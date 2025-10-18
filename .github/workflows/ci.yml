@@ -1,0 +1,22 @@
+# .github/workflows/ci.yml
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: intl, mbstring, json, dom, curl, openssl
+          coverage: none
+      - run: composer install --no-interaction --prefer-dist
+      - name: PHP Unit tests
+        run: vendor/bin/phpunit
+
+      - name: HTTP Smoke (healthz)
+        run: |
+          php -S 127.0.0.1:8085 -t public >/dev/null 2>&1 &
+          sleep 2
+          curl -fI http://127.0.0.1:8085/healthz

@@ -1,0 +1,84 @@
+# .github/workflows/codex-migrate.yml
+name: Codex Migrate Chunk
+on:
+  workflow_dispatch:
+    inputs:
+      chunk_name:
+        description: "Human name (e.g., Wallets module)"
+        required: true
+      paths:
+        description: "Comma-separated old-repo paths to pull (e.g., app/Modules/User,public/assets/wallets)"
+        required: true
+      dest:
+        description: "Destination path in new repo (default: keep original layout)"
+        required: false
+        default: ""
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout NEW repo
+        uses: actions/checkout@v4
+
+      - name: Install Git
+        run: sudo apt-get update && sudo apt-get install -y git
+
+      - name: Add OLD repo as remote + sparse checkout
+        env:
+          OLD_REPO: ${{ secrets.CODEX_OLD_REPO }}
+          OLD_REF:  ${{ secrets.CODEX_OLD_REPO_REF }}
+        run: |
+          git remote add old https://github.com/${OLD_REPO}.git
+          git fetch old ${OLD_REF}
+          git switch -c codex/${{ github.event.inputs.chunk_name }} || git checkout -b codex/${{ github.event.inputs.chunk_name }}
+          git sparse-checkout init --cone
+          IFS=',' read -ra PATHS <<< "${{ github.event.inputs.paths }}"
+          for p in "${PATHS[@]}"; do git sparse-checkout set "$(echo "$p" | xargs)"; done
+          git read-tree --prefix="${{ github.event.inputs.dest }}" -u old/${OLD_REF}
+
+      - name: Normalize composer + run codestyle (optional)
+        run: |
+          composer install --no-interaction --prefer-dist
+          git add -A || true
+
+      - name: Create migration checklist
+        run: |
+          cat > .github/CODEX_CHECKLIST.md <<'MD'
+          ## Codex Migration Checklist
+
+          - [ ] Files copied from old repo
+          - [ ] Namespaces aligned to `App\...`
+          - [ ] Controllers match route handlers
+          - [ ] Views placed under `app/Views/...`
+          - [ ] Services/Config merged carefully
+          - [ ] Add tests updated to CI4 (if any)
+          - [ ] Route parity test passes
+          - [ ] Smoke test: GET /healthz => 200
+          - [ ] Ensure no `dd()`/`var_dump()` left
+          - [ ] Remove unused legacy helpers
+
+          **Routes to verify (add/tick):**
+          MD
+          # Pull the routes you pasted into an issue body for easy ticking later
+          echo '```php' >> .github/CODEX_CHECKLIST.md
+          sed -n '1,400p' app/Config/Routes.php >> .github/CODEX_CHECKLIST.md || true
+          echo '```' >> .github/CODEX_CHECKLIST.md
+          git add .github/CODEX_CHECKLIST.md
+
+      - name: Commit
+        run: |
+          git config user.name  "codex-bot"
+          git config user.email "codex-bot@example.com"
+          git commit -m "Codex: migrate ${{ github.event.inputs.chunk_name }}"
+
+      - name: Open PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: codex/${{ github.event.inputs.chunk_name }}
+          title: "Codex: migrate ${{ github.event.inputs.chunk_name }}"
+          body: |
+            This PR migrates: **${{ github.event.inputs.paths }}**
+            
+            See checklist: `.github/CODEX_CHECKLIST.md`
+          labels: migration,codex
+          draft: false

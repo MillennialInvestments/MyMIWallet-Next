@@ -214,20 +214,19 @@
                 <button id="menuToggle">&#9776;</button>
             </li>
             <li class="menu-item hidden"><a href="#">Home</a></li>
-            <li class="menu-item hidden"><a href="https://codeigniter.com/user_guide/" target="_blank">Docs</a>
+            <li class="menu-item hidden"><a href="https://mymiwallet.com/How-It-Works" target="_blank">How It Works</a>
             </li>
-            <li class="menu-item hidden"><a href="https://forum.codeigniter.com/" target="_blank">Community</a></li>
-            <li class="menu-item hidden"><a
-                    href="https://codeigniter.com/contribute" target="_blank">Contribute</a>
+            <li class="menu-item hidden"><a href="https://mymiwallet.com/Community" target="_blank">Community</a></li>
+            <li class="menu-item hidden"><a href="https://mymiwallet.com/Support" target="_blank">Support</a>
             </li>
         </ul>
     </div>
 
     <div class="heroe">
 
-        <h1>Welcome to CodeIgniter <?= CodeIgniter\CodeIgniter::CI_VERSION ?></h1>
+        <h1>Welcome to MyMI Wallet</h1>
 
-        <h2>The small framework with powerful features</h2>
+        <h2>The Future of Finance</h2>
 
     </div>
 

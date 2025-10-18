@@ -1,0 +1,27 @@
+# .github/ISSUE_TEMPLATE/codex-migration.yml
+name: "Codex Migration: <module>"
+description: Migrate a module in chunks
+labels: ["migration","codex"]
+body:
+  - type: input
+    id: chunk
+    attributes:
+      label: Chunk name
+      placeholder: e.g. Wallets: CRUD + views
+    validations:
+      required: true
+  - type: textarea
+    id: paths
+    attributes:
+      label: Old repo paths (comma separated)
+      placeholder: app/Modules/User/Controllers/WalletsController.php, app/Views/wallets
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-merge checks
+      options:
+        - label: Route parity test passes
+        - label: PSR-12 tidy
+        - label: Controller namespaces aligned
+        - label: ENV-less test works (stubs/mocks)
+        - label: No legacy CI3 helpers left

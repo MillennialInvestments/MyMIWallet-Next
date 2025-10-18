@@ -1,0 +1,134 @@
+name: Codex Review Repos
+
+on:
+  workflow_dispatch:
+    inputs:
+      old_repo:
+        description: "OWNER/REPO for the old codebase (e.g. MillennialInvestments/MyMIWallet-OLD)"
+        required: true
+      old_ref:
+        description: "Branch or tag in the old repo"
+        required: false
+        default: "main"
+      include:
+        description: "Comma-separated globs to include (e.g. app/**,public/**)"
+        required: false
+        default: "app/**,public/**"
+      exclude:
+        description: "Comma-separated globs to exclude (e.g. vendor/**,writable/**)"
+        required: false
+        default: "vendor/**,writable/**,node_modules/**"
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out NEW repo (this repo)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          path: new
+
+      - name: Check out OLD repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.old_repo }}
+          ref: ${{ inputs.old_ref }}
+          fetch-depth: 0
+          path: old
+
+      - name: Prepare include/exclude lists
+        id: ie
+        run: |
+          inc="${{ inputs.include }}"
+          exc="${{ inputs.exclude }}"
+          echo "INCLUDE=${inc}" >> $GITHUB_OUTPUT
+          echo "EXCLUDE=${exc}" >> $GITHUB_OUTPUT
+
+      - name: Generate file lists (old vs new)
+        id: lists
+        working-directory: /
+        run: |
+          IFS=',' read -r -a includes <<< "${{ steps.ie.outputs.INCLUDE }}"
+          IFS=',' read -r -a excludes <<< "${{ steps.ie.outputs.EXCLUDE }}"
+
+          inc_args=()
+          for g in "${includes[@]}"; do inc_args+=( -path "./$g" -o ); done
+          # strip trailing -o
+          if [ ${#inc_args[@]} -gt 0 ]; then unset 'inc_args[${#inc_args[@]}-1]'; fi
+
+          exc_args=()
+          for g in "${excludes[@]}"; do exc_args+=( -path "./$g" -o ); done
+          if [ ${#exc_args[@]} -gt 0 ]; then unset 'exc_args[${#exc_args[@]}-1]'; fi
+
+          find_filtered () {
+            local root="$1"
+            if [ ${#inc_args[@]} -eq 0 ]; then
+              # no includes: list everything except excludes
+              eval find "$root" -type f \( "${exc_args[@]/#/-not }" \) -print | sed "s|^$root/||"
+            else
+              # includes present
+              eval find "$root" -type f \( "${inc_args[@]}" \) \( "${exc_args[@]/#/-not }" \) -print | sed "s|^$root/||"
+            fi
+          }
+
+          mkdir -p /tmp/codex
+          find_filtered old > /tmp/codex/old.txt || true
+          find_filtered new > /tmp/codex/new.txt || true
+
+          sort -u /tmp/codex/old.txt -o /tmp/codex/old.txt
+          sort -u /tmp/codex/new.txt -o /tmp/codex/new.txt
+
+          comm -23 /tmp/codex/old.txt /tmp/codex/new.txt > /tmp/codex/removed.txt || true
+          comm -13 /tmp/codex/old.txt /tmp/codex/new.txt > /tmp/codex/added.txt   || true
+          comm -12 /tmp/codex/old.txt /tmp/codex/new.txt > /tmp/codex/common.txt  || true
+
+          # For common files, detect modifications via hash
+          : > /tmp/codex/modified.txt
+          while IFS= read -r p; do
+            if ! cmp -s "old/$p" "new/$p"; then
+              echo "$p" >> /tmp/codex/modified.txt
+            fi
+          done < /tmp/codex/common.txt
+
+      - name: Build REPORT.md
+        run: |
+          mkdir -p codex-review
+          {
+            echo "# Codex Repo Review"
+            echo
+            echo "- Old repo: \`${{ inputs.old_repo }}@${{ inputs.old_ref }}\`"
+            echo "- New repo: \`${{ github.repository }}@${{ github.ref_name }}\`"
+            echo "- Include: \`${{ inputs.include }}\`"
+            echo "- Exclude: \`${{ inputs.exclude }}\`"
+            echo
+            echo "## Summary"
+            echo "- Added:   $(wc -l < /tmp/codex/added.txt)"
+            echo "- Removed: $(wc -l < /tmp/codex/removed.txt)"
+            echo "- Modified: $(wc -l < /tmp/codex/modified.txt)"
+            echo
+            echo "## Added"
+            sed 's/^/- /' /tmp/codex/added.txt || true
+            echo
+            echo "## Removed"
+            sed 's/^/- /' /tmp/codex/removed.txt || true
+            echo
+            echo "## Modified"
+            sed 's/^/- /' /tmp/codex/modified.txt || true
+            echo
+            echo "## Suggested first chunks"
+            echo "- Landing + Health (controllers/views + sw.js)"
+            echo "- Auth shell (AuthController + views)"
+            echo "- Dashboard shell (read-only)"
+          } > codex-review/REPORT.md
+
+      - name: Upload report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-review
+          path: codex-review/REPORT.md
+          if-no-files-found: error

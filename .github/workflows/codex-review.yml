@@ -1,0 +1,95 @@
+# .github/workflows/codex-review.yml
+name: Codex Review Repos
+on:
+  workflow_dispatch:
+    inputs:
+      old_repo:
+        description: "owner/name of source repo (overrides secret)"
+        required: false
+      old_ref:
+        description: "branch/tag in source (overrides secret)"
+        required: false
+      include:
+        description: "comma globs (e.g., app/**,public/**)"
+        required: false
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    steps:
+      - name: Checkout NEW repo
+        uses: actions/checkout@v4
+
+      - name: Resolve inputs
+        id: cfg
+        run: |
+          echo "OLD_REPO=${{ github.event.inputs.old_repo || secrets.CODEX_OLD_REPO }}" >> $GITHUB_OUTPUT
+          echo "OLD_REF=${{ github.event.inputs.old_ref  || secrets.CODEX_OLD_REPO_REF }}" >> $GITHUB_OUTPUT
+          echo "INCLUDE=${{ github.event.inputs.include  || secrets.CODEX_INCLUDE || 'app/**,public/**' }}" >> $GITHUB_OUTPUT
+
+      - name: Fetch OLD repo
+        run: |
+          git init .codex_old
+          cd .codex_old
+          git remote add origin https://github.com/${{ steps.cfg.outputs.OLD_REPO }}.git
+          git fetch --depth=1 origin ${{ steps.cfg.outputs.OLD_REF }}
+          git checkout FETCH_HEAD
+
+      - name: Generate diff report (by globs)
+        id: rep
+        run: |
+          mkdir -p .codex_report
+          IFS=',' read -ra GLOB <<< "${{ steps.cfg.outputs.INCLUDE }}"
+          for g in "${GLOB[@]}"; do
+            echo "# Scope: $g" >> .codex_report/REPORT.md
+            NEW_LIST=$(git ls-files "$g" 2>/dev/null || true)
+            OLD_LIST=$(cd .codex_old && git ls-files "$g" 2>/dev/null || true)
+
+            # Added/Missing/Changed
+            echo "## Missing in NEW (present in OLD)" >> .codex_report/REPORT.md
+            comm -23 <(printf "%s\n" $OLD_LIST | sort) <(printf "%s\n" $NEW_LIST | sort) | sed 's/^/- [ ] /' >> .codex_report/REPORT.md || true
+
+            echo "## Extra in NEW (not in OLD)" >> .codex_report/REPORT.md
+            comm -13 <(printf "%s\n" $OLD_LIST | sort) <(printf "%s\n" $NEW_LIST | sort) | sed 's/^/- [ ] /' >> .codex_report/REPORT.md || true
+
+            echo "## Same path, potentially changed" >> .codex_report/REPORT.md
+            for f in $NEW_LIST; do
+              if [ -f ".codex_old/$f" ] && [ -f "$f" ]; then
+                if ! diff -q ".codex_old/$f" "$f" >/dev/null 2>&1; then
+                  echo "- [ ] $f" >> .codex_report/REPORT.md
+                fi
+              fi
+            done
+            echo "" >> .codex_report/REPORT.md
+          done
+          echo "report=.codex_report/REPORT.md" >> $GITHUB_OUTPUT
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-review
+          path: .codex_report/REPORT.md
+
+      - name: Open/Update tracking issue
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.CODEX_PAT }}
+          script: |
+            const fs = require('fs')
+            const body = fs.readFileSync('${{ steps.rep.outputs.report }}', 'utf8')
+            const title = `Codex: Review Delta vs ${process.env.OLD_REPO || ''} (${process.env.OLD_REF || ''})`
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo, labels: 'codex', state: 'open'
+            })
+            const found = issues.find(i => i.title.startsWith('Codex: Review Delta'))
+            if (found) {
+              await github.rest.issues.update({ owner: context.repo.owner, repo: context.repo.repo, issue_number: found.number, body })
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo,
+                title, body, labels: ['codex','migration']
+              })
+            }

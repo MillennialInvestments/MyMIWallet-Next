@@ -1,0 +1,120 @@
+name: Codex Migrate Chunk
+
+on:
+  workflow_dispatch:
+    inputs:
+      chunk_name:
+        description: "Short label for this migration chunk (e.g. Landing+Health)"
+        required: true
+      old_repo:
+        description: "OWNER/REPO for the old codebase"
+        required: true
+      old_ref:
+        description: "Branch or tag in the old repo"
+        required: false
+        default: "main"
+      paths:
+        description: "Comma-separated list of OLD-repo paths to copy (files or folders)"
+        required: true
+      dest:
+        description: "Optional destination prefix inside NEW repo (blank keeps original paths)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out NEW repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check out OLD repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.old_repo }}
+          ref: ${{ inputs.old_ref }}
+          fetch-depth: 0
+          path: old
+
+      - name: Create working branch
+        run: |
+          safe="$(echo "${{ inputs.chunk_name }}" | tr ' /:' '---')"
+          echo "BRANCH=codex/${safe}" >> $GITHUB_ENV
+          git checkout -b "codex/${safe}"
+
+      - name: Copy selected paths from OLD -> NEW
+        run: |
+          IFS=',' read -r -a list <<< "${{ inputs.paths }}"
+          dest="${{ inputs.dest }}"
+          for p in "${list[@]}"; do
+            p="${p#"${p%%[![:space:]]*}"}"; p="${p%"${p##*[![:space:]]}"}"  # trim
+            if [ -z "$p" ]; then continue; fi
+            if [ -e "old/$p" ]; then
+              if [ -d "old/$p" ]; then
+                mkdir -p "${dest%/}/$p"
+                rsync -a --delete "old/$p/" "${dest%/}/$p/"
+              else
+                mkdir -p "$(dirname "${dest%/}/$p")"
+                rsync -a "old/$p" "${dest%/}/$p"
+              fi
+              echo "Copied: $p"
+            else
+              echo "::warning::Path not found in old repo: $p"
+            fi
+          done
+
+      - name: Add CODEX checklist
+        run: |
+          cat > CODEX_CHECKLIST.md <<EOF
+# Codex Checklist – ${{ inputs.chunk_name }}
+
+- [ ] Fix namespaces where needed (App\\…)
+- [ ] Update views paths if folder structure changed
+- [ ] Merge configs instead of overwriting
+- [ ] Ensure routes for these controllers exist
+- [ ] Run /healthz and basic smoke locally
+EOF
+          git add CODEX_CHECKLIST.md
+
+      - name: Commit changes
+        run: |
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes staged; nothing to commit."
+            exit 0
+          fi
+          git -c user.name="codex-bot" -c user.email="codex-bot@users.noreply.github.com" \
+            commit -m "Codex: migrate ${{ inputs.chunk_name }}"
+
+      - name: Push branch (if any commits)
+        if: success()
+        run: |
+          set -e
+          # If there is no commit, this will fail; ignore with || true
+          git push --set-upstream origin "$BRANCH" || true
+
+      - name: Create PR
+        if: success()
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: ${{ env.BRANCH }}
+          title: "Codex: migrate ${{ inputs.chunk_name }}"
+          body: |
+            Automated migration chunk **${{ inputs.chunk_name }}**.
+
+            **Paths copied from:** `${{ inputs.old_repo }}@${{ inputs.old_ref }}`
+            **Requested paths:**
+            ```
+            ${{ inputs.paths }}
+            ```
+            ---
+            See CODEX_CHECKLIST.md for manual fixes before merge.
+          labels: codex,migration
+          draft: false
