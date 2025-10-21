@@ -180,7 +180,7 @@ $viewFileData = [
                                     </div>
                                 </div>
                                 <div class="card-inner">
-                                    <?= view('ManagementModule/Views/Users\Active_Table', $viewFileData); ?>
+                                    <?= view('Management/Users/Active_Table', $viewFileData); ?>
                                 </div>
                             </div>
                         </div>
@@ -219,7 +219,7 @@ $viewFileData = [
                                     </div>
                                 </div>
                                 <div class="card-inner">
-                                    <?= view('ManagementModule/Views/Users\Inactive_Table', $viewFileData); ?>
+                                    <?= view('Management/Users/Inactive_Table', $viewFileData); ?>
                                 </div>
                             </div>
                         </div>

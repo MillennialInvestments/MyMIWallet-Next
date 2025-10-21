@@ -460,13 +460,13 @@ echo '
 <div class="nk-block d-none d-sm-block">
     <div class="row">
         <div class="d-lg-none d-xl-block col-md-12 col-xl-3 my-sm-3">';
-            echo view('UserModule/Investments/Assessment/assessment_center', $allViewData);
-            // echo view('UserModule/Investments/control_center', $allViewData);
+            echo view('User/Investments/Assessment/assessment_center', $allViewData);
+            // echo view('User/Investments/control_center', $allViewData);
         echo '
         </div><!-- .col -->
         <div class="d-none d-sm-block col-md-12 col-xl-9 my-sm-3">';
-            echo view('UserModule/Investments/Assessment/assessment_content', $allViewData);
-            // echo view('UserModule/Investments/overview_chart', $allViewData);
+            echo view('User/Investments/Assessment/assessment_content', $allViewData);
+            // echo view('User/Investments/overview_chart', $allViewData);
         echo '
         </div>
     </div>

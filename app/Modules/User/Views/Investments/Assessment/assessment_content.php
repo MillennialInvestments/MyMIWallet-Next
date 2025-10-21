@@ -376,7 +376,7 @@ $cuFullAddress          = $cuAddress . ', ' . $cuCity . ', ' . $cuState . ', ' .
                             </div>
                         </div>
                         <div id="kyc-verification" class="tab-pane fade">
-                            <?php //echo view('UserModule/Budget/index/Investor_Assessment/personal_information'); ?>
+                            <?php //echo view('User/Budget/index/Investor_Assessment/personal_information'); ?>
                             <div class="nk-block-head nk-block-head-lg">
                                 <div class="nk-block-between">
                                     <div class="nk-block-head-content">
@@ -978,7 +978,7 @@ $cuFullAddress          = $cuAddress . ', ' . $cuCity . ', ' . $cuState . ', ' .
                             </div>
                         </div>
                         <div id="features-activated" class="tab-pane fade">
-                            <?php //echo view('UserModule/Budget/index/Investor_Assessment/personal_information'); ?>
+                            <?php //echo view('User/Budget/index/Investor_Assessment/personal_information'); ?>
                             <div class="nk-block-head nk-block-head-lg">
                                 <div class="nk-block-between">
                                     <div class="nk-block-head-content">
@@ -1079,7 +1079,7 @@ $cuFullAddress          = $cuAddress . ', ' . $cuCity . ', ' . $cuState . ', ' .
 
                         <?php if ($investmentOperations === 1) { ?>
                         <div id="investment-summary" class="tab-pane fade">
-                            <?php //echo view('UserModule/Budget/index/Investor_Assessment/personal_information'); ?>
+                            <?php //echo view('User/Budget/index/Investor_Assessment/personal_information'); ?>
                             <div class="nk-block-head nk-block-head-lg">
                                 <div class="nk-block-between">
                                     <div class="nk-block-head-content">

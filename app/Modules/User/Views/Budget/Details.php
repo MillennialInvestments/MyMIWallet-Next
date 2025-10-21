@@ -36,7 +36,7 @@ if ($pageAccountType === 'Banking') {
         'accountNumber'             => $accountNumber,
         'accountBalance'            => $accountBalance,
     );
-    echo view('UserModule/Wallets/Details/bank_accounts', $accountInformation);
+    echo view('User/Wallets/Details/bank_accounts', $accountInformation);
 } elseif ($pageAccountType === 'Budget') {
     $accountTypeText = 'Budget';
     // Other variables
@@ -184,5 +184,5 @@ if ($pageAccountType === 'Banking') {
 //     );
 //     $this->load->""view('Budget\Details\accounts', $accountInformation); 
 // }
-// echo view('UserModule/Budget/Details/accounts', $accountInformation)
+// echo view('User/Budget/Details/accounts', $accountInformation)
 ?>

@@ -38,7 +38,7 @@ $fieldData = array(
                     </div>
                     <?php
                     
-                    // echo view('UserModule\Views\Investments\\' . $configMode . '\user_fields', $fieldData);
+                    // echo view('User/Investments/' . $configMode . '/user_fields', $fieldData);
                     ?>
                     <?php if (isset($subViewFile) && !empty($subViewFile)): ?>
                         <?php echo view($subViewFile); ?>

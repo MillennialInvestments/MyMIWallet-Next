@@ -225,7 +225,7 @@ $subViewData                = [
  
 
  <?php 
-//  echo view('Dashboard\index\user-feedback-modal'); 
+//  echo view('Dashboard/index/user-feedback-modal'); 
 
 echo view('themes/dashboard/layouts/js-links', $subViewData);
 echo vite_tags('app', $scriptNonceValue); 
