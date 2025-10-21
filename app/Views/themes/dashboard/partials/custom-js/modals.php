@@ -1,6 +1,6 @@
 <?php
 $subViewData                            = [];
-// echo view('Dashboard\Investor_Profile\Security\Reset_Password');
+// echo view('Dashboard/Investor_Profile/Security/Reset_Password');
 echo view('ManagementModule/Views/Marketing\index\modals');
 ?>
 <!-- Modal Structure -->

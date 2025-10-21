@@ -232,7 +232,7 @@ $supportName = $supportUser['displayName'] ?? ($supportUser['username'] ?? ($sup
                                 </div>
                             </div>
                             <div class="col-lg-8">
-                                <?= view('SupportModule/Views/Support\partials\kb_results', ['nonce' => $nonce ?? []]); ?>
+                                <?= view('Support/Support/partials/kb_results', ['nonce' => $nonce ?? []]); ?>
                             </div>
                         </div>
                     </div>

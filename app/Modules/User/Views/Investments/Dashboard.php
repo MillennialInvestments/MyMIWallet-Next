@@ -107,25 +107,25 @@ if ($this->agent->is_browser()) {
 // <div class="nk-block">
 //     <div class="row g-gs">
 //         <div class="d-lg-none d-xl-block col-md-12 col-xl-3 my-sm-3">';
-//         echo view('UserModule/Investments/index/Action_Center', $allViewData);
+//         echo view('User/Investments/index/Action_Center', $allViewData);
 //         echo '
 //         </div><!-- .col -->
 //         <div class="d-none d-sm-block col-md-12 col-xl-9 my-sm-3">';
-//         echo view('UserModule/Investments/index/Performance_Overview', $allViewData);
+//         echo view('User/Investments/index/Performance_Overview', $allViewData);
 //         echo '
 //         </div><!-- .col -->
 //         <div class="col-xl-7 col-xxl-8">';
-//             echo view('UserModule/Investments/index/Recent_Trades', $allViewData);
+//             echo view('User/Investments/index/Recent_Trades', $allViewData);
 //         echo '
 //         </div><!-- .col -->
 //         <div class="col-xl-5 col-xxl-4">
 //             <div class="row g-gs">
 //                 <div class="col-md-6 col-lg-12">';
-//                 // Uncomment This: echo view('UserModule/Investments/index/Top_Trades', $allViewData);
+//                 // Uncomment This: echo view('User/Investments/index/Top_Trades', $allViewData);
 //                 echo '
 //                 </div><!-- .col -->
 //                 <div class="col-md-6 col-lg-12">';
-//                     echo view('UserModule/Investments/index/Custom_Watchlist', $allViewData);
+//                     echo view('User/Investments/index/Custom_Watchlist', $allViewData);
 //                 echo '
 //                 </div><!-- .col -->
 //             </div><!-- .row -->
@@ -138,17 +138,17 @@ echo '
 <div class="nk-block">
     <div class="row g-gs">
         <div class="d-none d-lg-block col-md-12 col-xl-3 my-sm-3">';
-        echo view('UserModule/Investments/index/Action_Center', $allViewData);
+        echo view('User/Investments/index/Action_Center', $allViewData);
         echo '
         </div><!-- .col -->
         <div class="d-none d-sm-block col-md-12 col-xl-9 my-sm-3">';
-        echo view('UserModule/Investments/index/Performance_Overview', $allViewData);
+        echo view('User/Investments/index/Performance_Overview', $allViewData);
         echo '
         </div><!-- .col -->
     </div>
     <div class="row g-gs">
         <div class="col-12">';
-            echo view('UserModule/Investments/index/Recent_Trades', $allViewData);
+            echo view('User/Investments/index/Recent_Trades', $allViewData);
         echo '
         </div><!-- .col -->
     </div><!-- .row -->

@@ -138,11 +138,11 @@ echo '
 <div class="nk-block d-none d-sm-block">
     <div class="row">
         <div class="d-lg-none d-xl-block col-md-12 col-xl-3 my-sm-3">';
-            // echo view('UserModule/Budget/index/control_center', $allViewData);
+            // echo view('User/Budget/index/control_center', $allViewData);
         echo '
         </div><!-- .col -->
         <div class="d-none d-sm-block col-md-12 col-xl-9 my-sm-3">';
-            // echo view('UserModule/Budget/index/overview_chart', $allViewData);
+            // echo view('User/Budget/index/overview_chart', $allViewData);
         echo '
         </div>
     </div>
@@ -195,11 +195,11 @@ echo '
                                 </div> -->
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">';
-                                        echo view('UserModule/Budget/index/active_table', $allViewData);
+                                        echo view('User/Budget/index/active_table', $allViewData);
                                         echo '
                                     </div>
                                     <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">';
-                                    //echo view('UserModule/Budget/index/historical_table', $allViewData);
+                                    //echo view('User/Budget/index/historical_table', $allViewData);
                                     echo '
                                     </div>
                                 </div>
@@ -234,11 +234,11 @@ echo '
                                 </div> -->
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">';
-                                            echo view('UserModule/Budget/index/active_table', $allViewData);
+                                            echo view('User/Budget/index/active_table', $allViewData);
                                             echo '
                                         </div>
                                         <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">';
-                                        //echo view('UserModule/Budget/index/historical_table', $allViewData);
+                                        //echo view('User/Budget/index/historical_table', $allViewData);
                                         echo '
                                         </div>
                                     </div>

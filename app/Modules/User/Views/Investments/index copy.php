@@ -372,11 +372,11 @@ $allViewData                        = array(
 // if ($agent->isBrowser()) {
     // !! Activate this to enable the 
     // if ($investment_assessment === 'No') {
-    //     echo view('UserModule/Investments/Assessment', $allViewData); 
+    //     echo view('User/Investments/Assessment', $allViewData); 
     // } elseif ($investment_assessment === 'Yes') {
-    //     echo view('UserModule/Investments/Dashboard', $allViewData);
+    //     echo view('User/Investments/Dashboard', $allViewData);
     // }
-    //echo view('UserModule/Investments/Dashboard', $allViewData);
+    //echo view('User/Investments/Dashboard', $allViewData);
 // } else {
 
 // }

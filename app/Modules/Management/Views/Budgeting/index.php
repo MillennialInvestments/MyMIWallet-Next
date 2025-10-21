@@ -179,7 +179,7 @@ $viewFileData                       = array(
                                     </div>
                                 </div>
                                 <div class="card-inner">
-                                    <?php echo view('ManagementModule/Views/Users\Listing-Table', $viewFileData); ?>
+                                    <?php echo view('Management/Users/Listing-Table', $viewFileData); ?>
                                 </div><!-- .card-inner -->
                             </div><!-- .card-inner-group -->
                         </div><!-- .card -->

@@ -37,8 +37,8 @@ $testInfo						= array(
 			</div>
 			<div class="nk-block">
 				<?php
-                //echo view('ManagementModule/ViewsWeb_Design/Test_Page/data-distribution', $testInfo);
-                // echo view('ManagementModule/ViewsWeb_Design/Test_Page/trade_tracker', $testInfo);
+                //echo view('Management/Web_Design/Test_Page/data-distribution', $testInfo);
+                // echo view('Management/Web_Design/Test_Page/trade_tracker', $testInfo);
                 ?>
 			</div>
 			<div class="nk-block">

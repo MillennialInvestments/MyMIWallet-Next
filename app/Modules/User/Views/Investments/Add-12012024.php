@@ -55,7 +55,7 @@ $fieldData = array(
                     <?php echo view($subViewFile, $fieldData); ?>   
                 </div>
                 <!-- <div class="col-12 col-md-6">
-                    <?php // echo view('UserModule/Investments/index\Investment_Tools-sm', $fieldData); ?>
+                    <?php // echo view('User/Investments/index/Investment_Tools-sm', $fieldData); ?>
                 </div> -->
             </div>        
         </div>

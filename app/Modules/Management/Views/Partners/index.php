@@ -571,14 +571,14 @@ $viewFileData                       = array(
             <div class="nk-block">
                 <div class="row">
                     <div class="col-lg-12">
-                        <?php echo view('ManagementModule/Views/Partners\Active_Partners', $viewFileData); ?>
+                        <?php echo view('Management/Partners/Active_Partners', $viewFileData); ?>
                     </div>
                 </div>
             </div>
             <div class="nk-block">
                 <div class="row">
                     <div class="col-lg-12">
-                        <?php echo view('ManagementModule/Views/Partners\Active_Assets', $viewFileData); ?>
+                        <?php echo view('Management/Partners/Active_Assets', $viewFileData); ?>
                     </div>
                 </div>
             </div>

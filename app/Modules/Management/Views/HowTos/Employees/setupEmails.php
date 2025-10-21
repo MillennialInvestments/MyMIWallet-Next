@@ -13,7 +13,7 @@ $subViewData = [
     <div class="nk-content-body">
         <div class="row">
             <div class="col-12 col-lg-3">
-                <?php echo view('ManagementModule/Views/HowTos\Employees\action_center', $subViewData); ?>
+                <?php echo view('Management/HowTos/Employees/action_center', $subViewData); ?>
             </div>
             <div class="col-12 col-lg-9">
                 <div class="nk-block nk-block-lg">

@@ -237,7 +237,7 @@
                 //     'walletTitle'			=> $pageTitle,
                 //     'current_trade_type'	=> 'Option',
                 // );
-                // echo view('UserModule/Trade_Tracker/Quick_Trade', $walletTransfer);
+                // echo view('User/Trade_Tracker/Quick_Trade', $walletTransfer);
                 ?>
 			</div>
 			<div class="modal-footer">
@@ -267,7 +267,7 @@
                 //     'walletTitle'			=> $pageTitle,
                 //     'current_trade_type'	=> 'Option',
                 // );
-                // echo view('UserModule/Trade_Tracker/Quick_Trade', $walletTransfer);
+                // echo view('User/Trade_Tracker/Quick_Trade', $walletTransfer);
                 ?>
 			</div>
 			<div class="modal-footer">
