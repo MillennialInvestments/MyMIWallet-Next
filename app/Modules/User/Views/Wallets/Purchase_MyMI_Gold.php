@@ -14,10 +14,10 @@ $pageURID		= $this->uri->segment(4);
 <div class="nk-block">
 	<div class="row gy-gs">
 		<div class="col-md-4 mb-3">  
-			<?php echo view('UserModule/Wallets/MyMI_Gold\order_form'); ?>
+			<?php echo view('UserModule/Wallets/MyMI_Gold/order_form'); ?>
 		</div>
 		<div class="col-md-8 mb-3">  
-			<?php echo view('UserModule/Wallets/MyMI_Gold\description'); ?>
+			<?php echo view('UserModule/Wallets/MyMI_Gold/description'); ?>
 		</div>
 	</div>
 </div>						

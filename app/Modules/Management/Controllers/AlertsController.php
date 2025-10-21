@@ -1200,7 +1200,7 @@ class AlertsController extends UserController
 
         // Render the email content for preview
         $emailContent = view('emails/layout', [
-            'content' => view('ManagementModule/Views/Alerts/emails/trade_alert', $data), // Pass the trade alert template as a subview
+            'content' => view('Alerts/emails/trade_alert', $data), // Pass the trade alert template as a subview
             'title' => 'MyMI Premium Trade Alert', // Title for the layout
         ]);
 
@@ -1230,7 +1230,7 @@ class AlertsController extends UserController
 
         // Render the email content for preview
         $emailContent = view('emails/layout', [
-            'content' => view('ManagementModule/Views/Alerts\emails\trade_alerts', $data), // Pass the trade alert template as a subview
+            'content' => view('Alerts/emails/trade_alerts', $data), // Pass the trade alert template as a subview
             'title' => $tradeDetails['ticker'] . ' | ' . $tradeDetails['type'] . ' Trade Alert | MyMI Wallet Alerts', // Title for the layout
             'siteSettings' => $this->siteSettings,
             'socialMedia' => $this->socialMedia,

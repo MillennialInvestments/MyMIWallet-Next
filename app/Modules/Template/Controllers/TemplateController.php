@@ -10,6 +10,6 @@ class TemplateController extends BaseController
 {
     public function index()
     {
-        return view('Template//index');
+        return view('Template/index');
     }
 }

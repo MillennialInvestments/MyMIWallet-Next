@@ -1,4 +1,4 @@
-<?php echo view('App/Views/errors\html\under_construction'); ?>
+<?php echo view('App/Views/errors/html/under_construction'); ?>
 <div class="nk-block">
     <div class="card card-bordered">
         <div class="card-aside-wrap">
@@ -57,7 +57,7 @@
             </div>
             <?php 
             $controlCenterData = [];
-            echo view('Dashboard\Account\ControlCenter', $controlCenterData); 
+            echo view('Dashboard/Account/ControlCenter', $controlCenterData); 
             ?>
         </div><!-- .card-aside-wrap -->
     </div><!-- .card -->

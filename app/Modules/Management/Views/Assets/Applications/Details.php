@@ -133,12 +133,12 @@ $userData                                       = array(
                     echo '
                     <div class="col-sm-6 col-lg-4 col-xxl-3">
                     ';
-                    echo view('ManagementModule/Views/Assets\Applications\Details\User_Profile', $userData);
+                    echo view('Assets/Applications/Details/User_Profile', $userData);
                     echo '
                     </div><!-- .col -->
                     <div class="col-sm-6 col-lg-8 col-xxl-9">
                     ';
-                    echo view('ManagementModule/Views/Assets\Applications\Details\Asset_Information', $userData);
+                    echo view('Assets/Applications/Details/Asset_Information', $userData);
                     echo '
                     </div><!-- .col -->
                     <div class="col-12 pt-3">
@@ -166,15 +166,15 @@ $userData                                       = array(
                                     <div class="tab-pane" id="tabItem2">
                                         <div class="row">
                                             <div class="col-4">';
-                                            echo view('ManagementModule/Views/Assets\Applications\Details\Contact_Information', $userData);
+                                            echo view('Assets/Applications/Details/Contact_Information', $userData);
                                             echo '
                                             </div><!-- .col -->
                                             <div class="col-4">';
-                                            echo view('ManagementModule/Views/Assets\Applications\Details\Investor_Information', $userData);
+                                            echo view('Assets/Applications/Details/Investor_Information', $userData);
                                             echo '
                                             </div><!-- .col -->
                                             <div class="col-4">';
-                                            echo view('ManagementModule/Views/Assets\Applications\Details\Referral_Information', $userData);
+                                            echo view('Assets/Applications/Details/Referral_Information', $userData);
                                             echo '
                                             </div><!-- .col -->
                                         </div>

@@ -20,7 +20,7 @@ $subViewData                        = [
 <div class="nk-block d-none d-sm-block">
     <div class="row">
         <div class="d-none d-md-block col-md-12 col-xl-3 my-sm-3">
-            <?php echo view('Referral_Program\My_Referrals\control_center', $subViewData); ?>
+            <?php echo view('Referral_Program/My_Referrals/control_center', $subViewData); ?>
         </div>
         <div class="col-md-12 my-sm-3 col-xl-9 d-none d-sm-block">
             <div class="h-100 card card-bordered">
@@ -131,7 +131,7 @@ $subViewData                        = [
         </div>
     </div>
     <!-- <div class="row">
-        <?php //echo view('Referral_Program\My_Referrals\management_buttons', $subViewData); ?>
+        <?php //echo view('Referral_Program/My_Referrals/management_buttons', $subViewData); ?>
     </div> -->
     <div class="row">
         <div class="card card-bordered h-100">
@@ -155,7 +155,7 @@ $subViewData                        = [
                     </div>
                 </div>
                 <div class="card-inner">
-                    <?php echo view('Referral_Program\My_Referrals\Referrals', $subViewData); ?>
+                    <?php echo view('Referral_Program/My_Referrals/Referrals', $subViewData); ?>
                 </div>
             </div>
         </div>

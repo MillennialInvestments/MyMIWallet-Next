@@ -77,4 +77,4 @@
         <hr>
     </div>
 </div>
-<?php echo view('UserModule/Knowledgebase/includes\KYC_Verification\kyc_requirements'); ?>
+<?php echo view('UserModule/Knowledgebase/includes/KYC_Verification/kyc_requirements'); ?>

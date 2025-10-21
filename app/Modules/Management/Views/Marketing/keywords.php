@@ -48,7 +48,7 @@ $viewFileData = array(
                 <div class="row mb-1">
                     <!-- Keywords Analytics Table -->
                     <div class="col-12">
-                        <?= view('ManagementModule/Views/Marketing\Keywords\keyword_analytics_table', $viewFileData); ?>
+                        <?= view('Marketing/Keywords/keyword_analytics_table', $viewFileData); ?>
                     </div>
                 </div>
             </div>

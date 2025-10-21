@@ -48,12 +48,12 @@ $fieldData = array(
 
         <fieldset>
             <?php
-            echo view('Wallets\Purchase\paypal_fields', $fieldData);
+            echo view('Wallets/Purchase/paypal_fields', $fieldData);
             ?>
         </fieldset>
         <fieldset>
             <!-- Start of User Meta -->
-            <?php //$this->load->view('users/user_meta', array('frontend_only' => true));?>
+            <?php //$this->load->view('users/user_meta', array('frontend_only' => true);?>
             <!-- End of User Meta -->
         </fieldset>
     <?php echo form_close(); ?>	

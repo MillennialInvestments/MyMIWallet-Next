@@ -11,7 +11,7 @@
         'walletFunds'								=> $walletFunds,
         'walletGains'                               => $walletGains ?? 0,
     );
-    echo view('Wallets\index\investment_wallets\MyMIWallet', $MyMIWalletData);
+    echo view('Wallets/index/investment_wallets/MyMIWallet', $MyMIWalletData);
     if (!empty($getUserInvestAccounts)) {
         foreach ($getUserInvestAccounts as $accountInfo) {
             $btnID                                  = 'editInvestAccount';
@@ -33,7 +33,7 @@
                 'accountAccountNumber'		        => $accountAccountNumber,
                 'accountNetWorth'		            => $accountNetWorth,
             );
-            echo view('Wallets\index\investment_wallets\Wallet_Listing', $walletData);
+            echo view('Wallets/index/investment_wallets/Wallet_Listing', $walletData);
         }
     }
     $btnID				                            = 'addInvestAccount';
@@ -44,6 +44,6 @@
         'elementTitle'					            => $elementTitle,
         'elementText'					            => $elementText,
     );
-    echo view('Wallets\index\Purchase_Wallet', $purchaseWalletData);
+    echo view('Wallets/index/Purchase_Wallet', $purchaseWalletData);
 ?>
 </div>

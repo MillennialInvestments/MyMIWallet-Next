@@ -49,7 +49,7 @@ $fundingProgress = $totalTarget > 0 ? ($totalFunded / $totalTarget) * 100 : 0;
     </div>
     <div class="card card-bordered mt-3">
         <div class="card-inner">
-            <?= view('App/Modules/Management\Views\Projects/_quick_intake'); ?>
+            <?= view('App/Modules/Management/Views/Projects/_quick_intake'); ?>
         </div>
     </div>
     <div class="card-inner">

@@ -2,13 +2,13 @@
 /*
 Convert CURL to PHP https://codebeautify.org/curl-to-php-online
 */
-// echo view('ManagementModule/ViewsWeb_Design/Content_Creator/Codat/Create_Company'); 
-// echo view('ManagementModule/ViewsWeb_Design/Content_Creator/Codat/Get_Companies'); 
-// echo view('ManagementModule/ViewsWeb_Design/Content_Creator/Codat/Integrations'); 
+// echo view('Web_Design/Content_Creator/Codat/Create_Company'); 
+// echo view('Web_Design/Content_Creator/Codat/Get_Companies'); 
+// echo view('Web_Design/Content_Creator/Codat/Integrations'); 
 
 // echo '<br><br><hr><br><br>'; 
 
-// echo view('ManagementModule/ViewsWeb_Design/Content_Creator/Codat/Create_Company'); 
+// echo view('Web_Design/Content_Creator/Codat/Create_Company'); 
 
 // echo '<br><br><hr><br><br>'; 
 // use GuzzleHttp\Client;

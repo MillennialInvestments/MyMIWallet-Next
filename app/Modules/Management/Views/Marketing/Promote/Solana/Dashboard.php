@@ -126,24 +126,24 @@ $subViewData = [
             <div class="nk-block">
                 <div class="row">
                     <div class="col-12">
-                        <?php echo view('ManagementModule/Marketing/Campaigns\Listing-Table', $subViewData); ?>
+                        <?php echo view('ManagementModule/Marketing/Campaigns/Listing-Table', $subViewData); ?>
                     </div>
                 </div>
             </div>
             <div class="nk-block">
                 <div class="row">
                     <div class="col-12">
-                        <?php echo view('ManagementModule/Marketing/News\Listing-Table', $subViewData); ?>
+                        <?php echo view('ManagementModule/Marketing/News/Listing-Table', $subViewData); ?>
                     </div>
                 </div>
             </div>
             <div class="nk-block">
                 <div class="row">
                     <div class="col-6">
-                        <?php echo view('ManagementModule/Marketing/Blog\Listing-Table', $subViewData); ?>
+                        <?php echo view('ManagementModule/Marketing/Blog/Listing-Table', $subViewData); ?>
                     </div>
                     <div class="col-6">
-                        <?php echo view('ManagementModule/Marketing/User\MyMIGold-Tasks', $subViewData); ?>
+                        <?php echo view('ManagementModule/Marketing/User/MyMIGold-Tasks', $subViewData); ?>
                     </div>
                 </div>
             </div>

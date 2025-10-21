@@ -588,7 +588,7 @@ $viewFileData                       = array(
                                     </div>
                                 </div>
                                 <div class="card-inner">
-                                    <?php echo view('ManagementModule/Views/Assets\Listing-Table', $viewFileData); ?>
+                                    <?php echo view('Assets/Listing-Table', $viewFileData); ?>
                                 </div><!-- .card-inner -->
                             </div><!-- .card-inner-group -->
                         </div><!-- .card -->

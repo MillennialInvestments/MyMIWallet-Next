@@ -12,7 +12,7 @@ if ($pageAccountType === 'Banking') {
         'accountNumber'             => $previousData['account_number'],
         'accountBalance'            => $previousData['balance'],
     );
-    echo view('Wallets\Details\bank_accounts', $accountInformation);
+    echo view('Wallets/Details/bank_accounts', $accountInformation);
 } elseif ($pageAccountType === 'Credit') {
     $accountInformation             = array(
         'accountID'                 => $previousData['id'],
@@ -26,7 +26,7 @@ if ($pageAccountType === 'Banking') {
         'accountCurrentBalance'     => $previousData['current_balance'],
         'accountAvailableBalance'   => $previousData['available_balance'],
     );
-    echo view('Wallets\Details\credit_accounts', $accountInformation);
+    echo view('Wallets/Details/credit_accounts', $accountInformation);
 } elseif ($pageAccountType === 'Debt') {
     $accountInformation             = array(
         'accountID'                 => $previousData['id'],
@@ -39,7 +39,7 @@ if ($pageAccountType === 'Banking') {
         'accountCreditStatus'       => $previousData['credit_status'],
         'accountCurrentBalance'     => $previousData['current_balance'],
     );
-    echo view('Wallets\Details\debt_accounts', $accountInformation);
+    echo view('Wallets/Details/debt_accounts', $accountInformation);
 } elseif ($pageAccountType === 'Investment') {
     $accountInformation             = array(
         'accountID'                 => $previousData['id'],
@@ -51,7 +51,7 @@ if ($pageAccountType === 'Banking') {
         'accountNumber'             => $previousData['account_number'],
         'accountNetWorth'           => $previousData['net_worth'],
     );
-    echo view('Wallets\Details\investment_accounts', $accountInformation);
+    echo view('Wallets/Details/investment_accounts', $accountInformation);
 } elseif ($pageAccountType === 'Wallets') {
     
     $accountTypeText                = 'Wallet';

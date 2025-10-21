@@ -107,11 +107,11 @@ $viewFileData                       = array(
                 <div class="row">
                     <!-- Action Center -->
                     <div class="col-lg-4">
-                        <?php echo view('ManagementModule/Services/index\action_center', $viewFileData); ?>
+                        <?php echo view('ManagementModule/Services/index/action_center', $viewFileData); ?>
                     </div><!-- .col -->
                     <!-- Month-to-Month Overview -->
                     <div class="col-lg-8">
-                        <?php echo view('ManagementModule/Services/index\monthly_overview', $viewFileData); ?>
+                        <?php echo view('ManagementModule/Services/index/monthly_overview', $viewFileData); ?>
                     </div>
                 </div>
 			</div>
@@ -354,13 +354,13 @@ $viewFileData                       = array(
             </div>
             <div class="nk-block">
                 <div class="row g-gs">
-                    <?php //echo view('ManagementModule/Services/index\operational_tasks', $viewFileData); ?>
+                    <?php //echo view('ManagementModule/Services/index/operational_tasks', $viewFileData); ?>
                 </div>
             </div>
             <div class="nk-block">
                 <div class="row">
                     <div class="col-lg-12">
-                        <?php //echo view('ManagementModule/Services/Campaigns\Listing-Table', $viewFileData); ?>
+                        <?php //echo view('ManagementModule/Services/Campaigns/Listing-Table', $viewFileData); ?>
                     </div>
                 </div>
             </div>

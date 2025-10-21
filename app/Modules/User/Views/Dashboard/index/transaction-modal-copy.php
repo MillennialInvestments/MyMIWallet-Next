@@ -11,7 +11,7 @@ $pageURIE = $totalSegments >= 5 ? $uri->getSegment(5) : null;
 <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="trackDepositsModal" aria-hidden="true">
 	<div class="modal-dialog" id="transModalDialog">
 		<div class="modal-content" id="loading-content">
-			<?php echo view('Dashboard\index\modal-loading-page'); ?>
+			<?php echo view('Dashboard/index/modal-loading-page'); ?>
 		</div>
 		<div class="modal-content" id="transactionContainer">
 		</div>

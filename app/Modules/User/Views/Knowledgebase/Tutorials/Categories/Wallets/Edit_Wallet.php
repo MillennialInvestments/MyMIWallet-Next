@@ -92,7 +92,7 @@ $accountInformation             = array(
 ?>
 <div class="nk-block">
     <div class="row g-gs">
-        <?php echo view('UserModule/Wallets/Details\wallets', $accountInformation); ?>
+        <?php echo view('UserModule/Wallets/Details/wallets', $accountInformation); ?>
         <?php 
         if ($beta === 1) {
         } else {

@@ -199,7 +199,7 @@ if ($pageURIB === 'Assets') {
                                     </div>
                                 </div>
                                 <div class="card-inner">
-                                    <?php echo view('ManagementModule/Views/Assets\Applications\Listing-Table', $viewFileData); ?>
+                                    <?php echo view('Assets/Applications/Listing-Table', $viewFileData); ?>
                                 </div><!-- .card-inner -->
                             </div><!-- .card-inner-group -->
                         </div><!-- .card -->

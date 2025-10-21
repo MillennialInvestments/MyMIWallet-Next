@@ -13,7 +13,7 @@
                 <em class="icon ni ni-link"></em>
                 <div class="title">Newsletters: Add Subscriber</div>
                 <p>
-                    <?php echo view('ManagementModule/Views/Marketing\resources\standaloneAddSubscriberForm'); ?>
+                    <?php echo view('Marketing/resources/standaloneAddSubscriberForm'); ?>
                 </p>
             </div>
         </div>
@@ -25,7 +25,7 @@
                 <em class="icon ni ni-link"></em>
                 <div class="title">Web Scraper: Enter Link</div>
                 <p>
-                    <?php echo view('ManagementModule/Views/Marketing\resources\standaloneScraperForm'); ?>
+                    <?php echo view('Marketing/resources/standaloneScraperForm'); ?>
                 </p>
             </div>
         </div>
@@ -37,7 +37,7 @@
                 <em class="icon ni ni-link"></em>
                 <div class="title">Content Generator: </div>
                 <p>
-                    <?php echo view('ManagementModule/Views/Marketing\resources\standaloneLargeContentForm'); ?>
+                    <?php echo view('Marketing/resources/standaloneLargeContentForm'); ?>
                 </p>
             </div>
         </div>

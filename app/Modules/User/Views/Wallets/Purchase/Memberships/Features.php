@@ -39,7 +39,7 @@ $subViewData = [
     <div class="nk-block">
         <div class="row g-gs">
             <div class="col-12 mt-0">
-                <?php echo view('Wallets\Purchase\Memberships\Advertisements\CustomizeYourMembership', $subViewData); ?>
+                <?php echo view('Wallets/Purchase/Memberships/Advertisements/CustomizeYourMembership', $subViewData); ?>
             </div>
         </div>
         <div class="row g-gs flex-lg-row-reverse">

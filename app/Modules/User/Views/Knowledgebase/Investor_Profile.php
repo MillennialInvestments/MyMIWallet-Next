@@ -190,7 +190,7 @@
                         </div>
                     </div>
                 </div>
-                <?php echo view('UserModule/Knowledgebase/includes\Investor_Account\resources_and_tools'); ?>
+                <?php echo view('UserModule/Knowledgebase/includes/Investor_Account/resources_and_tools'); ?>
             </div>
         </div>
     </div>

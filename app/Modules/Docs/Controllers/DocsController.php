@@ -15,7 +15,7 @@ class DocsController extends BaseController
     public function index()
     {
         $files = $this->walk();
-        return view('App/Modules/Docs\Views\index', ['files'=>$files]);
+        return view('App/Modules/Docs/Views/index', ['files'=>$files]);
     }
 
     public function view($slug='')
@@ -24,7 +24,7 @@ class DocsController extends BaseController
         if (!is_file($file)) return redirect()->to('/Docs');
         $md = file_get_contents($file) ?: '';
         $html = (new \Parsedown())->text($md);
-        return view('App/Modules/Docs\Views\doc', ['html'=>$html,'slug'=>$slug]);
+        return view('App/Modules/Docs/Views/doc', ['html'=>$html,'slug'=>$slug]);
     }
 
     public function search()

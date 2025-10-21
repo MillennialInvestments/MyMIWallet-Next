@@ -1423,7 +1423,7 @@ class WalletsController extends UserController
         $this->data['pageTitle']                = 'Add New Wallet | MyMI Wallet | The Future of Finance';
         $this->commonData(); // Ensure this is correctly populating $this->data
         // Render the view with the compiled data
-        echo view('App/Modules/User\Views\Wallets\Purchase\Memberships\Success', $this->data);
+        echo view('App/Modules/User/Views/Wallets/Purchase/Memberships/Success', $this->data);
     }
 
     // Example for the Complete_Purchase method:

@@ -45,7 +45,7 @@ class SearchController extends BaseController
 
     public function view()
     {
-        return view('App/Modules/Search\Views\index', [
+        return view('App/Modules/Search/Views/index', [
             'pageTitle' => 'Search',
         ]);
     }

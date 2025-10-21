@@ -73,7 +73,7 @@ $this->load->view($emailLink);
         //Events::trigger('render_user_form');
         ?>
 		<!-- Start of User Meta -->
-		<?php //$this->load->view('users/user_meta', array('frontend_only' => true));?>
+		<?php //$this->load->view('users/user_meta', array('frontend_only' => true);?>
 		<!-- End of User Meta -->
 	</fieldset>
 <?php echo form_close(); ?>	

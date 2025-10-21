@@ -38,7 +38,7 @@
                             <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
 
                                 <fieldset>
-                                    <?php echo view('ManagementModule/Views/Alerts\add\user_fields', $fieldData); ?>
+                                    <?php echo view('Alerts/add/user_fields', $fieldData); ?>
                                 </fieldset>
                                 <fieldset>
                                     <?php
@@ -47,7 +47,7 @@
                                     // Events::trigger('render_user_form');
                                     ?>
                                     <!-- Start of User Meta -->
-                                    <?php //$this->load->view('users/user_meta', array('frontend_only' => true));?>
+                                    <?php //$this->load->view('users/user_meta', array('frontend_only' => true);?>
                                     <!-- End of User Meta -->
                                 </fieldset>
                                 <fieldset>

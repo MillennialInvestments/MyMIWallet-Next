@@ -73,7 +73,7 @@ function cat_title($c){
     <div class="d-flex align-items-center justify-content-between mb-2">
       <h5 class="mb-0"><?= esc(cat_title($walletCategory)) ?></h5>
     </div>
-    <?= view('Wallets\types\wallets_block', [
+    <?= view('Wallets/types/wallets_block', [
           'walletCategory' => $walletCategory,
           'siteSettings'   => $siteSettings,
           'cuID'           => $cuID,

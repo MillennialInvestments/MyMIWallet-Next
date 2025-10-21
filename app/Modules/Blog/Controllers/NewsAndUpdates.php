@@ -35,21 +35,21 @@ class NewsAndUpdates extends UserController
     public function index()
     {
         $uri = $this->request->uri;
-        $content = view('Modules/Blog/Views\NewsAndUpdates\index', $this->getViewFileData($uri));
+        $content = view('Blog/NewsAndUpdates/index', $this->getViewFileData($uri));
         return $this->renderPage('Home', 'Automated', $content);
     }
 
     public function IntegratingWithPlaid()
     {
         $uri = $this->request->uri;
-        $content = view('Modules/Blog/Views\NewsAndUpdates\Integrating_With_Plaid', $this->getViewFileData($uri));
+        $content = view('Blog/NewsAndUpdates/Integrating_With_Plaid', $this->getViewFileData($uri));
         return $this->renderPage('Home', 'Automated', $content);
     }
 
     public function TheRoadmapToTheFutureOfFinance()
     {
         $uri = $this->request->uri;
-        $content = view('Modules/Blog/Views\NewsAndUpdates\The_Roadmap_To_The_Future_Of_Finance', $this->getViewFileData($uri));
+        $content = view('Blog/NewsAndUpdates/The_Roadmap_To_The_Future_Of_Finance', $this->getViewFileData($uri));
         return $this->renderPage('Home', 'Automated', $content);
     }
 

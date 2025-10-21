@@ -204,7 +204,7 @@ $lastHighSeverity                   = 0;
                                     </div>
                                 </div>
                                 <div class="card-inner">
-                                    <?php echo view('ManagementModule/ViewsSupport/Requests/Listing-Table', $viewFileData); ?>
+                                    <?php echo view('Support/Requests/Listing-Table', $viewFileData); ?>
                                 </div><!-- .card-inner -->
                             </div><!-- .card-inner-group -->
                         </div><!-- .card -->

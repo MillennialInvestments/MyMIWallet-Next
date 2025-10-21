@@ -38,14 +38,14 @@ class FeaturesController extends UserController
     public function index()
     {
         $uri = $this->request->uri;
-        $content = view('Modules/Advertise/Views\Features\index', $this->getViewFileData($uri));
+        $content = view('Advertise/Features/index', $this->getViewFileData($uri));
         return $this->renderPage('Features', 'Automated', $content);
     }
 
     public function BrokerageIntegrations()
     {
         $uri = $this->request->uri;
-        $content = view('Modules/Advertise/Views\Features\Brokerage_Integrations', $this->getViewFileData($uri));
+        $content = view('Advertise/Features/Brokerage_Integrations', $this->getViewFileData($uri));
         return $this->renderPage('Features', 'Automated', $content);
     }
 
@@ -63,7 +63,7 @@ class FeaturesController extends UserController
         $data = array_merge($this->getViewFileData($uri), $viewFileData);
     
         // Pass the structured data array to the view
-        $content = view('Modules/Advertise/Views\Features\MyMI_Gold', $data);
+        $content = view('Advertise/Features/MyMI_Gold', $data);
         return $this->renderPage('Features', 'Automated', $content);
     }
 

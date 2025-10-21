@@ -140,7 +140,7 @@ $addModalTitle                          = $configMode . ' ' . $accountType . ' A
                                     Events::trigger('render_user_form');
                                     ?>
                                     <!-- Start of User Meta -->
-                                    <?php //$this->load->view('users/user_meta', array('frontend_only' => true));?>
+                                    <?php //$this->load->view('users/user_meta', array('frontend_only' => true);?>
                                     <!-- End of User Meta -->
                                 </fieldset>
                                 <fieldset>
@@ -160,7 +160,7 @@ $addModalTitle                          = $configMode . ' ' . $accountType . ' A
                 </div>
             </div>
             <div class="col-lg-8 col-sm-6 col-12">
-                <?php echo view('UserModule/Knowledgebase/Tutorials\Categories\Budget\Add'); ?>
+                <?php echo view('UserModule/Knowledgebase/Tutorials/Categories/Budget/Add'); ?>
             </div>
         </div>
     </div>

@@ -81,7 +81,7 @@ $fieldData = array(
                                             Events::trigger('render_user_form');
                                             ?>
 											<!-- Start of User Meta -->
-											<?php //$this->load->view('users/user_meta', array('frontend_only' => true));?>
+											<?php //$this->load->view('users/user_meta', array('frontend_only' => true);?>
 											<!-- End of User Meta -->
 										</fieldset>
 									</div>
@@ -100,7 +100,7 @@ $fieldData = array(
 		<?php echo validation_errors(); ?>
 	</div>
 <?php endif; ?>
-<?php echo "view('UserModule/WalletsCreate_Bank_Accounts')); ?>
+<?php echo view('Wallets/Create_Bank_Account'); ?>
 <script <?= $nonce['script'] ?? '' ?>>
 function calculateWithdraw()
 {

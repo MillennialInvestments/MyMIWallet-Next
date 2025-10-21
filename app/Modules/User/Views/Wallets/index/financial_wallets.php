@@ -31,7 +31,7 @@
                 'accountAccountNumber'		        => $accountAccountNumber,
                 'accountBalance'		            => $accountBalance,
             );
-            echo view('Wallets\index\financial_wallets\Wallet_Listing', $walletData);
+            echo view('Wallets/index/financial_wallets/Wallet_Listing', $walletData);
         }
     }
     $btnID    	                                    = 'addBankAccount';
@@ -44,6 +44,6 @@
         'elementTitle'					            => $elementTitle,
         'elementText'					            => $elementText,
     );
-    echo view('Wallets\index\Purchase_Wallet', $purchaseWalletData);
+    echo view('Wallets/index/Purchase_Wallet', $purchaseWalletData);
 ?>
 </div>

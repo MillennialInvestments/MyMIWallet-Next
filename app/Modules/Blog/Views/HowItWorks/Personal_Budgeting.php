@@ -83,7 +83,7 @@ $formData               = array(
                                 <div class="card-body">
                                     <?php 
                                         //echo view('users/register_form', $formData);
-                                        echo view('App/Views/Auth\register_form');
+                                        echo view('App/Views/Auth/register_form');
                                     ?>
                                 </div>
                             </div>

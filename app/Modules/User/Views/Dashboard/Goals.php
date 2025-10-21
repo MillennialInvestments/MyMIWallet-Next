@@ -1,5 +1,5 @@
 <?php 
-// echo view('App/Views/errors\html\under_construction');
+// echo view('App/Views/errors/html/under_construction');
 
 // Logging for debugging
 // log_message('debug', 'Dashboard\Goals L2 - Initializing Goals');

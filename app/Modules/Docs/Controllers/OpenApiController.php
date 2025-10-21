@@ -21,6 +21,6 @@ class OpenApiController extends BaseController
 
     public function ui()
     {
-        return view('App/Modules/Docs\Views\openapi');
+        return view('App/Modules/Docs/Views/openapi');
     }
 }

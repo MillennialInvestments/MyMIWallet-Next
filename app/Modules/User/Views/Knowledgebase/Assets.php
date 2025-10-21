@@ -58,7 +58,7 @@ $subViewData = [
                     </div>
                 </div>
 
-                <?php echo view('UserModule/Knowledgebase/includes\Assets\what_are_mymi_assets', $subViewData); ?>
+                <?php echo view('UserModule/Knowledgebase/includes/Assets/what_are_mymi_assets', $subViewData); ?>
 
                 <div class="row pt-4" id="owning-mymi-assets">
                     <div class="col-xl-12">
@@ -84,11 +84,11 @@ $subViewData = [
                     </div>
                 </div>
 
-                <?php echo view('UserModule/Knowledgebase/includes\Assets\asset_creator', $subViewData); ?>
-                <?php echo view('UserModule/Knowledgebase/includes\Assets\mymi_marketplace', $subViewData); ?>
-                <?php echo view('UserModule/Knowledgebase/includes\Assets\mymi_exchange', $subViewData); ?>
-                <?php echo view('UserModule/Knowledgebase/includes\Customer_Support\header', $subViewData); ?>
-                <?php echo view('UserModule/Knowledgebase/includes\Customer_Support\contact_support', $subViewData); ?>
+                <?php echo view('UserModule/Knowledgebase/includes/Assets/asset_creator', $subViewData); ?>
+                <?php echo view('UserModule/Knowledgebase/includes/Assets/mymi_marketplace', $subViewData); ?>
+                <?php echo view('UserModule/Knowledgebase/includes/Assets/mymi_exchange', $subViewData); ?>
+                <?php echo view('UserModule/Knowledgebase/includes/Customer_Support/header', $subViewData); ?>
+                <?php echo view('UserModule/Knowledgebase/includes/Customer_Support/contact_support', $subViewData); ?>
 
             </div>
         </div>

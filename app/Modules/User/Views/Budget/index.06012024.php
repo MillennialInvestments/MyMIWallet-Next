@@ -394,10 +394,10 @@ if ($userAgent->isBrowser()) {
 <div class="nk-block d-none d-sm-block">
     <div class="row">
         <div class="d-none d-md-block col-md-12 col-xl-3 my-sm-3">
-            <?php echo view('Budget\index\control_center', $allViewData); ?>
+            <?php echo view('Budget/index/control_center', $allViewData); ?>
         </div><!-- .col -->
         <div class="d-none d-sm-block col-md-12 col-xl-9 my-sm-3">
-            <?php echo view('Budget\index\overview_chart', $allViewData); ?>
+            <?php echo view('Budget/index/overview_chart', $allViewData); ?>
         </div>
     </div>
 </div>
@@ -410,9 +410,9 @@ if ($userAgent->isBrowser()) {
         <div class="col-sm-12 col-md-12 my-sm-3">
             <?php
             if ($userAgent->isMobile()) {
-                echo view('UserModule/Budget/index\mobile_table', $allViewData);
+                echo view('UserModule/Budget/index/mobile_table', $allViewData);
             } elseif ($userAgent->isBrowser()) {
-                echo view('UserModule/Budget/index\browser_table', $allViewData);
+                echo view('UserModule/Budget/index/browser_table', $allViewData);
             };
             ?>
         </div>

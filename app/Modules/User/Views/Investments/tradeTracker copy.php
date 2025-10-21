@@ -1,4 +1,4 @@
-<?php echo view('App/Views/errors\html\under_construction'); ?>
+<?php echo view('App/Views/errors/html/under_construction'); ?>
 <!-- app/Modules/User/Views/Investments/tradeTracker.php -->
 <?php
 // echo '<script <?= $nonce['script'] ?? '' ?>>

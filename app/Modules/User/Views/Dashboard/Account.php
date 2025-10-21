@@ -116,7 +116,7 @@ $subViewData = [
                 </div><!-- .nk-block -->
             </div>
             <?php 
-            echo view('Dashboard\Account\ControlCenter', $subViewData); 
+            echo view('Dashboard/Account/ControlCenter', $subViewData); 
             ?>
         </div><!-- .card-aside-wrap -->
     </div><!-- .card -->

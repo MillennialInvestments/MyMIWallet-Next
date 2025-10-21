@@ -231,7 +231,7 @@ $supportName = $supportUser['displayName'] ?? ($supportUser['username'] ?? ($sup
                                 </div>
                             </div>
                             <div class="col-lg-8">
-                                <?= view('Support\partials\kb_results', ['nonce' => $nonce ?? []]); ?>
+                                <?= view('Support/partials/kb_results', ['nonce' => $nonce ?? []]); ?>
                             </div>
                         </div>
                     </div>
@@ -241,8 +241,8 @@ $supportName = $supportUser['displayName'] ?? ($supportUser['username'] ?? ($sup
     </div>
 </div>
 
-<?= view('App//Modules\\User\\Views\\Support\\partials\\ticket_row', ['nonce' => $nonce ?? []]); ?>
-<?= view('App//Modules\\User\\Views\\Support\\partials\\ticket_offcanvas', ['nonce' => $nonce ?? []]); ?>
+<?= view('App/Modules/User/Views/Support/partials/ticket_row', ['nonce' => $nonce ?? []]); ?>
+<?= view('App/Modules/User/Views/Support/partials/ticket_offcanvas', ['nonce' => $nonce ?? []]); ?>
 
 <script <?= $scriptNonce; ?>>
     (() => {

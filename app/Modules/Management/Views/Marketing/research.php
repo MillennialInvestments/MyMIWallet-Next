@@ -39,10 +39,10 @@
 
         <!-- 🧩 Primary Marketing Interface -->
         <div class="col-12 col-xxl-4">
-            <?php // echo view('ManagementModule/Views/Marketing\index\action_center_new', $viewFileData); ?>
+            <?php // echo view('Marketing/index/action_center_new', $viewFileData); ?>
         </div>
         <div class="col-12 col-xxl-8">
-        <?php // echo view('ManagementModule/Views/Marketing\index\control_center', $viewFileData); ?>
+        <?php // echo view('Marketing/index/control_center', $viewFileData); ?>
         </div>
     </div>
 </div>

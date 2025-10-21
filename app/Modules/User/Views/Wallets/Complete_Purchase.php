@@ -70,7 +70,7 @@
                                 </ul>
                             </div>
                             <div class="pricing-body">
-		                        <?php echo view('UserModule/Wallets/Complete_Purchase\paypal_checkout', $paypalData); ?>
+		                        <?php echo view('UserModule/Wallets/Complete_Purchase/paypal_checkout', $paypalData); ?>
                             </div>
                         </div>      
                         <?php 
@@ -114,7 +114,7 @@
                     <div class="nk-block nk-block-lg">
                         <div class="card card-bordered pricing">
                             <div class="pricing-body">
-                                <?php echo view('UserModule/Knowledgebase/Tutorials\Categories\MyMIGold\Completing_Your_Purchase', $detailData); ?>
+                                <?php echo view('UserModule/Knowledgebase/Tutorials/Categories/MyMIGold/Completing_Your_Purchase', $detailData); ?>
                             </div>
                         </div>
                     </div>

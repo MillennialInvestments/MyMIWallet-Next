@@ -50,7 +50,7 @@ $subViewData            = array(
                                         <h2 class="subttitle text-white pb-3" class="fs-4">Join Our Mailing List<br>For More News &amp; Updates!</h2>
                                     </div>
                                     <div class="col-12">
-                                        <?php echo view('Subscribe\header_subscribe', $subViewData); ?>
+                                        <?php echo view('Subscribe/header_subscribe', $subViewData); ?>
                                     </div>
                                 </div>
                             </div>

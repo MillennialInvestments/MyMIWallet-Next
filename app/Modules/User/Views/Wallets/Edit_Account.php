@@ -162,7 +162,7 @@ if ($this->uri->segment(1) === 'Content-Creator') {
                             Events::trigger('render_user_form');
                             ?>
                             <!-- Start of User Meta -->
-                            <?php //$this->load->view('users/user_meta', array('frontend_only' => true));?>
+                            <?php //$this->load->view('users/user_meta', array('frontend_only' => true);?>
                             <!-- End of User Meta -->
                         </fieldset>
                         <!-- <fieldset>
@@ -182,7 +182,7 @@ if ($this->uri->segment(1) === 'Content-Creator') {
             </div>
         </div>
         <div class="col-sm-8 col-12">
-            <?php echo view('UserModule/Wallets/Edit_Account\transaction_history', $viewData); ?>
+            <?php echo view('UserModule/Wallets/Edit_Account/transaction_history', $viewData); ?>
         </div>
     </div>
 </div>

@@ -63,8 +63,8 @@ $viewFileData                       = array(
                 <div class="row">
                     <!-- Action Center -->
                     <div class="col-12 col-xxl-4">
-                        <?php echo view('ManagementModule/Views/Marketing\Exchanges\includes\action_center', $viewFileData); ?>
-                        <?php //echo view('ManagementModule/Views/Marketing\index\action_center', $viewFileData); ?>
+                        <?php echo view('Marketing/Exchanges/includes/action_center', $viewFileData); ?>
+                        <?php //echo view('Marketing/index/action_center', $viewFileData); ?>
                     </div>
                     <!-- Month-to-Month Overview -->
                     <div class="col-12 col-xxl-8">

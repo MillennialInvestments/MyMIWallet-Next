@@ -12,7 +12,7 @@ if (empty($pageURIE)) {
         $dashboardTitle                 = 'Assets /';
         $dashboardSubtitle              = 'Support Requests'; 
     }
-    echo view('ManagementModule/ViewsSupport/Requests/Listing', $viewData); 
+    echo view('Support/Requests/Listing', $viewData); 
 } else {
     $this->db->from('bf_support_requests');
     $this->db->where('topic', $pageURIB); 
@@ -31,6 +31,6 @@ if (empty($pageURIE)) {
         'dashboardTitle'                => $dashboardTitle,
         'dashboardSubtitle'             => $dashboardSubtitle,
     );
-    echo view('ManagementModule/ViewsSupport/Requests/Details', $viewData); 
+    echo view('Support/Requests/Details', $viewData); 
 }    
 ?>

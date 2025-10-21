@@ -85,7 +85,7 @@ $fieldData = array(
             </div>
             <hr>
             <fieldset>
-                <?php echo view('Projects\Add\user_fields_test', $fieldData); ?>
+                <?php echo view('Projects/Add/user_fields_test', $fieldData); ?>
             </fieldset>
             <fieldset>
                 <div class="pricing-action mt-0">
@@ -156,7 +156,7 @@ $fieldData = array(
 
                                 <div id="form-errors" class="alert alert-danger d-none"></div>
                                 <fieldset>
-                                    <?php echo view('Projects\Add\user_fields', $subViewData); ?>
+                                    <?php echo view('Projects/Add/user_fields', $subViewData); ?>
                                 </fieldset>
                                 <fieldset>
                                     <div class="form-group">

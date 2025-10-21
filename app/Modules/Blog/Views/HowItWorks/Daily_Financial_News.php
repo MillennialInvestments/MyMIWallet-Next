@@ -64,7 +64,7 @@ $btnText = empty($cuID) ? 'Register Now' : 'Dashboard';
             <div class="intro-banner-desc pt-0">
               <div class="card rounded p-3 shadow-sm">
                 <div class="card-body">
-                  <?= view('App/Views/Auth\register_form'); ?>
+                  <?= view('App/Views/Auth/register_form'); ?>
                 </div>
               </div>
               <div id="features"></div>

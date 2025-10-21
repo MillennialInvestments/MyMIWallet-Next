@@ -214,7 +214,7 @@ class AccountController extends UserController
             ->orderBy('last_seen', 'DESC')->findAll(50);
         return view('themes/dashboard/layouts/index', [
             'pageTitle' => 'Active Sessions',
-            'content' => view('App//Modules\\User\\Views\\Account\\sessions', compact('sessions')),
+            'content' => view('App/Modules/User/Views/Account/sessions', compact('sessions')),
         ]);
     }
 
@@ -242,7 +242,7 @@ class AccountController extends UserController
         $otpauth = \App\Libraries\Security\TotpService::otpauthUrl('MyMI Wallet', (string) session('cuID'), $proposedSecret);
         return view('themes/dashboard/layouts/index', [
             'pageTitle' => 'Two-Factor Authentication',
-            'content' => view('App//Modules\\User\\Views\\Account\\twofactor', [
+            'content' => view('App/Modules/User/Views/Account/twofactor', [
                 'row' => $row,
                 'proposedSecret' => $proposedSecret,
                 'otpauth' => $otpauth,

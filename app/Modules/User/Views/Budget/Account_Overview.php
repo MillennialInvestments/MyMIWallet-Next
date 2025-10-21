@@ -1,4 +1,4 @@
-<?php if ($uri->getSegment(2) === 'Expense') {echo view('App/Views/errors\html\under_construction');} ?>
+<?php if ($uri->getSegment(2) === 'Expense') {echo view('App/Views/errors/html/under_construction');} ?>
 <?php
 // !! Get Total Account Summary based on Budget Type
 // !! Make alternations based on wheteher Account View is Income | Expense
@@ -164,20 +164,20 @@ $viewFileData = [
 <div class="nk-block">
     <div class="row">
         <div class="col-lg-4">
-            <?php echo view('Budget\Account_Overview\action_center', $viewFileData); ?>
+            <?php echo view('Budget/Account_Overview/action_center', $viewFileData); ?>
         </div>
         <div class="col-lg-8">
-            <?php echo view('Budget\Account_Overview\monthly_overview', $viewFileData); ?>
+            <?php echo view('Budget/Account_Overview/monthly_overview', $viewFileData); ?>
         </div>
     </div>
 </div>
 <div class="nk-block">
     <div class="row">
         <div class="col-lg-4 col-sm-6">
-            <?php echo view('Budget\Account_Overview\source_breakdown', $viewFileData); ?>
+            <?php echo view('Budget/Account_Overview/source_breakdown', $viewFileData); ?>
         </div>
         <div class="col-lg-8 col-sm-6">
-            <?php echo view('Budget\Account_Overview\history_overview', $viewFileData); ?>
+            <?php echo view('Budget/Account_Overview/history_overview', $viewFileData); ?>
         </div>
     </div>
 </div>

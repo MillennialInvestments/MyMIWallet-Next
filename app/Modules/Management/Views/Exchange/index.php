@@ -339,7 +339,7 @@ $viewFileData = array(
                                     </div>
                                 </div>
                                 <div class="card-inner">
-                                    <?php echo view('ManagementModule/Views/Assets\Listing-Table', $viewFileData); ?>
+                                    <?php echo view('Assets/Listing-Table', $viewFileData); ?>
                                 </div><!-- .card-inner -->
                             </div><!-- .card-inner-group -->
                         </div><!-- .card -->
@@ -377,7 +377,7 @@ $viewFileData = array(
                                     </div>
                                 </div>
                                 <div class="card-inner">
-                                    <?php echo view('ManagementModule/Views/Exchange\index\Large_Transactions', $viewFileData); ?>
+                                    <?php echo view('Exchange/index/Large_Transactions', $viewFileData); ?>
                                 </div><!-- .card-inner -->
                             </div><!-- .card-inner-group -->
                         </div><!-- .card -->

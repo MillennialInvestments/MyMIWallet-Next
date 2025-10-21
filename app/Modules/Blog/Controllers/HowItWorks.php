@@ -38,14 +38,14 @@ class HowItWorks extends UserController
     public function index()
     {
         $uri = $this->request->uri;
-        $content = view('Modules/Blog/Views\HowItWorks\index', $this->getViewFileData($uri));
+        $content = view('Blog/HowItWorks/index', $this->getViewFileData($uri));
         return $this->renderPage('Home', 'Automated', $content);
     }
 
     public function DetermineYourFinancialGoals()
     {
         $uri = $this->request->uri;
-        $content = view('Modules/Blog/Views\HowItWorks\Determining_Your_Financial_Goals', $this->getViewFileData($uri));
+        $content = view('Blog/HowItWorks/Determining_Your_Financial_Goals', $this->getViewFileData($uri));
         return $this->renderPage('Home', 'Automated', $content);
     }
 
@@ -63,7 +63,7 @@ class HowItWorks extends UserController
         $data = array_merge($this->getViewFileData($uri), $viewFileData);
     
         // Pass the structured data array to the view
-        $content = view('Modules/Blog/Views\HowItWorks\MyMI_Gold', $data);
+        $content = view('Blog/HowItWorks/MyMI_Gold', $data);
         return $this->renderPage('Home', 'Automated', $content);
     }
 
@@ -81,14 +81,14 @@ class HowItWorks extends UserController
         $data = array_merge($this->getViewFileData($uri), $viewFileData);
     
         // Pass the structured data array to the view
-        $content = view('Modules/Blog/Views\HowItWorks\Purchase_MyMI_Gold', $data);
+        $content = view('Blog/HowItWorks/Purchase_MyMI_Gold', $data);
         return $this->renderPage('Home', 'Automated', $content);
     }
 
     public function PersonalBudgeting()
     {
         $uri = $this->request->uri;
-        $content = view('Modules/Blog/Views\HowItWorks\Personal_Budgeting', $this->getViewFileData($uri));
+        $content = view('Blog/HowItWorks/Personal_Budgeting', $this->getViewFileData($uri));
         return $this->renderPage('Home', 'Automated', $content);
     }
 

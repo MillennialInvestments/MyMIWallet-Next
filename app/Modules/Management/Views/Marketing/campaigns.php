@@ -47,11 +47,11 @@ $viewFileData                          = array(
                 <div class="row">
                     <!-- Action Center -->
                     <div class="col-12 col-md-4 col-xxl-4">
-                        <?= view('ManagementModule/Views/Marketing\Campaigns\action_center', $viewFileData); ?>
+                        <?= view('Marketing/Campaigns/action_center', $viewFileData); ?>
                     </div>
                     <!-- Month-to-Month Overview -->
                     <div class="col-12 col-md-8 col-xxl-8">
-                        <?= view('ManagementModule/Views/Marketing\Campaigns\monthly_overview', $viewFileData); ?>
+                        <?= view('Marketing/Campaigns/monthly_overview', $viewFileData); ?>
                     </div>
                 </div>
             </div>
@@ -59,14 +59,14 @@ $viewFileData                          = array(
                 <div class="row mb-1">
                     <!-- Campaigns Table -->
                     <div class="col-12">
-                        <?= view('ManagementModule/Views/Marketing\Campaigns\Drip-Campaigns-Table', $viewFileData); ?>
+                        <?= view('Marketing/Campaigns/Drip-Campaigns-Table', $viewFileData); ?>
                     </div>
                 </div>
                 <hr>
                 <div class="row mb-1">
                     <!-- Campaigns Table -->
                     <div class="col-12">
-                        <?= view('ManagementModule/Views/Marketing\Campaigns\Drip-Campaigns-Steps-Table', $viewFileData); ?>
+                        <?= view('Marketing/Campaigns/Drip-Campaigns-Steps-Table', $viewFileData); ?>
                     </div>
                 </div>
             </div>

@@ -12,7 +12,7 @@ $pageURIE = $totalSegments >= 5 ? $uri->getSegment(5) : null;
 <div class="modal fade" id="onboardingModal" tabindex="-1" aria-labelledby="onboardingModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content" id="loading-content">
-            <?php echo view('Dashboard\index\modal-loading-page'); ?>
+            <?php echo view('Dashboard/index/modal-loading-page'); ?>
         </div>
         <div class="modal-content" id="onboardingContainer"></div>
     </div>

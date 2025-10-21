@@ -39,46 +39,46 @@ $viewFileData = [
 
         <!-- 🧩 Primary Marketing Interface -->
         <div class="col-12 col-xxl-4">
-            <?= view('ManagementModule/Views/Marketing\index\action_center_new', $viewFileData); ?>
+            <?= view('Marketing/index/action_center_new', $viewFileData); ?>
         </div>
         <div class="col-12 col-xxl-8">
-        <?= view('ManagementModule/Views/Marketing\index\control_center', $viewFileData); ?>
+        <?= view('Marketing/index/control_center', $viewFileData); ?>
         </div>
 
         <!-- 🔘 Control Panel + Analytics -->
         <div class="col-12">
-            <?php // view('ManagementModule/Views/Marketing\resources\controlPanelBlock', $viewFileData); ?>
+            <?php // view('Marketing/resources/controlPanelBlock', $viewFileData); ?>
         </div>
         <div class="col-12">            
-            <?= view('ManagementModule/Views/Marketing\index\most_recent_content', $viewFileData); ?>
-            <?php // view('ManagementModule/Views/Marketing\resources\analyticsSummaryBlock', $viewFileData); ?>
+            <?= view('Marketing/index/most_recent_content', $viewFileData); ?>
+            <?php // view('Marketing/resources/analyticsSummaryBlock', $viewFileData); ?>
         </div>
 
         <!-- 📋 Summaries + CTA Suggestion -->
         <div class="col-12 col-xxl-12">
-            <?= view('ManagementModule/Views/Marketing\resources\controlPanelBlock', $viewFileData); ?>
-            <?php // view('ManagementModule/Views/Marketing\resources\generatedSummariesBlock', $viewFileData); ?>
+            <?= view('Marketing/resources/controlPanelBlock', $viewFileData); ?>
+            <?php // view('Marketing/resources/generatedSummariesBlock', $viewFileData); ?>
         </div>
         <div class="col-12 col-xxl-6">
-            <?php // echo view('ManagementModule/Views/Marketing\resources\ctaRecommenderModule', $viewFileData); ?>
+            <?php // echo view('Marketing/resources/ctaRecommenderModule', $viewFileData); ?>
         </div>
 
         <!-- 📚 Platform Libraries -->
         <div class="col-12">
-            <?= view('ManagementModule/Views/Marketing\resources\platform-library'); ?>
+            <?= view('Marketing/resources/platform-library'); ?>
         </div>
 
         <div class="col-12 mt-4">
             <h5 class="title">✅ Finalized Marketing Content</h5>
             <div id="finalizedContentBlock">
-                <?= view('ManagementModule/Views/Marketing\resources\finalizedSummaries', ['finalizedContent' => $finalizedContent ?? []]) ?>
+                <?= view('Marketing/resources/finalizedSummaries', ['finalizedContent' => $finalizedContent ?? []]) ?>
             </div>
         </div>
 
         <!-- 🔄 Live Refresh Toggle + View -->
         <div class="col-12 col-xxl-12 px-2">
             <div class="generated-summaries" id="generatedSummariesBlock">
-                <?= view('ManagementModule/Views/Marketing\resources\generatedSummaries', $viewFileData); ?>
+                <?= view('Marketing/resources/generatedSummaries', $viewFileData); ?>
             </div>
         </div>
 
@@ -118,15 +118,15 @@ $viewFileData = [
             </div>
         </div>
         <div class="col-12 col-xxl-12">
-            <?= view('ManagementModule/Views/Marketing\resources\dripCampaignBlock', $viewFileData) ?>
+            <?= view('Marketing/resources/dripCampaignBlock', $viewFileData) ?>
         </div>
 
         <!-- 📊 Additional Insights -->
         <div class="col-12 col-xxl-4 mt-3">
-            <?= view('ManagementModule/Views/Marketing\index\exchange_action_center', $viewFileData); ?>
+            <?= view('Marketing/index/exchange_action_center', $viewFileData); ?>
         </div>
         <div class="col-12 col-xxl-8 mt-3">
-            <?= view('ManagementModule/Views/Marketing\index\target_users', $viewFileData); ?>
+            <?= view('Marketing/index/target_users', $viewFileData); ?>
         </div>
     </div>
 </div>

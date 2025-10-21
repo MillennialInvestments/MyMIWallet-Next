@@ -190,7 +190,7 @@ $addModalTitle                          = $configMode . ' Your ' . $accountName 
 
                                     <?php
                                     if ($uriSegmentB === 'Copy') { 
-                                        echo view('Budget\Edit\user_fields', $fieldData);
+                                        echo view('Budget/Edit/user_fields', $fieldData);
                                     } else {
                                         echo view('UserModule\Views\Budget\\' . $configMode . '\user_fields', $fieldData);
                                     }
@@ -203,7 +203,7 @@ $addModalTitle                          = $configMode . ' Your ' . $accountName 
                                     // Events::trigger('render_user_form');
                                     ?>
                                     <!-- Start of User Meta -->
-                                    <?php //$this->load->view('users/user_meta', array('frontend_only' => true));?>
+                                    <?php //$this->load->view('users/user_meta', array('frontend_only' => true);?>
                                     <!-- End of User Meta -->
                                 </fieldset>
                                 <fieldset>
@@ -224,8 +224,8 @@ $addModalTitle                          = $configMode . ' Your ' . $accountName 
                 </div>
             </div>
             <div class="col-lg-8 col-sm-6 col-12">
-                <?php //echo view('Knowledgebase\Tutorials\Categories\Budget\Add'); ?>
-                <?php echo view('Budget\Edit\related_records', $viewFileData); ?>
+                <?php //echo view('Knowledgebase/Tutorials/Categories/Budget/Add'); ?>
+                <?php echo view('Budget/Edit/related_records', $viewFileData); ?>
             </div>
         </div>
     </div>

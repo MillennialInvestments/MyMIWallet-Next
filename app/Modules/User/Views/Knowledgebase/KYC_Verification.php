@@ -78,8 +78,8 @@ https://www.electronicid.eu/en/blog/post/kyc-know-your-customer-means/en
                         <hr>
                     </div>
                 </div>
-                <?php echo view('UserModule/Knowledgebase/includes\KYC_Verification/getting_started'); ?>
-                <?php echo view('UserModule/Knowledgebase/includes\KYC_Verification/kyc_requirements'); ?>
+                <?php echo view('UserModule/Knowledgebase/includes/KYC_Verification/getting_started'); ?>
+                <?php echo view('UserModule/Knowledgebase/includes/KYC_Verification/kyc_requirements'); ?>
                 <div class="row" id="kyc-compliance-and-reporting"></div>
                 <div class="row g-gs">
                     <div class="col-xl-12">
@@ -99,8 +99,8 @@ https://www.electronicid.eu/en/blog/post/kyc-know-your-customer-means/en
                         <hr>
                     </div>
                 </div>
-                <?php echo view('UserModule/Knowledgebase/includes\KYC_Verification/periodic_due_diligence'); ?>
-                <?php echo view('UserModule/Knowledgebase/includes\KYC_Verification/kyc_regulations'); ?>                
+                <?php echo view('UserModule/Knowledgebase/includes/KYC_Verification/periodic_due_diligence'); ?>
+                <?php echo view('UserModule/Knowledgebase/includes/KYC_Verification/kyc_regulations'); ?>                
             </div>
         </div>
     </div>
