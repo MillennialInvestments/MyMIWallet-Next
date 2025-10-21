@@ -92,7 +92,7 @@ class SupportService
      */
     public function sendConfirmationEmail(array $data): bool
     {
-        $emailContent = view('UserModule//Views\\Support\\_emails\\Support_Request_Received', ['data' => $data]);
+        $emailContent = view('Support/_emails/Support_Request_Received', ['data' => $data]);
         return $this->sendEmail([
             'to' => $data['email'],
             'from' => 'noreply@MyMIWallet.com',
@@ -110,7 +110,7 @@ class SupportService
      */
     public function sendSupportConfirmationEmail(array $data): bool
     {
-        $emailContent = view('UserModule//Views\\Support\\_emails\\Support_Request_Received', ['data' => $data]);
+        $emailContent = view('Support/_emails/Support_Request_Received', ['data' => $data]);
         return $this->sendEmail([
             'to' => $data['email'],
             'from' => 'noreply@MyMIWallet.com',

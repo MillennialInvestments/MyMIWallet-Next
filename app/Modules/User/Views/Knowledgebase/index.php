@@ -30,7 +30,7 @@ $subViewData = [];
                 <div class="card mb-4">
                     <div class="card-body">
                         <div class="nk-block-content">
-                            <?php echo view('Knowledgebase\Tutorials', $subViewData); ?>
+                            <?php echo view('Knowledgebase/Tutorials', $subViewData); ?>
                         </div>
                     </div>
                 </div>
@@ -45,7 +45,7 @@ $subViewData = [];
                 <div class="card">
                     <div class="card-body">
                         <div class="nk-block-content">
-                            <?php echo view('Knowledgebase\Promoted_Articles', $subViewData); ?>
+                            <?php echo view('Knowledgebase/Promoted_Articles', $subViewData); ?>
                         </div>
                     </div>
                 </div>
@@ -55,4 +55,4 @@ $subViewData = [];
 </div>
 
 <!-- Include your navigation view -->
-<?php echo view('Knowledgebase\includes\navigation', $subViewData); ?>
+<?php echo view('Knowledgebase/includes/navigation', $subViewData); ?>

@@ -27,7 +27,7 @@ $userData                   = array(
 <div class="nk-block">
 	<div class="row gy-gs">
 		<div class="col-md-12 mb-3">  
-			<?php echo view('UserModule/Wallets/MyMI_Wallet\header', $userData); ?> 
+			<?php echo view('UserModule/Wallets/MyMI_Wallet/header', $userData); ?> 
 			
 			<div class="nk-block nk-block-lg pb-3">
 				<div class="row g-gs">

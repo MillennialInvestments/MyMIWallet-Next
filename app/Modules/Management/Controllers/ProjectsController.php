@@ -224,7 +224,7 @@ class ProjectsController extends UserController
     
                 try {
                     // Render the project received content
-                    $emailBody = view('ManagementModule/Views/Projects\_email\Project_Received', ['data' => $projectData]);
+                    $emailBody = view('Projects/_email/Project_Received', ['data' => $projectData]);
                     log_message('debug', 'ProjectsController::add - $emailBody: ' . $emailBody);
                 
                     // Use the layout for email rendering
@@ -367,7 +367,7 @@ class ProjectsController extends UserController
             'email' => $project['user_email'],
             'project_name' => $project['name'],
             'subject' => 'More Information Required for Your Project',
-            'message' => view('ManagementModule/Views/Projects\_emails\More_Information_Required', $project),
+            'message' => view('Projects/_emails/More_Information_Required', $project),
         ];
     
         try {
@@ -399,7 +399,7 @@ class ProjectsController extends UserController
             'email' => $project['user_email'],
             'project_name' => $project['name'],
             'subject' => 'Your Project Has Been Approved!',
-            'message' => view('ManagementModule/Views/Projects\_emails\Project_Approved', $project),
+            'message' => view('Projects/_emails/Project_Approved', $project),
         ];
     
         try {
@@ -425,7 +425,7 @@ class ProjectsController extends UserController
             'email' => $project['user_email'],
             'project_name' => $project['name'],
             'subject' => 'Issues Found in Your Project Submission',
-            'message' => view('ManagementModule/Views/Projects\_emails\Project_Issues', $project),
+            'message' => view('Projects/_emails/Project_Issues', $project),
         ];
     
         try {
@@ -457,7 +457,7 @@ class ProjectsController extends UserController
             'email' => $project['user_email'],
             'project_name' => $project['name'],
             'subject' => 'Your Project Was Not Approved',
-            'message' => view('ManagementModule/Views/Projects\_emails\Project_Not_Approved', $project),
+            'message' => view('Projects/_emails/Project_Not_Approved', $project),
         ];
     
         try {

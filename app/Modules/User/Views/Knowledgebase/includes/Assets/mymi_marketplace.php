@@ -18,8 +18,8 @@
 </div>
 <?php 
 if ($uri->getSegment(1) === 'Knowledge-Base' && $uri->getSegment(2) === 'MyMI-Partnerships') {
-    echo view('UserModule/Knowledgebase/includes\Assets\what_are_mymi_assets');
-    echo view('UserModule/Knowledgebase/includes\Assets\asset_creator');
+    echo view('UserModule/Knowledgebase/includes/Assets/what_are_mymi_assets');
+    echo view('UserModule/Knowledgebase/includes/Assets/asset_creator');
 }
 ?>
 <div class="row" id="listing-assets-marketplace"></div>
@@ -151,7 +151,7 @@ if ($uri->getSegment(1) === 'Knowledge-Base' && $uri->getSegment(2) === 'MyMI-Pa
     </div>
 </div>
 
-<?php echo view('UserModule/Knowledgebase/includes\Assets\asset_distribution'); ?>
+<?php echo view('UserModule/Knowledgebase/includes/Assets/asset_distribution'); ?>
 <div class="row" id="coin-redistribution"></div>
 <div class="row g-gs">
     <div class="col-xl-12">

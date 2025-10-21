@@ -78,7 +78,7 @@ if ($registerType 	=== 'Investor') {
                                 ?>
 								<!-- Start of User Meta -->
 								<?php
-                                //$this->load->view('users/user_meta', array('frontend_only' => true));
+                                //$this->load->view('users/user_meta', array('frontend_only' => true);
                                 ?>
 								<!-- End of User Meta -->
 							</fieldset>

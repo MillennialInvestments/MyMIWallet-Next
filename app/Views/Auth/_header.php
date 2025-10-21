@@ -21,6 +21,6 @@
 
 <body>
 
-<?= view('App/Views/Auth\_navbar'); ?>
+<?= view('App/Views/Auth/_navbar'); ?>
 
 <main role="main" class="container">

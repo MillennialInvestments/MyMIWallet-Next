@@ -26,12 +26,12 @@ $department                         = $pageURIB;
                 <div class="row">
                     <!-- Action Center -->
                     <div class="col-12 col-xxl-4">
-                        <?php echo view('ManagementModule/Views/Marketing\Exchanges\includes\action_center', $viewFileData); ?>
-                        <?php //echo view('ManagementModule/Views/Marketing\index\action_center', $viewFileData); ?>
+                        <?php echo view('Marketing/Exchanges/includes/action_center', $viewFileData); ?>
+                        <?php //echo view('Marketing/index/action_center', $viewFileData); ?>
                     </div>
                     <!-- Month-to-Month Overview -->
                     <div class="col-12 col-xxl-8">
-                        <?php echo view('ManagementModule/Views/Marketing\Exchanges\includes\facebook', $viewFileData); ?>
+                        <?php echo view('Marketing/Exchanges/includes/facebook', $viewFileData); ?>
                     </div>
                 </div>
             </div>
@@ -39,12 +39,12 @@ $department                         = $pageURIB;
                 <div class="row">
                     <!-- Month-to-Month Overview -->
                     <!-- <div class="col-12 col-xxl-4">
-                        <?php //echo view('ManagementModule/Views/Marketing\index\exchange_action_center', $viewFileData); ?>
-                        <?php // echo view('ManagementModule/Views/Marketing\resources\standaloneAnalytics', $viewFileData); ?>
+                        <?php //echo view('Marketing/index/exchange_action_center', $viewFileData); ?>
+                        <?php // echo view('Marketing/resources/standaloneAnalytics', $viewFileData); ?>
                     </div> -->
                     <!-- Month-to-Month Overview -->
                     <!-- <div class="col-lg-4">
-                        <?php //echo view('ManagementModule/Views/Marketing\index\monthly_overview', $viewFileData); ?>
+                        <?php //echo view('Marketing/index/monthly_overview', $viewFileData); ?>
                     </div> -->
                 </div>
             </div>
@@ -52,11 +52,11 @@ $department                         = $pageURIB;
                 <div class="row">
                     <!-- Month-to-Month Overview -->
                     <div class="col-lg-12">
-                        <?php // echo view('ManagementModule/Views/Marketing\resources\standaloneCalendar', $viewFileData); ?>
+                        <?php // echo view('Marketing/resources/standaloneCalendar', $viewFileData); ?>
                     </div>
                     <!-- Month-to-Month Overview -->
                     <!-- <div class="col-lg-4">
-                        <?php //echo view('ManagementModule/Views/Marketing\index\monthly_overview', $viewFileData); ?>
+                        <?php //echo view('Marketing/index/monthly_overview', $viewFileData); ?>
                     </div> -->
                 </div>
             </div>
@@ -64,10 +64,10 @@ $department                         = $pageURIB;
                 <div class="row">
                     <!-- Analytics & KPIs -->
                     <div class="col-12 col-md-6">
-                        <?php //echo view('ManagementModule/Views/Marketing\index\analytics_kpis', $viewFileData); ?>
+                        <?php //echo view('Marketing/index/analytics_kpis', $viewFileData); ?>
                     </div>
                     <div class="col-12 col-lg-6">
-                        <?php //echo view('ManagementModule/Views/Marketing\User\MyMIGold-Tasks', $viewFileData); ?>
+                        <?php //echo view('Marketing/User/MyMIGold-Tasks', $viewFileData); ?>
                     </div>
                 </div>
             </div>
@@ -75,11 +75,11 @@ $department                         = $pageURIB;
                 <div class="row">
                     <!-- Campaigns Management -->
                     <div class="col-12 col-lg-6">
-                        <?php //echo view('ManagementModule/Views/Marketing\Campaigns\Listing-Table', $viewFileData); ?>
+                        <?php //echo view('Marketing/Campaigns/Listing-Table', $viewFileData); ?>
                     </div>
                     <!-- Blog and User Tasks -->
                     <div class="col-12 col-lg-6">
-                        <?php //echo view('ManagementModule/Views/Marketing\Blog\Listing-Table', $viewFileData); ?>
+                        <?php //echo view('Marketing/Blog/Listing-Table', $viewFileData); ?>
                     </div>
                 </div>
             </div>
@@ -87,7 +87,7 @@ $department                         = $pageURIB;
                 <div class="row">
                     <!-- SEO Tasks -->
                     <div class="col-12">
-                        <?php //echo view('ManagementModule/Views/Marketing\SEO\Listing-Table', $viewFileData); ?>
+                        <?php //echo view('Marketing/SEO/Listing-Table', $viewFileData); ?>
                     </div>
                 </div>
             </div>
@@ -95,7 +95,7 @@ $department                         = $pageURIB;
                 <div class="row">
                     <!-- News and Updates -->
                     <div class="col-12">
-                        <?php //echo view('ManagementModule/Views/Marketing\News\Listing-Table', $viewFileData); ?>
+                        <?php //echo view('Marketing/News/Listing-Table', $viewFileData); ?>
                     </div>
                 </div>
             </div>

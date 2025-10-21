@@ -1,4 +1,4 @@
-<?php echo view('App/Views/errors\html\under_construction'); ?>
+<?php echo view('App/Views/errors/html/under_construction'); ?>
 <?php
 $predefinedAnalytics = [];
 ?>

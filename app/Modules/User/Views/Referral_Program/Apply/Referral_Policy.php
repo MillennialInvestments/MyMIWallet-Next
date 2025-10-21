@@ -34,4 +34,4 @@ if ($percent_change > 0) {
         <p><strong>Have questions?</strong> If you ever need anything else or have questions, feel free to reach out to the team at <a href="mailto:affiliates@mymiwallet.com">affiliates@mymiwallet.com</a>.</p>
     </div>
 </div>
-<?php echo view('UserModule/Referral_Program/Apply\Referral_Policy_Additional'); ?>
+<?php echo view('UserModule/Referral_Program/Apply/Referral_Policy_Additional'); ?>

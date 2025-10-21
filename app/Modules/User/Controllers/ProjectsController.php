@@ -36,7 +36,7 @@ class ProjectsController extends BaseController
             'projects' => $payload['list'] ?? [],
             'summary'  => $payload,
         ];
-        return view('App//Modules\\User\\Views\\Projects\\index', $data);
+        return view('App/Modules/User/Views/Projects/index', $data);
     }
 
     public function view(string $slug)
@@ -57,7 +57,7 @@ class ProjectsController extends BaseController
             'progress'  => $progress,
         ];
         helper('form');
-        return view('App//Modules\\User\\Views\\Projects\\view', $data);
+        return view('App/Modules/User/Views/Projects/view', $data);
     }
 
     public function commit(int $projectId)

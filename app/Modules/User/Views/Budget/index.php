@@ -340,10 +340,10 @@ if (!function_exists('miw_is_outflow')) {
     <div class="nk-block d-none d-sm-block">
         <div class="row">
             <div class="d-none d-md-block col-md-12 col-xl-3 my-sm-3">
-                <?= view('Budget\index\control_center', $allViewData); ?>
+                <?= view('Budget/index/control_center', $allViewData); ?>
             </div>
             <div class="d-none d-sm-block col-md-12 col-xl-9 my-sm-3">
-                <?= view('Budget\index\overview_chart', $allViewData); ?>
+                <?= view('Budget/index/overview_chart', $allViewData); ?>
             </div>
         </div>
     </div>
@@ -356,11 +356,11 @@ if (!function_exists('miw_is_outflow')) {
             <div class="col-sm-12 col-md-12 my-sm-3">
                 <?php
                 if (!empty($userAgent) && method_exists($userAgent, 'isMobile') && $userAgent->isMobile()) {
-                    echo view('UserModule/Budget/index\mobile_table', $allViewData);
+                    echo view('UserModule/Budget/index/mobile_table', $allViewData);
                 } elseif (!empty($userAgent) && method_exists($userAgent, 'isBrowser') && $userAgent->isBrowser()) {
-                    echo view('UserModule/Budget/index\browser_table', $allViewData);
+                    echo view('UserModule/Budget/index/browser_table', $allViewData);
                 } else {
-                    echo view('UserModule/Budget/index\browser_table', $allViewData);
+                    echo view('UserModule/Budget/index/browser_table', $allViewData);
                 }
                 ?>
             </div>

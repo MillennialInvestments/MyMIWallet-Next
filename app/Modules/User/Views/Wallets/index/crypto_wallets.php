@@ -14,7 +14,7 @@
         'walletFunds'								=> $walletFunds,
         'walletCoins'                               => $walletCoins,
     );
-    echo view('Wallets\index\crypto_wallets\MyMIGold', $MyMIWalletData);
+    echo view('Wallets/index/crypto_wallets/MyMIGold', $MyMIWalletData);
     if (!empty($getUserCryptoAccounts)) {
         foreach ($getrCryptoWallets as $walletInfo) {
             $wallet_default							= $walletInfo['default_wallet'];
@@ -71,7 +71,7 @@
                     'walletTotalAmount'				=> $walletTotalAmount,
                     'perWalletGains'                => $perWalletGains,
                 );
-                echo view('UserModule/Wallets/index\crypto_wallets\Wallet_Listing', $walletData);
+                echo view('UserModule/Wallets/index/crypto_wallets/Wallet_Listing', $walletData);
             }
         }
     }
@@ -85,6 +85,6 @@
         'elementTitle'					            => $elementTitle,
         'elementText'					            => $elementText,
     );
-    echo view('Wallets\index\Purchase_Wallet', $purchaseWalletData);
+    echo view('Wallets/index/Purchase_Wallet', $purchaseWalletData);
 ?>
 </div>

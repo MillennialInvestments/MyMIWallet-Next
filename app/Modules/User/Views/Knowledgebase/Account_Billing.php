@@ -66,9 +66,9 @@ $subViewData = [
                     </div>
                 </div>
 
-                <?php echo view('Knowledgebase\includes\Partnerships\subheader', $subViewData); ?>
-                <?php echo view('Knowledgebase\includes\Partnerships\full_content', $subViewData); ?>
-                <?php echo view('Knowledgebase\includes\Partnerships\more_details', $subViewData); ?>
+                <?php echo view('Knowledgebase/includes/Partnerships/subheader', $subViewData); ?>
+                <?php echo view('Knowledgebase/includes/Partnerships/full_content', $subViewData); ?>
+                <?php echo view('Knowledgebase/includes/Partnerships/more_details', $subViewData); ?>
 
                 <div class="row py-4" id="kyc-verification">
                     <div class="col-xl-12">
@@ -81,8 +81,8 @@ $subViewData = [
                     </div>
                 </div>
 
-                <?php echo view('Knowledgebase\includes\KYC_Verification\getting_started', $subViewData); ?>
-                <?php echo view('Knowledgebase\includes\KYC_Verification\more_details', $subViewData); ?>
+                <?php echo view('Knowledgebase/includes/KYC_Verification/getting_started', $subViewData); ?>
+                <?php echo view('Knowledgebase/includes/KYC_Verification/more_details', $subViewData); ?>
 
                 <div class="row py-4" id="billing-and-payment">
                     <div class="col-xl-12">
@@ -106,8 +106,8 @@ $subViewData = [
                     </div>
                 </div>
 
-                <?php echo view('Knowledgebase\includes\Referral_Program\getting_started', $subViewData); ?>
-                <?php echo view('Knowledgebase\includes\Referral_Program\more_details', $subViewData); ?>
+                <?php echo view('Knowledgebase/includes/Referral_Program/getting_started', $subViewData); ?>
+                <?php echo view('Knowledgebase/includes/Referral_Program/more_details', $subViewData); ?>
 
 
                 <!-- <div class="row py-4" id="introduction-to-mymi-gold">
@@ -185,8 +185,8 @@ $subViewData = [
                         </div>
                     </div>
                 </div>
-                <?php //echo view('Knowledgebase\includes\Customer_Support\header', $subViewData); ?>
-                <?php //echo view('Knowledgebase\includes\Customer_Support\contact_support', $subViewData); ?>
+                <?php //echo view('Knowledgebase/includes/Customer_Support/header', $subViewData); ?>
+                <?php //echo view('Knowledgebase/includes/Customer_Support/contact_support', $subViewData); ?>
             </div>
         </div>
     </div>

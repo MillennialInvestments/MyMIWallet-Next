@@ -40,7 +40,7 @@ $viewFileData = [
                                 </div> -->
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                        <?php echo view('Budget\index\active_table', $viewFileData); ?>
+                                        <?php echo view('Budget/index/active_table', $viewFileData); ?>
                                     </div>
                                 </div>
                             </div>

@@ -100,7 +100,7 @@ $fieldData = array(
             <fieldset>
                 <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
 
-                <?php echo view('Budget\Add\user_fields', $fieldData); ?>
+                <?php echo view('Budget/Add/user_fields', $fieldData); ?>
             </fieldset>
             <fieldset>
                 <div class="pricing-action mt-0">
@@ -207,7 +207,7 @@ $fieldData = array(
                         <div class="pricing-body">                                
                             <form class="form-horizontal" id="add_user_budgeting_account">
                                 <fieldset>
-                                    <?php echo view('Budget\Add\user_fields', $fieldData); ?>
+                                    <?php echo view('Budget/Add/user_fields', $fieldData); ?>
                                 </fieldset>
                                 <fieldset>
                                     <?php
@@ -216,7 +216,7 @@ $fieldData = array(
                                     // Events::trigger('render_user_form');
                                     ?>
                                     <!-- Start of User Meta -->
-                                    <?php //$this->load->view('users/user_meta', array('frontend_only' => true));?>
+                                    <?php //$this->load->view('users/user_meta', array('frontend_only' => true);?>
                                     <!-- End of User Meta -->
                                 </fieldset>
                                 <fieldset>

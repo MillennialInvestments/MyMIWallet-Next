@@ -94,12 +94,12 @@ $subViewData                        = [
     <div class="row">
         <!-- Action Center Card -->
         <div class="col-lg-4">
-            <?= view('ManagementModule/Views/Alerts\resources\action-center', $subViewData) ?>
+            <?= view('Alerts/resources/action-center', $subViewData) ?>
         </div><!-- .col -->
 
         <!-- Alert Analytics Card -->
         <div class="col-lg-8">
-            <?= view('ManagementModule/Views/Alerts\resources\market-data', $subViewData) ?>
+            <?= view('Alerts/resources/market-data', $subViewData) ?>
         </div>
     </div><!-- .row -->
 </div><!-- .nk-block -->

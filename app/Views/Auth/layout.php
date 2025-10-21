@@ -35,11 +35,11 @@ $subViewData = [
 ?>
 <!doctype html>
 <html lang="en">
-<?= view('App\Views\themes\public\layouts\header_min', $subViewData) ?>
+<?= view('App/Views/themes/public/layouts/header_min', $subViewData) ?>
 
 <body class="login">
 
-<?= view('App/Views/themes\public\layouts\_sitenav', $subViewData) ?>
+<?= view('App/Views/themes/public/layouts/_sitenav', $subViewData) ?>
 
 <main role="main" class="container" id="main-container">
     <?= $this->renderSection('main') ?>
@@ -55,7 +55,7 @@ $subViewData = [
 <!-- Optional page init without inline: put any previous inline jQuery/DOM code here -->
 <script src="<?= base_url('assets/js/login-init.js'); ?>" <?= $nonce['script'] ?? '' ?> defer></script>
 
-<?= view('App/Views/themes\public\layouts\footer', $subViewData) ?>
+<?= view('App/Views/themes/public/layouts/footer', $subViewData) ?>
 <?= $this->renderSection('pageScripts') ?>
 </body>
 </html>

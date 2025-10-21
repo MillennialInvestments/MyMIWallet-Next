@@ -70,7 +70,7 @@ if ($pageAccountType === 'Banking') {
         'budgetRelatedRecords' => $budgetRelatedRecords,
     ];
     // log_message('info', 'Budget\Details L70 - $accountInformation: ' . print_r($accountInformation, true));
-    echo view('Budget\Details\accounts', $accountInformation); 
+    echo view('Budget/Details/accounts', $accountInformation); 
 }
     // } elseif ($pageAccountType === 'Wallets') {
     
@@ -182,7 +182,7 @@ if ($pageAccountType === 'Banking') {
 //         'transferBalance'           => $transferBalance,
 //         'getUserWalletTrades'       => $getUserWalletTrades,
 //     );
-//     $this->load->""view('Budget\Details\accounts', $accountInformation); 
+//     $this->load->""view('Budget/Details/accounts', $accountInformation); 
 // }
 // echo view('UserModule/Budget/Details/accounts', $accountInformation)
 ?>

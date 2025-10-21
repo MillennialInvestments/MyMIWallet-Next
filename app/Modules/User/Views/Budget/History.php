@@ -193,7 +193,7 @@ $allViewData                        = array(
                                 </div> -->
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">';
-                                         echo view('Budget\index\historical_table', $allViewData);
+                                         echo view('Budget/index/historical_table', $allViewData);
                                         echo '
                                     </div>
                                     <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">';

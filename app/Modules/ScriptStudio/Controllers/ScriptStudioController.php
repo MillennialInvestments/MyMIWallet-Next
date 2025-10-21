@@ -46,7 +46,7 @@ class ScriptStudioController extends BaseController
     {
         $scripts = $this->scriptModel->orderBy('created_at', 'desc')->findAll();
 
-        return view('App//Modules\\ScriptStudio\\Views\\index', [
+        return view('App/Modules/ScriptStudio/Views/index', [
             'scripts'           => $scripts,
             'platformOptions'   => $this->platformOptions,
             'languageOptions'   => $this->languageOptions,
@@ -61,14 +61,14 @@ class ScriptStudioController extends BaseController
             ->orderBy('created_at', 'desc')
             ->findAll();
 
-        return view('App//Modules\\ScriptStudio\\Views\\marketplace', [
+        return view('App/Modules/ScriptStudio/Views/marketplace', [
             'scripts' => $scripts,
         ]);
     }
 
     public function create(): string
     {
-        return view('App//Modules\\ScriptStudio\\Views\\create_edit', [
+        return view('App/Modules/ScriptStudio/Views/create_edit', [
             'platformOptions'  => $this->platformOptions,
             'languageOptions'  => $this->languageOptions,
             'logicTypeOptions' => $this->logicTypeOptions,
@@ -97,7 +97,7 @@ class ScriptStudioController extends BaseController
             throw PageNotFoundException::forPageNotFound('Script not found');
         }
 
-        return view('App//Modules\\ScriptStudio\\Views\\create_edit', [
+        return view('App/Modules/ScriptStudio/Views/create_edit', [
             'script'           => $this->prepareScriptForForm($script),
             'platformOptions'  => $this->platformOptions,
             'languageOptions'  => $this->languageOptions,
@@ -131,7 +131,7 @@ class ScriptStudioController extends BaseController
             throw PageNotFoundException::forPageNotFound('Script not found');
         }
 
-        return view('App//Modules\\ScriptStudio\\Views\\preview_emulator', [
+        return view('App/Modules/ScriptStudio/Views/preview_emulator', [
             'script'              => $script,
             'pineScriptExport'    => $this->scriptEngine->convertToPineScript($script['code_raw'] ?? ''),
             'thinkScriptExport'   => $this->scriptEngine->convertToThinkScript($script['code_raw'] ?? ''),

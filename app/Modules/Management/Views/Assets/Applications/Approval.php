@@ -133,7 +133,7 @@ $userData                                       = array(
                     echo '
                     <div class="col-sm-6 col-lg-4 col-xxl-2">
                     ';
-                    echo view('ManagementModule/Views/Assets\Applications\Details\Approval_Tasks', $userData); 
+                    echo view('Assets/Applications/Details/Approval_Tasks', $userData); 
                     echo '
                     </div><!-- .col -->
                     <div class="col-sm-6 col-lg-8 col-xxl-10">
@@ -146,15 +146,15 @@ $userData                                       = array(
                                                 <h5>Asset Information</h5>
                                             </div>
                                             <div class="col-4">';
-                                            echo view('ManagementModule/Views/Assets\Applications\Details\Contact_Information', $userData);
+                                            echo view('Assets/Applications/Details/Contact_Information', $userData);
                                             echo '
                                             </div><!-- .col -->
                                             <div class="col-4">';
-                                            echo view('ManagementModule/Views/Assets\Applications\Details\Investor_Information', $userData);
+                                            echo view('Assets/Applications/Details/Investor_Information', $userData);
                                             echo '
                                             </div><!-- .col -->
                                             <div class="col-4">';
-                                            echo view('ManagementModule/Views/Assets\Applications\Details\Referral_Information', $userData);
+                                            echo view('Assets/Applications/Details/Referral_Information', $userData);
                                             echo '
                                             </div><!-- .col -->
                                         </div>
@@ -181,47 +181,47 @@ $userData                                       = array(
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="tabItem2">';
-                                        echo view('ManagementModule/Views/Assets\Applications\Approval\Market_Conversion', $userData);
+                                        echo view('Assets/Applications/Approval/Market_Conversion', $userData);
                                     echo '
                                     </div>
                                     <div class="tab-pane" id="tabItem3">';
-                                        // echo view('ManagementModule/Views/Assets\Applications\Details\Contact_Information', $userData);
+                                        // echo view('Assets/Applications/Details/Contact_Information', $userData);
                                     echo '
                                     </div>
                                     <div class="tab-pane" id="tabItem4">';
-                                        // echo view('ManagementModule/Views/Assets\Applications\Details\Contact_Information', $userData);
+                                        // echo view('Assets/Applications/Details/Contact_Information', $userData);
                                     echo '
                                     </div>
                                     <div class="tab-pane" id="tabItem5">';
-                                        // echo view('ManagementModule/Views/Assets\Applications\Details\Contact_Information', $userData);
+                                        // echo view('Assets/Applications/Details/Contact_Information', $userData);
                                     echo '
                                     </div>
                                     <div class="tab-pane" id="tabItem6">';
-                                        // echo view('ManagementModule/Views/Assets\Applications\Details\Contact_Information', $userData);
+                                        // echo view('Assets/Applications/Details/Contact_Information', $userData);
                                     echo '
                                     </div>
                                     <div class="tab-pane" id="tabItem7">';
-                                        // echo view('ManagementModule/Views/Assets\Applications\Details\Contact_Information', $userData);
+                                        // echo view('Assets/Applications/Details/Contact_Information', $userData);
                                     echo '
                                     </div>
                                     <div class="tab-pane" id="tabItem8">';
-                                        // echo view('ManagementModule/Views/Assets\Applications\Details\Contact_Information', $userData);
+                                        // echo view('Assets/Applications/Details/Contact_Information', $userData);
                                     echo '
                                     </div>
                                     <div class="tab-pane" id="tabItem9">';
-                                        // echo view('ManagementModule/Views/Assets\Applications\Details\Contact_Information', $userData);
+                                        // echo view('Assets/Applications/Details/Contact_Information', $userData);
                                     echo '
                                     </div>
                                     <div class="tab-pane" id="tabItem10">';
-                                        // echo view('ManagementModule/Views/Assets\Applications\Details\Contact_Information', $userData);
+                                        // echo view('Assets/Applications/Details/Contact_Information', $userData);
                                     echo '
                                     </div>
                                     <div class="tab-pane" id="tabItem11">';
-                                        // echo view('ManagementModule/Views/Assets\Applications\Details\Contact_Information', $userData);
+                                        // echo view('Assets/Applications/Details/Contact_Information', $userData);
                                     echo '
                                     </div>
                                     <div class="tab-pane" id="tabItem12">';
-                                        // echo view('ManagementModule/Views/Assets\Applications\Details\Contact_Information', $userData);
+                                        // echo view('Assets/Applications/Details/Contact_Information', $userData);
                                     echo '
                                     </div>
                                 </div>

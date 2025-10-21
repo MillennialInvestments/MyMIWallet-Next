@@ -193,7 +193,7 @@ $viewFileData                       = array(
                                     </div>
                                 </div>
                                 <div class="card-inner">
-                                    <?php echo view('ManagementModule/Views/Wallets\Listing-Table', $viewFileData); ?>
+                                    <?php echo view('Wallets/Listing-Table', $viewFileData); ?>
                                 </div><!-- .card-inner -->
                             </div><!-- .card-inner-group -->
                         </div><!-- .card -->

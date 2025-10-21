@@ -67,7 +67,7 @@ $totalApprovedAssets   = $reporting['totalApprovedAssets'];
                             <div class="card rounded p-3">
                                 <div class="card-body">
                                     <?php 
-                                        echo view('App/Views/Auth\register_form');
+                                        echo view('App/Views/Auth/register_form');
                                     ?>
                                 </div>
                             </div>

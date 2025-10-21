@@ -514,7 +514,7 @@ class DashboardController extends UserController
 
                     if (!$row) {
                         // return a small error view to the modal and stop
-                        return $this->renderTheme('UserModule\Views\Errors\CannotLoadPage', [
+                        return $this->renderTheme('Errors/CannotLoadPage', [
                             'message' => 'We couldn’t find that account. Please refresh and try again.',
                         ]);
                     }

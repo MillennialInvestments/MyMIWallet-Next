@@ -1,7 +1,7 @@
 <?php
 $subViewData                            = [];
-// echo view('Dashboard\Investor_Profile\Security\Reset_Password');
-echo view('ManagementModule/Views/Marketing\index\modals');
+// echo view('Dashboard/Investor_Profile/Security/Reset_Password');
+echo view('Marketing/index/modals');
 ?>
 <!-- Modal Structure -->
 <div class="modal fade" id="connectWalletModal" aria-hidden="true" aria-labelledby="connectWalletModalLabel" tabindex="-1">

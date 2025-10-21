@@ -70,7 +70,7 @@
 					</div> 
 					<div class="row justify-content-center">
 						<div class="col-12 col-md-8">
-							<?php echo view('UserModule/Wallets/Deposit_Funds\paypal_checkout', $data); ?>
+							<?php echo view('UserModule/Wallets/Deposit_Funds/paypal_checkout', $data); ?>
 						</div>
 					</div>   
 				</div>

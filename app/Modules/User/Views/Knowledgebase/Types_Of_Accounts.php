@@ -126,7 +126,7 @@
                         </div>
                     </div>
                 </div>
-                <?php echo view('UserModule/Knowledgebase/includes\Investor_Account\resources_and_tools'); ?>
+                <?php echo view('UserModule/Knowledgebase/includes/Investor_Account/resources_and_tools'); ?>
                 <div class="row" id="partnerships"></div>
                 <div class="row g-gs">
                     <div class="col-xl-12">
@@ -283,7 +283,7 @@
                         </div>
                     </div>
                 </div>
-                <?php echo view('UserModule/Knowledgebase/includes\Referral_Program\getting_started'); ?>
+                <?php echo view('UserModule/Knowledgebase/includes/Referral_Program/getting_started'); ?>
                 <div class="row" id="monthly-distributions"></div>
                 <div class="row g-gs">
                     <div class="col-xl-12">

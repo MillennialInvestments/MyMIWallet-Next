@@ -386,20 +386,20 @@ $allViewData                        = array(
         <!-- Portfolio Manager Section -->
         <div class="col-md-12 col-xl-3">
             <!-- Portfolio Manager Content -->
-            <?php echo view('Investments\index\Action_Center', $allViewData); ?>
+            <?php echo view('Investments/index/Action_Center', $allViewData); ?>
         </div>
 
         <!-- Investment Overview Section -->
         <div class="col-md-12 col-xl-9">
             <!-- Month-to-Month Overview -->
-            <?php echo view('Investments\index\Month_to_Month', $allViewData); ?>
+            <?php echo view('Investments/index/Month_to_Month', $allViewData); ?>
         </div>
 
         <!-- Investment Overview Section -->
         <div class="col-md-12 col-xl-3">
             <!-- Economic Data Section -->
             <div class="economic-data">
-                <?php echo view('Investments\index\Economic_Data', $allViewData); ?>
+                <?php echo view('Investments/index/Economic_Data', $allViewData); ?>
             </div>
 
             <!-- Additional sections as needed -->
@@ -408,7 +408,7 @@ $allViewData                        = array(
         <div class="col-md-12 col-xl-9">
             <!-- Insights Section -->
             <div class="investment-insights">
-                <?php echo view('Investments\index\Insights', $allViewData); ?>
+                <?php echo view('Investments/index/Insights', $allViewData); ?>
             </div>
         </div>
     </div>

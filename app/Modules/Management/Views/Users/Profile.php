@@ -94,12 +94,12 @@ $subViewData = [
     <div class="row g-gs">
         <!-- Investor Strength Score -->
         <!-- <div class="col-12 col-md-4">
-            <?php //echo view('Dashboard\Profile\investor_strength_score', $subViewData); ?>
+            <?php //echo view('Dashboard/Profile/investor_strength_score', $subViewData); ?>
         </div> -->
         <!-- Project Participation -->
         <div class="col-12 col-md-12">            
             <div class="card card-bordered">
-                <?php echo view('Dashboard\Profile\user_mymi_projects', $subViewData); ?>
+                <?php echo view('Dashboard/Profile/user_mymi_projects', $subViewData); ?>
             </div>
         </div>
     </div>

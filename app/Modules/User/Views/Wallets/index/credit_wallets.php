@@ -37,7 +37,7 @@
                 'accountBalance'        => $accountBalance,
             ];
 
-            echo view('Wallets\index\credit_wallets\Wallet_Listing', $walletData);
+            echo view('Wallets/index/credit_wallets/Wallet_Listing', $walletData);
         }
     }
 
@@ -54,6 +54,6 @@
         'elementText'       => $elementText,
     ];
 
-    echo view('Wallets\index\Purchase_Wallet', $purchaseWalletData);
+    echo view('Wallets/index/Purchase_Wallet', $purchaseWalletData);
 ?>
 </div>

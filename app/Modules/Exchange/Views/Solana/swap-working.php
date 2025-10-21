@@ -29,7 +29,7 @@ $subViewData = [
         <div class="card">
             <div class="card-inner pl-0">
                 <div class="row g-gs">
-                    <?php log_message('debug', 'Exchanges\Views\Solana\swap L32 - $current_url: ' . (print_r($current_url, true); ?>
+                    <?php log_message('debug', 'Exchange/Solana/swap L32 - $current_url: ' . print_r($current_url, true)); ?>
                     <?php if ($current_url === 'Exchange/Solana/Swap') : ?>
                     <div class="col-12 col-md-4 mt-0">
                         <div class="card is-dark card-bordered card-full">
@@ -114,7 +114,7 @@ $subViewData = [
                                                 <div class="form-control-wrap">
                                                     <select class="form-control selectpicker" data-live-search="true" id="to_token" name="to_token" required>
                                                         <?php if (!empty($uri->getSegment(5))) : ?>
-                                                            <?php log_message('debug', 'Exchange\Views\Solana\swap L101 - $selectedToken' . (print_r($selectedToken, true); ?>
+                                                            <?php log_message('debug', 'Exchange/Solana/swap L101 - $selectedToken: ' . print_r($selectedToken, true)); ?>
                                                             <?php foreach ($selectedToken as $token): ?>
                                                                 <option value="<?= esc($token['coin_address']) ?>" data-address="<?= esc($token['coin_address']) ?>" data-symbol="<?= esc($token['symbol']) ?>" selected>
                                                                     <?= esc($token['symbol']) ?> - <?= esc($token['coin_name']) ?>
@@ -122,7 +122,7 @@ $subViewData = [
                                                             <?php endforeach; ?>
                                                         <?php endif; ?>
                                                         <option value="" <?= empty($uri->getSegment(5)) ? 'selected' : ''; ?>>Select a token to swap to</option>
-                                                        <?php log_message('debug', 'Exchange\Views\Solana\swap L101 - $cryptoTokens' . (print_r($cryptoTokens, true); ?>
+                                                        <?php log_message('debug', 'Exchange/Solana/swap L101 - $cryptoTokens: ' . print_r($cryptoTokens, true)); ?>
                                                         <?php foreach ($cryptoTokens as $token): ?>
                                                             <option value="<?= esc($token['coin_address']) ?>" data-address="<?= esc($token['coin_address']) ?>" data-symbol="<?= esc($token['symbol']) ?>" <?= (!empty($uri->getSegment(5)) && $uri->getSegment(5) == $token['coin_address']) ? 'selected' : ''; ?>>
                                                                 <?= esc($token['symbol']) ?> - <?= esc($token['coin_name']) ?>
@@ -221,7 +221,7 @@ $subViewData = [
                     </div>
                     <?php if ($current_url === 'Exchange/Solana/Swap') : ?>
                     <div class="col-12 col-md-8 mt-0">
-                        <?php echo view('ExchangeModule/Views/Solana\index\Top-Performing-Tokens' ,)) $subViewData); ?>
+                        <?php echo view('Solana/index/Top-Performing-Tokens', $subViewData); ?>
                     </div>
                     <?php endif; ?>
                 </div>

@@ -108,7 +108,7 @@ $detailData                 = array(
                     <div class="nk-block nk-block-lg">
                         <div class="card card-bordered pricing">
                             <div class="pricing-body">
-                                <?php echo view('UserModule/Knowledgebase/Tutorials\Categories\MyMIGold\Purchase_Complete', $detailData); ?>
+                                <?php echo view('UserModule/Knowledgebase/Tutorials/Categories/MyMIGold/Purchase_Complete', $detailData); ?>
                             </div>
                         </div>
                     </div>
@@ -120,7 +120,7 @@ $detailData                 = array(
 <div class="modal fade" id="nextActionModal" tabindex="-1" aria-labelledby="trackDepositsModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content" id="loading-content">
-            <?php echo view('UserModule/Dashboard/index\modal-loading-page'); ?>
+            <?php echo view('UserModule/Dashboard/index/modal-loading-page'); ?>
         </div>
         <div class="modal-content" id="nextActionContainer">
         </div>

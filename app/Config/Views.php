@@ -13,12 +13,18 @@ class Views extends BaseConfig
      */
     public array $paths = [
         APPPATH . 'Views',
-        APPPATH . 'Modules/User/Views',
+        APPPATH . 'Modules/APIs/Views',
+        APPPATH . 'Modules/Advertise/Views',
+        APPPATH . 'Modules/Blog/Views',
+        APPPATH . 'Modules/Docs/Views',
+        APPPATH . 'Modules/Exchange/Views',
         APPPATH . 'Modules/Management/Views',
+        APPPATH . 'Modules/Marketing_New/Views',
+        APPPATH . 'Modules/ScriptStudio/Views',
+        APPPATH . 'Modules/Search/Views',
         APPPATH . 'Modules/Support/Views',
-        // Add more modules here as you need them:
-        // APPPATH . 'Modules/Exchange/Views',
-        // APPPATH . 'Modules/Blog/Views',
+        APPPATH . 'Modules/Template/Views',
+        APPPATH . 'Modules/User/Views',
     ];
 
     /** The default renderer: leave as 'CodeIgniter\View\View' */

@@ -41,7 +41,7 @@ $fieldData = array(
                 <div class="col-12">
                     <form class="form-horizontal" id="customer_support_request">
                         <fieldset>
-                            <?php echo view('Support\Request\user_fields', $fieldData); ?>
+                            <?php echo view('Support/Request/user_fields', $fieldData); ?>
                         </fieldset>
                     <?php echo form_close(); ?>	
                     <?php if (validation_errors()) : ?>

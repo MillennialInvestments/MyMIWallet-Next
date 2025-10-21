@@ -208,13 +208,13 @@ $start_date = date('Y-m-d', strtotime('-5 years -1 day', strtotime($end_date)));
 ?>
 <?php 
 if ($uri->getSegment(2) === 'Debt') {
-    echo view('App/Views/errors\html\under_construction'); 
+    echo view('App/Views/errors/html/under_construction'); 
 }
 ?>
 <div class="nk-block">
     <div class="gy-gs row">
         <div class="col-md-12 my-0">
-            <?= view('Wallets\index\header', $walletData); ?>
+            <?= view('Wallets/index/header', $walletData); ?>
         </div>
         <?php if (!empty($viewFileNameA)): ?>
             <div class="col-md-12 mt-0 mb-3">

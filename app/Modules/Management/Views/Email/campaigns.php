@@ -14,7 +14,7 @@ $subViewData = [
         </div>
     </div>
 
-    <?php echo view('ManagementModule/Views/Email\resources\controlPanelBlock', $subViewData); ?>
+    <?php echo view('Email/resources/controlPanelBlock', $subViewData); ?>
     <div class="row mb-4">
         <div class="col-md-12">
             <div class="card card-bordered">

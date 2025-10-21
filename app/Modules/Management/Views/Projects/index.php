@@ -28,14 +28,14 @@ $subViewData = [
 
         <!-- Management Action Center -->
         <div class="col-md-12 col-xl-3">
-            <?php echo view('ManagementModule/Views/Projects\index\action_center', $subViewData); ?>
+            <?php echo view('Projects/index/action_center', $subViewData); ?>
         </div>
 
         <!-- Active Projects Section -->
         <div class="col-md-12 col-xl-9">
             <div class="card card-bordered h-100">
                 <div class="card-inner">
-                    <?php echo view('ManagementModule/Views/Projects\index\project_list', $subViewData); ?>
+                    <?php echo view('Projects/index/project_list', $subViewData); ?>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@ $subViewData = [
         <div class="col-md-12 col-xl-12">
             <div class="card card-bordered h-100">
                 <div class="card-inner">
-                    <?php echo view('ManagementModule/Views/Projects\index\pending_projects', $subViewData); ?>
+                    <?php echo view('Projects/index/pending_projects', $subViewData); ?>
                 </div>
             </div>
         </div>
@@ -53,7 +53,7 @@ $subViewData = [
         <!-- <div class="col-md-12 col-xl-4">
             <div class="card card-bordered h-100">
                 <div class="card-inner">
-                    <?php //echo view('Projects\index\revenue_distribution', $subViewData); ?>
+                    <?php //echo view('Projects/index/revenue_distribution', $subViewData); ?>
                 </div>
             </div>
         </div> -->
@@ -62,7 +62,7 @@ $subViewData = [
         <!-- <div class="col-md-12 col-xl-8">
             <div class="card card-bordered h-100">
                 <div class="card-inner">
-                    <?php //echo view('Projects\index\commitment_overview', $subViewData); ?>
+                    <?php //echo view('Projects/index/commitment_overview', $subViewData); ?>
                 </div>
             </div>
         </div> -->

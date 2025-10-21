@@ -13,7 +13,7 @@ $client_id  = $cuUserType === 'Beta' ? 'AeFttKQS_djpAmMEFvPSinKaluT_XqJ_zE00kD8Q
 <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="trackDepositsModal" aria-hidden="true">
     <div class="modal-dialog modal-xl" id="transModalDialog">
         <div class="modal-content" id="loading-content">
-            <?php echo view('Dashboard\index\modal-loading-page'); ?>
+            <?php echo view('Dashboard/index/modal-loading-page'); ?>
         </div>
         <div class="modal-content" id="transactionContainer">
         </div>

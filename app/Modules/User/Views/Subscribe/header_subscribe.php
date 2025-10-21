@@ -31,7 +31,7 @@ echo form_open('#', array('class' => 'form-horizontal', 'id' => 'email_subscribe
 ?>   
 <fieldset>
     <?php
-    echo view('Subscribe\form_fields', $fieldData);
+    echo view('Subscribe/form_fields', $fieldData);
     ?>
 </fieldset>
 <fieldset>

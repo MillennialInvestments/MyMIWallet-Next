@@ -51,16 +51,16 @@ $fieldData = array(
     if (!empty($uri->getSegment(4))) {
         if ($uri->getSegment(4) === 'Starter') {     
             $fieldData['membership_fee'] = $siteSettings->memberStarterFee;       
-            echo view('Wallets\Purchase\Memberships\Starter', $fieldData);
+            echo view('Wallets/Purchase/Memberships/Starter', $fieldData);
         } elseif ($uri->getSegment(4) === 'Basic') {
             $fieldData['membership_fee'] = $siteSettings->memberBasicFee;       
-            echo view('Wallets\Purchase\Memberships\Basic', $fieldData);
+            echo view('Wallets/Purchase/Memberships/Basic', $fieldData);
         } elseif ($uri->getSegment(4) === 'Pro') {
             $fieldData['membership_fee'] = $siteSettings->memberProFee;       
-            echo view('Wallets\Purchase\Memberships\Pro', $fieldData);
+            echo view('Wallets/Purchase/Memberships/Pro', $fieldData);
         } elseif ($uri->getSegment(4) === 'Premium') {
             $fieldData['membership_fee'] = $siteSettings->memberPremiumFee;       
-            echo view('Wallets\Purchase\Memberships\Premium', $fieldData);
+            echo view('Wallets/Purchase/Memberships/Premium', $fieldData);
         } elseif ($uri->getSegment(4) === 'NEWYEARS') {
             $fieldData['membershipStarterFee'] = $siteSettings->memberStarterFee;  
             $fieldData['membershipBasicFee'] = $siteSettings->memberBasicFee;  
@@ -70,14 +70,14 @@ $fieldData = array(
             $fieldData['membershipBasicFeePromo'] = $siteSettings->memberBasicFee - 20;  
             $fieldData['membershipProFeePromo'] = $siteSettings->memberProFee - 35;  
             $fieldData['membershipPremiumFeePromo'] = $siteSettings->memberPremiumFee - 70;  
-            echo view('Wallets\Purchase\Memberships\Promotions', $fieldData);
+            echo view('Wallets/Purchase/Memberships/Promotions', $fieldData);
         }
     } else {
         $fieldData['membershipStarterFee'] = $siteSettings->memberStarterFee;  
         $fieldData['membershipBasicFee'] = $siteSettings->memberBasicFee;  
         $fieldData['membershipProFee'] = $siteSettings->memberProFee;  
         $fieldData['membershipPremiumFee'] = $siteSettings->memberPremiumFee;  
-        echo view('Wallets\Purchase\Memberships', $fieldData);
+        echo view('Wallets/Purchase/Memberships', $fieldData);
     }
     ?>
 <?php else : ?>
@@ -103,12 +103,12 @@ $fieldData = array(
         <?php endif; ?>
         <fieldset>
             <?php
-            echo view('Wallets\Purchase\paypal_fields', $fieldData);
+            echo view('Wallets/Purchase/paypal_fields', $fieldData);
             ?>
         </fieldset>
         <fieldset>
             <!-- Start of User Meta -->
-            <?php //$this->load->view('users/user_meta', array('frontend_only' => true));?>
+            <?php //$this->load->view('users/user_meta', array('frontend_only' => true);?>
             <!-- End of User Meta -->
         </fieldset>
     <?php echo form_close(); ?>	

@@ -123,7 +123,7 @@ function fmt_int($v)   { return number_format((float)$v, 0); }
             <h6 class="title mb-0">Holdings Analytics</h6>
             <div class="text-muted small">Value • Cost • Distributions</div>
           </div>
-          <?php echo view('Projects\holdings\analytics_chart', $subViewData); ?>
+          <?php echo view('Projects/holdings/analytics_chart', $subViewData); ?>
         </div>
       </div>
 
@@ -194,7 +194,7 @@ function fmt_int($v)   { return number_format((float)$v, 0); }
               <div class="card card-bordered h-100">
                 <div class="card-inner">
                   <div class="mini-title mb-1">Recent Commitments</div>
-                  <?php echo view('Projects\holdings\list_commitments', $subViewData); ?>
+                  <?php echo view('Projects/holdings/list_commitments', $subViewData); ?>
                 </div>
               </div>
             </div>
@@ -202,7 +202,7 @@ function fmt_int($v)   { return number_format((float)$v, 0); }
               <div class="card card-bordered h-100">
                 <div class="card-inner">
                   <div class="mini-title mb-1">Recent Investments</div>
-                  <?php echo view('Projects\holdings\list_investments', $subViewData); ?>
+                  <?php echo view('Projects/holdings/list_investments', $subViewData); ?>
                 </div>
               </div>
             </div>
@@ -210,7 +210,7 @@ function fmt_int($v)   { return number_format((float)$v, 0); }
               <div class="card card-bordered h-100">
                 <div class="card-inner">
                   <div class="mini-title mb-1">Recent Distributions</div>
-                  <?php echo view('Projects\holdings\list_distributions', $subViewData); ?>
+                  <?php echo view('Projects/holdings/list_distributions', $subViewData); ?>
                 </div>
               </div>
             </div>

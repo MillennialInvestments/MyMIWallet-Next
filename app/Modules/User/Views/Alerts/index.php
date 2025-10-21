@@ -34,7 +34,7 @@ $isMobile = $userAgent->isMobile(); // Detect if the user is on mobile
 
             <div class="nk-block">
                 <div class="row">
-                    <!-- <div class="col-lg-4"><?php //echo view('Alerts\resources\control_center'); ?></div> -->
+                    <!-- <div class="col-lg-4"><?php //echo view('Alerts/resources/control_center'); ?></div> -->
                     <!-- <div class="col-lg-8"> -->
                     <div class="col-lg-12">
                         

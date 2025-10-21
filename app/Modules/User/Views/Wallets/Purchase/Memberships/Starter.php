@@ -20,7 +20,7 @@ $client_id = $cuUserType === 'Beta' ? 'AewHMlPPPhVyrOAAxPGHzBsgnftW3K9iztFySQt9b
 <div class="nk-block">
     <div class="row g-gs">
         <div class="col-12 mt-0">
-            <?php echo view('Wallets\Purchase\Memberships\Advertisements\CustomizeYourMembership'); ?>
+            <?php echo view('Wallets/Purchase/Memberships/Advertisements/CustomizeYourMembership'); ?>
         </div>
     </div>
     <div class="row g-gs flex-lg-row-reverse pt-5">

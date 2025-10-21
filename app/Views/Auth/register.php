@@ -34,13 +34,13 @@ $subViewData                = [
                 <?php echo view('App\Views\Auth\register\\' . $referralPlatform, $subViewData); ?>
             </div>
             <div class="col-sm-6">
-                <?php echo view('App/Views/Auth\register_form', $subViewData); ?>
+                <?php echo view('App/Views/Auth/register_form', $subViewData); ?>
                 <?php echo view('themes/public/resources/needSupport', $subViewData); ?>
             </div>
         <?php else: ?>
         <div class="col-sm-6 offset-sm-3">
 
-            <?php echo view('App/Views/Auth\register_form', $subViewData); ?>
+            <?php echo view('App/Views/Auth/register_form', $subViewData); ?>
 
         </div>
         <?php endif; ?>

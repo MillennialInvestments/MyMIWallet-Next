@@ -8,7 +8,7 @@ $subViewData = [
 <div class="nk-block">
     <div class="row">
         <div class="my-sm-3 col-md-3">
-            <?php echo view('Budget\index\control_center', $subViewData); ?>
+            <?php echo view('Budget/index/control_center', $subViewData); ?>
         </div>
         <div class="my-sm-3 col-md-9">
             <div class="card card-bordered h-100">

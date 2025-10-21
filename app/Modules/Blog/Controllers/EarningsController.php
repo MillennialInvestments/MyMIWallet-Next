@@ -340,7 +340,7 @@ class EarningsController extends UserController
         $data = array_merge($this->getViewFileData($uri), $viewFileData);
     
         // Pass the structured data array to the view
-        $content = view('Modules/Blog/Views\HowItWorks\MyMI_Gold', $data);        
+        $content = view('Modules/Blog/Views/HowItWorks/MyMI_Gold', $data);        
         return $this->renderPage('Home', 'Automated', $content);
     }
 
@@ -358,7 +358,7 @@ class EarningsController extends UserController
         $data = array_merge($this->getViewFileData($uri), $viewFileData);
     
         // Pass the structured data array to the view
-        $content = view('Modules/Blog/Views\HowItWorks\Purchase_MyMI_Gold', $data);
+        $content = view('Modules/Blog/Views/HowItWorks/Purchase_MyMI_Gold', $data);
         return $this->renderPage('Home', 'Automated', $content);
     }
 

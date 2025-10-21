@@ -167,8 +167,8 @@ $subViewData        = [
                         </div>
                     </div>
                 </div>
-                <?php echo view('UserModule/Knowledgebase/includes\Customer_Support\header', $subViewData); ?>
-                <?php echo view('UserModule/Knowledgebase/includes\Customer_Support\contact_support', $subViewData); ?>
+                <?php echo view('UserModule/Knowledgebase/includes/Customer_Support/header', $subViewData); ?>
+                <?php echo view('UserModule/Knowledgebase/includes/Customer_Support/contact_support', $subViewData); ?>
             </div>
         </div>
     </div>

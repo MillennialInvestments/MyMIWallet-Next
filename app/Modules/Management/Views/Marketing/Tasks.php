@@ -90,18 +90,18 @@ $viewFileData                       = array(
                 <div class="row">
                     <!-- Action Center -->
                     <div class="col-lg-4">
-                        <?php echo view('ManagementModule/ViewsMarketing/Tasks/action_center', $viewFileData); ?>
+                        <?php echo view('Marketing/Tasks/action_center', $viewFileData); ?>
                     </div><!-- .col -->
                     <!-- Month-to-Month Overview -->
                     <div class="col-lg-8">
-                        <?php echo view('ManagementModule/ViewsMarketing/Tasks/monthly_overview', $viewFileData); ?>
+                        <?php echo view('Marketing/Tasks/monthly_overview', $viewFileData); ?>
                     </div>
                 </div>
 			</div>
             <div class="nk-block">
                 <div class="row">
                     <div class="col-lg-12">
-                        <?php echo view('ManagementModule/ViewsMarketing/Tasks/Listing-Table', $viewFileData); ?>
+                        <?php echo view('Marketing/Tasks/Listing-Table', $viewFileData); ?>
                     </div>
                 </div>
             </div>

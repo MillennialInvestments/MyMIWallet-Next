@@ -29,7 +29,7 @@ $viewFileData = [
             <div class="nk-block">
                 <div class="row">
                     <div class="col-lg-4">
-                        <?php echo view('ManagementModule/Views/Marketing\Tasks\action_center', $viewFileData); ?>
+                        <?php echo view('Marketing/Tasks/action_center', $viewFileData); ?>
                     </div>
                     <div class="col-lg-8">
                         <div class="card card-bordered">
@@ -127,7 +127,7 @@ $viewFileData = [
             <div class="nk-block">
                 <div class="row">
                     <div class="col-lg-12">
-                        <?php //echo view('ManagementModule/Marketing/Tasks\Listing-Table', $viewFileData); ?>
+                        <?php //echo view('ManagementModule/Marketing/Tasks/Listing-Table', $viewFileData); ?>
                     </div>
                 </div>
             </div>
@@ -162,7 +162,7 @@ $viewFileData = [
 <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <?= view('Dashboard\index\modal-loading-page'); ?>
+            <?= view('Dashboard/index/modal-loading-page'); ?>
         </div>
     </div>
 </div>

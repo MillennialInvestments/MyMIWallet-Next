@@ -140,7 +140,7 @@
             </div>
             <?php 
             $controlCenterData = [];
-            echo view('Dashboard\Account\ControlCenter', $controlCenterData); 
+            echo view('Dashboard/Account/ControlCenter', $controlCenterData); 
             ?>
         </div><!-- .card-aside-wrap -->
     </div><!-- .card -->

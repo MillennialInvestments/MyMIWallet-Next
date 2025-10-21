@@ -188,7 +188,7 @@ class SupportController extends UserController
     
         // Render the email content for preview
         $emailContent = view('emails/layout', [
-            'content' => view('Support\_emails\Support_Request_Received', ['data' => $data]),
+            'content' => view('Support/_emails/Support_Request_Received', ['data' => $data]),
             'title' => 'Support Request Received',
             'siteSettings' => $this->siteSettings,
             'socialMedia' => $this->socialMedia,
@@ -221,7 +221,7 @@ class SupportController extends UserController
     
         // Use the layout and pass content as a dynamic subview
         $emailContent = view('emails/layout', [
-            'content' => view('Support\_emails\Support_Request_Received', ['data' => $data]),
+            'content' => view('Support/_emails/Support_Request_Received', ['data' => $data]),
             'title' => 'Support Request Received',
             'siteSettings' => $this->siteSettings,
             'socialMedia' => $this->socialMedia,
@@ -244,7 +244,7 @@ class SupportController extends UserController
         $email->setTo($data['email']);
         $email->setFrom('noreply@MyMIWallet.com', 'MyMI Wallet - Customer Support');
         $email->setSubject('MyMI Wallet - New Support Request Received');
-        $emailContent = view('Support\_emails\Support_Request_Received', ['data' => $data]);
+        $emailContent = view('Support/_emails/Support_Request_Received', ['data' => $data]);
         $email->setMessage($emailContent);
         $email->send();
     }
@@ -373,7 +373,7 @@ class SupportController extends UserController
                 $email->setFrom('support@mymillennialinvestments.com', 'Millennial Investments');
                 $email->setTo('admin@mymillennialinvestments.com');
                 $email->setSubject('Customer Service Request | Millennial Investments');
-                $email->setMessage(view('Support/Emails/Requests', $emailMessageData));
+            $email->setMessage(view('Support/Emails/Requests', $emailMessageData));
 
                 if ($email->send()) {
                     session()->setFlashdata('message', 'Customer Support - Support Request Submitted Successfully');

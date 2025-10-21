@@ -106,18 +106,18 @@ $subViewData                        = [
                 <div class="row">
                     <!-- Action Center Card -->
                     <div class="col-lg-4">
-                        <?= view('ManagementModule/Views/Alerts\resources\action-center', $subViewData) ?>
+                        <?= view('Alerts/resources/action-center', $subViewData) ?>
                     </div><!-- .col -->
 
                     <!-- Alert Analytics Card -->
                     <div class="col-lg-8">
-                        <?= view('ManagementModule/Views/Alerts\resources\market-data', $subViewData) ?>                        
+                        <?= view('Alerts/resources/market-data', $subViewData) ?>                        
                     </div>
                 </div><!-- .row -->
             </div><!-- .nk-block -->
-            <?php // echo view('ManagementModule/Views/Alerts\resources\statistical-overview', $subViewData) ?>
-            <?php // echo view('ManagementModule/Views/Alerts\resources\management-tools', $subViewData) ?>
-            <?php // echo view('ManagementModule/Views/Alerts\resources\management-controls', $subViewData) ?>
+            <?php // echo view('Alerts/resources/statistical-overview', $subViewData) ?>
+            <?php // echo view('Alerts/resources/management-tools', $subViewData) ?>
+            <?php // echo view('Alerts/resources/management-controls', $subViewData) ?>
 
 
             <div class="nk-block">
@@ -367,7 +367,7 @@ $subViewData                        = [
 		</div>
 	</div>
 </div>
-<?= view('ManagementModule/Views/Alerts\resources\advisorMedia', $subViewData) ?>
+<?= view('Alerts/resources/advisorMedia', $subViewData) ?>
 <!-- Quick TradingView Submit Modal -->
 <div class="modal fade" id="tvModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">

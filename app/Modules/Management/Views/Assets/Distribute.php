@@ -20,7 +20,7 @@ if ($pageURIB === 'Assets') {
         'dashboardTitle'                        => $dashboardTitle,
         'dashboardSubtitle'                     => $dashboardSubtitle,        
     );
-    echo view('ManagementModule/Views/Assets\Distribute\Overview', $viewFileData); 
+    echo view('Assets/Distribute/Overview', $viewFileData); 
 } elseif ($pageURIB === 'Users') {
     $dashboardTitle                             = 'Users /';
     $dashboardSubtitle                          = 'Assets'; 
@@ -43,6 +43,6 @@ if ($pageURIB === 'Assets') {
         'dashboardSubtitle'                     => $dashboardSubtitle,        
         'getExchanges'                          => $getExchanges,
     );
-    echo view('ManagementModule/Views/Assets\Distribute\By_User', $viewFileData); 
+    echo view('Assets/Distribute/By_User', $viewFileData); 
 }
 ?>

@@ -3,8 +3,8 @@ $cuID		= isset($current_user->id) && ! empty($current_user->id) ? $current_user-
 ?>
 <div class="modal fade" id="coinListingApplicationModal" tabindex="-1" aria-labelledby="trackDepositsModal" aria-hidden="true">
 	<div class="modal-dialog">
-		<div class="modal-content show" id="loading-content">
-			<?php echo """view('UserModule/Dashboard/index/modal-loading-page')); ?>
+        <div class="modal-content show" id="loading-content">
+                <?php echo view('Dashboard/index/modal-loading-page'); ?>
 		</div>
 		<div class="modal-content" id="applicationContainer">
 		</div>

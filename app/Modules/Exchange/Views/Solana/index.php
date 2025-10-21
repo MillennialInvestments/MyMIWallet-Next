@@ -258,7 +258,7 @@ $subViewData = [
         </div><!-- .col -->                    
         <!-- Top Performing Tokens -->
         <div class="col-12 col-md-8 col-xxl-8">
-            <?php echo view('ExchangeModule/Views/Solana\index\Top-Performing-Tokens', $subViewData); ?>
+            <?php echo view('Solana/index/Top-Performing-Tokens', $subViewData); ?>
         </div>
         <?php if ($solanaUserAssets === 1) : ?>
         <div class="col-12 col-md-4 col-xxl-4">

@@ -5,14 +5,14 @@
                 <div class="nk-content-inner">
                     <div class="nk-content-body pt-0">
                         <div class="content-page">
-                            <?php echo view('Knowledgebase\includes\navigation'); ?>
+                            <?php echo view('Knowledgebase/includes/navigation'); ?>
                             <hr class="py-3">
                             <div class="row g-gs">
                                 <div class="col-12 col-md-5 col-xxl-4">
-                                    <?php  echo view('Support\Request'); ?>
+                                    <?php  echo view('Support/Request'); ?>
                                 </div>
                                 <div class="col-12 col-md-7 col-xxl-8">
-                                    <?php echo view('Support\FAQs'); ?>
+                                    <?php echo view('Support/FAQs'); ?>
                                 </div>
                             </div>
                             <hr>
@@ -30,7 +30,7 @@
                                     <div class="card">
                                         <div class="card-inner p-0">
                                             <div class="nk-block-content">
-                                                <?php echo view('Knowledgebase\Tutorials'); ?>
+                                                <?php echo view('Knowledgebase/Tutorials'); ?>
                                             </div>
                                         </div>
                                     </div>

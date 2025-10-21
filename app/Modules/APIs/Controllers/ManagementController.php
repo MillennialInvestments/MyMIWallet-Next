@@ -151,7 +151,7 @@ class ManagementController extends \App\Controllers\BaseController
         $data = [];
         foreach ($records as $user) {
             try {
-                $actionView = view('ManagementModule/Views/Users\partials\action_buttons', ['user' => $user]);
+                $actionView = view('Users/partials/action_buttons', ['user' => $user]);
             } catch (\Throwable $e) {
                 log_message('error', '❌ Error rendering action_buttons view for user ID ' . $user['id'] . ': ' . $e->getMessage());
                 $actionView = '<span class="text-danger">View Error</span>';
@@ -194,7 +194,7 @@ class ManagementController extends \App\Controllers\BaseController
         $data = [];
         foreach ($records as $user) {
             try {
-                $actionView = view('ManagementModule/Views/Users\partials\action_buttons', ['user' => $user]);
+                $actionView = view('Users/partials/action_buttons', ['user' => $user]);
             } catch (\Throwable $e) {
                 log_message('error', '❌ Error rendering action_buttons view for user ID ' . $user['id'] . ': ' . $e->getMessage());
                 $actionView = '<span class="text-danger">View Error</span>';

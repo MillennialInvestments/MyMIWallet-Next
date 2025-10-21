@@ -3,4 +3,4 @@ $subViewData = [
     
 ];
 ?>
-<?= view('ManagementModule/Views/Alerts\resources\rh-keygen', $subViewData) ?>
+<?= view('Alerts/resources/rh-keygen', $subViewData) ?>
