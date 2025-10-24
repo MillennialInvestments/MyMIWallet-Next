@@ -129,3 +129,8 @@ _modules/*
 /writable/*
 !/writable/index.html
 /vendor/
+public/assets/img/*.png
+public/assets/img/*.jpg
+public/assets/img/*.jpeg
+public/assets/fonts/*
+!public/assets/img/*.svg
