@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+files=$(git diff --cached --name-only --diff-filter=ACMR)
+if [ -z "$files" ]; then
+  exit 0
+fi
+
+if command -v file >/dev/null 2>&1; then
+  bad=$(printf '%s
+' "$files" | xargs -I{} file --mime "{}" | awk -F': ' '$2 !~ /^text/ {print $1}')
+else
+  bad=$(git diff --cached --numstat --diff-filter=ACMR | awk '$1 == "-" || $2 == "-" {print $3}')
+fi
+
+if [ -n "$bad" ]; then
+  echo "Blocked binary files in commit:"
+  echo "$bad"
+  echo "Please remove binaries from this PR."
+  exit 1
+fi
