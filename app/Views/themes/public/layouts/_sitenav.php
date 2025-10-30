@@ -39,7 +39,7 @@ $brandAlt = 'MyMI Wallet - Investment Accounting/Analytical Software & Crypto As
           <a href="<?= $featuresUrl ?>" class="link-to nav-link intro-nav-link">Features</a>
         </li>
 
-        <li class="nav-item intro-nav-item dropdown">
+        <!-- <li class="nav-item intro-nav-item dropdown">
           <a class="nav-link intro-nav-link dropdown-toggle"
              href="#" id="resourcesDropdownPublic"
              role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -50,7 +50,7 @@ $brandAlt = 'MyMI Wallet - Investment Accounting/Analytical Software & Crypto As
             <li><a class="dropdown-item" href="<?= site_url('How-It-Works') ?>">How It Works</a></li>
             <li><a class="dropdown-item" href="<?= site_url('Knowledgebase') ?>">Knowledgebase</a></li>
           </ul>
-        </li>
+        </li> -->
 
         <!-- spacer that only grows on lg+ to push the last item right -->
         <li class="d-none d-lg-block flex-lg-grow-1"></li>
