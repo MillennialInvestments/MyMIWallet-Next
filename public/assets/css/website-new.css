@@ -1,0 +1,342 @@
+/* HTML ELEMENTS */
+body {
+    background-color: white !important;
+    border: none;
+}
+
+.btn-outline-primary:hover {
+    color: #fff !important;
+}
+
+.content-wrapper, .container {
+    background-color: white !important;
+}
+
+.alert-success {
+    padding-top: 2rem;
+}
+
+fieldset {
+    border: none;
+}
+
+.bootstrap-select>.dropdown-toggle,
+body .btn.dropdown-toggle.btn-default {
+    height: 35px !important;
+}
+
+.dark-text {
+    font-size: 1.125rem !important;
+    color: #364a63;
+}
+
+.myfs-xs {
+    font-size: 0.5rem !important;
+}
+
+.myfs-sm {
+    font-size: 0.75rem !important;
+}
+
+.myfs-md {
+    font-size: 1.25rem !important;
+}
+
+.myfs-lg {
+    font-size: 2.5rem !important;
+}
+
+.myfs-xxl {
+    font-size: 5rem !important;
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    max-height: 400px; /* or whatever height you find appropriate */
+    object-fit: cover; /* This will crop the image if it doesn't fit */
+}
+
+.img-inline {
+    max-width: 50%; /* or 60%, depending on your layout */
+    float: right; /* or left, depending on where you want the image */
+    margin: 0 0 1em 1em; /* This adds some space around the image */
+}
+
+.line {
+    width: 2px;
+    background-color: lightgrey !important;
+    height: 50px !important;
+}
+
+.tv-embed-widget-wrapper__body {
+    border: none !important;
+}
+
+.grecaptcha-badge {
+    visibility: hidden;
+}
+
+.lead {
+    font-size: 1.1rem;
+}
+
+.close {
+    height: 0 !important;
+    width: 1rem !important;
+}
+
+.no-bg, .container, .cid-s0KKUOB7cY .mbr-text, .cid-s0KKUOB7cY .mbr-section-btn, .form-label {
+    background-color: transparent !important;
+}
+
+.animated {
+    -webkit-transition: height 0.2s;
+    -moz-transition: height 0.2s;
+    transition: height 0.2s;
+}
+
+.form-horizontal .form-actions {
+    padding-left: 20rem;
+}
+
+.dataTable {
+    padding-top: 1rem !important;
+}
+
+.data-item .icon {
+    color: white;
+}
+
+.no-font-weight {
+    font-weight: normal !important;
+}
+
+.custom-select {
+    padding-right: 1rem !important;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+div.dataTables_wrapper div.dataTables_length select {
+    margin: 0 0.5rem;
+    padding: 5px 10px;
+    display: inline-block;
+}
+
+select.form-control,
+.select2-container--default select.select2-selection--single,
+.select2-container--default .select2-selection--single select.select2-search__field,
+select.typeahead,
+select.tt-query,
+select.tt-hint {
+    color: #807d78;
+    width: 100% !important;
+}
+
+.bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+    width: 100% !important;
+}
+
+.alert-dismissable {
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+}
+
+.custom-dropdown.show {
+    min-height: 250px !important;
+    height: 100% !important;
+    max-height: 225px !important;
+    width: 100% !important;
+}
+
+.dropdown-menu.show {
+    transform: scaleY(1) !important;
+    width: 100% !important;
+    max-height: inherit !important;
+    margin-top: 2.5rem !important;
+    overflow-y: auto;
+}
+
+.bootstrap-select .dropdown-menu.inner {
+    margin-top: 0px !important;
+    overflow: overlay;
+}
+
+.scrollable-sidebar {
+    max-height: 100vh; /* 100% of the viewport height */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.inner .show {
+    min-height: inherit !important;
+    max-height: inherit !important;
+}
+
+.bootstrap-select .dropdown-menu.inner {
+    margin-bottom: 0px !important;
+}
+
+.bootstrap-select .dropdown-menu.inner {
+    position: relative !important;
+}
+
+.form-horizontal .control-group .controls {
+    margin-left: 0px !important;
+}
+
+.dataTables_filter {
+    text-align: right;
+    margin-right: 3rem;
+    margin-bottom: 1rem;
+}
+
+strong {
+    font-weight: bolder !important;
+}
+
+.vertical-divider li {
+    border-right: 1px solid #ccc;
+    padding-right: 10px;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.modal-backdrop.show {
+    opacity: 0.2;
+}
+
+.breadcrumb.mbr-white {
+    padding: 2rem !important;
+}
+
+.row {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.form-control {
+    margin-bottom: 0.5rem !important;
+}
+
+.icon-bar {
+    display: none;
+}
+
+.alert {
+    margin-bottom: 1rem !important;
+}
+
+.mbr-text p {
+    margin-bottom: 1rem !important;
+}
+
+span { 
+    display: block;
+}
+
+/* Styling for the footer */
+#footer {
+    background-color: #282c37;
+    color: white;
+    padding: 20px 0;
+}
+
+/* Styling for the footer links */
+#footer a {
+    color: #ffffff;
+}
+
+/* Styling for the footer links on hover */
+#footer a:hover {
+    color: #41b883;
+}
+
+/* Reset some Bootstrap styles to customize as needed */
+body {
+    font-family: Arial, sans-serif;
+    /* Add any other custom body styles here */
+}
+
+/* Example typography styles */
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+    /* Add any other h1 styles here */
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.5;
+    /* Add any other paragraph styles here */
+}
+
+a {
+    text-decoration: none;
+    color: #007bff;
+    /* Add any other link styles here */
+}
+
+/* Example button styles */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    /* Add any other button styles here */
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+/* Example custom color definitions */
+.primary-bg {
+    background-color: #007bff;
+    /* Add any other custom color styles here */
+}
+
+.text-white {
+    color: #fff;
+    /* Add any other custom text color styles here */
+}
+
+/* Example layout adjustments */
+.container {
+    margin: 0 auto;
+    max-width: 1200px;
+    /* Add any other container styles here */
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    /* Add any other row styles here */
+}
+
+.col {
+    flex: 1;
+    padding: 10px;
+    box-sizing: border-box;
+    /* Add any other column styles here */
+}
+
+/* Example CSS animation */
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.slide-in {
+    animation: slideIn 1s forwards;
+    /* Add any other animation styles here */
+}
+
+/* Additional styles for specific elements can be added here */

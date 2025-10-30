@@ -1,0 +1,159 @@
+<?php
+
+namespace App\Modules\Blog\Controllers;
+
+use Config\Services; 
+use App\Config\{SiteSettings, SocialMedia}; 
+use App\Models\{MyMIGoldModel, PageSEOModel, SubscribeModel, UserModel};
+use App\Libraries\MyMIAnalytics;
+use CodeIgniter\API\ResponseTrait;
+use App\Controllers\UserController; 
+
+#[\AllowDynamicProperties]
+class FeaturesController extends UserController
+{
+    use ResponseTrait;
+    private $myMIAnalytics;
+    private $MyMIGoldModel;
+    private $pageSEOModel;
+    private $siteSettings;
+    private $subscribeModel;
+    private $userModel;
+
+    public function __construct()
+    {
+        parent::__construct();
+        helper(['directory', 'form', 'file', 'url']);
+
+        $this->myMIAnalytics = new MyMIAnalytics();
+//         $this->MyMIGoldModel = new MyMIGoldModel(); // replaced by BaseController getter
+        $this->pageSEOModel = new PageSEOModel();
+        $this->session = Services::session();
+        $this->subscribeModel = new SubscribeModel();
+        // $this->userModel = new UserModel();
+
+        $this->siteSettings = config('SiteSettings');
+    }
+
+    public function index()
+    {
+        $uri = $this->request->uri;
+        $content = view('Modules\Advertise\Views\Features\index', $this->getViewFileData($uri));
+        return $this->renderPage('Features', 'Automated', $content);
+    }
+
+    public function BrokerageIntegrations()
+    {
+        $uri = $this->request->uri;
+        $content = view('Modules\Advertise\Views\Features\Brokerage_Integrations', $this->getViewFileData($uri));
+        return $this->renderPage('Features', 'Automated', $content);
+    }
+
+    public function MyMIGold() {
+        $getCoinValue = $this->MyMIGoldModel->getCoinValue(); 
+        $getInitialCoinValue = $this->MyMIGoldModel->getInitialCoinValue(); 
+        
+        $uri = $this->request->uri;
+    
+        $viewFileData = [
+            'getCoinValue' => $getCoinValue,
+            'getInitialCoinValue' => $getInitialCoinValue
+        ];
+        // Merge site settings with other data
+        $data = array_merge($this->getViewFileData($uri), $viewFileData);
+    
+        // Pass the structured data array to the view
+        $content = view('Modules\Advertise\Views\Features\MyMI_Gold', $data);
+        return $this->renderPage('Features', 'Automated', $content);
+    }
+
+    // Additional methods...
+
+    private function renderPage($pageName, $pageType, $content)
+    {
+        $cuID = $this->session->get('user_id') ?? 0;
+        $reportingData = $this->getMyMIAnalytics()->reporting($cuID);
+        $uri = $this->request->uri;
+        $siteSettings = $this->getSiteSettings();
+
+        $pageTitle = $this->getPageTitle($pageName);
+        $seoData = $this->pageSEOModel->getPageSEOByName($pageName);
+        $seoData = $this->ensureSEOData($seoData, $pageTitle);
+
+        $viewFileData = [
+            'pageType' => $pageType,
+            'pageName' => $pageName,
+            'pageTitle' => $pageTitle,
+            'reportingData' => $reportingData,
+            'seoData' => $seoData,
+            'cuID' => $cuID,
+            'content' => $content
+        ];
+
+        // Merge site settings with other data
+        $data = array_merge($viewFileData, $siteSettings, [
+            // 'addValueHere' => $addValueHere,
+        ]);
+        return $this->render('themes/default/layouts/index', $data);
+    }
+
+    private function getViewFileData($uri)
+    {
+        $data = [];
+        for ($i = 1; $i <= 5; $i++) {
+            $data['pageURI' . chr(64 + $i)] = $uri->getTotalSegments() >= $i ? $uri->getSegment($i, '') : '';
+        }
+        return $data;
+    }  
+
+    private function getSiteSettings() {
+        $settings = $this->siteSettings;
+        return [
+            'siteOperations' => $settings->siteOperations,
+            'educateOperations' => $settings->educateOperations,
+            'budgetOperations' => $settings->budgetOperations,
+            'investmentOperations' => $settings->investmentOperations,
+            'integrationOperations' => $settings->integrationOperations,
+            'newsOperations' => $settings->newsOperations,
+            'referralOperations' => $settings->referralOperations,
+            'debtOperations' => $settings->debtOperations,
+            'retirementOperations' => $settings->retirementOperations,
+            'assetOperations' => $settings->assetOperations,
+            'exchangeOperations' => $settings->exchangeOperations,
+            'marketplaceOperations' => $settings->marketplaceOperations,
+            'partnerOperations' => $settings->partnerOperations,
+            'bettingOperations' => $settings->bettingOperations
+            // Add any additional settings here if needed
+        ];
+    }
+
+    private function getPageTitle($pageName)
+    {
+        $thisURL = current_url();
+        return str_replace(['/', '-'], [' | ', ' '], $thisURL);
+    }
+    
+    private function ensureSEOData($seoData, $pageTitle)
+    {
+        if (empty($seoData)) {
+            $seoData = [
+                'page_name' => $pageTitle,
+                'page_title' => $pageTitle,
+                'page_url' => current_url(),
+                'page_sitemap_url' => base_url('/sitemap.xml'),
+                'page_image' => base_url('/assets/images/default-seo-image.png'),
+                'meta_description' => 'Default meta description for ' . $pageTitle,
+                'meta_keywords' => 'default,keywords,for,' . str_replace(' ', ',', strtolower($pageTitle))
+            ];
+            
+            $this->pageSEOModel->saveOrUpdatePageSEO($seoData);
+        }
+    
+        return $seoData;
+    }    
+
+    public function render(string $view, array $data = [], array $options = []): string
+    {
+        return $this->renderTheme($view, $data);
+    }
+}

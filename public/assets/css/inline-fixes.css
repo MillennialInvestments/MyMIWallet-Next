@@ -1,0 +1,6 @@
+/* minimal helpers while removing inline style attrs */
+.h-auto{height:auto!important;}
+.whitespace-prewrap{white-space:pre-wrap!important;}
+/* add any one-off sizes you use frequently */
+.h-300px{height:300px!important;}
+.h-30vw{height:30vw!important;}

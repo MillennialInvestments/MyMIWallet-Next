@@ -1,0 +1,1 @@
+All libraries from the provided list have been integrated. Future tasks can follow the "Next Steps" guidance in docs/IntegrationStatus.md, starting with standardized controller endpoints and additional automated tests.

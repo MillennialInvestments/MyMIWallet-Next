@@ -1,0 +1,17 @@
+{
+    "title": "MyMI Advisor Notes",
+    "subtitle": "AI-Powered Financial Briefing",
+    "audio_url": null,
+    "text_overlays": [
+        {
+            "text": "**Voiceover Preview**\n\n[INTRO]\nUser has $2044.85 disposable.\n\nAvg momentum: 0.\nRisk: Aggressive.\n\n[OUTRO]\nLearn more inside your MyMI Wallet.\n",
+            "start": 0,
+            "duration": 15,
+            "position": "bottom",
+            "font": "Roboto",
+            "size": 24
+        }
+    ],
+    "background_chart": "https:\/\/www.tradingview.com\/symbols\/AAPL\/",
+    "created_at": "2025-06-30T11:40:34-05:00"
+}

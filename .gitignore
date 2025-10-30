@@ -1,0 +1,16 @@
+/vendor/
+/writable/
+/public/writable/
+/public/uploads/
+/node_modules/
+/**/*.orig.php
+/**/* copy.php
+app/_backup_autoload_skip/
+.env
+.env.*
+*.log
+/.idea/
+/.vscode/
+phpunit.xml
+phpunit.xml.dist
+*.map
