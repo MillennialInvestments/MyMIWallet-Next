@@ -40,6 +40,7 @@ class Autoload extends AutoloadConfig
     public $psr4 = [
         APP_NAMESPACE => APPPATH,                 // "App\" → app/
         'App\\Modules' => APPPATH . 'Modules',    // keep if you actually use App\Modules\...
+        'APIModule' => APPPATH . 'Modules/APIs',
         'BlogModule' => APPPATH . 'Modules/Blog',
         'ExchangeModule' => APPPATH . 'Modules/Exchange',
         'InvestmentModule' => APPPATH . 'Modules/User',

@@ -145,7 +145,6 @@ abstract class BaseController extends Controller
                 return $this->response->setStatusCode(401)
                     ->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
             }
-
             // For web controllers, redirect to Login
             return redirect()->to(site_url('Login?next=' . urlencode(current_url())));
         }

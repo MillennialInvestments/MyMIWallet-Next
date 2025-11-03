@@ -13,9 +13,11 @@ if (!$scriptNonceValue && is_string($scriptNonceAttr) && $scriptNonceAttr !== ''
 }
 
 // helper: return URL if file exists in /public, else null
-function asset_if_exists(string $publicPath): ?string {
-    $file = FCPATH . ltrim($publicPath, '/');
-    return is_file($file) ? base_url($publicPath) : null;
+if (!function_exists('asset_if_exists')) {
+    function asset_if_exists(string $publicPath): ?string {
+        $file = FCPATH . ltrim($publicPath, '/');
+        return is_file($file) ? base_url($publicPath) : null;
+    }
 }
 
 // 1) jQuery FIRST (NO defer)
