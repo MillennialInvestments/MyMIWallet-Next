@@ -195,7 +195,8 @@ class HowItWorksController extends UserController
         $cacheKey = "howitworks:dailynews:uid{$userId}:p{$page}:pp{$perPage}";
         $ttl = 300; // 5 min
 
-        if ($html = cache($cacheKey)) {
+        $cacheKeySanitized = sanitizeCacheKey($cacheKey);
+        if ($html = cache($cacheKeySanitized )) {
             return $this->response->setBody($html);
         }
 

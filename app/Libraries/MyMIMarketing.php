@@ -75,7 +75,7 @@ class MyMIMarketing
         $this->request = service('request');
         $this->session = service('session');
         $this->uri = $this->request->getUri();
-        $this->APIs = config('APIs');
+        $this->APIs = config('APISettings');
         $this->socialMedia = config('SocialMedia');
         $this->siteSettings = config('SiteSettings');
         $this->debug = $this->siteSettings->debug;

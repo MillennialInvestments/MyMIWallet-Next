@@ -55,7 +55,7 @@ class AlertsController extends UserController
     {
         $this->auth                                 = service('authentication');
         $this->request                              = service('request');
-        $this->API                                  = config('APIs');
+        $this->API                                  = config('APISettings');
         $this->NewsEmail                            = config('NewsEmailServer');
         $this->siteSettings                         = config('SiteSettings');
         $this->socialMedia                          = config('SocialMedia');
@@ -826,7 +826,7 @@ class AlertsController extends UserController
 
     private function fetchMarketData($ticker)
     {
-        $apiKey = config('APIs')->alphaVantageApiKey;
+        $apiKey = config('APISettings')->alphaVantageApiKey;
         $url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={$ticker}&apikey={$apiKey}";
 
         $response = file_get_contents($url);

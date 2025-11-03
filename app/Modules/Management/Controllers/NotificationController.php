@@ -44,7 +44,7 @@ class NotificationController extends UserController
         // Set Controller Settings
         $this->auth                                 = service('authentication');
         $this->request                              = service('request'); 
-        $this->API                                  = config('APIs');
+        $this->API                                  = config('APISettings');
         $this->siteSettings                         = config('SiteSettings');
         $this->debug                                = $this->siteSettings->debug; 
         $this->session                              = Services::session(); 

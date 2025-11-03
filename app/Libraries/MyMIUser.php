@@ -500,14 +500,19 @@ class MyMIUser
 
     public function getUserInformation($cuID)
     {
-        if (empty($cuID)) {
-            // log once per request to reduce spam
-            if (! defined('MYMIUSER_EMPTY_USER_LOGGED')) {
-                define('MYMIUSER_EMPTY_USER_LOGGED', true);
-                log_message('warning', 'MyMIUser::getUserInformation called with empty userId; returning null.');
-            }
+        if (empty($uscuIDerId)) {
+            // Don’t warn on expected public traffic
+            log_message('debug', 'MyMIUser::getUserInformation skipped (empty userId).');
             return null;
         }
+        // if (empty($cuID)) {
+        //     // log once per request to reduce spam
+        //     if (! defined('MYMIUSER_EMPTY_USER_LOGGED')) {
+        //         define('MYMIUSER_EMPTY_USER_LOGGED', true);
+        //         log_message('warning', 'MyMIUser::getUserInformation called with empty userId; returning null.');
+        //     }
+        //     return null;
+        // }
         $cuID = $cuID ?? $this->session->get('user_id') ?? $this->auth->id();
         if (empty($cuID)) {
             log_message('error', "MyMIUser L494 - Invalid User ID. getUserInformation called with empty user ID.");

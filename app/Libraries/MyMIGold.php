@@ -24,7 +24,7 @@ class MyMIGold
 
     public function __construct() {
         $this->auth                                 = service('authentication'); 
-        $this->APIs                                 = config('APIs');
+        $this->APIs                                 = config('APISettings');
         $this->db                                   = \Config\Database::connect();
         $this->alphaVantageApiKey                   = $this->APIs->alphaVantageApiKey; // Set your AlphaVantage API Key here
         $this->request                              = service('request');

@@ -16,7 +16,7 @@ class MyMIGemini implements ExchangeConnectorInterface {
     protected $geminiAPISecret; 
 
     public function __construct() {
-        $this->APIs = config('APIs');
+        $this->APIs = config('APISettings');
         $this->apiKey = $this->APIs->geminiAPIKey;
         $this->apiSecret = $this->APIs->geminiAPISecret;
         $this->apiUrl = 'https://api.gemini.com/v1/';

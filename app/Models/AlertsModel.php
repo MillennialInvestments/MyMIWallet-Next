@@ -369,7 +369,7 @@ class AlertsModel extends Model
 
     public function fetchBatchMarketData(array $tickers)
     {
-        $apiKey     = config('APIs')->alphaVantageApiKey;
+        $apiKey     = config('APISettings')->alphaVantageApiKey;
         $marketData = [];
 
         foreach ($tickers as $ticker) {
@@ -660,7 +660,7 @@ class AlertsModel extends Model
 
     public function fetchTickerDetails(string $symbol)
     {
-        $apiKey = config('APIs')->alphaVantageApiKey;
+        $apiKey = config('APISettings')->alphaVantageApiKey;
         $url    = "https://www.alphavantage.co/query?function=OVERVIEW&symbol={$symbol}&apikey={$apiKey}";
         $response = file_get_contents($url);
         $data     = json_decode($response, true);
@@ -681,7 +681,7 @@ class AlertsModel extends Model
 
     private function getDataFromAlphaVantage($symbol)
     {
-        $apiKey = config('APIs')->getAlphaVantageApiKey();
+        $apiKey = config('APISettings')->getAlphaVantageApiKey();
         if (empty($apiKey)) {
             log_message('error', "🚨 No AlphaVantage API key available! Cannot fetch data for $symbol.");
             return null;
@@ -730,7 +730,7 @@ class AlertsModel extends Model
 
     private function getDataFromTwelveData($symbol)
     {
-        $apiKey = config('APIs')->twelveDataApiKey;
+        $apiKey = config('APISettings')->twelveDataApiKey;
         $url    = "https://api.twelvedata.com/time_series?symbol={$symbol}&interval=5min&apikey={$apiKey}";
         $response = file_get_contents($url);
         if ($response === false) {
@@ -753,7 +753,7 @@ class AlertsModel extends Model
 
     private function getDataFromPolygon($symbol)
     {
-        $apiKey   = config('APIs')->polygonApiKey;
+        $apiKey   = config('APISettings')->polygonApiKey;
         $url      = "https://api.polygon.io/v2/aggs/ticker/{$symbol}/range/1/minute/2021-10-14/2021-10-14?apiKey={$apiKey}";
         $response = file_get_contents($url);
         if ($response === false) {
@@ -776,7 +776,7 @@ class AlertsModel extends Model
 
     private function getDataFromMarketStack($symbol)
     {
-        $config = config('APIs');
+        $config = config('APISettings');
         $apiKey = $config->marketstackApiKey;
         if (empty($apiKey)) {
             log_message('error', "🚨 MarketStack API key is missing. Skipping request for $symbol.");
@@ -805,7 +805,7 @@ class AlertsModel extends Model
 
     private function getDataFromIEXCloud($symbol)
     {
-        $apiKey = config('APIs')->iexCloudApiKey ?? '';
+        $apiKey = config('APISettings')->iexCloudApiKey ?? '';
         if (empty($apiKey)) {
             log_message('error', "🚨 IEX Cloud API key is missing. Skipping request for {$symbol}");
             return null;
@@ -2778,7 +2778,7 @@ class AlertsModel extends Model
     //     $ticker = $this->where('symbol', $symbol)->first();
 
     //     if (!$ticker) {
-    //         $apiKey = config('APIs')->alphaVantageApiKey;
+    //         $apiKey = config('APISettings')->alphaVantageApiKey;
     //         $url = "https://www.alphavantage.co/query?function=OVERVIEW&symbol=$symbol&apikey=$apiKey";
 
     //         $response = file_get_contents($url);
@@ -2803,7 +2803,7 @@ class AlertsModel extends Model
     // }
     
     // private function getDataFromAlphaVantageB($symbol) { // 2
-    //     $apiKey = config('APIs')->alphaVantageApiKeyB;
+    //     $apiKey = config('APISettings')->alphaVantageApiKeyB;
     //     // Fetch Global Quote
     //     $globalQuoteUrl = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={$symbol}&apikey={$apiKey}";
     //     $quoteResponse = file_get_contents($globalQuoteUrl);
@@ -2838,7 +2838,7 @@ class AlertsModel extends Model
     // }  
     
     // private function getDataFromAlphaVantageC($symbol) { // 3
-    //     $apiKey = config('APIs')->alphaVantageApiKeyC;
+    //     $apiKey = config('APISettings')->alphaVantageApiKeyC;
     //     // Fetch Global Quote
     //     $globalQuoteUrl = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={$symbol}&apikey={$apiKey}";
     //     $quoteResponse = file_get_contents($globalQuoteUrl);
@@ -2873,7 +2873,7 @@ class AlertsModel extends Model
     // }   
     
     // private function getDataFromAlphaVantageD($symbol) { // 4
-    //     $apiKey = config('APIs')->alphaVantageApiKeyD;
+    //     $apiKey = config('APISettings')->alphaVantageApiKeyD;
     //     // Fetch Global Quote
     //     $globalQuoteUrl = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={$symbol}&apikey={$apiKey}";
     //     $quoteResponse = file_get_contents($globalQuoteUrl);
@@ -2908,7 +2908,7 @@ class AlertsModel extends Model
     // }  
     
     // private function getDataFromAlphaVantageE($symbol) { // 5
-    //     $apiKey = config('APIs')->alphaVantageApiKeyE;
+    //     $apiKey = config('APISettings')->alphaVantageApiKeyE;
     //     // Fetch Global Quote
     //     $globalQuoteUrl = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={$symbol}&apikey={$apiKey}";
     //     $quoteResponse = file_get_contents($globalQuoteUrl);
@@ -2943,7 +2943,7 @@ class AlertsModel extends Model
     // }   
 
     // public function fetchMarketData($symbol) {
-    //     $apiKey = config('APIs')->alphaVantageApiKey;
+    //     $apiKey = config('APISettings')->alphaVantageApiKey;
     //     $url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={$symbol}&interval=5min&apikey={$apiKey}";
     
     //     $response = file_get_contents($url);

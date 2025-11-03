@@ -1,25 +1,12 @@
 <?php
-
-
-
 namespace App\Config;
-
-
 
 use CodeIgniter\Config\BaseConfig;
 
-
-
-class APIs extends BaseConfig
+class APISettings extends BaseConfig
 
 {
-
-    // Email Password
-
-    public string $emailPassword = 'MyMI2024!';
-
-
-
+    public string $emailPassword = '';
     // Alpaca settings
 
     public string $alpacaDashboard = "https://dash.tradier.com/settings/api";
@@ -37,8 +24,6 @@ class APIs extends BaseConfig
     public string $alpacaBatch = "#";
 
     public string $alpacaWebsocketDocs = "#";
-
-
 
     // Alpha Vantage settings
 
@@ -360,26 +345,6 @@ class APIs extends BaseConfig
 
     public string $scrapemax_api_key = 'CCW6Up4ueEA1n7lnktgjiX7Vxjuy1rZ8Db3PgFtuXICEv9xgu9aChH7fUwKW';
 
-    
-
-    public function __construct()
-
-    {
-
-        parent::__construct();
-
-
-
-        // Load from .env
-
-        $this->elevenLabsAPIKey = getenv('ELEVENLABS_API_KEY') ?: '';
-
-        $this->elevenLabsVoiceId = '21m00Tcm4TlvDq8ikWAM'; 
-
-    }
-
-
-
     public function getAlphaVantageApiKey()
 
     {
@@ -428,6 +393,20 @@ class APIs extends BaseConfig
 
     }
 
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->emailPassword = (string) (
+            env('email.password') ?? getenv('EMAIL_PASSWORD') ?? ''
+        );
+    
+        // Load from .env
+
+        $this->elevenLabsAPIKey = getenv('ELEVENLABS_API_KEY') ?: '';
+
+        $this->elevenLabsVoiceId = '21m00Tcm4TlvDq8ikWAM'; 
+    }
 
 
 }

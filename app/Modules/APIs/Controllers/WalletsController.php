@@ -108,7 +108,7 @@ class WalletsController extends ResourceController
 
     public function plaidConfigDebug(): \CodeIgniter\HTTP\ResponseInterface
     {
-        $cfg = config('APIs');
+        $cfg = config('APISettings');
         $ref = new \ReflectionClass($cfg);
         return $this->respond([
             'status' => 'ok',

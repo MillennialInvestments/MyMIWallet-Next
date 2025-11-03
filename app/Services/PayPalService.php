@@ -24,7 +24,7 @@ class PayPalService
     public function __construct()
     {
         // Load PayPal config
-        $this->APIs = config('APIs');
+        $this->APIs = config('APISettings');
         $this->siteSettings = config('SiteSettings');
         
         $this->merchantId = $this->APIs->paypalMerchantID;

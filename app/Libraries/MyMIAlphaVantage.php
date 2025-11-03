@@ -15,7 +15,7 @@ class MyMIAlphaVantage
 
     public function __construct()
     {
-        $config = config('APIs');
+        $config = config('APISettings');
 
         $envKeyList = getenv('ALPHA_VANTAGE_API_KEYS');
         $parsedEnvKeys = [];

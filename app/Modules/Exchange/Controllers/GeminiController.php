@@ -10,7 +10,7 @@ class GeminiController extends UserController {
     protected $APIs; 
 
     public function __construct() {
-        $this->APIs         = config('APIs'); 
+        $this->APIs         = config('APISettings'); 
         $apiKey             = $this->APIs->geminiAPIKey;
         $apiSecret          = $this->APIs->geminiAPISecret;
         $this->MyMIGemini = new MyMIGemini($apiKey, $apiSecret);

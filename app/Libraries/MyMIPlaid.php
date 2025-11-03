@@ -18,7 +18,7 @@ class MyMIPlaid
 
     public function __construct()
     {
-        $cfg = config('APIs');
+        $cfg = config('APISettings');
 
         $this->env = strtolower(getenv('PLAID_ENVIRONMENT') ?: ($cfg->plaidEnvironment ?? 'production'));
         $this->baseUrl = match ($this->env) {

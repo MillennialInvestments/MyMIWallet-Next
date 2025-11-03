@@ -42,7 +42,7 @@ class PartnersController extends UserController
     {
         // Set Controller Settings
         $this->auth                                 = service('authentication');
-        $this->API                                  = config('APIs');
+        $this->API                                  = config('APISettings');
         $this->siteSettings                         = config('SiteSettings');
         $this->request                              = service('request'); 
         $this->session                              = Services::session(); 

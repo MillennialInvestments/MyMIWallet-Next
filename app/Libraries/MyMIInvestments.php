@@ -46,7 +46,7 @@ class MyMIInvestments
         $this->cache = service('cache');
         $this->logger = service('logger');
         $this->curlRequest = service('curlrequest');
-        $this->APIs = config('APIs');
+        $this->APIs = config('APISettings');
         $this->siteSettings = config('SiteSettings');
         // $this->userModel = new UserModel(); 
         // Set cuID
@@ -339,7 +339,7 @@ class MyMIInvestments
             return ['error' => "Invalid stock symbol."];
         }
     
-        $apiKey = config('APIs')->alphaVantageApiKey;
+        $apiKey = config('APISettings')->alphaVantageApiKey;
         $url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={$symbol}&apikey={$apiKey}";
     
         try {

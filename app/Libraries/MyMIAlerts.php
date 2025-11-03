@@ -511,7 +511,7 @@ class MyMIAlerts
     }
 
     public function fetchAlphaVantageNews($ticker) {
-        $apiKey = config('APIs')->alphaVantageApiKey;
+        $apiKey = config('APISettings')->alphaVantageApiKey;
     
         // Prepare request URL
         $url = "https://www.alphavantage.co/query?function=NEWS_SENTIMENT"
@@ -1032,7 +1032,7 @@ class MyMIAlerts
 
     public function fetchMarketData($symbol)
     {
-        $apiKey = config('APIs')->alphaVantageApiKey;
+        $apiKey = config('APISettings')->alphaVantageApiKey;
         $url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={$symbol}&apikey={$apiKey}";
         
         $response = @file_get_contents($url);
@@ -1385,7 +1385,7 @@ class MyMIAlerts
     
     public function fetchBatchMarketData(array $tickers)
     {
-        $apiKey = config('APIs')->alphaVantageApiKey;
+        $apiKey = config('APISettings')->alphaVantageApiKey;
         $marketData = [];
 
         foreach ($tickers as $rawTicker) {

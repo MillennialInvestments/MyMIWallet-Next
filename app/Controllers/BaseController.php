@@ -127,8 +127,28 @@ abstract class BaseController extends Controller
         $this->data['userAgent']   = $this->request->getUserAgent();
     }
 
-    protected function commonData(): array
+    protected function getCuID(): ?int
     {
+        $auth = service('authentication');
+        $uid  = $auth && $auth->id() ? (int)$auth->id() : (int)session('user_id');
+        return $uid > 0 ? $uid : null;
+    }
+
+    protected function commonData(): array|ResponseInterface
+    {
+        $cuID = $this->getCuID();
+        $this->data['cuID'] = $cuID;
+
+        if ($cuID === null) {
+            // For API controllers, force 401
+            if ($this->request->isAJAX() || str_starts_with($this->request->getUri()->getPath(), 'API/')) {
+                return $this->response->setStatusCode(401)
+                    ->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+            }
+
+            // For web controllers, redirect to Login
+            return redirect()->to(site_url('Login?next=' . urlencode(current_url())));
+        }
         // --- Preserve already-set items and fallbacks
         $this->data['debug']       = $this->data['debug']       ?? $this->debug;
         $this->data['siteSettings']= $this->data['siteSettings']?? $this->siteSettings;
@@ -366,8 +386,11 @@ abstract class BaseController extends Controller
         return $this->data;
     }
 
-    protected function renderTheme(string $view, array $data = []): string
+    protected function renderTheme(string $view, array|ResponseInterface $data = []): string|ResponseInterface
     {
+        if ($data instanceof ResponseInterface) {
+            return $data; // just hand it back
+        }
         // Pick theme (public/dashboard) just like before
         $theme = $data['layout'] ?? $this->theme ?? 'public';
 
@@ -591,6 +614,20 @@ abstract class BaseController extends Controller
     protected function getUserService(): UserService
     {
         return $this->userService ??= new UserService($this->siteSettings, $this->cuID, $this->request);
+    }
+    
+    protected function loadCurrentUser(): void
+    {
+        $session = service('session');
+        $userId  = (int) ($session->get('user_id') ?? 0);
+
+        if ($userId > 0) {
+            $this->user = $this->myMiUser->getUserInformation($userId);
+        } else {
+            $this->user = null;
+            // Downgrade the noisy WARNING to a DEBUG-only log:
+            log_message('debug', 'Public request: no user session.');
+        }
     }
 
     /**

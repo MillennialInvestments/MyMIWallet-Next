@@ -18,7 +18,7 @@ class FinnhubService
     public function __construct()
     {
         $this->siteSettings = config('SiteSettings');
-        $this->APIs = config('APIs');
+        $this->APIs = config('APISettings');
         $this->apiKey = $this->APIs->finnhubAPIKey; // Replace with actual Finnhub API key
 
         // Initialize the custom Finnhub client

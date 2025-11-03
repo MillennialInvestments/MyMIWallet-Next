@@ -21,7 +21,7 @@ class PlaidService
 
     public function __construct()
     {
-        $this->APIs = config('APIs'); // Assuming you have a Plaid.php in the Config folder
+        $this->APIs = config('APISettings'); // Assuming you have a Plaid.php in the Config folder
         $this->plaidModel = model('PlaidModel'); // Assuming you have PlaidModel in the Models directory
 
         $this->client_id = $this->APIs->plaid_client_id;

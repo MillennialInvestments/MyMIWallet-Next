@@ -29,7 +29,7 @@ class AccountController extends UserController
     {
         $this->auth = service('authentication');
         $this->request = service('request'); 
-        $this->API = config('APIs');
+        $this->API = config('APISettings');
         $this->siteSettings = config('SiteSettings');
         $this->session = Services::session();
         

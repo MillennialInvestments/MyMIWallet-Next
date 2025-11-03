@@ -44,7 +44,7 @@ class BudgetsController extends UserController
     public function __construct()
     {
         $this->auth                                 = service('authentication');
-        $this->API                                  = config('APIs');
+        $this->API                                  = config('APISettings');
         $this->siteSettings                         = config('SiteSettings');
         $this->request                              = service('request'); 
         $this->session                              = Services::session(); 

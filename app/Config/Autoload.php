@@ -38,9 +38,8 @@ class Autoload extends AutoloadConfig
      * @var array<string, list<string>|string>
      */
     public $psr4 = [
-        APP_NAMESPACE => APPPATH,
-        'Config'      => APPPATH . 'Config',
-        'App\\Modules' => APPPATH . 'Modules',
+        APP_NAMESPACE => APPPATH,                 // "App\" → app/
+        'App\\Modules' => APPPATH . 'Modules',    // keep if you actually use App\Modules\...
         'BlogModule' => APPPATH . 'Modules/Blog',
         'ExchangeModule' => APPPATH . 'Modules/Exchange',
         'InvestmentModule' => APPPATH . 'Modules/User',
@@ -48,7 +47,7 @@ class Autoload extends AutoloadConfig
         'ScriptStudioModule' => APPPATH . 'Modules/ScriptStudio',
         'SupportModule' => APPPATH . 'Modules/Support',
         'UserModule' => APPPATH . 'Modules/User',
-        'Myth\Auth' => APPPATH . 'ThirdParty/myth-auth/src',
+        'Myth\\Auth' => APPPATH . 'ThirdParty/myth-auth/src',
         'Maatwebsite\\Excel\\' => APPPATH . 'ThirdParty/maatwebsite/excel',
     ];
 
@@ -99,5 +98,5 @@ class Autoload extends AutoloadConfig
      *
      * @var list<string>
      */
-    public $helpers = ['string', 'url', 'file', 'date', 'cache', 'vite'];
+    public $helpers = ['assets', 'string', 'url', 'file', 'date', 'cache', 'vite'];
 }

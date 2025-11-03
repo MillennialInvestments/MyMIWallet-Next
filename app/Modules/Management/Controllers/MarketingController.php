@@ -53,7 +53,7 @@ class MarketingController extends UserController
 
     public function __construct()
     {
-        $this->API = config('APIs');
+        $this->API = config('APISettings');
         $this->auth = service('authentication');        
         // Get the logger instance from CodeIgniter's Services
         $this->logger = service('logger');

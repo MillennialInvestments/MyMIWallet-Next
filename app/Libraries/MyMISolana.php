@@ -45,7 +45,7 @@ class MyMISolana implements CryptoCurrencyInterface
     public function __construct()
     {
         $db = \Config\Database::connect();
-        $this->APIs = config('APIs');
+        $this->APIs = config('APISettings');
         $this->market = 'SOL';
         $this->siteSettings = config('SiteSettings');
         if ($this->siteSettings->beta === 1) {

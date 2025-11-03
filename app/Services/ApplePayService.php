@@ -14,7 +14,7 @@ class ApplePayService
     public function __construct()
     {
         // Load PayPal config
-        $this->APIs = config('APIs');
+        $this->APIs = config('APISettings');
         $this->siteSettings = config('SiteSettings');
         $this->stripeAPIKey = $this->APIs->stripeApiKey;
         

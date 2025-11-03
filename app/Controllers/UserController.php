@@ -10,9 +10,20 @@ class UserController extends BaseController
     protected array $data = [];
     protected bool $stringAsHtml = false;
 
-    protected function renderTheme(string $view, array $data = []): string
+    protected function renderTheme(string $view, ResponseInterface|array $data = []): ResponseInterface|string
     {
-        $data  = array_merge($this->commonData(), $data);
+        // If caller passed a Response, just return it.
+        if ($data instanceof ResponseInterface) {
+            return $data;
+        }
+
+        $base = $this->commonData();
+        // If commonData() produced a Response (401/redirect), pass it through.
+        if ($base instanceof ResponseInterface) {
+            return $base;
+        }
+
+        $data = array_merge($base, $data);
 
         // PUBLIC THEME
         if (($data['layout'] ?? 'dashboard') === 'public') {

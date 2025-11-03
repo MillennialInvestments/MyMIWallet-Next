@@ -245,8 +245,8 @@ S;
 
     public function generateVoiceoverWithElevenLabs($text, $filename, $voiceIdOverride = null)
     {
-        $apiKey = config('APIs')->elevenLabsAPIKey;
-        $voiceId = $voiceIdOverride ?? config('APIs')->elevenLabsVoiceId;
+        $apiKey = config('APISettings')->elevenLabsAPIKey;
+        $voiceId = $voiceIdOverride ?? config('APISettings')->elevenLabsVoiceId;
 
         log_message('debug', "Using ElevenLabs voice: {$voiceId}");
 

@@ -24,7 +24,7 @@ class DoorDashController extends UserController
         // Assuming siteSettings is loaded from a config or similar in CI4
         $this->auth         = service('authentication'); // Use the 'authentication' service
         $this->siteSettings = config('SiteSettings');
-        $this->APIs         = config('APIs'); 
+        $this->APIs         = config('APISettings'); 
     }
 
     public function index()

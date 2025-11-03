@@ -17,7 +17,7 @@ class CashAppService
     public function __construct()
     {
         // Load PayPal config
-        $this->APIs = config('APIs');
+        $this->APIs = config('APISettings');
         $this->siteSettings = config('SiteSettings');
         
         $this->accessToken = $this->APIs->cashappAccessToken;

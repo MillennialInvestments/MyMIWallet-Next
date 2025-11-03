@@ -61,9 +61,12 @@ class Home extends BaseController
     /**
      * Merge in your “old” commonData() enrichments on top of BaseController::commonData().
      */
-    protected function buildCommonData(array $overrides = []): array
+    protected function buildCommonData(array $overrides = []): array|ResponseInterface
     {
         $data = parent::commonData();
+        if ($data instanceof ResponseInterface) {
+            return $data;
+        }
 
         // Site + auth
         $data['auth']        = $this->auth ?? service('authentication');
@@ -148,6 +151,12 @@ class Home extends BaseController
             'pageName'  => 'Home',
             'pageTitle' => 'MyMI Wallet | The Future of Finance | Budgeting & Investments',
         ]);
+        
+
+        // ⬅️ NEW: pass through Response (401/redirect)
+        if ($data instanceof ResponseInterface) {
+            return $data;
+        }
         return $this->renderTheme('themes/public/home', $data);
     }
 
