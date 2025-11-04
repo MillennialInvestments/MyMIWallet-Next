@@ -17,6 +17,7 @@ $viewFileData               = [
 ]; 
 ?>
 <!doctype html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" data-env="<?= esc(strtolower(ENVIRONMENT), 'attr') ?>">
 <head>  
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
     <?= view('themes/public/layouts/metadata-information', $viewFileData); ?>
@@ -37,6 +38,10 @@ $viewFileData               = [
         //     });
         // });
     </script>
+    <?php if (config('Security')->csrfProtection): ?>
+        <meta name="csrf-header" content="<?= esc(config('Security')->headerName ?? 'X-CSRF-TOKEN', 'attr') ?>">
+        <meta name="csrf-token"  content="<?= esc(csrf_hash(), 'attr') ?>">
+    <?php endif; ?>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2FS4BNS0SL" <?= $nonce['script'] ?? '' ?>></script>
     <script <?= $nonce['script'] ?? '' ?>>
@@ -64,4 +69,7 @@ $viewFileData               = [
     src="https://www.facebook.com/tr?id=1066980131308331&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Meta Pixel Code -->
+    <?php if (ENVIRONMENT !== 'production'): ?>
+        <script src="<?= base_url('assets/js/dev-html-guard.js') ?>" defer></script>
+    <?php endif; ?>
 </head>

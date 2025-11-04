@@ -385,7 +385,7 @@ abstract class BaseController extends Controller
         return $this->data;
     }
 
-    protected function renderTheme(string $view, array|ResponseInterface $data = []): string|ResponseInterface
+    protected function renderTheme(string $view, ResponseInterface|array $data = []): ResponseInterface|string
     {
         if ($data instanceof ResponseInterface) {
             return $data; // just hand it back
@@ -397,6 +397,13 @@ abstract class BaseController extends Controller
         if ($view === '*') {
             $view = $this->autoViewPath($theme, $data['view'] ?? null);
         }
+
+        $base = $this->commonData();
+        if ($base instanceof ResponseInterface) {
+            return $base;
+        }
+
+        $data = array_merge($base, $data);
 
         // Merge your global defaults and request-derived stuff
         $data = $this->injectThemeDefaults($theme, $data);

@@ -1,6 +1,9 @@
 /*
 HTML ELEMENTS
 */
+[class^="glyphicon"], [class*=" glyphicon"] {
+    background-image: none !important;
+}
 body {
     background-color: white !important;
     border: none;

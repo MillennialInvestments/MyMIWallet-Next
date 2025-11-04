@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="en" data-env="<?= esc(strtolower(ENVIRONMENT), 'attr') ?>">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?= esc($pageTitle ?? 'Dashboard'); ?></title>
@@ -10,7 +12,10 @@
     ]); ?>
     <meta name="robots" content="noindex">
     <meta http-equiv="cache-control" content="no-cache">
-    <meta name="csrf-token" content="<?= esc(csrf_hash()); ?>">
+    <?php if (config('Security')->csrfProtection): ?>
+        <meta name="csrf-header" content="<?= esc(config('Security')->headerName ?? 'X-CSRF-TOKEN', 'attr') ?>">
+        <meta name="csrf-token"  content="<?= esc(csrf_hash(), 'attr') ?>">
+    <?php endif; ?>
     <link rel="manifest" href="/manifest.webmanifest">
     <meta name="theme-color" content="#0ea5e9">
     <script <?= $nonce['script'] ?? '' ?>>
@@ -32,4 +37,7 @@
       window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
     }
     </script>
+    <?php if (ENVIRONMENT !== 'production'): ?>
+        <script src="<?= base_url('assets/js/dev-html-guard.js') ?>" defer></script>
+    <?php endif; ?>
 </head>

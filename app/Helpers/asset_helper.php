@@ -3,20 +3,15 @@
 use CodeIgniter\Config\Services;
 
 if (! function_exists('asset_if_exists')) {
-    /**
-     * Return versioned asset URL if file exists, else empty string.
-     */
-    if (! function_exists('asset_if_exists')) {
-        function asset_if_exists(string $path, ?string $baseUrl = null): string
-        {
-            $baseUrl = $baseUrl ?? base_url();
-            $full = FCPATH . ltrim($path, '/');
-            if (is_file($full)) {
-                $ver = (string) @filemtime($full);
-                return rtrim($baseUrl, '/') . '/' . ltrim($path, '/') . ($ver ? '?v=' . $ver : '');
-            }
-            return '';
+    function asset_if_exists(string $path, ?string $baseUrl = null): string
+    {
+        $baseUrl = $baseUrl ?? base_url();
+        $full = FCPATH . ltrim($path, '/');
+        if (is_file($full)) {
+            $ver = (string) @filemtime($full);
+            return rtrim($baseUrl, '/') . '/' . ltrim($path, '/') . ($ver ? '?v=' . $ver : '');
         }
+        return '';
     }
 }
 

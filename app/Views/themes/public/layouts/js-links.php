@@ -47,12 +47,6 @@ if (!$scriptNonceValue && is_string($scriptNonceAttr) && $scriptNonceAttr !== ''
     $scriptNonceValue = trim(str_replace(['nonce="', '"'], '', $scriptNonceAttr));
 }
 
-// helper: return URL if file exists in /public, else null
-function asset_if_exists(string $publicPath): ?string {
-    $file = FCPATH . ltrim($publicPath, '/');
-    return is_file($file) ? base_url($publicPath) : null;
-}
-
 // 1) jQuery FIRST (NO defer)
 ?>
 <script src="<?= base_url('assets/vendor/jquery/jquery-3.6.0.min.js'); ?>" <?= $scriptNonceAttr ?>></script>

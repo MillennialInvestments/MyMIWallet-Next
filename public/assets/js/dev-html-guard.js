@@ -1,45 +1,66 @@
-(function () {
+(() => {
   if (typeof window === 'undefined') {
     return;
   }
 
+  const docEl = document.documentElement;
+  if (!docEl || (docEl.dataset.env || '').toLowerCase() === 'production') {
+    return;
+  }
+
   const logPrefix = '[HTML-INSTEAD-OF-JS]';
+  const SKIP_HOSTS = new Set([
+    'connect.facebook.net',
+    'www.googletagmanager.com',
+    'www.google-analytics.com',
+  ]);
 
   async function checkScript(src) {
+    if (!src) {
+      return;
+    }
+
     try {
-      const response = await fetch(src, { cache: 'no-store', credentials: 'same-origin' });
-      const text = (await response.clone().text()).slice(0, 160).trim();
+      const url = new URL(src, window.location.href);
+      if (url.origin !== window.location.origin || SKIP_HOSTS.has(url.hostname)) {
+        return;
+      }
+
+      const response = await fetch(url.toString(), {
+        cache: 'no-store',
+        credentials: 'same-origin',
+      });
+      const preview = (await response.clone().text()).slice(0, 160).trim();
 
       if (!response.ok) {
-        console.error(`${logPrefix} ${src} → HTTP ${response.status}. Preview:`, text);
+        console.error(`${logPrefix} ${url} → HTTP ${response.status}. Preview:`, preview);
         return;
       }
 
       const contentType = response.headers.get('content-type') || '';
-      if (!contentType.includes('javascript') && text.startsWith('<')) {
-        console.error(`${logPrefix} ${src} → ${contentType || 'unknown'} (starts with "<")`);
+      if (!contentType.includes('javascript') && preview.startsWith('<')) {
+        console.error(`${logPrefix} ${url} → ${contentType || 'unknown'} (starts with "<")`);
       }
     } catch (error) {
       console.warn(`${logPrefix} Failed to fetch ${src}:`, error);
     }
   }
 
-  function run() {
-    const scripts = Array.from(document.scripts)
+  function runGuard() {
+    Array.from(document.scripts)
       .map((script) => script.src)
-      .filter(Boolean);
-
-    scripts.forEach((src) => {
-      if (src.includes('dev-html-guard.js')) {
-        return;
-      }
-      checkScript(src);
-    });
+      .filter(Boolean)
+      .forEach((src) => {
+        if (src.includes('dev-html-guard.js')) {
+          return;
+        }
+        checkScript(src);
+      });
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', run);
+    document.addEventListener('DOMContentLoaded', runGuard);
   } else {
-    run();
+    runGuard();
   }
 })();

@@ -16,33 +16,39 @@
 </div>
 
 <script <?= $nonce['script'] ?? '' ?>>
-(function($){
-  if(!window.bootstrap){ console.warn('Bootstrap JS not present'); }
+document.addEventListener('DOMContentLoaded', function () {
+  if (!window.bootstrap) {
+    console.warn('Bootstrap JS not present');
+  }
 
-  // Example: buttons like
-  // <button class="btn btn-outline-primary"
-  //         data-bs-toggle="modal"
-  //         data-bs-target="#toolModal"
-  //         data-tool="Create Post"
-  //         data-desc="Create a social post via Zapier"
-  //         data-href="<?= site_url('Management/CreatePost') ?>">
-  //   Create Post
-  // </button>
+  (function ($) {
+    if (!$) {
+      return;
+    }
 
-  document.addEventListener('show.bs.modal', function (e) {
-    var modal = e.target;
-    if(modal.id !== 'toolModal') return;
+    // Example: buttons like
+    // <button class="btn btn-outline-primary"
+    //         data-bs-toggle="modal"
+    //         data-bs-target="#toolModal"
+    //         data-tool="Create Post"
+    //         data-desc="Create a social post via Zapier"
+    //         data-href="<?= site_url('Management/CreatePost') ?>">
+    //   Create Post
+    // </button>
 
-    var btn = e.relatedTarget;
-    var tool = btn?.getAttribute('data-tool') || 'Tool';
-    var desc = btn?.getAttribute('data-desc') || 'No description';
-    var href = btn?.getAttribute('data-href') || '#';
+    document.addEventListener('show.bs.modal', function (e) {
+      var modal = e.target;
+      if (modal.id !== 'toolModal') return;
 
-    modal.querySelector('.modal-title').textContent = tool;
-    modal.querySelector('.modal-body').textContent  = desc;
-    modal.querySelector('#toolGoBtn').setAttribute('href', href);
-  });
+      var btn  = e.relatedTarget;
+      var tool = btn?.getAttribute('data-tool') || 'Tool';
+      var desc = btn?.getAttribute('data-desc') || 'No description';
+      var href = btn?.getAttribute('data-href') || '#';
 
-})(window.jQuery);
-
+      modal.querySelector('.modal-title').textContent = tool;
+      modal.querySelector('.modal-body').textContent  = desc;
+      modal.querySelector('#toolGoBtn').setAttribute('href', href);
+    });
+  })(window.jQuery);
+});
 </script>

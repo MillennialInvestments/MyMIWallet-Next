@@ -61,6 +61,7 @@ $routes->post('/resend-activation', 'AuthController::resendActivationCode', ['as
 
 // Dev tools
 $routes->get('Dev/BitcoinTest', 'App\Controllers\Dev\BitcoinTest::index');
+$routes->get('Debug/whoami', 'Debug::whoami');
 
 $routes->group('debug', ['namespace' => 'App\Controllers\Debug'], static function ($routes) {
     $routes->get('common-data/smoke', 'CommonDataController::smoke');

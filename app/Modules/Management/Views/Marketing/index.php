@@ -180,4 +180,3 @@ document.getElementById('standaloneScraperForm')?.addEventListener('submit', fun
     });
 });
 </script>
-

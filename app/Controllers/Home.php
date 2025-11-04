@@ -167,6 +167,9 @@ class Home extends BaseController
             'pageName'  => 'Apex Referral',
             'pageTitle' => 'MyMI Wallet | The Future of Finance | Apex Referral',
         ]);
+        if ($data instanceof ResponseInterface) {
+            return $data;
+        }
         return $this->renderTheme('themes/public/home', $data);
     }
 
@@ -177,6 +180,9 @@ class Home extends BaseController
             'pageName'  => 'Corporate Earnings',
             'pageTitle' => 'MyMI Wallet | The Future of Finance | Corporate Earnings',
         ]);
+        if ($data instanceof ResponseInterface) {
+            return $data;
+        }
         return $this->renderTheme('themes/public/corporateEarnings', $data);
     }
 
@@ -187,6 +193,9 @@ class Home extends BaseController
             'pageName'  => 'Economic Calendar',
             'pageTitle' => 'MyMI Wallet | The Future of Finance | Economic Calendar',
         ]);
+        if ($data instanceof ResponseInterface) {
+            return $data;
+        }
         return $this->renderTheme('themes/public/economicCalendar', $data);
     }
 
@@ -197,6 +206,9 @@ class Home extends BaseController
             'pageName'  => 'Getting Started',
             'pageTitle' => 'MyMI Wallet | The Future of Finance | Getting Started',
         ]);
+        if ($data instanceof ResponseInterface) {
+            return $data;
+        }
         return $this->renderTheme('themes/public/gettingStarted', $data);
     }
 
@@ -207,6 +219,9 @@ class Home extends BaseController
             'pageName'  => 'Memberships',
             'pageTitle' => 'MyMI Wallet | The Future of Finance | Memberships',
         ]);
+        if ($data instanceof ResponseInterface) {
+            return $data;
+        }
         return $this->renderTheme('themes/public/memberships', $data);
     }
 
@@ -241,6 +256,9 @@ class Home extends BaseController
             'comments'          => [],
             'cuID'              => $this->cuID,
         ]);
+        if ($data instanceof ResponseInterface) {
+            return $data;
+        }
 
         return $this->renderTheme('themes/public/previewAlert', $data);
     }

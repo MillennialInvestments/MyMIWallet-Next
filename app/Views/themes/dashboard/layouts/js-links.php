@@ -12,14 +12,6 @@ if (!$scriptNonceValue && is_string($scriptNonceAttr) && $scriptNonceAttr !== ''
     $scriptNonceValue = trim(str_replace(['nonce="', '"'], '', $scriptNonceAttr));
 }
 
-// helper: return URL if file exists in /public, else null
-if (!function_exists('asset_if_exists')) {
-    function asset_if_exists(string $publicPath): ?string {
-        $file = FCPATH . ltrim($publicPath, '/');
-        return is_file($file) ? base_url($publicPath) : null;
-    }
-}
-
 // 1) jQuery FIRST (NO defer)
 ?>
 <script src="<?= base_url('assets/vendor/jquery/jquery-3.6.0.min.js'); ?>" <?= $scriptNonceAttr ?>></script>
@@ -30,6 +22,9 @@ if (!function_exists('asset_if_exists')) {
 <?php // 3) Theme base (defines NioApp) BEFORE any code that requires it ?>
 <script src="<?= base_url('assets/js/scripts.js'); ?>" <?= $scriptNonceAttr ?> defer></script>
 
+<?php if ($u = asset_if_exists('assets/js/fetch-helper.js')): ?>
+  <script src="<?= $u ?>" <?= $scriptNonceAttr ?> defer></script>
+<?php endif; ?>
 <?php // 4) Form/UI vendors that depend on jQuery (safe deferred after jQuery is non-deferred) ?>
 <script src="<?= base_url('assets/vendor/bootstrap-select/bootstrap-select.min.js'); ?>" <?= $scriptNonceAttr ?> defer></script>
 <script src="<?= base_url('assets/vendor/select2/js/select2.min.js'); ?>" <?= $scriptNonceAttr ?> defer></script>
