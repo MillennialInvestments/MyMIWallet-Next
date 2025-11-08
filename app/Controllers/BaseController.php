@@ -145,8 +145,18 @@ abstract class BaseController extends Controller
                 return $this->response->setStatusCode(401)
                     ->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
             }
-            // For web controllers, redirect to Login
-            return redirect()->to(site_url('Login?next=' . urlencode(current_url())));
+
+            $session    = session();
+            $currentUrl = current_url();
+
+            if (! $session->has('redirect_url')) {
+                $session->set('redirect_url', $currentUrl);
+            }
+
+            log_message('debug', 'BaseController::commonData() redirecting guest to login from: ' . $currentUrl);
+
+            // For web controllers, redirect to login
+            return redirect()->to(site_url('login'));
         }
         // --- Preserve already-set items and fallbacks
         $this->data['debug']       = $this->data['debug']       ?? $this->debug;

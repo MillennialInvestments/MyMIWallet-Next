@@ -61,10 +61,25 @@ class MyMIExchange
         $this->session                  = Services::session();
         $this->siteSettings             = config('SiteSettings'); 
         $this->chains                   = config('Exchanges')->chains;
-         
-        $this->MyMIUser                 = service('myMIUser');  
-        $this->exchangeModel            = service('exchangeModel'); 
-        $this->cuID                     = $this->auth->id() ?? $this->session->get('user_id');
+
+        $this->MyMISolana               = service('myMISolana');
+        $this->MyMIUser                 = service('myMIUser');
+        $this->exchangeModel            = service('exchangeModel');
+        // Resolve cuID the same way everywhere
+        $this->cuID = $this->auth->id() ?? $this->session->get('user_id');
+
+        $userLib = $this->getMyMIUser();
+        if ($this->cuID && $userLib instanceof MyMIUser) {
+            $this->userAccount    = $userLib->getUserInformation($this->cuID);
+            $this->userAssessment = $userLib->getUserFinancialAssessment($this->cuID);
+        } else {
+            $this->userAccount    = null;
+            $this->userAssessment = null;
+            log_message(
+                'warning',
+                'MyMIExchange::__construct - No cuID or MyMIUser instance; skipping userAccount load.'
+            );
+        }
         $this->userAccount              = service('MyMIUser')->getUserInformation($this->cuID);  
         $this->userAssessment           = service('MyMIUser')->getUserFinancialAssessment($this->cuID);
     }

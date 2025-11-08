@@ -76,7 +76,7 @@ class ReferralController extends UserController {
     {
         $this->data = parent::commonData();
         $this->data = $this->data ?? [];
-        $cuID = getCuID();  // Get current user ID once
+        $cuID = $this->resolveCurrentUserId();;  // Get current user ID once
         $this->cuID = $cuID;  // Ensure $this->cuID is set for use elsewhere
         $userData = $this->getMyMIUser()->getUserInformation($cuID);  // ✅ Correct method call
         // Ensure $this->data is an array
@@ -84,19 +84,23 @@ class ReferralController extends UserController {
             $this->data = [];
         }
         
-        if ($this->debug = 1) {
-            //log_message('info', 'ReferralController L83 - $userData: ' . (print_r($this->userData, true)));
+        // Normalize $this->data and $userData to arrays
+        $baseData = is_array($this->data ?? null) ? $this->data : [];
+        $userData = is_array($userData ?? null) ? $userData : [];
+
+        if ($this->debug === 1) {
+            //log_message('info', 'ReferralController L83 - $userData: ' . print_r($userData, true));
         }
-        
+
         // Merge the fetched data with $this->data
-        $this->data = array_merge($this->data, $userData);
-    
+        $this->data = array_merge($baseData, $userData);
+
         // Add additional data to $this->data
         $this->data['siteSettings'] = $this->siteSettings;
-        $this->data['debug'] = $this->siteSettings->debug;
-        $this->data['uri'] = $this->request->getUri();
-        $this->data['userAgent'] = $this->request->getUserAgent();
-        $this->data['date'] = $this->siteSettings->date;
+        $this->data['debug']        = $this->siteSettings->debug;
+        $this->data['uri']          = $this->request->getUri();
+        $this->data['userAgent']    = $this->request->getUserAgent();
+        $this->data['date']         = $this->siteSettings->date;
         $this->data['time'] = $this->siteSettings->time;
         $this->data['cuID'] = $this->cuID;
 

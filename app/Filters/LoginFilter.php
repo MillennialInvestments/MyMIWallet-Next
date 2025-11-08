@@ -27,9 +27,16 @@ class LoginFilter extends BaseFilter implements FilterInterface
 
         // If no user is logged in then send them to the login form.
         if (! $this->authenticate->check()) {
-            session()->set('redirect_url', current_url());
+            $session    = session();
+            $currentUrl = current_url();
 
-            return redirect()->to(site_url($this->reservedRoutes['login']));
+            if (! $session->has('redirect_url')) {
+                $session->set('redirect_url', $currentUrl);
+            }
+
+            log_message('debug', 'LoginFilter redirecting guest to login from: ' . $currentUrl);
+
+            return redirect()->to(site_url('login'));
         }
     }
 

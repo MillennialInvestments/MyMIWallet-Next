@@ -116,14 +116,36 @@ class MyMIMarketing
         $smBase = getenv('SCRAPEMAX_BASE') ?: 'https://api.scrapemax.com';
         $smKey  = getenv('SCRAPEMAX_API_KEY') ?: null;
 
+        // Scrapemax HTTP client (optional)
         if ($smKey) {
-            $this->scrape = new \App\Libraries\ScrapemaxClient($smBase, $smKey);
+            // Keep both for backwards compatibility with old code
+            $this->scrapemax = new \App\Libraries\ScrapemaxClient($smBase, $smKey);
+            $this->scrape    = $this->scrapemax;
         } else {
             log_message('warning', 'MyMIMarketing: SCRAPEMAX_API_KEY missing; disabling email alerts');
-            $this->scrape = null; // and gate any usage below
+            $this->scrapemax = null;
+            $this->scrape    = null;
         }
-        $this->pscrape = new PscrapeScraper();
-        
+
+        // Pscrape client (optional)
+        if (class_exists(\Pscrape\Pscrape\Scrape::class)) {
+            try {
+                $this->pscrape = new PscrapeScraper();
+            } catch (\Throwable $e) {
+                log_message(
+                    'warning',
+                    'MyMIMarketing: failed to initialize PscrapeScraper: ' . $e->getMessage()
+                );
+                $this->pscrape = null;
+            }
+        } else {
+            log_message(
+                'info',
+                'MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.'
+            );
+            $this->pscrape = null;
+        }
+
         // Facebook Configuration
 
         // $fbConfig = config('Facebook');
@@ -1544,26 +1566,55 @@ class MyMIMarketing
 
     private function scrapeGoogleSearch($query)
     {
+        // 1) Prefer Pscrape backend if it is available
+        if ($this->pscrape) {
+            try {
+                $results     = $this->pscrape->rollingCurl('rollingCurl');
+                $results->request('https://www.google.com/search?q=' . urlencode($query));
+                $content     = '';
+                $resultsData = $results->execute();
+
+                if (!is_array($resultsData)) {
+                    throw new \Exception("Google search did not return an array");
+                }
+
+                foreach ($resultsData as $result) {
+                    // Defensive guards for unexpected structure
+                    $title = $result['title'] ?? '';
+                    $link  = $result['link']  ?? '';
+                    $content .= trim($title . ' ' . $link) . ' ';
+                }
+
+                return [
+                    'title'   => 'Google Search Results for ' . $query,
+                    'content' => $this->sanitizeContent($content),
+                ];
+            } catch (\Throwable $e) {
+                $this->logger->error('Error scraping Google Search via Pscrape: ' . $e->getMessage());
+                // fall through to fallback below
+            }
+        }
+
+        // 2) Fallback: simple link list using existing Guzzle-based helper
         try {
-            $results = $this->pscrape->rollingCurl('rollingCurl');
-            $results->request('https://www.google.com/search?q=' . urlencode($query));
-            $content = '';
-            $resultsData = $results->execute();
-            if (!is_array($resultsData)) {
-                throw new \Exception("Google search did not return an array");
+            $links = $this->fetchGoogleResults($query); // already defined earlier in this class
+
+            if (empty($links)) {
+                return [];
             }
-            foreach ($resultsData as $result) {
-                $content .= $result['title'] . ' ' . $result['link'] . ' ';
-            }
+
+            $content = implode(' ', $links);
+
             return [
-                'title' => 'Google Search Results for ' . $query,
+                'title'   => 'Google Search Links for ' . $query,
                 'content' => $this->sanitizeContent($content),
             ];
-        } catch (\Exception $e) {
-            $this->logger->error('Error scraping Google Search: ' . $e->getMessage());
+        } catch (\Throwable $e) {
+            $this->logger->error('Error scraping Google Search fallback: ' . $e->getMessage());
+            return [];
         }
-        return [];
     }
+
 
     public function sendMediaToZapier($media)
     {

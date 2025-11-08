@@ -39,7 +39,7 @@ $routes->setAutoRoute(false);
 
 
 $routes->get('/', 'Home::index');
-$routes->get('Dashboard', 'App\\Modules\\User\\Controllers\\BudgetController::index', ['filter' => 'login']);
+// $routes->get('Dashboard', 'App\\Modules\\User\\Controllers\\BudgetController::index', ['filter' => 'login']);
 
 // app/Config/Routes.php
 $routes->get('/sw.js', 'ServiceWorker::index');
@@ -86,6 +86,11 @@ $routes->group('', ['namespace' => 'App\Controllers'], static function ($routes)
     $routes->post('login', 'AuthController::attemptLogin', ['as' => 'auth/attemptLogin']);
     $routes->get('logout', 'AuthController::logout');
     $routes->post('logout', 'AuthController::logout', ['as' => 'auth/logout']);
+
+    // TEMP: handle accidental /Login and redirect to lowercase
+    $routes->get('Login', static function () {
+        return redirect()->to(site_url('login'));
+    });
 
     // Utility
     $routes->get('test-create-user', 'AuthController::createTempUser');

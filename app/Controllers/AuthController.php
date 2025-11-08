@@ -50,7 +50,15 @@ class AuthController extends Controller
             return $this->redirectAfterLogin();
         }
 
-        $this->rememberRedirectUrl($this->request->getGet('redirect_url'));
+        $request = $this->request;
+        $next    = $request->getGet('next');
+
+        if (! empty($next)) {
+            session()->set('redirect_url', $next);
+            log_message('debug', 'Auth login() captured next param: ' . $next);
+        }
+
+        $this->rememberRedirectUrl($request->getGet('redirect_url'));
 
         if (! $this->session->has('redirect_url')) {
             $this->rememberRedirectUrl(previous_url());
@@ -65,6 +73,7 @@ class AuthController extends Controller
      */
     public function attemptLogin()
     {
+        helper('auth');
         $rules = [
             'login'    => 'required',
             'password' => 'required',
@@ -81,16 +90,65 @@ class AuthController extends Controller
         $password = $this->request->getPost('password');
         $remember = (bool) $this->request->getPost('remember');
 
+        log_message('debug', sprintf(
+            'Auth attemptLogin() called with login identifier: %s, remember: %s',
+            $login ?? 'N/A',
+            $remember ? 'true' : 'false'
+        ));
+
         $this->rememberRedirectUrl($this->request->getPost('redirect_url'));
+        $this->rememberRedirectUrl($this->request->getPost('next'));
+
+        log_message('debug', 'Auth attemptLogin() called. redirect_url in session: ' . (session('redirect_url') ?? 'none'));
 
         // Determine credential type
         $type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
         // Try to log them in...
-        if (! $this->auth->attempt([$type => $login, 'password' => $password], $remember)) {
-            return redirect()->back()->withInput()->with('error', $this->auth->error() ?? lang('Auth.badAttempt'));
+        $credentials = [$type => $login, 'password' => $password];
+
+        log_message('debug', sprintf(
+            'Auth credentials normalised for attempt using key "%s"',
+            $type
+        ));
+
+        // Try to log them in...
+        if (! $this->auth->attempt($credentials, $remember)) {
+            log_message('debug', 'Auth attempt failed. Errors: ' . json_encode($this->auth->errors() ?? []));
+            $errors = $this->auth->errors() ?? [];
+            log_message('debug', sprintf(
+                'Auth attempt failed for identifier %s. Errors: %s',
+                $login ?? 'N/A',
+                json_encode($errors)
+            ));
+
+            if ($errors === []) {
+                $errors = [$this->auth->error() ?? lang('Auth.badAttempt')];
+            }
+
+            return redirect()->back()
+                ->withInput()
+                ->with('error', $this->auth->error() ?? lang('Auth.badAttempt'))
+                ->with('errors', $errors);
         }
 
+        $loggedIn = function_exists('logged_in') ? logged_in() : $this->auth->check();
+        $userId   = null;
+
+        if (function_exists('user_id')) {
+            $userId = user_id();
+        } elseif ($this->auth->user()) {
+            $userId = $this->auth->user()->id ?? null;
+        }
+
+        log_message('debug', sprintf(
+            'Auth attempt succeeded for identifier %s. logged_in(): %s, user_id(): %s',
+            $login ?? 'N/A',
+            $loggedIn ? 'yes' : 'no',
+            $userId ?? 'null'
+        ));
+
+        log_message('debug', 'Auth attempt succeeded. logged_in(): ' . (logged_in() ? 'yes' : 'no') . ', user_id(): ' . (user_id() ?? 'null'));
         // Is the user being forced to reset their password?
         if ($this->auth->user()->force_pass_reset === true) {
             return redirect()->to(route_to('reset-password') . '?token=' . $this->auth->user()->reset_hash)->withCookies();

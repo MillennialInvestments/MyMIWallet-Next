@@ -142,7 +142,7 @@ $allViewData = array(
 );
 ?>
 <div data-budget-dashboard hidden></div>
-<div class="alert alert-info mt-3" data-budget-session-note>Budget data requires a logged-in session. If you're in Incognito or blocked third-party cookies, sign in again in a normal window.</div>
+<!-- <div class="alert alert-info mt-3" data-budget-session-note>Budget data requires a logged-in session. If you're in Incognito or blocked third-party cookies, sign in again in a normal window.</div> -->
 <style <?= $nonce['style'] ?? '' ?>>
     @media only screen and (max-width: 768px) {
         #userBudgetingDatatable_filter { padding-top: 1rem; text-align: left; }
@@ -317,7 +317,7 @@ if (!function_exists('miw_is_outflow')) {
 
 <?php else: ?>
     <!-- DEFAULT FULL PAGE VIEW -->
-    <div class="d-flex flex-wrap gap-2 mb-5">
+    <!-- <div class="d-flex flex-wrap gap-2 mb-5">
         <div class="btn-group" role="group" aria-label="This month quick links">
             <a class="btn btn-primary" href="<?= site_url('Budget/This-Month'); ?>">This Month (All)</a>
             <a class="btn btn-outline-success" href="<?= site_url('Budget/This-Month/Income'); ?>">Income</a>
@@ -336,7 +336,7 @@ if (!function_exists('miw_is_outflow')) {
             <a class="btn btn-outline-success" href="<?= site_url('Budget/Next-Month/Income'); ?>">Income</a>
             <a class="btn btn-outline-danger" href="<?= site_url('Budget/Next-Month/Expense'); ?>">Expenses</a>
         </div>
-    </div>
+    </div> -->
     <?php if (!empty($userAgent) && method_exists($userAgent, 'isBrowser') && $userAgent->isBrowser()): ?>
     <div class="nk-block d-none d-sm-block">
         <div class="row">

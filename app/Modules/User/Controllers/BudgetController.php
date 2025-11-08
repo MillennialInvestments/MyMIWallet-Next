@@ -210,6 +210,8 @@ class BudgetController extends UserController
     // }
 
     public function index() {
+        $activeUserId = $this->cuID ?? null;
+        log_message('debug', 'Dashboard::index() reached in BudgetController. User ID: ' . ($activeUserId !== null ? (string) $activeUserId : 'guest'));
         // Set up the page
         $this->data['pageTitle'] = 'My Budget | MyMI Wallet | The Future of Finance';
 

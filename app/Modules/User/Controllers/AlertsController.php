@@ -34,7 +34,7 @@ class AlertsController extends UserController
     protected $alertsModel;
     protected $budgetModel;
     protected $alertsManager;
-    protected MyMIUser     $MyMIUser;
+    private ?MyMIUser $MyMIUser = null;
     protected $userService;
     protected $siteSettings;
     protected $uri;
@@ -77,6 +77,20 @@ class AlertsController extends UserController
     }
 
     // 🔧 Lazy-init getters so the typed props are always initialized before use
+    protected function getMyMIUser(): ?MyMIUser
+    {
+        if ($this->MyMIUser instanceof MyMIUser) {
+            return $this->MyMIUser;
+        }
+
+        // Try service() first, then direct constructor as fallback
+        $this->MyMIUser = service('myMIUser');
+        if (!$this->MyMIUser instanceof MyMIUser) {
+            $this->MyMIUser = new MyMIUser();
+        }
+
+        return $this->MyMIUser;
+    }
     protected function getMyMIBudget(): MyMIBudget
     {
         return $this->MyMIBudget ??= new MyMIBudget();
@@ -231,7 +245,15 @@ class AlertsController extends UserController
                 return $resp;
             }
             // If this is a page action, fall back to redirect (or show a friendly message)
-            return redirect_to_safe(null, '/Auth/Login');
+            $session     = session();
+            $currentUrl  = current_url();
+            if (! $session->has('redirect_url')) {
+                $session->set('redirect_url', $currentUrl);
+            }
+
+            log_message('debug', 'AlertsController::index() redirecting guest to login from: ' . $currentUrl);
+
+            return redirect()->to(site_url('login'));
         }
 
         $risk = $this->myMIBudget->getUserRiskProfileSafe($userId);
