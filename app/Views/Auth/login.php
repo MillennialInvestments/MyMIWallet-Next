@@ -12,7 +12,7 @@
 
 					<?= view('App\Views\Auth\_message_block') ?>
 
-					<form action="<?= url_to('login') ?>" method="post">
+					 <form action="<?= site_url('login'); ?>" method="post">
 						<?= csrf_field() ?>
 						<input type="hidden" name="redirect_url" value="<?= session('redirect_url') ?>">
 

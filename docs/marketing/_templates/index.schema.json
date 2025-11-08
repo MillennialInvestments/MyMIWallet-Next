@@ -1,0 +1,136 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MyMI Marketing Campaign Metadata",
+  "type": "object",
+  "required": [
+    "title",
+    "slug",
+    "status",
+    "audience",
+    "goals",
+    "pillars",
+    "primary_cta",
+    "secondary_cta",
+    "discounts",
+    "channels",
+    "kpis",
+    "seo",
+    "utm",
+    "compliance_notes",
+    "doc_version",
+    "updated"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "active", "archived"]
+    },
+    "audience": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["beginner", "advanced", "intermediate", "partner"]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "goals": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 5
+      },
+      "minItems": 1
+    },
+    "pillars": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "primary_cta": {
+      "type": "string",
+      "format": "uri"
+    },
+    "secondary_cta": {
+      "type": "string",
+      "format": "uri"
+    },
+    "discounts": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "channels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "kpis": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "target"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "target": {}
+        }
+      }
+    },
+    "seo": {
+      "type": "object",
+      "required": ["primary_keywords", "secondary_keywords"],
+      "properties": {
+        "primary_keywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "secondary_keywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "utm": {
+      "type": "object",
+      "required": ["source", "medium", "campaign", "content"],
+      "properties": {
+        "source": {"type": "string"},
+        "medium": {"type": "string"},
+        "campaign": {"type": "string"},
+        "content": {"type": "string"}
+      }
+    },
+    "compliance_notes": {
+      "type": "string"
+    },
+    "doc_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$"
+    },
+    "updated": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    }
+  },
+  "additionalProperties": false
+}

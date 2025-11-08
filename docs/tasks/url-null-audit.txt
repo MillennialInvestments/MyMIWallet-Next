@@ -1,0 +1,148 @@
+# URL Null Audit
+
+Date: 2025-09-30T17:58:40+00:00
+
+## Command Snapshots
+
+### redirect()->to( (filtered to high-risk callsites)
+app/Filters/RoleFilter.php:42:            return redirect()->to($redirectURL)->with('error', lang('Auth.notEnoughPrivilege'));
+app/Controllers/AuthControllerCustom.php:111:            return redirect()->to($redirectURL);
+app/Controllers/AuthControllerCustom.php:162:            return redirect()->to(route_to('reset-password') . '?token=' . $this->auth->user()->reset_hash)->withCookies();
+app/Controllers/AuthControllerCustom.php:168:        return redirect()->to($redirectURL)->withCookies()->with('message', lang('Auth.loginSuccess'));
+app/Controllers/AuthControllerCustom.php:180:        return redirect()->to(site_url('/'));
+app/Modules/APIs/Controllers/DoorDashController.php:36:            return redirect()->to('/login');
+app/Modules/APIs/Controllers/DoorDashController.php:74:        return redirect()->to($authUrl);
+app/Modules/APIs/Controllers/DoorDashController.php:105:            return redirect()->to('/Account/Connected-Accounts');
+app/Modules/APIs/Controllers/DoorDashController.php:141:                return redirect()->to('/budget');
+app/Modules/APIs/Controllers/DoorDashController.php:144:                return redirect()->to("/budget/recurring-account/schedule/{$accountId}");
+app/Modules/APIs/Controllers/DoorDashController.php:148:            return redirect()->to("/budget/edit/{$accountId}");
+app/Modules/APIs/Controllers/DoorDashController.php:161:                    return redirect()->to('/budget');
+app/Modules/APIs/Controllers/DoorDashController.php:164:                    return redirect()->to("/budget/edit/{$accountId}");
+app/Modules/APIs/Controllers/DoorDashController.php:169:                    return redirect()->to("/budget/edit/{$accountId}");
+app/Modules/APIs/Controllers/DoorDashController.php:172:                    return redirect()->to("/budget/recurring-account/schedule/{$accountId}");
+app/Modules/APIs/Controllers/DoorDashController.php:185:            return redirect()->to($referer);
+app/Modules/APIs/Controllers/DoorDashController.php:188:            return redirect()->to($referer);
+app/Modules/Exchange/Controllers/ExchangeController.php:297:            return redirect()->to('/dashboard');
+app/Modules/Exchange/Controllers/ExchangeController.php:299:            return redirect()->to('/dashboard')->with('error', 'Order Could Not Be Submitted!');
+app/Modules/Exchange/Controllers/ExchangeController.php:343:                return redirect()->to($this->request->getPost('redirectURL'))->with('success', 'Order Submitted Successfully');
+app/Modules/Exchange/Controllers/ExchangeController.php:345:                return redirect()->to($this->request->getPost('redirectURL'))->with('error', 'Order Could Not Be Submitted!');
+app/Modules/Exchange/Controllers/ExchangeController.php:348:            return redirect()->to('/dashboard')->with('error', 'Amount Must Be Larger Than Minimum Requirement');
+app/Modules/Exchange/Controllers/ExchangeController.php:392:                return redirect()->to($this->request->getPost('redirectURL'))->with('success', 'Order Submitted Successfully');
+app/Modules/Exchange/Controllers/ExchangeController.php:394:                return redirect()->to($this->request->getPost('redirectURL'))->with('error', 'Order Could Not Be Submitted!');
+app/Modules/Exchange/Controllers/ExchangeController.php:397:            return redirect()->to('/dashboard')->with('error', 'Amount Must Be Larger Than Minimum Requirement');
+app/Modules/Exchange/Controllers/ExchangeController.php:435:                return redirect()->to('/exchange/kyc_registration_reward/' . $formData['user_id'])->with('success', 'Account Information Updated Successfully');
+app/Modules/Exchange/Controllers/ExchangeController.php:437:                return redirect()->to('/exchange/account_information')->with('error', 'Submission Unsuccessful');
+app/Modules/Exchange/Controllers/ExchangeController.php:472:            return redirect()->to('/exchange')->with('success', 'Account Information Submitted Successfully');
+app/Modules/Exchange/Controllers/ExchangeController.php:474:            return redirect()->to('/exchange')->with('error', 'Reward Not Submitted');
+app/Modules/Exchange/Controllers/ExchangeController.php:597:            return redirect()->to('/exchange/success');
+app/Modules/Exchange/Controllers/ExchangeController.php:599:            return redirect()->to('/exchange/failure');
+app/Modules/User/Controllers/AccountController.php:126:                return redirect()->to('/budget');
+app/Modules/User/Controllers/AccountController.php:129:                return redirect()->to("/budget/recurring-account/schedule/{$accountId}");
+app/Modules/User/Controllers/AccountController.php:133:            return redirect()->to("/budget/edit/{$accountId}");
+app/Modules/User/Controllers/AccountController.php:147:                    return redirect()->to('/budget');
+app/Modules/User/Controllers/AccountController.php:150:                    return redirect()->to("/budget/edit/{$accountId}");
+app/Modules/User/Controllers/AccountController.php:155:                    return redirect()->to("/budget/edit/{$accountId}");
+app/Modules/User/Controllers/AccountController.php:158:                    return redirect()->to("/budget/recurring-account/schedule/{$accountId}");
+app/Modules/User/Controllers/AccountController.php:171:            return redirect()->to($referer);
+app/Modules/User/Controllers/AccountController.php:174:            return redirect()->to($referer);
+app/Modules/Management/Controllers/SecurityController.php:715:        return redirect()->to($path)->withCookies();
+app/Modules/Management/Controllers/HowTosController.php:48:            return redirect()->to('/login')->with('redirect_url', current_url())->send();
+app/Modules/Management/Controllers/HowTosController.php:379:        return redirect()->to('/Budget');
+app/Modules/Management/Controllers/HowTosController.php:608:        return redirect()->to($referer);
+app/Modules/Management/Controllers/HowTosController.php:619:                    return redirect()->to('/Budget');
+app/Modules/Management/Controllers/HowTosController.php:622:                    return redirect()->to("/Budget/Edit/{$accountID}");
+app/Modules/Management/Controllers/HowTosController.php:627:                    return redirect()->to("/Budget/Edit/{$accountID}");
+app/Modules/Management/Controllers/HowTosController.php:630:                    return redirect()->to("/Budget/Recurring-Account/Schedule/{$accountID}");
+app/Modules/Management/Controllers/HowTosController.php:640:            return redirect()->to('/Budget');
+app/Modules/Management/Controllers/HowTosController.php:644:            return redirect()->to('/Budget');
+app/Modules/Management/Controllers/HowTosController.php:652:            return redirect()->to('/Budget');
+app/Modules/Management/Controllers/HowTosController.php:656:            return redirect()->to('/Budget');
+app/Modules/Management/Controllers/HowTosController.php:712:            redirect()->to('/login')->with('redirect_url', current_url())->send();
+app/Modules/Management/Controllers/AdminController.php:358:        return redirect()->to('/Budget');
+app/Modules/Management/Controllers/AdminController.php:587:        return redirect()->to($referer);
+app/Modules/Management/Controllers/AdminController.php:598:                    return redirect()->to('/Budget');
+app/Modules/Management/Controllers/AdminController.php:601:                    return redirect()->to("/Budget/Edit/{$accountID}");
+app/Modules/Management/Controllers/AdminController.php:606:                    return redirect()->to("/Budget/Edit/{$accountID}");
+app/Modules/Management/Controllers/AdminController.php:609:                    return redirect()->to("/Budget/Recurring-Account/Schedule/{$accountID}");
+app/Modules/Management/Controllers/AdminController.php:619:            return redirect()->to('/Budget');
+app/Modules/Management/Controllers/AdminController.php:623:            return redirect()->to('/Budget');
+app/Modules/Management/Controllers/AdminController.php:631:            return redirect()->to('/Budget');
+app/Modules/Management/Controllers/AdminController.php:635:            return redirect()->to('/Budget');
+app/Modules/Management/Controllers/ManagementController.php:620:        return redirect()->to($referer);
+app/Modules/Management/Controllers/ManagementController.php:631:                    return redirect()->to('/Budget');
+app/Modules/Management/Controllers/ManagementController.php:634:                    return redirect()->to("/Budget/Edit/{$accountID}");
+app/Modules/Management/Controllers/ManagementController.php:639:                    return redirect()->to("/Budget/Edit/{$accountID}");
+app/Modules/Management/Controllers/ManagementController.php:642:                    return redirect()->to("/Budget/Recurring-Account/Schedule/{$accountID}");
+app/Modules/Management/Controllers/ManagementController.php:652:            return redirect()->to('/Budget');
+app/Modules/Management/Controllers/ManagementController.php:656:            return redirect()->to('/Budget');
+app/Modules/Management/Controllers/ManagementController.php:664:            return redirect()->to('/Budget');
+app/Modules/Management/Controllers/ManagementController.php:668:            return redirect()->to('/Budget');
+
+### site_url(
+app/Controllers/AuthControllerCustom.php:108:            $redirectURL = session('redirect_url') ?? site_url('/');
+app/Controllers/AuthControllerCustom.php:115:        $_SESSION['redirect_url'] = session('redirect_url') ?? previous_url() ?? site_url('/');
+app/Controllers/AuthControllerCustom.php:155:            $resetUrl = site_url('forgot-password');
+app/Controllers/AuthControllerCustom.php:165:        $redirectURL = session('redirect_url') ?? site_url('/');
+app/Controllers/AuthControllerCustom.php:180:        return redirect()->to(site_url('/'));
+
+### base_url(
+app/Modules/Management/Controllers/MarketingController.php:392:            return redirect()->to(base_url('Management/Marketing/Schedule'))->with('success', 'New schedule added successfully.');
+app/Modules/Management/Controllers/MarketingController.php:961:            $fileUrl = base_url('uploads/' . basename($outputFile));
+app/Modules/Management/Controllers/MarketingController.php:2055:                        $filePaths[] = base_url('assets/images/Marketing/Ideas/' . $newName);
+
+### anchor(
+app/Helpers/url_safe_helper.php:23:        return anchor($uri ?? '', $title, $attributes);
+app/Modules/Exchange/Views/Account_Information.php:59:													<?php echo anchor(LOGIN_URL, lang('bf_action_login')); ?>
+
+### route_to(
+app/Filters/RoleFilter.php:39:            $redirectURL = session('redirect_url') ?? route_to($this->landingRoute);
+app/Controllers/AuthControllerCustom.php:162:            return redirect()->to(route_to('reset-password') . '?token=' . $this->auth->user()->reset_hash)->withCookies();
+
+### $slug
+app/Sitemap/Providers/PublicPages.php:16:            $slug = basename($file, '.php');
+app/Sitemap/Providers/PublicPages.php:17:            if (! preg_match('/^[a-zA-Z0-9\-]+$/', $slug)) {
+app/Sitemap/Providers/PublicPages.php:20:            $path   = $slug === 'home' ? '/' : '/' . strtolower($slug);
+app/Sitemap/Providers/BlogPages.php:23:            $slug = $p->slug ?? ($p['slug'] ?? null);
+app/Sitemap/Providers/BlogPages.php:24:            if (! $slug) {
+
+### $next
+app/Commands/WebhooksDrain.php:33:                $next = date('Y-m-d H:i:s', time() + $delayMin * 60);
+app/Commands/WebhooksDrain.php:38:                    'next_attempt_at'=>$next,
+app/Libraries/MyMIAlphaVantage.php:903:                $next = [8, 13, 34, 48][$i];
+app/Libraries/MyMIAlphaVantage.php:904:                return ($emaResults[$p] !== null && $emaResults[$next] !== null && $emaResults[$p] > $emaResults[$next]) ? $carry + 1 : $carry;
+
+### $return
+(no matches)
+
+### $path
+(no matches)
+
+### $url
+app/Entities/SearchResult.php:11:        public string $url,
+app/Services/SolanaService.php:69:            $url = rtrim($base, '/');
+app/Services/SolanaService.php:72:            if ($this->isCircuitOpen($url)) {
+app/Services/SolanaService.php:73:                log_message('debug', "SolanaService RPC: skip {$url} (circuit open)");
+app/Services/SolanaService.php:87:                    log_message('debug', 'HTTP POST '.$url.' | payload:'.json_encode($payload));
+
+### $link
+app/Services/SearchRotationService.php:73:            foreach ($topLinks as $link) {
+app/Services/SearchRotationService.php:78:                $scraped = $this->scrapeUrlContent($link);
+app/Services/SearchRotationService.php:80:                    $model->cacheScrapedLinkWithKeyword($link, $scraped, $term);
+app/Libraries/MyMIMarketing-06162025.php:255:    private function cacheScrapedLink($link, $content)
+app/Libraries/MyMIMarketing-06162025.php:258:            'url' => $link,
+
+## Patched Call Sites
+- `app/Filters/RoleFilter.php` — wrap silent redirect with `redirect_to_safe()` using computed fallback.
+- `app/Controllers/AuthControllerCustom.php` — safe redirect for login success and already-logged flows.
+- `app/Modules/Exchange/Controllers/ExchangeController.php` — use `redirect_to_safe()` when reading `redirectURL` from POST data.
+- `app/Modules/Management/Controllers/ManagementController.php` — safe redirect when falling back to HTTP referer.
+- `app/Modules/Management/Controllers/AdminController.php` — safe redirect when falling back to HTTP referer.
+- `app/Modules/Management/Controllers/HowTosController.php` — safe redirect when falling back to HTTP referer.
+- `app/Modules/Management/Controllers/SecurityController.php` — guard secure redirect helper with fallback.
+- `app/Modules/APIs/Controllers/DoorDashController.php` — safe referer redirect with `/budget` fallback.
+- `app/Modules/User/Controllers/AccountController.php` — safe referer redirect with `/budget` fallback.
+- `app/Helpers/url_safe_helper.php` — normalize helpers and add `href_or()` convenience.
+
+## Follow-up Notes
+- Remaining `redirect()->to()` usages either target static routes or operate on previously validated inputs; monitor logs after deployment for any residual `SiteURI::stringifyRelativePath()` warnings.
+- Consider enabling the optional development guard in `app/Config/Events.php` if further null origins need to be traced locally.

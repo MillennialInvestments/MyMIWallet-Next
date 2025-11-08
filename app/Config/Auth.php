@@ -30,7 +30,40 @@ class Auth extends \Myth\Auth\Config\Auth
      *
      * @var string
      */
-    public $landingRoute = '/';
+    public $landingRoute = '/Dashboard';
+
+    /**
+     * --------------------------------------------------------------------
+     * Default Redirects
+     * --------------------------------------------------------------------
+     *
+     * Fallback locations Myth/Auth should use after authentication events.
+     * Keeping these values aligned ensures we consistently land users on the
+     * Dashboard after a successful login.
+     *
+     * @var string
+     */
+    public $redirect = '/Dashboard';
+
+    /**
+     * When true Myth/Auth will attempt to send users back to the page that
+     * triggered the auth flow. We leave this enabled but still provide a
+     * sensible default when no previous location is available.
+     *
+     * @var bool
+     */
+    public $redirectBack = true;
+
+    /**
+     * Explicit redirects for specific actions.
+     *
+     * @var array<string, string>
+     */
+    public $redirects = [
+        'register' => '/Dashboard',
+        'login'    => '/Dashboard',
+        'logout'   => '/login',
+    ];
 
     /**
      * --------------------------------------------------------------------
