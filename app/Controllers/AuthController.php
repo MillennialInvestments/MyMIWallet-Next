@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
+use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\Session\Session;
 use Myth\Auth\Config\Auth as AuthConfig;
 use Myth\Auth\Entities\User;
@@ -46,14 +47,14 @@ class AuthController extends Controller
         // No need to show a login form if the user
         // is already logged in.
         if ($this->auth->check()) {
-            $redirectURL = session('redirect_url') ?? site_url('/');
-            unset($_SESSION['redirect_url']);
-
-            return redirect()->to($redirectURL);
+            return $this->redirectAfterLogin();
         }
 
-        // Set a return URL if none is specified
-        $_SESSION['redirect_url'] = session('redirect_url') ?? previous_url() ?? site_url('/');
+        $this->rememberRedirectUrl($this->request->getGet('redirect_url'));
+
+        if (! $this->session->has('redirect_url')) {
+            $this->rememberRedirectUrl(previous_url());
+        }
 
         return $this->_render($this->config->views['login'], ['config' => $this->config]);
     }
@@ -80,6 +81,8 @@ class AuthController extends Controller
         $password = $this->request->getPost('password');
         $remember = (bool) $this->request->getPost('remember');
 
+        $this->rememberRedirectUrl($this->request->getPost('redirect_url'));
+
         // Determine credential type
         $type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
@@ -93,10 +96,9 @@ class AuthController extends Controller
             return redirect()->to(route_to('reset-password') . '?token=' . $this->auth->user()->reset_hash)->withCookies();
         }
 
-        $redirectURL = session('redirect_url') ?? site_url('/');
-        unset($_SESSION['redirect_url']);
-
-        return redirect()->to($redirectURL)->withCookies()->with('message', lang('Auth.loginSuccess'));
+        return $this->redirectAfterLogin()
+            ->withCookies()
+            ->with('message', lang('Auth.loginSuccess'));
     }
 
     /**
@@ -405,6 +407,112 @@ class AuthController extends Controller
 
         // Success!
         return redirect()->route('login')->with('message', lang('Auth.activationSuccess'));
+    }
+
+    private function redirectAfterLogin(): RedirectResponse
+    {
+        $destination = $this->determineRedirectDestination();
+
+        return redirect()->to($destination);
+    }
+
+    private function determineRedirectDestination(): string
+    {
+        $redirectURL = $this->session->get('redirect_url');
+
+        if (! $this->isValidRedirectTarget($redirectURL)) {
+            $redirectURL = $this->dashboardUrl();
+        }
+
+        $this->session->remove('redirect_url');
+
+        log_message('debug', 'Auth redirect destination: ' . $redirectURL);
+
+        return $redirectURL;
+    }
+
+    private function rememberRedirectUrl(?string $url): void
+    {
+        if ($url === null || $url === '') {
+            return;
+        }
+
+        if ($this->session->has('redirect_url')) {
+            return;
+        }
+
+        if ($this->isValidRedirectTarget($url)) {
+            $this->session->set('redirect_url', $url);
+        }
+    }
+
+    private function isValidRedirectTarget(?string $url): bool
+    {
+        if ($url === null || $url === '') {
+            return false;
+        }
+
+        if ($this->isRootDestination($url) || $this->isLoginDestination($url)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private function isRootDestination(?string $url): bool
+    {
+        if ($url === null) {
+            return true;
+        }
+
+        if ($url === '/' || $url === '') {
+            return true;
+        }
+
+        $path = $this->normalisePath($url);
+        if ($path === '' || in_array(strtolower($path), ['home', 'index', 'index.php'], true)) {
+            return true;
+        }
+
+        $normalisedUrl = rtrim($url, '/');
+        $baseUrls      = [
+            rtrim(site_url('/'), '/'),
+            rtrim(base_url('/'), '/'),
+        ];
+
+        return in_array($normalisedUrl, $baseUrls, true);
+    }
+
+    private function isLoginDestination(?string $url): bool
+    {
+        if ($url === null) {
+            return false;
+        }
+
+        $path      = $this->normalisePath($url);
+        $loginPath = $this->normalisePath(site_url('login'));
+
+        return $path === $loginPath;
+    }
+
+    private function normalisePath(?string $url): string
+    {
+        if ($url === null) {
+            return '';
+        }
+
+        $path = parse_url($url, PHP_URL_PATH);
+
+        if ($path === null) {
+            $path = $url;
+        }
+
+        return trim($path, '/');
+    }
+
+    private function dashboardUrl(): string
+    {
+        return site_url('Dashboard');
     }
 
     protected function _render(string $view, array $data = [])
