@@ -29,7 +29,7 @@ class LoginFilter extends BaseFilter implements FilterInterface
         if (! $this->authenticate->check()) {
             session()->set('redirect_url', current_url());
 
-            return redirect($this->reservedRoutes['login']);
+            return redirect()->to(site_url($this->reservedRoutes['login']));
         }
     }
 

@@ -39,6 +39,7 @@ $routes->setAutoRoute(false);
 
 
 $routes->get('/', 'Home::index');
+$routes->get('Dashboard', 'App\\Modules\\User\\Controllers\\BudgetController::index', ['filter' => 'login']);
 
 // app/Config/Routes.php
 $routes->get('/sw.js', 'ServiceWorker::index');
