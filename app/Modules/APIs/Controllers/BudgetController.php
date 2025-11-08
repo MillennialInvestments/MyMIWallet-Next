@@ -7,13 +7,34 @@ use CodeIgniter\HTTP\ResponseInterface;
 #[\AllowDynamicProperties]
 class BudgetController extends UserBudgetController
 {
+    private function guard(): ?ResponseInterface
+    {
+        if (! $this->auth || ! method_exists($this->auth, 'check') || ! $this->auth->check()) {
+            return $this->response->setStatusCode(401)->setJSON([
+                'status'  => 'error',
+                'message' => 'Unauthorized. User not found.',
+                'asOf'    => date('Y-m-d H:i:s'),
+            ]);
+        }
+
+        if (method_exists($this->auth, 'user')) {
+            $this->user = $this->auth->user();
+        }
+
+        return null;
+    }
+
     public function apiBudgetData(): ResponseInterface
     {
+        if ($guard = $this->guard()) {
+            return $guard;
+        }
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->response->setStatusCode(401)->setJSON([
                 'status'  => 'error',
-                'message' => 'User not logged in.',
+                'message' => 'Unauthorized. User not found.',
+                'asOf'    => date('Y-m-d H:i:s'),
             ]);
         }
 
@@ -55,11 +76,15 @@ class BudgetController extends UserBudgetController
 
     public function apiCreditData(): ResponseInterface
     {
+        if ($guard = $this->guard()) {
+            return $guard;
+        }
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->response->setStatusCode(401)->setJSON([
                 'status'  => 'error',
-                'message' => 'User not logged in.',
+                'message' => 'Unauthorized. User not found.',
+                'asOf'    => date('Y-m-d H:i:s'),
             ]);
         }
 
@@ -91,11 +116,15 @@ class BudgetController extends UserBudgetController
 
     public function apiAvailableData(): ResponseInterface
     {
+        if ($guard = $this->guard()) {
+            return $guard;
+        }
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->response->setStatusCode(401)->setJSON([
                 'status'  => 'error',
-                'message' => 'User not logged in.',
+                'message' => 'Unauthorized. User not found.',
+                'asOf'    => date('Y-m-d H:i:s'),
             ]);
         }
 
@@ -137,11 +166,15 @@ class BudgetController extends UserBudgetController
 
     public function apiRepaymentSummary(): ResponseInterface
     {
+        if ($guard = $this->guard()) {
+            return $guard;
+        }
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->response->setStatusCode(401)->setJSON([
                 'status'  => 'error',
-                'message' => 'User not logged in.',
+                'message' => 'Unauthorized. User not found.',
+                'asOf'    => date('Y-m-d H:i:s'),
             ]);
         }
 

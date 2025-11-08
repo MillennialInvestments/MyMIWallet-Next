@@ -1,10 +1,20 @@
 <?php // app/Views/themes/dashboard/partials/custom-js/Digibyte-js.php ?>
+<?php
+$nonce = $nonce ?? ['style' => '', 'script' => ''];
+$scriptNonceAttr = $nonce['script'] ?? '';
+$digibyte = asset_if_exists('assets/js/crypto/digibyte-adapter.js');
+$dgbFlow = asset_if_exists('assets/js/crypto/dgb-send-flow.js');
+?>
 <!-- Canonical DigibyteJS + Adapter (only use this partial on views that do NOT extend the dashboard layout) -->
-<?= vite_tags('app', $nonce['script'] ?? null); ?>
-<script src="<?= base_url('assets/js/crypto/digibyte-adapter.js'); ?>" <?= $nonce['script'] ?? '' ?>></script>
-<script src="<?= base_url('assets/js/crypto/dgb-send-flow.js'); ?>" <?= $nonce['script'] ?? '' ?>></script>
-
-<?php $nonce = $nonce ?? ['style' => '', 'script' => '']; ?>
+<?= vite_tags('app', $scriptNonceAttr); ?>
+<?php if ($digibyte): ?>
+  <script src="<?= $digibyte ?>" <?= $scriptNonceAttr ?>></script>
+<?php else: ?>
+  <script <?= $scriptNonceAttr ?>>/* digibyte-adapter not present; stub loaded */</script>
+<?php endif; ?>
+<?php if ($dgbFlow): ?>
+  <script src="<?= $dgbFlow ?>" <?= $scriptNonceAttr ?>></script>
+<?php endif; ?>
 <!-- Digibyte Wallet Generation Example -->
 <script <?= $nonce['script'] ?? '' ?>>
 function createWalletAddressDGB() {

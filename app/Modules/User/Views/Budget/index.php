@@ -142,6 +142,7 @@ $allViewData = array(
 );
 ?>
 <div data-budget-dashboard hidden></div>
+<div class="alert alert-info mt-3" data-budget-session-note>Budget data requires a logged-in session. If you're in Incognito or blocked third-party cookies, sign in again in a normal window.</div>
 <style <?= $nonce['style'] ?? '' ?>>
     @media only screen and (max-width: 768px) {
         #userBudgetingDatatable_filter { padding-top: 1rem; text-align: left; }

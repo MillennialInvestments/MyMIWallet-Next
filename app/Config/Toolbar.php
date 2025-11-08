@@ -24,6 +24,10 @@ use CodeIgniter\Debug\Toolbar\Collectors\Views;
 class Toolbar extends BaseConfig
 {
     /**
+     * Enable toolbar only outside production.
+     */
+    public bool $enabled = (ENVIRONMENT !== 'production');
+    /**
      * --------------------------------------------------------------------------
      * Toolbar Collectors
      * --------------------------------------------------------------------------

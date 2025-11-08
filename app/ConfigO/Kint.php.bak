@@ -1,0 +1,28 @@
+<?php
+namespace Config;
+
+use CodeIgniter\Config\BaseConfig;
+use Kint\Renderer\AbstractRenderer;
+
+class Kint extends BaseConfig
+{
+    // …your other props…
+    public int $richSort = 0; // fallback (no sort)
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        // Prefer FULL if available, else SIMPLE if available, else NONE/0
+        if (\defined('Kint\Renderer\AbstractRenderer::SORT_FULL')) {
+            $this->richSort = AbstractRenderer::SORT_FULL;
+        } elseif (\defined('Kint\Renderer\AbstractRenderer::SORT_SIMPLE')) {
+            $this->richSort = \constant('Kint\Renderer\AbstractRenderer::SORT_SIMPLE');
+        } elseif (\defined('Kint\Renderer\AbstractRenderer::SORT_NONE')) {
+            $this->richSort = \constant('Kint\Renderer\AbstractRenderer::SORT_NONE');
+        } else {
+            $this->richSort = 0; // safest fallback
+        }
+    }
+}
+?>

@@ -227,6 +227,8 @@ $subViewData                = [
 //  echo view('UserModule\Views\Dashboard\index\user-feedback-modal'); 
 
 echo view('themes/dashboard/layouts/js-links', $subViewData);
-echo vite_tags('app', $scriptNonceValue); 
+if (ENVIRONMENT !== 'production') {
+    echo vite_tags('app', $scriptNonceValue);
+}
 echo view('themes/dashboard/layouts/custom-js', $subViewData);
 ?>

@@ -1,0 +1,66 @@
+<?php
+
+namespace App\Filters;
+
+use CodeIgniter\Filters\FilterInterface;
+use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use Myth\Auth\Exceptions\PermissionException;
+
+class RoleFilter extends BaseFilter implements FilterInterface
+{
+    /**
+     * @param array|null $arguments
+     *
+     * @return RedirectResponse|void
+     */
+    public function before(RequestInterface $request, $arguments = null)
+    {
+        // If no user is logged in then send them to the login form.
+        if (! $this->authenticate->check()) {
+            session()->set('redirect_url', current_url());
+
+            return redirect($this->reservedRoutes['login']);
+        }
+
+        if (empty($arguments)) {
+            return;
+        }
+
+        // Check each requested permission
+        foreach ($arguments as $group) {
+            if ($this->authorize->inGroup($group, $this->authenticate->id())) {
+                return;
+            }
+        }
+
+        if ($this->authenticate->silent()) {
+            $redirectURL = session('redirect_url');
+            unset($_SESSION['redirect_url']);
+
+            $fallback = route_to($this->landingRoute) ?: '/';
+
+            return redirect_to_safe(
+                is_string($redirectURL) && $redirectURL !== '' ? $redirectURL : null,
+                $fallback
+            )->with('error', lang('Auth.notEnoughPrivilege'));
+        }
+
+        throw new PermissionException(lang('Auth.notEnoughPrivilege'));
+    }
+
+    /**
+     * Allows After filters to inspect and modify the response
+     * object as needed. This method does not allow any way
+     * to stop execution of other after filters, short of
+     * throwing an Exception or Error.
+     *
+     * @param array|null $arguments
+     *
+     * @return void
+     */
+    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
+    {
+    }
+}

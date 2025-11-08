@@ -6,6 +6,7 @@ $request     = $request     ?? service('request');
 $meta        = $meta        ?? [];
 $siteSettings= $siteSettings?? [];
 $pageTitle   = $pageTitle   ?? ($meta['title'] ?? 'MyMI Wallet');
+helper('security');
 $viewFileData               = [
     'siteSettings'          => $siteSettings,
     'uri'                   => $uri,

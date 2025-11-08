@@ -24,12 +24,12 @@ form.d-flex.align-items-center button.btn {
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark nk-header nk-header-fixed nk-header-fluid">
     <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center" href="<?= site_url('Dashboard'); ?>">
-            <img
+            <!-- <img
                 class="logo-light logo-img"
-                src="<?= base_url('assets/images/MyMI-Wallet.png'); ?>"
-                srcset="<?= base_url('assets/images/MyMI-Wallet.png'); ?> 2x"
+                src="<?= base_url('assets/images/MyMI-Wallet-Logo-White.png'); ?>"
+                srcset="<?= base_url('assets/images/MyMI-Wallet-Logo-White.png'); ?> 2x"
                 alt="MyMI Wallet"
-            >
+            > -->
         </a>
 
         <button class="navbar-toggler" type="button"
@@ -41,10 +41,10 @@ form.d-flex.align-items-center button.btn {
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="dashboardNavbarNav">
+        <div class="navbar-collapse" id="dashboardNavbarNav">
             <div class="navbar-nav me-lg-4 align-items-lg-center">
                 <span class="navbar-text text-white-50 d-none d-lg-inline">
-                    Welcome to MyMI Wallet – The Future of Finance!
+                    Welcome <?= esc($cuDisplayName ?? 'User'); ?>
                 </span>
             </div>
 

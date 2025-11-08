@@ -1,4 +1,4 @@
-import { fetchJSON } from '/assets/js/app/fetch-helpers.js';
+import { fetchJSON } from '/assets/js/app/fetch-helper.js';
 
 function hasBudgetDashboard() {
   return document.querySelector('[data-budget-dashboard]') !== null;
@@ -6,14 +6,20 @@ function hasBudgetDashboard() {
 
 async function fetchAllBudgetData() {
   try {
-    const [available, budget, credit, repayment] = await Promise.all([
-      fetchJSON('/API/Budget/Available'),
-      fetchJSON('/API/Budget/Data'),
-      fetchJSON('/API/Budget/Credit'),
-      fetchJSON('/API/Budget/Repayment')
+    const [budget, credit, available, repayment] = await Promise.all([
+      fetchJSON('/API/Budget/getUserBudgetRecords'),
+      fetchJSON('/API/Budget/getUserCreditBalances'),
+      fetchJSON('/API/Budget/getUserAvailableBalances'),
+      fetchJSON('/API/Budget/getUserRepaymentSummary')
     ]);
 
-    const payload = { available, budget, credit, repayment };
+
+    const payload = {
+      budget,
+      credit,
+      available,
+      repayment,
+    };
     window.MyMIBudget = Object.assign(window.MyMIBudget || {}, payload);
     document.dispatchEvent(new CustomEvent('mymi:budget-data-ready', { detail: payload }));
   } catch (error) {

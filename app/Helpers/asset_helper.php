@@ -25,31 +25,38 @@ if (! function_exists('vite_tags')) {
     {
         helper('env');
 
-        // Nonce (if your renderer injects one)
-        $nonceAttr = '';
-        try {
-            $nonceData = service('renderer')->getData('nonce');
-            if (!empty($nonceData['script'])) {
-                // $nonceData['script'] is expected to be like: nonce="abc..."
-                $nonceAttr = ' ' . trim($nonceData['script']);
-            }
-        } catch (\Throwable $e) {
-            // no-op if renderer not available here
-        }
-
         $env = (string) env('CI_ENVIRONMENT', 'production');
         $isProd = strtolower($env) === 'production';
 
         // Dev server (e.g., http://localhost:5173)
         $dev = rtrim((string) getenv('VITE_DEV_SERVER'), '/');
 
+        // Only treat the request as "local dev" when the client is localhost.
+        $clientIsLocal = in_array($_SERVER['REMOTE_ADDR'] ?? '', ['127.0.0.1', '::1'], true);
+
         // Resolve logical entry to real path
         $tsEntry = $entry === 'app'
             ? 'resources/ts/main.ts'
             : "resources/ts/pages/{$entry}.ts";
 
-        // DEV: emit @vite/client + the entry module
-        if ($dev && ! $isProd) {
+        $resolveNonce = static function (): string {
+            $nonceAttr = '';
+            try {
+                $nonceData = service('renderer')->getData('nonce');
+                if (! empty($nonceData['script'])) {
+                    // $nonceData['script'] is expected to be like: nonce="abc..."
+                    $nonceAttr = ' ' . trim($nonceData['script']);
+                }
+            } catch (\Throwable $e) {
+                // no-op if renderer not available here
+            }
+
+            return $nonceAttr;
+        };
+
+        // DEV: emit @vite/client + the entry module only for non-production local requests
+        if ($dev && ! $isProd && $clientIsLocal) {
+            $nonceAttr = $resolveNonce();
             $out  = '<script type="module" src="' . $dev . '/@vite/client"' . $nonceAttr . '></script>' . PHP_EOL;
             $out .= '<script type="module" src="' . $dev . '/' . $tsEntry . '"' . $nonceAttr . '></script>';
             return $out;

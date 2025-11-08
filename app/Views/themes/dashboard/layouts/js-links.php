@@ -61,8 +61,12 @@ $gdInvestV = is_file($gdInvest) ? filemtime($gdInvest) : '1';
 <?php endif; ?>
 
 <?php // 10) Crypto adapters: ONLY include if the file exists to avoid 404 ?>
-<?php if ($u = asset_if_exists('assets/js/crypto/digibyte-adapter.js')): ?>
-  <script src="<?= $u ?>" <?= $scriptNonceAttr ?> defer></script>
+<?php
+$digibyte = asset_if_exists('assets/js/crypto/digibyte-adapter.js');
+if ($digibyte): ?>
+  <script src="<?= $digibyte ?>" <?= $scriptNonceAttr ?> defer></script>
+<?php else: ?>
+  <script <?= $scriptNonceAttr ?>>/* digibyte-adapter not present; stub loaded */</script>
 <?php endif; ?>
 <?php if ($u = asset_if_exists('assets/js/crypto/dgb-send-flow.js')): ?>
   <script src="<?= $u ?>" <?= $scriptNonceAttr ?> defer></script>

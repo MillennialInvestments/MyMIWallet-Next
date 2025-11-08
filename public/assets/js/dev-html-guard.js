@@ -14,6 +14,10 @@
     'www.googletagmanager.com',
     'www.google-analytics.com',
   ]);
+  const OPTIONAL_SCRIPTS = new Set([
+    '/assets/js/crypto/digibyte-adapter.js',
+    '/assets/js/crypto/dgb-send-flow.js',
+  ]);
 
   async function checkScript(src) {
     if (!src) {
@@ -33,7 +37,10 @@
       const preview = (await response.clone().text()).slice(0, 160).trim();
 
       if (!response.ok) {
-        console.error(`${logPrefix} ${url} → HTTP ${response.status}. Preview:`, preview);
+        const isOptional = OPTIONAL_SCRIPTS.has(url.pathname) && response.status === 404;
+        const logger = isOptional ? console.warn : console.error;
+        const note = isOptional ? 'optional script missing (allowed)' : `HTTP ${response.status}`;
+        logger(`${logPrefix} ${url} → ${note}. Preview:`, preview);
         return;
       }
 

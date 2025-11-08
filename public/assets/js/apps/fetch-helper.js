@@ -1,8 +1,15 @@
+import { authFetch } from '/assets/js/helpers/authFetch.js';
+
 export async function fetchJSON(url, opts = {}) {
-  const response = await fetch(url, Object.assign({
-    headers: { 'Accept': 'application/json' },
-    credentials: 'same-origin'
-  }, opts));
+  const headers = new Headers(opts.headers || {});
+  if (!headers.has('Accept')) {
+    headers.set('Accept', 'application/json');
+  }
+
+  const response = await authFetch(url, {
+    ...opts,
+    headers,
+  });
 
   const contentType = response.headers.get('content-type') || '';
   if (!contentType.includes('application/json')) {

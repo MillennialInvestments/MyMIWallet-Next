@@ -30,7 +30,7 @@ $brandAlt = 'MyMI Wallet - Investment Accounting/Analytical Software & Crypto As
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="navbar-collapse intro-nav" id="publicNavbarNav">
+    <div class="navbar-collapse intro-nav" id="publicNavbarNav" style="display:block">
       <ul class="navbar-nav w-100 w-lg-auto mt-1 ps-4 ps-lg-0 align-items-lg-center gap-lg-2">
         <li class="nav-item intro-nav-item">
           <a href="<?= $homeUrl ?>" class="link-to nav-link intro-nav-link">Home</a>
