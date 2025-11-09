@@ -677,7 +677,7 @@ class BudgetController extends UserController
 
     protected function rememberUserData(string $segment, int $userId, callable $callback, array $context = []): array
     {
-        $cacheKey = sanitizedCacheKey($this->buildUserCacheKey($segment, $userId, $context));
+        $cacheKey = \sanitizedCacheKey($this->buildUserCacheKey($segment, $userId, $context));
         $cached   = $this->cache->get($cacheKey);
 
         if ($cached !== null) {

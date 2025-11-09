@@ -30,7 +30,7 @@ class AlphaVantageService
     {
         $url = "https://www.alphavantage.co/query?{$params}&apikey={$this->alphavantageKey}";
         $cacheKey = md5($url); // Cache the results to avoid repeated API calls
-        $cacheKeySanitized = sanitizedCacheKey($cacheKey);
+        $cacheKeySanitized = \sanitizedCacheKey($cacheKey);
 
         // Check if cached data exists
         $cachedData = $this->cache->get($cacheKeySanitized);

@@ -46,7 +46,7 @@ class BirdeyeService
     {
         $url = rtrim($this->cfg->base, '/').'/public/price';
         $cacheKey = 'birdeye_price_'.$address;
-        $cacheKeySanitized = sanitizedCacheKey($cacheKey);
+        $cacheKeySanitized = \sanitizedCacheKey($cacheKey);
         $cache = cache();
         if ($cached = $cache->get($cacheKeySanitized)) {
             return $cached;

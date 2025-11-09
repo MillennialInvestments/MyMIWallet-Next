@@ -324,7 +324,7 @@ class WalletsController extends UserController
         }
 
         $cacheKey = 'wallets:budget:' . $cuID;
-        $cacheKeySanitized = sanitizedCacheKey($cacheKey);
+        $cacheKeySanitized = \sanitizedCacheKey($cacheKey);
         $cache    = service('cache');
         if ($cache) {
             $cached = $cache->get($cacheKeySanitized);
