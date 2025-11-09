@@ -17,7 +17,7 @@ use App\Models\WalletModel; // <-- add this
 abstract class BaseController extends Controller
 {
     /** Make base_url() available for self-hosted assets */
-    protected $helpers = []; 
+    protected $helpers = ['auth', 'form', 'url', 'cache']; 
 
     protected ?int $cuID = null;
     protected array $data = [];

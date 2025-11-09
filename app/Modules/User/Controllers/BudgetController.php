@@ -54,7 +54,7 @@ class BudgetController extends UserController
         'api-repayment'      => false,
         'api-categories'     => false,
     ];
-    protected $helpers = ['auth', 'form', 'url'];
+    protected $helpers = ['auth', 'form', 'url', 'cache'];
 
     public function __construct()
     {
@@ -77,6 +77,10 @@ class BudgetController extends UserController
         $this->cache = Services::cache();
         $this->logger = service('logger');
         log_message('debug', 'BudgetController L53 Initialized with cuID: ' . var_export($this->cuID, true));
+        log_message(
+            'debug',
+            'BudgetController::constructor - sanitizedCacheKey exists? ' . (function_exists('sanitizedCacheKey') ? 'YES' : 'NO')
+        );
     }
 
     public function commonData(): ResponseInterface|array
