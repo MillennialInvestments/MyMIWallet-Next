@@ -21,6 +21,7 @@ use App\Services\{
 };
 use Config\Services;
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\HTTP\ResponseInterface;
 
 class AlertsController extends UserController
 {
@@ -57,18 +58,18 @@ class AlertsController extends UserController
         $this->alertsModel   = new AlertsModel();
         $this->budgetModel   = new BudgetModel();
 
-        if (!function_exists('getCuID')) {
-            helper('cuID');
-        }
-        $activeUserId = function_exists('getCuID') ? getCuID() : null;
+        $this->cuID = $this->resolveCurrentUserId();
 
         // use the service container for user library
-        $this->MyMIUser = service('MyMIUser');
+        $this->MyMIUser = service('myMIUser');
+        if (! $this->MyMIUser instanceof MyMIUser) {
+            $this->MyMIUser = new MyMIUser();
+        }
 
         // services
-        $this->userService         = new UserService($this->siteSettings, $this->auth?->id(), $this->request);
+        $this->userService         = new UserService($this->siteSettings, $this->cuID, $this->request);
         $this->goalTrackingService = new GoalTrackingService();
-        $this->budgetService       = new BudgetService($activeUserId);
+        $this->budgetService       = new BudgetService($this->cuID);
         $this->accountService      = new AccountService();
         $this->solanaService       = new SolanaService();
 
@@ -128,9 +129,14 @@ class AlertsController extends UserController
         return $this->goalTrackingService;
     }
 
-    public function commonData(): array
+    public function commonData(): array|ResponseInterface
     {
-        $this->data                 = parent::commonData();
+        $base = parent::commonData();
+        if ($base instanceof ResponseInterface) {
+            return $base;
+        }
+
+        $this->data                 = $base;
         $this->data['debug']        = (int) ($this->siteSettings->debug ?? 0);
         $this->data['siteSettings'] = $this->siteSettings;
         $this->data['uri']          = $this->request->getUri();

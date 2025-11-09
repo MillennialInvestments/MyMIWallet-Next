@@ -60,15 +60,70 @@ trait BaseLoader
         }
 
         // ---- Current user id (null-safe) ----
-        if (session()->has('user_id')) {
-            $cuID = (int) session()->get('user_id');
-        } elseif (function_exists('auth') && auth()->user() !== null) {
-            $cuID = (int) (auth()->user()->id ?? 0);
-        } else {
-            $cuID = 0;
+        $cuID = null;
+        if (property_exists($this, 'cuID') && is_int($this->cuID) && $this->cuID > 0) {
+            $cuID = $this->cuID;
+        } elseif (method_exists($this, 'resolveCurrentUserId')) {
+            $resolved = $this->resolveCurrentUserId();
+            if ($resolved !== null && $resolved > 0) {
+                $cuID = $resolved;
+                if (property_exists($this, 'cuID')) {
+                    $this->cuID = $resolved;
+                }
+            }
+        }
+
+        if ($cuID === null) {
+            if (session()->has('user_id')) {
+                $sessionId = (int) session()->get('user_id');
+                if ($sessionId > 0) {
+                    $cuID = $sessionId;
+                }
+            }
+        }
+
+        if ($cuID === null && function_exists('auth')) {
+            try {
+                $auth = auth();
+                $user = $auth ? $auth->user() : null;
+                if ($user && isset($user->id)) {
+                    $authId = (int) $user->id;
+                    if ($authId > 0) {
+                        $cuID = $authId;
+                    }
+                }
+            } catch (\Throwable $e) {
+                log_message('error', 'BaseLoader: auth() lookup failed: {message}', [
+                    'message' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        if ($cuID === null && function_exists('getCuID')) {
+            try {
+                $helperId = \getCuID();
+                if (!empty($helperId)) {
+                    $helperId = (int) $helperId;
+                    if ($helperId > 0) {
+                        $cuID = $helperId;
+                    }
+                }
+            } catch (\Throwable $e) {
+                log_message('error', 'BaseLoader: getCuID() helper failed: {message}', [
+                    'message' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        if ($cuID !== null && property_exists($this, 'cuID')) {
+            $this->cuID = $cuID;
+        }
+
+        if ($cuID === null) {
             log_message('debug', 'BaseLoader: no authenticated user; proceeding with guest defaults.');
         }
-        $this->data['cuID'] = $cuID ?: null;
+
+        $this->data['cuID'] = $cuID;
 
         // ---- Site settings & request basics ----
         $siteSettings                = config('SiteSettings');
@@ -83,15 +138,17 @@ trait BaseLoader
 
         // ---- User account info (null-safe) ----
         $userAccount = [];
-        try {
-            $userAccount = service('MyMIUser')->getUserInformation($cuID);
-            if (!is_array($userAccount)) {
-                $userAccount = [];
+        if ($cuID !== null) {
+            try {
+                $userAccount = service('MyMIUser')->getUserInformation($cuID);
+                if (!is_array($userAccount)) {
+                    $userAccount = [];
+                }
+            } catch (\Throwable $e) {
+                log_message('error', 'BaseLoader: getUserInformation failed: ' . $e->getMessage());
             }
-        } catch (\Throwable $e) {
-            log_message('error', 'BaseLoader: getUserInformation failed: ' . $e->getMessage());
         }
-        $this->data['cuID'] = $cuID ?: null;
+        $this->data['cuID'] = $cuID;
 
         $this->data['cuUsername']     = $userAccount['cuUsername']    ?? '';
         $this->data['cuDisplayName']  = $userAccount['cuDisplayName'] ?? '';
@@ -106,13 +163,15 @@ trait BaseLoader
 
         // ---- Solana info (null-safe) ----
         $solanaData = [];
-        try {
-            $solanaData = $this->getSolanaService()->getSolanaData($cuID);
-            if (!is_array($solanaData)) {
-                $solanaData = [];
+        if ($cuID !== null) {
+            try {
+                $solanaData = $this->getSolanaService()->getSolanaData($cuID);
+                if (!is_array($solanaData)) {
+                    $solanaData = [];
+                }
+            } catch (\Throwable $e) {
+                log_message('error', 'BaseLoader: getSolanaData failed: ' . $e->getMessage());
             }
-        } catch (\Throwable $e) {
-            log_message('error', 'BaseLoader: getSolanaData failed: ' . $e->getMessage());
         }
         $userSol = $solanaData['userSolanaWallets'] ?? [];
         $this->data['cuSolanaDW']          = $userSol['cuSolanaDW']   ?? null;
@@ -122,13 +181,15 @@ trait BaseLoader
 
         // ---- Dashboard info (null-safe) ----
         $dashboard = [];
-        try {
-            $dashboard = $this->getMyMIDashboard()->dashboardInfo($cuID);
-            if (!is_array($dashboard)) {
-                $dashboard = [];
+        if ($cuID !== null) {
+            try {
+                $dashboard = $this->getMyMIDashboard()->dashboardInfo($cuID);
+                if (!is_array($dashboard)) {
+                    $dashboard = [];
+                }
+            } catch (\Throwable $e) {
+                log_message('error', 'BaseLoader: dashboardInfo failed: ' . $e->getMessage());
             }
-        } catch (\Throwable $e) {
-            log_message('error', 'BaseLoader: dashboardInfo failed: ' . $e->getMessage());
         }
 
         $progress = $dashboard['progressGoalData'] ?? [];
@@ -139,13 +200,15 @@ trait BaseLoader
 
         // ---- Budget info (null-safe) ----
         $budget = [];
-        try {
-            $budget = $this->getBudgetService()->getUserBudget($cuID);
-            if (!is_array($budget)) {
-                $budget = [];
+        if ($cuID !== null) {
+            try {
+                $budget = $this->getBudgetService()->getUserBudget($cuID);
+                if (!is_array($budget)) {
+                    $budget = [];
+                }
+            } catch (\Throwable $e) {
+                log_message('error', 'BaseLoader: getUserBudget failed: ' . $e->getMessage());
             }
-        } catch (\Throwable $e) {
-            log_message('error', 'BaseLoader: getUserBudget failed: ' . $e->getMessage());
         }
 
         $this->data['userBudget']        = $budget;
@@ -155,11 +218,13 @@ trait BaseLoader
 
         // ---- Credit / Debt / Balances (null-safe) ----
         $creditAccounts = $debtAccounts = [];
-        try {
-            $creditAccounts = $this->getAccountService()->getUserCreditAccounts($cuID) ?? [];
-            $debtAccounts   = $this->getAccountService()->getUserDebtAccounts($cuID)   ?? [];
-        } catch (\Throwable $e) {
-            log_message('error', 'BaseLoader: account service failed: ' . $e->getMessage());
+        if ($cuID !== null) {
+            try {
+                $creditAccounts = $this->getAccountService()->getUserCreditAccounts($cuID) ?? [];
+                $debtAccounts   = $this->getAccountService()->getUserDebtAccounts($cuID)   ?? [];
+            } catch (\Throwable $e) {
+                log_message('error', 'BaseLoader: account service failed: ' . $e->getMessage());
+            }
         }
 
         $repaymentSchedules = [];

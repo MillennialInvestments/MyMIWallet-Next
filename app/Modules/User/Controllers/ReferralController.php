@@ -9,6 +9,7 @@ use App\Libraries\{MyMIDashboard};
 use App\Models\{BudgetModel, UserModel, WalletModel};
 use App\Services\{AccountService, BudgetService, DashboardService, GoalTrackingService, MarketingService, ReferralService, SolanaService, UserService, WalletService};
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\HTTP\ResponseInterface;
 
 #[\AllowDynamicProperties]
 class ReferralController extends UserController {
@@ -72,101 +73,229 @@ class ReferralController extends UserController {
     /**
      * Common data setup for all pages.
      */
-    public function commonData(): array
+    public function commonData(): array|ResponseInterface
     {
-        $this->data = parent::commonData();
-        $this->data = $this->data ?? [];
-        $cuID = $this->resolveCurrentUserId();;  // Get current user ID once
-        $this->cuID = $cuID;  // Ensure $this->cuID is set for use elsewhere
-        $userData = $this->getMyMIUser()->getUserInformation($cuID);  // ✅ Correct method call
-        // Ensure $this->data is an array
-        if (!is_array($this->data)) {
-            $this->data = [];
-        }
-        
-        // Normalize $this->data and $userData to arrays
-        $baseData = is_array($this->data ?? null) ? $this->data : [];
-        $userData = is_array($userData ?? null) ? $userData : [];
-
-        if ($this->debug === 1) {
-            //log_message('info', 'ReferralController L83 - $userData: ' . print_r($userData, true));
+        $base = parent::commonData();
+        if ($base instanceof ResponseInterface) {
+            return $base;
         }
 
-        // Merge the fetched data with $this->data
+        $this->data = is_array($base) ? $base : [];
+
+        $cuID = $this->resolveCurrentUserId();
+        $this->cuID = $cuID;
+
+        $userData = [];
+        if ($cuID !== null) {
+            try {
+                $userData = $this->getMyMIUser()->getUserInformation($cuID) ?? [];
+            } catch (\Throwable $e) {
+                log_message('error', 'ReferralController::commonData getUserInformation failed: {message}', [
+                    'message' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        $baseData = is_array($this->data) ? $this->data : [];
+        $userData = is_array($userData) ? $userData : [];
         $this->data = array_merge($baseData, $userData);
 
-        // Add additional data to $this->data
         $this->data['siteSettings'] = $this->siteSettings;
-        $this->data['debug']        = $this->siteSettings->debug;
-        $this->data['uri']          = $this->request->getUri();
-        $this->data['userAgent']    = $this->request->getUserAgent();
-        $this->data['date']         = $this->siteSettings->date;
-        $this->data['time'] = $this->siteSettings->time;
-        $this->data['cuID'] = $this->cuID;
+        $this->data['debug']        = (int) ($this->siteSettings->debug ?? 0);
+        $this->data['uri']          = $this->request?->getUri();
+        $this->data['userAgent']    = $this->request?->getUserAgent();
+        $this->data['date']         = $this->siteSettings->date ?? date('Y-m-d');
+        $this->data['time']         = $this->siteSettings->time ?? date('H:i:s');
+        $this->data['cuID']         = $cuID;
 
-        // Additional dynamic data from the service
-        $this->data['getFeatures'] = $this->getMyMIDashboard()->getFeatures();
-        $this->data['totalAccountBalance'] = $this->getMyMIBudget()->getTotalAccountBalance($this->cuID);
-        $this->data['completedGoals'] = $this->getGoalTrackingService()->getCompletedGoals($this->cuID);
-        $this->data['pendingGoals'] = $this->getGoalTrackingService()->getPendingGoals($this->cuID);
-        $this->data['progressGoalData'] = $this->getMyMIDashboard()->dashboardInfo($this->cuID)['progressGoalData'];
-        $this->data['promotionalBanners'] = $this->getMyMIDashboard()->dashboardInfo($this->cuID)['promotionalBanners'];
-        $this->data['userBudget'] = $this->getMyMIBudget()->getUserBudget($this->cuID);
-        $this->data['userWallets'] = $this->getMyMIWallets()->getUserWallets($this->cuID);
+        try {
+            $this->data['getFeatures'] = $this->getMyMIDashboard()->getFeatures();
+        } catch (\Throwable $e) {
+            log_message('error', 'ReferralController::commonData getFeatures failed: {message}', [
+                'message' => $e->getMessage(),
+            ]);
+            $this->data['getFeatures'] = [];
+        }
 
-        // Fetch Solana data
-        $userSolanaData = $this->getSolanaService()->getSolanaData($this->cuID);
-        $this->data['cuSolanaDW'] = $userSolanaData['userSolanaWallets']['cuSolanaDW'] ?? null;
-        // Ensure Solana network status exists to avoid "Undefined array key"
+        $dashboardInfo = [];
+        if ($cuID !== null) {
+            try {
+                $dashboardInfo = $this->getMyMIDashboard()->dashboardInfo($cuID) ?? [];
+            } catch (\Throwable $e) {
+                log_message('error', 'ReferralController::commonData dashboardInfo failed: {message}', [
+                    'message' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        $this->data['progressGoalData']   = is_array($dashboardInfo['progressGoalData'] ?? null) ? $dashboardInfo['progressGoalData'] : [];
+        $this->data['promotionalBanners'] = is_array($dashboardInfo['promotionalBanners'] ?? null) ? $dashboardInfo['promotionalBanners'] : [];
+
+        if ($cuID !== null) {
+            try {
+                $this->data['totalAccountBalance'] = (float) ($this->getMyMIBudget()->getTotalAccountBalance($cuID) ?? 0);
+            } catch (\Throwable $e) {
+                log_message('error', 'ReferralController::commonData getTotalAccountBalance failed: {message}', [
+                    'message' => $e->getMessage(),
+                ]);
+                $this->data['totalAccountBalance'] = (float) ($this->data['totalAccountBalance'] ?? 0);
+            }
+
+            try {
+                $this->data['completedGoals'] = $this->getGoalTrackingService()->getCompletedGoals($cuID) ?? [];
+                $this->data['pendingGoals']   = $this->getGoalTrackingService()->getPendingGoals($cuID) ?? [];
+            } catch (\Throwable $e) {
+                log_message('error', 'ReferralController::commonData goal tracking failed: {message}', [
+                    'message' => $e->getMessage(),
+                ]);
+                $this->data['completedGoals'] = $this->data['completedGoals'] ?? [];
+                $this->data['pendingGoals']   = $this->data['pendingGoals'] ?? [];
+            }
+
+            try {
+                $this->data['userBudget']  = $this->getMyMIBudget()->getUserBudget($cuID) ?? [];
+            } catch (\Throwable $e) {
+                log_message('error', 'ReferralController::commonData getUserBudget failed: {message}', [
+                    'message' => $e->getMessage(),
+                ]);
+                $this->data['userBudget'] = $this->data['userBudget'] ?? [];
+            }
+
+            try {
+                $this->data['userWallets'] = $this->getMyMIWallets()->getUserWallets($cuID) ?? [];
+            } catch (\Throwable $e) {
+                log_message('error', 'ReferralController::commonData getUserWallets failed: {message}', [
+                    'message' => $e->getMessage(),
+                ]);
+                $this->data['userWallets'] = $this->data['userWallets'] ?? [];
+            }
+        } else {
+            $this->data['totalAccountBalance'] = (float) ($this->data['totalAccountBalance'] ?? 0);
+            $this->data['completedGoals']      = $this->data['completedGoals'] ?? [];
+            $this->data['pendingGoals']        = $this->data['pendingGoals'] ?? [];
+            $this->data['userBudget']          = $this->data['userBudget'] ?? [];
+            $this->data['userWallets']         = $this->data['userWallets'] ?? [];
+        }
+
+        $userSolanaData = [];
+        if ($cuID !== null) {
+            try {
+                $userSolanaData = $this->getSolanaService()->getSolanaData($cuID) ?? [];
+            } catch (\Throwable $e) {
+                log_message('error', 'ReferralController::commonData getSolanaData failed: {message}', [
+                    'message' => $e->getMessage(),
+                ]);
+            }
+        }
+        $solanaWallets = is_array($userSolanaData['userSolanaWallets'] ?? null) ? $userSolanaData['userSolanaWallets'] : [];
+        $this->data['cuSolanaDW']    = $solanaWallets['cuSolanaDW']   ?? null;
+        $this->data['cuSolanaTotal'] = (float) ($solanaWallets['cuSolanaTotal'] ?? 0);
+        $this->data['cuSolanaValue'] = (float) ($solanaWallets['cuSolanaValue'] ?? 0);
+
+        $this->data['solanaNetworkStatus'] = [
+            'healthy' => false,
+            'slot'    => null,
+            'version' => null,
+            'error'   => null,
+        ];
         try {
             if (!isset($this->solanaService)) {
-                $this->solanaService = service('solanaService'); // or however you DI it
+                $this->solanaService = service('solanaService');
             }
-            $data['solanaNetworkStatus'] = $this->solanaService->getNetworkStatus();
+            $this->data['solanaNetworkStatus'] = $this->solanaService->getNetworkStatus();
         } catch (\Throwable $e) {
-            log_message('error', 'WalletsController getNetworkStatus failed: {msg}', ['msg' => $e->getMessage()]);
-            $data['solanaNetworkStatus'] = [
-                'healthy' => false,
-                'slot'    => null,
-                'version' => null,
-                'error'   => $e->getMessage(),
-            ];
+            log_message('error', 'ReferralController::commonData getNetworkStatus failed: {message}', [
+                'message' => $e->getMessage(),
+            ]);
+            $this->data['solanaNetworkStatus']['error'] = $e->getMessage();
         }
-        $this->data['cuSolanaTotal'] = $userSolanaData['userSolanaWallets']['cuSolanaTotal'] ?? 0;
-        $this->data['cuSolanaValue'] = $userSolanaData['userSolanaWallets']['cuSolanaValue'] ?? 0;
-    
-        // Referral-specific data
-        $userReferrals = $this->referralService->getUserReferralData($this->cuID); 
-        if (!empty($userReferrals['referrer_code'])) {
 
-        }; 
-        $this->data['userReferrals'] = $userReferrals;
-        $this->data['userLinks'] = $this->referralService->generateReferralLinks($this->cuID);
-        $this->data['commissionEarnings'] = $this->referralService->calculateCommissions($this->cuID);
-        $this->data['commissionHistory'] = $this->referralService->getCommissionHistory($this->cuID);
-        // Track referral success
-        $this->data['referralSuccess'] = $this->referralService->getReferralSuccess($this->cuID);
+        $userReferrals = [];
+        $userLinks = [];
+        $commissionEarnings = [];
+        $commissionHistory  = [];
+        $referralSuccess    = [];
+        if ($cuID !== null) {
+            try {
+                $userReferrals = $this->referralService->getUserReferralData($cuID) ?? [];
+            } catch (\Throwable $e) {
+                log_message('error', 'ReferralController::commonData getUserReferralData failed: {message}', [
+                    'message' => $e->getMessage(),
+                ]);
+            }
+
+            try {
+                $userLinks = $this->referralService->generateReferralLinks($cuID) ?? [];
+            } catch (\Throwable $e) {
+                log_message('error', 'ReferralController::commonData generateReferralLinks failed: {message}', [
+                    'message' => $e->getMessage(),
+                ]);
+            }
+
+            try {
+                $commissionEarnings = $this->referralService->calculateCommissions($cuID) ?? [];
+            } catch (\Throwable $e) {
+                log_message('error', 'ReferralController::commonData calculateCommissions failed: {message}', [
+                    'message' => $e->getMessage(),
+                ]);
+            }
+
+            try {
+                $commissionHistory = $this->referralService->getCommissionHistory($cuID) ?? [];
+            } catch (\Throwable $e) {
+                log_message('error', 'ReferralController::commonData getCommissionHistory failed: {message}', [
+                    'message' => $e->getMessage(),
+                ]);
+            }
+
+            try {
+                $referralSuccess = $this->referralService->getReferralSuccess($cuID) ?? [];
+            } catch (\Throwable $e) {
+                log_message('error', 'ReferralController::commonData getReferralSuccess failed: {message}', [
+                    'message' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        $this->data['userReferrals']       = $userReferrals;
+        $this->data['userLinks']           = $userLinks;
+        $this->data['commissionEarnings']  = $commissionEarnings;
+        $this->data['commissionHistory']   = $commissionHistory;
+        $this->data['referralSuccess']     = $referralSuccess;
+
         return $this->data;
-}
+    }
     
 
     /**
      * Display the main referral program page.
      */
-    public function index() {
-        $this->commonData();
+    public function index()
+    {
+        $common = $this->commonData();
+        if ($common instanceof ResponseInterface) {
+            return $common;
+        }
         $this->data['pageTitle'] = 'Referral Program | MyMI Wallet';
         return $this->renderTheme('UserModule\Views\Referral_Program\index', $this->data);
     }
 
-    public function create() {
-        $this->commonData();
+    public function create()
+    {
+        $common = $this->commonData();
+        if ($common instanceof ResponseInterface) {
+            return $common;
+        }
         $this->data['pageTitle'] = 'Referral Program | MyMI Wallet';
         return $this->renderTheme('UserModule\Views\Referral_Program\Create', $this->data);
     }
 
     public function share()
     {
+        $common = $this->commonData();
+        if ($common instanceof ResponseInterface) {
+            return $common;
+        }
         $this->data['pageTitle'] = 'Share Your Referral Link | MyMI Wallet';
         $referralLink = base_url('/referral/' . $this->cuID);
     
@@ -185,7 +314,6 @@ class ReferralController extends UserController {
         return $this->renderTheme('UserModule\Views\Referral_Program/share', $this->data);
     }
     
-
     public function sendReferralEmail()
     {
         log_message('info', 'sendReferralEmail method triggered.');

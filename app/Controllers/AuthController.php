@@ -74,10 +74,12 @@ class AuthController extends Controller
     public function attemptLogin()
     {
         helper('auth');
+
         $rules = [
             'login'    => 'required',
             'password' => 'required',
         ];
+
         if ($this->config->validFields === ['email']) {
             $rules['login'] .= '|valid_email';
         }
@@ -90,37 +92,39 @@ class AuthController extends Controller
         $password = $this->request->getPost('password');
         $remember = (bool) $this->request->getPost('remember');
 
-        log_message('debug', sprintf(
-            'Auth attemptLogin() called with login identifier: %s, remember: %s',
-            $login ?? 'N/A',
-            $remember ? 'true' : 'false'
-        ));
+        log_message(
+            'debug',
+            sprintf(
+                'Auth attemptLogin() called with login identifier: %s, remember: %s',
+                $login ?? 'N/A',
+                $remember ? 'true' : 'false'
+            )
+        );
 
         $this->rememberRedirectUrl($this->request->getPost('redirect_url'));
         $this->rememberRedirectUrl($this->request->getPost('next'));
 
         log_message('debug', 'Auth attemptLogin() called. redirect_url in session: ' . (session('redirect_url') ?? 'none'));
 
-        // Determine credential type
-        $type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $type        = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $credentials = [
+            $type      => $login,
+            'password' => $password,
+        ];
 
-        // Try to log them in...
-        $credentials = [$type => $login, 'password' => $password];
+        log_message('debug', sprintf('Auth credentials normalised for attempt using key "%s"', $type));
 
-        log_message('debug', sprintf(
-            'Auth credentials normalised for attempt using key "%s"',
-            $type
-        ));
-
-        // Try to log them in...
         if (! $this->auth->attempt($credentials, $remember)) {
             log_message('debug', 'Auth attempt failed. Errors: ' . json_encode($this->auth->errors() ?? []));
             $errors = $this->auth->errors() ?? [];
-            log_message('debug', sprintf(
-                'Auth attempt failed for identifier %s. Errors: %s',
-                $login ?? 'N/A',
-                json_encode($errors)
-            ));
+            log_message(
+                'debug',
+                sprintf(
+                    'Auth attempt failed for identifier %s. Errors: %s',
+                    $login ?? 'N/A',
+                    json_encode($errors)
+                )
+            );
 
             if ($errors === []) {
                 $errors = [$this->auth->error() ?? lang('Auth.badAttempt')];
@@ -132,6 +136,7 @@ class AuthController extends Controller
                 ->with('errors', $errors);
         }
 
+        // ✅ SUCCESS: secure the user identity for the rest of the app
         $loggedIn = function_exists('logged_in') ? logged_in() : $this->auth->check();
         $userId   = null;
 
@@ -141,23 +146,48 @@ class AuthController extends Controller
             $userId = $this->auth->user()->id ?? null;
         }
 
-        log_message('debug', sprintf(
-            'Auth attempt succeeded for identifier %s. logged_in(): %s, user_id(): %s',
-            $login ?? 'N/A',
-            $loggedIn ? 'yes' : 'no',
-            $userId ?? 'null'
-        ));
+        log_message(
+            'debug',
+            sprintf(
+                'Auth attempt succeeded for identifier %s. logged_in(): %s, user_id(): %s',
+                $login ?? 'N/A',
+                $loggedIn ? 'yes' : 'no',
+                $userId ?? 'null'
+            )
+        );
+        log_message(
+            'debug',
+            'Auth attempt succeeded. logged_in(): ' . ($loggedIn ? 'yes' : 'no')
+            . ', user_id(): ' . (function_exists('user_id') ? (user_id() ?? 'null') : 'helper-missing')
+        );
 
-        log_message('debug', 'Auth attempt succeeded. logged_in(): ' . (logged_in() ? 'yes' : 'no') . ', user_id(): ' . (user_id() ?? 'null'));
-        // Is the user being forced to reset their password?
+        // 🔐 CRITICAL: expose the user ID in the session for cuID resolution
+        if ($userId !== null && $userId > 0) {
+            $this->session->set('user_id', (int) $userId);
+
+            // Optional but often handy:
+            $user = $this->auth->user();
+            if ($user) {
+                $this->session->set('user_email', $user->email ?? null);
+                $this->session->set('username', $user->username ?? null);
+            }
+
+            log_message('debug', 'Auth attemptLogin() - session user_id set to: ' . $userId);
+        } else {
+            log_message('error', 'Auth attemptLogin() - login succeeded but userId could not be resolved.');
+        }
+
         if ($this->auth->user()->force_pass_reset === true) {
-            return redirect()->to(route_to('reset-password') . '?token=' . $this->auth->user()->reset_hash)->withCookies();
+            return redirect()
+                ->to(route_to('reset-password') . '?token=' . $this->auth->user()->reset_hash)
+                ->withCookies();
         }
 
         return $this->redirectAfterLogin()
             ->withCookies()
             ->with('message', lang('Auth.loginSuccess'));
     }
+
 
     /**
      * Log the user out.

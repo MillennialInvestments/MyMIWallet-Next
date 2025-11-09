@@ -1328,41 +1328,66 @@ class WalletsController extends UserController
         $uri       = $this->request->getUri();
         $segments  = $uri->getTotalSegments();
         $promoCode = '';
+        $tier      = (string) ($this->request->getPost('tier') ?? '');
 
         // Example URL patterns:
         // /Wallets/Purchase/Memberships/{Tier}/{PromoCode?}
         // /Wallets/Purchase/{Tier}/{PromoCode?}
         if ($segments >= 2 && $uri->getSegment(2) === 'Purchase') {
-            // Tier and promoCode logic
-            if ($segments >= 4) {
-                $tierSegment = $uri->getSegment(4);
+            $tierFromUri = null;
 
-                if (in_array($tierSegment, ['Starter', 'Basic', 'Pro', 'Premium'], true)) {
+            if ($segments >= 3) {
+                $thirdSegment = $uri->getSegment(3);
+
+                if ($thirdSegment === 'Memberships') {
+                    if ($segments >= 4) {
+                        $tierFromUri = $uri->getSegment(4);
+                    }
                     if ($segments >= 5) {
                         $promoCode = $uri->getSegment(5);
-                    } else {
-                        $promoCode = $this->request->getGet('promo_code') ?? '';
+                    }
+                } elseif (in_array($thirdSegment, ['Starter', 'Basic', 'Pro', 'Premium'], true)) {
+                    $tierFromUri = $thirdSegment;
+                    if ($segments >= 4) {
+                        $promoCode = $uri->getSegment(4);
                     }
                 }
             }
+
+            if ($tierFromUri !== null) {
+                $tier = $tierFromUri;
+            }
         }
 
-        log_message('debug', 'WalletsController L466 - $promoCode: ' . $promoCode);
+        if ($promoCode === '' && $this->request->getGet('promo_code')) {
+            $promoCode = (string) $this->request->getGet('promo_code');
+        }
+
+        log_message('debug', 'WalletsController::purchase - $promoCode: ' . $promoCode);
         $this->data['promoCode'] = $promoCode;
 
-        $discount = 0;
-        if (!empty($promoCode) && isset($this->promotionsConfig->promoCodes[$promoCode])) {
-            $discount = $this->promotionsConfig->promoCodes[$promoCode];
+        $promoCodes = [];
+        if (isset($this->promotionsConfig) && isset($this->promotionsConfig->promoCodes) && is_array($this->promotionsConfig->promoCodes)) {
+            $promoCodes = $this->promotionsConfig->promoCodes;
+        } else {
+            $config = config('Promotions');
+            if ($config && isset($config->promoCodes) && is_array($config->promoCodes)) {
+                $promoCodes = $config->promoCodes;
+            }
         }
 
-        $membershipFee        = $this->request->getPost('membership_fee') ?? 100;
-        $finalAmount          = max(0, $membershipFee - $discount);
+        $discount = 0.0;
+        if ($promoCode !== '' && isset($promoCodes[$promoCode])) {
+            $discount = (float) $promoCodes[$promoCode];
+        }
+
+        $membershipFee = (float) ($this->request->getPost('membership_fee') ?? 100);
+        $finalAmount   = max(0.0, $membershipFee - $discount);
         $this->data['membershipFee'] = $membershipFee;
         $this->data['discount']      = $discount;
         $this->data['finalAmount']   = $finalAmount;
 
         $serviceId = $this->request->getPost('service_id');
-        $tier      = $this->request->getPost('tier');
 
         if ($serviceId) {
             $service = $this->db->table('bf_users_services')
@@ -1380,10 +1405,11 @@ class WalletsController extends UserController
             $this->data['finalServiceAmount'] = $finalServiceAmount;
         }
 
+        $this->data['tier'] = $tier;
+
         $this->commonData($this->cuID);
         return $this->renderTheme('UserModule\Views\Wallets\Purchase', $this->data);
     }
-
 
     // !! 12/15/2024 - Working Version of Code
     // public function purchase()

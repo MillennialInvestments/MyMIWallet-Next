@@ -10,46 +10,25 @@ class UserController extends BaseController
     protected array $data = [];
     protected bool $stringAsHtml = false;
     protected ?int $cuID = null;
+    protected bool $cuIdResolutionLogged = false;
 
     /**
      * Central way to resolve the current user ID for all UserModule controllers.
      */
     protected function resolveCurrentUserId(): ?int
     {
-        // If BaseLoader::commonData() already set it, reuse it
-        if (!empty($this->cuID)) {
-            return (int) $this->cuID;
+        $resolved = parent::resolveCurrentUserId();
+        if ($resolved !== null && $resolved > 0) {
+            return (int) $resolved;
         }
 
-        // 1) Session user_id (your legacy pattern)
-        $session = session();
-        if ($session && $session->has('user_id')) {
-            $this->cuID = (int) $session->get('user_id');
-            return $this->cuID;
+        if (! $this->cuIdResolutionLogged) {
+            log_message('error', 'UserController::resolveCurrentUserId - No current user ID resolved.');
+            $this->cuIdResolutionLogged = true;
         }
 
-        // 2) Myth/Auth (if logged in)
-        if (function_exists('auth')) {
-            $auth = auth();
-            if ($auth && $auth->user()) {
-                $this->cuID = (int) $auth->user()->id;
-                return $this->cuID;
-            }
-        }
-
-        // 3) Fallback to global helper (if you still use it)
-        if (function_exists('getCuID')) {
-            $id = getCuID();
-            if (!empty($id)) {
-                $this->cuID = (int) $id;
-                return $this->cuID;
-            }
-        }
-
-        log_message('error', 'UserController::resolveCurrentUserId - No current user ID resolved.');
         return null;
     }
-
 
     protected function renderTheme(string $view, ResponseInterface|array $data = []): ResponseInterface|string
     {

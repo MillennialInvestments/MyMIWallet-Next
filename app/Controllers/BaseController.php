@@ -129,9 +129,7 @@ abstract class BaseController extends Controller
 
     protected function getCuID(): ?int
     {
-        $auth = service('authentication');
-        $uid  = $auth && $auth->id() ? (int)$auth->id() : (int)session('user_id');
-        return $uid > 0 ? $uid : null;
+        return $this->resolveCurrentUserId();
     }
 
     protected function commonData(): array|ResponseInterface
@@ -495,11 +493,53 @@ abstract class BaseController extends Controller
 
     protected function resolveCurrentUserId(): ?int
     {
-        if ($this->cuID !== null) return $this->cuID;
+        if ($this->cuID !== null) {
+            return $this->cuID > 0 ? $this->cuID : null;
+        }
+
         $session = session();
-        $id = $session->get('user_id');
-        $this->cuID = ($id && is_numeric($id)) ? (int) $id : null;
-        return $this->cuID;
+        if ($session && $session->has('user_id')) {
+            $sessionId = (int) $session->get('user_id');
+            if ($sessionId > 0) {
+                // set and return
+            }
+        }
+
+        if (function_exists('auth')) {
+            try {
+                $auth = auth();
+                $user = $auth ? $auth->user() : null;
+                if ($user && isset($user->id)) {
+                    $authId = (int) $user->id;
+                    if ($authId > 0) {
+                        return $this->cuID = $authId;
+                    }
+                }
+            } catch (\Throwable $e) {
+                log_message('error', 'BaseController::resolveCurrentUserId auth() lookup failed: {message}', [
+                    'message' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        if (function_exists('getCuID')) {
+            try {
+                $helperId = \getCuID();
+                if (!empty($helperId)) {
+                    $helperId = (int) $helperId;
+                    if ($helperId > 0) {
+                        return $this->cuID = $helperId;
+                    }
+                }
+            } catch (\Throwable $e) {
+                log_message('error', 'BaseController::resolveCurrentUserId getCuID() failed: {message}', [
+                    'message' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        $this->cuID = null;
+        return null;
     }
 
     protected function resolveUserId(): ?int

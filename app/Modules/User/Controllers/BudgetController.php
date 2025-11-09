@@ -8,6 +8,7 @@ use App\Models\{AccountsModel, BudgetModel};
 use App\Services\{AccountService, BudgetService, DashboardService, GoalTrackingService, MarketingService, SolanaService, UserService, WalletService};
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\I18n\Time;
 use DateTime;
@@ -21,7 +22,9 @@ class BudgetController extends UserController
     // protected $data = [];
     protected $request;
     protected int $debug;
-    protected ?int $cuID;
+    // protected ?int $cuID;
+    // Only if you absolutely insist on it here — but recommended to keep it only in BaseController.
+    protected ?int $cuID = null;
     protected $auth;
     protected $logger;
     protected $session;
@@ -62,12 +65,9 @@ class BudgetController extends UserController
         $this->debug = (int) $this->siteSettings->debug;
         $this->uri                                  = $this->request->getUri();
 
-        if (!function_exists('getCuID')) {
-            helper('cuID');
-        }
-        $activeUserId = function_exists('getCuID') ? getCuID() : null;
-        $this->cuID                                 = $activeUserId;
-        $this->uri                                  = $this->request->getUri(); 
+        $this->cuID = $this->resolveCurrentUserId();
+        $activeUserId = $this->cuID;
+        $this->uri  = $this->request->getUri();
         $this->accountService = new AccountService();
         $this->budgetService = new BudgetService($activeUserId);
         $this->goalTrackingService = new GoalTrackingService();
@@ -79,20 +79,31 @@ class BudgetController extends UserController
         log_message('debug', 'BudgetController L53 Initialized with cuID: ' . var_export($this->cuID, true));
     }
 
-    public function commonData(): array
+    public function commonData()
     {
-        // Inherit base enrichment first
-        $this->data = parent::commonData();
+        // Ask the parent to build base data
+        $base = parent::commonData();
 
-        log_message('debug', 'commonData snapshot: ' . json_encode([
-            'cuID' => $this->data['cuID'] ?? null,
-            'cuEmail' => $this->data['cuEmail'] ?? null,
+        // If BaseController::commonData() decided to redirect (guest),
+        // just bubble that up to the caller instead of touching $this->data.
+        if ($base instanceof RedirectResponse) {
+            return $base;
+        }
+
+        // Ensure we always have an array to work with
+        $baseArray      = is_array($base) ? $base : [];
+        $existingData   = is_array($this->data ?? null) ? $this->data : [];
+
+        // Merge / overwrite as needed; here we just take parent data as base
+        $this->data = array_merge($existingData, $baseArray);
+
+        log_message('debug', 'BudgetController::commonData snapshot: ' . json_encode([
+            'cuID'                => $this->data['cuID'] ?? null,
+            'cuEmail'             => $this->data['cuEmail'] ?? null,
             'totalAccountBalance' => $this->data['totalAccountBalance'] ?? null,
-            'nonce' => $this->data['nonce'] ?? null,
+            'nonce'               => $this->data['nonce'] ?? null,
         ]));
 
-        // Add ONLY Budget-specific overrides here if you truly need them,
-        // otherwise the inherited data already contains everything you expected.
         return $this->data;
     }
 
@@ -211,19 +222,24 @@ class BudgetController extends UserController
 
     public function index() {
         $activeUserId = $this->cuID ?? null;
-        log_message('debug', 'Dashboard::index() reached in BudgetController. User ID: ' . ($activeUserId !== null ? (string) $activeUserId : 'guest'));
-        // Set up the page
+        log_message(
+            'debug',
+            'Dashboard::index() reached in BudgetController. User ID: ' . ($activeUserId !== null ? (string) $activeUserId : 'guest')
+        );
+
         $this->data['pageTitle'] = 'My Budget | MyMI Wallet | The Future of Finance';
 
-        // Ensure commonData is called
-        $this->commonData();
+        // Run commonData and honor auth redirects from BaseController
+        $result = $this->commonData();
+        if ($result instanceof RedirectResponse) {
+            return $result;
+        }
 
         $asOf = $this->request->getGet('asOf');
         $asOf = is_string($asOf) && trim($asOf) !== '' ? trim($asOf) : date('Y-m-d');
 
         $accountIdParam = $this->request->getGet('accountId');
-        $accountId = is_numeric($accountIdParam) ? (int) $accountIdParam : null;
-
+        $accountId      = is_numeric($accountIdParam) ? (int) $accountIdParam : null;
         $initialBankBalance = 0.0;
         if (!empty($this->cuID)) {
             $initialBankBalance = $this->budgetService->getInitialBankBalance($this->cuID, $asOf, $accountId);
@@ -1554,9 +1570,11 @@ class BudgetController extends UserController
     // public function add()
     public function history($type = null) {
         // Site settings and user data
-        $this->data['pageTitle']                    = 'Account Details & History | MyMI Wallet | The Future of Finance';
-        $this->data['getUserBankAccounts']          = $this->accountsModel->getUserBankAccounts(getCuID());
-        $this->data['getUserCreditAccounts']        = $this->accountsModel->getUserCreditAccounts(getCuID());
+        $this->data['pageTitle'] = 'Account Details & History | MyMI Wallet | The Future of Finance';
+
+        $userId = $this->resolveCurrentUserId();
+        $this->data['getUserBankAccounts']   = $userId ? $this->accountsModel->getUserBankAccounts($userId)   : [];
+        $this->data['getUserCreditAccounts'] = $userId ? $this->accountsModel->getUserCreditAccounts($userId) : [];
         $this->commonData(); // Ensure this is correctly populating $this->data
         return $this->renderTheme('App\Modules\User\Views\Budget\History', $this->data);
     }

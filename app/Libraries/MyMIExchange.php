@@ -44,8 +44,8 @@ class MyMIExchange
     protected $session;
     protected $siteSettings;
     protected $template;
-    protected $MyMISolana; 
-    protected $MyMIUser; 
+    protected ?MyMISolana $MyMISolana = null;
+    protected ?MyMIUser $MyMIUser = null;
     protected $exchangeModel;
     protected $userAccount;
     protected $userAssessment;
@@ -63,25 +63,96 @@ class MyMIExchange
         $this->chains                   = config('Exchanges')->chains;
 
         $this->MyMISolana               = service('myMISolana');
-        $this->MyMIUser                 = service('myMIUser');
+        if (! $this->MyMISolana instanceof MyMISolana) {
+            $this->MyMISolana = new MyMISolana();
+        }
+
+        $this->MyMIUser = $this->getMyMIUser();
         $this->exchangeModel            = service('exchangeModel');
         // Resolve cuID the same way everywhere
-        $this->cuID = $this->auth->id() ?? $this->session->get('user_id');
+        $this->cuID = $this->resolveCuIdFromContext();
 
-        $userLib = $this->getMyMIUser();
-        if ($this->cuID && $userLib instanceof MyMIUser) {
-            $this->userAccount    = $userLib->getUserInformation($this->cuID);
-            $this->userAssessment = $userLib->getUserFinancialAssessment($this->cuID);
+        $this->userAccount    = null;
+        $this->userAssessment = null;
+
+        if ($this->cuID !== null && $this->MyMIUser instanceof MyMIUser) {
+            try {
+                $this->userAccount = $this->MyMIUser->getUserInformation($this->cuID) ?? null;
+            } catch (\Throwable $e) {
+                log_message('error', 'MyMIExchange::__construct getUserInformation failed: {message}', [
+                    'message' => $e->getMessage(),
+                ]);
+            }
+
+            try {
+                $this->userAssessment = $this->MyMIUser->getUserFinancialAssessment($this->cuID) ?? null;
+            } catch (\Throwable $e) {
+                log_message('error', 'MyMIExchange::__construct getUserFinancialAssessment failed: {message}', [
+                    'message' => $e->getMessage(),
+                ]);
+            }
         } else {
-            $this->userAccount    = null;
-            $this->userAssessment = null;
             log_message(
                 'warning',
                 'MyMIExchange::__construct - No cuID or MyMIUser instance; skipping userAccount load.'
             );
         }
-        $this->userAccount              = service('MyMIUser')->getUserInformation($this->cuID);  
-        $this->userAssessment           = service('MyMIUser')->getUserFinancialAssessment($this->cuID);
+    }
+
+    protected function getMyMIUser(): ?MyMIUser
+    {
+        if ($this->MyMIUser instanceof MyMIUser) {
+            return $this->MyMIUser;
+        }
+
+        $service = service('myMIUser');
+        if ($service instanceof MyMIUser) {
+            $this->MyMIUser = $service;
+            return $this->MyMIUser;
+        }
+
+        try {
+            $this->MyMIUser = new MyMIUser();
+        } catch (\Throwable $e) {
+            log_message('error', 'MyMIExchange::getMyMIUser failed to instantiate MyMIUser: {message}', [
+                'message' => $e->getMessage(),
+            ]);
+            $this->MyMIUser = null;
+        }
+
+        return $this->MyMIUser;
+    }
+
+    protected function resolveCuIdFromContext(): ?int
+    {
+        $authId = null;
+        if ($this->auth && method_exists($this->auth, 'id')) {
+            $authId = $this->auth->id();
+        }
+
+        if (is_numeric($authId) && (int) $authId > 0) {
+            return (int) $authId;
+        }
+
+        $sessionId = $this->session?->get('user_id');
+        if (is_numeric($sessionId) && (int) $sessionId > 0) {
+            return (int) $sessionId;
+        }
+
+        if (function_exists('getCuID')) {
+            try {
+                $helperId = \getCuID();
+                if (is_numeric($helperId) && (int) $helperId > 0) {
+                    return (int) $helperId;
+                }
+            } catch (\Throwable $e) {
+                log_message('error', 'MyMIExchange::resolveCuIdFromContext getCuID failed: {message}', [
+                    'message' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        return null;
     }
 
     /**
