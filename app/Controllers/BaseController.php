@@ -494,48 +494,89 @@ abstract class BaseController extends Controller
     protected function resolveCurrentUserId(): ?int
     {
         if ($this->cuID !== null) {
-            return $this->cuID > 0 ? $this->cuID : null;
+            return $this->cuID;
         }
 
-        $session = session();
-        if ($session && $session->has('user_id')) {
-            $sessionId = (int) $session->get('user_id');
-            if ($sessionId > 0) {
-                // set and return
-            }
-        }
+        $session    = function_exists('session') ? session() : null;
+        $candidates = [];
 
-        if (function_exists('auth')) {
-            try {
-                $auth = auth();
-                $user = $auth ? $auth->user() : null;
-                if ($user && isset($user->id)) {
-                    $authId = (int) $user->id;
-                    if ($authId > 0) {
-                        return $this->cuID = $authId;
+        if ($session) {
+            foreach (['cuID', 'user_id', 'userId', 'id', 'currentUserID', 'currentUserId'] as $key) {
+                if ($session->has($key)) {
+                    $value = $session->get($key);
+                    if (is_numeric($value) && (int) $value > 0) {
+                        $candidates[] = (int) $value;
                     }
                 }
-            } catch (\Throwable $e) {
-                log_message('error', 'BaseController::resolveCurrentUserId auth() lookup failed: {message}', [
-                    'message' => $e->getMessage(),
-                ]);
             }
         }
 
-        if (function_exists('getCuID')) {
-            try {
-                $helperId = \getCuID();
-                if (!empty($helperId)) {
-                    $helperId = (int) $helperId;
-                    if ($helperId > 0) {
-                        return $this->cuID = $helperId;
+        // Shield helpers (available when shield is loaded)
+        try {
+            if (function_exists('user_id')) {
+                $value = user_id();
+                if (is_numeric($value) && (int) $value > 0) {
+                    $candidates[] = (int) $value;
+                }
+            }
+        } catch (\Throwable $e) {
+            log_message('debug', 'resolveCurrentUserId user_id() lookup failed: ' . $e->getMessage());
+        }
+
+        try {
+            if (function_exists('auth')) {
+                $authHelper = auth();
+                if ($authHelper && method_exists($authHelper, 'id')) {
+                    $value = $authHelper->id();
+                    if (is_numeric($value) && (int) $value > 0) {
+                        $candidates[] = (int) $value;
                     }
                 }
-            } catch (\Throwable $e) {
-                log_message('error', 'BaseController::resolveCurrentUserId getCuID() failed: {message}', [
-                    'message' => $e->getMessage(),
-                ]);
+                if ($authHelper && method_exists($authHelper, 'user')) {
+                    $user = $authHelper->user();
+                    $value = $user->id ?? null;
+                    if (is_numeric($value) && (int) $value > 0) {
+                        $candidates[] = (int) $value;
+                    }
+                }
             }
+        } catch (\Throwable $e) {
+            log_message('debug', 'resolveCurrentUserId auth() lookup failed: ' . $e->getMessage());
+        }
+
+        try {
+            if (function_exists('service')) {
+                $authService = service('authentication');
+                if ($authService && method_exists($authService, 'id')) {
+                    $value = $authService->id();
+                    if (is_numeric($value) && (int) $value > 0) {
+                        $candidates[] = (int) $value;
+                    }
+                }
+                if ($authService && method_exists($authService, 'user')) {
+                    $user = $authService->user();
+                    $value = $user->id ?? null;
+                    if (is_numeric($value) && (int) $value > 0) {
+                        $candidates[] = (int) $value;
+                    }
+                }
+            }
+        } catch (\Throwable $e) {
+            log_message('debug', 'resolveCurrentUserId service("authentication") lookup failed: ' . $e->getMessage());
+        }
+
+        foreach ($candidates as $candidate) {
+            if ($candidate <= 0) {
+                continue;
+            }
+
+            $this->cuID = (int) $candidate;
+
+            if ($session && method_exists($session, 'set') && ! $session->has('cuID')) {
+                $session->set('cuID', $this->cuID);
+            }
+
+            return $this->cuID;
         }
 
         $this->cuID = null;

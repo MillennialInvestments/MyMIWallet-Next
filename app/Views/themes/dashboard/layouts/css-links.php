@@ -13,7 +13,7 @@ $styleNonce = $nonce['style'] ?? '';
 <link rel="stylesheet" href="<?= base_url('assets/css/responsive-overrides.css'); ?>" <?= $styleNonce ?>>
 <link rel="stylesheet" href="<?= base_url('assets/css/inline-fixes.css'); ?>" <?= $styleNonce ?>>
 
-<link rel="shortcut icon" href="<?= base_url('dev/public/favicon.ico') ?>" type="image/x-icon">
+<link rel="shortcut icon" href="<?= base_url('favicon.ico') ?>" type="image/x-icon">
 
 <!-- Expose nonce to client if you need it -->
 <script <?= $nonce['script'] ?? '' ?>>window.__CSP_NONCE__='<?= esc($csp['script'] ?? '') ?>'</script>

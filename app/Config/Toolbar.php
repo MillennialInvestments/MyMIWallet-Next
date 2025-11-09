@@ -24,9 +24,27 @@ use CodeIgniter\Debug\Toolbar\Collectors\Views;
 class Toolbar extends BaseConfig
 {
     /**
-     * Enable toolbar only outside production.
+     * Enable toolbar only when debugging outside production.
      */
-    public bool $enabled = (ENVIRONMENT !== 'production');
+    public bool $enabled = (CI_DEBUG && ENVIRONMENT !== 'production');
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $debugbarPath = WRITEPATH . 'debugbar';
+
+        if (! is_dir($debugbarPath)) {
+            if (! @mkdir($debugbarPath, 0775, true)) {
+                $this->enabled = false;
+                return;
+            }
+        }
+
+        if (! is_writable($debugbarPath)) {
+            $this->enabled = false;
+        }
+    }
     /**
      * --------------------------------------------------------------------------
      * Toolbar Collectors

@@ -329,6 +329,19 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
+    const scheduleChartUpdate = (() => {
+      let frame = null;
+      return () => {
+        if (frame !== null) {
+          cancelAnimationFrame(frame);
+        }
+        frame = requestAnimationFrame(() => {
+          frame = null;
+          chart.update();
+        });
+      };
+    })();
+
     const updateChartData = () => {
       const cleanData   = state.budgetData.filter(isValidRecord);
       const lowerAmount = getSelectedValue('#chart-lower-options') || -1;
@@ -350,7 +363,7 @@ document.addEventListener('DOMContentLoaded', function () {
       chart.data.datasets[3].data       = cum;
       chart.data.datasets[3].borderColor= colors;
       chart.data.datasets[3].pointBackgroundColor = colors;
-      chart.update();
+      scheduleChartUpdate();
     };
 
     const initializeDropdown = (selector, callback) => {

@@ -10,21 +10,35 @@ class UserController extends BaseController
     protected array $data = [];
     protected bool $stringAsHtml = false;
     protected ?int $cuID = null;
-    protected bool $cuIdResolutionLogged = false;
+    // protected bool $cuIdResolutionLogged = false;
 
     /**
      * Central way to resolve the current user ID for all UserModule controllers.
      */
     protected function resolveCurrentUserId(): ?int
     {
-        $resolved = parent::resolveCurrentUserId();
-        if ($resolved !== null && $resolved > 0) {
-            return (int) $resolved;
+        if ($this->cuID !== null) {
+            return $this->cuID;
         }
 
-        if (! $this->cuIdResolutionLogged) {
+        $resolved = parent::resolveCurrentUserId();
+        if ($resolved !== null) {
+            $this->cuID = (int) $resolved;
+            return $this->cuID;
+        }
+
+        if (function_exists('getCuID')) {
+            $id = getCuID();
+            if (!empty($id)) {
+                $this->cuID = (int) $id;
+                return $this->cuID;
+            }
+        }
+
+        static $logged = false;
+        if (! $logged) {
             log_message('error', 'UserController::resolveCurrentUserId - No current user ID resolved.');
-            $this->cuIdResolutionLogged = true;
+            $logged = true;
         }
 
         return null;

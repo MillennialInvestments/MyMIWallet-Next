@@ -79,22 +79,17 @@ class BudgetController extends UserController
         log_message('debug', 'BudgetController L53 Initialized with cuID: ' . var_export($this->cuID, true));
     }
 
-    public function commonData()
+    public function commonData(): ResponseInterface|array
     {
-        // Ask the parent to build base data
         $base = parent::commonData();
 
-        // If BaseController::commonData() decided to redirect (guest),
-        // just bubble that up to the caller instead of touching $this->data.
-        if ($base instanceof RedirectResponse) {
+        if ($base instanceof ResponseInterface) {
             return $base;
         }
 
-        // Ensure we always have an array to work with
-        $baseArray      = is_array($base) ? $base : [];
-        $existingData   = is_array($this->data ?? null) ? $this->data : [];
+        $baseArray    = is_array($base) ? $base : [];
+        $existingData = is_array($this->data ?? null) ? $this->data : [];
 
-        // Merge / overwrite as needed; here we just take parent data as base
         $this->data = array_merge($existingData, $baseArray);
 
         log_message('debug', 'BudgetController::commonData snapshot: ' . json_encode([
@@ -103,6 +98,18 @@ class BudgetController extends UserController
             'totalAccountBalance' => $this->data['totalAccountBalance'] ?? null,
             'nonce'               => $this->data['nonce'] ?? null,
         ]));
+
+        return $this->data;
+    }
+
+    protected function ensureCommonDataReady(): ResponseInterface|array
+    {
+        $common = $this->commonData();
+        if ($common instanceof ResponseInterface) {
+            return $common;
+        }
+
+        $this->data = is_array($common) ? $common : (is_array($this->data ?? null) ? $this->data : []);
 
         return $this->data;
     }
@@ -304,6 +311,11 @@ class BudgetController extends UserController
         $endDate   = (new \DateTime($endPhrase, $timezone))->format('Y-m-d H:i:s');
 
         $common = $this->commonData();
+        if ($common instanceof ResponseInterface) {
+            return $common;
+        }
+
+        $commonArray = is_array($common) ? $common : [];
 
         $summary      = ['income' => 0.0, 'expense' => 0.0, 'net' => 0.0];
         $transactions = [];
@@ -330,7 +342,7 @@ class BudgetController extends UserController
 
         $periodLabel = (new \DateTime($labelPhrase, $timezone))->format('F Y');
 
-        $this->data = array_merge($this->data ?? [], $common ?? [], [
+        $this->data = array_merge($this->data ?? [], $commonArray, [
             'pageTitle'        => $title,
             'periodTitle'      => $title,
             'periodLabel'      => $periodLabel,
@@ -690,13 +702,19 @@ class BudgetController extends UserController
         $this->data['budgetType'] = $budgetType;
         $this->data['getSourceRecords'] = $this->getBudgetService()->getSourceRecords($this->cuID, $budgetType);
 
-        $this->commonData();
+        $common = $this->ensureCommonDataReady();
+        if ($common instanceof ResponseInterface) {
+            return $common;
+        }
         return $this->renderTheme('App\Modules\User\Views\Budget\Account_Overview', $this->data);
     }
 
     public function add($type = null) {
         $this->data['pageTitle'] = 'Add Budget Record | MyMI Wallet | The Future of Finance';
-        $this->commonData();
+        $common = $this->ensureCommonDataReady();
+        if ($common instanceof ResponseInterface) {
+            return $common;
+        }
         return $this->renderTheme('App\Modules\User\Views\Budget\Add', $this->data);
     }
 
@@ -869,7 +887,10 @@ class BudgetController extends UserController
         $userBudgetRecordName = $this->data['userBudgetRecord']['accountName'];
         $this->data['userRelatedBudgetAccounts'] = $this->getBudgetService()->getUserRelatedBudgetRecords($this->cuID, $userBudgetRecordName);
 
-        $this->commonData();
+        $common = $this->ensureCommonDataReady();
+        if ($common instanceof ResponseInterface) {
+            return $common;
+        }
         return $this->renderTheme('App\Modules\User\Views\Budget\Details', $this->data);
     }
 
@@ -920,8 +941,11 @@ class BudgetController extends UserController
         $this->data['userRelatedBudgetAccounts'] = $userRelatedBudgetAccounts;
         $this->data['formMode'] = $formMode;
         $this->data['accountID'] = $accountID;
-    
-        $this->commonData();
+        
+        $common = $this->ensureCommonDataReady();
+        if ($common instanceof ResponseInterface) {
+            return $common;
+        }
     
         return $this->renderTheme('App\Modules\User\Views\Budget\Edit', $this->data);
     }
@@ -934,7 +958,11 @@ class BudgetController extends UserController
 
         // Merge data into view
         $this->data = array_merge($this->data, $financialData);
-        $this->commonData();
+
+        $common = $this->ensureCommonDataReady();
+        if ($common instanceof ResponseInterface) {
+            return $common;
+        }
         return $this->renderTheme('App\Modules\User\Views\Budget\Financial_Analysis', $this->data);
     }
 
@@ -970,7 +998,10 @@ class BudgetController extends UserController
         $this->data['totalSurplus']   = array_sum($surpluses);
         $this->data['historicalData'] = $forecastData['historical'] ?? [];
 
-        $this->commonData();
+        $common = $this->ensureCommonDataReady();
+        if ($common instanceof ResponseInterface) {
+            return $common;
+        }
         return $this->renderTheme('App\Modules\User\Views\Budget\Financial_Forecaster', $this->data);
     }
 
@@ -1012,7 +1043,10 @@ class BudgetController extends UserController
         $monthlyExpenseGrowth = pow(1 + ($expenseGrowthPct / 100), 1 / 12) - 1;
         $monthlyInflation     = pow(1 + ($inflationPct / 100), 1 / 12) - 1;
 
-        $common = $this->commonData();
+        $common = $this->ensureCommonDataReady();
+        if ($common instanceof ResponseInterface) {
+            return $common;
+        }
         $now    = new \DateTime('first day of this month', new \DateTimeZone('America/Chicago'));
 
         $queryParams = [
@@ -1083,7 +1117,7 @@ class BudgetController extends UserController
         $years        = max(1, (int) ceil($months / 12));
         $periodLabel  = $years === 1 ? '1 Year' : ($years . ' Years');
 
-        $this->data = array_merge($this->data ?? [], $common ?? [], [
+        $this->data = array_merge($this->data ?? [], $commonArray ?? [], [
             'pageTitle'      => 'Budget Forecast',
             'periodLabel'    => $periodLabel,
             'months'         => $months,
@@ -1575,7 +1609,10 @@ class BudgetController extends UserController
         $userId = $this->resolveCurrentUserId();
         $this->data['getUserBankAccounts']   = $userId ? $this->accountsModel->getUserBankAccounts($userId)   : [];
         $this->data['getUserCreditAccounts'] = $userId ? $this->accountsModel->getUserCreditAccounts($userId) : [];
-        $this->commonData(); // Ensure this is correctly populating $this->data
+        $common = $this->ensureCommonDataReady();
+        if ($common instanceof ResponseInterface) {
+            return $common;
+        }
         return $this->renderTheme('App\Modules\User\Views\Budget\History', $this->data);
     }
 
@@ -1592,7 +1629,10 @@ class BudgetController extends UserController
     public function recurringSchedule($accountID = null) {
         log_message('debug', 'BudgetController::recurringSchedule  L531 - Recurring Schedule - Start processing for Account ID: ' . $accountID);
     
-        $this->commonData();
+        $common = $this->ensureCommonDataReady();
+        if ($common instanceof ResponseInterface) {
+            return $common;
+        }
         $accountDetails = $this->getBudgetService()->getRecurringAccountInfo($this->cuID, $accountID);
         log_message('debug', 'BudgetController::recurringSchedule  - Account Details Retrieved: ' . print_r($accountDetails, true));
         
@@ -1703,8 +1743,12 @@ class BudgetController extends UserController
         // Load common data and settings specific to the budget type
         $this->data['pageTitle']                    = 'Budget Settings | MyMI Wallet | The Future of Finance';
         $this->data['budgetType']                   = $budgetType;
-        $this->data['settingsData']                 = $settingsData;
-        $this->commonData(); // Ensure this is correctly populating $this->data
+        $this->data['settingsData']                 = $settingsData;        
+    
+        $common = $this->ensureCommonDataReady();
+        if ($common instanceof ResponseInterface) {
+            return $common;
+        }
         return $this->renderTheme('App\Modules\User\Views\Budget\Settings', $this->data);
     }
 
