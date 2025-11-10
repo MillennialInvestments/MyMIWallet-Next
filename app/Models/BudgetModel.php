@@ -148,16 +148,18 @@ class BudgetModel extends Model
             ->where('deleted', 0)
             ->where('status', 1);
 
-        $builder->groupStart();
-        foreach ($periods as $period) {
-            $builder->orGroupStart()
-                ->where('year', $period['year'])
-                ->where('month', $period['month'])
-                ->groupEnd();
-        }
-        $builder->groupEnd();
 
-        $builder->orderBy('year', 'DESC')->orderBy('month', 'DESC');
+        $keys = array_keys($periods);
+        $startBound = (int) str_replace('-', '', min($keys));
+        $endBound   = (int) str_replace('-', '', max($keys));
+
+        $builder
+            ->where('year IS NOT NULL', null, false)
+            ->where('month IS NOT NULL', null, false)
+            ->where('(year * 100 + month) >=', $startBound)
+            ->where('(year * 100 + month) <=', $endBound)
+            ->orderBy('year', 'DESC')
+            ->orderBy('month', 'DESC');
 
         $rows = $builder->get()->getResultArray();
 

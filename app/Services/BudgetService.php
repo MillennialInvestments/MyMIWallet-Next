@@ -4,14 +4,20 @@ namespace App\Services;
 
 use Config\Services;
 use App\Config\SiteSettings;
+use App\DTO\Budget\{BudgetRecord, CashFlowSnapshot, DebtAccount};
 use App\Libraries\{BaseLoader};
 use App\Models\{AccountsModel, BudgetModel, UserModel};
 use App\Services\UserService;
 use CodeIgniter\I18n\Time;
-use DateTime;
 use DateInterval;
+use DateTime;
+use DateTimeImmutable;
 use DateTimeZone;
 use RuntimeException;
+use UnexpectedValueException;
+
+use function budget_normalize_date;
+use function budget_normalize_money;
 
 class BudgetService
 {
@@ -29,6 +35,7 @@ class BudgetService
 
     public function __construct(?int $userId = null)
     {
+        helper(['budget']);
         $this->auth = service('authentication');
         $this->session = Services::session();
         $this->siteSettings = config('SiteSettings');
@@ -73,31 +80,14 @@ class BudgetService
 
     private function asFloat($value): float
     {
-        if (is_numeric($value)) {
-            return (float) $value;
-        }
-
-        if (is_string($value)) {
-            $clean = preg_replace('/[^0-9.\-]/', '', $value);
-            if ($clean === null || $clean === '' || $clean === '-' || $clean === '.') {
-                return 0.0;
-            }
-
-            return (float) $clean;
-        }
-
-        return 0.0;
+        return budget_normalize_money($value ?? 0);
     }
 
-    private function parseRecordDate(array $record): ?DateTime
+    private function parseRecordDate(array $record): DateTimeImmutable
     {
         $dateStr = trim((string) ($record['designated_date'] ?? ''));
         if ($dateStr !== '') {
-            $dt = DateTime::createFromFormat('m/d/Y', $dateStr);
-            if ($dt instanceof DateTime) {
-                $dt->setTime(0, 0, 0);
-                return $dt;
-            }
+            return budget_normalize_date($dateStr, $this->timezone);
         }
 
         $year  = (int) ($record['year'] ?? 0);
@@ -105,21 +95,18 @@ class BudgetService
         $day   = (int) ($record['day'] ?? 0);
 
         if ($year > 0 && $month > 0 && $day > 0) {
-            $dt = DateTime::createFromFormat('Y-n-j', sprintf('%d-%d-%d', $year, $month, $day));
-            if ($dt instanceof DateTime) {
-                $dt->setTime(0, 0, 0);
-                return $dt;
-            }
+            $fallback = sprintf('%04d-%02d-%02d', $year, $month, $day);
+            return budget_normalize_date($fallback, $this->timezone);
         }
 
-        return null;
+        return budget_normalize_date(null, $this->timezone);
     }
 
     private function isOutflow(array $record): bool
     {
         $type = strtolower(trim($record['account_type'] ?? ($record['type'] ?? '')));
         if ($type !== '') {
-            $outflows = ['expense', 'debt', 'loan', 'liability', 'bill', 'payment'];
+            $outflows = ['expense', 'debt', 'loan', 'liability', 'bill', 'payment', 'credit card'];
             $inflows  = ['income', 'salary', 'wages', 'paycheck', 'bonus', 'deposit', 'refund', 'rebate', 'self-employment'];
             if (in_array($type, $outflows, true)) {
                 return true;
@@ -142,6 +129,10 @@ class BudgetService
         $type = strtolower(trim($record['account_type'] ?? ''));
         $src  = strtolower(trim($record['source_type'] ?? ''));
 
+        if (preg_match('/debt|loan|mortgage|credit/', $type . ' ' . $src)) {
+            return 'debt';
+        }
+
         if ($type === 'investment' || str_contains($type, 'invest')) {
             return 'investment';
         }
@@ -157,6 +148,135 @@ class BudgetService
     {
         $prefix = $amount < 0 ? '-$' : '$';
         return $prefix . number_format(abs($amount), 2);
+    }
+
+    /**
+     * Normalizes a raw budgeting record into a typed DTO for deterministic calculations.
+     */
+    public function normalizeBudgetRecord(array|BudgetRecord $record, ?int $userId = null): BudgetRecord
+    {
+        if ($record instanceof BudgetRecord) {
+            return $record;
+        }
+
+        $resolvedUserId = $userId ?? (isset($record['created_by']) ? (int) $record['created_by'] : null);
+        if ($resolvedUserId === null || $resolvedUserId <= 0) {
+            $resolvedUserId = $this->requireUserId();
+        }
+
+        $classification = $this->classifyRecord($record);
+        $netAmount      = $this->asFloat($record['net_amount'] ?? 0.0);
+        $grossAmount    = $this->asFloat($record['gross_amount'] ?? $netAmount);
+        $isOutflow      = $classification !== 'income';
+
+        return new BudgetRecord(
+            (int) ($record['id'] ?? 0),
+            $resolvedUserId,
+            (string) ($record['name'] ?? ''),
+            $classification,
+            $isOutflow,
+            $isOutflow ? -abs($netAmount) : abs($netAmount),
+            abs($grossAmount),
+            $this->parseRecordDate($record),
+            isset($record['account_type']) ? (string) $record['account_type'] : null,
+            isset($record['source_type']) ? (string) $record['source_type'] : null,
+            (bool) ($record['is_debt'] ?? ($classification === 'debt')),
+        );
+    }
+
+    /**
+     * Sanitizes controller payloads prior to persistence.
+     */
+    public function prepareAccountPayload(int $userId, array $input): array
+    {
+        $userId = (int) $userId;
+        if ($userId <= 0) {
+            throw new UnexpectedValueException('A valid user identifier is required to persist budget accounts.');
+        }
+
+        $dueDate   = $this->resolveDesignatedDate($input['designated_date'] ?? null);
+        $net       = $this->asFloat($input['net_amount'] ?? 0.0);
+        $gross     = $this->asFloat($input['gross_amount'] ?? $net);
+        $source    = isset($input['source_type']) ? trim((string) $input['source_type']) : null;
+        $isDebt    = $source ? (preg_match('/(Debt|Loan|Mortgage|Credit)/i', $source) === 1) : ((bool) ($input['is_debt'] ?? false));
+
+        return [
+            'status'            => (int) ($input['status'] ?? 1),
+            'beta'              => (string) ($input['beta'] ?? 'No'),
+            'mode'              => (string) ($input['form_mode'] ?? 'Add'),
+            'created_by'        => $userId,
+            'created_by_email'  => (string) ($input['user_email'] ?? ''),
+            'unix_timestamp'    => time(),
+            'designated_date'   => $dueDate['formatted'],
+            'month'             => $dueDate['month'],
+            'day'               => $dueDate['day'],
+            'year'              => $dueDate['year'],
+            'username'          => (string) ($input['username'] ?? ''),
+            'name'              => (string) ($input['nickname'] ?? ($input['name'] ?? '')),
+            'net_amount'        => $net,
+            'gross_amount'      => $gross,
+            'paid'              => (int) ($input['paid'] ?? 0),
+            'recurring_account' => (string) ($input['recurring_account'] ?? 'No'),
+            'account_type'      => isset($input['account_type']) ? trim((string) $input['account_type']) : null,
+            'source_type'       => $source,
+            'is_debt'           => $isDebt ? 1 : 0,
+            'intervals'         => $input['intervals'] ?? null,
+            'due_date_estimated'=> $dueDate['estimated'],
+        ];
+    }
+
+    /**
+     * Returns normalized date metadata used by both controllers and models.
+     */
+    public function resolveDesignatedDate(?string $rawDate): array
+    {
+        $tz        = new DateTimeZone($this->timezone);
+        $estimated = false;
+        $date      = null;
+
+        if (is_string($rawDate) && trim($rawDate) !== '') {
+            $candidate = trim($rawDate);
+            $formats   = ['Y-m-d', 'm/d/Y', 'n/j/Y'];
+            foreach ($formats as $format) {
+                $dt = DateTimeImmutable::createFromFormat($format, $candidate, $tz);
+                if ($dt instanceof DateTimeImmutable) {
+                    $date = $dt->setTime(0, 0);
+                    break;
+                }
+            }
+            if ($date === null) {
+                $estimated = true;
+            }
+        } else {
+            $estimated = true;
+        }
+
+        if ($date === null) {
+            $date = $this->defaultDueDate();
+        }
+
+        return [
+            'date'      => $date,
+            'formatted' => $date->format('m/d/Y'),
+            'month'     => (int) $date->format('m'),
+            'day'       => (int) $date->format('d'),
+            'year'      => (int) $date->format('Y'),
+            'estimated' => $estimated,
+        ];
+    }
+
+    private function defaultDueDate(): DateTimeImmutable
+    {
+        $tz       = new DateTimeZone($this->timezone);
+        $today    = new DateTimeImmutable('now', $tz);
+        $lastDay  = (int) $today->format('t');
+        $target   = min(28, $lastDay);
+
+        return $today->setDate(
+            (int) $today->format('Y'),
+            (int) $today->format('m'),
+            $target
+        )->setTime(0, 0);
     }
 
     public function getInitialBankBalance(int $userId, ?string $asOf = null, ?int $accountId = null): float
@@ -182,6 +302,32 @@ class BudgetService
         }
 
         return $cache[$cacheKey] = (float) $balance;
+    }
+
+    /**
+     * Converts a debt account payload into a DTO with normalized money values.
+     */
+    public function normalizeDebtAccount(array|DebtAccount $debt): DebtAccount
+    {
+        if ($debt instanceof DebtAccount) {
+            return $debt;
+        }
+
+        $accountId = (int) ($debt['account_id'] ?? $debt['id'] ?? 0);
+        $principal = $this->asFloat($debt['principal'] ?? $debt['current_balance'] ?? 0.0);
+        $apr       = (float) ($debt['apr'] ?? $debt['interest_rate'] ?? 0.0);
+        $minimum   = $this->asFloat($debt['minimum_payment'] ?? $debt['payment_due'] ?? $debt['monthly_payment'] ?? 0.0);
+
+        if ($apr > 1.0) {
+            $apr = $apr / 100;
+        }
+
+        return new DebtAccount(
+            $accountId,
+            max(0.0, $principal),
+            max(0.0, $apr),
+            max(0.0, $minimum),
+        );
     }
 
     public function getRecentMonthlyAverages(int $userId, int $months = 3): array
@@ -212,6 +358,175 @@ class BudgetService
             'monthsConsidered' => max(1, (int) $months),
             'series'           => [],
         ];
+    }
+
+    /**
+     * Generates a deterministic cash flow snapshot using normalized data.
+     *
+     * Assumptions:
+     * - Income records provide positive cash inflows.
+     * - Expenses, investments, and debt payments are treated as outflows.
+     * - Debt service equals the larger of recorded debt payments or configured minimum payments.
+     * - A reserve requirement (emergency fund) is subtracted before determining funds available to invest.
+     */
+    public function summarizeCashFlow(iterable $records, array $debts = [], float $reserveRequirement = 0.0): CashFlowSnapshot
+    {
+        $incomeTotal  = 0.0;
+        $expenseTotal = 0.0;
+        $debtService  = 0.0;
+
+        foreach ($debts as $debt) {
+            $dto         = $this->normalizeDebtAccount($debt);
+            $debtService += round($dto->minimumPayment, 2);
+        }
+
+        foreach ($records as $record) {
+            $normalized = $this->normalizeBudgetRecord($record);
+
+            if ($normalized->classification === 'income') {
+                $incomeTotal += abs($normalized->netAmount);
+                continue;
+            }
+
+            $outflow = abs($normalized->netAmount);
+            $expenseTotal += $outflow;
+
+            if ($normalized->classification === 'debt') {
+                $debtService += $outflow;
+            }
+        }
+
+        $incomeTotal  = round($incomeTotal, 2);
+        $expenseTotal = round($expenseTotal, 2);
+        $debtService  = round($debtService, 2);
+        $reserve      = max(0.0, round($reserveRequirement, 2));
+        $net          = round($incomeTotal - $expenseTotal, 2);
+
+        $available = max(0.0, $incomeTotal - $expenseTotal - $debtService - $reserve);
+
+        return new CashFlowSnapshot(
+            $incomeTotal,
+            $expenseTotal,
+            $net,
+            $debtService,
+            round($available, 2),
+        );
+    }
+
+    /**
+     * Projects repayment timelines using an avalanche strategy.
+     *
+     * Extra payments are applied to the highest APR balance first. Once a balance is
+     * closed, its minimum payment is recycled into the surplus for subsequent debts.
+     * Negative amortization (payment less than accrued interest) halts the schedule
+     * so calling code can prompt for a larger payment.
+     *
+     * @return array<int, array{accountId:int,monthsToPayoff:?int,totalInterest:float,negativeAmortization:bool,lastPaymentAmount:float,minimumPayment:float}>
+     */
+    public function projectDebtRepayment(array $debts, float $additionalPayment = 0.0, int $maxMonths = 600): array
+    {
+        if ($debts === []) {
+            return [];
+        }
+
+        $accounts = array_map(fn ($debt) => $this->normalizeDebtAccount($debt), $debts);
+
+        usort($accounts, static function (DebtAccount $a, DebtAccount $b): int {
+            return $b->annualPercentageRate <=> $a->annualPercentageRate
+                ?: $b->principal <=> $a->principal;
+        });
+
+        $balances   = [];
+        $minPay     = [];
+        $rates      = [];
+        $summary    = [];
+
+        foreach ($accounts as $account) {
+            $id = $account->accountId;
+            $balances[$id] = round($account->principal, 2);
+            $minPay[$id]   = round($account->minimumPayment, 2);
+            $rates[$id]    = max(0.0, $account->annualPercentageRate);
+            $summary[$id]  = [
+                'accountId'            => $id,
+                'monthsToPayoff'       => 0,
+                'totalInterest'        => 0.0,
+                'negativeAmortization' => false,
+                'lastPaymentAmount'    => 0.0,
+                'minimumPayment'       => $minPay[$id],
+            ];
+        }
+
+        $additionalPool = max(0.0, round($additionalPayment, 2));
+
+        for ($month = 1; $month <= $maxMonths; $month++) {
+            $allPaid        = true;
+            $monthlySurplus = $additionalPool;
+
+            foreach ($accounts as $account) {
+                $id = $account->accountId;
+                $balance = $balances[$id] ?? 0.0;
+
+                if ($balance <= 0.0) {
+                    continue;
+                }
+
+                $allPaid = false;
+                $monthlyRate = $rates[$id] / 12;
+                $interest    = round($balance * $monthlyRate, 6);
+                $payment     = $minPay[$id] + $monthlySurplus;
+                $payment     = round($payment, 2);
+                $monthlySurplus = 0.0;
+
+                if ($monthlyRate > 0 && $payment <= round($interest, 2)) {
+                    $summary[$id]['negativeAmortization'] = true;
+                    $summary[$id]['monthsToPayoff']       = null;
+                    return array_values($this->finalizeRepaymentSummary($summary));
+                }
+
+                $principalPayment = $payment - round($interest, 2);
+                if ($principalPayment <= 0) {
+                    $summary[$id]['negativeAmortization'] = true;
+                    $summary[$id]['monthsToPayoff']       = null;
+                    return array_values($this->finalizeRepaymentSummary($summary));
+                }
+
+                if ($principalPayment > $balance) {
+                    $principalPayment = $balance;
+                    $payment          = round($interest, 2) + round($principalPayment, 2);
+                }
+
+                $balances[$id] = max(0.0, round($balance - $principalPayment, 2));
+
+                $summary[$id]['monthsToPayoff']++;
+                $summary[$id]['totalInterest'] += round($interest, 2);
+                $summary[$id]['lastPaymentAmount'] = round($payment, 2);
+
+                if ($balances[$id] <= 0.0) {
+                    $balances[$id] = 0.0;
+                    $additionalPool += $minPay[$id];
+                }
+            }
+
+            if ($allPaid) {
+                break;
+            }
+        }
+
+        return array_values($this->finalizeRepaymentSummary($summary));
+    }
+
+    /**
+     * @param array<int, array{accountId:int,monthsToPayoff:?int,totalInterest:float,negativeAmortization:bool,lastPaymentAmount:float,minimumPayment:float}> $summary
+     */
+    private function finalizeRepaymentSummary(array $summary): array
+    {
+        foreach ($summary as &$row) {
+            $row['totalInterest']     = round($row['totalInterest'], 2);
+            $row['lastPaymentAmount'] = round($row['lastPaymentAmount'], 2);
+        }
+        unset($row);
+
+        return $summary;
     }
 
     public function buildForecast(int $userId, int $months, array $opt = []): array

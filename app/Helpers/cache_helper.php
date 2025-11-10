@@ -10,18 +10,29 @@ if (! function_exists('sanitizedCacheKey')) {
      */
     function sanitizedCacheKey(string $key): string
     {
-        // Cast to string explicitly to avoid notices when callers pass scalars.
-        $key = (string) $key;
+        // Hold onto the original for fallbacks before mutating the string value.
+        $originalKey = (string) $key;
 
-        // Replace anything outside the whitelist with underscores.
-        $key = preg_replace('/[^A-Za-z0-9:_-]/', '_', $key);
+        // Replace anything outside the whitelist (letters, numbers, dot, dash, underscore) with underscores.
+        $sanitized = preg_replace('/[^A-Za-z0-9._-]/', '_', $originalKey) ?? '';
+
+        // Collapse consecutive underscores to a single underscore for readability and shorter keys.
+        $sanitized = preg_replace('/_{2,}/', '_', $sanitized) ?? '';
+
+        // Trim leading/trailing underscores introduced during sanitization.
+        $sanitized = trim($sanitized, '_');
+
+        // If everything was stripped, fall back to a hash of the original key to keep it deterministic.
+        if ($sanitized === '') {
+            $sanitized = md5($originalKey !== '' ? $originalKey : microtime(true));
+        }
 
         // Limit the key length to stay within conservative backend limits.
         $maxLength = 120;
-        if (strlen($key) > $maxLength) {
-            $key = substr($key, 0, $maxLength);
+        if (strlen($sanitized) > $maxLength) {
+            $sanitized = substr($sanitized, 0, $maxLength);
         }
 
-        return $key;
+        return $sanitized;
     }
 }

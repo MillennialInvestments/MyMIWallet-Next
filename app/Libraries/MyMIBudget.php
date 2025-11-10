@@ -5,6 +5,11 @@ namespace App\Libraries;
 use App\Config\{SiteSettings};
 use App\Libraries\{BaseLoader, MyMIUser};
 use App\Models\{AccountsModel, BudgetModel, WalletModel, MgmtBudgetModel}; // Replace with actual model names and paths
+use App\Services\BudgetService;
+use App\DTO\Budget\{BudgetRecord, CashFlowSnapshot};
+use DateInterval;
+use DateTimeImmutable;
+use DateTimeZone;
 use CodeIgniter\Session\Session;
 
 #[\AllowDynamicProperties]
@@ -23,6 +28,7 @@ class MyMIBudget
     protected $mgmtBudgetModel;
     protected $MyMIUser;
     protected $walletModel;
+    protected BudgetService $budgetService;
     
     public function __construct()
     {
@@ -40,6 +46,7 @@ class MyMIBudget
 
         // Initialize MyMIUser library or model
         $this->MyMIUser                         = new MyMIUser();
+        $this->budgetService                    = new BudgetService();
     }
 
     private function getAccountSummary($cuID, $type) {
@@ -48,533 +55,606 @@ class MyMIBudget
         return $accountSummary;
     }
 
-    public function allUserBudgetInfo($cuID)
-    {        
-        $incomeAccountSummary                   = $this->getIncomeAccountSummary($cuID);
-        $expenseAccountSummary                  = $this->getExpenseAccountSummary($cuID);
-        $userAccount                            = $this->MyMIUser->getUserInformation($cuID); // Assuming MyMIUser is integrated in CI4
 
-        $monthlySavingsPercentage               = 0.2;
-        $monthlySavingsPercentageFMT            = number_format($monthlySavingsPercentage * 100, 0) . '%';
-
-        $userBudgetRecords                      = $this->budgetModel->getUserBudgetRecords($cuID);
-        $userActiveBudgetRecords                = $this->budgetModel->getUserActiveBudgetRecords($cuID);
-        if ($this->request->getUri()->getSegment(2) === 'Account-Overview') {
-            $userSourceRecords                  = $this->budgetModel->getSourceRecords($cuID); 
-        } else {
-            $userSourceRecords                  = [];
-        }
-        // Calculations for this month
-        $thisMonthsIncomeResult                 = $this->budgetModel->getThisMonthsIncome($cuID);
-        $thisMonthsExpenseResult                = $this->budgetModel->getThisMonthsExpense($cuID);
-        
-        // Assuming the result is an array and 'net_amount' is the sum you need
-        $thisMonthsIncome                       = abs($thisMonthsIncomeResult['net_amount'] ?? 0);
-        if ($thisMonthsIncome < 0) {
-            $thisMonthsIncomeFMT                = '-$' . number_format(abs($thisMonthsIncome), 2);
-        } else {
-            $thisMonthsIncomeFMT                = '$' . number_format($thisMonthsIncome, 2);
-        }   
-        $thisMonthsExpense                      = abs($thisMonthsExpenseResult['net_amount'] ?? 0);
-        if ($thisMonthsExpense > 0) {
-            $thisMonthsExpenseFMT               = '-$' . number_format(abs($thisMonthsExpense),2);
-        } else {
-            $thisMonthsExpenseFMT               = '$' . number_format($thisMonthsExpense,2);
-        }
-        
-        $thisMonthsSurplus                      = abs(($thisMonthsIncome - $thisMonthsExpense) ?? 0);
-        if ($thisMonthsSurplus < 0) {
-            $thisMonthsSurplusFMT               = '-$' . number_format($thisMonthsSurplus,2);
-        } else {
-            $thisMonthsSurplusFMT               = '$' . number_format($thisMonthsSurplus,2);
-        }
-
-        $thisMonthsInvestments                  = abs(($thisMonthsSurplus * $monthlySavingsPercentage) ?? 0);
-        if ($thisMonthsInvestments < 0) {
-            $thisMonthsInvestmentsFMT           = '-$' . number_format($thisMonthsInvestments,2);
-            $thisMonthsInvestmentsSplitFMT      = '-$' . number_format($thisMonthsInvestments/2,2);
-        } else {
-            $thisMonthsInvestmentsFMT           = '$' . number_format($thisMonthsInvestments,2);
-            $thisMonthsInvestmentsSplitFMT      = '$' . number_format($thisMonthsInvestments/2,2);
-        }      
-
-        // !! ---- HERE --- !! //
-        // Calculations for this month
-        $lastMonthsIncomeResult                 = $this->budgetModel->getLastMonthsIncome($cuID);
-        $lastMonthsExpenseResult                = $this->budgetModel->getLastMonthsExpense($cuID);
-        
-        // Assuming the result is an array and 'net_amount' is the sum you need
-        $lastMonthsIncome                       = abs($lastMonthsIncomeResult['net_amount'] ?? 0);
-        // $lastMonthsIncome                       = $getLastMonthsIncome[0]['net_amount'] ?? 0; 
-        if ($lastMonthsIncome < 0) {
-            $lastMonthsIncomeFMT                = '-$' . number_format(abs($lastMonthsIncome),2);
-        } else {
-            $lastMonthsIncomeFMT                = '$' . number_format($lastMonthsIncome,2);
-        }
-        
-        $lastMonthsExpense                      = abs($lastMonthsExpenseResult['net_amount'] ?? 0);
-        if ($lastMonthsExpense > 0) {
-            $lastMonthsExpenseFMT               = '-$' . number_format(abs($lastMonthsExpense),2);
-        } else {
-            $lastMonthsExpenseFMT               = '$' . number_format($lastMonthsExpense,2);
-        }
-        
-        $lastMonthsSurplus                      = abs(($lastMonthsIncome - $lastMonthsExpense) ?? 0);
-        if ($lastMonthsSurplus < 0) {
-            $lastMonthsSurplusFMT               = '-$' . number_format($lastMonthsSurplus,2);
-        } else {
-            $lastMonthsSurplusFMT               = '$' . number_format($lastMonthsSurplus,2);
-        }
-
-        $lastMonthsInvestments                  = abs(($lastMonthsSurplus * $monthlySavingsPercentage) ?? 0);
-        if ($lastMonthsInvestments < 0) {
-            $lastMonthsInvestmentsFMT           = '-$' . number_format($lastMonthsInvestments,2);
-        } else {
-            $lastMonthsInvestmentsFMT           = '$' . number_format($lastMonthsInvestments,2);
-        }      
-
-        // !! ---- HERE --- !! //
-        // Calculations for this month
-        $nextMonthsIncomeResult                 = $this->budgetModel->getNextMonthsIncome($cuID);
-        $nextMonthsExpenseResult                = $this->budgetModel->getNextMonthsExpense($cuID);
-        
-        // Assuming the result is an array and 'net_amount' is the sum you need
-        $nextMonthsIncome                       = abs($nextMonthsIncomeResult['net_amount'] ?? 0);
-        if ($nextMonthsIncome < 0) {
-            $nextMonthsIncomeFMT                = '-$' . number_format(abs($nextMonthsIncome),2);
-        } else {
-            $nextMonthsIncomeFMT                = '$' . number_format($nextMonthsIncome,2);
-        }
-
-        $nextMonthsExpense                      = abs($nextMonthsExpenseResult['net_amount'] ?? 0);
-        if ($nextMonthsExpense > 0) {
-            $nextMonthsExpenseFMT               = '-$' . number_format(abs($nextMonthsExpense),2);
-        } else {
-            $nextMonthsExpenseFMT               = '$' . number_format($nextMonthsExpense,2);
-        }
-        
-        $nextMonthsSurplus                      = abs(($nextMonthsIncome - $nextMonthsExpense) ?? 0);
-        if ($nextMonthsSurplus < 0) {
-            $nextMonthsSurplusFMT               = '-$' . number_format($nextMonthsSurplus,2);
-        } else {
-            $nextMonthsSurplusFMT               = '$' . number_format($nextMonthsSurplus,2);
-        }
-
-        $nextMonthsInvestments                  = abs(($nextMonthsSurplus * $monthlySavingsPercentage) ?? 0);     
-        if ($nextMonthsInvestments < 0) {
-            $nextMonthsInvestmentsFMT           = '-$' . number_format($nextMonthsInvestments,2);
-        } else {
-            $nextMonthsInvestmentsFMT           = '$' . number_format($nextMonthsInvestments,2);
-        } 
-
-        // !! ---- HERE --- !! //        
-        // Assuming the result is an array and 'net_amount' is the sum you need
-        $totalIncome                            = $incomeAccountSummary['income'] ?? 0;
-        if ($totalIncome < 0) {
-            $totalIncomeFMT                     = '-$' . number_format(abs($totalIncome),2);
-        } else {
-            $totalIncomeFMT                     = '$' . number_format($totalIncome,2);
-        }
-        $totalExpense                           = $expenseAccountSummary['expenses'] ?? 0;
-        if ($totalExpense > 0) {
-            $totalExpenseFMT                    = '-$' . number_format(abs($totalExpense),2);
-        } else {
-            $totalExpenseFMT                    = '$' . number_format($totalExpense,2);
-        }
-        
-        $totalSurplus                           = $totalIncome - $totalExpense;
-        if ($totalSurplus < 0) {
-            $totalSurplusFMT                    = '-$' . number_format($totalSurplus,2);
-        } else {
-            $totalSurplusFMT                    = '$' . number_format($totalSurplus,2);
-        }
-
-        $totalInvestments                       = $totalSurplus * $monthlySavingsPercentage;   
-        if ($totalInvestments < 0) {
-            $totalInvestmentsFMT                = '-$' . number_format($totalInvestments,2);
-        } else {
-            $totalInvestmentsFMT                = '$' . number_format($totalInvestments,2);
-        }  
-
-        // !! ---- HERE --- !! //
-        // Calculations for this month
-        $incomeYTDResult                        = $this->budgetModel->getIncomeYTDSummary($cuID);
-        $expenseYTDResult                       = $this->budgetModel->getExpenseYTDSummary($cuID);
-        $lastYearIncomeResult                   = $this->budgetModel->getLastYTDIncomeSummary($cuID); 
-        $lastYearExpenseResult                  = $this->budgetModel->getLastYTDExpenseSummary($cuID); 
-        
-        // Assuming the result is an array and 'net_amount' is the sum you need
-        $totalIncome                            = $incomeYTDResult[0]['ytd_income'] ?? 0;
-        $totalExpense                           = $expenseYTDResult[0]['ytd_expense'] ?? 0; 
-        $lastYTDTotalIncome                     = $lastYearIncomeResult[0]['ytd_income'] ?? 0;
-        if ($lastYTDTotalIncome < 0) {
-            $lastYTDTotalIncomeFMT              = '<span class="statusRed">-$' . number_format(abs($lastYTDTotalIncome),2) . '</span>';
-        } else {
-            $lastYTDTotalIncomeFMT              = '$' . number_format($lastYTDTotalIncome,2);
-        }  
-        $lastYTDTotalExpense                    = $lastYearExpenseResult[0]['ytd_expense'] ?? 0;
-        if ($lastYTDTotalExpense < 0) {
-            $lastYTDTotalExpenseFMT              = '<span class="statusRed">-$' . number_format(abs($lastYTDTotalExpense),2) . '</span>';
-        } else {
-            $lastYTDTotalExpenseFMT              = '$' . number_format($lastYTDTotalExpense,2);
-        }  
-        $lastYTDTotalSurplus                    = $lastYTDTotalIncome - $lastYTDTotalExpense; 
-        if ($lastYTDTotalSurplus > 0) {
-            $lastYTDTotalSurplusFMT              = '<span class="statusRed">-$' . number_format(abs($lastYTDTotalSurplus),2) . '</span>';
-        } else {
-            $lastYTDTotalSurplusFMT              = '$' . number_format($lastYTDTotalSurplus,2);
-        }  
-        $lastYTDTotalInvestments                = $lastYTDTotalSurplus * $monthlySavingsPercentage; 
-        if ($lastYTDTotalInvestments < 0) {
-            $lastYTDTotalInvestmentsFMT         = '<span class="statusRed">-$' . number_format(abs($lastYTDTotalInvestments),2) . '</span>';
-        } else {
-            $lastYTDTotalInvestmentsFMT         = '$' . number_format($lastYTDTotalInvestments,2);
-        }     
-
-        // !! ---- HERE --- !! //
-        // Calculations for this month
-        $checkingSummaryResult                  = $this->budgetModel->getCheckingSummary($cuID);
-        
-        // Assuming the result is an array and 'net_amount' is the sum you need
-        $checkingSummary                        = $checkingSummaryResult['balance'];
-        if ($checkingSummary < 0) {
-            $checkingSummaryFMT                 = '-$' . number_format(abs($checkingSummary ?? 0),2);
-        } else {
-            $checkingSummaryFMT                 = '$' . number_format(abs($checkingSummary ?? 0),2);
-        }
-
-        // !! ---- HERE --- !! //
-        // Calculations for this month
-        $creditAvailableResult                  = $this->budgetModel->getCreditAccountsSummary($cuID);
-        $debtSummaryResult                      = $this->budgetModel->getDebtAccountsSummary($cuID);
-        $investSummaryResult                    = $this->budgetModel->getInvestAccountsSummary($cuID);
-        $cryptoSummaryResult                    = $this->budgetModel->getCryptoAccountsSummary($cuID);
-        
-        // Assuming the result is an array and 'net_amount' is the sum you need
-        $creditLimit                            = $creditAvailableResult['credit_limit'] ?? 0;
-        if ($creditLimit < 0) {
-            $creditLimitFMT                     = '<span class="statusRed">-$' . number_format(abs($creditLimit),2) . '</span>';
-        } else {
-            $creditLimitFMT                     = '$' . number_format($creditLimit,2);
-        }      
-        // Assuming some logic to get $creditAvailableResult and $creditLimit
-        $creditAvailable                        = $creditAvailableResult['available_balance'];
-
-        if (is_null($creditAvailable)) {
-            $creditAvailable                    = 0; // Handle null case
-        }
-
-        if ($creditAvailable > $creditLimit) {
-            $creditAvailableFMT                 = '$' . number_format($creditAvailable, 2);
-        } else {
-            $creditAvailableFMT                 = '<span>$' . number_format(abs($creditAvailable), 2) . '</span>';
-        }
-        $debtSummary                            = $debtSummaryResult['current_balance'] ?? 0;   
-        if ($debtSummary > 0) {
-            $debtSummaryFMT                     = '-$' . number_format(abs($debtSummary),2);
-        } else {
-            $debtSummaryFMT                     = '$' . number_format($debtSummary,2);
-        } 
-        // !! ---- HERE --- !! //
-        $cryptoSummary                          = $cryptoSummaryResult['net_worth'] ?? 0; 
-        if ($cryptoSummary < 0) {
-            $cryptoSummaryFMT                   = '-$' . number_format(abs($cryptoSummary), 2); 
-        } else {
-            $cryptoSummaryFMT                   = '$' . number_format($cryptoSummary, 2); 
-        }
-        $investSummary                          = $investSummaryResult['net_worth'] ?? 0;   
-        if ($investSummary < 0) {
-            $investSummaryFMT                   = '-$' . number_format(abs($investSummary),2);
-        } else {
-            $investSummaryFMT                   = '$' . number_format($investSummary,2);
-        }  
-
-
-        // !! ---- HERE --- !! //
-        // Calculations for this month
-        $incomeYTDSummaryResult                 = $this->budgetModel->getIncomeYTDSummary($cuID);
-        // log_message('debug', 'MyMIBudget L283 - $incomeYTDSummaryResult: ' . (print_r($incomeYTDSummaryResult, true)));
-        
-        // Assuming the result is an array and 'net_amount' is the sum you need
-        $incomeYTDSummary                       = $incomeYTDSummaryResult[0]['ytd_income'];
-        // log_message('debug', 'MyMIBudget L283 - $incomeYTDSummary: ' . (print_r($incomeYTDSummary, true)));
-        if ($incomeYTDSummary === null) {
-            $incomeYTDSummaryFMT                = '$0.00'; // or any other default value you'd like to use
-        } else {
-            if ($incomeYTDSummary < 0) {
-                $incomeYTDSummaryFMT            = '-$' . number_format($incomeYTDSummary, 2);
-            } else {
-                $incomeYTDSummaryFMT            = '$' . number_format($incomeYTDSummary, 2);
-            }
-        }
-
-        // !! ---- HERE --- !! //
-        // Calculations for this month
-        $expenseYTDSummaryResult                  = $this->budgetModel->getExpenseYTDSummary($cuID);
-        
-        // Assuming the result is an array and 'net_amount' is the sum you need
-        $expenseYTDSummary                        = $expenseYTDSummaryResult[0]['ytd_expense'] ?? 0;
-        if ($expenseYTDSummary === null) {
-            $expenseYTDSummaryFMT = '$0.00'; // or any other default value you'd like to use
-        } else {
-            if ($expenseYTDSummary < 0) {
-                $expenseYTDSummaryFMT = '-$' . number_format($expenseYTDSummary, 2);
-            } else {
-                $expenseYTDSummaryFMT = '$' . number_format($expenseYTDSummary, 2);
-            }
-        }
-
-        // !! ---- HERE --- !! //
-        $allAccounts                            = $this->mgmtBudgetModel->getAccounts(); // Assuming getAccounts() method returns an array
-        $totalAccountBalance                    = $checkingSummary + $creditAvailable + $creditLimit;
-        if ($totalAccountBalance < 0) {
-            $totalAccountBalanceFMT             = '-$' . number_format($totalAccountBalance,2);
-        } else {
-            $totalAccountBalanceFMT             = '$' . number_format($totalAccountBalance,2);
-        }
-        if ($this->debug === 1) {
-            // log_message('debug', 'MyMIBudget Debug L314); 
-            // log_message('debug', 'MyMIBudget L41 - $incomeAccountSummary: ' . print_r($incomeAccountSummary, true));
-            // log_message('debug', 'MyMIBudget L43 - $expenseAccountSummary: ' . print_r($expenseAccountSummary, true));
-            // log_message('debug', 'MyMIBudget L244 - $creditAvailable: ' . $creditAvailable);
-            // log_message('debug', 'MyMIBudget L162 - $totalIncome: ' . $totalIncome); 
-            // log_message('debug', 'MyMIBudget L173 - $totalIncome: ' . $totalIncome);
-            // log_message('debug', 'MyMIBudget L162 - $totalExpense: ' . $totalExpense); 
-            // log_message('debug', 'MyMIBudget L173 - $totalExpense: ' . $totalExpense);
-            // log_message('debug', 'MyMIBudget L197 - $getIncomeYTDSummary: ' . print_r($incomeYTDResult, true));
-            // log_message('debug', 'MyMIBudget L198 - $lastYearIncomeResult: ' . print_r($lastYearIncomeResult, true));
-            // log_message('debug', 'MyMIBudget - L209 - $debtSummaryResult: ' . print_r($debtSummaryResult, true));
-            // log_message('debug', 'MyMIBudget L265 - $checkingSummaryResult: ' . print_r($checkingSummaryResult, true));
-            // log_message('debug', 'MyMIBudget L252 - $incomeYTDSummary: ' . $incomeYTDSummary);
-            // log_message('debug', 'MyMIBudget L252 - $expenseYTDSummary: ' . $expenseYTDSummary);
-            // log_message('debug', 'MyMIBudget L250 - $incomeYTDSummaryResult: ' . print_r($incomeYTDSummaryResult, true));
-            // log_message('debug', 'MyMIBudget L267 - $expenseYTDSummaryResult: ' . print_r($expenseYTDSummaryResult, true));
-        }
-        $allUserBudgets = [
-            'message_type'                      => 'Success',
-            'message'                           => 'Data Retrieved Successfully',
-            'allAccounts'                       => $allAccounts,
-            'userBudgetRecords'                 => $userBudgetRecords,
-            'userActiveBudgetRecords'           => $userActiveBudgetRecords,
-            'userSourceRecords'                 => $userSourceRecords,
-            // !! Start This Month Here:
-            'thisMonthsIncome'                  => $thisMonthsIncome,
-            'thisMonthsIncomeFMT'               => $thisMonthsIncomeFMT,
-            'thisMonthsExpense'                 => $thisMonthsExpense,
-            'thisMonthsExpenseFMT'              => $thisMonthsExpenseFMT,
-            'thisMonthsSurplus'                 => $thisMonthsSurplus,
-            'thisMonthsSurplusFMT'              => $thisMonthsSurplusFMT,
-            'thisMonthsInvestments'             => $thisMonthsInvestments,
-            'thisMonthsInvestmentsFMT'          => $thisMonthsInvestmentsFMT,
-            'thisMonthsInvestmentsSplitFMT'     => $thisMonthsInvestmentsSplitFMT,
-            // !! Start Last Month Here:
-            'lastMonthsIncome'                  => $lastMonthsIncome,
-            'lastMonthsIncomeFMT'               => $lastMonthsIncomeFMT,
-            'lastMonthsExpense'                 => $lastMonthsExpense,
-            'lastMonthsExpenseFMT'              => $lastMonthsExpenseFMT,
-            'lastMonthsSurplus'                 => $lastMonthsSurplus,
-            'lastMonthsSurplusFMT'              => $lastMonthsSurplusFMT,
-            'lastMonthsInvestments'             => $lastMonthsInvestments,
-            'lastMonthsInvestmentsFMT'          => $lastMonthsInvestmentsFMT,
-            // !! Start Last Year Here:
-            'lastYTDTotalIncome'                => $lastYTDTotalIncome,
-            'lastYTDTotalIncomeFMT'             => $lastYTDTotalIncomeFMT,
-            'lastYTDTotalExpense'               => $lastYTDTotalExpense,
-            'lastYTDTotalExpenseFMT'            => $lastYTDTotalExpenseFMT,
-            'lastYTDTotalSurplus'               => $lastYTDTotalSurplus,
-            'lastYTDTotalSurplusFMT'            => $lastYTDTotalSurplusFMT,
-            'lastYTDTotalInvestments'           => $lastYTDTotalInvestments,
-            'lastYTDTotalInvestmentsFMT'        => $lastYTDTotalInvestmentsFMT,
-            // !! Start Next Month Here:
-            'nextMonthsIncome'                  => $nextMonthsIncome,
-            'nextMonthsIncomeFMT'               => $nextMonthsIncomeFMT,
-            'nextMonthsExpense'                 => $nextMonthsExpense,
-            'nextMonthsExpenseFMT'              => $nextMonthsExpenseFMT,
-            'nextMonthsSurplus'                 => $nextMonthsSurplus,
-            'nextMonthsSurplusFMT'              => $nextMonthsSurplusFMT,
-            'nextMonthsInvestments'             => $nextMonthsInvestments,
-            'nextMonthsInvestmentsFMT'          => $nextMonthsInvestmentsFMT,
-            'totalIncome'                       => $totalIncome,
-            'totalIncomeFMT'                    => $totalIncomeFMT,
-            'totalExpense'                      => $totalExpense,
-            'totalExpenseFMT'                   => $totalExpenseFMT,
-            'totalSurplus'                      => $totalSurplus,
-            'totalSurplusFMT'                   => $totalSurplusFMT,
-            'totalInvestments'                  => $totalInvestments,
-            'totalInvestmentsFMT'               => $totalInvestmentsFMT,
-            'checkingSummary'                   => $checkingSummary,
-            'checkingSummaryFMT'                => $checkingSummaryFMT,
-            'incomeYTDSummary'                  => $incomeYTDSummary,
-            'incomeYTDSummaryFMT'               => $incomeYTDSummaryFMT,
-            'expenseYTDSummary'                 => $expenseYTDSummary,
-            'expenseYTDSummaryFMT'              => $expenseYTDSummaryFMT,
-            'creditLimit'                       => $creditLimit,
-            'creditLimitFMT'                    => $creditLimitFMT,
-            'creditAvailable'                   => $creditAvailable,
-            'creditAvailableFMT'                => $creditAvailableFMT,
-            'debtSummary'                       => $debtSummary,
-            'debtSummaryFMT'                    => $debtSummaryFMT,
-            'cryptoSummary'                     => $cryptoSummary,
-            'cryptoSummaryFMT'                  => $cryptoSummaryFMT,
-            'investSummary'                     => $investSummary,
-            'investSummaryFMT'                  => $investSummaryFMT,
-            'totalAccountBalance'               => $totalAccountBalance, 
-            'totalAccountBalanceFMT'            => $totalAccountBalanceFMT, 
-        ];
-        if ($this->debug === 1) {
-            // log_message('debug', 'MyMIBudget L355 - $allUserBudgets-creditAvailable: ' . $allUserBudgets['creditAvailable']); 
-        }; 
-        return $allUserBudgets;
-    }
-
-    public function userBudgetInfo($cuID)
+    /**
+     * @param BudgetRecord[] $records
+     * @return BudgetRecord[]
+     */
+    private function filterRecordsByWindow(array $records, DateTimeImmutable $start, DateTimeImmutable $end): array
     {
-        $financialAccountSummary                = $this->getAccountSummary($cuID, 'financial');
-        $incomeAccountSummary                   = $this->getIncomeAccountSummary($cuID);
-        $expenseAccountSummary                  = $this->getExpenseAccountSummary($cuID);
-        $debtAccountSummary                     = $this->getDebtAccountSummary($cuID);
-    
-        $accountSurplus                         = $incomeAccountSummary['income'] - $expenseAccountSummary['expenses'];
-    
-        $userBudgetRecords                      = $this->allUserBudgetInfo($cuID);
-    
-        $userBudget = [
-            'cuID' => $cuID,
-            'incomeAccountSummary'              => $incomeAccountSummary,
-            'debtAccountSummary'                => $debtAccountSummary,
-            'expenseAccountSummary'             => $expenseAccountSummary,
-            'accountSurplus'                    => $accountSurplus,
-            'accountTotalSurplus'               => number_format($accountSurplus, 2),
-            'userBudgetRecords'                 => $userBudgetRecords,
-        ];
-    
-        return $userBudget;
-    }   
+        return array_values(array_filter(
+            $records,
+            static fn (BudgetRecord $record) => $record->date >= $start && $record->date < $end
+        ));
+    }
 
-    public function calculateMonthlyData($budgetData) {
-        $months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        $incomes = array_fill(0, 12, 0);
-        $expenses = array_fill(0, 12, 0);
-        $surpluses = array_fill(0, 12, 0);
-    
-        foreach ($budgetData as $item) {
-            $monthIndex = date('n', strtotime($item['designated_date'])) - 1; // Get month index (0-11)
-    
-            log_message('debug', 'Processing item: ' . print_r($item, true));
-    
-            if ($item['account_type'] === 'Income') {
-                $incomes[$monthIndex] += $item['net_amount'];
-            } elseif ($item['account_type'] === 'Expense') {
-                $expenses[$monthIndex] += $item['net_amount'];
-            }
-        }
-    
-        for ($i = 0; $i < 12; $i++) {
-            $surpluses[$i] = $incomes[$i] - $expenses[$i];
-        }
-    
-        log_message('debug', 'Monthly Incomes: ' . print_r($incomes, true));
-        log_message('debug', 'Monthly Expenses: ' . print_r($expenses, true));
-        log_message('debug', 'Monthly Surpluses: ' . print_r($surpluses, true));
-    
+    private function snapshotToArray(CashFlowSnapshot $snapshot): array
+    {
         return [
-            'months' => $months,
-            'incomes' => $incomes,
-            'expenses' => $expenses,
-            'surpluses' => $surpluses,
+            'income'             => $snapshot->income,
+            'expenses'           => $snapshot->expenses,
+            'net'                => $snapshot->net,
+            'debtService'        => $snapshot->debtService,
+            'availableToInvest'  => $snapshot->availableToInvest,
         ];
     }
 
-    public function calculateForecastData($budgetData, $years) {
-        $months = [];
-        $incomes = [];
-        $expenses = [];
-        $surpluses = [];
-    
-        // Start with initial income and expense values
-        $initialIncome = array_sum(array_column(array_filter($budgetData, function ($item) {
-            return $item['account_type'] === 'Income';
-        }), 'net_amount'));
-    
-        $initialExpense = array_sum(array_column(array_filter($budgetData, function ($item) {
-            return $item['account_type'] === 'Expense';
-        }), 'net_amount'));
-    
-        for ($i = 0; $i < $years * 12; $i++) {
-            $monthIndex = $i % 12;
-            $yearIndex = floor($i / 12);
-            $monthName = date('F', mktime(0, 0, 0, $monthIndex + 1, 10)) . ' ' . (date('Y') + $yearIndex);
-            $months[] = $monthName;
-    
-            // Apply a growth factor (e.g., 3% annual growth)
-            $growthFactor = pow(1.03, $yearIndex);
-            $monthlyIncome = $initialIncome * $growthFactor;
-            $monthlyExpense = $initialExpense * $growthFactor;
-    
-            $incomes[] = $monthlyIncome;
-            $expenses[] = $monthlyExpense;
-            $surpluses[] = $monthlyIncome - $monthlyExpense;
-        }
-    
+    public function allUserBudgetInfo($cuID)
+    {
+        $incomeAccountSummary = $this->getIncomeAccountSummary($cuID);
+        $expenseAccountSummary = $this->getExpenseAccountSummary($cuID);
+        $userAccount = $this->MyMIUser->getUserInformation($cuID);
+
+        $userBudgetRecords = $this->budgetModel->getUserBudgetRecords($cuID) ?? [];
+        $userActiveBudgetRecords = $this->budgetModel->getUserActiveBudgetRecords($cuID) ?? [];
+        $userSourceRecords = $this->request->getUri()->getSegment(2) === 'Account-Overview'
+            ? ($this->budgetModel->getSourceRecords($cuID) ?? [])
+            : [];
+
+        $normalizedRecords = array_map(fn ($row) => $this->budgetService->normalizeBudgetRecord($row, $cuID), $userBudgetRecords);
+        $debtRecords = [];
+
+        $tz = new DateTimeZone('America/Chicago');
+        $currentStart = (new DateTimeImmutable('first day of this month', $tz))->setTime(0, 0);
+        $nextStart = $currentStart->add(new DateInterval('P1M'));
+        $previousStart = $currentStart->sub(new DateInterval('P1M'));
+        $afterNextStart = $nextStart->add(new DateInterval('P1M'));
+
+        $periodSnapshots = [
+            'thisMonth' => $this->budgetService->summarizeCashFlow(
+                $this->filterRecordsByWindow($normalizedRecords, $currentStart, $nextStart),
+                $debtRecords
+            ),
+            'lastMonth' => $this->budgetService->summarizeCashFlow(
+                $this->filterRecordsByWindow($normalizedRecords, $previousStart, $currentStart),
+                $debtRecords
+            ),
+            'nextMonth' => $this->budgetService->summarizeCashFlow(
+                $this->filterRecordsByWindow($normalizedRecords, $nextStart, $afterNextStart),
+                $debtRecords
+            ),
+            'lifetime'  => $this->budgetService->summarizeCashFlow($normalizedRecords, $debtRecords),
+        ];
+
         return [
-            'months' => $months,
-            'incomes' => $incomes,
-            'expenses' => $expenses,
-            'surpluses' => $surpluses,
+            'userAccount'             => $userAccount,
+            'incomeAccountSummary'    => $incomeAccountSummary,
+            'expenseAccountSummary'   => $expenseAccountSummary,
+            'userBudgetRecords'       => $userBudgetRecords,
+            'userActiveBudgetRecords' => $userActiveBudgetRecords,
+            'userSourceRecords'       => $userSourceRecords,
+            'periodSummaries'         => array_map([$this, 'snapshotToArray'], $periodSnapshots),
         ];
     }
+
+    
+    // public function allUserBudgetInfo($cuID)
+    // {        
+    //     $incomeAccountSummary                   = $this->getIncomeAccountSummary($cuID);
+    //     $expenseAccountSummary                  = $this->getExpenseAccountSummary($cuID);
+    //     $userAccount                            = $this->MyMIUser->getUserInformation($cuID); // Assuming MyMIUser is integrated in CI4
+
+    //     $monthlySavingsPercentage               = 0.2;
+    //     $monthlySavingsPercentageFMT            = number_format($monthlySavingsPercentage * 100, 0) . '%';
+
+    //     $userBudgetRecords                      = $this->budgetModel->getUserBudgetRecords($cuID);
+    //     $userActiveBudgetRecords                = $this->budgetModel->getUserActiveBudgetRecords($cuID);
+    //     if ($this->request->getUri()->getSegment(2) === 'Account-Overview') {
+    //         $userSourceRecords                  = $this->budgetModel->getSourceRecords($cuID); 
+    //     } else {
+    //         $userSourceRecords                  = [];
+    //     }
+    //     // Calculations for this month
+    //     $thisMonthsIncomeResult                 = $this->budgetModel->getThisMonthsIncome($cuID);
+    //     $thisMonthsExpenseResult                = $this->budgetModel->getThisMonthsExpense($cuID);
+        
+    //     // Assuming the result is an array and 'net_amount' is the sum you need
+    //     $thisMonthsIncome                       = abs($thisMonthsIncomeResult['net_amount'] ?? 0);
+    //     if ($thisMonthsIncome < 0) {
+    //         $thisMonthsIncomeFMT                = '-$' . number_format(abs($thisMonthsIncome), 2);
+    //     } else {
+    //         $thisMonthsIncomeFMT                = '$' . number_format($thisMonthsIncome, 2);
+    //     }   
+    //     $thisMonthsExpense                      = abs($thisMonthsExpenseResult['net_amount'] ?? 0);
+    //     if ($thisMonthsExpense > 0) {
+    //         $thisMonthsExpenseFMT               = '-$' . number_format(abs($thisMonthsExpense),2);
+    //     } else {
+    //         $thisMonthsExpenseFMT               = '$' . number_format($thisMonthsExpense,2);
+    //     }
+        
+    //     $thisMonthsSurplus                      = abs(($thisMonthsIncome - $thisMonthsExpense) ?? 0);
+    //     if ($thisMonthsSurplus < 0) {
+    //         $thisMonthsSurplusFMT               = '-$' . number_format($thisMonthsSurplus,2);
+    //     } else {
+    //         $thisMonthsSurplusFMT               = '$' . number_format($thisMonthsSurplus,2);
+    //     }
+
+    //     $thisMonthsInvestments                  = abs(($thisMonthsSurplus * $monthlySavingsPercentage) ?? 0);
+    //     if ($thisMonthsInvestments < 0) {
+    //         $thisMonthsInvestmentsFMT           = '-$' . number_format($thisMonthsInvestments,2);
+    //         $thisMonthsInvestmentsSplitFMT      = '-$' . number_format($thisMonthsInvestments/2,2);
+    //     } else {
+    //         $thisMonthsInvestmentsFMT           = '$' . number_format($thisMonthsInvestments,2);
+    //         $thisMonthsInvestmentsSplitFMT      = '$' . number_format($thisMonthsInvestments/2,2);
+    //     }      
+
+    //     // !! ---- HERE --- !! //
+    //     // Calculations for this month
+    //     $lastMonthsIncomeResult                 = $this->budgetModel->getLastMonthsIncome($cuID);
+    //     $lastMonthsExpenseResult                = $this->budgetModel->getLastMonthsExpense($cuID);
+        
+    //     // Assuming the result is an array and 'net_amount' is the sum you need
+    //     $lastMonthsIncome                       = abs($lastMonthsIncomeResult['net_amount'] ?? 0);
+    //     // $lastMonthsIncome                       = $getLastMonthsIncome[0]['net_amount'] ?? 0; 
+    //     if ($lastMonthsIncome < 0) {
+    //         $lastMonthsIncomeFMT                = '-$' . number_format(abs($lastMonthsIncome),2);
+    //     } else {
+    //         $lastMonthsIncomeFMT                = '$' . number_format($lastMonthsIncome,2);
+    //     }
+        
+    //     $lastMonthsExpense                      = abs($lastMonthsExpenseResult['net_amount'] ?? 0);
+    //     if ($lastMonthsExpense > 0) {
+    //         $lastMonthsExpenseFMT               = '-$' . number_format(abs($lastMonthsExpense),2);
+    //     } else {
+    //         $lastMonthsExpenseFMT               = '$' . number_format($lastMonthsExpense,2);
+    //     }
+        
+    //     $lastMonthsSurplus                      = abs(($lastMonthsIncome - $lastMonthsExpense) ?? 0);
+    //     if ($lastMonthsSurplus < 0) {
+    //         $lastMonthsSurplusFMT               = '-$' . number_format($lastMonthsSurplus,2);
+    //     } else {
+    //         $lastMonthsSurplusFMT               = '$' . number_format($lastMonthsSurplus,2);
+    //     }
+
+    //     $lastMonthsInvestments                  = abs(($lastMonthsSurplus * $monthlySavingsPercentage) ?? 0);
+    //     if ($lastMonthsInvestments < 0) {
+    //         $lastMonthsInvestmentsFMT           = '-$' . number_format($lastMonthsInvestments,2);
+    //     } else {
+    //         $lastMonthsInvestmentsFMT           = '$' . number_format($lastMonthsInvestments,2);
+    //     }      
+
+    //     // !! ---- HERE --- !! //
+    //     // Calculations for this month
+    //     $nextMonthsIncomeResult                 = $this->budgetModel->getNextMonthsIncome($cuID);
+    //     $nextMonthsExpenseResult                = $this->budgetModel->getNextMonthsExpense($cuID);
+        
+    //     // Assuming the result is an array and 'net_amount' is the sum you need
+    //     $nextMonthsIncome                       = abs($nextMonthsIncomeResult['net_amount'] ?? 0);
+    //     if ($nextMonthsIncome < 0) {
+    //         $nextMonthsIncomeFMT                = '-$' . number_format(abs($nextMonthsIncome),2);
+    //     } else {
+    //         $nextMonthsIncomeFMT                = '$' . number_format($nextMonthsIncome,2);
+    //     }
+
+    //     $nextMonthsExpense                      = abs($nextMonthsExpenseResult['net_amount'] ?? 0);
+    //     if ($nextMonthsExpense > 0) {
+    //         $nextMonthsExpenseFMT               = '-$' . number_format(abs($nextMonthsExpense),2);
+    //     } else {
+    //         $nextMonthsExpenseFMT               = '$' . number_format($nextMonthsExpense,2);
+    //     }
+        
+    //     $nextMonthsSurplus                      = abs(($nextMonthsIncome - $nextMonthsExpense) ?? 0);
+    //     if ($nextMonthsSurplus < 0) {
+    //         $nextMonthsSurplusFMT               = '-$' . number_format($nextMonthsSurplus,2);
+    //     } else {
+    //         $nextMonthsSurplusFMT               = '$' . number_format($nextMonthsSurplus,2);
+    //     }
+
+    //     $nextMonthsInvestments                  = abs(($nextMonthsSurplus * $monthlySavingsPercentage) ?? 0);     
+    //     if ($nextMonthsInvestments < 0) {
+    //         $nextMonthsInvestmentsFMT           = '-$' . number_format($nextMonthsInvestments,2);
+    //     } else {
+    //         $nextMonthsInvestmentsFMT           = '$' . number_format($nextMonthsInvestments,2);
+    //     } 
+
+    //     // !! ---- HERE --- !! //        
+    //     // Assuming the result is an array and 'net_amount' is the sum you need
+    //     $totalIncome                            = $incomeAccountSummary['income'] ?? 0;
+    //     if ($totalIncome < 0) {
+    //         $totalIncomeFMT                     = '-$' . number_format(abs($totalIncome),2);
+    //     } else {
+    //         $totalIncomeFMT                     = '$' . number_format($totalIncome,2);
+    //     }
+    //     $totalExpense                           = $expenseAccountSummary['expenses'] ?? 0;
+    //     if ($totalExpense > 0) {
+    //         $totalExpenseFMT                    = '-$' . number_format(abs($totalExpense),2);
+    //     } else {
+    //         $totalExpenseFMT                    = '$' . number_format($totalExpense,2);
+    //     }
+        
+    //     $totalSurplus                           = $totalIncome - $totalExpense;
+    //     if ($totalSurplus < 0) {
+    //         $totalSurplusFMT                    = '-$' . number_format($totalSurplus,2);
+    //     } else {
+    //         $totalSurplusFMT                    = '$' . number_format($totalSurplus,2);
+    //     }
+
+    //     $totalInvestments                       = $totalSurplus * $monthlySavingsPercentage;   
+    //     if ($totalInvestments < 0) {
+    //         $totalInvestmentsFMT                = '-$' . number_format($totalInvestments,2);
+    //     } else {
+    //         $totalInvestmentsFMT                = '$' . number_format($totalInvestments,2);
+    //     }  
+
+    //     // !! ---- HERE --- !! //
+    //     // Calculations for this month
+    //     $incomeYTDResult                        = $this->budgetModel->getIncomeYTDSummary($cuID);
+    //     $expenseYTDResult                       = $this->budgetModel->getExpenseYTDSummary($cuID);
+    //     $lastYearIncomeResult                   = $this->budgetModel->getLastYTDIncomeSummary($cuID); 
+    //     $lastYearExpenseResult                  = $this->budgetModel->getLastYTDExpenseSummary($cuID); 
+        
+    //     // Assuming the result is an array and 'net_amount' is the sum you need
+    //     $totalIncome                            = $incomeYTDResult[0]['ytd_income'] ?? 0;
+    //     $totalExpense                           = $expenseYTDResult[0]['ytd_expense'] ?? 0; 
+    //     $lastYTDTotalIncome                     = $lastYearIncomeResult[0]['ytd_income'] ?? 0;
+    //     if ($lastYTDTotalIncome < 0) {
+    //         $lastYTDTotalIncomeFMT              = '<span class="statusRed">-$' . number_format(abs($lastYTDTotalIncome),2) . '</span>';
+    //     } else {
+    //         $lastYTDTotalIncomeFMT              = '$' . number_format($lastYTDTotalIncome,2);
+    //     }  
+    //     $lastYTDTotalExpense                    = $lastYearExpenseResult[0]['ytd_expense'] ?? 0;
+    //     if ($lastYTDTotalExpense < 0) {
+    //         $lastYTDTotalExpenseFMT              = '<span class="statusRed">-$' . number_format(abs($lastYTDTotalExpense),2) . '</span>';
+    //     } else {
+    //         $lastYTDTotalExpenseFMT              = '$' . number_format($lastYTDTotalExpense,2);
+    //     }  
+    //     $lastYTDTotalSurplus                    = $lastYTDTotalIncome - $lastYTDTotalExpense; 
+    //     if ($lastYTDTotalSurplus > 0) {
+    //         $lastYTDTotalSurplusFMT              = '<span class="statusRed">-$' . number_format(abs($lastYTDTotalSurplus),2) . '</span>';
+    //     } else {
+    //         $lastYTDTotalSurplusFMT              = '$' . number_format($lastYTDTotalSurplus,2);
+    //     }  
+    //     $lastYTDTotalInvestments                = $lastYTDTotalSurplus * $monthlySavingsPercentage; 
+    //     if ($lastYTDTotalInvestments < 0) {
+    //         $lastYTDTotalInvestmentsFMT         = '<span class="statusRed">-$' . number_format(abs($lastYTDTotalInvestments),2) . '</span>';
+    //     } else {
+    //         $lastYTDTotalInvestmentsFMT         = '$' . number_format($lastYTDTotalInvestments,2);
+    //     }     
+
+    //     // !! ---- HERE --- !! //
+    //     // Calculations for this month
+    //     $checkingSummaryResult                  = $this->budgetModel->getCheckingSummary($cuID);
+        
+    //     // Assuming the result is an array and 'net_amount' is the sum you need
+    //     $checkingSummary                        = $checkingSummaryResult['balance'];
+    //     if ($checkingSummary < 0) {
+    //         $checkingSummaryFMT                 = '-$' . number_format(abs($checkingSummary ?? 0),2);
+    //     } else {
+    //         $checkingSummaryFMT                 = '$' . number_format(abs($checkingSummary ?? 0),2);
+    //     }
+
+    //     // !! ---- HERE --- !! //
+    //     // Calculations for this month
+    //     $creditAvailableResult                  = $this->budgetModel->getCreditAccountsSummary($cuID);
+    //     $debtSummaryResult                      = $this->budgetModel->getDebtAccountsSummary($cuID);
+    //     $investSummaryResult                    = $this->budgetModel->getInvestAccountsSummary($cuID);
+    //     $cryptoSummaryResult                    = $this->budgetModel->getCryptoAccountsSummary($cuID);
+        
+    //     // Assuming the result is an array and 'net_amount' is the sum you need
+    //     $creditLimit                            = $creditAvailableResult['credit_limit'] ?? 0;
+    //     if ($creditLimit < 0) {
+    //         $creditLimitFMT                     = '<span class="statusRed">-$' . number_format(abs($creditLimit),2) . '</span>';
+    //     } else {
+    //         $creditLimitFMT                     = '$' . number_format($creditLimit,2);
+    //     }      
+    //     // Assuming some logic to get $creditAvailableResult and $creditLimit
+    //     $creditAvailable                        = $creditAvailableResult['available_balance'];
+
+    //     if (is_null($creditAvailable)) {
+    //         $creditAvailable                    = 0; // Handle null case
+    //     }
+
+    //     if ($creditAvailable > $creditLimit) {
+    //         $creditAvailableFMT                 = '$' . number_format($creditAvailable, 2);
+    //     } else {
+    //         $creditAvailableFMT                 = '<span>$' . number_format(abs($creditAvailable), 2) . '</span>';
+    //     }
+    //     $debtSummary                            = $debtSummaryResult['current_balance'] ?? 0;   
+    //     if ($debtSummary > 0) {
+    //         $debtSummaryFMT                     = '-$' . number_format(abs($debtSummary),2);
+    //     } else {
+    //         $debtSummaryFMT                     = '$' . number_format($debtSummary,2);
+    //     } 
+    //     // !! ---- HERE --- !! //
+    //     $cryptoSummary                          = $cryptoSummaryResult['net_worth'] ?? 0; 
+    //     if ($cryptoSummary < 0) {
+    //         $cryptoSummaryFMT                   = '-$' . number_format(abs($cryptoSummary), 2); 
+    //     } else {
+    //         $cryptoSummaryFMT                   = '$' . number_format($cryptoSummary, 2); 
+    //     }
+    //     $investSummary                          = $investSummaryResult['net_worth'] ?? 0;   
+    //     if ($investSummary < 0) {
+    //         $investSummaryFMT                   = '-$' . number_format(abs($investSummary),2);
+    //     } else {
+    //         $investSummaryFMT                   = '$' . number_format($investSummary,2);
+    //     }  
+
+
+    //     // !! ---- HERE --- !! //
+    //     // Calculations for this month
+    //     $incomeYTDSummaryResult                 = $this->budgetModel->getIncomeYTDSummary($cuID);
+    //     // log_message('debug', 'MyMIBudget L283 - $incomeYTDSummaryResult: ' . (print_r($incomeYTDSummaryResult, true)));
+        
+    //     // Assuming the result is an array and 'net_amount' is the sum you need
+    //     $incomeYTDSummary                       = $incomeYTDSummaryResult[0]['ytd_income'];
+    //     // log_message('debug', 'MyMIBudget L283 - $incomeYTDSummary: ' . (print_r($incomeYTDSummary, true)));
+    //     if ($incomeYTDSummary === null) {
+    //         $incomeYTDSummaryFMT                = '$0.00'; // or any other default value you'd like to use
+    //     } else {
+    //         if ($incomeYTDSummary < 0) {
+    //             $incomeYTDSummaryFMT            = '-$' . number_format($incomeYTDSummary, 2);
+    //         } else {
+    //             $incomeYTDSummaryFMT            = '$' . number_format($incomeYTDSummary, 2);
+    //         }
+    //     }
+
+    //     // !! ---- HERE --- !! //
+    //     // Calculations for this month
+    //     $expenseYTDSummaryResult                  = $this->budgetModel->getExpenseYTDSummary($cuID);
+        
+    //     // Assuming the result is an array and 'net_amount' is the sum you need
+    //     $expenseYTDSummary                        = $expenseYTDSummaryResult[0]['ytd_expense'] ?? 0;
+    //     if ($expenseYTDSummary === null) {
+    //         $expenseYTDSummaryFMT = '$0.00'; // or any other default value you'd like to use
+    //     } else {
+    //         if ($expenseYTDSummary < 0) {
+    //             $expenseYTDSummaryFMT = '-$' . number_format($expenseYTDSummary, 2);
+    //         } else {
+    //             $expenseYTDSummaryFMT = '$' . number_format($expenseYTDSummary, 2);
+    //         }
+    //     }
+
+    //     // !! ---- HERE --- !! //
+    //     $allAccounts                            = $this->mgmtBudgetModel->getAccounts(); // Assuming getAccounts() method returns an array
+    //     $totalAccountBalance                    = $checkingSummary + $creditAvailable + $creditLimit;
+    //     if ($totalAccountBalance < 0) {
+    //         $totalAccountBalanceFMT             = '-$' . number_format($totalAccountBalance,2);
+    //     } else {
+    //         $totalAccountBalanceFMT             = '$' . number_format($totalAccountBalance,2);
+    //     }
+    //     if ($this->debug === 1) {
+    //         // log_message('debug', 'MyMIBudget Debug L314); 
+    //         // log_message('debug', 'MyMIBudget L41 - $incomeAccountSummary: ' . print_r($incomeAccountSummary, true));
+    //         // log_message('debug', 'MyMIBudget L43 - $expenseAccountSummary: ' . print_r($expenseAccountSummary, true));
+    //         // log_message('debug', 'MyMIBudget L244 - $creditAvailable: ' . $creditAvailable);
+    //         // log_message('debug', 'MyMIBudget L162 - $totalIncome: ' . $totalIncome); 
+    //         // log_message('debug', 'MyMIBudget L173 - $totalIncome: ' . $totalIncome);
+    //         // log_message('debug', 'MyMIBudget L162 - $totalExpense: ' . $totalExpense); 
+    //         // log_message('debug', 'MyMIBudget L173 - $totalExpense: ' . $totalExpense);
+    //         // log_message('debug', 'MyMIBudget L197 - $getIncomeYTDSummary: ' . print_r($incomeYTDResult, true));
+    //         // log_message('debug', 'MyMIBudget L198 - $lastYearIncomeResult: ' . print_r($lastYearIncomeResult, true));
+    //         // log_message('debug', 'MyMIBudget - L209 - $debtSummaryResult: ' . print_r($debtSummaryResult, true));
+    //         // log_message('debug', 'MyMIBudget L265 - $checkingSummaryResult: ' . print_r($checkingSummaryResult, true));
+    //         // log_message('debug', 'MyMIBudget L252 - $incomeYTDSummary: ' . $incomeYTDSummary);
+    //         // log_message('debug', 'MyMIBudget L252 - $expenseYTDSummary: ' . $expenseYTDSummary);
+    //         // log_message('debug', 'MyMIBudget L250 - $incomeYTDSummaryResult: ' . print_r($incomeYTDSummaryResult, true));
+    //         // log_message('debug', 'MyMIBudget L267 - $expenseYTDSummaryResult: ' . print_r($expenseYTDSummaryResult, true));
+    //     }
+    //     $allUserBudgets = [
+    //         'message_type'                      => 'Success',
+    //         'message'                           => 'Data Retrieved Successfully',
+    //         'allAccounts'                       => $allAccounts,
+    //         'userBudgetRecords'                 => $userBudgetRecords,
+    //         'userActiveBudgetRecords'           => $userActiveBudgetRecords,
+    //         'userSourceRecords'                 => $userSourceRecords,
+    //         // !! Start This Month Here:
+    //         'thisMonthsIncome'                  => $thisMonthsIncome,
+    //         'thisMonthsIncomeFMT'               => $thisMonthsIncomeFMT,
+    //         'thisMonthsExpense'                 => $thisMonthsExpense,
+    //         'thisMonthsExpenseFMT'              => $thisMonthsExpenseFMT,
+    //         'thisMonthsSurplus'                 => $thisMonthsSurplus,
+    //         'thisMonthsSurplusFMT'              => $thisMonthsSurplusFMT,
+    //         'thisMonthsInvestments'             => $thisMonthsInvestments,
+    //         'thisMonthsInvestmentsFMT'          => $thisMonthsInvestmentsFMT,
+    //         'thisMonthsInvestmentsSplitFMT'     => $thisMonthsInvestmentsSplitFMT,
+    //         // !! Start Last Month Here:
+    //         'lastMonthsIncome'                  => $lastMonthsIncome,
+    //         'lastMonthsIncomeFMT'               => $lastMonthsIncomeFMT,
+    //         'lastMonthsExpense'                 => $lastMonthsExpense,
+    //         'lastMonthsExpenseFMT'              => $lastMonthsExpenseFMT,
+    //         'lastMonthsSurplus'                 => $lastMonthsSurplus,
+    //         'lastMonthsSurplusFMT'              => $lastMonthsSurplusFMT,
+    //         'lastMonthsInvestments'             => $lastMonthsInvestments,
+    //         'lastMonthsInvestmentsFMT'          => $lastMonthsInvestmentsFMT,
+    //         // !! Start Last Year Here:
+    //         'lastYTDTotalIncome'                => $lastYTDTotalIncome,
+    //         'lastYTDTotalIncomeFMT'             => $lastYTDTotalIncomeFMT,
+    //         'lastYTDTotalExpense'               => $lastYTDTotalExpense,
+    //         'lastYTDTotalExpenseFMT'            => $lastYTDTotalExpenseFMT,
+    //         'lastYTDTotalSurplus'               => $lastYTDTotalSurplus,
+    //         'lastYTDTotalSurplusFMT'            => $lastYTDTotalSurplusFMT,
+    //         'lastYTDTotalInvestments'           => $lastYTDTotalInvestments,
+    //         'lastYTDTotalInvestmentsFMT'        => $lastYTDTotalInvestmentsFMT,
+    //         // !! Start Next Month Here:
+    //         'nextMonthsIncome'                  => $nextMonthsIncome,
+    //         'nextMonthsIncomeFMT'               => $nextMonthsIncomeFMT,
+    //         'nextMonthsExpense'                 => $nextMonthsExpense,
+    //         'nextMonthsExpenseFMT'              => $nextMonthsExpenseFMT,
+    //         'nextMonthsSurplus'                 => $nextMonthsSurplus,
+    //         'nextMonthsSurplusFMT'              => $nextMonthsSurplusFMT,
+    //         'nextMonthsInvestments'             => $nextMonthsInvestments,
+    //         'nextMonthsInvestmentsFMT'          => $nextMonthsInvestmentsFMT,
+    //         'totalIncome'                       => $totalIncome,
+    //         'totalIncomeFMT'                    => $totalIncomeFMT,
+    //         'totalExpense'                      => $totalExpense,
+    //         'totalExpenseFMT'                   => $totalExpenseFMT,
+    //         'totalSurplus'                      => $totalSurplus,
+    //         'totalSurplusFMT'                   => $totalSurplusFMT,
+    //         'totalInvestments'                  => $totalInvestments,
+    //         'totalInvestmentsFMT'               => $totalInvestmentsFMT,
+    //         'checkingSummary'                   => $checkingSummary,
+    //         'checkingSummaryFMT'                => $checkingSummaryFMT,
+    //         'incomeYTDSummary'                  => $incomeYTDSummary,
+    //         'incomeYTDSummaryFMT'               => $incomeYTDSummaryFMT,
+    //         'expenseYTDSummary'                 => $expenseYTDSummary,
+    //         'expenseYTDSummaryFMT'              => $expenseYTDSummaryFMT,
+    //         'creditLimit'                       => $creditLimit,
+    //         'creditLimitFMT'                    => $creditLimitFMT,
+    //         'creditAvailable'                   => $creditAvailable,
+    //         'creditAvailableFMT'                => $creditAvailableFMT,
+    //         'debtSummary'                       => $debtSummary,
+    //         'debtSummaryFMT'                    => $debtSummaryFMT,
+    //         'cryptoSummary'                     => $cryptoSummary,
+    //         'cryptoSummaryFMT'                  => $cryptoSummaryFMT,
+    //         'investSummary'                     => $investSummary,
+    //         'investSummaryFMT'                  => $investSummaryFMT,
+    //         'totalAccountBalance'               => $totalAccountBalance, 
+    //         'totalAccountBalanceFMT'            => $totalAccountBalanceFMT, 
+    //     ];
+    //     if ($this->debug === 1) {
+    //         // log_message('debug', 'MyMIBudget L355 - $allUserBudgets-creditAvailable: ' . $allUserBudgets['creditAvailable']); 
+    //     }; 
+    //     return $allUserBudgets;
+    // }
+
+    // public function userBudgetInfo($cuID)
+    // {
+    //     $financialAccountSummary                = $this->getAccountSummary($cuID, 'financial');
+    //     $incomeAccountSummary                   = $this->getIncomeAccountSummary($cuID);
+    //     $expenseAccountSummary                  = $this->getExpenseAccountSummary($cuID);
+    //     $debtAccountSummary                     = $this->getDebtAccountSummary($cuID);
+    
+    //     $accountSurplus                         = $incomeAccountSummary['income'] - $expenseAccountSummary['expenses'];
+    
+    //     $userBudgetRecords                      = $this->allUserBudgetInfo($cuID);
+    
+    //     $userBudget = [
+    //         'cuID' => $cuID,
+    //         'incomeAccountSummary'              => $incomeAccountSummary,
+    //         'debtAccountSummary'                => $debtAccountSummary,
+    //         'expenseAccountSummary'             => $expenseAccountSummary,
+    //         'accountSurplus'                    => $accountSurplus,
+    //         'accountTotalSurplus'               => number_format($accountSurplus, 2),
+    //         'userBudgetRecords'                 => $userBudgetRecords,
+    //     ];
+    
+    //     return $userBudget;
+    // }   
+
+    // public function calculateMonthlyData($budgetData) {
+    //     $months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    //     $incomes = array_fill(0, 12, 0);
+    //     $expenses = array_fill(0, 12, 0);
+    //     $surpluses = array_fill(0, 12, 0);
+    
+    //     foreach ($budgetData as $item) {
+    //         $monthIndex = date('n', strtotime($item['designated_date'])) - 1; // Get month index (0-11)
+    
+    //         log_message('debug', 'Processing item: ' . print_r($item, true));
+    
+    //         if ($item['account_type'] === 'Income') {
+    //             $incomes[$monthIndex] += $item['net_amount'];
+    //         } elseif ($item['account_type'] === 'Expense') {
+    //             $expenses[$monthIndex] += $item['net_amount'];
+    //         }
+    //     }
+    
+    //     for ($i = 0; $i < 12; $i++) {
+    //         $surpluses[$i] = $incomes[$i] - $expenses[$i];
+    //     }
+    
+    //     log_message('debug', 'Monthly Incomes: ' . print_r($incomes, true));
+    //     log_message('debug', 'Monthly Expenses: ' . print_r($expenses, true));
+    //     log_message('debug', 'Monthly Surpluses: ' . print_r($surpluses, true));
+    
+    //     return [
+    //         'months' => $months,
+    //         'incomes' => $incomes,
+    //         'expenses' => $expenses,
+    //         'surpluses' => $surpluses,
+    //     ];
+    // }
+
+    // public function calculateForecastData($budgetData, $years) {
+    //     $months = [];
+    //     $incomes = [];
+    //     $expenses = [];
+    //     $surpluses = [];
+    
+    //     // Start with initial income and expense values
+    //     $initialIncome = array_sum(array_column(array_filter($budgetData, function ($item) {
+    //         return $item['account_type'] === 'Income';
+    //     }), 'net_amount'));
+    
+    //     $initialExpense = array_sum(array_column(array_filter($budgetData, function ($item) {
+    //         return $item['account_type'] === 'Expense';
+    //     }), 'net_amount'));
+    
+    //     for ($i = 0; $i < $years * 12; $i++) {
+    //         $monthIndex = $i % 12;
+    //         $yearIndex = floor($i / 12);
+    //         $monthName = date('F', mktime(0, 0, 0, $monthIndex + 1, 10)) . ' ' . (date('Y') + $yearIndex);
+    //         $months[] = $monthName;
+    
+    //         // Apply a growth factor (e.g., 3% annual growth)
+    //         $growthFactor = pow(1.03, $yearIndex);
+    //         $monthlyIncome = $initialIncome * $growthFactor;
+    //         $monthlyExpense = $initialExpense * $growthFactor;
+    
+    //         $incomes[] = $monthlyIncome;
+    //         $expenses[] = $monthlyExpense;
+    //         $surpluses[] = $monthlyIncome - $monthlyExpense;
+    //     }
+    
+    //     return [
+    //         'months' => $months,
+    //         'incomes' => $incomes,
+    //         'expenses' => $expenses,
+    //         'surpluses' => $surpluses,
+    //     ];
+    // }
          
-    private function formatBudgetData($budgetData) {
-        // Use null coalescing operator ?? 0 to ensure no null values are passed
-        $budgetData['thisMonthsIncomeFMT'] = number_format($budgetData['thisMonthsIncome'] ?? 0, 2);
-        $budgetData['thisMonthsExpenseFMT'] = number_format($budgetData['thisMonthsExpense'] ?? 0, 2);
-        $budgetData['thisMonthsSurplusFMT'] = number_format($budgetData['thisMonthsSurplus'] ?? 0, 2);
-        $budgetData['thisMonthsInvestmentsFMT'] = number_format($budgetData['thisMonthsInvestments'] ?? 0, 2);
-        $budgetData['thisMonthsInvestmentsSplitFMT'] = number_format(($budgetData['thisMonthsInvestments'] ?? 0) / 2, 2);
+    // private function formatBudgetData($budgetData) {
+    //     // Use null coalescing operator ?? 0 to ensure no null values are passed
+    //     $budgetData['thisMonthsIncomeFMT'] = number_format($budgetData['thisMonthsIncome'] ?? 0, 2);
+    //     $budgetData['thisMonthsExpenseFMT'] = number_format($budgetData['thisMonthsExpense'] ?? 0, 2);
+    //     $budgetData['thisMonthsSurplusFMT'] = number_format($budgetData['thisMonthsSurplus'] ?? 0, 2);
+    //     $budgetData['thisMonthsInvestmentsFMT'] = number_format($budgetData['thisMonthsInvestments'] ?? 0, 2);
+    //     $budgetData['thisMonthsInvestmentsSplitFMT'] = number_format(($budgetData['thisMonthsInvestments'] ?? 0) / 2, 2);
     
-        $budgetData['lastMonthsIncomeFMT'] = number_format($budgetData['lastMonthsIncome'] ?? 0, 2);
-        $budgetData['lastMonthsExpenseFMT'] = number_format($budgetData['lastMonthsExpense'] ?? 0, 2);
-        $budgetData['lastMonthsSurplusFMT'] = number_format($budgetData['lastMonthsSurplus'] ?? 0, 2);
-        $budgetData['lastMonthsInvestmentsFMT'] = number_format($budgetData['lastMonthsInvestments'] ?? 0, 2);
+    //     $budgetData['lastMonthsIncomeFMT'] = number_format($budgetData['lastMonthsIncome'] ?? 0, 2);
+    //     $budgetData['lastMonthsExpenseFMT'] = number_format($budgetData['lastMonthsExpense'] ?? 0, 2);
+    //     $budgetData['lastMonthsSurplusFMT'] = number_format($budgetData['lastMonthsSurplus'] ?? 0, 2);
+    //     $budgetData['lastMonthsInvestmentsFMT'] = number_format($budgetData['lastMonthsInvestments'] ?? 0, 2);
     
-        $budgetData['nextMonthsIncomeFMT'] = number_format($budgetData['nextMonthsIncome'] ?? 0, 2);
-        $budgetData['nextMonthsExpenseFMT'] = number_format($budgetData['nextMonthsExpense'] ?? 0, 2);
-        $budgetData['nextMonthsSurplusFMT'] = number_format($budgetData['nextMonthsSurplus'] ?? 0, 2);
-        $budgetData['nextMonthsInvestmentsFMT'] = number_format($budgetData['nextMonthsInvestments'] ?? 0, 2);
+    //     $budgetData['nextMonthsIncomeFMT'] = number_format($budgetData['nextMonthsIncome'] ?? 0, 2);
+    //     $budgetData['nextMonthsExpenseFMT'] = number_format($budgetData['nextMonthsExpense'] ?? 0, 2);
+    //     $budgetData['nextMonthsSurplusFMT'] = number_format($budgetData['nextMonthsSurplus'] ?? 0, 2);
+    //     $budgetData['nextMonthsInvestmentsFMT'] = number_format($budgetData['nextMonthsInvestments'] ?? 0, 2);
     
-        $budgetData['totalIncomeFMT'] = number_format($budgetData['totalIncome'] ?? 0, 2);
-        $budgetData['totalExpenseFMT'] = number_format($budgetData['totalExpense'] ?? 0, 2);
-        $budgetData['totalSurplusFMT'] = number_format($budgetData['totalSurplus'] ?? 0, 2);
-        $budgetData['totalInvestmentsFMT'] = number_format($budgetData['totalInvestments'] ?? 0, 2);
+    //     $budgetData['totalIncomeFMT'] = number_format($budgetData['totalIncome'] ?? 0, 2);
+    //     $budgetData['totalExpenseFMT'] = number_format($budgetData['totalExpense'] ?? 0, 2);
+    //     $budgetData['totalSurplusFMT'] = number_format($budgetData['totalSurplus'] ?? 0, 2);
+    //     $budgetData['totalInvestmentsFMT'] = number_format($budgetData['totalInvestments'] ?? 0, 2);
     
-        $budgetData['checkingSummaryFMT'] = number_format($budgetData['checkingSummary'] ?? 0, 2);
-        $budgetData['incomeYTDSummaryFMT'] = number_format($budgetData['incomeYTDSummary'] ?? 0, 2);
-        $budgetData['expenseYTDSummaryFMT'] = number_format($budgetData['expenseYTDSummary'] ?? 0, 2);
+    //     $budgetData['checkingSummaryFMT'] = number_format($budgetData['checkingSummary'] ?? 0, 2);
+    //     $budgetData['incomeYTDSummaryFMT'] = number_format($budgetData['incomeYTDSummary'] ?? 0, 2);
+    //     $budgetData['expenseYTDSummaryFMT'] = number_format($budgetData['expenseYTDSummary'] ?? 0, 2);
     
-        $budgetData['creditLimitFMT'] = number_format($budgetData['creditLimit'] ?? 0, 2);
-        $budgetData['creditAvailableFMT'] = number_format($budgetData['creditAvailable'] ?? 0, 2);
-        $budgetData['cryptoSummaryFMT'] = number_format($budgetData['cryptoSummary'] ?? 0, 2);
-        $budgetData['debtSummaryFMT'] = number_format($budgetData['debtSummary'] ?? 0, 2);
-        $budgetData['debtAvailableFMT'] = number_format($budgetData['debtAvailable'] ?? 0, 2);
-        $budgetData['investSummaryFMT'] = number_format($budgetData['investSummary'] ?? 0, 2);
-        $budgetData['totalAccountBalanceFMT'] = number_format($budgetData['totalAccountBalance'] ?? 0, 2);
+    //     $budgetData['creditLimitFMT'] = number_format($budgetData['creditLimit'] ?? 0, 2);
+    //     $budgetData['creditAvailableFMT'] = number_format($budgetData['creditAvailable'] ?? 0, 2);
+    //     $budgetData['cryptoSummaryFMT'] = number_format($budgetData['cryptoSummary'] ?? 0, 2);
+    //     $budgetData['debtSummaryFMT'] = number_format($budgetData['debtSummary'] ?? 0, 2);
+    //     $budgetData['debtAvailableFMT'] = number_format($budgetData['debtAvailable'] ?? 0, 2);
+    //     $budgetData['investSummaryFMT'] = number_format($budgetData['investSummary'] ?? 0, 2);
+    //     $budgetData['totalAccountBalanceFMT'] = number_format($budgetData['totalAccountBalance'] ?? 0, 2);
     
-        return $budgetData;
-    }
+    //     return $budgetData;
+    // }
 
-    private function getMonthlyIncome($budgetData, $month) {
-        // Calculate the total income for the month
-        return array_sum(array_map(function($item) use ($month) {
-            return ($item['account_type'] === 'income' && date('m', strtotime($item['month'] . '/' . $item['day'] . '/' . $item['year'])) == $month) ? $item['net_amount'] : 0;
-        }, $budgetData));
-    }
+    // private function getMonthlyIncome($budgetData, $month) {
+    //     // Calculate the total income for the month
+    //     return array_sum(array_map(function($item) use ($month) {
+    //         return ($item['account_type'] === 'income' && date('m', strtotime($item['month'] . '/' . $item['day'] . '/' . $item['year'])) == $month) ? $item['net_amount'] : 0;
+    //     }, $budgetData));
+    // }
     
-    private function getMonthlyExpense($budgetData, $month) {
-        // Calculate the total expense for the month
-        return array_sum(array_map(function($item) use ($month) {
-            return ($item['account_type'] === 'expense' && date('m', strtotime($item['month'] . '/' . $item['day'] . '/' . $item['year'])) == $month) ? $item['net_amount'] : 0;
-        }, $budgetData));
-    }
+    // private function getMonthlyExpense($budgetData, $month) {
+    //     // Calculate the total expense for the month
+    //     return array_sum(array_map(function($item) use ($month) {
+    //         return ($item['account_type'] === 'expense' && date('m', strtotime($item['month'] . '/' . $item['day'] . '/' . $item['year'])) == $month) ? $item['net_amount'] : 0;
+    //     }, $budgetData));
+    // }
     
     public function getIncomeAccountSummary($cuID)
     {

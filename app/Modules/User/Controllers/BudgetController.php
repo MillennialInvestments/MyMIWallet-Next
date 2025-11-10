@@ -609,34 +609,34 @@ class BudgetController extends UserController
         return Time::now('America/Chicago')->toDateTimeString();
     }
 
-    protected function sanitizeCurrency($value): float
-    {
-        if (is_string($value)) {
-            $value = preg_replace('/[^0-9.\-]/', '', $value);
-        }
+    // protected function sanitizeCurrency($value): float
+    // {
+    //     if (is_string($value)) {
+    //         $value = preg_replace('/[^0-9.\-]/', '', $value);
+    //     }
 
-        return round((float) $value, 2);
-    }
+    //     return round((float) $value, 2);
+    // }
 
-    /**
-     * Returns an estimated due date when one is missing or invalid.
-     * Defaults to the 28th of the current month in America/Chicago.
-     */
-    protected function defaultDueDate(): array
-    {
-        $timezone = new DateTimeZone('America/Chicago');
-        $now      = new DateTime('now', $timezone);
-        $lastDay  = (int) $now->format('t');
-        $targetDay= min(28, $lastDay);
-        $now->setDate((int) $now->format('Y'), (int) $now->format('m'), $targetDay);
+    // /**
+    //  * Returns an estimated due date when one is missing or invalid.
+    //  * Defaults to the 28th of the current month in America/Chicago.
+    //  */
+    // protected function defaultDueDate(): array
+    // {
+    //     $timezone = new DateTimeZone('America/Chicago');
+    //     $now      = new DateTime('now', $timezone);
+    //     $lastDay  = (int) $now->format('t');
+    //     $targetDay= min(28, $lastDay);
+    //     $now->setDate((int) $now->format('Y'), (int) $now->format('m'), $targetDay);
 
-        return [
-            $now->format('m/d/Y'),
-            (int) $now->format('m'),
-            $targetDay,
-            (int) $now->format('Y'),
-        ];
-    }
+    //     return [
+    //         $now->format('m/d/Y'),
+    //         (int) $now->format('m'),
+    //         $targetDay,
+    //         (int) $now->format('Y'),
+    //     ];
+    // }
 
     protected function logSecurityEvent(string $action, string $message, int $userId, array $payload = []): void
     {
