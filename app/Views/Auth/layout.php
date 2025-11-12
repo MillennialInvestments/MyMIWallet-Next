@@ -41,7 +41,7 @@ $subViewData = [
 
 <?= view('App\Views\themes\public\layouts\_sitenav', $subViewData) ?>
 
-<main role="main" class="container" id="main-container">
+<main role="main" class="container mt-5" id="main-container">
     <?= $this->renderSection('main') ?>
 </main>
 

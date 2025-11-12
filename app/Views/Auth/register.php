@@ -39,10 +39,10 @@ $subViewData                = [
 <?= $this->extend($config->viewLayout) ?>
 <?= $this->section('main') ?>
 
-<div class="container">
-    <div class="row">
+<div class="mt-5">
+    <div class="row bg-white rounded shadow-sm p-3 mt-5">
         <?php if ($registerFormat === 'Split-Form') : ?>
-            <div class="col-sm-6">
+            <div class="col-sm-6 border-right pr-3">
                 <?php echo view('App\Views\Auth\register\\' . $referralPlatform, $subViewData); ?>
             </div>
             <div class="col-sm-6">

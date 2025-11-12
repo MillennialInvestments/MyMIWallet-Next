@@ -210,17 +210,47 @@ class AuthController extends Controller
      */
     public function register()
     {
-        // check if already logged in.
+        // If already logged in, send them away
         if ($this->auth->check()) {
             return redirect()->back();
         }
 
         // Check if registration is allowed
         if (! $this->config->allowRegistration) {
-            return redirect()->back()->withInput()->with('error', lang('Auth.registerDisabled'));
+            return redirect()->back()
+                ->withInput()
+                ->with('error', lang('Auth.registerDisabled'));
         }
 
-        return $this->_render($this->config->views['register'], ['config' => $this->config]);
+        // Use the controller's request instance
+        $request = $this->request;
+
+        $referralCode = null;
+        $uri          = null;
+
+        if ($request !== null) {
+            // Get the URI object safely
+            $uri = $request->getUri();
+
+            // 1) Try query string: /register?ref=MYCODE
+            $referralCode = $request->getGet('ref');
+
+            // 2) Fallback to a segment if query param not present
+            // Adjust `getSegment(2)` based on your real route:
+            //   /register/MYCODE        → getSegment(2)
+            //   /MYCODE/register        → getSegment(1)
+            if (! $referralCode && $uri !== null) {
+                $referralCode = $uri->getSegment(2);
+            }
+        }
+
+        return $this->_render($this->config->views['register'], [
+            'config'       => $this->config,
+            'referralCode' => $referralCode,
+            'siteSettings' => config('SiteSettings'),
+            'socialMedia'  => config('SocialMedia'),
+            'uri'          => $uri, // pass the URI object if the view needs it
+        ]);
     }
 
     /**

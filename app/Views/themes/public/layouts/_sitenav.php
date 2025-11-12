@@ -21,14 +21,14 @@ $brandAlt = 'MyMI Wallet - Investment Accounting/Analytical Software & Crypto As
            alt="<?= esc($brandAlt) ?>">
     </a>
 
-    <button class="navbar-toggler" type="button"
+    <!-- <button class="navbar-toggler" type="button"
             data-bs-toggle="collapse"
             data-bs-target="#publicNavbarNav"
             aria-controls="publicNavbarNav"
             aria-expanded="false"
             aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
-    </button>
+    </button> -->
 
     <div class="navbar-collapse intro-nav" id="publicNavbarNav" style="display:block">
       <ul class="navbar-nav w-100 w-lg-auto mt-1 ps-4 ps-lg-0 align-items-lg-center gap-lg-2">
