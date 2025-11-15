@@ -905,15 +905,17 @@ class MyMIBudget
     public function getUserRiskProfileSafe($userId): array
     {
         $id = is_numeric($userId) ? (int) $userId : 0;
+
         if ($id <= 0) {
             return [
-                'profile'   => 'neutral',
-                'score'     => 50,
-                'volatility'=> 'medium',
-                'notes'     => 'Default risk profile (anonymous).',
+                'profile'     => 'neutral',
+                'score'       => 50,
+                'volatility'  => 'medium',
+                'notes'       => 'Default risk profile (anonymous).',
             ];
         }
-        return $this->getUserRiskProfile($id); // existing strict method
+
+        return $this->getUserRiskProfile($id);
     }
 
     private function getFinancialsForPeriod($cuID, $period) {
@@ -964,6 +966,17 @@ class MyMIBudget
                 'annual_forecast' => [],
             ];
         }
+    }
+
+    // Add this helper inside MyMIBudget
+    private function getBudgetService(): BudgetService
+    {
+        // If you ever change constructor wiring, this still keeps it safe.
+        if (! isset($this->budgetService)) {
+            $this->budgetService = new BudgetService();
+        }
+
+        return $this->budgetService;
     }
 
     private function getSingleAccountSummary($cuID, $type) {

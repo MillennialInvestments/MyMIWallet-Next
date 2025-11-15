@@ -789,7 +789,7 @@ $routes->group('Blog', ['namespace' => 'App\Modules\Blog\Controllers'],  functio
 
 // Dashboard
 $routes->group('Dashboard', ['namespace' => 'App\Modules\User\Controllers','filter' => 'login'], function($routes) {
-    $routes->get('/', 'BudgetController::index', ['as' => 'dashboard']);
+    $routes->get('/', 'DashboardController::index', ['as' => 'dashboard']);
     $routes->get('Transaction-Modal/(:segment)', 'DashboardController::loadModalContent/$1', ['as' => 'load-modal-1-segment']);
     $routes->get('Transaction-Modal/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2', ['as' => 'load-modal-2-segment']);
     $routes->get('Transaction-Modal/(:segment)/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2/$3', ['as' => 'load-modal-3-segment']);

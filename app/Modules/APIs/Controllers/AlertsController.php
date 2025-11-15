@@ -1,12 +1,20 @@
-<?php
-namespace App\Modules\APIs\Controllers;
+<?php namespace App\Modules\APIs\Controllers;
 
 use App\Config\ApiKeys;
-use App\Controllers\BaseController;
 use App\Support\Http;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
-use App\Libraries\{MyMIAlerts, MyMIAlphaVantage, MyMIInvestments, MyMIMarketing,  MyMIMarketAux, MyMIRobinhood, MyMISEC};
+use CodeIgniter\RESTful\ResourceController;   // ⬅️ ADD THIS
+use App\Libraries\{
+    BaseLoader,
+    MyMIAlerts,
+    MyMIAlphaVantage,
+    MyMIInvestments,
+    MyMIMarketing,
+    MyMIMarketAux,
+    MyMIRobinhood,
+    MyMISEC
+};
 use App\Models\AlertsModel;
 use App\Tasks\ProcessTradeAlertChanges;
 use DateTime;
@@ -37,7 +45,7 @@ use DateTime;
 // curl -s https://www.mymiwallet.com/index.php/API/Alerts/processAlerts >> /home/mymiteam/cron_logs/alerts.log 2>&1
 
 #[\AllowDynamicProperties]
-class AlertsController extends \App\Controllers\BaseController
+class AlertsController extends ResourceController
 {
     use ResponseTrait;
     use BaseLoader;

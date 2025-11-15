@@ -586,6 +586,15 @@ class DashboardController extends UserController
     {
         $this->data['pageTitle'] = 'MyMI Dashboard | MyMI Wallet | The Future of Finance';
         $this->commonData();
+        $activeUserId = $this->cuID ?? $this->resolveCurrentUserId();
+        if ($activeUserId) {
+            try {
+                $summary = $this->getMyMIDashboard()->getExecutiveDashboardSummary((int) $activeUserId);
+                $this->data = array_merge($this->data ?? [], $summary);
+            } catch (\Throwable $e) {
+                log_message('error', 'DashboardController::index failed to load executive summary: {msg}', ['msg' => $e->getMessage()]);
+            }
+        }
         return $this->renderTheme('App\Modules\User\Views\Dashboard\index', $this->data);
     }
 

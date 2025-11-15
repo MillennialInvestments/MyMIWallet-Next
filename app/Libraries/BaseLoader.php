@@ -162,21 +162,24 @@ trait BaseLoader
         $this->data['walletID']       = $userAccount['walletID']      ?? '';
 
         // ---- Solana info (null-safe) ----
-        $solanaData = [];
-        if ($cuID !== null) {
+        $solanaData = [
+            'userSolanaWallets' => [
+                'cuSolanaDW'    => null,
+                'cuSolanaTotal' => 0,
+                'cuSolanaValue' => 0,
+            ],
+            'solanaNetworkStatus' => 'Unknown',
+        ];
+        if (!empty($this->cuID)) {
             try {
-                $solanaData = $this->getSolanaService()->getSolanaData($cuID);
-                if (!is_array($solanaData)) {
-                    $solanaData = [];
-                }
+                $solanaData = $this->getSolanaService()->getSolanaData($this->cuID) ?? $solanaData;
             } catch (\Throwable $e) {
-                log_message('error', 'BaseLoader: getSolanaData failed: ' . $e->getMessage());
+                log_message('error', 'BaseLoader::loadCommonData Solana fetch failed: ' . $e->getMessage());
             }
         }
-        $userSol = $solanaData['userSolanaWallets'] ?? [];
-        $this->data['cuSolanaDW']          = $userSol['cuSolanaDW']   ?? null;
-        $this->data['cuSolanaTotal']       = (float)($userSol['cuSolanaTotal'] ?? 0);
-        $this->data['cuSolanaValue']       = (float)($userSol['cuSolanaValue'] ?? 0);
+        $this->data['cuSolanaDW']          = $solanaData['userSolanaWallets']['cuSolanaDW'] ?? null;
+        $this->data['cuSolanaTotal']       = $solanaData['userSolanaWallets']['cuSolanaTotal'] ?? 0;
+        $this->data['cuSolanaValue']       = $solanaData['userSolanaWallets']['cuSolanaValue'] ?? 0;
         $this->data['solanaNetworkStatus'] = $solanaData['solanaNetworkStatus'] ?? 'Unknown';
 
         // ---- Dashboard info (null-safe) ----

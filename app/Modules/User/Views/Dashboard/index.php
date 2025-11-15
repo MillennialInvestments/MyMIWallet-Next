@@ -1,678 +1,512 @@
+<?php
+use CodeIgniter\I18n\Time;
+
+if (!function_exists('miw_format_currency')) {
+    function miw_format_currency($value): string
+    {
+        if (!is_numeric($value)) {
+            $value = preg_replace('/[^0-9\.-]/', '', (string) $value);
+        }
+        $value = (float) ($value ?: 0.0);
+        $prefix = $value < 0 ? '-$' : '$';
+        return $prefix . number_format(abs($value), 2);
+    }
+}
+
+if (!function_exists('miw_format_number')) {
+    function miw_format_number($value, int $decimals = 0): string
+    {
+        if (!is_numeric($value)) {
+            $value = preg_replace('/[^0-9\.-]/', '', (string) $value);
+        }
+        return number_format((float) ($value ?: 0.0), $decimals);
+    }
+}
+
+if (!function_exists('miw_relative_time')) {
+    function miw_relative_time(?string $datetime): string
+    {
+        if (empty($datetime)) {
+            return '—';
+        }
+        try {
+            return Time::parse($datetime)->humanize();
+        } catch (\Throwable $e) {
+            return $datetime;
+        }
+    }
+}
+
+$assetsSummary     = $assets ?? [];
+$budgetSummary     = $budget ?? [];
+$portfolioSummary  = $portfolio ?? [];
+$projectsSummary   = $projects ?? [];
+$alertsSummary     = $alerts ?? [];
+$newsSummary       = $news ?? [];
+
+$netWorthTrend     = $assetsSummary['trend'] ?? [];
+$allocationRaw     = $portfolioSummary['allocation'] ?? [];
+$allocationFiltered = array_filter(is_array($allocationRaw) ? $allocationRaw : [], static fn ($value) => abs((float) $value) > 0.01);
+$allocationLabels  = array_keys($allocationFiltered);
+$allocationValues  = array_map(static fn ($value) => (float) $value, array_values($allocationFiltered));
+
+$netWorthLabels    = array_map(static fn ($row) => (string) ($row['label'] ?? ''), $netWorthTrend);
+$netWorthValues    = array_map(static fn ($row) => (float) ($row['value'] ?? 0), $netWorthTrend);
+
+$netWorthChartData = [
+    'labels' => $netWorthLabels,
+    'values' => $netWorthValues,
+];
+$allocationChartData = [
+    'labels' => $allocationLabels,
+    'values' => $allocationValues,
+];
+
+$activeProjects    = $projectsSummary['topProjects'] ?? [];
+$recentAlerts      = $alertsSummary['recent'] ?? [];
+$newsItems         = $newsSummary['items'] ?? [];
+$todayLabel        = date('l, F j, Y');
+$displayName       = $cuDisplayName ?? $cuUsername ?? 'Investor';
+$availableToInvest = $budgetSummary['availableToInvest'] ?? 0.0;
+?>
 <div class="nk-block-head nk-block-head-sm">
     <div class="nk-block-between">
         <div class="nk-block-head-content">
-            <h3 class="nk-block-title page-title">Investment Dashboard</h3>
+            <h3 class="nk-block-title page-title">Executive Dashboard</h3>
             <div class="nk-block-des text-soft">
-                <p>Welcome to Crypto Invest Dashboard</p>
+                <p>Welcome back, <?= esc($displayName); ?>. Here's your financial pulse for <?= esc($todayLabel); ?>.</p>
             </div>
-        </div><!-- .nk-block-head-content -->
+        </div>
         <div class="nk-block-head-content">
             <div class="toggle-wrap nk-block-tools-toggle">
                 <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-bs-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
                 <div class="toggle-expand-content" data-content="pageMenu">
                     <ul class="nk-block-tools g-3">
-                        <li><a href="#" class="btn btn-white btn-dim btn-outline-primary"><em class="icon ni ni-download-cloud"></em><span>Export</span></a></li>
-                        <li><a href="#" class="btn btn-white btn-dim btn-outline-primary"><em class="icon ni ni-reports"></em><span>Reports</span></a></li>
+                        <li><a href="/user/budget" class="btn btn-white btn-dim btn-outline-primary"><em class="icon ni ni-reports"></em><span>Budget Reports</span></a></li>
+                        <li><a href="/user/investments" class="btn btn-white btn-dim btn-outline-secondary"><em class="icon ni ni-chart-up"></em><span>Portfolio</span></a></li>
                         <li class="nk-block-tools-opt">
                             <div class="drodown">
                                 <a href="#" class="dropdown-toggle btn btn-icon btn-primary" data-bs-toggle="dropdown"><em class="icon ni ni-plus"></em></a>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <ul class="link-list-opt no-bdr">
-                                        <li><a href="#"><em class="icon ni ni-user-add-fill"></em><span>Add User</span></a></li>
-                                        <li><a href="#"><em class="icon ni ni-coin-alt-fill"></em><span>Add Order</span></a></li>
-                                        <li><a href="#"><em class="icon ni ni-note-add-fill-c"></em><span>Add Page</span></a></li>
+                                        <li><a href="/dashboard/alerts/createTradeAlert"><em class="icon ni ni-activity-round"></em><span>Create Trade Alert</span></a></li>
+                                        <li><a href="/user/projects"><em class="icon ni ni-briefcase"></em><span>New Project Commitment</span></a></li>
+                                        <li><a href="/user/assets"><em class="icon ni ni-building"></em><span>Add Asset</span></a></li>
                                     </ul>
                                 </div>
                             </div>
                         </li>
                     </ul>
-                </div><!-- .toggle-expand-content -->
-            </div><!-- .toggle-wrap -->
-        </div><!-- .nk-block-head-content -->
-    </div><!-- .nk-block-between -->
-</div><!-- .nk-block-head -->
-<div class="nk-block">
-    <div class="row g-gs">
-        <div class="col-md-4">
-            <div class="card card-bordered card-full">
-                <div class="card-inner">
-                    <div class="card-title-group align-start mb-0">
-                        <div class="card-title">
-                            <h6 class="subtitle">Total Income</h6>
-                        </div>
-                        <div class="card-tools">
-                            <em class="card-hint icon ni ni-help-fill" data-bs-toggle="tooltip" data-bs-placement="left" title="Total Deposited"></em>
-                        </div>
-                    </div>
-                    <div class="card-amount">
-                        <span class="amount"><?= $userBudget['totalIncomeFMT']; ?> <span class="currency currency-usd">USD</span>
-                        </span>
-                        <span class="change up text-danger"><em class="icon ni ni-arrow-long-up"></em>1.93%</span>
-                    </div>
-                    <div class="invest-data">
-                        <div class="invest-data-amount g-2">
-                            <div class="invest-data-history">
-                                <div class="title">This Month</div>
-                                <div class="amount"><?= $userBudget['thisMonthsIncomeFMT']; ?> <span class="currency currency-usd">USD</span></div>
-                            </div>
-                            <div class="invest-data-history">
-                                <div class="title">Next Month</div>
-                                <div class="amount"><?= $userBudget['nextMonthsIncomeFMT']; ?> <span class="currency currency-usd">USD</span></div>
-                            </div>
-                        </div>
-                        <div class="invest-data-ck">
-                            <canvas class="iv-data-chart" id="totalDeposit"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- .card -->
-        </div><!-- .col -->
-        <div class="col-md-4">
-            <div class="card card-bordered card-full">
-                <div class="card-inner">
-                    <div class="card-title-group align-start mb-0">
-                        <div class="card-title">
-                            <h6 class="subtitle">Total Expenses</h6>
-                        </div>
-                        <div class="card-tools">
-                            <em class="card-hint icon ni ni-help-fill" data-bs-toggle="tooltip" data-bs-placement="left" title="Total Withdraw"></em>
-                        </div>
-                    </div>
-                    <div class="card-amount">
-                        <span class="amount"><?= $userBudget['totalExpenseFMT']; ?> <span class="currency currency-usd">USD</span>
-                        </span>
-                        <span class="change down text-danger"><em class="icon ni ni-arrow-long-down"></em>1.93%</span>
-                    </div>
-                    <div class="invest-data">
-                        <div class="invest-data-amount g-2">
-                            <div class="invest-data-history">
-                                <div class="title">This Month</div>
-                                <div class="amount"><?= $userBudget['thisMonthsExpenseFMT']; ?> <span class="currency currency-usd">USD</span></div>
-                            </div>
-                            <div class="invest-data-history">
-                                <div class="title">Last Month</div>
-                                <div class="amount"><?= $userBudget['lastMonthsExpenseFMT']; ?> <span class="currency currency-usd">USD</span></div>
-                            </div>
-                        </div>
-                        <div class="invest-data-ck">
-                            <canvas class="iv-data-chart" id="totalWithdraw"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- .card -->
-        </div><!-- .col -->
-        <div class="col-md-4">
-            <div class="card card-bordered  card-full">
-                <div class="card-inner">
-                    <div class="card-title-group align-start mb-0">
-                        <div class="card-title">
-                            <h6 class="subtitle">Investments</h6>
-                        </div>
-                        <div class="card-tools">
-                            <em class="card-hint icon ni ni-help-fill" data-bs-toggle="tooltip" data-bs-placement="left" title="Total Balance in Account"></em>
-                        </div>
-                    </div>
-                    <div class="card-amount">
-                        <span class="amount"><?= $userBudget['totalInvestmentsFMT']; ?> <span class="currency currency-usd">USD</span>
-                        </span>
-                    </div>
-                    <div class="invest-data">
-                        <div class="invest-data-amount g-2">
-                            <div class="invest-data-history">
-                                <div class="title">This Month</div>
-                                <div class="amount"><?= $userBudget['thisMonthsInvestmentsFMT']; ?> <span class="currency currency-usd">USD</span></div>
-                            </div>
-                            <div class="invest-data-history">
-                                <div class="title">Last Month</div>
-                                <div class="amount"><?= $userBudget['lastMonthsInvestmentsFMT']; ?> <span class="currency currency-usd">USD</span></div>
-                            </div>
-                        </div>
-                        <div class="invest-data-ck">
-                            <canvas class="iv-data-chart" id="totalBalance"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- .card -->
-        </div><!-- .col -->
-        <div class="col-md-6 col-xxl-4">
-            <div class="card card-bordered card-full">
-                <div class="card-inner">
-                    <div class="card-title-group mb-1">
-                        <div class="card-title">
-                            <h6 class="title">Investment Overview</h6>
-                            <p>The investment overview of your platform. <a href="#">All Investment</a></p>
-                        </div>
-                    </div>
-                    <ul class="nav nav-tabs nav-tabs-card nav-tabs-xs">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-bs-toggle="tab" href="#overview">Overview</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#thisyear">This Year</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#alltime">All Time</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content mt-0">
-                        <div class="tab-pane active" id="overview">
-                            <div class="invest-ov gy-2">
-                                <div class="subtitle">Currently Actived Investment</div>
-                                <div class="invest-ov-details">
-                                    <div class="invest-ov-info">
-                                        <div class="amount">49,395.395 <span class="currency currency-usd">USD</span></div>
-                                        <div class="title">Amount</div>
-                                    </div>
-                                    <div class="invest-ov-stats">
-                                        <div><span class="amount">56</span><span class="change up text-danger"><em class="icon ni ni-arrow-long-up"></em>1.93%</span></div>
-                                        <div class="title">Plans</div>
-                                    </div>
-                                </div>
-                                <div class="invest-ov-details">
-                                    <div class="invest-ov-info">
-                                        <div class="amount">49,395.395 <span class="currency currency-usd">USD</span></div>
-                                        <div class="title">Paid Profit</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="invest-ov gy-2">
-                                <div class="subtitle">Investment in this Month</div>
-                                <div class="invest-ov-details">
-                                    <div class="invest-ov-info">
-                                        <div class="amount">49,395.395 <span class="currency currency-usd">USD</span></div>
-                                        <div class="title">Amount</div>
-                                    </div>
-                                    <div class="invest-ov-stats">
-                                        <div><span class="amount">23</span><span class="change down text-danger"><em class="icon ni ni-arrow-long-down"></em>1.93%</span></div>
-                                        <div class="title">Plans</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="thisyear">
-                            <div class="invest-ov gy-2">
-                                <div class="subtitle">Currently Actived Investment</div>
-                                <div class="invest-ov-details">
-                                    <div class="invest-ov-info">
-                                        <div class="amount">89,395.395 <span class="currency currency-usd">USD</span></div>
-                                        <div class="title">Amount</div>
-                                    </div>
-                                    <div class="invest-ov-stats">
-                                        <div><span class="amount">96</span><span class="change up text-danger"><em class="icon ni ni-arrow-long-up"></em>1.93%</span></div>
-                                        <div class="title">Plans</div>
-                                    </div>
-                                </div>
-                                <div class="invest-ov-details">
-                                    <div class="invest-ov-info">
-                                        <div class="amount">99,395.395 <span class="currency currency-usd">USD</span></div>
-                                        <div class="title">Paid Profit</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="invest-ov gy-2">
-                                <div class="subtitle">Investment in this Month</div>
-                                <div class="invest-ov-details">
-                                    <div class="invest-ov-info">
-                                        <div class="amount">149,395.395 <span class="currency currency-usd">USD</span></div>
-                                        <div class="title">Amount</div>
-                                    </div>
-                                    <div class="invest-ov-stats">
-                                        <div><span class="amount">83</span><span class="change down text-danger"><em class="icon ni ni-arrow-long-down"></em>1.93%</span></div>
-                                        <div class="title">Plans</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="alltime">
-                            <div class="invest-ov gy-2">
-                                <div class="subtitle">Currently Actived Investment</div>
-                                <div class="invest-ov-details">
-                                    <div class="invest-ov-info">
-                                        <div class="amount">249,395.395 <span class="currency currency-usd">USD</span></div>
-                                        <div class="title">Amount</div>
-                                    </div>
-                                    <div class="invest-ov-stats">
-                                        <div><span class="amount">556</span><span class="change up text-danger"><em class="icon ni ni-arrow-long-up"></em>1.93%</span></div>
-                                        <div class="title">Plans</div>
-                                    </div>
-                                </div>
-                                <div class="invest-ov-details">
-                                    <div class="invest-ov-info">
-                                        <div class="amount">149,395.395 <span class="currency currency-usd">USD</span></div>
-                                        <div class="title">Paid Profit</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="invest-ov gy-2">
-                                <div class="subtitle">Investment in this Month</div>
-                                <div class="invest-ov-details">
-                                    <div class="invest-ov-info">
-                                        <div class="amount">249,395.395 <span class="currency currency-usd">USD</span></div>
-                                        <div class="title">Amount</div>
-                                    </div>
-                                    <div class="invest-ov-stats">
-                                        <div><span class="amount">223</span><span class="change down text-danger"><em class="icon ni ni-arrow-long-down"></em>1.93%</span></div>
-                                        <div class="title">Plans</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
-        </div><!-- .col -->
-        <div class="col-md-6 col-xxl-4">
-            <div class="card card-bordered card-full">
-                <div class="card-inner d-flex flex-column h-100">
-                    <div class="card-title-group mb-3">
-                        <div class="card-title">
-                            <h6 class="title">Top Invested Plan</h6>
-                            <p>In last 30 days top invested schemes.</p>
-                        </div>
-                        <div class="card-tools mt-n4 me-n1">
-                            <div class="drodown">
-                                <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
-                                    <ul class="link-list-opt no-bdr">
-                                        <li><a href="#"><span>15 Days</span></a></li>
-                                        <li><a href="#" class="active"><span>30 Days</span></a></li>
-                                        <li><a href="#"><span>3 Months</span></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="progress-list gy-3">
-                        <div class="progress-wrap">
-                            <div class="progress-text">
-                                <div class="progress-label">Strater Plan</div>
-                                <div class="progress-amount">58%</div>
-                            </div>
-                            <div class="progress progress-md">
-                                <div class="progress-bar" data-progress="58"></div>
-                            </div>
-                        </div>
-                        <div class="progress-wrap">
-                            <div class="progress-text">
-                                <div class="progress-label">Silver Plan</div>
-                                <div class="progress-amount">18.49%</div>
-                            </div>
-                            <div class="progress progress-md">
-                                <div class="progress-bar bg-orange" data-progress="18.49"></div>
-                            </div>
-                        </div>
-                        <div class="progress-wrap">
-                            <div class="progress-text">
-                                <div class="progress-label">Dimond Plan</div>
-                                <div class="progress-amount">16%</div>
-                            </div>
-                            <div class="progress progress-md">
-                                <div class="progress-bar bg-teal" data-progress="16"></div>
-                            </div>
-                        </div>
-                        <div class="progress-wrap">
-                            <div class="progress-text">
-                                <div class="progress-label">Platinam Plan</div>
-                                <div class="progress-amount">29%</div>
-                            </div>
-                            <div class="progress progress-md">
-                                <div class="progress-bar bg-pink" data-progress="29"></div>
-                            </div>
-                        </div>
-                        <div class="progress-wrap">
-                            <div class="progress-text">
-                                <div class="progress-label">Vibranium Plan</div>
-                                <div class="progress-amount">33%</div>
-                            </div>
-                            <div class="progress progress-md">
-                                <div class="progress-bar bg-azure" data-progress="33"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="invest-top-ck mt-auto">
-                        <canvas class="iv-plan-purchase" id="planPurchase"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div><!-- .col -->
-        <div class="col-md-6 col-xxl-4">
-            <div class="card card-bordered card-full">
-                <div class="card-inner border-bottom">
-                    <div class="card-title-group">
-                        <div class="card-title">
-                            <h6 class="title">Recent Activities</h6>
-                        </div>
-                        <div class="card-tools">
-                            <ul class="card-tools-nav">
-                                <li><a href="#"><span>Cancel</span></a></li>
-                                <li class="active"><a href="#"><span>All</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <ul class="nk-activity">
-                    <li class="nk-activity-item">
-                        <div class="nk-activity-media user-avatar bg-success"><img src="./images/avatar/c-sm.jpg" alt=""></div>
-                        <div class="nk-activity-data">
-                            <div class="label">Keith Jensen requested to Widthdrawl.</div>
-                            <span class="time">2 hours ago</span>
-                        </div>
-                    </li>
-                    <li class="nk-activity-item">
-                        <div class="nk-activity-media user-avatar bg-warning">HS</div>
-                        <div class="nk-activity-data">
-                            <div class="label">Harry Simpson placed a Order.</div>
-                            <span class="time">2 hours ago</span>
-                        </div>
-                    </li>
-                    <li class="nk-activity-item">
-                        <div class="nk-activity-media user-avatar bg-azure">SM</div>
-                        <div class="nk-activity-data">
-                            <div class="label">Stephanie Marshall got a huge bonus.</div>
-                            <span class="time">2 hours ago</span>
-                        </div>
-                    </li>
-                    <li class="nk-activity-item">
-                        <div class="nk-activity-media user-avatar bg-purple"><img src="./images/avatar/d-sm.jpg" alt=""></div>
-                        <div class="nk-activity-data">
-                            <div class="label">Nicholas Carr deposited funds.</div>
-                            <span class="time">2 hours ago</span>
-                        </div>
-                    </li>
-                    <li class="nk-activity-item">
-                        <div class="nk-activity-media user-avatar bg-pink">TM</div>
-                        <div class="nk-activity-data">
-                            <div class="label">Timothy Moreno placed a Order.</div>
-                            <span class="time">2 hours ago</span>
-                        </div>
-                    </li>
-                </ul>
-            </div><!-- .card -->
-        </div><!-- .col -->
-        <div class="col-md-6 col-xxl-4">
-            <div class="card card-bordered h-100">
-                <div class="card-inner border-bottom">
-                    <div class="card-title-group">
-                        <div class="card-title">
-                            <h6 class="title">Notifications</h6>
-                        </div>
-                        <div class="card-tools">
-                            <a href="#" class="link">View All</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-inner">
-                    <div class="timeline">
-                        <h6 class="timeline-head">November, 2019</h6>
-                        <ul class="timeline-list">
-                            <li class="timeline-item">
-                                <div class="timeline-status bg-primary is-outline"></div>
-                                <div class="timeline-date">13 Nov <em class="icon ni ni-alarm-alt"></em></div>
-                                <div class="timeline-data">
-                                    <h6 class="timeline-title">Submited KYC Application</h6>
-                                    <div class="timeline-des">
-                                        <p>Re-submitted KYC Application form.</p>
-                                        <span class="time">09:30am</span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="timeline-item">
-                                <div class="timeline-status bg-primary"></div>
-                                <div class="timeline-date">13 Nov <em class="icon ni ni-alarm-alt"></em></div>
-                                <div class="timeline-data">
-                                    <h6 class="timeline-title">Submited KYC Application</h6>
-                                    <div class="timeline-des">
-                                        <p>Re-submitted KYC Application form.</p>
-                                        <span class="time">09:30am</span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="timeline-item">
-                                <div class="timeline-status bg-pink"></div>
-                                <div class="timeline-date">13 Nov <em class="icon ni ni-alarm-alt"></em></div>
-                                <div class="timeline-data">
-                                    <h6 class="timeline-title">Submited KYC Application</h6>
-                                    <div class="timeline-des">
-                                        <p>Re-submitted KYC Application form.</p>
-                                        <span class="time">09:30am</span>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div><!-- .card -->
-        </div><!-- .col -->
-        <div class="col-xl-12 col-xxl-8">
-            <div class="card card-bordered card-full">
-                <div class="card-inner border-bottom">
-                    <div class="card-title-group">
-                        <div class="card-title">
-                            <h6 class="title">Recent Investment</h6>
-                        </div>
-                        <div class="card-tools">
-                            <a href="#" class="link">View All</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="nk-tb-list">
-                    <div class="nk-tb-item nk-tb-head">
-                        <div class="nk-tb-col"><span>Plan</span></div>
-                        <div class="nk-tb-col tb-col-sm"><span>Who</span></div>
-                        <div class="nk-tb-col tb-col-lg"><span>Date</span></div>
-                        <div class="nk-tb-col"><span>Amount</span></div>
-                        <div class="nk-tb-col tb-col-sm"><span>&nbsp;</span></div>
-                        <div class="nk-tb-col"><span>&nbsp;</span></div>
-                    </div>
-                    <div class="nk-tb-item">
-                        <div class="nk-tb-col">
-                            <div class="align-center">
-                                <div class="user-avatar user-avatar-sm bg-light">
-                                    <span>P1</span>
-                                </div>
-                                <span class="tb-sub ms-2">Silver <span class="d-none d-md-inline">- Daily 4.76% for 21 Days</span></span>
-                            </div>
-                        </div>
-                        <div class="nk-tb-col tb-col-sm">
-                            <div class="user-card">
-                                <div class="user-avatar user-avatar-xs bg-pink-dim">
-                                    <span>JC</span>
-                                </div>
-                                <div class="user-name">
-                                    <span class="tb-lead">Janice Carroll</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="nk-tb-col tb-col-lg">
-                            <span class="tb-sub">18/10/2019</span>
-                        </div>
-                        <div class="nk-tb-col">
-                            <span class="tb-sub tb-amount">1.094780 <span>BTC</span></span>
-                        </div>
-                        <div class="nk-tb-col tb-col-sm">
-                            <div class="progress progress-sm w-80px">
-                                <div class="progress-bar" data-progress="75"></div>
-                            </div>
-                        </div>
-                        <div class="nk-tb-col nk-tb-col-action">
-                            <div class="dropdown">
-                                <a class="text-soft dropdown-toggle btn btn-sm btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-chevron-right"></em></a>
-                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
-                                    <ul class="link-list-plain">
-                                        <li><a href="#">View</a></li>
-                                        <li><a href="#">Invoice</a></li>
-                                        <li><a href="#">Print</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nk-tb-item">
-                        <div class="nk-tb-col">
-                            <div class="align-center">
-                                <div class="user-avatar user-avatar-sm bg-light">
-                                    <span>P2</span>
-                                </div>
-                                <span class="tb-sub ms-2">Dimond <span class="d-none d-md-inline">- Daily 8.52% for 14 Days</span></span>
-                            </div>
-                        </div>
-                        <div class="nk-tb-col tb-col-sm">
-                            <div class="user-card">
-                                <div class="user-avatar user-avatar-xs bg-azure-dim">
-                                    <span>VA</span>
-                                </div>
-                                <div class="user-name">
-                                    <span class="tb-lead">Victoria Aguilar</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="nk-tb-col tb-col-lg">
-                            <span class="tb-sub">18/10/2019</span>
-                        </div>
-                        <div class="nk-tb-col">
-                            <span class="tb-sub tb-amount">1.094780 <span>BTC</span></span>
-                        </div>
-                        <div class="nk-tb-col tb-col-sm">
-                            <span class="tb-sub text-success">Completed</span>
-                        </div>
-                        <div class="nk-tb-col nk-tb-col-action">
-                            <div class="dropdown">
-                                <a class="text-soft dropdown-toggle btn btn-sm btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-chevron-right"></em></a>
-                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
-                                    <ul class="link-list-plain">
-                                        <li><a href="#">View</a></li>
-                                        <li><a href="#">Invoice</a></li>
-                                        <li><a href="#">Print</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nk-tb-item">
-                        <div class="nk-tb-col">
-                            <div class="align-center">
-                                <div class="user-avatar user-avatar-sm bg-light">
-                                    <span>P3</span>
-                                </div>
-                                <span class="tb-sub ms-2">Platinam <span class="d-none d-md-inline">- Daily 14.82% for 7 Days</span></span>
-                            </div>
-                        </div>
-                        <div class="nk-tb-col tb-col-sm">
-                            <div class="user-card">
-                                <div class="user-avatar user-avatar-xs bg-purple-dim">
-                                    <span>EH</span>
-                                </div>
-                                <div class="user-name">
-                                    <span class="tb-lead">Emma Henry</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="nk-tb-col tb-col-lg">
-                            <span class="tb-sub">18/10/2019</span>
-                        </div>
-                        <div class="nk-tb-col">
-                            <span class="tb-sub tb-amount">1.094780 <span>BTC</span></span>
-                        </div>
-                        <div class="nk-tb-col tb-col-sm">
-                            <span class="tb-sub text-success">Completed</span>
-                        </div>
-                        <div class="nk-tb-col nk-tb-col-action">
-                            <div class="dropdown">
-                                <a class="text-soft dropdown-toggle btn btn-sm btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-chevron-right"></em></a>
-                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
-                                    <ul class="link-list-plain">
-                                        <li><a href="#">View</a></li>
-                                        <li><a href="#">Invoice</a></li>
-                                        <li><a href="#">Print</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nk-tb-item">
-                        <div class="nk-tb-col">
-                            <div class="align-center">
-                                <div class="user-avatar user-avatar-sm bg-light">
-                                    <span>P1</span>
-                                </div>
-                                <span class="tb-sub ms-2">Silver <span class="d-none d-md-inline">- Daily 4.76% for 21 Days</span></span>
-                            </div>
-                        </div>
-                        <div class="nk-tb-col tb-col-sm">
-                            <div class="user-card">
-                                <div class="user-avatar user-avatar-xs bg-teal-dim">
-                                    <span>AF</span>
-                                </div>
-                                <div class="user-name">
-                                    <span class="tb-lead">Alice Ford</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="nk-tb-col tb-col-lg">
-                            <span class="tb-sub">18/10/2019</span>
-                        </div>
-                        <div class="nk-tb-col">
-                            <span class="tb-sub tb-amount">1.094780 <span>BTC</span></span>
-                        </div>
-                        <div class="nk-tb-col tb-col-sm">
-                            <span class="tb-sub text-success">Completed</span>
-                        </div>
-                        <div class="nk-tb-col nk-tb-col-action">
-                            <div class="dropdown">
-                                <a class="text-soft dropdown-toggle btn btn-sm btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-chevron-right"></em></a>
-                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
-                                    <ul class="link-list-plain">
-                                        <li><a href="#">View</a></li>
-                                        <li><a href="#">Invoice</a></li>
-                                        <li><a href="#">Print</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nk-tb-item">
-                        <div class="nk-tb-col">
-                            <div class="align-center">
-                                <div class="user-avatar user-avatar-sm bg-light">
-                                    <span>P3</span>
-                                </div>
-                                <span class="tb-sub ms-2">Platinam <span class="d-none d-md-inline">- Daily 14.82% for 7 Days</span></span>
-                            </div>
-                        </div>
-                        <div class="nk-tb-col tb-col-sm">
-                            <div class="user-card">
-                                <div class="user-avatar user-avatar-xs bg-orange-dim">
-                                    <span>HW</span>
-                                </div>
-                                <div class="user-name">
-                                    <span class="tb-lead">Harold Walker</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="nk-tb-col tb-col-lg">
-                            <span class="tb-sub">18/10/2019</span>
-                        </div>
-                        <div class="nk-tb-col">
-                            <span class="tb-sub tb-amount">1.094780 <span>BTC</span></span>
-                        </div>
-                        <div class="nk-tb-col tb-col-sm">
-                            <span class="tb-sub text-success">Completed</span>
-                        </div>
-                        <div class="nk-tb-col nk-tb-col-action">
-                            <div class="dropdown">
-                                <a class="text-soft dropdown-toggle btn btn-sm btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-chevron-right"></em></a>
-                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
-                                    <ul class="link-list-plain">
-                                        <li><a href="#">View</a></li>
-                                        <li><a href="#">Invoice</a></li>
-                                        <li><a href="#">Print</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- .card -->
-        </div><!-- .col -->
+        </div>
     </div>
 </div>
+
+<div class="nk-block">
+    <div class="row g-gs">
+        <div class="col-lg-4">
+            <div class="card card-bordered card-full h-100">
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-2">
+                        <div class="card-title">
+                            <h6 class="subtitle">Net Worth Snapshot</h6>
+                        </div>
+                        <div class="card-tools">
+                            <em class="card-hint icon ni ni-info" data-bs-toggle="tooltip" title="Total assets minus liabilities"></em>
+                        </div>
+                    </div>
+                    <div class="card-amount">
+                        <span class="amount"><?= miw_format_currency($assetsSummary['netWorth'] ?? 0.0); ?></span>
+                        <span class="change up text-success"><em class="icon ni ni-trend-up"></em><?= miw_format_currency($assetsSummary['totalAssets'] ?? 0.0); ?> assets</span>
+                    </div>
+                    <ul class="nk-activity">
+                        <li class="nk-activity-item">
+                            <div class="nk-activity-media"><em class="icon ni ni-wallet"></em></div>
+                            <div class="nk-activity-data">
+                                <div class="label">Total Assets</div>
+                                <div class="amount text-success"><?= miw_format_currency($assetsSummary['totalAssets'] ?? 0.0); ?></div>
+                            </div>
+                        </li>
+                        <li class="nk-activity-item">
+                            <div class="nk-activity-media"><em class="icon ni ni-minus-round"></em></div>
+                            <div class="nk-activity-data">
+                                <div class="label">Total Liabilities</div>
+                                <div class="amount text-danger"><?= miw_format_currency($assetsSummary['totalLiabilities'] ?? 0.0); ?></div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="mt-3">
+                        <canvas id="netWorthSparkline" height="120" data-chart='<?= esc(json_encode($netWorthChartData, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP)); ?>'></canvas>
+                    </div>
+                    <?php if (!empty($assetsSummary['breakdown'])): ?>
+                    <div class="mt-4">
+                        <h6 class="mb-2 text-muted">Asset Breakdown</h6>
+                        <div class="row g-2">
+                            <?php foreach ($assetsSummary['breakdown'] as $label => $amount): ?>
+                                <div class="col-6">
+                                    <div class="d-flex justify-content-between align-items-center text-soft">
+                                        <span><?= esc(ucwords(str_replace('_', ' ', $label))); ?></span>
+                                        <span><?= miw_format_currency($amount); ?></span>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card card-bordered card-full h-100">
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-2">
+                        <div class="card-title">
+                            <h6 class="subtitle">Monthly Budget Health</h6>
+                        </div>
+                        <div class="card-tools">
+                            <em class="card-hint icon ni ni-help" data-bs-toggle="tooltip" title="Income versus expenses for the current month"></em>
+                        </div>
+                    </div>
+                    <div class="nk-order-ovwg-data">
+                        <div class="amount"><?= miw_format_currency($budgetSummary['monthlyNet'] ?? 0.0); ?></div>
+                        <div class="info">Net cash flow</div>
+                    </div>
+                    <div class="progress progress-lg mt-3">
+                        <?php
+                        $income = max((float) ($budgetSummary['monthlyIncome'] ?? 0.0), 0);
+                        $expenses = max((float) ($budgetSummary['monthlyExpenses'] ?? 0.0), 0);
+                        $totalFlow = $income + $expenses;
+                        $incomePercent = $totalFlow > 0 ? ($income / $totalFlow) * 100 : 50;
+                        ?>
+                        <div class="progress-bar bg-success" style="width: <?= esc(number_format($incomePercent, 2)); ?>%"></div>
+                        <div class="progress-bar bg-danger" style="width: <?= esc(number_format(100 - $incomePercent, 2)); ?>%"></div>
+                    </div>
+                    <ul class="nk-activity mt-3">
+                        <li class="nk-activity-item">
+                            <div class="nk-activity-media"><em class="icon ni ni-arrow-down-left"></em></div>
+                            <div class="nk-activity-data">
+                                <div class="label">Income</div>
+                                <div class="amount text-success"><?= miw_format_currency($budgetSummary['monthlyIncome'] ?? 0.0); ?></div>
+                            </div>
+                        </li>
+                        <li class="nk-activity-item">
+                            <div class="nk-activity-media"><em class="icon ni ni-arrow-up-right"></em></div>
+                            <div class="nk-activity-data">
+                                <div class="label">Expenses</div>
+                                <div class="amount text-danger"><?= miw_format_currency($budgetSummary['monthlyExpenses'] ?? 0.0); ?></div>
+                            </div>
+                        </li>
+                        <li class="nk-activity-item">
+                            <div class="nk-activity-media"><em class="icon ni ni-layers"></em></div>
+                            <div class="nk-activity-data">
+                                <div class="label">Available to Invest</div>
+                                <div class="amount text-info"><?= miw_format_currency($availableToInvest); ?></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card card-bordered card-full h-100">
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-2">
+                        <div class="card-title">
+                            <h6 class="subtitle">Portfolio Summary</h6>
+                        </div>
+                        <div class="card-tools">
+                            <em class="card-hint icon ni ni-info" data-bs-toggle="tooltip" title="Live totals across equities, ETFs, crypto, and projects"></em>
+                        </div>
+                    </div>
+                    <div class="card-amount">
+                        <span class="amount"><?= miw_format_currency($portfolioSummary['totalValue'] ?? 0.0); ?></span>
+                        <span class="change up text-primary"><em class="icon ni ni-layers"></em><?= miw_format_number($portfolioSummary['positionCount'] ?? 0); ?> positions</span>
+                    </div>
+                    <div class="nk-order-ovwg-data mt-1">
+                        <div class="title">Unrealized P&amp;L</div>
+                        <div class="amount <?= ($portfolioSummary['pnl'] ?? 0) >= 0 ? 'text-success' : 'text-danger'; ?>"><?= miw_format_currency($portfolioSummary['pnl'] ?? 0.0); ?></div>
+                    </div>
+                    <div class="mt-3">
+                        <canvas id="allocationChart" height="140" data-chart='<?= esc(json_encode($allocationChartData, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP)); ?>'></canvas>
+                    </div>
+                    <?php if ($allocationFiltered): ?>
+                    <div class="mt-4">
+                        <div class="row g-1">
+                            <?php foreach ($allocationFiltered as $label => $amount): ?>
+                                <div class="col-6">
+                                    <div class="d-flex justify-content-between text-soft">
+                                        <span><?= esc(ucfirst($label)); ?></span>
+                                        <span><?= miw_format_currency($amount); ?></span>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-gs mt-1">
+        <div class="col-xxl-6">
+            <div class="card card-bordered card-full h-100">
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-3">
+                        <div class="card-title">
+                            <h6 class="subtitle">Active Projects</h6>
+                            <span class="text-soft">Capital deployed and upcoming deadlines.</span>
+                        </div>
+                        <div class="card-tools">
+                            <a class="btn btn-sm btn-outline-primary" href="/user/projects">Manage Projects</a>
+                        </div>
+                    </div>
+                    <div class="nk-order-ovwg-data">
+                        <div class="amount"><?= miw_format_number($projectsSummary['activeCount'] ?? 0); ?></div>
+                        <div class="info">Active initiatives</div>
+                    </div>
+                    <div class="nk-order-ovwg-data mt-1">
+                        <div class="amount text-primary"><?= miw_format_currency($projectsSummary['totalCommitments'] ?? 0.0); ?></div>
+                        <div class="info">Total committed capital</div>
+                    </div>
+                    <div class="nk-order-ovwg-data mt-1">
+                        <div class="amount text-soft">Next deadline: <?= $projectsSummary['nextDeadline'] ? esc(date('M j, Y', strtotime($projectsSummary['nextDeadline']))) : 'No upcoming due dates'; ?></div>
+                    </div>
+                    <div class="table-responsive mt-3">
+                        <table class="table table-sm align-middle">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Project</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Allocation</th>
+                                    <th class="text-end">Deadline</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if ($activeProjects): ?>
+                                    <?php foreach ($activeProjects as $project): ?>
+                                        <tr>
+                                            <td><?= esc($project['title'] ?? 'Project'); ?></td>
+                                            <td><span class="badge bg-outline-primary"><?= esc(ucwords($project['status'] ?? 'pending')); ?></span></td>
+                                            <td class="text-end"><?= miw_format_currency($project['allocation'] ?? 0.0); ?></td>
+                                            <td class="text-end">
+                                                <?php if (!empty($project['deadline'])): ?>
+                                                    <?= esc(date('M j', strtotime($project['deadline']))); ?>
+                                                <?php else: ?>
+                                                    —
+                                                <?php endif; ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr><td colspan="4" class="text-center text-soft">No project commitments yet.</td></tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-6">
+            <div class="card card-bordered card-full h-100">
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-3">
+                        <div class="card-title">
+                            <h6 class="subtitle">Recent Trade Alerts</h6>
+                            <span class="text-soft">Live strategies and open signals.</span>
+                        </div>
+                        <div class="card-tools">
+                            <span class="badge bg-success">Open Alerts: <?= miw_format_number($alertsSummary['openCount'] ?? 0); ?></span>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-sm align-middle">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Ticker</th>
+                                    <th>Direction</th>
+                                    <th class="text-end">Entry</th>
+                                    <th class="text-end">Stop</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Updated</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if ($recentAlerts): ?>
+                                    <?php foreach ($recentAlerts as $alert): ?>
+                                        <tr>
+                                            <td><span class="badge bg-outline-secondary"><?= esc($alert['ticker'] ?? '—'); ?></span></td>
+                                            <td><?= esc(ucfirst($alert['direction'] ?? '')); ?></td>
+                                            <td class="text-end"><?= miw_format_currency($alert['entry'] ?? 0.0); ?></td>
+                                            <td class="text-end"><?= miw_format_currency($alert['stop'] ?? 0.0); ?></td>
+                                            <td><span class="badge bg-outline-primary"><?= esc($alert['status'] ?? ''); ?></span></td>
+                                            <td class="text-end text-soft"><?= esc(miw_relative_time($alert['updated_at'] ?? null)); ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr><td colspan="6" class="text-center text-soft">No alerts to show.</td></tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-gs mt-1">
+        <div class="col-xxl-8">
+            <div class="card card-bordered card-full h-100">
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-3">
+                        <div class="card-title">
+                            <h6 class="subtitle">Market News &amp; Highlights</h6>
+                            <span class="text-soft">Curated from alerts@mymiwallet.com and MarketAux feeds.</span>
+                        </div>
+                        <div class="card-tools">
+                            <a class="btn btn-sm btn-outline-secondary" href="/news">News Center</a>
+                        </div>
+                    </div>
+                    <div class="gy-3">
+                        <?php if ($newsItems): ?>
+                            <?php foreach ($newsItems as $item): ?>
+                                <div class="border-bottom pb-2 mb-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h6 class="mb-0"><?= esc($item['title'] ?? 'Headline'); ?></h6>
+                                        <?php if (!empty($item['symbol'])): ?>
+                                            <span class="badge bg-outline-primary"><?= esc($item['symbol']); ?></span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <?php if (!empty($item['summary'])): ?>
+                                    <p class="text-soft mt-1 mb-1 small"><?= esc($item['summary']); ?></p>
+                                    <?php endif; ?>
+                                    <div class="d-flex justify-content-between align-items-center small text-soft">
+                                        <span><?= esc($item['source'] ?? 'Market News'); ?></span>
+                                        <span><?= esc(miw_relative_time($item['published_at'] ?? null)); ?></span>
+                                        <?php if (!empty($item['url'])): ?>
+                                            <a class="link-primary" target="_blank" rel="noopener" href="<?= esc($item['url']); ?>">View</a>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p class="text-center text-soft mb-0">News feeds are quiet. Check back soon.</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-4">
+            <div class="card card-bordered card-full h-100">
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-3">
+                        <div class="card-title">
+                            <h6 class="subtitle">Quick Links</h6>
+                            <span class="text-soft">Jump into deeper workflows.</span>
+                        </div>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-12">
+                            <a class="btn btn-outline-primary w-100" href="/user/budget">Go to Budget Overview</a>
+                        </div>
+                        <div class="col-12">
+                            <a class="btn btn-outline-secondary w-100" href="/user/assets">Manage Assets</a>
+                        </div>
+                        <div class="col-12">
+                            <a class="btn btn-outline-success w-100" href="/dashboard/alerts">View Trade Alerts</a>
+                        </div>
+                        <div class="col-12">
+                            <a class="btn btn-outline-info w-100" href="/user/projects">Review Projects</a>
+                        </div>
+                        <div class="col-12">
+                            <a class="btn btn-outline-warning w-100" href="/news">Marketing / News Center</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style <?= $nonce['style'] ?? ''; ?>>
+    .nk-order-ovwg-data .amount { font-weight: 700; }
+    .nk-order-ovwg-data .info { color: #8094ae; font-size: 0.9rem; }
+    .table thead th { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .table td, .table th { vertical-align: middle; }
+</style>
+
+<script <?= $nonce['script'] ?? ''; ?>>
+(function() {
+    const sparklineEl = document.getElementById('netWorthSparkline');
+    const allocationEl = document.getElementById('allocationChart');
+
+    function parseChartData(el) {
+        if (!el || !el.dataset.chart) { return null; }
+        try {
+            return JSON.parse(el.dataset.chart);
+        } catch (err) {
+            console.error('Failed to parse chart data', err);
+            return null;
+        }
+    }
+
+    function ensureChartJs(cb) {
+        if (window.Chart) {
+            cb(window.Chart);
+            return;
+        }
+        document.addEventListener('ChartJSReady', function () { cb(window.Chart); }, { once: true });
+    }
+
+    ensureChartJs(function(Chart) {
+        const sparklineData = parseChartData(sparklineEl);
+        if (sparklineEl && sparklineData && sparklineData.labels.length) {
+            new Chart(sparklineEl.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: sparklineData.labels,
+                    datasets: [{
+                        label: 'Net Worth',
+                        data: sparklineData.values,
+                        borderColor: '#6576ff',
+                        backgroundColor: 'rgba(101, 118, 255, 0.15)',
+                        tension: 0.35,
+                        fill: true,
+                        pointRadius: 3,
+                    }]
+                },
+                options: {
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { display: false },
+                        x: { grid: { display: false } }
+                    },
+                    elements: { point: { radius: 0 } },
+                    maintainAspectRatio: false,
+                }
+            });
+        }
+
+        const allocationData = parseChartData(allocationEl);
+        if (allocationEl && allocationData && allocationData.labels.length) {
+            new Chart(allocationEl.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: allocationData.labels.map(label => label.toUpperCase()),
+                    datasets: [{
+                        data: allocationData.values,
+                        backgroundColor: ['#6576ff', '#1ee0ac', '#ff63a5', '#ffa353', '#8094ae'],
+                        borderWidth: 0,
+                    }]
+                },
+                options: {
+                    plugins: { legend: { position: 'bottom' } },
+                    cutout: '65%',
+                    maintainAspectRatio: false,
+                }
+            });
+        }
+    });
+})();
+</script>

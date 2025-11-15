@@ -218,6 +218,9 @@ class AlertsController extends UserController
         // Call once to hydrate shared $this->data (theme/header/footer, etc.)
         $this->commonData();
 
+        // Enable required frontend assets
+        $this->data['useDataTables'] = true;
+
         // Single, correct render target
         return $this->renderTheme('ManagementModule\Views\Alerts\index', $this->data);
     }
