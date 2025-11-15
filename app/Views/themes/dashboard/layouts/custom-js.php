@@ -213,6 +213,11 @@ $(document).ready(function () {
     let csrfName = $('meta[name="csrf-name"]').attr('content');
     let csrfHash = $('meta[name="csrf-hash"]').attr('content');
 
+    if (!$.fn || typeof $.fn.DataTable !== 'function') {
+        console.error('DataTables plugin missing on Alerts page – aborting table initialisation.');
+        return;
+    }
+
     function updateCsrfToken(newCsrfName, newCsrfHash) {
         csrfName = newCsrfName;
         csrfHash = newCsrfHash;

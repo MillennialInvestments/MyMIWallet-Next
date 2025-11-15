@@ -304,6 +304,7 @@ class AlertsController extends UserController
         $this->data['recommendation_score']        = $advisor['score'];
         $this->data['investment_opportunity_flag'] = $advisor['flag_opportunity'];
         $this->data['risk_rating']                 = $advisor['risk_rating'];
+        $this->data['useDataTables']               = true;
 
         // Ensure the dashboard theme loads the jQuery DataTables bundle used by the view.
         $this->data['useDataTables'] = true;
@@ -319,7 +320,8 @@ class AlertsController extends UserController
             'date_range' => $this->request->getGet('date_range')
         ];
 
-        $this->data['alerts'] = $this->alertsModel->getFilteredUserAlerts($filters, $this->cuID);
+        $this->data['alerts']        = $this->alertsModel->getFilteredUserAlerts($filters, $this->cuID);
+        $this->data['useDataTables'] = true;
 
         return $this->renderTheme('App\Modules\User\Views\Alerts\index', $this->data);
     }
