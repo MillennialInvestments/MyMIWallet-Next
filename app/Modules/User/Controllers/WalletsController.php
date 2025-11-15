@@ -742,6 +742,12 @@ class WalletsController extends UserController
                 $id = $this->walletModel->insert($data, true);
             }
 
+            $userId = (int) ($data['user_id'] ?? $this->cuID ?? 0);
+            $this->invalidateCrudCache(array_filter([
+                'wallets',
+                $userId > 0 ? 'user:' . $userId : null,
+            ]));
+
             log_message('info', 'WalletsController::add - Wallet added successfully. ID: {id}', ['id' => $id]);
             return redirect()->to('/Wallets')->with('message', ucfirst($walletType) . ' wallet added successfully.');
         }
@@ -1002,6 +1008,22 @@ class WalletsController extends UserController
                 'id'     => $walletId,
             ]);
 
+            if ($ok) {
+                $userId = (int) ($this->request->getPost('user_id') ?? 0);
+                if (! $userId && $walletId) {
+                    $row = $this->walletModel->find($walletId);
+                    $userId = (int)($row['user_id'] ?? 0);
+                }
+                if (! $userId) {
+                    $userId = (int) ($this->cuID ?? 0);
+                }
+
+                $this->invalidateCrudCache(array_filter([
+                    'wallets',
+                    $userId > 0 ? 'user:' . $userId : null,
+                ]));
+            }
+
             return redirect()->to('/Wallets')->with('message', ucfirst($walletType) . ' wallet updated successfully.');
         }
 
@@ -1044,6 +1066,10 @@ class WalletsController extends UserController
 
             if ($result) {
                 log_message('info', "Wallet updated successfully for AccountID: {$accountID}");
+                $this->invalidateCrudCache(array_filter([
+                    'wallets',
+                    $this->cuID ? 'user:' . $this->cuID : null,
+                ]));
                 return redirect()->to('/Wallets')->with('message', ucfirst($accountType) . ' wallet updated successfully.');
             } else {
                 log_message('error', "Wallet update failed for AccountID: {$accountID}");
@@ -1085,6 +1111,10 @@ class WalletsController extends UserController
         }
 
         $this->walletModel->delete($id);
+        $this->invalidateCrudCache(array_filter([
+            'wallets',
+            (isset($row['user_id']) && (int) $row['user_id'] > 0) ? 'user:' . (int) $row['user_id'] : ($this->cuID ? 'user:' . $this->cuID : null),
+        ]));
         log_message('info', 'WalletsController::delete - Deleted wallet {id}', ['id' => $id]);
         return $this->response->setJSON(['status' => 'success']);
     }
@@ -1124,6 +1154,12 @@ class WalletsController extends UserController
             unset($previousData['id']);
             $previousData['user_id'] = $formData['user_id'];
             $this->getWalletService()->$walletModelMethod($previousData);
+
+            $userId = (int) ($previousData['user_id'] ?? $this->cuID ?? 0);
+            $this->invalidateCrudCache(array_filter([
+                'wallets',
+                $userId > 0 ? 'user:' . $userId : null,
+            ]));
 
             return redirect()->to('/Wallets')->with('message', ucfirst($accountType) . ' account copied successfully');
         }
@@ -1174,6 +1210,10 @@ class WalletsController extends UserController
 
             // Complete the withdrawal and update the transaction status
             $this->transactionService->completeDeposit($transactionID);
+            $this->invalidateCrudCache(array_filter([
+                'wallets',
+                $this->cuID ? 'user:' . $this->cuID : null,
+            ]));
 
             return redirect()->to('/Wallets')->with('message', 'Withdrawal successful.');
         } catch (Exception $e) {
@@ -1199,6 +1239,10 @@ class WalletsController extends UserController
 
             // Transfer between wallets using WalletService
             $this->getWalletService()->exchangeFunds($fromWalletID, $toWalletID, $convertedAmount);
+            $this->invalidateCrudCache(array_filter([
+                'wallets',
+                $this->cuID ? 'user:' . $this->cuID : null,
+            ]));
 
             return redirect()->to('/Wallets')->with('message', 'Currency exchanged successfully.');
         } catch (Exception $e) {
@@ -1718,6 +1762,12 @@ class WalletsController extends UserController
     public function freezeWallet($walletId)
     {
         if ($this->getWalletService()->freezeWallet($walletId)) {
+            $row = $this->walletModel->find($walletId);
+            $userId = (int)($row['user_id'] ?? $this->cuID ?? 0);
+            $this->invalidateCrudCache(array_filter([
+                'wallets',
+                $userId > 0 ? 'user:' . $userId : null,
+            ]));
             return redirect()->to('/Wallets')->with('message', 'Wallet has been frozen successfully.');
         } else {
             return redirect()->to('/Wallets')->with('error', 'Failed to freeze the wallet.');
@@ -1727,6 +1777,12 @@ class WalletsController extends UserController
     public function unfreezeWallet($walletId)
     {
         if ($this->getWalletService()->unfreezeWallet($walletId)) {
+            $row = $this->walletModel->find($walletId);
+            $userId = (int)($row['user_id'] ?? $this->cuID ?? 0);
+            $this->invalidateCrudCache(array_filter([
+                'wallets',
+                $userId > 0 ? 'user:' . $userId : null,
+            ]));
             return redirect()->to('/Wallets')->with('message', 'Wallet has been unfrozen successfully.');
         } else {
             return redirect()->to('/Wallets')->with('error', 'Failed to unfreeze the wallet.');
@@ -1784,6 +1840,11 @@ class WalletsController extends UserController
             'submitted_date' => date('Y-m-d H:i:s'),
         ];
         $this->db->table('bf_users_wallet_transactions')->insert($transactionLog);
+
+        $this->invalidateCrudCache(array_filter([
+            'wallets',
+            $userId ? 'user:' . (int) $userId : null,
+        ]));
 
         return $this->response->setJSON(['status' => 'success', 'message' => 'Premium service activated.']);
     }

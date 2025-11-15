@@ -2,6 +2,7 @@
 
 namespace Config;
 
+use App\Libraries\CrudCacheInvalidator;
 use CodeIgniter\Config\BaseService;
 
 /**
@@ -19,6 +20,17 @@ use CodeIgniter\Config\BaseService;
  */
 class Services extends BaseService
 {
+    public static function crudCacheInvalidator(bool $getShared = true): CrudCacheInvalidator
+    {
+        if ($getShared) {
+            /** @var CrudCacheInvalidator $service */
+            $service = static::getSharedInstance('crudCacheInvalidator');
+            return $service;
+        }
+
+        return new CrudCacheInvalidator();
+    }
+    
     public static function myMIAnalytics(bool $getShared = true)
     {
         if ($getShared) {

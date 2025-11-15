@@ -480,6 +480,10 @@ class BudgetController extends UserController
 
                     $insertedID = (int) $this->budgetModel->insertAccount($accountData);
                     if ($insertedID > 0) {
+                        $this->invalidateCrudCache(array_filter([
+                            'budget',
+                            $userId > 0 ? 'user:' . $userId : null,
+                        ]));
                         $responseData = [
                             'accountID'        => $insertedID,
                             'recurringAccount' => $accountData['recurring_account'],
@@ -499,6 +503,10 @@ class BudgetController extends UserController
 
                     $updated = $this->budgetModel->updateAccount($accountId, $accountData);
                     if ($updated) {
+                        $this->invalidateCrudCache(array_filter([
+                            'budget',
+                            $userId > 0 ? 'user:' . $userId : null,
+                        ]));
                         $responseData = [
                             'accountID'        => $accountId,
                             'recurringAccount' => $accountData['recurring_account'],
@@ -514,6 +522,10 @@ class BudgetController extends UserController
                  case 'Copy':
                     $insertedID = (int) $this->budgetModel->insertAccount($accountData);
                     if ($insertedID > 0) {
+                        $this->invalidateCrudCache(array_filter([
+                            'budget',
+                            $userId > 0 ? 'user:' . $userId : null,
+                        ]));
                         $responseData = [
                             'accountID'        => $insertedID,
                             'recurringAccount' => $accountData['recurring_account'],
@@ -818,6 +830,10 @@ class BudgetController extends UserController
         log_message('debug', 'BudgetController L273 - $approveRecurringSchedule - $jsonData: ' . print_r($jsonData, true));
         // Pass the form data to the service for processing
         if ($this->getBudgetService()->approveRecurringSchedule($accountID, $jsonData)) {
+            $this->invalidateCrudCache(array_filter([
+                'budget',
+                $this->cuID ? 'user:' . $this->cuID : null,
+            ]));
             session()->setFlashdata('message', 'Recurring schedules successfully created.');
             return redirect()->to('/Budget');
         } else {
@@ -831,6 +847,10 @@ class BudgetController extends UserController
         $ids = $this->request->getPost('ids');
 
         if ($this->getBudgetService()->bulkDelete($ids)) {
+            $this->invalidateCrudCache(array_filter([
+                'budget',
+                $this->cuID ? 'user:' . $this->cuID : null,
+            ]));
             return $this->response->setJSON(['status' => 'success', 'message' => 'Records deleted successfully.']);
         } else {
             return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to delete records.']);
@@ -842,6 +862,10 @@ class BudgetController extends UserController
         $status = $this->request->getPost('status');
 
         if ($this->getBudgetService()->bulkUpdateStatus($ids, $status)) {
+            $this->invalidateCrudCache(array_filter([
+                'budget',
+                $this->cuID ? 'user:' . $this->cuID : null,
+            ]));
             return $this->response->setJSON(['status' => 'success', 'message' => 'Records updated successfully.']);
         } else {
             return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to update records.']);
@@ -855,6 +879,10 @@ class BudgetController extends UserController
         foreach($accountInfo as $account) {
             if ($account['recurring_account_primary'] === 'Yes') {
                 if ($this->budgetModel->cancelAccount($accountID)) {
+                    $this->invalidateCrudCache(array_filter([
+                        'budget',
+                        $this->cuID ? 'user:' . $this->cuID : null,
+                    ]));
                     session()->setFlashdata('message', 'Recurring Account deleted.');
                     return redirect()->to('/Budget');
                 } else {
@@ -863,6 +891,10 @@ class BudgetController extends UserController
                 }
             } else {
                 if ($this->budgetModel->cancelSubaccount($accountID)) {
+                    $this->invalidateCrudCache(array_filter([
+                        'budget',
+                        $this->cuID ? 'user:' . $this->cuID : null,
+                    ]));
                     session()->setFlashdata('message', 'Subaccount deleted.');
                     return redirect()->to("/Budget/Edit/{$accountID}");
                 } else {
@@ -875,6 +907,10 @@ class BudgetController extends UserController
 
     public function deleteAccount($accountID) {
         if ($this->getBudgetService()->cancelAccount($accountID)) {
+            $this->invalidateCrudCache(array_filter([
+                'budget',
+                $this->cuID ? 'user:' . $this->cuID : null,
+            ]));
             session()->setFlashdata('message', 'Recurring Account deleted.');
             return redirect()->back()->withInput()->with('message', 'Account deleted successfully!');
         } else {

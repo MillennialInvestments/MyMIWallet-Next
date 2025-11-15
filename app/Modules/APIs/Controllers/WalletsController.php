@@ -1,11 +1,13 @@
 <?php
 namespace App\Modules\APIs\Controllers;
 
-use CodeIgniter\RESTful\ResourceController;
-use CodeIgniter\HTTP\ResponseInterface;
+use App\Libraries\CrudCacheInvalidator;
+
 use App\Libraries\MyMIPlaid;
 use App\Models\WalletModel;
 use App\Services\WalletService;
+use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\RESTful\ResourceController;
 
 #[\AllowDynamicProperties]
 class WalletsController extends ResourceController
@@ -18,11 +20,33 @@ class WalletsController extends ResourceController
     /** @var \Myth\Auth\Authentication\AuthenticationInterface|\CodeIgniter\Shield\Authentication\Authentication|null */
     protected $auth;
 
+    private ?CrudCacheInvalidator $crudCacheInvalidator = null;
+
     public function __construct()
     {
         $this->wallets = new WalletModel();
         $this->auth    = service('authentication'); // Myth\Auth
         helper(['text', 'url']);
+    }
+
+    protected function invalidateCaches(array $tags): void
+    {
+        if ($tags === []) {
+            return;
+        }
+
+        if ($this->crudCacheInvalidator === null) {
+            /** @var CrudCacheInvalidator $invalidator */
+            $invalidator = service('crudCacheInvalidator');
+            $this->crudCacheInvalidator = $invalidator;
+        }
+
+        $filtered = array_values(array_filter($tags, static fn($tag) => is_string($tag) && $tag !== ''));
+        if ($filtered === []) {
+            return;
+        }
+
+        $this->crudCacheInvalidator->clear($filtered);
     }
 
     /**
@@ -98,6 +122,8 @@ class WalletsController extends ResourceController
 
             $m = new WalletModel();
             $walletId = $m->createWallet($uid, $category, $provider, $label ?: ucfirst($provider), $status, $credentials);
+
+            $this->invalidateCaches(['wallets', 'user:' . $uid]);
 
             return $this->respond(['status' => 'success', 'wallet_id' => $walletId]);
         } catch (\Throwable $e) {
@@ -188,6 +214,8 @@ class WalletsController extends ResourceController
 
             $m = new WalletModel();
             $affected = $m->updateWallet($uid, $id, $label, $status, $credentials);
+
+            $this->invalidateCaches(['wallets', 'user:' . $uid]);
 
             return $this->respond(['status' => 'success', 'affected' => $affected]);
         } catch (\Throwable $e) {
@@ -301,6 +329,10 @@ class WalletsController extends ResourceController
                 if (!empty($ids['wallet_id'])) $created[] = (int) $ids['wallet_id'];
             }
 
+            if (!empty($created)) {
+                $this->invalidateCaches(['wallets', 'user:' . $uid]);
+            }
+
             return $this->respond(['status' => 'success', 'created' => $created]);
         } catch (\Throwable $e) {
             log_message('error', 'plaidExchange error: {m}', ['m' => $e->getMessage()]);
@@ -340,6 +372,8 @@ class WalletsController extends ResourceController
 
             $m = new WalletModel();
             $affected = $m->unlinkWallet($uid, $id);
+
+            $this->invalidateCaches(['wallets', 'user:' . $uid]);
 
             return $this->respond(['status' => 'success', 'affected' => $affected]);
         } catch (\Throwable $e) {
@@ -390,8 +424,12 @@ class WalletsController extends ResourceController
             if (!method_exists($svc, $method)) return $this->failServerError('Unsupported type');
             $ok = $svc->$method((int)$id, $prepared);
 
-            return $ok ? $this->respond(['status'=>'success'])
-                    : $this->failServerError('Update failed');
+            if ($ok) {
+                $this->invalidateCaches(['wallets', 'user:' . $uid]);
+                return $this->respond(['status'=>'success']);
+            }
+
+            return $this->failServerError('Update failed');
         } catch (\Throwable $e) {
             log_message('error', 'API Wallets updateByType error: {msg}', ['msg' => $e->getMessage()]);
             return $this->failServerError($e->getMessage());
@@ -440,6 +478,8 @@ class WalletsController extends ResourceController
                 'linked_at'       => date('c'),
             ]);
 
+            $this->invalidateCaches(['wallets', 'user:' . $uid]);
+
             return $this->respond(['status' => 'success', 'wallet_id' => $walletId]);
         } catch (\Throwable $e) {
             log_message('error', 'linkRobinhood failed: {msg}', ['msg' => $e->getMessage()]);
@@ -479,6 +519,8 @@ class WalletsController extends ResourceController
                 'snaptrade_user_id' => $snapUserId,
                 'linked_at'         => date('c'),
             ]);
+
+            $this->invalidateCaches(['wallets', 'user:' . $uid]);
 
             return $this->respond(['status' => 'success', 'wallet_id' => $walletId]);
         } catch (\Throwable $e) {

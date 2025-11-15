@@ -66,7 +66,7 @@ $epochOf = static function (?string $mdy): int {
       <a class="btn btn-danger btn-sm text-white me-md-2" href="<?= site_url('Budget/Add/Expense'); ?>">+ Add Expense</a>
       <a class="btn btn-secondary btn-sm" href="<?= site_url('Budget/History'); ?>">View History</a>
     </div>
-    <div class="table-responsive">
+    <div class="table-responsive mt-5">
       <table class="table table-striped" id="userBudgetingDatatable"
              data-start-sum="<?= htmlspecialchars($sumStart, ENT_QUOTES, 'UTF-8'); ?>">
         <thead>

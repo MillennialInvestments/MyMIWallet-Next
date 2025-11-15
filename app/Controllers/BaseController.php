@@ -10,7 +10,7 @@ use Config\Services;
 use Throwable; 
 use Psr\Log\LoggerInterface;
 
-use App\Libraries\{MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIAdvisor, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets};
+use App\Libraries\{CrudCacheInvalidator, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIAdvisor, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets};
 use App\Services\{AccountService, BudgetService, DashboardService, GoalTrackingService, MarketingService, SolanaService, UserService, WalletService};
 use App\Models\WalletModel; // <-- add this
 
@@ -70,6 +70,7 @@ abstract class BaseController extends Controller
     /** Properly-declared properties for wallet dependencies */
     private ?WalletService $walletService = null;
     private ?WalletModel   $walletModel   = null;
+    private ?CrudCacheInvalidator $crudCacheInvalidator = null;
 
     public function initController(
         RequestInterface $request,
@@ -130,6 +131,36 @@ abstract class BaseController extends Controller
     protected function getCuID(): ?int
     {
         return $this->resolveCurrentUserId();
+    }
+
+    protected function crudCacheInvalidator(): CrudCacheInvalidator
+    {
+        if ($this->crudCacheInvalidator === null) {
+            /** @var CrudCacheInvalidator $invalidator */
+            $invalidator = service('crudCacheInvalidator');
+            $this->crudCacheInvalidator = $invalidator;
+        }
+
+        return $this->crudCacheInvalidator;
+    }
+
+    /**
+     * Clear caches tied to the provided logical tags.
+     *
+     * @param array<int,string> $tags
+     */
+    protected function invalidateCrudCache(array $tags): void
+    {
+        if ($tags === []) {
+            return;
+        }
+
+        $filtered = array_values(array_filter($tags, static fn($tag) => is_string($tag) && $tag !== ''));
+        if ($filtered === []) {
+            return;
+        }
+
+        $this->crudCacheInvalidator()->clear($filtered);
     }
 
     protected function commonData(): array|ResponseInterface

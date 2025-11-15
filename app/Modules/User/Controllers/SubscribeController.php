@@ -41,6 +41,10 @@ class SubscribeController extends UserController
 
         $result = $this->subscribeModel->insertEmail($email, $referral);
 
+        if (is_array($result) && !empty($result['success'])) {
+            $this->invalidateCrudCache(['subscriptions']);
+        }
+
         return $this->response->setJSON($result);
     }
 

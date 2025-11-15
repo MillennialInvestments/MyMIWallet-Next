@@ -138,6 +138,11 @@ class SupportController extends UserController
 
             $result = $this->supportModel->submitRequest($userRequestData);
             if ($result) {
+                $userId = (int)($supportRequest['user_id'] ?? 0);
+                $this->invalidateCrudCache(array_filter([
+                    'support',
+                    $userId > 0 ? 'user:' . $userId : null,
+                ]));
                 $this->sendEmail($userRequestData);
                 $this->sendSupportRequestReceivedEmail($supportNoticeData); 
                 $this->sendToDiscord($userRequestData);  // Pass the request ID to Discord method
@@ -154,6 +159,11 @@ class SupportController extends UserController
             ];
 
             $this->db->table('bf_support_feedback')->insert($userRequestData);
+            $userId = (int)($supportRequest['user_id'] ?? 0);
+            $this->invalidateCrudCache(array_filter([
+                'support',
+                $userId > 0 ? 'user:' . $userId : null,
+            ]));
             $this->sendEmail($userRequestData);
             $this->sendToDiscord($userRequestData);
 

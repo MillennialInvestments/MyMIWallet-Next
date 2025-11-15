@@ -279,6 +279,11 @@ class AccountController extends UserController
         } else {
             $m->insert($payload);
         }
+        $userId = (int) session('cuID');
+        $this->invalidateCrudCache(array_filtre([
+            'account',
+            $userId > 0 ? $userId : null,
+        ]));
         audit('2fa.enable', [], 'user');
         return $this->response->setJSON([
             'status' => 'success',
@@ -321,6 +326,11 @@ class AccountController extends UserController
             ]);
             audit('2fa.disable', [], 'user');
         }
+        $userId = (int) session('cuID');
+        $this->invalidateCrudCache(array_filter([
+            'account',
+            $userId > 0 ? 'user:' . $userId : null,
+        ]));
         return $this->okJson('2FA disabled.');
     }
 
@@ -338,6 +348,11 @@ class AccountController extends UserController
             'updated_at' => date('Y-m-d H:i:s'),
         ]);
         audit('2fa.backup.regenerate', [], 'user');
+        $userId = (int) session('cuID');
+        $this->invalidateCrudCache(array_filter([
+            'account',
+            $userId > 0 ? 'user:' . $userId : null,
+        ]));
         return $this->response->setJSON([
             'status' => 'success',
             'data' => ['backup_codes' => $codes],

@@ -310,6 +310,11 @@ class InvestmentsController extends UserController
         ];
     
         if ($this->watchlistModel->insert($data)) {
+            $userId = (int) ($data['user_id'] ?? 0);
+            $this->invalidateCrudCache(array_filter([
+                'investments',
+                $userId > 0 ? 'user:' . $userId : null,
+            ]));
             return $this->response->setJSON(['status' => 'success', 'message' => 'Watchlist updated successfully']);
         } else {
             return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to update watchlist']);
@@ -324,6 +329,11 @@ class InvestmentsController extends UserController
         if ($this->request->getMethod() === 'post') {
             $updateData = $this->request->getPost();
             $this->investmentModel->updateTrade($tradeId, $updateData);
+            $userId = (int) ($trade['user_id'] ?? ($updateData['user_id'] ?? 0));
+            $this->invalidateCrudCache(array_filter([
+                'investments',
+                $userId > 0 ? 'user:' . $userId : null,
+            ]));
             return redirect()->to('/Investments');
         }
 
@@ -332,7 +342,13 @@ class InvestmentsController extends UserController
 
     public function deleteTrade($tradeId)
     {
+        $trade = $this->investmentModel->getTradeById($tradeId);
         $this->investmentModel->deleteTrade($tradeId);
+        $userId = (int)($trade['user_id'] ?? $this->cuID ?? 0);
+        $this->invalidateCrudCache(array_filter([
+            'investments',
+            $userId > 0 ? 'user:' . $userId : null,
+        ]));
         return redirect()->to('/Investments');
     }
 
@@ -646,7 +662,16 @@ class InvestmentsController extends UserController
     private function saveInvestmentData($formData)
     {
         $result = $this->investmentModel->insert($formData);
-        return $result ? $this->respond(['status' => 'success']) : $this->fail('Failed to save data');
+        if ($result) {
+            $userId = (int) ($formData['user_id'] ?? $this->cuID ?? 0);
+            $this->invalidateCrudCache(array_filter([
+                'investments',
+                $userId > 0 ? 'user:' . $userId : null,
+            ]));
+            return $this->respond(['status' => 'success']);
+        }
+
+        return $this->fail('Failed to save data');
     }
 
     // Trade Tracker Functionality: 
@@ -705,8 +730,22 @@ class InvestmentsController extends UserController
             $result = $this->investmentModel->addTrade($tradeInfo);
             log_message('debug', "Inserted new trade: " . print_r($tradeInfo, true));
         }
-    
+
         if ($result) {
+            $userId = (int) ($tradeInfo['user_id'] ?? 0);
+            if (! $userId && !empty($tradeInfo['id'])) {
+                $existing = $this->investmentModel->getTradeById($tradeInfo['id']);
+                $userId = (int)($existing['user_id'] ?? 0);
+            }
+            if (! $userId) {
+                $userId = (int) ($this->cuID ?? 0);
+            }
+
+            $this->invalidateCrudCache(array_filter([
+                'investments',
+                $userId > 0 ? 'user:' . $userId : null,
+            ]));
+
             return $this->respond(['status' => 'success', 'message' => 'Trade saved successfully']);
         } else {
             return $this->fail('Failed to save trade data', 500);
