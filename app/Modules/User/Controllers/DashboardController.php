@@ -585,18 +585,32 @@ class DashboardController extends UserController
     public function index()
     {
         $this->data['pageTitle'] = 'MyMI Dashboard | MyMI Wallet | The Future of Finance';
-        $this->commonData();
-        $activeUserId = $this->cuID ?? $this->resolveCurrentUserId();
-        if ($activeUserId) {
-            try {
-                $summary = $this->getMyMIDashboard()->getExecutiveDashboardSummary((int) $activeUserId);
-                $this->data = array_merge($this->data ?? [], $summary);
-            } catch (\Throwable $e) {
-                log_message('error', 'DashboardController::index failed to load executive summary: {msg}', ['msg' => $e->getMessage()]);
-            }
+
+        // ✅ Resolve active user first
+        $activeUserId = (int) ($this->cuID ?? $this->resolveCurrentUserId() ?? 0);
+        if ($activeUserId <= 0) {
+            // Guest → send them to login or home
+            log_message('debug', 'DashboardController::index guest access; redirecting to login.');
+            return redirect()->to(site_url('login'));
         }
-        return $this->renderTheme('App\Modules\User\Views\Dashboard\index', $this->data);
+
+        // ✅ Only now build userService/commonData
+        $this->userService = new \App\Services\UserService($this->siteSettings, $activeUserId, $this->request);
+        $userData          = $this->userService->commonData();
+        $this->data        = array_merge(($this->data ?? []), $userData);
+
+        try {
+            $summary = $this->getMyMIDashboard()->getExecutiveDashboardSummary($activeUserId);
+            $this->data = array_merge($this->data ?? [], $summary);
+        } catch (\Throwable $e) {
+            log_message('error', 'DashboardController::index failed to load executive summary: {msg}', [
+                'msg' => $e->getMessage(),
+            ]);
+        }
+
+        return $this->renderTheme('User/Dashboard/index', $this->data);
     }
+
 
     public function account()
     {
