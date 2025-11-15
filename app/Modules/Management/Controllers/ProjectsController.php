@@ -63,7 +63,6 @@ class ProjectsController extends UserController
 //         $this->MyMIDashboard = new MyMIDashboard(); // replaced by BaseController getter
 //         $this->MyMIGold = new MyMIGold(); // replaced by BaseController getter
 //         $this->MyMISolana = new MyMISolana(); // replaced by BaseController getter
-        $this->MyMIUser = service('MyMIUser');
 //         $this->MyMIWallet = new MyMIWallet(); // replaced by BaseController getter
 //         $this->MyMIWallets = new MyMIWallets(); // replaced by BaseController getter
 

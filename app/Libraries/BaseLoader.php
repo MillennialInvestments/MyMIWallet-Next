@@ -32,12 +32,13 @@ trait BaseLoader
     }
 
     // ---- Library getters ----
-    protected function getMyMIWallet()       { return $this->di('MyMIWallet',      fn () => service('MyMIWallet')); }
-    protected function getMyMIWallets()      { return $this->di('MyMIWallets',     fn () => service('MyMIWallets')); }
+    protected function getMyMIAnalytics()    { return $this->di('MyMIAnalytics',   fn () => service('MyMIAnalytics')); }
     protected function getMyMIGold()         { return $this->di('MyMIGold',        fn () => service('MyMIGold')); }
     protected function getMyMIInvestments()  { return $this->di('MyMIInvestments', fn () => service('MyMIInvestments')); }
     protected function getMyMIMarketing()    { return $this->di('MyMIMarketing',   fn () => service('MyMIMarketing')); }
-    protected function getMyMIAnalytics()    { return $this->di('MyMIAnalytics',   fn () => service('MyMIAnalytics')); }
+    protected function getMyMIUser()         { return $this->di('MyMIUser',        fn () => service('MyMIUser')); }
+    protected function getMyMIWallet()       { return $this->di('MyMIWallet',      fn () => service('MyMIWallet')); }
+    protected function getMyMIWallets()      { return $this->di('MyMIWallets',     fn () => service('MyMIWallets')); }
 
     // ---- Service getters ----
     // ---- Email ----
@@ -140,7 +141,8 @@ trait BaseLoader
         $userAccount = [];
         if ($cuID !== null) {
             try {
-                $userAccount = service('MyMIUser')->getUserInformation($cuID);
+                $myMiUser = $this->di('MyMIUser', fn () => new MyMIUser());
+                $userAccount = $myMiUser->getUserInformation($cuID);
                 if (!is_array($userAccount)) {
                     $userAccount = [];
                 }

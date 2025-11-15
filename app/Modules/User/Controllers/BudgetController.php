@@ -264,6 +264,14 @@ class BudgetController extends UserController
         $this->data['initialBankBalanceFMT'] = $formattedInitialBalance;
         $this->data['initialBankBalanceAsOf'] = $asOf;
 
+        if ($activeUserId !== null) {
+            try {
+                $executiveSummary = $this->getMyMIDashboard()->getExecutiveDashboardSummary((int) $activeUserId);
+                $this->data = array_merge($this->data ?? [], $executiveSummary);
+            } catch (\Throwable $e) {
+                log_message('error', 'BudgetController::index failed to build executive summary: {msg}', ['msg' => $e->getMessage()]);
+            }
+        }
 
         // Render the page
         return $this->renderTheme('App\Modules\User\Views\Budget\index', $this->data);

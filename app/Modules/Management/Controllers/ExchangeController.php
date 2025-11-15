@@ -75,7 +75,6 @@ class ExchangeController extends UserController
 //         $this->MyMIGold = new MyMIGold(); // replaced by BaseController getter
 //         $this->MyMIReferrals = new MyMIReferrals(); // replaced by BaseController getter
 //         $this->MyMISolana = new MyMISolana(); // replaced by BaseController getter
-        $this->MyMIUser = service('MyMIUser');
 //         $this->MyMIUsers = new MyMIUsers(); // replaced by BaseController getter
 //         $this->MyMIWallet = new MyMIWallet(); // replaced by BaseController getter
 //         $this->MyMIWallets = new MyMIWallets(); // replaced by BaseController getter

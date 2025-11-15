@@ -193,6 +193,14 @@ class AlertsController extends UserController
             $this->data['cuRole']        = $userData['cuRole']        ?? $this->data['cuRole'];
             $this->data['cuKYC']         = $userData['cuKYC']         ?? $this->data['cuKYC'];
             $this->data['cuUserType']    = $userData['cuUserType']    ?? $this->data['cuUserType'];
+            $this->data['cuFirstName']   = $userData['cuFirstName']
+                ?? $userData['first_name']
+                ?? ($this->data['cuFirstName'] ?? '');
+            $this->data['cuLastName']    = $userData['cuLastName']
+                ?? $userData['last_name']
+                ?? ($this->data['cuLastName'] ?? '');
+            $this->data['cuWalletCount'] = $userData['cuWalletCount'] ?? ($this->data['cuWalletCount'] ?? 0);
+            $this->data['MyMIGCoinSum']  = $userData['MyMIGCoinSum']  ?? ($this->data['MyMIGCoinSum'] ?? 0);
         } catch (\Throwable $e) {
             log_message('error', 'AlertsController commonData(): getUserInformation failed: ' . $e->getMessage());
         }
@@ -221,6 +229,19 @@ class AlertsController extends UserController
             $this->data['userBudgetRecords']          = $this->budgetService->getUserBudgetRecords($this->cuID) ?? [];
         } catch (\Throwable $e) {
             log_message('error', 'AlertsController commonData(): budget data failed: ' . $e->getMessage());
+        }
+
+        try {
+            $budgetOverview = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID) ?? [];
+            $this->data['checkingSummary']    = $budgetOverview['checkingSummary']    ?? ($this->data['checkingSummary'] ?? 0);
+            $this->data['checkingSummaryFMT'] = $budgetOverview['checkingSummaryFMT'] ?? ($this->data['checkingSummaryFMT'] ?? '$0.00');
+            $this->data['creditAvailableFMT'] = $budgetOverview['creditAvailableFMT'] ?? ($this->data['creditAvailableFMT'] ?? '$0.00');
+            $this->data['creditLimitFMT']     = $budgetOverview['creditLimitFMT']     ?? ($this->data['creditLimitFMT'] ?? '$0.00');
+            $this->data['debtSummaryFMT']     = $budgetOverview['debtSummaryFMT']     ?? ($this->data['debtSummaryFMT'] ?? '$0.00');
+            $this->data['totalAccountBalance']    = (float) ($budgetOverview['totalAccountBalance'] ?? $this->data['totalAccountBalance']);
+            $this->data['totalAccountBalanceFMT'] = $budgetOverview['totalAccountBalanceFMT'] ?? $this->data['totalAccountBalanceFMT'];
+        } catch (\Throwable $e) {
+            log_message('error', 'AlertsController commonData(): allUserBudgetInfo failed: ' . $e->getMessage());
         }
 
         try {
@@ -256,6 +277,8 @@ class AlertsController extends UserController
 
         $sentAlerts    = $this->alertsModel->getSentAlerts(50);
         $marketDataMap = $this->alertsManager->fetchBatchMarketData($sentAlerts);
+        $alertsInfo    = $this->alertsManager->getAlertInfo() ?? [];
+        $pendingTradeAlerts = $alertsInfo['pendingTradeAlerts'] ?? [];
 
         // ✅ these now safely lazy-init
         $userId = $this->cuID;
@@ -304,6 +327,10 @@ class AlertsController extends UserController
         $this->data['recommendation_score']        = $advisor['score'];
         $this->data['investment_opportunity_flag'] = $advisor['flag_opportunity'];
         $this->data['risk_rating']                 = $advisor['risk_rating'];
+        $this->data['alertsInfo']                  = $alertsInfo;
+        $this->data['pendingTradeAlerts']          = $pendingTradeAlerts;
+        $this->data['pendingAlertsCount']          = $alertsInfo['pendingAlertsCount'] ?? count($pendingTradeAlerts);
+        $this->data['resolvedAlertsCount']         = $alertsInfo['resolvedAlertsCount'] ?? 0;
 
         // Ensure the dashboard theme loads the jQuery DataTables bundle used by the view.
         $this->data['useDataTables'] = true;
@@ -319,7 +346,8 @@ class AlertsController extends UserController
             'date_range' => $this->request->getGet('date_range')
         ];
 
-        $this->data['alerts'] = $this->alertsModel->getFilteredUserAlerts($filters, $this->cuID);
+        $this->data['alerts']        = $this->alertsModel->getFilteredUserAlerts($filters, $this->cuID);
+        $this->data['useDataTables'] = true;
 
         return $this->renderTheme('App\Modules\User\Views\Alerts\index', $this->data);
     }
