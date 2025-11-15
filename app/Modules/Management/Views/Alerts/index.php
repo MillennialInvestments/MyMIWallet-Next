@@ -428,7 +428,26 @@ $subViewData                        = [
     </button>
 </div>
 <script <?= $nonce['script'] ?? '' ?>>
-$(document).ready(function () {
+(function initAlertsManagementScripts(attempt = 0) {
+    if (typeof window.jQuery === 'undefined') {
+        if (attempt > 200) {
+            console.error('jQuery not available for Alerts scripts.');
+            return;
+        }
+        return setTimeout(() => initAlertsManagementScripts(attempt + 1), 50);
+    }
+
+    const $ = window.jQuery;
+
+    if (!$.fn || typeof $.fn.DataTable !== 'function') {
+        if (attempt > 200) {
+            console.error('DataTables plugin not available for Alerts scripts.');
+            return;
+        }
+        return setTimeout(() => initAlertsManagementScripts(attempt + 1), 50);
+    }
+
+    $(function () {
     console.log('✅ Document is ready.');
 
     let csrfName = $('meta[name="csrf-name"]').attr('content');
@@ -988,7 +1007,8 @@ $(document).ready(function () {
             });
         }
     });
-});
+    });
+})();
 
 </script>
 <script <?= $nonce['script'] ?? '' ?>>
@@ -1041,34 +1061,49 @@ $(document).ready(function () {
       btnBackfill.disabled = false;
       btnBackfill.textContent = 'Backfill Categories';
       // Refresh tables if present
-      if ($.fn.DataTable.isDataTable('#confirmedTradeAlertTable')) {
-        $('#confirmedTradeAlertTable').DataTable().ajax.reload(null, false);
-      }
-      if ($.fn.DataTable.isDataTable('#pendingTradeAlertTable')) {
-        $('#pendingTradeAlertTable').DataTable().ajax.reload(null, false);
+      if (window.jQuery && $.fn && $.fn.DataTable) {
+        if ($.fn.DataTable.isDataTable('#confirmedTradeAlertTable')) {
+          $('#confirmedTradeAlertTable').DataTable().ajax.reload(null, false);
+        }
+        if ($.fn.DataTable.isDataTable('#pendingTradeAlertTable')) {
+          $('#pendingTradeAlertTable').DataTable().ajax.reload(null, false);
+        }
       }
     }
   });
 })();
 </script>
 <script <?= $nonce['script'] ?? '' ?>>
-setInterval(() => {
-    fetch('/index.php/API/Alerts/getLatestPrices')
-        .then(res => res.json())
-        .then(response => {
-            if (response.status === 'success') {
-                const prices = response.prices;
-                // Loop through rows and update the price column
-                $('#alertsTable tbody tr').each(function () {
-                    const row = $(this);
-                    const ticker = row.find('td:eq(1)').text().trim(); // Adjust column index
-                    if (prices[ticker]) {
-                        row.find('td.price-cell').text(`$${prices[ticker].toFixed(2)}`);
-                    }
-                });
-            }
-        });
-// }, 60000); // every 60s
-}, 300000); // every 5m
-// }, 600000); // every 10m
+(function initAlertsPricePolling(attempt = 0) {
+    if (typeof window.jQuery === 'undefined') {
+        if (attempt > 200) {
+            console.error('jQuery not available for Alerts price polling.');
+            return;
+        }
+        return setTimeout(() => initAlertsPricePolling(attempt + 1), 50);
+    }
+
+    const $ = window.jQuery;
+
+    setInterval(() => {
+        fetch('/index.php/API/Alerts/getLatestPrices')
+            .then(res => res.json())
+            .then(response => {
+                if (response.status === 'success') {
+                    const prices = response.prices;
+                    // Loop through rows and update the price column
+                    $('#alertsTable tbody tr').each(function () {
+                        const row = $(this);
+                        const ticker = row.find('td:eq(1)').text().trim(); // Adjust column index
+                        if (prices[ticker]) {
+                            row.find('td.price-cell').text(`$${prices[ticker].toFixed(2)}`);
+                        }
+                    });
+                }
+            })
+            .catch((error) => console.error('Failed to refresh latest prices', error));
+    // }, 60000); // every 60s
+    }, 300000); // every 5m
+    // }, 600000); // every 10m
+})();
 </script>
