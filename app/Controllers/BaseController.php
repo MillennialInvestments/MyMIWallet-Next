@@ -49,6 +49,7 @@ abstract class BaseController extends Controller
     protected $nonceAttributes;
 
     private ?MyMIAdvisor $myMIAdvisor = null;
+    private ?MyMIAlphaVantage $MyMIAlphaVantage = null;
     private ?MyMIAnalytics $myMIAnalytics = null;
     private ?MyMIBudget $myMIBudget = null;
     private ?MyMICoin $myMICoin = null;

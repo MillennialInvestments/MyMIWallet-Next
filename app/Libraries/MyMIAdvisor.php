@@ -167,17 +167,17 @@ S;
         }
 
         $momentumScores = [];
-        foreach ($alerts as $alert) {
-            $tradeId = $alert['id'] ?? '0';
-            $ticker = $alert['ticker'] ?? 'UNKNOWN';
-            try {
-                $score = $this->MyMIMomentum->scoreTradeOpportunity($ticker, 5, $tradeId);
-                $momentumScores[] = $score;
-                log_message('debug', "Scored momentum for {$ticker}: {$score}");
-            } catch (\Throwable $e) {
-                log_message('error', "MyMIAdvisor::generateAdvisorNotes - Exception while scoring {$ticker}: " . $e->getMessage());
-            }
-        }
+        // foreach ($alerts as $alert) {
+        //     $tradeId = $alert['id'] ?? '0';
+        //     $ticker = $alert['ticker'] ?? 'UNKNOWN';
+        //     try {
+        //         $score = $this->MyMIMomentum->scoreTradeOpportunity($ticker, 5, $tradeId);
+        //         $momentumScores[] = $score;
+        //         //log_message('debug', "Scored momentum for {$ticker}: {$score}");
+        //     } catch (\Throwable $e) {
+        //         log_message('error', "MyMIAdvisor::generateAdvisorNotes - Exception while scoring {$ticker}: " . $e->getMessage());
+        //     }
+        // }
 
         $avgMomentum = count($momentumScores) ? array_sum($momentumScores) / count($momentumScores) : 0;
         log_message('debug', "MyMIAdvisor::generateAdvisorNotes - Avg momentum for user {$userId}: {$avgMomentum}");

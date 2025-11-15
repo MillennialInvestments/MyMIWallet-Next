@@ -1818,8 +1818,8 @@ app/Modules/User/Views/Budget/Edit.php:52:    $copyButtonURL                    
 app/Modules/User/Views/Budget/Edit.php:58:    $copyButtonURL                      = site_url('/Budget/Copy/' . $accountID);
 app/Modules/User/Views/Budget/Edit.php:64:    $copyButtonURL                      = site_url('/Budget/Edit/' . $accountID);
 app/Modules/User/Views/Budget/Edit.php:103:$accountTypeAltURl                          = site_url('/Budget/Add/' . $accountType);
-app/Modules/User/Views/Budget/Edit.php:173:                            <li><a href="<?php echo site_url('/Budget'); ?>" class="btn btn-danger btn-dim btn-outline-primary"><em class="icon ni ni-cross"></em><span>Cancel</span></a></li>
-app/Modules/User/Views/Budget/Edit.php:213:                                        <a href="<?php echo site_url('/Budget'); ?>" class="btn btn-danger btn-dim btn-outline-primary"><em class="icon ni ni-cross"></em><span>Cancel</span></a></li>
+app/Modules/User/Views/Budget/Edit.php:173:                            <li><a href="<?php echo site_url('/Budget'); ?>" class="btn btn-danger btn-dim btn-outline-primary text-white"><em class="icon ni ni-cross"></em><span>Cancel</span></a></li>
+app/Modules/User/Views/Budget/Edit.php:213:                                        <a href="<?php echo site_url('/Budget'); ?>" class="btn btn-danger btn-dim btn-outline-primary text-white"><em class="icon ni ni-cross"></em><span>Cancel</span></a></li>
 app/Modules/User/Views/Budget/Edit.php:234:let redirectURL = "<?= site_url('/Budget'); ?>";
 app/Modules/User/Views/Budget/Edit.php:243:        // const redirectURL                   = <?php //echo '\'' . site_url('/Budget/Recurring-Account/Schedule') . '\'';?>;
 app/Modules/User/Views/Budget/Edit.php:246:        // const redirectURL                   = <?php //echo '\'' . site_url('/Budget') . '\'';?>;

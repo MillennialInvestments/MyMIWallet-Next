@@ -123,7 +123,7 @@ $fieldData = array(
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?= $userAgent->getReferrer(); ?>" class="btn btn-danger btn-dim btn-outline-primary">
+                                    <a href="<?= $userAgent->getReferrer(); ?>" class="btn btn-danger btn-dim btn-outline-primary text-white">
                                         <em class="icon ni ni-cross"></em><span>Cancel</span>
                                     </a>
                                 </li>

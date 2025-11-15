@@ -11,7 +11,7 @@ $scriptNonceValue = $csp['script'] ?? '';
 if (!$scriptNonceValue && is_string($scriptNonceAttr) && $scriptNonceAttr !== '') {
     $scriptNonceValue = trim(str_replace(['nonce="', '"'], '', $scriptNonceAttr));
 }
-
+$subViewData = $subViewData ?? [];
 // 1) jQuery FIRST (NO defer)
 ?>
 <script src="<?= base_url('assets/vendor/jquery/jquery-3.6.0.min.js'); ?>" <?= $scriptNonceAttr ?>></script>
@@ -71,6 +71,8 @@ if ($digibyte): ?>
 <?php if ($u = asset_if_exists('assets/js/crypto/dgb-send-flow.js')): ?>
   <script src="<?= $u ?>" <?= $scriptNonceAttr ?> defer></script>
 <?php endif; ?>
+
+<?php echo view('themes/dashboard/layouts/custom-js.php', $subViewData); ?>
 
 <?php // 11) Global AJAX CSRF header updater (after jQuery present) ?>
 <script <?= $nonce['script'] ?? '' ?>>

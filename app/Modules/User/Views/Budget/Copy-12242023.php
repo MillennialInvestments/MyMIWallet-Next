@@ -107,7 +107,7 @@ $addModalTitle                          = $configMode . ' ' . $accountType . ' A
                     <div class="toggle-expand-content" data-content="pageMenu">
                         <ul class="nk-block-tools g-3">
                             <li><a href="<?php echo $accountTypeAltURl; ?>" class="btn btn-white btn-dim btn-outline-primary"><em class="icon ni ni-plus"></em><span><?php echo $accountTypeAltText; ?></span></a></li>
-                            <li><a href="<?php echo $this->agent->referrer(); ?>" class="btn btn-danger btn-dim btn-outline-primary"><em class="icon ni ni-cross"></em><span>Cancel</span></a></li>
+                            <li><a href="<?php echo $this->agent->referrer(); ?>" class="btn btn-danger btn-dim btn-outline-primary text-white"><em class="icon ni ni-cross"></em><span>Cancel</span></a></li>
                         </ul>
                     </div>
                 </div>

@@ -85,7 +85,9 @@ class AuthController extends Controller
         }
 
         if (! $this->validate($rules)) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+            return redirect()->back()
+                ->withInput()
+                ->with('errors', $this->validator->getErrors());
         }
 
         $login    = $this->request->getPost('login');
@@ -101,10 +103,14 @@ class AuthController extends Controller
             )
         );
 
+        // Capture redirect targets if provided
         $this->rememberRedirectUrl($this->request->getPost('redirect_url'));
         $this->rememberRedirectUrl($this->request->getPost('next'));
 
-        log_message('debug', 'Auth attemptLogin() called. redirect_url in session: ' . (session('redirect_url') ?? 'none'));
+        log_message(
+            'debug',
+            'Auth attemptLogin() called. redirect_url in session: ' . (session('redirect_url') ?? 'none')
+        );
 
         $type        = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         $credentials = [
@@ -112,28 +118,30 @@ class AuthController extends Controller
             'password' => $password,
         ];
 
-        log_message('debug', sprintf('Auth credentials normalised for attempt using key "%s"', $type));
+        log_message(
+            'debug',
+            sprintf('Auth credentials normalised for attempt using key "%s"', $type)
+        );
 
+        // 🔴 AUTH ATTEMPT
         if (! $this->auth->attempt($credentials, $remember)) {
-            log_message('debug', 'Auth attempt failed. Errors: ' . json_encode($this->auth->errors() ?? []));
-            $errors = $this->auth->errors() ?? [];
+            // LocalAuthenticator exposes `error()` (single last error message)
+            $errorMsg = $this->auth->error() ?? lang('Auth.badAttempt');
+
             log_message(
                 'debug',
                 sprintf(
-                    'Auth attempt failed for identifier %s. Errors: %s',
+                    'Auth attempt failed for identifier %s. Error: %s',
                     $login ?? 'N/A',
-                    json_encode($errors)
+                    $errorMsg
                 )
             );
 
-            if ($errors === []) {
-                $errors = [$this->auth->error() ?? lang('Auth.badAttempt')];
-            }
-
+            // Keep both `error` (string) and `errors` (array) for view compatibility
             return redirect()->back()
                 ->withInput()
-                ->with('error', $this->auth->error() ?? lang('Auth.badAttempt'))
-                ->with('errors', $errors);
+                ->with('error', $errorMsg)
+                ->with('errors', [$errorMsg]);
         }
 
         // ✅ SUCCESS: secure the user identity for the rest of the app
@@ -161,11 +169,10 @@ class AuthController extends Controller
             . ', user_id(): ' . (function_exists('user_id') ? (user_id() ?? 'null') : 'helper-missing')
         );
 
-        // 🔐 CRITICAL: expose the user ID in the session for cuID resolution
+        // 🔐 Expose the user ID into the session for cuID resolution
         if ($userId !== null && $userId > 0) {
             $this->session->set('user_id', (int) $userId);
 
-            // Optional but often handy:
             $user = $this->auth->user();
             if ($user) {
                 $this->session->set('user_email', $user->email ?? null);
@@ -177,16 +184,19 @@ class AuthController extends Controller
             log_message('error', 'Auth attemptLogin() - login succeeded but userId could not be resolved.');
         }
 
+        // Force password reset branch
         if ($this->auth->user()->force_pass_reset === true) {
             return redirect()
                 ->to(route_to('reset-password') . '?token=' . $this->auth->user()->reset_hash)
                 ->withCookies();
         }
 
+        // Final redirect with success message
         return $this->redirectAfterLogin()
             ->withCookies()
             ->with('message', lang('Auth.loginSuccess'));
     }
+
 
 
     /**

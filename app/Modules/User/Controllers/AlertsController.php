@@ -28,6 +28,8 @@ class AlertsController extends UserController
     use ResponseTrait;
 
     protected $auth;
+    protected $csp;
+    protected $cspNonce;
     protected $session;
     protected $request;
     protected array $data = [];
@@ -36,6 +38,10 @@ class AlertsController extends UserController
     protected $budgetModel;
     protected $alertsManager;
     private ?MyMIUser $MyMIUser = null;
+    private ?MyMIBudget    $MyMIBudget    = null;
+    private ?MyMIDashboard $MyMIDashboard = null;
+    private ?MyMIAdvisor   $MyMIAdvisor   = null;
+
     protected $userService;
     protected $siteSettings;
     protected $uri;
@@ -78,20 +84,28 @@ class AlertsController extends UserController
     }
 
     // 🔧 Lazy-init getters so the typed props are always initialized before use
-    protected function getMyMIUser(): ?MyMIUser
+    // Signature MUST match BaseController::getMyMIUser(): MyMIUser
+    protected function getMyMIUser(): MyMIUser
     {
+        // If already initialized, just return it
         if ($this->MyMIUser instanceof MyMIUser) {
             return $this->MyMIUser;
         }
 
-        // Try service() first, then direct constructor as fallback
-        $this->MyMIUser = service('myMIUser');
-        if (!$this->MyMIUser instanceof MyMIUser) {
-            $this->MyMIUser = new MyMIUser();
+        // Try resolving from the service container first
+        $serviceInstance = service('myMIUser');
+
+        if ($serviceInstance instanceof MyMIUser) {
+            $this->MyMIUser = $serviceInstance;
+            return $this->MyMIUser;
         }
+
+        // Fallback: create a guest-safe instance
+        $this->MyMIUser = new MyMIUser();
 
         return $this->MyMIUser;
     }
+
     protected function getMyMIBudget(): MyMIBudget
     {
         return $this->MyMIBudget ??= new MyMIBudget();
@@ -262,7 +276,7 @@ class AlertsController extends UserController
             return redirect()->to(site_url('login'));
         }
 
-        $risk = $this->myMIBudget->getUserRiskProfileSafe($userId);
+        $risk     = $this->getMyMIBudget()->getUserRiskProfileSafe($userId);
         $forecast = $this->getMyMIBudget()->getForecastForUser($userId);
         $advisor  = $this->getMyMIAdvisor()->generateAdvisorNotes($userId);
 

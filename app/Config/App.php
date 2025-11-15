@@ -199,4 +199,12 @@ class App extends BaseConfig
      * @see http://www.w3.org/TR/CSP/
      */
     public bool $CSPEnabled = false;
+
+    // Make sure it's explicitly a string:
+    public string $cookiePrefix   = '';      // ✅ empty string, NOT null
+    public string $cookieDomain   = '';      // fine as empty string
+    public string $cookiePath     = '/';     // default OK
+    public bool   $cookieSecure   = false;   // or true, depending on your HTTPS setup
+    public bool   $cookieHTTPOnly = true;
+    public string $cookieSameSite = 'Lax';   // or 'None'/'Strict' as needed
 }

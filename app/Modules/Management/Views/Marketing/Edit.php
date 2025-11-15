@@ -48,7 +48,7 @@ $fieldData = [
                     <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-bs-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
                     <div class="toggle-expand-content" data-content="pageMenu">
                         <ul class="nk-block-tools g-3">
-                            <li><a href="<?php echo $redirectURL; ?>" class="btn btn-danger btn-dim btn-outline-primary"><em class="icon ni ni-cross"></em><span>Cancel</span></a></li>
+                            <li><a href="<?php echo $redirectURL; ?>" class="btn btn-danger btn-dim btn-outline-primary text-white"><em class="icon ni ni-cross"></em><span>Cancel</span></a></li>
                         </ul>
                     </div>
                 </div>

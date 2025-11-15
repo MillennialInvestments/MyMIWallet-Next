@@ -88,7 +88,7 @@ class MyMIMomentum
         // Compute score based on deltas
         $momentumScore = ($priceDelta * 2) + ($rsiDelta * 1.5);
 
-        log_message('debug', "MyMIMomentum::scoreTradeOpportunity - {$symbol} | Start Price: {$start['price']} | End Price: {$end['price']} | ΔPrice: {$priceDelta} | ΔRSI: {$rsiDelta} | Score: {$momentumScore}");
+        //log_message('debug', "MyMIMomentum::scoreTradeOpportunity - {$symbol} | Start Price: {$start['price']} | End Price: {$end['price']} | ΔPrice: {$priceDelta} | ΔRSI: {$rsiDelta} | Score: {$momentumScore}");
 
         return round($momentumScore, 2);
     }

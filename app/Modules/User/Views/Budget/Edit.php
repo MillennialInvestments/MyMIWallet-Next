@@ -170,7 +170,7 @@ $addModalTitle                          = $configMode . ' Your ' . $accountName 
                         <ul class="nk-block-tools g-3">
                             <li><a href="<?php echo $accountTypeAltURl; ?>" class="btn btn-white btn-dim btn-outline-primary"><em class="icon ni ni-plus"></em><span><?php echo $accountTypeAltText; ?></span></a></li>                             
                             <li><a href="<?php echo $copyButtonURL; ?>" class="btn btn-white btn-dim btn-outline-primary"><em class="<?php echo $copyButtonIcon; ?>"></em><span><?php echo $copyButtonText; ?></span></a></li>
-                            <li><a href="<?php echo site_url('/Budget'); ?>" class="btn btn-danger btn-dim btn-outline-primary"><em class="icon ni ni-cross"></em><span>Cancel</span></a></li>
+                            <li><a href="<?php echo site_url('/Budget'); ?>" class="btn btn-danger btn-dim btn-outline-primary text-white"><em class="icon ni ni-cross"></em><span>Cancel</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -210,7 +210,7 @@ $addModalTitle                          = $configMode . ' Your ' . $accountName 
                                     <div class="pricing-action mt-0">
                                         <p class="sub-text"></p>
                                         <input class="btn btn-primary btn-dim btn-outline-primary text-white mr-2" type="submit" name="register" id="addAccountSubmit" value="Submit" />
-                                        <a href="<?php echo site_url('/Budget'); ?>" class="btn btn-danger btn-dim btn-outline-primary"><em class="icon ni ni-cross"></em><span>Cancel</span></a></li>
+                                        <a href="<?php echo site_url('/Budget'); ?>" class="btn btn-danger btn-dim btn-outline-primary text-white"><em class="icon ni ni-cross"></em><span>Cancel</span></a></li>
                                     </div>
                                 </fieldset>
                             <?php echo form_close(); ?>	

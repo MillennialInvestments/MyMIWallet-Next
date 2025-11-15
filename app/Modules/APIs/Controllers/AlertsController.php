@@ -40,6 +40,7 @@ use DateTime;
 class AlertsController extends \App\Controllers\BaseController
 {
     use ResponseTrait;
+    use BaseLoader;
     protected $cache;
     protected $alertManager;
     protected $MyMIAlerts;
