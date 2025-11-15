@@ -33,8 +33,6 @@ class InstitutesController extends UserController
 //         $this->MyMIInstitutes = new MyMIInstitutes(); // replaced by BaseController getter
 //         $this->MyMIBudget = new MyMIBudget(); // replaced by BaseController getter
 //         $this->MyMIDashboard = new MyMIDashboard(); // replaced by BaseController getter
-        $this->MyMIUser = service('MyMIUser');
-        
     }
 
     public function commonData(): array

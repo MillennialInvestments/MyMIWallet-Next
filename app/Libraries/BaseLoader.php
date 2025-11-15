@@ -140,7 +140,8 @@ trait BaseLoader
         $userAccount = [];
         if ($cuID !== null) {
             try {
-                $userAccount = service('MyMIUser')->getUserInformation($cuID);
+                $myMiUser = $this->di('MyMIUser', fn () => new MyMIUser());
+                $userAccount = $myMiUser->getUserInformation($cuID);
                 if (!is_array($userAccount)) {
                     $userAccount = [];
                 }

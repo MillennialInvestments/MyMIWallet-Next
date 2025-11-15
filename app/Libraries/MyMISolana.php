@@ -62,7 +62,7 @@ class MyMISolana implements CryptoCurrencyInterface
         $this->debug = $this->siteSettings->debug;
         $this->solanaService = service('solanaService') ?? new SolanaService();
         $this->solanaModel = new SolanaModel();
-        $this->MyMIUser = service('MyMIUser');
+        $this->MyMIUser = new MyMIUser();
         $this->cache = \Config\Services::cache();
 
         $primary  = getenv('SOLANA_RPC_PRIMARY') ?: ($this->apiUrl ?? 'https://api.mainnet-beta.solana.com');

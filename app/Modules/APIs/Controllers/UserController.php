@@ -27,7 +27,7 @@ class UserController extends BaseController
         // If BaseLoader already initializes them, these lines are harmless.
         $this->MyMIExchange  = service('MyMIExchange');
         $this->MyMIMarketing = service('MyMIMarketing');
-        $this->MyMIUser      = service('MyMIUser');
+        $this->MyMIUser      = $this->getMyMIUser();
     }
 
     public function health()

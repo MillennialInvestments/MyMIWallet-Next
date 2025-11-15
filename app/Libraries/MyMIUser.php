@@ -500,32 +500,21 @@ class MyMIUser
 
     public function getUserInformation($cuID)
     {
-        if (empty($uscuIDerId)) {
-            // Don’t warn on expected public traffic
+        $cuID = (int) ($cuID ?? $this->session->get('user_id') ?? $this->auth->id() ?? 0);
+
+        if ($cuID <= 0) {
             log_message('debug', 'MyMIUser::getUserInformation skipped (empty userId).');
-            return null;
+            return [];
         }
-        // if (empty($cuID)) {
-        //     // log once per request to reduce spam
-        //     if (! defined('MYMIUSER_EMPTY_USER_LOGGED')) {
-        //         define('MYMIUSER_EMPTY_USER_LOGGED', true);
-        //         log_message('warning', 'MyMIUser::getUserInformation called with empty userId; returning null.');
-        //     }
-        //     return null;
-        // }
-        $cuID = $cuID ?? $this->session->get('user_id') ?? $this->auth->id();
-        if (empty($cuID)) {
-            log_message('error', "MyMIUser L494 - Invalid User ID. getUserInformation called with empty user ID.");
-            return null; // Prevents cascading failures
-        }
-        $cuID = (int) $cuID;
-    
+
+        $this->cuID = $cuID;
+
         $userData = $this->userModel->getUserAccount($cuID);
         if (!$userData || !is_array($userData) || count($userData) === 0) {
             log_message('error', "MyMIUser L501 - Can't retrieve User Information for ID {$cuID}. MyMIUser: L285");
-            return null; // Return null to indicate failure in retrieving user data.
+            return [];
         }
-        $getWalletCount                     = $this->walletModel->getNonDefaultWalletCount($this->cuID);
+        $getWalletCount                     = $this->walletModel->getNonDefaultWalletCount($cuID);
         $userGoldData                       = $this->getMyMIGold()->getUserCoinTotal($cuID);
         if ($this->debug === 1) {
             // log_message('debug', 'MyMIUser L291 - $userData: ' . (print_r($userData, true)));

@@ -63,11 +63,16 @@ class DashboardController extends UserController
     public function commonData(): array
     {
         $this->data = parent::commonData();
-        $cuID = (int)($this->cuID ?? session('cuID') ?? session('user_id') ?? 0);
+        $cuID      = (int)($this->cuID ?? session('cuID') ?? session('user_id') ?? 0);
 
-        $this->userService = new UserService($this->siteSettings, $this->cuID, $this->request);
-        $userData = $this->getuserService()->commonData();
-        $this->data = array_merge($this->data, $userData);
+        if ($cuID <= 0) {
+            log_message('debug', 'DashboardController::commonData guest context; skipping authenticated data hydration.');
+            return $this->data;
+        }
+
+        $this->userService = new UserService($this->siteSettings, $cuID, $this->request);
+        $userData          = $this->userService->commonData();
+        $this->data        = array_merge($this->data, $userData);
 
         $this->data['siteSettings'] = $this->siteSettings;
         $this->data['debug'] = (string)$this->siteSettings->debug;
@@ -75,32 +80,32 @@ class DashboardController extends UserController
         $this->data['request'] = $this->request;
         $this->data['cuID'] = $this->cuID;
 
-        $userBudget = $this->getMyMIBudget()->getUserBudget($this->cuID); 
+        $userBudget = $this->getMyMIBudget()->getUserBudget($cuID);
         log_message('info', 'DashboardController L72 - $checkingSummary: ' . $userBudget['checkingSummary']);
         $this->data['checkingSummary'] = $userBudget['checkingSummary'];
         // Other Budget-related data
-        $creditAccounts = $this->getAccountService()->getUserCreditAccounts($this->cuID);
-        $debtAccounts = $this->getAccountService()->getUserDebtAccounts($this->cuID);
-        $repaymentSummary = $this->getBudgetService()->getRepaymentSummary($this->cuID);
+        $creditAccounts = $this->getAccountService()->getUserCreditAccounts($cuID);
+        $debtAccounts = $this->getAccountService()->getUserDebtAccounts($cuID);
+        $repaymentSummary = $this->getBudgetService()->getRepaymentSummary($cuID);
         $repaymentSchedules = $this->getBudgetService()->calculateRepaymentSchedules($creditAccounts);
         $currentBalances = $this->getBudgetService()->getCurrentBalances($creditAccounts);
         $availableBalances = $this->getBudgetService()->getAvailableBalances($repaymentSchedules);
         $totalAvailableBalance = $this->getBudgetService()->getTotalAvailableBalance($debtAccounts);
-        $this->data['userBudget'] = $this->getBudgetService()->getUserBudget($this->cuID);
-        $this->data['userBudgetRecords'] = $this->getBudgetService()->getUserBudgetRecords($this->cuID);
+        $this->data['userBudget'] = $this->getBudgetService()->getUserBudget($cuID);
+        $this->data['userBudgetRecords'] = $this->getBudgetService()->getUserBudgetRecords($cuID);
         $this->data['currentBalances'] = $currentBalances;
         $this->data['availableBalances'] = $availableBalances;
         $this->data['totalAvailableBalance'] = $totalAvailableBalance;
         $this->data['repaymentSummary'] = $repaymentSummary;
         $this->data['repaymentSchedules'] = $repaymentSchedules;
-        $budgetInfo = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID);
+        $budgetInfo = $this->getMyMIBudget()->allUserBudgetInfo($cuID);
 
-        $dashboardInfo = $this->getMyMIDashboard()->dashboardInfo($this->cuID);
+        $dashboardInfo = $this->getMyMIDashboard()->dashboardInfo($cuID);
         $this->data['completedGoals'] = $dashboardInfo['progressGoalData']['completions'];
         $this->data['pendingGoals'] = $dashboardInfo['progressGoalData']['goals'];
         $this->data['promotionalBanners'] = $dashboardInfo['promotionalBanners'];
 
-        $userInfo = $this->getMyMIUser()->getUserInformation($this->cuID);
+        $userInfo = $this->getMyMIUser()->getUserInformation($cuID);
         $this->data['cuWalletID'] = $userInfo['cuWalletID'];
         $this->data['cuRole'] = $userInfo['cuRole'] ?? 4;
         $this->data['cuUserType'] = $userInfo['cuUserType'] ?? '';
@@ -113,7 +118,7 @@ class DashboardController extends UserController
         $this->data['MyMIGCoinSum'] = $userInfo['MyMIGCoinSum'];
         $this->data['walletID'] = $userInfo['walletID'];
 
-        $userSolanaData = $this->getSolanaService()->getSolanaData($this->cuID);
+        $userSolanaData = $this->getSolanaService()->getSolanaData($cuID);
         $addrRow = model(\App\Models\SolanaModel::class)->getDefaultAddressFromExchangeTable($cuID);
         $base58Address = $addrRow['address'] ?? null;
 
