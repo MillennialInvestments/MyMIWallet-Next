@@ -11,7 +11,7 @@ class ReferralModel extends Model
     protected $primaryKey = 'id';
     protected $useAutoIncrement = true;
     protected $returnType = 'array';
-    protected $useSoftDeletes = false;
+    protected $useSoftDeletes = true;
     protected $allowedFields = ['user_id', 'referrer_code', 'active', 'signup_date', 'user_type', 'first_name', 'last_name', 'email', 'phone', 'address', 'city', 'state', 'country', 'zipcode', 'paypal', 'other_payment', 'user_ip_address', 'total_spend', 'days_active'];
     protected $beforeInsert = [];
     protected $beforeUpdate = [];
@@ -76,26 +76,25 @@ class ReferralModel extends Model
         
     public function getAllReferrals()
     {
-        log_message('debug', 'ReferralModel L78 - $cuReferrerCode: ' . $cuReferrerCode);
-    
-        // Select the fields you want to retrieve (e.g., signup_date, referrer_email, etc.)
         return $this->db->table('bf_users_referrals')
-                    ->select('id, signup_date, referral_email, referrer_code, type')
-                    ->groupBy('DATE(signup_date)')
+                    ->select('id, signup_date, referral_email, referrer_code, type, first_name, last_name, active, total_spend')
+                    ->where('deleted_on', null)
                     ->orderBy('signup_date', 'DESC')  // You can also order by signup date if needed
                     ->get()
                     ->getResultArray();
     }
-        
+
     public function getTotalReferrals($cuID, $cuReferrerCode)
     {
-        log_message('debug', 'ReferralModel L78 - $cuReferrerCode: ' . $cuReferrerCode);
-    
+        if (empty($cuReferrerCode)) {
+            return [];
+        }
+
         // Select the fields you want to retrieve (e.g., signup_date, referrer_email, etc.)
         return $this->db->table('bf_users_referrals')
-                    ->select('id, signup_date, referral_email, referrer_code, type')
+                    ->select('id, signup_date, referral_email, referrer_code, referrer_code as referral_code, type, first_name, last_name, active, total_spend')
                     ->where('referrer_code', $cuReferrerCode)
-                    ->groupBy('DATE(signup_date)')
+                    ->where('deleted_on', null)
                     ->orderBy('signup_date', 'DESC')  // You can also order by signup date if needed
                     ->get()
                     ->getResultArray();
@@ -105,12 +104,75 @@ class ReferralModel extends Model
     public function getTotalActiveReferrals($cuID, $cuReferrerCode)
     {
         log_message('debug', 'ReferralModel L88 - $cuReferrerCode: ' . $cuReferrerCode); 
+        if (empty($cuReferrerCode)) {
+            return [];
+        }
+
         return $this->db->table('bf_users_referrals')
                     ->select('COUNT(*) as count, signup_date')
                     ->where(['referrer_code' => $cuReferrerCode, 'active' => 1])
+                    ->where('deleted_on', null)
                     ->groupBy('DATE(signup_date)')
                     ->get()
                     ->getResultArray();
+    }
+
+    public function getMonthlyReferralStats($cuReferrerCode)
+    {
+        if (empty($cuReferrerCode)) {
+            return [];
+        }
+
+        return $this->db->table('bf_users_referrals')
+                    ->select(
+                        'YEAR(signup_date) as year,' .
+                        'MONTH(signup_date) as month,' .
+                        'COUNT(*) as total,' .
+                        'SUM(CASE WHEN active = 1 THEN 1 ELSE 0 END) as active,' .
+                        'SUM(CASE WHEN COALESCE(total_spend, 0) > 0 THEN 1 ELSE 0 END) as paying'
+                    )
+                    ->where('referrer_code', $cuReferrerCode)
+                    ->where('deleted_on', null)
+                    ->groupBy('YEAR(signup_date), MONTH(signup_date)')
+                    ->orderBy('YEAR(signup_date)', 'ASC')
+                    ->orderBy('MONTH(signup_date)', 'ASC')
+                    ->get()
+                    ->getResultArray();
+    }
+
+    public function bulkUpdateStatus(array $ids, int $userId, bool $makeActive = true)
+    {
+        if (empty($ids) || $userId <= 0) {
+            return 0;
+        }
+
+        $builder = $this->db->table('bf_users_referrals');
+        $builder->where('user_id', $userId)
+                ->whereIn('id', $ids)
+                ->set('active', $makeActive ? 1 : 0)
+                ->set('modified_on', date('Y-m-d H:i:s'));
+
+        $builder->update();
+
+        return $this->db->affectedRows();
+    }
+
+    public function bulkDeleteByUser(array $ids, int $userId)
+    {
+        if (empty($ids) || $userId <= 0) {
+            return 0;
+        }
+
+        $builder = $this->db->table('bf_users_referrals');
+        $builder->where('user_id', $userId)
+                ->whereIn('id', $ids)
+                ->set('deleted_on', date('Y-m-d H:i:s'))
+                ->set('active', 0)
+                ->set('modified_on', date('Y-m-d H:i:s'));
+
+        $builder->update();
+
+        return $this->db->affectedRows();
     }
 
     public function calculateCommission($cuID, $cuReferrerCode)
