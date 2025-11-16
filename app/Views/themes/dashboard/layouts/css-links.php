@@ -12,6 +12,7 @@ $styleNonce = $nonce['style'] ?? '';
 <link rel="stylesheet" href="<?= base_url('assets/css/libs/bootstrap-icons.css') . '?v=' . (is_file(FCPATH.'assets/css/libs/bootstrap-icons.css') ? filemtime(FCPATH.'assets/css/libs/bootstrap-icons.css') : '1'); ?>" <?= $styleNonce ?>>
 <link rel="stylesheet" href="<?= base_url('assets/css/responsive-overrides.css'); ?>" <?= $styleNonce ?>>
 <link rel="stylesheet" href="<?= base_url('assets/css/inline-fixes.css'); ?>" <?= $styleNonce ?>>
+<link rel="stylesheet" href="<?= base_url('assets/css/mymiwallet-custom.css'); ?>" <?= $styleNonce ?>>
 
 <link rel="shortcut icon" href="<?= base_url('favicon.ico') ?>" type="image/x-icon">
 
