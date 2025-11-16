@@ -5,6 +5,7 @@ namespace App\Libraries;
 
 use App\Libraries\{BaseLoader, MyMICoin, MyMIGold};
 use App\Models\{AnalyticalModel, InvestorModel, TrackerModel, WalletModel};
+use CodeIgniter\Database\BaseResult;
 use Config\Services;
 
 #[\AllowDynamicProperties]
@@ -20,6 +21,7 @@ class MyMIWallets {
     protected $investorModel;
     protected $trackerModel;
     protected $walletModel;
+    private array $tableColumnCache = [];
 
     public function __construct() {
         $this->auth = service('authentication');
@@ -44,39 +46,239 @@ class MyMIWallets {
     public function getUserWallets() {
         $walletTypes = ['Checking', 'Credit', 'Debt', 'Investment', 'Savings'];
         $walletData = [];
-    
+
         foreach ($walletTypes as $type) {
             $methodName = "get{$type}Wallets";
             if (method_exists($this->walletModel, $methodName)) {
+                $rawRows = call_user_func([$this->walletModel, $methodName], $this->cuID);
+                $rows = $this->normalizeWalletResult($rawRows);
+                $count = is_array($rows) ? count($rows) : 0;
+                log_message('debug', 'MyMIWallets::getUserWallets user={user} type={type} rows={count}', [
+                    'user'  => $this->cuID,
+                    'type'  => strtolower($type),
+                    'count' => $count,
+                ]);
+
                 $walletData[strtolower($type) . 'Wallets'] = array_map(
                     [$this, 'processWalletData'],
-                    call_user_func([$this->walletModel, $methodName], $this->cuID)
+                    $rows
                 );
+            } else {
+                log_message('debug', 'MyMIWallets::getUserWallets missing method {method}', [
+                    'method' => $methodName,
+                ]);
             }
         }
-    
+
         return $walletData;
-    }    
+    }
 
     public function getUserBankAccounts($cuID) {
         $getBankAccounts = $this->walletModel->getUserBankAccounts($this->cuID); 
         return $getBankAccounts; 
     }
 
-    private function processWalletData($defaultWallet) {
-        $walletTitle = $defaultWallet['nickname'] ?? $defaultWallet['broker'] . ' - ' . $defaultWallet['nickname'];
+    private function processWalletData(array $defaultWallet): array {
+        $broker = $defaultWallet['broker']
+            ?? $defaultWallet['bank_name']
+            ?? $defaultWallet['exchange']
+            ?? $defaultWallet['provider']
+            ?? $defaultWallet['debtor']
+            ?? null;
+
+        $nickname = $defaultWallet['nickname']
+            ?? $defaultWallet['account_name']
+            ?? $defaultWallet['label']
+            ?? null;
+
+        $walletTitle = $this->buildWalletTitle($broker, $nickname);
+
         return [
-            'walletID' => $defaultWallet['id'],
-            'walletTitle' => $walletTitle,
-            'walletAmount' => $defaultWallet['amount'],
-            'walletBroker' => $defaultWallet['broker'],
-            'walletNickname' => $defaultWallet['nickname'],
-            'walletDefault' => $defaultWallet['default_wallet'],
-            'walletExchange' => $defaultWallet['exchange_wallet'],
-            'walletMarketPair' => $defaultWallet['market_pair'],
-            'walletMarket' => $defaultWallet['market'],
+            'walletID'         => (int)($defaultWallet['id'] ?? 0),
+            'walletTitle'      => $walletTitle,
+            'walletAmount'     => $this->resolveWalletAmount($defaultWallet),
+            'walletBroker'     => $broker,
+            'walletNickname'   => $nickname,
+            'walletDefault'    => $defaultWallet['default_wallet'] ?? null,
+            'walletExchange'   => $defaultWallet['exchange_wallet'] ?? ($defaultWallet['exchange'] ?? null),
+            'walletMarketPair' => $defaultWallet['market_pair'] ?? null,
+            'walletMarket'     => $defaultWallet['market'] ?? ($defaultWallet['account_type'] ?? ($defaultWallet['wallet_type'] ?? null)),
+            'walletStatus'     => $defaultWallet['status'] ?? null,
+            'walletType'       => $defaultWallet['wallet_type'] ?? $defaultWallet['account_type'] ?? null,
+            'walletCategory'   => $defaultWallet['category'] ?? null,
         ];
-    }    
+    }
+
+    private function buildWalletTitle(?string $broker, ?string $nickname): string
+    {
+        $broker   = $broker ? trim($broker) : '';
+        $nickname = $nickname ? trim($nickname) : '';
+
+        if ($nickname !== '' && $broker !== '' && strcasecmp($broker, $nickname) !== 0) {
+            return sprintf('%s - %s', $broker, $nickname);
+        }
+
+        return $nickname !== '' ? $nickname : ($broker !== '' ? $broker : 'Wallet');
+    }
+
+    private function resolveWalletAmount(array $wallet): float
+    {
+        $candidates = [
+            $wallet['walletAmount'] ?? null,
+            $wallet['available_balance'] ?? null,
+            $wallet['current_balance'] ?? null,
+            $wallet['balance'] ?? null,
+            $wallet['amount'] ?? null,
+            $wallet['investment_amount'] ?? null,
+            $wallet['net_worth'] ?? null,
+        ];
+
+        foreach ($candidates as $candidate) {
+            if ($candidate === null || $candidate === '') {
+                continue;
+            }
+
+            if (is_numeric($candidate)) {
+                return (float)$candidate;
+            }
+
+            $normalized = preg_replace('/[^0-9.\-]/', '', (string)$candidate);
+            if ($normalized !== '' && is_numeric($normalized)) {
+                return (float)$normalized;
+            }
+        }
+
+        return 0.0;
+    }
+
+    private function normalizeWalletResult($rows): array
+    {
+        if (is_array($rows)) {
+            return $rows;
+        }
+
+        if ($rows instanceof BaseResult) {
+            return $rows->getResultArray();
+        }
+
+        if ($rows instanceof \Traversable) {
+            return \iterator_to_array($rows, true);
+        }
+
+        return [];
+    }
+
+    private function tableHasColumn(string $table, string $column): bool
+    {
+        $column = strtolower($column);
+        if (!isset($this->tableColumnCache[$table])) {
+            try {
+                $fields = db_connect()->getFieldNames($table);
+            } catch (\Throwable $e) {
+                $fields = [];
+            }
+            $this->tableColumnCache[$table] = array_map('strtolower', $fields ?? []);
+        }
+
+        return in_array($column, $this->tableColumnCache[$table], true);
+    }
+
+    public function reconcileUserWallets(int $userId, bool $logSummary = true): array
+    {
+        $summary = [
+            'userId'    => $userId,
+            'processed' => 0,
+            'created'   => 0,
+            'issues'    => [],
+            'orphans'   => [],
+        ];
+
+        if ($userId <= 0) {
+            return $summary;
+        }
+
+        $wallets = $this->walletModel->listByUser($userId, null, false);
+        $summary['processed'] = count($wallets);
+
+        $walletIds = [];
+
+        foreach ($wallets as $wallet) {
+            $walletIds[] = (int)($wallet['id'] ?? 0);
+            $mapping = $this->walletModel->mapWalletRow($wallet);
+            if (!$mapping) {
+                continue;
+            }
+
+            $subsidiary = $this->walletModel->findSubsidiaryForWallet($wallet);
+            if (empty($subsidiary['row'])) {
+                $created = $this->walletModel->createSubsidiaryFromWallet($mapping['type'], $wallet);
+                if ($created) {
+                    $summary['created']++;
+                    $subsidiary['row'] = $created;
+                }
+            } elseif (!empty($subsidiary['table']) && !empty($subsidiary['row']['id'])) {
+                $this->walletModel->ensureSubsidiaryLink(
+                    $subsidiary['table'],
+                    (int)$subsidiary['row']['id'],
+                    (int)$wallet['id']
+                );
+            }
+
+            if (!empty($subsidiary['row'])) {
+                $missing = $this->walletModel->requiredMissingForType(
+                    $mapping['type'],
+                    $subsidiary['row'],
+                    $subsidiary['table']
+                );
+                if (!empty($missing)) {
+                    $summary['issues'][] = [
+                        'wallet_id'  => (int)$wallet['id'],
+                        'subsidiary' => $mapping['type'],
+                        'missing'    => $missing,
+                    ];
+                }
+            }
+        }
+
+        $db = db_connect();
+        $subsidiaryTables = [
+            'bank'       => 'bf_users_bank_accounts',
+            'credit'     => 'bf_users_credit_accounts',
+            'crypto'     => 'bf_users_crypto_accounts',
+            'debt'       => 'bf_users_debt_accounts',
+            'investment' => 'bf_users_invest_accounts',
+        ];
+
+        foreach ($subsidiaryTables as $type => $table) {
+            $builder = $db->table($table)->where('user_id', $userId);
+            if ($this->tableHasColumn($table, 'deleted')) {
+                $builder->where('deleted', 0);
+            }
+            $rows = $builder->get()->getResultArray();
+            foreach ($rows as $row) {
+                $walletId = (int)($row['wallet_id'] ?? 0);
+                if ($walletId === 0 || !in_array($walletId, $walletIds, true)) {
+                    $summary['orphans'][] = [
+                        'type'      => $type,
+                        'record_id' => (int)($row['id'] ?? 0),
+                        'wallet_id' => $walletId,
+                    ];
+                }
+            }
+        }
+
+        if ($logSummary) {
+            log_message('info', 'Wallet reconciliation summary user={user} processed={processed} created={created} issues={issues} orphans={orphans}', [
+                'user'      => $userId,
+                'processed' => $summary['processed'],
+                'created'   => $summary['created'],
+                'issues'    => count($summary['issues']),
+                'orphans'   => count($summary['orphans']),
+            ]);
+        }
+
+        return $summary;
+    }
 
     public function getTotalWalletValue()
     {
