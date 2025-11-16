@@ -69,12 +69,25 @@ window.jQuery = window.jQuery || window.$; // just in case
             if (toggle)  toggle.classList.remove(active);
             if (cBody) document.body.classList.remove(cBody);
         },
-        dropMenu: function ($toggler, o) {
+        dropMenu: function (toggler, o) {
             try {
                 var attr = o || { self:'nk-menu-toggle', child:'nk-menu-sub', active:'active' };
-                var $li = $toggler.closest('li');
-                $li.toggleClass(attr.active);
-                $li.find('.'+attr.child+':first').slideToggle(150);
+                var el = toggler;
+                if (!el) return;
+                if (el.jquery) {
+                    el = el.get(0);
+                }
+                var item = el.closest ? el.closest('.nk-menu-item.has-sub') : null;
+                if (!item) return;
+                var parent = item.parentElement;
+                if (parent) {
+                    parent.querySelectorAll('.nk-menu-item.has-sub.' + attr.active).forEach(function (sib) {
+                        if (sib !== item) {
+                            sib.classList.remove(attr.active);
+                        }
+                    });
+                }
+                item.classList.toggle(attr.active);
             } catch(e) {}
         }
     };
@@ -290,14 +303,42 @@ window.jQuery = window.jQuery || window.$; // just in case
     };
 
     NioApp.TGL.ddmenu = function (elm, opt) {
-        var imenu = elm || '.nk-menu-toggle', def = { active:'active', self:'nk-menu-toggle', child:'nk-menu-sub' },
+        var selector = elm || '.nk-menu-toggle', def = { active:'active', self:'nk-menu-toggle', child:'nk-menu-sub' },
             attr = opt ? extend(def, opt) : def;
-        $(imenu).on('click', function (e) {
-            if (NioApp.Win.width < _break.lg || $(this).parents().hasClass(_sidebar)) {
-                NioApp.Toggle.dropMenu($(this), attr);
-            }
-            e.preventDefault();
-        });
+        NioApp.TGL._ddmenuConfigs = NioApp.TGL._ddmenuConfigs || [];
+        NioApp.TGL._ddmenuConfigs.push({ selector: selector, attr: attr });
+        if (!NioApp.TGL._ddmenuInitialized) {
+            NioApp.TGL._ddmenuInitialized = true;
+            document.addEventListener('click', function (event) {
+                var configs = NioApp.TGL._ddmenuConfigs || [];
+                var match = null;
+                var toggle = null;
+                configs.some(function (cfg) {
+                    var candidate = event.target.closest(cfg.selector);
+                    if (candidate) {
+                        match = cfg;
+                        toggle = candidate;
+                        return true;
+                    }
+                    return false;
+                });
+                if (!toggle) {
+                    if (!event.target.closest('.nk-menu-item.has-sub')) {
+                        configs.forEach(function (cfg) {
+                            document.querySelectorAll('.nk-menu-item.has-sub.' + cfg.attr.active).forEach(function (item) {
+                                item.classList.remove(cfg.attr.active);
+                            });
+                        });
+                    }
+                    return;
+                }
+                if (!(NioApp.Win.width < _break.lg || (toggle.closest && toggle.closest('.' + _sidebar)))) {
+                    return;
+                }
+                event.preventDefault();
+                NioApp.Toggle.dropMenu(toggle, match.attr);
+            });
+        }
     };
 
     NioApp.TGL.showmenu = function (elm, opt) {
@@ -707,22 +748,3 @@ window.addEventListener('load', function () {
   catch (e) { console.error('winLoad runner failed', e); }
 });
 
-// Custom script to manage the toggling of nk-menu-sub elements
-$(document).ready(function() {
-    // Toggle nk-menu-sub visibility
-    $('.nk-menu-toggle').click(function(e) {
-        e.preventDefault();
-        let $submenu = $(this).next('.nk-menu-sub');
-        $submenu.slideToggle();
-        $(this).parent().toggleClass('active');
-    });
-
-    // Hide nk-menu-sub when clicking outside
-    $(document).on('click', function(e) {
-        if (!$(e.target).closest('.nk-menu-item.has-sub').length) {
-            $('.nk-menu-sub').slideUp();
-            $('.nk-menu-item.has-sub').removeClass('active');
-        }
-    });
-}(window.NioApp, window.jQuery));
-// });

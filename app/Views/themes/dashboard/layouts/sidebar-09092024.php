@@ -157,7 +157,7 @@ if ($agent->isMobile()) {
                                 <span class="nk-menu-icon"><em class="icon ni ni-coin"></em></span>
                                 <span class="nk-menu-text text-yellow">Purchase Now!</span>
                             </a>
-                            <ul class="nk-menu-sub" style="display:none !important;">
+                            <ul class="nk-menu-sub">
                                 <li class="nk-menu-item">
                                     <button class="nk-menu-link btn dynamicModalLoader" data-formtype="Purchase" data-endpoint="purchasePaypal" title="">
                                         <span class="nk-menu-text">Purchase</span>
@@ -272,7 +272,7 @@ if ($agent->isMobile()) {
                                 <span class="nk-menu-icon"><em class="icon ni ni-coin"></em></span>
                                 <span class="nk-menu-text text-yellow">MyMI Solana</span>
                             </a>
-                            <ul class="nk-menu-sub px-3" style="display:none !important;">
+                            <ul class="nk-menu-sub px-3">
                                 <li class="nk-menu-item">
                                     <a href="<?php echo site_url('/Exchange/Solana'); ?>" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em class="icon ni ni-layers"></em></span><span class="nk-menu-text">Exchange</span>
@@ -455,7 +455,7 @@ if ($agent->isMobile()) {
                                 <span class="nk-menu-icon"><em class="icon ni ni-coin"></em></span>
                                 <span class="nk-menu-text text-yellow">Solana</span>
                             </a>
-                            <ul class="nk-menu-sub px-3" style="display:none !important;">
+                            <ul class="nk-menu-sub px-3">
                                 <li class="nk-menu-item">
                                     <a href="<?php echo site_url('/Exchange/Solana'); ?>" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em class="icon ni ni-layers"></em></span><span class="nk-menu-text">Exchange</span>
@@ -537,7 +537,7 @@ if ($agent->isMobile()) {
                                 <span class="nk-menu-icon"><em class="icon ni ni-coin"></em></span>
                                 <span class="nk-menu-text text-yellow">MyMI Solana</span>
                             </a>
-                            <ul class="nk-menu-sub px-3" style="display:none !important;">
+                            <ul class="nk-menu-sub px-3">
                                 <li class="nk-menu-item">
                                     <a href="<?php echo site_url('/Exchange/Solana'); ?>" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em class="icon ni ni-layers"></em></span><span class="nk-menu-text">Exchange</span>
@@ -658,7 +658,7 @@ if ($agent->isMobile()) {
                                 <span class="nk-menu-icRon"><em class="icon ni ni-live"></em></span>
                                 <span class="nk-menu-text text-yellow">Marketing</span>
                             </a>
-                            <ul class="nk-menu-sub" style="display:none !important;">
+                            <ul class="nk-menu-sub">
                                 <li class="nk-menu-item">
                                     <a class="nk-menu-link" href="<?php echo site_url('/Management/Marketing'); ?>">
                                         <span class="nk-menu-text">Dashboard</span>
