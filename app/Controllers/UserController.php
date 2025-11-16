@@ -62,7 +62,7 @@ class UserController extends BaseController
         // PUBLIC THEME
         if (($data['layout'] ?? 'dashboard') === 'public') {
             $layoutBase      = 'themes/public/layouts';
-            $data['content'] = view($view, $data);
+            $data['content'] = $this->tryView($view, $data);
 
             // Optional partials if they exist
             if ($this->viewExists($layoutBase . '/header'))  { $data['header']  = view($layoutBase . '/header',  $data); }
@@ -74,7 +74,7 @@ class UserController extends BaseController
 
         // DASHBOARD THEME
         $layoutBase      = 'themes/dashboard/layouts';
-        $data['content'] = view($view, $data);
+        $data['content'] = $this->tryView($view, $data);
 
         // ✅ replace renderer->exists() with viewExists()
         if ($this->viewExists($layoutBase . '/_sitenav')) { $data['sitenav'] = view($layoutBase . '/_sitenav', $data); }
@@ -95,10 +95,13 @@ class UserController extends BaseController
 
     protected function resolveView(string $candidate, array $alternatives = []): ?string
     {
-        $paths = array_merge([$candidate], $alternatives);
+        $paths = array_merge($this->expandViewCandidates($candidate), $alternatives);
+
         foreach ($paths as $p) {
-            if ($this->viewExists($p)) {
-                return $p;
+            foreach ($this->expandViewCandidates($p) as $option) {
+                if ($this->viewExists($option)) {
+                    return $option;
+                }
             }
         }
         return null;
@@ -115,7 +118,62 @@ class UserController extends BaseController
             return true;
         }
         // Fallback to manual check
-        $file = APPPATH . 'Views/' . str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $path) . '.php';
-        return is_file($file);
+        $normalized = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $path);
+
+        $candidates = [
+            APPPATH . 'Views' . DIRECTORY_SEPARATOR . $normalized . '.php',
+        ];
+
+        $segments = explode(DIRECTORY_SEPARATOR, $normalized);
+        if (count($segments) > 1) {
+            $module     = array_shift($segments);
+            $moduleDir  = str_ends_with($module, 'Module') ? substr($module, 0, -6) : $module;
+            $moduleBase = APPPATH . 'Modules' . DIRECTORY_SEPARATOR . $moduleDir . DIRECTORY_SEPARATOR;
+            if (!empty($segments)) {
+                if ($segments[0] === 'Views') {
+                    $moduleCandidates = $moduleBase . implode(DIRECTORY_SEPARATOR, $segments) . '.php';
+                } else {
+                    $moduleCandidates = $moduleBase . 'Views' . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $segments) . '.php';
+                }
+                $candidates[] = $moduleCandidates;
+            }
+        }
+
+        foreach ($candidates as $file) {
+            if (is_file($file)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Provide alternate representations of a view path so legacy
+     * "Module/View" references can resolve to namespaced module views.
+     */
+    protected function expandViewCandidates(string $view): array
+    {
+        $candidates = [$view];
+
+        if (str_contains($view, '\\')) {
+            $candidates[] = str_replace('\\', '/', $view);
+        } else {
+            $normalized = str_replace('\\', '/', $view);
+            $segments   = explode('/', $normalized);
+
+            if (count($segments) > 1) {
+                $module    = array_shift($segments);
+                $namespace = str_ends_with($module, 'Module') ? $module : $module . 'Module';
+                $remainder = implode('\\', $segments);
+                $namespaced = $namespace . '\\Views\\' . $remainder;
+
+                if ($namespaced !== $view) {
+                    array_unshift($candidates, $namespaced);
+                }
+            }
+        }
+
+        return array_values(array_unique(array_filter($candidates)));
     }
 }

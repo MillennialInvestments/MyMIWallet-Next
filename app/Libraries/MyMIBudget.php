@@ -11,6 +11,7 @@ use DateInterval;
 use DateTimeImmutable;
 use DateTimeZone;
 use CodeIgniter\Session\Session;
+use function budget_normalize_money;
 
 #[\AllowDynamicProperties]
 class MyMIBudget
@@ -827,6 +828,106 @@ class MyMIBudget
         $userBudget = $this->formatBudgetData($userBudget);
 
         return $userBudget;
+    }
+
+    /**
+     * Normalize and format user budget data for downstream consumers.
+     */
+    protected function formatBudgetData(array $userBudget): array
+    {
+        $defaults = [
+            'thisMonthsIncome'           => 0.0,
+            'thisMonthsExpense'          => 0.0,
+            'thisMonthsSurplus'          => 0.0,
+            'thisMonthsInvestments'      => 0.0,
+            'thisMonthsInvestmentsSplit' => 0.0,
+            'lastMonthsIncome'           => 0.0,
+            'lastMonthsExpense'          => 0.0,
+            'lastMonthsSurplus'          => 0.0,
+            'lastMonthsInvestments'      => 0.0,
+            'nextMonthsIncome'           => 0.0,
+            'nextMonthsExpense'          => 0.0,
+            'nextMonthsSurplus'          => 0.0,
+            'nextMonthsInvestments'      => 0.0,
+            'totalIncome'                => 0.0,
+            'totalExpense'               => 0.0,
+            'totalSurplus'               => 0.0,
+            'totalInvestments'           => 0.0,
+            'incomeYTDSummary'           => 0.0,
+            'expenseYTDSummary'          => 0.0,
+            'checkingSummary'            => 0.0,
+            'savingsSummary'             => 0.0,
+            'investmentSummary'          => 0.0,
+            'cryptoSummary'              => 0.0,
+            'debtSummary'                => 0.0,
+            'debtAvailable'              => 0.0,
+            'debtCreditLimit'            => 0.0,
+            'investSummary'              => 0.0,
+            'creditLimit'                => 0.0,
+            'creditAvailable'            => 0.0,
+            'totalAccountBalance'        => 0.0,
+            'initialBankBalance'         => 0.0,
+        ];
+
+        foreach ($defaults as $key => $default) {
+            $userBudget[$key] = $this->normalizeMoney($userBudget[$key] ?? $default);
+        }
+
+        if (!array_key_exists('investmentSummary', $userBudget)) {
+            $userBudget['investmentSummary'] = $userBudget['investSummary'];
+        }
+
+        $formatMap = [
+            'thisMonthsIncome'           => 'thisMonthsIncomeFMT',
+            'thisMonthsExpense'          => 'thisMonthsExpenseFMT',
+            'thisMonthsSurplus'          => 'thisMonthsSurplusFMT',
+            'thisMonthsInvestments'      => 'thisMonthsInvestmentsFMT',
+            'thisMonthsInvestmentsSplit' => 'thisMonthsInvestmentsSplitFMT',
+            'lastMonthsIncome'           => 'lastMonthsIncomeFMT',
+            'lastMonthsExpense'          => 'lastMonthsExpenseFMT',
+            'lastMonthsSurplus'          => 'lastMonthsSurplusFMT',
+            'lastMonthsInvestments'      => 'lastMonthsInvestmentsFMT',
+            'nextMonthsIncome'           => 'nextMonthsIncomeFMT',
+            'nextMonthsExpense'          => 'nextMonthsExpenseFMT',
+            'nextMonthsSurplus'          => 'nextMonthsSurplusFMT',
+            'nextMonthsInvestments'      => 'nextMonthsInvestmentsFMT',
+            'totalIncome'                => 'totalIncomeFMT',
+            'totalExpense'               => 'totalExpenseFMT',
+            'totalSurplus'               => 'totalSurplusFMT',
+            'totalInvestments'           => 'totalInvestmentsFMT',
+            'incomeYTDSummary'           => 'incomeYTDSummaryFMT',
+            'expenseYTDSummary'          => 'expenseYTDSummaryFMT',
+            'checkingSummary'            => 'checkingSummaryFMT',
+            'savingsSummary'             => 'savingsSummaryFMT',
+            'investmentSummary'          => 'investmentSummaryFMT',
+            'cryptoSummary'              => 'cryptoSummaryFMT',
+            'debtSummary'                => 'debtSummaryFMT',
+            'debtAvailable'              => 'debtAvailableFMT',
+            'debtCreditLimit'            => 'debtCreditLimitFMT',
+            'investSummary'              => 'investSummaryFMT',
+            'creditLimit'                => 'creditLimitFMT',
+            'creditAvailable'            => 'creditAvailableFMT',
+            'totalAccountBalance'        => 'totalAccountBalanceFMT',
+            'initialBankBalance'         => 'initialBankBalanceFMT',
+        ];
+
+        foreach ($formatMap as $key => $formattedKey) {
+            $userBudget[$formattedKey] = $this->formatCurrency($userBudget[$key] ?? 0.0);
+        }
+
+        return $userBudget;
+    }
+
+    protected function normalizeMoney($value): float
+    {
+        return budget_normalize_money($value ?? 0.0);
+    }
+
+    protected function formatCurrency(float $amount): string
+    {
+        $prefix = $amount < 0 ? '-$' : '$';
+
+        return $prefix . number_format(abs($amount), 2, '.', ',');
     }
 
     public function getUserBudgetRecord($cuID, $accountID) {
