@@ -1,6 +1,3 @@
-+141
--0
-
 <?php
 
 if (! function_exists('miw_news_preview')) {

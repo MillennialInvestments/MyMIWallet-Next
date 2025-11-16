@@ -3,7 +3,7 @@
 namespace App\Modules\User\Controllers;
 
 use App\Controllers\UserController;
-use App\Libraries\{MyMIWallet, MyMISolana};
+use App\Libraries\{MyMIWallet, MyMIWallets, MyMISolana};
 use App\Models\{MyMIGoldModel, WalletModel};
 use App\Services\{AccountService, CurrencyService, GoalTrackingService, MarketingService, SolanaService, TransactionService, WalletService, WalletSummaryCalculator};
 use CodeIgniter\HTTP\RedirectResponse;
@@ -652,6 +652,19 @@ class WalletsController extends UserController
             $this->data['getUserWallets'] = [];
         }
 
+
+        $walletCount = is_array($this->data['getUserWallets']) ? count($this->data['getUserWallets']) : 0;
+        log_message('debug', 'WalletsController@index user={user} walletsReturned={count} filters=non-deleted', [
+            'user'  => $cuID,
+            'count' => $walletCount,
+        ]);
+
+        $shouldReconcile = $this->request->getGet('reconcile') === '1';
+        if ($shouldReconcile && $cuID > 0) {
+            $walletLibrary = new MyMIWallets();
+            $this->data['walletReconciliation'] = $walletLibrary->reconcileUserWallets($cuID);
+        }
+        
         $this->data['creditAvailable']    = $budgetSnapshot['totals']['creditAvailable'] ?? 0.0;
         $this->data['creditAvailableFMT'] = $budgetSnapshot['formatted']['creditAvailable'] ?? $this->formatCurrency($this->data['creditAvailable']);
         $this->data['creditLimit']        = $budgetSnapshot['totals']['creditLimit'] ?? 0.0;

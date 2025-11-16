@@ -69,7 +69,6 @@ class WalletsController extends ResourceController
         return $sid ? (int) $sid : null;
     }
 
-
     /** GET /API/Wallets
      * Returns all wallets for current user (optionally filter by ?category=)
      */
@@ -85,14 +84,22 @@ class WalletsController extends ResourceController
                 return $this->failUnauthorized('Unauthorized');
             }
 
-            $category = $this->request->getGet('category');
-            log_message('debug', 'API/Wallets category param: {cat}', ['cat' => $category]);
+            $category   = $this->request->getGet('category');
+            $activeFlag = $this->request->getGet('active_only') ?? $this->request->getGet('active');
+            $activeOnly = filter_var($activeFlag, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+            $activeOnly = $activeOnly ?? false;
 
-            $rows = $this->wallets->listByUser($uid, $category);
-            log_message('debug', 'WalletsController::index returning {n} wallets for user {u} category={c}', [
+            log_message('debug', 'API/Wallets category param: {cat} | active_only={active}', [
+                'cat'    => $category,
+                'active' => $activeOnly ? 'true' : 'false',
+            ]);
+
+            $rows = $this->wallets->listByUser($uid, $category, $activeOnly);
+            log_message('debug', 'WalletsController::index returning {n} wallets for user {u} category={c} activeOnly={a}', [
                 'n' => count($rows),
                 'u' => $uid,
                 'c' => $category ?? 'all',
+                'a' => $activeOnly ? 'true' : 'false',
             ]);
 
             return $this->respond(['status' => 'success', 'data' => $rows]);

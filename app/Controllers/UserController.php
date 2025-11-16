@@ -13,6 +13,33 @@ class UserController extends BaseController
     // protected bool $cuIdResolutionLogged = false;
 
     /**
+     * Normalize arbitrary render data inputs into a consistent array shape.
+     */
+    protected function normalizeRenderData(string $view, mixed $data): array|ResponseInterface
+    {
+        // Allow controllers to pass through a fully-built Response.
+        if ($data instanceof ResponseInterface) {
+            return $data;
+        }
+
+        if (is_array($data)) {
+            $viewData = $data;
+        } elseif (is_object($data)) {
+            // Support DTO/stdClass containers by exposing their public vars.
+            $viewData = get_object_vars($data);
+        } elseif ($data === null) {
+            $viewData = [];
+        } else {
+            // Fallback: wrap scalars so views can still consume the payload.
+            $viewData = ['payload' => $data];
+        }
+
+        $this->data = array_merge($this->data ?? [], $viewData);
+
+        return $this->data;
+    }
+
+    /**
      * Central way to resolve the current user ID for all UserModule controllers.
      */
     protected function resolveCurrentUserId(): ?int

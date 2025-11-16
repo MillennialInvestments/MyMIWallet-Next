@@ -117,9 +117,46 @@ class WalletModel extends Model
     {
         return $this->db->table('bf_users_bank_accounts')
             ->where('account_type', 'Checking')
-            ->where('status', 1)
             ->where('deleted', 0)
             ->where('user_id', $cuID)
+            ->orderBy('nickname', 'ASC')
+            ->get()->getResultArray();
+    }
+
+    public function getSavingsWallets($cuID)
+    {
+        return $this->db->table('bf_users_bank_accounts')
+            ->where('account_type', 'Savings')
+            ->where('deleted', 0)
+            ->where('user_id', $cuID)
+            ->orderBy('nickname', 'ASC')
+            ->get()->getResultArray();
+    }
+
+    public function getCreditWallets($cuID)
+    {
+        return $this->db->table('bf_users_credit_accounts')
+            ->where('user_id', $cuID)
+            ->where('deleted', 0)
+            ->orderBy('nickname', 'ASC')
+            ->get()->getResultArray();
+    }
+
+    public function getDebtWallets($cuID)
+    {
+        return $this->db->table('bf_users_debt_accounts')
+            ->where('user_id', $cuID)
+            ->where('deleted', 0)
+            ->orderBy('nickname', 'ASC')
+            ->get()->getResultArray();
+    }
+
+    public function getInvestmentWallets($cuID)
+    {
+        return $this->db->table('bf_users_invest_accounts')
+            ->where('user_id', $cuID)
+            ->where('deleted', 0)
+            ->orderBy('nickname', 'ASC')
             ->get()->getResultArray();
     }
 
@@ -429,7 +466,8 @@ class WalletModel extends Model
     {
         return $this->db->table('bf_users_bank_accounts')
             ->where('user_id', $cuID)
-            ->where('status', 1)
+            ->where('deleted', 0)
+            ->orderBy('nickname', 'ASC')
             ->get()->getResultArray();
     }
 
@@ -603,7 +641,7 @@ class WalletModel extends Model
     {
         return $this->db->table('bf_users_crypto_accounts')
             ->where('user_id', $cuID)
-            ->where('status', 1)
+            ->where('deleted', 0)
             ->get()->getResultArray();
     }
 
@@ -611,7 +649,7 @@ class WalletModel extends Model
     {
         return $this->db->table('bf_users_invest_accounts')
             ->where('user_id', $cuID)
-            ->where('status', 1)
+            ->where('deleted', 0)
             ->get()->getResultArray();
     }
 
@@ -665,9 +703,9 @@ class WalletModel extends Model
 
     /**
      * Ensure deleted=0 wallets don’t show in the list.
-     * (Leave your existing filters; just add deleted=0.)
+     * Pass $onlyActive=true to filter by the linked/active flags.
      */
-    public function listByUser(int $userId, ?string $category = null): array
+    public function listByUser(int $userId, ?string $category = null, bool $onlyActive = false): array
     {
         $db = db_connect();
         $b  = $db->table($this->table)
@@ -697,10 +735,20 @@ class WalletModel extends Model
             } else {
                 $b->whereIn('wallet_type', $want);
             }
-
-            // Your original code keeps this:
-            $b->where('status', 1);
         }
+
+        if ($onlyActive) {
+            $b->groupStart()
+                ->whereIn('status', ['linked', 'active', 'Active', 1, '1'])
+                ->orWhereIn('active', [1, '1', 'Yes'])
+            ->groupEnd();
+        }
+
+        log_message('debug', 'WalletModel::listByUser filters', [
+            'user'       => $userId,
+            'category'   => $category,
+            'onlyActive' => $onlyActive,
+        ]);
 
         $b->orderBy('created_on', 'DESC')->orderBy('id', 'DESC');
         $rows = $b->get()->getResultArray();
@@ -865,7 +913,9 @@ class WalletModel extends Model
         if ($userId <= 0) {
             return [];
         }
-        $b = $this->db->table($this->table)->where('user_id', $userId);
+        $b = $this->db->table($this->table)
+            ->where('user_id', $userId)
+            ->where('deleted', 0);
         if ($onlyActive) {
             $b->groupStart()
                 ->whereIn('status', ['linked', 'active', 'Active', 1, '1'])
@@ -879,6 +929,7 @@ class WalletModel extends Model
     {
         $b = $this->db->table($this->table)
             ->where('user_id', $userId)
+            ->where('deleted', 0)
             ->where('category', strtolower($category));
         if ($onlyActive) $b->where('status','linked');
         return $b->orderBy('created_on','DESC')->get()->getResultArray();
