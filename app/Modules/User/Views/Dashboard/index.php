@@ -373,7 +373,12 @@ $availableToInvest = $budgetSummary['availableToInvest'] ?? 0.0;
                             <?php foreach ($newsItems as $item): ?>
                                 <div class="border-bottom pb-2 mb-2">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <h6 class="mb-0"><?= esc($item['title'] ?? 'Headline'); ?></h6>
+                                        <?php
+                                            $rawTitle = $item['title'] ?? null;
+                                            $titlePreview = $rawTitle ? miw_news_preview($rawTitle, 140) : '';
+                                            $titleToDisplay = $titlePreview !== '' ? $titlePreview : 'Headline';
+                                        ?>
+                                        <h6 class="mb-0"><?= esc($titleToDisplay); ?></h6>
                                         <?php if (!empty($item['symbol'])): ?>
                                             <span class="badge bg-outline-primary"><?= esc($item['symbol']); ?></span>
                                         <?php endif; ?>
