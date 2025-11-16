@@ -104,6 +104,8 @@ $subViewData = [
     'userWatchlist' => $userInvestments['userWatchlist'] ?? [],
     'economicData' => $investDashboard['economicData'] ?? [],
 ];
+
+$investmentPartialData = is_array($subViewData ?? null) ? $subViewData : [];
 ?>
 
 <style <?= $nonce['style'] ?? '' ?>>
@@ -134,10 +136,10 @@ $subViewData = [
 <div class="nk-block">
     <div class="g-gs row">
         <div class="col-md-12 col-xl-3">
-            <?php echo view('UserModule\Views\Investments\index\Action_Center', $subViewData); ?>
+            <?php echo view('UserModule\Views\Investments\index\Action_Center', $investmentPartialData); ?>
         </div>
         <div class="col-md-12 col-xl-9">
-            <?php echo view('UserModule\Views\Investments\index\Month_to_Month', $subViewData); ?>
+            <?php echo view('UserModule\Views\Investments\index\Month_to_Month', $investmentPartialData); ?>
         </div>
         <div class="col-md-12 col-xl-3">
             <div class="nk-block nk-block-lg">
@@ -145,7 +147,7 @@ $subViewData = [
                     <!-- Active Trades Section -->
                     <div class="col-lg-12">
                         <div class="economic-data">
-                            <?php echo view('UserModule\Views\Investments\index\Investment_Tools', $subViewData); ?>
+                            <?php echo view('UserModule\Views\Investments\index\Investment_Tools', $investmentPartialData); ?>
                         </div>
                     </div>
                 </div>
@@ -153,7 +155,7 @@ $subViewData = [
         </div>
         <div class="col-md-12 col-xl-9">
             <div class="investment-insights">
-                <?php echo view('UserModule\Views\Investments\index\Insights', $subViewData); ?>
+                <?php echo view('UserModule\Views\Investments\index\Insights', $investmentPartialData); ?>
             </div>
         </div>
         <?php if ($siteSettings->stage > 5) : ?>
@@ -163,7 +165,7 @@ $subViewData = [
                     <!-- Active Trades Section -->
                     <div class="col-lg-12">
                         <div class="investment-insights">
-                            <?php echo view('UserModule\Views\Investments\index\MyMI_News', $subViewData); ?>
+                            <?php echo view('UserModule\Views\Investments\index\MyMI_News', $investmentPartialData); ?>
                         </div>
                     </div>
                 </div>
@@ -175,12 +177,12 @@ $subViewData = [
                     <!-- Active Trades Section -->
                     <div class="col-lg-6">
                         <div class="investment-insights">
-                            <?php echo view('UserModule\Views\Investments\index\My_Performance', $subViewData); ?>
+                            <?php echo view('UserModule\Views\Investments\index\My_Performance', $investmentPartialData); ?>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="investment-insights">
-                            <?php echo view('UserModule\Views\Investments\index\My_Alerts', $subViewData); ?>
+                            <?php echo view('UserModule\Views\Investments\index\My_Alerts', $investmentPartialData); ?>
                         </div>
                     </div>
                 </div>
@@ -192,7 +194,7 @@ $subViewData = [
                     <!-- Active Trades Section -->
                     <div class="col-lg-12">
                         <div class="investment-insights">
-                            <?php echo view('UserModule\Views\Investments\index\Economic_Data', $subViewData); ?>
+                            <?php echo view('UserModule\Views\Investments\index\Economic_Data', $investmentPartialData); ?>
                         </div>
                     </div>
                 </div>
@@ -204,12 +206,12 @@ $subViewData = [
                     <!-- Active Trades Section -->
                     <div class="col-lg-6">
                         <div class="investment-insights">
-                            <?php echo view('UserModule\Views\Investments\index\Stock_Overview', $subViewData); ?>
+                            <?php echo view('UserModule\Views\Investments\index\Stock_Overview', $investmentPartialData); ?>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="investment-insights">
-                            <?php echo view('UserModule\Views\Investments\index\Crypto_Overview', $subViewData); ?>
+                            <?php echo view('UserModule\Views\Investments\index\Crypto_Overview', $investmentPartialData); ?>
                         </div>
                     </div>
                 </div>
