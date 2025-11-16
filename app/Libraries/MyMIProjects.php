@@ -162,11 +162,23 @@ class MyMIProjects
 
     public function totalCommitted(int $projectId): float
     {
-        $builder = $this->commitments->selectSum('amount', 'total')
-            ->where('project_id', $projectId)
-            ->whereIn('status', ['confirmed', 'converted']);
-        $result = $builder->first();
-        return (float) ($result['total'] ?? 0.0);
+        try {
+            $builder = $this->commitments->selectSum('amount', 'total')
+                ->where('project_id', $projectId)
+                ->whereIn('status', ['confirmed', 'converted']);
+
+            $result = $builder->first();
+
+            return (float) ($result['total'] ?? 0.0);
+        } catch (Throwable $e) {
+            log_message(
+                'error',
+                'MyMIProjects::totalCommitted failed for project {id}: {error}',
+                ['id' => $projectId, 'error' => $e->getMessage()]
+            );
+
+            return 0.0;
+        }
     }
 
     public function hasMetThreshold(int $projectId): bool
