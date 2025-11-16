@@ -4,6 +4,12 @@ HTML ELEMENTS
 [class^="glyphicon"], [class*=" glyphicon"] {
     background-image: none !important;
 }
+input[type="checkbox"] {
+    width: 15%;
+}
+.intro-copyright {
+    color: #ffffff;
+}
 body {
     background-color: white !important;
     border: none;
@@ -137,13 +143,13 @@ select {width:100% !important;}
     max-height: 225px !important;
     width: 100% !important;
 }
-.dropdown-menu.show {
+/* .dropdown-menu.show {
     transform: scaleY(1) !important;
     width: 100% !important;
     max-height: inherit !important; 
     margin-top: 2.5rem !important; 
     overflow-y: auto;
-}
+} */
 .bootstrap-select .dropdown-menu.show {
     display: block !important;
     visibility: visible !important;

@@ -43,27 +43,22 @@ form.d-flex.align-items-center button.btn {
 
         <div class="navbar-collapse" id="dashboardNavbarNav">
             <div class="navbar-nav me-lg-4 align-items-lg-center">
-                <span class="navbar-text text-white-50 d-none d-lg-inline">
+                <span class="navbar-text text-white d-none d-lg-inline">
                     Welcome <?= esc($cuDisplayName ?? 'User'); ?>
                 </span>
             </div>
 
-            <ul class="navbar-nav ms-lg-auto align-items-lg-center gap-lg-3 w-100 w-lg-auto">
-                <li class="nav-item my-2 my-lg-0">
-                    <a href="<?= site_url('/Support'); ?>" class="btn btn-md btn-primary text-white">
-                        Need Support?
-                    </a>
-                </li>
-                <li class="nav-item flex-grow-1 flex-lg-grow-0 w-100 w-lg-auto">
+            <ul class="navbar-nav me-lg-4 align-items-lg-center gap-lg-3 w-100 w-lg-auto">
+                <li class="nav-item flex-grow-1 flex-lg-grow-0 w-100 w-lg-auto pt-1">
                     <form
-                        class="d-flex position-relative align-items-center"
+                        class="d-flex position-relative align-items-center mb-0"
                         method="get"
                         action="<?= site_url('Search'); ?>"
                         data-global-search-form
                     >
                         <em class="icon ni ni-search me-2 d-none d-md-block"></em>
                         <input
-                            class="form-control flex-grow-1 border form-focus-none"
+                            class="form-control flex-grow-1 border form-focus-none mb-0"
                             type="search"
                             name="query"
                             placeholder="Search tickers…"
@@ -71,13 +66,18 @@ form.d-flex.align-items-center button.btn {
                             autocomplete="off"
                             data-global-search-input
                         >
-                        <button type="submit" class="btn btn-primary btn-sm ms-2">Search</button>
+                        <button type="submit" class="btn btn-primary btn-sm ms-2 mt-0">Search</button>
                         <div
                             class="list-group position-absolute w-100 mt-1 shadow-sm d-none"
                             data-global-search-suggest
                             style="z-index: 1050; max-height: 60vh; overflow:auto"
                         ></div>
                     </form>
+                </li>
+                <li class="nav-item my-2 my-lg-0">
+                    <a href="<?= site_url('/Support'); ?>" class="btn btn-md btn-primary text-white">
+                        Support?
+                    </a>
                 </li>
                 <li class="nav-item dropdown user-dropdown">
                     <a class="nav-link dropdown-toggle d-flex align-items-center"
@@ -133,7 +133,7 @@ form.d-flex.align-items-center button.btn {
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item dropdown notification-dropdown">
+                <li class="nav-item dropdown notification-dropdown" style="top: -5px; left: -10px;">
                     <a class="nav-link dropdown-toggle nk-quick-nav-icon"
                        href="#"
                        id="dashboardNotificationsDropdown"

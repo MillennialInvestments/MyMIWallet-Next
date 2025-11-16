@@ -78,11 +78,13 @@ class DashboardController extends UserController
         $this->data['debug'] = (string)$this->siteSettings->debug;
         $this->data['uri'] = $this->uri;
         $this->data['request'] = $this->request;
-        $this->data['cuID'] = $this->cuID;
+        $this->data['cuID'] = $this->cuID;     
 
-        $userBudget = $this->getMyMIBudget()->getUserBudget($cuID);
-        log_message('info', 'DashboardController L72 - $checkingSummary: ' . $userBudget['checkingSummary']);
-        $this->data['checkingSummary'] = $userBudget['checkingSummary'];
+        $userBudget = $this->getMyMIBudget()->getUserBudget($cuID) ?? [];
+        $checkingSummary = (float) ($userBudget['checkingSummary'] ?? 0.0);
+        log_message('info', 'DashboardController L72 - $checkingSummary: {value}', ['value' => $checkingSummary]);
+        $this->data['checkingSummary'] = $checkingSummary;
+        $this->data['checkingSummaryFMT'] = $userBudget['checkingSummaryFMT'] ?? '$0.00';
         // Other Budget-related data
         $creditAccounts = $this->getAccountService()->getUserCreditAccounts($cuID);
         $debtAccounts = $this->getAccountService()->getUserDebtAccounts($cuID);
@@ -253,14 +255,17 @@ class DashboardController extends UserController
                 $pageURID = $this->uri->getSegment(4);
                 if ($pageURID === 'View') {
                     $pageURIF = $this->uri->getSegment(6); 
-                    if ($pageURIF === 'History') {                        
+                    if ($pageURIF === 'History') {                     
                         // Hydrate necessary data for the modal here
-                        $this->data['userBudget'] = $this->getBudgetService()->getUserBudget($this->cuID);
-                        $this->data['userBudgetRecords'] = $this->getBudgetService()->getUserBudgetRecords($this->cuID);
-                        $this->data['repaymentSchedules'] = $this->getBudgetService()->calculateRepaymentSchedules(
+                        $budgetService = $this->getBudgetService();
+                        $modalBudget   = $budgetService->getUserBudget($this->cuID) ?? [];
+                        $this->data['userBudget'] = $modalBudget;
+                        $this->data['userBudgetRecords'] = $budgetService->getUserBudgetRecords($this->cuID);
+                        $this->data['repaymentSchedules'] = $budgetService->calculateRepaymentSchedules(
                             $this->getAccountService()->getUserCreditAccounts($this->cuID)
                         );
-                        $this->data['checkingSummary'] = $this->getBudgetService()->getUserBudget($this->cuID)['checkingSummary'];
+                        $this->data['checkingSummary'] = (float) ($modalBudget['checkingSummary'] ?? 0.0);
+                        $this->data['checkingSummaryFMT'] = $modalBudget['checkingSummaryFMT'] ?? '$0.00';
                         $this->data['creditSummary'] = $this->getAccountService()->getCreditAvailable($this->cuID);
                     }
                 }
