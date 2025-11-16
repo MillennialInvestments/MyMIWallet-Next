@@ -425,8 +425,9 @@ abstract class BaseController extends Controller
         return $this->data;
     }
 
-    protected function renderTheme(string $view, ResponseInterface|array $data = []): ResponseInterface|string
+    protected function renderTheme(string $view, mixed $data = []): ResponseInterface|string
     {
+        $data = $this->normalizeRenderData($view, $data);
         if ($data instanceof ResponseInterface) {
             return $data; // just hand it back
         }
@@ -464,6 +465,35 @@ abstract class BaseController extends Controller
         // 3) Render the layout that expects `$content`
         $layout = "themes/{$theme}/layouts/index";
         return view($layout, $payload);
+    }
+
+    /**
+     * Ensure renderTheme always receives an array payload (or a Response).
+     *
+     * Historically some legacy controllers mistakenly passed strings or other
+     * scalars as the data argument which triggered a view() TypeError. Rather
+     * than letting those fatals bubble up we coerce the payload into a safe
+     * array and log the incident so it can be cleaned up at the caller.
+     */
+    protected function normalizeRenderData(string $view, mixed $data): array|ResponseInterface
+    {
+        if ($data instanceof ResponseInterface) {
+            return $data;
+        }
+
+        if ($data === null) {
+            return [];
+        }
+
+        if (! is_array($data)) {
+            log_message('error', 'renderTheme({view}) expected array data, received {type}', [
+                'view' => $view,
+                'type' => get_debug_type($data),
+            ]);
+            return [];
+        }
+
+        return $data;
     }
 
 
