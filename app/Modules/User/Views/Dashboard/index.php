@@ -378,8 +378,16 @@ $availableToInvest = $budgetSummary['availableToInvest'] ?? 0.0;
                                             <span class="badge bg-outline-primary"><?= esc($item['symbol']); ?></span>
                                         <?php endif; ?>
                                     </div>
-                                    <?php if (!empty($item['summary'])): ?>
-                                    <p class="text-soft mt-1 mb-1 small"><?= esc($item['summary']); ?></p>
+                                    <?php
+                                        $rawText = $item['summary']
+                                            ?? $item['content']
+                                            ?? $item['body']
+                                            ?? null;
+
+                                        $preview = $rawText ? miw_news_preview($rawText, 240) : null;
+                                    ?>
+                                    <?php if (!empty($preview)): ?>
+                                    <p class="text-soft mt-1 mb-1 small"><?= esc($preview); ?></p>
                                     <?php endif; ?>
                                     <div class="d-flex justify-content-between align-items-center small text-soft">
                                         <span><?= esc($item['source'] ?? 'Market News'); ?></span>
