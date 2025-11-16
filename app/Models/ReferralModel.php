@@ -11,7 +11,7 @@ class ReferralModel extends Model
     protected $primaryKey = 'id';
     protected $useAutoIncrement = true;
     protected $returnType = 'array';
-    protected $useSoftDeletes = false;
+    protected $useSoftDeletes = true;
     protected $allowedFields = ['user_id', 'referrer_code', 'active', 'signup_date', 'user_type', 'first_name', 'last_name', 'email', 'phone', 'address', 'city', 'state', 'country', 'zipcode', 'paypal', 'other_payment', 'user_ip_address', 'total_spend', 'days_active'];
     protected $beforeInsert = [];
     protected $beforeUpdate = [];

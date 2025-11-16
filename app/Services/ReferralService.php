@@ -21,11 +21,12 @@ class ReferralService
 
     public function __construct()
     {
+        helper('url');
         $this->auth = service('authentication');
         $this->session = Services::session();
         $this->referralModel = new ReferralModel();
         $this->transactionModel = new TransactionModel();
-        // $this->userModel = new UserModel();
+        $this->userModel = new UserModel();
         $this->siteSettings = config('SiteSettings');
         $this->cuID = $this->session->get('user_id') ?? $this->auth->id() ?? 0;
     }
@@ -35,35 +36,84 @@ class ReferralService
      */
     public function getUserReferralData($cuID)
     {
-        // Fetch user referrer code first
-        $cuReferrerCode = $this->referralModel->getReferrerCode($cuID);
-        
-        log_message('debug', 'ReferralService L39 - $cuReferrerCode: ' . $cuReferrerCode);
-        if (!empty($referrerCode)) {
-            $userService = new UserService($this->siteSettings, $this->cuID, Services::request()); 
+        $defaults = [
+            'cuReferrerCode'          => null,
+            'cuWalletID'              => null,
+            'getTotalReferrals'       => [],
+            'totalReferrals'          => 0,
+            'getTotalActiveReferrals' => [],
+            'totalActiveReferrals'    => 0,
+            'totalPaidActiveReferrals'=> 0,
+            'active_referrals'        => 0,
+            'totalReferralEarnings'   => 0.00,
+            'total_referrals'         => [],
+            'referral_link'           => null,
+        ];
+
+        if (empty($cuID)) {
+            return $defaults;
         }
 
-        
-        // Fetch referral data
-        $getTotalReferrals = $this->referralModel->getTotalReferrals($cuID, $cuReferrerCode);
-        $totalReferrals = count($getTotalReferrals);
+        $user = $this->userModel->find($cuID);
+        if ($user) {
+            $defaults['cuWalletID'] = $user['wallet_id'] ?? $user['cuWalletID'] ?? null;
+        }
 
-        $getTotalActiveReferrals = $this->referralModel->getTotalActiveReferrals($cuID, $cuReferrerCode);
-        $totalActiveReferrals = count($getTotalActiveReferrals);
+        $cuReferrerCode = $this->referralModel->getReferrerCode($cuID);
+        $defaults['cuReferrerCode'] = $cuReferrerCode;
+        $defaults['referral_link']  = $this->buildReferralLink($cuReferrerCode);
 
-        // Fetch the paid active referrals and total referral earnings from ReferralService
-        $totalPaidActiveReferrals = $totalActiveReferrals;
-        $commissionEarnings = $this->calculateCommissions($cuID);
-        $totalReferralEarnings = $commissionEarnings;
+        if (empty($cuReferrerCode)) {
+            return $defaults;
+        }
 
-        return [
-            'getTotalReferrals' => $getTotalReferrals,
-            'totalReferrals' => $totalReferrals,
-            'getTotalActiveReferrals' => $getTotalActiveReferrals,
-            'totalActiveReferrals' => $totalActiveReferrals,
-            'totalPaidActiveReferrals' => $totalPaidActiveReferrals,
-            'totalReferralEarnings' => $totalReferralEarnings,
-        ];
+        $getTotalReferrals = $this->referralModel->getTotalReferrals($cuID, $cuReferrerCode) ?? [];
+        $getTotalActiveReferrals = $this->referralModel->getTotalActiveReferrals($cuID, $cuReferrerCode) ?? [];
+
+        $totalReferrals = is_array($getTotalReferrals) ? count($getTotalReferrals) : 0;
+        $totalActiveReferrals = $this->sumActiveReferrals($getTotalActiveReferrals);
+        $commissionEarnings = (float) $this->calculateCommissions($cuID);
+
+        $defaults['getTotalReferrals']        = $getTotalReferrals;
+        $defaults['totalReferrals']           = $totalReferrals;
+        $defaults['getTotalActiveReferrals']  = $getTotalActiveReferrals;
+        $defaults['totalActiveReferrals']     = $totalActiveReferrals;
+        $defaults['totalPaidActiveReferrals'] = $totalActiveReferrals;
+        $defaults['active_referrals']         = $totalActiveReferrals;
+        $defaults['totalReferralEarnings']    = $commissionEarnings;
+
+        $monthlyStats = $this->referralModel->getMonthlyReferralStats($cuReferrerCode) ?? [];
+        $defaults['total_referrals'] = array_map(static function ($row) {
+            return [
+                'year'   => (int) ($row['year'] ?? 0),
+                'month'  => (int) ($row['month'] ?? 0),
+                'total'  => (int) ($row['total'] ?? 0),
+                'active' => (int) ($row['active'] ?? 0),
+                'paying' => (int) ($row['paying'] ?? 0),
+            ];
+        }, $monthlyStats);
+
+        return $defaults;
+    }
+
+    protected function buildReferralLink(?string $referrerCode): ?string
+    {
+        if (empty($referrerCode)) {
+            return null;
+        }
+
+        return site_url('register?ref=' . $referrerCode);
+    }
+
+    private function sumActiveReferrals(array $rows): int
+    {
+        if (empty($rows)) {
+            return 0;
+        }
+
+        return array_sum(array_map(static function ($row) {
+            return (int) ($row['count'] ?? 0);
+        }, $rows));
     }
     
 
@@ -73,9 +123,7 @@ class ReferralService
     public function getUserReferralLink($cuID)
     {
         $user = $this->referralModel->getAffiliateDetails($cuID);
-        $baseReferralURL = base_url('/referral');
-        
-        return $baseReferralURL . '/' . $user['referrer_code'];
+        return $this->buildReferralLink($user['referrer_code'] ?? null);
     }
 
     /**
@@ -85,7 +133,11 @@ class ReferralService
     {
         // Fetch user affiliate info
         $affiliateInfo = $this->referralModel->getAffiliateDetails($cuID);
-        $referrerCode = $affiliateInfo['referrer_code'];
+        $referrerCode = $affiliateInfo['referrer_code'] ?? $this->referralModel->getReferrerCode($cuID);
+
+        if (empty($referrerCode)) {
+            return [];
+        }
 
         // Referral links for each tier (basic, premium, gold)
         $basicReferralLink = base_url("/referral/$referrerCode/basic");
@@ -105,21 +157,28 @@ class ReferralService
     public function calculateCommissions($cuID)
     {
         $referrerCode = $this->referralModel->getReferrerCode($cuID);
+        if (empty($referrerCode)) {
+            return 0.0;
+        }
         $commissions = $this->referralModel->calculateCommission($cuID, $referrerCode);
-    
+
         $totalSpending = $commissions['total_spending'] ?? 0;
-    
+
         // Implement flexible payout percentages based on performance or conditions
         $commissionPercentage = $this->getCommissionPercentage($cuID, $referrerCode); // Assume you have a method for this
-    
-        return $totalSpending * ($commissionPercentage / 100);
+
+        return (float) $totalSpending * ($commissionPercentage / 100);
     }
     
     // Helper function to determine commission percentage
     public function getCommissionPercentage($cuID, $referrerCode)
     {
-        $performanceData = $this->getUserPerformance($cuID, $referrerCode);
-        $userPerformance = $performanceData['total_spending'];  // Assuming performance is based on total spending
+        if (empty($referrerCode)) {
+            return 10;
+        }
+
+        $performanceData = $this->getUserPerformance($cuID, $referrerCode) ?? [];
+        $userPerformance = (float) ($performanceData['total_spending'] ?? 0);  // Assuming performance is based on total spending
     
         // Apply tiered commission based on performance
         if ($userPerformance > 20000) {
@@ -145,8 +204,8 @@ class ReferralService
     {
         // Custom logic to determine user performance (e.g., referral count, revenue)
         return $this->referralModel->getUserReferralPerformance($cuID, $referrerCode);
-    }    
-
+    }
+    
     /**
      * Track referral activity and return summary.
      */

@@ -51,8 +51,8 @@ class MyMIReferrals
 
         // Fetch the paid active referrals and total referral earnings from ReferralService
         $commissionData = $this->referralService->getUserReferralData($cuID);
-        $totalPaidActiveReferrals = $commissionData['active_referrals'];
-        $totalReferralEarnings = $commissionData['total_earnings'];
+        $totalPaidActiveReferrals = $commissionData['active_referrals'] ?? 0;
+        $totalReferralEarnings = $commissionData['totalReferralEarnings'] ?? 0;
 
         $userReferrals = [
             'getTotalReferrals' => $getTotalReferrals,
