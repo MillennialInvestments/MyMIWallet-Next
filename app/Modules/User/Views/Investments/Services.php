@@ -343,6 +343,8 @@ $allViewData                        = array(
     'economicData'                  => $economicData, 
 );
 // print_r($allViewData);
+
+$servicesPartialData = is_array($allViewData ?? null) ? $allViewData : [];
 ?>
 <style <?= $nonce['style'] ?? '' ?>>
     @media only screen and (max-width: 768px) {
@@ -371,11 +373,11 @@ $allViewData                        = array(
 <?php 
 // if ($agent->isBrowser()) {
     // !! Activate this to enable the 
-    // if ($investment_assessment === 'No') {
-    //     echo view('UserModule/Investments/Assessment', $allViewData); 
+    //     echo view('UserModule/Investments/Assessment', $servicesPartialData); 
     // } elseif ($investment_assessment === 'Yes') {
-    //     echo view('UserModule/Investments/Dashboard', $allViewData);
+    //     echo view('UserModule/Investments/Dashboard', $servicesPartialData);
     // }
+    //echo view('UserModule/Investments/Dashboard', $servicesPartialData);
     //echo view('UserModule/Investments/Dashboard', $allViewData);
 // } else {
 
@@ -386,20 +388,20 @@ $allViewData                        = array(
         <!-- Portfolio Manager Section -->
         <div class="col-md-12 col-xl-3">
             <!-- Portfolio Manager Content -->
-            <?php echo view('UserModule\Views\Investments\index\Action_Center', $allViewData); ?>
+            <?php echo view('UserModule\Views\Investments\index\Action_Center', $servicesPartialData); ?>
         </div>
 
         <!-- Investment Overview Section -->
         <div class="col-md-12 col-xl-9">
             <!-- Month-to-Month Overview -->
-            <?php echo view('UserModule\Views\Investments\index\Month_to_Month', $allViewData); ?>
+            <?php echo view('UserModule\Views\Investments\index\Month_to_Month', $servicesPartialData); ?>
         </div>
 
         <!-- Investment Overview Section -->
         <div class="col-md-12 col-xl-3">
             <!-- Economic Data Section -->
             <div class="economic-data">
-                <?php echo view('UserModule\Views\Investments\index\Economic_Data', $allViewData); ?>
+                <?php echo view('UserModule\Views\Investments\index\Economic_Data', $servicesPartialData); ?>
             </div>
 
             <!-- Additional sections as needed -->
@@ -408,7 +410,7 @@ $allViewData                        = array(
         <div class="col-md-12 col-xl-9">
             <!-- Insights Section -->
             <div class="investment-insights">
-                <?php echo view('UserModule\Views\Investments\index\Insights', $allViewData); ?>
+                <?php echo view('UserModule\Views\Investments\index\Insights', $servicesPartialData); ?>
             </div>
         </div>
     </div>

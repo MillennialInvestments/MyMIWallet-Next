@@ -7,6 +7,7 @@ class ProjectCommitmentsModel extends Model
     protected $table = 'bf_project_commitments';
     protected $primaryKey = 'id';
     protected $returnType = 'array';
+    protected $useSoftDeletes = true;
     protected $allowedFields = [
         'project_id',
         'user_id',
@@ -14,10 +15,12 @@ class ProjectCommitmentsModel extends Model
         'status',
         'created_at',
         'updated_at',
+        'deleted_at',
     ];
     protected $useTimestamps = true;
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';
+    protected $deletedField = 'deleted_at';
 
     public function byProject(int $projectId): self
     {

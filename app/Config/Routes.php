@@ -223,6 +223,11 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         
     });
 
+    $routes->group('Referrals', ['filter' => 'login'], static function($routes) {
+        $routes->post('bulk-update-status', 'ReferralController::bulkUpdateStatus');
+        $routes->post('bulk-delete', 'ReferralController::bulkDelete');
+    });
+
     // ------------------------
     // ✅ AlertsController
     // ------------------------

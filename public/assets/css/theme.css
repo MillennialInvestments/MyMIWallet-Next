@@ -6,3 +6,13 @@
  * Version	 :	1.0.0
  * Updated	 :	07.23.2020
 **/
+**/
+
+/* Sidebar submenu visibility */
+.nk-menu-item.has-sub > .nk-menu-sub {
+    display: none;
+}
+
+.nk-menu-item.has-sub.active > .nk-menu-sub {
+    display: block;
+}

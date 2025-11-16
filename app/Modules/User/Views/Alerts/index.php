@@ -88,7 +88,7 @@ $alertNews = $alertNews ?? [];
     </div>
 
     <div class="row g-gs mt-3">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             <div class="card card-bordered h-100">
                 <div class="card-inner">
                     <div class="card-title-group align-items-start">
@@ -107,6 +107,7 @@ $alertNews = $alertNews ?? [];
                         <table class="table table-hover nk-table-init" id="openAlertsTable">
                             <thead>
                                 <tr>
+                                    <th class="d-none">ID</th>
                                     <th>Ticker</th>
                                     <th>Company</th>
                                     <th>Exchange</th>
@@ -119,9 +120,11 @@ $alertNews = $alertNews ?? [];
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php //echo print_r($alertsTableData, true); ?>
                                 <?php if (! empty($alertsTableData)): ?>
                                     <?php foreach ($alertsTableData as $alert): ?>
                                         <tr>
+                                            <td class="d-none"><?= esc($alert['id'] ?? '-'); ?></td>
                                             <td><strong><?= esc($alert['ticker'] ?? '-'); ?></strong></td>
                                             <td><?= esc($alert['company'] ?? '-'); ?></td>
                                             <td><?= esc($alert['exchange'] ?? '-'); ?></td>
@@ -160,8 +163,9 @@ $alertNews = $alertNews ?? [];
                 </div>
             </div>
         </div>
-
-        <div class="col-lg-4">
+    </div>
+    <div class="row g-gs mt-3">
+        <div class="col-lg-12 h-20">
             <div class="card card-bordered h-100">
                 <div class="card-inner">
                     <h5 class="title mb-1">Alerted Tickers – Trend Snapshot</h5>

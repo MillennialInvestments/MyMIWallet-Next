@@ -4,6 +4,70 @@ HTML ELEMENTS
 [class^="glyphicon"], [class*=" glyphicon"] {
     background-image: none !important;
 }
+/* MyMI Wallet custom overrides */
+
+/* Base button (Bootstrap/NK UI compatible) */
+.btn {
+    --bs-btn-padding-x: 1.125rem;
+    --bs-btn-padding-y: 0.4375rem;
+    --bs-btn-font-family: "Nunito", sans-serif;
+    --bs-btn-font-size: 0.8125rem;
+    --bs-btn-font-weight: 700;
+    --bs-btn-line-height: 1.25rem;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.02em;
+
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+
+    color: #526484;
+    background-color: transparent;
+
+    transition:
+        color .15s ease-in-out,
+        background-color .15s ease-in-out,
+        border-color .15s ease-in-out,
+        box-shadow .15s ease-in-out;
+}
+
+/* Outline primary brand button */
+.btn-outline-primary {
+    color: #0971fe;
+    border-color: #0971fe;
+}
+
+/* Hover state for outline primary */
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+    color: #ffffff;
+    background-color: #0971fe;
+    border-color: #0971fe;
+    box-shadow: 0 5px 15px rgba(9, 113, 254, 0.3);
+}
+
+/* Optional: generic hover, but DO NOT override brand variants */
+.btn:hover,
+.btn:focus {
+    text-decoration: none;
+}
+
+/* Link styling */
+a {
+    color: #3a8dfe;
+    text-decoration: none;
+    transition: color .4s, background-color .4s, border .4s, box-shadow .4s;
+}
+
+a:hover,
+a:focus {
+    color: #0770fe;
+    text-decoration: underline;
+}
 input[type="checkbox"] {
     width: 15%;
 }

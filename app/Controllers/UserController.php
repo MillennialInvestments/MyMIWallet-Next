@@ -44,8 +44,9 @@ class UserController extends BaseController
         return null;
     }
 
-    protected function renderTheme(string $view, ResponseInterface|array $data = []): ResponseInterface|string
+    protected function renderTheme(string $view, mixed $data = []): ResponseInterface|string
     {
+        $data = $this->normalizeRenderData($view, $data);
         // If caller passed a Response, just return it.
         if ($data instanceof ResponseInterface) {
             return $data;

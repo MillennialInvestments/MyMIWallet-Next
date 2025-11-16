@@ -51,7 +51,7 @@ form.d-flex.align-items-center button.btn {
             <ul class="navbar-nav me-lg-4 align-items-lg-center gap-lg-3 w-100 w-lg-auto">
                 <li class="nav-item flex-grow-1 flex-lg-grow-0 w-100 w-lg-auto pt-1">
                     <form
-                        class="d-flex position-relative align-items-center mb-0"
+                        class="d-flex position-relative align-items-center text-white mb-0"
                         method="get"
                         action="<?= site_url('Search'); ?>"
                         data-global-search-form
