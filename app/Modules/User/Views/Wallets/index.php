@@ -12,6 +12,9 @@ $wasEmpty  = ($uri->getSegment(2) === null || $uri->getSegment(2) === ''); // ad
 
 $map = [
   ''            => 'financial',
+  'All'         => 'financial',
+  'Bank'        => 'financial',
+  'Banking'     => 'financial',
   'Checking'    => 'financial',
   'Credit'      => 'credit',
   'Crypto'      => 'crypto',
