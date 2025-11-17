@@ -7,6 +7,7 @@ use App\Models\{AccountsModel, BudgetModel, InvestmentModel, MarketingModel, Mgm
 use App\Services\{BudgetService, DashboardService, GoalTrackingService, InvestmentService, SolanaService, UserService, WalletService};
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\Exceptions\PageNotFoundException;
 use Config\Services;
 use Maatwebsite\Excel\Facades\Excel;
 use Myth\Auth\Authorization\GroupModel;
@@ -256,38 +257,68 @@ class InvestmentsController extends UserController
 
     public function add()
     {
-        $investmentType = $this->uri->getSegment(3);
-        $subViewFile = '';
-        $subViewDirectory = 'UserModule\Views\\';
+        $investmentType   = $this->uri->getSegment(3) ?? 'Stock';
+        $subViewDirectory = 'UserModule\\Views\\';
+        $subViewFile      = 'Investments\\Add\\stock_fields';
+        $subViewForm      = 'Investments\\Add\\Stock';
+        $subViewTitle     = 'Add Investment';
 
         switch ($investmentType) {
             case 'Bond':
                 $subViewTitle = 'Add Bond Investment';
-                $subViewFile = 'Investments\Add\bond_fields';
-                $subViewForm = 'Investments\Add\Bond';
+                $subViewForm  = 'Investments\\Add\\Bond';
+                $subViewFile  = 'Investments\\Add\\bond_fields';
                 break;
             case 'Crypto':
                 $subViewTitle = 'Add Crypto Investment';
-                $subViewFile = 'Investments\Add\crypto_fields';
-                $subViewForm = 'Investments\Add\Crypto';
+                $subViewForm  = 'Investments\\Add\\Crypto';
+                $subViewFile  = 'Investments\\Add\\crypto_fields';
                 break;
             case 'Stock':
                 $subViewTitle = 'Add Stock Investment';
-                $subViewFile = 'Investments\Add\stock_fields';
-                $subViewForm = 'Investments\Add\Stock';
+                $subViewForm  = 'Investments\\Add\\Stock';
+                $subViewFile  = 'Investments\\Add\\stock_fields';
                 break;
-            // Add more cases as needed
+            default:
+                log_message('warning', 'InvestmentsController::add received unknown type: {type}', ['type' => $investmentType]);
+                break;
         }
 
-        $this->data['pageTitle'] = $subViewTitle . ' | MyMI Wallet | The Future of Finance';
-        $this->data['subViewFile'] = $subViewDirectory . $subViewFile;
+        $this->data['pageTitle']   = $subViewTitle . ' | MyMI Wallet | The Future of Finance';
+        $this->data['subViewFile'] = $this->resolveSubViewPath($subViewDirectory, $subViewFile);
         $this->data['subViewTitle'] = $subViewTitle;
-        $this->data['subViewForm'] = $subViewForm;
+        $this->data['subViewForm']  = $subViewForm;
         $this->commonData();
 
         return $this->renderTheme('App\Modules\User\Views\Investments\Add', $this->data);
     }
-    
+
+    private function resolveSubViewPath(string $base, string $relative, string $fallback = 'Investments\\Add\\stock_fields'): string
+    {
+        $candidate = $this->joinViewPath($base, $relative);
+        if ($this->viewExists($candidate)) {
+            return $candidate;
+        }
+
+        $fallbackPath = $this->joinViewPath($base, $fallback);
+        if ($this->viewExists($fallbackPath)) {
+            log_message('warning', 'InvestmentsController missing view {view}; using fallback {fallback}', [
+                'view'     => $candidate,
+                'fallback' => $fallbackPath,
+            ]);
+            return $fallbackPath;
+        }
+
+        throw PageNotFoundException::forPageNotFound($candidate);
+    }
+
+    private function joinViewPath(string $base, string $relative): string
+    {
+        $base = rtrim($base, '\\');
+        $relative = ltrim($relative, '\\');
+        return $base . '\\' . $relative;
+    }
+
     public function addWatchlist()
     {
         $request = service('request');

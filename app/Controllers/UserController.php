@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Exceptions\PageNotFoundException;
 
 class UserController extends BaseController
 {
@@ -112,96 +111,5 @@ class UserController extends BaseController
         return $this->tryView($layoutBase . '/index', $data);
     }
 
-    protected function tryView(string $view, array $data = [], array $alternatives = [])
-    {
-        $resolved = $this->resolveView($view, $alternatives);
-        if (!$resolved) {
-            throw PageNotFoundException::forPageNotFound($view);
-        }
-        return view($resolved, $data);
-    }
-
-    protected function resolveView(string $candidate, array $alternatives = []): ?string
-    {
-        $paths = array_merge($this->expandViewCandidates($candidate), $alternatives);
-
-        foreach ($paths as $p) {
-            foreach ($this->expandViewCandidates($p) as $option) {
-                if ($this->viewExists($option)) {
-                    return $option;
-                }
-            }
-        }
-        return null;
-    }
-
-    /**
-     * ✅ Works on all CI4 versions
-     */
-    protected function viewExists(string $path): bool
-    {
-        // Try the FileLocator (preferred)
-        $locator = service('locator');
-        if ($locator->locateFile($path, 'Views')) {
-            return true;
-        }
-        // Fallback to manual check
-        $normalized = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $path);
-
-        $candidates = [
-            APPPATH . 'Views' . DIRECTORY_SEPARATOR . $normalized . '.php',
-        ];
-
-        $segments = explode(DIRECTORY_SEPARATOR, $normalized);
-        if (count($segments) > 1) {
-            $module     = array_shift($segments);
-            $moduleDir  = str_ends_with($module, 'Module') ? substr($module, 0, -6) : $module;
-            $moduleBase = APPPATH . 'Modules' . DIRECTORY_SEPARATOR . $moduleDir . DIRECTORY_SEPARATOR;
-            if (!empty($segments)) {
-                if ($segments[0] === 'Views') {
-                    $moduleCandidates = $moduleBase . implode(DIRECTORY_SEPARATOR, $segments) . '.php';
-                } else {
-                    $moduleCandidates = $moduleBase . 'Views' . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $segments) . '.php';
-                }
-                $candidates[] = $moduleCandidates;
-            }
-        }
-
-        foreach ($candidates as $file) {
-            if (is_file($file)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Provide alternate representations of a view path so legacy
-     * "Module/View" references can resolve to namespaced module views.
-     */
-    protected function expandViewCandidates(string $view): array
-    {
-        $candidates = [$view];
-
-        if (str_contains($view, '\\')) {
-            $candidates[] = str_replace('\\', '/', $view);
-        } else {
-            $normalized = str_replace('\\', '/', $view);
-            $segments   = explode('/', $normalized);
-
-            if (count($segments) > 1) {
-                $module    = array_shift($segments);
-                $namespace = str_ends_with($module, 'Module') ? $module : $module . 'Module';
-                $remainder = implode('\\', $segments);
-                $namespaced = $namespace . '\\Views\\' . $remainder;
-
-                if ($namespaced !== $view) {
-                    array_unshift($candidates, $namespaced);
-                }
-            }
-        }
-
-        return array_values(array_unique(array_filter($candidates)));
-    }
+    // View resolution helpers are inherited from BaseController.
 }

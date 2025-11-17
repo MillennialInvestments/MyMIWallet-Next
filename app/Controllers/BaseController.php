@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
+use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -428,12 +429,11 @@ abstract class BaseController extends Controller
     protected function renderTheme(string $view, ResponseInterface|array $data = []): ResponseInterface|string
     {
         if ($data instanceof ResponseInterface) {
-            return $data; // just hand it back
+            return $data;
         }
-        // Pick theme (public/dashboard) just like before
+
         $theme = $data['layout'] ?? $this->theme ?? 'public';
 
-        // Auto-resolve view path if you passed '*'
         if ($view === '*') {
             $view = $this->autoViewPath($theme, $data['view'] ?? null);
         }
@@ -444,26 +444,111 @@ abstract class BaseController extends Controller
         }
 
         $data = array_merge($base, $data);
-
-        // Merge your global defaults and request-derived stuff
         $data = $this->injectThemeDefaults($theme, $data);
-        $data = array_merge($this->commonData(), $data);
 
-        // 1) Render the inner view to a string
-        $innerHtml = view($view, $data);
+        $innerHtml = $this->tryView($view, $data);
 
-        // 2) Pass it to the theme’s layout as `$content`
         $payload            = $data;
         $payload['content'] = $innerHtml;
 
-        // (Optional but handy) make sure nonce is available even if subViewData overrides
         if (! isset($payload['nonce']) && isset($this->nonceAttributes)) {
             $payload['nonce'] = $this->nonceAttributes;
         }
 
-        // 3) Render the layout that expects `$content`
         $layout = "themes/{$theme}/layouts/index";
-        return view($layout, $payload);
+
+        return $this->tryView($layout, $payload, [
+            "themes/{$theme}/layouts/default",
+            "themes/{$theme}/index",
+        ]);
+    }
+
+    protected function tryView(string $view, array $data = [], array $alternatives = []): string
+    {
+        $resolved = $this->resolveView($view, $alternatives);
+        if (! $resolved) {
+            log_message('error', 'renderTheme could not locate view: {view}', ['view' => $view]);
+            throw PageNotFoundException::forPageNotFound($view);
+        }
+
+        return view($resolved, $data);
+    }
+
+    protected function resolveView(string $candidate, array $alternatives = []): ?string
+    {
+        $paths = array_merge($this->expandViewCandidates($candidate), $alternatives);
+
+        foreach ($paths as $path) {
+            foreach ($this->expandViewCandidates($path) as $option) {
+                if ($this->viewExists($option)) {
+                    return $option;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    protected function viewExists(string $path): bool
+    {
+        $locator = service('locator');
+        if ($locator->locateFile($path, 'Views')) {
+            return true;
+        }
+
+        $normalized = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $path);
+        $candidates = [
+            APPPATH . 'Views' . DIRECTORY_SEPARATOR . $normalized . '.php',
+        ];
+
+        $segments = explode(DIRECTORY_SEPARATOR, $normalized);
+        if (count($segments) > 1) {
+            $module     = array_shift($segments);
+            $moduleDir  = str_ends_with($module, 'Module') ? substr($module, 0, -6) : $module;
+            $moduleBase = APPPATH . 'Modules' . DIRECTORY_SEPARATOR . $moduleDir . DIRECTORY_SEPARATOR;
+
+            if (! empty($segments)) {
+                if ($segments[0] === 'Views') {
+                    $moduleCandidates = $moduleBase . implode(DIRECTORY_SEPARATOR, $segments) . '.php';
+                } else {
+                    $moduleCandidates = $moduleBase . 'Views' . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $segments) . '.php';
+                }
+                $candidates[] = $moduleCandidates;
+            }
+        }
+
+        foreach ($candidates as $file) {
+            if (is_file($file)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected function expandViewCandidates(string $view): array
+    {
+        $candidates = [$view];
+
+        if (str_contains($view, '\\')) {
+            $candidates[] = str_replace('\\', '/', $view);
+        } else {
+            $normalized = str_replace('\\', '/', $view);
+            $segments   = explode('/', $normalized);
+
+            if (count($segments) > 1) {
+                $module    = array_shift($segments);
+                $namespace = str_ends_with($module, 'Module') ? $module : $module . 'Module';
+                $remainder = implode('\\', $segments);
+                $namespaced = $namespace . '\\Views\\' . $remainder;
+
+                if ($namespaced !== $view) {
+                    array_unshift($candidates, $namespaced);
+                }
+            }
+        }
+
+        return array_values(array_unique($candidates));
     }
 
 
