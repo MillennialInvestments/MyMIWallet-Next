@@ -42,6 +42,8 @@
         "sort-packages": true
     },
     "scripts": {
-        "test": "phpunit"
+        "test": "phpunit",
+        "build-inventory": "python3 scripts/build_inventory.py",
+        "build-seo-inventory": "python3 scripts/build_page_seo_inventory.py"
     }
 }
