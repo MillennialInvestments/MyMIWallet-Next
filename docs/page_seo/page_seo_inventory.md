@@ -1,0 +1,5843 @@
+# MyMI Wallet – Page SEO Inventory
+
+This document tracks SEO implementation per major UI page, built from the functional inventory and enriched with schema + meta requirements.
+
+## Legend
+
+- **JSON-LD**: Page has correct structured data (schema.org) injected.
+- **OG/Twitter**: Page has OpenGraph and Twitter Card metadata.
+- **Canonical**: Page defines a rel="canonical" URL.
+- **Internal Links**: Page participates in footer/sidebar/breadcrumb/related-links graph.
+
+---
+
+## Advertise Module
+
+### Features Area
+
+- [ ] **Features – Brokerage Integrations** (`/Features/Brokerage-Integrations`)
+  - **Full URL**: https://www.mymiwallet.com/Features/Brokerage-Integrations
+  - **Target Keywords**: `features brokerage integrations`, `features tools`, `advertise dashboard`, `handles requests features brokerage`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Features/Brokerage-Integrations`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Features – Features** (`/Features`)
+  - **Full URL**: https://www.mymiwallet.com/Features
+  - **Target Keywords**: `features features`, `features tools`, `advertise dashboard`, `handles requests features modules`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Features`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### HowItWorks Area
+
+- [ ] **HowItWorks – My Migold** (`/Features/MyMI-Gold`)
+  - **Full URL**: https://www.mymiwallet.com/Features/MyMI-Gold
+  - **Target Keywords**: `how mymi wallet works`, `platform overview`, `product explanation`, `investment automation`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Features/MyMI-Gold`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+---
+
+## AuctionsController Module
+
+### Auctions Area
+
+- [ ] **Auctions – Auctions** (`/Auctions`)
+  - **Full URL**: https://www.mymiwallet.com/Auctions
+  - **Target Keywords**: `auctions auctions`, `auctions tools`, `auctionscontroller dashboard`, `handles requests auctions controllers`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Auctions`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Auctions – Item** (`/Auctions/Item/(:num)`)
+  - **Full URL**: https://www.mymiwallet.com/Auctions/Item/(:num)
+  - **Target Keywords**: `auctions item`, `auctions tools`, `auctionscontroller dashboard`, `handles requests auctions item`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Auctions/Item/(:num)`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Auctions – Poll** (`/Auctions/Poll/(:num)`)
+  - **Full URL**: https://www.mymiwallet.com/Auctions/Poll/(:num)
+  - **Target Keywords**: `auctions poll`, `auctions tools`, `auctionscontroller dashboard`, `handles requests auctions poll`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Auctions/Poll/(:num)`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+---
+
+## AuthController Module
+
+### Auth Area
+
+- [ ] **Auth – Activate Account** (`/activate`)
+  - **Full URL**: https://www.mymiwallet.com/activate
+  - **Target Keywords**: `auth activate account`, `auth tools`, `authcontroller dashboard`, `handles requests activate controllers`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/activate`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: activate
+
+- [ ] **Auth – Activate Account** (`/activate-account`)
+  - **Full URL**: https://www.mymiwallet.com/activate-account
+  - **Target Keywords**: `auth activate account`, `auth tools`, `authcontroller dashboard`, `handles requests activate account`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/activate-account`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: activate-account-get
+
+- [ ] **Auth – Create Temp User** (`/test-create-user`)
+  - **Full URL**: https://www.mymiwallet.com/test-create-user
+  - **Target Keywords**: `auth create temp user`, `auth tools`, `authcontroller dashboard`, `handles requests test create`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/test-create-user`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Auth – Forgot Password** (`/forgot-password`)
+  - **Full URL**: https://www.mymiwallet.com/forgot-password
+  - **Target Keywords**: `auth forgot password`, `auth tools`, `authcontroller dashboard`, `handles requests forgot password`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/forgot-password`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: forgot-password
+
+- [ ] **Auth – Handle Provider Callback** (`/auth/provider/(:segment)/callback`)
+  - **Full URL**: https://www.mymiwallet.com/auth/provider/(:segment)/callback
+  - **Target Keywords**: `auth handle provider callback`, `auth tools`, `authcontroller dashboard`, `handles requests auth provider`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/auth/provider/(:segment)/callback`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: auth-provider-callback
+
+- [ ] **Auth – Link Provider** (`/auth/link/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/auth/link/(:segment)
+  - **Target Keywords**: `auth link provider`, `auth tools`, `authcontroller dashboard`, `handles requests auth link`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/auth/link/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: auth-link-provider
+
+- [ ] **Auth – Login** (`/login`)
+  - **Full URL**: https://www.mymiwallet.com/login
+  - **Target Keywords**: `auth login`, `auth tools`, `authcontroller dashboard`, `handles requests login controllers`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/login`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: login
+
+- [ ] **Auth – Logout** (`/logout`)
+  - **Full URL**: https://www.mymiwallet.com/logout
+  - **Target Keywords**: `auth logout`, `auth tools`, `authcontroller dashboard`, `handles requests logout controllers`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/logout`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Auth – Redirect To Provider** (`/auth/provider/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/auth/provider/(:segment)
+  - **Target Keywords**: `auth redirect to provider`, `auth tools`, `authcontroller dashboard`, `handles requests auth provider`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/auth/provider/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: auth-provider
+
+- [ ] **Auth – Register** (`/(:any)/register`)
+  - **Full URL**: https://www.mymiwallet.com/(:any)/register
+  - **Target Keywords**: `auth register`, `auth tools`, `authcontroller dashboard`, `handles requests register controllers`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/(:any)/register`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: dynamic-register
+
+- [ ] **Auth – Register** (`/(:any)/register/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/(:any)/register/(:segment)
+  - **Target Keywords**: `auth register`, `auth tools`, `authcontroller dashboard`, `handles requests register segment`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/(:any)/register/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: dynamic-register-referral
+
+- [ ] **Auth – Register** (`/register`)
+  - **Full URL**: https://www.mymiwallet.com/register
+  - **Target Keywords**: `auth register`, `auth tools`, `authcontroller dashboard`, `handles requests register controllers`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/register`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: register
+
+- [ ] **Auth – Register** (`/register/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/register/(:segment)
+  - **Target Keywords**: `auth register`, `auth tools`, `authcontroller dashboard`, `handles requests register segment`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/register/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: register-segment
+
+- [ ] **Auth – Resend Activate Account** (`/resend-activate-account`)
+  - **Full URL**: https://www.mymiwallet.com/resend-activate-account
+  - **Target Keywords**: `auth resend activate account`, `auth tools`, `authcontroller dashboard`, `handles requests resend activate`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/resend-activate-account`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: resend-activate-account
+
+- [ ] **Auth – Resend Activation** (`/resend-activation`)
+  - **Full URL**: https://www.mymiwallet.com/resend-activation
+  - **Target Keywords**: `auth resend activation`, `auth tools`, `authcontroller dashboard`, `handles requests resend activation`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/resend-activation`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: resend-activation
+
+- [ ] **Auth – Reset Password** (`/reset-password`)
+  - **Full URL**: https://www.mymiwallet.com/reset-password
+  - **Target Keywords**: `auth reset password`, `auth tools`, `authcontroller dashboard`, `handles requests reset password`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/reset-password`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: reset-password
+
+- [ ] **Auth – Unlink Provider** (`/auth/unlink/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/auth/unlink/(:segment)
+  - **Target Keywords**: `auth unlink provider`, `auth tools`, `authcontroller dashboard`, `handles requests auth unlink`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/auth/unlink/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: auth-unlink-provider
+
+---
+
+## Blog Module
+
+### Announcements Area
+
+- [ ] **Announcements – Announcements** (`/Announcements`)
+  - **Full URL**: https://www.mymiwallet.com/Announcements
+  - **Target Keywords**: `announcements announcements`, `announcements tools`, `blog dashboard`, `handles requests announcements modules`, `mymiwallet platform`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Announcements`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Blog Area
+
+- [ ] **Blog – Blog** (`/Blog`)
+  - **Full URL**: https://www.mymiwallet.com/Blog
+  - **Target Keywords**: `blog blog`, `blog tools`, `blog dashboard`, `handles requests blog modules`, `mymiwallet platform`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Blog – View Blog** (`/Blog/Post/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Blog/Post/(:segment)
+  - **Target Keywords**: `blog view blog`, `blog tools`, `blog dashboard`, `handles requests blog post`, `mymiwallet platform`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/Post/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Earnings Area
+
+- [ ] **Earnings – Earnings** (`/Blog/Earnings`)
+  - **Full URL**: https://www.mymiwallet.com/Blog/Earnings
+  - **Target Keywords**: `earnings earnings`, `earnings tools`, `blog dashboard`, `handles requests blog earnings`, `mymiwallet platform`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/Earnings`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Earnings – Test** (`/Blog/Earnings/Test`)
+  - **Full URL**: https://www.mymiwallet.com/Blog/Earnings/Test
+  - **Target Keywords**: `earnings test`, `earnings tools`, `blog dashboard`, `handles requests blog earnings`, `mymiwallet platform`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/Earnings/Test`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Earnings – View By Date** (`/Blog/Earnings/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Blog/Earnings/(:segment)
+  - **Target Keywords**: `earnings view by date`, `earnings tools`, `blog dashboard`, `handles requests blog earnings`, `mymiwallet platform`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/Earnings/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Earnings – View By Date** (`/Blog/Earnings/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Blog/Earnings/(:segment)
+  - **Target Keywords**: `earnings view by date`, `earnings tools`, `blog dashboard`, `handles requests blog earnings`, `mymiwallet platform`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/Earnings/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### HowItWorks Area
+
+- [ ] **HowItWorks – Daily Financial News** (`/How-It-Works/Daily-Financial-News`)
+  - **Full URL**: https://www.mymiwallet.com/How-It-Works/Daily-Financial-News
+  - **Target Keywords**: `how mymi wallet works`, `platform overview`, `product explanation`, `investment automation`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/How-It-Works/Daily-Financial-News`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **HowItWorks – Determine Your Financial Goals** (`/How-It-Works/Determining-Your-Financial-Goals`)
+  - **Full URL**: https://www.mymiwallet.com/How-It-Works/Determining-Your-Financial-Goals
+  - **Target Keywords**: `how mymi wallet works`, `platform overview`, `product explanation`, `investment automation`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/How-It-Works/Determining-Your-Financial-Goals`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **HowItWorks – Determine Your Financial Goals** (`/How-It-Works/Determining-Your-Financial-Goals`)
+  - **Full URL**: https://www.mymiwallet.com/How-It-Works/Determining-Your-Financial-Goals
+  - **Target Keywords**: `how mymi wallet works`, `platform overview`, `product explanation`, `investment automation`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/How-It-Works/Determining-Your-Financial-Goals`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **HowItWorks – How It Works** (`/How-It-Works`)
+  - **Full URL**: https://www.mymiwallet.com/How-It-Works
+  - **Target Keywords**: `how mymi wallet works`, `platform overview`, `product explanation`, `investment automation`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/How-It-Works`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **HowItWorks – How It Works** (`/How-It-Works`)
+  - **Full URL**: https://www.mymiwallet.com/How-It-Works
+  - **Target Keywords**: `how mymi wallet works`, `platform overview`, `product explanation`, `investment automation`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/How-It-Works`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **HowItWorks – Investment Portfolio Management** (`/How-It-Works/Investment-Portfolio-Management`)
+  - **Full URL**: https://www.mymiwallet.com/How-It-Works/Investment-Portfolio-Management
+  - **Target Keywords**: `how mymi wallet works`, `platform overview`, `product explanation`, `investment automation`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/How-It-Works/Investment-Portfolio-Management`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **HowItWorks – My Migold** (`/How-It-Works/MyMI-Gold`)
+  - **Full URL**: https://www.mymiwallet.com/How-It-Works/MyMI-Gold
+  - **Target Keywords**: `how mymi wallet works`, `platform overview`, `product explanation`, `investment automation`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/How-It-Works/MyMI-Gold`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **HowItWorks – My Migold** (`/How-It-Works/MyMI-Gold`)
+  - **Full URL**: https://www.mymiwallet.com/How-It-Works/MyMI-Gold
+  - **Target Keywords**: `how mymi wallet works`, `platform overview`, `product explanation`, `investment automation`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/How-It-Works/MyMI-Gold`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **HowItWorks – Personal Budgeting** (`/How-It-Works/Personal-Budgeting`)
+  - **Full URL**: https://www.mymiwallet.com/How-It-Works/Personal-Budgeting
+  - **Target Keywords**: `how mymi wallet works`, `platform overview`, `product explanation`, `investment automation`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/How-It-Works/Personal-Budgeting`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **HowItWorks – Personal Budgeting** (`/How-It-Works/Personal-Budgeting`)
+  - **Full URL**: https://www.mymiwallet.com/How-It-Works/Personal-Budgeting
+  - **Target Keywords**: `how mymi wallet works`, `platform overview`, `product explanation`, `investment automation`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/How-It-Works/Personal-Budgeting`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **HowItWorks – Purchase My Migold** (`/How-It-Works/Purchase-MyMI-Gold`)
+  - **Full URL**: https://www.mymiwallet.com/How-It-Works/Purchase-MyMI-Gold
+  - **Target Keywords**: `how mymi wallet works`, `platform overview`, `product explanation`, `investment automation`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/How-It-Works/Purchase-MyMI-Gold`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **HowItWorks – Purchase My Migold** (`/How-It-Works/Purchase/MyMIGold`)
+  - **Full URL**: https://www.mymiwallet.com/How-It-Works/Purchase/MyMIGold
+  - **Target Keywords**: `how mymi wallet works`, `platform overview`, `product explanation`, `investment automation`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/How-It-Works/Purchase/MyMIGold`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **HowItWorks – Registering An Account** (`/How-It-Works/Registering-An-Account`)
+  - **Full URL**: https://www.mymiwallet.com/How-It-Works/Registering-An-Account
+  - **Target Keywords**: `how mymi wallet works`, `platform overview`, `product explanation`, `investment automation`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/How-It-Works/Registering-An-Account`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **HowItWorks – Registering An Account** (`/How-It-Works/Registering-An-Account`)
+  - **Full URL**: https://www.mymiwallet.com/How-It-Works/Registering-An-Account
+  - **Target Keywords**: `how mymi wallet works`, `platform overview`, `product explanation`, `investment automation`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/How-It-Works/Registering-An-Account`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### IRS Area
+
+- [ ] **IRS – Irsexpanded Home Energy Tax Credits** (`/Blog/IRS/IRS-Expanded-Home-Energy-Tax-Credits`)
+  - **Full URL**: https://www.mymiwallet.com/Blog/IRS/IRS-Expanded-Home-Energy-Tax-Credits
+  - **Target Keywords**: `irs irsexpanded home energy tax credits`, `irs tools`, `blog dashboard`, `handles requests blog expanded`, `mymiwallet platform`
+  - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/IRS/IRS-Expanded-Home-Energy-Tax-Credits`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Investing Area
+
+- [ ] **Investing – Investing** (`/Blog/Investing`)
+  - **Full URL**: https://www.mymiwallet.com/Blog/Investing
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/Investing`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Investing – Irs** (`/Blog/IRS`)
+  - **Full URL**: https://www.mymiwallet.com/Blog/IRS
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/IRS`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Investing – The Beginners Guide To Option Trading** (`/Blog/Investing/The-Beginners-Guide-To-Option-Trading`)
+  - **Full URL**: https://www.mymiwallet.com/Blog/Investing/The-Beginners-Guide-To-Option-Trading
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/Investing/The-Beginners-Guide-To-Option-Trading`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Investing – The Fundamentals Of Investing** (`/Blog/Investing/The-Fundamentals-Of-Investing`)
+  - **Full URL**: https://www.mymiwallet.com/Blog/Investing/The-Fundamentals-Of-Investing
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/Investing/The-Fundamentals-Of-Investing`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Investing – Tips For Effective Investment Portfolio Management** (`/Blog/Investing/Tips-For-Effective-Investment-Portfolio-Management`)
+  - **Full URL**: https://www.mymiwallet.com/Blog/Investing/Tips-For-Effective-Investment-Portfolio-Management
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/Investing/Tips-For-Effective-Investment-Portfolio-Management`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### NewsAndUpdates Area
+
+- [ ] **NewsAndUpdates – Integrating With Plaid** (`/Blog/News-And-Updates/Integrating-With-Plaid`)
+  - **Full URL**: https://www.mymiwallet.com/Blog/News-And-Updates/Integrating-With-Plaid
+  - **Target Keywords**: `financial news summarizer`, `market news digest`, `investment news updates`, `product announcements`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/News-And-Updates/Integrating-With-Plaid`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **NewsAndUpdates – News And Updates** (`/Blog/News-And-Updates`)
+  - **Full URL**: https://www.mymiwallet.com/Blog/News-And-Updates
+  - **Target Keywords**: `financial news summarizer`, `market news digest`, `investment news updates`, `product announcements`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/News-And-Updates`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **NewsAndUpdates – The Roadmap To The Future Of Finance** (`/Blog/News-And-Updates/The-Roadmap-To-The-Future-Of-Finance`)
+  - **Full URL**: https://www.mymiwallet.com/Blog/News-And-Updates/The-Roadmap-To-The-Future-Of-Finance
+  - **Target Keywords**: `financial news summarizer`, `market news digest`, `investment news updates`, `product announcements`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/News-And-Updates/The-Roadmap-To-The-Future-Of-Finance`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+### PersonalBudgeting Area
+
+- [ ] **PersonalBudgeting – Personal Budgeting** (`/Blog/Personal-Budgeting`)
+  - **Full URL**: https://www.mymiwallet.com/Blog/Personal-Budgeting
+  - **Target Keywords**: `personalbudgeting personal budgeting`, `personalbudgeting tools`, `blog dashboard`, `handles requests blog personal`, `mymiwallet platform`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/Personal-Budgeting`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **PersonalBudgeting – The Importance Of Personal Financial Budgeting** (`/Blog/Personal-Budgeting/The-Importance-of-Personal-Financial-Budgeting`)
+  - **Full URL**: https://www.mymiwallet.com/Blog/Personal-Budgeting/The-Importance-of-Personal-Financial-Budgeting
+  - **Target Keywords**: `personalbudgeting the importance of personal financial budgeting`, `personalbudgeting tools`, `blog dashboard`, `handles requests blog personal`, `mymiwallet platform`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/Personal-Budgeting/The-Importance-of-Personal-Financial-Budgeting`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Subscribe Area
+
+- [ ] **Subscribe – Daily Financial News** (`/Subscribe/Daily-Financial-News`)
+  - **Full URL**: https://www.mymiwallet.com/Subscribe/Daily-Financial-News
+  - **Target Keywords**: `subscribe daily financial news`, `subscribe tools`, `blog dashboard`, `handles requests subscribe daily`, `mymiwallet platform`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Subscribe/Daily-Financial-News`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Subscribe – Submit** (`/Subscribe/Submit`)
+  - **Full URL**: https://www.mymiwallet.com/Subscribe/Submit
+  - **Target Keywords**: `subscribe submit`, `subscribe tools`, `blog dashboard`, `handles requests subscribe submit`, `mymiwallet platform`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Subscribe/Submit`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Subscribe – Subscribe** (`/Subscribe`)
+  - **Full URL**: https://www.mymiwallet.com/Subscribe
+  - **Target Keywords**: `subscribe subscribe`, `subscribe tools`, `blog dashboard`, `handles requests subscribe modules`, `mymiwallet platform`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Subscribe`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Updates Area
+
+- [ ] **Updates – Integrating With Plaid** (`/Blog/News-And-Updates/Integrating-With-Plaid`)
+  - **Full URL**: https://www.mymiwallet.com/Blog/News-And-Updates/Integrating-With-Plaid
+  - **Target Keywords**: `updates integrating with plaid`, `updates tools`, `blog dashboard`, `handles requests blog news`, `mymiwallet platform`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/News-And-Updates/Integrating-With-Plaid`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Updates – News And Updates** (`/Blog/News-And-Updates`)
+  - **Full URL**: https://www.mymiwallet.com/Blog/News-And-Updates
+  - **Target Keywords**: `updates news and updates`, `updates tools`, `blog dashboard`, `handles requests blog news`, `mymiwallet platform`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/News-And-Updates`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Updates – The Roadmap To The Future Of Finance** (`/Blog/News-And-Updates/The-Roadmap-To-The-Future-Of-Finance`)
+  - **Full URL**: https://www.mymiwallet.com/Blog/News-And-Updates/The-Roadmap-To-The-Future-Of-Finance
+  - **Target Keywords**: `updates the roadmap to the future of finance`, `updates tools`, `blog dashboard`, `handles requests blog news`, `mymiwallet platform`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/News-And-Updates/The-Roadmap-To-The-Future-Of-Finance`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+---
+
+## Debug Module
+
+### CommonData Area
+
+- [ ] **CommonData – Smoke** (`/debug/common-data/smoke`)
+  - **Full URL**: https://www.mymiwallet.com/debug/common-data/smoke
+  - **Target Keywords**: `commondata smoke`, `commondata tools`, `debug dashboard`, `handles requests debug common`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/debug/common-data/smoke`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Debug Area
+
+- [ ] **Debug – Whoami** (`/Debug/whoami`)
+  - **Full URL**: https://www.mymiwallet.com/Debug/whoami
+  - **Target Keywords**: `debug whoami`, `debug tools`, `debug dashboard`, `handles requests debug whoami`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Debug/whoami`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+---
+
+## Dev Module
+
+### BitcoinTest Area
+
+- [ ] **BitcoinTest – Bitcoin Test** (`/Dev/BitcoinTest`)
+  - **Full URL**: https://www.mymiwallet.com/Dev/BitcoinTest
+  - **Target Keywords**: `bitcointest bitcoin test`, `bitcointest tools`, `dev dashboard`, `handles requests bitcointest controllers`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dev/BitcoinTest`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+---
+
+## Exchange Module
+
+### Exchange Area
+
+- [ ] **Exchange – Exchange** (`/Exchange`)
+  - **Full URL**: https://www.mymiwallet.com/Exchange
+  - **Target Keywords**: `exchange exchange`, `exchange tools`, `exchange dashboard`, `handles requests exchange modules`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Exchange`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: mymi-exchange
+
+### MetaMask Area
+
+- [ ] **MetaMask – Meta Mask** (`/Exchange/MetaMask`)
+  - **Full URL**: https://www.mymiwallet.com/Exchange/MetaMask
+  - **Target Keywords**: `metamask meta mask`, `metamask tools`, `exchange dashboard`, `handles requests exchange metamask`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Exchange/MetaMask`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: mymi-metamask
+
+### Solana Area
+
+- [ ] **Solana – Assets** (`/Exchange/Solana/Assets`)
+  - **Full URL**: https://www.mymiwallet.com/Exchange/Solana/Assets
+  - **Target Keywords**: `solana assets`, `solana tools`, `exchange dashboard`, `handles requests exchange solana`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Exchange/Solana/Assets`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: mymi-solana-assets
+
+- [ ] **Solana – Coin Swap** (`/Exchange/Solana/Swap`)
+  - **Full URL**: https://www.mymiwallet.com/Exchange/Solana/Swap
+  - **Target Keywords**: `solana coin swap`, `solana tools`, `exchange dashboard`, `handles requests exchange solana`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Exchange/Solana/Swap`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: mymi-solana-coin-swap
+
+- [ ] **Solana – Create** (`/Exchange/Solana/Create`)
+  - **Full URL**: https://www.mymiwallet.com/Exchange/Solana/Create
+  - **Target Keywords**: `solana create`, `solana tools`, `exchange dashboard`, `handles requests exchange solana`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Exchange/Solana/Create`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: mymi-solana-create
+
+- [ ] **Solana – Create** (`/Exchange/Solana/Create/Wallet`)
+  - **Full URL**: https://www.mymiwallet.com/Exchange/Solana/Create/Wallet
+  - **Target Keywords**: `solana create`, `solana tools`, `exchange dashboard`, `handles requests exchange solana`, `mymiwallet platform`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Exchange/Solana/Create/Wallet`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: mymi-solana-create-wallet
+
+- [ ] **Solana – Disconnect Wallet** (`/Exchange/Solana/Wallet/Disconnect/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Exchange/Solana/Wallet/Disconnect/(:segment)
+  - **Target Keywords**: `solana disconnect wallet`, `solana tools`, `exchange dashboard`, `handles requests exchange solana`, `mymiwallet platform`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Exchange/Solana/Wallet/Disconnect/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: mymi-solana-create
+
+- [ ] **Solana – Execute Swap** (`/Exchange/Solana/Wallet/Execute-Swap`)
+  - **Full URL**: https://www.mymiwallet.com/Exchange/Solana/Wallet/Execute-Swap
+  - **Target Keywords**: `solana execute swap`, `solana tools`, `exchange dashboard`, `handles requests exchange solana`, `mymiwallet platform`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Exchange/Solana/Wallet/Execute-Swap`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: mymi-solana-execute-swap
+
+- [ ] **Solana – Import** (`/Exchange/Solana/Import`)
+  - **Full URL**: https://www.mymiwallet.com/Exchange/Solana/Import
+  - **Target Keywords**: `solana import`, `solana tools`, `exchange dashboard`, `handles requests exchange solana`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Exchange/Solana/Import`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: mymi-solana-import
+
+- [ ] **Solana – Import Wallet** (`/Exchange/Solana/Import/Wallet`)
+  - **Full URL**: https://www.mymiwallet.com/Exchange/Solana/Import/Wallet
+  - **Target Keywords**: `solana import wallet`, `solana tools`, `exchange dashboard`, `handles requests exchange solana`, `mymiwallet platform`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Exchange/Solana/Import/Wallet`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: mymi-solana-import-wallet
+
+- [ ] **Solana – Solana** (`/Exchange/Solana`)
+  - **Full URL**: https://www.mymiwallet.com/Exchange/Solana
+  - **Target Keywords**: `solana solana`, `solana tools`, `exchange dashboard`, `handles requests exchange solana`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Exchange/Solana`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: mymi-solana
+
+- [ ] **Solana – Test Page** (`/Exchange/Solana/Test-Page`)
+  - **Full URL**: https://www.mymiwallet.com/Exchange/Solana/Test-Page
+  - **Target Keywords**: `solana test page`, `solana tools`, `exchange dashboard`, `handles requests exchange solana`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Exchange/Solana/Test-Page`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: mymi-solana-test-page
+
+- [ ] **Solana – Verify Wallet Ownership** (`/Exchange/Solana/Wallet/Verify-Ownership`)
+  - **Full URL**: https://www.mymiwallet.com/Exchange/Solana/Wallet/Verify-Ownership
+  - **Target Keywords**: `solana verify wallet ownership`, `solana tools`, `exchange dashboard`, `handles requests exchange solana`, `mymiwallet platform`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Exchange/Solana/Wallet/Verify-Ownership`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: mymi-solana-verify-wallet
+
+- [ ] **Solana – View Assets** (`/Exchange/Solana/Wallet/ViewAssets`)
+  - **Full URL**: https://www.mymiwallet.com/Exchange/Solana/Wallet/ViewAssets
+  - **Target Keywords**: `solana view assets`, `solana tools`, `exchange dashboard`, `handles requests exchange solana`, `mymiwallet platform`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Exchange/Solana/Wallet/ViewAssets`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: mymi-solana-view-assets
+
+---
+
+## Health Module
+
+### Health Area
+
+- [ ] **Health – Health** (`/health`)
+  - **Full URL**: https://www.mymiwallet.com/health
+  - **Target Keywords**: `health health`, `health tools`, `health dashboard`, `handles requests health controllers`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/health`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Health – Status** (`/status`)
+  - **Full URL**: https://www.mymiwallet.com/status
+  - **Target Keywords**: `health status`, `health tools`, `health dashboard`, `handles requests status controllers`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/status`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+---
+
+## Home Module
+
+### Home Area
+
+- [ ] **Home – Apex Referral** (`/Apex/Referral`)
+  - **Full URL**: https://www.mymiwallet.com/Apex/Referral
+  - **Target Keywords**: `personal finance platform`, `mymiwallet`, `investment tools`, `financial planning`
+  - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Apex/Referral`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Home – Apex Referral** (`/Apex/Referral/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Apex/Referral/(:segment)
+  - **Target Keywords**: `personal finance platform`, `mymiwallet`, `investment tools`, `financial planning`
+  - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Apex/Referral/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Home – Corporate Earnings** (`/Corporate-Earnings`)
+  - **Full URL**: https://www.mymiwallet.com/Corporate-Earnings
+  - **Target Keywords**: `personal finance platform`, `mymiwallet`, `investment tools`, `financial planning`
+  - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Corporate-Earnings`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Home – Corporate Earnings** (`/Corporate-Earnings/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Corporate-Earnings/(:segment)
+  - **Target Keywords**: `personal finance platform`, `mymiwallet`, `investment tools`, `financial planning`
+  - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Corporate-Earnings/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Home – Economic Calendar** (`/Economic-Calendar`)
+  - **Full URL**: https://www.mymiwallet.com/Economic-Calendar
+  - **Target Keywords**: `personal finance platform`, `mymiwallet`, `investment tools`, `financial planning`
+  - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Economic-Calendar`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Home – Economic Calendar Content** (`/Economic-Calendar/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Economic-Calendar/(:segment)
+  - **Target Keywords**: `personal finance platform`, `mymiwallet`, `investment tools`, `financial planning`
+  - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Economic-Calendar/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Home – Getting Started** (`/Getting-Started`)
+  - **Full URL**: https://www.mymiwallet.com/Getting-Started
+  - **Target Keywords**: `personal finance platform`, `mymiwallet`, `investment tools`, `financial planning`
+  - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Getting-Started`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Home – Getting Started** (`/Getting-Started/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Getting-Started/(:segment)
+  - **Target Keywords**: `personal finance platform`, `mymiwallet`, `investment tools`, `financial planning`
+  - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Getting-Started/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Home – Getting Started** (`/Getting-Started/(:segment)/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Getting-Started/(:segment)/(:segment)
+  - **Target Keywords**: `personal finance platform`, `mymiwallet`, `investment tools`, `financial planning`
+  - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Getting-Started/(:segment)/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Home – Home** (`/`)
+  - **Full URL**: https://www.mymiwallet.com/
+  - **Target Keywords**: `personal finance platform`, `mymiwallet`, `investment tools`, `financial planning`
+  - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Home – Memberships** (`/Memberships`)
+  - **Full URL**: https://www.mymiwallet.com/Memberships
+  - **Target Keywords**: `personal finance platform`, `mymiwallet`, `investment tools`, `financial planning`
+  - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Memberships`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Home – Memberships** (`/Memberships/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Memberships/(:segment)
+  - **Target Keywords**: `personal finance platform`, `mymiwallet`, `investment tools`, `financial planning`
+  - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Memberships/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Home – Preview Alert** (`/Preview/Alert/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Preview/Alert/(:segment)
+  - **Target Keywords**: `personal finance platform`, `mymiwallet`, `investment tools`, `financial planning`
+  - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Preview/Alert/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Home – Privacy Policy** (`/Privacy-Policy`)
+  - **Full URL**: https://www.mymiwallet.com/Privacy-Policy
+  - **Target Keywords**: `personal finance platform`, `mymiwallet`, `investment tools`, `financial planning`
+  - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Privacy-Policy`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Home – Terms Of Service** (`/Terms-Of-Service`)
+  - **Full URL**: https://www.mymiwallet.com/Terms-Of-Service
+  - **Target Keywords**: `personal finance platform`, `mymiwallet`, `investment tools`, `financial planning`
+  - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Terms-Of-Service`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+---
+
+## Management Module
+
+### Admin Area
+
+- [ ] **Admin – Admin** (`/Management/Admin`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Admin
+  - **Target Keywords**: `admin admin`, `admin tools`, `management dashboard`, `handles requests management admin`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Admin`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Alerts Area
+
+- [ ] **Alerts – Add** (`/Management/Alerts/Add/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Alerts/Add/(:segment)
+  - **Target Keywords**: `investment alerts`, `automated trade alerts`, `stock alerts`, `crypto alerts`
+  - **Schema Types**: `InvestmentOrDeposit`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts/Add/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Alerts
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Alerts – Add Trade Alert** (`/Management/Alerts/addTradeAlert`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Alerts/addTradeAlert
+  - **Target Keywords**: `investment alerts`, `automated trade alerts`, `stock alerts`, `crypto alerts`
+  - **Schema Types**: `InvestmentOrDeposit`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts/addTradeAlert`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Alerts
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Alerts – Advisor Media** (`/Management/Alerts/Advisor/Media`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Alerts/Advisor/Media
+  - **Target Keywords**: `investment alerts`, `automated trade alerts`, `stock alerts`, `crypto alerts`
+  - **Schema Types**: `InvestmentOrDeposit`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts/Advisor/Media`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Alerts
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Alerts – Alerts** (`/Management/Alerts`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Alerts
+  - **Target Keywords**: `investment alerts`, `automated trade alerts`, `stock alerts`, `crypto alerts`
+  - **Schema Types**: `InvestmentOrDeposit`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Alerts
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Alerts – Audit Email Scraper** (`/Management/Alerts/Audit/Emails`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Alerts/Audit/Emails
+  - **Target Keywords**: `investment alerts`, `automated trade alerts`, `stock alerts`, `crypto alerts`
+  - **Schema Types**: `InvestmentOrDeposit`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts/Audit/Emails`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Alerts
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Alerts – Fetch Data** (`/Management/Alerts/Tasks/fetchAlerts`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Alerts/Tasks/fetchAlerts
+  - **Target Keywords**: `investment alerts`, `automated trade alerts`, `stock alerts`, `crypto alerts`
+  - **Schema Types**: `InvestmentOrDeposit`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts/Tasks/fetchAlerts`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Alerts
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Alerts – Fetch Data** (`/Management/Alerts/fetchData`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Alerts/fetchData
+  - **Target Keywords**: `investment alerts`, `automated trade alerts`, `stock alerts`, `crypto alerts`
+  - **Schema Types**: `InvestmentOrDeposit`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts/fetchData`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Alerts
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Alerts – Fetch Ticker Details** (`/Management/Alerts/Fetch/Ticker/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Alerts/Fetch/Ticker/(:segment)
+  - **Target Keywords**: `investment alerts`, `automated trade alerts`, `stock alerts`, `crypto alerts`
+  - **Schema Types**: `InvestmentOrDeposit`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts/Fetch/Ticker/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Alerts
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Alerts – Import Tickers** (`/Management/Alerts/Import/Tickers`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Alerts/Import/Tickers
+  - **Target Keywords**: `investment alerts`, `automated trade alerts`, `stock alerts`, `crypto alerts`
+  - **Schema Types**: `InvestmentOrDeposit`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts/Import/Tickers`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Alerts
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Alerts – Research** (`/Management/Marketing/Research`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Research
+  - **Target Keywords**: `investment alerts`, `automated trade alerts`, `stock alerts`, `crypto alerts`
+  - **Schema Types**: `InvestmentOrDeposit`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Research`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Alerts
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Alerts – Send Test Email** (`/Management/Alerts/Test-Email`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Alerts/Test-Email
+  - **Target Keywords**: `investment alerts`, `automated trade alerts`, `stock alerts`, `crypto alerts`
+  - **Schema Types**: `InvestmentOrDeposit`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts/Test-Email`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Alerts
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Alerts – Stock Overview** (`/Management/Alerts/Crypto/(:segment)/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Alerts/Crypto/(:segment)/(:segment)
+  - **Target Keywords**: `investment alerts`, `automated trade alerts`, `stock alerts`, `crypto alerts`
+  - **Schema Types**: `InvestmentOrDeposit`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts/Crypto/(:segment)/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Alerts
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Alerts – Stock Overview** (`/Management/Alerts/Stock/(:segment)/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Alerts/Stock/(:segment)/(:segment)
+  - **Target Keywords**: `investment alerts`, `automated trade alerts`, `stock alerts`, `crypto alerts`
+  - **Schema Types**: `InvestmentOrDeposit`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts/Stock/(:segment)/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Alerts
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Alerts – Test** (`/Management/Alerts/Test`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Alerts/Test
+  - **Target Keywords**: `investment alerts`, `automated trade alerts`, `stock alerts`, `crypto alerts`
+  - **Schema Types**: `InvestmentOrDeposit`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts/Test`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Alerts
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Alerts – Test Email** (`/Management/Alerts/Test-Alert-Email`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Alerts/Test-Alert-Email
+  - **Target Keywords**: `investment alerts`, `automated trade alerts`, `stock alerts`, `crypto alerts`
+  - **Schema Types**: `InvestmentOrDeposit`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts/Test-Alert-Email`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Alerts
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Alerts – Trades** (`/Management/Alerts/Trades`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Alerts/Trades
+  - **Target Keywords**: `investment alerts`, `automated trade alerts`, `stock alerts`, `crypto alerts`
+  - **Schema Types**: `InvestmentOrDeposit`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts/Trades`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Alerts
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+### Assets Area
+
+- [ ] **Assets – Assets** (`/Management/Assets`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Assets
+  - **Target Keywords**: `assets assets`, `assets tools`, `management dashboard`, `handles requests management assets`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Assets`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Blogger Area
+
+- [ ] **Blogger – Blogger** (`/Management/Marketing/Blogger`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Blogger
+  - **Target Keywords**: `blogger blogger`, `blogger tools`, `management dashboard`, `handles requests management marketing`, `mymiwallet platform`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Blogger`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Blogger – Preview** (`/Management/Marketing/Blogger/preview/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Blogger/preview/(:segment)
+  - **Target Keywords**: `blogger preview`, `blogger tools`, `management dashboard`, `handles requests management marketing`, `mymiwallet platform`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Blogger/preview/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Budgeting Area
+
+- [ ] **Budgeting – Budgeting** (`/Management/Budgeting`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Budgeting
+  - **Target Keywords**: `budgeting budgeting`, `budgeting tools`, `management dashboard`, `handles requests management budgeting`, `mymiwallet platform`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Budgeting`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Budgets Area
+
+- [ ] **Budgets – Budgets** (`/Management/Budgets`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Budgets
+  - **Target Keywords**: `budgets budgets`, `budgets tools`, `management dashboard`, `handles requests management budgets`, `mymiwallet platform`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Budgets`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Development Area
+
+- [ ] **Development – Development** (`/Management/Development`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Development
+  - **Target Keywords**: `development development`, `development tools`, `management dashboard`, `handles requests management development`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Development`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Discord Area
+
+- [ ] **Discord – Discord** (`/Management/Discord`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Discord
+  - **Target Keywords**: `discord discord`, `discord tools`, `management dashboard`, `handles requests management discord`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Discord`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### DripCampaign Area
+
+- [ ] **DripCampaign – Add Step** (`/Management/Drip-Campaigns/(:num)/Steps/Add`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Drip-Campaigns/(:num)/Steps/Add
+  - **Target Keywords**: `dripcampaign add step`, `dripcampaign tools`, `management dashboard`, `handles post requests management`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Drip-Campaigns/(:num)/Steps/Add`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **DripCampaign – Create** (`/Management/Drip-Campaigns/Create`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Drip-Campaigns/Create
+  - **Target Keywords**: `dripcampaign create`, `dripcampaign tools`, `management dashboard`, `handles post requests management`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Drip-Campaigns/Create`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **DripCampaign – Drip Campaigns** (`/Management/Drip-Campaigns`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Drip-Campaigns
+  - **Target Keywords**: `dripcampaign drip campaigns`, `dripcampaign tools`, `management dashboard`, `handles requests management drip`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Drip-Campaigns`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **DripCampaign – View Steps** (`/Management/Drip-Campaigns/(:num)/Steps`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Drip-Campaigns/(:num)/Steps
+  - **Target Keywords**: `dripcampaign view steps`, `dripcampaign tools`, `management dashboard`, `handles requests management drip`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Drip-Campaigns/(:num)/Steps`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Email Area
+
+- [ ] **Email – Auto Schedule Drafts** (`/Management/Email/autoScheduleDrafts`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Email/autoScheduleDrafts
+  - **Target Keywords**: `email auto schedule drafts`, `email tools`, `management dashboard`, `handles requests management email`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Email/autoScheduleDrafts`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Email – Auto Schedule Logs** (`/Management/Email/autoScheduleLogs`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Email/autoScheduleLogs
+  - **Target Keywords**: `email auto schedule logs`, `email tools`, `management dashboard`, `handles requests management email`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Email/autoScheduleLogs`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Email – Campaign Stats** (`/Management/Email/campaignStats/(:num)`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Email/campaignStats/(:num)
+  - **Target Keywords**: `email campaign stats`, `email tools`, `management dashboard`, `handles requests management email`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Email/campaignStats/(:num)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Email – Campaigns** (`/Management/Email/campaigns`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Email/campaigns
+  - **Target Keywords**: `email campaigns`, `email tools`, `management dashboard`, `handles requests management email`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Email/campaigns`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Email – Edit Campaign** (`/Management/Email/editCampaign/(:num)`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Email/editCampaign/(:num)
+  - **Target Keywords**: `email edit campaign`, `email tools`, `management dashboard`, `handles requests management email`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Email/editCampaign/(:num)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Email – Email** (`/Management/Email`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Email
+  - **Target Keywords**: `email email`, `email tools`, `management dashboard`, `handles requests management email`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Email`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Email – Email** (`/Management/Marketing/Email`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Email
+  - **Target Keywords**: `email email`, `email tools`, `management dashboard`, `handles requests management marketing`, `mymiwallet platform`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Email`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Email – Preview Queued Email** (`/Management/Email/previewQueuedEmail/(:num)`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Email/previewQueuedEmail/(:num)
+  - **Target Keywords**: `email preview queued email`, `email tools`, `management dashboard`, `handles requests management email`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Email/previewQueuedEmail/(:num)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Email – Queued** (`/Management/Email/queued`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Email/queued
+  - **Target Keywords**: `email queued`, `email tools`, `management dashboard`, `handles requests management email`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Email/queued`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### EmailQueue Area
+
+- [ ] **EmailQueue – Create** (`/Management/Marketing/Email-Queue/create`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Email-Queue/create
+  - **Target Keywords**: `emailqueue create`, `emailqueue tools`, `management dashboard`, `handles requests management marketing`, `mymiwallet platform`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Email-Queue/create`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **EmailQueue – Email Queue** (`/Management/Marketing/Email-Queue`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Email-Queue
+  - **Target Keywords**: `emailqueue email queue`, `emailqueue tools`, `management dashboard`, `handles requests management marketing`, `mymiwallet platform`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Email-Queue`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### EmailTemplate Area
+
+- [ ] **EmailTemplate – Create** (`/Management/Marketing/Email-Templates/create`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Email-Templates/create
+  - **Target Keywords**: `emailtemplate create`, `emailtemplate tools`, `management dashboard`, `handles requests management marketing`, `mymiwallet platform`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Email-Templates/create`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Exchange Area
+
+- [ ] **Exchange – Exchange** (`/Management/Exchange`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Exchange
+  - **Target Keywords**: `exchange exchange`, `exchange tools`, `management dashboard`, `handles requests management exchange`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Exchange`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Finance Area
+
+- [ ] **Finance – Finance** (`/Management/Finance`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Finance
+  - **Target Keywords**: `finance finance`, `finance tools`, `management dashboard`, `handles requests management finance`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Finance`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### HR Area
+
+- [ ] **HR – Hr** (`/Management/HR`)
+  - **Full URL**: https://www.mymiwallet.com/Management/HR
+  - **Target Keywords**: `hr hr`, `hr tools`, `management dashboard`, `handles requests management modules`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/HR`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### HowTos Area
+
+- [ ] **HowTos – Employee Account Setup** (`/Management/How-Tos/Employees/Account-Setup`)
+  - **Full URL**: https://www.mymiwallet.com/Management/How-Tos/Employees/Account-Setup
+  - **Target Keywords**: `howtos employee account setup`, `howtos tools`, `management dashboard`, `handles requests management employees`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/How-Tos/Employees/Account-Setup`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **HowTos – Employee Email Setup** (`/Management/How-Tos/Employees/Email-Setup`)
+  - **Full URL**: https://www.mymiwallet.com/Management/How-Tos/Employees/Email-Setup
+  - **Target Keywords**: `howtos employee email setup`, `howtos tools`, `management dashboard`, `handles requests management employees`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/How-Tos/Employees/Email-Setup`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **HowTos – How Tos** (`/Management/How-Tos`)
+  - **Full URL**: https://www.mymiwallet.com/Management/How-Tos
+  - **Target Keywords**: `howtos how tos`, `howtos tools`, `management dashboard`, `handles requests management modules`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/How-Tos`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Management Area
+
+- [ ] **Management – Management** (`/Management`)
+  - **Full URL**: https://www.mymiwallet.com/Management
+  - **Target Keywords**: `management management`, `management tools`, `management dashboard`, `handles requests management modules`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Marketing Area
+
+- [ ] **Marketing – Add** (`/Management/Marketing/Add/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Add/(:segment)
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Add/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Approve Content** (`/Management/Marketing/Approve-Content/(:num)`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Approve-Content/(:num)
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Approve-Content/(:num)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Blog Creator** (`/Management/Marketing/Blog-Creator`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Blog-Creator
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Blog-Creator`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Blogs** (`/Management/Marketing/Blogs`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Blogs
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Blogs`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Campaigns** (`/Management/Marketing/Campaigns`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Campaigns
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Campaigns`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Content Generator** (`/Management/Marketing/Content/Generator`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Content/Generator
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Content/Generator`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Content Listing** (`/Management/Marketing/Content/Listing`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Content/Listing
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Content/Listing`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Content Review** (`/Management/Marketing/Content-Review`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Content-Review
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Content-Review`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Edit** (`/Management/Marketing/Exchange/Edit/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Exchange/Edit/(:segment)
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Exchange/Edit/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Edit Content** (`/Management/Marketing/Edit-Content/(:num)`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Edit-Content/(:num)
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Edit-Content/(:num)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Exchange** (`/Management/Marketing/Exchange`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Exchange
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Exchange`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Fetch Emails** (`/Management/Marketing/fetchEmails`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/fetchEmails
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/fetchEmails`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Financial News** (`/Management/Marketing/Financial-News`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Financial-News
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Financial-News`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Generate Content** (`/Management/Marketing/generateContent`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/generateContent
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/generateContent`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Generate Daily Content Digest** (`/Management/Marketing/generateDailyContentDigest`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/generateDailyContentDigest
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/generateDailyContentDigest`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Generate Grouped Content Drafts** (`/Management/Marketing/Grouped-Content-Drafts`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Grouped-Content-Drafts
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Grouped-Content-Drafts`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Generate Newsletter Content** (`/Management/Marketing/generateNewsletter`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/generateNewsletter
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/generateNewsletter`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Get Recent Scrapes** (`/Management/Marketing/getRecentScrapes`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/getRecentScrapes
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/getRecentScrapes`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Ideas** (`/Management/Marketing/Ideas`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Ideas
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Ideas`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Marketing** (`/Management/Marketing`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Post Creator** (`/Management/Marketing/Post-Creator`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Post-Creator
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Post-Creator`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Preview Generated Post** (`/Management/Marketing/previewGeneratedPost/(:num)`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/previewGeneratedPost/(:num)
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/previewGeneratedPost/(:num)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Promote** (`/Management/Marketing/Promote`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Promote
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Promote`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Promote** (`/Management/Marketing/Promote/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Promote/(:segment)
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Promote/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Reject Content** (`/Management/Marketing/Reject-Content/(:num)`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Reject-Content/(:num)
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Reject-Content/(:num)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Run Content Generation** (`/Management/Marketing/RunContentGeneration`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/RunContentGeneration
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/RunContentGeneration`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Schedule** (`/Management/Marketing/Schedule`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Schedule
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Schedule`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Schedule** (`/Management/Marketing/Schedule/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Schedule/(:segment)
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Schedule/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Schedule Newsletter Campaign** (`/Management/Marketing/scheduleNewsletters`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/scheduleNewsletters
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/scheduleNewsletters`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Send Notification** (`/Management/Marketing/sendNotification`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/sendNotification
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/sendNotification`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Send Schedule Newsletter** (`/Management/Marketing/sendNewsletter`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/sendNewsletter
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `NewsArticle`, `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/sendNewsletter`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Standalone Scrape** (`/Management/Marketing/Quick-Scraper`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Quick-Scraper
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Quick-Scraper`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Submit Daily Log** (`/Management/Marketing/submitDailyLog`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/submitDailyLog
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/submitDailyLog`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Test** (`/Management/Marketing/Test`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Test
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Test`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Top Communities** (`/Management/Marketing/Exchange/Top-Communities`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Exchange/Top-Communities
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Exchange/Top-Communities`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Top Communities** (`/Management/Marketing/Exchange/Top-Communities/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Exchange/Top-Communities/(:segment)
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Exchange/Top-Communities/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Twitter Dashboard** (`/Management/Marketing/Twitter`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Twitter
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Twitter`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – Video Creator** (`/Management/Marketing/Video-Creator`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Video-Creator
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Video-Creator`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – View Daily Logs** (`/Management/Marketing/Daily-Log`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Daily-Log
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Daily-Log`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – View Email** (`/Management/Marketing/Email/(:any)/(:any)`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Email/(:any)/(:any)
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Email/(:any)/(:any)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – View Email** (`/Management/Marketing/View-Email/(:segment)/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/View-Email/(:segment)/(:segment)
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/View-Email/(:segment)/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+- [ ] **Marketing – View-Grouped-Summaries** (`/Management/Marketing/View-Grouped-Summaries`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/View-Grouped-Summaries
+  - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
+  - **Schema Types**: `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/View-Grouped-Summaries`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Marketing:Landing,Marketing:News
+    - Linked from Routes: /,/News-And-Updates
+
+### Operations Area
+
+- [ ] **Operations – Operations** (`/Management/Operations`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Operations
+  - **Target Keywords**: `operations operations`, `operations tools`, `management dashboard`, `handles requests management operations`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Operations`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Partners Area
+
+- [ ] **Partners – Partners** (`/Management/Partners`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Partners
+  - **Target Keywords**: `partners partners`, `partners tools`, `management dashboard`, `handles requests management partners`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Partners`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Projects Area
+
+- [ ] **Projects – Projects** (`/Management/Projects`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Projects
+  - **Target Keywords**: `projects projects`, `projects tools`, `management dashboard`, `handles requests management projects`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Projects`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Projects – Real Estate Quick Intake** (`/Management/Projects/Quick-Intake`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Projects/Quick-Intake
+  - **Target Keywords**: `projects real estate quick intake`, `projects tools`, `management dashboard`, `handles requests management projects`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Projects/Quick-Intake`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Referrals Area
+
+- [ ] **Referrals – Referrals** (`/Management/Referrals`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Referrals
+  - **Target Keywords**: `referrals referrals`, `referrals tools`, `management dashboard`, `handles requests management referrals`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Referrals`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Security Area
+
+- [ ] **Security – Security** (`/Management/Security`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Security
+  - **Target Keywords**: `security security`, `security tools`, `management dashboard`, `handles requests management security`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Security`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Services Area
+
+- [ ] **Services – Services** (`/Management/Services`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Services
+  - **Target Keywords**: `services services`, `services tools`, `management dashboard`, `handles requests management services`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Services`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Users Area
+
+- [ ] **Users – Ajax Block User** (`/Management/Users/ajaxBlockUser/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Users/ajaxBlockUser/(:segment)
+  - **Target Keywords**: `users ajax block user`, `users tools`, `management dashboard`, `handles post requests management`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Users/ajaxBlockUser/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Users – Ajax Bulk Ban Users** (`/Management/Users/ajaxBulkBanUsers`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Users/ajaxBulkBanUsers
+  - **Target Keywords**: `users ajax bulk ban users`, `users tools`, `management dashboard`, `handles post requests management`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Users/ajaxBulkBanUsers`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Users – Profile** (`/Management/Users/Profile/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Users/Profile/(:segment)
+  - **Target Keywords**: `users profile`, `users tools`, `management dashboard`, `handles requests management users`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Users/Profile/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Users – Users** (`/Management/Users`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Users
+  - **Target Keywords**: `users users`, `users tools`, `management dashboard`, `handles requests management users`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Users`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Wallets Area
+
+- [ ] **Wallets – Add User Gold Tasks** (`/Management/Marketing/MyMI-Gold/Tasks/Add`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/MyMI-Gold/Tasks/Add
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/MyMI-Gold/Tasks/Add`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+
+- [ ] **Wallets – Reconcile** (`/Management/Wallets/Reconcile`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Wallets/Reconcile
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Wallets/Reconcile`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+
+- [ ] **Wallets – Wallets** (`/Management/Wallets`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Wallets
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Wallets`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+
+### WebDesign Area
+
+- [ ] **WebDesign – Web Design** (`/Management/Web-Design`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Web-Design
+  - **Target Keywords**: `webdesign web design`, `webdesign tools`, `management dashboard`, `handles requests management design`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Web-Design`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+---
+
+## Ops Module
+
+### Ops Area
+
+- [ ] **Ops – Opcache Reset** (`/_ops/opcache-reset`)
+  - **Full URL**: https://www.mymiwallet.com/_ops/opcache-reset
+  - **Target Keywords**: `ops opcache reset`, `ops tools`, `ops dashboard`, `handles requests opcache reset`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/_ops/opcache-reset`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+---
+
+## Predictions Module
+
+### Predictions Area
+
+- [ ] **Predictions – Markets** (`/Predictions/Markets`)
+  - **Full URL**: https://www.mymiwallet.com/Predictions/Markets
+  - **Target Keywords**: `predictions markets`, `predictions tools`, `predictions dashboard`, `handles requests predictions markets`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Predictions/Markets`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Predictions – Portfolio** (`/Predictions/Portfolio`)
+  - **Full URL**: https://www.mymiwallet.com/Predictions/Portfolio
+  - **Target Keywords**: `predictions portfolio`, `predictions tools`, `predictions dashboard`, `handles requests predictions portfolio`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Predictions/Portfolio`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Predictions – Predictions** (`/Predictions`)
+  - **Full URL**: https://www.mymiwallet.com/Predictions
+  - **Target Keywords**: `predictions predictions`, `predictions tools`, `predictions dashboard`, `handles requests predictions modules`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Predictions`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Predictions – Settlements** (`/Predictions/Settlements`)
+  - **Full URL**: https://www.mymiwallet.com/Predictions/Settlements
+  - **Target Keywords**: `predictions settlements`, `predictions tools`, `predictions dashboard`, `handles requests predictions settlements`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Predictions/Settlements`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Predictions – View** (`/Predictions/Market/(:num)`)
+  - **Full URL**: https://www.mymiwallet.com/Predictions/Market/(:num)
+  - **Target Keywords**: `predictions view`, `predictions tools`, `predictions dashboard`, `handles requests predictions market`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Predictions/Market/(:num)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+---
+
+## ScriptStudio Module
+
+### ScriptStudio Area
+
+- [ ] **ScriptStudio – Create** (`/ScriptStudio/Create`)
+  - **Full URL**: https://www.mymiwallet.com/ScriptStudio/Create
+  - **Target Keywords**: `scriptstudio create`, `scriptstudio tools`, `scriptstudio dashboard`, `handles requests scriptstudio create`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/ScriptStudio/Create`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **ScriptStudio – Edit** (`/ScriptStudio/Edit/(:num)`)
+  - **Full URL**: https://www.mymiwallet.com/ScriptStudio/Edit/(:num)
+  - **Target Keywords**: `scriptstudio edit`, `scriptstudio tools`, `scriptstudio dashboard`, `handles requests scriptstudio edit`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/ScriptStudio/Edit/(:num)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **ScriptStudio – Export** (`/ScriptStudio/Export/(:num)/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/ScriptStudio/Export/(:num)/(:segment)
+  - **Target Keywords**: `scriptstudio export`, `scriptstudio tools`, `scriptstudio dashboard`, `handles requests scriptstudio export`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/ScriptStudio/Export/(:num)/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **ScriptStudio – Marketplace** (`/ScriptStudio/Marketplace`)
+  - **Full URL**: https://www.mymiwallet.com/ScriptStudio/Marketplace
+  - **Target Keywords**: `scriptstudio marketplace`, `scriptstudio tools`, `scriptstudio dashboard`, `handles requests scriptstudio marketplace`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/ScriptStudio/Marketplace`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **ScriptStudio – Preview** (`/ScriptStudio/Preview/(:num)`)
+  - **Full URL**: https://www.mymiwallet.com/ScriptStudio/Preview/(:num)
+  - **Target Keywords**: `scriptstudio preview`, `scriptstudio tools`, `scriptstudio dashboard`, `handles requests scriptstudio preview`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/ScriptStudio/Preview/(:num)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **ScriptStudio – Script Studio** (`/ScriptStudio`)
+  - **Full URL**: https://www.mymiwallet.com/ScriptStudio
+  - **Target Keywords**: `scriptstudio script studio`, `scriptstudio tools`, `scriptstudio dashboard`, `handles requests scriptstudio modules`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/ScriptStudio`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+---
+
+## ServiceWorker Module
+
+### ServiceWorker Area
+
+- [ ] **ServiceWorker – Sw.Js** (`/sw.js`)
+  - **Full URL**: https://www.mymiwallet.com/sw.js
+  - **Target Keywords**: `serviceworker sw js`, `serviceworker tools`, `serviceworker dashboard`, `handles requests controllers serviceworker`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/sw.js`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+---
+
+## Support Module
+
+### Support Area
+
+- [ ] **Support – Article** (`/Support/Article/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Support/Article/(:segment)
+  - **Target Keywords**: `support center`, `help desk`, `knowledge base`, `customer support`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Support/Article/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Support:HelpCenter,User:Dashboard
+    - Linked from Routes: /Support,/Dashboard
+
+- [ ] **Support – Faq** (`/Support/FAQ`)
+  - **Full URL**: https://www.mymiwallet.com/Support/FAQ
+  - **Target Keywords**: `support center`, `help desk`, `knowledge base`, `customer support`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Support/FAQ`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Support:HelpCenter,User:Dashboard
+    - Linked from Routes: /Support,/Dashboard
+
+- [ ] **Support – Send Test Email** (`/Support/Test-Email`)
+  - **Full URL**: https://www.mymiwallet.com/Support/Test-Email
+  - **Target Keywords**: `support center`, `help desk`, `knowledge base`, `customer support`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Support/Test-Email`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Support:HelpCenter,User:Dashboard
+    - Linked from Routes: /Support,/Dashboard
+
+- [ ] **Support – Support** (`/Support`)
+  - **Full URL**: https://www.mymiwallet.com/Support
+  - **Target Keywords**: `support center`, `help desk`, `knowledge base`, `customer support`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Support`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Support:HelpCenter,User:Dashboard
+    - Linked from Routes: /Support,/Dashboard
+
+- [ ] **Support – Test** (`/Support/Test`)
+  - **Full URL**: https://www.mymiwallet.com/Support/Test
+  - **Target Keywords**: `support center`, `help desk`, `knowledge base`, `customer support`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Support/Test`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Support:HelpCenter,User:Dashboard
+    - Linked from Routes: /Support,/Dashboard
+
+---
+
+## User Module
+
+### Account Area
+
+- [ ] **Account – Create Link Token** (`/Accounts/createLinkToken`)
+  - **Full URL**: https://www.mymiwallet.com/Accounts/createLinkToken
+  - **Target Keywords**: `account create link token`, `account tools`, `user dashboard`, `handles requests accounts createlinktoken`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Accounts/createLinkToken`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: create-link-token
+
+### Advisor Area
+
+- [ ] **Advisor – Advisors** (`/Advisors`)
+  - **Full URL**: https://www.mymiwallet.com/Advisors
+  - **Target Keywords**: `advisor advisors`, `advisor tools`, `user dashboard`, `handles post requests advisors`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Advisors`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Alerts Area
+
+- [ ] **Alerts – Alerts** (`/Alerts`)
+  - **Full URL**: https://www.mymiwallet.com/Alerts
+  - **Target Keywords**: `investment alerts`, `automated trade alerts`, `stock alerts`, `crypto alerts`
+  - **Schema Types**: `InvestmentOrDeposit`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Alerts`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Alerts
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+### Budget Area
+
+- [ ] **Budget – Account Manager** (`/Budget/Account-Manager`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Account-Manager
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Account-Manager`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Account Overview** (`/Budget/Expenses`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Expenses
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Expenses`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Account Overview** (`/Budget/Income`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Income
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Income`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Add** (`/Budget/Add`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Add
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Add`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Add** (`/Budget/Add/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Add/(:segment)
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Add/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Approve Recurring Schedule** (`/Budget/Approve-Recurring-Schedule/(:num)`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Approve-Recurring-Schedule/(:num)
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Approve-Recurring-Schedule/(:num)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Budget** (`/Budget`)
+  - **Full URL**: https://www.mymiwallet.com/Budget
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Cancel Account** (`/Budget/Cancel-Account/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Cancel-Account/(:segment)
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Cancel-Account/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Delete Account** (`/Budget/Delete-Account`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Delete-Account
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Delete-Account`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Delete Account** (`/Budget/Delete-Account/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Delete-Account/(:segment)
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Delete-Account/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Details** (`/Budget/Details`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Details
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Details`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Details** (`/Budget/Details/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Details/(:segment)
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Details/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Edit** (`/Budget/Copy`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Copy
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Copy`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Edit** (`/Budget/Copy/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Copy/(:segment)
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Copy/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Edit** (`/Budget/Edit`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Edit
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Edit`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Edit** (`/Budget/Edit/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Edit/(:segment)
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Edit/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Edit** (`/Budget/Edit/(:segment)/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Edit/(:segment)/(:segment)
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Edit/(:segment)/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Edit** (`/Budget/Recurring-Account/Edit/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Recurring-Account/Edit/(:segment)
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Recurring-Account/Edit/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Financial Analysis** (`/Budget/Financial-Analysis`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Financial-Analysis
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Financial-Analysis`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Financial Forecaster** (`/Budget/Financial-Forecaster`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Financial-Forecaster
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Financial-Forecaster`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Forecast** (`/Budget/Forecast`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Forecast
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Forecast`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Forecast** (`/Budget/Forecast/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Forecast/(:segment)
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Forecast/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – History** (`/Budget/History`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/History
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/History`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – History** (`/Budget/History/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/History/(:segment)
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/History/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Last Month** (`/Budget/Last-Month`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Last-Month
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Last-Month`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Last Month** (`/Budget/Last-Month/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Last-Month/(:segment)
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Last-Month/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Next Month** (`/Budget/Next-Month`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Next-Month
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Next-Month`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Next Month** (`/Budget/Next-Month/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Next-Month/(:segment)
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Next-Month/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Paid** (`/Budget/Status/Paid/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Status/Paid/(:segment)
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Status/Paid/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Recurring Schedule** (`/Budget/Recurring-Account/Schedule`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Recurring-Account/Schedule
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Recurring-Account/Schedule`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Recurring Schedule** (`/Budget/Recurring-Account/Schedule/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Recurring-Account/Schedule/(:segment)
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Recurring-Account/Schedule/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Search** (`/Budget/Search/(:any)`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Search/(:any)
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Search/(:any)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Settings** (`/Budget/Settings/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Settings/(:segment)
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Settings/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – This Month** (`/Budget/This-Month`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/This-Month
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/This-Month`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – This Month** (`/Budget/This-Month/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/This-Month/(:segment)
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/This-Month/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+- [ ] **Budget – Unpaid** (`/Budget/Status/Unpaid/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Status/Unpaid/(:segment)
+  - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Status/Unpaid/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Budget
+    - Linked from Routes: /Dashboard,/Wallets,/Alerts
+
+### Dashboard Area
+
+- [ ] **Dashboard – Account** (`/Account`)
+  - **Full URL**: https://www.mymiwallet.com/Account
+  - **Target Keywords**: `dashboard account`, `dashboard tools`, `user dashboard`, `handles requests account modules`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Account`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: account
+
+- [ ] **Dashboard – Activity** (`/Account/Activity`)
+  - **Full URL**: https://www.mymiwallet.com/Account/Activity
+  - **Target Keywords**: `dashboard activity`, `dashboard tools`, `user dashboard`, `handles requests account activity`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Account/Activity`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: activity
+
+- [ ] **Dashboard – Billing** (`/Account/Billing`)
+  - **Full URL**: https://www.mymiwallet.com/Account/Billing
+  - **Target Keywords**: `dashboard billing`, `dashboard tools`, `user dashboard`, `handles requests account billing`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Account/Billing`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: billing
+
+- [ ] **Dashboard – Check Onboarding Status** (`/Dashboard/checkOnboardingStatus`)
+  - **Full URL**: https://www.mymiwallet.com/Dashboard/checkOnboardingStatus
+  - **Target Keywords**: `dashboard check onboarding status`, `dashboard tools`, `user dashboard`, `handles requests dashboard checkonboardingstatus`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dashboard/checkOnboardingStatus`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: check-onboarding-status
+
+- [ ] **Dashboard – Connected Accounts** (`/Account/Connected-Accounts`)
+  - **Full URL**: https://www.mymiwallet.com/Account/Connected-Accounts
+  - **Target Keywords**: `dashboard connected accounts`, `dashboard tools`, `user dashboard`, `handles requests account connected`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Account/Connected-Accounts`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: connected-accounts
+
+- [ ] **Dashboard – Dashboard** (`/Dashboard`)
+  - **Full URL**: https://www.mymiwallet.com/Dashboard
+  - **Target Keywords**: `dashboard dashboard`, `dashboard tools`, `user dashboard`, `handles requests dashboard modules`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dashboard`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: dashboard
+
+- [ ] **Dashboard – Goals** (`/MyMI-Gold/Goals/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/MyMI-Gold/Goals/(:segment)
+  - **Target Keywords**: `dashboard goals`, `dashboard tools`, `user dashboard`, `handles requests mymi gold`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/MyMI-Gold/Goals/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: mymi-gold-daily-goals
+
+- [ ] **Dashboard – Load Modal Content** (`/Dashboard/Transaction-Modal/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)
+  - **Target Keywords**: `dashboard load modal content`, `dashboard tools`, `user dashboard`, `handles requests dashboard transaction`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: load-modal-1-segment
+
+- [ ] **Dashboard – Load Modal Content** (`/Dashboard/Transaction-Modal/(:segment)/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)/(:segment)
+  - **Target Keywords**: `dashboard load modal content`, `dashboard tools`, `user dashboard`, `handles requests dashboard transaction`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: load-modal-2-segment
+
+- [ ] **Dashboard – Load Modal Content** (`/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)
+  - **Target Keywords**: `dashboard load modal content`, `dashboard tools`, `user dashboard`, `handles requests dashboard transaction`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: load-modal-3-segment
+
+- [ ] **Dashboard – Load Modal Content** (`/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)
+  - **Target Keywords**: `dashboard load modal content`, `dashboard tools`, `user dashboard`, `handles requests dashboard transaction`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: load-modal-4-segment
+
+- [ ] **Dashboard – Load Modal Content** (`/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)
+  - **Target Keywords**: `dashboard load modal content`, `dashboard tools`, `user dashboard`, `handles requests dashboard transaction`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: load-modal-5-segment
+
+- [ ] **Dashboard – Load Modal Content** (`/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)
+  - **Target Keywords**: `dashboard load modal content`, `dashboard tools`, `user dashboard`, `handles requests dashboard transaction`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: load-modal-6-segment
+
+- [ ] **Dashboard – Loading Screen** (`/Dashboard/LoadingScreen`)
+  - **Full URL**: https://www.mymiwallet.com/Dashboard/LoadingScreen
+  - **Target Keywords**: `dashboard loading screen`, `dashboard tools`, `user dashboard`, `handles requests dashboard loadingscreen`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dashboard/LoadingScreen`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: loading-screen
+
+- [ ] **Dashboard – Notifications** (`/Account/Notifications`)
+  - **Full URL**: https://www.mymiwallet.com/Account/Notifications
+  - **Target Keywords**: `dashboard notifications`, `dashboard tools`, `user dashboard`, `handles requests account notifications`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Account/Notifications`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: notifications
+
+- [ ] **Dashboard – Onboarding** (`/Dashboard/onboarding`)
+  - **Full URL**: https://www.mymiwallet.com/Dashboard/onboarding
+  - **Target Keywords**: `dashboard onboarding`, `dashboard tools`, `user dashboard`, `handles requests dashboard onboarding`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dashboard/onboarding`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: onboarding
+
+- [ ] **Dashboard – Performance** (`/Performance`)
+  - **Full URL**: https://www.mymiwallet.com/Performance
+  - **Target Keywords**: `dashboard performance`, `dashboard tools`, `user dashboard`, `handles requests performance modules`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Performance`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: performance
+
+- [ ] **Dashboard – Profile** (`/Profile/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Profile/(:segment)
+  - **Target Keywords**: `dashboard profile`, `dashboard tools`, `user dashboard`, `handles requests profile segment`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Profile/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: profile
+
+- [ ] **Dashboard – Schedule** (`/Schedule`)
+  - **Full URL**: https://www.mymiwallet.com/Schedule
+  - **Target Keywords**: `dashboard schedule`, `dashboard tools`, `user dashboard`, `handles requests schedule modules`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Schedule`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: schedule
+
+- [ ] **Dashboard – Security** (`/Account/Security`)
+  - **Full URL**: https://www.mymiwallet.com/Account/Security
+  - **Target Keywords**: `dashboard security`, `dashboard tools`, `user dashboard`, `handles requests account security`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Account/Security`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: security
+
+- [ ] **Dashboard – Social Media** (`/Account/Social-Media`)
+  - **Full URL**: https://www.mymiwallet.com/Account/Social-Media
+  - **Target Keywords**: `dashboard social media`, `dashboard tools`, `user dashboard`, `handles requests account social`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Account/Social-Media`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Notes: alias: social-media
+
+### Institutes Area
+
+- [ ] **Institutes – Institutes** (`/Institutes`)
+  - **Full URL**: https://www.mymiwallet.com/Institutes
+  - **Target Keywords**: `institutes institutes`, `institutes tools`, `user dashboard`, `handles post requests institutes`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Institutes`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Investment Area
+
+- [ ] **Investment – Create Goal** (`/Investments/Goals/(:num)`)
+  - **Full URL**: https://www.mymiwallet.com/Investments/Goals/(:num)
+  - **Target Keywords**: `investment create goal`, `investment tools`, `user dashboard`, `handles requests investments goals`, `mymiwallet platform`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Investments/Goals/(:num)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Investment – Get Goals** (`/Investments/Goals`)
+  - **Full URL**: https://www.mymiwallet.com/Investments/Goals
+  - **Target Keywords**: `investment get goals`, `investment tools`, `user dashboard`, `handles requests investments goals`, `mymiwallet platform`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Investments/Goals`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Investment – Get Strategies** (`/Investments/Strategies`)
+  - **Full URL**: https://www.mymiwallet.com/Investments/Strategies
+  - **Target Keywords**: `investment get strategies`, `investment tools`, `user dashboard`, `handles requests investments strategies`, `mymiwallet platform`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Investments/Strategies`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Investment – Get Strategy** (`/Investments/Strategies/(:num)`)
+  - **Full URL**: https://www.mymiwallet.com/Investments/Strategies/(:num)
+  - **Target Keywords**: `investment get strategy`, `investment tools`, `user dashboard`, `handles requests investments strategies`, `mymiwallet platform`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Investments/Strategies/(:num)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Investments Area
+
+- [ ] **Investments – Add** (`/Investments/Add`)
+  - **Full URL**: https://www.mymiwallet.com/Investments/Add
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Investments/Add`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Investments
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Investments – Add** (`/Investments/Add/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Investments/Add/(:segment)
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Investments/Add/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Investments
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Investments – Auto Save** (`/Investments/Autosave`)
+  - **Full URL**: https://www.mymiwallet.com/Investments/Autosave
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Investments/Autosave`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Investments
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Investments – Crypto Overview** (`/Investments/Crypto-Overview`)
+  - **Full URL**: https://www.mymiwallet.com/Investments/Crypto-Overview
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Investments/Crypto-Overview`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Investments
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Investments – Economic Data** (`/Investments/Economic-Data`)
+  - **Full URL**: https://www.mymiwallet.com/Investments/Economic-Data
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Investments/Economic-Data`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Investments
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Investments – Get Trade Data** (`/Trade-Tracker/getTradeData`)
+  - **Full URL**: https://www.mymiwallet.com/Trade-Tracker/getTradeData
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Trade-Tracker/getTradeData`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Investments
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+    - Notes: alias: get-trade-tracker-data
+
+- [ ] **Investments – Investments** (`/Investments`)
+  - **Full URL**: https://www.mymiwallet.com/Investments
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Investments`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Investments
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Investments – Market News** (`/Investments/Market-News`)
+  - **Full URL**: https://www.mymiwallet.com/Investments/Market-News
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Investments/Market-News`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Investments
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Investments – My Investments** (`/My-Investments`)
+  - **Full URL**: https://www.mymiwallet.com/My-Investments
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/My-Investments`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Investments
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+    - Notes: requires filter login
+
+- [ ] **Investments – My Minews** (`/Investments/MyMI-News`)
+  - **Full URL**: https://www.mymiwallet.com/Investments/MyMI-News
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Investments/MyMI-News`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Investments
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Investments – My Miresearch** (`/Investments/MyMI-Research`)
+  - **Full URL**: https://www.mymiwallet.com/Investments/MyMI-Research
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Investments/MyMI-Research`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Investments
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Investments – My Trades** (`/My-Trades`)
+  - **Full URL**: https://www.mymiwallet.com/My-Trades
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/My-Trades`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Investments
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+    - Notes: requires filter login
+
+- [ ] **Investments – Overview** (`/Investments/Overview`)
+  - **Full URL**: https://www.mymiwallet.com/Investments/Overview
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Investments/Overview`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Investments
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Investments – Retirement** (`/Investments/Retirement`)
+  - **Full URL**: https://www.mymiwallet.com/Investments/Retirement
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Investments/Retirement`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Investments
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Investments – Save** (`/Investments/Save`)
+  - **Full URL**: https://www.mymiwallet.com/Investments/Save
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Investments/Save`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Investments
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Investments – Services** (`/Investments/Services`)
+  - **Full URL**: https://www.mymiwallet.com/Investments/Services
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Investments/Services`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Investments
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Investments – Stock Overview** (`/Investments/Stock-Overview`)
+  - **Full URL**: https://www.mymiwallet.com/Investments/Stock-Overview
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Investments/Stock-Overview`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Investments
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Investments – Test** (`/Investments/Test`)
+  - **Full URL**: https://www.mymiwallet.com/Investments/Test
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Investments/Test`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Investments
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+- [ ] **Investments – Trade Tracker** (`/Trade-Tracker`)
+  - **Full URL**: https://www.mymiwallet.com/Trade-Tracker
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Trade-Tracker`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Investments
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+    - Notes: alias: mymi-trade-tracker
+
+- [ ] **Investments – Watchlist** (`/Investments/Watchlist`)
+  - **Full URL**: https://www.mymiwallet.com/Investments/Watchlist
+  - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Investments/Watchlist`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Investments
+    - Linked from Routes: /Dashboard,/Budget,/Wallets
+
+### Knowledgebase Area
+
+- [ ] **Knowledgebase – Account Billing** (`/Knowledgebase/Account-And-Billing`)
+  - **Full URL**: https://www.mymiwallet.com/Knowledgebase/Account-And-Billing
+  - **Target Keywords**: `support articles`, `help documentation`, `troubleshooting guides`, `faq`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Knowledgebase/Account-And-Billing`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Support:HelpCenter,User:Dashboard
+    - Linked from Routes: /Support,/Dashboard
+
+- [ ] **Knowledgebase – Assets** (`/Knowledgebase/Assets`)
+  - **Full URL**: https://www.mymiwallet.com/Knowledgebase/Assets
+  - **Target Keywords**: `support articles`, `help documentation`, `troubleshooting guides`, `faq`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Knowledgebase/Assets`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Support:HelpCenter,User:Dashboard
+    - Linked from Routes: /Support,/Dashboard
+
+- [ ] **Knowledgebase – Integrating Wallets** (`/Knowledgebase/Integrating-Wallets`)
+  - **Full URL**: https://www.mymiwallet.com/Knowledgebase/Integrating-Wallets
+  - **Target Keywords**: `support articles`, `help documentation`, `troubleshooting guides`, `faq`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Knowledgebase/Integrating-Wallets`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Support:HelpCenter,User:Dashboard
+    - Linked from Routes: /Support,/Dashboard
+
+- [ ] **Knowledgebase – Investor Profile** (`/Knowledgebase/Investor-Profile`)
+  - **Full URL**: https://www.mymiwallet.com/Knowledgebase/Investor-Profile
+  - **Target Keywords**: `support articles`, `help documentation`, `troubleshooting guides`, `faq`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Knowledgebase/Investor-Profile`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Support:HelpCenter,User:Dashboard
+    - Linked from Routes: /Support,/Dashboard
+
+- [ ] **Knowledgebase – Knowledgebase** (`/Knowledgebase`)
+  - **Full URL**: https://www.mymiwallet.com/Knowledgebase
+  - **Target Keywords**: `support articles`, `help documentation`, `troubleshooting guides`, `faq`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Knowledgebase`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Support:HelpCenter,User:Dashboard
+    - Linked from Routes: /Support,/Dashboard
+
+- [ ] **Knowledgebase – Kycverification** (`/Knowledgebase/KYC-Verification`)
+  - **Full URL**: https://www.mymiwallet.com/Knowledgebase/KYC-Verification
+  - **Target Keywords**: `support articles`, `help documentation`, `troubleshooting guides`, `faq`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Knowledgebase/KYC-Verification`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Support:HelpCenter,User:Dashboard
+    - Linked from Routes: /Support,/Dashboard
+
+- [ ] **Knowledgebase – Partnerships** (`/Knowledgebase/MyMI-Partnerships`)
+  - **Full URL**: https://www.mymiwallet.com/Knowledgebase/MyMI-Partnerships
+  - **Target Keywords**: `support articles`, `help documentation`, `troubleshooting guides`, `faq`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Knowledgebase/MyMI-Partnerships`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Support:HelpCenter,User:Dashboard
+    - Linked from Routes: /Support,/Dashboard
+
+- [ ] **Knowledgebase – Promoted Articles** (`/Knowledgebase/Promoted-Articles`)
+  - **Full URL**: https://www.mymiwallet.com/Knowledgebase/Promoted-Articles
+  - **Target Keywords**: `support articles`, `help documentation`, `troubleshooting guides`, `faq`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Knowledgebase/Promoted-Articles`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Support:HelpCenter,User:Dashboard
+    - Linked from Routes: /Support,/Dashboard
+
+- [ ] **Knowledgebase – Technical Support** (`/Knowledgebase/Technical-Support`)
+  - **Full URL**: https://www.mymiwallet.com/Knowledgebase/Technical-Support
+  - **Target Keywords**: `support articles`, `help documentation`, `troubleshooting guides`, `faq`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Knowledgebase/Technical-Support`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Support:HelpCenter,User:Dashboard
+    - Linked from Routes: /Support,/Dashboard
+
+- [ ] **Knowledgebase – Trade Tracker** (`/Knowledgebase/Trade-Tracker`)
+  - **Full URL**: https://www.mymiwallet.com/Knowledgebase/Trade-Tracker
+  - **Target Keywords**: `support articles`, `help documentation`, `troubleshooting guides`, `faq`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Knowledgebase/Trade-Tracker`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Support:HelpCenter,User:Dashboard
+    - Linked from Routes: /Support,/Dashboard
+
+- [ ] **Knowledgebase – Tutorials** (`/Knowledgebase/Tutorials`)
+  - **Full URL**: https://www.mymiwallet.com/Knowledgebase/Tutorials
+  - **Target Keywords**: `support articles`, `help documentation`, `troubleshooting guides`, `faq`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Knowledgebase/Tutorials`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Support:HelpCenter,User:Dashboard
+    - Linked from Routes: /Support,/Dashboard
+
+- [ ] **Knowledgebase – Types Of Accounts** (`/Knowledgebase/Types-Of-Accounts`)
+  - **Full URL**: https://www.mymiwallet.com/Knowledgebase/Types-Of-Accounts
+  - **Target Keywords**: `support articles`, `help documentation`, `troubleshooting guides`, `faq`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Knowledgebase/Types-Of-Accounts`)
+  - **Internal Links**:
+    - Footer: ☑
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: Support:HelpCenter,User:Dashboard
+    - Linked from Routes: /Support,/Dashboard
+
+### Projects Area
+
+- [ ] **Projects – My Commitments** (`/Projects/My/Commitments`)
+  - **Full URL**: https://www.mymiwallet.com/Projects/My/Commitments
+  - **Target Keywords**: `projects my commitments`, `projects tools`, `user dashboard`, `handles requests projects commitments`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Projects/My/Commitments`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Projects – Projects** (`/Projects`)
+  - **Full URL**: https://www.mymiwallet.com/Projects
+  - **Target Keywords**: `projects projects`, `projects tools`, `user dashboard`, `handles requests projects modules`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Projects`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Projects – View** (`/Projects/View/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Projects/View/(:segment)
+  - **Target Keywords**: `projects view`, `projects tools`, `user dashboard`, `handles requests projects view`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Projects/View/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Referral Area
+
+- [ ] **Referral – Create** (`/Referrals/Create`)
+  - **Full URL**: https://www.mymiwallet.com/Referrals/Create
+  - **Target Keywords**: `referral create`, `referral tools`, `user dashboard`, `handles post requests referrals`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Referrals/Create`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Referral – My Referrals** (`/My-Referrals`)
+  - **Full URL**: https://www.mymiwallet.com/My-Referrals
+  - **Target Keywords**: `referral my referrals`, `referral tools`, `user dashboard`, `handles post requests referrals`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/My-Referrals`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Referral – Referrals** (`/Referrals`)
+  - **Full URL**: https://www.mymiwallet.com/Referrals
+  - **Target Keywords**: `referral referrals`, `referral tools`, `user dashboard`, `handles post requests referrals`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Referrals`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Referral – Send Referral Email** (`/Referrals/sendReferralEmail`)
+  - **Full URL**: https://www.mymiwallet.com/Referrals/sendReferralEmail
+  - **Target Keywords**: `referral send referral email`, `referral tools`, `user dashboard`, `handles post requests referrals`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Referrals/sendReferralEmail`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Search Area
+
+- [ ] **Search – Search** (`/Search`)
+  - **Full URL**: https://www.mymiwallet.com/Search
+  - **Target Keywords**: `search search`, `search tools`, `user dashboard`, `handles requests search modules`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Search`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+- [ ] **Search – Search** (`/Search/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Search/(:segment)
+  - **Target Keywords**: `search search`, `search tools`, `user dashboard`, `handles requests search segment`, `mymiwallet platform`
+  - **Schema Types**: `WebPage`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Search/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☐
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+
+### Wallets Area
+
+- [ ] **Wallets – Account Manager** (`/Wallets/Account-Manager`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Account-Manager
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Account-Manager`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.account-manager
+
+- [ ] **Wallets – Add** (`/Wallets/Add`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Add
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Add`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.add
+
+- [ ] **Wallets – Add** (`/Wallets/Add/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Add/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Add/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.add.segment
+
+- [ ] **Wallets – Add** (`/Wallets/Banking/Add/Account/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Banking/Add/Account/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Banking/Add/Account/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.banking.add.account.segment
+
+- [ ] **Wallets – Add Account** (`/Wallets/Banking/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Banking/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Banking/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.banking.segment
+
+- [ ] **Wallets – Add Deposit Fetch** (`/Wallets/Deposit/Fetch`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Deposit/Fetch
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Deposit/Fetch`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.deposit.fetch
+
+- [ ] **Wallets – Add Fetch** (`/Wallets/Add/(:segment)/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Add/(:segment)/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Add/(:segment)/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.add.segment.segment
+
+- [ ] **Wallets – Add Withdraw Fetch** (`/Wallets/Withdraw/Fetch`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Withdraw/Fetch
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Withdraw/Fetch`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.withdraw.fetch
+
+- [ ] **Wallets – Attach Account** (`/Wallets/Attach-Account`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Attach-Account
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Attach-Account`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.attach-account
+
+- [ ] **Wallets – Attach Account** (`/Wallets/Attach-Account/(:segment)/(:segment)/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Attach-Account/(:segment)/(:segment)/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Attach-Account/(:segment)/(:segment)/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.attach-account.segment.segment.segment
+
+- [ ] **Wallets – Banking** (`/Wallets/Banking`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Banking
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Banking`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.banking
+
+- [ ] **Wallets – Checking** (`/Wallets/Checking`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Checking
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Checking`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.checking
+
+- [ ] **Wallets – Coin Swap** (`/Wallets/Coin-Swap`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Coin-Swap
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Coin-Swap`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.coin-swap
+
+- [ ] **Wallets – Coin Swap** (`/Wallets/Coin-Swap/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Coin-Swap/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Coin-Swap/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.coin-swap.segment
+
+- [ ] **Wallets – Complete Purchase** (`/Wallets/Complete/Purchase`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Complete/Purchase
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Complete/Purchase`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.complete.purchase
+
+- [ ] **Wallets – Confirm Deposit** (`/Wallets/Confirm-Deposit`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Confirm-Deposit
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Confirm-Deposit`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.confirm.deposit
+
+- [ ] **Wallets – Create Banke Account** (`/Wallets/Add/Bank-Account`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Add/Bank-Account
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Add/Bank-Account`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.add.bank-account
+
+- [ ] **Wallets – Credit** (`/Wallets/Credit`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Credit
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Credit`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.credit
+
+- [ ] **Wallets – Customize Membership** (`/Wallets/Purchase/Memberships/Customize`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/Memberships/Customize
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/Memberships/Customize`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+
+- [ ] **Wallets – Debt** (`/Wallets/Debt`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Debt
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Debt`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.debt
+
+- [ ] **Wallets – Delete** (`/Wallets/Delete/(:segment)/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Delete/(:segment)/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Delete/(:segment)/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+
+- [ ] **Wallets – Deposit** (`/Wallets/Deposit`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Deposit
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Deposit`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.deposit
+
+- [ ] **Wallets – Deposit** (`/Wallets/Deposit/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Deposit/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Deposit/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.deposit.segment
+
+- [ ] **Wallets – Deposit** (`/Wallets/Deposit/Funds`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Deposit/Funds
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Deposit/Funds`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.deposit.funds
+
+- [ ] **Wallets – Deposit Complete** (`/Wallets/Deposit/Complete`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Deposit/Complete
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Deposit/Complete`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.deposit.complete
+
+- [ ] **Wallets – Deposit Complete** (`/Wallets/Deposit/Complete/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Deposit/Complete/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Deposit/Complete/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.deposit.complete.segment
+
+- [ ] **Wallets – Details** (`/Wallets/Banking/Details/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Banking/Details/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Banking/Details/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.banking.details.segment
+
+- [ ] **Wallets – Details** (`/Wallets/Credit/Details/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Credit/Details/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Credit/Details/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+
+- [ ] **Wallets – Details** (`/Wallets/Debt/Details/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Debt/Details/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Debt/Details/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.debt.details.segment
+
+- [ ] **Wallets – Details** (`/Wallets/Details`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Details
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Details`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.details
+
+- [ ] **Wallets – Details** (`/Wallets/Investment/Details/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Investment/Details/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Investment/Details/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.investment.details
+
+- [ ] **Wallets – Edit** (`/Wallets/Banking/Edit/Account/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Banking/Edit/Account/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Banking/Edit/Account/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.banking.edit.account.segment
+
+- [ ] **Wallets – Edit** (`/Wallets/Credit/Edit/Account/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Credit/Edit/Account/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Credit/Edit/Account/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+
+- [ ] **Wallets – Edit** (`/Wallets/Debt/Edit/Account/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Debt/Edit/Account/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Debt/Edit/Account/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.debt.edit.account.segment
+
+- [ ] **Wallets – Edit** (`/Wallets/Edit`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Edit
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Edit`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.edit
+
+- [ ] **Wallets – Edit** (`/Wallets/Edit/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Edit/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Edit/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.edit.segment
+
+- [ ] **Wallets – Edit** (`/Wallets/Edit/(:segment)/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Edit/(:segment)/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Edit/(:segment)/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.edit.segment.segment
+
+- [ ] **Wallets – Edit** (`/Wallets/Investment/Edit/Account/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Investment/Edit/Account/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Investment/Edit/Account/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.investment.edit
+
+- [ ] **Wallets – Feature Manager** (`/Wallets/Feature-Manager`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Feature-Manager
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Feature-Manager`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.feature-manager
+
+- [ ] **Wallets – Generate Wallet** (`/Wallets/Create`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Create
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Create`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.create
+
+- [ ] **Wallets – Generate Wallet** (`/Wallets/Generate-Wallet`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Generate-Wallet
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Generate-Wallet`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.generate-wallet
+
+- [ ] **Wallets – Handle My Migpay Pal Callback** (`/Wallets/Wallets/MyMIGPayPalCallback`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Wallets/MyMIGPayPalCallback
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Wallets/MyMIGPayPalCallback`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+
+- [ ] **Wallets – Investments** (`/Wallets/Investments`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Investments
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Investments`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.investments
+
+- [ ] **Wallets – Link Account** (`/Wallets/Link-Account`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Link-Account
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Link-Account`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.link-account
+
+- [ ] **Wallets – Link Account** (`/Wallets/Link-Account/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Link-Account/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Link-Account/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.link-account.segment
+
+- [ ] **Wallets – Link Account** (`/Wallets/Link-Account/(:segment)/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Link-Account/(:segment)/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Link-Account/(:segment)/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.link-account.segment.segment
+
+- [ ] **Wallets – Link Account Success** (`/Wallets/Link-Account/Success`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Link-Account/Success
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Link-Account/Success`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.link-account.success
+
+- [ ] **Wallets – Link Account Success** (`/Wallets/Link-Account/Success/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Link-Account/Success/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Link-Account/Success/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.link-account.success.segment
+
+- [ ] **Wallets – My Miwallet** (`/MyMI-Wallet`)
+  - **Full URL**: https://www.mymiwallet.com/MyMI-Wallet
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/MyMI-Wallet`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: mymi-wallet
+
+- [ ] **Wallets – Purchase** (`/Wallets/Purchase`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+
+- [ ] **Wallets – Purchase** (`/Wallets/Purchase/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+
+- [ ] **Wallets – Purchase** (`/Wallets/Purchase/Memberships/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/Memberships/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/Memberships/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+
+- [ ] **Wallets – Purchase** (`/Wallets/Purchase/Memberships/(:segment)/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/Memberships/(:segment)/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/Memberships/(:segment)/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+
+- [ ] **Wallets – Purchase Complete** (`/Wallets/Purchase/(:segment)/Complete`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/(:segment)/Complete
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/(:segment)/Complete`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+
+- [ ] **Wallets – Purchase Complete** (`/Wallets/Purchase/Complete/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/Complete/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/Complete/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+
+- [ ] **Wallets – Purchase Complete** (`/Wallets/Purchase/Complete/(:segment)/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/Complete/(:segment)/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/Complete/(:segment)/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+
+- [ ] **Wallets – Purchase Manager** (`/Wallets/Purchase-Manager`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase-Manager
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase-Manager`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+
+- [ ] **Wallets – Purchase Membership Success** (`/Wallets/Purchase/Memberships/Success`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/Memberships/Success
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/Memberships/Success`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+
+- [ ] **Wallets – Purchase Membership Success** (`/Wallets/Purchase/Memberships/Success`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/Memberships/Success
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/Memberships/Success`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+
+- [ ] **Wallets – Purchase My Migold** (`/Wallets/Purchase/MyMI-Gold`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/MyMI-Gold
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/MyMI-Gold`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+
+- [ ] **Wallets – Security Violation** (`/Wallets/Purchase/MyMIGold/Security/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/MyMIGold/Security/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/MyMIGold/Security/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+
+- [ ] **Wallets – Transfer Funds** (`/Wallets/Transfer-Funds`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Transfer-Funds
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Transfer-Funds`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.transfer-funds
+
+- [ ] **Wallets – Wallet Generator** (`/Wallets/Wallet-Generator`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Wallet-Generator
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Wallet-Generator`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.generator
+
+- [ ] **Wallets – Wallet Manager** (`/Wallets/Manager`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Manager
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Manager`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.manager
+
+- [ ] **Wallets – Wallet Selections** (`/Wallets/Wallet-Selection`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Wallet-Selection
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Wallet-Selection`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.selection
+
+- [ ] **Wallets – Wallet Transaction** (`/Wallets/Wallet-Transaction/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Wallet-Transaction/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Wallet-Transaction/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.transactions.segment
+
+- [ ] **Wallets – Wallet Transaction** (`/Wallets/Wallet-Transactions`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Wallet-Transactions
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Wallet-Transactions`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.transactions
+
+- [ ] **Wallets – Wallets** (`/Wallets`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.index
+
+- [ ] **Wallets – Withdraw** (`/Wallets/Withdraw`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Withdraw
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Withdraw`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.withdraw
+
+- [ ] **Wallets – Withdraw** (`/Wallets/Withdraw/(:segment)`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Withdraw/(:segment)
+  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+  - **Schema Types**: `FinancialProduct`, `WebApplication`
+  - **JSON-LD**: ☐ todo
+  - **OG/Twitter**: ☐/☐ todo / todo
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Withdraw/(:segment)`)
+  - **Internal Links**:
+    - Footer: ☐
+    - Sidebar: ☑
+    - Breadcrumb: ☐
+    - Related Features Block: ☐
+    - Linked from Modules: User:Dashboard,User:Wallets
+    - Linked from Routes: /Dashboard,/Budget,/Alerts
+    - Notes: alias: wallets.withdraw.segment
+
+---

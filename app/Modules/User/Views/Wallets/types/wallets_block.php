@@ -32,7 +32,7 @@ $mapAddEndpoint = [
   'financial'  => 'Wallets/Banking/Add/Account',
   'credit'     => 'Wallets/Credit/Add/Account',
   'debt'       => 'Wallets/Debt/Add/Account',
-  'crypto'     => 'Wallets/Crypto/Add/Wallet',
+  'crypto'     => 'Wallets/Crypto/Add/Account',
   'investment' => 'Wallets/Investments/Add/Account',
 ];
 $btnID = $mapAddEndpoint[$walletCategory] ?? 'Wallets/Banking/Add/Account';
@@ -57,7 +57,7 @@ $mapEditBase = [
   'financial'  => 'Wallets/Banking/Edit/Account/',
   'credit'     => 'Wallets/Credit/Edit/Account/',
   'debt'       => 'Wallets/Debt/Edit/Account/',
-  'crypto'     => 'Wallets/Crypto/Edit/Wallet/',
+  'crypto'     => 'Wallets/Crypto/Edit/Account/',
   'investment' => 'Wallets/Investments/Edit/Account/',
 ];
 
@@ -119,7 +119,7 @@ $deleteType = $mapDeleteType[$walletCategory] ?? 'Bank';
         data-formtype="Add"
         data-endpoint="<?= esc($btnEndpointToken) ?>"
         data-cuid="<?= esc($cuID) ?>">
-        <i class="icon ni ni-plus me-1"></i> Add Manually
+        <i class="icon ni ni-plus text-white me-1"></i> Add Manually
       </button>
     </div>
   </div>

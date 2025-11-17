@@ -1276,6 +1276,9 @@ class WalletsController extends UserController
             case 'Credit':
                 $accountInfoMethod = 'getCreditAccountInfo';
                 break;
+            case 'Crypto':
+                $accountInfoMethod = 'getCryptoAccountInfo';
+                break;
             case 'Debt':
                 $accountInfoMethod = 'getDebtAccountInfo';
                 break;
