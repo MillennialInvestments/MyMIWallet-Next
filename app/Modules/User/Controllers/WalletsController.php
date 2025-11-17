@@ -7,6 +7,7 @@ use App\Libraries\{MyMIWallet, MyMIWallets, MyMISolana};
 use App\Models\{MyMIGoldModel, WalletModel};
 use App\Services\{AccountService, CurrencyService, GoalTrackingService, MarketingService, SolanaService, TransactionService, WalletService, WalletSummaryCalculator};
 use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\HTTP\ResponseInterface;
 use DateTime;
 use Exception;
 
@@ -627,7 +628,7 @@ class WalletsController extends UserController
         return $this->data;
     }
 
-    public function index()
+    private function renderWalletLandingPage(): ResponseInterface|string
     {
         $this->data['pageTitle'] = 'My Wallets | MyMI Wallet | The Future of Finance';
 
@@ -683,7 +684,52 @@ class WalletsController extends UserController
             'generatedAt' => date(DateTime::ATOM),
         ];
 
-        return $this->renderTheme('App\Modules\User\Views\Wallets\index', $this->data);
+        return $this->renderTheme('App\\Modules\\User\\Views\\Wallets\\index', $this->data);
+    }
+
+    public function index(): ResponseInterface|string
+    {
+        return $this->renderWalletLandingPage();
+    }
+
+    public function checking(): ResponseInterface|string
+    {
+        return $this->renderWalletLandingPage();
+    }
+
+    public function bank(): ResponseInterface|string
+    {
+        return $this->renderWalletLandingPage();
+    }
+
+    public function banking(): ResponseInterface|string
+    {
+        return $this->renderWalletLandingPage();
+    }
+
+    public function all(): ResponseInterface|string
+    {
+        return $this->renderWalletLandingPage();
+    }
+
+    public function crypto(): ResponseInterface|string
+    {
+        return $this->renderWalletLandingPage();
+    }
+
+    public function credit(): ResponseInterface|string
+    {
+        return $this->renderWalletLandingPage();
+    }
+
+    public function debt(): ResponseInterface|string
+    {
+        return $this->renderWalletLandingPage();
+    }
+
+    public function investments(): ResponseInterface|string
+    {
+        return $this->renderWalletLandingPage();
     }
 
     // public function index()
