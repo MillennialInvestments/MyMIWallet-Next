@@ -2,6 +2,7 @@
 
 use App\Libraries\{BaseLoader, MyMIBudget, MyMIMomentum};
 use App\Models\AlertsModel;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 #[\AllowDynamicProperties]
 class MyMIAdvisor
@@ -11,6 +12,7 @@ class MyMIAdvisor
     protected $MyMIBudget;
     protected $MyMIMomentum;
     protected $alertsModel;
+    protected static bool $elevenLabsFailureLogged = false;
 
     public function __construct()
     {
@@ -55,6 +57,9 @@ class MyMIAdvisor
         $script = $this->generateVoiceoverScriptFromSummary($summary);
         $filename = "advisor_notes_user_{$userId}";
         $voiceoverUrl = $this->generateVoiceoverAudio($script, $filename);
+        if ($voiceoverUrl === null) {
+            log_message('warning', 'generateAdvisorMediaPackage - missing ElevenLabs audio for user ' . $userId);
+        }
         $topPick = $this->suggestTrades($userId)[0] ?? ['ticker' => 'AAPL'];
         $symbol = $topPick['ticker'];
         $chartUrl = $this->generateTradingViewChartUrl($symbol);
@@ -238,12 +243,17 @@ S;
         return $script;
     }
 
-    public function generateVoiceoverAudio($script, $filename): string
+    public function generateVoiceoverAudio($script, $filename): ?string
     {
-        return $this->generateVoiceoverWithElevenLabs($script, $filename);
+        $voiceover = $this->generateVoiceoverWithElevenLabs($script, $filename);
+        if ($voiceover === null) {
+            log_message('warning', sprintf('generateVoiceoverAudio - ElevenLabs unavailable for %s', $filename));
+        }
+
+        return $voiceover;
     }
 
-    public function generateVoiceoverWithElevenLabs($text, $filename, $voiceIdOverride = null)
+    public function generateVoiceoverWithElevenLabs($text, $filename, $voiceIdOverride = null): ?string
     {
         $apiKey = config('APISettings')->elevenLabsAPIKey;
         $voiceId = $voiceIdOverride ?? config('APISettings')->elevenLabsVoiceId;
@@ -251,20 +261,33 @@ S;
         log_message('debug', "Using ElevenLabs voice: {$voiceId}");
 
         $client = \Config\Services::curlrequest();
-        $response = $client->post("https://api.elevenlabs.io/v1/text-to-speech/{$voiceId}", [
-            'headers' => [
-                'xi-api-key' => $apiKey,
-                'Content-Type' => 'application/json',
-            ],
-            'json' => [
-                'text' => $text,
-                'model_id' => 'eleven_multilingual_v2',
-                'voice_settings' => [
-                    'stability' => 0.5,
-                    'similarity_boost' => 0.75,
+        try {
+            $response = $client->post("https://api.elevenlabs.io/v1/text-to-speech/{$voiceId}", [
+                'headers' => [
+                    'xi-api-key' => $apiKey,
+                    'Content-Type' => 'application/json',
+                ],
+                'json' => [
+                    'text' => $text,
+                    'model_id' => 'eleven_multilingual_v2',
+                    'voice_settings' => [
+                        'stability' => 0.5,
+                        'similarity_boost' => 0.75,
+                    ]
                 ]
-            ]
-        ]);
+            ]);
+        } catch (HTTPException $e) {
+            $this->logElevenLabsFailure('ElevenLabs HTTP error: ' . $e->getMessage());
+            return null;
+        } catch (\Throwable $e) {
+            $this->logElevenLabsFailure('ElevenLabs transport error: ' . $e->getMessage());
+            return null;
+        }
+
+        if ($response->getStatusCode() === 401) {
+            $this->logElevenLabsFailure('ElevenLabs returned 401 Unauthorized.');
+            return null;
+        }
 
         $voicePath = WRITEPATH . "uploads/voiceovers/";
         if (!is_dir($voicePath)) {
@@ -275,6 +298,16 @@ S;
         file_put_contents($filePath, $response->getBody());
 
         return base_url("writable/uploads/voiceovers/{$filename}.mp3");
+    }
+
+    protected function logElevenLabsFailure(string $message): void
+    {
+        if (!self::$elevenLabsFailureLogged) {
+            log_message('error', $message);
+            self::$elevenLabsFailureLogged = true;
+        } else {
+            log_message('debug', $message);
+        }
     }
 
     public function generateSentimentTag($text): string

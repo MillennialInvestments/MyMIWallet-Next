@@ -6,6 +6,7 @@ use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\RESTful\ResourceController;   // ⬅️ ADD THIS
 use App\Libraries\{
+    AlertJobQueue,
     BaseLoader,
     MyMIAlerts,
     MyMIAlphaVantage,
@@ -58,6 +59,7 @@ class AlertsController extends ResourceController
     protected $MyMIRobinhood;
     protected $MyMISEC;
     protected $alertsModel;
+    protected ?AlertJobQueue $alertJobQueue = null;
     protected bool $stringAsHtml = true;
 
     public function __construct()
@@ -282,6 +284,15 @@ class AlertsController extends ResourceController
         return $inventory != 0 ? round(($currentAssets - $inventory) / $currentAssets, 2) : null;
     }
 
+    protected function getAlertJobQueue(): AlertJobQueue
+    {
+        if ($this->alertJobQueue instanceof AlertJobQueue) {
+            return $this->alertJobQueue;
+        }
+
+        return $this->alertJobQueue = new AlertJobQueue();
+    }
+
     private function cleanText($text)
     {
         if (is_null($text)) return '';
@@ -356,6 +367,29 @@ class AlertsController extends ResourceController
                 'message' => $e->getMessage()
             ], 500);
         }
+    }
+
+    public function runQueue($type = null)
+    {
+        if ($response = $this->enforceCronKey()) {
+            return $response;
+        }
+
+        $requested = $type ?? $this->request->getGet('type') ?? 'all';
+        $jobTypes = $requested === 'all' ? $this->getDefaultJobTypes() : [$requested];
+
+        $results = [];
+        foreach ($jobTypes as $jobType) {
+            $results[$jobType] = $this->getAlertJobQueue()->process(
+                $jobType,
+                fn (array $job) => $this->handleAlertJob($job)
+            );
+        }
+
+        return $this->respond([
+            'status' => 'success',
+            'jobs'   => $results,
+        ]);
     }
 
     public function fetchMarketAuxNews($symbol)
@@ -496,8 +530,16 @@ class AlertsController extends ResourceController
         try {
             $package = $this->getMyMIAdvisor()->prepareAdvisorMediaPackage($userId);
             $package['voiceover_url'] = $this->getMyMIAdvisor()->generateVoiceoverAudio($package['script'], "advisor_notes_user_{$userId}");
-            
+
             // Optionally cache/save this in a DB table or temp file
+
+            if (empty($package['voiceover_url'])) {
+                return Http::jsonSuccess([
+                    'status'  => 'warning',
+                    'message' => 'Voiceover could not be generated at this time.',
+                    'script'  => $package['script'],
+                ]);
+            }
 
             return Http::jsonSuccess([
                 'status' => 'success',
@@ -1237,7 +1279,8 @@ class AlertsController extends ResourceController
         log_message('debug', 'getLatestPrices - Starting price refresh');
 
         helper('array');
-        $alpha = service('MyMIAlphaVantage'); // Use AlphaVantage for market data (not MarketAux)
+        $alpha = $this->getMyMIAlphaVantage();
+        $queue = $this->getAlertJobQueue();
         $alertsModel = $this->alertsModel;
 
         $activeAlerts = $alertsModel->getFilteredTradeAlerts();
@@ -1254,8 +1297,20 @@ class AlertsController extends ResourceController
         $validUpdates = [];
         $skipped = [];
 
+        if (!$alpha->hasRateLimitCapacity(max(1, count($symbols)))) {
+            foreach ($symbols as $symbol) {
+                $queue->enqueue('update_market_data', ['symbol' => $symbol]);
+            }
+
+            return $this->respond([
+                'status'  => 'queued',
+                'message' => 'Rate limit reached; processing deferred.',
+                'queued'  => count($symbols),
+            ], 202);
+        }
+
         // Fetch prices in batch from AlphaVantage
-        $batchPrices = $this->getMyMIAlphaVantage()->getBatchPrices($symbols);
+        $batchPrices = $alpha->getBatchPrices($symbols);
 
         foreach ($symbols as $symbol) {
             $price = $batchPrices[$symbol] ?? null;
@@ -1279,6 +1334,7 @@ class AlertsController extends ResourceController
             $metrics = $alpha->getTechnicalMetrics($symbol)['data'] ?? [];
 
             $data = [
+                'ticker' => $symbol,
                 'id'     => $alert['id'],
                 'price'  => $price,
                 'open'   => $metrics['open'] ?? null,
@@ -1322,12 +1378,25 @@ class AlertsController extends ResourceController
         $updateCount = $alertsModel->updateAlertPrices($validUpdates);
         log_message('debug', "getLatestPrices - Updated {$updateCount} alerts. Skipped: " . implode(', ', $skipped));
 
-        return $this->respond([
+        $response = [
             'status'  => 'success',
             'updated' => $updateCount,
             'skipped' => $skipped,
             'data'    => $validUpdates
-        ]);
+        ];
+
+        if ($alpha->didHitRateLimit()) {
+            $deferred = array_diff($symbols, array_keys($batchPrices));
+            foreach ($deferred as $symbol) {
+                $queue->enqueue('update_market_data', ['symbol' => $symbol]);
+            }
+            $response['status'] = 'queued';
+            $response['message'] = 'Rate limit reached; remaining symbols deferred to queue.';
+            $response['queued'] = count($deferred);
+            return $this->respond($response, 202);
+        }
+
+        return $this->respond($response);
     }
 
     // public function getFilteredAlerts()
@@ -1990,6 +2059,110 @@ class AlertsController extends ResourceController
         }
 
         return null;
+    }
+
+    protected function getDefaultJobTypes(): array
+    {
+        return [
+            'parse_alert',
+            'update_market_data',
+            'generate_script',
+            'generate_voiceover',
+            'distribute_discord',
+            'distribute_email',
+        ];
+    }
+
+    protected function handleAlertJob(array $job): bool
+    {
+        $type = $job['type'] ?? '';
+        $payload = $job['payload'] ?? [];
+
+        return match ($type) {
+            'parse_alert'       => $this->handleParseAlertJob($payload),
+            'update_market_data'=> $this->handleMarketDataJob($payload),
+            'generate_script',
+            'generate_voiceover',
+            'distribute_discord',
+            'distribute_email'  => $this->acknowledgePlaceholderJob($type, $payload),
+            default             => $this->acknowledgePlaceholderJob($type, $payload),
+        };
+    }
+
+    protected function handleParseAlertJob(array $payload): bool
+    {
+        $scraperId = (int) ($payload['scraper_id'] ?? 0);
+        if ($scraperId <= 0) {
+            throw new \InvalidArgumentException('parse_alert job missing scraper_id');
+        }
+
+        return (bool) $this->alertsModel->processScraperRecord($scraperId);
+    }
+
+    protected function handleMarketDataJob(array $payload): bool
+    {
+        $symbol = strtoupper(trim($payload['symbol'] ?? ''));
+        if ($symbol === '') {
+            throw new \InvalidArgumentException('update_market_data job missing symbol');
+        }
+
+        if (!$this->refreshMarketDataForSymbol($symbol)) {
+            throw new \RuntimeException('Failed to refresh market data for ' . $symbol);
+        }
+
+        return true;
+    }
+
+    protected function refreshMarketDataForSymbol(string $symbol): bool
+    {
+        $alpha = $this->getMyMIAlphaVantage();
+
+        $quote = $alpha->getGlobalQuoteDetailed($symbol);
+        $price = $quote['price'] ?? null;
+
+        if ($price === null) {
+            $fallback = $alpha->getCurrentPrice($symbol);
+            $price = $fallback['price'] ?? null;
+            $quote = array_merge($quote, $fallback);
+        }
+
+        if ($price === null) {
+            log_message('warning', 'refreshMarketDataForSymbol - missing price for ' . $symbol);
+            return false;
+        }
+
+        $db = \Config\Database::connect();
+        $update = [
+            'price'             => $price,
+            'volume'            => $quote['volume'] ?? null,
+            'open'              => $quote['open'] ?? null,
+            'high'              => $quote['high'] ?? null,
+            'low'               => $quote['low'] ?? null,
+            'change'            => $quote['change'] ?? null,
+            'change_percent'    => $quote['change_percent'] ?? null,
+            'last_updated'      => date('Y-m-d'),
+            'last_updated_time' => date('H:i:s'),
+        ];
+
+        $db->table('bf_investment_trade_alerts')->where('ticker', $symbol)->update($update);
+
+        $history = [
+            'ticker'     => $symbol,
+            'alerted_on' => date('Y-m-d H:i:s'),
+            'price'      => $price,
+            'volume'     => $quote['volume'] ?? null,
+            'status'     => 'Updated',
+            'category'   => $quote['category'] ?? null,
+        ];
+        $this->alertsModel->recordAlertHistory($history);
+
+        return true;
+    }
+
+    protected function acknowledgePlaceholderJob(string $type, array $payload): bool
+    {
+        log_message('debug', sprintf('Queue job %s acknowledged (payload keys: %s)', $type, implode(',', array_keys($payload))));
+        return true;
     }
 
     private function sendEmailToList($email, $tradeAlert, $tier) {

@@ -2,6 +2,27 @@
 use CodeIgniter\HTTP\Header;
 use CodeIgniter\CodeIgniter;
 
+if (! function_exists('formatExceptionArg')) {
+    function formatExceptionArg($value): string
+    {
+        if (is_object($value)) {
+            return '[object] ' . $value::class;
+        }
+
+        if (is_resource($value)) {
+            return '[resource] ' . get_resource_type($value);
+        }
+
+        $string = print_r($value, true);
+        $max = 4000;
+        if (is_string($string) && strlen($string) > $max) {
+            return substr($string, 0, $max) . "\n...[truncated]";
+        }
+
+        return is_string($string) ? $string : ''; 
+    }
+}
+
 $errorId = uniqid('error', true);
 ?>
 <!doctype html>
@@ -128,7 +149,7 @@ $errorId = uniqid('error', true);
                                         foreach ($row['args'] as $key => $value) : ?>
                                             <tr>
                                                 <td><code><?= esc(isset($params[$key]) ? '$' . $params[$key]->name : "#{$key}") ?></code></td>
-                                                <td><pre><?= esc(print_r($value, true)) ?></pre></td>
+                                                <td><pre><?= esc(formatExceptionArg($value)) ?></pre></td>
                                             </tr>
                                         <?php endforeach ?>
 
@@ -182,7 +203,7 @@ $errorId = uniqid('error', true);
                                     <?php if (is_string($value)) : ?>
                                         <?= esc($value) ?>
                                     <?php else: ?>
-                                        <pre><?= esc(print_r($value, true)) ?></pre>
+                                        <pre><?= esc(formatExceptionArg($value)) ?></pre>
                                     <?php endif; ?>
                                 </td>
                             </tr>
@@ -212,7 +233,7 @@ $errorId = uniqid('error', true);
                                     <?php if (is_string($value)) : ?>
                                         <?= esc($value) ?>
                                     <?php else: ?>
-                                        <pre><?= esc(print_r($value, true)) ?></pre>
+                                        <pre><?= esc(formatExceptionArg($value)) ?></pre>
                                     <?php endif; ?>
                                 </td>
                             </tr>
@@ -287,7 +308,7 @@ $errorId = uniqid('error', true);
                                     <?php if (is_string($value)) : ?>
                                         <?= esc($value) ?>
                                     <?php else: ?>
-                                        <pre><?= esc(print_r($value, true)) ?></pre>
+                                        <pre><?= esc(formatExceptionArg($value)) ?></pre>
                                     <?php endif; ?>
                                 </td>
                             </tr>
