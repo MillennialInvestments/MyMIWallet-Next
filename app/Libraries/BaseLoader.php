@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Libraries;
+
 use App\Libraries\MyMIUser;
+use App\Libraries\MyMIAlphaVantage;
 
 use CodeIgniter\Email\Email;
 
@@ -33,6 +35,18 @@ trait BaseLoader
 
     // ---- Library getters ----
     protected function getMyMIAnalytics()    { return $this->di('MyMIAnalytics',   fn () => service('MyMIAnalytics')); }
+    protected function getMyMIAlphaVantage()
+    {
+        return $this->di('MyMIAlphaVantage', function () {
+            try {
+                return service('MyMIAlphaVantage');
+            } catch (\Throwable $e) {
+                log_message('error', 'BaseLoader::getMyMIAlphaVantage service lookup failed: ' . $e->getMessage());
+            }
+
+            return new MyMIAlphaVantage();
+        });
+    }
     protected function getMyMIGold()         { return $this->di('MyMIGold',        fn () => service('MyMIGold')); }
     protected function getMyMIInvestments()  { return $this->di('MyMIInvestments', fn () => service('MyMIInvestments')); }
     protected function getMyMIMarketing()    { return $this->di('MyMIMarketing',   fn () => service('MyMIMarketing')); }

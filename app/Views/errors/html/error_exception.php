@@ -125,10 +125,25 @@ $errorId = uniqid('error', true);
                                             $params = $mirror->getParameters();
                                         }
 
-                                        foreach ($row['args'] as $key => $value) : ?>
+                                        foreach ($row['args'] as $key => $value) :
+                                            $label = isset($params[$key]) ? '$' . $params[$key]->name : "#{$key}";
+
+                                            if (is_object($value) || is_resource($value)) {
+                                                $display = '[object] ' . get_debug_type($value);
+                                            } else {
+                                                $string = print_r($value, true);
+                                                $maxLen = 2000;
+
+                                                if (strlen($string) > $maxLen) {
+                                                    $string = substr($string, 0, $maxLen) . '… [truncated]';
+                                                }
+
+                                                $display = $string;
+                                            }
+                                        ?>
                                             <tr>
-                                                <td><code><?= esc(isset($params[$key]) ? '$' . $params[$key]->name : "#{$key}") ?></code></td>
-                                                <td><pre><?= esc(print_r($value, true)) ?></pre></td>
+                                                <td><code><?= esc($label) ?></code></td>
+                                                <td><pre><?= esc($display) ?></pre></td>
                                             </tr>
                                         <?php endforeach ?>
 
