@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Libraries;
-use App\Libraries\MyMIUser;
+use App\Libraries\{MyMIAlphaVantage, MyMIUser};
 
 use CodeIgniter\Email\Email;
 
@@ -39,6 +39,7 @@ trait BaseLoader
     protected function getMyMIUser()         { return $this->di('MyMIUser',        fn () => service('MyMIUser')); }
     protected function getMyMIWallet()       { return $this->di('MyMIWallet',      fn () => service('MyMIWallet')); }
     protected function getMyMIWallets()      { return $this->di('MyMIWallets',     fn () => service('MyMIWallets')); }
+    protected function getMyMIAlphaVantage() { return $this->di('MyMIAlphaVantage', fn () => new MyMIAlphaVantage()); }
 
     // ---- Service getters ----
     // ---- Email ----

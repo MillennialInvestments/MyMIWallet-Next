@@ -194,7 +194,10 @@ class AlertsController extends UserController
         $advisorMedia                       = $this->getMyMIAdvisor()->generateAdvisorMediaPackage($this->cuID) ?? [];
         $advisorSummary                     = $advisorMedia['summary']        ?? '';
         $advisorScript                      = $advisorMedia['script']         ?? '';
-        $advisorAudio                       = $advisorMedia['voiceover_url']  ?? '';
+        $advisorAudio                       = $advisorMedia['voiceover_url']  ?? null;
+        if (empty($advisorAudio)) {
+            log_message('debug', 'Management AlertsController - advisor voiceover unavailable (optional).');
+        }
         $advisorCapcutUrl                   = $this->getMyMIAdvisor()->exportCapCutJsonTemplate($advisorMedia) ?? '';
         $advisorZipUrl                      = $this->getMyMIAdvisor()->packageAdvisorMediaAsZip($advisorMedia) ?? '';
         $advisorPick                        = $advisorMedia['pick']          ?? '';

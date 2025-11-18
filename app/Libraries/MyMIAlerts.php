@@ -1,12 +1,15 @@
 <?php
 namespace App\Libraries;
 
+use App\Config\{APIs, Auth, SiteSettings, SocialMedia};
+use App\Libraries\AlertChannels\{DiscordChannel, EmailChannel, ZapierChannel};
+use App\Libraries\AlertSources\{ManualEntrySource, MarketAuxNewsSource, ThinkOrSwimEmailSource};
+use App\Models\{AlertsModel, TrackerModel, UserModel};
 use CodeIgniter\Database\BaseConnection;
 use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
-use App\Config\{APIs, Auth, SiteSettings, SocialMedia};
 use App\Libraries\{BaseLoader, MyMIAlphaVantage, MyMIDiscord, MyMIInvestments};
-use App\Models\{AlertsModel, TrackerModel, UserModel}; // Assuming your models are in App\Models namespace
+use App\Libraries\AlertJobQueue;
 // use App\Libraries\{MyMICoin, MyMIGold, MyMIWallet};
 
 #[\AllowDynamicProperties]
@@ -30,6 +33,7 @@ class MyMIAlerts
     protected $userModel;
     protected $MyMIAlphaVantage;
     protected $MyMIInvestments;
+    protected AlertJobQueue $jobQueue;
 
     /**
      * Known scanner subject keywords that should be ingested.
@@ -156,6 +160,7 @@ class MyMIAlerts
         $this->userModel = new UserModel();
         $this->MyMIAlphaVantage = $alphaVantage ?? new MyMIAlphaVantage();
         $this->MyMIInvestments = $investments ?? new MyMIInvestments();
+        $this->jobQueue = new AlertJobQueue();
         
         $this->cuID = $this->auth->id() ?? $this->session->get('user_id');
         $cuID = $this->cuID;
@@ -170,6 +175,34 @@ class MyMIAlerts
             // log_message('DEBUG', '$this->cuID __construct() - MyMIUser Library: ' . ($this->cuID ? $this->cuID : 'null'));
         }
 
+    }
+
+    /**
+     * Active alert sources that feed the queue.
+     *
+     * @return array<int,AlertSourceInterface>
+     */
+    public function getActiveSources(): array
+    {
+        return [
+            new ThinkOrSwimEmailSource($this->alertsModel),
+            new MarketAuxNewsSource(),
+            new ManualEntrySource($this->alertsModel),
+        ];
+    }
+
+    /**
+     * Delivery channels used by distribution jobs.
+     *
+     * @return array<int,AlertChannelInterface>
+     */
+    public function getDeliveryChannels(): array
+    {
+        return [
+            new DiscordChannel(),
+            new EmailChannel(),
+            new ZapierChannel(),
+        ];
     }
 
     private function buildImapSearchQuery(): string
@@ -346,9 +379,18 @@ class MyMIAlerts
             'created_on'       => date('Y-m-d H:i:s'),
         ];
 
-        $this->alertsModel->storeEmails($emailData);
+        $insertId = $this->alertsModel->storeEmails($emailData);
 
-        log_message('info', sprintf('📬 Stored alert email "%s" with category %s', $subject, $category));
+        if ($insertId) {
+            $emailData['id'] = $insertId;
+            $this->jobQueue->enqueue('parse_alert', [
+                'scraper_id' => $insertId,
+                'category'   => $category,
+            ]);
+            log_message('info', sprintf('📬 Stored alert email "%s" (ID %d) with category %s', $subject, $insertId, $category));
+        } else {
+            log_message('error', '❌ Failed to insert alert email into bf_investment_scraper.');
+        }
 
         return $emailData;
     }
