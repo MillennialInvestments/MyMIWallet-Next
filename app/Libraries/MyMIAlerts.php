@@ -430,6 +430,17 @@ class MyMIAlerts
 
         $newsMetadata = $this->classifyEmailNewsMetadata($subject, $body, $rawSender ?: $sender);
 
+        log_message('debug', '📨 Email classification snapshot: ' . json_encode([
+            'identifier'   => $identifier,
+            'email_type'   => $newsMetadata['email_type'],
+            'news_vendor'  => $newsMetadata['news_vendor'],
+            'symbols'      => $symbols,
+            'category'     => $category,
+            'tag'          => $tag,
+            'class'        => $class,
+            'segment'      => $segment,
+        ]));
+
         $emailData = [
             'status'           => 'In Review',
             'type'             => 'Trade Alerts',
@@ -459,6 +470,12 @@ class MyMIAlerts
                 'category'   => $category,
             ]);
             log_message('info', sprintf('📬 Stored alert email "%s" (ID %d) with category %s', $subject, $insertId, $category));
+            if ($newsMetadata['email_type'] === 'news') {
+                log_message('info', sprintf('📰 News email flagged for marketing pipeline (vendor: %s)', $newsMetadata['news_vendor'] ?? 'unknown'));
+            }
+            if (empty($symbols)) {
+                log_message('warning', sprintf('⚠️ No symbols detected in email %s — marketing summary may be limited.', $identifier));
+            }
         } else {
             log_message('error', '❌ Failed to insert alert email into bf_investment_scraper.');
         }
@@ -545,6 +562,7 @@ class MyMIAlerts
             $cached = $model->getCachedLink($link);
             if ($cached && strtotime($cached['last_enriched_at']) > strtotime('-2 days')) {
                 $compiled .= ' ' . strip_tags($cached['content']);
+                log_message('debug', sprintf('♻️ Reusing cached enrichment for %s', $link));
                 continue;
             }
     
@@ -552,13 +570,16 @@ class MyMIAlerts
             if ($scraped) {
                 $compiled .= ' ' . strip_tags($scraped);
                 $model->cacheScrapedLink($link, $scraped);
+                log_message('info', sprintf('🧠 Scraped fresh enrichment content for %s', $link));
             }
         }
-    
+
         if (strlen($compiled) > 1000) {
             $summary  = $marketing->summarizeText($compiled);
             $keywords = $marketing->extractKeywords($compiled);
-    
+
+            log_message('info', sprintf('🧪 Generated enrichment summary for %s with %d keywords', $symbol, count($keywords)));
+
             $model->insertEnrichedTradeAlertSummary([
                 'symbol'   => $symbol,
                 'summary'  => $summary,

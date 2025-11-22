@@ -6,7 +6,7 @@ This document summarizes how trade alerts and marketing/news items flow through 
 - **Email ingestion** via `MyMIAlerts` (`app/Libraries/MyMIAlerts.php`)
   - ThinkOrSwim and TradingView scanner emails filtered by known subjects/senders.
   - Press-release/news style emails identified via vendor prefixes/keywords.
-- **Manual/API creation** through `APIs\AlertsController::addTradeAlert` and dashboard modals.
+- **Manual/API creation** through `APIs\\AlertsController::addTradeAlert` and dashboard modals.
 - **External data enrichment** from Alpha Vantage and tracking helpers inside `MyMIAlerts` and `AlertsModel`.
 
 ## Storage Layers

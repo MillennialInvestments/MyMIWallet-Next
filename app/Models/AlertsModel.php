@@ -3133,11 +3133,19 @@ class AlertsModel extends Model
             'distribution_channels' => !empty($channels) ? json_encode(array_values($channels)) : null,
         ];
 
-        return (bool) $this->db
+        $result = $this->db
             ->table('bf_investment_trade_alerts')
             ->where('id', $alertId)
             ->set($payload)
             ->update();
+
+        if ($result) {
+            log_message('info', sprintf('📣 Marked alert %d as marketed via channels: %s', $alertId, $payload['distribution_channels'] ?? 'none'));
+        } else {
+            log_message('error', sprintf('❌ Failed to mark alert %d as marketed: %s', $alertId, json_encode($this->db->error())));
+        }
+
+        return (bool) $result;
     }
 
     /**
