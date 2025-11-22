@@ -191,19 +191,29 @@ class AlertsController extends UserController
         $this->data['perPage']           = $pending['perPage'];
 
         // Advisor media defaults + generation
-        $advisorMedia                       = $this->getMyMIAdvisor()->generateAdvisorMediaPackage($this->cuID) ?? [];
-        $advisorSummary                     = $advisorMedia['summary']        ?? '';
-        $advisorScript                      = $advisorMedia['script']         ?? '';
-        $advisorAudio                       = $advisorMedia['voiceover_url']  ?? '';
-        $advisorCapcutUrl                   = $this->getMyMIAdvisor()->exportCapCutJsonTemplate($advisorMedia) ?? '';
-        $advisorZipUrl                      = $this->getMyMIAdvisor()->packageAdvisorMediaAsZip($advisorMedia) ?? '';
-        $advisorPick                        = $advisorMedia['pick']          ?? '';
-        $this->data['advisorSummary']       = $pending['advisorSummary'];
-        $this->data['advisorScript']        = $pending['advisorScript'];
-        $this->data['advisorAudio']         = $pending['advisorAudio'];
-        $this->data['advisorCapcutUrl']     = $pending['advisorCapcutUrl'];
-        $this->data['advisorZipUrl']        = $pending['advisorZipUrl'];
-        $this->data['advisorPick']          = $pending['advisorPick'];
+
+        // Advisor media defaults + generation
+        $advisorMedia                   = $this->getMyMIAdvisor()->generateAdvisorMediaPackage($this->cuID) ?? [];
+        $advisorSummary                 = $advisorMedia['summary']        ?? '';
+        $advisorScript                  = $advisorMedia['script']         ?? '';
+        $advisorAudio                   = $advisorMedia['voiceover_url']  ?? '';
+        $advisorVoiceoverError          = $advisorMedia['voiceover_error'] ?? null;
+        $advisorCapcutUrl               = '';
+        $advisorZipUrl                  = '';
+
+        if (! empty($advisorAudio)) {
+            $advisorCapcutUrl = $this->getMyMIAdvisor()->exportCapCutJsonTemplate($advisorMedia) ?? '';
+            $advisorZipUrl    = $this->getMyMIAdvisor()->packageAdvisorMediaAsZip($advisorMedia) ?? '';
+        }
+
+        $advisorPick                    = $advisorMedia['pick'] ?? '';
+        $this->data['advisorSummary']   = $advisorSummary;
+        $this->data['advisorScript']    = $advisorScript;
+        $this->data['advisorAudio']     = $advisorAudio;
+        $this->data['advisorCapcutUrl'] = $advisorCapcutUrl;
+        $this->data['advisorZipUrl']    = $advisorZipUrl;
+        $this->data['advisorPick']      = $advisorPick;
+        $this->data['advisorVoiceoverError'] = $advisorVoiceoverError;
 
         // ── Opportunistic CRON trigger based on idle timeout ───────────────────
         $lastActiveKey = sanitizeCacheKey('user_alerts_activity_' . $this->cuID);

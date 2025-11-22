@@ -2,6 +2,7 @@
 
 use App\Libraries\{BaseLoader, MyMIBudget, MyMIMomentum};
 use App\Models\AlertsModel;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 #[\AllowDynamicProperties]
 class MyMIAdvisor
@@ -11,6 +12,9 @@ class MyMIAdvisor
     protected $MyMIBudget;
     protected $MyMIMomentum;
     protected $alertsModel;
+    protected bool $elevenLabsAvailable = true;
+    protected ?string $elevenLabsLastError = null;
+    protected static bool $elevenLabsFailureLogged = false;
 
     public function __construct()
     {
@@ -55,6 +59,20 @@ class MyMIAdvisor
         $script = $this->generateVoiceoverScriptFromSummary($summary);
         $filename = "advisor_notes_user_{$userId}";
         $voiceoverUrl = $this->generateVoiceoverAudio($script, $filename);
+        $voiceoverError = null;
+
+        if ($voiceoverUrl === null) {
+            $voiceoverError = $this->elevenLabsLastError
+                ?? 'Voiceover unavailable (ElevenLabs error).';
+            log_message(
+                'warning',
+                'MyMIAdvisor::generateAdvisorMediaPackage - ElevenLabs unavailable, skipping audio for user {userId}. Reason: {reason}',
+                [
+                    'userId' => $userId,
+                    'reason' => $voiceoverError,
+                ]
+            );
+        }
         $topPick = $this->suggestTrades($userId)[0] ?? ['ticker' => 'AAPL'];
         $symbol = $topPick['ticker'];
         $chartUrl = $this->generateTradingViewChartUrl($symbol);
@@ -66,7 +84,8 @@ class MyMIAdvisor
             'status' => 'generated',
             'summary' => $summary,
             'script' => $script,
-            'voiceover_url' => $voiceoverUrl,
+            'voiceover_url' => $voiceoverUrl ?? '',
+            'voiceover_error' => $voiceoverError,
             'media_json_url' => null,
             'chart_url' => $chartUrl,
             'score' => $advisor['score'],
@@ -238,20 +257,41 @@ S;
         return $script;
     }
 
-    public function generateVoiceoverAudio($script, $filename): string
+    public function generateVoiceoverAudio($script, $filename): ?string
     {
-        return $this->generateVoiceoverWithElevenLabs($script, $filename);
+        if ($this->elevenLabsAvailable === false) {
+            log_message('debug', 'MyMIAdvisor::generateVoiceoverAudio skipped, ElevenLabs marked unavailable.');
+            return null;
+        }
+
+        $audioPath = $this->generateVoiceoverWithElevenLabs($script, $filename);
+
+        if ($audioPath === null) {
+            $message = $this->elevenLabsLastError ?? 'Unknown ElevenLabs failure.';
+            log_message('warning', 'MyMIAdvisor::generateVoiceoverAudio - Unable to generate audio: {message}', [
+                'message' => $message,
+            ]);
+        }
+
+        return $audioPath;
     }
 
-    public function generateVoiceoverWithElevenLabs($text, $filename, $voiceIdOverride = null)
+    public function generateVoiceoverWithElevenLabs($text, $filename, $voiceIdOverride = null): ?string
     {
         $apiKey = config('APISettings')->elevenLabsAPIKey;
         $voiceId = $voiceIdOverride ?? config('APISettings')->elevenLabsVoiceId;
 
         log_message('debug', "Using ElevenLabs voice: {$voiceId}");
 
+        if (empty($apiKey) || empty($voiceId)) {
+            $this->elevenLabsAvailable = false;
+            $this->elevenLabsLastError = 'Missing ElevenLabs API credentials.';
+            log_message('error', 'MyMIAdvisor::generateVoiceoverWithElevenLabs - API key or voice ID missing.');
+            return null;
+        }
+
         $client = \Config\Services::curlrequest();
-        $response = $client->post("https://api.elevenlabs.io/v1/text-to-speech/{$voiceId}", [
+        $options = [
             'headers' => [
                 'xi-api-key' => $apiKey,
                 'Content-Type' => 'application/json',
@@ -264,7 +304,47 @@ S;
                     'similarity_boost' => 0.75,
                 ]
             ]
-        ]);
+        ];
+        try {
+            $response = $client->post("https://api.elevenlabs.io/v1/text-to-speech/{$voiceId}", [
+                'headers' => [
+                    'xi-api-key' => $apiKey,
+                    'Content-Type' => 'application/json',
+                ],
+                'json' => [
+                    'text' => $text,
+                    'model_id' => 'eleven_multilingual_v2',
+                    'voice_settings' => [
+                        'stability' => 0.5,
+                        'similarity_boost' => 0.75,
+                    ]
+                ]
+            ]);
+        } catch (HTTPException $e) {
+            $this->logElevenLabsFailure('ElevenLabs HTTP error: ' . $e->getMessage());
+            return null;
+        } catch (\Throwable $e) {
+            $this->logElevenLabsFailure('ElevenLabs transport error: ' . $e->getMessage());
+            return null;
+        }
+
+        if ($response->getStatusCode() === 401) {
+            $this->logElevenLabsFailure('ElevenLabs returned 401 Unauthorized.');
+            return null;
+        }
+
+        $statusCode = $response->getStatusCode();
+        if ($statusCode >= 400) {
+            $body = $response->getBody();
+            $this->elevenLabsLastError = "HTTP {$statusCode}: {$body}";
+            log_message('error', 'MyMIAdvisor::generateVoiceoverWithElevenLabs HTTP error: {status}', ['status' => $this->elevenLabsLastError]);
+
+            if ($statusCode === 401) {
+                $this->elevenLabsAvailable = false;
+            }
+
+            return null;
+        }
 
         $voicePath = WRITEPATH . "uploads/voiceovers/";
         if (!is_dir($voicePath)) {
@@ -272,9 +352,27 @@ S;
         }
 
         $filePath = $voicePath . "{$filename}.mp3";
-        file_put_contents($filePath, $response->getBody());
+        $bytes = @file_put_contents($filePath, $response->getBody());
+
+        if ($bytes === false) {
+            $this->elevenLabsLastError = 'Failed to write ElevenLabs audio to disk.';
+            log_message('error', 'MyMIAdvisor::generateVoiceoverWithElevenLabs - Unable to write audio file: {path}', [
+                'path' => $filePath,
+            ]);
+            return null;
+        }
 
         return base_url("writable/uploads/voiceovers/{$filename}.mp3");
+    }
+
+    protected function logElevenLabsFailure(string $message): void
+    {
+        if (!self::$elevenLabsFailureLogged) {
+            log_message('error', $message);
+            self::$elevenLabsFailureLogged = true;
+        } else {
+            log_message('debug', $message);
+        }
     }
 
     public function generateSentimentTag($text): string

@@ -148,12 +148,12 @@ $deleteType = $mapDeleteType[$walletCategory] ?? 'Bank';
                     data-formtype="Add"
                     data-endpoint="<?= esc($btnEndpointToken) ?>"
                     data-cuid="<?= esc($cuID) ?>">
-              <i class="icon ni ni-plus me-1"></i> Add Manually
+              <i class="icon ni ni-plus text-white me-1"></i> Add Manually
             </button>
           </div>
         </div>
       </div>
-    </div>
+        </div>
 
     <?php if ($walletCategory === 'investment'): ?>
       <div class="col-xxl-3 col-lg-4 col-sm-6">

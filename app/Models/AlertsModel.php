@@ -2048,57 +2048,73 @@ class AlertsModel extends Model
         $processed = false;
 
         foreach ($records as $record) {
-            log_message('info', "📩 Processing Email ID: {$record['id']}");
-
-            $subject = (string) ($record['email_subject'] ?? '');
-            $body    = (string) ($record['email_body'] ?? '');
-            $text    = trim($subject . ' ' . $body);
-
-            $symbols = $symbolExtractor ? (array) $symbolExtractor($text) : $this->defaultSymbolExtractor($text);
-            $symbols = array_values(array_unique(array_map('strtoupper', $symbols)));
-
-            if (empty($symbols)) {
-                log_message('warning', "⚠️ No valid symbols found in email ID {$record['id']}. Marking as processed.");
-                $this->markScraperRecordProcessed($record['id']);
-                continue;
-            }
-
-            foreach ($symbols as $symbol) {
-                if (!$this->ensureTickerExists($symbol)) {
-                    log_message('warning', "⚠️ Skipping {$symbol}; unable to verify ticker existence.");
-                    continue;
-                }
-
-                $alertData = [
-                    'ticker'            => $symbol,
-                    'category'          => $record['category'] ?? 'Uncategorized',
-                    'tag'               => $record['tag'] ?? null,
-                    'class'             => $record['class'] ?? null,
-                    'segment'           => $record['segment'] ?? null,
-                    'created_on'        => date('Y-m-d H:i:s'),
-                    'last_updated'      => date('Y-m-d'),
-                    'last_updated_time' => date('H:i:s'),
-                ];
-
-                $upserted = $this->upsertOpenedTradeAlert($alertData);
-
-                $historyPayload = [
-                    'ticker'           => $symbol,
-                    'alerted_on'       => $record['email_date'] ?? date('Y-m-d H:i:s'),
-                    'status'           => $upserted['status'] ?? 'Opened',
-                    'category'         => $alertData['category'],
-                    'occurrences'      => $upserted['occurrences'] ?? 1,
-                    'email_identifier' => $record['email_identifier'] ?? null,
-                ];
-
-                $this->recordAlertHistory($historyPayload);
-            }
-
-            $this->markScraperRecordProcessed($record['id']);
-            $processed = true;
+            $processed = $this->processScraperRecordPayload($record, $symbolExtractor) || $processed;
         }
 
         return $processed;
+    }
+
+    public function processScraperRecord(int $recordId, ?callable $symbolExtractor = null): bool
+    {
+        $record = $this->db->table('bf_investment_scraper')->where('id', $recordId)->get()->getRowArray();
+        if (!$record) {
+            log_message('warning', "⚠️ processScraperRecord - record {$recordId} not found.");
+            return false;
+        }
+
+        return $this->processScraperRecordPayload($record, $symbolExtractor);
+    }
+
+    protected function processScraperRecordPayload(array $record, ?callable $symbolExtractor = null): bool
+    {
+        log_message('info', "📩 Processing Email ID: {$record['id']}");
+
+        $subject = (string) ($record['email_subject'] ?? '');
+        $body    = (string) ($record['email_body'] ?? '');
+        $text    = trim($subject . ' ' . $body);
+
+        $symbols = $symbolExtractor ? (array) $symbolExtractor($text) : $this->defaultSymbolExtractor($text);
+        $symbols = array_values(array_unique(array_map('strtoupper', $symbols)));
+
+        if (empty($symbols)) {
+            log_message('warning', "⚠️ No valid symbols found in email ID {$record['id']}. Marking as processed.");
+            $this->markScraperRecordProcessed($record['id']);
+            return false;
+        }
+
+        foreach ($symbols as $symbol) {
+            if (!$this->ensureTickerExists($symbol)) {
+                log_message('warning', "⚠️ Skipping {$symbol}; unable to verify ticker existence.");
+                continue;
+            }
+
+            $alertData = [
+                'ticker'            => $symbol,
+                'category'          => $record['category'] ?? 'Uncategorized',
+                'tag'               => $record['tag'] ?? null,
+                'class'             => $record['class'] ?? null,
+                'segment'           => $record['segment'] ?? null,
+                'created_on'        => date('Y-m-d H:i:s'),
+                'last_updated'      => date('Y-m-d'),
+                'last_updated_time' => date('H:i:s'),
+            ];
+
+            $upserted = $this->upsertOpenedTradeAlert($alertData);
+
+            $historyPayload = [
+                'ticker'           => $symbol,
+                'alerted_on'       => $record['email_date'] ?? date('Y-m-d H:i:s'),
+                'status'           => $upserted['status'] ?? 'Opened',
+                'category'         => $alertData['category'],
+                'occurrences'      => $upserted['occurrences'] ?? 1,
+                'email_identifier' => $record['email_identifier'] ?? null,
+            ];
+
+            $this->recordAlertHistory($historyPayload);
+        }
+
+        $this->markScraperRecordProcessed($record['id']);
+        return true;
     }
 
     private function defaultSymbolExtractor(string $text): array
@@ -2181,7 +2197,7 @@ class AlertsModel extends Model
             if (!$inserted) {
                 throw new \Exception(json_encode($this->db->error()));
             }
-            return $inserted;
+            return (int) $this->db->insertID();
         } catch (\Exception $e) {
             log_message('error', '❌ Failed to insert email: ' . $e->getMessage());
         }
@@ -2314,23 +2330,30 @@ class AlertsModel extends Model
             return $this->db->table('bf_investment_alert_history')
                             ->insert($data);
         }
-    }    
+    }       
     
     public function updateAlertPrices(array $updates): int
     {
         $count = 0;
         foreach ($updates as $symbol => $data) {
-            $result = $this->where('ticker', $symbol)
-                        ->set([
-                            'price' => $data['price'] ?? null,
-                            'volume' => $data['volume'] ?? null,
-                            'open' => $data['open'] ?? null,
-                            'high' => $data['high'] ?? null,
-                            'low' => $data['low'] ?? null,
+            if (!is_string($symbol) || $symbol === '') {
+                $symbol = $data['ticker'] ?? null;
+            }
+
+            if (empty($symbol)) {
+                continue;
+            }
+            $result = $this->db->table('bf_investment_trade_alerts')
+                        ->where('ticker', $symbol)
+                        ->update([
+                            'price'             => $data['price'] ?? null,
+                            'volume'            => $data['volume'] ?? null,
+                            'open'              => $data['open'] ?? null,
+                            'high'              => $data['high'] ?? null,
+                            'low'               => $data['low'] ?? null,
                             'last_updated_time' => date('H:i:s'),
-                            'last_updated' => date('Y-m-d'),
-                        ])
-                        ->update();
+                            'last_updated'      => date('Y-m-d'),
+                        ]);
 
             if ($result !== false) {
                 $count++;

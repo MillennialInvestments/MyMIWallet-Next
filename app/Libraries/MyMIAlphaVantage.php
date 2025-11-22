@@ -3,6 +3,7 @@ namespace App\Libraries;
 
 use Config\APIs;
 use CodeIgniter\HTTP\CURLRequest;
+use Config\Services;
 
 class MyMIAlphaVantage
 {
@@ -12,6 +13,9 @@ class MyMIAlphaVantage
     protected $marketstackKey;
     protected $alphaKeys = [];
     protected $alphaKeyIndex = 0;
+    protected int $rateLimitPerMinute = 70;
+    protected bool $rateLimitExceeded = false;
+    protected bool $rateLimitWarned = false;
 
     public function __construct()
     {
@@ -50,6 +54,54 @@ class MyMIAlphaVantage
         if (empty($this->apiKey)) {
             log_message('warning', 'AlphaVantage API key is missing. Requests may fail until a key is configured.');
         }
+    }
+
+    public function hasRateLimitCapacity(int $needed = 1): bool
+    {
+        $cache = Services::cache();
+        $state = $cache->get($this->rateLimiterCacheKey());
+        $count = is_array($state) ? (int) ($state['count'] ?? 0) : (int) $state;
+        return ($count + $needed) <= $this->rateLimitPerMinute;
+    }
+
+    public function didHitRateLimit(): bool
+    {
+        return $this->rateLimitExceeded;
+    }
+
+    protected function rateLimiterCacheKey(): string
+    {
+        return 'alphavantage_rate_' . date('YmdHi');
+    }
+
+    protected function acquireRateSlots(int $slots = 1): bool
+    {
+        $cache = Services::cache();
+        $key = $this->rateLimiterCacheKey();
+        $state = $cache->get($key);
+        $count = is_array($state) ? (int) ($state['count'] ?? 0) : (int) $state;
+
+        if ($count + $slots > $this->rateLimitPerMinute) {
+            $this->rateLimitExceeded = true;
+            $this->logRateLimitWarning();
+            return false;
+        }
+
+        $count += $slots;
+        $cache->save($key, ['count' => $count], 90);
+        $this->rateLimitExceeded = false;
+        $this->rateLimitWarned = false;
+        return true;
+    }
+
+    protected function logRateLimitWarning(): void
+    {
+        if ($this->rateLimitWarned) {
+            return;
+        }
+
+        log_message('warning', 'AlphaVantage rate limit reached; processing deferred.');
+        $this->rateLimitWarned = true;
     }
 
     private function currentAlphaKey(): ?string
@@ -94,6 +146,9 @@ class MyMIAlphaVantage
             $query['apikey'] = $apiKey;
 
             try {
+                if (! $this->acquireRateSlots()) {
+                    return null;
+                }
                 $response = $this->client->get('https://www.alphavantage.co/query', [
                     'query' => $query,
                     'timeout' => 10,
@@ -166,6 +221,10 @@ class MyMIAlphaVantage
                 'function' => 'GLOBAL_QUOTE',
                 'symbol'   => $symbol,
             ]);
+
+            if ($data === null && $this->rateLimitExceeded) {
+                break;
+            }
 
             if (!is_array($data)) {
                 continue;

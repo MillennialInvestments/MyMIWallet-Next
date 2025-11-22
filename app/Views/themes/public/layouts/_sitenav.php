@@ -57,7 +57,7 @@ $brandAlt = 'MyMI Wallet - Investment Accounting/Analytical Software & Crypto As
 
         <li class="nav-item intro-nav-item py-1 ps-lg-1 ms-lg-0">
           <?php if ($isLoggedIn): ?>
-            <a href="<?= $dashboardUrl ?>" class="btn btn-primary"><span>ACCOUNT</span></a>
+            <a href="<?= $dashboardUrl ?>" class="btn btn-primary text-white"><span>ACCOUNT</span></a>
           <?php else: ?>
             <a href="<?= $loginUrl ?>" class="btn btn-primary"><span>LOGIN</span></a>
           <?php endif; ?>

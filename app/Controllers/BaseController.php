@@ -11,7 +11,7 @@ use Config\Services;
 use Throwable; 
 use Psr\Log\LoggerInterface;
 
-use App\Libraries\{CrudCacheInvalidator, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIAdvisor, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets};
+use App\Libraries\{CrudCacheInvalidator, MyMIAdvisor, MyMIAlphaVantage, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets};
 use App\Services\{AccountService, BudgetService, DashboardService, GoalTrackingService, MarketingService, SolanaService, UserService, WalletService};
 use App\Models\WalletModel; // <-- add this
 

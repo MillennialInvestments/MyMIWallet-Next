@@ -17,7 +17,7 @@ class SupportController extends UserController
     protected ?SubscribeModel $subscribeModel = null;
 
     // protected array $siteSettings = [];
-    protected array $socialMedia = [];
+    // protected array $socialMedia = [];
     protected $auth;
     protected $session;
     protected ?array $userAccount = null;

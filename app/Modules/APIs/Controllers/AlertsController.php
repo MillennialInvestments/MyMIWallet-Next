@@ -1237,7 +1237,7 @@ class AlertsController extends ResourceController
         log_message('debug', 'getLatestPrices - Starting price refresh');
 
         helper('array');
-        $alpha = service('MyMIAlphaVantage'); // Use AlphaVantage for market data (not MarketAux)
+        $alpha = $this->getMyMIAlphaVantage(); // Use AlphaVantage for market data (not MarketAux)
         $alertsModel = $this->alertsModel;
 
         $activeAlerts = $alertsModel->getFilteredTradeAlerts();

@@ -21,6 +21,11 @@ header {
     background-color: rgba(247, 248, 249, 1);
     padding: .4rem 0 0;
 }
+.btn-primary {
+    color: #ffffff !important;
+    background-color: #1565d8;
+    border-color: #1565d8;
+}
 :root{ --login-accent:#1565d8; }
 body.login { background:#0f172a; }
 .intro-navbar{top:0px;position:fixed;width:100%;z-index:1030;}
@@ -198,14 +203,19 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
     border-style: solid;
     border-color: transparent;
 
-    color: #526484;
-    background-color: transparent;
+    /* color: #526484; */
+    /* background-color: transparent; */
 
-    transition:
+    /* transition:
         color .15s ease-in-out,
         background-color .15s ease-in-out,
         border-color .15s ease-in-out,
-        box-shadow .15s ease-in-out;
+        box-shadow .15s ease-in-out; */
+}
+
+.btn:hover, .btn-focus {
+    background-position: 0;
+    /* box-shadow: 0 5px 15px rgba(33, 37, 41, 0.15); */
 }
 
 /* Outline primary brand button */
