@@ -103,112 +103,6 @@ $availableToInvest = $budgetSummary['availableToInvest'] ?? 0.0;
     </div>
 </div>
 
-
-<div class="nk-block">
-    <div class="row g-gs">
-        <div class="col-lg-4">
-            <div class="card card-bordered card-full h-100">
-                <div class="card-inner">
-                    <div class="card-title-group align-start d-flex mb-2">
-                        <div class="card-title">
-                            <h6 class="subtitle">Daily News &amp; Updates</h6>
-                            <span class="text-soft small">
-                                From alerts@mymiwallet.com / alerts@thinkorswim.com
-                            </span>
-                        </div>
-                        <div class="card-tools">
-                            <?php if ($cuRole < 2): ?>
-                            <em class="card-hint icon ni ni-setting"
-                                data-bs-toggle="tooltip"
-                                title="Latest press releases and news scraped from your investment alerts."></em>
-                            <?php endif; ?>
-                            <em class="card-hint icon ni ni-info"
-                                data-bs-toggle="tooltip"
-                                title="Latest press releases and news scraped from your investment alerts."></em>
-                        </div>
-                    </div>
-
-                    <?php $dailyNews = $dailyNews ?? []; ?>
-                    <?php $topNews = $dailyNews[0] ?? null; ?>
-
-                    <div class="card-amount mb-3">
-                        <?php if ($topNews): ?>
-                            <span class="amount d-block">
-                                <?= esc($topNews['title']); ?>
-                            </span>
-                            <span class="change up text-success d-inline-flex align-items-center mt-1">
-                                <em class="icon ni ni-clock me-1"></em>
-                                <?= esc($topNews['published_at_human']); ?>
-                                <?php if (!empty($topNews['symbols'])): ?>
-                                    <span class="badge badge-dim bg-primary ms-2">
-                                        <?= esc($topNews['symbols']); ?>
-                                    </span>
-                                <?php endif; ?>
-                            </span>
-                        <?php else: ?>
-                            <span class="amount text-soft d-block">
-                                No news collected yet today.
-                            </span>
-                            <span class="text-soft small">
-                                Check back after the next email scrape run.
-                            </span>
-                        <?php endif; ?>
-                    </div>
-
-                    <?php if (!empty($dailyNews)): ?>
-                        <ul class="nk-activity">
-                            <?php foreach (array_slice($dailyNews, 0, 5) as $item): ?>
-                                <li class="nk-activity-item">
-                                    <div class="nk-activity-media">
-                                        <em class="icon ni ni-report"></em>
-                                    </div>
-                                    <div class="nk-activity-data">
-                                        <div class="label d-flex align-items-center justify-content-between">
-                                            <span>
-                                                <?= esc($item['source'] ?? 'Press Release'); ?>
-                                            </span>
-                                            <?php if (!empty($item['symbols'])): ?>
-                                                <span class="badge badge-dim bg-primary">
-                                                    <?= esc($item['symbols']); ?>
-                                                </span>
-                                            <?php endif; ?>
-                                        </div>
-                                        <div class="details text-soft small">
-                                            <?php if (!empty($item['url'])): ?>
-                                                <a href="<?= esc($item['url']); ?>" target="_blank" rel="noopener"
-                                                   class="link">
-                                                    <?= esc($item['short_title']); ?>
-                                                </a>
-                                            <?php else: ?>
-                                                <?= esc($item['short_title']); ?>
-                                            <?php endif; ?>
-                                        </div>
-                                        <div class="sub text-muted xsmall">
-                                            <?= esc($item['published_at_human']); ?>
-                                        </div>
-                                    </div>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    <?php endif; ?>
-
-                    <div class="mt-3 d-flex justify-content-between align-items-center">
-                        <a href="<?= site_url('News-And-Updates'); ?>" class="link link-sm">
-                            View News Hub
-                        </a>
-                        <button type="button"
-                                class="btn btn-sm btn-outline-primary"
-                                data-url="<?= site_url('API/Management/cronFetchAndGenerateNews'); ?>"
-                                id="btn-refresh-daily-news">
-                            Refresh Now
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="nk-block">
     <div class="row g-gs">
         <div class="col-lg-4">
@@ -233,8 +127,6 @@ $availableToInvest = $budgetSummary['availableToInvest'] ?? 0.0;
                                 <div class="label">Total Assets</div>
                                 <div class="amount text-success"><?= miw_format_currency($assetsSummary['totalAssets'] ?? 0.0); ?></div>
                             </div>
-                        </li>
-                        <li class="nk-activity-item">
                             <div class="nk-activity-media"><em class="icon ni ni-minus-round"></em></div>
                             <div class="nk-activity-data">
                                 <div class="label">Total Liabilities</div>
@@ -242,11 +134,11 @@ $availableToInvest = $budgetSummary['availableToInvest'] ?? 0.0;
                             </div>
                         </li>
                     </ul>
-                    <div class="mt-3">
+                    <!-- <div class="mt-3">
                         <canvas id="netWorthSparkline" height="120" data-chart='<?= esc(json_encode($netWorthChartData, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP)); ?>'></canvas>
-                    </div>
+                    </div> -->
                     <?php if (!empty($assetsSummary['breakdown'])): ?>
-                    <div class="mt-4">
+                    <div class="mt-1">
                         <h6 class="mb-2 text-muted">Asset Breakdown</h6>
                         <div class="row g-2">
                             <?php foreach ($assetsSummary['breakdown'] as $label => $amount): ?>
@@ -295,15 +187,11 @@ $availableToInvest = $budgetSummary['availableToInvest'] ?? 0.0;
                                 <div class="label">Income</div>
                                 <div class="amount text-success"><?= miw_format_currency($budgetSummary['monthlyIncome'] ?? 0.0); ?></div>
                             </div>
-                        </li>
-                        <li class="nk-activity-item">
                             <div class="nk-activity-media"><em class="icon ni ni-arrow-up-right"></em></div>
                             <div class="nk-activity-data">
                                 <div class="label">Expenses</div>
                                 <div class="amount text-danger"><?= miw_format_currency($budgetSummary['monthlyExpenses'] ?? 0.0); ?></div>
                             </div>
-                        </li>
-                        <li class="nk-activity-item">
                             <div class="nk-activity-media"><em class="icon ni ni-layers"></em></div>
                             <div class="nk-activity-data">
                                 <div class="label">Available to Invest</div>
@@ -333,9 +221,9 @@ $availableToInvest = $budgetSummary['availableToInvest'] ?? 0.0;
                         <div class="title">Unrealized P&amp;L</div>
                         <div class="amount <?= ($portfolioSummary['pnl'] ?? 0) >= 0 ? 'text-success' : 'text-danger'; ?>"><?= miw_format_currency($portfolioSummary['pnl'] ?? 0.0); ?></div>
                     </div>
-                    <div class="mt-3">
+                    <!-- <div class="mt-3">
                         <canvas id="allocationChart" height="140" data-chart='<?= esc(json_encode($allocationChartData, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP)); ?>'></canvas>
-                    </div>
+                    </div> -->
                     <?php if ($allocationFiltered): ?>
                     <div class="mt-4">
                         <div class="row g-1">
@@ -526,20 +414,20 @@ $availableToInvest = $budgetSummary['availableToInvest'] ?? 0.0;
                         </div>
                     </div>
                     <div class="row g-2">
-                        <div class="col-12">
-                            <a class="btn btn-outline-primary w-100" href="/user/budget">Go to Budget Overview</a>
+                        <div class="col-12 mb-2">
+                            <a class="btn btn-outline-primary w-100" href="Budget">Go to Budget Overview</a>
                         </div>
-                        <div class="col-12">
-                            <a class="btn btn-outline-secondary w-100" href="/user/assets">Manage Assets</a>
+                        <div class="col-12 mb-2">
+                            <a class="btn btn-outline-secondary w-100" href="Assets">Manage Assets</a>
                         </div>
-                        <div class="col-12">
-                            <a class="btn btn-outline-success w-100" href="/dashboard/alerts">View Trade Alerts</a>
+                        <div class="col-12 mb-2">
+                            <a class="btn btn-outline-success w-100" href="Alerts">View Trade Alerts</a>
                         </div>
-                        <div class="col-12">
-                            <a class="btn btn-outline-info w-100" href="/user/projects">Review Projects</a>
+                        <div class="col-12 mb-2">
+                            <a class="btn btn-outline-info w-100" href="Projects">Review Projects</a>
                         </div>
-                        <div class="col-12">
-                            <a class="btn btn-outline-warning w-100" href="/news">Marketing / News Center</a>
+                        <div class="col-12 mb-2">
+                            <a class="btn btn-outline-warning w-100" href="News">Marketing / News Center</a>
                         </div>
                     </div>
                 </div>

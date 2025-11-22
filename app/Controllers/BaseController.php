@@ -1005,17 +1005,17 @@ abstract class BaseController extends Controller
         // PERMISSIVE: allows inline <script> and style="", and whitelists your CDNs/widgets
         $directives = [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' https://code.jquery.com https://cdn.jsdelivr.net https://cdn.datatables.net https://cdnjs.cloudflare.com https://unpkg.com https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://www.gstatic.com https://s3.tradingview.com https://www.tradingview.com https://maxcdn.bootstrapcdn.com https://stackpath.bootstrapcdn.com https://connect.facebook.net",
-            "script-src-elem 'self' 'unsafe-inline' https://code.jquery.com https://cdn.jsdelivr.net https://cdn.datatables.net https://cdnjs.cloudflare.com https://unpkg.com https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://www.gstatic.com https://s3.tradingview.com https://www.tradingview.com https://maxcdn.bootstrapcdn.com https://stackpath.bootstrapcdn.com https://connect.facebook.net",
-            "connect-src 'self' https: https://www.google-analytics.com https://www.googletagmanager.com https://s3.tradingview.com https://www.tradingview.com https://connect.facebook.net",
+            "script-src 'self' 'unsafe-inline' https://code.jquery.com https://cdn.jsdelivr.net https://cdn.datatables.net https://cdnjs.cloudflare.com https://unpkg.com https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://www.gstatic.com https://s3.tradingview.com https://www.tradingview.com https://maxcdn.bootstrapcdn.com https://stackpath.bootstrapcdn.com https://connect.facebook.net https://www.clarity.ms",
+            "script-src-elem 'self' 'unsafe-inline' https://code.jquery.com https://cdn.jsdelivr.net https://cdn.datatables.net https://cdnjs.cloudflare.com https://unpkg.com https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://www.gstatic.com https://s3.tradingview.com https://www.tradingview.com https://maxcdn.bootstrapcdn.com https://stackpath.bootstrapcdn.com https://connect.facebook.net https://www.clarity.ms",
+            "connect-src 'self' https: https://www.google-analytics.com https://www.googletagmanager.com https://s3.tradingview.com https://www.tradingview.com https://connect.facebook.net https://www.clarity.ms",
             "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com https://unpkg.com https://maxcdn.bootstrapcdn.com https://stackpath.bootstrapcdn.com",
             "style-src-elem 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com https://unpkg.com https://maxcdn.bootstrapcdn.com https://stackpath.bootstrapcdn.com",
 
             "img-src 'self' data: https:",
             "font-src 'self' data: https: https://fonts.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://maxcdn.bootstrapcdn.com https://stackpath.bootstrapcdn.com https://static.tradingview.com",
 
-            // Embeds (YouTube, TradingView)
-            "frame-src 'self' https://www.youtube.com https://www.google.com https://www.tradingview.com",
+            // Embeds (YouTube, TradingView, Clarity)
+            "frame-src 'self' https://www.youtube.com https://www.google.com https://www.tradingview.com https://www.clarity.ms",
 
             "worker-src 'self' blob:",
             "object-src 'none'",
@@ -1047,6 +1047,8 @@ abstract class BaseController extends Controller
             'https://s3.tradingview.com',
             'https://connect.facebook.net', // + Facebook
             'https://unpkg.com',   
+            'https://unpkg.com',
+            'https://www.clarity.ms',
         ];
 
         $styleSrc = [
@@ -1063,6 +1065,7 @@ abstract class BaseController extends Controller
             'https://s3.tradingview.com',
             'https://www.tradingview.com',
             'https://connect.facebook.net', // + Facebook
+            'https://www.clarity.ms',
         ];
 
         if ($allowViteDev) {
@@ -1083,7 +1086,7 @@ abstract class BaseController extends Controller
             "img-src 'self' data: https:",
             "font-src 'self' https://fonts.gstatic.com data:",
             'connect-src ' . implode(' ', array_filter(array_unique($connectSrc))),
-            "frame-src 'self' https://cdn.plaid.com https://www.youtube.com https://www.tradingview.com https://www.google.com",
+            "frame-src 'self' https://cdn.plaid.com https://www.youtube.com https://www.tradingview.com https://www.google.com https://www.clarity.ms",
             "manifest-src 'self'",
             "worker-src 'self' blob:",
             "object-src 'none'",
