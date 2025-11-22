@@ -630,6 +630,24 @@ class DashboardController extends UserController
             $this->data['dailyNews'] = [];
         }
 
+        try {
+            $alertsModel = model(\App\Models\AlertsModel::class);
+            $this->data['dailyTradeAlerts'] = $alertsModel
+                ->getFilteredTradeAlerts([
+                    'start' => date('Y-m-d 00:00:00'),
+                    'end'   => date('Y-m-d 23:59:59'),
+                ])
+                ->orderBy('created_on', 'DESC')
+                ->limit(10)
+                ->get()
+                ->getResultArray();
+        } catch (\Throwable $e) {
+            log_message('error', 'DashboardController::index failed to load trade alerts: {msg}', [
+                'msg' => $e->getMessage(),
+            ]);
+            $this->data['dailyTradeAlerts'] = [];
+        }
+
         return $this->renderTheme('User/Dashboard/index', $this->data);
     }
 
