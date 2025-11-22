@@ -21,7 +21,7 @@ class AlertsModel extends Model
 
     protected $allowedFields = [
         'symbol','name','currency','exchange','mic_code','country','type','status','type','url','title','summary','content',
-        'email_identifier','email_date','email_sender','email_subject','email_body',
+        'email_identifier','email_date','email_sender','email_subject','email_body','source_email','email_type','news_vendor','symbols',
         'created_on','modified_on','links','images','videos','metadata','structured_data','additional_html_elements',
         'page_performance_data','network_requests','user_interaction_points','accessibility_information','page_relationships',
         'seo_elements','social_media_links','comments_user_generated_content','contact_information','legal_information',
@@ -2201,6 +2201,32 @@ class AlertsModel extends Model
         } catch (\Exception $e) {
             log_message('error', '❌ Failed to insert email: ' . $e->getMessage());
         }
+    }
+
+    public function getUnprocessedNews(?string $sinceDate = null): array
+    {
+        $sinceDate = $sinceDate ?: date('Y-m-d 00:00:00');
+
+        return $this->db->table('bf_investment_scraper')
+            ->where('email_type', 'news')
+            ->where('status', 'In Review')
+            ->groupStart()
+                ->where('email_date >=', $sinceDate)
+                ->orWhere('created_on >=', $sinceDate)
+            ->groupEnd()
+            ->orderBy('email_date', 'DESC')
+            ->get()
+            ->getResultArray();
+    }
+
+    public function markNewsAsProcessed(int $id): bool
+    {
+        return (bool) $this->db->table('bf_investment_scraper')
+            ->where('id', $id)
+            ->update([
+                'status'      => 'Processed',
+                'modified_on' => date('Y-m-d H:i:s'),
+            ]);
     }
 
     public function storeEnrichment(array $data)

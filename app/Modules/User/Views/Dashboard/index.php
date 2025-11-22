@@ -103,6 +103,112 @@ $availableToInvest = $budgetSummary['availableToInvest'] ?? 0.0;
     </div>
 </div>
 
+
+<div class="nk-block">
+    <div class="row g-gs">
+        <div class="col-lg-4">
+            <div class="card card-bordered card-full h-100">
+                <div class="card-inner">
+                    <div class="card-title-group align-start d-flex mb-2">
+                        <div class="card-title">
+                            <h6 class="subtitle">Daily News &amp; Updates</h6>
+                            <span class="text-soft small">
+                                From alerts@mymiwallet.com / alerts@thinkorswim.com
+                            </span>
+                        </div>
+                        <div class="card-tools">
+                            <?php if ($cuRole < 2): ?>
+                            <em class="card-hint icon ni ni-setting"
+                                data-bs-toggle="tooltip"
+                                title="Latest press releases and news scraped from your investment alerts."></em>
+                            <?php endif; ?>
+                            <em class="card-hint icon ni ni-info"
+                                data-bs-toggle="tooltip"
+                                title="Latest press releases and news scraped from your investment alerts."></em>
+                        </div>
+                    </div>
+
+                    <?php $dailyNews = $dailyNews ?? []; ?>
+                    <?php $topNews = $dailyNews[0] ?? null; ?>
+
+                    <div class="card-amount mb-3">
+                        <?php if ($topNews): ?>
+                            <span class="amount d-block">
+                                <?= esc($topNews['title']); ?>
+                            </span>
+                            <span class="change up text-success d-inline-flex align-items-center mt-1">
+                                <em class="icon ni ni-clock me-1"></em>
+                                <?= esc($topNews['published_at_human']); ?>
+                                <?php if (!empty($topNews['symbols'])): ?>
+                                    <span class="badge badge-dim bg-primary ms-2">
+                                        <?= esc($topNews['symbols']); ?>
+                                    </span>
+                                <?php endif; ?>
+                            </span>
+                        <?php else: ?>
+                            <span class="amount text-soft d-block">
+                                No news collected yet today.
+                            </span>
+                            <span class="text-soft small">
+                                Check back after the next email scrape run.
+                            </span>
+                        <?php endif; ?>
+                    </div>
+
+                    <?php if (!empty($dailyNews)): ?>
+                        <ul class="nk-activity">
+                            <?php foreach (array_slice($dailyNews, 0, 5) as $item): ?>
+                                <li class="nk-activity-item">
+                                    <div class="nk-activity-media">
+                                        <em class="icon ni ni-report"></em>
+                                    </div>
+                                    <div class="nk-activity-data">
+                                        <div class="label d-flex align-items-center justify-content-between">
+                                            <span>
+                                                <?= esc($item['source'] ?? 'Press Release'); ?>
+                                            </span>
+                                            <?php if (!empty($item['symbols'])): ?>
+                                                <span class="badge badge-dim bg-primary">
+                                                    <?= esc($item['symbols']); ?>
+                                                </span>
+                                            <?php endif; ?>
+                                        </div>
+                                        <div class="details text-soft small">
+                                            <?php if (!empty($item['url'])): ?>
+                                                <a href="<?= esc($item['url']); ?>" target="_blank" rel="noopener"
+                                                   class="link">
+                                                    <?= esc($item['short_title']); ?>
+                                                </a>
+                                            <?php else: ?>
+                                                <?= esc($item['short_title']); ?>
+                                            <?php endif; ?>
+                                        </div>
+                                        <div class="sub text-muted xsmall">
+                                            <?= esc($item['published_at_human']); ?>
+                                        </div>
+                                    </div>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+
+                    <div class="mt-3 d-flex justify-content-between align-items-center">
+                        <a href="<?= site_url('News-And-Updates'); ?>" class="link link-sm">
+                            View News Hub
+                        </a>
+                        <button type="button"
+                                class="btn btn-sm btn-outline-primary"
+                                data-url="<?= site_url('API/Management/cronFetchAndGenerateNews'); ?>"
+                                id="btn-refresh-daily-news">
+                            Refresh Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="nk-block">
     <div class="row g-gs">
         <div class="col-lg-4">

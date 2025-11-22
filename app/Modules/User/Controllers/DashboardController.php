@@ -618,6 +618,18 @@ class DashboardController extends UserController
             ]);
         }
 
+        helper(['news']);
+
+        try {
+            $marketingModel = model(\App\Models\MarketingModel::class);
+            $this->data['dailyNews'] = $marketingModel->getDailyDashboardNews($activeUserId, 5);
+        } catch (\Throwable $e) {
+            log_message('error', 'DashboardController::index failed to load daily news: {msg}', [
+                'msg' => $e->getMessage(),
+            ]);
+            $this->data['dailyNews'] = [];
+        }
+
         return $this->renderTheme('User/Dashboard/index', $this->data);
     }
 

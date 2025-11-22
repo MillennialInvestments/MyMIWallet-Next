@@ -15,13 +15,13 @@ class MarketingModel extends Model
     protected $useSoftDeletes = false;
     protected $allowedFields = [
         // General fields (used in multiple sections)
-        'title', 'description', 'created_on', 'modified_on', 'status', 'type',
+        'title', 'description', 'created_on', 'modified_on', 'status', 'type', 'source_id', 'source_type', 'source', 'symbols',
     
         // Fields for minimal footprint and specific queries
         'day', 'time', 'activity', 'link', 'url', 'summary', 'content', 
         'email_identifier', 'email_date', 'email_sender', 'email_subject', 'email_body',
-        'email_attachments', 'keywords', 'scraped_at', 'links', 'images', 'videos', 
-        'metadata', 'structured_data',
+        'email_attachments', 'keywords', 'scraped_at', 'links', 'images', 'videos',
+        'metadata', 'structured_data', 'url', 'date_scraped', 'meta_json', 'hash', 'platforms',
     
         // Fields for marketing content
         'sched_id', 'escalated', 'audience_type', 'stage', 'name', 'assigned_on', 
@@ -1698,6 +1698,51 @@ class MarketingModel extends Model
             return false;
         }
     }
+
+    public function insertNewsItem(array $data): bool
+    {
+        $title       = trim($data['title'] ?? '');
+        $summaryText = trim(is_array($data['summary'] ?? null) ? ($data['summary']['summary'] ?? '') : ($data['summary'] ?? ''));
+
+        if ($title === '' || $summaryText === '') {
+            log_message('error', '❌ insertNewsItem: title or summary missing.');
+            return false;
+        }
+
+        $hash = md5(strtolower($title . $summaryText));
+        $existing = $this->db->table('bf_marketing_scraper')->where('hash', $hash)->get()->getRowArray();
+        if ($existing) {
+            log_message('debug', "🛑 insertNewsItem skipped duplicate hash {$hash} (existing ID {$existing['id']}).");
+            return false;
+        }
+
+        $keywords = $data['keywords'] ?? [];
+        $keywordString = is_array($keywords) ? implode(',', $keywords) : $keywords;
+
+        $payload = [
+            'source_id'    => $data['source_id'] ?? null,
+            'source_type'  => $data['source_type'] ?? 'investment_scraper',
+            'title'        => $title,
+            'summary'      => $summaryText,
+            'content'      => $data['content'] ?? null,
+            'keywords'     => $keywordString,
+            'url'          => $data['url'] ?? null,
+            'symbols'      => $data['symbols'] ?? null,
+            'source'       => $data['source'] ?? null,
+            'date_scraped' => $data['date_scraped'] ?? date('Y-m-d H:i:s'),
+            'meta_json'    => $data['meta_json'] ?? null,
+            'hash'         => $hash,
+            'status'       => $data['status'] ?? 'ready',
+            'created_on'   => $data['created_on'] ?? date('Y-m-d H:i:s'),
+        ];
+
+        try {
+            return (bool) $this->db->table('bf_marketing_scraper')->insert($payload);
+        } catch (\Throwable $e) {
+            log_message('error', '❌ insertNewsItem failed: ' . $e->getMessage());
+            return false;
+        }
+    }
     
     public function insertGeneratedContent(array $data): bool
     {
@@ -2569,6 +2614,37 @@ class MarketingModel extends Model
     public function deleteSuggestion(int $id): bool
     {
         return $this->db->table('bf_marketing_suggestions')->where('id', $id)->update(['is_active' => 0]);
+    }
+
+    public function getDailyDashboardNews(int $userId, int $limit = 5): array
+    {
+        $start = date('Y-m-d 00:00:00');
+        $end   = date('Y-m-d 23:59:59');
+
+        $rows = $this->db->table('bf_marketing_scraper')
+            ->select('id,title,summary,keywords,url,source,symbols,date_scraped,created_on,meta_json')
+            ->where('date_scraped >=', $start)
+            ->where('date_scraped <=', $end)
+            ->orderBy('date_scraped', 'DESC')
+            ->limit($limit)
+            ->get()
+            ->getResultArray();
+
+        return array_map(static function (array $row) {
+            $publishedAt = $row['date_scraped'] ?? $row['created_on'] ?? date('Y-m-d H:i:s');
+            $title       = $row['title'] ?? '';
+
+            return [
+                'id'                 => (int) ($row['id'] ?? 0),
+                'title'              => $title,
+                'short_title'        => mb_strimwidth($title, 0, 80, '…'),
+                'source'             => $row['source'] ?? 'Press Release',
+                'symbols'            => $row['symbols'] ?? '',
+                'published_at'       => $publishedAt,
+                'published_at_human' => function_exists('time_elapsed_string') ? time_elapsed_string($publishedAt) : $publishedAt,
+                'url'                => $row['url'] ?? null,
+            ];
+        }, $rows);
     }
 
 }

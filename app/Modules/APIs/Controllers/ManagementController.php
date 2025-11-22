@@ -279,9 +279,16 @@ class ManagementController extends \App\Controllers\BaseController
 
     public function cronFetchAndGenerateNews() {
         try {
-            $this->getMyMIMarketing()->cronFetchAndGenerateNews();
-            return Http::jsonSuccess(['status' => 'success', 'message' => 'MarketAux news pulled, ranked, and content generated.']);
+            $marketing = new MyMIMarketing();
+            $result    = $marketing->promoteInvestmentNewsToMarketingScraper();
+
+            return Http::jsonSuccess([
+                'status'  => 'success',
+                'message' => 'Investment news promoted to marketing scraper.',
+                'result'  => $result,
+            ]);
         } catch (\Throwable $e) {
+            log_message('error', '❌ cronFetchAndGenerateNews failed: ' . $e->getMessage());
             return Http::jsonError($e->getMessage(), 500);
         }
     }

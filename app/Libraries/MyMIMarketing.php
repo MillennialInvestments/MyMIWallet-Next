@@ -67,6 +67,13 @@ class MyMIMarketing
     protected $pscrape;
     // protected $initializeServices;
 
+    private array $newsVendorPrefixes = [
+        'pr newswire'   => 'PR Newswire',
+        'globenewswire' => 'GlobeNewswire',
+        'business wire' => 'Business Wire',
+        'press release' => 'Press Release',
+    ];
+
     public function __construct()
     {
         $this->auth = service('authentication');
@@ -2887,6 +2894,106 @@ class MyMIMarketing
             $this->marketingModel->insert($payload);
             $this->logger->info("Generated content inserted for record ID {$record['id']}.");
         }
+    }
+
+    public function promoteInvestmentNewsToMarketingScraper(?string $sinceDate = null): array
+    {
+        $alertsModel    = new \App\Models\AlertsModel();
+        $marketingModel = new \App\Models\MarketingModel();
+
+        $sinceDate = $sinceDate ?: date('Y-m-d 00:00:00');
+        $records   = $alertsModel->getUnprocessedNews($sinceDate);
+
+        $results = [
+            'processed' => 0,
+            'skipped'   => 0,
+            'errors'    => 0,
+        ];
+
+        foreach ($records as $row) {
+            $rawContent   = $row['email_body'] ?? $row['content'] ?? '';
+            $cleanContent = $this->sanitizeRawEmailContent($rawContent);
+
+            if (empty($cleanContent)) {
+                $results['skipped']++;
+                continue;
+            }
+
+            $summaryData = $this->summarizeContent($cleanContent);
+            $summaryText = is_array($summaryData) ? ($summaryData['summary'] ?? '') : $summaryData;
+
+            if (empty($summaryText)) {
+                $results['skipped']++;
+                continue;
+            }
+
+            $keywords = is_array($summaryData) ? ($summaryData['keywords'] ?? []) : $this->extractKeywords($cleanContent);
+            if (! is_array($keywords)) {
+                $keywords = array_filter(array_map('trim', explode(',', (string) $keywords)));
+            }
+
+            $title = $this->extractNewsTitleFromEmail($row, $rawContent, $cleanContent);
+            $url   = $this->extractFirstUrlFromText($rawContent);
+
+            $inserted = $marketingModel->insertNewsItem([
+                'source_id'    => $row['id'] ?? null,
+                'source_type'  => 'investment_scraper',
+                'title'        => $title,
+                'summary'      => $summaryText,
+                'content'      => $cleanContent,
+                'keywords'     => $keywords,
+                'url'          => $url,
+                'symbols'      => $row['symbols'] ?? null,
+                'source'       => $row['news_vendor'] ?? 'Press Release',
+                'date_scraped' => $row['email_date'] ?? $row['created_on'] ?? date('Y-m-d H:i:s'),
+                'meta_json'    => json_encode([
+                    'email_subject' => $row['email_subject'] ?? null,
+                    'email_from'    => $row['source_email'] ?? $row['email_sender'] ?? null,
+                ]),
+            ]);
+
+            if ($inserted) {
+                $alertsModel->markNewsAsProcessed((int) ($row['id'] ?? 0));
+                $results['processed']++;
+            } else {
+                $results['errors']++;
+            }
+        }
+
+        return $results;
+    }
+
+    private function extractNewsTitleFromEmail(array $row, string $rawContent, string $cleanContent): string
+    {
+        $subject = trim($row['email_subject'] ?? '');
+
+        foreach ($this->newsVendorPrefixes as $needle => $vendor) {
+            $pattern = '/' . preg_quote($needle, '/') . '[:\-]\s*(.+)$/im';
+            if (preg_match($pattern, $rawContent, $matches)) {
+                return $this->sanitizeSummary($matches[1]);
+            }
+            if ($subject && preg_match($pattern, $subject, $matches)) {
+                return $this->sanitizeSummary($matches[1]);
+            }
+        }
+
+        if (! empty($subject)) {
+            return $this->sanitizeSummary($subject);
+        }
+
+        $sentences = $this->splitIntoSentences($cleanContent);
+        $fallback  = $sentences[0] ?? mb_substr($cleanContent, 0, 140);
+
+        return $this->sanitizeSummary($fallback);
+    }
+
+    private function extractFirstUrlFromText(string $text): ?string
+    {
+        if (preg_match('/https?:\/\/[^\s]+/i', $text, $matches)) {
+            return $matches[0];
+        }
+
+        return null;
     }
 
     public function generateContentForZapier($platform, $contentData)

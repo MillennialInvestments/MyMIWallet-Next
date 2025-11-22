@@ -139,3 +139,62 @@ if (! function_exists('miw_news_normalize_mime_fragments')) {
         return preg_replace('/\s+/', ' ', trim($cleaned));
     }
 }
+if (! function_exists('time_elapsed_string')) {
+    /**
+     * Human-friendly time difference helper used on dashboard news cards.
+     */
+    function time_elapsed_string($datetime, bool $full = false): string
+    {
+        if (empty($datetime)) {
+            return '';
+        }
+
+        $now  = new \DateTime();
+        $ago  = new \DateTime($datetime);
+        $diff = $now->diff($ago);
+
+        $diff->w = floor($diff->d / 7);
+        $diff->d -= $diff->w * 7;
+
+        $string = [
+            'y' => 'year',
+            'm' => 'month',
+            'w' => 'week',
+            'd' => 'day',
+            'h' => 'hour',
+            'i' => 'minute',
+            's' => 'second',
+        ];
+        foreach ($string as $k => &$v) {
+            if ($diff->$k) {
+                $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+            } else {
+                unset($string[$k]);
+            }
+        }
+
+        if (! $full) {
+            $string = array_slice($string, 0, 1);
+        }
+
+        return $string ? implode(', ', $string) . ' ago' : 'just now';
+    }
+}
+if (! function_exists('miw_news_source_domain')) {
+    /**
+     * Extract the domain name from a news source URL.
+     */
+    function miw_news_source_domain(?string $url): string
+    {
+        if ($url === null || $url === '') {
+            return '';
+        }
+
+        $parsed = parse_url($url);
+        if ($parsed === false || ! isset($parsed['host'])) {
+            return '';
+        }
+
+        return preg_replace('/^www\./i', '', strtolower($parsed['host']));
+    }
+}

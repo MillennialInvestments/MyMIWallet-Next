@@ -82,6 +82,28 @@ class MyMIAlerts
     ];
 
     /**
+     * Known senders and vendor prefixes that signal press-release style news emails.
+     */
+    private array $newsSenders = [
+        'alerts@mymiwallet.com',
+        'alerts@thinkorswim.com',
+    ];
+
+    private array $newsVendorPrefixes = [
+        'pr newswire'   => 'PR Newswire',
+        'globenewswire' => 'GlobeNewswire',
+        'business wire' => 'Business Wire',
+        'press release' => 'Press Release',
+    ];
+
+    private array $newsKeywordPhrases = [
+        'press release alert',
+        'pr newswire',
+        'globenewswire',
+        'business wire',
+    ];
+
+    /**
      * Mapping of known subject fragments to scanner names.
      *
      * @var array<string,string>
@@ -333,12 +355,55 @@ class MyMIAlerts
         return $this->timeframeClassMap[$tf] ?? null;
     }
 
+    private function classifyEmailNewsMetadata(string $subject, string $body, string $sender): array
+    {
+        $normalizedSender = strtolower(trim($sender));
+        $haystack         = strtolower($subject . ' ' . $body);
+        $isNewsSender     = in_array($normalizedSender, $this->newsSenders, true);
+        $hasNewsKeywords  = $this->containsNewsKeywords($haystack);
+
+        $emailType  = ($isNewsSender && $hasNewsKeywords) ? 'news' : 'trade_alert';
+        $newsVendor = $this->detectNewsVendor($subject . ' ' . $body);
+
+        $symbols = $this->extractSymbolsFromText(trim($subject . ' ' . $body));
+
+        return [
+            'email_type'  => $emailType,
+            'news_vendor' => $newsVendor,
+            'symbols'     => !empty($symbols) ? implode(',', array_unique($symbols)) : null,
+        ];
+    }
+
+    private function containsNewsKeywords(string $content): bool
+    {
+        foreach ($this->newsKeywordPhrases as $phrase) {
+            if (stripos($content, $phrase) !== false) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function detectNewsVendor(string $content): ?string
+    {
+        $content = strtolower($content);
+        foreach ($this->newsVendorPrefixes as $needle => $vendor) {
+            if (stripos($content, $needle) !== false) {
+                return $vendor;
+            }
+        }
+
+        return null;
+    }
+
     public function ingestEmailPayload(array $payload): ?array
     {
-        $subject = trim((string) ($payload['subject'] ?? 'No Subject'));
-        $body    = (string) ($payload['body'] ?? '');
-        $date    = $payload['date'] ?? date('Y-m-d H:i:s');
-        $sender  = $this->formatSender($payload['sender'] ?? '[Unknown Sender]');
+        $subject    = trim((string) ($payload['subject'] ?? 'No Subject'));
+        $body       = (string) ($payload['body'] ?? '');
+        $date       = $payload['date'] ?? date('Y-m-d H:i:s');
+        $rawSender  = strtolower(trim((string) ($payload['sender'] ?? '')));
+        $sender     = $this->formatSender($payload['sender'] ?? '[Unknown Sender]');
 
         $identifier = $payload['identifier'] ?? md5($subject . $date . $sender);
 
@@ -363,6 +428,8 @@ class MyMIAlerts
         $symbols = $this->extractSymbolsFromText(trim($subject . ' ' . $body));
         $summary = !empty($symbols) ? implode(', ', $symbols) : '[No Symbols Detected]';
 
+        $newsMetadata = $this->classifyEmailNewsMetadata($subject, $body, $rawSender ?: $sender);
+
         $emailData = [
             'status'           => 'In Review',
             'type'             => 'Trade Alerts',
@@ -371,6 +438,10 @@ class MyMIAlerts
             'email_subject'    => $subject,
             'email_body'       => mb_substr($body, 0, 500),
             'email_sender'     => $sender,
+            'source_email'     => $rawSender ?: $sender,
+            'email_type'       => $newsMetadata['email_type'],
+            'news_vendor'      => $newsMetadata['news_vendor'],
+            'symbols'          => $newsMetadata['symbols'],
             'email_identifier' => $identifier,
             'category'         => $category,
             'tag'              => $tag,
