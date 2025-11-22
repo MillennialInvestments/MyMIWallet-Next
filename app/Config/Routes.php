@@ -242,6 +242,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->match(['GET', 'POST'], 'fetchMarketAuxNews/(:segment)', 'AlertsController::fetchMarketAuxNews/$1');
         $routes->match(['GET', 'POST'], 'forceFetchEmails', 'AlertsController::forceFetchEmails');
         $routes->match(['GET', 'POST'], 'forceFetchTickers', 'AlertsController::forceFetchTickers');
+        $routes->match(['GET', 'POST'], 'generateMarketingForAlert/(:num)', 'AlertsController::generateMarketingForAlert/$1');
         $routes->post('API/Alerts/generateAdvisorMediaFromAlert/(:num)', 'AlertsController::generateAdvisorMediaFromAlert/$1');
         $routes->post('API/Alerts/generateAdvisorMediaFromAlert', 'AlertsController::generateAdvisorMediaFromAlert');
         $routes->match(['GET', 'POST'], 'generateNow', 'AlertsController::generateNow');

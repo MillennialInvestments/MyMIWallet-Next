@@ -63,7 +63,8 @@ class AlertsController extends ResourceController
     public function __construct()
     {
         $this->alertManager = new MyMIAlerts();
-        $this->alertsModel = new AlertsModel(); 
+        $this->alertsModel = new AlertsModel();
+        $this->MyMIMarketing = new MyMIMarketing();
 //         $this->MyMIAlphaVantage = new MyMIAlphaVantage(); // replaced by BaseController getter
 //         $this->MyMIInvestments = new MyMIInvestments(); // replaced by BaseController getter
 //         $this->MyMIMarketing = new MyMIMarketing(); // replaced by BaseController getter
@@ -1229,6 +1230,49 @@ class AlertsController extends ResourceController
             log_message('error', 'getFullMetrics Error: ' . $e->getMessage());
             return $this->failServerError('Failed to fetch metrics.');
         }
+    }
+
+    /**
+     * Generate marketing payloads for a specific alert.
+     */
+    public function generateMarketingForAlert($id = null)
+    {
+        $auth = service('authentication');
+        $user = $auth->user();
+        if (!$user) {
+            return $this->failUnauthorized('Authentication required.');
+        }
+
+        if (property_exists($user, 'role_id') && (int) $user->role_id > 2) {
+            return $this->failForbidden('Management access required.');
+        }
+
+        $alertId = (int) ($id ?? 0);
+        if ($alertId <= 0) {
+            return $this->failValidationErrors('Invalid alert id.');
+        }
+
+        $alert = $this->alertsModel->find($alertId);
+        if (!$alert) {
+            return $this->failNotFound('Alert not found.');
+        }
+
+        $payload = $this->MyMIMarketing->generateMarketingFromAlert((array) $alert);
+
+        $channels = $this->request->getPost('channels');
+        if (is_string($channels)) {
+            $channels = array_filter(array_map('trim', explode(',', $channels)));
+        }
+        if (!is_array($channels)) {
+            $channels = [];
+        }
+
+        $this->alertsModel->markAlertAsMarketed($alertId, $channels);
+
+        return Http::jsonSuccess([
+            'alert_id' => $alertId,
+            'marketing' => $payload,
+        ]);
     }
 
     // API/AlertsController.php
