@@ -65,6 +65,7 @@ $allocationChartData = [
 $activeProjects    = $projectsSummary['topProjects'] ?? [];
 $recentAlerts      = $alertsSummary['recent'] ?? [];
 $newsItems         = $newsSummary['items'] ?? [];
+$todayAlerts       = $dailyTradeAlerts ?? [];
 $todayLabel        = date('l, F j, Y');
 $displayName       = $cuDisplayName ?? $cuUsername ?? 'Investor';
 $availableToInvest = $budgetSummary['availableToInvest'] ?? 0.0;
@@ -343,6 +344,53 @@ $availableToInvest = $budgetSummary['availableToInvest'] ?? 0.0;
                                 <?php endif; ?>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-gs mt-1">
+        <div class="col-xxl-8">
+            <div class="card card-bordered card-full h-100">
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-3">
+                        <div class="card-title">
+                            <h6 class="subtitle">Today's Trade Alerts</h6>
+                            <span class="text-soft">Live signals that can be marketed or distributed.</span>
+                        </div>
+                        <div class="card-tools">
+                            <a class="btn btn-sm btn-outline-primary" href="/Alerts">Manage Alerts</a>
+                        </div>
+                    </div>
+                    <div class="gy-2">
+                        <?php if (!empty($todayAlerts)): ?>
+                            <?php foreach ($todayAlerts as $alert): ?>
+                                <div class="border-bottom pb-2 mb-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <span class="badge bg-primary text-white"><?= esc($alert['ticker'] ?? 'N/A'); ?></span>
+                                            <span class="fw-bold"><?= esc($alert['category'] ?? 'Open Alert'); ?></span>
+                                        </div>
+                                        <span class="text-soft small"><?= esc(miw_relative_time($alert['created_on'] ?? null)); ?></span>
+                                    </div>
+                                    <div class="small text-soft mt-1">
+                                        <?php if (!empty($alert['entry_price'])): ?>
+                                            <span class="me-2">Entry: <?= esc(number_format((float)$alert['entry_price'], 2)); ?></span>
+                                        <?php endif; ?>
+                                        <?php if (!empty($alert['target_price'])): ?>
+                                            <span class="me-2">Target: <?= esc(number_format((float)$alert['target_price'], 2)); ?></span>
+                                        <?php endif; ?>
+                                        <?php if (!empty($alert['stop_loss'])): ?>
+                                            <span class="me-2">Stop: <?= esc(number_format((float)$alert['stop_loss'], 2)); ?></span>
+                                        <?php endif; ?>
+                                        <span class="badge bg-outline-secondary">Status: <?= esc($alert['status'] ?? 'Open'); ?></span>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p class="text-center text-soft mb-0">No trade alerts posted today.</p>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

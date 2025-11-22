@@ -9,7 +9,7 @@ class AlertsModel extends Model
 {
     protected $siteSettings;
 
-    protected $table       = 'bf_investment_scraper';
+    protected $table       = 'bf_investment_trade_alerts';
     protected $primaryKey  = 'id';
     protected $returnType  = 'object';
     protected $useSoftDeletes = false;
@@ -20,19 +20,24 @@ class AlertsModel extends Model
     protected array $fieldCache = [];
 
     protected $allowedFields = [
-        'symbol','name','currency','exchange','mic_code','country','type','status','type','url','title','summary','content',
-        'email_identifier','email_date','email_sender','email_subject','email_body','source_email','email_type','news_vendor','symbols',
-        'created_on','modified_on','links','images','videos','metadata','structured_data','additional_html_elements',
-        'page_performance_data','network_requests','user_interaction_points','accessibility_information','page_relationships',
-        'seo_elements','social_media_links','comments_user_generated_content','contact_information','legal_information',
-        'breadcrumbs','date_time','author_information','ratings_reviews','price_information','location_data','language_locale',
-        'mobile_responsiveness','security_information','technology_stack','server_information','caching_information',
-        'content_type','character_set','rss_atom_feeds','pagination','custom_data','error_handling','historical_changes',
-        'user_reviews_ratings','inventory_levels','shipping_information','bots_crawlers_information','affiliate_links',
-        'advertisements','cookie_notices','popups_modals','browser_specific_data','geolocation_specific_content',
-        'ab_testing_variations','user_agent_specific_content','screen_size_specific_content','device_specific_content',
-        'browser_extension_data','custom_scripts_analytics','order_status','trailing_stop_percent','target_price',
-        'locked_profit_stop','ema_9','ema_21','ema_34','ema_48','ema_100','ema_200',
+        // Core trade alert fields
+        'active','status','occurrences','alert_count','distributed_count','created_on','created_by','updated_at','alert_created','send_alert','alert_sent',
+        'ticker','exchange','company','price','open','high','low','volume','market_cap','trailing_stop_percent','locked_profit_stop','stop_loss','max_entry',
+        'current_price','entry_price','potential_price','target_price','market_sentiment','trade_type','category','alert_priority','trade_description',
+        'financial_news','analysis_summary','tv_chart_type','tv_chart','display','notification_sent','submitted_date','last_updated','last_updated_time',
+        'ema_9','ema_21','ema_34','ema_48','ema_100','ema_200',
+        // Legacy scraper metadata retained for compatibility
+        'symbol','name','currency','mic_code','country','type','url','title','summary','content','email_identifier','email_date','email_sender',
+        'email_subject','email_body','source_email','email_type','news_vendor','symbols','links','images','videos','metadata','structured_data',
+        'additional_html_elements','page_performance_data','network_requests','user_interaction_points','accessibility_information','page_relationships',
+        'seo_elements','social_media_links','comments_user_generated_content','contact_information','legal_information','breadcrumbs','date_time','author_information',
+        'ratings_reviews','price_information','location_data','language_locale','mobile_responsiveness','security_information','technology_stack','server_information',
+        'caching_information','content_type','character_set','rss_atom_feeds','pagination','custom_data','error_handling','historical_changes','user_reviews_ratings',
+        'inventory_levels','shipping_information','bots_crawlers_information','affiliate_links','advertisements','cookie_notices','popups_modals','browser_specific_data',
+        'geolocation_specific_content','ab_testing_variations','user_agent_specific_content','screen_size_specific_content','device_specific_content','browser_extension_data',
+        'custom_scripts_analytics','order_status',
+        // Marketing alignment fields
+        'keywords','last_marketed_at','marketing_status','distribution_channels',
     ];
 
     protected $validationRules = [
@@ -3112,8 +3117,44 @@ class AlertsModel extends Model
     // //             }
     // //         }
     // //     }
-    
+
     // //     return $symbolCounts;
     // // }
+
+    /**
+     * Mark an alert as marketed and capture the distribution channels used.
+     */
+    public function markAlertAsMarketed(int $alertId, array $channels = []): bool
+    {
+        $payload = [
+            'marketing_status'      => 'generated',
+            'last_marketed_at'      => date('Y-m-d H:i:s'),
+            'distribution_channels' => !empty($channels) ? json_encode(array_values($channels)) : null,
+        ];
+
+        return (bool) $this->db
+            ->table('bf_investment_trade_alerts')
+            ->where('id', $alertId)
+            ->set($payload)
+            ->update();
+    }
+
+    /**
+     * Fetch alerts that still need marketing content generated.
+     */
+    public function getAlertsPendingMarketing(int $limit = 50)
+    {
+        return $this->db
+            ->table('bf_investment_trade_alerts')
+            ->whereIn('status', ['Open', 'Opened', 'Active Buy', 'Active Sell'])
+            ->groupStart()
+                ->where('marketing_status', null)
+                ->orWhere('marketing_status', 'pending')
+            ->groupEnd()
+            ->orderBy('created_on', 'DESC')
+            ->limit($limit)
+            ->get()
+            ->getResultArray();
+    }
 }
 ?>

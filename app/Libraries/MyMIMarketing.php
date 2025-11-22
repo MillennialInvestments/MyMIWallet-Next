@@ -179,6 +179,78 @@ class MyMIMarketing
         // ]);
     }
 
+    /**
+     * Generate ready-to-publish marketing payloads from a trade alert.
+     */
+    public function generateMarketingFromAlert(array $alert): array
+    {
+        $ticker      = strtoupper($alert['ticker'] ?? $alert['symbol'] ?? '');
+        $direction   = $alert['trade_type'] ?? $alert['category'] ?? 'Trade Alert';
+        $title       = $alert['title']
+            ?? ($ticker ? sprintf('%s %s Update', $ticker, $direction) : 'Trade Alert Update');
+
+        $summary = $alert['summary']
+            ?? $alert['analysis_summary']
+            ?? $alert['trade_description']
+            ?? 'New trading opportunity identified by MyMI Alerts.';
+
+        $entry   = $alert['entry_price'] ?? $alert['price'] ?? null;
+        $target  = $alert['target_price'] ?? null;
+        $stop    = $alert['stop_loss'] ?? null;
+
+        $keywords = [];
+        if (!empty($alert['keywords'])) {
+            $keywords = array_filter(array_map('trim', explode(',', (string) $alert['keywords'])));
+        } elseif (!empty($ticker)) {
+            $keywords = [$ticker, 'trade alert'];
+        }
+
+        $lines = [
+            $title,
+            $summary,
+            $ticker ? "Ticker: {$ticker}" : null,
+            $direction ? "Direction: {$direction}" : null,
+            $entry ? 'Entry: ' . number_format((float) $entry, 2) : null,
+            $target ? 'Target: ' . number_format((float) $target, 2) : null,
+            $stop ? 'Stop: ' . number_format((float) $stop, 2) : null,
+        ];
+        $body = implode("\n", array_filter($lines));
+
+        $discord = "**{$title}**\n{$summary}";
+        if ($ticker) {
+            $discord .= "\nTicker: {$ticker}";
+        }
+        if ($entry) {
+            $discord .= "\nEntry: " . number_format((float) $entry, 2);
+        }
+        if ($target) {
+            $discord .= " | Target: " . number_format((float) $target, 2);
+        }
+        if ($stop) {
+            $discord .= " | Stop: " . number_format((float) $stop, 2);
+        }
+
+        return [
+            'title'     => $title,
+            'summary'   => $summary,
+            'keywords'  => $keywords,
+            'discord'   => $discord,
+            'email'     => [
+                'subject' => $title,
+                'body'    => $body,
+            ],
+            'social'    => [
+                'twitter'  => $ticker ? "{$ticker}: {$summary}" : $summary,
+                'facebook' => $body,
+                'linkedin' => $body,
+            ],
+            'metadata' => [
+                'ticker'    => $ticker,
+                'direction' => $direction,
+            ],
+        ];
+    }
+
     public function marketing()
     {
         $department = $this->department();
