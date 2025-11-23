@@ -58,12 +58,11 @@ class MyMIAdvisor
         $summary = $advisor['summary'] ?? 'No summary.';
         $script = $this->generateVoiceoverScriptFromSummary($summary);
         $filename = "advisor_notes_user_{$userId}";
-        $voiceoverUrl = $this->generateVoiceoverAudio($script, $filename);
-        $voiceoverError = null;
+        $voiceResult = $this->generateVoiceoverWithElevenLabs($script, $filename);
+        $voiceoverUrl = $voiceResult['success'] ? $voiceResult['url'] : '';
+        $voiceoverError = $voiceResult['success'] ? null : ($voiceResult['error'] ?? null);
 
-        if ($voiceoverUrl === null) {
-            $voiceoverError = $this->elevenLabsLastError
-                ?? 'Voiceover unavailable (ElevenLabs error).';
+        if (!$voiceResult['success'] && $voiceoverError !== null) {
             log_message(
                 'warning',
                 'MyMIAdvisor::generateAdvisorMediaPackage - ElevenLabs unavailable, skipping audio for user {userId}. Reason: {reason}',
@@ -264,19 +263,22 @@ S;
             return null;
         }
 
-        $audioPath = $this->generateVoiceoverWithElevenLabs($script, $filename);
+        $voiceResult = $this->generateVoiceoverWithElevenLabs($script, $filename);
 
-        if ($audioPath === null) {
-            $message = $this->elevenLabsLastError ?? 'Unknown ElevenLabs failure.';
+        if (!$voiceResult['success']) {
+            $message = $voiceResult['error'] ?? ($this->elevenLabsLastError ?? 'Unknown ElevenLabs failure.');
+            $this->elevenLabsLastError = $message;
             log_message('warning', 'MyMIAdvisor::generateVoiceoverAudio - Unable to generate audio: {message}', [
                 'message' => $message,
             ]);
+
+            return null;
         }
 
-        return $audioPath;
+        return $voiceResult['url'] ?: null;
     }
 
-    public function generateVoiceoverWithElevenLabs($text, $filename, $voiceIdOverride = null): ?string
+    public function generateVoiceoverWithElevenLabs($text, $filename, $voiceIdOverride = null): array
     {
         $apiKey = config('APISettings')->elevenLabsAPIKey;
         $voiceId = $voiceIdOverride ?? config('APISettings')->elevenLabsVoiceId;
@@ -286,8 +288,12 @@ S;
         if (empty($apiKey) || empty($voiceId)) {
             $this->elevenLabsAvailable = false;
             $this->elevenLabsLastError = 'Missing ElevenLabs API credentials.';
-            log_message('error', 'MyMIAdvisor::generateVoiceoverWithElevenLabs - API key or voice ID missing.');
-            return null;
+            log_message('warning', 'MyMIAdvisor::generateVoiceoverWithElevenLabs - API key or voice ID missing.');
+            return [
+                'success' => false,
+                'url'     => '',
+                'error'   => $this->elevenLabsLastError,
+            ];
         }
 
         $client = \Config\Services::curlrequest();
@@ -322,15 +328,27 @@ S;
             ]);
         } catch (HTTPException $e) {
             $this->logElevenLabsFailure('ElevenLabs HTTP error: ' . $e->getMessage());
-            return null;
+            return [
+                'success' => false,
+                'url'     => '',
+                'error'   => $this->elevenLabsLastError ?? $e->getMessage(),
+            ];
         } catch (\Throwable $e) {
             $this->logElevenLabsFailure('ElevenLabs transport error: ' . $e->getMessage());
-            return null;
+            return [
+                'success' => false,
+                'url'     => '',
+                'error'   => $this->elevenLabsLastError ?? $e->getMessage(),
+            ];
         }
 
         if ($response->getStatusCode() === 401) {
             $this->logElevenLabsFailure('ElevenLabs returned 401 Unauthorized.');
-            return null;
+            return [
+                'success' => false,
+                'url'     => '',
+                'error'   => $this->elevenLabsLastError ?? 'Unauthorized',
+            ];
         }
 
         $statusCode = $response->getStatusCode();
@@ -343,7 +361,11 @@ S;
                 $this->elevenLabsAvailable = false;
             }
 
-            return null;
+            return [
+                'success' => false,
+                'url'     => '',
+                'error'   => $this->elevenLabsLastError,
+            ];
         }
 
         $voicePath = WRITEPATH . "uploads/voiceovers/";
@@ -359,14 +381,23 @@ S;
             log_message('error', 'MyMIAdvisor::generateVoiceoverWithElevenLabs - Unable to write audio file: {path}', [
                 'path' => $filePath,
             ]);
-            return null;
+            return [
+                'success' => false,
+                'url'     => '',
+                'error'   => $this->elevenLabsLastError,
+            ];
         }
 
-        return base_url("writable/uploads/voiceovers/{$filename}.mp3");
+        return [
+            'success' => true,
+            'url'     => base_url("writable/uploads/voiceovers/{$filename}.mp3"),
+            'error'   => null,
+        ];
     }
 
     protected function logElevenLabsFailure(string $message): void
     {
+        $this->elevenLabsLastError = $message;
         if (!self::$elevenLabsFailureLogged) {
             log_message('error', $message);
             self::$elevenLabsFailureLogged = true;
