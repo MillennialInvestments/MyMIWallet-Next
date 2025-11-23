@@ -77,27 +77,34 @@ class MyMIAdvisor
         $chartUrl = $this->generateTradingViewChartUrl($symbol);
 
         // STEP 3: Save to advisor log table
-        $data = [
-            'user_id' => $userId,
-            'advisor_type' => 'default',
-            'status' => 'generated',
-            'summary' => $summary,
-            'script' => $script,
-            'voiceover_url' => $voiceoverUrl ?? '',
-            'voiceover_error' => $voiceoverError,
-            'media_json_url' => null,
-            'chart_url' => $chartUrl,
-            'score' => $advisor['score'],
-            'risk_rating' => $advisor['risk_rating'],
-            'flag_opportunity' => $advisor['flag_opportunity'] ? 1 : 0,
-            'ticker' => $symbol,
-            'updated_on' => date('Y-m-d H:i:s')
+        $payload = [
+            'user_id'          => $userId,
+            'advisor_type'     => 'default',
+            'status'           => 'generated',
+            'summary'          => $summary,
+            'script'           => $script,
+            'voiceover_url'    => $voiceoverUrl ?? '',
+            'voiceover_error'  => $voiceoverError ?? null,
+            'media_json_url'   => null,
+            'chart_url'        => $chartUrl ?? null,
+            'score'            => $advisor['score'] ?? 0,
+            'risk_rating'      => $advisor['risk_rating'] ?? 'Unknown',
+            'flag_opportunity' => (int) ($advisor['flag_opportunity'] ?? 0),
+            'ticker'           => $symbol ?? '',
+            'updated_on'       => date('Y-m-d H:i:s'),
         ];
 
-        if ($existing) {
-            $builder->where('id', $existing->id)->update($data);
-        } else {
-            $builder->insert($data);
+        try {
+            if ($existing) {
+                $builder->where('id', $existing->id)->update($payload);
+            } else {
+                $builder->insert($payload);
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'MyMIAdvisor::generateAdvisorMediaPackage - failed to insert log: {msg}', [
+                'msg' => $e->getMessage(),
+            ]);
+            // Do not rethrow – let the dashboard load.
         }
 
         // STEP 4: Return response

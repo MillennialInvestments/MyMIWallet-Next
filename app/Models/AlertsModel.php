@@ -20,6 +20,8 @@ class AlertsModel extends Model
 
     protected array $fieldCache = [];
     private array $backfillAttemptState = [];
+    protected int $backfillLimitPerRequest = 5;
+    protected int $backfillCount = 0;
 
     protected $allowedFields = [
         // Core trade alert fields
@@ -289,22 +291,18 @@ class AlertsModel extends Model
 
     public function isLikelyValidSymbol(string $symbol): bool
     {
+        return $this->isValidTickerSymbol($symbol);
+    }
+
+    protected function isValidTickerSymbol(string $symbol): bool
+    {
         $symbol = strtoupper(trim($symbol));
 
-        if ($symbol === '' || strlen($symbol) > 5) {
+        if ($symbol === '' || $symbol === 'THIS' || $symbol === 'OUTER') {
             return false;
         }
 
-        if (!preg_match('/[A-Z]/', $symbol)) {
-            return false;
-        }
-
-        $blacklist = ['THIS', 'OUTER'];
-        if (in_array($symbol, $blacklist, true)) {
-            return false;
-        }
-
-        return true;
+        return preg_match('/^[A-Z0-9.\-]{1,10}$/', $symbol) === 1;
     }
 
     private function shouldAttemptBackfill(string $symbol): bool
@@ -331,6 +329,26 @@ class AlertsModel extends Model
         $state = $this->backfillAttemptState[$symbol] ?? ['count' => 0, 'last' => 0];
         $state['last'] = time();
         $this->backfillAttemptState[$symbol] = $state;
+    }
+
+    public function maybeBackfillSymbol(string $symbol, int $tradeId = null): bool
+    {
+        $symbol = strtoupper(trim($symbol));
+
+        if ($this->backfillCount >= $this->backfillLimitPerRequest) {
+            log_message('debug', 'Backfill limit reached for this request, skipping symbol {symbol}', [
+                'symbol' => $symbol,
+            ]);
+            return false;
+        }
+
+        if (!$this->isValidTickerSymbol($symbol)) {
+            return false;
+        }
+
+        $this->backfillCount++;
+
+        return (bool) $this->insertAlertSnapshot($symbol, $tradeId);
     }
 
     public function fetchMarketData($symbol)
@@ -576,12 +594,16 @@ class AlertsModel extends Model
             ->getResultArray();
     }
 
-    public function getAlertHistoryByTicker($symbol)
+    public function getAlertHistoryByTicker($symbol, ?int $limit = null)
     {
         $builder = $this->db->table('bf_investment_alert_history');
         $builder->where('ticker', $symbol);
-        $query = $builder->get();
-        $rows  = $query->getResultArray();
+
+        if ($limit !== null && $limit > 0) {
+            $builder->orderBy('alerted_on', 'DESC')->limit($limit);
+        }
+
+        $rows  = $builder->get()->getResultArray();
 
         if (empty($rows)) {
             log_message('warning', "⚠️ No history found for $symbol. Consider triggering backfill.");

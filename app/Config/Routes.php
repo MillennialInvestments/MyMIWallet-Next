@@ -61,6 +61,8 @@ $routes->group('', ['namespace' => 'App\Modules\User\Controllers'], static funct
     // Legacy alias
     $routes->get('Preview/Alert/(:segment)', 'AlertsController::preview/$1');
 });
+$routes->get('Sector/(:segment)', 'Home::sector/$1');
+$routes->get('Exchange/(:segment)', 'Home::exchange/$1');
 $routes->get('/Privacy-Policy', 'Home::privacyPolicy');
 $routes->get('/Terms-Of-Service', 'Home::termsOfService');
 $routes->get('/resend-activation', 'AuthController::resendActivation', ['as' => 'resend-activation']);
