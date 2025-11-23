@@ -225,14 +225,21 @@ class Home extends BaseController
         return $this->renderTheme('themes/public/memberships', $data);
     }
 
-    public function previewAlert(?string $symbol = null)
+    public function previewAlert(?string $symbol = null, ?string $exchangeSlug = null)
     {
+        if ($exchangeSlug !== null && $symbol !== null) {
+            $symbol = strtoupper(trim((string) $exchangeSlug)) . '-' . strtoupper(trim((string) $symbol));
+        }
+
         $symbol = strtoupper(trim((string) $symbol));
         log_message('info', 'PreviewAlert symbol: {symbol}', ['symbol' => $symbol]);
         // Support NASDAQ-GUTS style slug – take last segment as ticker
+        $slugSymbol = $symbol;
+        $slugExchange = '';
         if ($symbol !== '') {
-            $parts  = explode('-', $symbol);
-            $symbol = strtoupper(end($parts));
+            $parts       = explode('-', $symbol);
+            $slugSymbol  = strtoupper(end($parts));
+            $slugExchange = count($parts) > 1 ? strtoupper(reset($parts)) : '';
         }
 
         $meta = [
@@ -280,11 +287,11 @@ class Home extends BaseController
         $exchange = '';
 
         if (is_array($alert)) {
-            $ticker   = strtoupper($alert['ticker']   ?? $symbol ?? '');
-            $exchange = strtoupper($alert['exchange'] ?? 'NASDAQ');
+            $ticker   = strtoupper($alert['ticker']   ?? $slugSymbol ?? '');
+            $exchange = strtoupper($alert['exchange'] ?? ($slugExchange ?: 'NASDAQ'));
         } else {
-            $ticker   = $symbol;
-            $exchange = 'NASDAQ';
+            $ticker   = $slugSymbol;
+            $exchange = $slugExchange ?: 'NASDAQ';
         }
 
         $tvSymbol = ($exchange ? $exchange . ':' : '') . $ticker;

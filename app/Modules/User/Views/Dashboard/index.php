@@ -145,7 +145,7 @@ $availableToInvest = $budgetSummary['availableToInvest'] ?? 0.0;
                             <?php foreach ($assetsSummary['breakdown'] as $label => $amount): ?>
                                 <div class="col-6">
                                     <div class="d-flex justify-content-between align-items-center text-soft">
-                                        <span><?= esc(ucwords(str_replace('_', ' ', $label))); ?></span>
+                                        <span><strong><?= esc(ucwords(str_replace('_', ' ', $label))); ?></strong></span>
                                         <span><?= miw_format_currency($amount); ?></span>
                                     </div>
                                 </div>
@@ -171,7 +171,7 @@ $availableToInvest = $budgetSummary['availableToInvest'] ?? 0.0;
                         <div class="amount"><?= miw_format_currency($budgetSummary['monthlyNet'] ?? 0.0); ?></div>
                         <div class="info">Net cash flow</div>
                     </div>
-                    <div class="progress progress-lg mt-3">
+                    <div class="progress progress-lg">
                         <?php
                         $income = max((float) ($budgetSummary['monthlyIncome'] ?? 0.0), 0);
                         $expenses = max((float) ($budgetSummary['monthlyExpenses'] ?? 0.0), 0);
@@ -181,8 +181,8 @@ $availableToInvest = $budgetSummary['availableToInvest'] ?? 0.0;
                         <div class="progress-bar bg-success" style="width: <?= esc(number_format($incomePercent, 2)); ?>%"></div>
                         <div class="progress-bar bg-danger" style="width: <?= esc(number_format(100 - $incomePercent, 2)); ?>%"></div>
                     </div>
-                    <ul class="nk-activity mt-3">
-                        <li class="nk-activity-item">
+                    <ul class="nk-activity ">
+                        <li class="nk-activity-item px-1">
                             <div class="nk-activity-media"><em class="icon ni ni-arrow-down-left"></em></div>
                             <div class="nk-activity-data">
                                 <div class="label">Income</div>
@@ -195,7 +195,7 @@ $availableToInvest = $budgetSummary['availableToInvest'] ?? 0.0;
                             </div>
                             <div class="nk-activity-media"><em class="icon ni ni-layers"></em></div>
                             <div class="nk-activity-data">
-                                <div class="label">Available to Invest</div>
+                                <div class="label">Avail. to Invest</div>
                                 <div class="amount text-info"><?= miw_format_currency($availableToInvest); ?></div>
                             </div>
                         </li>

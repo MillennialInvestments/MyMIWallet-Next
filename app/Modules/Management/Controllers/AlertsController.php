@@ -1257,7 +1257,7 @@ class AlertsController extends UserController
     {
         $this->data['pageTitle']                    = 'MyMI Trade Alerts | Management | MyMI Wallet';
         $this->commonData();
-        $this->renderTheme('App\Modules\Management\Views\Alerts\index', $this->data);
+        return $this->renderTheme('ManagementModule\Views\Alerts\index', $this->data);
     }
 
     public function updateAlerts()
@@ -1369,11 +1369,11 @@ class AlertsController extends UserController
         ]);
     }
 
-    public function weeklyTopPerformance()
+    public function weeklyTopPerformance($limit = null)
     {
         $this->response->setContentType('application/json');
 
-        $limit = (int)($this->request->getGet('limit') ?? 10);
+        $limit = (int)($limit ?? $this->request->getGet('limit') ?? 10);
         $model = new \App\Modules\Management\Models\AlertsModel();
 
         return $this->response->setJSON([

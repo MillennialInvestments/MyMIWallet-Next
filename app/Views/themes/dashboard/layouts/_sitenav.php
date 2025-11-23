@@ -61,7 +61,7 @@ form.d-flex.align-items-center button.btn {
                             class="form-control flex-grow-1 border form-focus-none mb-0"
                             type="search"
                             name="query"
-                            placeholder="Search tickers…"
+                            placeholder="Tickers ($NVDA) | Users (@MyMIWallet)..."
                             aria-label="Search"
                             autocomplete="off"
                             data-global-search-input

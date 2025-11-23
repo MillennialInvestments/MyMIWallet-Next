@@ -293,6 +293,19 @@ foreach ($recentTradeAlerts as $ra) {
 
 <div class="mt-3 container-fluid px-3">
 
+    <div class="d-flex justify-content-between flex-wrap mb-3">
+        <div class="btn-group gap-2">
+            <a href="<?= site_url('User/Alerts'); ?>" class="btn btn-outline-primary btn-sm">
+                ← Back to Alerts Dashboard
+            </a>
+            <?php if ((int)($cuRole ?? 4) <= 3): ?>
+                <a href="<?= site_url('Management/Alerts'); ?>" class="btn btn-outline-secondary btn-sm">
+                    ← Back to Alert Management Console
+                </a>
+            <?php endif; ?>
+        </div>
+    </div>
+
     <!-- ------------------------------------------------------------------
          FINVIZ-STYLE HEADER
     ------------------------------------------------------------------- -->
@@ -432,104 +445,6 @@ foreach ($recentTradeAlerts as $ra) {
     </div>
 
     <!-- ------------------------------------------------------------------
-         KEY STATS + OWNERSHIP / INSIDER SNAPSHOT (Finviz-style “Index” block)
-    ------------------------------------------------------------------- -->
-    <div class="row mb-3">
-        <!-- Key / Valuation stats -->
-        <div class="col-md-8 mb-3">
-            <div class="card card-bordered trade-alert-card">
-                <div class="bg-primary card-header text-white">
-                    Key Metrics & Performance
-                </div>
-                <div class="card-body">
-                    <?php if (!empty($keyStats) || !empty($performanceStats) || !empty($valuationStats)): ?>
-                        <div class="stats-grid">
-                            <?php foreach ($keyStats as $stat): ?>
-                                <div>
-                                    <div class="stats-item-label"><?= esc(vv($stat, 'label')) ?></div>
-                                    <div class="stats-item-value"><?= esc(vv($stat, 'value')) ?></div>
-                                </div>
-                            <?php endforeach; ?>
-
-                            <?php foreach ($performanceStats as $stat): ?>
-                                <div>
-                                    <div class="stats-item-label"><?= esc(vv($stat, 'label')) ?></div>
-                                    <div class="stats-item-value"><?= esc(vv($stat, 'value')) ?></div>
-                                </div>
-                            <?php endforeach; ?>
-
-                            <?php foreach ($valuationStats as $stat): ?>
-                                <div>
-                                    <div class="stats-item-label"><?= esc(vv($stat, 'label')) ?></div>
-                                    <div class="stats-item-value"><?= esc(vv($stat, 'value')) ?></div>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php else: ?>
-                        <p class="text-muted mb-0">
-                            Key valuation and performance metrics will appear here once wired
-                            from the AlertsModel/AlphaVantage fundamentals.
-                        </p>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </div>
-
-        <!-- Ownership + Insider snapshot -->
-        <div class="col-md-4 mb-3">
-            <div class="card card-bordered trade-alert-card mb-3">
-                <div class="bg-primary card-header text-white">
-                    Institutional Ownership
-                </div>
-                <div class="card-body small-card-body-text">
-                    <?php if (!empty($ownershipTopHolders)): ?>
-                        <ul class="list-unstyled mb-0">
-                            <?php foreach ($ownershipTopHolders as $holder): ?>
-                                <li>
-                                    <strong><?= esc(vv($holder, 'name')) ?></strong>
-                                    — <?= esc(vv($holder, 'percent')) ?>%
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    <?php else: ?>
-                        <p class="text-muted mb-0">
-                            Top institutional holders will be displayed here.
-                        </p>
-                    <?php endif; ?>
-                </div>
-            </div>
-
-            <div class="card card-bordered trade-alert-card">
-                <div class="bg-primary card-header text-white">
-                    Insider Activity (Snapshot)
-                </div>
-                <div class="card-body small-card-body-text">
-                    <?php if (!empty($insiderTrades)): ?>
-                        <ul class="list-unstyled mb-0">
-                            <?php
-                            $insiderPreview = array_slice($insiderTrades, 0, 3);
-                            foreach ($insiderPreview as $it):
-                            ?>
-                                <li>
-                                    <strong><?= esc(vv($it, 'insider_name')) ?></strong>
-                                    — <?= esc(vv($it, 'relationship')) ?> —
-                                    <?= esc(vv($it, 'transaction_type')) ?>  
-                                    at <?= esc(vv($it, 'price')) ?>  
-                                    on <?= esc(vv($it, 'date')) ?>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    <?php else: ?>
-                        <p class="text-muted mb-0">
-                            Recent insider trades will be summarized here.
-                        </p>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ------------------------------------------------------------------
          TRADINGVIEW PROFILE + CHART TABS
     ------------------------------------------------------------------- -->
     <div class="row px-3 my-3">
@@ -640,6 +555,108 @@ foreach ($recentTradeAlerts as $ra) {
                     "symbol": "<?= vupper(vv($tradeAlert ?? $alert ?? [], 'exchange', $exchange)) ?>:<?= vupper(vv($tradeAlert ?? $alert ?? [], 'ticker', $ticker)) ?>",
                     "locale": "en"
                 }</script>
+            </div>
+        </div>
+    </div>
+
+    <hr class="mb-3">
+
+    <!-- ------------------------------------------------------------------
+         KEY STATS + OWNERSHIP / INSIDER SNAPSHOT (Finviz-style “Index” block)
+    ------------------------------------------------------------------- -->
+    <div class="row mb-3">
+        <!-- Key / Valuation stats -->
+        <div class="col-md-4 mb-3">
+            <div class="card card-bordered trade-alert-card">
+                <div class="bg-primary card-header text-white">
+                    Key Metrics & Performance
+                </div>
+                <div class="card-body">
+                    <?php if (!empty($keyStats) || !empty($performanceStats) || !empty($valuationStats)): ?>
+                        <div class="stats-grid">
+                            <?php foreach ($keyStats as $stat): ?>
+                                <div>
+                                    <div class="stats-item-label"><?= esc(vv($stat, 'label')) ?></div>
+                                    <div class="stats-item-value"><?= esc(vv($stat, 'value')) ?></div>
+                                </div>
+                            <?php endforeach; ?>
+
+                            <?php foreach ($performanceStats as $stat): ?>
+                                <div>
+                                    <div class="stats-item-label"><?= esc(vv($stat, 'label')) ?></div>
+                                    <div class="stats-item-value"><?= esc(vv($stat, 'value')) ?></div>
+                                </div>
+                            <?php endforeach; ?>
+
+                            <?php foreach ($valuationStats as $stat): ?>
+                                <div>
+                                    <div class="stats-item-label"><?= esc(vv($stat, 'label')) ?></div>
+                                    <div class="stats-item-value"><?= esc(vv($stat, 'value')) ?></div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php else: ?>
+                        <p class="text-muted mb-0">
+                            Key valuation and performance metrics will appear here once wired
+                            from the AlertsModel/AlphaVantage fundamentals.
+                        </p>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ownership snapshot -->
+        <div class="col-md-4 mb-3">
+            <div class="card card-bordered trade-alert-card mb-3">
+                <div class="bg-primary card-header text-white">
+                    Institutional Ownership
+                </div>
+                <div class="card-body small-card-body-text">
+                    <?php if (!empty($ownershipTopHolders)): ?>
+                        <ul class="list-unstyled mb-0">
+                            <?php foreach ($ownershipTopHolders as $holder): ?>
+                                <li>
+                                    <strong><?= esc(vv($holder, 'name')) ?></strong>
+                                    — <?= esc(vv($holder, 'percent')) ?>%
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php else: ?>
+                        <p class="text-muted mb-0">
+                            Top institutional holders will be displayed here.
+                        </p>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+        <!-- Insider snapshot -->
+        <div class="col-md-4 mb-3">
+            <div class="card card-bordered trade-alert-card">
+                <div class="bg-primary card-header text-white">
+                    Insider Activity (Snapshot)
+                </div>
+                <div class="card-body small-card-body-text">
+                    <?php if (!empty($insiderTrades)): ?>
+                        <ul class="list-unstyled mb-0">
+                            <?php
+                            $insiderPreview = array_slice($insiderTrades, 0, 3);
+                            foreach ($insiderPreview as $it):
+                            ?>
+                                <li>
+                                    <strong><?= esc(vv($it, 'insider_name')) ?></strong>
+                                    — <?= esc(vv($it, 'relationship')) ?> —
+                                    <?= esc(vv($it, 'transaction_type')) ?>  
+                                    at <?= esc(vv($it, 'price')) ?>  
+                                    on <?= esc(vv($it, 'date')) ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php else: ?>
+                        <p class="text-muted mb-0">
+                            Recent insider trades will be summarized here.
+                        </p>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
     </div>

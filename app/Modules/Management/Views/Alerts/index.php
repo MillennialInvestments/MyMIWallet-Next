@@ -469,15 +469,23 @@ $subViewData                        = [
                 title: 'Ticker',
                 orderable: true,
                 render: function (data, type, row) {
-                    if (row.exchange && row.exchange !== "N/A" && row.exchange !== "Unknown") {
-                        return `<a href="https://www.tradingview.com/symbols/${row.exchange}-${data}/" 
-                                    target="_blank" 
-                                    class="text-primary">
-                                    ${data}
-                                </a>`;
-                    } else {
-                        return `<span class="text-muted">${data} (No Exchange)</span>`;
+                    const exchange = (row.exchange && row.exchange !== "N/A" && row.exchange !== "Unknown") ? row.exchange : null;
+                    const previewUrl = '<?= site_url('Preview/Alert'); ?>/' + encodeURIComponent(exchange ? `${exchange}-${data}` : data);
+                    const tvUrl = exchange ? `https://www.tradingview.com/symbols/${exchange}-${data}/` : null;
+
+                    let html = `<a href="${previewUrl}" class="text-primary fw-bold">${data}</a>`;
+
+                    if (tvUrl) {
+                        html += ` <a href="${tvUrl}" target="_blank" rel="noopener" class="ms-1 text-soft">
+                                    <em class="icon ni ni-external"></em>
+                                 </a>`;
                     }
+
+                    if (!exchange) {
+                        html += ' <span class="text-muted">(No Exchange)</span>';
+                    }
+
+                    return html;
                 }
             },
             {

@@ -141,6 +141,43 @@ class MyMIUser
         return $defaultAccountArray;
     }
 
+    /**
+     * Determine whether a user should be treated as a premium subscriber.
+     *
+     * Mirrors the logic used on the public site (session flag, role name, or
+     * account type) so views stay consistent.
+     */
+    public function isPremiumUser(?int $userId = null): bool
+    {
+        // Session override
+        $isPremiumSession = (bool) ($this->session?->get('is_premium'));
+
+        // Resolve user information (falls back to current user if null)
+        $userInfo = $this->getUserInformation($userId);
+
+        // Role-based premium detection (supports numeric role IDs as well as names)
+        $roleRaw = $userInfo['cuRole'] ?? '';
+        $roleName = '';
+        if (is_numeric($roleRaw)) {
+            try {
+                $group = (new GroupModel())->find((int) $roleRaw);
+                $roleName = strtolower((string) ($group['name'] ?? ''));
+            } catch (\Throwable $e) {
+                log_message('error', 'MyMIUser::isPremiumUser group lookup failed: {msg}', ['msg' => $e->getMessage()]);
+            }
+        } else {
+            $roleName = strtolower((string) $roleRaw);
+        }
+
+        $isPremiumRole = in_array($roleName, ['premium', 'pro', 'admin'], true);
+
+        // Account type flag
+        $accountType = strtolower((string) ($userInfo['cuUserType'] ?? $userInfo['account_type'] ?? ''));
+        $isPremiumType = ($accountType === 'premium');
+
+        return $isPremiumSession || $isPremiumRole || $isPremiumType;
+    }
+
     public function findPotentialSpamUsers()
     {
         $users = $this->userModel->findAll();

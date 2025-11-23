@@ -222,6 +222,7 @@ class Filters extends BaseFilters
                     'MyMI-Gold/*',
                     'MyMI-Wallet',
                     'MyMI-Wallet/*',
+                    'Preview/Alert/*',
                     'Referrals',
                     'Referrals/*',
                     'Trade-Tracker',

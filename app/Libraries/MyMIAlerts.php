@@ -1961,6 +1961,103 @@ class MyMIAlerts
             log_message('debug', $message);
         }
     }
+    
+    // ---------------------------------------------------------------------
+    // Preview helpers
+    // ---------------------------------------------------------------------
+    public function getRealtimeQuote(string $symbol, string $exchange): array
+    {
+        $marketAux = new MyMIMarketAux();
+        return $marketAux->fetchMarketData($symbol) ?? [];
+    }
+
+    public function getCompanyProfile(string $symbol, string $exchange): array
+    {
+        return [];
+    }
+
+    public function getKeyStats(string $symbol, string $exchange): array
+    {
+        return [];
+    }
+
+    public function getPerformanceStats(string $symbol, string $exchange): array
+    {
+        return [];
+    }
+
+    public function getValuationStats(string $symbol, string $exchange): array
+    {
+        return [];
+    }
+
+    public function getTopInstitutionalHolders(string $symbol, string $exchange): array
+    {
+        return [];
+    }
+
+    public function getInsiderTrades(string $symbol, string $exchange): array
+    {
+        return [];
+    }
+
+    public function getPeers(string $symbol, string $exchange): array
+    {
+        return [];
+    }
+
+    public function getHeldByEtfs(string $symbol, string $exchange): array
+    {
+        return [];
+    }
+
+    public function getCommentsForSymbol(string $symbol): array
+    {
+        return [];
+    }
+
+    public function getRecentSecFilings(string $symbol, string $exchange): array
+    {
+        return [];
+    }
+
+    public function getHeadlineNews(string $symbol, string $exchange)
+    {
+        return null;
+    }
+
+    public function getMarketAuxNewsForSymbol(string $symbol): array
+    {
+        $client = \Config\Services::curlrequest();
+        $apiKey = getenv('MARKETAUX_API_KEY');
+
+        try {
+            $response = $client->get('https://api.marketaux.com/v1/news/all', [
+                'query' => [
+                    'symbols'         => strtoupper($symbol),
+                    'filter_entities'  => 'true',
+                    'language'        => 'en',
+                    'page_size'       => 5,
+                    'api_token'       => $apiKey,
+                ],
+            ]);
+
+            $body = json_decode($response->getBody(), true);
+            $articles = $body['data'] ?? [];
+
+            return array_map(static function ($item) {
+                return [
+                    'title'        => $item['title']        ?? '',
+                    'summary'      => $item['description']  ?? '',
+                    'url'          => $item['url']          ?? '',
+                    'published_at' => $item['published_at'] ?? '',
+                ];
+            }, $articles);
+        } catch (\Throwable $e) {
+            log_message('error', 'getMarketAuxNewsForSymbol failed: {msg}', ['msg' => $e->getMessage()]);
+            return [];
+        }
+    }
 
 }
 ?>

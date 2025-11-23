@@ -138,6 +138,72 @@ class AlertsController extends UserController
         return $this->solanaService;
     }
 
+    /**
+     * Public symbol preview page.
+     */
+    public function preview(string $symbol = null)
+    {
+        $symbol = strtoupper($symbol ?? '');
+
+        if ($symbol === '') {
+            return redirect()->to('/Alerts')->with('error', 'Symbol is required.');
+        }
+
+        $alertsModel = model(AlertsModel::class);
+        $myMIAlerts  = service('mymialerts') ?? new MyMIAlerts();
+
+        $cuID          = $this->auth->id() ?? session('logged_in') ?? $this->session->get('user_id');
+        $isPremiumUser = $this->getMyMIUser()->isPremiumUser($cuID ?? null);
+
+        $tradeAlert = $alertsModel->getLatestTradeAlertBySymbol($symbol);
+        $recentTradeAlerts = $alertsModel->getRecentTradeAlerts($symbol, 20);
+
+        $exchange       = $tradeAlert['exchange'] ?? 'NASDAQ';
+        $companyProfile = $myMIAlerts->getCompanyProfile($symbol, $exchange);
+        $keyStats       = $myMIAlerts->getKeyStats($symbol, $exchange);
+        $performance    = $myMIAlerts->getPerformanceStats($symbol, $exchange);
+        $valuation      = $myMIAlerts->getValuationStats($symbol, $exchange);
+
+        $realTimeStockData    = $myMIAlerts->getRealtimeQuote($symbol, $exchange);
+        $ownershipTopHolders  = $myMIAlerts->getTopInstitutionalHolders($symbol, $exchange);
+        $insiderTrades        = $myMIAlerts->getInsiderTrades($symbol, $exchange);
+        $peers                = $myMIAlerts->getPeers($symbol, $exchange);
+        $heldByEtfs           = $myMIAlerts->getHeldByEtfs($symbol, $exchange);
+        $comments             = $myMIAlerts->getCommentsForSymbol($symbol);
+        $secFilings           = $myMIAlerts->getRecentSecFilings($symbol, $exchange);
+        $headlineNews         = $myMIAlerts->getHeadlineNews($symbol, $exchange);
+
+        $nonce = [
+            'style'  => $this->cspNonce['style']  ?? '',
+            'script' => $this->cspNonce['script'] ?? '',
+        ];
+
+        $data = [
+            'ticker'              => $symbol,
+            'exchange'            => $exchange,
+            'tvSymbol'            => $exchange . ':' . $symbol,
+            'tradeAlert'          => $tradeAlert ?: null,
+            'recentTradeAlerts'   => $recentTradeAlerts ?? [],
+            'realTimeStockData'   => $realTimeStockData ?? [],
+            'comments'            => $comments ?? [],
+            'secFilings'          => $secFilings ?? [],
+            'companyProfile'      => $companyProfile ?? [],
+            'keyStats'            => $keyStats ?? [],
+            'performanceStats'    => $performance ?? [],
+            'valuationStats'      => $valuation ?? [],
+            'ownershipTopHolders' => $ownershipTopHolders ?? [],
+            'insiderTrades'       => $insiderTrades ?? [],
+            'peers'               => $peers ?? [],
+            'heldByEtfs'          => $heldByEtfs ?? [],
+            'headlineNews'        => $headlineNews ?? null,
+            'cuID'                => $cuID,
+            'isPremiumUser'       => (bool) $isPremiumUser,
+            'nonce'               => $nonce,
+        ];
+
+        return $this->renderTheme('themes/public/previewAlert', $data);
+    }
+
     protected function getGoalTrackingService(): GoalTrackingService
     {
         return $this->goalTrackingService;
@@ -336,6 +402,35 @@ class AlertsController extends UserController
         $this->data['useDataTables'] = true;
 
         return $this->renderTheme('App\Modules\User\Views\Alerts\index', $this->data);
+    }
+
+    public function trades()
+    {
+        $userId = $this->cuID;
+        if (!is_int($userId) || $userId <= 0) {
+            if ($resp = $this->requireUserOrJson()) {
+                return $resp;
+            }
+
+            return redirect()->to(site_url('login'));
+        }
+
+        $alerts = $this->alertsModel->getDistributedTradeAlertsForUser($userId, 200);
+        $marketDataMap = $this->alertsManager->fetchBatchMarketData($alerts);
+
+        foreach ($alerts as &$alert) {
+            $ticker = $alert['ticker'] ?? null;
+            if ($ticker && isset($marketDataMap[$ticker])) {
+                $alert = array_merge($alert, $marketDataMap[$ticker]);
+            }
+        }
+        unset($alert);
+
+        $this->data['alerts'] = $alerts;
+        $this->data['pageTitle'] = 'All Trade Alerts | MyMI Wallet';
+        $this->data['useDataTables'] = true;
+
+        return $this->renderTheme('App\Modules\User\Views\Alerts\trades', $this->data);
     }
 
     public function filterAlerts()

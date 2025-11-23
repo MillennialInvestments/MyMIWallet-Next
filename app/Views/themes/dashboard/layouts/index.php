@@ -43,7 +43,7 @@ echo view('themes/dashboard/layouts/header', $subViewData);
                 <?php echo view('themes/dashboard/layouts/sidebar', $subViewData); ?>
                 <div class="nk-wrap db-nk-wrap px-3 px-md-1 pl-xxl-3">
                     <?php echo view('themes/dashboard/layouts/_sitenav', $subViewData); ?>
-                    <div class="nk-content content-wrapper pt-3 pt-xxl-5 ml-xxl-3 px-xxl-3 pl-xxl-3">
+                    <div class="nk-content content-wrapper pt-3 pt-xxl-3 ml-xxl-3 px-xxl-3 pl-xxl-3">
                         <div class="mb-3 pl-md-5 ml-xl-5 pl-xl-3">
                             <?= view('App\Views\Auth\_message_block') ?>
                             <div class="row justify-content-center pt-md-0 pt-md-0 pl-md-5 pr-md-3 px-xxl-0 pb-md-3">

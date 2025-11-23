@@ -80,7 +80,7 @@ $(document).ready(function () {
         $.ajax({
             url: '<?= site_url("API/Alerts/manageTradeAlert") ?>',
             type: 'GET',
-            data: { trade_id: tradeId, [csrfTokenName]: csrfToken },
+            data: { trade_id: tradeId, format: 'json', [csrfTokenName]: csrfToken },
             dataType: 'json',
             success: function (res) {
                 if (res.status === 'success') {

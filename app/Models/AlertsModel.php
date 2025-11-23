@@ -498,6 +498,26 @@ class AlertsModel extends Model
             ->getRowArray();
     }
 
+    public function getLatestTradeAlertBySymbol(string $symbol): ?array
+    {
+        return $this->db->table('bf_investment_trade_alerts')
+            ->where('ticker', strtoupper($symbol))
+            ->orderBy('created_on', 'DESC')
+            ->limit(1)
+            ->get()
+            ->getRowArray() ?: null;
+    }
+
+    public function getRecentTradeAlerts(string $symbol, int $limit = 20): array
+    {
+        return $this->db->table('bf_investment_trade_alerts')
+            ->where('ticker', strtoupper($symbol))
+            ->orderBy('created_on', 'DESC')
+            ->limit($limit)
+            ->get()
+            ->getResultArray();
+    }
+
     public function getAlertHistoryByTicker($symbol)
     {
         $builder = $this->db->table('bf_investment_alert_history');
@@ -1303,6 +1323,23 @@ class AlertsModel extends Model
         return $this->db->table('bf_investment_trade_alert_changes')
             ->orderBy('created_at', 'DESC')
             ->limit(50)
+            ->get()
+            ->getResultArray();
+    }
+
+    public function getDistributedTradeAlertsForUser(int $userId, int $limit = 100): array
+    {
+        return $this->db->table('bf_investment_trade_alerts')
+            ->where('active', 1)
+            ->where('alert_created', 1)
+            ->groupStart()
+                ->where('send_alert', 1)
+                ->orWhere('alert_sent', 1)
+                ->orWhere('distribution_status', 'sent')
+                ->orWhere('is_public', 1)
+            ->groupEnd()
+            ->orderBy('created_on', 'DESC')
+            ->limit($limit)
             ->get()
             ->getResultArray();
     }

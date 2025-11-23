@@ -244,6 +244,30 @@ class AlertsController extends ResourceController
             'message' => '✅ Trade alert submitted successfully for TradeID: ' . $tradeID . ' | Symbol: ' . $historyData['ticker'],
             'data'    => $data
         ]);
+    }
+
+    public function createTradeAlert()
+    {
+        if ($this->request->getMethod() === 'post') {
+            return $this->addTradeAlert();
+        }
+
+        $tradeId = $this->request->getGet('accountid')
+            ?? $this->request->getGet('trade_id')
+            ?? $this->request->getGet('id');
+
+        $alert = [];
+        if (!empty($tradeId)) {
+            $alert = $this->alertsModel->getAlertById((int) $tradeId) ?? [];
+        }
+
+        $data = [
+            'alert' => $alert,
+            'cuID'  => auth()->id() ?? session('user_id'),
+            'nonce' => ['style' => '', 'script' => ''],
+        ];
+
+        return view('ManagementModule\\Views\\Alerts\\modals\\createTradeAlert', $data);
     }    
     
     public function backfillCategories()
@@ -359,35 +383,56 @@ class AlertsController extends ResourceController
         }
     }
 
-    public function fetchMarketAuxNews($symbol)
+    // public function fetchMarketAuxNews($symbol)
+    // {
+    //     helper('text'); // For character_limiter()
+    
+    //     $apiKey = getenv('MARKETAUX_API_KEY'); // Store in .env or Config
+    //     $url = "https://api.marketaux.com/v1/news/all?symbols={$symbol}&filter_entities=true&limit=5&language=en&api_token={$apiKey}";
+    
+    //     try {
+    //         $client = \Config\Services::curlrequest();
+    //         $response = $client->get($url);
+    //         $data = json_decode($response->getBody(), true);
+    
+    //         if (!isset($data['data'])) {
+    //             return Http::jsonError('No news found.');
+    //         }
+    
+    //         $news = array_map(function ($item) {
+    //             return [
+    //                 'title' => character_limiter($item['title'], 100),
+    //                 'summary' => character_limiter(strip_tags($item['description'] ?? ''), 160),
+    //                 'url' => $item['url'],
+    //                 'published_at' => date('Y-m-d H:i', strtotime($item['published_at']))
+    //             ];
+    //         }, $data['data']);
+    
+    //         return Http::jsonSuccess(['status' => 'success', 'news' => $news]);
+    //     } catch (\Throwable $e) {
+    //         log_message('error', 'MarketAux Fetch Error: ' . $e->getMessage());
+    //         return Http::jsonError('Failed to fetch news.');
+    //     }
+    // }
+
+    public function fetchMarketAuxNews(string $ticker): ResponseInterface
     {
-        helper('text'); // For character_limiter()
-    
-        $apiKey = getenv('MARKETAUX_API_KEY'); // Store in .env or Config
-        $url = "https://api.marketaux.com/v1/news/all?symbols={$symbol}&filter_entities=true&limit=5&language=en&api_token={$apiKey}";
-    
+        $myMIAlerts = new MyMIAlerts();
+
         try {
-            $client = \Config\Services::curlrequest();
-            $response = $client->get($url);
-            $data = json_decode($response->getBody(), true);
-    
-            if (!isset($data['data'])) {
-                return Http::jsonError('No news found.');
-            }
-    
-            $news = array_map(function ($item) {
-                return [
-                    'title' => character_limiter($item['title'], 100),
-                    'summary' => character_limiter(strip_tags($item['description'] ?? ''), 160),
-                    'url' => $item['url'],
-                    'published_at' => date('Y-m-d H:i', strtotime($item['published_at']))
-                ];
-            }, $data['data']);
-    
-            return Http::jsonSuccess(['status' => 'success', 'news' => $news]);
+            $news = $myMIAlerts->getMarketAuxNewsForSymbol($ticker);
+
+            return $this->response->setJSON([
+                'status' => 'success',
+                'news'   => $news,
+            ]);
         } catch (\Throwable $e) {
-            log_message('error', 'MarketAux Fetch Error: ' . $e->getMessage());
-            return Http::jsonError('Failed to fetch news.');
+            log_message('error', 'fetchMarketAuxNews failed: {msg}', ['msg' => $e->getMessage()]);
+
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => 'Unable to fetch news at this time.',
+            ])->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
     
@@ -1499,6 +1544,27 @@ class AlertsController extends ResourceController
             return $this->respond(['status' => 'error', 'message' => 'Failed to hide trade alert.'], 500);
         }
     }
+
+    public function addChart()
+    {
+        $tradeId = $this->request->getGet('accountid')
+            ?? $this->request->getGet('trade_id')
+            ?? $this->request->getGet('id');
+
+        $alert = [];
+        if (!empty($tradeId)) {
+            $alert = $this->alertsModel->getAlertById((int) $tradeId) ?? [];
+        }
+
+        $data = [
+            'alert'    => $alert,
+            'ticker'   => $alert['ticker'] ?? '',
+            'exchange' => $alert['exchange'] ?? '',
+            'nonce'    => ['style' => '', 'script' => ''],
+        ];
+
+        return view('ManagementModule\\Views\\Alerts\\modals\\viewTradeChart', $data);
+    }
     
     /**
      * API endpoint to generate randomized marketing content for a trade alert.
@@ -1508,6 +1574,10 @@ class AlertsController extends ResourceController
     public function manageTradeAlert()
     {
         log_message('debug', 'CSRF Token Debug - Incoming Request: ' . print_r($this->request->getPost(), true));
+
+        $tradeId = $this->request->getGet('accountid')
+            ?? $this->request->getGet('trade_id')
+            ?? $this->request->getPost('trade_id');
     
         $tradeId = $this->request->getGet('trade_id') ?? $this->request->getPost('trade_id');
         if (!$tradeId) {
@@ -1518,15 +1588,23 @@ class AlertsController extends ResourceController
         if (!$tradeAlert) {
             return $this->failNotFound("Trade alert not found for ID: {$tradeId}");
         }
-    
-        // Fetch existing content if it exists
-        $existingContent = $this->alertsModel->getMarketingContentByTradeId((int)$tradeId);
-    
-        // Generate new marketing content
-        $socialContent = $this->getMyMIMarketing()->generateRandomMarketingContent((array)$tradeAlert);
-        $emailContent = $this->getMyMIMarketing()->generateTradeAlertEmailContent((array)$tradeAlert);
-        $blogContent = $this->getMyMIMarketing()->generateTradeAlertBlogContent((array)$tradeAlert);
-        $voiceoverScript = $this->getMyMIMarketing()->generateTradeAlertVoiceoverScriptContent((array)$tradeAlert);
+
+        $wantsJson = $this->request->wantsJSON() || $this->request->getGet('format') === 'json';
+
+        if ($this->request->getMethod() === 'get' && ! $wantsJson) {
+            $history = $this->alertsModel->getAlertHistoryById((int) $tradeId) ?? [];
+
+            return view('ManagementModule\\Views\\Alerts\\modals\\manageTradeAlert', [
+                'alert'        => $tradeAlert,
+                'alertHistory' => $history,
+                'nonce'        => ['style' => '', 'script' => ''],
+            ]);
+        }
+
+        $socialContent = $this->getMyMIMarketing()->generateRandomMarketingContent((array) $tradeAlert);
+        $emailContent = $this->getMyMIMarketing()->generateTradeAlertEmailContent((array) $tradeAlert);
+        $blogContent = $this->getMyMIMarketing()->generateTradeAlertBlogContent((array) $tradeAlert);
+        $voiceoverScript = $this->getMyMIMarketing()->generateTradeAlertVoiceoverScriptContent((array) $tradeAlert);
     
         $response = [
             'status' => 'success',
@@ -1540,6 +1618,7 @@ class AlertsController extends ResourceController
             'blog_content'     => $blogContent ?? '',
             'voiceover_script' => $voiceoverScript ?? '',
             'details'          => $tradeAlert['trade_description'] ?? '',
+            'csrfHash'         => csrf_hash(),
         ];
     
         log_message('debug', '✅ Returning API Response: ' . print_r($response, true));
@@ -1547,7 +1626,6 @@ class AlertsController extends ResourceController
         return $this->respond($response);
     }
  
-
     /**
      * 🔥 Step 7: Mark alert as sent and trigger email notification
      * ✅ Called from Zapier
@@ -2281,6 +2359,22 @@ class AlertsController extends ResourceController
     
     public function updateExchange()
     {
+        if ($this->request->getMethod() === 'get') {
+            $tradeId = $this->request->getGet('accountid')
+                ?? $this->request->getGet('trade_id')
+                ?? $this->request->getGet('id');
+
+            $alert = [];
+            if (!empty($tradeId)) {
+                $alert = $this->alertsModel->getAlertById((int) $tradeId) ?? [];
+            }
+
+            return view('ManagementModule\\Views\\Alerts\\modals\\updateExchange', [
+                'alert' => $alert,
+                'nonce' => ['style' => '', 'script' => ''],
+            ]);
+        }
+        
         $ticker = $this->request->getPost('ticker');
         $exchange = $this->request->getPost('exchange');
 

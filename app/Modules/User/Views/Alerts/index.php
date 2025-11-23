@@ -125,7 +125,19 @@ $alertNews = $alertNews ?? [];
                                     <?php foreach ($alertsTableData as $alert): ?>
                                         <tr>
                                             <td class="d-none"><?= esc($alert['id'] ?? '-'); ?></td>
-                                            <td><strong><?= esc($alert['ticker'] ?? '-'); ?></strong></td>
+                                            <?php
+                                            $ticker = $alert['ticker'] ?? '';
+                                            $exchange = $alert['exchange'] ?? '';
+                                            $previewSlug = $exchange ? $exchange . '-' . $ticker : $ticker;
+                                            $previewUrl = site_url('Preview/Alert/' . urlencode($previewSlug));
+                                            ?>
+                                            <td>
+                                                <strong>
+                                                    <a href="<?= esc($previewUrl, 'attr'); ?>" class="text-primary">
+                                                        <?= esc($ticker ?: '-'); ?>
+                                                    </a>
+                                                </strong>
+                                            </td>
                                             <td><?= esc($alert['company'] ?? '-'); ?></td>
                                             <td><?= esc($alert['exchange'] ?? '-'); ?></td>
                                             <td><?= esc(number_format((float) ($alert['price'] ?? 0), 2)); ?></td>
@@ -142,6 +154,11 @@ $alertNews = $alertNews ?? [];
                                             <td>
                                                 <?php if (! empty($alert['chart_link'])): ?>
                                                     <a href="<?= esc($alert['chart_link'], 'attr'); ?>" target="_blank" rel="noopener" class="btn btn-xs btn-outline-primary">
+                                                        TV
+                                                    </a>
+                                                <?php elseif (! empty($exchange) && ! empty($ticker)): ?>
+                                                    <a href="https://www.tradingview.com/symbols/<?= esc($exchange . '-' . $ticker, 'attr'); ?>/"
+                                                       class="btn btn-xs btn-outline-primary" target="_blank" rel="noopener">
                                                         TV
                                                     </a>
                                                 <?php else: ?>
