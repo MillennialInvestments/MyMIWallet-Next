@@ -2630,6 +2630,13 @@ class MarketingModel extends Model
             ->get()
             ->getResultArray();
 
+        log_message('debug', sprintf(
+            '📰 Daily dashboard news window %s -> %s returned %d rows',
+            $start,
+            $end,
+            count($rows)
+        ));
+
         return array_map(static function (array $row) {
             $publishedAt = $row['date_scraped'] ?? $row['created_on'] ?? date('Y-m-d H:i:s');
             $title       = $row['title'] ?? '';
