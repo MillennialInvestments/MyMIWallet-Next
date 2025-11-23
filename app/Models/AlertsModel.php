@@ -19,6 +19,7 @@ class AlertsModel extends Model
     protected $updatedField = 'modified_on';
 
     protected array $fieldCache = [];
+    private array $backfillAttemptState = [];
 
     protected $allowedFields = [
         // Core trade alert fields
@@ -286,8 +287,65 @@ class AlertsModel extends Model
         return $symbols;
     }
 
+    public function isLikelyValidSymbol(string $symbol): bool
+    {
+        $symbol = strtoupper(trim($symbol));
+
+        if ($symbol === '' || strlen($symbol) > 5) {
+            return false;
+        }
+
+        if (!preg_match('/[A-Z]/', $symbol)) {
+            return false;
+        }
+
+        $blacklist = ['THIS', 'OUTER'];
+        if (in_array($symbol, $blacklist, true)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private function shouldAttemptBackfill(string $symbol): bool
+    {
+        $symbol = strtoupper(trim($symbol));
+        $now = time();
+        $state = $this->backfillAttemptState[$symbol] ?? ['count' => 0, 'last' => 0];
+
+        if ($state['count'] >= 3 && ($now - $state['last']) < 86400) {
+            log_message('warning', 'Skipping AlphaVantage backfill for {symbol}: too many recent failures.', ['symbol' => $symbol]);
+            return false;
+        }
+
+        $state['count']++;
+        $state['last'] = $now;
+        $this->backfillAttemptState[$symbol] = $state;
+
+        return true;
+    }
+
+    private function recordBackfillFailure(string $symbol): void
+    {
+        $symbol = strtoupper(trim($symbol));
+        $state = $this->backfillAttemptState[$symbol] ?? ['count' => 0, 'last' => 0];
+        $state['last'] = time();
+        $this->backfillAttemptState[$symbol] = $state;
+    }
+
     public function fetchMarketData($symbol)
     {
+        $symbol = strtoupper(trim($symbol));
+
+        if (!$this->isLikelyValidSymbol($symbol)) {
+            log_message('warning', 'Skipping backfill for invalid symbol {symbol}', ['symbol' => $symbol]);
+            return null;
+        }
+
+        if (!$this->shouldAttemptBackfill($symbol)) {
+            return null;
+        }
+
         $apiProviders = ['AlphaVantage'];
         foreach ($apiProviders as $api) {
             try {
@@ -304,6 +362,7 @@ class AlertsModel extends Model
             }
             sleep(1);
         }
+        $this->recordBackfillFailure($symbol);
         log_message('error', "⚠️ All APIs failed to retrieve data for $symbol.");
         return null;
     }
@@ -1547,8 +1606,16 @@ class AlertsModel extends Model
 
     public function insertAlertSnapshot(string $symbol, int $tradeId = null)
     {
+        $symbol = strtoupper(trim($symbol));
+
+        if (!$this->isLikelyValidSymbol($symbol)) {
+            log_message('warning', 'insertAlertSnapshot - skipped invalid symbol {symbol}', ['symbol' => $symbol]);
+            return false;
+        }
+
         $marketData = $this->fetchMarketData($symbol);
         if (!$marketData || empty($marketData['price']) || $marketData['price'] <= 0) {
+            $this->recordBackfillFailure($symbol);
             log_message('warning', "insertAlertSnapshot - skipped: No valid price for {$symbol}");
             return false;
         }

@@ -26,7 +26,17 @@ class MyMIWallets {
         $this->auth = service('authentication');
         $this->request = service('request');
         $this->session = service('session');
-        $this->cuID = $this->session->get('user_id') ?? $this->request->getIPAddress();
+        $authUserId = method_exists($this->auth, 'id') ? $this->auth->id() : null;
+        $sessionUserId = $this->session->get('user_id');
+
+        if (is_numeric($authUserId)) {
+            $this->cuID = (int) $authUserId;
+        } elseif (is_numeric($sessionUserId)) {
+            $this->cuID = (int) $sessionUserId;
+        } else {
+            $this->cuID = null;
+            log_message('warning', 'MyMIWallets initialized without numeric user context.');
+        }
         $this->mymiCoin = new MyMICoin();
         $this->mymiGold = new MyMIGold();
         $this->analyticsModel = new AnalyticalModel();
@@ -37,12 +47,22 @@ class MyMIWallets {
 
     // Refactoring: Simplified method to get user wallet information
     public function getUserWalletInformation() {
-        return $this->getUserWallets();
+        return $this->getUserWallets($this->cuID);
     }
     
 
     // Refactoring: Simplified and streamlined wallet data fetching
-    public function getUserWallets() {
+    public function getUserWallets($userId = null) {
+        $resolvedUserId = $userId ?? $this->cuID;
+
+        if (!is_numeric($resolvedUserId)) {
+            log_message('warning', 'MyMIWallets::getUserWallets called with non-numeric userId: {value}', [
+                'value' => $resolvedUserId,
+            ]);
+            return [];
+        }
+
+        $this->cuID = (int) $resolvedUserId;
         $walletTypes = ['Checking', 'Credit', 'Debt', 'Investment', 'Savings'];
         $walletData = [];
 
