@@ -54,7 +54,13 @@ $routes->get('/Getting-Started/(:segment)', 'Home::gettingStarted');
 $routes->get('/Getting-Started', 'Home::gettingStarted');
 $routes->get('/Memberships', 'Home::memberships');
 $routes->get('/Memberships/(:segment)', 'Home::memberships');
-$routes->get('/Preview/Alert/(:segment)', 'Home::previewAlert/$1');
+// Public preview routes
+$routes->group('', ['namespace' => 'App\Modules\User\Controllers'], static function ($routes) {
+    // Symbol preview (canonical)
+    $routes->get('Alerts/Preview/(:segment)', 'AlertsController::preview/$1');
+    // Legacy alias
+    $routes->get('Preview/Alert/(:segment)', 'AlertsController::preview/$1');
+});
 $routes->get('/Privacy-Policy', 'Home::privacyPolicy');
 $routes->get('/Terms-Of-Service', 'Home::termsOfService');
 $routes->get('/resend-activation', 'AuthController::resendActivation', ['as' => 'resend-activation']);
@@ -750,6 +756,11 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
 
     $routes->group('User', function($routes) {
         $routes->match(['GET', 'POST'], 'Comments/Add', 'UserController::addComment');
+    });
+
+    // Alerts-related public APIs
+    $routes->group('Alerts', function ($routes) {
+        $routes->get('fetchMarketAuxNews/(:segment)', 'AlertsController::fetchMarketAuxNews/$1');
     });
 });
 

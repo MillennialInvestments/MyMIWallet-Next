@@ -2451,5 +2451,26 @@ class AlertsController extends ResourceController
             return Http::jsonError('Signing failed', 500);
         }
     }
+
+    public function fetchMarketAuxNews(string $ticker): ResponseInterface
+    {
+        $myMIAlerts = new MyMIAlerts();
+
+        try {
+            $news = $myMIAlerts->getMarketAuxNewsForSymbol($ticker);
+
+            return $this->response->setJSON([
+                'status' => 'success',
+                'news'   => $news,
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'fetchMarketAuxNews failed: {msg}', ['msg' => $e->getMessage()]);
+
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => 'Unable to fetch news at this time.',
+            ])->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
 ?>
