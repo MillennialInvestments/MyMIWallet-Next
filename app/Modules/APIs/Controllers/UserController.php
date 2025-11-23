@@ -49,7 +49,7 @@ class UserController extends BaseController
             'ticker'       => $this->request->getPost('ticker'),
             'comment_text' => $this->request->getPost('comment_text'),
             'user_id'      => $userId,
-            'created_at'   => date('Y-m-d H:i:s'),
+            'created_at'   => date('Y-m-d H:i'),
         ];
 
         log_message('info', 'UserController::addComment - $data: ' . print_r($data, true));
@@ -95,7 +95,7 @@ class UserController extends BaseController
             ->setJSON([
                 'success'     => true,
                 'user_id'     => $data['user_id'],
-                'comment_text'=> $data['comment_text'],
+                'comment'     => $data['comment_text'],
                 'created_at'  => $data['created_at'],
                 'csrf_token'  => csrf_hash(),
             ])

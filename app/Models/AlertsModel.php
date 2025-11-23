@@ -498,6 +498,26 @@ class AlertsModel extends Model
             ->getRowArray();
     }
 
+    public function getLatestTradeAlertBySymbol(string $symbol): ?array
+    {
+        return $this->db->table('bf_investment_trade_alerts')
+            ->where('ticker', strtoupper($symbol))
+            ->orderBy('created_on', 'DESC')
+            ->limit(1)
+            ->get()
+            ->getRowArray() ?: null;
+    }
+
+    public function getRecentTradeAlerts(string $symbol, int $limit = 20): array
+    {
+        return $this->db->table('bf_investment_trade_alerts')
+            ->where('ticker', strtoupper($symbol))
+            ->orderBy('created_on', 'DESC')
+            ->limit($limit)
+            ->get()
+            ->getResultArray();
+    }
+
     public function getAlertHistoryByTicker($symbol)
     {
         $builder = $this->db->table('bf_investment_alert_history');
