@@ -39,6 +39,10 @@ class MyMIMomentum
 
     public function scoreTradeOpportunity(string $symbol, int $days = 5, int $tradeId = null, ): float
     {
+        if (method_exists($this->alertsModel, 'isLikelyValidSymbol') && !$this->alertsModel->isLikelyValidSymbol($symbol)) {
+            log_message('warning', 'MyMIMomentum::scoreTradeOpportunity - skipped invalid symbol {symbol}', ['symbol' => $symbol]);
+            return 0.0;
+        }
         // Fetch alert history for the past N days
         $history = $this->alertsModel->getAlertHistoryByTicker($symbol, $days);
         
