@@ -17,17 +17,21 @@ if (!function_exists('vv')) {
 }
 
 // Core objects
-$tradeAlert         = isset($tradeAlert) && is_array($tradeAlert) ? $tradeAlert : null;
+$alert              = isset($alert) && is_array($alert) ? $alert : null;
+$tradeAlert         = isset($tradeAlert) && is_array($tradeAlert) ? $tradeAlert : $alert;
 $recentTradeAlerts  = is_array($recentTradeAlerts ?? null) ? $recentTradeAlerts : [];
 $realTimeStockData  = is_array($realTimeStockData ?? null) ? $realTimeStockData : [];
 $comments           = is_array($comments ?? null) ? $comments : [];
 $secFilings         = is_array($secFilings ?? null) ? $secFilings : [];
 $cuID               = $cuID ?? null;
-$isPremiumUser      = (bool)($isPremiumUser ?? false);
+$isPremiumUser      = (bool)($isPremiumUser ?? $isPremium ?? false);
+$isLoggedIn         = (bool)($isLoggedIn ?? ($cuID !== null));
+$cuRole             = $cuRole ?? 4;
 
 // New data containers for Finviz-style layout (all optional)
 $companyProfile     = is_array($companyProfile ?? null) ? $companyProfile : [];
-$keyStats           = is_array($keyStats ?? null) ? $keyStats : [];          // list: ['label' => 'P/E', 'value' => '44.31']
+$headlineStats      = is_array($headlineStats ?? null) ? $headlineStats : [];
+$keyStats           = is_array($keyStats ?? null) ? $keyStats : $headlineStats;          // list: ['label' => 'P/E', 'value' => '44.31']
 $performanceStats   = is_array($performanceStats ?? null) ? $performanceStats : [];
 $valuationStats     = is_array($valuationStats ?? null) ? $valuationStats : [];
 $ownershipTopHolders= is_array($ownershipTopHolders ?? null) ? $ownershipTopHolders : []; // list of ['name','percent']
@@ -37,7 +41,7 @@ $peers              = is_array($peers ?? null) ? $peers : [];                 //
 $heldByEtfs         = is_array($heldByEtfs ?? null) ? $heldByEtfs : [];       // list of ETF tickers
 
 // Symbols
-$ticker     = vupper($ticker ?? ($tradeAlert['ticker'] ?? ''));
+$ticker     = vupper($symbol ?? ($ticker ?? ($tradeAlert['ticker'] ?? '')));
 $exchange   = vupper($exchange ?? ($tradeAlert['exchange'] ?? '')) ?? 'NASDAQ';
 $tvSymbol   = vupper($tvSymbol ?? ($exchange . ':' . $ticker));
 $tvSymbol   = $tvSymbol ?: ($exchange ? $exchange . ':' . $ticker : $ticker);
@@ -293,7 +297,7 @@ foreach ($recentTradeAlerts as $ra) {
 
 <div class="mt-3 container-fluid px-3">
 
-    <div class="d-flex justify-content-between flex-wrap mb-3">
+    <div class="d-flex justify-content-between flex-wrap mb-3 g-2 align-items-center">
         <div class="btn-group gap-2">
             <a href="<?= site_url('User/Alerts'); ?>" class="btn btn-outline-primary btn-sm">
                 ← Back to Alerts Dashboard
@@ -304,11 +308,32 @@ foreach ($recentTradeAlerts as $ra) {
                 </a>
             <?php endif; ?>
         </div>
+        <div class="btn-group gap-1">
+            <a href="https://twitter.com/intent/tweet?text=Checking%20out%20<?= urlencode($ticker); ?>%20on%20MyMI%20Wallet&url=<?= urlencode(current_url()); ?>"
+               target="_blank" class="btn btn-icon btn-sm btn-outline-light" title="Share on Twitter">
+                <em class="icon ni ni-twitter"></em>
+            </a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?= urlencode(current_url()); ?>"
+               target="_blank" class="btn btn-icon btn-sm btn-outline-light" title="Share on LinkedIn">
+                <em class="icon ni ni-linkedin"></em>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=<?= urlencode(current_url()); ?>"
+               target="_blank" class="btn btn-icon btn-sm btn-outline-light" title="Share on Facebook">
+                <em class="icon ni ni-facebook-f"></em>
+            </a>
+            <?php if ((int) ($cuRole ?? 4) < 2): ?>
+                <a href="<?= site_url('Management/Alerts/share-template?symbol=' . urlencode($ticker)); ?>"
+                   class="btn btn-sm btn-outline-primary">
+                    Generate management share copy
+                </a>
+            <?php endif; ?>
+        </div>
     </div>
 
     <!-- ------------------------------------------------------------------
          FINVIZ-STYLE HEADER
     ------------------------------------------------------------------- -->
+    <section id="headline-stats">
     <div class="row mb-3">
         <div class="col-12">
             <div class="ticker-header">
@@ -352,16 +377,24 @@ foreach ($recentTradeAlerts as $ra) {
 
                     <div class="meta-tags mt-2">
                         <?php if ($sector): ?>
-                            <span><?= esc($sector) ?></span>
+                            <span>
+                                <a href="<?= site_url('Sector/' . urlencode($sector)); ?>" class="link-primary text-primary">
+                                    <?= esc($sector) ?>
+                                </a>
+                            </span>
+                        <?php endif; ?>
+                        <?php if ($primaryExLabel): ?>
+                            <span>
+                                <a href="<?= site_url('Exchange/' . urlencode($primaryExLabel)); ?>" class="link-secondary text-secondary">
+                                    <?= esc($primaryExLabel) ?>
+                                </a>
+                            </span>
                         <?php endif; ?>
                         <?php if ($industry): ?>
                             <span><?= esc($industry) ?></span>
                         <?php endif; ?>
                         <?php if ($country): ?>
                             <span><?= esc($country) ?></span>
-                        <?php endif; ?>
-                        <?php if ($primaryExLabel): ?>
-                            <span><?= esc($primaryExLabel) ?></span>
                         <?php endif; ?>
                     </div>
 
@@ -462,6 +495,27 @@ foreach ($recentTradeAlerts as $ra) {
             </div>
         </div>
     </div>
+    </section>
+
+    <?php if (!$isLoggedIn): ?>
+        <div class="alert alert-info mb-3">
+            You are viewing a public snapshot of this alert.
+            <a href="<?= site_url('Login'); ?>">Sign in</a> or
+            <a href="<?= site_url('Register'); ?>">create an account</a> to unlock deeper analytics.
+        </div>
+    <?php elseif ($isLoggedIn && !$isPremiumUser): ?>
+        <div class="alert alert-warning mb-3">
+            Upgrade to <a href="<?= site_url('Pricing'); ?>">MyMI Premium</a> to unlock full analytics,
+            advanced metrics, and advisor notes for <?= esc($ticker); ?>.
+        </div>
+    <?php endif; ?>
+
+    <?php if (!$isPremiumUser): ?>
+        <div class="bg-lighter border rounded p-3 text-center mt-3">
+            <p class="mb-2">Premium metrics for <?= esc($ticker); ?> are locked.</p>
+            <a href="<?= site_url('Pricing'); ?>" class="btn btn-primary btn-sm">Unlock with Premium</a>
+        </div>
+    <?php endif; ?>
 
     <div class="row px-3 my-3">
         <div class="col-12 col-md-3">

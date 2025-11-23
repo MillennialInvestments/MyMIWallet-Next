@@ -143,62 +143,42 @@ class AlertsController extends UserController
      */
     public function preview(string $symbol = null)
     {
-        $symbol = strtoupper($symbol ?? '');
+        $symbol = strtoupper(trim($symbol ?? ''));
 
         if ($symbol === '') {
             return redirect()->to('/Alerts')->with('error', 'Symbol is required.');
         }
 
         $alertsModel = model(AlertsModel::class);
-        $myMIAlerts  = service('mymialerts') ?? new MyMIAlerts();
+        $myMIAlerts  = service('mymialerts');
+
+        if (!$myMIAlerts instanceof MyMIAlerts) {
+            $myMIAlerts = new MyMIAlerts();
+        }
 
         $cuID          = $this->auth->id() ?? session('logged_in') ?? $this->session->get('user_id');
         $isPremiumUser = $this->getMyMIUser()->isPremiumUser($cuID ?? null);
 
-        $tradeAlert = $alertsModel->getLatestTradeAlertBySymbol($symbol);
-        $recentTradeAlerts = $alertsModel->getRecentTradeAlerts($symbol, 20);
+        $alert        = $alertsModel->getLatestTradeAlertBySymbol($symbol);
+        $ttlMinutes   = 15;
+        $lastUpdated  = $alert['last_updated_time'] ?? $alert['last_updated'] ?? null;
+        $needsRefresh = $myMIAlerts->needsSymbolRefresh($symbol, $lastUpdated, $ttlMinutes);
 
-        $exchange       = $tradeAlert['exchange'] ?? 'NASDAQ';
-        $companyProfile = $myMIAlerts->getCompanyProfile($symbol, $exchange);
-        $keyStats       = $myMIAlerts->getKeyStats($symbol, $exchange);
-        $performance    = $myMIAlerts->getPerformanceStats($symbol, $exchange);
-        $valuation      = $myMIAlerts->getValuationStats($symbol, $exchange);
+        if ($needsRefresh) {
+            $alert = $myMIAlerts->refreshSymbolData($symbol, $alert);
+        }
 
-        $realTimeStockData    = $myMIAlerts->getRealtimeQuote($symbol, $exchange);
-        $ownershipTopHolders  = $myMIAlerts->getTopInstitutionalHolders($symbol, $exchange);
-        $insiderTrades        = $myMIAlerts->getInsiderTrades($symbol, $exchange);
-        $peers                = $myMIAlerts->getPeers($symbol, $exchange);
-        $heldByEtfs           = $myMIAlerts->getHeldByEtfs($symbol, $exchange);
-        $comments             = $myMIAlerts->getCommentsForSymbol($symbol);
-        $secFilings           = $myMIAlerts->getRecentSecFilings($symbol, $exchange);
-        $headlineNews         = $myMIAlerts->getHeadlineNews($symbol, $exchange);
-
-        $nonce = [
-            'style'  => $this->cspNonce['style']  ?? '',
-            'script' => $this->cspNonce['script'] ?? '',
-        ];
+        $exchange = $alert['exchange'] ?? 'NASDAQ';
 
         $data = [
-            'ticker'              => $symbol,
-            'exchange'            => $exchange,
-            'tvSymbol'            => $exchange . ':' . $symbol,
-            'tradeAlert'          => $tradeAlert ?: null,
-            'recentTradeAlerts'   => $recentTradeAlerts ?? [],
-            'realTimeStockData'   => $realTimeStockData ?? [],
-            'comments'            => $comments ?? [],
-            'secFilings'          => $secFilings ?? [],
-            'companyProfile'      => $companyProfile ?? [],
-            'keyStats'            => $keyStats ?? [],
-            'performanceStats'    => $performance ?? [],
-            'valuationStats'      => $valuation ?? [],
-            'ownershipTopHolders' => $ownershipTopHolders ?? [],
-            'insiderTrades'       => $insiderTrades ?? [],
-            'peers'               => $peers ?? [],
-            'heldByEtfs'          => $heldByEtfs ?? [],
-            'headlineNews'        => $headlineNews ?? null,
-            'cuID'                => $cuID,
-            'isPremiumUser'       => (bool) $isPremiumUser,
-            'nonce'               => $nonce,
+            'symbol'           => $symbol,
+            'alert'            => $alert,
+            'sector'           => $alert['sector'] ?? null,
+            'exchange'         => $exchange,
+            'headlineStats'    => $myMIAlerts->buildHeadlineStats($alert),
+            'isLoggedIn'       => $this->auth->check(),
+            'isPremium'        => (bool) $isPremiumUser,
+            'cuRole'           => $this->data['cuRole'] ?? 0,
         ];
 
         return $this->renderTheme('themes/public/previewAlert', $data);

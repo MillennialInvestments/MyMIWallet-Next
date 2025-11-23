@@ -199,6 +199,80 @@ class MyMIAlerts
 
     }
 
+    public function needsSymbolRefresh(string $symbol, ?string $lastUpdated, int $ttlMinutes = 15): bool
+    {
+        if (empty($lastUpdated)) {
+            return true;
+        }
+
+        $last = strtotime($lastUpdated);
+        if ($last === false) {
+            return true;
+        }
+
+        $ageMinutes = (time() - $last) / 60;
+        return $ageMinutes >= $ttlMinutes;
+    }
+
+    public function refreshSymbolData(string $symbol, ?array $existingAlert = null): array
+    {
+        $normalized = strtoupper(trim($symbol));
+        $alert      = $existingAlert ?? $this->alertsModel->getLatestTradeAlertBySymbol($normalized) ?? [];
+
+        if (!is_array($alert)) {
+            $alert = [];
+        }
+
+        try {
+            $quote = $this->MyMIAlphaVantage->getCurrentPrice($normalized);
+            $price = $quote['price'] ?? null;
+
+            if ($price !== null) {
+                $alert['price']             = $price;
+                $alert['current_price']     = $price;
+                $alert['last_updated']      = date('Y-m-d H:i:s');
+                $alert['last_updated_time'] = date('Y-m-d H:i:s');
+
+                if (!empty($alert['id'])) {
+                    $this->alertsModel->updateTrade($alert['id'], [
+                        'price'             => $price,
+                        'current_price'     => $price,
+                        'last_updated'      => $alert['last_updated'],
+                        'last_updated_time' => $alert['last_updated_time'],
+                    ]);
+                }
+
+                if (method_exists($this->alertsModel, 'maybeBackfillSymbol')) {
+                    $this->alertsModel->maybeBackfillSymbol($normalized, $alert['id'] ?? null);
+                }
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'MyMIAlerts::refreshSymbolData failed for {symbol}: {msg}', [
+                'symbol' => $normalized,
+                'msg'    => $e->getMessage(),
+            ]);
+        }
+
+        $alert['ticker']   = $normalized;
+        $alert['exchange'] = $alert['exchange'] ?? ($alert['exchange'] ?? '');
+
+        return $alert;
+    }
+
+    public function buildHeadlineStats(?array $alert): array
+    {
+        if (empty($alert)) {
+            return [];
+        }
+
+        return [
+            'last_price'     => $alert['price'] ?? $alert['current_price'] ?? null,
+            'change_percent' => $alert['change_percent'] ?? $alert['change'] ?? null,
+            'volume'         => $alert['volume'] ?? null,
+            'market_cap'     => $alert['market_cap'] ?? null,
+        ];
+    }
+
     /**
      * Active alert sources that feed the queue.
      *
