@@ -227,34 +227,89 @@ class Home extends BaseController
 
     public function previewAlert(?string $symbol = null)
     {
-        $symbol   = strtoupper(trim((string)$symbol));
-        $meta     = $this->metaService
-            ? $this->metaService->getBySlugOrFallback($symbol ? ('Preview/Alert/' . strtolower($symbol)) : 'Preview/Alert')
-            : ['page_title' => 'Preview Alert — ' . ($symbol ?: 'Unknown')];
+        $symbol = strtoupper(trim((string) $symbol));
 
-        $alert              = $this->alertsModel?->getAlertBySymbol($symbol);
-        $recentTradeAlerts  = $this->alertsModel?->getRecentAlerts($symbol, 8) ?? [];
+        // Support NASDAQ-GUTS style slug – take last segment as ticker
+        if ($symbol !== '') {
+            $parts  = explode('-', $symbol);
+            $symbol = strtoupper(end($parts));
+        }
 
-        $ticker   = $alert['ticker']   ?? ($symbol ?: '');
-        $exchange = $alert['exchange'] ?? '';
-        $tvSymbol = $exchange . ':' . $ticker;
+        $meta = [
+            'page_title'  => 'Preview Alert — ' . ($symbol ?: 'Unknown'),
+            'description' => 'Preview MyMI trade alerts, links, and tools for ' . ($symbol ?: 'this symbol') . '.',
+        ];
+
+        if ($this->metaService && method_exists($this->metaService, 'getBySlugOrFallback')) {
+            try {
+                $slug     = $symbol ? ('Preview/Alert/' . strtolower($symbol)) : 'Preview/Alert';
+                $metaData = $this->metaService->getBySlugOrFallback($slug);
+
+                if (is_array($metaData)) {
+                    $meta = array_replace($meta, $metaData);
+                }
+            } catch (\Throwable $e) {
+                log_message('error', 'Home::previewAlert metaService error: {msg}', ['msg' => $e->getMessage()]);
+            }
+        }
+
+        $pageTitle = $meta['title'] ?? ($meta['page_title'] ?? 'Preview Alert');
+
+        $alert             = null;
+        $recentTradeAlerts = [];
+
+        if ($this->alertsModel) {
+            try {
+                if ($symbol && method_exists($this->alertsModel, 'getAlertBySymbol')) {
+                    $alert = $this->alertsModel->getAlertBySymbol($symbol);
+                }
+
+                if ($symbol && method_exists($this->alertsModel, 'getRecentAlerts')) {
+                    $recentTradeAlerts = $this->alertsModel->getRecentAlerts($symbol, 8) ?? [];
+                }
+            } catch (\Throwable $e) {
+                log_message('error', 'Home::previewAlert alertsModel error: {msg}', ['msg' => $e->getMessage()]);
+            }
+        }
+
+        $ticker   = '';
+        $exchange = '';
+
+        if (is_array($alert)) {
+            $ticker   = strtoupper($alert['ticker']   ?? $symbol ?? '');
+            $exchange = strtoupper($alert['exchange'] ?? '');
+        } else {
+            $ticker   = $symbol;
+            $exchange = '';
+        }
+
+        $tvSymbol = ($exchange ? $exchange . ':' : '') . $ticker;
 
         $data = $this->buildCommonData([
-            'layout'            => 'public',
-            'pageName'          => 'Preview Alert',
-            'pageTitle'         => $meta['title'] ?? ($meta['page_title'] ?? 'Preview Alert'),
-            'meta'              => $meta ?? [],
-            'symbol'            => $symbol,
-            'alert'             => $alert,
-            'tradeAlert'        => $alert,
-            'recentTradeAlerts' => $recentTradeAlerts,
-            'ticker'            => $ticker,
-            'exchange'          => $exchange,
-            'tvSymbol'          => $tvSymbol,
-            'realTimeStockData' => [],
-            'secFilings'        => [],
-            'comments'          => [],
-            'cuID'              => $this->cuID,
+            'layout'              => 'public',
+            'pageName'            => 'Preview Alert',
+            'pageTitle'           => $pageTitle,
+            'meta'                => $meta,
+            'symbol'              => $symbol,
+            'alert'               => $alert,
+            'tradeAlert'          => $alert,
+            'recentTradeAlerts'   => $recentTradeAlerts,
+            'ticker'              => $ticker,
+            'exchange'            => $exchange,
+            'tvSymbol'            => $tvSymbol,
+            'realTimeStockData'   => $realTimeStockData ?? [],
+            'secFilings'          => $secFilings ?? [],
+            'comments'            => $comments ?? [],
+            'companyProfile'      => $companyProfile ?? [],
+            'keyStats'            => $keyStats ?? [],
+            'performanceStats'    => $performanceStats ?? [],
+            'valuationStats'      => $valuationStats ?? [],
+            'ownershipTopHolders' => $ownershipTopHolders ?? [],
+            'insiderTrades'       => $insiderTrades ?? [],
+            'peers'               => $peers ?? [],
+            'heldByEtfs'          => $heldByEtfs ?? [],
+            'headlineNews'        => $headlineNews ?? null,
+            'cuID'                => $this->cuID,
         ]);
         if ($data instanceof ResponseInterface) {
             return $data;

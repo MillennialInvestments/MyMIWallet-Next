@@ -40,6 +40,12 @@ $heldByEtfs         = is_array($heldByEtfs ?? null) ? $heldByEtfs : [];       //
 $ticker     = vupper($ticker ?? ($tradeAlert['ticker'] ?? ''));
 $exchange   = vupper($exchange ?? ($tradeAlert['exchange'] ?? ''));
 $tvSymbol   = vupper($tvSymbol ?? ($exchange . ':' . $ticker));
+$tvSymbol   = $tvSymbol ?: ($exchange ? $exchange . ':' . $ticker : $ticker);
+
+if ($ticker === '' && !empty($symbol ?? '')) {
+    $ticker = vupper($symbol);
+    $tvSymbol = $exchange ? ($exchange . ':' . $ticker) : $ticker;
+}
 $hasAlert   = is_array($tradeAlert) && !empty($tradeAlert);
 
 $tvExch     = $hasAlert ? vupper(vv($tradeAlert, 'exchange', $exchange)) : $exchange;
@@ -346,15 +352,24 @@ foreach ($recentTradeAlerts as $ra) {
                         <?php endif; ?>
                     </div>
 
-                    <div class="action-links mt-2">
-                        <!-- These can be wired to internal pages/routes later -->
-                        <a href="javascript:void(0)">Stock Detail</a>
-                        <a href="javascript:void(0)">Compare</a>
-                        <a href="javascript:void(0)">Short Interest</a>
-                        <a href="javascript:void(0)">Financials</a>
-                        <a href="javascript:void(0)">Options</a>
+                    <div class="mt-2 action-links">
+                        <a href="https://www.tradingview.com/symbols/<?= urlencode($tvExch) ?>-<?= urlencode($tvTicker) ?>/"
+                           target="_blank" rel="noopener">TradingView Chart</a>
+
+                        <a href="https://stocktwits.com/symbol/<?= urlencode($tvTicker) ?>"
+                           target="_blank" rel="noopener">StockTwits Stream</a>
+
+                        <a href="https://finance.yahoo.com/quote/<?= urlencode($tvTicker) ?>"
+                           target="_blank" rel="noopener">Yahoo Finance</a>
+
+                        <a href="<?= site_url('/register') ?>">Join MyMI Wallet</a>
+
+                        <a href="<?= site_url('/Alerts') ?>">View All MyMI Alerts</a>
+
                         <a href="#sec-filings-block">Latest Filings</a>
+
                         <a href="<?= site_url('/Portfolio/Add/' . urlencode($tvTicker)) ?>">Add to Portfolio</a>
+
                         <a href="<?= site_url('/Alerts/Create/' . urlencode($tvTicker)) ?>">Set Alert</a>
                     </div>
                 </div>
