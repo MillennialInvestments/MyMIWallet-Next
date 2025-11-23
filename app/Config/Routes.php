@@ -49,6 +49,7 @@ $routes->get('/Corporate-Earnings', 'Home::corporateEarnings');
 $routes->get('/Corporate-Earnings/(:segment)', 'Home::corporateEarnings/$1');
 $routes->get('/Economic-Calendar', 'Home::economicCalendar');
 $routes->get('/Economic-Calendar/(:segment)', 'Home::economicCalendarContent/$1');
+$routes->get('Exchange/(:segment)', 'Home::exchange/$1');
 $routes->get('/Getting-Started/(:segment)/(:segment)', 'Home::gettingStarted');
 $routes->get('/Getting-Started/(:segment)', 'Home::gettingStarted');
 $routes->get('/Getting-Started', 'Home::gettingStarted');
@@ -62,6 +63,7 @@ $routes->group('', ['namespace' => 'App\Modules\User\Controllers'], static funct
     $routes->get('Preview/Alert/(:segment)', 'AlertsController::preview/$1');
 });
 $routes->get('/Privacy-Policy', 'Home::privacyPolicy');
+$routes->get('Sector/(:segment)', 'Home::sector/$1');
 $routes->get('/Terms-Of-Service', 'Home::termsOfService');
 $routes->get('/resend-activation', 'AuthController::resendActivation', ['as' => 'resend-activation']);
 $routes->post('/resend-activation', 'AuthController::resendActivationCode', ['as' => 'resend-activation-code']);

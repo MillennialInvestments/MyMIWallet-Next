@@ -17,17 +17,21 @@ if (!function_exists('vv')) {
 }
 
 // Core objects
-$tradeAlert         = isset($tradeAlert) && is_array($tradeAlert) ? $tradeAlert : null;
+$alert              = isset($alert) && is_array($alert) ? $alert : null;
+$tradeAlert         = isset($tradeAlert) && is_array($tradeAlert) ? $tradeAlert : $alert;
 $recentTradeAlerts  = is_array($recentTradeAlerts ?? null) ? $recentTradeAlerts : [];
 $realTimeStockData  = is_array($realTimeStockData ?? null) ? $realTimeStockData : [];
 $comments           = is_array($comments ?? null) ? $comments : [];
 $secFilings         = is_array($secFilings ?? null) ? $secFilings : [];
 $cuID               = $cuID ?? null;
-$isPremiumUser      = (bool)($isPremiumUser ?? false);
+$isPremiumUser      = (bool)($isPremiumUser ?? $isPremium ?? false);
+$isLoggedIn         = (bool)($isLoggedIn ?? ($cuID !== null));
+$cuRole             = $cuRole ?? 4;
 
 // New data containers for Finviz-style layout (all optional)
 $companyProfile     = is_array($companyProfile ?? null) ? $companyProfile : [];
-$keyStats           = is_array($keyStats ?? null) ? $keyStats : [];          // list: ['label' => 'P/E', 'value' => '44.31']
+$headlineStats      = is_array($headlineStats ?? null) ? $headlineStats : [];
+$keyStats           = is_array($keyStats ?? null) ? $keyStats : $headlineStats;          // list: ['label' => 'P/E', 'value' => '44.31']
 $performanceStats   = is_array($performanceStats ?? null) ? $performanceStats : [];
 $valuationStats     = is_array($valuationStats ?? null) ? $valuationStats : [];
 $ownershipTopHolders= is_array($ownershipTopHolders ?? null) ? $ownershipTopHolders : []; // list of ['name','percent']
@@ -37,7 +41,7 @@ $peers              = is_array($peers ?? null) ? $peers : [];                 //
 $heldByEtfs         = is_array($heldByEtfs ?? null) ? $heldByEtfs : [];       // list of ETF tickers
 
 // Symbols
-$ticker     = vupper($ticker ?? ($tradeAlert['ticker'] ?? ''));
+$ticker     = vupper($symbol ?? ($ticker ?? ($tradeAlert['ticker'] ?? '')));
 $exchange   = vupper($exchange ?? ($tradeAlert['exchange'] ?? '')) ?? 'NASDAQ';
 $tvSymbol   = vupper($tvSymbol ?? ($exchange . ':' . $ticker));
 $tvSymbol   = $tvSymbol ?: ($exchange ? $exchange . ':' . $ticker : $ticker);
@@ -293,7 +297,7 @@ foreach ($recentTradeAlerts as $ra) {
 
 <div class="mt-3 container-fluid px-3">
 
-    <div class="d-flex justify-content-between flex-wrap mb-3">
+    <div class="d-flex justify-content-between flex-wrap mb-3 g-2 align-items-center">
         <div class="btn-group gap-2">
             <a href="<?= site_url('User/Alerts'); ?>" class="btn btn-outline-primary btn-sm">
                 ← Back to Alerts Dashboard
@@ -304,164 +308,214 @@ foreach ($recentTradeAlerts as $ra) {
                 </a>
             <?php endif; ?>
         </div>
+        <div class="btn-group gap-1">
+            <a href="https://twitter.com/intent/tweet?text=Checking%20out%20<?= urlencode($ticker); ?>%20on%20MyMI%20Wallet&url=<?= urlencode(current_url()); ?>"
+               target="_blank" class="btn btn-icon btn-sm btn-outline-light" title="Share on Twitter">
+                <em class="icon ni ni-twitter"></em>
+            </a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?= urlencode(current_url()); ?>"
+               target="_blank" class="btn btn-icon btn-sm btn-outline-light" title="Share on LinkedIn">
+                <em class="icon ni ni-linkedin"></em>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=<?= urlencode(current_url()); ?>"
+               target="_blank" class="btn btn-icon btn-sm btn-outline-light" title="Share on Facebook">
+                <em class="icon ni ni-facebook-f"></em>
+            </a>
+            <?php if ((int) ($cuRole ?? 4) < 2): ?>
+                <a href="<?= site_url('Management/Alerts/share-template?symbol=' . urlencode($ticker)); ?>"
+                   class="btn btn-sm btn-outline-primary">
+                    Generate management share copy
+                </a>
+            <?php endif; ?>
+        </div>
     </div>
 
     <!-- ------------------------------------------------------------------
          FINVIZ-STYLE HEADER
     ------------------------------------------------------------------- -->
-    <div class="row mb-3">
-        <div class="col-12">
-            <div class="ticker-header">
-                <div class="ticker-header-main">
-                    <div class="ticker-symbol">
-                        <?= esc(vupper($tvTicker)) ?>
-                    </div>
-                    <?php if (!empty($companyName)): ?>
-                        <div class="ticker-company">
-                            <?= esc($companyName) ?>
+    <section id="headline-stats">
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="ticker-header">
+                    <div class="ticker-header-main">
+                        <div class="ticker-symbol">
+                            <?= esc(vupper($tvTicker)) ?>
                         </div>
-                    <?php endif; ?>
-
-                    <div class="mt-2">
-                        <span class="price-line">
-                            <?= $lastClose !== null ? number_format((float)$lastClose, 2) : '—' ?>
-                        </span>
-                        <?php
-                        $chgClass = '';
-                        if ($change !== null && (float)$change > 0) {
-                            $chgClass = 'up';
-                        } elseif ($change !== null && (float)$change < 0) {
-                            $chgClass = 'down';
-                        }
-                        ?>
-                        <span class="price-change <?= $chgClass ?>">
-                            <?php if ($change !== null): ?>
-                                <?= sprintf('%+0.2f', (float)$change) ?>
-                            <?php endif; ?>
-                            <?php if ($changePercent !== null): ?>
-                                (<?= esc($changePercent) ?>)
-                            <?php endif; ?>
-                        </span>
-                    </div>
-                    <div class="price-meta">
-                        Last Close
-                        <?php if ($quoteAsOf !== '—'): ?>
-                            — <?= esc($quoteAsOf) ?> • <?= esc($lastCloseTime) ?>
-                        <?php endif; ?>
-                    </div>
-
-                    <div class="meta-tags mt-2">
-                        <?php if ($sector): ?>
-                            <span><?= esc($sector) ?></span>
-                        <?php endif; ?>
-                        <?php if ($industry): ?>
-                            <span><?= esc($industry) ?></span>
-                        <?php endif; ?>
-                        <?php if ($country): ?>
-                            <span><?= esc($country) ?></span>
-                        <?php endif; ?>
-                        <?php if ($primaryExLabel): ?>
-                            <span><?= esc($primaryExLabel) ?></span>
-                        <?php endif; ?>
-                    </div>
-
-                    <div class="mt-2 action-links">
-                        <a href="https://www.tradingview.com/symbols/<?= urlencode($tvExch) ?>-<?= urlencode($tvTicker) ?>/"
-                           target="_blank" rel="noopener">TradingView Chart</a>
-
-                        <a href="https://stocktwits.com/symbol/<?= urlencode($tvTicker) ?>"
-                           target="_blank" rel="noopener">StockTwits Stream</a>
-
-                        <a href="https://finance.yahoo.com/quote/<?= urlencode($tvTicker) ?>"
-                           target="_blank" rel="noopener">Yahoo Finance</a>
-
-                        <a href="<?= site_url('/register') ?>">Join MyMI Wallet</a>
-
-                        <a href="<?= site_url('/Alerts') ?>">View All MyMI Alerts</a>
-
-                        <a href="#sec-filings-block">Latest Filings</a>
-
-                        <a href="<?= site_url('/Portfolio/Add/' . urlencode($tvTicker)) ?>">Add to Portfolio</a>
-
-                        <a href="<?= site_url('/Alerts/Create/' . urlencode($tvTicker)) ?>">Set Alert</a>
-                    </div>
-                </div>
-
-                <div class="ticker-header-meta">
-                    <!-- Quick metrics summary (if you send them in $keyStats / $performanceStats) -->
-                    <div class="stats-grid">
-                        <?php
-                        // Example: show first 3 "headline" stats if provided
-                        $headlineStats = array_slice($keyStats, 0, 3);
-                        foreach ($headlineStats as $stat):
-                        ?>
-                            <div>
-                                <div class="stats-item-label"><?= esc(vv($stat, 'label')) ?></div>
-                                <div class="stats-item-value"><?= esc(vv($stat, 'value')) ?></div>
+                        <?php if (!empty($companyName)): ?>
+                            <div class="ticker-company">
+                                <?= esc($companyName) ?>
                             </div>
-                        <?php endforeach; ?>
+                        <?php endif; ?>
+
+                        <div class="mt-2">
+                            <span class="price-line">
+                                <?= $lastClose !== null ? number_format((float)$lastClose, 2) : '—' ?>
+                            </span>
+                            <?php
+                            $chgClass = '';
+                            if ($change !== null && (float)$change > 0) {
+                                $chgClass = 'up';
+                            } elseif ($change !== null && (float)$change < 0) {
+                                $chgClass = 'down';
+                            }
+                            ?>
+                            <span class="price-change <?= $chgClass ?>">
+                                <?php if ($change !== null): ?>
+                                    <?= sprintf('%+0.2f', (float)$change) ?>
+                                <?php endif; ?>
+                                <?php if ($changePercent !== null): ?>
+                                    (<?= esc($changePercent) ?>)
+                                <?php endif; ?>
+                            </span>
+                        </div>
+                        <div class="price-meta">
+                            Last Close
+                            <?php if ($quoteAsOf !== '—'): ?>
+                                — <?= esc($quoteAsOf) ?> • <?= esc($lastCloseTime) ?>
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="meta-tags mt-2">
+                            <?php if ($sector): ?>
+                                <span>
+                                    <a href="<?= site_url('Sector/' . urlencode($sector)); ?>" class="link-primary text-primary">
+                                        <?= esc($sector) ?>
+                                    </a>
+                                </span>
+                            <?php endif; ?>
+                            <?php if ($primaryExLabel): ?>
+                                <span>
+                                    <a href="<?= site_url('Exchange/' . urlencode($primaryExLabel)); ?>" class="link-secondary text-secondary">
+                                        <?= esc($primaryExLabel) ?>
+                                    </a>
+                                </span>
+                            <?php endif; ?>
+                            <?php if ($industry): ?>
+                                <span><?= esc($industry) ?></span>
+                            <?php endif; ?>
+                            <?php if ($country): ?>
+                                <span><?= esc($country) ?></span>
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="mt-2 action-links">
+                            <a href="https://www.tradingview.com/symbols/<?= urlencode($tvExch) ?>-<?= urlencode($tvTicker) ?>/"
+                            target="_blank" rel="noopener">TradingView Chart</a>
+
+                            <a href="https://stocktwits.com/symbol/<?= urlencode($tvTicker) ?>"
+                            target="_blank" rel="noopener">StockTwits Stream</a>
+
+                            <a href="https://finance.yahoo.com/quote/<?= urlencode($tvTicker) ?>"
+                            target="_blank" rel="noopener">Yahoo Finance</a>
+
+                            <a href="<?= site_url('/register') ?>">Join MyMI Wallet</a>
+
+                            <a href="<?= site_url('/Alerts') ?>">View All MyMI Alerts</a>
+
+                            <a href="#sec-filings-block">Latest Filings</a>
+
+                            <a href="<?= site_url('/Portfolio/Add/' . urlencode($tvTicker)) ?>">Add to Portfolio</a>
+
+                            <a href="<?= site_url('/Alerts/Create/' . urlencode($tvTicker)) ?>">Set Alert</a>
+                        </div>
+                    </div>
+
+                    <div class="ticker-header-meta">
+                        <!-- Quick metrics summary (if you send them in $keyStats / $performanceStats) -->
+                        <div class="stats-grid">
+                            <?php
+                            // Example: show first 3 "headline" stats if provided
+                            $headlineStats = array_slice($keyStats, 0, 3);
+                            foreach ($headlineStats as $stat):
+                            ?>
+                                <div>
+                                    <div class="stats-item-label"><?= esc(vv($stat, 'label')) ?></div>
+                                    <div class="stats-item-value"><?= esc(vv($stat, 'value')) ?></div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Peers + Held By ETFs row -->
-            <?php if (!empty($peers) || !empty($heldByEtfs)): ?>
-                <div class="peers-heldby-row">
-                    <?php if (!empty($peers)): ?>
-                        <div>
-                            <span class="label">Peers:</span>
-                            <?php foreach ($peers as $p): ?>
-                                <span class="badge-ticker">
-                                    <a href="<?= site_url('/Alerts/Preview/' . urlencode($p)) ?>">
-                                        <?= esc($p) ?>
-                                    </a>
-                                </span>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
+                <!-- Peers + Held By ETFs row -->
+                <?php if (!empty($peers) || !empty($heldByEtfs)): ?>
+                    <div class="peers-heldby-row">
+                        <?php if (!empty($peers)): ?>
+                            <div>
+                                <span class="label">Peers:</span>
+                                <?php foreach ($peers as $p): ?>
+                                    <span class="badge-ticker">
+                                        <a href="<?= site_url('/Alerts/Preview/' . urlencode($p)) ?>">
+                                            <?= esc($p) ?>
+                                        </a>
+                                    </span>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
 
-                    <?php if (!empty($heldByEtfs)): ?>
-                        <div>
-                            <span class="label">Held by:</span>
-                            <?php foreach ($heldByEtfs as $etf): ?>
-                                <span class="badge-ticker">
-                                    <a href="<?= site_url('/Alerts/Preview/' . urlencode($etf)) ?>">
-                                        <?= esc($etf) ?>
-                                    </a>
-                                </span>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            <?php endif; ?>
+                        <?php if (!empty($heldByEtfs)): ?>
+                            <div>
+                                <span class="label">Held by:</span>
+                                <?php foreach ($heldByEtfs as $etf): ?>
+                                    <span class="badge-ticker">
+                                        <a href="<?= site_url('/Alerts/Preview/' . urlencode($etf)) ?>">
+                                            <?= esc($etf) ?>
+                                        </a>
+                                    </span>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
 
-            <!-- Finviz-style descriptive note / headline (optional) -->
-            <?php if (!empty($headlineNews ?? null)): ?>
-                <div class="mt-2 small">
-                    <?= esc($headlineNews) ?>
-                </div>
-            <?php endif; ?>
-        </div>
-    </div>
-
-    <!-- ------------------------------------------------------------------
-         TRADINGVIEW PROFILE + CHART TABS
-    ------------------------------------------------------------------- -->
-    <div class="row px-3 my-3">
-        <div class="col-12 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Technical Overview & Company Profile</h5>
-
-            <!-- Finviz-like tab strip (visual only; TV widget handles intervals internally) -->
-            <div class="chart-interval-tabs" id="chartIntervalTabs">
-                <span class="tab-pill active" data-interval="ideas">Draw</span>
-                <span class="tab-pill" data-interval="ideas">Ideas</span>
-                <span class="tab-pill" data-interval="1">Intraday</span>
-                <span class="tab-pill" data-interval="D">Daily</span>
-                <span class="tab-pill" data-interval="W">Weekly</span>
-                <span class="tab-pill" data-interval="M">Monthly</span>
+                <!-- Finviz-style descriptive note / headline (optional) -->
+                <?php if (!empty($headlineNews ?? null)): ?>
+                    <div class="mt-2 small">
+                        <?= esc($headlineNews) ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
-    </div>
+
+        <!-- ------------------------------------------------------------------
+            TRADINGVIEW PROFILE + CHART TABS
+        ------------------------------------------------------------------- -->
+        <div class="row px-3 my-3">
+            <div class="col-12 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Technical Overview & Company Profile</h5>
+
+                <!-- Finviz-like tab strip (visual only; TV widget handles intervals internally) -->
+                <div class="chart-interval-tabs" id="chartIntervalTabs">
+                    <span class="tab-pill active" data-interval="ideas">Draw</span>
+                    <span class="tab-pill" data-interval="ideas">Ideas</span>
+                    <span class="tab-pill" data-interval="1">Intraday</span>
+                    <span class="tab-pill" data-interval="D">Daily</span>
+                    <span class="tab-pill" data-interval="W">Weekly</span>
+                    <span class="tab-pill" data-interval="M">Monthly</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <?php if (!$isLoggedIn): ?>
+        <div class="alert alert-info mb-3">
+            You are viewing a public snapshot of this alert.
+            <a href="<?= site_url('Login'); ?>">Sign in</a> or
+            <a href="<?= site_url('Register'); ?>">create an account</a> to unlock deeper analytics.
+        </div>
+    <?php elseif ($isLoggedIn && !$isPremiumUser): ?>
+        <div class="alert alert-warning mb-3">
+            Upgrade to <a href="<?= site_url('Pricing'); ?>">MyMI Premium</a> to unlock full analytics,
+            advanced metrics, and advisor notes for <?= esc($ticker); ?>.
+        </div>
+    <?php endif; ?>
+
+    <?php if (!$isPremiumUser): ?>
+        <div class="bg-lighter border rounded p-3 text-center mt-3">
+            <p class="mb-2">Premium metrics for <?= esc($ticker); ?> are locked.</p>
+            <a href="<?= site_url('Pricing'); ?>" class="btn btn-primary btn-sm">Unlock with Premium</a>
+        </div>
+    <?php endif; ?>
 
     <div class="row px-3 my-3">
         <div class="col-12 col-md-3">

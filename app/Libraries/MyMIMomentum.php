@@ -10,6 +10,17 @@ class MyMIMomentum
     protected $db;
     protected $alertsModel;
 
+    protected function isValidTicker(string $symbol): bool
+    {
+        $symbol = strtoupper(trim($symbol));
+
+        if ($symbol === '' || $symbol === 'THIS' || $symbol === 'OUTER') {
+            return false;
+        }
+
+        return preg_match('/^[A-Z0-9.\-]{1,10}$/', $symbol) === 1;
+    }
+
     public function __construct(ConnectionInterface $db = null)
     {
         $this->db = $db ?? db_connect();
@@ -37,21 +48,23 @@ class MyMIMomentum
         ];
     }
 
-    public function scoreTradeOpportunity(string $symbol, int $days = 5, int $tradeId = null, ): float
+    public function scoreTradeOpportunity(string $symbol, int $days = 5, int $tradeId = null, ): ?float
     {
-        if (method_exists($this->alertsModel, 'isLikelyValidSymbol') && !$this->alertsModel->isLikelyValidSymbol($symbol)) {
-            log_message('warning', 'MyMIMomentum::scoreTradeOpportunity - skipped invalid symbol {symbol}', ['symbol' => $symbol]);
-            return 0.0;
+        if (!$this->isValidTicker($symbol)) {
+            log_message('warning', 'MyMIMomentum::scoreTradeOpportunity - skipped invalid symbol {symbol}', [
+                'symbol' => $symbol,
+            ]);
+            return null;
         }
         // Fetch alert history for the past N days
         $history = $this->alertsModel->getAlertHistoryByTicker($symbol, $days);
-        
+
         if (empty($history) || count($history) < 2) {
             log_message('warning', "⚠️ No history found for {$symbol}. Consider triggering backfill.");
 
             // Auto-backfill attempt
-            if (method_exists($this->alertsModel, 'insertAlertSnapshot')) {
-                $this->alertsModel->insertAlertSnapshot($symbol, $tradeId);
+            if (method_exists($this->alertsModel, 'maybeBackfillSymbol')) {
+                $this->alertsModel->maybeBackfillSymbol($symbol, $tradeId);
                 log_message('info', "📈 Auto-triggered snapshot insert for {$symbol}");
             }
 

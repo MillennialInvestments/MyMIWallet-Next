@@ -199,6 +199,15 @@ class Home extends BaseController
         return $this->renderTheme('themes/public/economicCalendar', $data);
     }
 
+    public function exchange(string $slug)
+    {
+        $data = [
+            'exchangeSlug' => $slug,
+        ];
+
+        return $this->render('Public/exchange', $data);
+    }
+
     public function gettingStarted()
     {
         $data = $this->buildCommonData([
@@ -335,6 +344,15 @@ class Home extends BaseController
             'layout'    => 'public',
             'pageTitle' => 'Privacy Policy — MyMI Wallet',
         ]);
+    }
+
+    public function sector(string $slug)
+    {
+        $data = [
+            'sectorSlug' => $slug,
+        ];
+
+        return $this->render('Public/sector', $data);
     }
 
     public function terms()

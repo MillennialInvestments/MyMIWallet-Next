@@ -28,10 +28,24 @@ class FRED
         // log('debug', 'FRED API Key: ' . $this->apiKey);
     }
 
+    private function canCallApi(): bool
+    {
+        if (empty($this->apiKey)) {
+            log_message('warning', 'FRED API key is missing; skipping request.');
+            return false;
+        }
+
+        return true;
+    }
+
     public function fetchData($series_id)
     {
         if (!is_string($series_id) || !is_string($this->apiKey)) {
             throw new InvalidArgumentException('Series ID and API key must be strings.');
+        }
+
+        if (!$this->canCallApi()) {
+            return [];
         }
 
         try {
@@ -58,8 +72,8 @@ class FRED
             }
             return $formattedData;
         } catch (Exception $e) {
-            log('error', 'Error fetching data: ' . $e->getMessage());
-            throw $e;
+            log_message('error', 'Error fetching data: ' . $e->getMessage());
+            return [];
         }
     }
 
@@ -67,6 +81,9 @@ class FRED
     {
         if (!is_string($series_id)) {
             throw new InvalidArgumentException('Series ID must be a string.');
+        }
+        if (!$this->canCallApi()) {
+            return [];
         }
         try {
             $client = $this->curlrequest;
@@ -90,6 +107,9 @@ class FRED
         if (!is_string($keywords)) {
             throw new InvalidArgumentException('Keywords must be a string.');
         }
+        if (!$this->canCallApi()) {
+            return [];
+        }
         try {
             $client = $this->curlrequest;
             $response = $client->get($this->apiBase . 'series/search', [
@@ -102,8 +122,8 @@ class FRED
     
             return json_decode($response->getBody(), true);
         } catch (Exception $e) {
-            log('error', 'Error searching series: ' . $e->getMessage());
-            throw $e;
+            log_message('error', 'Error searching series: ' . $e->getMessage());
+            return [];
         }
     }
 
@@ -111,6 +131,9 @@ class FRED
     {
         if (!is_numeric($category_id)) {
             throw new InvalidArgumentException('Category ID must be a number.');
+        }
+        if (!$this->canCallApi()) {
+            return [];
         }
         try {
             $client = $this->curlrequest;
@@ -124,8 +147,8 @@ class FRED
     
             return json_decode($response->getBody(), true);
         } catch (Exception $e) {
-            log('error', 'Error fetching category series: ' . $e->getMessage());
-            throw $e;
+            log_message('error', 'Error fetching category series: ' . $e->getMessage());
+            return [];
         }
     }
 
@@ -135,6 +158,9 @@ class FRED
             throw new InvalidArgumentException('Limit must be a number.');
         }
 
+        if (!$this->canCallApi()) {
+            return [];
+        }
         try {
             $client = $this->curlrequest;
             $response = $client->get($this->apiBase . 'series/updates', [
@@ -147,8 +173,8 @@ class FRED
 
             return json_decode($response->getBody(), true);
         } catch (Exception $e) {
-            log('error', 'Error fetching series updates: ' . $e->getMessage());
-            throw $e;
+            log_message('error', 'Error fetching series updates: ' . $e->getMessage());
+            return [];
         }
     }
 
@@ -156,6 +182,9 @@ class FRED
     {
         if (!is_numeric($category_id)) {
             throw new InvalidArgumentException('Category ID must be a number.');
+        }
+        if (!$this->canCallApi()) {
+            return [];
         }
         try {
             $client = $this->curlrequest;
@@ -169,8 +198,8 @@ class FRED
 
             return json_decode($response->getBody(), true);
         } catch (Exception $e) {
-            log('error', 'Error fetching category children: ' . $e->getMessage());
-            throw $e;
+            log_message('error', 'Error fetching category children: ' . $e->getMessage());
+            return [];
         }
     }
 
@@ -178,6 +207,9 @@ class FRED
     {
         if (!is_string($series_id)) {
             throw new InvalidArgumentException('Series ID must be a string.');
+        }
+        if (!$this->canCallApi()) {
+            return [];
         }
         try {
             $client = $this->curlrequest;
@@ -191,8 +223,8 @@ class FRED
 
             return json_decode($response->getBody(), true);
         } catch (Exception $e) {
-            log('error', 'Error fetching series releases: ' . $e->getMessage());
-            throw $e;
+            log_message('error', 'Error fetching series releases: ' . $e->getMessage());
+            return [];
         }
     }
 
@@ -200,6 +232,9 @@ class FRED
     {
         if (!is_numeric($category_id)) {
             throw new InvalidArgumentException('Category ID must be a number.');
+        }
+        if (!$this->canCallApi()) {
+            return [];
         }
         try {
             $client = $this->curlrequest;
@@ -213,8 +248,8 @@ class FRED
 
             return json_decode($response->getBody(), true);
         } catch (Exception $e) {
-            log('error', 'Error fetching category: ' . $e->getMessage());
-            throw $e;
+            log_message('error', 'Error fetching series releases: ' . $e->getMessage());
+            return [];
         }
     }
 
@@ -222,6 +257,9 @@ class FRED
     {
         if (!is_numeric($release_id)) {
             throw new InvalidArgumentException('Release ID must be a number.');
+        }
+        if (!$this->canCallApi()) {
+            return [];
         }
         try {
             $client = $this->curlrequest;
@@ -235,8 +273,8 @@ class FRED
 
             return json_decode($response->getBody(), true);
         } catch (Exception $e) {
-            log('error', 'Error fetching release series: ' . $e->getMessage());
-            throw $e;
+            log_message('error', 'Error fetching series releases: ' . $e->getMessage());
+            return [];
         }
     }
 
@@ -244,6 +282,9 @@ class FRED
     {
         if (!is_numeric($release_id)) {
             throw new InvalidArgumentException('Release ID must be a number.');
+        }
+        if (!$this->canCallApi()) {
+            return [];
         }
         try {
             $client = $this->curlrequest;
@@ -257,8 +298,8 @@ class FRED
 
             return json_decode($response->getBody(), true);
         } catch (Exception $e) {
-            log('error', 'Error fetching release sources: ' . $e->getMessage());
-            throw $e;
+            log_message('error', 'Error fetching series releases: ' . $e->getMessage());
+            return [];
         }
     }
 
@@ -266,6 +307,9 @@ class FRED
     {
         if (!is_string($series_id)) {
             throw new InvalidArgumentException('Series ID must be a string.');
+        }
+        if (!$this->canCallApi()) {
+            return [];
         }
         try {
             $client = $this->curlrequest;
@@ -279,8 +323,8 @@ class FRED
 
             return json_decode($response->getBody(), true);
         } catch (Exception $e) {
-            log('error', 'Error fetching series tags: ' . $e->getMessage());
-            throw $e;
+            log_message('error', 'Error fetching series releases: ' . $e->getMessage());
+            return [];
         }
     }
 
@@ -288,6 +332,9 @@ class FRED
     {
         if (!is_string($series_id) || !is_string($tag_names)) {
             throw new InvalidArgumentException('Series ID and tag names must be strings.');
+        }
+        if (!$this->canCallApi()) {
+            return [];
         }
         try {
             $client = $this->curlrequest;
@@ -302,8 +349,8 @@ class FRED
 
             return json_decode($response->getBody(), true);
         } catch (Exception $e) {
-            log('error', 'Error fetching series related tags: ' . $e->getMessage());
-            throw $e;
+            log_message('error', 'Error fetching series releases: ' . $e->getMessage());
+            return [];
         }
     }
 
@@ -311,6 +358,9 @@ class FRED
     {
         if (!is_numeric($release_id)) {
             throw new InvalidArgumentException('Release ID must be a number.');
+        }
+        if (!$this->canCallApi()) {
+            return [];
         }
         try {
             $client = $this->curlrequest;
@@ -324,8 +374,8 @@ class FRED
 
             return json_decode($response->getBody(), true);
         } catch (Exception $e) {
-            log('error', 'Error fetching release tables: ' . $e->getMessage());
-            throw $e;
+            log_message('error', 'Error fetching series releases: ' . $e->getMessage());
+            return [];
         }
     }
 
