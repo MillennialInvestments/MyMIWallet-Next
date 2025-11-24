@@ -20,6 +20,8 @@ use Google\Cloud\TextToSpeech\V1\AudioEncoding;
 #[\AllowDynamicProperties]
 class AlertsController extends UserController
 {
+    use ResponseTrait;
+
     protected $API;
     protected $auth;
     protected $helpers = ['auth', 'form', 'url'];
@@ -109,7 +111,8 @@ class AlertsController extends UserController
         $this->data['checkingSummaryFMT'] = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['checkingSummaryFMT'];
         $this->data['totalAccountBalance'] = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['totalAccountBalance'];
         $this->data['totalAccountBalanceFMT'] = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['totalAccountBalanceFMT'];
-        $this->data['cuSolanaDW'] = $this->getMyMIDashboard()->getCryptoAccount($this->cuID, 'Solana')['accountInfo'];
+        // Avoid live Solana RPC calls on the management dashboard; rely on cached values instead.
+        $this->data['cuSolanaDW'] = [];
         $this->data['getFeatures'] = $this->getMyMIDashboard()->dashboardInfo($this->cuID)['getFeatures'];
         $this->data['completedGoals'] = $this->getMyMIDashboard()->dashboardInfo($this->cuID)['progressGoalData']['completions'];
         $this->data['pendingGoals'] = $this->getMyMIDashboard()->dashboardInfo($this->cuID)['progressGoalData']['goals'];
@@ -190,30 +193,15 @@ class AlertsController extends UserController
         $this->data['page']              = $pending['page'];
         $this->data['perPage']           = $pending['perPage'];
 
-        // Advisor media defaults + generation
-
-        // Advisor media defaults + generation
-        $advisorMedia                   = $this->getMyMIAdvisor()->generateAdvisorMediaPackage($this->cuID) ?? [];
-        $advisorSummary                 = $advisorMedia['summary']        ?? '';
-        $advisorScript                  = $advisorMedia['script']         ?? '';
-        $advisorAudio                   = $advisorMedia['voiceover_url']  ?? '';
-        $advisorVoiceoverError          = $advisorMedia['voiceover_error'] ?? null;
-        $advisorCapcutUrl               = '';
-        $advisorZipUrl                  = '';
-
-        if (! empty($advisorAudio)) {
-            $advisorCapcutUrl = $this->getMyMIAdvisor()->exportCapCutJsonTemplate($advisorMedia) ?? '';
-            $advisorZipUrl    = $this->getMyMIAdvisor()->packageAdvisorMediaAsZip($advisorMedia) ?? '';
-        }
-
-        $advisorPick                    = $advisorMedia['pick'] ?? '';
-        $this->data['advisorSummary']   = $advisorSummary;
-        $this->data['advisorScript']    = $advisorScript;
-        $this->data['advisorAudio']     = $advisorAudio;
-        $this->data['advisorCapcutUrl'] = $advisorCapcutUrl;
-        $this->data['advisorZipUrl']    = $advisorZipUrl;
-        $this->data['advisorPick']      = $advisorPick;
-        $this->data['advisorVoiceoverError'] = $advisorVoiceoverError;
+        // Advisor media defaults (cached only; generation is user-triggered)
+        $advisorMedia                   = $this->getMyMIAdvisor()->getCachedAdvisorMedia($this->cuID);
+        $this->data['advisorSummary']   = $advisorMedia['summary']        ?? '';
+        $this->data['advisorScript']    = $advisorMedia['script']         ?? '';
+        $this->data['advisorAudio']     = $advisorMedia['voiceover_url']  ?? '';
+        $this->data['advisorCapcutUrl'] = $advisorMedia['capcut_url']     ?? '';
+        $this->data['advisorZipUrl']    = $advisorMedia['zip_url']        ?? '';
+        $this->data['advisorPick']      = $advisorMedia['ticker']         ?? '';
+        $this->data['advisorVoiceoverError'] = $advisorMedia['voiceover_error'] ?? null;
 
         // ── Opportunistic CRON trigger based on idle timeout ───────────────────
         $lastActiveKey = sanitizeCacheKey('user_alerts_activity_' . $this->cuID);
@@ -233,6 +221,29 @@ class AlertsController extends UserController
 
         // Single, correct render target
         return $this->renderTheme('ManagementModule\Views\Alerts\index', $this->data);
+    }
+
+    public function generateAdvisorPackage()
+    {
+        try {
+            $advisor = new \App\Libraries\MyMIAdvisor();
+            $media   = $advisor->generateAdvisorMediaPackage($this->cuID);
+
+            return $this->response->setJSON([
+                'status'  => 'success',
+                'message' => 'Advisor media package queued/generated.',
+                'media'   => $media,
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'AlertsController::generateAdvisorPackage failed: {msg}', [
+                'msg' => $e->getMessage(),
+            ]);
+
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => 'Failed to generate advisor media package.',
+            ])->setStatusCode(500);
+        }
     }
 
     // public function index()
