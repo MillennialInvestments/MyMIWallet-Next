@@ -1306,10 +1306,11 @@ class AlertsModel extends Model
 
     public function getPendingAlerts(array $params): array
     {
-        $q       = trim($params['q'] ?? '');
-        $status  = $params['status'] ?? 'Opened';
-        $page    = max(1, (int) ($params['page'] ?? 1));
-        $perPage = min(100, max(10, (int) ($params['perPage'] ?? 50)));
+        $q        = trim($params['q'] ?? '');
+        $status   = $params['status'] ?? 'Opened';
+        $page     = max(1, (int) ($params['page'] ?? 1));
+        $maxLimit = max(1, (int) ($params['maxLimit'] ?? 50));
+        $perPage  = min($maxLimit, max(10, (int) ($params['perPage'] ?? $maxLimit)));
 
         $builder = $this->db->table('bf_investment_trade_alerts')
             ->select([
@@ -1352,6 +1353,11 @@ class AlertsModel extends Model
 
         $total   = (clone $builder)->select('COUNT(*) AS c')->get()->getRow('c') ?? 0;
         $results = $builder->limit($perPage, ($page - 1) * $perPage)->get()->getResultArray();
+
+        log_message('debug', 'AlertsModel::getPendingAlerts - fetched {count} alerts (limit {limit})', [
+            'count' => is_array($results) ? count($results) : 0,
+            'limit' => $perPage,
+        ]);
 
         return [
             'data'    => $results,

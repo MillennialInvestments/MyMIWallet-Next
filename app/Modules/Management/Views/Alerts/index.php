@@ -137,6 +137,16 @@ $subViewData                        = [
                                                 <!-- <span class="sub-text">Techyspec</span> -->
                                             </div>
                                         </a>
+                                        <?php if (($cuRole ?? 4) < 2): ?>
+                                            <div class="d-flex flex-wrap gap-2 mt-2">
+                                                <button id="btn-generate-advisor" class="btn btn-sm btn-outline-primary">
+                                                    Generate Advisor Package (On-Demand)
+                                                </button>
+                                                <button id="btn-refresh-momentum" class="btn btn-sm btn-outline-secondary">
+                                                    Refresh Momentum Scores
+                                                </button>
+                                            </div>
+                                        <?php endif; ?>
                                         <!-- <div class="drodown">
                                             <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                             <div class="dropdown-menu dropdown-menu-end">

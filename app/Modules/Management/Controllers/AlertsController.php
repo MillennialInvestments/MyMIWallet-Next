@@ -4,6 +4,7 @@ namespace App\Modules\Management\Controllers;
 
 use App\Controllers\BaseController;
 use Config\Services;
+use Config\MyMI as MyMIConfig;
 use Myth\Auth\Authorization\GroupModel;
 use App\Config\{Auth, SiteSettings, SocialMedia}; 
 use App\Controllers\UserController;
@@ -51,7 +52,8 @@ class AlertsController extends UserController
     protected $userAssessment;
     protected $userBudget;
     protected $userDashboard;
-    protected $userWallets; 
+    protected $userWallets;
+    protected array $alertsFlags = [];
 
     public function __construct()
     {
@@ -64,6 +66,8 @@ class AlertsController extends UserController
         $this->session                              = Services::session();
         $this->debug                                = $this->siteSettings->debug;
         $this->uri                                  = $this->request->getUri();
+        $config                                     = new MyMIConfig();
+        $this->alertsFlags                          = $config->alertsDashboard ?? [];
 
         $this->alertsModel                          = new AlertsModel(); 
         $this->accountsModel                        = new AccountsModel(); 
@@ -88,11 +92,11 @@ class AlertsController extends UserController
             return redirect()->to('/login')->with('redirect_url', current_url())->send();
         }
         $this->userAccount                          = $this->getMyMIUser()->getUserInformation($this->cuID); 
-        $this->userAssessment                       = $this->getMyMIUser()->getUserFinancialAssessment($this->cuID);  
-        $this->userBudget                           = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID); 
-        $this->userDashboard                        = $this->getMyMIDashboard()->dashboardInfo($this->cuID); 
-        $this->userWallets                          = $this->getMyMIWallets()->getUserWallets($this->cuID);  
-        $this->reporting                            = $this->getMyMIAnalytics()->reporting($this->cuID);  
+        $this->userAssessment                       = $this->getMyMIUser()->getUserFinancialAssessment($this->cuID);
+        $this->userBudget                           = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID);
+        $this->userDashboard                        = $this->getMyMIDashboard()->dashboardInfo($this->cuID);
+        $this->userWallets                          = $this->getMyMIWallets()->getUserWallets($this->cuID);
+        $this->reporting                            = $this->getMyMIAnalytics()->reporting($this->cuID);
     }
 
     public function commonData(): array {  
@@ -158,6 +162,7 @@ class AlertsController extends UserController
     {
         // ── Page meta / lightweight dashboard data ─────────────────────────────
         $this->data['pageTitle'] = 'MyMI Alerts | Management | MyMI Wallet';
+        $this->logMem('start');
 
         $this->data['marketEvents']     = $this->getMyMIDashboard()->getUpcomingEconomicEvents();
         $this->data['advisorUserId']    = $this->cuID;
@@ -171,20 +176,43 @@ class AlertsController extends UserController
         $this->data['investSummaryFMT']     = $this->userBudget['investSummaryFMT']     ?? 0;
         $this->data['totalAccountBalance']  = $this->userBudget['totalAccountBalance']  ?? 0;
 
+        if (!empty($this->alertsFlags['enableFullWalletBlocks'])) {
+            log_message('debug', 'AlertsController::index - full wallet blocks ON');
+            $this->data['wallets'] = [
+                'checking'   => $this->getMyMIWallets()->getUserWallets($this->cuID, 'checking'),
+                'credit'     => $this->getMyMIWallets()->getUserWallets($this->cuID, 'credit'),
+                'debt'       => $this->getMyMIWallets()->getUserWallets($this->cuID, 'debt'),
+                'investment' => $this->getMyMIWallets()->getUserWallets($this->cuID, 'investment'),
+                'savings'    => $this->getMyMIWallets()->getUserWallets($this->cuID, 'savings'),
+            ];
+        } else {
+            log_message('debug', 'AlertsController::index - wallet blocks disabled by config');
+            $this->data['wallets'] = [];
+        }
+
+        $this->logMem('after wallets');
+
+
         // User context defaults
         $this->data['cuSolanaDW'] = $this->data['cuSolanaDW'] ?? [];
         $this->data['cuUserType'] = $this->data['cuUserType'] ?? '';
 
         // ── Search / pagination for Pending table (uses Management\Models\AlertsModel) ──
+        $maxPerPage = (int) ($this->alertsFlags['maxAlertsPerPage'] ?? 50);
+
         $params = [
             'q'       => $this->request->getGet('q'),
             'page'    => $this->request->getGet('page'),
             'perPage' => $this->request->getGet('perPage'),
             'status'  => 'Opened',
+            'maxLimit'=> $maxPerPage,
         ];
+
+        $this->logMem('before alerts query');
 
         // Use the Management module model for the new methods without breaking your existing $this->alertsModel
         $pending   = $this->alertsModel->getPendingAlerts($params);
+        $this->logMem('after alerts query');
 
         // Expose to the view (keep legacy key for compatibility)
         $this->data['search']            = $params['q'] ?? '';
@@ -194,15 +222,60 @@ class AlertsController extends UserController
         $this->data['page']              = $pending['page'];
         $this->data['perPage']           = $pending['perPage'];
 
+        if (!empty($this->alertsFlags['enableMomentumScoring'])) {
+            log_message('debug', 'AlertsController::index - Momentum scoring enabled');
+            $this->logMem('before momentum');
+            $momentumService               = new \App\Libraries\MyMIMomentum();
+            if (method_exists($momentumService, 'scoreOpenAlerts')) {
+                $this->data['scoredAlerts'] = $momentumService->scoreOpenAlerts($pending['data']);
+            } else {
+                $this->data['scoredAlerts'] = array_map(static function ($alert) use ($momentumService) {
+                    $alert['momentum_score'] = $momentumService->scoreTradeOpportunity($alert['ticker'] ?? '', 5, $alert['id'] ?? null, 'management_dashboard');
+                    return $alert;
+                }, $pending['data'] ?? []);
+            }
+            $this->logMem('after momentum');
+        } else {
+            log_message('debug', 'AlertsController::index - Momentum scoring disabled by config');
+            $this->data['scoredAlerts'] = $pending['data'];
+        }
+
         // Advisor media defaults (cached only; generation is user-triggered)
-        $advisorMedia                   = $this->getMyMIAdvisor()->getCachedAdvisorMedia($this->cuID);
-        $this->data['advisorSummary']   = $advisorMedia['summary']        ?? '';
-        $this->data['advisorScript']    = $advisorMedia['script']         ?? '';
-        $this->data['advisorAudio']     = $advisorMedia['voiceover_url']  ?? '';
-        $this->data['advisorCapcutUrl'] = $advisorMedia['capcut_url']     ?? '';
-        $this->data['advisorZipUrl']    = $advisorMedia['zip_url']        ?? '';
-        $this->data['advisorPick']      = $advisorMedia['ticker']         ?? '';
-        $this->data['advisorVoiceoverError'] = $advisorMedia['voiceover_error'] ?? null;
+        if (!empty($this->alertsFlags['enableAdvisorPackage'])) {
+            log_message('debug', 'AlertsController::index - Advisor package enabled');
+            $this->logMem('before advisor');
+            $advisor                        = new \App\Libraries\MyMIAdvisor();
+            $advisorPackage                 = $advisor->generateAdvisorMediaPackage($this->cuID);
+            $this->data['advisorSummary']   = $advisorPackage['summary']        ?? '';
+            $this->data['advisorScript']    = $advisorPackage['script']         ?? '';
+            $this->data['advisorAudio']     = $advisorPackage['voiceover_url']  ?? '';
+            $this->data['advisorCapcutUrl'] = $advisorPackage['capcut_url']     ?? '';
+            $this->data['advisorZipUrl']    = $advisorPackage['zip_url']        ?? '';
+            $this->data['advisorPick']      = $advisorPackage['ticker']         ?? '';
+            $this->data['advisorVoiceoverError'] = $advisorPackage['voiceover_error'] ?? null;
+            $this->logMem('after advisor');
+        } else {
+            log_message('debug', 'AlertsController::index - Advisor package disabled by config');
+            $this->data['advisorSummary']   = '';
+            $this->data['advisorScript']    = '';
+            $this->data['advisorAudio']     = '';
+            $this->data['advisorCapcutUrl'] = '';
+            $this->data['advisorZipUrl']    = '';
+            $this->data['advisorPick']      = '';
+            $this->data['advisorVoiceoverError'] = null;
+        }
+
+        if (!empty($this->alertsFlags['enableSolanaSummary'])) {
+            log_message('debug', 'AlertsController::index - Solana summary enabled');
+            $this->logMem('before solana');
+            $this->data['solanaSummary'] = $this->getMyMIDashboard()->getCryptoAccount($this->cuID, 'Solana')['accountInfo'] ?? null;
+            $this->logMem('after solana');
+        } else {
+            log_message('debug', 'AlertsController::index - Solana summary disabled by config');
+            $this->data['solanaSummary'] = null;
+        }
+
+        $this->logMem('end');
 
         // ── Opportunistic CRON trigger based on idle timeout ───────────────────
         $lastActiveKey = sanitizeCacheKey('user_alerts_activity_' . $this->cuID);
@@ -385,12 +458,16 @@ class AlertsController extends UserController
     
         // 🧠 Inject AlphaVantage EMA values
         if (!empty($symbol)) {
-            try {
-                $emaFetcher = new \App\Libraries\MyMIAlphaVantage();
-                $emaData = $emaFetcher->fetchEMAs($symbol);
-                $post = array_merge($post, $emaData);
-            } catch (\Throwable $e) {
-                log_message('error', 'EMA Fetch Failed for ' . $symbol . ': ' . $e->getMessage());
+            if (!empty($this->alertsFlags['enableAlphaVantage'])) {
+                try {
+                    $emaFetcher = new \App\Libraries\MyMIAlphaVantage();
+                    $emaData = $emaFetcher->fetchEMAs($symbol);
+                    $post = array_merge($post, $emaData);
+                } catch (\Throwable $e) {
+                    log_message('error', 'EMA Fetch Failed for ' . $symbol . ': ' . $e->getMessage());
+                }
+            } else {
+                log_message('debug', 'AlertsController::addTradeAlert - AlphaVantage disabled for this request');
             }
         }
     
@@ -1393,5 +1470,11 @@ class AlertsController extends UserController
             'data'   => $model->getWeeklyTopPerformance($limit),
         ]);
     }
+
+    private function logMem(string $label): void
+    {
+        log_message('debug', 'AlertsController::index ' . $label . ' - memory: {mem}', [
+            'mem' => memory_get_usage(true),
+        ]);
+    }
 }
-?>
