@@ -20,17 +20,17 @@ $routes->get('clean-url-test', function () {
 
 $routes->get('/', 'Home::index');
 $routes->get('/Apex/Referral', 'Home::apexReferral');
-$routes->get('/Apex/Referral/(:segment)', 'Home::apexReferral/$1');
+$routes->get('/Apex/Referral/(:any)', 'Home::apexReferral/$1');
 $routes->get('/Corporate-Earnings', 'Home::corporateEarnings');
-$routes->get('/Corporate-Earnings/(:segment)', 'Home::corporateEarnings/$1');
+$routes->get('/Corporate-Earnings/(:any)', 'Home::corporateEarnings/$1');
 $routes->get('/Economic-Calendar', 'Home::economicCalendar');
-$routes->get('/Economic-Calendar/(:segment)', 'Home::economicCalendarContent/$1');
-$routes->get('/Getting-Started/(:segment)/(:segment)', 'Home::gettingStarted');
-$routes->get('/Getting-Started/(:segment)', 'Home::gettingStarted');
+$routes->get('/Economic-Calendar/(:any)', 'Home::economicCalendarContent/$1');
+$routes->get('/Getting-Started/(:any)/(:any)', 'Home::gettingStarted');
+$routes->get('/Getting-Started/(:any)', 'Home::gettingStarted');
 $routes->get('/Getting-Started', 'Home::gettingStarted');
 $routes->get('/Memberships', 'Home::memberships');
-$routes->get('/Memberships/(:segment)', 'Home::memberships');
-$routes->get('/Preview/Alert/(:segment)', 'Home::previewAlert');
+$routes->get('/Memberships/(:any)', 'Home::memberships');
+$routes->get('/Preview/Alert/(:any)', 'Home::previewAlert');
 $routes->get('/Privacy-Policy', 'Home::privacyPolicy');
 $routes->get('/Terms-Of-Service', 'Home::termsOfService');
 $routes->get('/resend-activation', 'Home::resendActivation');
