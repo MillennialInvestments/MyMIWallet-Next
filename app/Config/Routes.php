@@ -840,6 +840,7 @@ $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers
         $routes->get('Add/(:segment)', 'AlertsController::add');
         $routes->get('addTradeAlert', 'AlertsController::addTradeAlert');
         $routes->get('Advisor/Media', 'AlertsController::advisorMedia');
+        $routes->post('Generate-Advisor-Package', 'AlertsController::generateAdvisorPackage', ['filter' => 'auth']);
         $routes->get('Crypto/(:segment)/(:segment)', 'Management\AlertsController::stockOverview/$1/$2');
         $routes->match(['GET', 'POST'], 'Audit/Emails', 'AlertsController::auditEmailScraper');
         $routes->get('fetchData', 'AlertsController::fetchData');

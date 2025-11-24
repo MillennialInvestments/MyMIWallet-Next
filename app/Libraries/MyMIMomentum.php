@@ -48,8 +48,14 @@ class MyMIMomentum
         ];
     }
 
-    public function scoreTradeOpportunity(string $symbol, int $days = 5, int $tradeId = null, ): ?float
+    public function scoreTradeOpportunity(string $symbol, int $days = 5, int $tradeId = null, string $context = 'default'): ?float
     {
+        if ($context === 'management_dashboard') {
+            log_message('debug', 'MyMIMomentum::scoreTradeOpportunity skipped for management dashboard context on {symbol}', [
+                'symbol' => $symbol,
+            ]);
+            return null;
+        }
         if (!$this->isValidTicker($symbol)) {
             log_message('warning', 'MyMIMomentum::scoreTradeOpportunity - skipped invalid symbol {symbol}', [
                 'symbol' => $symbol,
@@ -63,7 +69,7 @@ class MyMIMomentum
             log_message('warning', "⚠️ No history found for {$symbol}. Consider triggering backfill.");
 
             // Auto-backfill attempt
-            if (method_exists($this->alertsModel, 'maybeBackfillSymbol')) {
+            if ($context !== 'management_dashboard' && method_exists($this->alertsModel, 'insertAlertSnapshot')) {
                 $this->alertsModel->maybeBackfillSymbol($symbol, $tradeId);
                 log_message('info', "📈 Auto-triggered snapshot insert for {$symbol}");
             }

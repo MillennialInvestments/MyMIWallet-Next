@@ -1309,9 +1309,33 @@ class AlertsModel extends Model
         $q       = trim($params['q'] ?? '');
         $status  = $params['status'] ?? 'Opened';
         $page    = max(1, (int) ($params['page'] ?? 1));
-        $perPage = min(100, max(10, (int) ($params['perPage'] ?? 25)));
+        $perPage = min(100, max(10, (int) ($params['perPage'] ?? 50)));
 
-        $builder = $this->db->table('bf_investment_trade_alerts')->select('*')->where('status', $status);
+        $builder = $this->db->table('bf_investment_trade_alerts')
+            ->select([
+                'id',
+                'ticker',
+                'exchange',
+                'category',
+                'price',
+                'entry_price',
+                'target_price',
+                'locked_profit_stop',
+                'trailing_stop_percent',
+                'ema_3_8',
+                'ema_8_13',
+                'ema_13_34',
+                'ema_34_48',
+                'ema_consensus',
+                'tv_chart',
+                'tv_title',
+                'tv_description',
+                'created_on',
+                'last_updated_time',
+                'status',
+                'alert_created',
+            ])
+            ->where('status', $status);
 
         if ($q !== '') {
             $like = '%' . $this->db->escapeLikeString($q) . '%';
@@ -1324,7 +1348,7 @@ class AlertsModel extends Model
             ->groupEnd();
         }
 
-        $builder->orderBy('created_on', 'DESC');
+        $builder->orderBy('last_updated_time', 'DESC')->orderBy('created_on', 'DESC');
 
         $total   = (clone $builder)->select('COUNT(*) AS c')->get()->getRow('c') ?? 0;
         $results = $builder->limit($perPage, ($page - 1) * $perPage)->get()->getResultArray();

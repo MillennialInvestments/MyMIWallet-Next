@@ -23,6 +23,41 @@ class MyMIAdvisor
         $this->alertsModel = new AlertsModel();
     }
 
+    /**
+     * Return the most recent advisor media entry without triggering regeneration.
+     */
+    public function getCachedAdvisorMedia(int $userId): array
+    {
+        $db = \Config\Database::connect();
+        $existing = $db->table('bf_investment_advisor_log')
+            ->where('user_id', $userId)
+            ->where('advisor_type', 'default')
+            ->orderBy('updated_on', 'DESC')
+            ->get()
+            ->getRow();
+
+        if (! $existing) {
+            return [];
+        }
+
+        return [
+            'user_id'        => $userId,
+            'ticker'         => $existing->ticker ?? null,
+            'summary'        => $existing->summary ?? null,
+            'script'         => $existing->script ?? null,
+            'voiceover_url'  => $existing->voiceover_url ?? null,
+            'voiceover_error'=> $existing->voiceover_error ?? null,
+            'score'          => $existing->score ?? null,
+            'risk_rating'    => $existing->risk_rating ?? null,
+            'flag_opportunity' => (bool) ($existing->flag_opportunity ?? false),
+            'sentiment'      => $this->generateSentimentTag($existing->summary ?? ''),
+            'chart_url'      => $existing->chart_url ?? null,
+            'timestamp'      => $existing->updated_on ?? null,
+            'capcut_url'     => $existing->media_json_url ?? null,
+            'zip_url'        => $existing->media_zip_url ?? null,
+        ];
+    }
+
     public function generateAdvisorMediaPackage($userId)
     {
         helper('date');

@@ -1,4 +1,11 @@
-<?php $advisorUserId = $advisorUserId ?? $cuID ?? null; ?>
+<?php
+$advisorUserId     = $advisorUserId ?? $cuID ?? null;
+$advisorSummaryTxt = $advisorSummary ?? '';
+$advisorScriptTxt  = $advisorScript ?? '';
+$advisorAudioUrl   = $advisorAudio ?? '';
+$capcutUrl         = $advisorCapcutUrl ?? '';
+$zipUrl            = $advisorZipUrl ?? '';
+?>
 <div class="card card-bordered h-100">
     <div class="card-inner">
         <div class="card-title-group align-start mb-3">
@@ -13,7 +20,16 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
                         <ul class="link-list-opt no-bdr" id="advisorDownloadLinks">
-                            <li><span class="text-muted">No media files yet.</span></li>
+                            <?php if ($capcutUrl || $zipUrl): ?>
+                                <?php if ($capcutUrl): ?>
+                                    <li><a href="<?= esc($capcutUrl); ?>" target="_blank"><span>Download CapCut Template</span></a></li>
+                                <?php endif; ?>
+                                <?php if ($zipUrl): ?>
+                                    <li><a href="<?= esc($zipUrl); ?>" target="_blank"><span>Download Media Bundle (ZIP)</span></a></li>
+                                <?php endif; ?>
+                            <?php else: ?>
+                                <li><span class="text-muted">No media files yet.</span></li>
+                            <?php endif; ?>
                         </ul>
                     </div>
                 </div>
@@ -25,14 +41,14 @@
                 <div class="col-md-7">
                     <div class="nk-order-ovwg-data">
                         <h6>📋 Advisor Summary</h6>
-                        <p id="advisorSummary" class="text-muted">⚠️ Summary not generated yet.</p>
+                        <p id="advisorSummary" class="text-muted"><?= ! empty($advisorSummaryTxt) ? esc($advisorSummaryTxt) : '⚠️ Summary not generated yet.'; ?></p>
 
                         <h6>📝 Script Preview</h6>
-                        <pre id="advisorScript" style="white-space: pre-wrap; font-size: 0.85rem;" class="text-muted">No script preview available.</pre>
+                        <pre id="advisorScript" style="white-space: pre-wrap; font-size: 0.85rem;" class="text-muted"><?= ! empty($advisorScriptTxt) ? esc($advisorScriptTxt) : 'No script preview available.'; ?></pre>
 
                         <div class="mt-3">
                             <button class="btn btn-warning" id="generateAdvisorMediaBtn" data-userid="<?= $advisorUserId ?>">
-                                🎙️ Generate Advisor Media
+                                🎙️ Refresh Advisor Pack
                             </button>
                             <div class="mt-2" id="advisorMediaStatus"></div>
                         </div>
@@ -43,7 +59,20 @@
                     <div class="nk-order-ovwg-data">
                         <h6>🔊 Voiceover Audio</h6>
                         <div id="advisorAudioPlayer">
-                            <p class="text-danger">No audio available yet.</p>
+                            <?php if (! empty($advisorAudioUrl)): ?>
+                                <audio controls style="width:100%;" src="<?= esc($advisorAudioUrl); ?>"></audio>
+                                <div class="mt-2">
+                                    <a href="<?= esc($advisorAudioUrl); ?>" class="btn btn-sm btn-success" target="_blank">Download MP3</a>
+                                    <?php if (! empty($capcutUrl)): ?>
+                                        <a href="<?= esc($capcutUrl); ?>" class="btn btn-sm btn-info" target="_blank">CapCut Template</a>
+                                    <?php endif; ?>
+                                    <?php if (! empty($zipUrl)): ?>
+                                        <a href="<?= esc($zipUrl); ?>" class="btn btn-sm btn-primary" target="_blank">Media Bundle</a>
+                                    <?php endif; ?>
+                                </div>
+                            <?php else: ?>
+                                <p class="text-danger">No audio available yet.</p>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -66,38 +95,49 @@ document.addEventListener('DOMContentLoaded', function () {
         $(this).prop('disabled', true).text('⏳ Generating...');
 
         $.ajax({
-            url: '<?= site_url("API/Alerts/generateNow") ?>',
+            url: '<?= site_url("Management/Alerts/Generate-Advisor-Package") ?>',
             method: 'POST',
-            data: { user_id: userId },
+            data: {
+                user_id: userId,
+                '<?= csrf_token() ?>': '<?= csrf_hash() ?>'
+            },
             success: function (res) {
                 if (res.status === 'success') {
-                    const media = res.media;
+                    const media = res.media || {};
 
-                    summary.html(media.summary);
-                    script.text(media.script);
+                    if (media.summary) {
+                        summary.html(media.summary);
+                    }
+                    if (media.script) {
+                        script.text(media.script);
+                    }
 
-                    audioBlock.html(`
-                        <audio controls style="width:100%;" src="${media.voiceover_url}"></audio>
-                        <div class="mt-2">
-                            <a href="${media.voiceover_url}" class="btn btn-sm btn-success" target="_blank">Download MP3</a>
-                        </div>
-                    `);
+                    if (media.voiceover_url) {
+                        audioBlock.html(`
+                            <audio controls style="width:100%;" src="${media.voiceover_url}"></audio>
+                            <div class="mt-2">
+                                <a href="${media.voiceover_url}" class="btn btn-sm btn-success" target="_blank">Download MP3</a>
+                            </div>
+                        `);
+                    }
 
-                    dropdown.html(`
-                        <li><a href="${media.capcut_url}" target="_blank"><span>Download CapCut Template</span></a></li>
-                        <li><a href="${media.zip_url}" target="_blank"><span>Download Media Bundle (ZIP)</span></a></li>
-                    `);
+                    if (media.capcut_url || media.zip_url) {
+                        dropdown.html(`
+                            ${media.capcut_url ? `<li><a href="${media.capcut_url}" target="_blank"><span>Download CapCut Template</span></a></li>` : ''}
+                            ${media.zip_url ? `<li><a href="${media.zip_url}" target="_blank"><span>Download Media Bundle (ZIP)</span></a></li>` : ''}
+                        `);
+                    }
 
                     status.html(`<span class="text-success">✅ Media package ready.</span>`);
                 } else {
                     status.html(`<span class="text-danger">❌ Failed to generate advisor media.</span>`);
                 }
 
-                $('#generateAdvisorMediaBtn').prop('disabled', false).text('🎙️ Generate Advisor Media');
+                $('#generateAdvisorMediaBtn').prop('disabled', false).text('🎙️ Refresh Advisor Pack');
             },
             error: function (xhr) {
                 status.html(`<span class="text-danger">❌ Error: ${xhr.responseText}</span>`);
-                $('#generateAdvisorMediaBtn').prop('disabled', false).text('🎙️ Generate Advisor Media');
+                $('#generateAdvisorMediaBtn').prop('disabled', false).text('🎙️ Refresh Advisor Pack');
             }
         });
     });
