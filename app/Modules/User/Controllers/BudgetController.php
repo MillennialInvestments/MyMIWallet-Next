@@ -353,6 +353,7 @@ class BudgetController extends UserController
         }
 
         $periodLabel = (new \DateTime($labelPhrase, $timezone))->format('F Y');
+        $periodKey   = (new \DateTime($startDate, $timezone))->format('Y-m');
 
         $this->data = array_merge($this->data ?? [], $commonArray, [
             'pageTitle'        => $title,
@@ -363,7 +364,8 @@ class BudgetController extends UserController
             'filterType'       => $filterType,
             'summary'          => $summary,
             'transactions'     => $transactions,
-            'periodRouteBase'  => $routeBase,
+            'periodKey'        => $periodKey,
+            'periodRouteBase'  => rtrim($routeBase, '/') . '/' . $periodKey,
         ]);
 
         return $this->renderTheme('User/Budget/monthly_overview', $this->data);

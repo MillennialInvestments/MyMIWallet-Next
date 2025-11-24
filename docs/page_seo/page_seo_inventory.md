@@ -162,13 +162,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Related Features Block: ☐
     - Notes: alias: forgot-password
 
-- [ ] **Auth – Handle Provider Callback** (`/auth/provider/(:segment)/callback`)
-  - **Full URL**: https://www.mymiwallet.com/auth/provider/(:segment)/callback
+- [ ] **Auth – Handle Provider Callback** (`/auth/provider/<segment>/callback`)
+  - **Full URL**: https://www.mymiwallet.com/auth/provider/<segment>/callback
   - **Target Keywords**: `auth handle provider callback`, `auth tools`, `authcontroller dashboard`, `handles requests auth provider`, `mymiwallet platform`
   - **Schema Types**: `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/auth/provider/(:segment)/callback`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/auth/provider/<segment>/callback`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -176,13 +176,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Related Features Block: ☐
     - Notes: alias: auth-provider-callback
 
-- [ ] **Auth – Link Provider** (`/auth/link/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/auth/link/(:segment)
+- [ ] **Auth – Link Provider** (`/auth/link/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/auth/link/<segment>
   - **Target Keywords**: `auth link provider`, `auth tools`, `authcontroller dashboard`, `handles requests auth link`, `mymiwallet platform`
   - **Schema Types**: `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/auth/link/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/auth/link/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -217,13 +217,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Breadcrumb: ☐
     - Related Features Block: ☐
 
-- [ ] **Auth – Redirect To Provider** (`/auth/provider/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/auth/provider/(:segment)
+- [ ] **Auth – Redirect To Provider** (`/auth/provider/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/auth/provider/<segment>
   - **Target Keywords**: `auth redirect to provider`, `auth tools`, `authcontroller dashboard`, `handles requests auth provider`, `mymiwallet platform`
   - **Schema Types**: `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/auth/provider/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/auth/provider/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -245,13 +245,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Related Features Block: ☐
     - Notes: alias: dynamic-register
 
-- [ ] **Auth – Register** (`/(:any)/register/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/(:any)/register/(:segment)
+- [ ] **Auth – Register** (`/(:any)/register/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/(:any)/register/<segment>
   - **Target Keywords**: `auth register`, `auth tools`, `authcontroller dashboard`, `handles requests register segment`, `mymiwallet platform`
   - **Schema Types**: `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/(:any)/register/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/(:any)/register/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -273,13 +273,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Related Features Block: ☐
     - Notes: alias: register
 
-- [ ] **Auth – Register** (`/register/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/register/(:segment)
+- [ ] **Auth – Register** (`/register/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/register/<segment>
   - **Target Keywords**: `auth register`, `auth tools`, `authcontroller dashboard`, `handles requests register segment`, `mymiwallet platform`
   - **Schema Types**: `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/register/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/register/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -329,13 +329,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Related Features Block: ☐
     - Notes: alias: reset-password
 
-- [ ] **Auth – Unlink Provider** (`/auth/unlink/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/auth/unlink/(:segment)
+- [ ] **Auth – Unlink Provider** (`/auth/unlink/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/auth/unlink/<segment>
   - **Target Keywords**: `auth unlink provider`, `auth tools`, `authcontroller dashboard`, `handles requests auth unlink`, `mymiwallet platform`
   - **Schema Types**: `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/auth/unlink/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/auth/unlink/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -377,13 +377,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Breadcrumb: ☐
     - Related Features Block: ☐
 
-- [ ] **Blog – View Blog** (`/Blog/Post/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Blog/Post/(:segment)
+- [ ] **Blog – View Blog** (`/Blog/Post/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Blog/Post/<segment>
   - **Target Keywords**: `blog view blog`, `blog tools`, `blog dashboard`, `handles requests blog post`, `mymiwallet platform`
   - **Schema Types**: `NewsArticle`, `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/Post/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/Post/<segment>`)
   - **Internal Links**:
     - Footer: ☑
     - Sidebar: ☐
@@ -418,26 +418,26 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Breadcrumb: ☐
     - Related Features Block: ☐
 
-- [ ] **Earnings – View By Date** (`/Blog/Earnings/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Blog/Earnings/(:segment)
+- [ ] **Earnings – View By Date** (`/Blog/Earnings/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Blog/Earnings/<segment>
   - **Target Keywords**: `earnings view by date`, `earnings tools`, `blog dashboard`, `handles requests blog earnings`, `mymiwallet platform`
   - **Schema Types**: `NewsArticle`, `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/Earnings/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/Earnings/<segment>`)
   - **Internal Links**:
     - Footer: ☑
     - Sidebar: ☐
     - Breadcrumb: ☐
     - Related Features Block: ☐
 
-- [ ] **Earnings – View By Date** (`/Blog/Earnings/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Blog/Earnings/(:segment)
+- [ ] **Earnings – View By Date** (`/Blog/Earnings/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Blog/Earnings/<segment>
   - **Target Keywords**: `earnings view by date`, `earnings tools`, `blog dashboard`, `handles requests blog earnings`, `mymiwallet platform`
   - **Schema Types**: `NewsArticle`, `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/Earnings/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Blog/Earnings/<segment>`)
   - **Internal Links**:
     - Footer: ☑
     - Sidebar: ☐
@@ -1014,13 +1014,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Related Features Block: ☐
     - Notes: alias: mymi-solana-create-wallet
 
-- [ ] **Solana – Disconnect Wallet** (`/Exchange/Solana/Wallet/Disconnect/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Exchange/Solana/Wallet/Disconnect/(:segment)
+- [ ] **Solana – Disconnect Wallet** (`/Exchange/Solana/Wallet/Disconnect/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Exchange/Solana/Wallet/Disconnect/<segment>
   - **Target Keywords**: `solana disconnect wallet`, `solana tools`, `exchange dashboard`, `handles requests exchange solana`, `mymiwallet platform`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Exchange/Solana/Wallet/Disconnect/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Exchange/Solana/Wallet/Disconnect/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -1177,13 +1177,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Breadcrumb: ☐
     - Related Features Block: ☐
 
-- [ ] **Home – Apex Referral** (`/Apex/Referral/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Apex/Referral/(:segment)
+- [ ] **Home – Apex Referral** (`/Apex/Referral/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Apex/Referral/<segment>
   - **Target Keywords**: `personal finance platform`, `mymiwallet`, `investment tools`, `financial planning`
   - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Apex/Referral/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Apex/Referral/<segment>`)
   - **Internal Links**:
     - Footer: ☑
     - Sidebar: ☐
@@ -1203,13 +1203,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Breadcrumb: ☐
     - Related Features Block: ☐
 
-- [ ] **Home – Corporate Earnings** (`/Corporate-Earnings/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Corporate-Earnings/(:segment)
+- [ ] **Home – Corporate Earnings** (`/Corporate-Earnings/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Corporate-Earnings/<segment>
   - **Target Keywords**: `personal finance platform`, `mymiwallet`, `investment tools`, `financial planning`
   - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Corporate-Earnings/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Corporate-Earnings/<segment>`)
   - **Internal Links**:
     - Footer: ☑
     - Sidebar: ☐
@@ -1229,13 +1229,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Breadcrumb: ☐
     - Related Features Block: ☐
 
-- [ ] **Home – Economic Calendar Content** (`/Economic-Calendar/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Economic-Calendar/(:segment)
+- [ ] **Home – Economic Calendar Content** (`/Economic-Calendar/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Economic-Calendar/<segment>
   - **Target Keywords**: `personal finance platform`, `mymiwallet`, `investment tools`, `financial planning`
   - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Economic-Calendar/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Economic-Calendar/<segment>`)
   - **Internal Links**:
     - Footer: ☑
     - Sidebar: ☐
@@ -1255,26 +1255,26 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Breadcrumb: ☐
     - Related Features Block: ☐
 
-- [ ] **Home – Getting Started** (`/Getting-Started/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Getting-Started/(:segment)
+- [ ] **Home – Getting Started** (`/Getting-Started/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Getting-Started/<segment>
   - **Target Keywords**: `personal finance platform`, `mymiwallet`, `investment tools`, `financial planning`
   - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Getting-Started/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Getting-Started/<segment>`)
   - **Internal Links**:
     - Footer: ☑
     - Sidebar: ☐
     - Breadcrumb: ☐
     - Related Features Block: ☐
 
-- [ ] **Home – Getting Started** (`/Getting-Started/(:segment)/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Getting-Started/(:segment)/(:segment)
+- [ ] **Home – Getting Started** (`/Getting-Started/<segment>/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Getting-Started/<segment>/<segment>
   - **Target Keywords**: `personal finance platform`, `mymiwallet`, `investment tools`, `financial planning`
   - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Getting-Started/(:segment)/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Getting-Started/<segment>/<segment>`)
   - **Internal Links**:
     - Footer: ☑
     - Sidebar: ☐
@@ -1307,26 +1307,26 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Breadcrumb: ☐
     - Related Features Block: ☐
 
-- [ ] **Home – Memberships** (`/Memberships/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Memberships/(:segment)
+- [ ] **Home – Memberships** (`/Memberships/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Memberships/<segment>
   - **Target Keywords**: `personal finance platform`, `mymiwallet`, `investment tools`, `financial planning`
   - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Memberships/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Memberships/<segment>`)
   - **Internal Links**:
     - Footer: ☑
     - Sidebar: ☐
     - Breadcrumb: ☐
     - Related Features Block: ☐
 
-- [ ] **Home – Preview Alert** (`/Preview/Alert/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Preview/Alert/(:segment)
+- [ ] **Home – Preview Alert** (`/Preview/Alert/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Preview/Alert/<segment>
   - **Target Keywords**: `personal finance platform`, `mymiwallet`, `investment tools`, `financial planning`
   - **Schema Types**: `Organization`, `SoftwareApplication`, `FinancialService`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Preview/Alert/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Preview/Alert/<segment>`)
   - **Internal Links**:
     - Footer: ☑
     - Sidebar: ☐
@@ -1380,13 +1380,13 @@ This document tracks SEO implementation per major UI page, built from the functi
 
 ### Alerts Area
 
-- [ ] **Alerts – Add** (`/Management/Alerts/Add/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Management/Alerts/Add/(:segment)
+- [ ] **Alerts – Add** (`/Management/Alerts/Add/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Alerts/Add/<segment>
   - **Target Keywords**: `investment alerts`, `automated trade alerts`, `stock alerts`, `crypto alerts`
   - **Schema Types**: `InvestmentOrDeposit`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts/Add/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts/Add/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -1485,13 +1485,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Alerts
     - Linked from Routes: /Dashboard,/Budget,/Wallets
 
-- [ ] **Alerts – Fetch Ticker Details** (`/Management/Alerts/Fetch/Ticker/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Management/Alerts/Fetch/Ticker/(:segment)
+- [ ] **Alerts – Fetch Ticker Details** (`/Management/Alerts/Fetch/Ticker/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Alerts/Fetch/Ticker/<segment>
   - **Target Keywords**: `investment alerts`, `automated trade alerts`, `stock alerts`, `crypto alerts`
   - **Schema Types**: `InvestmentOrDeposit`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts/Fetch/Ticker/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts/Fetch/Ticker/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -1545,13 +1545,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Alerts
     - Linked from Routes: /Dashboard,/Budget,/Wallets
 
-- [ ] **Alerts – Stock Overview** (`/Management/Alerts/Crypto/(:segment)/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Management/Alerts/Crypto/(:segment)/(:segment)
+- [ ] **Alerts – Stock Overview** (`/Management/Alerts/Crypto/<segment>/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Alerts/Crypto/<segment>/<segment>
   - **Target Keywords**: `investment alerts`, `automated trade alerts`, `stock alerts`, `crypto alerts`
   - **Schema Types**: `InvestmentOrDeposit`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts/Crypto/(:segment)/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts/Crypto/<segment>/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -1560,13 +1560,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Alerts
     - Linked from Routes: /Dashboard,/Budget,/Wallets
 
-- [ ] **Alerts – Stock Overview** (`/Management/Alerts/Stock/(:segment)/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Management/Alerts/Stock/(:segment)/(:segment)
+- [ ] **Alerts – Stock Overview** (`/Management/Alerts/Stock/<segment>/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Alerts/Stock/<segment>/<segment>
   - **Target Keywords**: `investment alerts`, `automated trade alerts`, `stock alerts`, `crypto alerts`
   - **Schema Types**: `InvestmentOrDeposit`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts/Stock/(:segment)/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Alerts/Stock/<segment>/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -1650,13 +1650,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Breadcrumb: ☐
     - Related Features Block: ☐
 
-- [ ] **Blogger – Preview** (`/Management/Marketing/Blogger/preview/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Blogger/preview/(:segment)
+- [ ] **Blogger – Preview** (`/Management/Marketing/Blogger/preview/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Blogger/preview/<segment>
   - **Target Keywords**: `blogger preview`, `blogger tools`, `management dashboard`, `handles requests management marketing`, `mymiwallet platform`
   - **Schema Types**: `NewsArticle`, `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Blogger/preview/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Blogger/preview/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -2042,13 +2042,13 @@ This document tracks SEO implementation per major UI page, built from the functi
 
 ### Marketing Area
 
-- [ ] **Marketing – Add** (`/Management/Marketing/Add/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Add/(:segment)
+- [ ] **Marketing – Add** (`/Management/Marketing/Add/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Add/<segment>
   - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
   - **Schema Types**: `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Add/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Add/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -2162,13 +2162,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: Marketing:Landing,Marketing:News
     - Linked from Routes: /,/News-And-Updates
 
-- [ ] **Marketing – Edit** (`/Management/Marketing/Exchange/Edit/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Exchange/Edit/(:segment)
+- [ ] **Marketing – Edit** (`/Management/Marketing/Exchange/Edit/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Exchange/Edit/<segment>
   - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
   - **Schema Types**: `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Exchange/Edit/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Exchange/Edit/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -2387,13 +2387,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: Marketing:Landing,Marketing:News
     - Linked from Routes: /,/News-And-Updates
 
-- [ ] **Marketing – Promote** (`/Management/Marketing/Promote/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Promote/(:segment)
+- [ ] **Marketing – Promote** (`/Management/Marketing/Promote/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Promote/<segment>
   - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
   - **Schema Types**: `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Promote/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Promote/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -2447,13 +2447,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: Marketing:Landing,Marketing:News
     - Linked from Routes: /,/News-And-Updates
 
-- [ ] **Marketing – Schedule** (`/Management/Marketing/Schedule/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Schedule/(:segment)
+- [ ] **Marketing – Schedule** (`/Management/Marketing/Schedule/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Schedule/<segment>
   - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
   - **Schema Types**: `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Schedule/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Schedule/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -2567,13 +2567,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: Marketing:Landing,Marketing:News
     - Linked from Routes: /,/News-And-Updates
 
-- [ ] **Marketing – Top Communities** (`/Management/Marketing/Exchange/Top-Communities/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Exchange/Top-Communities/(:segment)
+- [ ] **Marketing – Top Communities** (`/Management/Marketing/Exchange/Top-Communities/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/Exchange/Top-Communities/<segment>
   - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
   - **Schema Types**: `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Exchange/Top-Communities/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/Exchange/Top-Communities/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -2642,13 +2642,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: Marketing:Landing,Marketing:News
     - Linked from Routes: /,/News-And-Updates
 
-- [ ] **Marketing – View Email** (`/Management/Marketing/View-Email/(:segment)/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/View-Email/(:segment)/(:segment)
+- [ ] **Marketing – View Email** (`/Management/Marketing/View-Email/<segment>/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Marketing/View-Email/<segment>/<segment>
   - **Target Keywords**: `financial marketing platform`, `growth marketing tools`, `campaign analytics`, `customer acquisition`
   - **Schema Types**: `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/View-Email/(:segment)/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Marketing/View-Email/<segment>/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -2777,13 +2777,13 @@ This document tracks SEO implementation per major UI page, built from the functi
 
 ### Users Area
 
-- [ ] **Users – Ajax Block User** (`/Management/Users/ajaxBlockUser/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Management/Users/ajaxBlockUser/(:segment)
+- [ ] **Users – Ajax Block User** (`/Management/Users/ajaxBlockUser/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Users/ajaxBlockUser/<segment>
   - **Target Keywords**: `users ajax block user`, `users tools`, `management dashboard`, `handles post requests management`, `mymiwallet platform`
   - **Schema Types**: `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Users/ajaxBlockUser/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Users/ajaxBlockUser/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -2803,13 +2803,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Breadcrumb: ☐
     - Related Features Block: ☐
 
-- [ ] **Users – Profile** (`/Management/Users/Profile/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Management/Users/Profile/(:segment)
+- [ ] **Users – Profile** (`/Management/Users/Profile/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Management/Users/Profile/<segment>
   - **Target Keywords**: `users profile`, `users tools`, `management dashboard`, `handles requests management users`, `mymiwallet platform`
   - **Schema Types**: `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Users/Profile/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Management/Users/Profile/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -3013,13 +3013,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Breadcrumb: ☐
     - Related Features Block: ☐
 
-- [ ] **ScriptStudio – Export** (`/ScriptStudio/Export/(:num)/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/ScriptStudio/Export/(:num)/(:segment)
+- [ ] **ScriptStudio – Export** (`/ScriptStudio/Export/(:num)/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/ScriptStudio/Export/(:num)/<segment>
   - **Target Keywords**: `scriptstudio export`, `scriptstudio tools`, `scriptstudio dashboard`, `handles requests scriptstudio export`, `mymiwallet platform`
   - **Schema Types**: `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/ScriptStudio/Export/(:num)/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/ScriptStudio/Export/(:num)/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -3090,13 +3090,13 @@ This document tracks SEO implementation per major UI page, built from the functi
 
 ### Support Area
 
-- [ ] **Support – Article** (`/Support/Article/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Support/Article/(:segment)
+- [ ] **Support – Article** (`/Support/Article/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Support/Article/<segment>
   - **Target Keywords**: `support center`, `help desk`, `knowledge base`, `customer support`
   - **Schema Types**: `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Support/Article/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Support/Article/<segment>`)
   - **Internal Links**:
     - Footer: ☑
     - Sidebar: ☐
@@ -3279,13 +3279,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Budget
     - Linked from Routes: /Dashboard,/Wallets,/Alerts
 
-- [ ] **Budget – Add** (`/Budget/Add/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Budget/Add/(:segment)
+- [ ] **Budget – Add** (`/Budget/Add/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Add/<segment>
   - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Add/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Add/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -3324,13 +3324,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Budget
     - Linked from Routes: /Dashboard,/Wallets,/Alerts
 
-- [ ] **Budget – Cancel Account** (`/Budget/Cancel-Account/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Budget/Cancel-Account/(:segment)
+- [ ] **Budget – Cancel Account** (`/Budget/Cancel-Account/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Cancel-Account/<segment>
   - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Cancel-Account/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Cancel-Account/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -3354,13 +3354,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Budget
     - Linked from Routes: /Dashboard,/Wallets,/Alerts
 
-- [ ] **Budget – Delete Account** (`/Budget/Delete-Account/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Budget/Delete-Account/(:segment)
+- [ ] **Budget – Delete Account** (`/Budget/Delete-Account/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Delete-Account/<segment>
   - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Delete-Account/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Delete-Account/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -3384,13 +3384,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Budget
     - Linked from Routes: /Dashboard,/Wallets,/Alerts
 
-- [ ] **Budget – Details** (`/Budget/Details/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Budget/Details/(:segment)
+- [ ] **Budget – Details** (`/Budget/Details/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Details/<segment>
   - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Details/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Details/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -3414,13 +3414,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Budget
     - Linked from Routes: /Dashboard,/Wallets,/Alerts
 
-- [ ] **Budget – Edit** (`/Budget/Copy/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Budget/Copy/(:segment)
+- [ ] **Budget – Edit** (`/Budget/Copy/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Copy/<segment>
   - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Copy/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Copy/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -3444,13 +3444,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Budget
     - Linked from Routes: /Dashboard,/Wallets,/Alerts
 
-- [ ] **Budget – Edit** (`/Budget/Edit/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Budget/Edit/(:segment)
+- [ ] **Budget – Edit** (`/Budget/Edit/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Edit/<segment>
   - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Edit/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Edit/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -3459,13 +3459,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Budget
     - Linked from Routes: /Dashboard,/Wallets,/Alerts
 
-- [ ] **Budget – Edit** (`/Budget/Edit/(:segment)/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Budget/Edit/(:segment)/(:segment)
+- [ ] **Budget – Edit** (`/Budget/Edit/<segment>/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Edit/<segment>/<segment>
   - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Edit/(:segment)/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Edit/<segment>/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -3474,13 +3474,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Budget
     - Linked from Routes: /Dashboard,/Wallets,/Alerts
 
-- [ ] **Budget – Edit** (`/Budget/Recurring-Account/Edit/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Budget/Recurring-Account/Edit/(:segment)
+- [ ] **Budget – Edit** (`/Budget/Recurring-Account/Edit/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Recurring-Account/Edit/<segment>
   - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Recurring-Account/Edit/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Recurring-Account/Edit/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -3534,13 +3534,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Budget
     - Linked from Routes: /Dashboard,/Wallets,/Alerts
 
-- [ ] **Budget – Forecast** (`/Budget/Forecast/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Budget/Forecast/(:segment)
+- [ ] **Budget – Forecast** (`/Budget/Forecast/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Forecast/<segment>
   - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Forecast/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Forecast/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -3564,13 +3564,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Budget
     - Linked from Routes: /Dashboard,/Wallets,/Alerts
 
-- [ ] **Budget – History** (`/Budget/History/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Budget/History/(:segment)
+- [ ] **Budget – History** (`/Budget/History/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/History/<segment>
   - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/History/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/History/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -3594,13 +3594,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Budget
     - Linked from Routes: /Dashboard,/Wallets,/Alerts
 
-- [ ] **Budget – Last Month** (`/Budget/Last-Month/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Budget/Last-Month/(:segment)
+- [ ] **Budget – Last Month** (`/Budget/Last-Month/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Last-Month/<segment>
   - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Last-Month/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Last-Month/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -3624,13 +3624,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Budget
     - Linked from Routes: /Dashboard,/Wallets,/Alerts
 
-- [ ] **Budget – Next Month** (`/Budget/Next-Month/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Budget/Next-Month/(:segment)
+- [ ] **Budget – Next Month** (`/Budget/Next-Month/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Next-Month/<segment>
   - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Next-Month/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Next-Month/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -3639,13 +3639,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Budget
     - Linked from Routes: /Dashboard,/Wallets,/Alerts
 
-- [ ] **Budget – Paid** (`/Budget/Status/Paid/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Budget/Status/Paid/(:segment)
+- [ ] **Budget – Paid** (`/Budget/Status/Paid/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Status/Paid/<segment>
   - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Status/Paid/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Status/Paid/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -3669,13 +3669,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Budget
     - Linked from Routes: /Dashboard,/Wallets,/Alerts
 
-- [ ] **Budget – Recurring Schedule** (`/Budget/Recurring-Account/Schedule/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Budget/Recurring-Account/Schedule/(:segment)
+- [ ] **Budget – Recurring Schedule** (`/Budget/Recurring-Account/Schedule/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Recurring-Account/Schedule/<segment>
   - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Recurring-Account/Schedule/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Recurring-Account/Schedule/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -3699,13 +3699,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Budget
     - Linked from Routes: /Dashboard,/Wallets,/Alerts
 
-- [ ] **Budget – Settings** (`/Budget/Settings/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Budget/Settings/(:segment)
+- [ ] **Budget – Settings** (`/Budget/Settings/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Settings/<segment>
   - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Settings/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Settings/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -3729,13 +3729,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Budget
     - Linked from Routes: /Dashboard,/Wallets,/Alerts
 
-- [ ] **Budget – This Month** (`/Budget/This-Month/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Budget/This-Month/(:segment)
+- [ ] **Budget – This Month** (`/Budget/This-Month/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/This-Month/<segment>
   - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/This-Month/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/This-Month/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -3744,13 +3744,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Budget
     - Linked from Routes: /Dashboard,/Wallets,/Alerts
 
-- [ ] **Budget – Unpaid** (`/Budget/Status/Unpaid/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Budget/Status/Unpaid/(:segment)
+- [ ] **Budget – Unpaid** (`/Budget/Status/Unpaid/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Budget/Status/Unpaid/<segment>
   - **Target Keywords**: `personal finance dashboard`, `budgeting tool`, `monthly budget planner`, `budget to investment tool`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Status/Unpaid/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Budget/Status/Unpaid/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -3845,13 +3845,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Related Features Block: ☐
     - Notes: alias: dashboard
 
-- [ ] **Dashboard – Goals** (`/MyMI-Gold/Goals/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/MyMI-Gold/Goals/(:segment)
+- [ ] **Dashboard – Goals** (`/MyMI-Gold/Goals/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/MyMI-Gold/Goals/<segment>
   - **Target Keywords**: `dashboard goals`, `dashboard tools`, `user dashboard`, `handles requests mymi gold`, `mymiwallet platform`
   - **Schema Types**: `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/MyMI-Gold/Goals/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/MyMI-Gold/Goals/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -3859,13 +3859,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Related Features Block: ☐
     - Notes: alias: mymi-gold-daily-goals
 
-- [ ] **Dashboard – Load Modal Content** (`/Dashboard/Transaction-Modal/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)
+- [ ] **Dashboard – Load Modal Content** (`/Dashboard/Transaction-Modal/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Dashboard/Transaction-Modal/<segment>
   - **Target Keywords**: `dashboard load modal content`, `dashboard tools`, `user dashboard`, `handles requests dashboard transaction`, `mymiwallet platform`
   - **Schema Types**: `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dashboard/Transaction-Modal/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -3873,13 +3873,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Related Features Block: ☐
     - Notes: alias: load-modal-1-segment
 
-- [ ] **Dashboard – Load Modal Content** (`/Dashboard/Transaction-Modal/(:segment)/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)/(:segment)
+- [ ] **Dashboard – Load Modal Content** (`/Dashboard/Transaction-Modal/<segment>/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Dashboard/Transaction-Modal/<segment>/<segment>
   - **Target Keywords**: `dashboard load modal content`, `dashboard tools`, `user dashboard`, `handles requests dashboard transaction`, `mymiwallet platform`
   - **Schema Types**: `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dashboard/Transaction-Modal/<segment>/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -3887,13 +3887,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Related Features Block: ☐
     - Notes: alias: load-modal-2-segment
 
-- [ ] **Dashboard – Load Modal Content** (`/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)
+- [ ] **Dashboard – Load Modal Content** (`/Dashboard/Transaction-Modal/<segment>/<segment>/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Dashboard/Transaction-Modal/<segment>/<segment>/<segment>
   - **Target Keywords**: `dashboard load modal content`, `dashboard tools`, `user dashboard`, `handles requests dashboard transaction`, `mymiwallet platform`
   - **Schema Types**: `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dashboard/Transaction-Modal/<segment>/<segment>/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -3901,13 +3901,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Related Features Block: ☐
     - Notes: alias: load-modal-3-segment
 
-- [ ] **Dashboard – Load Modal Content** (`/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)
+- [ ] **Dashboard – Load Modal Content** (`/Dashboard/Transaction-Modal/<segment>/<segment>/<segment>/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Dashboard/Transaction-Modal/<segment>/<segment>/<segment>/<segment>
   - **Target Keywords**: `dashboard load modal content`, `dashboard tools`, `user dashboard`, `handles requests dashboard transaction`, `mymiwallet platform`
   - **Schema Types**: `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dashboard/Transaction-Modal/<segment>/<segment>/<segment>/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -3915,13 +3915,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Related Features Block: ☐
     - Notes: alias: load-modal-4-segment
 
-- [ ] **Dashboard – Load Modal Content** (`/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)
+- [ ] **Dashboard – Load Modal Content** (`/Dashboard/Transaction-Modal/<segment>/<segment>/<segment>/<segment>/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Dashboard/Transaction-Modal/<segment>/<segment>/<segment>/<segment>/<segment>
   - **Target Keywords**: `dashboard load modal content`, `dashboard tools`, `user dashboard`, `handles requests dashboard transaction`, `mymiwallet platform`
   - **Schema Types**: `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dashboard/Transaction-Modal/<segment>/<segment>/<segment>/<segment>/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -3929,13 +3929,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Related Features Block: ☐
     - Notes: alias: load-modal-5-segment
 
-- [ ] **Dashboard – Load Modal Content** (`/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)
+- [ ] **Dashboard – Load Modal Content** (`/Dashboard/Transaction-Modal/<segment>/<segment>/<segment>/<segment>/<segment>/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Dashboard/Transaction-Modal/<segment>/<segment>/<segment>/<segment>/<segment>/<segment>
   - **Target Keywords**: `dashboard load modal content`, `dashboard tools`, `user dashboard`, `handles requests dashboard transaction`, `mymiwallet platform`
   - **Schema Types**: `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dashboard/Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Dashboard/Transaction-Modal/<segment>/<segment>/<segment>/<segment>/<segment>/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -3999,13 +3999,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Related Features Block: ☐
     - Notes: alias: performance
 
-- [ ] **Dashboard – Profile** (`/Profile/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Profile/(:segment)
+- [ ] **Dashboard – Profile** (`/Profile/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Profile/<segment>
   - **Target Keywords**: `dashboard profile`, `dashboard tools`, `user dashboard`, `handles requests profile segment`, `mymiwallet platform`
   - **Schema Types**: `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Profile/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Profile/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -4141,13 +4141,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Investments
     - Linked from Routes: /Dashboard,/Budget,/Wallets
 
-- [ ] **Investments – Add** (`/Investments/Add/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Investments/Add/(:segment)
+- [ ] **Investments – Add** (`/Investments/Add/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Investments/Add/<segment>
   - **Target Keywords**: `investment analysis`, `portfolio tracker`, `market insights`, `investment research`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Investments/Add/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Investments/Add/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -4640,13 +4640,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Breadcrumb: ☐
     - Related Features Block: ☐
 
-- [ ] **Projects – View** (`/Projects/View/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Projects/View/(:segment)
+- [ ] **Projects – View** (`/Projects/View/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Projects/View/<segment>
   - **Target Keywords**: `projects view`, `projects tools`, `user dashboard`, `handles requests projects view`, `mymiwallet platform`
   - **Schema Types**: `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Projects/View/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Projects/View/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -4722,13 +4722,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Breadcrumb: ☐
     - Related Features Block: ☐
 
-- [ ] **Search – Search** (`/Search/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Search/(:segment)
+- [ ] **Search – Search** (`/Search/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Search/<segment>
   - **Target Keywords**: `search search`, `search tools`, `user dashboard`, `handles requests search segment`, `mymiwallet platform`
   - **Schema Types**: `WebPage`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Search/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Search/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☐
@@ -4769,13 +4769,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.add
 
-- [ ] **Wallets – Add** (`/Wallets/Add/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Add/(:segment)
+- [ ] **Wallets – Add** (`/Wallets/Add/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Add/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Add/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Add/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -4785,13 +4785,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.add.segment
 
-- [ ] **Wallets – Add** (`/Wallets/Banking/Add/Account/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Banking/Add/Account/(:segment)
+- [ ] **Wallets – Add** (`/Wallets/Banking/Add/Account/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Banking/Add/Account/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Banking/Add/Account/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Banking/Add/Account/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -4801,13 +4801,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.banking.add.account.segment
 
-- [ ] **Wallets – Add Account** (`/Wallets/Banking/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Banking/(:segment)
+- [ ] **Wallets – Add Account** (`/Wallets/Banking/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Banking/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Banking/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Banking/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -4833,13 +4833,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.deposit.fetch
 
-- [ ] **Wallets – Add Fetch** (`/Wallets/Add/(:segment)/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Add/(:segment)/(:segment)
+- [ ] **Wallets – Add Fetch** (`/Wallets/Add/<segment>/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Add/<segment>/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Add/(:segment)/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Add/<segment>/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -4881,13 +4881,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.attach-account
 
-- [ ] **Wallets – Attach Account** (`/Wallets/Attach-Account/(:segment)/(:segment)/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Attach-Account/(:segment)/(:segment)/(:segment)
+- [ ] **Wallets – Attach Account** (`/Wallets/Attach-Account/<segment>/<segment>/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Attach-Account/<segment>/<segment>/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Attach-Account/(:segment)/(:segment)/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Attach-Account/<segment>/<segment>/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -4945,13 +4945,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.coin-swap
 
-- [ ] **Wallets – Coin Swap** (`/Wallets/Coin-Swap/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Coin-Swap/(:segment)
+- [ ] **Wallets – Coin Swap** (`/Wallets/Coin-Swap/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Coin-Swap/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Coin-Swap/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Coin-Swap/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5056,13 +5056,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.debt
 
-- [ ] **Wallets – Delete** (`/Wallets/Delete/(:segment)/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Delete/(:segment)/(:segment)
+- [ ] **Wallets – Delete** (`/Wallets/Delete/<segment>/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Delete/<segment>/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Delete/(:segment)/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Delete/<segment>/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5087,13 +5087,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.deposit
 
-- [ ] **Wallets – Deposit** (`/Wallets/Deposit/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Deposit/(:segment)
+- [ ] **Wallets – Deposit** (`/Wallets/Deposit/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Deposit/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Deposit/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Deposit/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5135,13 +5135,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.deposit.complete
 
-- [ ] **Wallets – Deposit Complete** (`/Wallets/Deposit/Complete/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Deposit/Complete/(:segment)
+- [ ] **Wallets – Deposit Complete** (`/Wallets/Deposit/Complete/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Deposit/Complete/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Deposit/Complete/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Deposit/Complete/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5151,13 +5151,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.deposit.complete.segment
 
-- [ ] **Wallets – Details** (`/Wallets/Banking/Details/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Banking/Details/(:segment)
+- [ ] **Wallets – Details** (`/Wallets/Banking/Details/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Banking/Details/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Banking/Details/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Banking/Details/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5167,13 +5167,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.banking.details.segment
 
-- [ ] **Wallets – Details** (`/Wallets/Credit/Details/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Credit/Details/(:segment)
+- [ ] **Wallets – Details** (`/Wallets/Credit/Details/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Credit/Details/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Credit/Details/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Credit/Details/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5182,13 +5182,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Wallets
     - Linked from Routes: /Dashboard,/Budget,/Alerts
 
-- [ ] **Wallets – Details** (`/Wallets/Debt/Details/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Debt/Details/(:segment)
+- [ ] **Wallets – Details** (`/Wallets/Debt/Details/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Debt/Details/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Debt/Details/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Debt/Details/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5214,13 +5214,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.details
 
-- [ ] **Wallets – Details** (`/Wallets/Investment/Details/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Investment/Details/(:segment)
+- [ ] **Wallets – Details** (`/Wallets/Investment/Details/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Investment/Details/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Investment/Details/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Investment/Details/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5230,13 +5230,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.investment.details
 
-- [ ] **Wallets – Edit** (`/Wallets/Banking/Edit/Account/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Banking/Edit/Account/(:segment)
+- [ ] **Wallets – Edit** (`/Wallets/Banking/Edit/Account/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Banking/Edit/Account/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Banking/Edit/Account/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Banking/Edit/Account/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5246,13 +5246,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.banking.edit.account.segment
 
-- [ ] **Wallets – Edit** (`/Wallets/Credit/Edit/Account/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Credit/Edit/Account/(:segment)
+- [ ] **Wallets – Edit** (`/Wallets/Credit/Edit/Account/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Credit/Edit/Account/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Credit/Edit/Account/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Credit/Edit/Account/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5261,13 +5261,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Wallets
     - Linked from Routes: /Dashboard,/Budget,/Alerts
 
-- [ ] **Wallets – Edit** (`/Wallets/Debt/Edit/Account/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Debt/Edit/Account/(:segment)
+- [ ] **Wallets – Edit** (`/Wallets/Debt/Edit/Account/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Debt/Edit/Account/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Debt/Edit/Account/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Debt/Edit/Account/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5293,13 +5293,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.edit
 
-- [ ] **Wallets – Edit** (`/Wallets/Edit/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Edit/(:segment)
+- [ ] **Wallets – Edit** (`/Wallets/Edit/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Edit/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Edit/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Edit/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5309,13 +5309,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.edit.segment
 
-- [ ] **Wallets – Edit** (`/Wallets/Edit/(:segment)/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Edit/(:segment)/(:segment)
+- [ ] **Wallets – Edit** (`/Wallets/Edit/<segment>/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Edit/<segment>/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Edit/(:segment)/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Edit/<segment>/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5325,13 +5325,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.edit.segment.segment
 
-- [ ] **Wallets – Edit** (`/Wallets/Investment/Edit/Account/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Investment/Edit/Account/(:segment)
+- [ ] **Wallets – Edit** (`/Wallets/Investment/Edit/Account/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Investment/Edit/Account/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Investment/Edit/Account/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Investment/Edit/Account/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5436,13 +5436,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.link-account
 
-- [ ] **Wallets – Link Account** (`/Wallets/Link-Account/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Link-Account/(:segment)
+- [ ] **Wallets – Link Account** (`/Wallets/Link-Account/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Link-Account/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Link-Account/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Link-Account/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5452,13 +5452,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.link-account.segment
 
-- [ ] **Wallets – Link Account** (`/Wallets/Link-Account/(:segment)/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Link-Account/(:segment)/(:segment)
+- [ ] **Wallets – Link Account** (`/Wallets/Link-Account/<segment>/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Link-Account/<segment>/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Link-Account/(:segment)/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Link-Account/<segment>/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5484,13 +5484,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.link-account.success
 
-- [ ] **Wallets – Link Account Success** (`/Wallets/Link-Account/Success/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Link-Account/Success/(:segment)
+- [ ] **Wallets – Link Account Success** (`/Wallets/Link-Account/Success/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Link-Account/Success/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Link-Account/Success/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Link-Account/Success/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5531,13 +5531,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Wallets
     - Linked from Routes: /Dashboard,/Budget,/Alerts
 
-- [ ] **Wallets – Purchase** (`/Wallets/Purchase/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/(:segment)
+- [ ] **Wallets – Purchase** (`/Wallets/Purchase/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5546,13 +5546,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Wallets
     - Linked from Routes: /Dashboard,/Budget,/Alerts
 
-- [ ] **Wallets – Purchase** (`/Wallets/Purchase/Memberships/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/Memberships/(:segment)
+- [ ] **Wallets – Purchase** (`/Wallets/Purchase/Memberships/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/Memberships/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/Memberships/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/Memberships/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5561,13 +5561,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Wallets
     - Linked from Routes: /Dashboard,/Budget,/Alerts
 
-- [ ] **Wallets – Purchase** (`/Wallets/Purchase/Memberships/(:segment)/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/Memberships/(:segment)/(:segment)
+- [ ] **Wallets – Purchase** (`/Wallets/Purchase/Memberships/<segment>/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/Memberships/<segment>/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/Memberships/(:segment)/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/Memberships/<segment>/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5576,13 +5576,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Wallets
     - Linked from Routes: /Dashboard,/Budget,/Alerts
 
-- [ ] **Wallets – Purchase Complete** (`/Wallets/Purchase/(:segment)/Complete`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/(:segment)/Complete
+- [ ] **Wallets – Purchase Complete** (`/Wallets/Purchase/<segment>/Complete`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/<segment>/Complete
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/(:segment)/Complete`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/<segment>/Complete`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5591,13 +5591,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Wallets
     - Linked from Routes: /Dashboard,/Budget,/Alerts
 
-- [ ] **Wallets – Purchase Complete** (`/Wallets/Purchase/Complete/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/Complete/(:segment)
+- [ ] **Wallets – Purchase Complete** (`/Wallets/Purchase/Complete/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/Complete/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/Complete/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/Complete/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5606,13 +5606,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Wallets
     - Linked from Routes: /Dashboard,/Budget,/Alerts
 
-- [ ] **Wallets – Purchase Complete** (`/Wallets/Purchase/Complete/(:segment)/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/Complete/(:segment)/(:segment)
+- [ ] **Wallets – Purchase Complete** (`/Wallets/Purchase/Complete/<segment>/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/Complete/<segment>/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/Complete/(:segment)/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/Complete/<segment>/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5681,13 +5681,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Modules: User:Dashboard,User:Wallets
     - Linked from Routes: /Dashboard,/Budget,/Alerts
 
-- [ ] **Wallets – Security Violation** (`/Wallets/Purchase/MyMIGold/Security/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/MyMIGold/Security/(:segment)
+- [ ] **Wallets – Security Violation** (`/Wallets/Purchase/MyMIGold/Security/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Purchase/MyMIGold/Security/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/MyMIGold/Security/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Purchase/MyMIGold/Security/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5760,13 +5760,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.selection
 
-- [ ] **Wallets – Wallet Transaction** (`/Wallets/Wallet-Transaction/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Wallet-Transaction/(:segment)
+- [ ] **Wallets – Wallet Transaction** (`/Wallets/Wallet-Transaction/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Wallet-Transaction/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Wallet-Transaction/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Wallet-Transaction/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
@@ -5824,13 +5824,13 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.withdraw
 
-- [ ] **Wallets – Withdraw** (`/Wallets/Withdraw/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Withdraw/(:segment)
+- [ ] **Wallets – Withdraw** (`/Wallets/Withdraw/<segment>`)
+  - **Full URL**: https://www.mymiwallet.com/Wallets/Withdraw/<segment>
   - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
   - **Schema Types**: `FinancialProduct`, `WebApplication`
   - **JSON-LD**: ☐ todo
   - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Withdraw/(:segment)`)
+  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Withdraw/<segment>`)
   - **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑

@@ -20,17 +20,17 @@ $routes->get('clean-url-test', function () {
 
 $routes->get('/', 'Home::index');
 $routes->get('/Apex/Referral', 'Home::apexReferral');
-$routes->get('/Apex/Referral/(:segment)', 'Home::apexReferral/$1');
+$routes->get('/Apex/Referral/(:any)', 'Home::apexReferral/$1');
 $routes->get('/Corporate-Earnings', 'Home::corporateEarnings');
-$routes->get('/Corporate-Earnings/(:segment)', 'Home::corporateEarnings/$1');
+$routes->get('/Corporate-Earnings/(:any)', 'Home::corporateEarnings/$1');
 $routes->get('/Economic-Calendar', 'Home::economicCalendar');
-$routes->get('/Economic-Calendar/(:segment)', 'Home::economicCalendarContent/$1');
-$routes->get('/Getting-Started/(:segment)/(:segment)', 'Home::gettingStarted');
-$routes->get('/Getting-Started/(:segment)', 'Home::gettingStarted');
+$routes->get('/Economic-Calendar/(:any)', 'Home::economicCalendarContent/$1');
+$routes->get('/Getting-Started/(:any)/(:any)', 'Home::gettingStarted');
+$routes->get('/Getting-Started/(:any)', 'Home::gettingStarted');
 $routes->get('/Getting-Started', 'Home::gettingStarted');
 $routes->get('/Memberships', 'Home::memberships');
-$routes->get('/Memberships/(:segment)', 'Home::memberships');
-$routes->get('/Preview/Alert/(:segment)', 'Home::previewAlert');
+$routes->get('/Memberships/(:any)', 'Home::memberships');
+$routes->get('/Preview/Alert/(:any)', 'Home::previewAlert');
 $routes->get('/Privacy-Policy', 'Home::privacyPolicy');
 $routes->get('/Terms-Of-Service', 'Home::termsOfService');
 $routes->get('/resend-activation', 'Home::resendActivation');
@@ -71,15 +71,15 @@ $routes->group('', ['namespace' => 'Myth\Auth\Controllers'], function ($routes) 
     // Registration
     // Registration routes
     $routes->get('register', 'AuthController::register', ['as' => 'register']); // Base route
-    $routes->get('register/(:segment)', 'AuthController::register/$1', ['as' => 'register-segment']); // /register/<referral>
+    $routes->get('register/(:any)', 'AuthController::register/$1', ['as' => 'register-segment']); // /register/<referral>
     $routes->get('(:any)/register', 'AuthController::register', ['as' => 'dynamic-register']); // /<dynamic>/register
-    $routes->get('(:any)/register/(:segment)', 'AuthController::register/$2', ['as' => 'dynamic-register-referral']); // /<dynamic>/register/<referral>
+    $routes->get('(:any)/register/(:any)', 'AuthController::register/$2', ['as' => 'dynamic-register-referral']); // /<dynamic>/register/<referral>
 
 
     // Activation
     $routes->get('activate', 'AuthController::activateAccount', ['as' => 'activate']);
     $routes->post('activate-account', 'AuthController::activateAccount', ['as' => 'activate-account']);
-    $routes->post('activate-account/(:segment)', 'AuthController::activateAccount', ['as' => 'activate-account-by-uri']);
+    $routes->post('activate-account/(:any)', 'AuthController::activateAccount', ['as' => 'activate-account-by-uri']);
     // $routes->get('resend-activation', 'AuthController::resend', ['as' => 'resend-activation-view']);
     // $routes->post('resend-activation', 'AuthController::resendActivationCode', ['as' => 'resend-activation-code']); 
 
@@ -110,7 +110,7 @@ $routes->group('', ['namespace' => 'App\Modules\User\Controllers','filter' => 'l
     // $routes->get('/Getting-Started', 'Subscribe::index', ['as' => 'getting-started']);
     $routes->get('/MyMI-Wallet', 'WalletsController::MyMIWallet', ['as' => 'support']);
     // $routes->get('/Profile', 'DashboardController::profile', ['as' => 'profile']);
-    $routes->get('/Profile/(:segment)', 'DashboardController::profile/$1', ['as' => 'profile']);
+    $routes->get('/Profile/(:any)', 'DashboardController::profile/$1', ['as' => 'profile']);
     $routes->get('/Performance', 'DashboardController::performance', ['as' => 'performance']);
     $routes->get('/Schedule', 'DashboardController::schedule', ['as' => 'schedule']);
     $routes->get('/Support', 'DashboardController::support', ['as' => 'support']);
@@ -118,7 +118,7 @@ $routes->group('', ['namespace' => 'App\Modules\User\Controllers','filter' => 'l
     $routes->get('/Trade-Tracker', 'InvestmentsController::tradeTracker', ['as' => 'mymi-trade-tracker']);
     $routes->get('/Trade-Tracker/getTradeData', 'InvestmentsController::getTradeData', ['as' => 'get-trade-tracker-data']);
     $routes->post('/Trade-Tracker/saveTradeData', 'InvestmentsController::saveTradeData', ['as' => 'save-trade-tracker-data']);
-    $routes->get('/MyMI-Gold/Goals/(:segment)', 'DashboardController::goals', ['as' => 'mymi-gold-daily-goals']);
+    $routes->get('/MyMI-Gold/Goals/(:any)', 'DashboardController::goals', ['as' => 'mymi-gold-daily-goals']);
     // $routes->get('/MyMI-Gold/Goals/Daily', 'DashboardController::goals', ['as' => 'mymi-gold-daily-goals']);
     // $routes->get('/MyMI-Gold/Goals/Weekly', 'DashboardController::goals', ['as' => 'mymi-gold-weekly-goals']);
     // $routes->get('/MyMI-Gold/Goals/Monthly', 'DashboardController::goals', ['as' => 'mymi-gold-monthly-goals']);
@@ -133,8 +133,8 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->match(['GET', 'POST'], 'Status', 'APIController::status');
     $routes->get('Health', 'HealthController::index');              // /API/Health
     $routes->get('Ops/OPcacheReset', 'OpsController::opcacheReset'); // /API/Ops/OPcacheReset
-    $routes->match(['GET', 'POST'], 'Status/(:segment)', 'APIController::status');
-    $routes->match(['GET', 'POST'], 'Investments/getSymbolsByTradeType/(:segment)', 'APIController::getSymbolsByTradeType/$1');
+    $routes->match(['GET', 'POST'], 'Status/(:any)', 'APIController::status');
+    $routes->match(['GET', 'POST'], 'Investments/getSymbolsByTradeType/(:any)', 'APIController::getSymbolsByTradeType/$1');
 
     $routes->group('Management', function($routes) {
         $routes->get('Run-CRON-Tasks', 'ManagementController::runCRONTasks');
@@ -162,7 +162,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('scrapeAndGenerateTodaysStoryFromInbox', 'ManagementController::scrapeAndGenerateTodaysStoryFromInbox');
         $routes->get('sendAllDiscordAlerts', 'ManagementController::sendAllDiscordAlerts');
         $routes->get('sendToZapierManually', 'ManagementController::sendToZapierManually');
-        $routes->get('sharePost/(:num)/(:segment)', 'ManagementController::sharePost/$1/$2');
+        $routes->get('sharePost/(:num)/(:any)', 'ManagementController::sharePost/$1/$2');
         $routes->get('triggerPostAutogenOnEmpty', 'ManagementController::triggerPostAutogenOnEmpty');
         $routes->get('updateMarketDataForAlerts', 'ManagementController::updateMarketDataForAlerts');
 
@@ -180,32 +180,32 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->group('Alerts', function($routes) {
         $routes->match(['GET', 'POST'], 'addTradeAlert', 'AlertsController::addTradeAlert');
         $routes->match(['GET', 'POST'], 'backfillCategories', 'AlertsController::backfillCategories');
-        $routes->match(['GET', 'POST'], 'createTradeAlert/(:segment)', 'AlertsController::addTradeAlert');
+        $routes->match(['GET', 'POST'], 'createTradeAlert/(:any)', 'AlertsController::addTradeAlert');
         $routes->match(['GET', 'POST'], 'createTradeAlert', 'AlertsController::addTradeAlert');
         $routes->match(['GET', 'POST'], 'getFilteredAlerts', 'AlertsController::getFilteredAlerts');
         $routes->match(['GET', 'POST'], 'fetchAutoGeneratedAnalysis', 'AlertsController::fetchAutoGeneratedAnalysis');
         $routes->match(['GET', 'POST'], 'fetchEmailAlerts', 'AlertsController::fetchEmailAlerts');
-        $routes->match(['GET', 'POST'], 'fetchMarketAuxNews/(:segment)', 'AlertsController::fetchMarketAuxNews/$1');
+        $routes->match(['GET', 'POST'], 'fetchMarketAuxNews/(:any)', 'AlertsController::fetchMarketAuxNews/$1');
         $routes->match(['GET', 'POST'], 'forceFetchEmails', 'AlertsController::forceFetchEmails');
         $routes->match(['GET', 'POST'], 'forceFetchTickers', 'AlertsController::forceFetchTickers');
         $routes->post('API/Alerts/generateAdvisorMediaFromAlert/(:num)', 'AlertsController::generateAdvisorMediaFromAlert/$1');
         $routes->post('API/Alerts/generateAdvisorMediaFromAlert', 'AlertsController::generateAdvisorMediaFromAlert');
         $routes->match(['GET', 'POST'], 'generateNow', 'AlertsController::generateNow');
         $routes->match(['GET', 'POST'], 'generateTradeAlertSummary', 'AlertsController::generateTradeAlertSummary');
-        $routes->match(['GET', 'POST'], 'getEmaComparison/(:segment)', 'AlertsController::getEmaComparison/1');
+        $routes->match(['GET', 'POST'], 'getEmaComparison/(:any)', 'AlertsController::getEmaComparison/1');
         $routes->match(['GET', 'POST'], 'getFullMetrics', 'AlertsController::getFullMetrics');
         $routes->match(['GET', 'POST'], 'getLatestPrices', 'AlertsController::getLatestPrices');
         $routes->match(['GET', 'POST'], 'getTechnicalIndicators', 'AlertsController::getTechnicalIndicators');
         $routes->match(['GET', 'POST'], 'hideTradeAlert', 'AlertsController::hideTradeAlert');
         $routes->match(['GET', 'POST'], 'manageTradeAlert', 'AlertsController::manageTradeAlert');
-        $routes->match(['GET', 'POST'], 'markAlertAsSentAndSendEmail/(:segment)', 'AlertsController::markAlertAsSentAndSendEmail/$1');
+        $routes->match(['GET', 'POST'], 'markAlertAsSentAndSendEmail/(:any)', 'AlertsController::markAlertAsSentAndSendEmail/$1');
         $routes->match(['GET', 'POST'], 'processAlerts', 'AlertsController::processAlerts');
         $routes->match(['GET', 'POST'], 'processEmailAlerts', 'AlertsController::processEmailAlerts');
         $routes->match(['GET', 'POST'], 'processTradeAlerts', 'AlertsController::processTradeAlerts');
         $routes->match(['GET', 'POST'], 'processTradeBatch', 'AlertsController::processTradeBatch');
         $routes->match(['GET', 'POST'], 'sendAlert', 'AlertsController::sendAlert');
         $routes->match(['GET', 'POST'], 'sendDiscordAlerts', 'AlertsController::sendDiscordAlerts');
-        $routes->match(['GET', 'POST'], 'sendDiscordAlertsBySymbol/(:segment)', 'AlertsController::sendDiscordAlertsBySymbol/$1');
+        $routes->match(['GET', 'POST'], 'sendDiscordAlertsBySymbol/(:any)', 'AlertsController::sendDiscordAlertsBySymbol/$1');
         $routes->match(['GET', 'POST'], 'storeMarketingContent', 'AlertsController::storeMarketingContent');
         $routes->match(['GET', 'POST'], 'updateBatchPrices', 'AlertsController::updateBatchPrices');
         $routes->match(['GET', 'POST'], 'updateChartOverride', 'AlertsController::updateChartOverride');
@@ -236,16 +236,16 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->group('Broker', function($routes) {
         $routes->get('rh-account', 'BrokerSmokeController::rhAccount');
         $routes->get('rhEnvDebug', 'BrokerSmokeController::rhEnvDebug');
-        $routes->get('snap-accounts/(:segment)', 'BrokerSmokeController::snapAccounts/$1');
+        $routes->get('snap-accounts/(:any)', 'BrokerSmokeController::snapAccounts/$1');
     });
 
     // ------------------------
     // ✅ DripCampaignController
     // ------------------------
     $routes->group('DripCampaign', function($routes) {
-        $routes->get('click/(:segment)', 'DripCampaignController::click/$1');
+        $routes->get('click/(:any)', 'DripCampaignController::click/$1');
         $routes->get('Enroll/(:num)', 'DripCampaignController::enrollUser/$1');
-        $routes->get('open/(:segment)', 'DripCampaignController::open/$1');
+        $routes->get('open/(:any)', 'DripCampaignController::open/$1');
         $routes->get('processBatch', 'DripCampaignController::processBatch');
         $routes->get('TestCron', 'DripCampaignController::testDripCron');
     });
@@ -279,13 +279,13 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('fetchActiveTrades/(:any)', 'API::fetchActiveTrade/$1'); // Fetch User Active Trades
         $routes->get('fetchRealTimeData/(:any)/(:any)', 'API::fetchRealTimeData/$1/$2'); // Fetch Real-Time Price Data
         $routes->get('fetchWatchlistPrices/(:any)', 'InvestmentsController::fetchWatchlistPrices/$1');
-        $routes->get('getInvestmentData/(:segment)', 'InvestmentsController::getInvestmentData/$1');
+        $routes->get('getInvestmentData/(:any)', 'InvestmentsController::getInvestmentData/$1');
         $routes->get('getSymbolsByTradeType/(:any)', 'API::getSymbolsByTradeType/$1'); // Fetch Symbols by Trade Type (Stocks, Cryptos, etc.)
         $routes->get('GetUserWatchlist/(:any)', 'InvestmentsController::getUserWatchlist/$1');
         $routes->get('GetUserWatchlist/(:any)', 'InvestmentsController::getUserWatchlist/$1');
         $routes->get('refreshActiveTradesPrices/(:any)', 'InvestmentsController::refreshActiveTradesPrices/$1');
-        $routes->get('getSymbolsByTradeType/(:segment)', 'InvestmentsController::getSymbolsByTradeType/$1');
-        $routes->get('getInvestmentData/(:segment)', 'InvestmentsController::getInvestmentData/$1');
+        $routes->get('getSymbolsByTradeType/(:any)', 'InvestmentsController::getSymbolsByTradeType/$1');
+        $routes->get('getInvestmentData/(:any)', 'InvestmentsController::getInvestmentData/$1');
     });
 
     // ------------------------
@@ -349,8 +349,8 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('monitorKeywords', 'MarketingController::monitorKeywordsAndScrape');
         $routes->get('previewBufferItem/(:num)', 'MarketingController::previewBufferItem/$1');
         $routes->get('previewPendingSummaries', 'MarketingController::previewPendingSummaries');
-        $routes->get('processMarketingTempEmails/(:num)/(:segment)/(:num)', 'MarketingController::processMarketingTempEmails/$1/$2/$3');
-        $routes->get('processMarketingTempEmails/(:num)/(:segment)', 'MarketingController::processMarketingTempEmails/$1/$2');
+        $routes->get('processMarketingTempEmails/(:num)/(:any)/(:num)', 'MarketingController::processMarketingTempEmails/$1/$2/$3');
+        $routes->get('processMarketingTempEmails/(:num)/(:any)', 'MarketingController::processMarketingTempEmails/$1/$2');
         $routes->get('publishGroupedContentDraft', 'MarketingController::publishGroupedContentDraft');
         $routes->get('rankBufferPostsDaily', 'MarketingController::rankBufferPostsDaily');
         $routes->get('reprocessIncompleteEmails', 'MarketingController::reprocessIncompleteEmails');
@@ -359,18 +359,18 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('runKeywordBackfillBatch', 'MarketingController::runKeywordBackfillBatch');
         $routes->get('runKeywordEnrichment', 'MarketingController::runKeywordEnrichment');
         $routes->get('runScheduledTasks', 'MarketingController::runScheduledTasks');
-        $routes->get('Search/(:segment)/(:any)', 'ManagementController::index/$1/$2');
+        $routes->get('Search/(:any)/(:any)', 'ManagementController::index/$1/$2');
         $routes->get('sendWalkthroughEmails', 'MarketingController::sendWalkthroughEmails');
         $routes->get('scheduleApprovedPost/(:num)', 'MarketingController::scheduleApprovedPost/$1');
         $routes->get('schedulePost/(:any)/(:any)/(:any)', 'MarketingController::schedulePost/$1/$2/$3');
-        $routes->get('sharePost/(:num)/(:segment)', 'MarketingController::sharePost/$1/$2');
+        $routes->get('sharePost/(:num)/(:any)', 'MarketingController::sharePost/$1/$2');
         $routes->get('Large-Content/Form', 'MarketingController::submitLargeContentForm'); 
         $routes->post('submitLargeContent', 'MarketingController::submitLargeContent'); 
         $routes->get('testGenerateDailyDigest', 'MarketingController::testGenerateDailyDigest');
         $routes->get('testGenerateFromTempEmail/(:num)', 'MarketingController::testGenerateFromTempEmail/$1');
         $routes->get('testTfIdfEdgeCases', 'MarketingController::testTfIdfEdgeCases');
         $routes->get('testGenerateSummarizerHarness', 'MarketingController::testGenerateSummarizerHarness');
-        $routes->get('Timeline/(:segment)', 'MarketingController::timeline/$1');
+        $routes->get('Timeline/(:any)', 'MarketingController::timeline/$1');
         $routes->get('Timeline', 'MarketingController::viewTimelineGrouped');
         $routes->get('triggerBackfill', 'MarketingController::reprocessIncompleteEmails');
         $routes->get('triggerPostAutogenOnEmpty', 'MarketingController::triggerPostAutogenOnEmpty');
@@ -384,17 +384,17 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
 
     $routes->group('Projects', function($routes) {
         $routes->get('List', 'ProjectsController::list');
-        $routes->get('View/(:segment)', 'ProjectsController::view/$1');
+        $routes->get('View/(:any)', 'ProjectsController::view/$1');
         $routes->get('Holdings', 'ProjectsController::holdings');
         $routes->post('ingest/real-estate', 'ProjectsController::ingestRealEstate');
     });
 
     $routes->group('Solana', function($routes) {
-        $routes->get('getMarketPrice/(:segment)', 'SolanaController::get/$1');
-        $routes->get('getCoinAmount/(:segment)', 'SolanaController::getCoinAmount/$1');
+        $routes->get('getMarketPrice/(:any)', 'SolanaController::get/$1');
+        $routes->get('getCoinAmount/(:any)', 'SolanaController::getCoinAmount/$1');
         $routes->get('getMarketPrice', 'SolanaController::getMarketPrice');
-        $routes->get('getTokenPrice/(:segment)', 'SolanaController::getTokenPrice/$1');
-        $routes->get('getExchangePrice/(:segment)', 'SolanaController::getExchangePrice/$1');
+        $routes->get('getTokenPrice/(:any)', 'SolanaController::getTokenPrice/$1');
+        $routes->get('getExchangePrice/(:any)', 'SolanaController::getExchangePrice/$1');
         $routes->get('getAssetsData', 'SolanaController::getAssetsData');
         $routes->get('provisionDefaultWallet', 'SolanaController::provisionDefaultWallet');
         $routes->get('updatePrices', 'SolanaController::updateSolanaPrices');
@@ -402,8 +402,8 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
 
         // New Routes - Codex Pull Request https://github.com/MillennialInvestments/MyMIWallet/pull/35/files#diff-bfda09f2b1b5c0bbb67e81be1c5a9e3f3c0abcff17f9890caa17e3557bb25653R1-R4
         $routes->get('health', 'SolanaController::health');
-        $routes->get('wallet/(:segment)/balance', 'SolanaController::getBalance/$1');
-        $routes->get('wallet/(:segment)/tokens', 'SolanaController::getTokenAccounts/$1');
+        $routes->get('wallet/(:any)/balance', 'SolanaController::getBalance/$1');
+        $routes->get('wallet/(:any)/tokens', 'SolanaController::getTokenAccounts/$1');
         $routes->post('transfer', 'SolanaController::transfer');
         $routes->post('swap/quote', 'SolanaController::quote');
         $routes->post('swap/execute', 'SolanaController::swap');
@@ -430,7 +430,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->post('Snaptrade/Connect-URL', 'WalletsController::getSnapTradeConnectUrl');
 
         // (optional legacy) leave this if you still need it, but it’s not required for the client fetch:
-        $routes->get('/(:segment)/(:segment)', 'WalletsController::index/$1/$2');
+        $routes->get('/(:any)/(:any)', 'WalletsController::index/$1/$2');
         $routes->post('Banking/Update/(:num)',   'WalletsController::updateBank/$1');
         $routes->post('Credit/Update/(:num)',    'WalletsController::updateCredit/$1');
         $routes->post('Debt/Update/(:num)',      'WalletsController::updateDebt/$1');
@@ -450,13 +450,13 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
 
 $routes->group('Blog', ['namespace' => 'App\Modules\Blog\Controllers'],  function($routes) {
     $routes->get('/', 'BlogController::index'); // Landing Page
-    $routes->get('Post/(:segment)', 'BlogController::viewBlog/$1'); // Dynamic Blog Post View
+    $routes->get('Post/(:any)', 'BlogController::viewBlog/$1'); // Dynamic Blog Post View
 
     $routes->group('Earnings', function($routes) {
         $routes->get('/', 'EarningsController::index');
         $routes->get('Test', 'EarningsController::test');
-        $routes->get('(:segment)', 'EarningsController::viewByDate'); // Catch any dynamic date
-        $routes->get('(:segment)', 'EarningsController::viewByDate'); // Catch any dynamic date
+        $routes->get('(:any)', 'EarningsController::viewByDate'); // Catch any dynamic date
+        $routes->get('(:any)', 'EarningsController::viewByDate'); // Catch any dynamic date
     });
     $routes->group('Investing', function($routes) {
         $routes->get('/', 'InvestingController::index');
@@ -482,19 +482,19 @@ $routes->group('Blog', ['namespace' => 'App\Modules\Blog\Controllers'],  functio
 // Dashboard
 $routes->group('Dashboard', ['namespace' => 'App\Modules\User\Controllers','filter' => 'login'], function($routes) {
     $routes->get('/', 'BudgetController::index', ['as' => 'dashboard']);
-    $routes->get('Transaction-Modal/(:segment)', 'DashboardController::loadModalContent/$1', ['as' => 'load-modal-1-segment']);
-    $routes->get('Transaction-Modal/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2', ['as' => 'load-modal-2-segment']);
-    $routes->get('Transaction-Modal/(:segment)/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2/$3', ['as' => 'load-modal-3-segment']);
-    $routes->get('Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2/$3/$4', ['as' => 'load-modal-4-segment']);
-    $routes->get('Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2/$3/$4/$5', ['as' => 'load-modal-5-segment']);
-    $routes->get('Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2/$3/$4/$5/$6', ['as' => 'load-modal-6-segment']);
+    $routes->get('Transaction-Modal/(:any)', 'DashboardController::loadModalContent/$1', ['as' => 'load-modal-1-segment']);
+    $routes->get('Transaction-Modal/(:any)/(:any)', 'DashboardController::loadModalContent/$1/$2', ['as' => 'load-modal-2-segment']);
+    $routes->get('Transaction-Modal/(:any)/(:any)/(:any)', 'DashboardController::loadModalContent/$1/$2/$3', ['as' => 'load-modal-3-segment']);
+    $routes->get('Transaction-Modal/(:any)/(:any)/(:any)/(:any)', 'DashboardController::loadModalContent/$1/$2/$3/$4', ['as' => 'load-modal-4-segment']);
+    $routes->get('Transaction-Modal/(:any)/(:any)/(:any)/(:any)/(:any)', 'DashboardController::loadModalContent/$1/$2/$3/$4/$5', ['as' => 'load-modal-5-segment']);
+    $routes->get('Transaction-Modal/(:any)/(:any)/(:any)/(:any)/(:any)/(:any)', 'DashboardController::loadModalContent/$1/$2/$3/$4/$5/$6', ['as' => 'load-modal-6-segment']);
     $routes->get('LoadingScreen', 'DashboardController::LoadingScreen', ['as' => 'loading-screen']);
     // Additional secured routes here
 
     // ✅ Onboarding Routes
     $routes->get('onboarding', 'DashboardController::onboarding', ['as' => 'onboarding']);
     $routes->get('checkOnboardingStatus', 'DashboardController::checkOnboardingStatus', ['as' => 'check-onboarding-status']);
-    $routes->post('completeOnboardingStep/(:segment)', 'DashboardController::completeOnboardingStep/$1', ['as' => 'complete-onboarding-step']);
+    $routes->post('completeOnboardingStep/(:any)', 'DashboardController::completeOnboardingStep/$1', ['as' => 'complete-onboarding-step']);
 });
 
 $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers'],  function($routes) {
@@ -504,15 +504,15 @@ $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers
     });
     $routes->group('Alerts', function($routes) {
         $routes->get('/', 'AlertsController::index');
-        $routes->get('Add/(:segment)', 'AlertsController::add');
+        $routes->get('Add/(:any)', 'AlertsController::add');
         $routes->get('addTradeAlert', 'AlertsController::addTradeAlert');
         $routes->get('Advisor/Media', 'AlertsController::advisorMedia');
-        $routes->get('Crypto/(:segment)/(:segment)', 'Management\AlertsController::stockOverview/$1/$2');
+        $routes->get('Crypto/(:any)/(:any)', 'Management\AlertsController::stockOverview/$1/$2');
         $routes->match(['GET', 'POST'], 'Audit/Emails', 'AlertsController::auditEmailScraper');
         $routes->get('fetchData', 'AlertsController::fetchData');
-        $routes->get('Fetch/Ticker/(:segment)', 'AlertsController::fetchTickerDetails/$1');
+        $routes->get('Fetch/Ticker/(:any)', 'AlertsController::fetchTickerDetails/$1');
         $routes->get('Import/Tickers', 'AlertsController::importTickers');
-        $routes->get('Stock/(:segment)/(:segment)', 'Management\AlertsController::stockOverview/$1/$2');
+        $routes->get('Stock/(:any)/(:any)', 'Management\AlertsController::stockOverview/$1/$2');
         $routes->get('Tasks/fetchAlerts', 'Management\AlertsController::fetchData');
         $routes->get('Test', 'AlertsController::test');
         $routes->get('Test-Alert-Email', 'AlertsController::testEmail');
@@ -563,8 +563,8 @@ $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers
     });
     $routes->group('Marketing', function($routes) {
         $routes->get('/', 'MarketingController::index');
-        $routes->match(['GET', 'POST'], 'Add/(:segment)', 'MarketingController::add/$1');
-        // $routes->get('Add/(:segment)', 'MarketingController::addSchedule');
+        $routes->match(['GET', 'POST'], 'Add/(:any)', 'MarketingController::add/$1');
+        // $routes->get('Add/(:any)', 'MarketingController::addSchedule');
         $routes->match(['POST'], 'Add-Subscriber', 'MarketingController::addSubscriber');
         $routes->get('Approve-Content/(:num)', 'MarketingController::approveContent/$1');
         $routes->get('Blog-Creator', 'MarketingController::blogCreator');
@@ -589,7 +589,7 @@ $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers
         $routes->get('Post-Creator', 'MarketingController::postCreator');    
         $routes->get('previewGeneratedPost/(:num)', 'MarketingController::previewGeneratedPost/$1');
         $routes->get('Promote', 'MarketingController::promote'); 
-        $routes->get('Promote/(:segment)', 'MarketingController::promote'); 
+        $routes->get('Promote/(:any)', 'MarketingController::promote'); 
         $routes->post('PublishBlog/(:num)', 'Management\MarketingController::publishBlog/$1');
         $routes->get('Research', 'AlertsController::research');
         $routes->get('RunContentGeneration', 'Management\MarketingController::runContentGeneration');
@@ -597,7 +597,7 @@ $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers
         $routes->get('Reject-Content/(:num)', 'MarketingController::rejectContent/$1');
         $routes->post('Save-Content-Edit/(:num)', 'MarketingController::saveContentEdit/$1');
         $routes->get('Schedule', 'MarketingController::schedule'); 
-        $routes->get('Schedule/(:segment)', 'MarketingController::schedule/$1'); 
+        $routes->get('Schedule/(:any)', 'MarketingController::schedule/$1'); 
         $routes->get('scheduleNewsletters', 'MarketingController::scheduleNewsletterCampaign'); 
         $routes->get('submitDailyLog', 'MarketingController::submitDailyLog'); 
         $routes->post('Scrape-Link', 'MarketingController::scrapeLink'); // Ensure this is a POST route
@@ -606,7 +606,7 @@ $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers
         $routes->get('Test', 'MarketingController::test'); 
         $routes->get('Twitter', 'MarketingController::twitterDashboard'); 
         $routes->get('Video-Creator', 'MarketingController::videoCreator');
-        $routes->get('View-Email/(:segment)/(:segment)', 'MarketingController::viewEmail/$1/$2');
+        $routes->get('View-Email/(:any)/(:any)', 'MarketingController::viewEmail/$1/$2');
         $routes->get('View-Grouped-Summaries', 'MarketingController::View-Grouped-Summaries');
         $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsController::addUserGoldTasks');
         // Define other routes for 'blog' module
@@ -624,17 +624,17 @@ $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers
     });
     $routes->group('Marketing/Exchange', function($routes) {
         $routes->get('/', 'MarketingController::index');
-        $routes->match(['GET', 'POST'], 'Edit/(:segment)', 'MarketingController::edit/$1');
+        $routes->match(['GET', 'POST'], 'Edit/(:any)', 'MarketingController::edit/$1');
         $routes->get('Top-Communities', 'MarketingController::topCommunities');
-        $routes->get('Top-Communities/(:segment)', 'MarketingController::topCommunities/$1');
+        $routes->get('Top-Communities/(:any)', 'MarketingController::topCommunities/$1');
     });
     $routes->group('Support', function($routes) {
         $routes->get('/', 'SupportController::index');
     });
     $routes->group('Users', function($routes) {
         $routes->get('/', 'UsersController::index');
-        $routes->get('Profile/(:segment)', 'UsersController::profile');
-        $routes->match(['GET', 'POST'], 'ajaxBlockUser/(:segment)', 'UsersController::ajaxBlockUser');
+        $routes->get('Profile/(:any)', 'UsersController::profile');
+        $routes->match(['GET', 'POST'], 'ajaxBlockUser/(:any)', 'UsersController::ajaxBlockUser');
         $routes->match(['GET', 'POST'], 'ajaxBulkBanUsers', 'UsersController::ajaxBulkBanUsers');
     });
     $routes->group('Partners', function($routes) {
@@ -642,9 +642,9 @@ $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers
     });
     $routes->group('Projects', function($routes) {
         $routes->get('/', 'ProjectsController::index');
-        $routes->post('Approve/(:segment)', 'ProjectsController::approveProject/$1'); 
-        $routes->post('Edit/(:segment)', 'ProjectsController::approveProject/$1'); 
-        $routes->post('Reject/(:segment)', 'ProjectsController::rejectProject/$1'); 
+        $routes->post('Approve/(:any)', 'ProjectsController::approveProject/$1'); 
+        $routes->post('Edit/(:any)', 'ProjectsController::approveProject/$1'); 
+        $routes->post('Reject/(:any)', 'ProjectsController::rejectProject/$1'); 
         $routes->get('Quick-Intake', 'ProjectsController::realEstateQuickIntake');
         $routes->post('Quick-Intake', 'ProjectsController::realEstateQuickSubmit');
     });
@@ -688,34 +688,34 @@ $routes->group('Budget', ['namespace' => 'App\Modules\User\Controllers', 'filter
     $routes->match(['GET', 'POST'], 'Search/(:any)', 'BudgetController::index');
     $routes->match(['GET', 'POST'], 'Account-Manager', 'BudgetController::accountManager');
     $routes->match(['GET', 'POST'], 'Add', 'BudgetController::add');
-    $routes->match(['GET', 'POST'], 'Add/(:segment)', 'BudgetController::add/$1');
+    $routes->match(['GET', 'POST'], 'Add/(:any)', 'BudgetController::add/$1');
     $routes->match(['GET', 'POST'], 'Approve-Recurring-Schedule/(:num)', 'BudgetController::approveRecurringSchedule/$1');
 
     // $routes->post('Approve-Recurring-Schedule/(:num)', 'BudgetController::approveRecurringSchedule/$1');
-    $routes->match(['GET', 'POST'], 'Cancel-Account/(:segment)', 'BudgetController::cancelAccount/$1');
+    $routes->match(['GET', 'POST'], 'Cancel-Account/(:any)', 'BudgetController::cancelAccount/$1');
     $routes->match(['GET', 'POST'], 'Copy', 'BudgetController::edit');
-    $routes->match(['GET', 'POST'], 'Copy/(:segment)', 'BudgetController::edit/$1');
+    $routes->match(['GET', 'POST'], 'Copy/(:any)', 'BudgetController::edit/$1');
     $routes->match(['GET', 'POST'], 'Delete-Account', 'BudgetController::deleteAccount');
-    $routes->match(['GET', 'POST'], 'Delete-Account/(:segment)', 'BudgetController::deleteAccount/$1');
+    $routes->match(['GET', 'POST'], 'Delete-Account/(:any)', 'BudgetController::deleteAccount/$1');
     $routes->match(['GET', 'POST'], 'Details', 'BudgetController::details');
-    $routes->match(['GET', 'POST'], 'Details/(:segment)', 'BudgetController::details/$1');
+    $routes->match(['GET', 'POST'], 'Details/(:any)', 'BudgetController::details/$1');
     $routes->match(['GET', 'POST'], 'Edit', 'BudgetController::edit');
-    $routes->match(['GET', 'POST'], 'Edit/(:segment)', 'BudgetController::edit/$1');
-    $routes->match(['GET', 'POST'], 'Edit/(:segment)/(:segment)', 'BudgetController::edit/$1/$2');
+    $routes->match(['GET', 'POST'], 'Edit/(:any)', 'BudgetController::edit/$1');
+    $routes->match(['GET', 'POST'], 'Edit/(:any)/(:any)', 'BudgetController::edit/$1/$2');
     $routes->match(['GET', 'POST'], 'Expenses', 'BudgetController::accountOverview');
     $routes->match(['GET', 'POST'], 'Financial-Analysis', 'BudgetController::financialAnalysis');
     $routes->match(['GET', 'POST'], 'Financial-Forecaster', 'BudgetController::financialForecaster');
     $routes->match(['GET', 'POST'], 'Forecast', 'BudgetController::forecast');
-    $routes->match(['GET', 'POST'], 'Forecast/(:segment)', 'BudgetController::forecast/$1');
+    $routes->match(['GET', 'POST'], 'Forecast/(:any)', 'BudgetController::forecast/$1');
     $routes->match(['GET', 'POST'], 'History', 'BudgetController::history');
-    $routes->match(['GET', 'POST'], 'History/(:segment)', 'BudgetController::history');
+    $routes->match(['GET', 'POST'], 'History/(:any)', 'BudgetController::history');
     $routes->match(['GET', 'POST'], 'Income', 'BudgetController::accountOverview');
     $routes->match(['GET', 'POST'], 'Recurring-Account/Schedule', 'BudgetController::recurringSchedule/$1');
-    $routes->match(['GET', 'POST'], 'Recurring-Account/Schedule/(:segment)', 'BudgetController::recurringSchedule/$1');
-    $routes->match(['GET', 'POST'], 'Recurring-Account/Edit/(:segment)', 'BudgetController::edit/$1');
-    $routes->match(['GET', 'POST'], 'Settings/(:segment)', 'BudgetController::settings/$1');
-    $routes->match(['GET', 'POST'], 'Status/Paid/(:segment)', 'BudgetController::paid/$1');
-    $routes->match(['GET', 'POST'], 'Status/Unpaid/(:segment)', 'BudgetController::unpaid/$1');
+    $routes->match(['GET', 'POST'], 'Recurring-Account/Schedule/(:any)', 'BudgetController::recurringSchedule/$1');
+    $routes->match(['GET', 'POST'], 'Recurring-Account/Edit/(:any)', 'BudgetController::edit/$1');
+    $routes->match(['GET', 'POST'], 'Settings/(:any)', 'BudgetController::settings/$1');
+    $routes->match(['GET', 'POST'], 'Status/Paid/(:any)', 'BudgetController::paid/$1');
+    $routes->match(['GET', 'POST'], 'Status/Unpaid/(:any)', 'BudgetController::unpaid/$1');
 
     $routes->get('getUserBudgetRecords', 'BudgetController::getUserBudgetRecords');
     $routes->get('getUserCreditBalances', 'BudgetController::getUserCreditBalances');
@@ -738,7 +738,7 @@ $routes->group('Investments', ['namespace' => 'App\Modules\User\Controllers', 'f
     $routes->match(['GET', 'POST'], '/', 'InvestmentsController::index');
     $routes->post('Account-Manager', 'InvestmentsController::accountManager'); // Account Manager to handle adding, editing, deleting Investments Records to/from Database
     $routes->match(['GET', 'POST'], 'Add', 'InvestmentsController::add'); // Add New Investment Records to Database
-    $routes->match(['GET', 'POST'], 'Add/(:segment)', 'InvestmentsController::add'); // Add New Investment Records to Database
+    $routes->match(['GET', 'POST'], 'Add/(:any)', 'InvestmentsController::add'); // Add New Investment Records to Database
     $routes->match(['GET', 'POST'], 'Autosave', 'InvestmentsController::autoSave');
     $routes->match(['GET', 'POST'], 'Overview', 'InvestmentsController::overview');
     $routes->match(['GET', 'POST'], 'Retirement', 'InvestmentsController::retirement');
@@ -774,15 +774,15 @@ $routes->group('Projects', ['namespace' => 'App\Modules\User\Controllers', 'filt
     $routes->match(['GET', 'POST'], '/', 'ProjectsController::index');
     $routes->match(['GET', 'POST'], 'Add', 'ProjectsController::add');
     $routes->match(['GET', 'POST'], 'Holdings', 'ProjectsController::holdings');
-    $routes->match(['GET', 'POST'], 'View/(:segment)', 'ProjectsController::viewProject/$1');
-    $routes->match(['GET', 'POST'], 'Commit/(:segment)', 'ProjectsController::commit/$1');
-    $routes->match(['GET', 'POST'], 'Submit/Commit/(:segment)', 'ProjectsController::submitCommit/$1');
-    $routes->match(['GET', 'POST'], 'Invest/(:segment)', 'ProjectsController::invest/$1');
-    $routes->match(['GET', 'POST'], 'Submit/Invest/(:segment)', 'ProjectsController::submitInvest/$1');
-    $routes->match(['GET', 'POST'], 'Sell/(:segment)', 'ProjectsController::sell/$1');
-    $routes->match(['GET', 'POST'], 'Submit/Sell/(:segment)', 'ProjectsController::submitSell/$1');
-    $routes->match(['GET', 'POST'], 'Discuss/(:segment)', 'ProjectsController::discuss/$1');
-    $routes->match(['GET', 'POST'], 'Submit/Discuss/(:segment)', 'ProjectsController::submitDiscuss/$1');
+    $routes->match(['GET', 'POST'], 'View/(:any)', 'ProjectsController::viewProject/$1');
+    $routes->match(['GET', 'POST'], 'Commit/(:any)', 'ProjectsController::commit/$1');
+    $routes->match(['GET', 'POST'], 'Submit/Commit/(:any)', 'ProjectsController::submitCommit/$1');
+    $routes->match(['GET', 'POST'], 'Invest/(:any)', 'ProjectsController::invest/$1');
+    $routes->match(['GET', 'POST'], 'Submit/Invest/(:any)', 'ProjectsController::submitInvest/$1');
+    $routes->match(['GET', 'POST'], 'Sell/(:any)', 'ProjectsController::sell/$1');
+    $routes->match(['GET', 'POST'], 'Submit/Sell/(:any)', 'ProjectsController::submitSell/$1');
+    $routes->match(['GET', 'POST'], 'Discuss/(:any)', 'ProjectsController::discuss/$1');
+    $routes->match(['GET', 'POST'], 'Submit/Discuss/(:any)', 'ProjectsController::submitDiscuss/$1');
     $routes->post('AddComment', 'ProjectsController::addComment');
 }); 
 
@@ -822,7 +822,7 @@ $routes->group('Exchange', ['namespace' => 'App\Modules\Exchange\Controllers', '
         $routes->get('Test-Page', 'SolanaController::testPage', ['as' => 'mymi-solana-test-page']);
         $routes->get('Assets', 'SolanaController::assets', ['as' => 'mymi-solana-assets']);
         $routes->get('Create', 'SolanaController::create', ['as' => 'mymi-solana-create']);
-        $routes->get('Wallet/Disconnect/(:segment)', 'SolanaController::disconnectWallet/$1', ['as' => 'mymi-solana-create']);
+        $routes->get('Wallet/Disconnect/(:any)', 'SolanaController::disconnectWallet/$1', ['as' => 'mymi-solana-create']);
         $routes->get('Import', 'SolanaController::import', ['as' => 'mymi-solana-import']);
         $routes->get('Swap', 'SolanaController::coinSwap', ['as' => 'mymi-solana-coin-swap']);
         $routes->get('Create/Wallet', 'SolanaController::create', ['as' => 'mymi-solana-create-wallet']);
@@ -876,7 +876,7 @@ $routes->group('Announcements', ['namespace' => 'App\Modules\Blog\Controllers'],
 $routes->group('Support', ['namespace' => 'App\Modules\Support\Controllers'], function($routes) {
     $routes->get('/', 'SupportController::index');
     $routes->get('FAQ', 'SupportController::faq');
-    $routes->get('Article/(:segment)', 'SupportController::article/$1');
+    $routes->get('Article/(:any)', 'SupportController::article/$1');
     $routes->post('Feedback', 'SupportController::feedback');
     $routes->get('Test', 'SupportController::test');
     $routes->get('Test-Email', 'SupportController::sendTestEmail');
@@ -914,75 +914,75 @@ $routes->group('Wallets', ['namespace' => 'App\Modules\User\Controllers', 'filte
     $routes->match(['GET', 'POST'], '/', 'WalletsController::index', ['as' => 'wallets.index']);
     $routes->match(['GET', 'POST'], 'Account-Manager', 'WalletsController::accountManager', ['as' => 'wallets.account-manager']);
     $routes->match(['GET', 'POST'], 'Add', 'WalletsController::add', ['as' => 'wallets.add']);
-    $routes->match(['GET', 'POST'], 'Add/(:segment)', 'WalletsController::add/$1', ['as' => 'wallets.add.segment']);
-    $routes->match(['GET', 'POST'], 'Add/(:segment)/(:segment)', 'WalletsController::addFetch/$1/$2', ['as' => 'wallets.add.segment.segment']);
+    $routes->match(['GET', 'POST'], 'Add/(:any)', 'WalletsController::add/$1', ['as' => 'wallets.add.segment']);
+    $routes->match(['GET', 'POST'], 'Add/(:any)/(:any)', 'WalletsController::addFetch/$1/$2', ['as' => 'wallets.add.segment.segment']);
     $routes->match(['GET', 'POST'], 'Add/Bank-Account', 'WalletsController::createBankeAccount', ['as' => 'wallets.add.bank-account']);
     $routes->match(['GET', 'POST'], 'Attach-Account', 'WalletsController::attachAccount', ['as' => 'wallets.attach-account']);
-    $routes->match(['GET', 'POST'], 'Attach-Account/(:segment)/(:segment)/(:segment)', 'WalletsController::attachAccount/$1/$2/$3', ['as' => 'wallets.attach-account.segment.segment.segment']);
+    $routes->match(['GET', 'POST'], 'Attach-Account/(:any)/(:any)/(:any)', 'WalletsController::attachAccount/$1/$2/$3', ['as' => 'wallets.attach-account.segment.segment.segment']);
     $routes->match(['GET', 'POST'], 'Banking', 'WalletsController::banking', ['as' => 'wallets.banking']);
-    $routes->match(['GET', 'POST'], 'Banking/Add/Account/(:segment)', 'WalletsController::add', ['as' => 'wallets.banking.add.account.segment']);
-    $routes->match(['GET', 'POST'], 'Banking/(:segment)', 'WalletsController::addAccount', ['as' => 'wallets.banking.segment']);
-    $routes->match(['GET', 'POST'], 'Banking/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.banking.details.segment']);
-    $routes->match(['GET', 'POST'], 'Banking/Edit/Account/(:segment)', 'WalletsController::edit/$1', ['as' => 'wallets.banking.edit.account.segment']);
+    $routes->match(['GET', 'POST'], 'Banking/Add/Account/(:any)', 'WalletsController::add', ['as' => 'wallets.banking.add.account.segment']);
+    $routes->match(['GET', 'POST'], 'Banking/(:any)', 'WalletsController::addAccount', ['as' => 'wallets.banking.segment']);
+    $routes->match(['GET', 'POST'], 'Banking/Details/(:any)', 'WalletsController::details/$1', ['as' => 'wallets.banking.details.segment']);
+    $routes->match(['GET', 'POST'], 'Banking/Edit/Account/(:any)', 'WalletsController::edit/$1', ['as' => 'wallets.banking.edit.account.segment']);
     $routes->match(['GET', 'POST'], 'Checking', 'WalletsController::index', ['as' => 'wallets.checking']);
     $routes->match(['GET', 'POST'], 'Create', 'WalletsController::generateWallet', ['as' => 'wallets.create']); // Previously /Wallets/Address-Generator
     $routes->match(['GET', 'POST'], 'Credit', 'WalletsController::index', ['as' => 'wallets.credit']);
-    $routes->match(['GET', 'POST'], 'Credit/Details/(:segment)', 'WalletsController::details/$1');
-    $routes->match(['GET', 'POST'], 'Credit/Edit/Account/(:segment)', 'WalletsController::edit/$1');
+    $routes->match(['GET', 'POST'], 'Credit/Details/(:any)', 'WalletsController::details/$1');
+    $routes->match(['GET', 'POST'], 'Credit/Edit/Account/(:any)', 'WalletsController::edit/$1');
     $routes->match(['GET', 'POST'], 'Coin-Swap', 'WalletsController::coinSwap', ['as' => 'wallets.coin-swap']);
-    $routes->match(['GET', 'POST'], 'Coin-Swap/(:segment)', 'WalletsController::coinSwap/$1', ['as' => 'wallets.coin-swap.segment']);
+    $routes->match(['GET', 'POST'], 'Coin-Swap/(:any)', 'WalletsController::coinSwap/$1', ['as' => 'wallets.coin-swap.segment']);
     $routes->match(['GET', 'POST'], 'Complete/Purchase', 'WalletsController::completePurchase', ['as' => 'wallets.complete.purchase']);
     $routes->match(['GET', 'POST'], 'Confirm-Deposit', 'WalletsController::confirmDeposit', ['as' => 'wallets.confirm.deposit']);
     $routes->match(['GET', 'POST'], 'Debt', 'WalletsController::index', ['as' => 'wallets.debt']);
-    $routes->match(['GET', 'POST'], 'Debt/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.debt.details.segment']);
-    $routes->match(['GET', 'POST'], 'Debt/Edit/Account/(:segment)', 'WalletsController::edit/$1', ['as' => 'wallets.debt.edit.account.segment']);
-    $routes->match(['GET', 'POST'], 'Delete/(:segment)/(:segment)', 'WalletsController::delete/$1/$2');
+    $routes->match(['GET', 'POST'], 'Debt/Details/(:any)', 'WalletsController::details/$1', ['as' => 'wallets.debt.details.segment']);
+    $routes->match(['GET', 'POST'], 'Debt/Edit/Account/(:any)', 'WalletsController::edit/$1', ['as' => 'wallets.debt.edit.account.segment']);
+    $routes->match(['GET', 'POST'], 'Delete/(:any)/(:any)', 'WalletsController::delete/$1/$2');
     $routes->match(['GET', 'POST'], 'Deposit', 'WalletsController::deposit', ['as' => 'wallets.deposit']);
     $routes->match(['GET', 'POST'], 'Deposit/Fetch', 'WalletsController::addDepositFetch', ['as' => 'wallets.deposit.fetch']);
     $routes->match(['GET', 'POST'], 'Deposit/Complete', 'WalletsController::depositComplete', ['as' => 'wallets.deposit.complete']);
-    $routes->match(['GET', 'POST'], 'Deposit/Complete/(:segment)', 'WalletsController::depositComplete/$1', ['as' => 'wallets.deposit.complete.segment']);
-    $routes->match(['GET', 'POST'], 'Deposit/(:segment)', 'WalletsController::deposit/$1', ['as' => 'wallets.deposit.segment']);
+    $routes->match(['GET', 'POST'], 'Deposit/Complete/(:any)', 'WalletsController::depositComplete/$1', ['as' => 'wallets.deposit.complete.segment']);
+    $routes->match(['GET', 'POST'], 'Deposit/(:any)', 'WalletsController::deposit/$1', ['as' => 'wallets.deposit.segment']);
     $routes->match(['GET', 'POST'], 'Deposit/Funds', 'WalletsController::deposit', ['as' => 'wallets.deposit.funds']);
     $routes->match(['GET', 'POST'], 'Details', 'WalletsController::details', ['as' => 'wallets.details']);
     $routes->match(['GET', 'POST'], 'Edit', 'WalletsController::edit', ['as' => 'wallets.edit']);
-    $routes->match(['GET', 'POST'], 'Edit/(:segment)', 'WalletsController::edit/$1', ['as' => 'wallets.edit.segment']); // Previously /Wallets/Address-Generator
-    $routes->match(['GET', 'POST'], 'Edit/(:segment)/(:segment)', 'WalletsController::edit/$1/$2', ['as' => 'wallets.edit.segment.segment']); // Previously /Wallets/Address-Generator
+    $routes->match(['GET', 'POST'], 'Edit/(:any)', 'WalletsController::edit/$1', ['as' => 'wallets.edit.segment']); // Previously /Wallets/Address-Generator
+    $routes->match(['GET', 'POST'], 'Edit/(:any)/(:any)', 'WalletsController::edit/$1/$2', ['as' => 'wallets.edit.segment.segment']); // Previously /Wallets/Address-Generator
     $routes->match(['GET', 'POST'], 'Feature-Manager', 'WalletsController::featureManager', ['as' => 'wallets.feature-manager']);
     $routes->match(['GET', 'POST'], 'Generate-Wallet', 'WalletsController::generateWallet', ['as' => 'wallets.generate-wallet']);
     $routes->match(['GET', 'POST'], 'Investments', 'WalletsController::index', ['as' => 'wallets.investments']);
-    $routes->match(['GET', 'POST'], 'Investment/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.investment.details']);
-    $routes->match(['GET', 'POST'], 'Investment/Edit/Account/(:segment)', 'WalletsController::edit/$1', ['as' => 'wallets.investment.edit']);
+    $routes->match(['GET', 'POST'], 'Investment/Details/(:any)', 'WalletsController::details/$1', ['as' => 'wallets.investment.details']);
+    $routes->match(['GET', 'POST'], 'Investment/Edit/Account/(:any)', 'WalletsController::edit/$1', ['as' => 'wallets.investment.edit']);
     $routes->match(['GET', 'POST'], 'Link-Account', 'WalletsController::linkAccount', ['as' => 'wallets.link-account']);
-    $routes->match(['GET', 'POST'], 'Link-Account/(:segment)', 'WalletsController::linkAccount/$1', ['as' => 'wallets.link-account.segment']);
-    $routes->match(['GET', 'POST'], 'Link-Account/(:segment)/(:segment)', 'WalletsController::linkAccount/$1', ['as' => 'wallets.link-account.segment.segment']);
+    $routes->match(['GET', 'POST'], 'Link-Account/(:any)', 'WalletsController::linkAccount/$1', ['as' => 'wallets.link-account.segment']);
+    $routes->match(['GET', 'POST'], 'Link-Account/(:any)/(:any)', 'WalletsController::linkAccount/$1', ['as' => 'wallets.link-account.segment.segment']);
     $routes->match(['GET', 'POST'], 'Link-Account/Success', 'WalletsController::linkAccountSuccess', ['as' => 'wallets.link-account.success']);
-    $routes->match(['GET', 'POST'], 'Link-Account/Success/(:segment)', 'WalletsController::linkAccountSuccess/$1', ['as' => 'wallets.link-account.success.segment']);
+    $routes->match(['GET', 'POST'], 'Link-Account/Success/(:any)', 'WalletsController::linkAccountSuccess/$1', ['as' => 'wallets.link-account.success.segment']);
     $routes->match(['GET', 'POST'], 'Manager', 'WalletsController::walletManager', ['as' => 'wallets.manager']);
     $routes->match(['GET', 'POST'], 'Wallets/MyMIGPayPalCallback', 'WalletsController::handleMyMIGPayPalCallback');
     $routes->match(['GET', 'POST'], 'Purchase', 'WalletsController::purchase');
     $routes->match(['GET', 'POST'], 'Purchase-Manager', 'WalletsController::purchaseManager');
-    $routes->match(['GET', 'POST'], 'Purchase/(:segment)', 'WalletsController::purchase');
+    $routes->match(['GET', 'POST'], 'Purchase/(:any)', 'WalletsController::purchase');
     $routes->match(['GET', 'POST'], 'Purchase/Memberships/Customize', 'WalletsController::customizeMembership');
     $routes->match(['GET', 'POST'], 'Purchase/Memberships/Success', 'WalletsController::purchaseMembershipSuccess');
     $routes->match(['GET', 'POST'], 'Purchase/Memberships/Success', 'WalletsController::purchaseMembershipSuccess');
-    $routes->match(['GET', 'POST'], 'Purchase/Memberships/(:segment)', 'WalletsController::purchase');
-    $routes->match(['GET', 'POST'], 'Purchase/Memberships/(:segment)/(:segment)', 'WalletsController::purchase');
+    $routes->match(['GET', 'POST'], 'Purchase/Memberships/(:any)', 'WalletsController::purchase');
+    $routes->match(['GET', 'POST'], 'Purchase/Memberships/(:any)/(:any)', 'WalletsController::purchase');
     // $routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold', 'WalletsController::purchaseGold');
-    $routes->match(['GET', 'POST'], 'Purchase/(:segment)/Complete', 'WalletsController::purchaseComplete');
-    $routes->match(['GET', 'POST'], 'Purchase/Complete/(:segment)', 'WalletsController::purchaseComplete/$1');
-    $routes->match(['GET', 'POST'], 'Purchase/Complete/(:segment)/(:segment)', 'WalletsController::purchaseComplete/$1/$2');
+    $routes->match(['GET', 'POST'], 'Purchase/(:any)/Complete', 'WalletsController::purchaseComplete');
+    $routes->match(['GET', 'POST'], 'Purchase/Complete/(:any)', 'WalletsController::purchaseComplete/$1');
+    $routes->match(['GET', 'POST'], 'Purchase/Complete/(:any)/(:any)', 'WalletsController::purchaseComplete/$1/$2');
     $routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold', 'WalletsController::purchaseMyMIGold');
     // $routes->match(['GET', 'POST'], 'Purchase/Complete/MyMI-Gold', 'WalletsController::purchaseMyMIGold');
-    // $routes->match(['GET', 'POST'], 'Purchase/Complete/MyMI-Gold/(:segment)', 'WalletsController::purchaseMyMIGold');
-    // $routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold/Complete/(:segment)', 'WalletsController::purchaseComplete/$1');
-    $routes->match(['GET', 'POST'], 'Purchase/MyMIGold/Security/(:segment)', 'WalletsController::securityViolation');
+    // $routes->match(['GET', 'POST'], 'Purchase/Complete/MyMI-Gold/(:any)', 'WalletsController::purchaseMyMIGold');
+    // $routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold/Complete/(:any)', 'WalletsController::purchaseComplete/$1');
+    $routes->match(['GET', 'POST'], 'Purchase/MyMIGold/Security/(:any)', 'WalletsController::securityViolation');
     $routes->match(['GET', 'POST'], 'Transfer-Funds', 'WalletsController::transferFunds', ['as' => 'wallets.transfer-funds']);
     $routes->match(['GET', 'POST'], 'Wallet-Generator', 'WalletsController::walletGenerator', ['as' => 'wallets.generator']);
     $routes->match(['GET', 'POST'], 'Wallet-Selection', 'WalletsController::walletSelections', ['as' => 'wallets.selection']);
     $routes->match(['GET', 'POST'], 'Wallet-Transactions', 'WalletsController::walletTransaction', ['as' => 'wallets.transactions']);
-    $routes->match(['GET', 'POST'], 'Wallet-Transaction/(:segment)', 'WalletsController::walletTransaction/$1', ['as' => 'wallets.transactions.segment']);
+    $routes->match(['GET', 'POST'], 'Wallet-Transaction/(:any)', 'WalletsController::walletTransaction/$1', ['as' => 'wallets.transactions.segment']);
     $routes->match(['GET', 'POST'], 'Withdraw', 'WalletsController::withdraw', ['as' => 'wallets.withdraw']); // Previously /Wallets/Withdraw-Funds
-    $routes->match(['GET', 'POST'], 'Withdraw/(:segment)', 'WalletsController::withdraw/$1', ['as' => 'wallets.withdraw.segment']); // Previously /Wallets/Withdraw-Funds
+    $routes->match(['GET', 'POST'], 'Withdraw/(:any)', 'WalletsController::withdraw/$1', ['as' => 'wallets.withdraw.segment']); // Previously /Wallets/Withdraw-Funds
     $routes->match(['GET', 'POST'], 'Withdraw/Fetch', 'WalletsController::addWithdrawFetch', ['as' => 'wallets.withdraw.fetch']);
     // Add other necessary route definitions here
 });
@@ -1092,13 +1092,13 @@ if (ENVIRONMENT !== 'production') {
 //     $routes->match(['GET', 'POST'], 'forceFetchEmails', 'AlertsController::forceFetchEmails');
 //     $routes->match(['GET', 'POST'], 'forceFetchTickers', 'AlertsController::forceFetchTickers');
 //     $routes->match(['GET', 'POST'], 'manageTradeAlert', 'AlertsController::manageTradeAlert');
-//     $routes->match(['GET', 'POST'], 'markAlertAsSentAndSendEmail/(:segment)', 'AlertsController::markAlertAsSentAndSendEmail/$1');
+//     $routes->match(['GET', 'POST'], 'markAlertAsSentAndSendEmail/(:any)', 'AlertsController::markAlertAsSentAndSendEmail/$1');
 //     $routes->match(['GET', 'POST'], 'updateTradeAlerts', 'AlertsController::updateTradeAlerts');
 //     $routes->match(['GET', 'POST'], 'processAlerts', 'AlertsController::processAlerts');
 //     $routes->match(['GET', 'POST'], 'processTradeAlerts', 'AlertsController::processTradeAlerts');
 //     $routes->match(['GET', 'POST'], 'sendAlert', 'AlertsController::sendAlert');
 //     $routes->match(['GET', 'POST'], 'sendDiscordAlerts', 'AlertsController::sendDiscordAlerts');
-//     $routes->match(['GET', 'POST'], 'sendDiscordAlertsBySymbol/(:segment)', 'AlertsController::sendDiscordAlertsBySymbol/$1');
+//     $routes->match(['GET', 'POST'], 'sendDiscordAlertsBySymbol/(:any)', 'AlertsController::sendDiscordAlertsBySymbol/$1');
 //     $routes->match(['GET', 'POST'], 'storeMarketingContent', 'AlertsController::storeMarketingContent');
 //     $routes->match(['GET', 'POST'], 'updateChartOverride', 'AlertsController::updateChartOverride');
 //     $routes->match(['GET', 'POST'], 'updateExchange', 'AlertsController::updateExchange');
@@ -1152,7 +1152,7 @@ if (ENVIRONMENT !== 'production') {
 //     $routes->get('runDailyAlphaVantageDataPipeline', 'ManagementController::runDailyAlphaVantageDataPipeline');
 //     $routes->get('sendToZapierManually', 'ManagementController::sendToZapierManually');
 //     $routes->get('scrapeAndGenerateTodaysStoryFromInbox', 'ManagementController::scrapeAndGenerateTodaysStoryFromInbox');
-//     $routes->get('sharePost/(:num)/(:segment)', 'ManagementController::sharePost/$1/$2');
+//     $routes->get('sharePost/(:num)/(:any)', 'ManagementController::sharePost/$1/$2');
 //     $routes->get('sendAllDiscordAlerts', 'ManagementController::sendAllDiscordAlerts');
 //     $routes->get('updateMarketDataForAlerts', 'ManagementController::updateMarketDataForAlerts');
 // });
@@ -1210,10 +1210,10 @@ if (ENVIRONMENT !== 'production') {
 // // Management - Alert Management:
 // $routes->group('Management/Alerts', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'AlertsController::index');
-//     $routes->get('Add/(:segment)', 'AlertsController::add');
+//     $routes->get('Add/(:any)', 'AlertsController::add');
 //     $routes->get('addTradeAlert', 'AlertsController::addTradeAlert');
 //     $routes->get('fetchData', 'AlertsController::fetchData');
-//     $routes->get('Fetch/Ticker/(:segment)', 'AlertsController::fetchTickerDetails/$1');
+//     $routes->get('Fetch/Ticker/(:any)', 'AlertsController::fetchTickerDetails/$1');
 //     $routes->get('Import/Tickers', 'AlertsController::importTickers');
 //     $routes->get('Tasks/fetchAlerts', 'Management\AlertsController::fetchData');
 //     $routes->get('Test', 'AlertsController::testEmail');
@@ -1225,8 +1225,8 @@ if (ENVIRONMENT !== 'production') {
 // // Management - Marketing:
 // $routes->group('Management/Marketing', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'MarketingController::index');
-//     $routes->match(['GET', 'POST'], 'Add/(:segment)', 'MarketingController::add/$1');
-//     // $routes->get('Add/(:segment)', 'MarketingController::addSchedule');
+//     $routes->match(['GET', 'POST'], 'Add/(:any)', 'MarketingController::add/$1');
+//     // $routes->get('Add/(:any)', 'MarketingController::addSchedule');
 //     $routes->match(['POST'], 'Add-Subscriber', 'MarketingController::addSubscriber');
 //     $routes->get('Approve-Content/(:num)', 'MarketingController::approveContent/$1');
 //     $routes->get('Blog-Creator', 'MarketingController::blogCreator');
@@ -1250,14 +1250,14 @@ if (ENVIRONMENT !== 'production') {
 //     $routes->get('Post-Creator', 'MarketingController::postCreator');    
 //     $routes->get('previewGeneratedPost/(:num)', 'MarketingController::previewGeneratedPost/$1');
 //     $routes->get('Promote', 'MarketingController::promote'); 
-//     $routes->get('Promote/(:segment)', 'MarketingController::promote'); 
+//     $routes->get('Promote/(:any)', 'MarketingController::promote'); 
 //     $routes->post('PublishBlog/(:num)', 'Management\MarketingController::publishBlog/$1');
 //     $routes->get('RunContentGeneration', 'Management\MarketingController::runContentGeneration');
 //     $routes->get('Quick-Scraper', 'MarketingController::standaloneScrape'); 
 //     $routes->get('Reject-Content/(:num)', 'MarketingController::rejectContent/$1');
 //     $routes->post('Save-Content-Edit/(:num)', 'MarketingController::saveContentEdit/$1');
 //     $routes->get('Schedule', 'MarketingController::schedule'); 
-//     $routes->get('Schedule/(:segment)', 'MarketingController::schedule/$1'); 
+//     $routes->get('Schedule/(:any)', 'MarketingController::schedule/$1'); 
 //     $routes->get('scheduleNewsletters', 'MarketingController::scheduleNewsletterCampaign'); 
 //     $routes->get('submitDailyLog', 'MarketingController::submitDailyLog'); 
 //     $routes->get('Large-Content/Form', 'MarketingController::submitLargeContentForm'); 
@@ -1284,9 +1284,9 @@ if (ENVIRONMENT !== 'production') {
 // // Management - Marketing:
 // $routes->group('Management/Marketing/Exchanges', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'MarketingController::index');
-//     $routes->match(['GET', 'POST'], 'Edit/(:segment)', 'MarketingController::edit/$1');
+//     $routes->match(['GET', 'POST'], 'Edit/(:any)', 'MarketingController::edit/$1');
 //     $routes->get('Top-Communities', 'MarketingController::topCommunities');
-//     $routes->get('Top-Communities/(:segment)', 'MarketingController::topCommunities/$1');
+//     $routes->get('Top-Communities/(:any)', 'MarketingController::topCommunities/$1');
 //     // $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsController::addUserGoldTasks');
 //     // Define other routes for 'blog' module
 // });
@@ -1300,9 +1300,9 @@ if (ENVIRONMENT !== 'production') {
 // // Management - Projects:
 // $routes->group('Management/Projects', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'ProjectsController::index');
-//     $routes->post('Approve/(:segment)', 'ProjectsController::approveProject/$1'); 
-//     $routes->post('Edit/(:segment)', 'ProjectsController::approveProject/$1'); 
-//     $routes->post('Reject/(:segment)', 'ProjectsController::rejectProject/$1'); 
+//     $routes->post('Approve/(:any)', 'ProjectsController::approveProject/$1'); 
+//     $routes->post('Edit/(:any)', 'ProjectsController::approveProject/$1'); 
+//     $routes->post('Reject/(:any)', 'ProjectsController::rejectProject/$1'); 
 //     // Define other routes for 'blog' module
 // });
 
@@ -1333,8 +1333,8 @@ if (ENVIRONMENT !== 'production') {
 // // Management - Users:
 // $routes->group('Management/Users', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'UsersController::index');
-//     $routes->get('Profile/(:segment)', 'UsersController::profile');
-//     $routes->match(['GET', 'POST'], 'ajaxBlockUser/(:segment)', 'UsersController::ajaxBlockUser');
+//     $routes->get('Profile/(:any)', 'UsersController::profile');
+//     $routes->match(['GET', 'POST'], 'ajaxBlockUser/(:any)', 'UsersController::ajaxBlockUser');
 //     $routes->match(['GET', 'POST'], 'ajaxBulkBanUsers', 'UsersController::ajaxBulkBanUsers');
 //     // Define other routes for 'blog' module
 // });
@@ -1355,7 +1355,7 @@ if (ENVIRONMENT !== 'production') {
 // // Blog:
 // $routes->group('Blog', ['namespace' => 'App\Modules\Blog\Controllers'], function($routes) {
 //     $routes->get('/', 'BlogController::index'); // Landing Page
-//     $routes->get('Post/(:segment)', 'BlogController::viewBlog/$1'); // Dynamic Blog Post View
+//     $routes->get('Post/(:any)', 'BlogController::viewBlog/$1'); // Dynamic Blog Post View
 //     // Define other routes for 'blog' module
 // });
 
@@ -1363,8 +1363,8 @@ if (ENVIRONMENT !== 'production') {
 // $routes->group('Blog/Earnings', ['namespace' => 'App\Modules\Blog\Controllers'], function($routes) {
 //     $routes->get('/', 'EarningsController::index');
 //     $routes->get('Test', 'EarningsController::test');
-//     $routes->get('(:segment)', 'EarningsController::viewByDate'); // Catch any dynamic date
-//     $routes->get('(:segment)', 'EarningsController::viewByDate'); // Catch any dynamic date
+//     $routes->get('(:any)', 'EarningsController::viewByDate'); // Catch any dynamic date
+//     $routes->get('(:any)', 'EarningsController::viewByDate'); // Catch any dynamic date
 // });
 
 

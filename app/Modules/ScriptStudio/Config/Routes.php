@@ -11,5 +11,5 @@ $routes->group('ScriptStudio', ['namespace' => 'App\\Modules\\ScriptStudio\\Cont
     $routes->get('Edit/(:num)', 'ScriptStudioController::edit/$1');
     $routes->post('Update/(:num)', 'ScriptStudioController::update/$1');
     $routes->get('Preview/(:num)', 'ScriptStudioController::preview/$1');
-    $routes->get('Export/(:num)/(:segment)', 'ScriptStudioController::export/$1/$2');
+    $routes->get('Export/(:num)/(:any)', 'ScriptStudioController::export/$1/$2');
 });

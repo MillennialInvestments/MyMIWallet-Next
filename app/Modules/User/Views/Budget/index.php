@@ -8,6 +8,7 @@ $today = new DateTime('today');
 $thisMonthStart = new DateTime($today->format('Y-m-01'));
 $sixMonthsAgoDT = (clone $thisMonthStart)->modify('-6 months');
 $sixMonthsAheadDT = (clone $thisMonthStart)->modify('+6 months');
+$nextMonthKey   = $nextMonthKey ?? date('Y-m', strtotime('first day of next month'));
 
 $last_year = $current_year - 1;
 $next_year = $current_year + 1;
@@ -332,9 +333,12 @@ if (!function_exists('miw_is_outflow')) {
             <a class="btn btn-outline-danger" href="<?= site_url('Budget/Last-Month/Expense'); ?>">Expenses</a>
         </div>
         <div class="btn-group" role="group" aria-label="Next month quick links">
-            <a class="btn btn-outline-primary" href="<?= site_url('Budget/Next-Month'); ?>">Next Month (All)</a>
-            <a class="btn btn-outline-success" href="<?= site_url('Budget/Next-Month/Income'); ?>">Income</a>
-            <a class="btn btn-outline-danger" href="<?= site_url('Budget/Next-Month/Expense'); ?>">Expenses</a>
+            <?php
+                $nextMonthUrl = site_url('Budget/Next-Month/' . $nextMonthKey);
+            ?>
+            <a class="btn btn-outline-primary" href="<?= $nextMonthUrl; ?>">Next Month (All)</a>
+            <a class="btn btn-outline-success" href="<?= $nextMonthUrl . '/Income'; ?>">Income</a>
+            <a class="btn btn-outline-danger" href="<?= $nextMonthUrl . '/Expense'; ?>">Expenses</a>
         </div>
     </div> -->
     <?php if (!empty($userAgent) && method_exists($userAgent, 'isBrowser') && $userAgent->isBrowser()): ?>
