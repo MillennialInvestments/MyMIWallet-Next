@@ -1676,9 +1676,13 @@ class WalletsController extends UserController
             $email->setMessage("User with ID {$this->cuID} tried to access unauthorized transaction {$trans_id}.");
             $email->send();
     
-            $webhook = new Client(['base_uri' => 'https://discord.com/api/webhooks/...']);
-            $webhook->post('', ['json' => ['content' => "Alert! User with ID {$this->cuID} tried to access unauthorized transaction: {$trans_id}."]]);
-    
+            (new \App\Libraries\MyMIDiscord())->enqueuePlain('ops',
+                "Alert! User with ID {$this->cuID} tried to access unauthorized transaction: {$trans_id}.",
+                [
+                    'dedupe_key' => 'unauthorized|' . $this->cuID . '|' . $trans_id,
+                    'priority'   => 9,
+                ]
+            );
             return redirect()->to('/Wallets/Purchase/MyMIGold/Security/' . $trans_id);
         }
     }
@@ -1718,12 +1722,9 @@ class WalletsController extends UserController
     //         $email->send();
     
     //         // Send a notification to Discord
-    //         $webhook = new Client(['base_uri' => 'https://discord.com/api/webhooks/1235020137363411095/tRJOdPsHeSg17Dd1BMdHMBocLkCNL3wmQdf1eqV4DCvp2wGuZze_QR8bTa1rJiLghiYN']);
-    //         $response = $webhook->post('', [
-    //             'json' => [
-    //                 'content' => "Alert! User with ID {$this->cuID} tried to access unauthorized transaction: {$trans_id}."
-    //             ]
-    //         ]);
+    
+    //         // Send a notification to Discord via MyMIDiscord (ops channel)
+    //         (new \App\Libraries\MyMIDiscord())->enqueuePlain('ops', "Alert! User with ID {$this->cuID} tried to access unauthorized transaction: {$trans_id}.");
     
     //         return redirect()->to('/Wallets/Purchase/MyMIGold/Security/' . $trans_id);
     //     }

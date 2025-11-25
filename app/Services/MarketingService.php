@@ -264,14 +264,10 @@ class MarketingService
 
     protected function sendToDiscordWebhook($message)
     {
-        $webhook = getenv('DISCORD_WEBHOOK_URL');
-        if (!$webhook) return false;
-    
-        $client = \Config\Services::curlrequest();
-        $payload = ['content' => $message];
-    
-        $response = $client->post($webhook, ['json' => $payload]);
-        return $response->getStatusCode() === 204;
+        $discord = new \App\Libraries\MyMIDiscord();
+        return $discord->enqueuePlain('marketing', $message, [
+            'dedupe_key' => hash('sha256', $message),
+        ]);
     }
 
     public function sendWalkthroughInviteToActiveUsers()

@@ -261,19 +261,34 @@ class SupportController extends UserController
 
     private function sendToDiscord(array $data)
     {
-        $webhookUrls = [
-            'General'           => 'https://discord.com/api/webhooks/1235018629112791163/32jzRBxGCvTSM3d1jIL9YkbXKoVcfc7CKxqYReXBY2nfKCQPVL-V8Jfr1VzQKZwAZ39d',
-            'Account'           => 'https://discord.com/api/webhooks/1235016982491955342/bywKotPeWh1s9QvfwK9Pd5C4aEfWVs_0UiAJfNk-trNiaQbWeb0m2YuLD_T0AAdUBzJn',
-            'Asset Creator'     => 'https://discord.com/api/webhooks/1235019154545971271/z3uF6Z1H64DQk6GY4p6MF5AQ3kWl_IBBVr2hpcSetzNXThZnxTSauc82zCEBd8jeGAZH',
-            'Asset Exchange'    => 'https://discord.com/api/webhooks/1235019713109557250/CPddF8brM--cGrl4X6VQ8RZm9Op3MWvxlb0dIAHuVYtfSE0APXI6tj8tpnzvrIYFHlRX',
-            'Budgeting'         => 'https://discord.com/api/webhooks/1235019835910651936/fwpnj3g_tUL8n-G1NMobfY1tZMPOozchpoZvrNQSnP9l3HXbH3nORgDA1ZBfgknWRGkk',
-            'Credit/Debt'       => 'https://discord.com/api/webhooks/1235019925643329577/EI2mppE100WN3pWirFORyi94YDbogET64fWUX3H55ftdRNM5HxDkg0QMi_Cf3sZBPslp',
-            'Mobile'            => 'https://discord.com/api/webhooks/1235020045961400351/s_C9U6XrmxglF7rkA0BkpKdHDyr40DFPCTCKEsMnYLqUu1x0uJgddMtKlABGvERX78Sk',
-            'MyMI Coin'         => 'https://discord.com/api/webhooks/1235020223527256106/_7IjHd0QSSjayDphpksjl772l-L3LF40T4KWmu1FD1gWtWfyufw4HiEYQy5N3CxFwu9W',
-            'MyMI Gold'         => 'https://discord.com/api/webhooks/1235020137363411095/tRJOdPsHeSg17Dd1BMdHMBocLkCNL3wmQdf1eqV4DCvp2wGuZze_QR8bTa1rJiLghiYN',
-            'MyMI Projects'     => 'https://discord.com/api/webhooks/1310413840634216498/I6_TobptfDyfSsFfIegmGiSXNthzyTmMSzrXq1yAse8EIgMdtET5IrcR2Gcs-_8Uph1c',
-            'Portfolio Manager' => 'https://discord.com/api/webhooks/1235020413407330354/ME87bC56ABGa-DnD2pH8npeamtipAAy2SB9MqTfZozA-2EONNg1zQtt5bWSmFErnFXXj',
-        ];   
+        // $webhookUrls = [
+        //     'General'           => 'https://discord.com/api/webhooks/1235018629112791163/32jzRBxGCvTSM3d1jIL9YkbXKoVcfc7CKxqYReXBY2nfKCQPVL-V8Jfr1VzQKZwAZ39d',
+        //     'Account'           => 'https://discord.com/api/webhooks/1235016982491955342/bywKotPeWh1s9QvfwK9Pd5C4aEfWVs_0UiAJfNk-trNiaQbWeb0m2YuLD_T0AAdUBzJn',
+        //     'Asset Creator'     => 'https://discord.com/api/webhooks/1235019154545971271/z3uF6Z1H64DQk6GY4p6MF5AQ3kWl_IBBVr2hpcSetzNXThZnxTSauc82zCEBd8jeGAZH',
+        //     'Asset Exchange'    => 'https://discord.com/api/webhooks/1235019713109557250/CPddF8brM--cGrl4X6VQ8RZm9Op3MWvxlb0dIAHuVYtfSE0APXI6tj8tpnzvrIYFHlRX',
+        //     'Budgeting'         => 'https://discord.com/api/webhooks/1235019835910651936/fwpnj3g_tUL8n-G1NMobfY1tZMPOozchpoZvrNQSnP9l3HXbH3nORgDA1ZBfgknWRGkk',
+        //     'Credit/Debt'       => 'https://discord.com/api/webhooks/1235019925643329577/EI2mppE100WN3pWirFORyi94YDbogET64fWUX3H55ftdRNM5HxDkg0QMi_Cf3sZBPslp',
+        //     'Mobile'            => 'https://discord.com/api/webhooks/1235020045961400351/s_C9U6XrmxglF7rkA0BkpKdHDyr40DFPCTCKEsMnYLqUu1x0uJgddMtKlABGvERX78Sk',
+        //     'MyMI Coin'         => 'https://discord.com/api/webhooks/1235020223527256106/_7IjHd0QSSjayDphpksjl772l-L3LF40T4KWmu1FD1gWtWfyufw4HiEYQy5N3CxFwu9W',
+        //     'MyMI Gold'         => 'https://discord.com/api/webhooks/1235020137363411095/tRJOdPsHeSg17Dd1BMdHMBocLkCNL3wmQdf1eqV4DCvp2wGuZze_QR8bTa1rJiLghiYN',
+        //     'MyMI Projects'     => 'https://discord.com/api/webhooks/1310413840634216498/I6_TobptfDyfSsFfIegmGiSXNthzyTmMSzrXq1yAse8EIgMdtET5IrcR2Gcs-_8Uph1c',
+        //     'Portfolio Manager' => 'https://discord.com/api/webhooks/1235020413407330354/ME87bC56ABGa-DnD2pH8npeamtipAAy2SB9MqTfZozA-2EONNg1zQtt5bWSmFErnFXXj',
+        // ];   
+        $channelMap = [
+            'General'           => 'support',
+            'Account'           => 'support.account',
+            'Asset Creator'     => 'support.asset_creator',
+            'Asset Exchange'    => 'support.asset_exchange',
+            'Budgeting'         => 'support.budgeting',
+            'Credit/Debt'       => 'support.credit_debt',
+            'Mobile'            => 'support.mobile',
+            'MyMI Coin'         => 'support.coin',
+            'MyMI Gold'         => 'support.gold',
+            'MyMI Projects'     => 'support.projects',
+            'Portfolio Manager' => 'support.portfolio',
+        ];
+
+        $channelKey = $channelMap[$data['subject'] ?? ''] ?? 'support';
 
         // Construct the message
         $formattedMessage = sprintf(
@@ -298,18 +313,10 @@ class SupportController extends UserController
             "http://www.mymiwallet.com/Support/Request/" . ($data['id'] ?? 'Unknown') // Default to 'Unknown' if ID is not available
         );  
 
-        $curl = curl_init($webhookUrls[$data['subject']]);
-        $discordMessage = json_encode(['content' => $formattedMessage], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $discordMessage);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen($discordMessage)
+        (new \App\Libraries\MyMIDiscord())->enqueuePlain($channelKey, $formattedMessage, [
+            'dedupe_key' => $channelKey . '|' . ($data['id'] ?? uniqid('', true)),
+            'priority'   => 4,
         ]);
-
-        curl_exec($curl);
-        curl_close($curl);
     }
 
     public function Communication_Manager()

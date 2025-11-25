@@ -30,6 +30,8 @@ Step-by-step checklist to provision the Discord server, webhooks, and CI4 wiring
    DISCORD_MARKETING_WEBHOOK="https://discord.com/api/webhooks/xxx/marketing"
    DISCORD_EARNINGS_WEBHOOK="https://discord.com/api/webhooks/xxx/earnings"
    DISCORD_OPS_WEBHOOK="https://discord.com/api/webhooks/xxx/ops"
+   DISCORD_SUPPORT_WEBHOOK="https://discord.com/api/webhooks/xxx/support"     # optional: support inbox
+   DISCORD_ALERTS_TIER1_WEBHOOK="https://discord.com/api/webhooks/xxx/tier1"  # optional: tiered alert routing
    DISCORD_BOT_TOKEN="<bot-token-if-using-bot-api>"
    DISCORD_GUILD_ID="<guild-id>"
    DISCORD_ALERTS_DRY_RUN=false        # set true on staging

@@ -33,25 +33,16 @@ class SupportService
     }
     
     /**
-     * Send a message to Discord webhook
+     * Queue a support message to Discord via MyMIDiscord
      */
-    public function sendToDiscord(string $webhookUrl, string $message): bool
+    public function sendToDiscord(string $channelKey, string $message): bool
     {
         try {
-            $curl = curl_init($webhookUrl);
-
-            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
-            curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode(['content' => $message], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($curl, CURLOPT_HTTPHEADER, [
-                'Content-Type: application/json',
-                'Content-Length: ' . strlen($message)
+            $discord = new \App\Libraries\MyMIDiscord();
+            return $discord->enqueuePlain($channelKey, $message, [
+                'dedupe_key' => $channelKey . '|' . hash('sha256', $message),
+                'priority'   => 4,
             ]);
-
-            $response = curl_exec($curl);
-            curl_close($curl);
-
-            return $response !== false;
         } catch (\Exception $e) {
             log_message('error', 'SupportService::sendToDiscord - Failed: ' . $e->getMessage());
             return false;

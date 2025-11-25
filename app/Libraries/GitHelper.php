@@ -17,7 +17,8 @@ class GitHelper
     ];
 
     protected $logPath = WRITEPATH . 'logs/git-helper.log';
-    protected $webhookUrl = 'https://discord.com/api/webhooks/xxx/yyy';
+    // protected $webhookUrl = 'https://discord.com/api/webhooks/xxx/yyy';
+    protected string $discordChannelKey = 'ops';
 
     public function pushRepo($repoKey = 'media', $customMessage = null, $author = null)
     {
@@ -142,17 +143,22 @@ class GitHelper
 
     protected function sendWebhook($message)
     {
-        if (!$this->webhookUrl) {
-            return;
-        }
+        // ORIGINAL CODE:
+        // if (!$this->webhookUrl) {
+        //     return;
+        // }
 
-        $payload = json_encode(['content' => $message]);
-        $ch = curl_init($this->webhookUrl);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_exec($ch);
-        curl_close($ch);
+        // $payload = json_encode(['content' => $message]);
+        // $ch = curl_init($this->webhookUrl);
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // curl_exec($ch);
+        // curl_close($ch);
+        (new MyMIDiscord())->enqueuePlain($this->discordChannelKey, (string) $message, [
+            'dedupe_key' => 'git-helper|' . hash('sha256', $message),
+            'priority'   => 3,
+        ]);
     }
 
     public function listRepos()

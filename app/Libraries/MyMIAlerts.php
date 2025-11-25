@@ -1805,29 +1805,47 @@ class MyMIAlerts
     }
     
     public function sendDiscordTradeAlert($tradeAlert, $tier) {
-        $channels = [
-            'Free' => 'YOUR_DISCORD_PUBLIC_CHANNEL_ID',
-            'Tier 1' => 'YOUR_DISCORD_TIER_1_CHANNEL_ID',
-            'Tier 2' => 'YOUR_DISCORD_TIER_2_CHANNEL_ID',
-            'Tier 3' => 'YOUR_DISCORD_TIER_3_CHANNEL_ID'
-        ];
+        // $channels = [
+        //     'Free' => 'YOUR_DISCORD_PUBLIC_CHANNEL_ID',
+        //     'Tier 1' => 'YOUR_DISCORD_TIER_1_CHANNEL_ID',
+        //     'Tier 2' => 'YOUR_DISCORD_TIER_2_CHANNEL_ID',
+        //     'Tier 3' => 'YOUR_DISCORD_TIER_3_CHANNEL_ID'
+        // ];
     
-        $webhookUrl = "https://discord.com/api/webhooks/" . $channels[$tier];
+        // $webhookUrl = "https://discord.com/api/webhooks/" . $channels[$tier];
     
-        $payload = json_encode([
-            'content' => "**📢 Trade Alert - {$tradeAlert['ticker']} ({$tier})**\n" .
-                         "🔹 **Price:** {$tradeAlert['price']}\n" .
-                         "🔹 **Sentiment:** {$tradeAlert['market_sentiment']}\n" .
-                         "📊 [View Chart]({$tradeAlert['link']})"
+        // $payload = json_encode([
+        //     'content' => "**📢 Trade Alert - {$tradeAlert['ticker']} ({$tier})**\n" .
+        //                  "🔹 **Price:** {$tradeAlert['price']}\n" .
+        //                  "🔹 **Sentiment:** {$tradeAlert['market_sentiment']}\n" .
+        //                  "📊 [View Chart]({$tradeAlert['link']})"
+        // ]);
+    
+        // $ch = curl_init($webhookUrl);
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+        // curl_setopt($ch, CURLOPT_POST, 1);
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // $response = curl_exec($ch);
+        // curl_close($ch);
+        $discord = new MyMIDiscord();
+
+        $channelKey = match (strtolower($tier)) {
+            'tier 1', 'tier1' => 'alerts.tier1',
+            'tier 2', 'tier2' => 'alerts.tier2',
+            'tier 3', 'tier3' => 'alerts.tier3',
+            default => 'alerts.free',
+        };
+
+        $content = "**📢 Trade Alert - {$tradeAlert['ticker']} ({$tier})**\n"
+            . "🔹 **Price:** {$tradeAlert['price']}\n"
+            . "🔹 **Sentiment:** {$tradeAlert['market_sentiment']}\n"
+            . (!empty($tradeAlert['link']) ? "📊 [View Chart]({$tradeAlert['link']})" : '');
+
+        $discord->enqueuePlain($channelKey, $content, [
+            'dedupe_key' => $tradeAlert['ticker'] . '|' . strtolower($tier),
+            'priority'   => 7,
         ]);
-    
-        $ch = curl_init($webhookUrl);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($ch);
-        curl_close($ch);
     }
     
 

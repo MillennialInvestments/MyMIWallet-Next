@@ -50,6 +50,28 @@ class MyMIDiscord
         return true;
     }
 
+    /** Queue a plain text payload to a specific channel_key (bypasses template lookup). */
+    public function enqueuePlain(string $channelKey, string $content, array $context = []): bool
+    {
+        $content = $this->sanitize($content);
+        if ($content === '') {
+            return false;
+        }
+
+        $payload = ['content' => $content];
+        if (!empty($context['embeds']) && is_array($context['embeds'])) {
+            $payload['embeds'] = $context['embeds'];
+        }
+
+        return $this->model->enqueue(
+            $channelKey,
+            $payload,
+            (int)($context['priority'] ?? 5),
+            $context['dedupe_key'] ?? null,
+            $context['coalesce_key'] ?? null
+        );
+    }
+
     /** Render a template_key into {content, embeds?} */
     public function renderTemplate(string $templateKey, array $data): ?array
     {
@@ -322,7 +344,8 @@ class MyMIDiscord
             return true;
         }
 
-        $webhook = $chan['webhook_url'] ?: ($this->cfg->defaultWebhook ?: getenv('DISCORD_DEFAULT_WEBHOOK') ?: '');
+        // $webhook = $chan['webhook_url'] ?: ($this->cfg->defaultWebhook ?: getenv('DISCORD_DEFAULT_WEBHOOK') ?: '');
+        $webhook = $this->resolveChannelWebhook($chan);
         if ($webhook) {
             if ($this->cfg->storeWebhookMsgId && strpos($webhook, 'wait=true') === false) {
                 $webhook .= (str_contains($webhook, '?') ? '&' : '?') . 'wait=true';
@@ -330,8 +353,9 @@ class MyMIDiscord
             return $this->postJSON($webhook, $payload, $chan);
         }
 
-        if ($this->cfg->useBotApiFallback && $this->cfg->botToken && !empty($chan['channel_id'])) {
-            return $this->postBotMessage($chan['channel_id'], $payload);
+        $channelId = $chan['channel_id'] ?: $this->resolveChannelId($chan);
+        if ($this->cfg->useBotApiFallback && $this->cfg->botToken && !empty($channelId)) {
+            return $this->postBotMessage($channelId, $payload);
         }
 
         return false;
@@ -428,5 +452,33 @@ class MyMIDiscord
         if (!empty($envQuietEnd)) {
             $this->cfg->quietHoursEnd = $envQuietEnd;
         }
+    }
+
+    protected function resolveChannelWebhook(array $chan): string
+    {
+        $key = $chan['channel_key'] ?? '';
+        if (!empty($chan['webhook_url'])) {
+            return $chan['webhook_url'];
+        }
+
+        if ($key && !empty($this->cfg->channelWebhooks[$key] ?? null)) {
+            return $this->cfg->channelWebhooks[$key];
+        }
+
+        return $this->cfg->defaultWebhook ?: (string) getenv('DISCORD_DEFAULT_WEBHOOK') ?: '';
+    }
+
+    protected function resolveChannelId(array $chan): string
+    {
+        $key = $chan['channel_key'] ?? '';
+        if (!empty($chan['channel_id'])) {
+            return (string) $chan['channel_id'];
+        }
+
+        if ($key && !empty($this->cfg->channelIds[$key] ?? null)) {
+            return $this->cfg->channelIds[$key];
+        }
+
+        return '';
     }
 }

@@ -4504,12 +4504,17 @@ class MyMIMarketing
     
     public function postToDiscord($message)
     {
-        $discordWebhookUrl = getenv('DISCORD_WEBHOOK_URL');
+        $discord = new \App\Libraries\MyMIDiscord();
     
         // ✅ Ensure the message is within the 2000 character limit
         if (strlen($message) > 2000) {
             $message = substr($message, 0, 1997) . "..."; // Truncate and add "..."
         }
+
+        return $discord->enqueuePlain('marketing', $message, [
+            'dedupe_key' => hash('sha256', $message),
+            'priority'   => 5,
+        ]);
     
         $payload = json_encode(["content" => $message]);
     
