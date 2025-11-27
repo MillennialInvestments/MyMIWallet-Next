@@ -10,6 +10,12 @@ class Discord extends BaseConfig
     public string $timezone = 'America/Chicago';
 
     /**
+     * Quiet hours window (hh:mm, 24h) used by MyMIDiscord::isQuietHours().
+     */
+    public string $quietHoursStart = '22:00';
+    public string $quietHoursEnd   = '06:30';
+
+    /**
      * Fallback webhook when no channel-specific webhook is configured.
      */
     public string $defaultWebhook = '';
@@ -21,59 +27,56 @@ class Discord extends BaseConfig
     public int $minSecondsBetweenPosts = 90;
 
     /**
-     * Quiet hours window (hh:mm, 24h) used by MyMIDiscord::isQuietHours().
-     */
-    public string $quietHoursStart = '22:00';
-    public string $quietHoursEnd   = '06:30';
-
-    /**
      * Discord interaction verification public key (used if/when you add slash commands).
      */
     public string $publicKey = '';
 
     /**
-     * Optional per-channel webhooks/IDs to avoid hardcoding URLs in controllers.
-     * Keys should match bf_discord_channels.channel_key when present.
+     * Channel webhooks are the primary delivery path. Keys must match bf_discord_channels.channel_key.
      *
-     * Recommended mapping:
-     *  - 'alerts'    → #trade-alerts
-     *  - 'marketing' → #marketing-news
-     *  - 'earnings'  → #earnings-watch
-     *  - 'ops'       → #ops-status
-     *  - 'support'   → #support (if you wire it)
-     *  - 'staging'   → #staging-sandbox
-     *
-     * Tiered alert channels are optional premium splits.
+     * Channel intent guide:
+     *  - 'alerts'       → #trade-alerts (paid tiers)
+     *  - 'alerts.free'  → #trade-alerts-free
+     *  - 'alerts.tier1' → #trade-alerts-tier1 (Basic)
+     *  - 'alerts.tier2' → #trade-alerts-tier2 (Premium)
+     *  - 'alerts.tier3' → #trade-alerts-tier3 (Gold)
+     *  - 'marketing'    → #marketing-news
+     *  - 'earnings'     → #earnings-watch
+     *  - 'ops'          → #ops-status
+     *  - 'support'      → #support (optional)
+     *  - 'staging'      → #staging-sandbox
      */
     public array $channelWebhooks = [
         'alerts'       => '',
+        'alerts.free'  => '',
+        'alerts.tier1' => '',
+        'alerts.tier2' => '',
+        'alerts.tier3' => '',
         'marketing'    => '',
         'earnings'     => '',
         'ops'          => '',
         'support'      => '',
         'staging'      => '',
+    ];
+
+    /**
+     * Channel IDs for Bot API fallback (never primary path). Keys mirror $channelWebhooks.
+     */
+    public array $channelIds = [
+        'alerts'       => '',
         'alerts.free'  => '',
         'alerts.tier1' => '',
         'alerts.tier2' => '',
         'alerts.tier3' => '',
+        'marketing'    => '',
+        'earnings'     => '',
+        'ops'          => '',
+        'support'      => '',
+        'staging'      => '',
     ];
 
     /**
-     * Optional per-channel Discord channel IDs (used when falling back
-     * to the Bot API instead of webhooks).
-     */
-    public array $channelIds = [
-        'alerts'    => '',
-        'marketing' => '',
-        'earnings'  => '',
-        'ops'       => '',
-        'support'   => '',
-        'staging'   => '',
-    ];
-
-    /**
-     * Discord Bot token & guild ID (used for Bot API fallback and
-     * future member/role sync features).
+     * Discord Bot token & guild ID (used for Bot API fallback and future member/role sync features).
      */
     public string $botToken = '';
     public string $guildId  = '';
@@ -112,20 +115,19 @@ class Discord extends BaseConfig
     {
         parent::__construct();
 
-        // Base env pulls
-        $this->defaultWebhook    = (string) env('DISCORD_DEFAULT_WEBHOOK', $this->defaultWebhook);
-        $this->botToken          = (string) env('DISCORD_BOT_TOKEN', '');
-        $this->guildId           = (string) env('DISCORD_GUILD_ID', '');
-        $this->publicKey         = (string) env('DISCORD_PUBLIC_KEY', '');
-        $this->useBotApiFallback = filter_var(env('DISCORD_USE_BOT_API_FALLBACK', $this->useBotApiFallback), FILTER_VALIDATE_BOOLEAN);
-        $this->storeWebhookMsgId = filter_var(env('DISCORD_STORE_WEBHOOK_MSG_ID', $this->storeWebhookMsgId), FILTER_VALIDATE_BOOLEAN);
-        $this->alertsStrict      = filter_var(env('DISCORD_ALERTS_STRICT', $this->alertsStrict), FILTER_VALIDATE_BOOLEAN);
-        $this->alertsDryRun      = filter_var(env('DISCORD_ALERTS_DRY_RUN', $this->alertsDryRun), FILTER_VALIDATE_BOOLEAN);
+        // Base env pulls (only env(), never hardcoded)
+        $this->timezone           = (string) env('DISCORD_TIMEZONE', $this->timezone);
+        $this->quietHoursStart    = (string) env('DISCORD_QUIET_HOURS_START', $this->quietHoursStart);
+        $this->quietHoursEnd      = (string) env('DISCORD_QUIET_HOURS_END', $this->quietHoursEnd);
+        $this->defaultWebhook     = (string) env('DISCORD_DEFAULT_WEBHOOK', $this->defaultWebhook);
+        $this->publicKey          = (string) env('DISCORD_PUBLIC_KEY', '');
+        $this->botToken           = (string) env('DISCORD_BOT_TOKEN', '');
+        $this->guildId            = (string) env('DISCORD_GUILD_ID', '');
+        $this->useBotApiFallback  = filter_var(env('DISCORD_USE_BOT_API_FALLBACK', $this->useBotApiFallback), FILTER_VALIDATE_BOOLEAN);
+        $this->storeWebhookMsgId  = filter_var(env('DISCORD_STORE_WEBHOOK_MSG_ID', $this->storeWebhookMsgId), FILTER_VALIDATE_BOOLEAN);
+        $this->alertsStrict       = filter_var(env('DISCORD_ALERTS_STRICT', $this->alertsStrict), FILTER_VALIDATE_BOOLEAN);
+        $this->alertsDryRun       = filter_var(env('DISCORD_ALERTS_DRY_RUN', $this->alertsDryRun), FILTER_VALIDATE_BOOLEAN);
 
-        // Optional: override timezone/quiet hours via env
-        $this->timezone        = (string) env('DISCORD_TIMEZONE', $this->timezone);
-        $this->quietHoursStart = (string) env('DISCORD_QUIET_HOURS_START', $this->quietHoursStart);
-        $this->quietHoursEnd   = (string) env('DISCORD_QUIET_HOURS_END', $this->quietHoursEnd);
 
         // JSON-based role map, if configured
         $rolePlanEnv = env('DISCORD_ROLE_PLAN_MAP');
@@ -139,45 +141,42 @@ class Discord extends BaseConfig
         /**
          * Channel-specific webhook fallbacks (used when DB channels omit webhooks).
          *
-         * Set these in .env as:
+         * Configure in .env:
          *   DISCORD_ALERTS_WEBHOOK="https://discord.com/api/webhooks/..."
-         *   DISCORD_MARKETING_WEBHOOK="https://discord.com/api/webhooks/..."
-         *   DISCORD_EARNINGS_WEBHOOK="https://discord.com/api/webhooks/..."
-         *   DISCORD_OPS_WEBHOOK="https://discord.com/api/webhooks/..."
-         *   DISCORD_SUPPORT_WEBHOOK="https://discord.com/api/webhooks/..."
-         *   DISCORD_STAGING_WEBHOOK="https://discord.com/api/webhooks/..."
          *   DISCORD_ALERTS_FREE_WEBHOOK="..."
          *   DISCORD_ALERTS_TIER1_WEBHOOK="..."
          *   DISCORD_ALERTS_TIER2_WEBHOOK="..."
          *   DISCORD_ALERTS_TIER3_WEBHOOK="..."
+         *   DISCORD_MARKETING_WEBHOOK="..."
+         *   DISCORD_EARNINGS_WEBHOOK="..."
+         *   DISCORD_OPS_WEBHOOK="..."
+         *   DISCORD_SUPPORT_WEBHOOK="..."
+         *   DISCORD_STAGING_WEBHOOK="..."
          */
         $this->channelWebhooks['alerts']       = (string) env('DISCORD_ALERTS_WEBHOOK', $this->channelWebhooks['alerts']);
+        $this->channelWebhooks['alerts.free']  = (string) env('DISCORD_ALERTS_FREE_WEBHOOK', $this->channelWebhooks['alerts.free']);
+        $this->channelWebhooks['alerts.tier1'] = (string) env('DISCORD_ALERTS_TIER1_WEBHOOK', $this->channelWebhooks['alerts.tier1']);
+        $this->channelWebhooks['alerts.tier2'] = (string) env('DISCORD_ALERTS_TIER2_WEBHOOK', $this->channelWebhooks['alerts.tier2']);
+        $this->channelWebhooks['alerts.tier3'] = (string) env('DISCORD_ALERTS_TIER3_WEBHOOK', $this->channelWebhooks['alerts.tier3']);
         $this->channelWebhooks['marketing']    = (string) env('DISCORD_MARKETING_WEBHOOK', $this->channelWebhooks['marketing']);
         $this->channelWebhooks['earnings']     = (string) env('DISCORD_EARNINGS_WEBHOOK', $this->channelWebhooks['earnings']);
         $this->channelWebhooks['ops']          = (string) env('DISCORD_OPS_WEBHOOK', $this->channelWebhooks['ops']);
         $this->channelWebhooks['support']      = (string) env('DISCORD_SUPPORT_WEBHOOK', $this->channelWebhooks['support']);
         $this->channelWebhooks['staging']      = (string) env('DISCORD_STAGING_WEBHOOK', $this->channelWebhooks['staging']);
-        $this->channelWebhooks['alerts.free']  = (string) env('DISCORD_ALERTS_FREE_WEBHOOK', $this->channelWebhooks['alerts.free']);
-        $this->channelWebhooks['alerts.tier1'] = (string) env('DISCORD_ALERTS_TIER1_WEBHOOK', $this->channelWebhooks['alerts.tier1']);
-        $this->channelWebhooks['alerts.tier2'] = (string) env('DISCORD_ALERTS_TIER2_WEBHOOK', $this->channelWebhooks['alerts.tier2']);
-        $this->channelWebhooks['alerts.tier3'] = (string) env('DISCORD_ALERTS_TIER3_WEBHOOK', $this->channelWebhooks['alerts.tier3']);
 
         /**
-         * Channel IDs used for Bot API fallback.
-         *
-         * Set these in .env as:
-         *   DISCORD_ALERTS_CHANNEL_ID="123..."
-         *   DISCORD_MARKETING_CHANNEL_ID="123..."
-         *   DISCORD_EARNINGS_CHANNEL_ID="123..."
-         *   DISCORD_OPS_CHANNEL_ID="123..."
-         *   DISCORD_SUPPORT_CHANNEL_ID="123..."
-         *   DISCORD_STAGING_CHANNEL_ID="123..."
+         * Channel IDs used for Bot API fallback (optional).
+         * Set in .env as DISCORD_*_CHANNEL_ID variables.
          */
-        $this->channelIds['alerts']    = (string) env('DISCORD_ALERTS_CHANNEL_ID', $this->channelIds['alerts']);
-        $this->channelIds['marketing'] = (string) env('DISCORD_MARKETING_CHANNEL_ID', $this->channelIds['marketing']);
-        $this->channelIds['earnings']  = (string) env('DISCORD_EARNINGS_CHANNEL_ID', $this->channelIds['earnings']);
-        $this->channelIds['ops']       = (string) env('DISCORD_OPS_CHANNEL_ID', $this->channelIds['ops']);
-        $this->channelIds['support']   = (string) env('DISCORD_SUPPORT_CHANNEL_ID', $this->channelIds['support']);
-        $this->channelIds['staging']   = (string) env('DISCORD_STAGING_CHANNEL_ID', $this->channelIds['staging']);
+        $this->channelIds['alerts']       = (string) env('DISCORD_ALERTS_CHANNEL_ID', $this->channelIds['alerts']);
+        $this->channelIds['alerts.free']  = (string) env('DISCORD_ALERTS_FREE_CHANNEL_ID', $this->channelIds['alerts.free']);
+        $this->channelIds['alerts.tier1'] = (string) env('DISCORD_ALERTS_TIER1_CHANNEL_ID', $this->channelIds['alerts.tier1']);
+        $this->channelIds['alerts.tier2'] = (string) env('DISCORD_ALERTS_TIER2_CHANNEL_ID', $this->channelIds['alerts.tier2']);
+        $this->channelIds['alerts.tier3'] = (string) env('DISCORD_ALERTS_TIER3_CHANNEL_ID', $this->channelIds['alerts.tier3']);
+        $this->channelIds['marketing']    = (string) env('DISCORD_MARKETING_CHANNEL_ID', $this->channelIds['marketing']);
+        $this->channelIds['earnings']     = (string) env('DISCORD_EARNINGS_CHANNEL_ID', $this->channelIds['earnings']);
+        $this->channelIds['ops']          = (string) env('DISCORD_OPS_CHANNEL_ID', $this->channelIds['ops']);
+        $this->channelIds['support']      = (string) env('DISCORD_SUPPORT_CHANNEL_ID', $this->channelIds['support']);
+        $this->channelIds['staging']      = (string) env('DISCORD_STAGING_CHANNEL_ID', $this->channelIds['staging']);
     }
 }
