@@ -5,6 +5,7 @@ namespace Config;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\HotReloader\HotReloader;
+use Config\Services;
 
 /*
  * --------------------------------------------------------------------
@@ -35,6 +36,13 @@ Events::on('pre_system', static function (): void {
 
         ob_start(static fn ($buffer) => $buffer);
     }
+
+    helper('uri_guard');
+
+    $request = Services::request();
+    $uri     = (string) $request->uri;
+
+    log_if_placeholder_in_uri($uri, 'pre_system');
 
     /*
      * --------------------------------------------------------------------
