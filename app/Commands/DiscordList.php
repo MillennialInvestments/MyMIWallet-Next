@@ -2,77 +2,129 @@
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use App\Libraries\MyMIDiscord;
+use Config\Discord as DiscordConfig;
 
 class DiscordList extends BaseCommand
 {
     protected $group       = 'Discord';
     protected $name        = 'discord:list';
-    protected $description = 'List all Discord channels, categories, and roles.';
+    protected $description = 'List configured Discord channels/webhooks/IDs from config and database.';
 
     public function run(array $params)
     {
-   
-        $discord = new \App\Libraries\MyMIDiscord();
-        $guildId = getenv('DISCORD_GUILD_ID');
-        $token   = getenv('DISCORD_BOT_TOKEN');
+        /** @var DiscordConfig $cfg */
+        $cfg = config('Discord');
 
-        CLI::write('DISCORD_BOT_TOKEN: ' . ($token ?: '(empty)'), 'yellow');
-        CLI::write('DISCORD_GUILD_ID: ' . ($guildId ?: '(empty)'), 'yellow');
+        CLI::write("=== MyMI Discord Wiring Overview ===\n", 'yellow');
 
-        if (!$guildId || !$token) {
-            CLI::error("Missing DISCORD_GUILD_ID or DISCORD_BOT_TOKEN in .env");
+        // 1. Show core env/config state (masked)
+        $this->printEnvSummary($cfg);
+
+        // 2. Show config-based channelWebhooks
+        $this->printConfigWebhooks($cfg);
+
+        // 3. Show config-based channelIds (for Bot API fallback)
+        $this->printConfigChannelIds($cfg);
+
+        // 4. Show bf_discord_channels rows from DB
+        $this->printDbChannels();
+    }
+
+    protected function printEnvSummary(DiscordConfig $cfg): void
+    {
+        $botToken = $cfg->botToken ?: env('DISCORD_BOT_TOKEN');
+        $guildId  = $cfg->guildId  ?: env('DISCORD_GUILD_ID');
+
+        $maskedToken = $botToken
+            ? substr($botToken, 0, 8) . '...' . substr($botToken, -6)
+            : '(empty)';
+
+        CLI::write("-- Core Environment --", 'green');
+        CLI::write("Timezone        : {$cfg->timezone}");
+        CLI::write("Quiet Hours     : {$cfg->quietHoursStart} - {$cfg->quietHoursEnd}");
+        CLI::write("Default Webhook : " . ($cfg->defaultWebhook ? '[configured]' : '(none)'));
+        CLI::write("Bot Token       : {$maskedToken}");
+        CLI::write("Guild ID        : " . ($guildId ?: '(empty)'));
+        CLI::write("Use Bot Fallback: " . ($cfg->useBotApiFallback ? 'true' : 'false'));
+        CLI::write("Store Msg IDs   : " . ($cfg->storeWebhookMsgId ? 'true' : 'false'));
+        CLI::write("Alerts Strict   : " . ($cfg->alertsStrict ? 'true' : 'false'));
+        CLI::write("Alerts Dry Run  : " . ($cfg->alertsDryRun ? 'true' : 'false'));
+        CLI::newLine();
+    }
+
+    protected function printConfigWebhooks(DiscordConfig $cfg): void
+    {
+        CLI::write("-- Configured channelWebhooks (Config\\Discord) --", 'green');
+
+        if (empty($cfg->channelWebhooks)) {
+            CLI::write("  (none)", 'red');
+            CLI::newLine();
             return;
         }
 
-        $channels = $discord->apiGet("guilds/{$guildId}/channels");
-        $roles    = $discord->apiGet("guilds/{$guildId}/roles");
+        foreach ($cfg->channelWebhooks as $key => $url) {
+            $status = $url ? '[configured]' : '(empty)';
+            CLI::write(sprintf("  %-14s : %s", $key, $status));
+        }
+        CLI::newLine();
+    }
 
-        if ($channels === null) {
-            CLI::error("Failed to fetch channels. Check writable/logs for MyMIDiscord::apiGet errors.");
+    protected function printConfigChannelIds(DiscordConfig $cfg): void
+    {
+        CLI::write("-- Configured channelIds (Config\\Discord) --", 'green');
+
+        if (empty($cfg->channelIds)) {
+            CLI::write("  (none)", 'red');
+            CLI::newLine();
             return;
         }
 
-        if ($roles === null) {
-            CLI::error("Failed to fetch roles. Check writable/logs for MyMIDiscord::apiGet errors.");
+        foreach ($cfg->channelIds as $key => $id) {
+            $status = $id ? $id : '(empty)';
+            CLI::write(sprintf("  %-10s : %s", $key, $status));
+        }
+        CLI::newLine();
+    }
+
+    protected function printDbChannels(): void
+    {
+        CLI::write("-- bf_discord_channels (database) --", 'green');
+
+        try {
+            $db   = db_connect();
+            $rows = $db->table('bf_discord_channels')
+                ->orderBy('channel_key', 'ASC')
+                ->get()
+                ->getResultArray();
+        } catch (\Throwable $e) {
+            CLI::write("  Error reading bf_discord_channels: " . $e->getMessage(), 'red');
+            CLI::newLine();
             return;
         }
 
-        if (!$guildId || !$token) {
-            CLI::error("Missing DISCORD_GUILD_ID or DISCORD_BOT_TOKEN in .env");
+        if (!$rows) {
+            CLI::write("  (no rows found)", 'yellow');
+            CLI::newLine();
             return;
         }
 
-        // Fetch channel list
-        $channels = $discord->apiGet("/guilds/{$guildId}/channels");
-        $roles    = $discord->apiGet("/guilds/{$guildId}/roles");
+        foreach ($rows as $row) {
+            $key      = $row['channel_key'] ?? '(no key)';
+            $enabled  = !empty($row['is_enabled']) ? 'yes' : 'no';
+            $webhook  = !empty($row['webhook_url']) ? '[set]' : '(none)';
+            $chanId   = !empty($row['channel_id']) ? $row['channel_id'] : '(none)';
+            $interval = $row['min_interval_sec'] ?? null;
 
-        CLI::write("=== DISCORD SERVER STRUCTURE ===", 'yellow');
-
-        CLI::write("\n-- Categories & Channels --", 'green');
-        foreach ($channels as $c) {
-            if ($c['type'] === 4) { // category
-                CLI::write("[CATEGORY] {$c['name']} ({$c['id']})", 'yellow');
-                foreach ($channels as $sub) {
-                    if (($sub['parent_id'] ?? null) === $c['id']) {
-                        CLI::write("  - {$sub['name']}  ({$sub['type']})");
-                    }
-                }
+            CLI::write("  {$key}", 'yellow');
+            CLI::write("    enabled       : {$enabled}");
+            CLI::write("    webhook_url   : {$webhook}");
+            CLI::write("    channel_id    : {$chanId}");
+            if ($interval !== null) {
+                CLI::write("    min_interval  : {$interval} sec");
             }
+            CLI::write('');
         }
 
-        CLI::write("\n-- Uncategorized Channels --", 'green');
-        foreach ($channels as $c) {
-            if ($c['parent_id'] === null && $c['type'] !== 4) {
-                CLI::write("  * {$c['name']} ({$c['type']})");
-            }
-        }
-
-        CLI::write("\n-- Roles --", 'cyan');
-        foreach ($roles as $r) {
-            CLI::write("{$r['name']}  ({$r['id']})");
-        }
-
-        CLI::write("\nDone.\n", 'green');
+        CLI::newLine();
     }
 }
