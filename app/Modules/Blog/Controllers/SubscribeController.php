@@ -5,7 +5,7 @@ namespace App\Modules\Blog\Controllers;
 use App\Controllers\UserController;
 use App\Libraries\MyMIAnalytics;
 use App\Models\PageSEOModel;
-use App\Models\SubcribeModel;
+use App\Models\SubscribeModel;
 use App\Models\UserModel;
 use CodeIgniter\API\ResponseTrait;
 
@@ -13,7 +13,6 @@ use CodeIgniter\API\ResponseTrait;
 class SubscribeController extends UserController
 {
     use ResponseTrait;
-    private $siteSettings;
     private $subscribeModel;
 
     public function __construct()
@@ -25,8 +24,6 @@ class SubscribeController extends UserController
         $this->pageSEOModel = new PageSEOModel();
         $this->myMIAnalytics = new MyMIAnalytics();
         $this->subscribeModel = new SubscribeModel();
-
-        $this->siteSettings = config('App')->siteSettings;
     }
 
     public function index()
