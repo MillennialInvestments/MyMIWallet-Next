@@ -452,6 +452,10 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->group('Discord', ['namespace' => 'App\Modules\APIs\Controllers'], static function($routes) {
         $routes->post('enqueue',         'DiscordController::enqueue');
         $routes->post('broadcast',       'DiscordController::broadcast');
+        $routes->post('interactions',    'DiscordController::handleInteraction');
+        $routes->post('messageHook',     'DiscordController::messageHook');
+        $routes->post('webhook',         'DiscordController::webhookProxy');
+        $routes->post('createLinkToken', 'DiscordController::createLinkToken');
         $routes->get('process-queue',    'DiscordController::processQueue');
         $routes->get('coalesce-now',     'DiscordController::coalesceNow');
         $routes->delete('purge-dead',    'DiscordController::purgeDead');

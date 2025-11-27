@@ -1,14 +1,13 @@
-<?php echo view('App\Views\errors\html\under_construction'); ?>
 <div class="nk-block">
     <div class="card card-bordered">
-        <div class="card-aside-wrap">            
+        <div class="card-aside-wrap">
             <div class="card-inner card-inner-lg">
                 <div class="nk-block-head nk-block-head-lg">
                     <div class="nk-block-between">
                         <div class="nk-block-head-content">
                             <h4 class="nk-block-title">Connected with Social Account</h4>
                             <div class="nk-block-des">
-                                <p>You can connect with your social account such as facebook, google etc to make easier to login into account.</p>
+                                <p>Link Discord to unlock slash commands, ticker lookups, and gated alerts directly from your server.</p>
                             </div>
                         </div>
                         <div class="nk-block-head-content align-self-start d-lg-none">
@@ -16,6 +15,41 @@
                         </div>
                     </div>
                 </div><!-- .nk-block-head -->
+
+                <?php if (!empty($discordLinkMessage)): ?>
+                    <div class="alert alert-<?php echo ($discordLinkMessage['status'] ?? '') === 'linked' ? 'success' : 'danger'; ?>">
+                        <?php echo esc($discordLinkMessage['message'] ?? 'Discord account linked successfully.'); ?>
+                    </div>
+                <?php endif; ?>
+
+                <div class="card card-bordered mb-4">
+                    <div class="card-inner">
+                        <div class="between-center flex-wrap flex-md-nowrap g-3">
+                            <div class="media media-center gx-3 wide-xs">
+                                <div class="media-object">
+                                    <em class="icon icon-circle icon-circle-lg ni ni-discord"></em>
+                                </div>
+                                <div class="media-content">
+                                    <?php $isLinked = !empty($discordLink['linked_at'] ?? null); ?>
+                                    <p class="mb-1">Use the <code>/mymi link</code> slash command in Discord to generate a secure link token, then return here to confirm.</p>
+                                    <?php if ($isLinked): ?>
+                                        <p class="text-success mb-0">Linked as <strong><?php echo esc($discordLink['discord_username'] ?? ''); ?></strong> (ID: <?php echo esc($discordLink['discord_user_id'] ?? ''); ?>).</p>
+                                    <?php else: ?>
+                                        <p class="text-soft mb-0">No Discord account linked yet.</p>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <div class="nk-block-actions flex-shrink-0">
+                                <?php if ($isLinked): ?>
+                                    <span class="badge bg-success">Connected</span>
+                                <?php else: ?>
+                                    <a href="<?php echo esc($discordLinkUrl); ?>" class="btn btn-lg btn-primary">Return after /mymi link</a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div><!-- .card-inner -->
+                </div><!-- .card -->
+
                 <h6 class="lead-text">Connect to Facebook</h6>
                 <div class="card card-bordered">
                     <div class="card-inner">
@@ -25,11 +59,11 @@
                                     <em class="icon icon-circle icon-circle-lg ni ni-facebook-f"></em>
                                 </div>
                                 <div class="media-content">
-                                    <p>You can connect with your Facebook account. <em class="d-block text-soft">Not connected yet</em></p>
+                                    <p>Connect with your Facebook account. <em class="d-block text-soft">Not connected yet</em></p>
                                 </div>
                             </div>
                             <div class="nk-block-actions flex-shrink-0">
-                                <a href="#" class="btn btn-lg btn-success">Connect</a>
+                                <a href="#" class="btn btn-lg btn-success disabled">Coming soon</a>
                             </div>
                         </div>
                     </div><!-- .nk-card-inner -->
@@ -43,19 +77,19 @@
                                     <em class="icon icon-circle icon-circle-lg ni ni-google"></em>
                                 </div>
                                 <div class="media-content">
-                                    <p>You can connect with your Google account. <em class="d-block text-soft">Not connected yet</em></p>
+                                    <p>Connect with your Google account. <em class="d-block text-soft">Not connected yet</em></p>
                                 </div>
                             </div>
                             <div class="nk-block-actions flex-shrink-0">
-                                <a href="#" class="btn btn-lg btn-success">Connect</a>
+                                <a href="#" class="btn btn-lg btn-success disabled">Coming soon</a>
                             </div>
                         </div>
                     </div><!-- .nk-card-inner -->
                 </div><!-- .nk-card -->
             </div>
-            <?php 
+            <?php
             $controlCenterData = [];
-            echo view('UserModule\Views\Dashboard\Account\ControlCenter', $controlCenterData); 
+            echo view('UserModule\\Views\\Dashboard\\Account\\ControlCenter', $controlCenterData);
             ?>
         </div><!-- .card-aside-wrap -->
     </div><!-- .card -->

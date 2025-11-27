@@ -5,7 +5,7 @@ use Config\Services;
 use App\Config\{Auth, SiteSettings, SocialMedia};
 use App\Controllers\UserController;
 use App\Libraries\{MyMIAlerts, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIInvestments, MyMIMarketing, MyMIOnboarding, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets};
-use App\Models\{AccountsModel, AlertsModel, DashboardModel, MarketingModel, SolanaModel, UserModel};
+use App\Models\{AccountsModel, AlertsModel, DashboardModel, DiscordLinkModel, MarketingModel, SolanaModel, UserModel};
 use App\Services\{AccountService, BudgetService, DashboardService, EmailService, SolanaService, UserService};
 use CodeIgniter\API\ResponseTrait;
 use Myth\Auth\Authorization\GroupModel;
@@ -1170,6 +1170,19 @@ class DashboardController extends UserController
     {
         $this->data['pageTitle'] = 'My Social Media | MyMI Wallet | The Future of Finance';
         $this->commonData();
+        $linkModel = new DiscordLinkModel();
+
+        $linkMessage = null;
+        $source      = $this->request->getGet('source');
+        $token       = $this->request->getGet('code');
+
+        if ($source === 'discord' && $token) {
+            $linkMessage = $linkModel->consumeToken($token, (int) $this->cuID);
+        }
+
+        $this->data['discordLink']        = $linkModel->findByUserId($this->cuID);
+        $this->data['discordLinkMessage'] = $linkMessage;
+        $this->data['discordLinkUrl']     = site_url('/Account/Social-Media?source=discord');
         return $this->renderTheme('App\Modules\User\Views\Dashboard\Account\Social', $this->data);
     }
 

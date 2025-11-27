@@ -481,4 +481,75 @@ class MyMIDiscord
 
         return '';
     }
+
+    public function apiGet(string $endpoint)
+    {
+        $token = getenv('DISCORD_BOT_TOKEN');
+
+        if (empty($token)) {
+            log_message('error', 'MyMIDiscord::apiGet missing DISCORD_BOT_TOKEN env var.');
+            return null;
+        }
+
+        $client = \Config\Services::curlrequest([
+            'baseURI' => 'https://discord.com/api/v10',
+            'headers' => [
+                'Authorization' => "Bot {$token}",
+                'Content-Type'  => 'application/json',
+                'Accept'        => 'application/json',
+                'User-Agent'    => 'MyMIWalletBot (https://www.mymiwallet.com)',
+            ],
+            'http_errors'    => false,   // don’t throw exceptions on 4xx/5xx
+            'allow_redirects'=> false,   // <- IMPORTANT, don’t silently follow to HTML
+            'timeout'        => 10,
+        ]);
+
+        $endpoint = '/' . ltrim($endpoint, '/');
+
+        try {
+            $response = $client->get($endpoint);
+        } catch (\Throwable $e) {
+            log_message('error', 'MyMIDiscord::apiGet transport error for {endpoint}: {err}', [
+                'endpoint' => $endpoint,
+                'err'      => $e->getMessage(),
+            ]);
+            return null;
+        }
+
+        $status = $response->getStatusCode();
+        $body   = (string) $response->getBody();
+        $headers = $response->getHeaderLine('Location');
+
+        if ($status >= 300) {
+            log_message(
+                'error',
+                'MyMIDiscord::apiGet HTTP {status} for {endpoint}. Location={loc}, body={body}',
+                [
+                    'status'   => $status,
+                    'endpoint' => $endpoint,
+                    'loc'      => $headers,
+                    'body'     => substr($body, 0, 300),
+                ]
+            );
+            return null;
+        }
+
+        $decoded = json_decode($body, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            log_message(
+                'error',
+                'MyMIDiscord::apiGet JSON decode error for {endpoint}: {error} - {body}',
+                [
+                    'endpoint' => $endpoint,
+                    'error'    => json_last_error_msg(),
+                    'body'     => substr($body, 0, 300),
+                ]
+            );
+            return null;
+        }
+
+        return $decoded;
+    }
+
 }
