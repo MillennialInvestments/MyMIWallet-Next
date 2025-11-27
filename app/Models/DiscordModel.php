@@ -38,6 +38,7 @@ class DiscordModel extends Model
             'channel_key' => $channelKey,
             'payload_json'=> $payloadJson,
             'dedupe_hash' => $dedupe,
+            'dedupe_key'  => $dedupeKey,
             'status'      => 'queued',
             'scheduled_at'=> date('Y-m-d H:i:s'),
             'priority'    => max(0, $priority),
@@ -410,6 +411,19 @@ class DiscordModel extends Model
     {
         $now = date('Y-m-d H:i:s');
         $contextJson = $context ? json_encode($context, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) : null;
+
+        try {
+            $this->db->table('bf_discord_events_log')->insert([
+                'level'        => $level,
+                'event_key'    => $context['event'] ?? null,
+                'channel_key'  => $context['channel'] ?? ($context['channel_key'] ?? null),
+                'payload_json' => $contextJson,
+                'details_json' => null,
+                'created_at'   => $now,
+            ]);
+        } catch (\Throwable $e) {
+            // optional table, ignore failures
+        }
 
         try {
             $this->db->table('bf_discord_logs')->insert([
