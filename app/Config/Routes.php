@@ -1322,7 +1322,7 @@ $routes->group('Wallets', ['namespace' => 'App\Modules\User\Controllers', 'filte
     $routes->match(['GET', 'POST'], 'Banking/Add/Account/(:segment)', 'WalletsController::add', ['as' => 'wallets.banking.add.account.segment']);
     $routes->match(['GET', 'POST'], 'Banking/(:segment)', 'WalletsController::addAccount', ['as' => 'wallets.banking.segment']);
     $routes->match(['GET', 'POST'], 'Banking/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.banking.details.segment']);
-    $routes->match(['GET', 'POST'], 'Banking/Edit/Account/(:segment)', 'WalletsController::edit/$1', ['as' => 'wallets.banking.edit.account.segment']);
+    $routes->match(['GET', 'POST'], 'Banking/Edit/Account/(:segment)', 'WalletsController::editBankAccount/$1', ['as' => 'wallets.banking.edit.account.segment']);
     $routes->match(['GET', 'POST'], 'Checking', 'WalletsController::checking', ['as' => 'wallets.checking']);
     $routes->match(['GET', 'POST'], 'Create', 'WalletsController::generateWallet', ['as' => 'wallets.create']); // Previously /Wallets/Address-Generator
     $routes->match(['GET', 'POST'], 'Credit', 'WalletsController::credit', ['as' => 'wallets.credit']);
@@ -1331,14 +1331,14 @@ $routes->group('Wallets', ['namespace' => 'App\Modules\User\Controllers', 'filte
     $routes->match(['GET', 'POST'], 'Create', 'WalletsController::generateWallet', ['as' => 'wallets.create']); // Previously /Wallets/Address-Generator
     $routes->match(['GET', 'POST'], 'Credit', 'WalletsController::index', ['as' => 'wallets.credit']);
     $routes->match(['GET', 'POST'], 'Credit/Details/(:segment)', 'WalletsController::details/$1');
-    $routes->match(['GET', 'POST'], 'Credit/Edit/Account/(:segment)', 'WalletsController::edit/$1');
+    $routes->match(['GET', 'POST'], 'Credit/Edit/Account/(:segment)', 'WalletsController::editCreditAccount/$1');
     $routes->match(['GET', 'POST'], 'Coin-Swap', 'WalletsController::coinSwap', ['as' => 'wallets.coin-swap']);
     $routes->match(['GET', 'POST'], 'Coin-Swap/(:segment)', 'WalletsController::coinSwap/$1', ['as' => 'wallets.coin-swap.segment']);
     $routes->match(['GET', 'POST'], 'Complete/Purchase', 'WalletsController::completePurchase', ['as' => 'wallets.complete.purchase']);
     $routes->match(['GET', 'POST'], 'Confirm-Deposit', 'WalletsController::confirmDeposit', ['as' => 'wallets.confirm.deposit']);
     $routes->match(['GET', 'POST'], 'Debt', 'WalletsController::debt', ['as' => 'wallets.debt']);
     $routes->match(['GET', 'POST'], 'Debt/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.debt.details.segment']);
-    $routes->match(['GET', 'POST'], 'Debt/Edit/Account/(:segment)', 'WalletsController::edit/$1', ['as' => 'wallets.debt.edit.account.segment']);
+    $routes->match(['GET', 'POST'], 'Debt/Edit/Account/(:segment)', 'WalletsController::editDebtAccount/$1', ['as' => 'wallets.debt.edit.account.segment']);
     $routes->match(['GET', 'POST'], 'Delete/(:segment)/(:segment)', 'WalletsController::delete/$1/$2');
     $routes->match(['GET', 'POST'], 'Deposit', 'WalletsController::deposit', ['as' => 'wallets.deposit']);
     $routes->match(['GET', 'POST'], 'Deposit/Fetch', 'WalletsController::addDepositFetch', ['as' => 'wallets.deposit.fetch']);
@@ -1354,7 +1354,7 @@ $routes->group('Wallets', ['namespace' => 'App\Modules\User\Controllers', 'filte
     $routes->match(['GET', 'POST'], 'Generate-Wallet', 'WalletsController::generateWallet', ['as' => 'wallets.generate-wallet']);
     $routes->match(['GET', 'POST'], 'Investments', 'WalletsController::investments', ['as' => 'wallets.investments']);
     $routes->match(['GET', 'POST'], 'Investment/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.investment.details']);
-    $routes->match(['GET', 'POST'], 'Investment/Edit/Account/(:segment)', 'WalletsController::edit/$1', ['as' => 'wallets.investment.edit']);
+    $routes->match(['GET', 'POST'], 'Investment/Edit/Account/(:segment)', 'WalletsController::editInvestAccount/$1', ['as' => 'wallets.investment.edit']);
     $routes->match(['GET', 'POST'], 'Link-Account', 'WalletsController::linkAccount', ['as' => 'wallets.link-account']);
     $routes->match(['GET', 'POST'], 'Link-Account/(:segment)', 'WalletsController::linkAccount/$1', ['as' => 'wallets.link-account.segment']);
     $routes->match(['GET', 'POST'], 'Link-Account/(:segment)/(:segment)', 'WalletsController::linkAccount/$1', ['as' => 'wallets.link-account.segment.segment']);
