@@ -5,6 +5,7 @@ namespace Config;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Debug\ExceptionHandler;
 use CodeIgniter\Debug\ExceptionHandlerInterface;
+use CodeIgniter\HTTP\Exceptions\BadRequestException;
 use Psr\Log\LogLevel;
 use Throwable;
 
@@ -101,6 +102,12 @@ class Exceptions extends BaseConfig
      */
     public function handler(int $statusCode, Throwable $exception): ExceptionHandlerInterface
     {
+        if ($exception instanceof BadRequestException) {
+            log_message('error', 'BadRequestException: {msg} | URI: {uri}', [
+                'msg' => $exception->getMessage(),
+                'uri' => (string) service('request')->getUri(),
+            ]);
+        }
         return new ExceptionHandler($this);
     }
 }

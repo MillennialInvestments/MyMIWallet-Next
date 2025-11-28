@@ -6,6 +6,8 @@ use App\Controllers\UserController;
 use App\Libraries\{MyMIWallet, MyMIWallets, MyMISolana};
 use App\Models\{MyMIGoldModel, WalletModel};
 use App\Services\{AccountService, CurrencyService, GoalTrackingService, MarketingService, SolanaService, TransactionService, WalletService, WalletSummaryCalculator};
+use CodeIgniter\Exceptions\PageNotFoundException;
+use Throwable;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\ResponseInterface;
 use DateTime;
@@ -1090,6 +1092,106 @@ class WalletsController extends UserController
         $this->data['accountType'] = $accountType;
         $this->commonData();
         return $this->renderTheme('App\Modules\User\Views\Wallets\Edit', $this->data);
+    }
+
+    public function editBankAccount($accountId = null)
+    {
+        return $this->renderEditAccountByEndpoint('editBankAccount', $accountId);
+    }
+
+    public function editCreditAccount($accountId = null)
+    {
+        return $this->renderEditAccountByEndpoint('editCreditAccount', $accountId);
+    }
+
+    public function editCryptoAccount($accountId = null)
+    {
+        return $this->renderEditAccountByEndpoint('editCryptoAccount', $accountId);
+    }
+
+    public function editDebtAccount($accountId = null)
+    {
+        return $this->renderEditAccountByEndpoint('editDebtAccount', $accountId);
+    }
+
+    public function editInvestAccount($accountId = null)
+    {
+        return $this->renderEditAccountByEndpoint('editInvestAccount', $accountId);
+    }
+
+    private function renderEditAccountByEndpoint(string $endpoint, $accountId = null)
+    {
+        $rawAccountId = trim((string) $accountId);
+        $userId       = (int) ($this->cuID ?? 0);
+        $endpointL    = strtolower(trim($endpoint));
+
+        $supported = [
+            'editbankaccount',
+            'editcreditaccount',
+            'editcryptoaccount',
+            'editdebtaccount',
+            'editinvestaccount',
+        ];
+
+        if (! in_array($endpointL, $supported, true)) {
+            log_message('error', 'WalletsController::renderEditAccountByEndpoint unsupported endpoint', [
+                'endpoint' => $endpoint,
+                'uri'      => (string) $this->request->getUri(),
+                'user'     => $userId,
+            ]);
+
+            throw PageNotFoundException::forPageNotFound('Invalid account type');
+        }
+
+        if ($rawAccountId === '' || ! ctype_digit($rawAccountId)) {
+            log_message('error', 'WalletsController::renderEditAccountByEndpoint invalid account id', [
+                'endpoint' => $endpointL,
+                'id'       => $rawAccountId,
+                'uri'      => (string) $this->request->getUri(),
+                'user'     => $userId,
+            ]);
+
+            throw PageNotFoundException::forPageNotFound('Invalid account ID');
+        }
+
+        $accountId = (int) $rawAccountId;
+
+        try {
+            $row = $this->walletModel->findAccountRowForEdit($endpointL, $accountId, $userId);
+
+            if (! $row) {
+                log_message('warning', 'WalletsController::renderEditAccountByEndpoint account not found', [
+                    'endpoint' => $endpointL,
+                    'id'       => $accountId,
+                    'user'     => $userId,
+                ]);
+
+                throw PageNotFoundException::forPageNotFound('Account not found');
+            }
+
+            $this->data['accountID']   = $accountId;
+            $this->data['accountType'] = $endpointL;
+            $this->data['pageView']    = $row['__pageView'] ?? null;
+            $this->commonData();
+
+            log_message('debug', 'WalletsController::renderEditAccountByEndpoint rendering edit view', [
+                'endpoint' => $endpointL,
+                'id'       => $accountId,
+                'user'     => $userId,
+            ]);
+
+            return $this->renderTheme('App\Modules\User\Views\Wallets\Edit', $this->data);
+        } catch (Throwable $e) {
+            log_message('error', 'WalletsController::renderEditAccountByEndpoint failed', [
+                'endpoint' => $endpointL,
+                'id'       => $accountId,
+                'user'     => $userId,
+                'error'    => $e->getMessage(),
+                'trace'    => $e->getTraceAsString(),
+            ]);
+
+            throw $e;
+        }
     }
 
     // REPLACE the entire submitEdit() with this (for non-AJAX fallbacks using a form POST)

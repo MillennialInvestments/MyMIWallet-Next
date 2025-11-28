@@ -164,7 +164,7 @@ class MyMIProjects
     public function totalCommitted(int $projectId): float
     {
         try {
-            $row = $this->projectsModel
+            $row = $this->commitments
                 ->selectSum('amount')
                 ->where('project_id', $projectId)
                 ->first();

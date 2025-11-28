@@ -36,6 +36,8 @@ abstract class BaseController extends Controller
     protected $socialMedia;
     protected int $debug = 0;
     protected string $theme = 'public';
+    protected array $csp = [];
+    protected ?string $cspNonce = null;
 
     protected array $pageDefaults = [
         'pageName'  => '',

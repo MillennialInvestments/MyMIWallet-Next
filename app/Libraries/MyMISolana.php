@@ -81,6 +81,20 @@ class MyMISolana implements CryptoCurrencyInterface
         return $cuID > 0 ? $cuID : null;
     }
 
+    private function isValidAddress(?string $address): bool
+    {
+        if (!is_string($address) || trim($address) === '') {
+            return false;
+        }
+
+        try {
+            $normalized = $this->solanaService->normalizeAddress($address);
+            return $normalized !== null && $this->solanaService->isValidPublicKey($normalized);
+        } catch (\Throwable $e) {
+            return false;
+        }
+    }
+
     public function addMetadata($tokenAddress, $metadata) {
         $client = Services::curlrequest();
         $url = 'https://api.metaplex.com/metadata'; // Replace with actual Metaplex endpoint
@@ -638,17 +652,12 @@ class MyMISolana implements CryptoCurrencyInterface
             }
         }
 
-        if (!is_string($address) || $address === '') {
-            log_message('error', 'getTransactions: no address for user '.$cuID);
+        if (! $this->isValidAddress($address)) {
+            log_message('warning', 'getTransactions: invalid address param for user {user}', ['user' => $cuID]);
             return [];
         }
 
-        $normalized = null;
-        try { $normalized = $this->solanaService->normalizeAddress($address); } catch (\Throwable $e) {}
-        if (!$normalized || !$this->solanaService->isValidPublicKey($normalized)) {
-            log_message('error', 'getTransactions: invalid Base58 address param; got '.gettype($address));
-            return [];
-        }
+        $normalized = $this->solanaService->normalizeAddress($address);
 
         session()->set('solana_public_key', $normalized);
 

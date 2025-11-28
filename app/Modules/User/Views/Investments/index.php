@@ -1,5 +1,5 @@
 <?php
-// echo '<script <?= $nonce['script'] ?? '' ?>>
+// echo '<script <?= $nonce['script'] ?? '' 
 //     console.log("userInvestment Array: " + ' . (print_r($userInvestments, true)) . '
 // </script>'; 
 // log_message('debug', 'Investments\index L2 - $investDashboard Array: ' . (print_r($investDashboard, true)));
@@ -105,6 +105,14 @@ $subViewData = [
     'economicData' => $investDashboard['economicData'] ?? [],
 ];
 $investmentPartialData = is_array($subViewData ?? null) ? $subViewData : [];
+$actionCenterData      = $investmentPartialData['actionCenter'] ?? $investmentPartialData;
+if (!is_array($actionCenterData)) {
+    $actionCenterData = [];
+}
+
+$actionCenterData['userInvestments'] = $actionCenterData['userInvestments'] ?? [];
+$actionCenterData['riskTools']       = $actionCenterData['riskTools']       ?? [];
+$actionCenterData['insights']        = $actionCenterData['insights']        ?? [];
 ?>
 
 <style <?= $nonce['style'] ?? '' ?>>
@@ -141,7 +149,7 @@ $investmentPartialData = is_array($subViewData ?? null) ? $subViewData : [];
 <div class="nk-block">
     <div class="g-gs row">
         <div class="col-md-12 col-xl-3">
-            <?php echo view('UserModule\Views\Investments\index\Action_Center', $investmentPartialData); ?>
+            <?php echo view('UserModule\Views\Investments\index\Action_Center', $actionCenterData); ?>
         </div>
         <div class="col-md-12 col-xl-9">
             <?php echo view('UserModule\Views\Investments\index\Month_to_Month', $investmentPartialData); ?>

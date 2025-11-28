@@ -4945,14 +4945,14 @@ This document tracks SEO implementation per major UI page, built from the functi
     - Linked from Routes: /Dashboard,/Budget,/Alerts
     - Notes: alias: wallets.coin-swap
 
-- [ ] **Wallets – Coin Swap** (`/Wallets/Coin-Swap/(:segment)`)
-  - **Full URL**: https://www.mymiwallet.com/Wallets/Coin-Swap/(:segment)
-  - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
-  - **Schema Types**: `FinancialProduct`, `WebApplication`
-  - **JSON-LD**: ☐ todo
-  - **OG/Twitter**: ☐/☐ todo / todo
-  - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Coin-Swap/(:segment)`)
-  - **Internal Links**:
+- [ ] **Wallets – Coin Swap** (`/Wallets/Coin-Swap`)
+    - **Full URL**: https://www.mymiwallet.com/Wallets/Coin-Swap
+    - **Target Keywords**: `crypto wallet dashboard`, `digital asset tracker`, `portfolio wallet manager`, `wallet security tools`
+    - **Schema Types**: `FinancialProduct`, `WebApplication`
+    - **JSON-LD**: ☐ todo
+    - **OG/Twitter**: ☐/☐ todo / todo
+    - **Canonical**: ☐ todo (should be `https://www.mymiwallet.com/Wallets/Coin-Swap`)
+- **Internal Links**:
     - Footer: ☐
     - Sidebar: ☑
     - Breadcrumb: ☐

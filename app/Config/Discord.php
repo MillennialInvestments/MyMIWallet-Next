@@ -47,33 +47,35 @@ class Discord extends BaseConfig
      *  - 'staging'      → #staging-sandbox
      */
     public array $channelWebhooks = [
-        'alerts'       => '',
-        'alerts.free'  => '',
-        'alerts.tier1' => '',
-        'alerts.tier2' => '',
-        'alerts.tier3' => '',
-        'marketing'    => '',
-        'earnings'     => '',
-        'ops'          => '',
-        'support'      => '',
-        'staging'      => '',
+        'alerts'      => '',
+        'marketing'   => '',
+        'earnings'    => '',
+        'ops'         => '',
+        'support'     => '',
+        'staging'     => '',
+        'alerts.free' => '',
+        'alerts.tier1'=> '',
+        'alerts.tier2'=> '',
+        'alerts.tier3'=> '',
+        // ⬇️ add this line
+        'alerts.liquidity' => '',
     ];
+
 
     /**
      * Channel IDs for Bot API fallback (never primary path). Keys mirror $channelWebhooks.
      */
     public array $channelIds = [
-        'alerts'       => '',
-        'alerts.free'  => '',
-        'alerts.tier1' => '',
-        'alerts.tier2' => '',
-        'alerts.tier3' => '',
-        'marketing'    => '',
-        'earnings'     => '',
-        'ops'          => '',
-        'support'      => '',
-        'staging'      => '',
+        'alerts'    => '',
+        'marketing' => '',
+        'earnings'  => '',
+        'ops'       => '',
+        'support'   => '',
+        'staging'   => '',
+        // ⬇️ add this
+        'alerts.liquidity' => '',
     ];
+
 
     /**
      * Discord Bot token & guild ID (used for Bot API fallback and future member/role sync features).
@@ -163,6 +165,10 @@ class Discord extends BaseConfig
         $this->channelWebhooks['ops']          = (string) env('DISCORD_OPS_WEBHOOK', $this->channelWebhooks['ops']);
         $this->channelWebhooks['support']      = (string) env('DISCORD_SUPPORT_WEBHOOK', $this->channelWebhooks['support']);
         $this->channelWebhooks['staging']      = (string) env('DISCORD_STAGING_WEBHOOK', $this->channelWebhooks['staging']);
+        $this->channelWebhooks['alerts.liquidity'] = (string) env(
+            'DISCORD_ALERTS_LIQUIDITY_SCANS_WEBHOOK',
+            $this->channelWebhooks['alerts.liquidity']
+        );
 
         /**
          * Channel IDs used for Bot API fallback (optional).
@@ -178,5 +184,11 @@ class Discord extends BaseConfig
         $this->channelIds['ops']          = (string) env('DISCORD_OPS_CHANNEL_ID', $this->channelIds['ops']);
         $this->channelIds['support']      = (string) env('DISCORD_SUPPORT_CHANNEL_ID', $this->channelIds['support']);
         $this->channelIds['staging']      = (string) env('DISCORD_STAGING_CHANNEL_ID', $this->channelIds['staging']);
+
+        $this->channelIds['alerts.liquidity'] = (string) env(
+            'DISCORD_ALERTS_LIQUIDITY_SCANS_CHANNEL_ID',
+            $this->channelIds['alerts.liquidity']
+        );
+
     }
 }
