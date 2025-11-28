@@ -1111,6 +1111,9 @@ class WalletsController extends UserController
 
     public function editDebtAccount($accountId = null)
     {
+        helper('uri_guard');
+
+        log_if_placeholder_in_uri((string) $this->request->getUri(), 'wallets.editDebtAccount');
         return $this->renderEditAccountByEndpoint('editDebtAccount', $accountId);
     }
 
@@ -1143,7 +1146,18 @@ class WalletsController extends UserController
             throw PageNotFoundException::forPageNotFound('Invalid account type');
         }
 
-        if ($rawAccountId === '' || ! ctype_digit($rawAccountId)) {
+        if ($rawAccountId === '' || strpos($rawAccountId, ':segment') !== false || strpos($rawAccountId, '(') !== false) {
+            log_message('error', 'WalletsController::renderEditAccountByEndpoint placeholder detected in account id', [
+                'endpoint' => $endpointL,
+                'id'       => $rawAccountId,
+                'uri'      => (string) $this->request->getUri(),
+                'user'     => $userId,
+            ]);
+
+            throw PageNotFoundException::forPageNotFound('Invalid account ID');
+        }
+
+        if (! ctype_digit($rawAccountId)) {
             log_message('error', 'WalletsController::renderEditAccountByEndpoint invalid account id', [
                 'endpoint' => $endpointL,
                 'id'       => $rawAccountId,
