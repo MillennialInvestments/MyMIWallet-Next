@@ -346,13 +346,13 @@ class MyMIDashboard
             $openStatuses = ['Opened', 'Open', 'Active', 'Watching'];
             $builder = $alertsModel->builder();
             $openCount = $builder
-                ->where('user_id', $userId)
+                ->where('created_by', $userId)
                 ->whereIn('status', $openStatuses)
                 ->countAllResults();
 
             $rows = $alertsModel->builder()
                 ->select('id, ticker, direction, entry_price, stop_loss, status, modified_on, created_on')
-                ->where('user_id', $userId)
+                ->where('created_by', $userId)
                 ->orderBy('modified_on', 'DESC')
                 ->limit(10)
                 ->get()

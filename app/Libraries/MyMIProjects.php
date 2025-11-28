@@ -160,26 +160,32 @@ class MyMIProjects
         }
     }
 
+    // AFTER (wrap in try/catch + consolidated logging)
     public function totalCommitted(int $projectId): float
     {
         try {
-            $builder = $this->commitments->selectSum('amount', 'total')
+            $row = $this->projectsModel
+                ->selectSum('amount')
                 ->where('project_id', $projectId)
-                ->whereIn('status', ['confirmed', 'converted']);
+                ->first();
 
-            $result = $builder->first();
+            if (!is_array($row) || !array_key_exists('amount', $row)) {
+                log_message('warning', 'MyMIProjects::totalCommitted project={id} returned empty row or missing amount', [
+                    'id' => $projectId,
+                ]);
+                return 0.0;
+            }
 
-            return (float) ($result['total'] ?? 0.0);
-        } catch (Throwable $e) {
-            log_message(
-                'error',
-                'MyMIProjects::totalCommitted failed for project {id}: {error}',
-                ['id' => $projectId, 'error' => $e->getMessage()]
-            );
-
-            return 0.0;
+            return (float) $row['amount'];
+        } catch (\Throwable $e) {
+            log_message('error', 'MyMIProjects::totalCommitted failed for project {id}: {msg}', [
+                'id'  => $projectId,
+                'msg' => $e->getMessage(),
+            ]);
+            return 0.0; // fail soft so dashboard still loads
         }
     }
+
 
     public function hasMetThreshold(int $projectId): bool
     {

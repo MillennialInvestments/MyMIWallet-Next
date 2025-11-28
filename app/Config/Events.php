@@ -5,6 +5,7 @@ namespace Config;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\HotReloader\HotReloader;
+use CodeIgniter\HTTP\IncomingRequest;
 use Config\Services;
 
 /*
@@ -40,9 +41,23 @@ Events::on('pre_system', static function (): void {
     helper('uri_guard');
 
     $request = Services::request();
-    $uri     = (string) $request->uri;
 
-    log_if_placeholder_in_uri($uri, 'pre_system');
+    // Only HTTP requests have IncomingRequest::getUri()
+    if ($request instanceof IncomingRequest) {
+        try {
+            $uriString = (string) $request->getUri();
+            log_if_placeholder_in_uri($uriString, 'pre_system');
+        } catch (\Throwable $e) {
+            // Failsafe logging so this never crashes the request lifecycle
+            log_message('error', 'pre_system URI guard failed: {msg}', [
+                'msg' => $e->getMessage(),
+            ]);
+        }
+    } else {
+        // Skip URI guard for CLI or non-HTTP requests
+        log_message('debug', 'pre_system URI guard skipped (non-HTTP request).');
+    }
+
 
     /*
      * --------------------------------------------------------------------
