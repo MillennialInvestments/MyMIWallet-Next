@@ -35,6 +35,16 @@ class MyMIAlerts
     protected $MyMIInvestments;
     protected AlertJobQueue $jobQueue;
 
+    private const LIQUIDITY_SCANNERS = [
+        '0001 - EMA Liquidity 1Hr'         => '1h',
+        '0002 - EMA Liquidity 4Hr'         => '4h',
+        '0003 - AI Liquidity Stock Scanner'=> '',
+        '0004 - EMA Liquidity 1Hr - $50M'  => '1h',
+        '0005 - EMA Liquidity 4Hr - $50M'  => '4h',
+        '0010 - EMA Liquidity 30Min'       => '30m',
+        '00 - MyMI High Dollar Volume- 30M'=> '30m',
+    ];
+
     /**
      * Known scanner subject keywords that should be ingested.
      *
@@ -429,6 +439,89 @@ class MyMIAlerts
         return $this->timeframeClassMap[$tf] ?? null;
     }
 
+    private function isLiquidityScannerName(?string $name): bool
+    {
+        if ($name === null || $name === '') {
+            return false;
+        }
+
+        if (isset(self::LIQUIDITY_SCANNERS[$name])) {
+            return true;
+        }
+
+        $normalized = $this->normalizeScannerName($name);
+        foreach (array_keys(self::LIQUIDITY_SCANNERS) as $scannerName) {
+            if ($normalized !== null && $normalized === $this->normalizeScannerName($scannerName)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function detectLiquidityScannerName(string $haystack, ?string $candidate = null): ?string
+    {
+        foreach (array_keys(self::LIQUIDITY_SCANNERS) as $scannerName) {
+            if (stripos($haystack, $scannerName) !== false) {
+                return $scannerName;
+            }
+        }
+
+        if ($candidate && $this->isLiquidityScannerName($candidate)) {
+            foreach (array_keys(self::LIQUIDITY_SCANNERS) as $scannerName) {
+                if ($this->normalizeScannerName($candidate) === $this->normalizeScannerName($scannerName)) {
+                    return $scannerName;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private function inferTimeframeFromName(string $scannerName): string
+    {
+        if (isset(self::LIQUIDITY_SCANNERS[$scannerName]) && self::LIQUIDITY_SCANNERS[$scannerName] !== '') {
+            return self::LIQUIDITY_SCANNERS[$scannerName];
+        }
+
+        $needle = strtolower($scannerName);
+        if (str_contains($needle, '30m') || str_contains($needle, '30min')) {
+            return '30m';
+        }
+        if (str_contains($needle, '1hr') || str_contains($needle, '1h')) {
+            return '1h';
+        }
+        if (str_contains($needle, '4hr') || str_contains($needle, '4h')) {
+            return '4h';
+        }
+        if (str_contains($needle, 'daily')) {
+            return '1d';
+        }
+
+        return '';
+    }
+
+    private function extractLiquidityPrice(string $text, string $symbol): ?float
+    {
+        if (preg_match('/\$(\d+(?:\.\d+)?)/', $text, $match)) {
+            return (float) $match[1];
+        }
+
+        try {
+            $quote = $this->MyMIAlphaVantage->getCurrentPrice($symbol);
+            if (!empty($quote['price'])) {
+                return (float) $quote['price'];
+            }
+        } catch (\Throwable $e) {
+            log_message('warning', 'extractLiquidityPrice fallback failed for {symbol}: {err}', [
+                'symbol' => $symbol,
+                'err'    => $e->getMessage(),
+            ]);
+        }
+
+        return null;
+    }
+
     private function classifyEmailNewsMetadata(string $subject, string $body, string $sender): array
     {
         $normalizedSender = strtolower(trim($sender));
@@ -550,6 +643,36 @@ class MyMIAlerts
                 log_message('warning', sprintf('⚠️ No symbols detected in email %s — marketing summary may be limited.', $identifier));
             }
             log_message('info', sprintf('📬 Stored alert email "%s" (ID %d) with category %s', $subject, $insertId, $category));
+
+            $liquidityScanner = $this->detectLiquidityScannerName($subject . ' ' . $body, $scanDetails['name'] ?? $category);
+            if ($liquidityScanner && !empty($symbols)) {
+                $primarySymbol = strtoupper(trim($symbols[0]));
+                $price         = $this->extractLiquidityPrice($subject . ' ' . $body, $primarySymbol);
+                $timeframe     = $scanDetails['tf'] ?? $this->inferTimeframeFromName($liquidityScanner);
+
+                if ($price !== null) {
+                    $discord     = new MyMIDiscord();
+                    $dispatched  = $discord->notifyLiquidityScan([
+                        'ticker'       => $primarySymbol,
+                        'scanner'      => $liquidityScanner,
+                        'timeframe'    => $timeframe,
+                        'price'        => $price,
+                        'notes'        => mb_substr($body, 0, 200),
+                        'triggered_at' => $date,
+                    ]);
+
+                    log_message($dispatched ? 'info' : 'warning', '🚀 Liquidity scanner dispatch {status} for {symbol} via {scanner}', [
+                        'status'  => $dispatched ? 'queued' : 'skipped',
+                        'symbol'  => $primarySymbol,
+                        'scanner' => $liquidityScanner,
+                    ]);
+                } else {
+                    log_message('warning', '⚠️ Liquidity scanner detected but price missing for {symbol} ({scanner})', [
+                        'symbol'  => $primarySymbol,
+                        'scanner' => $liquidityScanner,
+                    ]);
+                }
+            }
         } else {
             log_message('error', '❌ Failed to insert alert email into bf_investment_scraper.');
         }

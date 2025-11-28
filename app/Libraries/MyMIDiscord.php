@@ -72,6 +72,36 @@ class MyMIDiscord
         );
     }
 
+    /**
+     * Dispatch a liquidity scanner alert through the Discord pipeline.
+     */
+    public function notifyLiquidityScan(array $payload): bool
+    {
+        // Normalize and validate required fields
+        $ticker    = strtoupper(trim($payload['ticker'] ?? ''));
+        $scanner   = trim($payload['scanner'] ?? '');
+        $timeframe = trim($payload['timeframe'] ?? '');
+        $price     = isset($payload['price']) ? (float) $payload['price'] : null;
+
+        if ($ticker === '' || $scanner === '' || $price === null) {
+            $this->model->logEvent('warning', 'scanner.liquidity.missing_fields', [
+                'raw' => array_keys($payload),
+            ]);
+            return false;
+        }
+
+        $eventData = [
+            'ticker'       => $ticker,
+            'scanner'      => $scanner,
+            'timeframe'    => $timeframe !== '' ? $timeframe : ($payload['tf'] ?? ''),
+            'price'        => $price,
+            'notes'        => $payload['notes'] ?? null,
+            'triggered_at' => $payload['triggered_at'] ?? date('Y-m-d H:i:s'),
+        ];
+
+        return $this->dispatch('scanner.liquidity', $eventData);
+    }
+
     /** Render a template_key into {content, embeds?} */
     public function renderTemplate(string $templateKey, array $data): ?array
     {
