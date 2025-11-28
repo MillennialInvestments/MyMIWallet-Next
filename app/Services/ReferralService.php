@@ -56,7 +56,13 @@ class ReferralService
 
         $user = $this->userModel->find($cuID);
         if ($user) {
-            $defaults['cuWalletID'] = $user['wallet_id'] ?? $user['cuWalletID'] ?? null;
+            if (is_array($user)) {
+                $defaults['cuWalletID'] = $user['wallet_id'] ?? $user['cuWalletID'] ?? null;
+                $defaults['cuReferrerCode'] = $user['referrer_code'] ?? $defaults['cuReferrerCode'];
+            } else {
+                $defaults['cuWalletID']   = $user->wallet_id    ?? $user->cuWalletID   ?? null;
+                $defaults['cuReferrerCode'] = $user->referrer_code ?? $defaults['cuReferrerCode'];
+            }
         }
 
         $cuReferrerCode = $this->referralModel->getReferrerCode($cuID);
