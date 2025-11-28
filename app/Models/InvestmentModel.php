@@ -1390,6 +1390,16 @@ class InvestmentModel extends Model
     }
 
     public function getInvestmentSymbol($investmentId) {
+        if (!is_numeric($investmentId)) {
+            $symbol = is_string($investmentId) ? trim($investmentId) : '';
+            if ($symbol === '' || strtoupper($symbol) === 'TEST') {
+                log_message('debug', 'Skipping placeholder investment lookup for ID={id}', ['id' => $investmentId]);
+                return null;
+            }
+
+            return $symbol;
+        }
+
         $builder = $this->db->table('bf_users_trades');
         $builder->select('symbol');
         $builder->where('id', $investmentId);
@@ -1398,15 +1408,18 @@ class InvestmentModel extends Model
         $row = $query->getRow();
         if (!empty($row)) {
             return $row->symbol;
-        } else {
-            log_message('error', "No investment found for ID: {$investmentId}");
-            return null;
         }
+
+        log_message('error', "No investment found for ID: {$investmentId}");
+        return null;
     }
 
     private function getMarketValue($investmentId) {
         $apiKey = '<API_KEY>';
         $symbol = $this->getInvestmentSymbol($investmentId);
+        if (empty($symbol)) {
+            return 0;
+        }
         $url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={$symbol}&apikey={$apiKey}";
 
         $client = \Config\Services::curlrequest();
@@ -1421,6 +1434,11 @@ class InvestmentModel extends Model
 
         log_message('error', "Failed to fetch market value for investment ID: {$investmentId} using symbol: {$symbol}");
         return 0;
+    }
+
+    public function getMarketValueBySymbol(string $symbol): float
+    {
+        return (float) $this->getMarketValue($symbol);
     }
 
     public function getStrategiesByUser($userId)

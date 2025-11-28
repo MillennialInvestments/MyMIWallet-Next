@@ -1592,21 +1592,57 @@ class MyMIInvestments
     
         // Total current value for all assets
         $totalInvestment = 0;
-    
+        $validPositionsCount = 0;
+
         // Loop through each investment record to calculate asset allocation
         foreach ($investmentRecords as $investment) {
+            $shares       = (float) ($investment['shares'] ?? 0);
+            $entryPrice   = (float) ($investment['entry_price'] ?? 0);
+            $currentPrice = (float) ($investment['current_price'] ?? 0);
+            $symbol       = trim((string) ($investment['symbol'] ?? ''));
+
+            if ($symbol === 'TEST' || $symbol === '' || $shares <= 0 || $entryPrice <= 0) {
+                log_message('debug', 'Skipping placeholder/invalid investment record ID={id} symbol={symbol}', [
+                    'id'     => $investment['id'] ?? null,
+                    'symbol' => $symbol,
+                ]);
+                continue;
+            }
+
+            if ($currentPrice <= 0) {
+                $currentPrice = $this->fetchCurrentPriceSafe($symbol) ?? 0.0;
+                if ($currentPrice <= 0) {
+                    log_message('warning', 'Skipping investment ID={id} symbol={symbol} due to missing current price.', [
+                        'id'     => $investment['id'] ?? null,
+                        'symbol' => $symbol,
+                    ]);
+                    continue;
+                }
+            }
+
             // Check if necessary keys exist in the investment record
-            if (!isset($investment['category'], $investment['current_price'], $investment['shares'])) {
+            if (!isset($investment['category'])) {
                 log_message('error', "Missing data in investment record: " . json_encode($investment));
                 continue; // Skip invalid records
             }
-    
+
             $assetType = $investment['category'];
-            $currentValue = $investment['current_price'] * $investment['shares'];
-    
+            $currentValue = $currentPrice * $shares;
+
+            // Skip zero-value entries after normalization
+            if ($currentValue <= 0) {
+                log_message('debug', 'Skipping zero-value position ID={id} symbol={symbol}.', [
+                    'id'     => $investment['id'] ?? null,
+                    'symbol' => $symbol,
+                ]);
+                continue;
+            }
+
+            ++$validPositionsCount;
+
             // Add the current value to the total
             $totalInvestment += $currentValue;
-    
+
             // Group investments by asset type
             if (!isset($assetAllocation['allocationByAsset'][$assetType])) {
                 $assetAllocation['allocationByAsset'][$assetType] = [
@@ -1614,26 +1650,45 @@ class MyMIInvestments
                     'allocation_percentage' => 0,
                 ];
             }
-    
+
             // Sum up current value for each asset type
             $assetAllocation['allocationByAsset'][$assetType]['current_value'] += $currentValue;
         }
-    
+
         // Avoid division by zero
         if ($totalInvestment > 0) {
             // Calculate the allocation percentage for each asset type
             foreach ($assetAllocation['allocationByAsset'] as $assetType => &$data) {
                 $data['allocation_percentage'] = ($data['current_value'] / $totalInvestment) * 100;
             }
+        } elseif ($validPositionsCount === 0) {
+            log_message('info', 'No valid investment positions found. Skipping allocation calculation.');
+            $assetAllocation['allocationByAsset'] = [];
+            $assetAllocation['totalInvestment'] = 0;
+            return $assetAllocation;
         } else {
             log_message('error', "Total investment is zero. Cannot calculate allocation percentages.");
         }
-    
+
         // Set total investment in the result
         $assetAllocation['totalInvestment'] = $totalInvestment;
-    
+
         return $assetAllocation;
-    }    
+    }
+
+    private function fetchCurrentPriceSafe(string $symbol): ?float
+    {
+        try {
+            $price = $this->investmentModel->getMarketValueBySymbol($symbol);
+            return is_numeric($price) ? (float) $price : null;
+        } catch (\Throwable $e) {
+            log_message('debug', 'fetchCurrentPriceSafe failed for symbol {symbol}: {msg}', [
+                'symbol' => $symbol,
+                'msg'    => $e->getMessage(),
+            ]);
+            return null;
+        }
+    }
 
     public function calculateGrowthMetrics($investmentRecords)
     {
