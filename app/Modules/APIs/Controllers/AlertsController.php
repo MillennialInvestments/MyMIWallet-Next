@@ -1395,7 +1395,7 @@ class AlertsController extends ResourceController
         }
 
         if (empty($validUpdates)) {
-            log_message('critical', 'getLatestPrices - No valid data to update after filtering. Skipped: ' . implode(', ', $skipped));
+            log_message('warning', 'getLatestPrices - No valid data to update after filtering. Skipped: ' . implode(', ', $skipped));
             return $this->respond([
                 'status'  => 'warning',
                 'updated' => 0,
