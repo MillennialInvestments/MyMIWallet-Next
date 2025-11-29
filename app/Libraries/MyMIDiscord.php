@@ -83,11 +83,18 @@ class MyMIDiscord
         $timeframe = trim($payload['timeframe'] ?? '');
         $price     = isset($payload['price']) ? (float) $payload['price'] : null;
 
-        if ($ticker === '' || $scanner === '' || $price === null) {
+        if ($ticker === '' || $scanner === '') {
             $this->model->logEvent('warning', 'scanner.liquidity.missing_fields', [
                 'raw' => array_keys($payload),
             ]);
             return false;
+        }
+
+        if ($price === null) {
+            $this->model->logEvent('notice', 'scanner.liquidity.price_missing', [
+                'ticker'  => $ticker,
+                'scanner' => $scanner,
+            ]);
         }
 
         $eventData = [
