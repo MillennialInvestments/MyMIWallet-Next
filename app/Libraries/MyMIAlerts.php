@@ -8,7 +8,7 @@ use App\Models\{AlertsModel, TrackerModel, UserModel};
 use CodeIgniter\Database\BaseConnection;
 use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
-use App\Libraries\{BaseLoader, MyMIAlphaVantage, MyMIDiscord, MyMIInvestments};
+use App\Libraries\{BaseLoader, MyMIAlphaVantage, MyMIDiscord, MyMIInvestments, ScannerRouter};
 use App\Libraries\AlertJobQueue;
 // use App\Libraries\{MyMICoin, MyMIGold, MyMIWallet};
 
@@ -644,15 +644,16 @@ class MyMIAlerts
             }
             log_message('info', sprintf('📬 Stored alert email "%s" (ID %d) with category %s', $subject, $insertId, $category));
 
+
             $liquidityScanner = $this->detectLiquidityScannerName($subject . ' ' . $body, $scanDetails['name'] ?? $category);
-            if ($liquidityScanner && !empty($symbols)) {
+            if (!empty($symbols)) {
                 $primarySymbol = strtoupper(trim($symbols[0]));
                 $price         = $this->extractLiquidityPrice($subject . ' ' . $body, $primarySymbol);
-                $timeframe     = $scanDetails['tf'] ?? $this->inferTimeframeFromName($liquidityScanner);
+                $timeframe     = $scanDetails['tf'] ?? ($liquidityScanner ? $this->inferTimeframeFromName($liquidityScanner) : '');
 
-                if ($price !== null) {
-                    $discord     = new MyMIDiscord();
-                    $dispatched  = $discord->notifyLiquidityScan([
+                if ($liquidityScanner) {
+                    $discord    = new MyMIDiscord();
+                    $dispatched = $discord->notifyLiquidityScan([
                         'ticker'       => $primarySymbol,
                         'scanner'      => $liquidityScanner,
                         'timeframe'    => $timeframe,
@@ -665,11 +666,24 @@ class MyMIAlerts
                         'status'  => $dispatched ? 'queued' : 'skipped',
                         'symbol'  => $primarySymbol,
                         'scanner' => $liquidityScanner,
+                        'price'   => $price,
                     ]);
-                } else {
-                    log_message('warning', '⚠️ Liquidity scanner detected but price missing for {symbol} ({scanner})', [
+                } elseif (!empty($scanDetails['name'])) {
+                    $discord    = new MyMIDiscord();
+                    $dispatched = $discord->notifyLiquidityScan([
+                        'ticker'       => $primarySymbol,
+                        'scanner'      => $scanDetails['name'],
+                        'timeframe'    => $timeframe,
+                        'price'        => $price,
+                        'notes'        => mb_substr($body, 0, 200),
+                        'triggered_at' => $date,
+                    ]);
+
+                    log_message($dispatched ? 'info' : 'warning', '🚀 Generic scanner dispatch {status} for {symbol} via {scanner}', [
+                        'status'  => $dispatched ? 'queued' : 'skipped',
                         'symbol'  => $primarySymbol,
-                        'scanner' => $liquidityScanner,
+                        'scanner' => $scanDetails['name'],
+                        'price'   => $price,
                     ]);
                 }
             }

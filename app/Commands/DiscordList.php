@@ -28,6 +28,9 @@ class DiscordList extends BaseCommand
 
         // 4. Show bf_discord_channels rows from DB
         $this->printDbChannels();
+
+        // 5. Show core subscriptions for scanners and system channels
+        $this->printDbSubscriptions();
     }
 
     protected function printEnvSummary(DiscordConfig $cfg): void
@@ -62,6 +65,7 @@ class DiscordList extends BaseCommand
             return;
         }
 
+        ksort($cfg->channelWebhooks);
         foreach ($cfg->channelWebhooks as $key => $url) {
             $status = $url ? '[configured]' : '(empty)';
             CLI::write(sprintf("  %-14s : %s", $key, $status));
@@ -79,6 +83,7 @@ class DiscordList extends BaseCommand
             return;
         }
 
+        ksort($cfg->channelIds);
         foreach ($cfg->channelIds as $key => $id) {
             $status = $id ? $id : '(empty)';
             CLI::write(sprintf("  %-10s : %s", $key, $status));
@@ -108,21 +113,77 @@ class DiscordList extends BaseCommand
             return;
         }
 
+        $grouped = [];
         foreach ($rows as $row) {
-            $key      = $row['channel_key'] ?? '(no key)';
-            $enabled  = !empty($row['is_enabled']) ? 'yes' : 'no';
-            $webhook  = !empty($row['webhook_url']) ? '[set]' : '(none)';
-            $chanId   = !empty($row['channel_id']) ? $row['channel_id'] : '(none)';
-            $interval = $row['min_interval_sec'] ?? null;
+            $key    = $row['channel_key'] ?? '(no key)';
+            $prefix = strstr($key, '.', true) ?: $key;
+            $grouped[$prefix][] = $row;
+        }
 
-            CLI::write("  {$key}", 'yellow');
-            CLI::write("    enabled       : {$enabled}");
-            CLI::write("    webhook_url   : {$webhook}");
-            CLI::write("    channel_id    : {$chanId}");
-            if ($interval !== null) {
-                CLI::write("    min_interval  : {$interval} sec");
+        foreach ($grouped as $prefix => $channels) {
+            CLI::write("  [{$prefix}]", 'yellow');
+            foreach ($channels as $row) {
+                $key      = $row['channel_key'] ?? '(no key)';
+                $enabled  = !empty($row['is_enabled']) ? 'yes' : 'no';
+                $webhook  = !empty($row['webhook_url']) ? '[set]' : '(none)';
+                $chanId   = !empty($row['channel_id']) ? $row['channel_id'] : '(none)';
+                $interval = $row['min_interval_sec'] ?? null;
+
+                CLI::write("    {$key}");
+                CLI::write("      enabled       : {$enabled}");
+                CLI::write("      webhook_url   : {$webhook}");
+                CLI::write("      channel_id    : {$chanId}");
+                if ($interval !== null) {
+                    CLI::write("      min_interval  : {$interval} sec");
+                }
+                CLI::write('');
             }
-            CLI::write('');
+        }
+
+        CLI::newLine();
+    }
+
+    protected function printDbSubscriptions(): void
+    {
+        CLI::write("-- bf_discord_subscriptions (scanner/system) --", 'green');
+
+        try {
+            $db   = db_connect();
+            $rows = $db->table('bf_discord_subscriptions s')
+                ->select('s.*, c.channel_id, c.webhook_url')
+                ->join('bf_discord_channels c', 'c.channel_key = s.channel_key', 'left')
+                ->orderBy('s.event_key', 'ASC')
+                ->get()
+                ->getResultArray();
+        } catch (\Throwable $e) {
+            CLI::write("  Error reading bf_discord_subscriptions: " . $e->getMessage(), 'red');
+            CLI::newLine();
+            return;
+        }
+
+        if (!$rows) {
+            CLI::write("  (no rows found)", 'yellow');
+            CLI::newLine();
+            return;
+        }
+
+        $filtered = array_filter($rows, static function (array $row): bool {
+            $event = $row['event_key'] ?? '';
+            return str_starts_with($event, 'scanner.')
+                || str_starts_with($event, 'earnings')
+                || str_starts_with($event, 'marketing')
+                || str_starts_with($event, 'ops')
+                || str_starts_with($event, 'support')
+                || str_starts_with($event, 'alerts');
+        });
+
+        foreach ($filtered as $row) {
+            CLI::write(sprintf(
+                "  %-20s → %-18s (template: %s)",
+                $row['event_key'],
+                $row['channel_key'],
+                $row['template_key']
+            ));
         }
 
         CLI::newLine();

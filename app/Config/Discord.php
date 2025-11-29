@@ -47,35 +47,45 @@ class Discord extends BaseConfig
      *  - 'staging'      → #staging-sandbox
      */
     public array $channelWebhooks = [
-        'alerts'      => '',
-        'marketing'   => '',
-        'earnings'    => '',
-        'ops'         => '',
-        'support'     => '',
-        'staging'     => '',
-        'alerts.free' => '',
-        'alerts.tier1'=> '',
-        'alerts.tier2'=> '',
-        'alerts.tier3'=> '',
-        // ⬇️ add this line
+        'alerts'           => '',
+        'alerts.free'      => '',
+        'alerts.tier1'     => '',
+        'alerts.tier2'     => '',
+        'alerts.tier3'     => '',
         'alerts.liquidity' => '',
+        'alerts.momentum'  => '',
+        'alerts.ai'        => '',
+        'alerts.ema'       => '',
+        'alerts.news'      => '',
+        'marketing'        => '',
+        'marketing.news'   => '',
+        'earnings'         => '',
+        'ops'              => '',
+        'support'          => '',
+        'staging'          => '',
     ];
-
 
     /**
      * Channel IDs for Bot API fallback (never primary path). Keys mirror $channelWebhooks.
      */
     public array $channelIds = [
-        'alerts'    => '',
-        'marketing' => '',
-        'earnings'  => '',
-        'ops'       => '',
-        'support'   => '',
-        'staging'   => '',
-        // ⬇️ add this
+        'alerts'           => '',
+        'alerts.free'      => '',
+        'alerts.tier1'     => '',
+        'alerts.tier2'     => '',
+        'alerts.tier3'     => '',
         'alerts.liquidity' => '',
+        'alerts.momentum'  => '',
+        'alerts.ai'        => '',
+        'alerts.ema'       => '',
+        'alerts.news'      => '',
+        'marketing'        => '',
+        'marketing.news'   => '',
+        'earnings'         => '',
+        'ops'              => '',
+        'support'          => '',
+        'staging'          => '',
     ];
-
 
     /**
      * Discord Bot token & guild ID (used for Bot API fallback and future member/role sync features).
@@ -155,40 +165,43 @@ class Discord extends BaseConfig
          *   DISCORD_SUPPORT_WEBHOOK="..."
          *   DISCORD_STAGING_WEBHOOK="..."
          */
-        $this->channelWebhooks['alerts']       = (string) env('DISCORD_ALERTS_WEBHOOK', $this->channelWebhooks['alerts']);
-        $this->channelWebhooks['alerts.free']  = (string) env('DISCORD_ALERTS_FREE_WEBHOOK', $this->channelWebhooks['alerts.free']);
-        $this->channelWebhooks['alerts.tier1'] = (string) env('DISCORD_ALERTS_TIER1_WEBHOOK', $this->channelWebhooks['alerts.tier1']);
-        $this->channelWebhooks['alerts.tier2'] = (string) env('DISCORD_ALERTS_TIER2_WEBHOOK', $this->channelWebhooks['alerts.tier2']);
-        $this->channelWebhooks['alerts.tier3'] = (string) env('DISCORD_ALERTS_TIER3_WEBHOOK', $this->channelWebhooks['alerts.tier3']);
-        $this->channelWebhooks['marketing']    = (string) env('DISCORD_MARKETING_WEBHOOK', $this->channelWebhooks['marketing']);
-        $this->channelWebhooks['earnings']     = (string) env('DISCORD_EARNINGS_WEBHOOK', $this->channelWebhooks['earnings']);
-        $this->channelWebhooks['ops']          = (string) env('DISCORD_OPS_WEBHOOK', $this->channelWebhooks['ops']);
-        $this->channelWebhooks['support']      = (string) env('DISCORD_SUPPORT_WEBHOOK', $this->channelWebhooks['support']);
-        $this->channelWebhooks['staging']      = (string) env('DISCORD_STAGING_WEBHOOK', $this->channelWebhooks['staging']);
-        $this->channelWebhooks['alerts.liquidity'] = (string) env(
-            'DISCORD_ALERTS_LIQUIDITY_SCANS_WEBHOOK',
-            $this->channelWebhooks['alerts.liquidity']
-        );
+        $this->channelWebhooks['alerts']           = (string) env('DISCORD_ALERTS_WEBHOOK', $this->channelWebhooks['alerts']);
+        $this->channelWebhooks['alerts.free']      = (string) env('DISCORD_ALERTS_FREE_WEBHOOK', $this->channelWebhooks['alerts.free']);
+        $this->channelWebhooks['alerts.tier1']     = (string) env('DISCORD_ALERTS_TIER1_WEBHOOK', $this->channelWebhooks['alerts.tier1']);
+        $this->channelWebhooks['alerts.tier2']     = (string) env('DISCORD_ALERTS_TIER2_WEBHOOK', $this->channelWebhooks['alerts.tier2']);
+        $this->channelWebhooks['alerts.tier3']     = (string) env('DISCORD_ALERTS_TIER3_WEBHOOK', $this->channelWebhooks['alerts.tier3']);
+        $this->channelWebhooks['alerts.liquidity'] = (string) env('DISCORD_ALERTS_LIQUIDITY_SCANS_WEBHOOK', $this->channelWebhooks['alerts.liquidity']);
+        $this->channelWebhooks['alerts.momentum']  = (string) env('DISCORD_ALERTS_MOMENTUM_WEBHOOK', $this->channelWebhooks['alerts.momentum']);
+        $this->channelWebhooks['alerts.ai']        = (string) env('DISCORD_ALERTS_AI_WEBHOOK', $this->channelWebhooks['alerts.ai']);
+        $this->channelWebhooks['alerts.ema']       = (string) env('DISCORD_ALERTS_EMA_WEBHOOK', $this->channelWebhooks['alerts.ema']);
+        $this->channelWebhooks['alerts.news']      = (string) env('DISCORD_ALERTS_NEWS_WEBHOOK', $this->channelWebhooks['alerts.news']);
+        $this->channelWebhooks['marketing']        = (string) env('DISCORD_MARKETING_WEBHOOK', $this->channelWebhooks['marketing']);
+        $this->channelWebhooks['marketing.news']   = (string) env('DISCORD_MARKETING_NEWS_WEBHOOK', $this->channelWebhooks['marketing.news']);
+        $this->channelWebhooks['earnings']         = (string) env('DISCORD_EARNINGS_WEBHOOK', $this->channelWebhooks['earnings']);
+        $this->channelWebhooks['ops']              = (string) env('DISCORD_OPS_WEBHOOK', $this->channelWebhooks['ops']);
+        $this->channelWebhooks['support']          = (string) env('DISCORD_SUPPORT_WEBHOOK', $this->channelWebhooks['support']);
+        $this->channelWebhooks['staging']          = (string) env('DISCORD_STAGING_WEBHOOK', $this->channelWebhooks['staging']);
 
         /**
          * Channel IDs used for Bot API fallback (optional).
          * Set in .env as DISCORD_*_CHANNEL_ID variables.
          */
-        $this->channelIds['alerts']       = (string) env('DISCORD_ALERTS_CHANNEL_ID', $this->channelIds['alerts']);
-        $this->channelIds['alerts.free']  = (string) env('DISCORD_ALERTS_FREE_CHANNEL_ID', $this->channelIds['alerts.free']);
-        $this->channelIds['alerts.tier1'] = (string) env('DISCORD_ALERTS_TIER1_CHANNEL_ID', $this->channelIds['alerts.tier1']);
-        $this->channelIds['alerts.tier2'] = (string) env('DISCORD_ALERTS_TIER2_CHANNEL_ID', $this->channelIds['alerts.tier2']);
-        $this->channelIds['alerts.tier3'] = (string) env('DISCORD_ALERTS_TIER3_CHANNEL_ID', $this->channelIds['alerts.tier3']);
-        $this->channelIds['marketing']    = (string) env('DISCORD_MARKETING_CHANNEL_ID', $this->channelIds['marketing']);
-        $this->channelIds['earnings']     = (string) env('DISCORD_EARNINGS_CHANNEL_ID', $this->channelIds['earnings']);
-        $this->channelIds['ops']          = (string) env('DISCORD_OPS_CHANNEL_ID', $this->channelIds['ops']);
-        $this->channelIds['support']      = (string) env('DISCORD_SUPPORT_CHANNEL_ID', $this->channelIds['support']);
-        $this->channelIds['staging']      = (string) env('DISCORD_STAGING_CHANNEL_ID', $this->channelIds['staging']);
-
-        $this->channelIds['alerts.liquidity'] = (string) env(
-            'DISCORD_ALERTS_LIQUIDITY_SCANS_CHANNEL_ID',
-            $this->channelIds['alerts.liquidity']
-        );
+        $this->channelIds['alerts']           = (string) env('DISCORD_ALERTS_CHANNEL_ID', $this->channelIds['alerts']);
+        $this->channelIds['alerts.free']      = (string) env('DISCORD_ALERTS_FREE_CHANNEL_ID', $this->channelIds['alerts.free']);
+        $this->channelIds['alerts.tier1']     = (string) env('DISCORD_ALERTS_TIER1_CHANNEL_ID', $this->channelIds['alerts.tier1']);
+        $this->channelIds['alerts.tier2']     = (string) env('DISCORD_ALERTS_TIER2_CHANNEL_ID', $this->channelIds['alerts.tier2']);
+        $this->channelIds['alerts.tier3']     = (string) env('DISCORD_ALERTS_TIER3_CHANNEL_ID', $this->channelIds['alerts.tier3']);
+        $this->channelIds['alerts.liquidity'] = (string) env('DISCORD_ALERTS_LIQUIDITY_SCANS_CHANNEL_ID', $this->channelIds['alerts.liquidity']);
+        $this->channelIds['alerts.momentum']  = (string) env('DISCORD_ALERTS_MOMENTUM_CHANNEL_ID', $this->channelIds['alerts.momentum']);
+        $this->channelIds['alerts.ai']        = (string) env('DISCORD_ALERTS_AI_CHANNEL_ID', $this->channelIds['alerts.ai']);
+        $this->channelIds['alerts.ema']       = (string) env('DISCORD_ALERTS_EMA_CHANNEL_ID', $this->channelIds['alerts.ema']);
+        $this->channelIds['alerts.news']      = (string) env('DISCORD_ALERTS_NEWS_CHANNEL_ID', $this->channelIds['alerts.news']);
+        $this->channelIds['marketing']        = (string) env('DISCORD_MARKETING_CHANNEL_ID', $this->channelIds['marketing']);
+        $this->channelIds['marketing.news']   = (string) env('DISCORD_MARKETING_NEWS_CHANNEL_ID', $this->channelIds['marketing.news']);
+        $this->channelIds['earnings']         = (string) env('DISCORD_EARNINGS_CHANNEL_ID', $this->channelIds['earnings']);
+        $this->channelIds['ops']              = (string) env('DISCORD_OPS_CHANNEL_ID', $this->channelIds['ops']);
+        $this->channelIds['support']          = (string) env('DISCORD_SUPPORT_CHANNEL_ID', $this->channelIds['support']);
+        $this->channelIds['staging']          = (string) env('DISCORD_STAGING_CHANNEL_ID', $this->channelIds['staging']);
 
     }
 }
