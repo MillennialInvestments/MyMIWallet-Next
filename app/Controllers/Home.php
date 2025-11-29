@@ -13,8 +13,6 @@ class Home extends BaseController
 {
     // Old deps as props (lazy-loaded)
     protected $auth;
-    protected $csp;
-    protected $cspNonce;
     protected $session;
     protected $siteSettings;
 

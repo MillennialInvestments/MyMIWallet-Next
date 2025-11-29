@@ -28,8 +28,6 @@ class AlertsController extends UserController
     use ResponseTrait;
 
     protected $auth;
-    protected $csp;
-    protected $cspNonce;
     protected $session;
     protected $request;
     protected array $data = [];
