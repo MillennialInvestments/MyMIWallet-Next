@@ -632,15 +632,15 @@ class DashboardController extends UserController
 
         try {
             $alertsModel = model(\App\Models\AlertsModel::class);
+
+            $startOfDay = date('Y-m-d 00:00:00');
+            $endOfDay   = date('Y-m-d 23:59:59');
+
             $this->data['dailyTradeAlerts'] = $alertsModel
-                ->getFilteredTradeAlerts([
-                    'start' => date('Y-m-d 00:00:00'),
-                    'end'   => date('Y-m-d 23:59:59'),
-                ])
+                ->where('created_on >=', $startOfDay)
+                ->where('created_on <=', $endOfDay)
                 ->orderBy('created_on', 'DESC')
-                ->limit(10)
-                ->get()
-                ->getResultArray();
+                ->findAll(10);
         } catch (\Throwable $e) {
             log_message('error', 'DashboardController::index failed to load trade alerts: {msg}', [
                 'msg' => $e->getMessage(),

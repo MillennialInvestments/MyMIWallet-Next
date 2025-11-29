@@ -13,8 +13,6 @@ class Home extends BaseController
 {
     // Old deps as props (lazy-loaded)
     protected $auth;
-    protected $csp;
-    protected $cspNonce;
     protected $session;
     protected $siteSettings;
 
@@ -205,7 +203,7 @@ class Home extends BaseController
             'exchangeSlug' => $slug,
         ];
 
-        return $this->render('Public/exchange', $data);
+        return $this->renderTheme('themes/public/exchange', $data);
     }
 
     public function gettingStarted()

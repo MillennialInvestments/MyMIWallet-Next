@@ -30,7 +30,7 @@ class WalletsController extends UserController
     protected $dashboardService;
     protected $goalTrackingService;
     protected $marketingService;
-    protected $solanaService;
+    protected ?SolanaService $solanaService = null;
     protected $transactionService;
     protected $walletService;
     protected $mymigoldModel;
@@ -86,9 +86,31 @@ class WalletsController extends UserController
         $this->currencyService    = new CurrencyService();
         $this->goalTrackingService= new GoalTrackingService();
         $this->marketingService   = new MarketingService();
-        $this->solanaService      = new SolanaService();
+        $this->solanaService      = $this->resolveSolanaService();
         $this->transactionService = new TransactionService();
         $this->mymigoldModel      = new MyMIGoldModel();
+    }
+
+    private function resolveSolanaService(): SolanaService
+    {
+        $service = service('solanaService');
+
+        if ($service instanceof SolanaService) {
+            return $service;
+        }
+
+        return new SolanaService();
+    }
+
+    protected function getSolanaService(): SolanaService
+    {
+        if ($this->solanaService instanceof SolanaService) {
+            return $this->solanaService;
+        }
+
+        $this->solanaService = $this->resolveSolanaService();
+
+        return $this->solanaService;
     }
 
     /**

@@ -49,7 +49,7 @@ $routes->get('/Corporate-Earnings', 'Home::corporateEarnings');
 $routes->get('/Corporate-Earnings/(:segment)', 'Home::corporateEarnings/$1');
 $routes->get('/Economic-Calendar', 'Home::economicCalendar');
 $routes->get('/Economic-Calendar/(:segment)', 'Home::economicCalendarContent/$1');
-$routes->get('Exchange/(:segment)', 'Home::exchange/$1');
+// $routes->get('Exchange/(:segment)', 'Home::exchange/$1');
 $routes->get('/Getting-Started/(:segment)/(:segment)', 'Home::gettingStarted');
 $routes->get('/Getting-Started/(:segment)', 'Home::gettingStarted');
 $routes->get('/Getting-Started', 'Home::gettingStarted');
