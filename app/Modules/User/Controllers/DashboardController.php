@@ -142,10 +142,14 @@ class DashboardController extends UserController
         // Then pass $cuSolanaDW to the view like you already do in $data
         $data['cuSolanaDW'] = $cuSolanaDW;        // Ensure Solana network status exists to avoid "Undefined array key"
         try {
-            if (!isset($this->solanaService)) {
-                $this->solanaService = service('solanaService'); // or however you DI it
+            $svc = $this->solanaService instanceof SolanaService ? $this->solanaService : (service('solanaService') ?: null);
+            if ($svc instanceof SolanaService) {
+                $data['solanaNetworkStatus'] = $svc->getSafeNetworkStatus();
+                $this->solanaService = $svc;
+            } else {
+                log_message('info', 'DashboardController getNetworkStatus skipped: SolanaService not configured; returning offline');
+                $data['solanaNetworkStatus'] = ['healthy' => false, 'status' => 'offline', 'degraded' => true];
             }
-            $data['solanaNetworkStatus'] = $this->solanaService->getNetworkStatus();
         } catch (\Throwable $e) {
             log_message('error', 'WalletsController getNetworkStatus failed: {msg}', ['msg' => $e->getMessage()]);
             $data['solanaNetworkStatus'] = [

@@ -26,7 +26,7 @@ class ReferralModel extends Model
 
     protected $createdField = 'created_on';
     protected $updatedField = 'modified_on';
-    protected $deletedField = 'deleted_on';
+    protected $deletedField = 'deleted_at';
 
     public function apply($data)
     {
@@ -78,7 +78,7 @@ class ReferralModel extends Model
     {
         return $this->db->table('bf_users_referrals')
                     ->select('id, signup_date, referral_email, referrer_code, type, first_name, last_name, active, total_spend')
-                    ->where('deleted_on', null)
+                    ->where('deleted_at', null)
                     ->orderBy('signup_date', 'DESC')  // You can also order by signup date if needed
                     ->get()
                     ->getResultArray();
@@ -94,7 +94,7 @@ class ReferralModel extends Model
         return $this->db->table('bf_users_referrals')
                     ->select('id, signup_date, referral_email, referrer_code, referrer_code as referral_code, type, first_name, last_name, active, total_spend')
                     ->where('referrer_code', $cuReferrerCode)
-                    ->where('deleted_on', null)
+                    ->where('deleted_at', null)
                     ->orderBy('signup_date', 'DESC')  // You can also order by signup date if needed
                     ->get()
                     ->getResultArray();
@@ -111,7 +111,7 @@ class ReferralModel extends Model
         return $this->db->table('bf_users_referrals')
                     ->select('COUNT(*) as count, signup_date')
                     ->where(['referrer_code' => $cuReferrerCode, 'active' => 1])
-                    ->where('deleted_on', null)
+                    ->where('deleted_at', null)
                     ->groupBy('DATE(signup_date)')
                     ->get()
                     ->getResultArray();
@@ -132,7 +132,7 @@ class ReferralModel extends Model
                         'SUM(CASE WHEN COALESCE(total_spend, 0) > 0 THEN 1 ELSE 0 END) as paying'
                     )
                     ->where('referrer_code', $cuReferrerCode)
-                    ->where('deleted_on', null)
+                    ->where('deleted_at', null)
                     ->groupBy('YEAR(signup_date), MONTH(signup_date)')
                     ->orderBy('YEAR(signup_date)', 'ASC')
                     ->orderBy('MONTH(signup_date)', 'ASC')
