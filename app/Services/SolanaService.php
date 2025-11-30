@@ -24,6 +24,7 @@ class SolanaService
     private array $requestMemo = [];        // e.g., ['solData:ADDRESS' => [...]]
     private int $maxMemoEntries = 100;      // max entries in memo to avoid memory bloat
     private int $maxMemoSize = 5 * 1024 * 1024; // max total size of memo in bytes
+    private string $networkStatusCacheKey = 'solana:network_status';
 
     public function __construct()
     {
@@ -84,7 +85,9 @@ class SolanaService
                 }
 
                 try {
-                    log_message('debug', 'HTTP POST '.$url.' | payload:'.json_encode($payload));
+                    if (defined('CI_DEBUG') && CI_DEBUG) {
+                        log_message('debug', 'HTTP POST '.$url.' | payload:'.json_encode($payload));
+                    }
                     $resp = $client->request('POST', $url, [
                         'headers' => ['Content-Type' => 'application/json'],
                         'timeout' => 10,
@@ -114,7 +117,8 @@ class SolanaService
                 } catch (\Throwable $e) {
                     $lastError = $e;
                     $msg = $e->getMessage() ?? 'unknown';
-                    log_message('error', "SolanaService RPC fail {$method} @ {$url} -> {$msg}");
+                    $logLevel = str_contains($msg, 'HTTP 429') ? 'warning' : 'error';
+                    log_message($logLevel, "SolanaService RPC fail {$method} @ {$url} -> {$msg}");
 
                     // Determine if we should open the circuit and how long
                     $penalty = null;
@@ -261,6 +265,26 @@ class SolanaService
     /** Lightweight status for UI */
     public function getNetworkStatus(): array
     {
+        $cache   = \Config\Services::cache();
+        $cacheKey = sanitizeCacheKey($this->networkStatusCacheKey);
+        $cached  = $cache->get($cacheKey);
+        if (is_array($cached)) {
+            return $cached;
+        }
+
+        if ($this->allCircuitsOpen()) {
+            $status = [
+                'healthy'  => false,
+                'slot'     => null,
+                'version'  => null,
+                'status'   => 'offline',
+                'degraded' => true,
+                'error'    => 'circuit_open',
+            ];
+            $cache->save($cacheKey, $status, 60);
+            return $status;
+        }
+
         try {
             $slotRes    = $this->rpc('getSlot', [['commitment' => $this->commitment]]);
             $versionRes = $this->rpc('getVersion');
@@ -268,10 +292,27 @@ class SolanaService
             $slot = $slotRes['result'] ?? $slotRes['slot'] ?? (is_int($slotRes) ? $slotRes : null);
             $version = $versionRes['solana-core'] ?? ($versionRes['result']['solana-core'] ?? null);
 
-            return ['healthy' => true, 'slot' => $slot, 'version' => $version];
+            $status = [
+                'healthy'  => true,
+                'slot'     => $slot,
+                'version'  => $version,
+                'status'   => 'online',
+                'degraded' => false,
+            ];
         } catch (\Throwable $e) {
-            return ['healthy' => false, 'slot' => null, 'version' => null, 'error' => $e->getMessage()];
+            $msg = $e->getMessage();
+            $status = [
+                'healthy'  => false,
+                'slot'     => null,
+                'version'  => null,
+                'status'   => str_contains($msg, '429') ? 'rate_limited' : 'rpc_error',
+                'degraded' => true,
+                'error'    => $msg,
+            ];
         }
+
+        $cache->save($cacheKey, $status, 60);
+        return $status;
     }
 
     /** Keep your earlier compatibility method if WalletsController calls it */
@@ -279,13 +320,12 @@ class SolanaService
     {
         $address = $this->guardAddress($address, 'getSolanaData');
         if ($address === null) {
-            log_message('error', 'getSolanaData: invalid address param');
             return [
                 'address' => $address,
                 'nativeLamports' => 0,
                 'nativeSOL' => 0.0,
                 'tokens' => [],
-                'solanaNetworkStatus' => ['healthy' => false, 'error' => 'invalid-address'],
+                'solanaNetworkStatus' => ['healthy' => false, 'status' => 'invalid_address', 'error' => 'invalid-address'],
             ];
         }
 
@@ -314,11 +354,11 @@ class SolanaService
                 'nativeLamports'     => 0,
                 'nativeSOL'          => 0.0,
                 'tokens'             => [],
-                'solanaNetworkStatus'=> ['healthy' => false, 'error' => $e->getMessage()],
+                'solanaNetworkStatus'=> ['healthy' => false, 'status' => 'rpc_error', 'error' => $e->getMessage()],
             ];
             return $this->requestMemo[$memoKey] = $out;
         }
-    }    
+    }
 
     public function getSolanaPrice(): ?float
     {
@@ -622,13 +662,23 @@ class SolanaService
 
     private function guardAddress(string $address, string $context): ?string
     {
+        $address = trim($address);
+        if ($address === '' || preg_match('/\s/', $address)) {
+            log_message('info', '{context}: invalid address param', [
+                'context' => $context,
+                'address' => $address,
+                'user'    => $this->resolveUserContext(),
+            ]);
+            return null;
+        }
+
         $normalized = $this->normalizeAddress($address);
         if ($normalized !== null) {
             return $normalized;
         }
 
         $userId = $this->resolveUserContext();
-        log_message('error', '{context}: invalid address param', [
+        log_message('info', '{context}: invalid address param', [
             'context' => $context,
             'address' => $address,
             'user'    => $userId,
@@ -663,21 +713,36 @@ class SolanaService
         $delayMs    = 200;
 
         for ($i = 0; $i <= $maxRetries; $i++) {
-            $resp = $this->rpc('getSignaturesForAddress', [$address, ['limit' => $limit]]);
-            if (!isset($resp['error'])) {
-                return $this->memo[$key] = $resp['result'] ?? [];
+            try {
+                $resp = $this->rpc('getSignaturesForAddress', [$address, ['limit' => $limit]]);
+                if (!isset($resp['error'])) {
+                    return $this->memo[$key] = $resp['result'] ?? [];
+                }
+                $err = (string)($resp['error']['message'] ?? 'unknown');
+            } catch (\Throwable $rpcError) {
+                $err = $rpcError->getMessage() ?: 'unknown';
             }
-            $err = (string)($resp['error']['message'] ?? 'unknown');
+
             if (str_contains($err, '429') && $i < $maxRetries) {
+                log_message('warning', 'SolanaService: rate limited on {endpoint} for getSignaturesForAddress', [
+                    'endpoint' => $this->rpcEndpoints[0] ?? 'unknown',
+                ]);
                 usleep($delayMs * 1000);
                 $delayMs = min(2000, (int)($delayMs * 1.8 + random_int(5, 35)));
                 continue;
             }
-            // Non-429 or exhausted retries: log once and return empty
+            // Non-429 or exhausted retries: log once and return degraded response
             log_message('notice', 'Solana RPC getSignaturesForAddress failed: {msg}', ['msg' => $err]);
             break;
         }
-        return $this->memo[$key] = [];
+
+        return $this->memo[$key] = [
+            'status'     => 'degraded',
+            'reason'     => str_contains((string)$err, '429') ? 'rate_limited' : 'rpc_error',
+            'endpoint'   => $this->rpcEndpoints[0] ?? null,
+            'signatures' => [],
+            'data'       => [],
+        ];
     }
 
     private function isCircuitOpen(string $endpoint): bool
@@ -717,6 +782,36 @@ class SolanaService
             if (!$this->isCircuitOpen($ep)) return false;
         }
         return !empty($this->rpcEndpoints);
+    }
+
+    private function allCircuitsOpen(): bool
+    {
+        if (empty($this->rpcEndpoints)) {
+            return false;
+        }
+
+        foreach ($this->rpcEndpoints as $endpoint) {
+            if (!$this->isCircuitOpen($endpoint)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function getSafeNetworkStatus(): array
+    {
+        try {
+            $status = $this->getNetworkStatus();
+            if (empty($status)) {
+                return ['status' => 'unknown', 'degraded' => true, 'healthy' => false];
+            }
+
+            return $status;
+        } catch (\Throwable $e) {
+            log_message('warning', 'SolanaService::getSafeNetworkStatus failed: {msg}', ['msg' => $e->getMessage()]);
+            return ['status' => 'offline', 'degraded' => true, 'healthy' => false];
+        }
     }
 
 }
