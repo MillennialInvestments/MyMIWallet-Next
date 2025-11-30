@@ -1,0 +1,14 @@
+{
+  "name": "mymiwallet-utils",
+  "version": "1.0.0",
+  "description": "Utility scripts for MyMI Wallet documentation pipelines",
+  "type": "module",
+  "scripts": {
+    "import-and-categorize": "node scripts/import_and_categorize.js"
+  },
+  "dependencies": {
+    "@xenova/transformers": "^2.16.1",
+    "natural": "^6.6.4",
+    "slugify": "^1.6.6"
+  }
+}
