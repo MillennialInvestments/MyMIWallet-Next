@@ -45,11 +45,7 @@ Events::on('pre_system', static function (): void {
     // Only HTTP requests have IncomingRequest::getUri()
     if ($request instanceof IncomingRequest) {
         try {
-            $response = guard_uri_placeholders($request, 'pre_system');
-            if ($response) {
-                $response->send();
-                exit; // stop processing to honor redirect
-            }
+            guard_uri_placeholders($request, 'pre_system');
         } catch (\Throwable $e) {
             // Failsafe logging so this never crashes the request lifecycle
             log_message('error', 'pre_system URI guard failed: {msg}', [
