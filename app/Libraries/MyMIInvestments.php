@@ -658,6 +658,7 @@ class MyMIInvestments
                 'investmentOverview' => [],
             ];
         }
+
         $cacheKey = "investment_dashboard_{$cuID}";
         $cachedData = $this->cache->get($cacheKey);
     
@@ -1616,10 +1617,12 @@ class MyMIInvestments
             $symbol       = trim((string) ($investment['symbol'] ?? ''));
 
             if ($symbol === 'TEST' || $symbol === '' || $shares <= 0 || $entryPrice <= 0) {
-                log_message('debug', 'Skipping placeholder/invalid investment record ID={id} symbol={symbol}', [
-                    'id'     => $investment['id'] ?? null,
-                    'symbol' => $symbol,
-                ]);
+                if (defined('CI_DEBUG') && CI_DEBUG) {
+                    log_message('debug', 'Skipping placeholder/invalid investment record ID={id} symbol={symbol}', [
+                        'id'     => $investment['id'] ?? null,
+                        'symbol' => $symbol,
+                    ]);
+                }
                 continue;
             }
 
@@ -1915,8 +1918,8 @@ class MyMIInvestments
             $generalInsightsData = []; //$this->investmentModel->fetchGeneralInsights($cuID); // Hypothetical model method
 
             if (empty($generalInsightsData)) {
-                log_message('error', "No general insights found for User ID: {$cuID}");
-                return ['error' => 'No general insights found'];
+                log_message('info', "No general insights found for User ID: {$cuID}");
+                return ['status' => 'empty', 'message' => 'No insights yet'];
             }
 
             // Return the general insights
