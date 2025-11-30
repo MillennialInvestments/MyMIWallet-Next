@@ -84,20 +84,26 @@ class InvestmentsController extends UserController
         // $userSolanaData = $this->getSolanaService()->getSolanaData($this->cuID);
         // $this->data['cuSolanaDW'] = $userSolanaData['userSolanaWallets']['cuSolanaDW'] ?? null;
         // // Ensure Solana network status exists to avoid "Undefined array key"
+        $networkStatus = [
+            'healthy'  => false,
+            'slot'     => null,
+            'version'  => null,
+            'status'   => 'offline',
+            'degraded' => true,
+        ];
         try {
-            if (!isset($this->solanaService)) {
-                $this->solanaService = service('solanaService'); // or however you DI it
+            $svc = $this->solanaService instanceof SolanaService ? $this->solanaService : (service('solanaService') ?: null);
+            if ($svc instanceof SolanaService) {
+                $networkStatus       = $svc->getSafeNetworkStatus();
+                $this->solanaService = $svc;
+            } else {
+                log_message('info', 'InvestmentsController getNetworkStatus skipped: SolanaService not configured');
             }
-            $data['solanaNetworkStatus'] = $this->solanaService->getNetworkStatus();
         } catch (\Throwable $e) {
             log_message('error', 'WalletsController getNetworkStatus failed: {msg}', ['msg' => $e->getMessage()]);
-            $data['solanaNetworkStatus'] = [
-                'healthy' => false,
-                'slot'    => null,
-                'version' => null,
-                'error'   => $e->getMessage(),
-            ];
+            $networkStatus['error'] = $e->getMessage();
         }
+        $data['solanaNetworkStatus'] = $networkStatus;
         // $this->data['cuSolanaTotal'] = $userSolanaData['userSolanaWallets']['cuSolanaTotal'] ?? 0;
         // $this->data['cuSolanaValue'] = $userSolanaData['userSolanaWallets']['cuSolanaValue'] ?? 0;
         
@@ -111,20 +117,7 @@ class InvestmentsController extends UserController
         ];
         $this->data['cuSolanaDW'] = $userSolanaData['userSolanaWallets']['cuSolanaDW'] ?? null;
         // Ensure Solana network status exists to avoid "Undefined array key"
-        try {
-            if (!isset($this->solanaService)) {
-                $this->solanaService = service('solanaService'); // or however you DI it
-            }
-            $data['solanaNetworkStatus'] = $this->solanaService->getNetworkStatus();
-        } catch (\Throwable $e) {
-            log_message('error', 'WalletsController getNetworkStatus failed: {msg}', ['msg' => $e->getMessage()]);
-            $data['solanaNetworkStatus'] = [
-                'healthy' => false,
-                'slot'    => null,
-                'version' => null,
-                'error'   => $e->getMessage(),
-            ];
-        }
+        $data['solanaNetworkStatus'] = $networkStatus;
         $this->data['cuSolanaTotal'] = $userSolanaData['userSolanaWallets']['cuSolanaTotal'] ?? 0;
         $this->data['cuSolanaValue'] = $userSolanaData['userSolanaWallets']['cuSolanaValue'] ?? 0;
         

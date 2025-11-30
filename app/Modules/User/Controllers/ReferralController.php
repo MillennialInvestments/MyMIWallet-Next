@@ -26,7 +26,8 @@ class ReferralController extends UserController {
     protected $goalTrackingService;
     protected $marketingService;
     protected $referralService;
-    protected $solanaService;
+    /** @var SolanaService|null */
+    protected $solanaService = null;
     protected $userService;
     protected $userData;
     protected $walletService;
@@ -53,7 +54,10 @@ class ReferralController extends UserController {
         // $this->dashboardService = new DashboardService();
         $this->goalTrackingService = new GoalTrackingService();
         // $this->marketingService  = new MarketingService();
-        $this->solanaService  = new SolanaService();
+        $this->solanaService  = service('solanaService');
+        if (!($this->solanaService instanceof SolanaService)) {
+            $this->solanaService = null;
+        }
 
         $this->budgetModel = new BudgetModel(); 
         // $this->userModel = new UserModel(); 
@@ -193,16 +197,20 @@ class ReferralController extends UserController {
         $this->data['cuSolanaValue'] = (float) ($solanaWallets['cuSolanaValue'] ?? 0);
 
         $this->data['solanaNetworkStatus'] = [
-            'healthy' => false,
-            'slot'    => null,
-            'version' => null,
-            'error'   => null,
+            'healthy'  => false,
+            'slot'     => null,
+            'version'  => null,
+            'status'   => 'offline',
+            'degraded' => true,
         ];
         try {
-            if (!isset($this->solanaService)) {
-                $this->solanaService = service('solanaService');
+            $svc = $this->solanaService instanceof SolanaService ? $this->solanaService : (service('solanaService') ?: null);
+            if ($svc instanceof SolanaService) {
+                $this->data['solanaNetworkStatus'] = $svc->getSafeNetworkStatus();
+                $this->solanaService = $svc;
+            } else {
+                log_message('info', 'ReferralController::commonData getNetworkStatus skipped: SolanaService not configured');
             }
-            $this->data['solanaNetworkStatus'] = $this->solanaService->getNetworkStatus();
         } catch (\Throwable $e) {
             log_message('error', 'ReferralController::commonData getNetworkStatus failed: {message}', [
                 'message' => $e->getMessage(),

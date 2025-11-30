@@ -113,7 +113,9 @@ class MyMIFractalAnalyzer
         ];
 
         // Log that a dummy data is being used for testing purposes
-        log_message('info', 'Using dummy market data for symbol: {symbol}', ['symbol' => $symbol]);
+        if (defined('CI_DEBUG') && CI_DEBUG) {
+            log_message('debug', 'Using dummy market data for symbol: {symbol}', ['symbol' => $symbol]);
+        }
 
         return $dummyData['timeSeries'];
     }
