@@ -349,8 +349,8 @@ class Home extends BaseController
         $data = [
             'sectorSlug' => $slug,
         ];
-
-        return $this->render('Public/sector', $data);
+        
+        return $this->renderTheme('Public/sector', $data);
     }
 
     public function terms()

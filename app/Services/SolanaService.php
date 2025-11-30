@@ -199,9 +199,8 @@ class SolanaService
 
     public function getBalanceLamports(string $address): int
     {
-        $address = $this->normalizeAddress($address) ?? '';
-        if ($address === '') {
-            log_message('error', 'getBalanceLamports: invalid address param');
+        $address = $this->guardAddress($address, 'getBalanceLamports');
+        if ($address === null) {
             return 0;
         }
         $res = $this->rpc('getBalance', [$address, ['commitment' => $this->commitment]]);
@@ -212,9 +211,8 @@ class SolanaService
 
     public function getTokenAccounts(string $owner): array
     {
-        $owner = $this->normalizeAddress($owner) ?? '';
-        if ($owner === '') {
-            log_message('error', 'getTokenAccounts: invalid owner param');
+        $owner = $this->guardAddress($owner, 'getTokenAccounts');
+        if ($owner === null) {
             return [];
         }
 
@@ -279,8 +277,8 @@ class SolanaService
     /** Keep your earlier compatibility method if WalletsController calls it */
     public function getSolanaData(string $address): array
     {
-        $address = $this->normalizeAddress($address) ?? '';
-        if ($address === '') {
+        $address = $this->guardAddress($address, 'getSolanaData');
+        if ($address === null) {
             log_message('error', 'getSolanaData: invalid address param');
             return [
                 'address' => $address,
@@ -622,9 +620,42 @@ class SolanaService
         return null;
     }
 
+    private function guardAddress(string $address, string $context): ?string
+    {
+        $normalized = $this->normalizeAddress($address);
+        if ($normalized !== null) {
+            return $normalized;
+        }
+
+        $userId = $this->resolveUserContext();
+        log_message('error', '{context}: invalid address param', [
+            'context' => $context,
+            'address' => $address,
+            'user'    => $userId,
+        ]);
+
+        return null;
+    }
+
+    private function resolveUserContext(): string
+    {
+        try {
+            $session = service('session');
+            $id = $session?->get('user_id') ?? $session?->get('cuID');
+            return (string) ($id ?? 'guest');
+        } catch (\Throwable $e) {
+            return 'guest';
+        }
+    }
+
     // Normalize in RPC that takes an address
     public function getSignaturesForAddress(string $address, int $limit = 100): array
     {
+        $address = $this->guardAddress($address, 'getSignaturesForAddress');
+        if ($address === null) {
+            return [];
+        }
+
         $key = "sigs:{$address}:{$limit}";
         if (isset($this->memo[$key])) return $this->memo[$key];
 

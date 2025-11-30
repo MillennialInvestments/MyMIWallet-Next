@@ -36,6 +36,7 @@ class DashboardController extends UserController
     protected $emailService;
     protected $solanaService;
     protected $userService;
+    protected ?MyMIInvestments $MyMIInvestments = null;
 
     public function __construct()
     {
@@ -56,6 +57,8 @@ class DashboardController extends UserController
         $this->dashboardService = new DashboardService();
         $this->emailService = new EmailService();
         $this->solanaService = new SolanaService();
+
+        $this->MyMIInvestments = $this->getMyMIInvestments();
 
         $this->cuID = $this->auth->id() ?? $this->session->get('user_id');
     }
@@ -355,6 +358,27 @@ class DashboardController extends UserController
                     $this->data['campaigns']                        = $this->emailService->getAvailableCampaigns(); // We'll add getAvailableCampaigns() next
                 }
             } elseif ($pageURIC === 'Investments') {
+                if (! ($this->MyMIInvestments instanceof MyMIInvestments)) {
+                    $this->MyMIInvestments = $this->getMyMIInvestments();
+                }
+
+                if (! ($this->MyMIInvestments instanceof MyMIInvestments)) {
+                    log_message(
+                        'error',
+                        'DashboardController::commonData getInvestmentDashboard failed: MyMIInvestments is null for user {id}',
+                        ['id' => $this->cuID ?? null]
+                    );
+
+                    $this->data['investDashboard'] = [
+                        'status'             => 'Unavailable',
+                        'message'            => 'Investment dashboard is temporarily unavailable.',
+                        'investmentOverview' => [],
+                    ];
+                    $this->data['investmentDashboardUnavailable'] = true;
+
+                    return $this->data;
+                }
+                
 //                 $this->MyMIInvestments                              = new MyMIInvestments(); // replaced by BaseController getter
                 $this->accountsModel                                = new AccountsModel();
                 $this->data['investDashboard']                      = $this->MyMIInvestments->getInvestmentDashboard($this->cuID);

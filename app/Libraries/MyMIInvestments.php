@@ -650,6 +650,14 @@ class MyMIInvestments
     
     public function getInvestmentDashboard($cuID)
     {
+        if (! ($this->investmentModel instanceof InvestmentModel) || ! ($this->cache instanceof CacheInterface)) {
+            log_message('error', 'MyMIInvestments::getInvestmentDashboard missing required dependencies.');
+            return [
+                'status'             => 'Unavailable',
+                'message'            => 'Investment dashboard is temporarily unavailable.',
+                'investmentOverview' => [],
+            ];
+        }
         $cacheKey = "investment_dashboard_{$cuID}";
         $cachedData = $this->cache->get($cacheKey);
     
@@ -668,7 +676,13 @@ class MyMIInvestments
         } else {
             log_message('warning', 'Queue service is not initialized, processing investment dashboard synchronously.');
             $this->prepareInvestmentDashboard($cuID, $cacheKey); // Fallback to synchronous processing
-        }        
+        }
+
+        log_message(
+            'debug',
+            'MyMIInvestments::getInvestmentDashboard success for user {id}',
+            ['id' => $cuID]
+        );
     
         return ['status' => 'Processing', 'message' => 'Dashboard data is being prepared.', 'investmentOverview' => $investmentOverview];
     }

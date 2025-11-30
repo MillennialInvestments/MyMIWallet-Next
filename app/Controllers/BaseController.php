@@ -11,7 +11,8 @@ use Config\Services;
 use Throwable; 
 use Psr\Log\LoggerInterface;
 
-use App\Libraries\{CrudCacheInvalidator, MyMIAdvisor, MyMIAlphaVantage, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets};
+
+use App\Libraries\{CrudCacheInvalidator, MyMIAdvisor, MyMIAlphaVantage, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIInvestments, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets};
 use App\Services\{AccountService, BudgetService, DashboardService, GoalTrackingService, MarketingService, SolanaService, UserService, WalletService};
 use App\Models\WalletModel; // <-- add this
 
@@ -57,6 +58,7 @@ abstract class BaseController extends Controller
     private ?MyMIBudget $myMIBudget = null;
     private ?MyMICoin $myMICoin = null;
     private ?MyMIDashboard $myMIDashboard = null;
+    private ?MyMIInvestments $myMIInvestments = null;
     private ?MyMIProjects $myMIProjects = null;
     private ?MyMISolana $myMISolana = null;
     private ?MyMIUser $myMIUser = null;
@@ -777,6 +779,25 @@ abstract class BaseController extends Controller
     protected function getMyMICoin(): MyMICoin
     {
         return $this->myMICoin ??= new MyMICoin();
+    }
+    protected function getMyMIInvestments(): MyMIInvestments
+    {
+        if (! ($this->myMIInvestments instanceof MyMIInvestments)) {
+            try {
+                $svc = service('myMIInvestments');
+                if ($svc instanceof MyMIInvestments) {
+                    $this->myMIInvestments = $svc;
+                }
+            } catch (\Throwable $e) {
+                // ignore and fallback to manual initialization
+            }
+
+            if (! ($this->myMIInvestments instanceof MyMIInvestments)) {
+                $this->myMIInvestments = new MyMIInvestments();
+            }
+        }
+
+        return $this->myMIInvestments;
     }
     protected function getMyMIDashboard(): MyMIDashboard
     {

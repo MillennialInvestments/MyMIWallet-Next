@@ -9,68 +9,122 @@ class LogSummarize extends BaseCommand
 {
     protected $group       = 'maintenance';
     protected $name        = 'logs:summarize';
-    protected $description = 'Consolidate today\'s logs into a summary file with deduped entries (ignores timestamps).';
+    protected $description = 'Summarize CI4 logs for a given date (default today).';
+    protected $usage       = 'logs:summarize [date|yesterday]';
+    protected $arguments   = [
+        'date' => 'Optional: "yesterday" or YYYY-MM-DD (defaults to today).',
+    ];
 
     public function run(array $params)
     {
-        $today    = date('Y-m-d');
-        $logFile  = WRITEPATH . "logs/log-{$today}.log";
-        $outFile  = WRITEPATH . "logs/summary-{$today}.log";
+        // Determine target date
+        $arg = $params[0] ?? null;
+
+        if ($arg === 'yesterday') {
+            $targetDate = date('Y-m-d', strtotime('-1 day'));
+        } elseif ($arg && preg_match('/^\d{4}-\d{2}-\d{2}$/', $arg)) {
+            $targetDate = $arg;
+        } else {
+            $targetDate = date('Y-m-d'); // server date
+        }
+
+        $this->summarizeForDate($targetDate);
+    }
+
+    /**
+     * Core logic to summarize a log file for a specific date.
+     *
+     * Now timestamp-aware:
+     * - Tracks last processed timestamp in summary-YYYY-MM-DD.state
+     * - Adds a "HERE'S THE NEW STUFF" section for entries after that timestamp.
+     */
+    protected function summarizeForDate(string $date): void
+    {
+        $logFile   = WRITEPATH . "logs/log-{$date}.log";
+        $outFile   = WRITEPATH . "logs/summary-{$date}.log";
+        $stateFile = WRITEPATH . "logs/summary-{$date}.state";
 
         if (! is_file($logFile)) {
-            CLI::error("No log file for today: {$logFile}");
+            CLI::error("No log file found for {$date}: {$logFile}");
             return;
         }
 
-        // Levels we care about
         $levels = ['DEBUG', 'INFO', 'NOTICE', 'WARNING', 'ERROR', 'CRITICAL'];
 
-        // Storage: [ "LEVEL|message" => count ]
+        // key: "LEVEL|message" => total count
         $entries = [];
 
-        $lines = file($logFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        // key: "LEVEL|message" => count of NEW entries (after lastProcessedTs)
+        $newEntries = [];
 
-        // Example CI4 line:
-        // CRITICAL - 2025-11-29 07:39:20 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "(:segment)"
-        $pattern = '/^(DEBUG|INFO|NOTICE|WARNING|ERROR|CRITICAL)\s*-\s*\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}\s*-->\s*(.*)$/';
+        // Load last processed timestamp (if any)
+        $lastProcessedTs = null;
+        if (is_file($stateFile)) {
+            $raw = trim((string) file_get_contents($stateFile));
+            if ($raw !== '') {
+                $lastProcessedTs = $raw; // format: Y-m-d H:i:s
+            }
+        }
+
+        $lines       = file($logFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $pattern     = '/^(DEBUG|INFO|NOTICE|WARNING|ERROR|CRITICAL)\s*-\s*' .
+                       '(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})\s*-->\s*(.*)$/';
+        $maxTsString = $lastProcessedTs; // track the latest timestamp we see
 
         foreach ($lines as $line) {
             if (! preg_match($pattern, $line, $matches)) {
-                continue; // skip non-log lines (PHP headers, stack trace lines, etc.)
+                // skip non-standard lines (stack traces, etc.)
+                continue;
             }
 
-            $level   = strtoupper(trim($matches[1]));
-            $message = trim($matches[2]);
+            $level     = strtoupper(trim($matches[1]));
+            $timestamp = trim($matches[2]); // "YYYY-MM-DD HH:MM:SS"
+            $message   = trim($matches[3]);
 
-            // Only track configured levels, just in case
             if (! in_array($level, $levels, true)) {
                 continue;
             }
 
-            // Optional: strip extra whitespace / normalize
+            // normalize whitespace to group similar messages
             $message = preg_replace('/\s+/', ' ', $message);
 
-            // Use LEVEL + message (no timestamp) as the key
             $key = $level . '|' . $message;
 
+            // ----- total occurrences -----
             if (! isset($entries[$key])) {
                 $entries[$key] = 0;
             }
-
             $entries[$key]++;
+
+            // ----- NEW occurrences since lastProcessedTs -----
+            $isNew = false;
+            if ($lastProcessedTs === null) {
+                // first run for this date => treat everything as "old" by default
+                // If you want first run to count as "new", flip this logic.
+                $isNew = false;
+            } else {
+                // safe lexicographical comparison for "YYYY-MM-DD HH:MM:SS"
+                if ($timestamp > $lastProcessedTs) {
+                    $isNew = true;
+                }
+            }
+
+            if ($isNew) {
+                if (! isset($newEntries[$key])) {
+                    $newEntries[$key] = 0;
+                }
+                $newEntries[$key]++;
+            }
+
+            // Track the maximum timestamp we see
+            if ($maxTsString === null || $timestamp > $maxTsString) {
+                $maxTsString = $timestamp;
+            }
         }
 
-        // Build summary output
-        $summary   = [];
-        $summary[] = "===============================================";
-        $summary[] = "   MyMI Wallet — Log Summary for {$today}";
-        $summary[] = "   Auto-generated by logs:summarize command";
-        $summary[] = "   Grouped by (LEVEL + message), timestamps ignored";
-        $summary[] = "===============================================";
-        $summary[] = "";
-
-        // Group back by level for nicer display
-        $groupedByLevel = [];
+        // Group by level for nicer output
+        $groupedByLevel    = [];
+        $newGroupedByLevel = [];
 
         foreach ($entries as $key => $count) {
             [$level, $message] = explode('|', $key, 2);
@@ -80,6 +134,31 @@ class LogSummarize extends BaseCommand
             $groupedByLevel[$level][$message] = $count;
         }
 
+        foreach ($newEntries as $key => $count) {
+            [$level, $message] = explode('|', $key, 2);
+            if (! isset($newGroupedByLevel[$level])) {
+                $newGroupedByLevel[$level] = [];
+            }
+            $newGroupedByLevel[$level][$message] = $count;
+        }
+
+        // Build summary output
+        $summary   = [];
+        $summary[] = "===============================================";
+        $summary[] = "   MyMI Wallet — Log Summary for {$date}";
+        $summary[] = "   Auto-generated by logs:summarize command";
+        $summary[] = "   Grouped by (LEVEL + message)";
+        $summary[] = "===============================================";
+        $summary[] = "";
+
+        if ($lastProcessedTs !== null) {
+            $summary[] = "Last processed up to: {$lastProcessedTs}";
+        } else {
+            $summary[] = "Last processed up to: <none> (first run for this date)";
+        }
+        $summary[] = "";
+
+        // ---- Full grouped summary (all occurrences) ----
         foreach ($levels as $level) {
             if (empty($groupedByLevel[$level])) {
                 continue;
@@ -99,8 +178,55 @@ class LogSummarize extends BaseCommand
             $summary[] = "";
         }
 
+        // ---- "HERE'S THE NEW STUFF" delta section ----
+        $summary[] = "===============================================";
+        $summary[] = "   HERE'S THE NEW STUFF";
+        if ($lastProcessedTs !== null) {
+            $summary[] = "   (Entries logged AFTER {$lastProcessedTs})";
+        } else {
+            $summary[] = "   (No previous timestamp recorded – nothing treated as new)";
+        }
+        $summary[] = "===============================================";
+        $summary[] = "";
+
+        $hasNew = false;
+
+        foreach ($levels as $level) {
+            if (empty($newGroupedByLevel[$level])) {
+                continue;
+            }
+
+            $hasNew = true;
+
+            $summary[] = "---------------------------";
+            $summary[] = "LEVEL: {$level} (NEW)";
+            $summary[] = "---------------------------";
+            $summary[] = "";
+
+            foreach ($newGroupedByLevel[$level] as $message => $count) {
+                $summary[] = "[{$count} NEW occurrence(s)]";
+                $summary[] = "{$level} --> {$message}";
+                $summary[] = "";
+            }
+
+            $summary[] = "";
+        }
+
+        if (! $hasNew && $lastProcessedTs !== null) {
+            $summary[] = "No NEW log entries found after {$lastProcessedTs}.";
+            $summary[] = "";
+        }
+
         file_put_contents($outFile, implode(PHP_EOL, $summary));
 
-        CLI::write("Summary generated: {$outFile}", 'green');
+        // Update state file with the latest timestamp we saw
+        if ($maxTsString !== null) {
+            file_put_contents($stateFile, $maxTsString);
+        }
+
+        CLI::write("Summary generated for {$date}: {$outFile}", 'green');
+        if ($maxTsString !== null) {
+            CLI::write("Last processed timestamp updated to: {$maxTsString}", 'yellow');
+        }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Config;
 
-use App\Libraries\CrudCacheInvalidator;
+use App\Libraries\{CrudCacheInvalidator, MyMIAnalytics, MyMIInvestments};
 use CodeIgniter\Config\BaseService;
 
 /**
@@ -37,6 +37,15 @@ class Services extends BaseService
             return static::getSharedInstance('myMIAnalytics');
         }
         return new MyMIAnalytics();
+    }
+
+    public static function myMIInvestments(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('myMIInvestments');
+        }
+
+        return new MyMIInvestments();
     }
     /*
      * public static function example($getShared = true)
