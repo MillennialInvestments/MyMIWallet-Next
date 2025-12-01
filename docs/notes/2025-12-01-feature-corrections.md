@@ -1,0 +1,78 @@
+# Feature Corrections - 2025-12-01
+
+## 1. List of Issues to Correct:
+- MyMI-Gold/Goals/Daily
+  - Start Task Functionality not working
+  - Add DataTableJS to Sort
+- Budget/Income
+  - Financial Breakdown Element Box Sizing - Smaller or more responsive
+  - Financial Overview Table Formatting
+  - Income Breakdown Chart Not Working
+- Budget/Expense
+  - Same as Budget/Income
+- Wallets/Checking
+  - Ensure all wallets are displaying correctly from database
+    - Provide a checklist of what data should be in the database for an active wallet to display and beadded to the calculations
+- Wallets/{Types}
+  - Check Add/Edit Functionality
+- Memberships
+  - Feature Descriptions not displaying
+  - Paid Membership Pages (Basic/Pro/Gold)
+    - Transaction Modal to register in-page
+    - Check Promo Code Tracking and Functionality
+  - Membership/Customize
+    - Page Layout & Data Population not working correctly
+- Budget
+  - Migrate Add Income/Expenses to Transactional-Modal
+  - DataTableJS Issues: Table not working
+  - Bank/Credit Account Button not opening modal 
+  - Table Updates on change lagging / not populating or updating after form submission success. Has to reload the page twice for it to display
+  - Migrate Copy Record to Transactional Modal also
+  - Search Input to find Related Records to displayed budget record or not displayed even
+- Budget/History
+  - DataTableJS Not working properly
+- Exchange/Solana
+  - MyMI Solana Transactional Modal not opening
+  - Trade Solana Transactional Modal not opening
+  - Swap Solana Transactional Modal not opening
+  - View Solana Wallet Transactional Modal not opening
+- Investments
+  - Data not populating for existing records in bf_investment_trades
+  - Add Trade Transactional Modal not opening
+  - Add to Watchlist Transactional Modal not opening
+  - Economic Calendar not populating
+    - Sending Alert when it comes back empty - apply this to other modules, elements and features/services to be made aware of failures to be more proactive
+- Investment/Retirement
+  - Migrate to Individual User/Retirement Module like User/Investments
+  - Adjust Format to Layout
+- Investment/Watchlist
+  - 404 Error / Create Page
+- Projects
+  - Move to My-Projects so we can have a public view with /Projects that gives some previews on the existing Projects we have on our platform
+- My-Referrals
+  - Page Layout messed up
+  - Create My-Referrals/Settings Page
+  - Overview Chart not working
+    - Try to track where user came from -> breakdown
+  - DataTableJS Issue here as well
+- Referrals/Create 
+  - Expand Referral Ability / Functionality
+- Referrals/Pending
+  - Create Page / 404 Error
+- Referrals/Reports 
+  - Same as Create / Pending
+- Referrals/Active
+  - Same as Create / Pending
+- Trade-Tracker
+  - Ensure Manual is Free and ready to use
+  - Lock down but display Premium Tools
+  - Add Trade Button not working
+  - Check Save/Export Functionality
+  - Show Table even when empty
+- Wallets
+  - Populating Appropriate Wallets Data
+  - Add Manuallly Add Button is not opening Transactional Modal
+  - Plaid Link Integration not working either.
+- Wallets/Investments
+  - Check Automation Functionality
+- 
