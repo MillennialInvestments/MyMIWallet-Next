@@ -67,3 +67,18 @@
 #--------------------------------------------------------------------
 
 # logger.threshold = 4
+
+#--------------------------------------------------------------------
+# EMAIL (SMTP)
+#--------------------------------------------------------------------
+email.protocol   = smtp
+email.smtpHost   = smtp.dreamhost.com
+email.smtpPort   = 587
+email.smtpCrypto = tls
+email.smtpUser   = support@mymiwallet.com
+email.smtpPass   =
+email.fromEmail  = no-reply@mymiwallet.com
+email.fromName   = "MyMI Wallet"
+
+# Optional default recipient for `php spark email:test`
+# test.email.to = you@example.com
