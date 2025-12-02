@@ -26,7 +26,13 @@ class EmailController extends BaseController
         $email->setFrom(getenv('EMAIL_FROM') ?: 'noreply@localhost', 'MyMI Wallet');
         $email->setSubject('Verify your email');
         $email->setMessage("Click to verify: {$link}");
-        @$email->send();
+        if (! $email->send()) {
+            $debug = $email->printDebugger(['headers', 'subject', 'body']);
+            log_message('error', 'Email verification send failed for user {user}: {debug}', [
+                'user'  => $user['id'] ?? 'unknown',
+                'debug' => $debug,
+            ]);
+        }
 
         audit('email.verify.send', ['email' => Redactor::email($user['email'])], 'email');
         return $this->ok('Verification email sent.');
