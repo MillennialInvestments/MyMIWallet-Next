@@ -1,0 +1,9 @@
+{
+  "api_base": "https://www.mymiwallet.com/index.php",
+  "cron_key": "<optional-management-cron-key>",
+  "discord_webhook_digest": "https://discord.com/api/webhooks/.../digest",
+  "discord_webhook_engagement": "https://discord.com/api/webhooks/.../engagement",
+  "discord_bot_token": "<bot-token-if-used>",
+  "guild_id": "<guild-id>",
+  "lookback_minutes": 15
+}
