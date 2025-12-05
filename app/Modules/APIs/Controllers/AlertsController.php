@@ -1331,6 +1331,11 @@ class AlertsController extends ResourceController
         $alertsModel = $this->alertsModel;
 
         $activeAlerts = $alertsModel->getFilteredTradeAlerts();
+        log_message(
+            'debug',
+            'getLatestPrices - Loaded {count} active alerts before symbol filtering.',
+            ['count' => is_array($activeAlerts) ? count($activeAlerts) : 0]
+        );
         if (empty($activeAlerts)) {
             log_message('warning', 'getLatestPrices - No active trade alerts found.');
             return $this->fail('No active trade alerts to process.');
@@ -1395,7 +1400,14 @@ class AlertsController extends ResourceController
         }
 
         if (empty($validUpdates)) {
-            log_message('warning', 'getLatestPrices - No valid data to update after filtering. Skipped: ' . implode(', ', $skipped));
+            log_message(
+                'info',
+                'getLatestPrices - No valid data to update after filtering. Skipped price refresh. totalSymbols={total} skipped={skipped}',
+                [
+                    'total'   => is_array($symbols) ? count($symbols) : 0,
+                    'skipped' => count($skipped),
+                ]
+            );
             return $this->respond([
                 'status'  => 'warning',
                 'updated' => 0,
@@ -2127,8 +2139,14 @@ class AlertsController extends ResourceController
             🔹 **Sentiment:** {$tradeAlert['market_sentiment']}
             📊 **Chart:** <a href='{$chartLink}'>View Here</a>
         ");
-        $emailService->send();
-    }    
+        if (! $emailService->send()) {
+            $debug = $emailService->printDebugger(['headers', 'subject', 'body']);
+            log_message('error', 'sendEmailToList - Failed to send trade alert email to {recipient}: {debug}', [
+                'recipient' => $email,
+                'debug'     => $debug,
+            ]);
+        }
+    }
     
     /**
      * Distribute Trade Alert Emails
