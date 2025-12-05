@@ -369,12 +369,20 @@ abstract class BaseController extends Controller
                 ?? null;
 
             if ($address) {
-                $snapshot = $solService->getSolanaData($address) ?? [];
-                if (isset($snapshot['nativeSOL'])) {
-                    $this->data['cuSolanaTotal'] = (float)$snapshot['nativeSOL'];
-                }
-                if (!empty($snapshot['solanaNetworkStatus'])) {
-                    $setValue('solanaNetworkStatus', $snapshot['solanaNetworkStatus']);
+                try {
+                    $snapshot = $solService->getSolanaData($address) ?? null;
+                    if (is_array($snapshot)) {
+                        if (isset($snapshot['nativeSOL'])) {
+                            $this->data['cuSolanaTotal'] = (float)$snapshot['nativeSOL'];
+                        }
+                        if (!empty($snapshot['solanaNetworkStatus'])) {
+                            $setValue('solanaNetworkStatus', $snapshot['solanaNetworkStatus']);
+                        }
+                    } else {
+                        log_message('debug', 'BaseController commonData(): Solana data unavailable for address {address}', ['address' => $address]);
+                    }
+                } catch (\Throwable $inner) {
+                    log_message('warning', 'BaseController commonData(): Solana snapshot failed for {address}: {msg}', ['address' => $address, 'msg' => $inner->getMessage()]);
                 }
             }
 
@@ -390,7 +398,7 @@ abstract class BaseController extends Controller
                 }
             }
         } catch (\Throwable $e) {
-            log_message('error', 'BaseController commonData(): Solana calls failed: '.$e->getMessage());
+            log_message('warning', 'BaseController commonData(): Solana calls failed: '.$e->getMessage());
         }
 
 

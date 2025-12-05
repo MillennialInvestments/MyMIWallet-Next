@@ -67,6 +67,9 @@ class MyMIMarketing
     protected $pscrape;
     // protected $initializeServices;
 
+    private static bool $pscrapeNoticeLogged = false;
+
+
     private array $newsVendorPrefixes = [
         'pr newswire'   => 'PR Newswire',
         'globenewswire' => 'GlobeNewswire',
@@ -146,6 +149,13 @@ class MyMIMarketing
                 $this->pscrape = null;
             }
         } else {
+            if (! self::$pscrapeNoticeLogged) {
+                log_message(
+                    'debug',
+                    'MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.'
+                );
+                self::$pscrapeNoticeLogged = true;
+            }
             log_message(
                 'info',
                 'MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.'
