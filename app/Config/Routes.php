@@ -184,6 +184,15 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->match(['GET', 'POST'], 'Status/(:segment)', 'APIController::status');
     $routes->match(['GET', 'POST'], 'Investments/getSymbolsByTradeType/(:segment)', 'APIController::getSymbolsByTradeType/$1');
 
+    // API – Investments News
+    $routes->group('Investments', ['namespace' => 'App\Modules\APIs\Controllers'], static function ($routes) {
+        $routes->get('news',              'InvestmentsController::listNews');
+        $routes->get('news/(:num)',       'InvestmentsController::getNews/$1');
+        $routes->post('news',             'InvestmentsController::createNews');
+        $routes->post('news/(:num)',      'InvestmentsController::updateNews/$1');
+        $routes->delete('news/(:num)',    'InvestmentsController::deleteNews/$1');
+    });
+
     $routes->group('Management', ['filter' => 'cronKey'], function($routes) {
         $routes->get('Run-CRON-Tasks', 'ManagementController::Run_CRON_Tasks');
         $routes->get('ajaxGetActiveUsers', 'ManagementController::ajaxGetActiveUsers');
@@ -836,6 +845,7 @@ $routes->group('Dashboard', ['namespace' => 'App\Modules\User\Controllers','filt
 
 $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers'],  function($routes) {
     $routes->get('/', 'ManagementController::index');
+    $routes->get('Investments/News', 'InvestmentsController::newsIndex');
     $routes->group('Admin', function($routes) {
         $routes->get('/', 'AdminController::index');
     });
