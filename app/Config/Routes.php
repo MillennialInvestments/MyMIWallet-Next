@@ -184,6 +184,12 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->match(['GET', 'POST'], 'Status/(:segment)', 'APIController::status');
     $routes->match(['GET', 'POST'], 'Investments/getSymbolsByTradeType/(:segment)', 'APIController::getSymbolsByTradeType/$1');
 
+    $routes->group('AI', function($routes) {
+        $routes->post('Chat', 'AIController::postChat');
+        $routes->get('Notes', 'AIController::listNotes');
+        $routes->post('LinkSettings', 'AIController::updateLinkSettings');
+    });
+
     $routes->group('Management', ['filter' => 'cronKey'], function($routes) {
         $routes->get('Run-CRON-Tasks', 'ManagementController::Run_CRON_Tasks');
         $routes->get('ajaxGetActiveUsers', 'ManagementController::ajaxGetActiveUsers');
