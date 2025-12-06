@@ -4,7 +4,7 @@ use App\Controllers\BaseController;
 use Config\Services;
 use App\Config\{Auth, SiteSettings, SocialMedia};
 use App\Controllers\UserController;
-use App\Libraries\{MyMIAlerts, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIInvestments, MyMIMarketing, MyMIOnboarding, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets};
+use App\Libraries\{MyMIAlerts, MyMIAnalytics, MyMIAssistant, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIInvestments, MyMIMarketing, MyMIOnboarding, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets};
 use App\Models\{AccountsModel, AlertsModel, DashboardModel, DiscordLinkModel, MarketingModel, SolanaModel, UserModel};
 use App\Services\{AccountService, BudgetService, DashboardService, EmailService, SolanaService, UserService};
 use CodeIgniter\API\ResponseTrait;
@@ -676,6 +676,18 @@ class DashboardController extends UserController
             $this->data['dailyTradeAlerts'] = [];
         }
 
+        try {
+            $assistant = new MyMIAssistant();
+            $this->data['aiSessionKey'] = $assistant->ensureSessionKey($activeUserId);
+            $this->data['aiNotes']      = $assistant->getNotesForUser($activeUserId);
+        } catch (\Throwable $e) {
+            log_message('error', 'DashboardController::index failed to prep AI session: {msg}', [
+                'msg' => $e->getMessage(),
+            ]);
+            $this->data['aiSessionKey'] = null;
+            $this->data['aiNotes']      = [];
+        }
+
         return $this->renderTheme('User/Dashboard/index', $this->data);
     }
 
@@ -1211,6 +1223,18 @@ class DashboardController extends UserController
         $this->data['discordLink']        = $linkModel->findByUserId($this->cuID);
         $this->data['discordLinkMessage'] = $linkMessage;
         $this->data['discordLinkUrl']     = site_url('/Account/Social-Media?source=discord');
+        $scopes = [];
+        if (!empty($this->data['discordLink']['scopes_json'] ?? null)) {
+            $decoded = json_decode($this->data['discordLink']['scopes_json'], true) ?? [];
+            $scopes  = array_map('boolval', $decoded);
+        }
+        $this->data['discordScopes']  = array_merge([
+            'budget'     => true,
+            'alerts'     => true,
+            'watchlists' => true,
+            'marketing'  => false,
+        ], $scopes);
+        $this->data['discordPersona'] = $this->data['discordLink']['ai_persona'] ?? 'investor';
         return $this->renderTheme('App\Modules\User\Views\Dashboard\Account\Social', $this->data);
     }
 

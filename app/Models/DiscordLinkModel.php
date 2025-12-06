@@ -8,7 +8,7 @@ use Exception;
 
 class DiscordLinkModel extends Model
 {
-    protected $table            = 'bf_users_discord_links';
+    protected $table            = 'bf_discord_links';
     protected $primaryKey       = 'id';
     protected $returnType       = 'array';
     protected $useTimestamps    = true;
@@ -21,6 +21,10 @@ class DiscordLinkModel extends Model
         'link_token',
         'token_expires_at',
         'linked_at',
+        'status',
+        'ai_persona',
+        'last_seen_at',
+        'scopes_json',
     ];
 
     public function issueToken(string $discordId, string $discordUsername, int $ttlSeconds = 900): array

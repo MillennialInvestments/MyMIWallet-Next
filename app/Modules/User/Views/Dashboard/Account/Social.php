@@ -50,6 +50,63 @@
                     </div><!-- .card-inner -->
                 </div><!-- .card -->
 
+                <div class="card card-bordered mb-4">
+                    <div class="card-inner">
+                        <div class="card-title-group align-start mb-3">
+                            <div class="card-title">
+                                <h6 class="subtitle">MyMI AI Permissions</h6>
+                                <span class="text-soft">Choose what the assistant can reference and the tone to use.</span>
+                            </div>
+                        </div>
+                        <form id="discordScopesForm" class="gy-2">
+                            <div class="row g-2">
+                                <div class="col-md-6">
+                                    <label class="form-label" for="aiPersona">AI Persona</label>
+                                    <select class="form-select" id="aiPersona" name="ai_persona">
+                                        <?php $persona = $discordPersona ?? 'investor'; ?>
+                                        <option value="investor" <?= ($persona === 'investor') ? 'selected' : ''; ?>>Long-term Investor</option>
+                                        <option value="trader" <?= ($persona === 'trader') ? 'selected' : ''; ?>>Active Trader</option>
+                                        <option value="budgeter" <?= ($persona === 'budgeter') ? 'selected' : ''; ?>>Budget Coach</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 d-flex align-items-end">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="unlinkDiscord" name="unlink">
+                                        <label class="form-check-label" for="unlinkDiscord">Unlink Discord</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row g-3 pt-2">
+                                <?php $scopes = $discordScopes ?? []; ?>
+                                <div class="col-sm-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="scopeBudget" name="scopes[budget]" <?= !empty($scopes['budget']) ? 'checked' : ''; ?>>
+                                        <label class="form-check-label" for="scopeBudget">Budget summaries</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="scopeAlerts" name="scopes[alerts]" <?= !empty($scopes['alerts']) ? 'checked' : ''; ?>>
+                                        <label class="form-check-label" for="scopeAlerts">Open alerts</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="scopeWatchlists" name="scopes[watchlists]" <?= !empty($scopes['watchlists']) ? 'checked' : ''; ?>>
+                                        <label class="form-check-label" for="scopeWatchlists">Watchlists</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="scopeMarketing" name="scopes[marketing]" <?= !empty($scopes['marketing']) ? 'checked' : ''; ?>>
+                                        <label class="form-check-label" for="scopeMarketing">Education &amp; marketing</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-3 d-flex gap-2">
+                                <button type="button" id="saveDiscordScopes" class="btn btn-primary">Save Preferences</button>
+                                <span id="discordScopeStatus" class="text-soft small"></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
                 <h6 class="lead-text">Connect to Facebook</h6>
                 <div class="card card-bordered">
                     <div class="card-inner">
@@ -94,3 +151,44 @@
         </div><!-- .card-aside-wrap -->
     </div><!-- .card -->
 </div><!-- .nk-block -->
+
+<script <?= $nonce['script'] ?? ''; ?>>
+(function() {
+    const saveBtn = document.getElementById('saveDiscordScopes');
+    const statusEl = document.getElementById('discordScopeStatus');
+    if (!saveBtn) return;
+
+    saveBtn.addEventListener('click', function() {
+        const form = document.getElementById('discordScopesForm');
+        const formData = new FormData(form);
+        const payload = {
+            ai_persona: formData.get('ai_persona'),
+            unlink: formData.get('unlink') ? true : false,
+            scopes: {
+                budget: !!formData.get('scopes[budget]'),
+                alerts: !!formData.get('scopes[alerts]'),
+                watchlists: !!formData.get('scopes[watchlists]'),
+                marketing: !!formData.get('scopes[marketing]'),
+            },
+        };
+
+        statusEl.textContent = 'Saving...';
+        fetch('/API/AI/LinkSettings', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '<?= csrf_hash(); ?>',
+            },
+            body: JSON.stringify(payload),
+        }).then(resp => resp.json())
+          .then(data => {
+              statusEl.textContent = data.status === 'ok' ? 'Preferences saved.' : (data.message || 'Unable to save.');
+              if (payload.unlink && data.status === 'ok') {
+                  window.location.reload();
+              }
+          }).catch(() => {
+              statusEl.textContent = 'Failed to update settings.';
+          });
+    });
+})();
+</script>
