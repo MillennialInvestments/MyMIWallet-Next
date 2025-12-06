@@ -341,52 +341,50 @@ abstract class BaseController extends Controller
         // --- Solana summary (non-fatal)
         try {
             $solanaSummary = [];
+            $solService    = $this->getSolanaService();
 
             // >>> Short-circuit when RPC network/circuits are degraded
-            $solService = $this->getSolanaService();
             if (method_exists($solService, 'isNetworkDegraded') && $solService->isNetworkDegraded()) {
                 log_message('notice', 'BaseController commonData(): Solana network degraded, skipping live calls');
-                throw new \RuntimeException('solana-network-degraded');
-            }
-            // <<< end short-circuit
-
-            try {
-                $solanaSummary = $this->getMyMISolana()->getUserSolana($this->cuID) ?? [];
-            } catch (\Throwable $inner) {
-                log_message('error', 'BaseController commonData(): MyMISolana getUserSolana failed: '.$inner->getMessage());
-            }
-
-            if (!empty($solanaSummary)) {
-                if (!empty($solanaSummary['cuSolanaDW'])) $setValue('cuSolanaDW', $solanaSummary['cuSolanaDW']);
-                if (array_key_exists('cuSolanaTotal', $solanaSummary)) $this->data['cuSolanaTotal'] = (float)$solanaSummary['cuSolanaTotal'];
-                if (array_key_exists('cuSolanaValue', $solanaSummary)) $this->data['cuSolanaValue'] = (float)$solanaSummary['cuSolanaValue'];
-                if (!empty($solanaSummary['solanaNetworkStatus'])) $setValue('solanaNetworkStatus', $solanaSummary['solanaNetworkStatus']);
-            }
-
-            $address = $solanaSummary['cuSolanaDW']['public_token']
-                ?? $solanaSummary['cuSolanaDW']['address']
-                ?? $solanaSummary['address_b58']
-                ?? null;
-
-            if ($address) {
+            } else {
                 try {
-                    $snapshot = $solService->getSolanaData($address) ?? null;
-                    if (is_array($snapshot)) {
-                        if (isset($snapshot['nativeSOL'])) {
-                            $this->data['cuSolanaTotal'] = (float)$snapshot['nativeSOL'];
-                        }
-                        if (!empty($snapshot['solanaNetworkStatus'])) {
-                            $setValue('solanaNetworkStatus', $snapshot['solanaNetworkStatus']);
-                        }
-                    } else {
-                        log_message('debug', 'BaseController commonData(): Solana data unavailable for address {address}', ['address' => $address]);
-                    }
+                    $solanaSummary = $this->getMyMISolana()->getUserSolana($this->cuID) ?? [];
                 } catch (\Throwable $inner) {
-                    log_message('warning', 'BaseController commonData(): Solana snapshot failed for {address}: {msg}', ['address' => $address, 'msg' => $inner->getMessage()]);
+                    log_message('error', 'BaseController commonData(): MyMISolana getUserSolana failed: '.$inner->getMessage());
+                }
+
+                if (!empty($solanaSummary)) {
+                    if (!empty($solanaSummary['cuSolanaDW'])) $setValue('cuSolanaDW', $solanaSummary['cuSolanaDW']);
+                    if (array_key_exists('cuSolanaTotal', $solanaSummary)) $this->data['cuSolanaTotal'] = (float)$solanaSummary['cuSolanaTotal'];
+                    if (array_key_exists('cuSolanaValue', $solanaSummary)) $this->data['cuSolanaValue'] = (float)$solanaSummary['cuSolanaValue'];
+                    if (!empty($solanaSummary['solanaNetworkStatus'])) $setValue('solanaNetworkStatus', $solanaSummary['solanaNetworkStatus']);
+                }
+
+                $address = $solanaSummary['cuSolanaDW']['public_token']
+                    ?? $solanaSummary['cuSolanaDW']['address']
+                    ?? $solanaSummary['address_b58']
+                    ?? null;
+
+                if ($address) {
+                    try {
+                        $snapshot = $solService->getSolanaData($address) ?? null;
+                        if (is_array($snapshot)) {
+                            if (isset($snapshot['nativeSOL'])) {
+                                $this->data['cuSolanaTotal'] = (float)$snapshot['nativeSOL'];
+                            }
+                            if (!empty($snapshot['solanaNetworkStatus'])) {
+                                $setValue('solanaNetworkStatus', $snapshot['solanaNetworkStatus']);
+                            }
+                        } else {
+                            log_message('debug', 'BaseController commonData(): Solana data unavailable for address {address}', ['address' => $address]);
+                        }
+                    } catch (\Throwable $inner) {
+                        log_message('debug', 'BaseController commonData(): Solana snapshot failed for {address}: {msg}', ['address' => $address, 'msg' => $inner->getMessage()]);
+                    }
                 }
             }
 
-            $network = $solService->getNetworkStatus();
+            $network = $solService->getSafeNetworkStatus();
             if (!empty($network)) $setValue('solanaNetworkStatus', $network);
 
             if ($this->data['cuSolanaValue'] === 0.0 && $this->data['cuSolanaTotal'] !== 0.0) {
@@ -398,7 +396,7 @@ abstract class BaseController extends Controller
                 }
             }
         } catch (\Throwable $e) {
-            log_message('warning', 'BaseController commonData(): Solana calls failed: '.$e->getMessage());
+            log_message('debug', 'BaseController commonData(): Solana calls failed: '.$e->getMessage());
         }
 
 
