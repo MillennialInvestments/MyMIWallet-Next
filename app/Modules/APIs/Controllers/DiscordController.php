@@ -2,6 +2,7 @@
 
 use App\Controllers\BaseController;
 use App\Libraries\MyMIDiscord;
+use App\Libraries\MyMIAssistant;
 use App\Models\AlertsModel;
 use App\Models\DiscordLinkModel;
 use CodeIgniter\API\ResponseTrait;
@@ -15,12 +16,14 @@ class DiscordController extends BaseController
     protected MyMIDiscord $discord;
     protected DiscordConfig $cfg;
     protected DiscordLinkModel $linkModel;
+    protected MyMIAssistant $assistant;
 
     public function __construct()
     {
         $this->discord = new MyMIDiscord();
         $this->cfg     = config('Discord');
         $this->linkModel = new DiscordLinkModel();
+        $this->assistant = new MyMIAssistant();
     }
 
     public function enqueue()
@@ -195,6 +198,10 @@ class DiscordController extends BaseController
     protected function handleMymiCommand(string $sub, array $options, array $payload): ResponseInterface
     {
         switch ($sub) {
+            case '':
+            case 'ask':
+            case 'chat':
+                return $this->respond($this->handleAiChatFromInteraction($options, $payload));
             case 'link':
                 $user = $payload['member']['user'] ?? $payload['user'] ?? [];
                 $token = $this->linkModel->issueToken((string) ($user['id'] ?? ''), (string) ($user['username'] ?? ''));
@@ -217,7 +224,44 @@ class DiscordController extends BaseController
             case 'ticker':
                 return $this->respond($this->formatTickerResponse($payload));
             default:
-                return $this->respond($this->interactionMessage('Command not yet implemented.')); 
+                return $this->respond($this->interactionMessage('Command not yet implemented.'));
+        }
+    }
+
+    protected function handleAiChatFromInteraction(array $options, array $payload): array
+    {
+        $question = $this->extractOptionValue($options, 'question');
+        if (!$question && !empty($options[0]['value'])) {
+            $question = (string) ($options[0]['value'] ?? '');
+        }
+
+        $user   = $payload['member']['user'] ?? $payload['user'] ?? [];
+        $discordId = (string) ($user['id'] ?? '');
+
+        if ($question === '' || $discordId === '') {
+            return $this->interactionMessage('Please provide a message for MyMI AI.');
+        }
+
+        try {
+            $result = $this->assistant->chat([
+                'message'        => $question,
+                'discord_user_id'=> $discordId,
+                'channel_context'=> [
+                    'channel_id' => $payload['channel_id'] ?? null,
+                    'source'     => 'discord',
+                ],
+            ]);
+
+            return [
+                'type' => 4,
+                'data' => [
+                    'content' => $result['reply'] ?? 'Working on it... ',
+                    'flags'   => 64,
+                ],
+            ];
+        } catch (\Throwable $e) {
+            log_message('error', 'Discord AI chat failed: {msg}', ['msg' => $e->getMessage()]);
+            return $this->interactionMessage('Unable to process that request right now.', true);
         }
     }
 

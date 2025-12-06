@@ -8,10 +8,11 @@ use Myth\Auth\Authorization\GroupModel;
 use App\Config\{Auth, SiteSettings, SocialMedia}; 
 use App\Controllers\UserController;
 use App\Libraries\{BaseLoader, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIUser, MyMIWallet, MyMIWallets};
-use App\Modules\User\Libraries\{DashboardLibrary}; 
+use App\Modules\User\Libraries\{DashboardLibrary};
 use App\Models\{InvestmentModel, PageSEOModel, ReferralModel, SubscribeModel, UserModel};
 use App\Services\{InvestmentService};
-use CodeIgniter\API\ResponseTrait; 
+use CodeIgniter\API\ResponseTrait;
+use App\Modules\APIs\Models\InvestmentsNewsModel;
 
 #[\AllowDynamicProperties]
 class InvestmentsController extends UserController
@@ -28,12 +29,13 @@ class InvestmentsController extends UserController
     protected $MyMIDashboard;
     protected $MyMIUser;
     protected $pageSEOModel;
-    protected $investmentModel; 
-    protected $referralModel; 
+    protected $investmentModel;
+    protected $referralModel;
     protected $subscribeModel;
     protected $userModel;
     protected $investmentService;
-    public function __construct() 
+    protected InvestmentsNewsModel $newsModel;
+    public function __construct()
     {
         $this->auth                         = service('authentication'); // Use the 'authentication' service
         $this->request                      = service('request');
@@ -45,11 +47,12 @@ class InvestmentsController extends UserController
 //         $this->MyMIAnalytics                = new MyMIAnalytics(); // replaced by BaseController getter
         // $this->MyMIUser                     = new MyMIUser(); 
         $this->investmentModel              = new InvestmentModel();
-        $this->referralModel                = new ReferralModel(); 
+        $this->referralModel                = new ReferralModel();
         $this->pageSEOModel                 = new PageSEOModel();
         $this->subscribeModel               = new SubscribeModel();
         // $this->cuID                         = $this->auth->id() ?? $this->session->get('user_id') ?? 0;
-        $this->investmentService            = new InvestmentService(); 
+        $this->investmentService            = new InvestmentService();
+        $this->newsModel                    = new InvestmentsNewsModel();
     }
 
     public function commonData(): array {
@@ -319,6 +322,94 @@ class InvestmentsController extends UserController
             return $this->response
                 ->setStatusCode(500)
                 ->setJSON(['status' => 'error', 'message' => 'Internal error']);
+        }
+    }
+
+    public function listNews()
+    {
+        try {
+            $rows = $this->newsModel
+                ->orderBy('received_at', 'DESC')
+                ->limit(500)
+                ->findAll();
+
+            return $this->respond([
+                'status' => 'success',
+                'data'   => $rows,
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'listNews failed: {msg}', ['msg' => $e->getMessage()]);
+            return $this->failServerError('Failed to load news records.');
+        }
+    }
+
+    public function getNews($id)
+    {
+        $row = $this->newsModel->find($id);
+
+        if (!$row) {
+            return $this->failNotFound('News record not found.');
+        }
+
+        return $this->respond([
+            'status' => 'success',
+            'data'   => $row,
+        ]);
+    }
+
+    public function createNews()
+    {
+        $data = $this->request->getPost();
+
+        if (empty($data['subject']) || empty($data['body'])) {
+            return $this->failValidationErrors('Subject and body are required.');
+        }
+
+        try {
+            $data['category'] = $data['category'] ?? 'press_release';
+            $id = $this->newsModel->insert($data, true);
+            $row = $id ? $this->newsModel->find($id) : null;
+
+            return $this->respond([
+                'status' => $row ? 'success' : 'error',
+                'data'   => $row,
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'createNews failed: {msg}', ['msg' => $e->getMessage()]);
+            return $this->failServerError('Failed to create news record.');
+        }
+    }
+
+    public function updateNews($id)
+    {
+        $data = $this->request->getPost();
+
+        try {
+            $updated = $this->newsModel->update($id, $data);
+            $row = $this->newsModel->find($id);
+
+            return $this->respond([
+                'status' => $updated ? 'success' : 'error',
+                'data'   => $row,
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'updateNews failed: {msg}', ['msg' => $e->getMessage()]);
+            return $this->failServerError('Failed to update news record.');
+        }
+    }
+
+    public function deleteNews($id)
+    {
+        try {
+            $deleted = $this->newsModel->delete($id);
+
+            return $this->respond([
+                'status'  => $deleted ? 'success' : 'error',
+                'message' => $deleted ? 'News record deleted.' : 'Failed to delete news record.',
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'deleteNews failed: {msg}', ['msg' => $e->getMessage()]);
+            return $this->failServerError('Failed to delete news record.');
         }
     }
     
