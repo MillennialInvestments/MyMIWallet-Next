@@ -2,9 +2,10 @@
 namespace App\Libraries;
 
 use App\Libraries\{BaseLoader, MyMIFinnhub};
+use App\Modules\APIs\Models\MarketingNewsContentModel;
 use CodeIgniter\HTTP\CURLRequest;
-use Config\Services;
 use Config\ApiEndpoints;
+use Config\Services;
 
 #[\AllowDynamicProperties]
 class MyMINews {
@@ -12,12 +13,14 @@ class MyMINews {
     private $newsApiKey;
     private $request;
     private $marketingModel;
+    private MarketingNewsContentModel $newsContentModel;
     private $finnhub;
 
     public function __construct() {
         // Load necessary services, models, and configurations
         $this->request = Services::request();
         $this->marketingModel = model('App\Models\MarketingModel');
+        $this->newsContentModel = model(MarketingNewsContentModel::class);
 
         helper(['date', 'url']);
 
@@ -127,6 +130,65 @@ class MyMINews {
     public function headlinesForChains(array $chains, int $limit = 20): array
     {
         return $this->finnhub->latestCryptoNews($limit);
+    }
+
+    public function isNewsAlertEmail(string $subject): bool
+    {
+        $normalized = strtolower(trim($subject));
+        return str_contains($normalized, 'news alert for all symbols');
+    }
+
+    protected function parseProviderAndHeadline(string $line): array
+    {
+        $provider = null;
+        $headline = $line;
+
+        if (str_contains($line, ':')) {
+            [$providerPart, $headlinePart] = explode(':', $line, 2);
+            $provider = trim($providerPart);
+            $headline = trim($headlinePart);
+        }
+
+        return [$provider, $headline];
+    }
+
+    public function storeNewsEmail(
+        string $subject,
+        string $rawBody,
+        ?string $fromEmail,
+        ?string $messageId,
+        ?string $receivedAt
+    ): void {
+        try {
+            $lines = preg_split('/\r\n|\r|\n/', trim($rawBody));
+            $lines = array_values(array_filter($lines, static fn($l) => strlen(trim((string) $l)) > 0));
+            $topLine = $lines[0] ?? '';
+
+            [$provider, $headline] = $this->parseProviderAndHeadline($topLine);
+
+            $this->newsContentModel->insert([
+                'source_email' => $fromEmail,
+                'provider'     => $provider,
+                'headline'     => $headline,
+                'subject'      => $subject,
+                'body'         => $rawBody,
+                'category'     => 'news',
+                'status'       => 'new',
+                'received_at'  => $receivedAt,
+            ]);
+
+            log_message(
+                'info',
+                'MyMINews: stored news email {subject} from {from}',
+                ['subject' => $subject, 'from' => $fromEmail]
+            );
+        } catch (\Throwable $e) {
+            log_message(
+                'error',
+                'MyMINews::storeNewsEmail failed: {msg}',
+                ['msg' => $e->getMessage()]
+            );
+        }
     }
 }
 ?>

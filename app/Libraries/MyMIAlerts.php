@@ -5,6 +5,9 @@ use App\Config\{APIs, Auth, SiteSettings, SocialMedia};
 use App\Libraries\AlertChannels\{DiscordChannel, EmailChannel, ZapierChannel};
 use App\Libraries\AlertSources\{ManualEntrySource, MarketAuxNewsSource, ThinkOrSwimEmailSource};
 use App\Models\{AlertsModel, TrackerModel, UserModel};
+use App\Libraries\MyMINews;
+use App\Modules\APIs\Models\InvestmentsNewsModel;
+use App\Modules\APIs\Models\InvestmentsTickersModel;
 use CodeIgniter\Database\BaseConnection;
 use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
@@ -34,6 +37,7 @@ class MyMIAlerts
     protected $MyMIAlphaVantage;
     protected $MyMIInvestments;
     protected AlertJobQueue $jobQueue;
+    protected MyMINews $myMINews;
 
     private const LIQUIDITY_SCANNERS = [
         '0001 - EMA Liquidity 1Hr'         => '1h',
@@ -193,6 +197,7 @@ class MyMIAlerts
         $this->MyMIAlphaVantage = $alphaVantage ?? new MyMIAlphaVantage();
         $this->MyMIInvestments = $investments ?? new MyMIInvestments();
         $this->jobQueue = new AlertJobQueue();
+        $this->myMINews = new MyMINews();
         
         $this->cuID = $this->auth->id() ?? $this->session->get('user_id');
         $cuID = $this->cuID;
@@ -520,6 +525,139 @@ class MyMIAlerts
         }
 
         return null;
+    }
+
+    protected function isPressReleaseEmail(string $subject): bool
+    {
+        $normalized = strtolower(trim($subject));
+        return str_contains($normalized, 'press release alert for all symbols');
+    }
+
+    protected function storePressReleaseEmail(
+        string $subject,
+        string $rawBody,
+        ?string $fromEmail,
+        ?string $messageId,
+        ?string $receivedAt
+    ): void {
+        try {
+            $newsModel = new InvestmentsNewsModel();
+
+            $lines = preg_split('/\r\n|\r|\n/', trim($rawBody));
+            $lines = array_values(array_filter($lines, static fn($l) => strlen(trim((string) $l)) > 0));
+            $topLine = $lines[0] ?? '';
+
+            [$provider, $headline] = $this->parseProviderAndHeadline($topLine);
+            $companyName = $this->extractCompanyNameFromHeadline($headline);
+            $tickerSymbol = $this->resolveTickerFromCompanyName($companyName);
+
+            $newsModel->insert([
+                'email_message_id' => $messageId,
+                'source_email'     => $fromEmail,
+                'provider'         => $provider,
+                'ticker_symbol'    => $tickerSymbol,
+                'headline'         => $headline,
+                'subject'          => $subject,
+                'body'             => $rawBody,
+                'category'         => 'press_release',
+                'status'           => 'new',
+                'received_at'      => $receivedAt,
+            ]);
+
+            log_message(
+                'info',
+                'MyMIAlerts: stored press release {subject} ({ticker}) from {from}',
+                [
+                    'subject' => $subject,
+                    'ticker'  => $tickerSymbol,
+                    'from'    => $fromEmail,
+                ]
+            );
+        } catch (\Throwable $e) {
+            log_message(
+                'error',
+                'MyMIAlerts::storePressReleaseEmail failed: {msg}',
+                ['msg' => $e->getMessage()]
+            );
+        }
+    }
+
+    protected function extractCompanyNameFromHeadline(string $headline): ?string
+    {
+        $verbs = [
+            'Announces', 'Presents', 'Showcases', 'Reports', 'Issues',
+            'Provides', 'Releases', 'Launches', 'Declares', 'Unveils', 'Highlights',
+        ];
+
+        foreach ($verbs as $verb) {
+            $needle = ' ' . $verb . ' ';
+            $pos = stripos($headline, $needle);
+            if ($pos !== false) {
+                $candidate = trim(substr($headline, 0, $pos));
+                if ($candidate !== '') {
+                    return $candidate;
+                }
+            }
+        }
+
+        $parts = preg_split('/\s+/', trim($headline));
+        if (count($parts) === 0) {
+            return null;
+        }
+
+        $candidate = $parts[0];
+        if (isset($parts[1])) {
+            $candidate .= ' ' . $parts[1];
+        }
+
+        return trim($candidate);
+    }
+
+    protected function resolveTickerFromCompanyName(?string $companyName): ?string
+    {
+        if ($companyName === null || $companyName === '') {
+            return null;
+        }
+
+        $tickerModel = new InvestmentsTickersModel();
+
+        $row = $tickerModel
+            ->where('company_name', $companyName)
+            ->first();
+
+        if (!$row) {
+            $row = $tickerModel
+                ->like('company_name', $companyName, 'after')
+                ->first();
+        }
+
+        return $row['symbol'] ?? null;
+    }
+
+    protected function parseProviderAndHeadline(string $line): array
+    {
+        $provider = null;
+        $headline = $line;
+
+        if (str_contains($line, ':')) {
+            [$providerPart, $headlinePart] = explode(':', $line, 2);
+            $provider = trim($providerPart);
+            $headline = trim($headlinePart);
+        }
+
+        return [$provider, $headline];
+    }
+
+    protected function markEmailAsProcessed($imapStream, int $emailNumber): void
+    {
+        try {
+            @imap_setflag_full($imapStream, (string) $emailNumber, '\\Seen');
+            if (@imap_mail_move($imapStream, (string) $emailNumber, 'Processed')) {
+                imap_expunge($imapStream);
+            }
+        } catch (\Throwable $e) {
+            log_message('warning', 'MyMIAlerts::markEmailAsProcessed failed: {msg}', ['msg' => $e->getMessage()]);
+        }
     }
 
     private function classifyEmailNewsMetadata(string $subject, string $body, string $sender): array
@@ -945,8 +1083,22 @@ class MyMIAlerts
                 $header  = imap_headerinfo($inbox, $emailNumber);
                 $subject = isset($header->subject) ? imap_utf8($header->subject) : 'No Subject';
                 $date    = date('Y-m-d H:i:s', strtotime($header->date ?? 'now'));
+                $messageId = isset($header->message_id) ? trim((string) $header->message_id) : null;
                 $sender  = $this->formatSender($header->from ?? []);
                 $body    = $this->fetchEmailBody($inbox, $emailNumber);
+
+                if ($this->myMINews->isNewsAlertEmail($subject)) {
+                    $this->myMINews->storeNewsEmail($subject, $body, $sender, $messageId, $date);
+                    $this->markEmailAsProcessed($inbox, $emailNumber);
+                    continue;
+                }
+
+                if ($this->isPressReleaseEmail($subject)) {
+                    $this->storePressReleaseEmail($subject, $body, $sender, $messageId, $date);
+                    $this->markEmailAsProcessed($inbox, $emailNumber);
+                    continue;
+                }
+
 
                 $payload = [
                     'subject'    => $subject,
@@ -957,6 +1109,7 @@ class MyMIAlerts
                 ];
 
                 $this->ingestEmailPayload($payload);
+                $this->markEmailAsProcessed($inbox, $emailNumber);
             }
 
             return true;

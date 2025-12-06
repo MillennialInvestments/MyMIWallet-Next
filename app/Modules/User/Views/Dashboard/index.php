@@ -69,6 +69,9 @@ $todayAlerts       = $dailyTradeAlerts ?? [];
 $todayLabel        = date('l, F j, Y');
 $displayName       = $cuDisplayName ?? $cuUsername ?? 'Investor';
 $availableToInvest = $budgetSummary['availableToInvest'] ?? 0.0;
+$aiSessionKey      = $aiSessionKey ?? '';
+$aiNotesList       = $aiNotes ?? [];
+?>
 ?>
 <div class="nk-block-head nk-block-head-sm">
     <div class="nk-block-between">
@@ -356,6 +359,63 @@ $availableToInvest = $budgetSummary['availableToInvest'] ?? 0.0;
                 <div class="card-inner">
                     <div class="card-title-group align-start mb-3">
                         <div class="card-title">
+                            <h6 class="subtitle">MyMI AI Copilot</h6>
+                            <span class="text-soft">Ask questions or request summaries using your wallet context.</span>
+                        </div>
+                        <div class="card-tools">
+                            <span class="badge bg-outline-primary">Beta</span>
+                        </div>
+                    </div>
+                    <div id="aiChatLog" class="border rounded-3 p-3 mb-2 bg-light" data-session="<?= esc($aiSessionKey); ?>">
+                        <p class="text-soft mb-1">Start typing below to chat with your assistant.</p>
+                    </div>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" id="aiChatInput" placeholder="Ask MyMI anything about your budget, alerts, or watchlist...">
+                        <button class="btn btn-primary" type="button" id="aiChatSend">Send</button>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center small text-soft">
+                        <span id="aiChatStatus">Scopes: budget, alerts, watchlists.</span>
+                        <a class="link-primary" href="/Account/Social-Media">Manage Discord link</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-4">
+            <div class="card card-bordered card-full h-100">
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-3">
+                        <div class="card-title">
+                            <h6 class="subtitle">AI Notes</h6>
+                            <span class="text-soft">Saved insights from chat or /note commands.</span>
+                        </div>
+                    </div>
+                    <div class="gy-3" id="aiNotesList">
+                        <?php if (!empty($aiNotesList)): ?>
+                            <?php foreach ($aiNotesList as $note): ?>
+                                <div class="border rounded-3 p-2 mb-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h6 class="mb-0"><?= esc($note['title'] ?? 'Note'); ?></h6>
+                                        <span class="small text-soft"><?= esc(miw_relative_time($note['updated_at'] ?? $note['created_at'] ?? null)); ?></span>
+                                    </div>
+                                    <p class="small mb-1"><?= esc($note['content'] ?? ''); ?></p>
+                                    <?php if (!empty($note['tags'])): ?><span class="badge bg-outline-primary"><?= esc($note['tags']); ?></span><?php endif; ?>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p class="text-soft mb-0">No notes yet. Ask MyMI to save a plan or idea.</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-gs mt-1">
+        <div class="col-xxl-8">
+            <div class="card card-bordered card-full h-100">
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-3">
+                        <div class="card-title">
                             <h6 class="subtitle">Today's Trade Alerts</h6>
                             <span class="text-soft">Live signals that can be marketed or distributed.</span>
                         </div>
@@ -489,6 +549,9 @@ $availableToInvest = $budgetSummary['availableToInvest'] ?? 0.0;
     .nk-order-ovwg-data .info { color: #8094ae; font-size: 0.9rem; }
     .table thead th { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
     .table td, .table th { vertical-align: middle; }
+    #aiChatLog { min-height: 140px; max-height: 260px; overflow-y: auto; }
+    .ai-chat-line { display: flex; gap: 0.5rem; margin-bottom: 0.35rem; align-items: baseline; }
+    .ai-chat-line .badge { min-width: 70px; }
 </style>
 
 <script <?= $nonce['script'] ?? ''; ?>>
@@ -563,5 +626,123 @@ $availableToInvest = $budgetSummary['availableToInvest'] ?? 0.0;
             });
         }
     });
+
+    const aiChatLog     = document.getElementById('aiChatLog');
+    const aiChatInput   = document.getElementById('aiChatInput');
+    const aiChatSend    = document.getElementById('aiChatSend');
+    const aiChatStatus  = document.getElementById('aiChatStatus');
+    const aiNotesList   = document.getElementById('aiNotesList');
+    let aiSessionKey    = aiChatLog ? aiChatLog.dataset.session || '' : '';
+    const csrfToken     = '<?= csrf_hash(); ?>';
+
+    function appendAiMessage(role, text) {
+        if (!aiChatLog) return;
+        const line  = document.createElement('div');
+        const badge = document.createElement('span');
+        const body  = document.createElement('span');
+
+        line.className = 'ai-chat-line';
+        badge.className = 'badge ' + (role === 'assistant' ? 'bg-outline-primary' : 'bg-outline-secondary');
+        badge.textContent = role === 'assistant' ? 'Assistant' : 'You';
+        body.textContent = text;
+
+        line.appendChild(badge);
+        line.appendChild(body);
+        aiChatLog.appendChild(line);
+        aiChatLog.scrollTop = aiChatLog.scrollHeight;
+    }
+
+    function renderNotes(notes) {
+        if (!aiNotesList || !Array.isArray(notes)) return;
+        aiNotesList.innerHTML = '';
+        if (!notes.length) {
+            aiNotesList.innerHTML = '<p class="text-soft mb-0">No notes yet. Ask MyMI to save a plan or idea.</p>';
+            return;
+        }
+        notes.forEach(function(note) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'border rounded-3 p-2 mb-2';
+            const header = document.createElement('div');
+            header.className = 'd-flex justify-content-between align-items-center';
+            const title = document.createElement('h6');
+            title.className = 'mb-0';
+            title.textContent = note.title || 'Note';
+            const time = document.createElement('span');
+            time.className = 'small text-soft';
+            time.textContent = note.updated_at || note.created_at || '';
+            header.appendChild(title);
+            header.appendChild(time);
+
+            const body = document.createElement('p');
+            body.className = 'small mb-1';
+            body.textContent = note.content || '';
+
+            wrapper.appendChild(header);
+            wrapper.appendChild(body);
+
+            if (note.tags) {
+                const tag = document.createElement('span');
+                tag.className = 'badge bg-outline-primary';
+                tag.textContent = note.tags;
+                wrapper.appendChild(tag);
+            }
+
+            aiNotesList.appendChild(wrapper);
+        });
+    }
+
+    function sendAiMessage() {
+        if (!aiChatInput || aiChatInput.value.trim() === '') return;
+        const message = aiChatInput.value.trim();
+        appendAiMessage('user', message);
+        aiChatInput.value = '';
+        if (aiChatStatus) {
+            aiChatStatus.textContent = 'Sending...';
+        }
+
+        fetch('/API/AI/Chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+            },
+            body: JSON.stringify({
+                message: message,
+                session_key: aiSessionKey,
+                channel_id: 'dashboard',
+                source: 'web',
+            }),
+        })
+            .then(resp => resp.json())
+            .then(data => {
+                aiSessionKey = data.session_key || aiSessionKey;
+                if (data.reply) {
+                    appendAiMessage('assistant', data.reply);
+                }
+                if (Array.isArray(data.notes) && data.notes.length) {
+                    renderNotes(data.notes);
+                }
+                if (aiChatStatus) {
+                    aiChatStatus.textContent = 'AI ready.';
+                }
+            })
+            .catch(() => {
+                if (aiChatStatus) {
+                    aiChatStatus.textContent = 'AI request failed.';
+                }
+            });
+    }
+
+    if (aiChatSend) {
+        aiChatSend.addEventListener('click', sendAiMessage);
+    }
+    if (aiChatInput) {
+        aiChatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendAiMessage();
+            }
+        });
+    }
 })();
 </script>

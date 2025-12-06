@@ -266,8 +266,9 @@ class SolanaService
     /** Lightweight status for UI */
     public function getNetworkStatus(): array
     {
+        helper('cache');
         $cache   = \Config\Services::cache();
-        $cacheKey = sanitizeCacheKey($this->networkStatusCacheKey);
+        $cacheKey = sanitize_cache_key($this->networkStatusCacheKey);
         $cached  = $cache->get($cacheKey);
         if (is_array($cached)) {
             return $cached;
@@ -319,6 +320,7 @@ class SolanaService
     /** Keep your earlier compatibility method if WalletsController calls it */
     public function getSolanaData(string $address): array
     {
+        helper('cache');
         $address = $this->guardAddress($address, 'getSolanaData');
         if ($address === null) {
             return [
@@ -335,6 +337,15 @@ class SolanaService
             return $this->requestMemo[$memoKey];
         }
 
+        $cache    = cache();
+        $rawKey   = "solana:data:{$address}";
+        $cacheKey = sanitize_cache_key($rawKey);
+        $cached   = $cache->get($cacheKey);
+
+        if (is_array($cached)) {
+            return $this->requestMemo[$memoKey] = $cached;
+        }
+
         try {
             $lamports = $this->getBalanceLamports($address);
             $tokens   = $this->getTokenAccounts($address);
@@ -346,7 +357,10 @@ class SolanaService
                 'tokens'             => $tokens,
                 'solanaNetworkStatus'=> $this->getNetworkStatus(),
             ];
-            return $this->requestMemo[$memoKey] = $out;
+            $this->requestMemo[$memoKey] = $out;
+            $cache->save($cacheKey, $out, 300);
+
+            return $out;
 
         } catch (\Throwable $e) {
             log_message('error', 'getSolanaData failed: {msg}', ['msg' => $e->getMessage()]);
@@ -802,16 +816,32 @@ class SolanaService
 
     public function getSafeNetworkStatus(): array
     {
+        helper('cache');
+
+        $cache    = cache();
+        $rawKey   = 'solana:network:status';
+        $cacheKey = sanitize_cache_key($rawKey);
+        $cached   = $cache->get($cacheKey);
+
+        if (is_array($cached)) {
+            return $cached;
+        }
+
         try {
             $status = $this->getNetworkStatus();
             if (empty($status)) {
                 return ['status' => 'unknown', 'degraded' => true, 'healthy' => false];
             }
 
+            $cache->save($cacheKey, $status, 60);
+
             return $status;
         } catch (\Throwable $e) {
             log_message('warning', 'SolanaService::getSafeNetworkStatus failed: {msg}', ['msg' => $e->getMessage()]);
-            return ['status' => 'offline', 'degraded' => true, 'healthy' => false];
+            $fallback = ['status' => 'offline', 'degraded' => true, 'healthy' => false];
+            $cache->save($cacheKey, $fallback, 60);
+
+            return $fallback;
         }
     }
 

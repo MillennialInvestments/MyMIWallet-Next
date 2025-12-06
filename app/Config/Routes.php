@@ -184,6 +184,12 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->match(['GET', 'POST'], 'Status/(:segment)', 'APIController::status');
     $routes->match(['GET', 'POST'], 'Investments/getSymbolsByTradeType/(:segment)', 'APIController::getSymbolsByTradeType/$1');
 
+    $routes->group('AI', function($routes) {
+        $routes->post('Chat', 'AIController::postChat');
+        $routes->get('Notes', 'AIController::listNotes');
+        $routes->post('LinkSettings', 'AIController::updateLinkSettings');
+    });
+
     $routes->group('Management', ['filter' => 'cronKey'], function($routes) {
         $routes->get('Run-CRON-Tasks', 'ManagementController::Run_CRON_Tasks');
         $routes->get('ajaxGetActiveUsers', 'ManagementController::ajaxGetActiveUsers');
@@ -522,6 +528,11 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('refreshActiveTradesPrices/(:any)', 'InvestmentsController::refreshActiveTradesPrices/$1');
         $routes->get('getSymbolsByTradeType/(:segment)', 'InvestmentsController::getSymbolsByTradeType/$1');
         $routes->get('getInvestmentData/(:segment)', 'InvestmentsController::getInvestmentData/$1');
+        $routes->get('news',              'InvestmentsController::listNews');
+        $routes->get('news/(:num)',       'InvestmentsController::getNews/$1');
+        $routes->post('news',             'InvestmentsController::createNews');
+        $routes->post('news/(:num)',      'InvestmentsController::updateNews/$1');
+        $routes->delete('news/(:num)',    'InvestmentsController::deleteNews/$1');
         $routes->get('removeTradeFromWatchlist/(:num)', 'InvestmentsController::removeTradeFromWatchlist/$1'); // NOT COMPLETED Remove Trade from Watchlist
         $routes->post('updateTradeNotes', 'InvestmentsController::updateTradeNotes'); // NOT COMPLETED Update Trade Notes
         $routes->post('updateTradeTargetPrice', 'InvestmentsController::updateTradeTargetPrice'); // NOT COMPLETED Update Trade Target Price
@@ -918,6 +929,10 @@ $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers
     $routes->group('HR', function($routes) {
         $routes->get('/', 'HRController::index');
     });
+    $routes->group('Investments', function($routes) {
+        $routes->get('/', 'InvestmentsController::index');
+        $routes->get('News', 'InvestmentsController::newsIndex');
+    });
     $routes->group('Marketing', function($routes) {
         $routes->get('/', 'MarketingController::index');
         $routes->match(['GET', 'POST'], 'Add/(:segment)', 'MarketingController::add/$1');
@@ -991,12 +1006,6 @@ $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers
     // $routes->group('Support', function($routes) {
     //     $routes->get('/', 'SupportController::index');
     // });
-    $routes->group('Users', function($routes) {
-        $routes->get('/', 'UsersController::index');
-        $routes->get('Profile/(:segment)', 'UsersController::profile');
-        $routes->match(['GET', 'POST'], 'ajaxBlockUser/(:segment)', 'UsersController::ajaxBlockUser');
-        $routes->match(['GET', 'POST'], 'ajaxBulkBanUsers', 'UsersController::ajaxBulkBanUsers');
-    });
     $routes->group('Partners', function($routes) {
         $routes->get('/', 'PartnersController::index');
     });
@@ -1016,6 +1025,12 @@ $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers
     });
     $routes->group('Services', function($routes) {
         $routes->get('/', 'ServicesController::index');
+    });
+    $routes->group('Users', function($routes) {
+        $routes->get('/', 'UsersController::index');
+        $routes->get('Profile/(:segment)', 'UsersController::profile');
+        $routes->match(['GET', 'POST'], 'ajaxBlockUser/(:segment)', 'UsersController::ajaxBlockUser');
+        $routes->match(['GET', 'POST'], 'ajaxBulkBanUsers', 'UsersController::ajaxBulkBanUsers');
     });
     $routes->group('Wallets', function($routes) {
         $routes->get('/', 'WalletsController::index');
