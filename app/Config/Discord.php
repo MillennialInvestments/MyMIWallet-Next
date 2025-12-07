@@ -105,10 +105,10 @@ class Discord extends BaseConfig
      *  ]
      */
     public array $rolePlanMap = [
-        // 'free'    => '',
-        // 'basic'   => '',
-        // 'premium' => '',
-        // 'gold'    => '',
+        'free'    => ['discord_role_id' => 'ROLE_ID_FREE'],
+        'basic'   => ['discord_role_id' => 'ROLE_ID_BASIC'],
+        'pro'     => ['discord_role_id' => 'ROLE_ID_PRO'],
+        'premium' => ['discord_role_id' => 'ROLE_ID_PREMIUM'],
     ];
 
     /**

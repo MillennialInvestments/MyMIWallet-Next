@@ -589,4 +589,9 @@ class MyMIDiscord
         return $decoded;
     }
 
+    private function markOnboardingStepCompleted(string $discordUserId, string $stepKey): void
+    {
+        // TODO: Call CI4 API (API/Discord/completeOnboardingStep) to record onboarding and achievements.
+    }
+
 }

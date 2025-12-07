@@ -181,6 +181,11 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->match(['GET', 'POST'], 'Status', 'APIController::status');
     $routes->get('Health', 'HealthController::index');              // /API/Health
     $routes->get('Ops/OPcacheReset', 'OpsController::opcacheReset'); // /API/Ops/OPcacheReset
+    // Public Discord help/onboarding endpoints
+    $routes->get('Discord/commandsCatalog', 'DiscordController::commandsCatalog');
+    $routes->get('Discord/onboardingSteps', 'DiscordController::onboardingSteps');
+    $routes->get('Discord/sharingGuide', 'DiscordController::sharingGuide');
+    $routes->post('Discord/completeOnboardingStep', 'DiscordController::completeOnboardingStep');
     $routes->match(['GET', 'POST'], 'Status/(:segment)', 'APIController::status');
     $routes->match(['GET', 'POST'], 'Investments/getSymbolsByTradeType/(:segment)', 'APIController::getSymbolsByTradeType/$1');
 
@@ -1294,6 +1299,7 @@ $routes->group('Support', ['namespace' => 'App\Modules\Support\Controllers'], fu
     $routes->get('/', 'SupportController::index');
     $routes->get('FAQ', 'SupportController::faq');
     $routes->get('Article/(:segment)', 'SupportController::article/$1');
+    $routes->get('Discord', 'SupportController::discordOnboarding');
     $routes->post('Feedback', 'SupportController::feedback');
     $routes->get('Test', 'SupportController::test');
     $routes->get('Test-Email', 'SupportController::sendTestEmail');
@@ -1303,6 +1309,8 @@ $routes->group('Support', ['namespace' => 'App\Modules\Support\Controllers'], fu
 // How It Works (public CI4 user guides)
 $routes->group('', ['namespace' => 'App\Modules\Blog\Controllers'], static function ($routes) {
     $routes->get('How-It-Works', 'HowItWorksController::index');
+    $routes->get('How-It-Works/Discord', 'HowItWorksController::discord');
+    $routes->get('How-It-Works/Streaming', 'HowItWorksController::streaming');
     $routes->get('How-It-Works/(:segment)', 'HowItWorksController::show/$1');
 });
 

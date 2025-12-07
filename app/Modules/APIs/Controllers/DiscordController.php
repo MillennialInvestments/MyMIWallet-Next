@@ -103,6 +103,57 @@ class DiscordController extends BaseController
         return $this->respond(['queued'=>$queued,'tz'=>config('Discord')->timezone]);
     }
 
+    public function commandsCatalog(): ResponseInterface
+    {
+        $config = config('DiscordHelp');
+
+        return $this->response->setJSON([
+            'status'   => 'success',
+            'commands' => $config->commands,
+        ]);
+    }
+
+    public function onboardingSteps(): ResponseInterface
+    {
+        $config = config('DiscordHelp');
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'steps'  => $config->onboardingSteps,
+        ]);
+    }
+
+    public function sharingGuide(): ResponseInterface
+    {
+        $data = [
+            'status'   => 'success',
+            'sections' => [
+                [
+                    'title'       => 'Trade Ideas & Alerts',
+                    'description' => 'Post in #trade-alerts-free or your tiered alerts channel. Use $TICKER and /mymi alerts.',
+                    'channels'    => ['#trade-alerts-free', '#trade-alerts-tier1', '#trade-alerts-tier2', '#trade-alerts-tier3'],
+                ],
+                [
+                    'title'       => 'Due Diligence & Research',
+                    'description' => 'Share DD, long-form analysis, and links in #due-diligence.',
+                    'channels'    => ['#due-diligence', '#research'],
+                ],
+                [
+                    'title'       => 'Support & Questions',
+                    'description' => 'Use #welcome-support and /mymi support for help with the app or account.',
+                    'channels'    => ['#welcome-support', '#support-tickets'],
+                ],
+                [
+                    'title'       => 'Streaming & Live Content',
+                    'description' => 'Link Twitch/Youtube streams in #live-streams and follow pinned rules.',
+                    'channels'    => ['#live-streams'],
+                ],
+            ],
+        ];
+
+        return $this->response->setJSON($data);
+    }
+
     public function handleInteraction(): ResponseInterface
     {
         $raw = $this->request->getBody();
@@ -170,6 +221,22 @@ class DiscordController extends BaseController
         return $this->respond(['status' => $queued ? 'queued' : 'skipped']);
     }
 
+    public function completeOnboardingStep(): ResponseInterface
+    {
+        $discordUserId = (string) $this->request->getPost('discord_user_id');
+        $stepKey       = (string) $this->request->getPost('step_key');
+
+        if ($discordUserId === '' || $stepKey === '') {
+            return $this->failValidationErrors('discord_user_id and step_key are required');
+        }
+
+        // TODO: Map step_key to bf_discord_achievements and insert into bf_discord_user_achievements
+        return $this->response->setJSON([
+            'status'  => 'accepted',
+            'message' => 'Achievement recording to be wired in a follow-up release.',
+        ]);
+    }
+
     public function createLinkToken(): ResponseInterface
     {
         $apiKey = env('DISCORD_LINK_API_KEY');
@@ -202,13 +269,20 @@ class DiscordController extends BaseController
             case 'ask':
             case 'chat':
                 return $this->respond($this->handleAiChatFromInteraction($options, $payload));
+            case 'help':
+                return $this->respond($this->handleHelpCommand($payload));
             case 'link':
                 $user = $payload['member']['user'] ?? $payload['user'] ?? [];
                 $token = $this->linkModel->issueToken((string) ($user['id'] ?? ''), (string) ($user['username'] ?? ''));
                 $url   = site_url('/Account/Social-Media?source=discord&code='.$token['token']);
                 $msg   = 'Click the link to complete Discord linking: '.$url;
                 return $this->respond($this->interactionMessage($msg, true));
+            case 'support':
+                return $this->respond($this->handleSupportCommand($payload));
             case 'alerts':
+                if ($guard = $this->maybeDenyPremiumCommand('alerts', $payload)) {
+                    return $this->respond($guard);
+                }
                 $symbol = $this->extractOptionValue($options, 'symbol');
                 $alerts = $this->latestAlerts($symbol, 5);
                 if (!$alerts) {
@@ -222,7 +296,39 @@ class DiscordController extends BaseController
                     ],
                 ]);
             case 'ticker':
+                if ($guard = $this->maybeDenyPremiumCommand('ticker', $payload)) {
+                    return $this->respond($guard);
+                }
                 return $this->respond($this->formatTickerResponse($payload));
+            case 'budget':
+                if ($guard = $this->maybeDenyPremiumCommand('budget', $payload)) {
+                    return $this->respond($guard);
+                }
+                return $this->respond($this->interactionMessage('Budget summary will be synced here soon. Visit '.site_url('Budget').' for the full dashboard.', true));
+            case 'portfolio':
+                if ($guard = $this->maybeDenyPremiumCommand('portfolio', $payload)) {
+                    return $this->respond($guard);
+                }
+                return $this->respond($this->interactionMessage('Portfolio snapshots are being wired. Check your MyMI Wallet portfolio for now.', true));
+            case 'watchlist':
+                if ($guard = $this->maybeDenyPremiumCommand('watchlist', $payload)) {
+                    return $this->respond($guard);
+                }
+                return $this->respond($this->interactionMessage('Watchlist management is coming to Discord. Manage symbols inside MyMI Wallet for now.', true));
+            case 'projects':
+                if ($guard = $this->maybeDenyPremiumCommand('projects', $payload)) {
+                    return $this->respond($guard);
+                }
+                return $this->respond($this->interactionMessage('Browse MyMI Projects in-app while Discord embeds are finalized.', true));
+            case 'assets':
+                if ($guard = $this->maybeDenyPremiumCommand('assets', $payload)) {
+                    return $this->respond($guard);
+                }
+                return $this->respond($this->interactionMessage('Asset Creator prompts will surface here soon. Manage assets directly in MyMI Wallet today.', true));
+            case 'news':
+                return $this->respond($this->interactionMessage('Fetching curated news — check #marketing-news or use /mymi news [topic|symbol].', true));
+            case 'earnings':
+                return $this->respond($this->interactionMessage('Daily/weekly earnings posts live in #earnings-watch. Use /mymi earnings [today|this_week].', true));
             default:
                 return $this->respond($this->interactionMessage('Command not yet implemented.'));
         }
@@ -263,6 +369,86 @@ class DiscordController extends BaseController
             log_message('error', 'Discord AI chat failed: {msg}', ['msg' => $e->getMessage()]);
             return $this->interactionMessage('Unable to process that request right now.', true);
         }
+    }
+
+    protected function handleHelpCommand(array $payload): array
+    {
+        $config          = config('DiscordHelp');
+        $commandsSummary = $this->formatCommandList($config->commands, ['link', 'alerts', 'ticker', 'budget', 'portfolio', 'projects', 'news', 'support']);
+        $stepsList       = $this->formatOnboardingChecklist($config->onboardingSteps);
+        $user            = $this->getDiscordUser($payload);
+
+        if (!empty($user['id'])) {
+            $this->discord->enqueuePlain('support', 'Help pack sent to <@'.$user['id'].'>. Start in #welcome-support: '.site_url('Support/Discord'));
+        }
+
+        return [
+            'type' => 4,
+            'data' => [
+                'content' => 'Here’s how the MyMI Discord works — Support is your starting point.',
+                'embeds'  => [
+                    [
+                        'title'       => 'Welcome to MyMI Wallet Discord',
+                        'description' => 'New members land in #welcome-support. Link your account, review the rules, and start with the key commands below.',
+                        'fields'      => [
+                            [
+                                'name'  => 'Start here',
+                                'value' => '1) Register on MyMI Wallet → 2) Use /mymi link → 3) Follow #welcome-support pins.',
+                            ],
+                            [
+                                'name'  => 'Key commands',
+                                'value' => $commandsSummary,
+                            ],
+                            [
+                                'name'  => 'Onboarding steps',
+                                'value' => $stepsList,
+                            ],
+                            [
+                                'name'  => 'Resources',
+                                'value' => 'Support onboarding: '.site_url('Support/Discord')."\nHow It Works (Discord): ".site_url('How-It-Works/Discord')."\nSharing guide: ".site_url('API/Discord/sharingGuide'),
+                            ],
+                        ],
+                        'footer' => ['text' => 'Use /mymi support anytime for help.'],
+                    ],
+                ],
+                'flags'   => 64,
+            ],
+        ];
+    }
+
+    protected function handleSupportCommand(array $payload): array
+    {
+        $user = $this->getDiscordUser($payload);
+        $link = site_url('Support/Discord');
+        $msg  = 'Head to #welcome-support or open a ticket at '.$link.' for step-by-step help.';
+
+        if (!empty($user['id'])) {
+            $this->discord->enqueuePlain('support', 'Support request from <@'.$user['id'].'>. Guide: '.$link);
+        }
+
+        return [
+            'type' => 4,
+            'data' => [
+                'content' => $msg,
+                'embeds'  => [
+                    [
+                        'title'       => 'Need assistance?',
+                        'description' => 'Start in #welcome-support. Ask a question, open a thread, or tap the web guide for forms.',
+                        'fields'      => [
+                            [
+                                'name'  => 'Web support',
+                                'value' => $link,
+                            ],
+                            [
+                                'name'  => 'Commands',
+                                'value' => '/mymi link • /mymi alerts • /mymi support',
+                            ],
+                        ],
+                    ],
+                ],
+                'flags'   => 64,
+            ],
+        ];
     }
 
     protected function formatTickerResponse(array $payload): array
@@ -364,6 +550,69 @@ class DiscordController extends BaseController
             'title'       => ($summary['ticker'] ?: 'Alert').' — '.($summary['status'] ?: ''),
             'description' => 'Entry: '.$summary['price'].' | Target: '.$summary['target'].' | Stop: '.$summary['stop'],
             'timestamp'   => $summary['created_on'],
+        ];
+    }
+
+    protected function maybeDenyPremiumCommand(string $commandKey, array $payload): ?array
+    {
+        $config = config('DiscordHelp');
+        $meta   = $config->commands[$commandKey] ?? null;
+
+        if (!$meta || empty($meta['premium'])) {
+            return null;
+        }
+
+        $user = $this->getDiscordUser($payload);
+        if (empty($user['id'])) {
+            return $this->interactionMessage('Link your account with /mymi link to unlock this command.', true);
+        }
+
+        $link = $this->linkModel->findByDiscordId($user['id']);
+        if (!$link || empty($link['user_id'])) {
+            return $this->interactionMessage('Upgrade required. Link your MyMI Wallet account and ensure your plan includes this command: '.site_url('Memberships'), true);
+        }
+
+        // TODO: Check membership tier and map to Discord roles/plans.
+        return null;
+    }
+
+    protected function formatCommandList(array $commands, array $keys): string
+    {
+        $parts = [];
+        foreach ($keys as $key) {
+            if (!isset($commands[$key])) {
+                continue;
+            }
+            $cmd = $commands[$key];
+            $parts[] = $cmd['name'].' — '.$cmd['description'];
+        }
+
+        return implode("\n", $parts);
+    }
+
+    protected function formatOnboardingChecklist(array $steps): string
+    {
+        $lines = [];
+        foreach ($steps as $step) {
+            $line = '- [ ] '.$step['title'];
+            if (!empty($step['description'])) {
+                $line .= ' — '.$step['description'];
+            }
+            if (!empty($step['url'])) {
+                $line .= ' ('.$step['url'].')';
+            }
+            $lines[] = $line;
+        }
+
+        return implode("\n", $lines);
+    }
+
+    protected function getDiscordUser(array $payload): array
+    {
+        $user = $payload['member']['user'] ?? $payload['user'] ?? [];
+        return [
+            'id'       => (string) ($user['id'] ?? ''),
+            'username' => (string) ($user['username'] ?? ''),
         ];
     }
 }
