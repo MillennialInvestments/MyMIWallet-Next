@@ -45,4 +45,17 @@ class SupportController extends UserController
         $data['article'] = $this->supportModel->findBySlug($slug);
         return $this->renderTheme('SupportModule/Support/article', $data);
     }
+
+    public function discordOnboarding()
+    {
+        $config = config('DiscordHelp');
+
+        $data = [
+            'pageTitle'       => 'Discord Onboarding',
+            'commands'        => $config->commands,
+            'onboardingSteps' => $config->onboardingSteps,
+        ] + $this->commonData();
+
+        return $this->renderTheme('SupportModule/discord_onboarding', $data);
+    }
 }

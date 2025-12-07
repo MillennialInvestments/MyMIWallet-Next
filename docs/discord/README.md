@@ -9,7 +9,10 @@ Discord is a core distribution channel for MyMI Wallet: it delivers real-time tr
 - [`earnings_calendar_automation.md`](earnings_calendar_automation.md) — Concepts for weekly and daily earnings posts.
 - [`operations_and_monitoring.md`](operations_and_monitoring.md) — Safety, observability, and rollout guidance for Discord automations.
 - [`server_setup_and_ci4_integration.md`](server_setup_and_ci4_integration.md) — Step-by-step server, webhook, and CI4 wiring checklist to deploy the pipelines.
+- [`server_setup_support_category.md`](server_setup_support_category.md) — Make **Support** the default landing zone with MEE6 + Community Onboarding (mirrors staging and production).
 - [`discord_to_ci4_commands.md`](discord_to_ci4_commands.md) — Interactive Discord slash commands that query CI4 (alerts, portfolio, watchlists, earnings, news) after account linking.
+- [`where_to_share_what.md`](where_to_share_what.md) — Channel governance: alerts, DD, support, streaming, and off-topic boundaries.
+- [`streaming_setup.md`](streaming_setup.md) — How to announce Twitch/YouTube streams and weave MyMI data into live sessions.
 
 
 ## Quick Enable/Disable Checklist
