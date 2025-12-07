@@ -3,6 +3,7 @@
 Step-by-step checklist to provision the Discord server, webhooks, and CI4 wiring required for the alert, marketing/news, earnings, and ops pipelines documented in this folder.
 
 ## 1) Create the Discord server foundation
+> For the Support-first onboarding layout (default landing in `#welcome-support` with MEE6/Community onboarding), see [`server_setup_support_category.md`](server_setup_support_category.md) and reuse that structure for both production and staging.
 1. **Create/rename the server** to something recognizable (e.g., `MyMI Wallet`).
 2. **Roles**:
    - `Admin` (full control).
