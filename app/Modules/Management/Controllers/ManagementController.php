@@ -8,8 +8,8 @@ use Myth\Auth\Authorization\GroupModel;
 use App\Config\{Auth, SiteSettings, SocialMedia}; 
 use App\Controllers\UserController;
 use App\Libraries\{MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIUser, MyMIWallet, MyMIWallets};
-use App\Models\{AccountsModel, BudgetModel, WalletModel, UserModel};
-use App\Services\{AccountService, BudgetService, DashboardService, GoalTrackingService, MarketingService, SolanaService, UserService, WalletService};
+use App\Models\{AccountsModel, BudgetModel, MarketingNewsletterModel, UserModel, WalletModel, WeeklyStreamWatchlistModel};
+use App\Services\{AccountService, BudgetService, DashboardService, GoalTrackingService, MarketingService, SolanaService, UserService, WalletService, WeeklyStreamService};
 // use App\Modules\User\Libraries\{DashboardLibrary}; 
 use DateTime;
 use DateInterval;
@@ -34,6 +34,9 @@ class ManagementController extends UserController
     protected $walletService;
     protected $budgetModel;
     protected $MyMIDashboard;
+    protected WeeklyStreamService $weeklyStreamService;
+    protected WeeklyStreamWatchlistModel $weeklyWatchlistModel;
+    protected MarketingNewsletterModel $newsletterModel;
     protected $helpers = ['auth', 'form', 'url'];
 
     public function __construct()
@@ -42,6 +45,9 @@ class ManagementController extends UserController
         $this->session = Services::session();
         $this->siteSettings = config('SiteSettings');
         $this->debug = $this->siteSettings->debug;
+        $this->weeklyStreamService = new WeeklyStreamService();
+        $this->weeklyWatchlistModel = new WeeklyStreamWatchlistModel();
+        $this->newsletterModel = new MarketingNewsletterModel();
 
         if (!function_exists('getCuID')) {
             helper('cuID');
@@ -128,6 +134,24 @@ class ManagementController extends UserController
         log_message('info', 'ManagementController L117 - Starting Page Load');
         $this->data['pageTitle']                    = 'MyMI Management | MyMI Wallet | The Future of Finance';
         $this->commonData(); // Ensure this is correctly populating $this->data
+        $weekStart = $this->weeklyStreamService->getDefaultWeekStart()->format('Y-m-d');
+        $latestWeek = $this->weeklyWatchlistModel
+            ->select('week_start_date')
+            ->orderBy('week_start_date', 'DESC')
+            ->first();
+        $symbolCount = $this->weeklyWatchlistModel
+            ->where('week_start_date', $weekStart)
+            ->countAllResults();
+        $newsletter = $this->newsletterModel
+            ->where('week_start_date', $weekStart)
+            ->first();
+
+        $this->data['streamPrep'] = [
+            'week_start_date'    => $weekStart,
+            'last_prepared'      => $latestWeek['week_start_date'] ?? null,
+            'symbol_count'       => $symbolCount,
+            'newsletter_status'  => $newsletter['status'] ?? 'not generated',
+        ];
         return $this->renderTheme('App\Modules\Management\Views\index', $this->data);
     }
 
