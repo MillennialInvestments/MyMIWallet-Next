@@ -148,6 +148,34 @@ class HowItWorksController extends UserController
         return $this->renderTheme('App\\Modules\\Blog\\Views\\HowItWorks\\index', $data);
     }
 
+    public function discord(): ResponseInterface
+    {
+        $config = config('DiscordHelp');
+
+        $data = [
+            'title'           => 'How The MyMI Discord Works',
+            'slug'            => 'discord',
+            'commands'        => $config->commands,
+            'onboardingSteps' => $config->onboardingSteps,
+            'sharingGuideUrl' => site_url('API/Discord/sharingGuide'),
+        ];
+
+        return $this->response
+            ->setStatusCode(200)
+            ->setBody(view('Modules/Blog/HowItWorks/Discord', $data));
+    }
+
+    public function streaming(): ResponseInterface
+    {
+        $data = [
+            'title' => 'Streaming with Twitch & YouTube',
+        ];
+
+        return $this->response
+            ->setStatusCode(200)
+            ->setBody(view('Modules/Blog/HowItWorks/Streaming', $data));
+    }
+
     public function DetermineYourFinancialGoals()
     {
         $this->data['pageTitle']                    = 'Determine Your Financial Goals | How It Works | MyMI Wallet';
