@@ -1300,18 +1300,10 @@ $routes->group('Support', ['namespace' => 'App\Modules\Support\Controllers'], fu
     // Define other routes for 'blog' module
 });
 
-// How It Works:
-$routes->group('How-It-Works', ['namespace' => 'App\Modules\Blog\Controllers'], function($routes) {
-    $routes->get('/', 'HowItWorksController::index');
-    $routes->get('Determining-Your-Financial-Goals', 'HowItWorksController::DetermineYourFinancialGoals');
-    $routes->get('Daily-Financial-News', 'HowItWorksController::DailyFinancialNews'); 
-    $routes->get('Investment-Portfolio-Management', 'HowItWorksController::InvestmentPortfolioManagement'); 
-    $routes->get('Personal-Budgeting', 'HowItWorksController::PersonalBudgeting'); 
-    $routes->get('Registering-An-Account', 'HowItWorksController::RegisteringAnAccount'); 
-    // MyMI Gold - How It Works
-    $routes->get('MyMI-Gold', 'HowItWorksController::MyMIGold');
-    $routes->get('Purchase-MyMI-Gold', 'HowItWorksController::PurchaseMyMIGold');
-    // Define other routes for 'blog' module
+// How It Works (public CI4 user guides)
+$routes->group('', ['namespace' => 'App\Modules\Blog\Controllers'], static function ($routes) {
+    $routes->get('How-It-Works', 'HowItWorksController::index');
+    $routes->get('How-It-Works/(:segment)', 'HowItWorksController::show/$1');
 });
 
 // User - Referrals
@@ -1428,18 +1420,6 @@ $routes->group('Features', ['namespace' => 'App\Modules\Advertise\Controllers'],
     $routes->get('/', 'Features::index');
     $routes->get('Brokerage-Integrations', 'Features::BrokerageIntegrations');
     $routes->get('MyMI-Gold', 'HowItWorks::MyMIGold');
-    // Define other routes for 'blog' module
-});
-
-// How It Works:
-$routes->group('How-It-Works', ['namespace' => 'App\Modules\Blog\Controllers'], function($routes) {
-    $routes->get('/', 'HowItWorks::index');
-    $routes->get('Determining-Your-Financial-Goals', 'HowItWorksController::DetermineYourFinancialGoals');
-    $routes->get('Personal-Budgeting', 'HowItWorksController::PersonalBudgeting'); 
-    $routes->get('Registering-An-Account', 'HowItWorksController::RegisteringAnAccount'); 
-    // MyMI Gold - How It Works
-    $routes->get('MyMI-Gold', 'HowItWorksController::MyMIGold');
-    $routes->get('Purchase/MyMIGold', 'HowItWorksController::PurchaseMyMIGold');
     // Define other routes for 'blog' module
 });
 
