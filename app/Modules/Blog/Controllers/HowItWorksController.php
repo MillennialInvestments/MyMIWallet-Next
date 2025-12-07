@@ -11,12 +11,15 @@ use App\Models\{MarketingModel, MyMIGoldModel, PageSEOModel, SubscribeModel, Use
 use CodeIgniter\API\RequestTrait; // Import the ResponseTrait
 use CodeIgniter\API\ResponseTrait; // Import the ResponseTrait
 use App\Controllers\BaseController;
+use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Exceptions\PageNotFoundException;
 use Config\Services;
 
 #[\AllowDynamicProperties]
 class HowItWorksController extends UserController
 {
     use ResponseTrait;
+    protected string $ci4DocsPath = ROOTPATH . 'docs/user-guides/ci4/';
     protected $auth;
     protected $helpers = ['directory', 'form', 'file', 'url'];
     protected $library;
@@ -103,11 +106,46 @@ class HowItWorksController extends UserController
         return $this->data;
 }
 
-    public function index()
+
+
+    public function index(): ResponseInterface
     {
-        $this->data['pageTitle']                    = 'How It Works | MyMI Wallet | The Future of Finance';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $this->renderTheme('App\Modules\Blog\Views\HowItWorks\index', $this->data);
+        return $this->show('overview');
+    }
+
+    public function show(string $slug = 'overview'): ResponseInterface
+    {
+        $map = [
+            'overview'         => '01_Overview.md',
+            'alerts'           => '02_Alerts_Dashboard_Guide.md',
+            'marketing'        => '03_Marketing_Dashboard_Guide.md',
+            'earnings'         => '04_Earnings_Dashboard_Guide.md',
+            'investments'      => '05_Investments_and_Portfolio_Guide.md',
+            'account-settings' => '06_Account_Settings_and_Social_Media_Linking.md',
+        ];
+
+        if (! array_key_exists($slug, $map)) {
+            throw PageNotFoundException::forPageNotFound();
+        }
+
+        $file = $this->ci4DocsPath . $map[$slug];
+
+        if (! is_file($file)) {
+            throw PageNotFoundException::forPageNotFound();
+        }
+
+        $markdown = file_get_contents($file) ?: '';
+        $contentHtml = $this->parseMarkdownToHtml($markdown);
+
+        $data = [
+            'layout'      => 'public',
+            'title'       => $this->getGuideTitle($slug),
+            'slug'        => $slug,
+            'contentHtml' => $contentHtml,
+            'navItems'    => $this->getNavItems(),
+        ];
+
+        return $this->renderTheme('App\\Modules\\Blog\\Views\\HowItWorks\\index', $data);
     }
 
     public function DetermineYourFinancialGoals()
@@ -154,8 +192,8 @@ class HowItWorksController extends UserController
     }
 
     public function PurchaseMyMIGold() {
-        $getCoinValue = $this->MyMIGoldModel->getCoinValue(); 
-        $getInitialCoinValue = $this->MyMIGoldModel->getInitialCoinValue(); 
+        $getCoinValue = $this->MyMIGoldModel->getCoinValue();
+        $getInitialCoinValue = $this->MyMIGoldModel->getInitialCoinValue();
         
         $uri = $this->uri;
     
@@ -169,6 +207,43 @@ class HowItWorksController extends UserController
         // Pass the structured data array to the view
         $content = view('Modules\Blog\Views\HowItWorks\Purchase_MyMI_Gold', $data);
         return $this->renderPage('Home', 'Automated', $content);
+    }
+
+    protected function parseMarkdownToHtml(string $markdown): string
+    {
+        if (class_exists(\Parsedown::class)) {
+            $parsedown = new \Parsedown();
+            $parsedown->setSafeMode(true);
+            return $parsedown->text($markdown);
+        }
+
+        return nl2br(esc($markdown));
+    }
+
+    protected function getGuideTitle(string $slug): string
+    {
+        $titles = [
+            'overview'         => 'How MyMI Wallet Works',
+            'alerts'           => 'Trade Alerts Dashboard Guide',
+            'marketing'        => 'Marketing Dashboard Guide',
+            'earnings'         => 'Earnings Calendar Guide',
+            'investments'      => 'Investments & Portfolio Guide',
+            'account-settings' => 'Account Settings & Social Media Linking',
+        ];
+
+        return $titles[$slug] ?? 'How It Works';
+    }
+
+    protected function getNavItems(): array
+    {
+        return [
+            ['slug' => 'overview', 'label' => 'Overview'],
+            ['slug' => 'alerts', 'label' => 'Alerts Dashboard'],
+            ['slug' => 'marketing', 'label' => 'Marketing Dashboard'],
+            ['slug' => 'earnings', 'label' => 'Earnings Calendar'],
+            ['slug' => 'investments', 'label' => 'Investments & Portfolio'],
+            ['slug' => 'account-settings', 'label' => 'Account Settings & Social Linking'],
+        ];
     }
 
     public function PersonalBudgeting()
