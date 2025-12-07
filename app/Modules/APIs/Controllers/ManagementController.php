@@ -4,8 +4,8 @@ namespace App\Modules\APIs\Controllers;
 use App\Controllers\BaseController;
 use App\Modules\APIs\Controllers\MarketingController;
 use App\Libraries\{MyMIAlerts, MyMIMarketing};
-use App\Models\{AlertsModel, ExchangeModel, MarketingModel, ReferralModel, SupportModel, UserModel};
-use App\Services\{MarketingService, AlphaVantagePipelineService};
+use App\Models\{AlertsModel, ExchangeModel, MarketingModel, MarketingNewsletterModel, ReferralModel, SupportModel, UserModel, WeeklyStreamWatchlistModel};
+use App\Services\{AlphaVantagePipelineService, MarketingService, WeeklyStreamService};
 use App\Support\Http;
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait; // Import the ResponseTrait
@@ -20,10 +20,13 @@ class ManagementController extends \App\Controllers\BaseController
     protected AlertsModel $alertsModel;
     protected ExchangeModel $exchangeModel;
     protected MarketingModel $marketingModel;
+    protected MarketingNewsletterModel $newsletterModel;
     protected UserModel $userModel;
     protected ReferralModel $referralModel;
     protected SupportModel $supportModel;
     protected AlphaVantagePipelineService $alphaVantageService;
+    protected WeeklyStreamWatchlistModel $weeklyWatchlistModel;
+    protected WeeklyStreamService $weeklyStreamService;
 
     public function initController(
         \CodeIgniter\HTTP\RequestInterface $request,
@@ -37,11 +40,14 @@ class ManagementController extends \App\Controllers\BaseController
         $this->alertsModel         = model(AlertsModel::class);
         $this->exchangeModel       = model(ExchangeModel::class);
         $this->marketingModel      = model(MarketingModel::class);
+        $this->newsletterModel     = model(MarketingNewsletterModel::class);
         $this->referralModel       = model(ReferralModel::class);
         $this->supportModel        = model(SupportModel::class);
         $this->userModel           = model(UserModel::class);
         $this->marketingService    = new MarketingService();
         $this->alphaVantageService = new AlphaVantagePipelineService();
+        $this->weeklyWatchlistModel = model(WeeklyStreamWatchlistModel::class);
+        $this->weeklyStreamService  = new WeeklyStreamService();
     }
 
     public function Run_CRON_Tasks()
@@ -131,6 +137,218 @@ class ManagementController extends \App\Controllers\BaseController
             'status' => 'ok',
             'completed_at' => date('c'),
         ];
+    }
+
+    public function generateWeeklyStreamData()
+    {
+        $weekStart = $this->request->getGet('week_start_date');
+
+        try {
+            $result = $this->weeklyStreamService->generateWeeklyWatchlistSnapshot($weekStart);
+            log_message(
+                'info',
+                sprintf(
+                    '📺 generateWeeklyStreamData completed for %s: %d watchlists, %d records',
+                    $result['week_start_date'],
+                    $result['total_watchlists'],
+                    $result['total_records']
+                )
+            );
+
+            return Http::jsonSuccess($result);
+        } catch (\Throwable $e) {
+            log_message(
+                'error',
+                sprintf(
+                    '❌ generateWeeklyStreamData failed for %s: %s',
+                    $weekStart ?: '(auto)',
+                    $e->getMessage()
+                )
+            );
+            return $this->failServerError('Failed to generate weekly stream data.');
+        }
+    }
+
+    public function exportWeeklyWatchlistCSV()
+    {
+        $weekStart = $this->request->getGet('week_start_date');
+        if (! $weekStart) {
+            $weekStart = $this->weeklyStreamService->getDefaultWeekStart()->format('Y-m-d');
+        }
+
+        try {
+            $records = $this->weeklyWatchlistModel
+                ->where('week_start_date', $weekStart)
+                ->orderBy('watchlist_name', 'ASC')
+                ->orderBy('score', 'DESC')
+                ->findAll();
+
+            $watchlists = array_unique(array_map(static function ($row) {
+                return $row['watchlist_name'] ?? 'Stream Watchlist';
+            }, $records));
+
+            log_message(
+                'info',
+                sprintf(
+                    '🗂️ exportWeeklyWatchlistCSV for %s with %d symbols across %d watchlists',
+                    $weekStart,
+                    count($records),
+                    count($watchlists)
+                )
+            );
+
+            $csvHandle = fopen('php://temp', 'r+');
+            fputcsv($csvHandle, ['watchlist_name', 'symbol', 'score', 'notes']);
+
+            foreach ($records as $row) {
+                fputcsv($csvHandle, [
+                    $row['watchlist_name'] ?? '',
+                    $row['symbol'] ?? '',
+                    $row['score'] ?? '',
+                    $row['notes'] ?? '',
+                ]);
+            }
+
+            rewind($csvHandle);
+            $csvContent = stream_get_contents($csvHandle);
+            fclose($csvHandle);
+
+            return $this->response
+                ->setHeader('Content-Type', 'text/csv')
+                ->setHeader('Content-Disposition', 'attachment; filename="weekly-stream-watchlist-' . $weekStart . '.csv"')
+                ->setBody($csvContent ?? '');
+        } catch (\Throwable $e) {
+            log_message(
+                'error',
+                sprintf('❌ exportWeeklyWatchlistCSV failed for %s: %s', $weekStart, $e->getMessage())
+            );
+            return $this->failServerError('Failed to export weekly watchlist CSV.');
+        }
+    }
+
+    public function generateCoffeeAndStocksNewsletter()
+    {
+        $weekStart = $this->weeklyStreamService->getDefaultWeekStart()->format('Y-m-d');
+
+        try {
+            $newsletterData = $this->MyMIMarketing->buildWeeklyWatchlistNewsletter($weekStart);
+
+            $payload = [
+                'title'           => $newsletterData['title'],
+                'slug'            => $newsletterData['slug'],
+                'subject'         => $newsletterData['subject'],
+                'body_html'       => $newsletterData['body_html'],
+                'status'          => 'draft',
+                'week_start_date' => $weekStart,
+                'updated_at'      => date('Y-m-d H:i:s'),
+            ];
+
+            $existing = $this->newsletterModel
+                ->where('week_start_date', $weekStart)
+                ->first();
+
+            if ($existing) {
+                $this->newsletterModel->update($existing['id'], $payload);
+            } else {
+                $payload['created_at'] = date('Y-m-d H:i:s');
+                $this->newsletterModel->insert($payload);
+            }
+
+            $symbolCount = $this->weeklyWatchlistModel
+                ->where('week_start_date', $weekStart)
+                ->countAllResults();
+
+            $watchlistCount = $this->weeklyWatchlistModel
+                ->select('watchlist_name')
+                ->where('week_start_date', $weekStart)
+                ->groupBy('watchlist_name')
+                ->countAllResults();
+
+            log_message(
+                'info',
+                sprintf(
+                    '📧 Coffee & Stocks newsletter drafted for %s with %d symbols across %d watchlists',
+                    $weekStart,
+                    $symbolCount,
+                    $watchlistCount
+                )
+            );
+
+            return Http::jsonSuccess([
+                'week_start_date' => $weekStart,
+                'symbol_count'    => $symbolCount,
+                'subject'         => $payload['subject'],
+                'status'          => $payload['status'],
+            ]);
+        } catch (\Throwable $e) {
+            log_message(
+                'error',
+                sprintf('❌ generateCoffeeAndStocksNewsletter failed for %s: %s', $weekStart, $e->getMessage())
+            );
+            return $this->failServerError('Failed to generate newsletter draft.');
+        }
+    }
+
+    public function fetchCoffeeAndStocksNewsletter()
+    {
+        $weekStart = $this->request->getGet('week_start_date')
+            ?: $this->weeklyStreamService->getDefaultWeekStart()->format('Y-m-d');
+
+        $existing = $this->newsletterModel
+            ->where('week_start_date', $weekStart)
+            ->first();
+
+        if (! $existing) {
+            $existing = $this->MyMIMarketing->buildWeeklyWatchlistNewsletter($weekStart);
+            $existing['status'] = 'draft';
+        }
+
+        log_message('info', sprintf('📧 fetchCoffeeAndStocksNewsletter for %s', $weekStart));
+
+        return Http::jsonSuccess([
+            'week_start_date' => $weekStart,
+            'newsletter'      => $existing,
+        ]);
+    }
+
+    public function saveCoffeeAndStocksNewsletter()
+    {
+        $weekStart = $this->request->getPost('week_start_date')
+            ?: $this->weeklyStreamService->getDefaultWeekStart()->format('Y-m-d');
+        $subject   = $this->request->getPost('subject');
+        $bodyHtml  = $this->request->getPost('body_html');
+        $status    = $this->request->getPost('status') ?? 'draft';
+
+        $payload = [
+            'title'           => $this->request->getPost('title') ?: 'Coffee & Stocks Newsletter',
+            'slug'            => 'coffee-and-stocks-' . str_replace([' ', '/'], '-', strtolower($weekStart)),
+            'subject'         => $subject ?: 'MyMI Wallet Coffee & Stocks – Weekly Watchlist',
+            'body_html'       => $bodyHtml ?? '',
+            'status'          => $status,
+            'week_start_date' => $weekStart,
+            'updated_at'      => date('Y-m-d H:i:s'),
+        ];
+
+        $existing = $this->newsletterModel
+            ->where('week_start_date', $weekStart)
+            ->first();
+
+        if ($existing) {
+            $this->newsletterModel->update($existing['id'], $payload);
+        } else {
+            $payload['created_at'] = date('Y-m-d H:i:s');
+            $this->newsletterModel->insert($payload);
+        }
+
+        log_message(
+            'info',
+            sprintf('✅ saveCoffeeAndStocksNewsletter stored %s with status %s', $weekStart, $status)
+        );
+
+        return Http::jsonSuccess([
+            'week_start_date' => $weekStart,
+            'status'          => $status,
+        ]);
     }
     
     public function ajaxGetActiveUsers()
