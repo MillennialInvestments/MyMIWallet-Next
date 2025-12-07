@@ -24,6 +24,9 @@ $viewFileData = [
     'recentMarketingPosts' => $recentMarketingPosts ?? [],
     'todaysStory' => $todaysStory ?? [],
 ];
+
+$newsletterWeekStart = date('Y-m-d', strtotime('saturday this week'));
+$cronKey = env('CRON_SHARED_KEY');
 ?>
 
 <div class="nk-block">
@@ -33,6 +36,36 @@ $viewFileData = [
                 <div class="nk-block-head-content">
                     <h1 class="title nk-block-title">MyMI Management - <?= esc($department) ?></h1>
                     <a href="<?= site_url('/Management'); ?>">← Back to Management Dashboard</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="card card-bordered mb-3">
+                <div class="card-inner d-flex justify-content-between flex-wrap align-items-center">
+                    <div>
+                        <h5 class="title mb-1">Coffee &amp; Stocks Newsletter</h5>
+                        <p class="mb-0 text-soft">Week starting <strong><?= esc($newsletterWeekStart); ?></strong></p>
+                    </div>
+                    <div class="btn-group" role="group" aria-label="Coffee & Stocks actions">
+                        <button class="btn btn-outline-primary" id="marketingGenerateNewsletter">Generate Draft</button>
+                        <button class="btn btn-primary" id="marketingEditDraft">Edit Draft</button>
+                        <button class="btn btn-success" id="marketingMarkSent">Mark as Sent</button>
+                    </div>
+                </div>
+                <div class="card-inner border-top" id="newsletterEditor" style="display:none;">
+                    <div class="form-group mb-2">
+                        <label class="form-label" for="newsletterSubject">Subject</label>
+                        <input type="text" class="form-control" id="newsletterSubject" placeholder="Newsletter subject">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="newsletterBody">Body (HTML)</label>
+                        <textarea class="form-control" id="newsletterBody" rows="6" placeholder="Compose the Coffee &amp; Stocks body"></textarea>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="text-soft small">Saving for week of <?= esc($newsletterWeekStart); ?></div>
+                        <button class="btn btn-primary" id="newsletterSave">Save Draft</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -177,6 +210,84 @@ document.getElementById('standaloneScraperForm')?.addEventListener('submit', fun
     .catch(err => {
         console.error('❌ Scrape error:', err);
         alert('❌ An unexpected error occurred while scraping.');
+    });
+});
+</script>
+
+<script <?= $nonce['script'] ?? '' ?>>
+document.addEventListener('DOMContentLoaded', () => {
+    const cronKey = "<?= esc($cronKey ?? ''); ?>";
+    const weekStart = "<?= esc($newsletterWeekStart); ?>";
+    const editor = document.getElementById('newsletterEditor');
+    const subjectInput = document.getElementById('newsletterSubject');
+    const bodyInput = document.getElementById('newsletterBody');
+    const csrfToken = "<?= csrf_hash(); ?>";
+
+    const buildUrl = (baseUrl) => {
+        if (!cronKey) {
+            return baseUrl;
+        }
+        const separator = baseUrl.includes('?') ? '&' : '?';
+        return `${baseUrl}${separator}cronKey=${encodeURIComponent(cronKey)}`;
+    };
+
+    async function loadDraft() {
+        const response = await fetch(buildUrl('<?= site_url('/API/Management/fetchCoffeeAndStocksNewsletter'); ?>?week_start_date=' + weekStart));
+        const data = await response.json();
+        if (data?.success && data.newsletter) {
+            subjectInput.value = data.newsletter.subject || '';
+            bodyInput.value = data.newsletter.body_html || '';
+        }
+    }
+
+    async function saveDraft(status = 'draft') {
+        const payload = {
+            week_start_date: weekStart,
+            subject: subjectInput.value,
+            body_html: bodyInput.value,
+            status: status,
+        };
+
+        const response = await fetch(buildUrl('<?= site_url('/API/Management/saveCoffeeAndStocksNewsletter'); ?>'), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': csrfToken,
+            },
+            body: JSON.stringify(payload),
+        });
+
+        if (response.ok) {
+            alert(status === 'sent' ? 'Newsletter marked as sent.' : 'Draft saved.');
+        } else {
+            alert('Unable to save the newsletter draft.');
+        }
+    }
+
+    document.getElementById('marketingGenerateNewsletter')?.addEventListener('click', async () => {
+        const response = await fetch(buildUrl('<?= site_url('/API/Management/generateCoffeeAndStocksNewsletter'); ?>'));
+        if (response.ok) {
+            alert('Draft generated for ' + weekStart);
+            await loadDraft();
+        } else {
+            alert('Failed to generate draft.');
+        }
+    });
+
+    document.getElementById('marketingEditDraft')?.addEventListener('click', async () => {
+        editor.style.display = editor.style.display === 'none' ? 'block' : 'none';
+        if (editor.style.display === 'block') {
+            await loadDraft();
+        }
+    });
+
+    document.getElementById('marketingMarkSent')?.addEventListener('click', async () => {
+        await saveDraft('sent');
+    });
+
+    document.getElementById('newsletterSave')?.addEventListener('click', async () => {
+        await saveDraft('draft');
     });
 });
 </script>

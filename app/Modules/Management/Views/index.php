@@ -51,6 +51,26 @@ $discordHealth = $discordHealth ?? ['queued' => 0, 'failed24h' => 0, 'dead7d' =>
     </div>
 
     <div class="nk-block mt-3">
+        <div class="card card-bordered mb-3">
+            <div class="card-inner">
+                <div class="d-flex justify-content-between flex-wrap align-items-center mb-2">
+                    <div>
+                        <h5 class="mb-1">Saturday Stream Prep</h5>
+                        <p class="mb-0 text-soft">Week starting: <strong><?= esc($streamPrep['week_start_date'] ?? 'N/A'); ?></strong></p>
+                        <p class="mb-0 text-soft">Last prepared: <?= !empty($streamPrep['last_prepared']) ? esc($streamPrep['last_prepared']) : 'Not yet generated'; ?></p>
+                    </div>
+                    <div class="text-end">
+                        <div class="small">Symbols in snapshot: <strong><?= number_format((int)($streamPrep['symbol_count'] ?? 0)); ?></strong></div>
+                        <div class="small">Newsletter status: <strong><?= esc($streamPrep['newsletter_status'] ?? 'n/a'); ?></strong></div>
+                    </div>
+                </div>
+                <div class="btn-group" role="group" aria-label="Stream prep actions">
+                    <button class="btn btn-primary" id="btnGenerateStreamData">Generate Weekly Stream Data</button>
+                    <a class="btn btn-outline-primary" id="btnExportStreamCSV" href="<?= site_url('/API/Management/exportWeeklyWatchlistCSV?week_start_date=' . ($streamPrep['week_start_date'] ?? '')); ?>">Export Watchlist CSV</a>
+                    <button class="btn btn-success" id="btnGenerateNewsletter">Generate Newsletter Draft</button>
+                </div>
+            </div>
+        </div>
         <div class="row my-3">
             <!-- Example Action Card -->
 
@@ -321,6 +341,44 @@ $discordHealth = $discordHealth ?? ['queued' => 0, 'failed24h' => 0, 'dead7d' =>
 
 <script <?= $nonce['script'] ?? '' ?>>
     $(document).ready(function () {
+        const cronKey = "<?= esc(env('CRON_SHARED_KEY') ?? ''); ?>";
+
+        const buildUrl = (baseUrl) => {
+            if (!cronKey) {
+                return baseUrl;
+            }
+            const separator = baseUrl.includes('?') ? '&' : '?';
+            return `${baseUrl}${separator}cronKey=${encodeURIComponent(cronKey)}`;
+        };
+
+        function callEndpoint(button, url, label) {
+            const originalText = button.text();
+            button.attr('disabled', true).text('Working...');
+
+            $.get(buildUrl(url), function (data) {
+                const message = data?.message || `${label} completed.`;
+                alert(message);
+            }).fail(function (xhr) {
+                alert('Error: ' + (xhr.responseJSON?.message || 'Request failed'));
+            }).always(function () {
+                button.attr('disabled', false).text(originalText);
+            });
+        }
+
+        $('#btnGenerateStreamData').on('click', function () {
+            callEndpoint($(this), '<?= site_url('/API/Management/generateWeeklyStreamData'); ?>', 'Stream data refresh');
+        });
+
+        $('#btnGenerateNewsletter').on('click', function () {
+            callEndpoint($(this), '<?= site_url('/API/Management/generateCoffeeAndStocksNewsletter'); ?>', 'Newsletter draft');
+        });
+
+        $('#btnExportStreamCSV').on('click', function (event) {
+            const link = $(this);
+            const updatedUrl = buildUrl(link.attr('href'));
+            link.attr('href', updatedUrl);
+        });
+
         $('#runNowBtn').on('click', function () {
             let btn = $(this);
             btn.attr('disabled', true).text('Running...');

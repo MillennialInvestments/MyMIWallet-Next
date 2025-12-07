@@ -196,6 +196,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('ajaxGetInactiveUsers', 'ManagementController::ajaxGetInactiveUsers');
         $routes->get('checkForSpamUsers', 'ManagementController::checkForSpamUsers');
         $routes->get('distributeTodaysNewsContent', 'ManagementController::distributeTodaysNewsContent');
+        $routes->get('exportWeeklyWatchlistCSV', 'ManagementController::exportWeeklyWatchlistCSV');
         $routes->get('exportPostJson/(:num)', 'ManagementController::exportPostJson/$1');
         $routes->get('fetchAlphaVantageNewsForTradeAlerts', 'ManagementController::fetchAlphaVantageNewsForTradeAlerts');
         $routes->get('fetchEmailsToTempScraper', 'ManagementController::fetchEmailsToTempScraper');
@@ -203,6 +204,10 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('fetchNewsEmails', 'ManagementController::fetchNewsEmails');
         $routes->get('generatePostsFromSummary/(:num)', 'ManagementController::generatePostsFromSummary/$1');
         $routes->get('generatePostsFromSummary', 'ManagementController::generatePostsFromSummary');
+        $routes->get('generateCoffeeAndStocksNewsletter', 'ManagementController::generateCoffeeAndStocksNewsletter');
+        $routes->get('fetchCoffeeAndStocksNewsletter', 'ManagementController::fetchCoffeeAndStocksNewsletter');
+        $routes->get('generateWeeklyStreamData', 'ManagementController::generateWeeklyStreamData');
+        $routes->post('saveCoffeeAndStocksNewsletter', 'ManagementController::saveCoffeeAndStocksNewsletter');
         $routes->get('generateVoiceScriptManually', 'ManagementController::generateVoiceScriptManually');
         $routes->get('getUsers', 'ManagementController::getUsers');
         $routes->get('getAlerts', 'ManagementController::getAlerts');

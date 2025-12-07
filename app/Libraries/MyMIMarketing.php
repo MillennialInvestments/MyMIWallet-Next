@@ -5,7 +5,7 @@ namespace App\Libraries;
 use App\Config\{SiteSettings, SocialMedia};
 use App\Libraries\{BaseLoader, FRED, MyMIAlphaVantage, MyMICoinGecko, MyMIInvestments};
 use App\Libraries\Traits\TextProcessor;
-use App\Models\{AnalyticalModel, MarketingModel};
+use App\Models\{AnalyticalModel, MarketingModel, MarketingNewsletterModel, WeeklyStreamWatchlistModel};
 use App\Services\{EmailService, MarketingService, SolanaService};
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Log\LoggerInterface;
@@ -5998,6 +5998,61 @@ class MyMIMarketing
 
         return ['text' => $text, 'meta' => $plan];
     }
-    
+
+    public function buildWeeklyWatchlistNewsletter(string $weekStartDate): array
+    {
+        $watchlistModel = model(WeeklyStreamWatchlistModel::class);
+
+        $records = $watchlistModel
+            ->where('week_start_date', $weekStartDate)
+            ->orderBy('watchlist_name', 'ASC')
+            ->orderBy('score', 'DESC')
+            ->findAll();
+
+        $grouped = [];
+        foreach ($records as $row) {
+            $name = $row['watchlist_name'] ?? 'Stream Watchlist';
+            $grouped[$name][] = $row;
+        }
+
+        $subject   = sprintf('MyMI Wallet Coffee & Stocks – Weekly Watchlist for %s', date('M j, Y', strtotime($weekStartDate)));
+        $preheader = 'Top stocks and events to watch this week.';
+        $title     = sprintf('Coffee & Stocks – %s', $weekStartDate);
+        $slug      = 'coffee-and-stocks-' . str_replace([' ', '/'], '-', strtolower($weekStartDate));
+
+        $body  = '<!DOCTYPE html><html><body style="font-family: Arial, sans-serif; color: #111;">';
+        $body .= sprintf('<p style="font-size:16px;">Hi there! Here is your Coffee &amp; Stocks prep for the week starting %s.</p>', date('l, F j', strtotime($weekStartDate)));
+        $body .= '<p style="font-size:15px;">We pulled the latest activity from MyMI Alerts and curated the symbols trending across our stream watchlists. Use this snapshot to plan Saturday&#8217;s show and highlight any standout moves.</p>';
+        $body .= '<div style="margin:20px 0; padding:15px; background:#f5f7fb; border-radius:8px;">';
+        $body .= '<strong>Market snapshot:</strong> Watch for earnings movers, macro headlines, and sentiment shifts that might affect your picks.';
+        $body .= '</div>';
+
+        foreach ($grouped as $watchlistName => $symbols) {
+            $body .= sprintf('<h3 style="margin-bottom:8px;">%s</h3><ul>', esc($watchlistName));
+            foreach ($symbols as $symbol) {
+                $score = isset($symbol['score']) ? number_format((float) $symbol['score'], 2) : '0.00';
+                $notes = $symbol['notes'] ?? 'No recent notes.';
+                $body .= sprintf('<li style="margin-bottom:6px;"><strong>%s</strong> <span style="color:#667;">(Score: %s)</span><br><small style="color:#555;">%s</small></li>', esc($symbol['symbol']), $score, esc($notes));
+            }
+            $body .= '</ul>';
+        }
+
+        if (empty($grouped)) {
+            $body .= '<p>No watchlist data was generated for this week yet. Run the weekly stream prep to populate the list.</p>';
+        }
+
+        $body .= '<p style="margin-top:20px;">Ready to feature these tickers on stream? <a href="https://www.mymiwallet.com/register" style="color:#0b6efd;">Register</a> or <a href="https://www.mymiwallet.com/upgrade" style="color:#0b6efd;">upgrade your MyMI Wallet plan</a> to unlock more automation.</p>';
+        $body .= '</body></html>';
+
+        return [
+            'title'           => $title,
+            'slug'            => $slug,
+            'subject'         => $subject,
+            'preheader'       => $preheader,
+            'body_html'       => $body,
+            'week_start_date' => $weekStartDate,
+        ];
+    }
+
 }
 ?>
