@@ -1089,6 +1089,29 @@ $subViewData                        = [
       }
     }
   });
+
+  const btnBackfillEmails = document.getElementById('backfill-alerts-emails');
+  btnBackfillEmails?.addEventListener('click', async () => {
+    btnBackfillEmails.disabled = true;
+    const originalText = btnBackfillEmails.textContent;
+    btnBackfillEmails.textContent = 'Starting backfill…';
+    try {
+      const res = await fetch('<?= site_url('API/Alerts/backfillEmailAlerts'); ?>', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+        body: JSON.stringify({ days_back: 30 })
+      });
+      const json = await res.json();
+      const data = json.data || {};
+      alert(`Backfill completed. Inserted: ${data.inserted ?? 0}, Duplicates: ${data.duplicates_skipped ?? 0}, Errors: ${data.errors ?? 0}`);
+    } catch (e) {
+      alert('Backfill failed. Check logs for details.');
+      console.error(e);
+    } finally {
+      btnBackfillEmails.disabled = false;
+      btnBackfillEmails.textContent = originalText;
+    }
+  });
 })();
 </script>
 <script <?= $nonce['script'] ?? '' ?>>

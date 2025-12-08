@@ -46,6 +46,28 @@
             </div>
         </div>
 
+        <!-- Backfill Alerts Emails -->
+        <div class="col-sm-6 col-xl-4">
+            <div class="card card-bordered h-100">
+                <div class="card-inner">
+                    <div class="project">
+                        <div class="project-head">
+                            <div class="user-avatar sq bg-info"><span>BF</span></div>
+                            <div class="project-info">
+                                <h6 class="title">Backfill Alerts Emails</h6>
+                            </div>
+                        </div>
+                        <div class="project-details">
+                            <p>Run a retro pull to ensure no alert emails were missed.</p>
+                        </div>
+                        <button id="backfill-alerts-emails" class="btn btn-info btn-block">
+                            <i class="icon ni ni-curve-down-left"></i> Backfill Alerts Emails
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Force Fetch Tickers -->
         <div class="col-sm-6 col-xl-4">
             <div class="card card-bordered h-100">

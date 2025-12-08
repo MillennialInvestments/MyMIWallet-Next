@@ -1492,6 +1492,121 @@ class MyMIAlerts
     
         return true;
     }
+
+    public function backfillAlertsEmails(int $daysBack = 30, ?int $maxEmails = null): array
+    {
+        $summary = [
+            'processed'           => 0,
+            'inserted'            => 0,
+            'duplicates_skipped'  => 0,
+            'deleted_from_inbox'  => 0,
+            'invalid'             => 0,
+            'errors'              => 0,
+        ];
+
+        $hostname = "{{$this->emailHost}:993/imap/ssl}INBOX";
+        $username = $this->emailUsername;
+        $password = $this->emailPassword;
+
+        log_message('info', "BackfillAlertsEmails started daysBack={$daysBack}, maxEmails={$maxEmails}");
+
+        $inbox = @imap_open($hostname, $username, $password);
+        if (! $inbox) {
+            log_message('error', 'Cannot connect to email server for alerts backfill: ' . imap_last_error());
+            $summary['errors']++;
+            return $summary;
+        }
+
+        try {
+            $targetDate = date('d-M-Y', strtotime("-{$daysBack} days"));
+            $oldestStored = $this->alertsModel->getOldestScraperEmailDate();
+            if ($oldestStored) {
+                $oldestDate = date('d-M-Y', strtotime($oldestStored));
+                $targetDate = (strtotime($oldestDate) < strtotime($targetDate)) ? $oldestDate : $targetDate;
+            }
+
+            $emails = imap_search($inbox, 'SINCE "' . $targetDate . '"') ?: [];
+            if ($maxEmails !== null) {
+                $emails = array_slice($emails, 0, max(0, $maxEmails));
+            }
+
+            foreach ($emails as $emailNumber) {
+                $summary['processed']++;
+                try {
+                    $overviewList = imap_fetch_overview($inbox, $emailNumber, 0) ?: [];
+                    $overview = $overviewList[0] ?? null;
+                    if (! $overview) {
+                        $summary['invalid']++;
+                        log_message('warning', "⚠️ Missing overview for email #{$emailNumber}");
+                        continue;
+                    }
+
+                    $subject = isset($overview->subject) ? imap_utf8($overview->subject) : '';
+                    $date    = $overview->date ? date('Y-m-d H:i:s', strtotime($overview->date)) : date('Y-m-d H:i:s');
+                    $sender  = $overview->from ?? '';
+                    $identifier = $overview->message_id ?? '';
+
+                    if (empty($identifier)) {
+                        $identifier = hash('sha256', $sender . $subject . $date);
+                    }
+
+                    if (empty($identifier)) {
+                        $summary['invalid']++;
+                        log_message('warning', "⚠️ Invalid email – no identifier (email #{$emailNumber})");
+                        continue;
+                    }
+
+                    if ($this->alertsModel->findScraperByIdentifier($identifier)) {
+                        $summary['duplicates_skipped']++;
+                        if (@imap_delete($inbox, $emailNumber)) {
+                            $summary['deleted_from_inbox']++;
+                        }
+                        continue;
+                    }
+
+                    $body    = $this->fetchEmailBody($inbox, $emailNumber);
+                    $symbols = $this->extractSymbolsFromText($subject . ' ' . $body);
+
+                    $emailData = [
+                        'status'           => 'In Review',
+                        'type'             => 'Trade Alerts',
+                        'summary'          => ! empty($symbols) ? implode(', ', $symbols) : null,
+                        'email_date'       => $date,
+                        'email_subject'    => $subject,
+                        'email_body'       => mb_substr($body ?? '', 0, 6000),
+                        'email_sender'     => $sender,
+                        'email_identifier' => $identifier,
+                        'created_on'       => date('Y-m-d H:i:s'),
+                        'modified_on'      => date('Y-m-d H:i:s'),
+                    ];
+
+                    if ($this->alertsModel->insertScraperEmail($emailData)) {
+                        $summary['inserted']++;
+                    } else {
+                        $summary['errors']++;
+                        log_message('error', "❌ Failed to insert alert email {$identifier}");
+                    }
+                } catch (\Throwable $e) {
+                    $summary['errors']++;
+                    log_message('error', '❌ backfillAlertsEmails error: ' . $e->getMessage());
+                }
+            }
+
+            imap_expunge($inbox);
+        } finally {
+            imap_close($inbox);
+        }
+
+        log_message('info', sprintf(
+            'BackfillAlertsEmails finished inserted=%d, duplicates=%d, deleted=%d, errors=%d',
+            $summary['inserted'],
+            $summary['duplicates_skipped'],
+            $summary['deleted_from_inbox'],
+            $summary['errors']
+        ));
+
+        return $summary;
+    }
         
     public function fetchEmailAlerts()
     {
