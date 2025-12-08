@@ -68,6 +68,20 @@
     <div class="card-inner">
         <div class="nk-wg-action">
             <div class="nk-wg-action-content">
+                <em class="icon ni ni-curve-down-left"></em>
+                <div class="title">Backfill Marketing Emails</div>
+                <p>Pull older marketing emails, dedupe, and clear duplicates from the inbox.</p>
+            </div>
+            <button id="backfillMarketingEmails" class="btn btn-info btn-md">
+                <em class="icon ni ni-reload"></em>
+                <span>Backfill Marketing Emails</span>
+            </button>
+        </div>
+    </div><!-- .card-inner -->
+    <hr>
+    <div class="card-inner">
+        <div class="nk-wg-action">
+            <div class="nk-wg-action-content">
                 <em class="icon ni ni-article"></em>
                 <div class="title">Generate Newsletter</div>
                 <p><a href="<?php echo site_url('Management/Marketing/generateNewsletter'); ?>"><strong><?php // echo $totalActiveUsers; ?> Active Users</strong></a> and <a href="#active-assets-overview"><strong><?php // echo $totalActivePartners; ?> Active Partners</strong></a>, thats need to be reviewed.</p>

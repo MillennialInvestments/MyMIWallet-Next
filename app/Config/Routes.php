@@ -180,6 +180,9 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->match(['GET', 'POST'], '/', 'APIController::index');
     $routes->match(['GET', 'POST'], 'Status', 'APIController::status');
     $routes->get('Health', 'HealthController::index');              // /API/Health
+    $routes->post('Alerts/backfillEmailAlerts', 'AlertsController::backfillEmailAlerts');
+    $routes->post('Management/backfillMarketingEmails', 'ManagementController::backfillMarketingEmails');
+
     // Public Discord help/onboarding endpoints
     $routes->post('Discord/completeOnboardingStep', 'DiscordController::completeOnboardingStep');
     $routes->get('Ops/OPcacheReset', 'OpsController::opcacheReset'); // /API/Ops/OPcacheReset
@@ -211,6 +214,8 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('generateWeeklyStreamData', 'ManagementController::generateWeeklyStreamData');
         $routes->post('saveCoffeeAndStocksNewsletter', 'ManagementController::saveCoffeeAndStocksNewsletter');
         $routes->get('generateVoiceScriptManually', 'ManagementController::generateVoiceScriptManually');
+        $routes->get('runBackfillAlertsEmails', 'ManagementController::runBackfillAlertsEmails');
+        $routes->get('runBackfillMarketingEmails', 'ManagementController::runBackfillMarketingEmails');
         $routes->get('getUsers', 'ManagementController::getUsers');
         $routes->get('getAlerts', 'ManagementController::getAlerts');
         $routes->get('getReferrals', 'ManagementController::getReferrals');

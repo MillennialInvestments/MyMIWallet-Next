@@ -211,16 +211,94 @@ class DiscordController extends BaseController
     {
         $discordUserId = (string) $this->request->getPost('discord_user_id');
         $stepKey       = (string) $this->request->getPost('step_key');
+        $apiToken      = $this->request->getHeaderLine('X-Internal-Api-Token');
+        $expectedToken = getenv('DISCORD_INTERNAL_API_TOKEN');
 
-        if ($discordUserId === '' || $stepKey === '') {
-            return $this->failValidationErrors('discord_user_id and step_key are required');
+        if (!$expectedToken || !hash_equals((string) $expectedToken, (string) $apiToken)) {
+            return $this->response->setStatusCode(401)
+                ->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
         }
 
-        // TODO: Map step_key to bf_discord_achievements and insert into bf_discord_user_achievements
-        return $this->response->setJSON([
-            'status'  => 'accepted',
-            'message' => 'Achievement recording to be wired in a follow-up release.',
-        ]);
+        if ($discordUserId === '' || $stepKey === '') {
+            return $this->response->setStatusCode(400)
+                ->setJSON(['status' => 'error', 'message' => 'Missing discord_user_id or step_key']);
+        }
+
+        $achievementKey = $this->mapStepKeyToAchievementKey($stepKey);
+        if (!$achievementKey) {
+            return $this->response->setStatusCode(400)
+                ->setJSON(['status' => 'error', 'message' => 'Unknown step key']);
+        }
+
+        try {
+            $db = db_connect();
+
+            $achievement = $db->table('bf_discord_achievements')
+                ->where('key', $achievementKey)
+                ->get()
+                ->getRowArray();
+
+            if (!$achievement) {
+                return $this->response->setStatusCode(404)
+                    ->setJSON(['status' => 'error', 'message' => 'Achievement not found']);
+            }
+
+            $userId = null;
+            try {
+                $link = $db->table('bf_users_discord_links')
+                    ->where('discord_user_id', $discordUserId)
+                    ->orderBy('id', 'DESC')
+                    ->get()
+                    ->getRowArray();
+
+                if ($link && !empty($link['user_id'])) {
+                    $userId = (int) $link['user_id'];
+                }
+            } catch (\Throwable $e) {
+                log_message('notice', 'DiscordController::completeOnboardingStep link lookup failed: {msg}', [
+                    'msg' => $e->getMessage(),
+                ]);
+            }
+
+            $existing = $db->table('bf_discord_user_achievements')
+                ->where('discord_user_id', $discordUserId)
+                ->where('achievement_id', $achievement['id'])
+                ->get()
+                ->getRowArray();
+
+            if ($existing) {
+                return $this->response->setJSON([
+                    'status'       => 'success',
+                    'message'      => 'Already completed',
+                    'achievement'  => $achievement,
+                    'discord_user' => $discordUserId,
+                    'user_id'      => $userId,
+                ]);
+            }
+
+            $db->table('bf_discord_user_achievements')->insert([
+                'discord_user_id' => $discordUserId,
+                'achievement_id'  => $achievement['id'],
+                'achievement_key' => $achievement['key'] ?? $achievementKey,
+                'user_id'         => $userId,
+                'completed_at'    => date('Y-m-d H:i:s'),
+            ]);
+
+            return $this->response->setJSON([
+                'status'       => 'success',
+                'message'      => 'Achievement recorded',
+                'achievement'  => $achievement,
+                'discord_user' => $discordUserId,
+                'user_id'      => $userId,
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'DiscordController::completeOnboardingStep failed: {msg}', [
+                'msg' => $e->getMessage(),
+            ]);
+
+            return $this->response->setStatusCode(500)
+                ->setJSON(['status' => 'error', 'message' => 'Unable to record achievement']);
+        }
     }
 
     public function webhookProxy(): ResponseInterface
@@ -380,6 +458,7 @@ class DiscordController extends BaseController
 
         if (!empty($user['id'])) {
             $this->discord->enqueuePlain('support', 'Help pack sent to <@'.$user['id'].'>. Start in #welcome-support: '.site_url('Support/Discord'));
+            $this->discord->trackOnboardingStep($user['id'], 'read_how_it_works');
         }
 
         return [
@@ -604,6 +683,36 @@ class DiscordController extends BaseController
         }
 
         return implode("\n", $lines);
+    }
+
+    protected function mapStepKeyToAchievementKey(string $stepKey): ?string
+    {
+        $stepKey = trim($stepKey);
+        if ($stepKey === '') {
+            return null;
+        }
+
+        $known = [
+            'read_how_it_works' => 'read_how_it_works',
+            'first_budget_sync' => 'first_budget_sync',
+            'first_trade_tracked' => 'first_trade_tracked',
+            'onboarding_complete' => 'onboarding_complete',
+        ];
+
+        if (isset($known[$stepKey])) {
+            return $known[$stepKey];
+        }
+
+        $config = config('DiscordHelp');
+        if ($config && property_exists($config, 'onboardingSteps')) {
+            foreach ($config->onboardingSteps as $step) {
+                if (($step['key'] ?? '') === $stepKey) {
+                    return $stepKey;
+                }
+            }
+        }
+
+        return null;
     }
 
     protected function getDiscordUser(array $payload): array

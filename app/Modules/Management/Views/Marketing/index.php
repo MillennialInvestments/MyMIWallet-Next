@@ -288,5 +288,32 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('newsletterSave')?.addEventListener('click', async () => {
         await saveDraft('draft');
     });
+
+    document.getElementById('backfillMarketingEmails')?.addEventListener('click', async (event) => {
+        const button = event.currentTarget;
+        button.disabled = true;
+        const original = button.textContent;
+        button.textContent = 'Starting backfill…';
+        try {
+            const response = await fetch(buildUrl('<?= site_url('/API/Management/backfillMarketingEmails'); ?>'), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': csrfToken,
+                },
+                body: JSON.stringify({ days_back: 30 })
+            });
+            const json = await response.json();
+            const summary = json.summary || json.data || {};
+            alert(`Backfill complete. Inserted: ${summary.inserted ?? 0}, Duplicates: ${summary.duplicates_skipped ?? 0}`);
+        } catch (e) {
+            alert('Unable to run marketing backfill right now.');
+            console.error(e);
+        } finally {
+            button.disabled = false;
+            button.textContent = original;
+        }
+    });
 });
 </script>

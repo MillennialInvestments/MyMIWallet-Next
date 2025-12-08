@@ -4166,6 +4166,140 @@ class MyMIMarketing
         return ($recordDateOnly !== $todayDateOnly);
     }
     
+    
+
+    public function backfillMarketingEmails(int $daysBack = 30, ?int $maxEmails = null): array
+    {
+        $summary = [
+            'processed'           => 0,
+            'inserted'            => 0,
+            'duplicates_skipped'  => 0,
+            'deleted_from_inbox'  => 0,
+            'invalid'             => 0,
+            'errors'              => 0,
+        ];
+
+        $emailCredentials = [
+            'hostname' => '{imap.dreamhost.com:993/imap/ssl}INBOX',
+            'username' => 'marketing@mymiwallet.com',
+            'password' => $this->APIs->emailPassword,
+        ];
+
+        log_message('info', "BackfillMarketingEmails started daysBack={$daysBack}, maxEmails={$maxEmails}");
+
+        $inbox = @imap_open(
+            $emailCredentials['hostname'],
+            $emailCredentials['username'],
+            $emailCredentials['password']
+        );
+
+        if (! $inbox) {
+            $this->logger->error('Cannot connect to marketing inbox for backfill: ' . imap_last_error());
+            $summary['errors']++;
+            return $summary;
+        }
+
+        try {
+            $targetDate = date('d-M-Y', strtotime("-{$daysBack} days"));
+            $oldestStored = $this->marketingModel->getOldestTempEmailDate();
+            if ($oldestStored) {
+                $oldestDate = date('d-M-Y', strtotime($oldestStored));
+                $targetDate = (strtotime($oldestDate) < strtotime($targetDate)) ? $oldestDate : $targetDate;
+            }
+
+            $emails = imap_search($inbox, 'SINCE "' . $targetDate . '"') ?: [];
+            if ($maxEmails !== null) {
+                $emails = array_slice($emails, 0, max(0, $maxEmails));
+            }
+
+            foreach ($emails as $emailNumber) {
+                $summary['processed']++;
+                try {
+                    $overviewList = imap_fetch_overview($inbox, $emailNumber, 0) ?: [];
+                    $overview = $overviewList[0] ?? null;
+                    if (! $overview) {
+                        $summary['invalid']++;
+                        $this->logger->warning("⚠️ Missing overview for marketing email #{$emailNumber}");
+                        continue;
+                    }
+
+                    $subject = isset($overview->subject) ? imap_utf8($overview->subject) : '';
+                    $date    = $overview->date ? date('Y-m-d H:i:s', strtotime($overview->date)) : date('Y-m-d H:i:s');
+                    $sender  = $overview->from ?? '';
+                    $identifier = $overview->message_id ?? '';
+
+                    if (empty($identifier)) {
+                        $identifier = hash('sha256', $sender . $subject . $date);
+                    }
+
+                    if (empty($identifier)) {
+                        $summary['invalid']++;
+                        $this->logger->warning("⚠️ Invalid marketing email – no identifier (#{$emailNumber})");
+                        continue;
+                    }
+
+                    if ($this->marketingModel->findTempByIdentifier($identifier)) {
+                        $summary['duplicates_skipped']++;
+                        if (@imap_delete($inbox, $emailNumber)) {
+                            $summary['deleted_from_inbox']++;
+                        }
+                        continue;
+                    }
+
+                    $body = imap_fetchbody($inbox, $emailNumber, 1.2);
+                    if (empty($body)) {
+                        $body = imap_fetchbody($inbox, $emailNumber, 1);
+                    }
+
+                    $cleanBody = $this->stripHtmlTags($this->decodeSpecialCharacters($body ?? ''));
+
+                    $emailData = [
+                        'status'           => 'In Review',
+                        'type'             => 'Email/Newsletters',
+                        'email_date'       => $date,
+                        'email_subject'    => $subject ?: 'Untitled Email',
+                        'email_body'       => mb_substr($body ?? '', 0, 60000),
+                        'content'          => $cleanBody,
+                        'email_sender'     => $sender,
+                        'email_identifier' => $identifier,
+                        'title'            => $subject ?: 'Untitled Email',
+                        'created_on'       => date('Y-m-d H:i:s'),
+                        'modified_on'      => date('Y-m-d H:i:s'),
+                        'scraped_at'       => date('Y-m-d H:i:s'),
+                    ];
+
+                    if (! empty($emailData['email_identifier'])) {
+                        if ($this->marketingModel->insertTempEmail($emailData)) {
+                            $summary['inserted']++;
+                        } else {
+                            $summary['errors']++;
+                            $this->logger->error("❌ Failed to insert marketing email {$identifier}");
+                        }
+                    } else {
+                        $summary['invalid']++;
+                    }
+                } catch (\Throwable $e) {
+                    $summary['errors']++;
+                    $this->logger->error('❌ backfillMarketingEmails error: ' . $e->getMessage());
+                }
+            }
+
+            imap_expunge($inbox);
+        } finally {
+            imap_close($inbox);
+        }
+
+        log_message('info', sprintf(
+            'BackfillMarketingEmails finished inserted=%d, duplicates=%d, deleted=%d, errors=%d',
+            $summary['inserted'],
+            $summary['duplicates_skipped'],
+            $summary['deleted_from_inbox'],
+            $summary['errors']
+        ));
+
+        return $summary;
+    }
+    
     public function insertFinalScraper($record, $summary)
     {
         $model = new MarketingModel();

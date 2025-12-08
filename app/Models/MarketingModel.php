@@ -2143,6 +2143,29 @@ class MarketingModel extends Model
     {
         return $this->db->table('bf_marketing_generated_content')->insert($data);
     }
+
+    public function findTempByIdentifier(string $identifier): ?array
+    {
+        return $this->db->table('bf_marketing_temp_scraper')
+            ->where('email_identifier', $identifier)
+            ->get()
+            ->getRowArray();
+    }
+
+    public function insertTempEmail(array $data): bool
+    {
+        return (bool) $this->db->table('bf_marketing_temp_scraper')->insert($data);
+    }
+
+    public function getOldestTempEmailDate(): ?string
+    {
+        $row = $this->db->table('bf_marketing_temp_scraper')
+            ->selectMin('email_date')
+            ->get()
+            ->getRow();
+
+        return $row?->email_date ?? null;
+    }
     
     public function storeGroupedContentDrafts(array $groupedLabels, array $drafts): int
     {

@@ -28,6 +28,21 @@ class ManagementController extends \App\Controllers\BaseController
     protected WeeklyStreamWatchlistModel $weeklyWatchlistModel;
     protected WeeklyStreamService $weeklyStreamService;
 
+    private function guardAdmin(): ?\CodeIgniter\HTTP\Response
+    {
+        if (! $this->auth || ! method_exists($this->auth, 'check') || ! $this->auth->check()) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+        }
+
+        $user = method_exists($this->auth, 'user') ? $this->auth->user() : null;
+        $authorizer = service('authorization');
+        if ($authorizer && $user && ! ($authorizer->inGroup('admin', $user->id) || $authorizer->inGroup('superadmin', $user->id))) {
+            return $this->response->setStatusCode(403)->setJSON(['status' => 'error', 'message' => 'Forbidden']);
+        }
+
+        return null;
+    }
+
     public function initController(
         \CodeIgniter\HTTP\RequestInterface $request,
         \CodeIgniter\HTTP\ResponseInterface $response,
@@ -167,6 +182,49 @@ class ManagementController extends \App\Controllers\BaseController
             );
             return $this->failServerError('Failed to generate weekly stream data.');
         }
+    }
+
+    public function backfillMarketingEmails()
+    {
+        if ($guard = $this->guardAdmin()) {
+            return $guard;
+        }
+
+        $daysBack = (int) ($this->request->getVar('days_back') ?? 30);
+        $maxEmails = $this->request->getVar('max_emails');
+        $maxEmails = $maxEmails !== null ? (int) $maxEmails : null;
+
+        $result = $this->MyMIMarketing->backfillMarketingEmails($daysBack, $maxEmails);
+
+        return Http::jsonSuccess(['summary' => $result]);
+    }
+
+    public function runBackfillAlertsEmails()
+    {
+        $token = $this->request->getHeaderLine('X-CRON-Key') ?: $this->request->getGet('cronKey');
+        $expected = env('CRON_SHARED_KEY');
+
+        if (! $expected || ! hash_equals((string) $expected, (string) $token)) {
+            log_message('warning', '🚫 runBackfillAlertsEmails blocked - invalid token');
+            return $this->failForbidden('Invalid CRON key.');
+        }
+
+        $result = $this->alertManager->backfillAlertsEmails(7, 300);
+        return Http::jsonSuccess(['summary' => $result]);
+    }
+
+    public function runBackfillMarketingEmails()
+    {
+        $token = $this->request->getHeaderLine('X-CRON-Key') ?: $this->request->getGet('cronKey');
+        $expected = env('CRON_SHARED_KEY');
+
+        if (! $expected || ! hash_equals((string) $expected, (string) $token)) {
+            log_message('warning', '🚫 runBackfillMarketingEmails blocked - invalid token');
+            return $this->failForbidden('Invalid CRON key.');
+        }
+
+        $result = $this->MyMIMarketing->backfillMarketingEmails(7, 300);
+        return Http::jsonSuccess(['summary' => $result]);
     }
 
     public function exportWeeklyWatchlistCSV()
