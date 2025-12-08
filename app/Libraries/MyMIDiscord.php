@@ -9,12 +9,14 @@ class MyMIDiscord
 {
     protected DiscordModel $model;
     protected DiscordConfig $cfg;
+    protected DiscordConfig $config;
     protected DateTimeZone $tz;
 
     public function __construct()
     {
         $this->model = new DiscordModel();
-        $this->cfg   = config('Discord');
+        $this->config = config('Discord');
+        $this->cfg    = $this->config;
         $this->hydrateConfigFromEnv();
         $this->tz    = new DateTimeZone($this->cfg->timezone ?? 'America/Chicago');
     }
@@ -591,7 +593,94 @@ class MyMIDiscord
 
     private function markOnboardingStepCompleted(string $discordUserId, string $stepKey): void
     {
-        // TODO: Call CI4 API (API/Discord/completeOnboardingStep) to record onboarding and achievements.
+        $endpoint = $this->config->onboardingCompleteEndpoint ?? null;
+        $token    = $this->config->internalApiToken ?? null;
+
+        if (!$endpoint || !$token) {
+            log_message('debug', 'MyMIDiscord::markOnboardingStepCompleted skipped (missing endpoint or token).');
+            return;
+        }
+
+        $payload = [
+            'discord_user_id' => $discordUserId,
+            'step_key'        => $stepKey,
+        ];
+
+        try {
+            if (class_exists(\GuzzleHttp\Client::class)) {
+                $client = new \GuzzleHttp\Client([
+                    'timeout' => 3.0,
+                ]);
+
+                $response = $client->post($endpoint, [
+                    'headers' => [
+                        'Accept'               => 'application/json',
+                        'X-Internal-Api-Token' => $token,
+                    ],
+                    'form_params' => $payload,
+                ]);
+
+                $statusCode = $response->getStatusCode();
+                if ($statusCode >= 200 && $statusCode < 300) {
+                    log_message('debug', 'MyMIDiscord::markOnboardingStepCompleted success for {discord_user_id} step={step_key}', [
+                        'discord_user_id' => $discordUserId,
+                        'step_key'        => $stepKey,
+                    ]);
+                } else {
+                    log_message('warning', 'MyMIDiscord::markOnboardingStepCompleted non-2xx response: {code}', [
+                        'code' => $statusCode,
+                    ]);
+                }
+
+                return;
+            }
+
+            $ch = curl_init($endpoint);
+            curl_setopt_array($ch, [
+                CURLOPT_POST           => true,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_TIMEOUT        => 3,
+                CURLOPT_HTTPHEADER     => [
+                    'Accept: application/json',
+                    'X-Internal-Api-Token: ' . $token,
+                ],
+                CURLOPT_POSTFIELDS     => http_build_query($payload),
+            ]);
+
+            $body       = curl_exec($ch);
+            $curlError  = curl_error($ch);
+            $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            if ($curlError) {
+                log_message('error', 'MyMIDiscord::markOnboardingStepCompleted curl error: {error}', [
+                    'error' => $curlError,
+                ]);
+                return;
+            }
+
+            if ($statusCode < 200 || $statusCode >= 300) {
+                log_message('warning', 'MyMIDiscord::markOnboardingStepCompleted HTTP status {code} body={body}', [
+                    'code' => $statusCode,
+                    'body' => $body,
+                ]);
+                return;
+            }
+
+            log_message('debug', 'MyMIDiscord::markOnboardingStepCompleted success (curl) for {discord_user_id} step={step_key}', [
+                'discord_user_id' => $discordUserId,
+                'step_key'        => $stepKey,
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'MyMIDiscord::markOnboardingStepCompleted failed: {msg}', [
+                'msg' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function trackOnboardingStep(string $discordUserId, string $stepKey): void
+    {
+        $this->markOnboardingStepCompleted($discordUserId, $stepKey);
     }
 
 }

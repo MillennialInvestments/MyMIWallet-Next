@@ -27,6 +27,12 @@ class Discord extends BaseConfig
     public int $minSecondsBetweenPosts = 90;
 
     /**
+     * Internal endpoint + token for recording Discord onboarding progress.
+     */
+    public string $onboardingCompleteEndpoint = 'https://www.mymiwallet.com/index.php/API/Discord/completeOnboardingStep';
+    public ?string $internalApiToken = null;
+
+    /**
      * Discord interaction verification public key (used if/when you add slash commands).
      */
     public string $publicKey = '';
@@ -139,6 +145,7 @@ class Discord extends BaseConfig
         $this->storeWebhookMsgId  = filter_var(env('DISCORD_STORE_WEBHOOK_MSG_ID', $this->storeWebhookMsgId), FILTER_VALIDATE_BOOLEAN);
         $this->alertsStrict       = filter_var(env('DISCORD_ALERTS_STRICT', $this->alertsStrict), FILTER_VALIDATE_BOOLEAN);
         $this->alertsDryRun       = filter_var(env('DISCORD_ALERTS_DRY_RUN', $this->alertsDryRun), FILTER_VALIDATE_BOOLEAN);
+        $this->internalApiToken   = getenv('DISCORD_INTERNAL_API_TOKEN') ?: null;
 
 
         // JSON-based role map, if configured
