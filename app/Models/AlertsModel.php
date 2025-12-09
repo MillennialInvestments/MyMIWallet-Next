@@ -1851,6 +1851,29 @@ class AlertsModel extends Model
         return $exists;
     }
 
+    public function findScraperByIdentifier(string $identifier): ?array
+    {
+        return $this->db->table('bf_investment_scraper')
+            ->where('email_identifier', $identifier)
+            ->get()
+            ->getRowArray();
+    }
+
+    public function insertScraperEmail(array $data): bool
+    {
+        return (bool) $this->db->table('bf_investment_scraper')->insert($data);
+    }
+
+    public function getOldestScraperEmailDate(): ?string
+    {
+        $row = $this->db->table('bf_investment_scraper')
+            ->selectMin('email_date')
+            ->get()
+            ->getRow();
+
+        return $row?->email_date ?? null;
+    }
+
     private function logChange($alertId, $changeType, $previousData = null, $newData = [])
     {
         $changeData = [

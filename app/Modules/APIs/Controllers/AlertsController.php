@@ -60,6 +60,21 @@ class AlertsController extends ResourceController
     protected $alertsModel;
     protected bool $stringAsHtml = true;
 
+    private function guardAdmin(): ?ResponseInterface
+    {
+        if (! $this->auth || ! method_exists($this->auth, 'check') || ! $this->auth->check()) {
+            return $this->failUnauthorized('Unauthorized.');
+        }
+
+        $user = method_exists($this->auth, 'user') ? $this->auth->user() : null;
+        $authorizer = service('authorization');
+        if ($authorizer && $user && ! ($authorizer->inGroup('admin', $user->id) || $authorizer->inGroup('superadmin', $user->id))) {
+            return $this->failForbidden('Insufficient permissions.');
+        }
+
+        return null;
+    }
+
     public function __construct()
     {
         $this->alertManager = new MyMIAlerts();
@@ -484,7 +499,25 @@ class AlertsController extends ResourceController
             log_message('error', '❌ forceFetchEmails - Error: ' . $e->getMessage());
             return $this->respond(['status' => 'error', 'message' => 'Error fetching emails: ' . $e->getMessage()], 500);
         }
-    }    
+    }
+
+    public function backfillEmailAlerts()
+    {
+        if ($guard = $this->guardAdmin()) {
+            return $guard;
+        }
+
+        $daysBack = (int) ($this->request->getVar('days_back') ?? 30);
+        $maxEmails = $this->request->getVar('max_emails');
+        $maxEmails = $maxEmails !== null ? (int) $maxEmails : null;
+
+        $result = $this->alertManager->backfillAlertsEmails($daysBack, $maxEmails);
+
+        return $this->respond([
+            'status' => 'success',
+            'data'   => $result,
+        ]);
+    }
     
     public function forceFetchTickers()
     {
