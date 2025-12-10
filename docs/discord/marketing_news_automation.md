@@ -40,6 +40,8 @@ This guide captures how marketing content and news flow into the platform and ho
 - Reuse `formatDiscordPost`/`postToDiscord` helpers for consistent truncation and emoji usage.
 - Optionally mirror to Zapier/email for subscribers who prefer alternative channels.
 
+## --------------------------------- NEW ------------------------------------------------------
+
 # Discord Marketing News Automation
 
 ## News Source Pipeline
@@ -108,3 +110,7 @@ Use the same PHP binary path as existing tasks. Replace `USERNAME` with the serv
 - `ManagementController::cronFetchAndGenerateNews()` logs start/end counts and dedupes.
 - `ManagementController::distributeTodaysNewsContent()` logs empty queues and Discord delivery errors.
 - All log_message output is forwarded through the CI4 logging pipeline (including `bf_error_logs`).
+
+## Controller properties & dynamic access
+- `MarketingController` now declares a typed `$stringAsHtml` flag to avoid PHP 8.2 legacy-property notices during cron calls.
+- Cron endpoints explicitly return JSON payloads (no dynamic response-format flags) so CLI/HTTP callers always receive structured responses.
