@@ -133,6 +133,25 @@ class MyMIDiscord
         return $payload;
     }
 
+    /**
+     * Send a single payload directly to a Discord webhook URL.
+     */
+    public function sendWebhookMessage(string $webhookUrl, array $payload, string $channelKey = 'news_webhook'): bool
+    {
+        if (empty($webhookUrl)) {
+            log_message('error', 'Discord sendWebhookMessage called without a webhook URL.');
+            return false;
+        }
+
+        $chan = [
+            'channel_key'  => $channelKey,
+            'webhook_url'  => $webhookUrl,
+            'allow_embeds' => 1,
+        ];
+
+        return $this->deliver($chan, $payload);
+    }
+
     /** Simple mustache replacer: {{var}} and {{#items}} loops (minimal) */
     protected function mustache(string $text, array $data): string
     {

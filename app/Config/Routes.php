@@ -181,6 +181,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->match(['GET', 'POST'], 'Status', 'APIController::status');
     $routes->get('Health', 'HealthController::index');              // /API/Health
     $routes->post('Alerts/backfillEmailAlerts', 'AlertsController::backfillEmailAlerts');
+    $routes->get('cronFetchAndGenerateNews', 'ManagementController::cronFetchAndGenerateNews');
     $routes->post('Management/backfillMarketingEmails', 'ManagementController::backfillMarketingEmails');
 
     // Public Discord help/onboarding endpoints
