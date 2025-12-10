@@ -4,6 +4,9 @@ namespace App\Modules\APIs\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\RESTful\ResourceController;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use Psr\Log\LoggerInterface;
 use App\Controllers\BaseController;
 use App\Libraries\{MyMIDiscord, MyMIMarketing};
 use App\Services\MarketingService;
@@ -19,10 +22,13 @@ class MarketingController extends \App\Controllers\BaseController
     protected MarketingService $marketingService;
     protected MarketingModel $marketingModel;
 
-    protected function initController(
-        \CodeIgniter\HTTP\RequestInterface $request,
-        \CodeIgniter\HTTP\ResponseInterface $response,
-        \Psr\Log\LoggerInterface $logger
+    // Explicit property to avoid PHP 8.2 legacy property notices
+    protected bool $stringAsHtml = false;
+
+    public function initController(
+        RequestInterface $request,
+        ResponseInterface $response,
+        LoggerInterface $logger
     ) {
         parent::initController($request, $response, $logger);
 
@@ -84,7 +90,11 @@ class MarketingController extends \App\Controllers\BaseController
     {
         log_message('debug', '🧠 Starting content digest analysis...');
         $this->getMyMIMarketing()->generateFromTempScraper(5);
-        return ['status' => 'success', 'message' => 'Content analysis completed.'];
+
+        return Http::jsonSuccess([
+            'status' => 'success',
+            'message' => 'Content analysis completed.',
+        ]);
     }
 
     public function cronAutoPublishGroupedDigest()
@@ -153,8 +163,17 @@ class MarketingController extends \App\Controllers\BaseController
     public function cronFetchAndGenerateNews()
     {
         try {
-            $this->MyMIMarketing->cronFetchAndGenerateNews();
-            return ['status' => 'success', 'message' => 'News fetched and generated.'];
+            $result = $this->MyMIMarketing->cronFetchAndGenerateNews();
+
+            return Http::jsonSuccess([
+                'status'  => 'success',
+                'message' => 'News fetched and generated.',
+                'counts'  => [
+                    'temp_inserted'  => $result['temp_inserted'] ?? 0,
+                    'final_inserted' => $result['final_inserted'] ?? 0,
+                    'skipped'        => $result['skipped'] ?? 0,
+                ],
+            ]);
         } catch (\Throwable $e) {
             return $this->failServerError($e->getMessage());
         }
@@ -177,16 +196,16 @@ class MarketingController extends \App\Controllers\BaseController
         log_message('info', '📬 CRON: Fetching marketing emails via inbox scrape');
         try {
             $result = $this->getMyMIMarketing()->fetchAndStoreEmails('marketing'); // or 'alerts' depending on CRON purpose
-            return [
-                'status' => 'success',
+            return Http::jsonSuccess([
+                'status'  => 'success',
                 'message' => 'Marketing inbox scrape completed.',
-                'result' => $result
-            ];
+                'result'  => $result,
+            ]);
         } catch (\Throwable $e) {
             log_message('error', '❌ cronFetchMarketingEmails() failed: ' . $e->getMessage());
             return $this->failServerError('Inbox fetch failed: ' . $e->getMessage());
         }
-    }   
+    }
 
     public function cronProcessSMSMarketingIdeas()
     {
