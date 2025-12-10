@@ -3,7 +3,7 @@ namespace App\Modules\APIs\Controllers;
 
 use App\Controllers\BaseController;
 use App\Modules\APIs\Controllers\MarketingController;
-use App\Libraries\{MyMIAlerts, MyMIMarketing};
+use App\Libraries\{MyMIAlerts, MyMIMarketing, MyMIDiscord};
 use App\Models\{AlertsModel, ExchangeModel, MarketingModel, MarketingNewsletterModel, ReferralModel, SupportModel, UserModel, WeeklyStreamWatchlistModel};
 use App\Services\{AlphaVantagePipelineService, MarketingService, WeeklyStreamService};
 use App\Support\Http;
@@ -555,13 +555,12 @@ class ManagementController extends \App\Controllers\BaseController
 
     public function cronFetchAndGenerateNews() {
         try {
-            $marketing = new MyMIMarketing();
-            $result    = $marketing->promoteInvestmentNewsToMarketingScraper();
-
+            $result = $this->getMyMIMarketing()->cronFetchAndGenerateNews();
+            log_message('info', '[CRON] cronFetchAndGenerateNews completed', $result);
             return Http::jsonSuccess([
-                'status'  => 'success',
-                'message' => 'Investment news promoted to marketing scraper.',
-                'result'  => $result,
+                'status' => 'success',
+                'message' => 'MarketAux news pulled, ranked, and content generated.',
+                'result' => $result,
             ]);
         } catch (\Throwable $e) {
             log_message('error', '❌ cronFetchAndGenerateNews failed: ' . $e->getMessage());
@@ -605,9 +604,60 @@ class ManagementController extends \App\Controllers\BaseController
     }
     
     public function distributeTodaysNewsContent() {
-        $generated = $this->generateTodaysNewsSummary();
-        $result = $this->getMyMIMarketing()->sendToZapier($generated['content']); // Push content
-        return Http::jsonSuccess(['status' => 'success', 'message' => 'Content distributed via Zapier.', 'zapier_result' => $result]);
+        helper(['text']);
+
+        try {
+            $limit = (int) ($this->request->getGet('limit') ?? 5);
+            $hours = (int) ($this->request->getGet('hours') ?? 24);
+
+            $items = $this->marketingModel->getTodaysTopNewsSummaries($limit, $hours);
+
+            if (empty($items)) {
+                log_message('warning', '📭 distributeTodaysNewsContent found no news items to send.');
+                return Http::jsonError('No news items available for distribution.', 404);
+            }
+
+            $discord = new MyMIDiscord();
+            $webhook = config('Discord')->newsWebhook ?? '';
+
+            $lines = [];
+            foreach ($items as $item) {
+                $url = $item['url'] ?? $item['source_url'] ?? '';
+                $summary = word_limiter(strip_tags($item['summary'] ?? ''), 35);
+                $line = '• **' . ($item['title'] ?? 'Untitled') . '**';
+                if (!empty($summary)) {
+                    $line .= ' — ' . $summary;
+                }
+                if (!empty($url)) {
+                    $line .= " [Read More]({$url})";
+                }
+                $lines[] = $line;
+            }
+
+            $payload = [
+                'embeds' => [[
+                    'title'       => "Today's Top News",
+                    'description' => implode("\n\n", $lines),
+                ]],
+            ];
+
+            $sent = $discord->sendWebhookMessage($webhook, $payload, 'news_daily_digest');
+
+            if (!$sent) {
+                log_message('error', '❌ distributeTodaysNewsContent failed to send Discord payload.');
+                return Http::jsonError('Failed to send news to Discord.', 500);
+            }
+
+            return Http::jsonSuccess([
+                'status'  => 'success',
+                'sent'    => count($items),
+                'channel' => 'news_daily_digest',
+                'items'   => array_map(fn($i) => ['id' => $i['id'] ?? null, 'title' => $i['title'] ?? ''], $items),
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', '❌ distributeTodaysNewsContent error: ' . $e->getMessage());
+            return Http::jsonError($e->getMessage(), 500);
+        }
     }
     
     public function exportPostJson($id)
@@ -1074,11 +1124,17 @@ class ManagementController extends \App\Controllers\BaseController
     //     }
     // }
         
-    public function generateTodaysNewsSummary() {
-        $todayNews = $this->marketingModel->getTodaysNewsContent();
+    public function generateTodaysNewsSummary(): array {
+        $todayNews = $this->marketingModel->getTodaysTopNewsSummaries(10);
+
+        if (empty($todayNews)) {
+            return ['status' => 'error', 'message' => 'No news found for today.', 'content' => null];
+        }
+
         $summary = $this->getMyMIMarketing()->summarizeMultipleArticles($todayNews); // NLP Summarization
         $content = $this->getMyMIMarketing()->generateMarketingContent($summary); // social, blog, video scripts
-        return Http::jsonSuccess(['status' => 'success', 'summary' => $summary, 'content' => $content]);
+
+        return ['status' => 'success', 'summary' => $summary, 'content' => $content];
     }
     
     public function generateTodaysStory()

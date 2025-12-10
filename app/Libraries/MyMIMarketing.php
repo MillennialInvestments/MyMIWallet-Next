@@ -5909,6 +5909,92 @@ class MyMIMarketing
         // $marketingModel = new \App\Models\MarketingModel();
         return $this->marketingModel->getRecentPosts($limit);
     }
+
+    public function cronFetchAndGenerateNews(int $limit = 25): array
+    {
+        $apiKey = getenv('MARKETAUX_API_KEY') ?: ($this->APIs->marketAuxApiKey ?? null);
+
+        if (empty($apiKey)) {
+            throw new \RuntimeException('MARKETAUX_API_KEY is missing; cannot fetch news.');
+        }
+
+        $query = [
+            'api_token' => $apiKey,
+            'language'  => 'en',
+            'country'   => 'us',
+            'limit'     => $limit,
+        ];
+
+        $insertedTemp = 0;
+        $insertedFinal = 0;
+        $skipped = 0;
+
+        log_message('info', '📰 [Marketing] Starting cronFetchAndGenerateNews');
+
+        $response = $this->client->get('https://www.marketaux.com/api/v1/news/all', ['query' => $query]);
+        $payload = json_decode((string) $response->getBody(), true);
+        $articles = $payload['data'] ?? [];
+
+        foreach ($articles as $story) {
+            $hash = md5(($story['uuid'] ?? '') . ($story['url'] ?? '') . ($story['title'] ?? ''));
+
+            if ($this->marketingModel->newsExistsByHash($hash)) {
+                $skipped++;
+                continue;
+            }
+
+            $content = trim(($story['description'] ?? '') . ' ' . ($story['content'] ?? ''));
+
+            $tempId = $this->marketingModel->insertTempNews([
+                'title'       => $story['title'] ?? 'Untitled',
+                'content'     => $content,
+                'email_body'  => $story['content'] ?? $content,
+                'source_url'  => $story['url'] ?? null,
+                'category'    => 'News',
+                'type'        => 'financial_news',
+                'scraped_at'  => date('Y-m-d H:i:s'),
+                'hash'        => $hash,
+            ]);
+
+            if ($tempId) {
+                $insertedTemp++;
+            }
+
+            $cleaned = $this->sanitizeRawEmailContent($content ?: ($story['title'] ?? ''));
+            $summaryData = $this->summarizeContent($cleaned);
+
+            $summaryText = is_array($summaryData) ? ($summaryData['summary'] ?? '') : (string) $summaryData;
+            $keywords    = is_array($summaryData) ? ($summaryData['keywords'] ?? []) : [];
+
+            if (empty($summaryText)) {
+                $summaryText = $story['title'] ?? 'Untitled';
+            }
+
+            $finalInserted = $this->marketingModel->insertNewsSummary([
+                'source_id'  => $tempId,
+                'title'      => $story['title'] ?? 'Untitled',
+                'summary'    => $summaryText,
+                'keywords'   => json_encode($keywords),
+                'url'        => $story['url'] ?? null,
+                'source_url' => $story['url'] ?? null,
+                'category'   => 'News',
+                'status'     => 'finalized',
+                'hash'       => $hash,
+            ]);
+
+            if ($finalInserted) {
+                $insertedFinal++;
+            }
+        }
+
+        log_message('info', "📰 [Marketing] cronFetchAndGenerateNews complete. Temp={$insertedTemp}, Final={$insertedFinal}, Skipped={$skipped}");
+
+        return [
+            'temp_inserted'  => $insertedTemp,
+            'final_inserted' => $insertedFinal,
+            'skipped'        => $skipped,
+        ];
+    }
     
     /**
      * Pull news from MarketAux API (hourly)

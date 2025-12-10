@@ -19,6 +19,8 @@ class Discord extends BaseConfig
      * Fallback webhook when no channel-specific webhook is configured.
      */
     public string $defaultWebhook = '';
+    public string $newsWebhook    = '';
+    public string $alertsWebhook  = '';
 
     /**
      * Global minimum seconds between posts per channel if not overridden
@@ -138,6 +140,8 @@ class Discord extends BaseConfig
         $this->quietHoursStart    = (string) env('DISCORD_QUIET_HOURS_START', $this->quietHoursStart);
         $this->quietHoursEnd      = (string) env('DISCORD_QUIET_HOURS_END', $this->quietHoursEnd);
         $this->defaultWebhook     = (string) env('DISCORD_DEFAULT_WEBHOOK', $this->defaultWebhook);
+        $this->newsWebhook       = (string) env('DISCORD_WEBHOOK_NEWS', $this->newsWebhook);
+        $this->alertsWebhook     = (string) env('DISCORD_WEBHOOK_ALERTS', $this->alertsWebhook);
         $this->publicKey          = (string) env('DISCORD_PUBLIC_KEY', '');
         $this->botToken           = (string) env('DISCORD_BOT_TOKEN', '');
         $this->guildId            = (string) env('DISCORD_GUILD_ID', '');

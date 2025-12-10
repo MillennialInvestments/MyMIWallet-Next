@@ -1699,6 +1699,56 @@ class MarketingModel extends Model
         }
     }
 
+    public function newsExistsByHash(string $hash): bool
+    {
+        return (bool) $this->db->table('bf_marketing_scraper')->where('hash', $hash)->countAllResults();
+    }
+
+    public function insertTempNews(array $data): ?int
+    {
+        $data['scraped_at'] = $data['scraped_at'] ?? date('Y-m-d H:i:s');
+
+        try {
+            $this->db->table('bf_marketing_temp_scraper')->insert($data);
+            return (int) $this->db->insertID();
+        } catch (\Throwable $e) {
+            log_message('error', '❌ insertTempNews failed: ' . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function insertNewsSummary(array $data): bool
+    {
+        $data['created_on'] = $data['created_on'] ?? date('Y-m-d H:i:s');
+        $data['hash'] = $data['hash'] ?? md5(($data['title'] ?? '') . ($data['summary'] ?? ''));
+
+        if ($this->newsExistsByHash($data['hash'])) {
+            log_message('debug', '🛑 insertNewsSummary skipped duplicate hash: ' . $data['hash']);
+            return false;
+        }
+
+        try {
+            return (bool) $this->db->table('bf_marketing_scraper')->insert($data);
+        } catch (\Throwable $e) {
+            log_message('error', '❌ insertNewsSummary failed: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getTodaysTopNewsSummaries(int $limit = 5, int $hours = 24): array
+    {
+        $since = date('Y-m-d H:i:s', strtotime("-{$hours} hours"));
+
+        return $this->db->table('bf_marketing_scraper')
+            ->select('id, title, summary, url, source_url, keywords, score, created_on')
+            ->where('created_on >=', $since)
+            ->orderBy('score', 'DESC')
+            ->orderBy('created_on', 'DESC')
+            ->limit($limit)
+            ->get()
+            ->getResultArray();
+    }
+
     public function insertNewsItem(array $data): bool
     {
         $title       = trim($data['title'] ?? '');
