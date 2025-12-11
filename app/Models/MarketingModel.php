@@ -16,6 +16,7 @@ class MarketingModel extends Model
     protected $allowedFields = [
         // General fields (used in multiple sections)
         'title', 'description', 'created_on', 'modified_on', 'status', 'type', 'source_id', 'source_type', 'source', 'symbols',
+        'category', 'topics_json', 'symbols_json', 'is_macro', 'used_in_storyboard',
     
         // Fields for minimal footprint and specific queries
         'day', 'time', 'activity', 'link', 'url', 'summary', 'content', 

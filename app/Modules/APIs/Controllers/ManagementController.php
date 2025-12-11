@@ -9,6 +9,7 @@ use App\Services\{AlphaVantagePipelineService, MarketingService, WeeklyStreamSer
 use App\Support\Http;
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait; // Import the ResponseTrait
+use CodeIgniter\Exceptions\PageNotFoundException;
 
 #[\AllowDynamicProperties]
 class ManagementController extends \App\Controllers\BaseController
@@ -27,6 +28,22 @@ class ManagementController extends \App\Controllers\BaseController
     protected AlphaVantagePipelineService $alphaVantageService;
     protected WeeklyStreamWatchlistModel $weeklyWatchlistModel;
     protected WeeklyStreamService $weeklyStreamService;
+
+    public function _remap($method, ...$params)
+    {
+        if (! aiKimiEnabled()) {
+            return $this->response->setJSON([
+                'status'  => 'disabled',
+                'message' => 'Kimi AI Services are currently disabled by SiteSettings.',
+            ]);
+        }
+
+        if (! method_exists($this, $method)) {
+            throw PageNotFoundException::forPageNotFound();
+        }
+
+        return $this->$method(...$params);
+    }
 
     private function guardAdmin(): ?\CodeIgniter\HTTP\Response
     {

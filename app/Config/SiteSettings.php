@@ -14,6 +14,12 @@ if (!class_exists(\App\Config\SiteSettings::class, false)) {
         public $csrfEnabled                     = 1;
         public $date;
         public $hostTime;
+        /**
+         * Global Toggle for Kimi-K2 AI Features.
+         * When false, all Kimi-related routes, controllers,
+         * modals, buttons, jobs, and integrations must be disabled.
+         */
+        public bool $enableKimiK2               = false;
         public $time;
         public $alertOperations                 = 0;
         public $assetOperations                 = 0;
@@ -143,6 +149,11 @@ if (!class_exists(\App\Config\SiteSettings::class, false)) {
             $this->month                        = date("n");
             $this->day                          = date("d");
             $this->year                         = date("Y");
+
+            $envFlag = getenv('AI_ENABLE_KIMI_K2');
+            if ($envFlag !== false && $envFlag !== null) {
+                $this->enableKimiK2 = filter_var($envFlag, FILTER_VALIDATE_BOOL);
+            }
 
             // Load the App config
             $appConfig                          = config('App'); // Properly fetching the App configuration

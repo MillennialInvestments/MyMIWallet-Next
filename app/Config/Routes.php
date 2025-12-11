@@ -9,6 +9,7 @@ use Config\Services; // ← add this line
  * @var RouteCollection $routes
  */
 $routes = Services::routes();
+helper('ai');
 // app/Config/Routes.php
 // $routes->get('assets/(.*)', 'Assets::file/$1');
 // $routes->get('favicon.ico', 'Assets::favicon');
@@ -171,6 +172,14 @@ $routes->group('', ['namespace' => 'App\Modules\User\Controllers','filter' => 'l
     // $routes->get('/MyMI-Gold/Goals/Monthly', 'DashboardController::goals', ['as' => 'mymi-gold-monthly-goals']);
 
     // Additional secured routes here
+});
+
+
+$routes->group('Advisor', ['namespace' => 'App\\Modules\\Advisor\\Controllers'], function($routes) {
+    $routes->get('/', 'AdvisorController::index');
+    $routes->post('generateInsight', 'AdvisorController::generateAdvisorInsight');
+    $routes->post('generateStoryboard', 'AdvisorController::generateNewsStoryboard');
+    $routes->post('tradeAnalysis/(:num)', 'AdvisorController::generateTradeAnalysis/$1');
 });
 
 $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function($routes) {

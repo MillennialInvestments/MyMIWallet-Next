@@ -3,7 +3,7 @@
 namespace App\Libraries;
 
 use App\Config\{SiteSettings, SocialMedia};
-use App\Libraries\{BaseLoader, FRED, MyMIAlphaVantage, MyMICoinGecko, MyMIInvestments};
+use App\Libraries\{BaseLoader, FRED, KimiClient, MyMIAlphaVantage, MyMICoinGecko, MyMIInvestments};
 use App\Libraries\Traits\TextProcessor;
 use App\Models\{AnalyticalModel, MarketingModel, MarketingNewsletterModel, WeeklyStreamWatchlistModel};
 use App\Services\{EmailService, MarketingService, SolanaService};
@@ -57,6 +57,7 @@ class MyMIMarketing
     protected $solanaService;
     protected $siteSettings;
     protected $marketingModel;
+    protected ?KimiClient $kimiClient = null;   
     protected $analyticalModel;
     protected $socialMedia;
     protected $facebook;
@@ -94,6 +95,11 @@ class MyMIMarketing
         $this->analyticalModel = new AnalyticalModel();
         $this->emailService = service('email');
         $this->solanaService = new SolanaService();
+
+        if (aiKimiEnabled()) {
+            $this->siteSettings->useTfidf = false;
+            $this->kimiClient = service('kimiClient');
+        }
         try {
             $this->alphaVantage = new MyMIAlphaVantage();
         } catch (\Throwable $e) {
@@ -2032,6 +2038,17 @@ class MyMIMarketing
         }
 
         $cleaned = $this->sanitizeRawEmailContent($content);
+
+        if ($this->kimiClient) {
+            try {
+                $kimiSummary = $this->generateKimiSummary($cleaned);
+                if (!empty($kimiSummary)) {
+                    return $kimiSummary;
+                }
+            } catch (\Throwable $e) {
+                log_message('warning', 'MyMIMarketing::summarizeContent Kimi fallback triggered: ' . $e->getMessage());
+            }
+        }
         $cleanedLength = strlen($cleaned);
 
         if ($cleanedLength > $maxLength) {
@@ -2053,6 +2070,29 @@ class MyMIMarketing
         }
 
         return $summary;
+    }
+
+    private function generateKimiSummary(string $content): ?string
+    {
+        if (! $this->kimiClient) {
+            return null;
+        }
+
+        $messages = [
+            [
+                'role'    => 'system',
+                'content' => 'Summarize the following marketing/news content into concise markdown with bullet highlights and a CTA.',
+            ],
+            [
+                'role'    => 'user',
+                'content' => mb_substr($content, 0, 5000),
+            ],
+        ];
+
+        $response = $this->kimiClient->chat($messages, [], null, ['temperature' => 0.35]);
+        $message  = $response['choices'][0]['message']['content'] ?? null;
+
+        return is_string($message) ? $message : null;
     }
 
     public function summarizeContentByKeyword(string $keyword): array
@@ -3159,6 +3199,89 @@ class MyMIMarketing
             'category'  => 'News',
             'headline'  => $this->generateHeadline($summary),
         ];
+    }
+
+    /**
+     * Classify incoming news rows into high level categories and tags.
+     */
+    public function classifyNewsCategory(array $newsRow): array
+    {
+        $fullText = strtolower(implode(' ', [
+            $newsRow['title'] ?? '',
+            $newsRow['summary'] ?? '',
+            $newsRow['content'] ?? '',
+        ]));
+
+        $category = 'other';
+        $isMacro  = false;
+
+        $macroKeywords = [
+            'cpi', 'pce', 'inflation', 'federal reserve', 'fed', 'fomc', 'rate hike', 'rate cut', 'interest rates',
+            'jobs report', 'nonfarm payroll', 'unemployment rate', 'gdp', 'ism', 'pmi', 'consumer confidence', 'housing starts',
+        ];
+        $cryptoKeywords = ['bitcoin', 'ethereum', 'crypto', 'blockchain', 'token', 'defi', 'stablecoin'];
+        $earningsKeywords = ['earnings', 'quarterly results', 'eps', 'guidance', 'revenue', 'profit', 'outlook'];
+        $regKeywords = ['sec', 'regulation', 'lawsuit', 'fine', 'compliance', 'oversight'];
+        $sectorKeywords = ['technology sector', 'healthcare sector', 'energy sector', 'financials'];
+
+        $contains = static function (string $haystack, array $needles): bool {
+            foreach ($needles as $needle) {
+                if (strpos($haystack, $needle) !== false) {
+                    return true;
+                }
+            }
+
+            return false;
+        };
+
+        if ($contains($fullText, $macroKeywords)) {
+            $category = 'macro';
+            $isMacro  = true;
+        } elseif ($contains($fullText, $cryptoKeywords)) {
+            $category = 'crypto';
+        } elseif ($contains($fullText, $earningsKeywords)) {
+            $category = 'earnings';
+        } elseif ($contains($fullText, $regKeywords)) {
+            $category = 'regulation';
+        } elseif ($contains($fullText, $sectorKeywords)) {
+            $category = 'sector';
+        } elseif (!empty($this->extractSymbolsFromText($fullText))) {
+            $category = 'single_name';
+        }
+
+        $sentences = $this->splitIntoSentences($newsRow['summary'] ?? $newsRow['content'] ?? '');
+        $topics    = $this->extractKeywords($sentences) ?? [];
+        if (empty($topics)) {
+            $topics = $this->generateFallbackKeywords($fullText);
+        }
+
+        $symbols = $this->extractSymbolsFromText(($newsRow['title'] ?? '') . ' ' . ($newsRow['summary'] ?? ''));
+
+        return [
+            'category' => $category,
+            'is_macro' => $isMacro,
+            'topics'   => array_values(array_unique($topics)),
+            'symbols'  => array_values(array_unique($symbols)),
+        ];
+    }
+
+    /**
+     * Lightweight ticker extraction for uppercase ticker-like tokens.
+     */
+    public function extractSymbolsFromText(string $text): array
+    {
+        $symbols = [];
+        if (preg_match_all('/\b[A-Z]{2,5}(?:\.[A-Z]{1,2})?\b/', strtoupper($text), $matches)) {
+            $symbols = $matches[0] ?? [];
+        }
+
+        // Filter out common words that are not tickers
+        $stopWords = ['THE', 'AND', 'FOR', 'WITH', 'THIS', 'THAT', 'FROM', 'WILL', 'HAVE'];
+        $symbols = array_filter($symbols, static function ($symbol) use ($stopWords) {
+            return !in_array($symbol, $stopWords, true);
+        });
+
+        return array_values(array_unique($symbols));
     }
 
     public function generateHeadline($input)
@@ -4330,12 +4453,22 @@ class MyMIMarketing
         $cleanTitle = preg_replace('/[^\p{L}\p{N}\s:;\-]/u', '', $cleanTitle);
 
         $cta = $this->generateCTA($summary['summary']);
+        $classification = $this->classifyNewsCategory([
+            'title'   => $cleanTitle,
+            'summary' => $cleanSummary,
+            'content' => $record['content'] ?? '',
+        ]);
+
         $data = [
             'source_id' => $record['id'],
             'title' => trim($cleanTitle),
             'summary' => trim($cleanSummary),
             'keywords' => isset($summary['keywords']) ? implode(',', $summary['keywords']) : '',
             'cta' => $cta, // <-- ✅ ADD THIS
+            'category' => $classification['category'] ?? 'other',
+            'is_macro' => !empty($classification['is_macro']) ? 1 : 0,
+            'topics_json' => json_encode($classification['topics'] ?? []),
+            'symbols_json' => json_encode($classification['symbols'] ?? []),
             'date_created' => date('Y-m-d H:i:s'),
         ];
     
