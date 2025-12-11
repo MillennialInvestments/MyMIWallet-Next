@@ -117,6 +117,9 @@ $alertNews = $alertNews ?? [];
                                     <th>Type</th>
                                     <th>Status</th>
                                     <th>Chart</th>
+                                    <?php if (aiKimiEnabled()): ?>
+                                        <th class="text-center">AI</th>
+                                    <?php endif; ?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -161,11 +164,22 @@ $alertNews = $alertNews ?? [];
                                                        class="btn btn-xs btn-outline-primary" target="_blank" rel="noopener">
                                                         TV
                                                     </a>
+                                            <?php else: ?>
+                                                <span class="text-soft">N/A</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <?php if (aiKimiEnabled()): ?>
+                                            <td class="text-center">
+                                                <?php if (! empty($alert['id'])): ?>
+                                                    <button class="btn btn-xs btn-outline-secondary ai-trade-analysis" data-alert-id="<?= esc($alert['id'], 'attr'); ?>">
+                                                        AI Analysis
+                                                    </button>
                                                 <?php else: ?>
-                                                    <span class="text-soft">N/A</span>
+                                                    <span class="text-soft">—</span>
                                                 <?php endif; ?>
                                             </td>
-                                        </tr>
+                                        <?php endif; ?>
+                                    </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>
                                     <tr>
@@ -266,6 +280,24 @@ $alertNews = $alertNews ?? [];
     <?php endif; ?>
 </div>
 
+<?php if (aiKimiEnabled()): ?>
+<div class="modal fade" tabindex="-1" id="aiTradeAnalysisModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">AI Trade Analysis</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <em class="icon ni ni-cross"></em>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="aiTradeAnalysisBody" class="wysiwyg-content"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     if (typeof $ !== 'undefined' && $.fn.DataTable) {
@@ -274,6 +306,47 @@ document.addEventListener('DOMContentLoaded', function () {
             order: [[0, 'asc']],
         });
     }
+
+    <?php if (aiKimiEnabled()): ?>
+    const aiModalElement = document.getElementById('aiTradeAnalysisModal');
+    const aiModalBody = document.getElementById('aiTradeAnalysisBody');
+    const aiModal = (window.bootstrap && aiModalElement) ? new bootstrap.Modal(aiModalElement) : null;
+
+    document.querySelectorAll('.ai-trade-analysis').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+            const alertId = btn.getAttribute('data-alert-id');
+            if (!alertId || !aiModalBody) return;
+
+            aiModalBody.innerHTML = '<p class="text-soft">Generating analysis...</p>';
+
+            try {
+                const response = await fetch(`/Advisor/tradeAnalysis/${alertId}`, { method: 'POST' });
+                const json = await response.json();
+
+                if (json?.status === 'disabled') {
+                    aiModalBody.textContent = json.message || 'Kimi AI is disabled.';
+                } else if (json?.content) {
+                    aiModalBody.innerHTML = json.content;
+                } else if (json?.data?.choices?.[0]?.message?.content) {
+                    aiModalBody.innerHTML = json.data.choices[0].message.content;
+                } else {
+                    aiModalBody.textContent = 'No analysis available.';
+                }
+            } catch (e) {
+                aiModalBody.textContent = 'Unable to load trade analysis.';
+            }
+
+            if (aiModal) {
+                aiModal.show();
+            } else if (window.jQuery) {
+                $('#aiTradeAnalysisModal').modal('show');
+            } else if (aiModalElement) {
+                aiModalElement.classList.add('show');
+                aiModalElement.style.display = 'block';
+            }
+        });
+    });
+    <?php endif; ?>
 
     const alertLabels = <?= json_encode($chartLabels, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
     const alertPrices = <?= json_encode($chartPrices, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;

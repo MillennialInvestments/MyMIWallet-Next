@@ -9,6 +9,7 @@ use Config\Services; // ← add this line
  * @var RouteCollection $routes
  */
 $routes = Services::routes();
+helper('ai');
 // app/Config/Routes.php
 // $routes->get('assets/(.*)', 'Assets::file/$1');
 // $routes->get('favicon.ico', 'Assets::favicon');
@@ -170,6 +171,15 @@ $routes->group('', ['namespace' => 'App\Modules\User\Controllers','filter' => 'l
     // $routes->get('/MyMI-Gold/Goals/Weekly', 'DashboardController::goals', ['as' => 'mymi-gold-weekly-goals']);
     // $routes->get('/MyMI-Gold/Goals/Monthly', 'DashboardController::goals', ['as' => 'mymi-gold-monthly-goals']);
 
+    if (function_exists('aiKimiEnabled') && aiKimiEnabled()) {
+        $routes->group('Advisor', ['namespace' => 'App\\Modules\\Advisor\\Controllers'], function($routes) {
+            $routes->get('/', 'AdvisorController::index');
+            $routes->post('generateInsight', 'AdvisorController::generateAdvisorInsight');
+            $routes->post('generateStoryboard', 'AdvisorController::generateNewsStoryboard');
+            $routes->post('tradeAnalysis/(:num)', 'AdvisorController::generateTradeAnalysis/$1');
+        });
+    }
+
     // Additional secured routes here
 });
 
@@ -190,11 +200,13 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->match(['GET', 'POST'], 'Status/(:segment)', 'APIController::status');
     $routes->match(['GET', 'POST'], 'Investments/getSymbolsByTradeType/(:segment)', 'APIController::getSymbolsByTradeType/$1');
 
-    $routes->group('AI', function($routes) {
-        $routes->post('Chat', 'AIController::postChat');
-        $routes->get('Notes', 'AIController::listNotes');
-        $routes->post('LinkSettings', 'AIController::updateLinkSettings');
-    });
+    if (function_exists('aiKimiEnabled') && aiKimiEnabled()) {
+        $routes->group('AI', function($routes) {
+            $routes->post('Chat', 'AIController::postChat');
+            $routes->get('Notes', 'AIController::listNotes');
+            $routes->post('LinkSettings', 'AIController::updateLinkSettings');
+        });
+    }
 
     $routes->group('Management', ['filter' => 'cronKey'], function($routes) {
         $routes->get('Run-CRON-Tasks', 'ManagementController::Run_CRON_Tasks');

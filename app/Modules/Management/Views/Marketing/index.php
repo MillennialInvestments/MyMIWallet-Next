@@ -49,6 +49,9 @@ $cronKey = env('CRON_SHARED_KEY');
                         <button class="btn btn-outline-primary" id="marketingGenerateNewsletter">Generate Draft</button>
                         <button class="btn btn-primary" id="marketingEditDraft">Edit Draft</button>
                         <button class="btn btn-success" id="marketingMarkSent">Mark as Sent</button>
+                        <?php if (aiKimiEnabled()): ?>
+                            <button class="btn btn-info" id="marketingGenerateStoryboard">AI Storyboard</button>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="card-inner border-top" id="newsletterEditor" style="display:none;">
@@ -284,6 +287,29 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('marketingMarkSent')?.addEventListener('click', async () => {
         await saveDraft('sent');
     });
+
+    <?php if (aiKimiEnabled()): ?>
+    document.getElementById('marketingGenerateStoryboard')?.addEventListener('click', async () => {
+        try {
+            const response = await fetch('/Advisor/generateStoryboard', { method: 'POST' });
+            const json = await response.json();
+            const storyboard = json?.content || json?.data?.choices?.[0]?.message?.content || '';
+
+            if (storyboard) {
+                editor.style.display = 'block';
+                bodyInput.value = storyboard;
+                alert('Storyboard drafted. You can edit the AI output above.');
+            } else if (json?.status === 'disabled') {
+                alert(json.message || 'Kimi AI is disabled.');
+            } else {
+                alert('No storyboard content returned.');
+            }
+        } catch (e) {
+            console.error(e);
+            alert('Unable to generate storyboard right now.');
+        }
+    });
+    <?php endif; ?>
 
     document.getElementById('newsletterSave')?.addEventListener('click', async () => {
         await saveDraft('draft');

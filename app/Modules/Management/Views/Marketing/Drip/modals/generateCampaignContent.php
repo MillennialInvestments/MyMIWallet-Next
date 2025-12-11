@@ -3,10 +3,15 @@
     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 </div>
 <div class="modal-body text-center">
-    <p>Are you sure you want to generate AI content for this drip campaign?</p>
-    <form action="<?= site_url('API/Marketing/generateCampaignContent/' . $campaign['id']) ?>" method="POST">
-        <button type="submit" class="btn btn-primary">Generate Now</button>
-    </form>
+    <?php if (aiKimiEnabled()): ?>
+        <p>Are you sure you want to generate AI content for this drip campaign?</p>
+        <form action="<?= site_url('API/Marketing/generateCampaignContent/' . $campaign['id']) ?>" method="POST">
+            <button type="submit" class="btn btn-primary">Generate Now</button>
+        </form>
+    <?php else: ?>
+        <p class="text-muted">Enable Kimi AI in Site Settings to generate campaign content automatically.</p>
+        <button class="btn btn-secondary" disabled title="Enable Kimi AI in Site Settings">AI Disabled</button>
+    <?php endif; ?>
 </div>
 <script <?= $nonce['script'] ?? '' ?>>
 document.addEventListener("DOMContentLoaded", function () {

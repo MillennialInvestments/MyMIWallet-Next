@@ -3,7 +3,7 @@
 namespace App\Libraries;
 
 use App\Config\{SiteSettings, SocialMedia};
-use App\Libraries\{BaseLoader, FRED, MyMIAlphaVantage, MyMICoinGecko, MyMIInvestments};
+use App\Libraries\{BaseLoader, FRED, KimiClient, MyMIAlphaVantage, MyMICoinGecko, MyMIInvestments};
 use App\Libraries\Traits\TextProcessor;
 use App\Models\{AnalyticalModel, MarketingModel, MarketingNewsletterModel, WeeklyStreamWatchlistModel};
 use App\Services\{EmailService, MarketingService, SolanaService};
@@ -56,6 +56,7 @@ class MyMIMarketing
     protected $emailService;
     protected $solanaService;
     protected $siteSettings;
+    protected ?KimiClient $kimiClient = null;
     protected $marketingModel;
     protected $analyticalModel;
     protected $socialMedia;
@@ -94,6 +95,11 @@ class MyMIMarketing
         $this->analyticalModel = new AnalyticalModel();
         $this->emailService = service('email');
         $this->solanaService = new SolanaService();
+
+        if (aiKimiEnabled()) {
+            $this->siteSettings->useTfidf = false;
+            $this->kimiClient = service('kimiClient');
+        }
         try {
             $this->alphaVantage = new MyMIAlphaVantage();
         } catch (\Throwable $e) {
@@ -2032,6 +2038,18 @@ class MyMIMarketing
         }
 
         $cleaned = $this->sanitizeRawEmailContent($content);
+
+        if ($this->kimiClient) {
+            try {
+                $kimiSummary = $this->generateKimiSummary($cleaned);
+                if (!empty($kimiSummary)) {
+                    return $kimiSummary;
+                }
+            } catch (\Throwable $e) {
+                log_message('warning', 'MyMIMarketing::summarizeContent Kimi fallback triggered: ' . $e->getMessage());
+            }
+        }
+
         $cleanedLength = strlen($cleaned);
 
         if ($cleanedLength > $maxLength) {
@@ -2053,6 +2071,29 @@ class MyMIMarketing
         }
 
         return $summary;
+    }
+
+    private function generateKimiSummary(string $content): ?string
+    {
+        if (! $this->kimiClient) {
+            return null;
+        }
+
+        $messages = [
+            [
+                'role'    => 'system',
+                'content' => 'Summarize the following marketing/news content into concise markdown with bullet highlights and a CTA.',
+            ],
+            [
+                'role'    => 'user',
+                'content' => mb_substr($content, 0, 5000),
+            ],
+        ];
+
+        $response = $this->kimiClient->chat($messages, [], null, ['temperature' => 0.35]);
+        $message  = $response['choices'][0]['message']['content'] ?? null;
+
+        return is_string($message) ? $message : null;
     }
 
     public function summarizeContentByKeyword(string $keyword): array

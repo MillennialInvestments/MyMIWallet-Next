@@ -88,6 +88,9 @@ $aiNotesList       = $aiNotes ?? [];
                     <ul class="nk-block-tools g-3">
                         <li><a href="/Budget" class="btn btn-white btn-dim btn-outline-primary"><em class="icon ni ni-reports"></em><span>Budget Reports</span></a></li>
                         <li><a href="/Investments" class="btn btn-white btn-dim btn-outline-secondary"><em class="icon ni ni-chart-up"></em><span>Portfolio</span></a></li>
+                        <?php if (aiKimiEnabled()): ?>
+                        <li><a href="/Advisor#panel-health" class="btn btn-white btn-dim btn-outline-info"><em class="icon ni ni-bulb"></em><span>AI Financial Review</span></a></li>
+                        <?php endif; ?>
                         <li class="nk-block-tools-opt">
                             <div class="drodown">
                                 <a href="#" class="dropdown-toggle btn btn-icon btn-primary" data-bs-toggle="dropdown"><em class="icon ni ni-plus text-white"></em></a>
@@ -106,6 +109,17 @@ $aiNotesList       = $aiNotes ?? [];
         </div>
     </div>
 </div>
+
+<?php if (aiKimiEnabled()): ?>
+<ul class="nk-menu mb-4">
+    <li class="nk-menu-item">
+        <a href="/Advisor" class="nk-menu-link">
+            <span class="nk-menu-icon"><em class="icon ni ni-bulb"></em></span>
+            <span class="nk-menu-text">MyMI AI Advisor</span>
+        </a>
+    </li>
+</ul>
+<?php endif; ?>
 
 <div class="nk-block">
     <div class="row g-gs">

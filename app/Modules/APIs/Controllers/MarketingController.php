@@ -12,6 +12,7 @@ use App\Libraries\{MyMIDiscord, MyMIMarketing};
 use App\Services\MarketingService;
 use App\Models\MarketingModel;
 use App\Support\Http;
+use CodeIgniter\Exceptions\PageNotFoundException;
 
 #[\AllowDynamicProperties]
 class MarketingController extends \App\Controllers\BaseController
@@ -24,6 +25,22 @@ class MarketingController extends \App\Controllers\BaseController
 
     // Explicit property to avoid PHP 8.2 legacy property notices
     protected bool $stringAsHtml = false;
+
+    public function _remap($method, ...$params)
+    {
+        if (! aiKimiEnabled()) {
+            return $this->response->setJSON([
+                'status'  => 'disabled',
+                'message' => 'Kimi AI Services are currently disabled by SiteSettings.',
+            ]);
+        }
+
+        if (! method_exists($this, $method)) {
+            throw PageNotFoundException::forPageNotFound();
+        }
+
+        return $this->$method(...$params);
+    }
 
     public function initController(
         RequestInterface $request,
