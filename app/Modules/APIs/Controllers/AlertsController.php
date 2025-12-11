@@ -83,7 +83,57 @@ class AlertsController extends ResourceController
 //         $this->MyMIAlphaVantage = new MyMIAlphaVantage(); // replaced by BaseController getter
 //         $this->MyMIInvestments = new MyMIInvestments(); // replaced by BaseController getter
 //         $this->MyMIMarketing = new MyMIMarketing(); // replaced by BaseController getter
-//         $this->MyMISEC = new MyMISEC(); // replaced by BaseController getter 
+//         $this->MyMISEC = new MyMISEC(); // replaced by BaseController getter
+    }
+
+    public function generateAlertCommentary($id = null)
+    {
+        if (! aiKimiEnabled()) {
+            return $this->failForbidden('Kimi AI disabled.');
+        }
+
+        $alertId = $id ?? $this->request->getGet('id');
+        $alert = $this->alertsModel->find($alertId);
+        if (! $alert) {
+            return $this->failNotFound('Alert not found');
+        }
+
+        $result = $this->alertManager->generateAlertCommentaryWithKimi((array) $alert);
+        return $this->response->setJSON(['status' => 'success', 'data' => $result]);
+    }
+
+    public function generateAlertBatchCommentary()
+    {
+        if (! aiKimiEnabled()) {
+            return $this->failForbidden('Kimi AI disabled.');
+        }
+
+        $payload = $this->request->getJSON(true) ?? [];
+        $ids = $payload['ids'] ?? [];
+        $alerts = $ids ? $this->alertsModel->whereIn('id', $ids)->findAll() : [];
+
+        $responses = [];
+        foreach ($alerts as $alert) {
+            $responses[$alert['id']] = $this->alertManager->generateAlertCommentaryWithKimi((array) $alert);
+        }
+
+        return $this->response->setJSON(['status' => 'success', 'data' => $responses]);
+    }
+
+    public function generateAlertSocialCopy($id = null)
+    {
+        if (! aiKimiEnabled()) {
+            return $this->failForbidden('Kimi AI disabled.');
+        }
+
+        $alertId = $id ?? $this->request->getGet('id');
+        $alert = $this->alertsModel->find($alertId);
+        if (! $alert) {
+            return $this->failNotFound('Alert not found');
+        }
+
+        $result = $this->alertManager->generateAlertSocialCopyWithKimi((array) $alert);
+        return $this->response->setJSON(['status' => 'success', 'data' => $result]);
     }
     
     public function addTradeAlert()

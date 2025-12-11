@@ -174,6 +174,9 @@ $alertNews = $alertNews ?? [];
                                                         <button class="btn btn-xs btn-outline-secondary ai-trade-analysis" data-alert-id="<?= esc($alert['id'], 'attr'); ?>">
                                                             AI Analysis
                                                         </button>
+                                                        <button class="btn btn-xs btn-outline-primary mt-1 ai-alert-breakdown" data-alert-id="<?= esc($alert['id'], 'attr'); ?>">
+                                                            Kimi AI Breakdown
+                                                        </button>
                                                     <?php else: ?>
                                                         <span class="text-soft">—</span>
                                                     <?php endif; ?>
@@ -346,8 +349,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 aiModalElement.style.display = 'block';
             }
         });
-    });
-    <?php endif; ?>
+
+        document.querySelectorAll('.ai-alert-breakdown').forEach((btn) => {
+            btn.addEventListener('click', async () => {
+                const alertId = btn.getAttribute('data-alert-id');
+                if (!alertId || !aiModalBody) return;
+                aiModalBody.textContent = 'Requesting Kimi breakdown...';
+                const response = await fetch(`/Alerts/generateAlertCommentary/${alertId}`);
+                const json = await response.json();
+                const content = json?.data?.data?.choices?.[0]?.message?.content || json?.data?.commentary || JSON.stringify(json?.data || json);
+                aiModalBody.textContent = content;
+                aiModal?.show();
+            });
+        });
+      });
+      <?php endif; ?>
 
     const alertLabels = <?= json_encode($chartLabels, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
     const alertPrices = <?= json_encode($chartPrices, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
