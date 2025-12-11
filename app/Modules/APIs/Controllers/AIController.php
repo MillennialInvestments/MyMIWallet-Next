@@ -4,6 +4,7 @@ namespace App\Modules\APIs\Controllers;
 use App\Controllers\BaseController;
 use App\Libraries\MyMIAssistant;
 use App\Models\DiscordLinkModel;
+use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\API\ResponseTrait;
 
 class AIController extends BaseController
@@ -12,6 +13,22 @@ class AIController extends BaseController
 
     protected MyMIAssistant $assistant;
     protected DiscordLinkModel $linkModel;
+
+    public function _remap($method, ...$params)
+    {
+        if (! aiKimiEnabled()) {
+            return $this->response->setJSON([
+                'status'  => 'disabled',
+                'message' => 'Kimi AI Services are currently disabled by SiteSettings.',
+            ]);
+        }
+
+        if (! method_exists($this, $method)) {
+            throw PageNotFoundException::forPageNotFound();
+        }
+
+        return $this->$method(...$params);
+    }
 
     public function __construct()
     {

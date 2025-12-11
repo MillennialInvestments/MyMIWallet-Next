@@ -11,7 +11,7 @@ use App\Modules\APIs\Models\InvestmentsTickersModel;
 use CodeIgniter\Database\BaseConnection;
 use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
-use App\Libraries\{BaseLoader, MyMIAlphaVantage, MyMIDiscord, MyMIInvestments, ScannerRouter};
+use App\Libraries\{BaseLoader, KimiClient, MyMIAlphaVantage, MyMIDiscord, MyMIInvestments, ScannerRouter};
 use App\Libraries\AlertJobQueue;
 // use App\Libraries\{MyMICoin, MyMIGold, MyMIWallet};
 
@@ -36,6 +36,7 @@ class MyMIAlerts
     protected $userModel;
     protected $MyMIAlphaVantage;
     protected $MyMIInvestments;
+    protected ?KimiClient $kimiClient = null;
     protected AlertJobQueue $jobQueue;
     protected MyMINews $myMINews;
 
@@ -198,6 +199,10 @@ class MyMIAlerts
         $this->MyMIInvestments = $investments ?? new MyMIInvestments();
         $this->jobQueue = new AlertJobQueue();
         $this->myMINews = new MyMINews();
+
+        if (aiKimiEnabled()) {
+            $this->kimiClient = service('kimiClient');
+        }
         
         $this->cuID = $this->auth->id() ?? $this->session->get('user_id');
         $cuID = $this->cuID;
@@ -2188,6 +2193,17 @@ class MyMIAlerts
             ?? $tradeAlert['details']
             ?? '';
 
+        if ($this->kimiClient && aiKimiEnabled()) {
+            try {
+                $aiSummary = $this->generateKimiTradeCommentary($tradeAlert);
+                if (!empty($aiSummary)) {
+                    $summary = $aiSummary;
+                }
+            } catch (\Throwable $e) {
+                log_message('warning', 'MyMIAlerts::sendDiscordNotification Kimi fallback: ' . $e->getMessage());
+            }
+        }
+
         $chart = $tradeAlert['trade_chart_link']
             ?? $tradeAlert['chart_link']
             ?? $tradeAlert['tv_chart']
@@ -2207,6 +2223,29 @@ class MyMIAlerts
         $discord->dispatch('alerts.opened', $payload);
         $this->alertsModel->updateMarketingContent($tradeAlert['id'], ['notification_sent' => 1]);
         log_message('info', "✅ Discord alert queued for: {$tradeAlert['ticker']}");
+    }
+
+    private function generateKimiTradeCommentary(array $tradeAlert): ?string
+    {
+        if (! $this->kimiClient) {
+            return null;
+        }
+
+        $messages = [
+            [
+                'role'    => 'system',
+                'content' => 'Provide concise trade commentary with thesis, entry/exit logic, risk score (1-10), and macro context. Format in markdown.',
+            ],
+            [
+                'role'    => 'user',
+                'content' => json_encode($tradeAlert, JSON_PRETTY_PRINT),
+            ],
+        ];
+
+        $response = $this->kimiClient->chat($messages, [], null, ['temperature' => 0.3]);
+        $message  = $response['choices'][0]['message']['content'] ?? null;
+
+        return is_string($message) ? $message : null;
     }
     
     public function sendDiscordTradeAlert($tradeAlert, $tier) {
@@ -2517,6 +2556,42 @@ class MyMIAlerts
     public function getRecentSecFilings(string $symbol, string $exchange): array
     {
         return [];
+    }
+
+    /**
+     * Lightweight open-alert summary tailored for AI prompts.
+     *
+     * @return array<int,array<string,mixed>>
+     */
+    public function getOpenAlertsSummaryForAI(int $userId): array
+    {
+        try {
+            $statuses = ['Open', 'Opened', 'Active', 'Pending'];
+
+            $rows = $this->alertsModel
+                ->where('user_id', $userId)
+                ->whereIn('status', $statuses)
+                ->orderBy('created_at', 'DESC')
+                ->limit(25)
+                ->findAll();
+
+            return array_map(static function ($row) {
+                return [
+                    'id'          => $row['id']          ?? null,
+                    'ticker'      => $row['ticker']      ?? null,
+                    'exchange'    => $row['exchange']    ?? null,
+                    'alert_type'  => $row['alert_type']  ?? ($row['status'] ?? null),
+                    'status'      => $row['status']      ?? null,
+                    'price'       => isset($row['price']) ? (float) $row['price'] : null,
+                    'change_pct'  => isset($row['change_percent']) ? (float) $row['change_percent'] : null,
+                    'notes'       => $row['notes']       ?? null,
+                    'created_at'  => $row['created_at']  ?? null,
+                ];
+            }, $rows ?? []);
+        } catch (\Throwable $e) {
+            log_message('warning', 'getOpenAlertsSummaryForAI failed: {msg}', ['msg' => $e->getMessage()]);
+            return [];
+        }
     }
 
     public function getHeadlineNews(string $symbol, string $exchange)

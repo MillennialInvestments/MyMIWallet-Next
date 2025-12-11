@@ -2,7 +2,7 @@
 
 namespace Config;
 
-use App\Libraries\{CrudCacheInvalidator, MyMIAnalytics, MyMIInvestments};
+use App\Libraries\{CrudCacheInvalidator, KimiClient, MyMIAnalytics, MyMIInvestments};
 use CodeIgniter\Config\BaseService;
 
 /**
@@ -47,6 +47,18 @@ class Services extends BaseService
 
         return new MyMIInvestments();
     }
+
+    public static function kimiClient(bool $getShared = true): KimiClient
+    {
+        if ($getShared) {
+            /** @var KimiClient $service */
+            $service = static::getSharedInstance('kimiClient');
+            return $service;
+        }
+
+        return new KimiClient();
+    }
+    
     /*
      * public static function example($getShared = true)
      * {
