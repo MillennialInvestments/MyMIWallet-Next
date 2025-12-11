@@ -196,6 +196,94 @@ class MyMIMarketing
     }
 
     /**
+     * Generate concise summaries for scraped marketing records using Kimi-K2.
+     * Falls back to legacy summarization when the toggle is disabled.
+     *
+     * @param array<int,array<string,mixed>> $records
+     * @return array<string,mixed>
+     */
+    public function generateSummaryWithKimi(array $records): array
+    {
+        if (! aiKimiEnabled() || $this->kimiClient === null) {
+            return [
+                'status'    => aiKimiEnabled() ? 'fallback' : 'disabled',
+                'summaries' => array_map(fn($row) => $this->summarizeContent($row['summary'] ?? ($row['content'] ?? '')), $records),
+            ];
+        }
+
+        $payload = json_encode($records, JSON_PRETTY_PRINT);
+        $messages = [
+            ['role' => 'system', 'content' => 'You are MyMI Wallet\'s marketing strategist. Summarize scraped news or emails into 2-3 bullet takeaways and a headline. Return JSON with fields: title, summary, keywords (array).'],
+            ['role' => 'user', 'content' => 'Summaries needed for these records: ' . $payload],
+        ];
+
+        $response = $this->kimiClient->chat($messages, [], null, ['response_format' => ['type' => 'json_object']]);
+        return [
+            'status'  => 'ok',
+            'data'    => $response,
+            'records' => $records,
+        ];
+    }
+
+    /**
+     * Generate social-ready posts from summaries via Kimi-K2.
+     *
+     * @param array<int,array<string,mixed>> $summaries
+     * @return array<string,mixed>
+     */
+    public function generateSocialPostsWithKimi(array $summaries): array
+    {
+        if (! aiKimiEnabled() || $this->kimiClient === null) {
+            return [
+                'status' => aiKimiEnabled() ? 'fallback' : 'disabled',
+                'posts'  => array_map(fn($s) => $this->generateSocialPosts($s['summary'] ?? '', $s['keywords'] ?? []), $summaries),
+            ];
+        }
+
+        $payload = json_encode($summaries, JSON_PRETTY_PRINT);
+        $messages = [
+            ['role' => 'system', 'content' => 'Create short social posts (Twitter/X, LinkedIn, Discord) with tickers and 2 hashtags. Return JSON with keys twitter, linkedin, discord.'],
+            ['role' => 'user', 'content' => 'Summaries: ' . $payload],
+        ];
+
+        $response = $this->kimiClient->chat($messages, [], null, ['response_format' => ['type' => 'json_object']]);
+
+        return [
+            'status' => 'ok',
+            'data'   => $response,
+        ];
+    }
+
+    /**
+     * Draft email content with Kimi-K2.
+     *
+     * @param array<int,array<string,mixed>> $summaries
+     * @return array<string,mixed>
+     */
+    public function generateEmailDraftsWithKimi(array $summaries): array
+    {
+        if (! aiKimiEnabled() || $this->kimiClient === null) {
+            return [
+                'status' => aiKimiEnabled() ? 'fallback' : 'disabled',
+                'emails' => array_map(fn($s) => $this->generateMarketingContent($s['summary'] ?? ''), $summaries),
+            ];
+        }
+
+        $payload = json_encode($summaries, JSON_PRETTY_PRINT);
+        $messages = [
+            ['role' => 'system', 'content' => 'Write concise marketing email drafts (headline, preview, body, CTA link). Return JSON array of drafts.'],
+            ['role' => 'user', 'content' => 'Email drafts for: ' . $payload],
+        ];
+
+        $response = $this->kimiClient->chat($messages, [], null, ['response_format' => ['type' => 'json_object']]);
+
+        return [
+            'status' => 'ok',
+            'data'   => $response,
+        ];
+    }
+
+    /**
      * Generate ready-to-publish marketing payloads from a trade alert.
      */
     public function generateMarketingFromAlert(array $alert): array

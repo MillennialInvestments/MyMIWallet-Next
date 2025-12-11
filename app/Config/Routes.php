@@ -34,6 +34,12 @@ $routes->get('healthz', static function () {
     return service('response')->setJSON(['ok' => true, 'time' => time()]);
 });
 
+// Docs index for AI orchestration
+$routes->group('API/Docs', ['namespace' => 'App\Modules\APIs\Controllers'], static function($routes) {
+    $routes->get('index', 'DocsController::index');
+    $routes->get('view', 'DocsController::view');
+});
+
 // (Optional) temporarily enable auto-routing to confirm controller wiring
 $routes->setAutoRoute(false);
 // --- END: Default + explicit routes ---
@@ -289,6 +295,9 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->match(['GET', 'POST'], 'generateNow', 'AlertsController::generateNow');
         $routes->match(['GET', 'POST'], 'getFilteredAlerts', 'AlertsController::getFilteredAlerts');
         $routes->match(['GET', 'POST'], 'generateTradeAlertSummary', 'AlertsController::generateTradeAlertSummary');
+        $routes->get('generateAlertCommentary/(:num)', 'AlertsController::generateAlertCommentary/$1');
+        $routes->post('generateAlertBatchCommentary', 'AlertsController::generateAlertBatchCommentary');
+        $routes->get('generateAlertSocialCopy/(:num)', 'AlertsController::generateAlertSocialCopy/$1');
         $routes->match(['GET', 'POST'], 'getEmaComparison/(:segment)', 'AlertsController::getEmaComparison/1');
         $routes->match(['GET', 'POST'], 'getFullMetrics', 'AlertsController::getFullMetrics');
         $routes->match(['GET', 'POST'], 'getLatestPrices', 'AlertsController::getLatestPrices');
@@ -576,6 +585,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('resendActivationEmailsBatch', 'ManagementController::resendActivationEmailsBatch');
         $routes->get('resendActivationEmailsBatchQueued', 'ManagementController::resendActivationEmailsBatchQueued');
         $routes->get('sendTestActivationEmail', 'ManagementController::sendTestActivationEmail');
+        $routes->post('saveSuggestion', 'ManagementController::saveSuggestion');
     });
 
     // ------------------------
@@ -609,6 +619,8 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('generateContentFromScraper', 'MarketingController::generateContentFromScraper');
         $routes->get('generateContentDigestFromStored', 'MarketingController::generateContentDigestFromStored');
         $routes->get('generateDailyContentDigest', 'MarketingController::generateDailyContentDigest');
+        $routes->get('generateKimiSummaries', 'MarketingController::generateKimiSummaries');
+        $routes->get('generateKimiPosts', 'MarketingController::generateKimiPosts');
         $routes->get('GenerateFromSimilar/(:num)', 'MarketingController::generateFromSimilar/$1');
         $routes->get('generateFromSimilar', 'MarketingController::generateFromSimilar');
         $routes->get('generateLivePreview', 'MarketingController::generateLivePreview');

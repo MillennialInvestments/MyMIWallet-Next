@@ -69,8 +69,26 @@ $cronKey = env('CRON_SHARED_KEY');
                     </div>
                 </div>
             </div>
+    </div>
+    </div>
+
+        <?php if (aiKimiEnabled()): ?>
+        <div class="col-12">
+            <div class="card card-bordered mb-3">
+                <div class="card-inner d-flex justify-content-between flex-wrap align-items-center">
+                    <div>
+                        <h5 class="title mb-1">Kimi AI Boosters</h5>
+                        <p class="mb-0 text-soft">Generate AI summaries and social posts from the latest scrapes.</p>
+                    </div>
+                    <div class="btn-group" role="group" aria-label="Kimi marketing actions">
+                        <button class="btn btn-outline-primary" id="marketingKimiSummaries">Generate Kimi AI Summaries</button>
+                        <button class="btn btn-outline-success" id="marketingKimiPosts">Generate Kimi Social Posts</button>
+                    </div>
+                </div>
+                <div class="card-inner border-top" id="kimiMarketingResults" style="display:none;"></div>
+            </div>
         </div>
-        </div>
+        <?php endif; ?>
 
         <!-- 🧩 Primary Marketing Interface -->
         <div class="col-12 col-xxl-4">
@@ -308,6 +326,25 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error(e);
             alert('Unable to generate storyboard right now.');
         }
+    });
+
+    const kimiResults = document.getElementById('kimiMarketingResults');
+    const showKimiResults = (content) => {
+        if (!kimiResults) return;
+        kimiResults.style.display = 'block';
+        kimiResults.innerText = typeof content === 'string' ? content : JSON.stringify(content, null, 2);
+    };
+
+    document.getElementById('marketingKimiSummaries')?.addEventListener('click', async () => {
+        const res = await fetch('/Marketing/generateKimiSummaries');
+        const json = await res.json();
+        showKimiResults(json?.data || json);
+    });
+
+    document.getElementById('marketingKimiPosts')?.addEventListener('click', async () => {
+        const res = await fetch('/Marketing/generateKimiPosts');
+        const json = await res.json();
+        showKimiResults(json?.data || json);
     });
     <?php endif; ?>
 
