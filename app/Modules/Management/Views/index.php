@@ -71,6 +71,7 @@ $discordHealth = $discordHealth ?? ['queued' => 0, 'failed24h' => 0, 'dead7d' =>
                 </div>
             </div>
         </div>
+        <?= view('App\\Modules\\Management\\Views\\ContentEngine\\index', ['contentEngine' => $contentEngine ?? []]); ?>
         <div class="row my-3">
             <!-- Example Action Card -->
 

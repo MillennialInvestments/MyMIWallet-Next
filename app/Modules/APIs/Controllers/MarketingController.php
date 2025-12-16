@@ -54,6 +54,20 @@ class MarketingController extends \App\Controllers\BaseController
         $this->marketingService = new MarketingService();
     }
 
+    public function generateKimiSummaries()
+    {
+        $records = $this->marketingModel->getRecentTempScraperRecords(10);
+        $result  = $this->MyMIMarketing->generateSummaryWithKimi($records);
+        return $this->response->setJSON(['status' => 'success', 'data' => $result]);
+    }
+
+    public function generateKimiPosts()
+    {
+        $summaries = $this->marketingModel->getRecentSummaries(5);
+        $result = $this->MyMIMarketing->generateSocialPostsWithKimi($summaries);
+        return $this->response->setJSON(['status' => 'success', 'data' => $result]);
+    }
+
     public function approveBufferItem($id)
     {
         $record = $this->marketingModel->findFinalizedById($id);

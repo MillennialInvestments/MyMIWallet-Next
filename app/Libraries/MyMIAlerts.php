@@ -198,6 +198,9 @@ class MyMIAlerts
         $this->MyMIAlphaVantage = $alphaVantage ?? new MyMIAlphaVantage();
         $this->MyMIInvestments = $investments ?? new MyMIInvestments();
         $this->jobQueue = new AlertJobQueue();
+        if (aiKimiEnabled()) {
+            $this->kimiClient = service('kimiClient');
+        }
         $this->myMINews = new MyMINews();
 
         if (aiKimiEnabled()) {
@@ -2246,6 +2249,53 @@ class MyMIAlerts
         $message  = $response['choices'][0]['message']['content'] ?? null;
 
         return is_string($message) ? $message : null;
+    }
+
+    /**
+     * Public helper to deliver structured Kimi commentary for an alert.
+     */
+    public function generateAlertCommentaryWithKimi(array $alert): array
+    {
+        if (! aiKimiEnabled() || ! $this->kimiClient) {
+            return [
+                'status'    => 'disabled',
+                'commentary'=> $alert['analysis_summary'] ?? ($alert['trade_description'] ?? ''),
+            ];
+        }
+
+        $messages = [
+            ['role' => 'system', 'content' => 'Explain this trade alert in plain English with thesis, entry/exit, risk, and catalysts. Return JSON with commentary, risk, reward, and bullets.'],
+            ['role' => 'user', 'content' => json_encode($alert, JSON_PRETTY_PRINT)],
+        ];
+
+        $response = $this->kimiClient->chat($messages, [], null, ['response_format' => ['type' => 'json_object']]);
+        return [
+            'status'  => 'ok',
+            'data'    => $response,
+            'alert'   => $alert,
+        ];
+    }
+
+    public function generateAlertSocialCopyWithKimi(array $alert): array
+    {
+        if (! aiKimiEnabled() || ! $this->kimiClient) {
+            return [
+                'status' => 'disabled',
+                'social' => [],
+            ];
+        }
+
+        $messages = [
+            ['role' => 'system', 'content' => 'Write social-ready blurbs for this trade alert. Provide twitter, discord, and linkedin fields with hashtags and tickers. Return JSON object.'],
+            ['role' => 'user', 'content' => json_encode($alert, JSON_PRETTY_PRINT)],
+        ];
+
+        $response = $this->kimiClient->chat($messages, [], null, ['response_format' => ['type' => 'json_object']]);
+        return [
+            'status' => 'ok',
+            'data'   => $response,
+            'alert'  => $alert,
+        ];
     }
     
     public function sendDiscordTradeAlert($tradeAlert, $tier) {
