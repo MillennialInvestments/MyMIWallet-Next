@@ -3,7 +3,7 @@ namespace App\Modules\APIs\Controllers;
 
 use App\Controllers\BaseController;
 use App\Modules\APIs\Controllers\MarketingController;
-use App\Libraries\{MyMIAlerts, MyMIMarketing, MyMIDiscord};
+use App\Libraries\{MyMIAlerts, MyMIMarketing, MyMIDiscord, KimiSuggestions};
 use App\Models\{AlertsModel, ExchangeModel, MarketingModel, MarketingNewsletterModel, ReferralModel, SupportModel, UserModel, WeeklyStreamWatchlistModel};
 use App\Services\{AlphaVantagePipelineService, MarketingService, WeeklyStreamService};
 use App\Support\Http;
@@ -58,6 +58,34 @@ class ManagementController extends \App\Controllers\BaseController
         }
 
         return null;
+    }
+
+    public function saveSuggestion()
+    {
+        $authGuard = $this->guardAdmin();
+        if ($authGuard) {
+            return $authGuard;
+        }
+
+        $payload  = $this->request->getJSON(true) ?? $this->request->getPost();
+        $title    = trim($payload['title'] ?? '');
+        $body     = trim($payload['body'] ?? '');
+        $category = trim($payload['category'] ?? '');
+
+        if ($title === '' || $body === '') {
+            return $this->response->setStatusCode(422)->setJSON([
+                'status'  => 'error',
+                'message' => 'Title and body are required.',
+            ]);
+        }
+
+        $helper = new KimiSuggestions();
+        $path   = $helper->saveSuggestion($title, $body, $category ?: null);
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'path'   => $path,
+        ]);
     }
 
     public function initController(

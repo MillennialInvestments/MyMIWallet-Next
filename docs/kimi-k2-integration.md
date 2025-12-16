@@ -91,4 +91,26 @@ When enabled, AI endpoints register, Advisor routes load, and UI buttons appear 
   - **Budget drills:** ask for savings or debt payoff plans.
   - **Portfolio tilts:** request sector/asset-class rebalancing guidance.
   - **Alert hygiene:** generate stop-loss or TP adjustments for stale alerts.
+
 - Update the dashboard modal or cards to surface the new responses, always wrapping UI in the toggle check.
+
+## 11. MyMIMarketing AI Flows
+- New endpoints (toggle-aware via `_remap`):
+  - `GET /Marketing/generateKimiSummaries` → wraps `MyMIMarketing::generateSummaryWithKimi()` against recent `bf_marketing_temp_scraper` rows.
+  - `GET /Marketing/generateKimiPosts` → calls `MyMIMarketing::generateSocialPostsWithKimi()` from stored summaries.
+- UI buttons in Marketing dashboard (“Kimi AI Summaries”, “Kimi Social Posts”) appear only when `aiKimiEnabled()` is true and render JSON output in a panel.
+- `.env` toggle: `AI_ENABLE_KIMI_K2=true` is required; without it, methods fall back to legacy summarizers.
+
+## 12. Alerts AI Commentary
+- Endpoints:
+  - `GET /Alerts/generateAlertCommentary/{id}` → `MyMIAlerts::generateAlertCommentaryWithKimi()` returns thesis/risk JSON.
+  - `POST /Alerts/generateAlertBatchCommentary` with `{ "ids": [1,2] }` batches commentary.
+  - `GET /Alerts/generateAlertSocialCopy/{id}` → short-form social text.
+- The Alerts dashboard adds a “Kimi AI Breakdown” button per alert row (modal) when Kimi is enabled.
+
+## 13. Using /docs as Kimi’s Roadmap
+- Library `App\Libraries\DocsIndex` scans `/docs` for `.md` files and extracts title/snippet.
+- API endpoints:
+  - `GET /API/Docs/index` → list of docs with metadata.
+  - `GET /API/Docs/view?path=relative/path.md` → returns raw markdown for orchestration tools.
+- Place AI-facing suggestions in `/docs/Kimi/suggestions/` (see `docs/Kimi/README.md`).

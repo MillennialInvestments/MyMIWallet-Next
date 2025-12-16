@@ -8,7 +8,7 @@ use Myth\Auth\Authorization\GroupModel;
 use App\Config\{Auth, SiteSettings, SocialMedia}; 
 use App\Controllers\UserController;
 use App\Libraries\{MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIUser, MyMIWallet, MyMIWallets};
-use App\Models\{AccountsModel, BudgetModel, MarketingNewsletterModel, UserModel, WalletModel, WeeklyStreamWatchlistModel};
+use App\Models\{AccountsModel, BudgetModel, ContentIdeaModel, ContentPostModel, ContentScannerIngestModel, MarketingNewsletterModel, UserModel, WalletModel, WeeklyStreamWatchlistModel};
 use App\Services\{AccountService, BudgetService, DashboardService, GoalTrackingService, MarketingService, SolanaService, UserService, WalletService, WeeklyStreamService};
 // use App\Modules\User\Libraries\{DashboardLibrary}; 
 use DateTime;
@@ -152,6 +152,7 @@ class ManagementController extends UserController
             'symbol_count'       => $symbolCount,
             'newsletter_status'  => $newsletter['status'] ?? 'not generated',
         ];
+        $this->data['contentEngine'] = $this->buildContentEngineSummary();
         return $this->renderTheme('App\Modules\Management\Views\index', $this->data);
     }
 
@@ -183,6 +184,39 @@ class ManagementController extends UserController
         }
         $this->commonData(); // Ensure this is correctly populating $this->data
         return $this->renderTheme('App\Modules\User\Views\Budget\Account_Overview', $this->data);
+    }
+
+    protected function buildContentEngineSummary(): array
+    {
+        $ingestModel = model(ContentScannerIngestModel::class);
+        $ideaModel = model(ContentIdeaModel::class);
+        $postModel = model(ContentPostModel::class);
+
+        $ingests = $ingestModel->orderBy('quote_ts', 'DESC')->findAll(5);
+        $summary = [];
+        foreach ($ingests as $ingest) {
+            $tiers = [];
+            foreach (['tier1', 'tier2', 'tier3', 'avoid'] as $tier) {
+                $tiers[$tier] = $ideaModel->where('ingest_id', $ingest['id'])->where('tier', $tier)->countAllResults();
+            }
+
+            $topIdea = $ideaModel->where('ingest_id', $ingest['id'])->orderBy('score_total', 'DESC')->first();
+            $previewPost = $topIdea ? $postModel->where('idea_id', $topIdea['id'])->first() : null;
+
+            $summary[] = [
+                'ingest' => $ingest,
+                'tiers' => $tiers,
+                'topIdea' => $topIdea,
+                'preview_post_id' => $previewPost['id'] ?? null,
+            ];
+        }
+
+        $latestId = ! empty($ingests) ? $ingests[0]['id'] : null;
+
+        return [
+            'ingests' => $summary,
+            'latest_ingest_id' => $latestId,
+        ];
     }
 
     public function details($accountID)
