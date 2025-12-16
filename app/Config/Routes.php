@@ -205,6 +205,17 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->post('LinkSettings', 'AIController::updateLinkSettings');
     });
 
+    $routes->group('ContentEngine', function($routes) {
+        $routes->post('ingestScanner', 'ContentEngineController::ingestScanner');
+        $routes->post('processIngest/(:num)', 'ContentEngineController::processIngest/$1');
+        $routes->get('topIdeas', 'ContentEngineController::topIdeas');
+        $routes->get('posts', 'ContentEngineController::posts');
+        $routes->get('posts/(:num)', 'ContentEngineController::posts/$1');
+        $routes->post('approvePost/(:num)', 'ContentEngineController::approvePost/$1');
+        $routes->post('sendPost/(:num)', 'ContentEngineController::sendPost/$1');
+        $routes->post('runDaily', 'ContentEngineController::runDaily');
+    });
+
     $routes->group('Management', ['filter' => 'cronKey'], function($routes) {
         $routes->get('Run-CRON-Tasks', 'ManagementController::Run_CRON_Tasks');
         $routes->get('ajaxGetActiveUsers', 'ManagementController::ajaxGetActiveUsers');

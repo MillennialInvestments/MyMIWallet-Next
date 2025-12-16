@@ -1,0 +1,71 @@
+{
+  "info": {
+    "name": "Content Engine",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Ingest Scanner",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "X-MYMI-TOKEN", "value": "{{mymi_token}}", "disabled": true}
+        ],
+        "url": "{{base_url}}/API/ContentEngine/ingestScanner",
+        "body": {"mode": "raw", "raw": "{{scanner_payload}}"}
+      }
+    },
+    {
+      "name": "Process Ingest",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/API/ContentEngine/processIngest/{{ingest_id}}"
+      }
+    },
+    {
+      "name": "Top Ideas",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/API/ContentEngine/topIdeas?ingest_id={{ingest_id}}&tier=tier1&limit=10"
+      }
+    },
+    {
+      "name": "Posts by Idea",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/API/ContentEngine/posts?idea_id={{idea_id}}"
+      }
+    },
+    {
+      "name": "Approve Post",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/API/ContentEngine/approvePost/{{post_id}}"
+      }
+    },
+    {
+      "name": "Send Post",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/API/ContentEngine/sendPost/{{post_id}}"
+      }
+    },
+    {
+      "name": "Run Daily",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/API/ContentEngine/runDaily",
+        "header": [{"key": "X-MYMI-TOKEN", "value": "{{mymi_token}}", "disabled": true}]
+      }
+    }
+  ],
+  "variable": [
+    {"key": "base_url", "value": "https://localhost"},
+    {"key": "mymi_token", "value": ""},
+    {"key": "ingest_id", "value": "1"},
+    {"key": "idea_id", "value": "1"},
+    {"key": "post_id", "value": "1"},
+    {"key": "scanner_payload", "value": "{\n  \"quote_ts\": \"2025-12-12T16:28:51-06:00\",\n  \"scan_name\": \"Daily Top Gainers - >+5% %Change\",\n  \"rows\": [{\n    \"symbol\": \"TLRY\",\n    \"mark\": 12.56,\n    \"mark_pct_change\": 48.99,\n    \"pct_chng_5d\": 65.31,\n    \"market_cap_m\": 1409,\n    \"volume\": 81089096,\n    \"dollar_vol_m\": 919.96,\n    \"abvvol\": 867.14,\n    \"vol_365\": 5.31,\n    \"high_52w\": 23.2,\n    \"low_52w\": 3.507,\n    \"pct_1mo_chg\": -1.22\n  }]\n}"}
+  ]
+}
