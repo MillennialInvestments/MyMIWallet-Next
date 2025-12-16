@@ -3,6 +3,7 @@
 namespace Config;
 
 use App\Libraries\{CrudCacheInvalidator, KimiClient, MyMIAnalytics, MyMIInvestments};
+use App\Services\AuthAuditService;
 use CodeIgniter\Config\BaseService;
 
 /**
@@ -57,6 +58,17 @@ class Services extends BaseService
         }
 
         return new KimiClient();
+    }
+
+    public static function authAuditService(bool $getShared = true): AuthAuditService
+    {
+        if ($getShared) {
+            /** @var AuthAuditService $service */
+            $service = static::getSharedInstance('authAuditService');
+            return $service;
+        }
+
+        return new AuthAuditService();
     }
     
     /*
