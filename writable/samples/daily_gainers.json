@@ -1,0 +1,39 @@
+{
+  "scan_name": "Daily Top Gainers",
+  "quote_ts": "2024-05-20 15:45:00",
+  "rows": [
+    {
+      "Symbol": "AAPL",
+      "Mark %Change": 2.34,
+      "$ Vol": 1450.7,
+      "Market Cap": 250000,
+      "AbvVol": 120,
+      "%Chng 5 D": 4.5,
+      "52High": 195.12,
+      "52Low": 124.45,
+      "pct_1_Mo_Chg": 6.7
+    },
+    {
+      "Ticker": "TSLA",
+      "Mark%Change": 5.12,
+      "Dollar Vol": 1890.3,
+      "Market Cap (M)": 700000,
+      "ABVVol": 210,
+      "5D %Change": 8.4,
+      "52w Low": 152.11,
+      "52w High": 284.22,
+      "pct_1_Mo_Chng": 12.4
+    },
+    {
+      "symbol": "GME",
+      "% Change": 18.4,
+      "$Vol": 320.4,
+      "MarketCap": 14000,
+      "ABV": 980,
+      "pct_chng_5d": 35.1,
+      "52Low": 12.1,
+      "52High": 64.3,
+      "pct_1mo_chg": 44.8
+    }
+  ]
+}

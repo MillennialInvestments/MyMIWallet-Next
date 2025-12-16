@@ -38,7 +38,7 @@ class ContentEngineController extends BaseController
         $this->ingestService = new ScannerIngestService($this->config);
         $this->scoringService = new ScannerScoringService($this->config);
         $this->draftService = new PostDraftService($this->config);
-        $this->distributionService = new DistributionService();
+        $this->distributionService = new DistributionService($this->config);
         $this->ideaModel = model(ContentIdeaModel::class);
         $this->postModel = model(ContentPostModel::class);
         $this->ingestModel = model(ContentScannerIngestModel::class);
@@ -72,7 +72,8 @@ class ContentEngineController extends BaseController
         }
 
         try {
-            $ideas = $this->scoringService->scoreIngest($ingestId);
+            $force = (bool) ($this->request->getGet('force') ?? $this->request->getPost('force'));
+            $ideas = $this->scoringService->scoreIngest($ingestId, $force);
             $drafts = $this->draftService->generateDrafts($ingestId, $ideas);
             $summary = $this->summarizeIdeas($ideas);
 
@@ -145,7 +146,7 @@ class ContentEngineController extends BaseController
         }
 
         $result = $this->distributionService->send($postId);
-        if (($result['status'] ?? '') === 'sent') {
+        if (($result['status'] ?? '') === 'sent' || ($result['status'] ?? '') === 'skipped') {
             return $this->respond($result);
         }
 
