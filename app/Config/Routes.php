@@ -194,14 +194,12 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->get('Ops/OPcacheReset', 'OpsController::opcacheReset'); // /API/Ops/OPcacheReset
     $routes->match(['GET', 'POST'], '/', 'APIController::index');
     $routes->match(['GET', 'POST'], 'Status', 'APIController::status');
-    $routes->get('Health', 'HealthController::index');              // /API/Health
     $routes->post('Alerts/backfillEmailAlerts', 'AlertsController::backfillEmailAlerts');
     $routes->get('cronFetchAndGenerateNews', 'ManagementController::cronFetchAndGenerateNews');
     $routes->post('Management/backfillMarketingEmails', 'ManagementController::backfillMarketingEmails');
 
     // Public Discord help/onboarding endpoints
     $routes->post('Discord/completeOnboardingStep', 'DiscordController::completeOnboardingStep');
-    $routes->get('Ops/OPcacheReset', 'OpsController::opcacheReset'); // /API/Ops/OPcacheReset
     $routes->match(['GET', 'POST'], 'Status/(:segment)', 'APIController::status');
     $routes->match(['GET', 'POST'], 'Investments/getSymbolsByTradeType/(:segment)', 'APIController::getSymbolsByTradeType/$1');
 
@@ -290,14 +288,11 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->match(['GET', 'POST'], 'forceFetchEmails', 'AlertsController::forceFetchEmails');
         $routes->match(['GET', 'POST'], 'forceFetchTickers', 'AlertsController::forceFetchTickers');
         $routes->match(['GET', 'POST'], 'generateMarketingForAlert/(:num)', 'AlertsController::generateMarketingForAlert/$1');
-        $routes->post('API/Alerts/generateAdvisorMediaFromAlert/(:num)', 'AlertsController::generateAdvisorMediaFromAlert/$1');
-        $routes->post('API/Alerts/generateAdvisorMediaFromAlert', 'AlertsController::generateAdvisorMediaFromAlert');
+        $routes->post('Alerts/generateAdvisorMediaFromAlert/(:num)', 'AlertsController::generateAdvisorMediaFromAlert/$1');
+        $routes->post('Alerts/generateAdvisorMediaFromAlert', 'AlertsController::generateAdvisorMediaFromAlert');
         $routes->match(['GET', 'POST'], 'generateNow', 'AlertsController::generateNow');
-        $routes->match(['GET', 'POST'], 'getFilteredAlerts', 'AlertsController::getFilteredAlerts');
         $routes->match(['GET', 'POST'], 'generateTradeAlertSummary', 'AlertsController::generateTradeAlertSummary');
-        $routes->match(['GET', 'POST'], 'getEmaComparison/(:segment)', 'AlertsController::getEmaComparison/1');
-        $routes->get('generateAlertCommentary/(:num)', 'AlertsController::generateAlertCommentary/$1');
-        $routes->post('generateAlertBatchCommentary', 'AlertsController::generateAlertBatchCommentary');
+        $routes->match(['GET', 'POST'], 'getEmaComparison/(:segment)', 'AlertsController::getEmaComparison/$1');
         $routes->get('generateAlertSocialCopy/(:num)', 'AlertsController::generateAlertSocialCopy/$1');
         $routes->match(['GET', 'POST'], 'getFullMetrics', 'AlertsController::getFullMetrics');
         $routes->match(['GET', 'POST'], 'getLatestPrices', 'AlertsController::getLatestPrices');
@@ -316,7 +311,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->match(['GET', 'POST'], 'updateBatchPrices', 'AlertsController::updateBatchPrices');
         $routes->match(['GET', 'POST'], 'updateChartOverride', 'AlertsController::updateChartOverride');
         $routes->match(['GET', 'POST'], 'updateExchange', 'AlertsController::updateExchange');
-        $routes->match(['GET', 'POST'], 'updateStatus/(:num)/(:any)', 'AlertsController::updateStatus/$1/$2s');
+        $routes->match(['GET', 'POST'], 'updateStatus/(:num)/(:any)', 'AlertsController::updateStatus/$1/$2');
         $routes->match(['GET', 'POST'], 'updateTradeAlerts', 'AlertsController::updateTradeAlerts');
 
         // Trade Alert Creation & Management
@@ -391,20 +386,6 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('fetchPlaidInvestments', 'BrokerController::fetchPlaidInvestments');
         $routes->get('fetchPlaidHoldings/(:segment)', 'BrokerController::fetchPlaidHoldings/$1');
         $routes->get('fetchPlaidHoldings', 'BrokerController::fetchPlaidHoldings');
-        $routes->get('fetchPlaidLiabilities/(:segment)', 'BrokerController::fetchPlaidLiabilities/$1');
-        $routes->get('fetchPlaidLiabilities', 'BrokerController::fetchPlaidLiabilities');
-        $routes->get('fetchPlaidTransactions/(:segment)', 'BrokerController::fetchPlaidTransactions/$1');
-        $routes->get('fetchPlaidTransactions', 'BrokerController::fetchPlaidTransactions');
-        $routes->get('fetchPlaidBalances/(:segment)', 'BrokerController::fetchPlaidBalances/$1');
-        $routes->get('fetchPlaidBalances', 'BrokerController::fetchPlaidBalances');
-        $routes->get('fetchPlaidIncome/(:segment)', 'BrokerController::fetchPlaidIncome/$1');
-        $routes->get('fetchPlaidIncome', 'BrokerController::fetchPlaidIncome');
-        $routes->get('fetchPlaidIdentity/(:segment)', 'BrokerController::fetchPlaidIdentity/$1');
-        $routes->get('fetchPlaidIdentity', 'BrokerController::fetchPlaidIdentity');
-        $routes->get('fetchPlaidInvestments/(:segment)', 'BrokerController::fetchPlaidInvestments/$1');
-        $routes->get('fetchPlaidInvestments', 'BrokerController::fetchPlaidInvestments');
-        $routes->get('fetchPlaidHoldings/(:segment)', 'BrokerController::fetchPlaidHoldings/$1');
-        $routes->get('fetchPlaidHoldings', 'BrokerController::fetchPlaidHoldings');
         $routes->get('fetchRobinhoodAccounts', 'BudgetController::fetchRobinhoodAccounts');
         $routes->get('fetchRobinhoodAccountDetails/(:segment)', 'BudgetController::fetchRobinhoodAccountDetails/$1');
         $routes->get('fetchRobinhoodPositions/(:segment)', 'BudgetController::fetchRobinhoodPositions/$1');
@@ -441,7 +422,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('fetchRobinhoodCryptoPortfolio', 'BudgetController::fetchRobinhoodCryptoPortfolio');
         $routes->get('fetchRobinhoodCryptoOrders/(:segment)', 'BudgetController::fetchRobinhoodCryptoOrders/$1');
         $routes->get('fetchRobinhoodCryptoOrders', 'BudgetController::fetchRobinhoodCryptoOrders');
-        $routes->get('fetchRobinhoodCrypto  OrderDetails/(:segment)', 'BudgetController::fetchRobinhoodCryptoOrderDetails/$1');
+        $routes->get('fetchRobinhoodCryptoOrderDetails/(:segment)', 'BudgetController::fetchRobinhoodCryptoOrderDetails/$1');
         $routes->get('fetchRobinhoodCryptoOrderDetails', 'BudgetController::fetchRobinhoodCryptoOrderDetails');
         $routes->get('fetchRobinhoodCryptoTransactions/(:segment)', 'BudgetController::fetchRobinhoodCryptoTransactions/$1');
         $routes->get('fetchRobinhoodCryptoTransactions', 'BudgetController::fetchRobinhoodCryptoTransactions');
@@ -568,7 +549,6 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('getInvestmentData/(:segment)', 'InvestmentsController::getInvestmentData/$1');
         $routes->get('getSymbolsByTradeType/(:any)', 'API::getSymbolsByTradeType/$1'); // Fetch Symbols by Trade Type (Stocks, Cryptos, etc.)
         $routes->get('GetUserWatchlist/(:any)', 'InvestmentsController::getUserWatchlist/$1');
-        $routes->get('GetUserWatchlist/(:any)', 'InvestmentsController::getUserWatchlist/$1');
         $routes->get('refreshActiveTradesPrices/(:any)', 'InvestmentsController::refreshActiveTradesPrices/$1');
         $routes->get('getSymbolsByTradeType/(:segment)', 'InvestmentsController::getSymbolsByTradeType/$1');
         $routes->get('getInvestmentData/(:segment)', 'InvestmentsController::getInvestmentData/$1');
@@ -644,7 +624,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('generateThreadFromSummary/(:num)', 'MarketingController::generateThreadFromSummary/$1');
         $routes->get('getContentPerformanceAnalytics', 'MarketingController::getContentPerformanceAnalytics');
         $routes->get('getGeneratedPostsPaginated', 'MarketingController::getGeneratedPostsPaginated');
-        $routes->get('getStoryboardPackage/(:num)', 'MarketingController::getStoryboardPackage/(:num)');
+        $routes->get('getStoryboardPackage/(:num)', 'MarketingController::getStoryboardPackage/$1');
         $routes->get('getTopGeneratedPosts', 'MarketingController::getTopGeneratedPosts');
         $routes->get('getTopKeywordChart/(:num)', 'MarketingController::getTopKeywordChart/$1');
         $routes->get('groupSimilarSummariesByCosine', 'MarketingController::groupSimilarSummariesByCosine');
@@ -783,8 +763,8 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
 
     $routes->group('Support', function($routes) {
         // app/Config/Routes.php (inside your existing User or API group)
-        $routes->get('Support/kb', 'SupportController::kb');
-        $routes->get('Support/kb/(:segment)', 'SupportController::kbArticle/$1');
+        $routes->get('kb', 'SupportController::kb');
+        $routes->get('kb/(:segment)', 'SupportController::kbArticle/$1');
     });
 
     $routes->group('Wallets', function($routes) {
@@ -833,15 +813,6 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
 // $routes->group('Alerts', function ($routes) {
 //     $routes->get('fetchMarketAuxNews/(:segment)', 'AlertsController::fetchMarketAuxNews/$1');
 // });
-
-// Temporary health probe for audit/bisect (no auth wrappers)
-$routes->get('health', static function() {
-    return service('response')->setJSON([
-        'ok'  => true,
-        'app' => 'MyMI Wallet',
-        'ts'  => date('c'),
-    ]);
-});
 
 $routes->group('Blog', ['namespace' => 'App\Modules\Blog\Controllers'],  function($routes) {
     $routes->get('/', 'BlogController::index'); // Landing Page
