@@ -35,7 +35,7 @@ class PostDraftService
 
         $created = [];
         foreach ($ideas as $idea) {
-            $platforms = $idea['platforms'] ?? [];
+            $platforms = $idea['platforms'] ?? ($this->config->recommendedPlatforms[$idea['tier']] ?? []);
             $row = $rowsBySymbol[$idea['symbol']] ?? [];
             $payload = $this->buildTemplateData($idea, $row);
 
@@ -77,6 +77,8 @@ class PostDraftService
 
         $path = APPPATH . 'Libraries/ContentEngine/templates/' . $templateFile;
         if (! is_file($path)) {
+            log_message('warning', 'ContentEngine template missing for ' . $platform);
+            return null;
             throw new RuntimeException('Template missing for ' . $platform);
         }
 
