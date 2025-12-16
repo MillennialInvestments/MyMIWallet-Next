@@ -1,6 +1,10 @@
 /vendor/
-/writable/
+/writable/*
 /public/writable/
+# Allow checked-in smoke sample
+!/writable/samples/
+!/writable/samples/*
+!/writable/samples/daily_gainers.json
 /public/uploads/
 /node_modules/
 /**/*.orig.php

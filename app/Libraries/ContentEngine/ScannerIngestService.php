@@ -34,7 +34,7 @@ class ScannerIngestService
         $this->guardPayloadSize($payload);
         $this->validatePayload($payload);
 
-        $hash = hash('sha256', json_encode($payload));
+        $hash = $this->computePayloadHash($payload);
         if ($existing = $this->ingestModel->where('payload_hash', $hash)->first()) {
             return [
                 'ingest_id' => (int) $existing['id'],
@@ -101,6 +101,10 @@ class ScannerIngestService
             throw new RuntimeException('Invalid payload: rows array is required.');
         }
 
+        if (count($payload['rows']) > $this->config->maxRows) {
+            throw new RuntimeException('Too many rows in payload.');
+        }
+
         if (empty($payload['scan_name'])) {
             throw new RuntimeException('Invalid payload: scan_name is required.');
         }
@@ -118,10 +122,16 @@ class ScannerIngestService
     {
         $normalized = [
             'raw_json' => json_encode($row),
+            'symbol'   => null,
         ];
 
+        foreach ($this->config->numericFields as $field) {
+            $normalized[$field] = null;
+        }
+
         foreach ($row as $key => $value) {
-            $mappedKey = $this->config->aliasMap[$key] ?? null;
+            $lookup = trim((string) $key);
+            $mappedKey = $this->config->aliasMap[$lookup] ?? null;
             if (! $mappedKey) {
                 continue;
             }
@@ -144,6 +154,27 @@ class ScannerIngestService
             $normalized['symbol'] = strtoupper((string) $row['symbol']);
         }
 
+        if (empty($normalized['symbol'])) {
+            throw new RuntimeException('Row missing symbol after normalization.');
+        }
+
         return $normalized;
+    }
+
+    protected function computePayloadHash(array $payload): string
+    {
+        $normalized = $this->deepKsort($payload);
+        return hash('sha256', json_encode($normalized));
+    }
+
+    protected function deepKsort(array $data): array
+    {
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $data[$key] = $this->deepKsort($value);
+            }
+        }
+        ksort($data);
+        return $data;
     }
 }
