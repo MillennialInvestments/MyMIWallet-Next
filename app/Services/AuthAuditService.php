@@ -153,23 +153,79 @@ class AuthAuditService
 
     private function isThrottled(string $email, string $ip): bool
     {
-        $cache     = service('cache');
-        $cacheKeys = [
-            'auth_audit:ip:' . $ip,
-            'auth_audit:email:' . ($email !== '' ? hash('sha256', $email) : 'empty'),
-        ];
-
-        foreach ($cacheKeys as $key) {
-            $count = (int) ($cache->get($key) ?? 0);
-            $count++;
-            $cache->save($key, $count, self::THROTTLE_WINDOW);
-
-            if ($count > self::MAX_ALERTS_PER_WINDOW) {
-                return true;
+        try {
+            $cache = service('cache');
+            if ($cache === null) {
+                return false;
             }
+
+            $cacheKeys = [
+                $this->cacheKey('ip', $ip),
+                $this->cacheKey('email', $email),
+                $this->cacheKey('pair', $email . '|' . $ip),
+            ];
+
+            foreach ($cacheKeys as $key) {
+                $count = (int) ($cache->get($key) ?? 0);
+                $count++;
+                $cache->save($key, $count, self::THROTTLE_WINDOW);
+
+                if ($count > self::MAX_ALERTS_PER_WINDOW) {
+                    return true;
+                }
+            }
+        } catch (Throwable $e) {
+            log_message('error', 'AuthAuditService cache failure: {msg}', ['msg' => $e->getMessage()]);
+            return false;
         }
 
         return false;
+    }
+
+    private function cacheKey(string $type, string $value): string
+    {
+        $normalized = strtolower(trim($value));
+        $hash       = hash('sha256', $normalized);
+
+        return "auth_audit_{$type}_{$hash}";
+    }
+
+    public function debugCacheRoundTrip(string $email, string $ip): array
+    {
+        $cache = service('cache');
+        $keys  = [
+            'ip'    => $this->cacheKey('ip', $ip),
+            'email' => $this->cacheKey('email', $email),
+            'pair'  => $this->cacheKey('pair', $email . '|' . $ip),
+        ];
+
+        $result = [
+            'keys'            => $keys,
+            'cache_available' => $cache !== null,
+            'counts'          => [],
+        ];
+
+        if ($cache === null) {
+            return $result;
+        }
+
+        try {
+            foreach ($keys as $label => $key) {
+                $before = (int) ($cache->get($key) ?? 0);
+                $cache->save($key, $before + 1, 60);
+                $after = (int) ($cache->get($key) ?? 0);
+
+                $result['counts'][$label] = [
+                    'before' => $before,
+                    'after'  => $after,
+                ];
+            }
+        } catch (Throwable $e) {
+            $result['error'] = $e->getMessage();
+            log_message('error', 'AuthAuditService cache self-test failed: {msg}', ['msg' => $e->getMessage()]);
+        }
+
+        return $result;
     }
 
     private function sendSupportEmail(string $subjectPrefix, string $email, string $status, array $meta): void

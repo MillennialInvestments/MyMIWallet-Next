@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Services\AuthAuditService;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class Debug extends BaseController
@@ -59,5 +60,27 @@ class Debug extends BaseController
             'session_id'=> session_id(),
             'headers'   => function_exists('getallheaders') ? getallheaders() : [],
         ]);
+    }
+
+    public function authAuditCacheSelfTest(): ResponseInterface
+    {
+        if (ENVIRONMENT === 'production') {
+            return $this->response->setStatusCode(404);
+        }
+
+        $email        = (string) $this->request->getGet('email');
+        $ip           = (string) ($this->request->getGet('ip') ?? $this->request->getIPAddress());
+        $auditService = service('authAuditService');
+
+        if (! $auditService instanceof AuthAuditService) {
+            return $this->response->setJSON([
+                'cache_available' => false,
+                'error'           => 'AuthAuditService unavailable',
+            ]);
+        }
+
+        $result = $auditService->debugCacheRoundTrip($email, $ip);
+
+        return $this->response->setJSON($result);
     }
 }

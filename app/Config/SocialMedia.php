@@ -16,3 +16,4 @@ class SocialMedia extends BaseConfig
     public string $youtube              = 'https://www.youtube.com/@MyMIWallet';
     public string $promotional_yt_video = 'https://www.youtube.com/embed/AMCS5kwGgpA';
 }
+
