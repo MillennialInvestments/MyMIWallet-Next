@@ -1364,7 +1364,7 @@ class ManagementController extends \App\Controllers\BaseController
         $users = $this->userModel->getPendingActivationUsers(); // Then filter those with activate_hash
     
         $activator = service('activator');
-        $emailer = \Config\Services::email();
+        // $emailer = \Config\Services::email();
     
         $successCount = 0;
         $failureCount = 0;
@@ -1435,39 +1435,27 @@ class ManagementController extends \App\Controllers\BaseController
     public function processQueuedEmails()
     {
         $queue = $this->marketingModel->getQueuedEmails(25); // Limit batch size
-        $emailService = \Config\Services::email();
-    
-        $successCount = 0;
-        $failCount = 0;
+        $mailService = service('mailService');
     
         foreach ($queue as $email) {
             try {
-                if ($email['retry_count'] >= 3) {
-                    // Mark as failed if retries exceeded
-                    $this->marketingModel->markEmailAsFailed($email['id']);
-                    continue;
-                }
-    
-                $emailService->clear();
-                $emailService->setTo($email['email']);
-                $emailService->setSubject($email['subject']);
-                $emailService->setMessage($email['content']);
-                $emailService->setMailType('html');
-    
-                if ($emailService->send()) {
+                $result = $mailService->send(
+                    $email['email'],
+                    $email['subject'],
+                    $email['content'],
+                    [
+                        'module' => 'marketing',
+                        'queue'  => true,
+                    ]
+                );
+
+                if ($result['ok'] ?? false) {
                     $this->marketingModel->markEmailAsSent($email['id']);
                 } else {
-                    $error = $emailService->printDebugger(['headers']);
+                    $error = $result['error'] ?? 'unknown error';
                     $this->marketingModel->incrementRetry($email['id']);
-                
-                    // 🧼 Log bounce if invalid address suspected
-                    if (strpos($error, '550') !== false || strpos($error, 'User unknown') !== false) {
-                        $this->marketingModel->markEmailAsBounced($email['email'], $error);
-                    }
-                
-                    log_message('error', "[EmailQueue] ❌ Failed to send: {$error}");
+                    log_message('error', "[EmailQueue] ❌ Failed to queue: {$error}");
                 }
-                
             } catch (\Throwable $e) {
                 $this->marketingModel->incrementRetry($email['id']);
                 log_message('error', "❌ Email ID {$email['id']} failed: ".$e->getMessage());
@@ -1547,7 +1535,7 @@ class ManagementController extends \App\Controllers\BaseController
             return Http::jsonSuccess(['status' => 'complete', 'message' => 'No users pending activation email resend.']);
         }
     
-        $emailService = \Config\Services::email();
+        // $emailService = \Config\Services::email();
         $siteSettings = config('SiteSettings');
         $socialMedia  = config('SocialMedia');
     
@@ -1565,20 +1553,24 @@ class ManagementController extends \App\Controllers\BaseController
                     'socialMedia'     => $socialMedia,
                 ]);
     
-                $emailService->clear(); // reset headers
-                $emailService->setTo($userEmail);
-                $emailService->setSubject('🚀 Activate Your MyMI Wallet Account');
-                $emailService->setMessage($emailBody);
-                $emailService->setMailType('html');
-    
-                if ($emailService->send()) {
+                $result = service('mailService')->send(
+                    $userEmail,
+                    '🚀 Activate Your MyMI Wallet Account',
+                    $emailBody,
+                    [
+                        'module' => 'auth',
+                        'queue'  => true,
+                    ]
+                );
+
+                if ($result['ok'] ?? false) {
                     $userModel->update($user->id, [
                         'activate_email_resend' => date('Y-m-d H:i:s')
                     ]);
                     log_message('info', "[ActivationResend] ✅ Email sent to: {$userEmail}");
                     $successCount++;
                 } else {
-                    $error = $emailService->printDebugger(['headers', 'subject', 'body']);
+                    $error = $result['error'] ?? 'unknown';
                     log_message('error', "[ActivationResend] ❌ Failed to send email to {$userEmail} | Debug: {$error}");
                     $failureCount++;
                 }
@@ -1687,7 +1679,7 @@ class ManagementController extends \App\Controllers\BaseController
             return $this->failNotFound('Test user or activation token not found.');
         }
     
-        $emailService = \Config\Services::email();
+        // $emailService = \Config\Services::email();
         $siteSettings = config('SiteSettings');
         $socialMedia  = config('SocialMedia');
     
@@ -1697,17 +1689,22 @@ class ManagementController extends \App\Controllers\BaseController
             'socialMedia'     => $socialMedia,
         ]);
     
-        $emailService->setTo('tburks2392@gmail.com');
-        $emailService->setSubject('✅ [TEST] Activate Your MyMI Wallet Account');
-        $emailService->setMessage($emailBody);
-        $emailService->setMailType('html');
-    
-        if ($emailService->send()) {
+        $result = service('mailService')->send(
+            'tburks2392@gmail.com',
+            '✅ [TEST] Activate Your MyMI Wallet Account',
+            $emailBody,
+            [
+                'module' => 'auth',
+                'queue'  => true,
+            ]
+        );
+
+        if ($result['ok'] ?? false) {
             return $this->respond(['status' => 'success', 'message' => 'Test activation email sent successfully.']);
-        } else {
-            $debug = $emailService->printDebugger(['headers', 'subject', 'body']);
-            return $this->failServerError("Failed to send test email. Debug: {$debug}");
         }
+
+        $errorDebug = $result['error'] ?? 'unknown';
+        return $this->failServerError("Failed to send test email. Debug: {$errorDebug}");
     }
     
     public function sendToZapierManually() {

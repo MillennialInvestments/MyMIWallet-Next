@@ -14,7 +14,7 @@ class MyMIOnboarding
     protected $userModel;
     protected $db;
     protected $session;
-    protected $emailService;
+    // protected $emailService;
     protected $solanaService;
     protected $ethService;
     protected $btcService;
@@ -24,7 +24,7 @@ class MyMIOnboarding
         $this->db = \Config\Database::connect();
         // $this->userModel = new UserModel();
         $this->session = Services::session();
-        $this->emailService = service('email');
+        // $this->emailService = service('email');
         $this->session       = Services::session();
         $this->solanaService = service('solanaService');
         $this->ethService    = service('ethereumServices');
@@ -111,11 +111,16 @@ class MyMIOnboarding
 
     private function sendReminderEmail($userId, $incompleteSteps)
     {
-        $email = $this->emailService;
-        $email->setTo($this->getUserEmail($userId));
-        $email->setSubject("Complete Your MyMI Wallet Setup");
-        $email->setMessage("You have the following incomplete steps:\n\n" . implode("\n", $incompleteSteps));
-        $email->send();
+        service('mailService')->send(
+            $this->getUserEmail($userId),
+            "Complete Your MyMI Wallet Setup",
+            nl2br("You have the following incomplete steps:\n\n" . implode("\n", $incompleteSteps)),
+            [
+                'module' => 'auth',
+                'queue'  => true,
+                'text'   => "You have the following incomplete steps:\n\n" . implode("\n", $incompleteSteps),
+            ]
+        );
     }
 
     private function getUserEmail($userId)

@@ -17,19 +17,26 @@ class SupportService
      */
     public function sendEmail(array $data): bool
     {
-        $email = Services::email();
-        $email->setTo($data['to']);
-        $email->setFrom($data['from'], $data['from_name'] ?? 'MyMI Wallet | Customer Support');
-        $email->setSubject($data['subject']);
-        
-        $email->setMessage($data['message']);
-    
-        try {
-            return $email->send();
-        } catch (\Exception $e) {
-            log_message('error', 'SupportService::sendEmail - Failed: ' . $e->getMessage());
-            return false;
+        $mailService = service('mailService');
+        $result      = $mailService->send(
+            $data['to'],
+            $data['subject'] ?? 'MyMI Wallet Support',
+            $data['message'] ?? '',
+            [
+                'from_email' => $data['from'] ?? 'noreply@mymiwallet.com',
+                'from_name'  => $data['from_name'] ?? 'MyMI Wallet | Customer Support',
+                'reply_to'   => $data['reply_to'] ?? null,
+                'text'       => $data['text'] ?? null,
+                'module'     => $data['module'] ?? 'support',
+                'queue'      => $data['queue'] ?? true,
+            ]
+        );
+
+        if (! ($result['ok'] ?? false)) {
+            log_message('error', 'SupportService::sendEmail - Failed: ' . ($result['error'] ?? 'unknown'));
         }
+
+        return (bool) ($result['ok'] ?? false);
     }
     
     /**

@@ -53,7 +53,7 @@ class MyMIMarketing
     protected $session;
     protected $uri;
     protected $APIs;
-    protected $emailService;
+    // protected $emailService;
     protected $solanaService;
     protected $siteSettings;
     protected $marketingModel;
@@ -93,7 +93,7 @@ class MyMIMarketing
         $this->socialMedia = config('SocialMedia');
         $this->marketingModel = new MarketingModel();
         $this->analyticalModel = new AnalyticalModel();
-        $this->emailService = service('email');
+        // $this->emailService = service('email');
         $this->solanaService = new SolanaService();
 
         if (aiKimiEnabled()) {
@@ -162,10 +162,10 @@ class MyMIMarketing
                 );
                 self::$pscrapeNoticeLogged = true;
             }
-            log_message(
-                'info',
-                'MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.'
-            );
+            // log_message(
+            //     'info',
+            //     'MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.'
+            // );
             $this->pscrape = null;
         }
 
@@ -721,10 +721,15 @@ class MyMIMarketing
         }
     
         if ($platforms['email'] ?? false) {
-            $this->emailService->setTo('newsletter@mymiwallet.com');
-            $this->emailService->setSubject('📬 MyMI Daily Digest');
-            $this->emailService->setMessage(nl2br($message));
-            $this->emailService->send();
+            service('mailService')->send(
+                'newsletter@mymiwallet.com',
+                '📬 MyMI Daily Digest',
+                nl2br($message),
+                [
+                    'module' => 'marketing',
+                    'queue'  => true,
+                ]
+            );
         }
     
         // ✅ Optional: Send to Zapier
@@ -1346,13 +1351,21 @@ class MyMIMarketing
 
     private function notifyAdminOnError($subject, $message)
     {
-        $this->emailService->setFrom('no-reply@mymiwallet.com', 'MyMI Wallet');
-        $this->emailService->setTo('team@mymiwallet.com');
-        $this->emailService->setSubject($subject);
-        $this->emailService->setMessage($message);
+        $result = service('mailService')->send(
+            'team@mymiwallet.com',
+            $subject,
+            nl2br($message),
+            [
+                'from_email' => 'no-reply@mymiwallet.com',
+                'from_name'  => 'MyMI Wallet',
+                'module'     => 'marketing',
+                'queue'      => true,
+                'text'       => $message,
+            ]
+        );
 
-        if (!$this->emailService->send()) {
-            $this->logger->error('Failed to send error notification email: ' . print_r($this->emailService->printDebugger(), true));
+        if (! ($result['ok'] ?? false)) {
+            $this->logger->error('Failed to send error notification email: ' . ($result['error'] ?? 'unknown'));
         }
     }
 
@@ -5223,10 +5236,16 @@ class MyMIMarketing
             case 'sora':
                 return $this->generateSoraVideoFromScript($message);
             case 'email':
-                $this->emailService->setTo('newsletter@mymiwallet.com');
-                $this->emailService->setSubject('New Marketing Content');
-                $this->emailService->setMessage(nl2br($message));
-                return $this->emailService->send();
+                $result = service('mailService')->send(
+                    'newsletter@mymiwallet.com',
+                    'New Marketing Content',
+                    nl2br($message),
+                    [
+                        'module' => 'marketing',
+                        'queue'  => true,
+                    ]
+                );
+                return (bool) ($result['ok'] ?? false);
             default:
                 return false;
         }
