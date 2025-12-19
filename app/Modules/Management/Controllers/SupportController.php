@@ -275,7 +275,17 @@ class SupportController extends UserController
             'subject' => 'Test Email | Millennial Investments',
             'message' => view($emailLink)
         ];
-        Services::email()->send($alert);
+        service('mailService')->send(
+            $alert['to'],
+            $alert['subject'],
+            $alert['message'],
+            [
+                'from_email' => $alert['from'],
+                'from_name'  => 'Millennial Investments',
+                'module'     => 'support',
+                'queue'      => true,
+            ]
+        );
         session()->setFlashdata('message', 'Updated Successfully');
         return redirect()->to('/Web-Design/Test-Page-Email');
     }

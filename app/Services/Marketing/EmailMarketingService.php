@@ -72,16 +72,25 @@ class EmailMarketingService
     public function processQueue()
     {
         $pendingEmails = $this->queueModel->getPendingEmails();
-        $emailService = Services::email();
 
         foreach ($pendingEmails as $emailData) {
-            $emailService->setTo($emailData['email']);
-            $emailService->setSubject($emailData['subject']);
-            $emailService->setMessage($emailData['content']);
+            $result = service('mailService')->send(
+                $emailData['email'],
+                $emailData['subject'],
+                $emailData['content'],
+                [
+                    'module' => 'marketing',
+                    'queue'  => true,
+                ]
+            );
 
-            if ($emailService->send()) {
+            if ($result['ok'] ?? false) {
                 $this->queueModel->markAsSent($emailData['id']);
                 $this->trackingModel->recordEmailOpen($emailData['id']);
+            } else {
+                log_message('error', 'EmailMarketingService::processQueue failed to queue mail: {error}', [
+                    'error' => $result['error'] ?? 'unknown',
+                ]);
             }
         }
     }

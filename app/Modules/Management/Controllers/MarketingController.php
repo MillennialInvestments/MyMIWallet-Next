@@ -428,41 +428,42 @@ class MarketingController extends UserController
             ];
     
             if ($marketingModel->addSubscriber($subscriberData)) {
-                $emailService = \Config\Services::email();
-    
-                $emailService->setTo($subscriberData['email']);
-                $emailService->setSubject('🎉 Welcome to Investor’s Talk | MyMI Wallet');
                 $emailBody = view('emails/welcomeInvestor', [
                     'siteSettings' => $this->siteSettings,
                     'socialMedia'  => config('SocialMedia'),
                     'subscriber'   => $subscriberData,
                 ]);
-                $emailService->setMessage($emailBody);
-                $emailService->setMailType('html');
-    
-                if ($emailService->send()) {
-                    log_message('info', '✅ addSubscriber: Welcome email sent to ' . $subscriberData['email']);
+
+                $result = service('mailService')->send(
+                    $subscriberData['email'],
+                    '🎉 Welcome to Investor’s Talk | MyMI Wallet',
+                    $emailBody,
+                    [
+                        'module' => 'marketing',
+                        'queue'  => true,
+                    ]
+                );
+
+                if ($result['ok'] ?? false) {
+                    log_message('info', '✅ addSubscriber: Welcome email queued for ' . $subscriberData['email']);
                     return $this->response->setJSON([
                         'success' => true,
-                        'message' => 'Subscriber added and welcome email sent.',
-                    ]);
-                } else {
-                    $debug = $emailService->printDebugger(['headers', 'subject', 'body']);
-                    $errorString = strip_tags($debug);
-                    $errorSummary = strstr($errorString, "The following SMTP error was encountered", true)
-                        ?: substr($errorString, 0, 300);
-    
-                    // Optionally, mark in DB the email failed to deliver
-                    $marketingModel->markEmailAsUndeliverable($subscriberData['email'], $errorSummary);
-    
-                    log_message('error', "❌ addSubscriber: Email failed to send — {$errorSummary}");
-    
-                    return $this->response->setJSON([
-                        'success' => false,
-                        'message' => 'The email could not be delivered. Please check the address and try again.',
-                        'error'   => $errorSummary,
+                        'message' => 'Subscriber added and welcome email queued.',
                     ]);
                 }
+
+                $errorSummary = $result['error'] ?? 'unknown send failure';
+
+                // Optionally, mark in DB the email failed to deliver
+                $marketingModel->markEmailAsUndeliverable($subscriberData['email'], $errorSummary);
+
+                log_message('error', "❌ addSubscriber: Email failed to send — {$errorSummary}");
+
+                return $this->response->setJSON([
+                    'success' => false,
+                    'message' => 'The email could not be delivered. Please check the address and try again.',
+                    'error'   => $errorSummary,
+                ]);
             } else {
                 log_message('error', '❌ addSubscriber: Failed to insert subscriber.');
                 return $this->response->setJSON([
@@ -770,17 +771,29 @@ class MarketingController extends UserController
             'Daily Log Summary for ' . date('F j, Y') :
             'Fallback Content - Daily Summary ' . date('F j, Y');
     
+        $mail = service('mailService');
+
         // Send the summary email
-        $this->email->setTo('community@mymiwallet.com')
-            ->setSubject($subject)
-            ->setMessage($emailView)
-            ->send();
+        $mail->send(
+            'community@mymiwallet.com',
+            $subject,
+            $emailView,
+            [
+                'module' => 'marketing',
+                'queue'  => true,
+            ]
+        );
     
         // Send a reminder email to the team
-        $this->email->setTo('team@mymiwallet.com')
-            ->setSubject('Reminder: Daily Log Email Pending Confirmation')
-            ->setMessage('The daily log email is scheduled to be sent at 3 PM CST. Please review the content to ensure everything is accurate.')
-            ->send();
+        $mail->send(
+            'team@mymiwallet.com',
+            'Reminder: Daily Log Email Pending Confirmation',
+            'The daily log email is scheduled to be sent at 3 PM CST. Please review the content to ensure everything is accurate.',
+            [
+                'module' => 'marketing',
+                'queue'  => true,
+            ]
+        );
     }
     
     public function edit($id = null) {

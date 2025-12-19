@@ -26,16 +26,47 @@ $client_id  = $cuUserType === 'Beta'
 $(document).ready(function () {
     console.log("✅ Document is ready!");
 
+    const modalBaseUrl = "<?= rtrim(site_url('Dashboard/Transaction-Modal'), '/') ?>";
+
+    function sanitizeSegment(segment) {
+        if (!segment) {
+            return "";
+        }
+
+        const decoded = decodeURIComponent(String(segment)).replace(/^\/+/, "").trim();
+        const placeholderPattern = /^\(:?(segment|num)\)$/i;
+        const encodedPlaceholderPattern = /%28:(segment|num)%29/i;
+
+        if (decoded === "" || placeholderPattern.test(decoded) || encodedPlaceholderPattern.test(segment)) {
+            return "";
+        }
+
+        return encodeURIComponent(decoded);
+    }
+
+    function buildModalUrl(target) {
+        const segments = [
+            sanitizeSegment(target?.formtype),
+            sanitizeSegment(target?.endpoint),
+            sanitizeSegment(target?.accountid),
+            sanitizeSegment(target?.category),
+            sanitizeSegment(target?.platform),
+        ].filter(Boolean);
+
+        return `${modalBaseUrl}/${segments.join("/")}`;
+    }
+
     $(document).on("click", ".dynamicModalLoader", function (event) {
         event.preventDefault();
 
-        let formtype = $(this).data("formtype") || "";
-        let endpoint = $(this).data("endpoint") ? "/" + $(this).data("endpoint") : "";
-        let accountid = $(this).data("accountid") ? "/" + $(this).data("accountid") : "";
-        let category = $(this).data("category") ? "/" + $(this).data("category") : "";
-        let platform = $(this).data("platform") ? "/" + $(this).data("platform") : "";
+        const url = buildModalUrl({
+            formtype: $(this).data("formtype"),
+            endpoint: $(this).data("endpoint"),
+            accountid: $(this).data("accountid"),
+            category: $(this).data("category"),
+            platform: $(this).data("platform"),
+        });
 
-        let url = `<?= site_url('Dashboard/Transaction-Modal/')?>${formtype}${endpoint}${accountid}${category}${platform}`;
         console.log("⏳ Fetching modal content from:", url);
 
         $("#transactionModal").modal("show");

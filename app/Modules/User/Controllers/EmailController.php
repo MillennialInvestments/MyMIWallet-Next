@@ -21,16 +21,22 @@ class EmailController extends BaseController
         db_connect()->table('users')->where('id', $uid)->set(['email_verification_token_hash' => $hash])->update();
 
         $link = rtrim(getenv('APP_URL') ?: site_url(), '/') . '/Account/verify-email/' . $token;
-        $email = service('email');
-        $email->setTo($user['email']);
-        $email->setFrom(getenv('EMAIL_FROM') ?: 'noreply@localhost', 'MyMI Wallet');
-        $email->setSubject('Verify your email');
-        $email->setMessage("Click to verify: {$link}");
-        if (! $email->send()) {
-            $debug = $email->printDebugger(['headers', 'subject', 'body']);
+        $result = service('mailService')->send(
+            $user['email'],
+            'Verify your email',
+            "Click to verify: {$link}",
+            [
+                'from_email' => getenv('EMAIL_FROM') ?: 'noreply@localhost',
+                'from_name'  => 'MyMI Wallet',
+                'module'     => 'auth',
+                'queue'      => true,
+            ]
+        );
+
+        if (! ($result['ok'] ?? false)) {
             log_message('error', 'Email verification send failed for user {user}: {debug}', [
                 'user'  => $user['id'] ?? 'unknown',
-                'debug' => $debug,
+                'debug' => $result['error'] ?? 'unknown',
             ]);
         }
 

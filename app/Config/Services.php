@@ -70,6 +70,15 @@ class Services extends BaseService
 
         return new AuthAuditService();
     }
+
+    public static function mailService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('mailService');
+        }
+
+        return new \App\Services\MailService();
+    }
     
     /*
      * public static function example($getShared = true)
