@@ -1,14 +1,13 @@
 <?php
-namespace App\Libraries\AlertChannels;
+namespace App\Libraries\AlertsChannels;
 
 use App\Libraries\AlertChannelInterface;
-use CodeIgniter\Email\Email;
 
 class EmailChannel implements AlertChannelInterface
 {
-    public function __construct(private ?Email $mailer = null)
+    public function __construct(private $mailer = null)
     {
-        $this->mailer = $mailer ?? service('email');
+        $this->mailer = $mailer ?? service('mailService');
     }
 
     public function getName(): string
@@ -23,11 +22,14 @@ class EmailChannel implements AlertChannelInterface
         }
 
         try {
-            $this->mailer->clear();
-            $this->mailer->setTo($alert['recipient'] ?? 'alerts@mymiwallet.com');
-            $this->mailer->setSubject('MyMI Trade Alert: ' . ($alert['symbol'] ?? 'Update'));
-            $this->mailer->setMessage($alert['summary'] ?? '');
-            return $this->mailer->send();
+            $result = $this->mailer->send(
+                $alert['recipient'] ?? 'alerts@mymiwallet.com',
+                'MyMI Trade Alert: ' . ($alert['symbol'] ?? 'Update'),
+                $alert['summary'] ?? '',
+                ['module' => 'alerts', 'queue' => true]
+            );
+
+            return (bool) ($result['ok'] ?? false);
         } catch (\Throwable $e) {
             log_message('error', 'EmailChannel failed: ' . $e->getMessage());
             return false;

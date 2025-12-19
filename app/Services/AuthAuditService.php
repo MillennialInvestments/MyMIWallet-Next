@@ -258,21 +258,22 @@ class AuthAuditService
 
         $message = implode("\n", $messageLines);
 
-        try {
-            $emailService->setFrom($this->supportEmail, $this->supportName);
-            $emailService->setTo($this->supportEmail);
-            $emailService->setSubject($subject);
-            $emailService->setMessage($message);
-            $emailService->setMailType('text');
+        $result = service('mailService')->send(
+            $this->supportEmail,
+            $subject,
+            nl2br($message),
+            [
+                'from_email' => $this->supportEmail,
+                'from_name'  => $this->supportName,
+                'module'     => 'auth',
+                'queue'      => true,
+                'text'       => $message,
+            ]
+        );
 
-            if (! $emailService->send()) {
-                log_message('warning', 'Registration audit email could not be sent: {reason}', [
-                    'reason' => method_exists($emailService, 'printDebugger') ? $emailService->printDebugger(['headers']) : 'unknown',
-                ]);
-            }
-        } catch (Throwable $e) {
-            log_message('warning', 'Registration audit email failed to send: {msg}', [
-                'msg' => $e->getMessage(),
+        if (! ($result['ok'] ?? false)) {
+            log_message('warning', 'Registration audit email could not be sent: {reason}', [
+                'reason' => $result['error'] ?? 'unknown',
             ]);
         }
     }

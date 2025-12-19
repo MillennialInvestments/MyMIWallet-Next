@@ -174,12 +174,17 @@ class SupportController extends UserController
 
     private function sendEmail(array $data)
     {
-        $email = Services::email();
-        $email->setTo('support@MyMIWallet.com');
-        $email->setFrom('noreply@MyMIWallet.com', 'MyMI Wallet - Customer Support');
-        $email->setSubject('New Support Request Received');
-        $email->setMessage("A new support request or feedback has been submitted. Details: \n" . print_r($data, true));
-        $email->send();
+        service('mailService')->send(
+            'support@MyMIWallet.com',
+            'New Support Request Received',
+            nl2br("A new support request or feedback has been submitted. Details:\n" . print_r($data, true)),
+            [
+                'from_email' => 'noreply@mymiwallet.com',
+                'from_name'  => 'MyMI Wallet - Customer Support',
+                'module'     => 'support',
+                'queue'      => true,
+            ]
+        );
     }
 
     public function test() { 
@@ -223,40 +228,47 @@ class SupportController extends UserController
             'socialMedia' => $this->socialMedia,
         ];
     
-        // Initialize email service
-        $email = Services::email();
-        $email->setTo($data['email']);
-        $email->setFrom('noreply@MyMIWallet.com', 'MyMI Wallet - Customer Support');
-        $email->setSubject('MyMI Wallet - Support Request Received');
-    
-        // Use the layout and pass content as a dynamic subview
         $emailContent = view('emails/layout', [
-            'content' => view('UserModule\Views\Support\_emails\Support_Request_Received', ['data' => $data]),
-            'title' => 'Support Request Received',
+            'content'      => view('UserModule\Views\Support\_emails\Support_Request_Received', ['data' => $data]),
+            'title'        => 'Support Request Received',
             'siteSettings' => $this->siteSettings,
-            'socialMedia' => $this->socialMedia,
+            'socialMedia'  => $this->socialMedia,
         ]);
-    
-        $email->setMessage($emailContent);
-    
-        // Send email and log result
-        if ($email->send()) {
+
+        $result = service('mailService')->send(
+            $data['email'],
+            'MyMI Wallet - Support Request Received',
+            $emailContent,
+            [
+                'from_email' => 'noreply@mymiwallet.com',
+                'from_name'  => 'MyMI Wallet - Customer Support',
+                'module'     => 'support',
+                'queue'      => true,
+            ]
+        );
+
+        if ($result['ok'] ?? false) {
             return redirect()->to('/Support')->with('message', 'Test email sent successfully.');
-        } else {
-            log_message('error', $email->printDebugger(['headers', 'subject', 'body']));
-            return redirect()->to('/Support')->with('error', 'Failed to send test email.');
         }
+
+        log_message('error', 'Support test email failed: ' . ($result['error'] ?? 'unknown'));
+        return redirect()->to('/Support')->with('error', 'Failed to send test email.');
     }    
 
     private function sendSupportRequestReceivedEmail(array $data)
     {
-        $email = Services::email();
-        $email->setTo($data['email']);
-        $email->setFrom('noreply@MyMIWallet.com', 'MyMI Wallet - Customer Support');
-        $email->setSubject('MyMI Wallet - New Support Request Received');
         $emailContent = view('UserModule\Views\Support\_emails\Support_Request_Received', ['data' => $data]);
-        $email->setMessage($emailContent);
-        $email->send();
+        service('mailService')->send(
+            $data['email'],
+            'MyMI Wallet - New Support Request Received',
+            $emailContent,
+            [
+                'from_email' => 'noreply@mymiwallet.com',
+                'from_name'  => 'MyMI Wallet - Customer Support',
+                'module'     => 'support',
+                'queue'      => true,
+            ]
+        );
     }
 
     private function sendToDiscord(array $data)
@@ -386,17 +398,22 @@ class SupportController extends UserController
                     // Include other necessary data from $formData
                 ];
 
-                $email = \Config\Services::email();
-                $email->setFrom('support@mymillennialinvestments.com', 'Millennial Investments');
-                $email->setTo('admin@mymillennialinvestments.com');
-                $email->setSubject('Customer Service Request | Millennial Investments');
-                $email->setMessage(view('Support/Emails/Requests', $emailMessageData));
+                $emailContent = view('Support/Emails/Requests', $emailMessageData);
+                $result = service('mailService')->send(
+                    'admin@mymillennialinvestments.com',
+                    'Customer Service Request | Millennial Investments',
+                    $emailContent,
+                    [
+                        'from_email' => 'support@mymillennialinvestments.com',
+                        'from_name'  => 'Millennial Investments',
+                        'module'     => 'support',
+                        'queue'      => true,
+                    ]
+                );
 
-                if ($email->send()) {
+                if ($result['ok'] ?? false) {
                     session()->setFlashdata('message', 'Customer Support - Support Request Submitted Successfully');
                     return redirect()->to('Customer-Support/Response/' . $formData['res_id']);
-                } else {
-                    // Handle email sending failure
                 }
             } else {
                 // Handle submitResponse failure

@@ -327,13 +327,17 @@ class MarketingController extends \App\Controllers\BaseController
         $post = $this->marketingModel->getGeneratedPostById($postId);
         if (!$post) return $this->failNotFound();
     
-        $email = \Config\Services::email();
-        $email->setTo('editor@mymiwallet.com');
-        $email->setSubject('Review & Approve: ' . $post->title);
-    
         $body = view('emails/Marketing/ReviewPostEmail', ['post' => $post]);
-        $email->setMessage($body);
-        $email->send();
+
+        service('mailService')->send(
+            'editor@mymiwallet.com',
+            'Review & Approve: ' . $post->title,
+            $body,
+            [
+                'module' => 'marketing',
+                'queue'  => true,
+            ]
+        );
     
         return Http::jsonSuccess(['status' => 'email sent']);
     }

@@ -26,12 +26,12 @@ class Email extends BaseConfig
         parent::__construct();
 
         // Pull from .env at runtime
-        $this->fromEmail = env('email.fromEmail', $this->fromEmail);
-        $this->fromName  = env('email.fromName',  $this->fromName);
-        $this->SMTPHost  = env('email.smtpHost',  $this->SMTPHost);
-        $this->SMTPUser  = env('email.smtpUser',  $this->SMTPUser);
-        $this->SMTPPass  = env('email.smtpPass',  $this->SMTPPass);
-        $this->SMTPPort  = (int) env('email.smtpPort', $this->SMTPPort);
-        $this->SMTPCrypto= env('email.smtpCrypto', $this->SMTPCrypto);
+        $this->fromEmail = env('mail.from.email', env('email.fromEmail', $this->fromEmail));
+        $this->fromName  = env('mail.from.name', env('email.fromName', $this->fromName));
+        $this->SMTPHost  = env('email.SMTPHost', env('email.smtpHost', $this->SMTPHost));
+        $this->SMTPUser  = env('email.SMTPUser', env('email.smtpUser', $this->SMTPUser));
+        $this->SMTPPass  = env('email.SMTPPass', env('email.smtpPass', $this->SMTPPass));
+        $this->SMTPPort  = (int) env('email.SMTPPort', env('email.smtpPort', $this->SMTPPort));
+        $this->SMTPCrypto= env('email.SMTPCrypto', env('email.smtpCrypto', $this->SMTPCrypto));
     }
 }
