@@ -78,6 +78,7 @@ $routes->post('/resend-activation', 'AuthController::resendActivationCode', ['as
 // Dev tools
 $routes->get('Dev/BitcoinTest', 'App\Controllers\Dev\BitcoinTest::index');
 $routes->get('Debug/whoami', 'Debug::whoami');
+$routes->get('Debug/auth-audit-cache', 'Debug::authAuditCacheSelfTest');
 
 $routes->group('debug', ['namespace' => 'App\Controllers\Debug'], static function ($routes) {
     $routes->get('common-data/smoke', 'CommonDataController::smoke');
@@ -94,13 +95,19 @@ $routes->group('', ['namespace' => 'App\Controllers'], static function($routes) 
     $routes->get('_ops/opcache-reset', 'Ops::opcacheReset');
 });
 
-// --- Auth Routes (App Controller wrapper around Myth/Auth) ---
+// --- Auth Routes ---
+// $routes->group('', ['namespace' => 'Myth\Auth\Controllers'], static function ($routes) {
 $routes->group('', ['namespace' => 'App\Controllers'], static function ($routes) {
-    // Core session auth
     $routes->get('login', 'AuthController::login', ['as' => 'login']);
     $routes->post('login', 'AuthController::attemptLogin', ['as' => 'auth/attemptLogin']);
     $routes->get('logout', 'AuthController::logout');
     $routes->post('logout', 'AuthController::logout', ['as' => 'auth/logout']);
+
+    $routes->get('register', 'AuthController::register', ['as' => 'register']);
+    $routes->post('register', 'AuthController::attemptRegister', ['as' => 'register-attempt']);
+// });
+
+// $routes->group('', ['namespace' => 'App\Controllers'], static function ($routes) {
 
     // TEMP: handle accidental /Login and redirect to lowercase
     $routes->get('Login', static function () {
@@ -115,9 +122,7 @@ $routes->group('', ['namespace' => 'App\Controllers'], static function ($routes)
     $routes->post('Auth/link-snaptrade', 'AuthController::linkSnapTrade');
 
     // Registration (including dynamic/referral patterns)
-    $routes->get('register', 'AuthController::register', ['as' => 'register']);
     $routes->get('register/(:segment)', 'AuthController::register/$1', ['as' => 'register-segment']);
-    $routes->post('register', 'AuthController::attemptRegister', ['as' => 'register-attempt']);
     $routes->get('(:any)/register', 'AuthController::register', ['as' => 'dynamic-register']);
     $routes->get('(:any)/register/(:segment)', 'AuthController::register/$2', ['as' => 'dynamic-register-referral']);
     $routes->post('(:any)/register', 'AuthController::attemptRegister');

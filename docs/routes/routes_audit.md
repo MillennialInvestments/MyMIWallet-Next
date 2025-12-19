@@ -101,3 +101,26 @@ Single group handles marketing automations; no duplicate /Marketing groups found
 * Duplicate Investments mappings removed and replaced with methods that exist in InvestmentsController.
 * Required Management endpoints from the missing list are present under the /API/Management group.
 * /Marketing routes are unified under one group in app/Config/Routes.php; the redundant /Blog/News-And-Updates group was removed in favor of the canonical nested blog mapping.
+
+# Auth route audit
+
+## Myth/Auth session endpoints
+
+| Method | Path    | Controller target                                |
+|--------|---------|---------------------------------------------------|
+| GET    | /login  | Myth\\Auth\\Controllers\\AuthController::login         |
+| POST   | /login  | Myth\\Auth\\Controllers\\AuthController::attemptLogin  |
+| GET    | /logout | Myth\\Auth\\Controllers\\AuthController::logout        |
+| POST   | /logout | Myth\\Auth\\Controllers\\AuthController::logout        |
+
+## Registration endpoints
+
+| Method | Path                  | Controller target                                   | Notes                                  |
+|--------|-----------------------|------------------------------------------------------|----------------------------------------|
+| GET    | /register             | Myth\\Auth\\Controllers\\AuthController::register      | Base registration form                 |
+| POST   | /register             | Myth\\Auth\\Controllers\\AuthController::attemptRegister | Base registration submission           |
+| GET    | /register/{referral}  | App\\Controllers\\AuthController::register               | Referral captured from URI segment     |
+| GET    | */register            | App\\Controllers\\AuthController::register               | Dynamic registration landing by prefix |
+| GET    | */register/{referral} | App\\Controllers\\AuthController::register               | Dynamic registration with referral     |
+| POST   | */register            | App\\Controllers\\AuthController::attemptRegister        | Dynamic registration submission        |
+| POST   | */register/{referral} | App\\Controllers\\AuthController::attemptRegister        | Dynamic registration with referral     |
