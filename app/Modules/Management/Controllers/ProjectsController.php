@@ -237,10 +237,12 @@ class ProjectsController extends UserController
                 
                     // Email data
                     $emailData = [
-                        'from' => 'no-reply@mymiwallet.com',
-                        'to' => $formData['user_email'],
+                        'from'    => 'no-reply@mymiwallet.com',
+                        'to'      => $formData['user_email'],
                         'subject' => 'New MyMI Wallet Project Submitted - ' . $formData['name'],
                         'message' => $emailContent,
+                        'module'  => 'projects',
+                        'queue'   => true,
                     ];
                     log_message('debug', 'ProjectsController::add - $emailData: ' . print_r($emailData, true));
                 

@@ -1154,26 +1154,29 @@ class AlertsController extends UserController
             'time' => date('H:i:s'), // Current Time
         ];
 
-        // Initialize email service
-        $email = Services::email();
-        $email->setTo('testuser@example.com'); // Replace with your test recipient email
-        $email->setFrom('noreply@MyMIWallet.com', 'MyMI Wallet - Trade Alerts');
-        $email->setSubject('Test Trade Alert Email');
-
-        // Generate email content using the template
         $emailContent = view('emails/layout', [
             'content' => view('emails/trade_alert', $data),
             'title' => 'Trade Alert',
         ]);
-        $email->setMessage($emailContent);
 
-        // Send the email and log the result
-        if ($email->send()) {
+        $result = service('mailService')->send(
+            'testuser@example.com',
+            'Test Trade Alert Email',
+            $emailContent,
+            [
+                'from_email' => 'noreply@MyMIWallet.com',
+                'from_name'  => 'MyMI Wallet - Trade Alerts',
+                'module'     => 'alerts',
+                'queue'      => true,
+            ]
+        );
+
+        if ($result['ok'] ?? false) {
             return redirect()->to('/TradeAlerts/Test')->with('message', 'Test email sent successfully.');
-        } else {
-            log_message('error', $email->printDebugger(['headers', 'subject', 'body']));
-            return redirect()->to('/TradeAlerts/Test')->with('error', 'Failed to send test email.');
         }
+
+        log_message('error', $result['error'] ?? 'Failed to send test email.');
+        return redirect()->to('/TradeAlerts/Test')->with('error', 'Failed to send test email.');
     }
 
     public function sendTradeAlertEmail($tradeId)
@@ -1195,24 +1198,27 @@ class AlertsController extends UserController
             'time' => date('H:i:s'),
         ];
     
-        // Initialize email service
-        $email = Services::email();
-        $email->setTo('premium.alerts@mymiwallet.com');
-        $email->setFrom('noreply@MyMIWallet.com', 'MyMI Wallet - Trade Alerts');
-        $email->setSubject('MyMI Wallet - New Trade Alert');
-    
-        // Generate email content using the template
         $emailContent = view('emails/trade_alert', $data);
-        $email->setMessage($emailContent);
     
-        // Send the email and log result
-        if ($email->send()) {
+        $result = service('mailService')->send(
+            'premium.alerts@mymiwallet.com',
+            'MyMI Wallet - New Trade Alert',
+            $emailContent,
+            [
+                'from_email' => 'noreply@MyMIWallet.com',
+                'from_name'  => 'MyMI Wallet - Trade Alerts',
+                'module'     => 'alerts',
+                'queue'      => true,
+            ]
+        );
+    
+        if ($result['ok'] ?? false) {
             log_message('info', "Trade Alert Email Sent Successfully for Trade ID: $tradeId");
             return true;
-        } else {
-            log_message('error', $email->printDebugger(['headers', 'subject', 'body']));
-            return false;
         }
+
+        log_message('error', $result['error'] ?? 'Failed to send trade alert email.');
+        return false;
     }  
 
     /**

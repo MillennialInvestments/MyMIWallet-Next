@@ -20,15 +20,15 @@ class TestEmail extends BaseCommand
             return;
         }
 
-        $email = service('email');
+        $result = service('mailService')->send(
+            $to,
+            'MyMI Wallet SMTP Test',
+            'This is a test email from MyMI Wallet.',
+            ['queue' => false, 'module' => 'system']
+        );
 
-        $email->setTo($to);
-        $email->setSubject('MyMI Wallet SMTP Test');
-        $email->setMessage('This is a test email from MyMI Wallet.');
-
-        if (! $email->send()) {
-            $debug = $email->printDebugger(['headers', 'subject', 'body']);
-            log_message('error', 'SMTP test failed: {debug}', ['debug' => $debug]);
+        if (! ($result['ok'] ?? false)) {
+            log_message('error', 'SMTP test failed: {debug}', ['debug' => $result['error'] ?? 'unknown']);
             CLI::error('SMTP test failed; see logs for details.');
             return;
         }

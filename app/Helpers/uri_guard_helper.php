@@ -23,23 +23,6 @@ if (! function_exists('log_if_placeholder_in_uri')) {
         $userContext = $extra['user']
             ?? ((function_exists('current_user_id') && current_user_id()) ? 'user#' . current_user_id() : 'guest');
 
-        // Early-exit for encoded placeholder noise like "%28:num%29" or "%28:segment%29"
-        $encodedPlaceholderPattern = '/%28:(num|segment)%29/i';
-
-        if (preg_match($encodedPlaceholderPattern, $uriString)) {
-            log_message(
-                'debug',
-                'URI guard: ignoring encoded placeholder noise in {context}: "{uri}" (user {user})',
-                [
-                    'context' => $context,
-                    'uri'     => $uriString,
-                    'user'    => $userContext,
-                ]
-            );
-
-            return false;
-        }
-
         // Use a decoded copy for detecting real placeholders
         $decodedUri = rawurldecode($uriString);
 
@@ -75,9 +58,30 @@ if (! function_exists('guard_uri_placeholders')) {
             $uri       = $request->getUri();
             $uriString = (string) $uri;
             $path      = $uri->getPath();
+            $decoded   = rawurldecode($uriString);
 
             $session = Services::session(null);
             $userId  = $session?->get('user_id') ?? $session?->get('cuID') ?? 'guest';
+
+            // Block encoded placeholders before they ever reach routing
+            $encodedPlaceholderPattern = '/%28:(num|segment)%29/i';
+            if (preg_match($encodedPlaceholderPattern, $uriString)) {
+                log_message(
+                    'notice',
+                    'URI guard blocked encoded placeholder request in {context}: "{uri}" (user {user})',
+                    [
+                        'context' => $context,
+                        'uri'     => $decoded,
+                        'user'    => $userId,
+                    ]
+                );
+
+                Services::response()
+                    ->setStatusCode(ResponseInterface::HTTP_NOT_FOUND)
+                    ->setBody('Not Found')
+                    ->send();
+                exit;
+            }
 
             // First check for unencoded placeholders in the path
             log_if_placeholder_in_uri($uriString, $context, [

@@ -67,3 +67,29 @@
 #--------------------------------------------------------------------
 
 # logger.threshold = 4
+#--------------------------------------------------------------------
+# MAIL
+#--------------------------------------------------------------------
+
+# mail.driver = postmark   # smtp|postmark|mailgun|sendgrid|ses
+mail.from.email = no-reply@mymiwallet.com
+mail.from.name  = MyMI Wallet
+
+# Postmark
+postmark.token =
+
+# Mailgun
+mailgun.domain =
+mailgun.key    =
+mailgun.region = us
+
+# SendGrid
+sendgrid.key =
+
+# SMTP (fallback)
+email.protocol   = smtp
+email.SMTPHost   = smtp.yourhost.com
+email.SMTPPort   = 587
+email.SMTPCrypto = tls
+email.SMTPUser   = user@domain.com
+email.SMTPPass   = secret

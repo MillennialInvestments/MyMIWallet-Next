@@ -485,16 +485,23 @@ class ReferralService
                 'referrer_name' => $this->getUserNameByID($userID)
             ]);
     
-            // Send follow-up email
-            $this->email->setTo($email);
-            $this->email->setSubject('Reminder: Join MyMI Wallet Today!');
-            $this->email->setMessage($emailContent);
-    
-            if ($this->email->send()) {
+            $result = service('mailService')->send(
+                $email,
+                'Reminder: Join MyMI Wallet Today!',
+                $emailContent,
+                [
+                    'module' => 'auth',
+                    'queue'  => true,
+                ]
+            );
+
+            if ($result['ok'] ?? false) {
                 log_message('info', 'Follow-up email sent to: ' . $email);
             } else {
-                $error = $this->email->printDebugger(['headers']);
-                log_message('error', 'Failed to send follow-up email to: ' . $email . ' Error: ' . $error);
+                log_message('error', 'Failed to send follow-up email to: {email} Error: {error}', [
+                    'email' => $email,
+                    'error' => $result['error'] ?? 'unknown',
+                ]);
             }
         }
     }

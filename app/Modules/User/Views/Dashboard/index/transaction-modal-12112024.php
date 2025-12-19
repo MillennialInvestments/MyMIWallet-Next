@@ -28,21 +28,47 @@ $client_id  = $cuUserType === 'Beta' ? 'AeFttKQS_djpAmMEFvPSinKaluT_XqJ_zE00kD8Q
 
 <script <?= $nonce['script'] ?? '' ?>>
     $(document).ready(function() {
+    const modalBaseUrl = "<?= rtrim(site_url('Dashboard/Transaction-Modal'), '/') ?>";
+
+    function sanitizeSegment(segment) {
+        if (!segment) {
+            return "";
+        }
+
+        const decoded = decodeURIComponent(String(segment)).replace(/^\/+/, "").trim();
+        const placeholderPattern = /^\(:?(segment|num)\)$/i;
+        const encodedPlaceholderPattern = /%28:(segment|num)%29/i;
+
+        if (decoded === "" || placeholderPattern.test(decoded) || encodedPlaceholderPattern.test(segment)) {
+            return "";
+        }
+
+        return encodeURIComponent(decoded);
+    }
+
+    function buildModalUrl(target) {
+        const segments = [
+            sanitizeSegment(target?.formtype),
+            sanitizeSegment(target?.endpoint),
+            sanitizeSegment(target?.accountid),
+            sanitizeSegment(target?.category),
+            sanitizeSegment(target?.platform),
+        ].filter(Boolean);
+
+        return `${modalBaseUrl}/${segments.join("/")}`;
+    }
+
     $('.dynamicModalLoader').click(function() {
-        const formtype = $(this).data('formtype');
-        let endpoint = $(this).data('endpoint');
-        endpoint = endpoint ? '/' + endpoint : '';
-        let accountid = $(this).data('accountid');
-        accountid = accountid ? '/' + accountid : '';
-        let category = $(this).data('category');
-        category = category ? '/' + category : '';
-        let platform = $(this).data('platform');
-        platform = platform ? '/' + platform : '';
-        
         // Capture promo code if present
         const promoCode = $('#promo_code_input').val(); // Assume a promo code input field with ID `promo_code_input`
-        
-        const url = `<?= site_url('Dashboard/Transaction-Modal/') ?>${formtype}${endpoint}${accountid}${category}${platform}?promo_code=${promoCode}`;
+
+        const url = `${buildModalUrl({
+            formtype: $(this).data('formtype'),
+            endpoint: $(this).data('endpoint'),
+            accountid: $(this).data('accountid'),
+            category: $(this).data('category'),
+            platform: $(this).data('platform'),
+        })}?promo_code=${encodeURIComponent(promoCode ?? '')}`;
         
         console.log('URL:', url); // Debugging URL
 

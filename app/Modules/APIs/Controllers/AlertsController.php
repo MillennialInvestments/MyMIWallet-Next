@@ -1431,6 +1431,8 @@ class AlertsController extends ResourceController
 
         $validUpdates = [];
         $skipped = [];
+        $invalidPriceCount = 0;
+        $missingAlertCount = 0;
 
         // Fetch prices in batch from AlphaVantage
         $batchPrices = $this->getMyMIAlphaVantage()->getBatchPrices($symbols);
@@ -1439,7 +1441,8 @@ class AlertsController extends ResourceController
             $price = $batchPrices[$symbol] ?? null;
 
             if (empty($price) || !is_numeric($price)) {
-                log_message('warning', "getLatestPrices - Skipping {$symbol}, invalid price: {$price}");
+                $invalidPriceCount++;
+                log_message('debug', "getLatestPrices - Skipping {$symbol}, invalid price: {$price}");
                 $this->alertsModel->trackFailedTicker($symbol, 'Invalid or missing price returned from AlphaVantage');
                 $skipped[] = $symbol;
                 continue;
@@ -1447,7 +1450,8 @@ class AlertsController extends ResourceController
             
             $alert = $this->getAlertBySymbol($activeAlerts, $symbol);
             if (!$alert || !isset($alert['id']) || !is_numeric($alert['id'])) {
-                log_message('warning', "getLatestPrices - Skipping update for {$symbol}, missing alert ID.");
+                $missingAlertCount++;
+                log_message('debug', "getLatestPrices - Skipping update for {$symbol}, missing alert ID.");
                 $skipped[] = $symbol;
                 continue;
             }
@@ -1483,12 +1487,15 @@ class AlertsController extends ResourceController
         }
 
         if (empty($validUpdates)) {
+            $totalSymbols = is_array($symbols) ? count($symbols) : 0;
             log_message(
                 'info',
-                'getLatestPrices - No valid data to update after filtering. Skipped price refresh. totalSymbols={total} skipped={skipped}',
+                'getLatestPrices - No valid data after filtering. loaded={loaded} filtered={filtered} updated=0 invalid_price={invalid} missing_alert={missing}',
                 [
-                    'total'   => is_array($symbols) ? count($symbols) : 0,
-                    'skipped' => count($skipped),
+                    'loaded'   => is_array($activeAlerts) ? count($activeAlerts) : 0,
+                    'filtered' => $totalSymbols,
+                    'invalid'  => $invalidPriceCount,
+                    'missing'  => $missingAlertCount,
                 ]
             );
             return $this->respond([
@@ -1505,7 +1512,17 @@ class AlertsController extends ResourceController
         }
 
         $updateCount = $alertsModel->updateAlertPrices($validUpdates);
-        log_message('debug', "getLatestPrices - Updated {$updateCount} alerts. Skipped: " . implode(', ', $skipped));
+        log_message(
+            'info',
+            'getLatestPrices - updated={updated} loaded={loaded} filtered={filtered} invalid_price={invalid} missing_alert={missing}',
+            [
+                'updated'  => $updateCount,
+                'loaded'   => is_array($activeAlerts) ? count($activeAlerts) : 0,
+                'filtered' => is_array($symbols) ? count($symbols) : 0,
+                'invalid'  => $invalidPriceCount,
+                'missing'  => $missingAlertCount,
+            ]
+        );
 
         return $this->respond([
             'status'  => 'success',
@@ -2211,22 +2228,28 @@ class AlertsController extends ResourceController
     }
 
     private function sendEmailToList($email, $tradeAlert, $tier) {
-        $emailService = service('email');
         $chartLink = $this->getChartImage($tradeAlert, $tier);
-    
-        $emailService->setTo($email);
-        $emailService->setSubject("🚀 Trade Alert - {$tradeAlert['ticker']} ({$tier} Alert)");
-        $emailService->setMessage("
-            🔹 **Ticker:** {$tradeAlert['ticker']}
-            🔹 **Price:** {$tradeAlert['price']}
-            🔹 **Sentiment:** {$tradeAlert['market_sentiment']}
-            📊 **Chart:** <a href='{$chartLink}'>View Here</a>
-        ");
-        if (! $emailService->send()) {
-            $debug = $emailService->printDebugger(['headers', 'subject', 'body']);
-            log_message('error', 'sendEmailToList - Failed to send trade alert email to {recipient}: {debug}', [
+        $message = "
+            🔹 <strong>Ticker:</strong> {$tradeAlert['ticker']}<br>
+            🔹 <strong>Price:</strong> {$tradeAlert['price']}<br>
+            🔹 <strong>Sentiment:</strong> {$tradeAlert['market_sentiment']}<br>
+            📊 <strong>Chart:</strong> <a href='{$chartLink}'>View Here</a>
+        ";
+
+        $result = service('mailService')->send(
+            $email,
+            "🚀 Trade Alert - {$tradeAlert['ticker']} ({$tier} Alert)",
+            $message,
+            [
+                'module' => 'alerts',
+                'queue'  => true,
+            ]
+        );
+
+        if (! ($result['ok'] ?? false)) {
+            log_message('error', 'sendEmailToList - Failed to send trade alert email to {recipient}: {err}', [
                 'recipient' => $email,
-                'debug'     => $debug,
+                'err'       => $result['error'] ?? 'unknown',
             ]);
         }
     }
@@ -2250,19 +2273,11 @@ class AlertsController extends ResourceController
             return false;
         }
 
-        // Fetch proper CodeIgniter email service
-        $emailService = \Config\Services::email();
-
-        // Set email parameters correctly using setFrom()
-        $emailService->setFrom('alerts@mymiwallet.com', 'MyMI Wallet Alerts');
         $recipients = $this->alertsModel->getSubscribedUserEmails();
-        $emails = array_column($recipients, 'email');
-        $emailService->setTo(array_shift($emails));
-        if (!empty($emails)) {
-            $emailService->setBCC($emails);
+        if (empty($recipients)) {
+            log_message('warning', 'sendTradeAlertEmail() - No subscribed users found for Trade ID: {id}', ['id' => $tradeId]);
+            return false;
         }
-
-        $emailService->setSubject("\ud83d\ude80 Trade Alert - {$tradeAlert['ticker']} Buy Signal!");
 
         // Compose message body
         $messageBody = "
@@ -2275,16 +2290,35 @@ class AlertsController extends ResourceController
             <p><strong>Details:</strong><br>{$tradeAlert['email_content']}</p>
         ";
 
-        $emailService->setMessage($messageBody);
-        $emailService->setMailType('html');
+        $sent = 0;
+        foreach ($recipients as $recipient) {
+            $email = $recipient['email'] ?? null;
+            if (! $email) {
+                continue;
+            }
 
-        if ($emailService->send()) {
-            log_message('info', "\u2705 sendTradeAlertEmail() - Trade alert email sent for Trade ID: {$tradeId}");
-            return true;
-        } else {
-            log_message('error', "\u274c sendTradeAlertEmail() - Failed to send email for Trade ID: {$tradeId}. Debug: " . print_r($emailService->printDebugger(['headers', 'subject', 'body']), true));
-            return false;
+            $result = service('mailService')->send(
+                $email,
+                "\ud83d\ude80 Trade Alert - {$tradeAlert['ticker']} Buy Signal!",
+                $messageBody,
+                [
+                    'module' => 'alerts',
+                    'queue'  => true,
+                ]
+            );
+
+            if ($result['ok'] ?? false) {
+                $sent++;
+            } else {
+                log_message('error', 'sendTradeAlertEmail() - Failed for recipient {recipient}: {error}', [
+                    'recipient' => $email,
+                    'error'     => $result['error'] ?? 'unknown',
+                ]);
+            }
         }
+
+        log_message('info', "\u2705 sendTradeAlertEmail() - Trade alert email queued for {$sent} recipients (Trade ID: {$tradeId})");
+        return $sent > 0;
     }
     
      // public function sendTradeAlertEmails()
