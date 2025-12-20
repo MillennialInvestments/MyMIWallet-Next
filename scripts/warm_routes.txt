@@ -1,0 +1,13 @@
+# Core pages
+/
+/healthz
+/Dashboard
+/Dashboard/Transaction-Modal/1/test
+
+# Marketing & content
+/Management/cronFetchAndGenerateNews
+/Management/cronFetchMarketingEmails
+
+# Status pages
+# Endpoints below may return 403 when warmed without a cron/opcache header (acceptable for warm check)
+/_ops/opcache-reset

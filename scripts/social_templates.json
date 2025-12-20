@@ -1,0 +1,28 @@
+{
+  "platforms": {
+    "discord": {
+      "max_length": 1800,
+      "template": "**{title}**\n{message}\n{cta_line}\n{url}\n{hashtags_line}\n{tickers_line}"
+    },
+    "x": {
+      "max_length": 270,
+      "template": "{title}: {message}\n{url}\n{hashtags_line}"
+    },
+    "linkedin": {
+      "max_length": 3000,
+      "template": "{title}\n\n{message}\n{cta_line}\n{url}\n{hashtags_line}"
+    },
+    "facebook": {
+      "max_length": 4000,
+      "template": "{title}\n\n{message}\n{cta_line}\n{url}\n{hashtags_line}"
+    },
+    "email": {
+      "max_length": 5000,
+      "template": "Subject: {title}\n\n{message}\n{cta_line}\n\nRead more: {url}\n{hashtags_line}\n{tickers_line}"
+    },
+    "blog": {
+      "max_length": 5000,
+      "template": "## {title}\n\n{message}\n{cta_line}\n\nRead more: {url}\n{hashtags_line}\n{tickers_line}"
+    }
+  }
+}
