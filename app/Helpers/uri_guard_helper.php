@@ -2,7 +2,6 @@
 
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\HTTP\URI;
 use Config\Services;
 
 if (! function_exists('log_if_placeholder_in_uri')) {
@@ -91,5 +90,32 @@ if (! function_exists('guard_uri_placeholders')) {
         } catch (\Throwable $e) {
             log_message('error', 'guard_uri_placeholders failed: {msg}', ['msg' => $e->getMessage()]);
         }
+    }
+}
+
+if (! function_exists('mymi_url_guard')) {
+    /**
+     * Guard URLs against leaking CI4 route placeholders into runtime links.
+     *
+     * If a placeholder token is detected, it logs a warning and returns a safe fallback.
+     *
+     * @param string $url     Fully-formed URL or path
+     * @param array  $context Optional context (e.g., ['source' => __FILE__, 'line' => __LINE__])
+     */
+    function mymi_url_guard(string $url, array $context = []): string
+    {
+        $decoded = rawurldecode($url);
+        $pattern = '/\\(:segment\\)|\\(:num\\)|%28:segment%29|%28:num%29/i';
+
+        if (preg_match($pattern, $decoded)) {
+            log_message('warning', 'URI guard: placeholder token detected in URL: {url}', [
+                'url'     => $decoded,
+                'context' => $context,
+            ]);
+
+            return site_url('/');
+        }
+
+        return $url;
     }
 }

@@ -158,12 +158,13 @@ class Home extends BaseController
         return $this->renderTheme('themes/public/home', $data);
     }
 
-    public function apexReferral()
+    public function apexReferral(?string $referralCode = null)
     {
         $data = $this->buildCommonData([
             'layout'    => 'public',
             'pageName'  => 'Apex Referral',
             'pageTitle' => 'MyMI Wallet | The Future of Finance | Apex Referral',
+            'referralCode' => $referralCode,
         ]);
         if ($data instanceof ResponseInterface) {
             return $data;
@@ -171,12 +172,13 @@ class Home extends BaseController
         return $this->renderTheme('themes/public/home', $data);
     }
 
-    public function corporateEarnings()
+    public function corporateEarnings(?string $section = null)
     {
         $data = $this->buildCommonData([
             'layout'    => 'public',
             'pageName'  => 'Corporate Earnings',
             'pageTitle' => 'MyMI Wallet | The Future of Finance | Corporate Earnings',
+            'contentSection' => $section,
         ]);
         if ($data instanceof ResponseInterface) {
             return $data;
@@ -184,17 +186,24 @@ class Home extends BaseController
         return $this->renderTheme('themes/public/corporateEarnings', $data);
     }
 
-    public function economicCalendar()
+    public function economicCalendar(?string $section = null)
     {
         $data = $this->buildCommonData([
             'layout'    => 'public',
             'pageName'  => 'Economic Calendar',
             'pageTitle' => 'MyMI Wallet | The Future of Finance | Economic Calendar',
+            'contentSection' => $section,
         ]);
         if ($data instanceof ResponseInterface) {
             return $data;
         }
         return $this->renderTheme('themes/public/economicCalendar', $data);
+    }
+
+    public function economicCalendarContent(?string $section = null)
+    {
+        // Reuse the main Economic Calendar view while allowing deep links to sections/content
+        return $this->economicCalendar($section);
     }
 
     public function exchange(string $slug)
@@ -206,12 +215,14 @@ class Home extends BaseController
         return $this->renderTheme('themes/public/exchange', $data);
     }
 
-    public function gettingStarted()
+    public function gettingStarted(?string $section = null, ?string $subsection = null)
     {
         $data = $this->buildCommonData([
             'layout'    => 'public',
             'pageName'  => 'Getting Started',
             'pageTitle' => 'MyMI Wallet | The Future of Finance | Getting Started',
+            'contentSection' => $section,
+            'contentSubsection' => $subsection,
         ]);
         if ($data instanceof ResponseInterface) {
             return $data;
@@ -219,12 +230,13 @@ class Home extends BaseController
         return $this->renderTheme('themes/public/gettingStarted', $data);
     }
 
-    public function memberships()
+    public function memberships(?string $plan = null)
     {
         $data = $this->buildCommonData([
             'layout'    => 'public',
             'pageName'  => 'Memberships',
             'pageTitle' => 'MyMI Wallet | The Future of Finance | Memberships',
+            'selectedPlan' => $plan,
         ]);
         if ($data instanceof ResponseInterface) {
             return $data;
@@ -336,12 +348,24 @@ class Home extends BaseController
         return $this->renderTheme('themes/public/previewAlert', $data);
     }
 
-    public function privacy()
+    public function privacy(?string $section = null)
     {
-        return $this->renderTheme('themes/public/privacyPolicy', [
-            'layout'    => 'public',
-            'pageTitle' => 'Privacy Policy — MyMI Wallet',
+        $data = $this->buildCommonData([
+            'layout'         => 'public',
+            'pageName'       => 'Privacy Policy',
+            'pageTitle'      => 'Privacy Policy — MyMI Wallet',
+            'contentSection' => $section,
         ]);
+        if ($data instanceof ResponseInterface) {
+            return $data;
+        }
+
+        return $this->renderTheme('themes/public/privacyPolicy', $data);
+    }
+
+    public function privacyPolicy(?string $section = null)
+    {
+        return $this->privacy($section);
     }
 
     public function sector(string $slug)
@@ -353,11 +377,23 @@ class Home extends BaseController
         return $this->renderTheme('Public/sector', $data);
     }
 
-    public function terms()
+    public function terms(?string $section = null)
     {
-        return $this->renderTheme('themes/public/termsOfService', [
-            'layout'    => 'public',
-            'pageTitle' => 'Terms of Service — MyMI Wallet',
+        $data = $this->buildCommonData([
+            'layout'         => 'public',
+            'pageName'       => 'Terms of Service',
+            'pageTitle'      => 'Terms of Service — MyMI Wallet',
+            'contentSection' => $section,
         ]);
+        if ($data instanceof ResponseInterface) {
+            return $data;
+        }
+
+        return $this->renderTheme('themes/public/termsOfService', $data);
+    }
+
+    public function termsOfService(?string $section = null)
+    {
+        return $this->terms($section);
     }
 }
