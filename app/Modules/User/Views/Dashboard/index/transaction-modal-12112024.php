@@ -1,4 +1,5 @@
 <?php
+helper('url_guard');
 // Safely access segments
 $totalSegments = $uri->getTotalSegments();
 
@@ -28,22 +29,37 @@ $client_id  = $cuUserType === 'Beta' ? 'AeFttKQS_djpAmMEFvPSinKaluT_XqJ_zE00kD8Q
 
 <script <?= $nonce['script'] ?? '' ?>>
     $(document).ready(function() {
+    const modalBaseUrl = "<?= rtrim(mymi_url_guard(site_url('Dashboard/Transaction-Modal'), ['source' => __FILE__, 'line' => __LINE__]), '/') ?>";
+    const encodedPlaceholderPattern = /%28:(segment|num)%29/i;
+    const placeholderPattern = /\\(:?(segment|num)\\)/i;
+
+    function safeSegment(value) {
+        const cleaned = (value ?? '').toString().trim();
+        if (!cleaned || placeholderPattern.test(cleaned) || encodedPlaceholderPattern.test(cleaned)) {
+            return '';
+        }
+        return '/' + encodeURIComponent(cleaned.replace(/^\\/+/, ''));
+    }
+
+    function guardUrl(url) {
+        if (!url || placeholderPattern.test(url) || encodedPlaceholderPattern.test(url)) {
+            console.warn('⚠️ URL guard blocked placeholder token', { url });
+            return "<?= site_url('/') ?>";
+        }
+        return url;
+    }
+
     $('.dynamicModalLoader').click(function() {
-        const formtype = $(this).data('formtype');
-        let endpoint = $(this).data('endpoint');
-        endpoint = endpoint ? '/' + endpoint : '';
-        let accountid = $(this).data('accountid');
-        accountid = accountid ? '/' + accountid : '';
-        let category = $(this).data('category');
-        category = category ? '/' + category : '';
-        let platform = $(this).data('platform');
-        platform = platform ? '/' + platform : '';
-        
-        // Capture promo code if present
-        const promoCode = $('#promo_code_input').val(); // Assume a promo code input field with ID `promo_code_input`
-        
-        const url = `<?= site_url('Dashboard/Transaction-Modal/') ?>${formtype}${endpoint}${accountid}${category}${platform}?promo_code=${promoCode}`;
-        
+        const formtype = safeSegment($(this).data('formtype'));
+        const endpoint = safeSegment($(this).data('endpoint'));
+        const accountid = safeSegment($(this).data('accountid'));
+        const category = safeSegment($(this).data('category'));
+        const platform = safeSegment($(this).data('platform'));
+
+        const promoCode = $('#promo_code_input').val();
+
+        const url = guardUrl(`${modalBaseUrl}${formtype}${endpoint}${accountid}${category}${platform}?promo_code=${encodeURIComponent(promoCode ?? '')}`);
+
         console.log('URL:', url); // Debugging URL
 
         $('#transactionModal').modal('show');

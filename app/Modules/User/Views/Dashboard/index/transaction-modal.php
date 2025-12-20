@@ -1,5 +1,6 @@
 <!-- app/Modules/User/Views/Dashboard/index/transaction-modal.php -->
 <?php
+helper('url_guard');
 $totalSegments = $uri->getTotalSegments();
 
 $pageURIA   = $totalSegments >= 1 ? $uri->getSegment(1) : null;
@@ -26,7 +27,17 @@ $client_id  = $cuUserType === 'Beta'
 $(document).ready(function () {
     console.log("✅ Document is ready!");
 
-    const modalBaseUrl = "<?= rtrim(site_url('Dashboard/Transaction-Modal'), '/') ?>";
+    const modalBaseUrl = "<?= rtrim(mymi_url_guard(site_url('Dashboard/Transaction-Modal'), ['source' => __FILE__, 'line' => __LINE__]), '/') ?>";
+    const placeholderPattern = /\\(:?(segment|num)\\)/i;
+    const encodedPlaceholderPattern = /%28:(segment|num)%29/i;
+
+    function guardUrl(url, meta = {}) {
+        if (!url || placeholderPattern.test(url) || encodedPlaceholderPattern.test(url)) {
+            console.warn('⚠️ URL guard blocked placeholder token', { url, meta });
+            return "<?= site_url('/') ?>";
+        }
+        return url;
+    }
 
     function sanitizeSegment(segment) {
         if (!segment) {
@@ -34,10 +45,9 @@ $(document).ready(function () {
         }
 
         const decoded = decodeURIComponent(String(segment)).replace(/^\/+/, "").trim();
-        const placeholderPattern = /^\(:?(segment|num)\)$/i;
-        const encodedPlaceholderPattern = /%28:(segment|num)%29/i;
+        const placeholderOnlyPattern = /^\\(:?(segment|num)\\)$/i;
 
-        if (decoded === "" || placeholderPattern.test(decoded) || encodedPlaceholderPattern.test(segment)) {
+        if (decoded === "" || placeholderOnlyPattern.test(decoded) || encodedPlaceholderPattern.test(segment)) {
             return "";
         }
 
@@ -59,13 +69,13 @@ $(document).ready(function () {
     $(document).on("click", ".dynamicModalLoader", function (event) {
         event.preventDefault();
 
-        const url = buildModalUrl({
+        const url = guardUrl(buildModalUrl({
             formtype: $(this).data("formtype"),
             endpoint: $(this).data("endpoint"),
             accountid: $(this).data("accountid"),
             category: $(this).data("category"),
             platform: $(this).data("platform"),
-        });
+        }), { source: 'dynamicModalLoader', href: $(this).attr('href') });
 
         console.log("⏳ Fetching modal content from:", url);
 

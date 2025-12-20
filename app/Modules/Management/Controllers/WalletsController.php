@@ -20,7 +20,7 @@ class WalletsController extends UserController
     // Controller Settings
     protected $auth;
     protected $format;
-    protected $helpers = ['auth', 'form', 'url'];
+    protected $helpers = ['auth', 'form', 'url', 'url_guard'];
     protected $request;
     protected $session;
     protected $siteSettings;
@@ -325,7 +325,12 @@ class WalletsController extends UserController
             if ($withActions) {
                 $uid = (int)($r['user_id'] ?? 0);
                 $wid = (int)($r['wallet_id'] ?? 0);
-                $editUrl = site_url('Dashboard/Transaction-Modal/Edit/'. $this->guessEditEndpoint($r) .'/'. ($wid ?: ($r['id'] ?? 0)));
+                $endpoint = rawurlencode($this->guessEditEndpoint($r));
+                $walletId = rawurlencode((string)($wid ?: ($r['id'] ?? 0)));
+                $editUrl = mymi_url_guard(site_url("Dashboard/Transaction-Modal/Edit/{$endpoint}/{$walletId}"), [
+                    'source' => __METHOD__,
+                    'row'    => $r,
+                ]);
                 $emailUrl = site_url('Management/Wallets/NotifyUserMissingInfo/'. $uid .'/'. ($wid ?: ($r['id'] ?? 0)));
                 $out .= '<td>
                     <a class="btn btn-primary btn-sm" target="_blank" href="'.esc($editUrl).'">Open Edit</a>
@@ -402,7 +407,10 @@ class WalletsController extends UserController
         $sub   = $db->table($map['table'])->where('wallet_id', $walletId)->get()->getRowArray();
         $subId = $sub['id'] ?? ($w['account_id'] ?? $walletId);
 
-        $editUrl = site_url("Dashboard/Transaction-Modal/Edit/{$map['endpoint']}/{$subId}");
+        $editUrl = mymi_url_guard(site_url('Dashboard/Transaction-Modal/Edit/' . rawurlencode($map['endpoint']) . '/' . rawurlencode((string) $subId)), [
+            'source'   => __METHOD__,
+            'walletId' => $walletId,
+        ]);
 
         // Recipient
         $user = $db->table('users')->select('email, username')->where('id', $userId)->get()->getRowArray();
