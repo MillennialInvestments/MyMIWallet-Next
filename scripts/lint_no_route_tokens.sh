@@ -3,9 +3,9 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
-ALLOWLIST_REGEX="app/(Config|Modules/.*/Config)/Routes\\.php|app/ConfigO/Routes\\.php"
+ALLOWLIST_REGEX="app/Config/Routes\\.php:|app/Modules/.*/Config/Routes\\.php:|app/ConfigO/Routes\\.php:"
 
-MATCHES=$(grep -RIn --exclude-dir=writable --exclude-dir=vendor "\(:segment\)|\(:num\)|%28:segment%29|%28:num%29" "$ROOT" \
+MATCHES=$(grep -RIn --exclude-dir=writable --exclude-dir=vendor --exclude-dir=node_modules "\(:segment\)|\(:num\)|%28:segment%29|%28:num%29" "$ROOT" \
   | grep -vE "$ALLOWLIST_REGEX" || true)
 
 if [[ -n "$MATCHES" ]]; then
