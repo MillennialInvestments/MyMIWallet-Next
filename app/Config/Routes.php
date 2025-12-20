@@ -1910,6 +1910,22 @@ $routes->group('API/Management', ['namespace' => 'App\\Modules\\APIs\\Controller
     $routes->get('getSupport', 'ManagementController::getSupport');
 });
 
+// Management Project Control Center
+$routes->group('Management', ['namespace' => 'App\\Modules\\Management\\Controllers', 'filter' => 'login'], static function ($routes) {
+    $routes->get('Project-Control-Center', 'ProjectControlCenterController::index');
+});
+
+$routes->group('API/Management/ProjectControl', ['namespace' => 'App\\Modules\\Management\\Controllers', 'filter' => 'login'], static function ($routes) {
+    $routes->get('list', 'ProjectControlCenterController::list');
+    $routes->post('upsert', 'ProjectControlCenterController::upsert');
+    $routes->get('detail/(:num)', 'ProjectControlCenterController::detail/$1');
+    $routes->post('updateStatus/(:num)', 'ProjectControlCenterController::updateStatus/$1');
+    $routes->post('updateNotes/(:num)', 'ProjectControlCenterController::updateNotes/$1');
+    $routes->get('exportCsv', 'ProjectControlCenterController::exportCsv');
+    $routes->get('exportJson', 'ProjectControlCenterController::exportJson');
+    $routes->post('importCsv', 'ProjectControlCenterController::importCsv');
+});
+
 if (file_exists(APPPATH . "Modules/Management/Config/Routes.php")) {
     require APPPATH . "Modules/Management/Config/Routes.php";
 }
