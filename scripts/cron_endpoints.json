@@ -1,0 +1,36 @@
+{
+  "endpoints": [
+    {
+      "name": "Marketing - Generate News",
+      "method": "GET",
+      "path": "/Management/cronFetchAndGenerateNews",
+      "headers": {
+        "X-Cron-Key": "{{CRON_SECRET}}"
+      }
+    },
+    {
+      "name": "Marketing - Analyze Content",
+      "method": "GET",
+      "path": "/Management/cronAnalyzeContent",
+      "headers": {
+        "X-Cron-Key": "{{CRON_SECRET}}"
+      }
+    },
+    {
+      "name": "Marketing - Auto Publish Digest",
+      "method": "GET",
+      "path": "/Management/cronAutoPublishGroupedDigest",
+      "headers": {
+        "X-Cron-Key": "{{CRON_SECRET}}"
+      }
+    },
+    {
+      "name": "Esports - Process Jobs",
+      "method": "POST",
+      "path": "/Management/cronProcessJobs",
+      "headers": {
+        "X-Cron-Key": "{{CRON_SECRET}}"
+      }
+    }
+  ]
+}
