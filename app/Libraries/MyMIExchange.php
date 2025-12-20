@@ -21,7 +21,8 @@ use App\Libraries\{
     CryptoCurrencyInterface,
     ExchangeConnectorInterface,
     MyMIGemini,
-    MyMIRobinhood
+    MyMIRobinhood,
+    Overledger\MyMIOverledger
 };
 use App\Models\{ExchangeModel};
 use CodeIgniter\API\ResponseTrait; // Import the ResponseTrait
@@ -52,6 +53,7 @@ class MyMIExchange
     protected $chains = [];
     protected $instances = [];
     protected array $connectors = [];
+    protected ?MyMIOverledger $overledger = null;
 
     public function __construct()
     {
@@ -61,6 +63,7 @@ class MyMIExchange
         $this->session                  = Services::session();
         $this->siteSettings             = config('SiteSettings'); 
         $this->chains                   = config('Exchanges')->chains;
+        $this->overledger               = new MyMIOverledger();
 
         $this->MyMISolana               = service('myMISolana');
         if (! $this->MyMISolana instanceof MyMISolana) {
@@ -174,6 +177,51 @@ class MyMIExchange
             }
         }
         return $this->connectors[$key];
+    }
+
+    public function overledgerHealthCheck(array $options = []): array
+    {
+        return $this->overledger?->healthCheck($options) ?? [
+            'success' => false,
+            'status'  => 500,
+            'error'   => 'Overledger client not initialized',
+        ];
+    }
+
+    public function overledgerGetSupportedNetworks(array $options = []): array
+    {
+        return $this->overledger?->getSupportedNetworks($options) ?? [
+            'success' => false,
+            'status'  => 500,
+            'error'   => 'Overledger client not initialized',
+        ];
+    }
+
+    public function overledgerGetBalance(string $network, string $address, ?string $asset = null, array $options = []): array
+    {
+        return $this->overledger?->getBalance($network, $address, $asset, $options) ?? [
+            'success' => false,
+            'status'  => 500,
+            'error'   => 'Overledger client not initialized',
+        ];
+    }
+
+    public function overledgerPrepareTransaction(array $tx, array $options = []): array
+    {
+        return $this->overledger?->prepareTransaction($tx, $options) ?? [
+            'success' => false,
+            'status'  => 500,
+            'error'   => 'Overledger client not initialized',
+        ];
+    }
+
+    public function overledgerSubmitTransaction(array $preparedTx, array $options = []): array
+    {
+        return $this->overledger?->submitTransaction($preparedTx, $options) ?? [
+            'success' => false,
+            'status'  => 500,
+            'error'   => 'Overledger client not initialized',
+        ];
     }
     
     /**
