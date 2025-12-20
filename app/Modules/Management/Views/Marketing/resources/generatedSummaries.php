@@ -267,6 +267,12 @@ document.addEventListener("DOMContentLoaded", function () {
  *   then injects it into the #previewPostContent and shows the modal.
  */
 function dynamicModalLoader(url) {
+    const placeholderPattern = /\\(:?(segment|num)\\)/i;
+    const encodedPlaceholderPattern = /%28:(segment|num)%29/i;
+    const safeUrl = (!url || placeholderPattern.test(url) || encodedPlaceholderPattern.test(url))
+        ? "<?= site_url('/') ?>"
+        : url;
+
     const modalElement = document.getElementById('previewPostModal');
     const modal = new bootstrap.Modal(modalElement);
     const content = document.getElementById('previewPostContent');
@@ -281,7 +287,7 @@ function dynamicModalLoader(url) {
     `;
     modal.show();
 
-    fetch(url)
+    fetch(safeUrl)
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success' && data.html) {

@@ -6,6 +6,7 @@ use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Debug\ExceptionHandler;
 use CodeIgniter\Debug\ExceptionHandlerInterface;
 use CodeIgniter\HTTP\Exceptions\BadRequestException;
+use CodeIgniter\Exceptions\PageNotFoundException;
 use Psr\Log\LogLevel;
 use Throwable;
 
@@ -34,7 +35,7 @@ class Exceptions extends BaseConfig
      *
      * @var list<int>
      */
-    public array $ignoreCodes = [404];
+    public array $ignoreCodes = [];
 
     /**
      * --------------------------------------------------------------------------
@@ -106,6 +107,13 @@ class Exceptions extends BaseConfig
             log_message('error', 'BadRequestException: {msg} | URI: {uri}', [
                 'msg' => $exception->getMessage(),
                 'uri' => (string) service('request')->getUri(),
+            ]);
+        }
+        if ($exception instanceof PageNotFoundException) {
+            $request = service('request');
+            log_message('warning', '404 route miss: {uri} | referrer: {ref}', [
+                'uri' => (string) $request->getUri(),
+                'ref' => $request->getHeaderLine('Referer') ?: 'none',
             ]);
         }
         return new ExceptionHandler($this);

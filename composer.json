@@ -47,6 +47,7 @@
         "build-inventory": "python3 scripts/build_inventory.py",
         "build-seo-inventory": "python3 scripts/build_page_seo_inventory.py",
         "build-sitemap": "python3 scripts/build_sitemap_from_inventory.py",
-        "build-syndication-inventory": "python3 scripts/build_syndication_inventory.py"
+        "build-syndication-inventory": "python3 scripts/build_syndication_inventory.py",
+        "lint:no-route-tokens": "bash scripts/lint_no_route_tokens.sh"
     }
 }
