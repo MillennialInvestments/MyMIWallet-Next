@@ -10,6 +10,7 @@ use App\Support\Http;
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait; // Import the ResponseTrait
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\HTTP\ResponseInterface;
 
 #[\AllowDynamicProperties]
 class ManagementController extends \App\Controllers\BaseController
@@ -1646,6 +1647,10 @@ class ManagementController extends \App\Controllers\BaseController
     
     public function runCronManually()
     {
+        if ($response = $this->requireCronAuth()) {
+            return $response;
+        }
+
         $result = $this->executeCronWorkflow();
         $result['message'] = 'Manual CRON execution complete.';
 
@@ -1653,6 +1658,10 @@ class ManagementController extends \App\Controllers\BaseController
     }
 
     public function runDailyAlphaVantageDataPipeline() {
+        if ($response = $this->requireCronAuth()) {
+            return $response;
+        }
+
         $symbols = array_map(static function ($row) {
             return is_array($row) ? ($row['symbol'] ?? null) : $row;
         }, $this->alertsModel->getTopWatchlistSymbols());
@@ -1707,6 +1716,35 @@ class ManagementController extends \App\Controllers\BaseController
         return $this->failServerError("Failed to send test email. Debug: {$errorDebug}");
     }
     
+    
+    protected function requireCronAuth(): ?ResponseInterface
+    {
+        $expected = trim((string) getenv('MYMI_CRON_TOKEN'));
+
+        if ($expected === '') {
+            return null;
+        }
+
+        $authHeader = $this->request->getHeaderLine('Authorization');
+        $provided   = '';
+
+        if ($authHeader && preg_match('/Bearer\s+(.*)$/i', $authHeader, $matches)) {
+            $provided = trim($matches[1]);
+        }
+
+        if ($provided === '') {
+            $provided = (string) $this->request->getGet('token');
+        }
+
+        if ($provided === '' || ! hash_equals($expected, $provided)) {
+            log_message('warning', 'Cron auth failed for ManagementController endpoint.');
+
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+        }
+
+        return null;
+    }
+
     public function sendToZapierManually() {
         $summary = $this->generateTodaysNewsSummary();
         $result = $this->getMyMIMarketing()->sendToZapier($summary['content']);
