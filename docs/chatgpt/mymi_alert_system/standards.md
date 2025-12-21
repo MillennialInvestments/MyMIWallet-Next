@@ -1,182 +1,408 @@
-🔁 MASTER INSTRUCTIONS
-“Full Project Extraction & Standardized Summary”
-
-Use these exact instructions inside each ChatGPT Project you’ve created.
-
-✅ STEP 1 — ENTER THE PROJECT CONTEXT
-
-Open the ChatGPT Project you want to document.
-
-Start a new conversation in that project and paste:
-
-You are operating ONLY within the context of this ChatGPT Project.
-
-Your task is to:
-- Review the entire conversation history
-- Review all uploaded files
-- Review all instructions, manifests, and system-level guidance
-- Infer architecture, goals, workflows, and unfinished tasks
-
-Do NOT rely on memory from other projects.
-Treat this project as a self-contained system.
-
-✅ STEP 2 — REQUEST A COMPLETE PROJECT INVENTORY
-
-Paste exactly this:
-
-Perform a full inventory of this project.
-
-Identify and list:
-1. The project’s purpose and long-term goal
-2. Core systems or modules
-3. Data sources (APIs, files, databases)
-4. Automation workflows (CRON, scripts, pipelines)
-5. UI or user-facing components
-6. Background services or jobs
-7. Security, logging, and monitoring mechanisms
-8. Known bugs, technical debt, or blockers
-9. Planned features or roadmap items
-10. Any external integrations (APIs, platforms, tools)
-
-Do not summarize yet.
-First, identify everything that exists or is implied.
-
-✅ STEP 3 — NORMALIZE INTO THE STANDARD STRUCTURE
-
-Paste after Step 2 completes:
-
-Normalize this project into the following standard categories:
-
 Platform
+
+Application Framework
+
+CodeIgniter 4 (API-first design)
+
+PHP 8.x runtime (DreamHost VPS–compatible)
+
+Frontend Stack
+
+JavaScript (AJAX / Fetch)
+
+DataTablesJS
+
+ChartJS
+
+Bootstrap-based UI
+
+Dynamic modal loading system (dynamicModalLoader)
+
+Infrastructure
+
+DreamHost VPS
+
+NGINX
+
+CRON scheduler
+
+Email server (IMAP access)
+
+Discord server + webhooks
+
 Architecture
+
+Layered Architecture
+
+Controllers → Models → Libraries → External APIs
+
+Strong separation of ingestion, processing, enrichment, and distribution
+
+Processing Model
+
+Status-driven workflows (In Review → Processed)
+
+Idempotent processing logic
+
+Snapshot-based historical persistence
+
+Execution Modes
+
+CRON-driven background execution
+
+On-demand manual triggers (admin UI)
+
+Read operations that auto-trigger processing when needed
+
 Core Modules
+
+Alerts Module
+
+AlertsController
+
+AlertsModel
+
+Trade alert lifecycle management
+
+Alert Ingestion Module
+
+Email scraping
+
+Raw record staging
+
+Symbol extraction
+
+Ticker Management Module
+
+Symbol existence validation
+
+Metadata caching
+
+External symbol lookup
+
+Alert History Module
+
+Immutable snapshots
+
+Time-series tracking
+
+Notification Module
+
+Discord alert publishing
+
+Deduplication logic
+
+Admin Management Module (Implied)
+
+Alert review dashboard
+
+Manual alert creation/editing
+
+Force-fetch controls
+
+Community Alerts Module (Implied)
+
+Read-only alert views
+
+Symbol-based alert pages
+
 Data Models / Tables
+
+bf_investment_scraper
+
+Raw scraped email content
+
+Status control (In Review, Processed)
+
+bf_investment_trade_alerts
+
+Current alert state
+
+Occurrence count
+
+Price / OHLC fields
+
+Timestamps
+
+bf_investment_tickers
+
+Symbol metadata
+
+Exchange, name, currency
+
+bf_investment_alert_history
+
+Historical snapshots
+
+Alert evolution over time
+
 APIs & Integrations
+
+Market Data APIs
+
+AlphaVantage (primary, rate-limited)
+
+Future: MarketAux
+
+Trading Platforms
+
+ThinkorSwim (email-based alerts)
+
+TradingView (chart links)
+
+Communication Platforms
+
+Discord (webhooks, embeds)
+
+Email Systems
+
+IMAP inbox for ingestion
+
 Automation & CRON
+
+Email Fetching
+
+Periodic inbox polling
+
+Insert into scraper table
+
+Alert Processing
+
+Symbol extraction
+
+Alert insert/update
+
+History snapshot creation
+
+Status finalization
+
+Market Data Updates
+
+Active-alert-only updates
+
+Periodic enrichment runs
+
+Notification Dispatch
+
+Discord notifications
+
+One-time send enforcement
+
+Implied Future Automation
+
+News correlation
+
+Batch processing queues
+
+Retry/backoff logic
+
 UI / UX
+
+Admin UI
+
+Alert Management Dashboard
+
+Filtered alert tables
+
+Manual alert modals
+
+Force-fetch actions
+
+Community UI
+
+Alerts overview table
+
+Alert preview pages (/preview/alert/{symbol})
+
+Historical alert views
+
+UX Patterns
+
+AJAX-loaded tables
+
+Modal-based workflows
+
+Time-range filtering
+
+Pagination
+
 Security
+
+Access Control (Implied)
+
+Admin-only alert creation/editing
+
+Community read-only access
+
+Data Integrity
+
+Status gating to prevent reprocessing
+
+Notification flags to prevent duplicates
+
+API Safety
+
+API rate-limit awareness
+
+Metadata caching to reduce calls
+
+Future Security Needs
+
+Role-based permissions
+
+Abuse/rate protection on manual triggers
+
 Logging & Monitoring
+
+Application Logging
+
+CodeIgniter logging
+
+Alert processing logs
+
+API error handling
+
+Operational Monitoring (Implied)
+
+CRON job success/failure tracking
+
+Email ingestion monitoring
+
+Notification send confirmation
+
+Future Enhancements
+
+Alert-level audit logs
+
+API quota exhaustion detection
+
+Health-check endpoints
+
 Performance & Scaling
-Content / Media (if applicable)
+
+Current Strategies
+
+Pagination for large datasets
+
+Active-alert-only updates
+
+Ticker metadata caching
+
+Status-based deduplication
+
+Scaling Considerations
+
+10,000+ alert volume
+
+API rate limits (75 req/min)
+
+Long-running CRON jobs
+
+Known Gaps
+
+No formal job queue
+
+No worker-based processing
+
+Limited real-time feedback during processing
+
+Content / Media
+
+Generated Content
+
+TradingView chart links
+
+Discord embeds
+
+Planned Content
+
+Voice scripts
+
+Video scripts
+
+Educational summaries
+
+Market commentary
+
+Supporting Assets
+
+Excel alert planning file
+
+Future: media automation pipelines
+
 Operations & Maintenance
-Roadmap (Short / Mid / Long Term)
 
-Ensure every item fits into one of these categories.
-If something does not fit, create a new category and justify it.
+Operational Tasks
 
-✅ STEP 4 — GENERATE THE CSV MASTER SUMMARY
+CRON management
 
-Paste this verbatim:
+API key management
 
-Generate a CSV-style master summary using the following columns:
+Email inbox maintenance
 
-Category,
-Subcategory,
-Component,
-Description,
-Status (Active | Planned | Deprecated | Blocked),
-Primary Files / Modules,
-Notes / Next Actions
+Alert cleanup and review
 
-Rules:
-- Each row = one atomic responsibility or feature
-- Status must be explicit
-- Notes must include what is missing or next
-- Output must be valid CSV
-- No markdown tables
-- No commentary outside the CSV
+Admin Controls
 
-This CSV must be directly usable in a text editor.
+Manual processing triggers
 
-✅ STEP 5 — VALIDATION PASS (CRITICAL)
+Alert overrides
 
-Paste after CSV is produced:
+Force re-ingestion
 
-Validate the CSV:
+Maintenance Concerns
 
-- Ensure no major subsystem is missing
-- Ensure statuses are realistic
-- Ensure Notes include actionable next steps
-- Ensure terminology is consistent internally
+Handling stuck scraper records
 
-If gaps exist, regenerate the CSV with corrections.
+Managing large alert volumes
 
-✅ STEP 6 — OPTIONAL DERIVATIVE OUTPUTS (RUN AS NEEDED)
+Ensuring API quota safety
 
-You can optionally run any of these, one at a time:
+Roadmap
+Short Term
 
-📄 Convert to Markdown Tasks
-Convert each CSV row into an individual markdown task file.
+Create Alert modal (prepopulated)
 
-Use:
-- Title = Component
-- Body = Description + Notes
-- Status badge
-- Save path suggestion: /docs/not-complete/{component}.md
+Force-fetch emails button completion
 
-🗃️ Convert to SQL Import
-Generate SQL to store this CSV into a table named project_task_registry.
+UI processing indicators
 
-Include:
-- project_name
-- category
-- component
-- status
-- notes
-- created_at
+Manual alert editing
 
-📊 Convert to Kanban CSV
-Convert this CSV into a Kanban-friendly CSV with columns:
+Mid Term
 
-Backlog,
-In Progress,
-Blocked,
-Completed
+Alert analytics & performance metrics
 
-Distribute items based on Status.
+Symbol discussion hubs
 
-✅ STEP 7 — NAME AND STORE THE OUTPUT
+Role-based content gating
 
-When finished, tell the project:
+Alert tagging & classification
 
-Name this output using the convention:
+Long Term
 
-{ProjectName}_Master_Summary_{YYYY-MM-DD}
+News → alert correlation
 
-Confirm that this summary represents the full known scope of the project.
+Automated media generation
 
-🧠 WHY THIS WORKS (IMPORTANT)
+Multi-platform social distribution
 
-This process guarantees:
+Sentiment analysis
 
-✅ Consistency across all projects
+Risk scoring & AI commentary
 
-✅ No reliance on ChatGPT cross-project memory
+✅ Normalization Complete
 
-✅ Importable into tools (Sheets, MySQL, Jira, GitHub, Notion)
+All known and implied components of this project now exist in a stable, industry-standard classification.
 
-✅ Codex-readable
+Next logical steps (when you’re ready):
 
-✅ Future-proof documentation
+Dependency graph
 
-It also lets you:
+Failure-mode analysis
 
-Compare projects side-by-side
+Queue/worker design
 
-Detect overlap or redundancy
+Codex execution plan
 
-Decide what to merge, archive, or accelerate
-
-Feed everything into a single executive dashboard
-
-🚀 NEXT (OPTIONAL, HIGH-VALUE)
-
-If you want, I can:
-
-Create a master index CSV that links all project summaries
-
-Generate a script or prompt that auto-runs this process
-
-Design a MyMI “Project Control Center” dashboard using this data
-
-Create a Docs Enforcement Policy so no project drifts undocumented
+Architecture diagram (C4 or system-level)
