@@ -1895,6 +1895,7 @@ $routes->group('API/Management', ['namespace' => 'App\\Modules\\APIs\\Controller
     $routes->post('runDailyAlphaVantageDataPipeline', 'ManagementController::runDailyAlphaVantageDataPipeline');
     $routes->post('triggerPostAutogenOnEmpty', 'ManagementController::triggerPostAutogenOnEmpty');
     $routes->get('exportPostJson/(:num)', 'ManagementController::exportPostJson/$1');
+    $routes->get('logHealthcheck', 'ManagementController::logHealthcheck');
     $routes->post('generateVoiceScriptManually', 'ManagementController::generateVoiceScriptManually');
     $routes->post('processAllTradeAlerts', 'ManagementController::processAllTradeAlerts');
     $routes->post('distributeTodaysNewsContent', 'ManagementController::distributeTodaysNewsContent');
