@@ -25,7 +25,7 @@ LIVE every Saturday from 6:00 AM - 8:00 AM (Central Time) for extended market an
 
 🔗 Connect With MyMI Wallet
 🌐 Website: https://www.mymiwallet.com
-📺 YouTube: https://www.youtube.com/@MyMI Wallet    
+📺 YouTube: https://www.youtube.com/@MyMIWallet    
 🎮 Twitch: https://www.twitch.tv/mymiwallet
 💬 Discord: https://discord.gg/fhT2XDjW8W
 🐦 X (Twitter): https://x.com/MyMIWallet

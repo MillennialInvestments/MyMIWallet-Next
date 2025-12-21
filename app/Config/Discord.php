@@ -31,7 +31,7 @@ class Discord extends BaseConfig
     /**
      * Internal endpoint + token for recording Discord onboarding progress.
      */
-    public string $onboardingCompleteEndpoint = 'https://www.mymiwallet.com/index.php/API/Discord/completeOnboardingStep';
+    public string $onboardingCompleteEndpoint = 'https://www.mymiwallet.com/API/Discord/completeOnboardingStep';
     public ?string $internalApiToken = null;
 
     /**

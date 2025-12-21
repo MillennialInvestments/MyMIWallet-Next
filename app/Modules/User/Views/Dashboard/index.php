@@ -72,7 +72,6 @@ $availableToInvest = $budgetSummary['availableToInvest'] ?? 0.0;
 $aiSessionKey      = $aiSessionKey ?? '';
 $aiNotesList       = $aiNotes ?? [];
 ?>
-?>
 <div class="nk-block-head nk-block-head-sm">
     <div class="nk-block-between">
         <div class="nk-block-head-content">

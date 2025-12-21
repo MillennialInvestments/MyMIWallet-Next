@@ -40,7 +40,8 @@ class App extends BaseConfig
      * something else. If you have configured your web server to remove this file
      * from your site URIs, set this variable to an empty string.
      */
-    public string $indexPage = 'index.php';
+    // public string $indexPage = 'index.php';
+    public string $indexPage = '';
 
     /**
      * --------------------------------------------------------------------------
@@ -146,6 +147,18 @@ class App extends BaseConfig
      * @see http://php.net/htmlspecialchars for a list of supported charsets.
      */
     public string $charset = 'UTF-8';
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $baseURL = env('app.baseURL');
+        if (! empty($baseURL)) {
+            $this->baseURL = rtrim($baseURL, '/') . '/';
+        }
+
+        $this->indexPage = env('app.indexPage', '');
+    }
 
     /**
      * --------------------------------------------------------------------------
