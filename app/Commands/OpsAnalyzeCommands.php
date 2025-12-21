@@ -14,15 +14,21 @@ class OpsAnalyzeCommands extends BaseCommand
 
     protected OpsCommandService $service;
 
-    public function __construct()
+    protected function svc(): OpsCommandService
     {
-        parent::__construct();
-        $this->service = new OpsCommandService();
+        // Lazy init so command discovery doesn't instantiate heavy services
+        static $svc = null;
+
+        if ($svc === null) {
+            $svc = new OpsCommandService();
+        }
+
+        return $svc;
     }
 
     public function run(array $params)
     {
-        $items = $this->service->listInbox(['status' => ['Parsed']]);
+        $items = $this->svc()->listInbox(['status' => ['Parsed']]);
 
         if (empty($items)) {
             CLI::write('No Parsed inbox items found.');
