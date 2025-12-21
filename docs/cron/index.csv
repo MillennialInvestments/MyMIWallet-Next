@@ -1,0 +1,8 @@
+job_slug,schedule,entrypoint,environment,auth_method,owner,last_updated,notes
+health_check,*/30 * * * *,scripts/ops/health_check.sh,prod,bearer:${MYMI_CRON_TOKEN},ops,2025-01-05,"JSON health surface; safe for phone SSH"
+log_summarize_and_diff,0 * * * *,scripts/ops/log_summarize_and_diff.sh,prod,local shell,ops,2025-01-05,"Compares last log summary to previous run"
+ops_fetch_commands,*/10 * * * *,php spark ops:fetch-commands,prod,imap auth + shared token,ops,2025-01-05,"Polls commands@mymiwallet.com inbox"
+ops_analyze_commands,*/20 * * * *,php spark ops:analyze-commands,prod,openai api key,ops,2025-01-05,"Transforms Parsed inbox items into AI plans"
+marketing_daily_run,30 6 * * *,scripts/ops/run_cron_endpoint.sh?path=/API/Marketing/runDaily,prod,bearer:${MYMI_CRON_TOKEN},marketing,2025-01-05,"Guarded manual trigger via cron token"
+deploy_pull_restart,0 */6 * * *,scripts/ops/deploy_pull_restart.sh,prod,ssh key auth,ops,2025-01-05,"Git pull + php-fpm reload hook (no sudo)"
+codex_review,0 2 * * *,php spark codex:review,prod,local shell,ops,2025-01-05,"Generates docs/codex review artifacts"

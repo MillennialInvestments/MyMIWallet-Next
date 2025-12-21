@@ -67,3 +67,16 @@
 #--------------------------------------------------------------------
 
 # logger.threshold = 4
+
+#--------------------------------------------------------------------
+# OPS / CONTROL PLANE
+#--------------------------------------------------------------------
+
+# MYMI_OPS_IMAP_HOST=
+# MYMI_OPS_IMAP_USER=
+# MYMI_OPS_IMAP_PASS=
+# MYMI_OPS_ALLOWED_SENDERS=
+# MYMI_OPS_EMAIL_TOKEN=
+# MYMI_CRON_TOKEN=
+# OPENAI_API_KEY=
+# OPENAI_MODEL=
