@@ -2,6 +2,7 @@
 
 namespace Config;
 
+use App\Log\Handlers\DatabaseLoggerHandler;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Log\Handlers\FileHandler;
 use CodeIgniter\Log\Handlers\HandlerInterface;
@@ -76,76 +77,96 @@ class Logger extends BaseConfig
      *
      * @var array<class-string<HandlerInterface>, array<string, int|list<string>|string>>
      */
-    public array $handlers = [
-        /*
-         * --------------------------------------------------------------------
-         * File Handler
-         * --------------------------------------------------------------------
-         */
-        FileHandler::class => [
-            // The log levels that this handler will handle.
-            'handles' => [
-                'critical',
-                'alert',
-                'emergency',
-                'debug',
-                'error',
-                'info',
-                'notice',
-                'warning',
+    public array $handlers = [];
+
+    /**
+     * Resolved log path for File and Database fallback handling.
+     */
+    protected string $logPath;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->logPath   = $this->ensureLogPath();
+        $this->threshold = $this->determineThreshold();
+
+        $this->handlers = [
+            /*
+             * --------------------------------------------------------------------
+             * Database Handler
+             * --------------------------------------------------------------------
+             * Executes before the file handler so DB logs are captured even if
+             * the filesystem is temporarily unavailable.
+             */
+            DatabaseLoggerHandler::class => [
+                'handles'            => ['emergency', 'alert', 'critical', 'error', 'warning'],
+                'fallbackPath'       => $this->logPath,
+                'notificationEmail'  => env('LOGGER_ALERT_EMAIL', 'support@mymiwallet.com'),
             ],
 
             /*
-             * The default filename extension for log files.
-             * An extension of 'php' allows for protecting the log files via basic
-             * scripting, when they are to be stored under a publicly accessible directory.
-             *
-             * NOTE: Leaving it blank will default to 'log'.
+             * --------------------------------------------------------------------
+             * File Handler
+             * --------------------------------------------------------------------
              */
-            'fileExtension' => '',
+            FileHandler::class => [
+                // The log levels that this handler will handle.
+                'handles' => [
+                    'critical',
+                    'alert',
+                    'emergency',
+                    'debug',
+                    'error',
+                    'info',
+                    'notice',
+                    'warning',
+                ],
 
-            /*
-             * The file system permissions to be applied on newly created log files.
-             *
-             * IMPORTANT: This MUST be an integer (no quotes) and you MUST use octal
-             * integer notation (i.e. 0700, 0644, etc.)
-             */
-            'filePermissions' => 0644,
+                /*
+                 * The default filename extension for log files.
+                 * Use 'php' to protect log files from web access.
+                 */
+                'fileExtension' => 'php',
 
-            /*
-             * Logging Directory Path
-             *
-             * By default, logs are written to WRITEPATH . 'logs/'
-             * Specify a different destination here, if desired.
-             */
-            'path' => '',
-        ],
+                /*
+                 * The file system permissions to be applied on newly created log files.
+                 *
+                 * IMPORTANT: This MUST be an integer (no quotes) and you MUST use octal
+                 * integer notation (i.e. 0700, 0644, etc.)
+                 */
+                'filePermissions' => 0644,
 
-        /*
-         * The ChromeLoggerHandler requires the use of the Chrome web browser
-         * and the ChromeLogger extension. Uncomment this block to use it.
-         */
-        // 'CodeIgniter\Log\Handlers\ChromeLoggerHandler' => [
-        //     /*
-        //      * The log levels that this handler will handle.
-        //      */
-        //     'handles' => ['critical', 'alert', 'emergency', 'debug',
-        //                   'error', 'info', 'notice', 'warning'],
-        // ],
+                /*
+                 * Logging Directory Path
+                 *
+                 * By default, logs are written to WRITEPATH . 'logs/'
+                 */
+                'path' => $this->logPath,
+            ],
+        ];
+    }
 
-        /*
-         * The ErrorlogHandler writes the logs to PHP's native `error_log()` function.
-         * Uncomment this block to use it.
-         */
-        // 'CodeIgniter\Log\Handlers\ErrorlogHandler' => [
-        //     /* The log levels this handler can handle. */
-        //     'handles' => ['critical', 'alert', 'emergency', 'debug', 'error', 'info', 'notice', 'warning'],
-        //
-        //     /*
-        //     * The message type where the error should go. Can be 0 or 4, or use the
-        //     * class constants: `ErrorlogHandler::TYPE_OS` (0) or `ErrorlogHandler::TYPE_SAPI` (4)
-        //     */
-        //     'messageType' => 0,
-        // ],
-    ];
+    protected function ensureLogPath(): string
+    {
+        $path = WRITEPATH . 'logs';
+
+        if (! is_dir($path)) {
+            @mkdir($path, 0775, true);
+        }
+
+        return rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+    }
+
+    protected function determineThreshold(): int
+    {
+        $envThreshold = env('logger.threshold');
+
+        if ($envThreshold !== null && $envThreshold !== '') {
+            return max(3, (int) $envThreshold);
+        }
+
+        // Default to verbose logging outside production; production logs warnings/errors.
+        return (ENVIRONMENT === 'production') ? 3 : 8;
+    }
 }

@@ -7,10 +7,12 @@ use App\Libraries\{MyMIAlerts, MyMIMarketing, MyMIDiscord, KimiSuggestions};
 use App\Models\{AlertsModel, ExchangeModel, MarketingModel, MarketingNewsletterModel, ReferralModel, SupportModel, UserModel, WeeklyStreamWatchlistModel};
 use App\Services\{AlphaVantagePipelineService, MarketingService, WeeklyStreamService};
 use App\Support\Http;
+use CodeIgniter\Log\Handlers\FileHandler;
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait; // Import the ResponseTrait
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\ResponseInterface;
+use Config\Database;
 
 #[\AllowDynamicProperties]
 class ManagementController extends \App\Controllers\BaseController
@@ -59,6 +61,58 @@ class ManagementController extends \App\Controllers\BaseController
         }
 
         return null;
+    }
+
+    public function logHealthcheck()
+    {
+        $enabled = filter_var((string) env('LOG_HEALTHCHECK_ENABLE', false), FILTER_VALIDATE_BOOLEAN);
+
+        if (! $enabled) {
+            return $this->failForbidden('Log healthcheck disabled.');
+        }
+
+        $clientIp    = $this->request->getIPAddress();
+        $token       = env('LOG_HEALTHCHECK_TOKEN');
+        $allowedIps  = array_filter(array_map('trim', explode(',', (string) env('LOG_HEALTHCHECK_ALLOWED_IPS', ''))));
+        $tokenAllowed = $this->isHealthcheckAllowed($clientIp, $token, $allowedIps);
+
+        if (! $tokenAllowed) {
+            $authGuard = $this->guardAdmin();
+            if ($authGuard) {
+                return $authGuard;
+            }
+        }
+
+        $logPath  = $this->resolveLogPath();
+        $beforeSz = is_file($logPath) ? filesize($logPath) : 0;
+        $marker   = bin2hex(random_bytes(6));
+
+        $context = [
+            'marker' => $marker,
+            'source' => 'http-log-healthcheck',
+            'ip'     => $clientIp,
+            'uri'    => (string) $this->request->getUri(),
+            'method' => $this->request->getMethod(),
+        ];
+
+        log_message('debug', 'Log healthcheck HTTP debug {marker}', $context);
+        log_message('info', 'Log healthcheck HTTP info {marker}', $context);
+        log_message('error', 'Log healthcheck HTTP error {marker}', $context);
+
+        clearstatcache(false, $logPath);
+        $afterSz   = is_file($logPath) ? filesize($logPath) : 0;
+        $fileLogOk = is_file($logPath) && $afterSz > $beforeSz;
+        $dbLogOk   = $this->dbHealthcheck($marker);
+
+        $status = ($fileLogOk && $dbLogOk) ? 'ok' : 'degraded';
+
+        return $this->response->setJSON([
+            'status'       => $status,
+            'file_log_ok'  => $fileLogOk,
+            'db_log_ok'    => $dbLogOk,
+            'marker'       => $marker,
+            'timestamp'    => date('c'),
+        ]);
     }
 
     public function saveSuggestion()
@@ -1881,6 +1935,49 @@ class ManagementController extends \App\Controllers\BaseController
             return Http::jsonSuccess(['status' => 'success', 'message' => 'Trade alerts updated with market data.']);
         } catch (\Exception $e) {
             return Http::jsonError('Failed to update market data: ' . $e->getMessage(), 500);
+        }
+    }
+
+    private function isHealthcheckAllowed(?string $clientIp, ?string $token, array $allowedIps): bool
+    {
+        $providedToken = $this->request->getHeaderLine('X-Log-Healthcheck-Token') ?: $this->request->getGet('token');
+
+        if ($token && $providedToken && hash_equals((string) $token, (string) $providedToken)) {
+            return true;
+        }
+
+        if ($allowedIps && $clientIp && in_array($clientIp, $allowedIps, true)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function resolveLogPath(): string
+    {
+        $loggerConfig = config('Logger');
+        $fileConfig   = $loggerConfig->handlers[FileHandler::class] ?? [];
+
+        $path = $fileConfig['path'] ?? WRITEPATH . 'logs/';
+        $path = $path === '' ? WRITEPATH . 'logs/' : rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+
+        $extension = $fileConfig['fileExtension'] ?? 'log';
+        $extension = $extension === '' ? 'log' : $extension;
+
+        return $path . 'log-' . date('Y-m-d') . '.' . $extension;
+    }
+
+    private function dbHealthcheck(string $marker): bool
+    {
+        try {
+            $db = Database::connect();
+            $builder = $db->table('bf_error_logs');
+            $builder->where('created_at >=', date('Y-m-d H:i:s', time() - 120));
+            $builder->like('message', $marker, 'both', false);
+
+            return $builder->countAllResults() > 0;
+        } catch (\Throwable $e) {
+            return false;
         }
     }
 }
