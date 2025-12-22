@@ -73,6 +73,8 @@
 #--------------------------------------------------------------------
 
 mail.provider = smtp
+mail.from.email = no-reply@mymiwallet.com
+mail.from.name = "MyMI Wallet"
 
 #--------------------------------------------------------------------
 # OPS / CONTROL PLANE
