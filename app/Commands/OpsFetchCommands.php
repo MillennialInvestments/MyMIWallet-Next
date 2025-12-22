@@ -14,10 +14,15 @@ class OpsFetchCommands extends BaseCommand
 
     protected OpsCommandInboxModel $model;
 
-    public function __construct()
+    protected function svc(): \App\Services\OpsCommandService
     {
-        parent::__construct();
-        $this->model = new OpsCommandInboxModel();
+        static $svc = null;
+
+        if ($svc === null) {
+            $svc = new \App\Services\OpsCommandService();
+        }
+
+        return $svc;
     }
 
     public function run(array $params)

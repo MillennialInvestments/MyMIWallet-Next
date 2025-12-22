@@ -258,22 +258,61 @@ class AuthAuditService
 
         $message = implode("\n", $messageLines);
 
-        $result = service('mailService')->send(
-            $this->supportEmail,
-            $subject,
-            nl2br($message),
-            [
-                'from_email' => $this->supportEmail,
-                'from_name'  => $this->supportName,
-                'module'     => 'auth',
-                'queue'      => true,
-                'text'       => $message,
-            ]
-        );
+        try {
+            $mail = service('mailService');
 
-        if (! ($result['ok'] ?? false)) {
-            log_message('warning', 'Registration audit email could not be sent: {reason}', [
-                'reason' => $result['error'] ?? 'unknown',
+            $result = $mail->send(
+                $this->supportEmail,
+                $subject,
+                nl2br($message),
+                [
+                    'from_email' => $this->supportEmail,
+                    'from_name'  => $this->supportName,
+                    'module'     => 'auth',
+                    'queue'      => true,
+                    'text'       => $message,
+                ]
+            );
+
+            if (! ($result['ok'] ?? false)) {
+                log_message('warning', 'Registration audit email could not be sent (mailService): {reason}', [
+                    'reason' => $result['error'] ?? 'unknown',
+                ]);
+
+                // fallback attempt using CI Email (best-effort)
+                $this->sendViaCiEmailFallback($subject, $message);
+            }
+        } catch (Throwable $e) {
+            // Never block registration because audit email failed
+            log_message('error', 'AuthAuditService: support email failed (non-fatal): {msg}', [
+                'msg' => $e->getMessage(),
+            ]);
+
+            // best-effort fallback using CI Email
+            $this->sendViaCiEmailFallback($subject, $message);
+        }
+    }
+    
+    private function sendViaCiEmailFallback(string $subject, string $message): void
+    {
+        try {
+            $email = Services::email();
+
+            // Some setups require explicit from() call
+            $email->setFrom($this->supportEmail, $this->supportName);
+            $email->setTo($this->supportEmail);
+            $email->setSubject($subject);
+            $email->setMessage(nl2br($message));
+            $email->setAltMessage($message);
+
+            if (! $email->send(false)) {
+                log_message('warning', 'AuthAuditService: CI Email fallback failed: {dbg}', [
+                    'dbg' => (string) $email->printDebugger(['headers', 'subject']),
+                ]);
+            }
+        } catch (Throwable $e) {
+            log_message('warning', 'AuthAuditService: CI Email fallback threw: {msg}', [
+                'msg' => $e->getMessage(),
             ]);
         }
     }
