@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\Libraries\Mail\Contracts\MailProviderInterface;
-use App\Libraries\Mail\Providers\PostmarkProvider;
-use App\Libraries\Mail\Providers\SmtpProvider;
+use App\Libraries\Mail\MailProviderInterface;
+use App\Libraries\Mail\SmtpProvider;
+use App\Libraries\Mail\PostmarkProvider;
 use App\Models\MailQueueModel;
 
 class MailService
@@ -19,13 +19,31 @@ class MailService
         $this->queue    = $queue ?? new MailQueueModel();
     }
 
-    protected function resolveProvider(string $driver): MailProviderInterface
+    protected function resolveProvider(?string $provider): MailProviderInterface
     {
-        return match ($driver) {
+        // Normalize
+        $provider = strtolower(trim((string) $provider));
+
+        // Default if missing
+        if ($provider === '') {
+            $provider = strtolower(trim((string) getenv('mail.provider'))) ?: 'smtp';
+
+            if ($provider === '' || $provider === '0') {
+                $provider = 'smtp';
+            }
+
+            // Non-fatal: warn but do not block user flows like registration
+            log_message('warning', 'MailService: mail provider was empty; defaulting to "smtp". Check env mail.provider');
+        }
+
+        // Safest: include a default case
+        return match ($provider) {
+            'smtp'     => new SmtpProvider(),
             'postmark' => new PostmarkProvider(),
-            'smtp' => new SmtpProvider(),
+            default    => new SmtpProvider(),
         };
     }
+
 
     /**
      * Send immediately (or enqueue when queue=true).
