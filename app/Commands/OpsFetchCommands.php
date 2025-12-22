@@ -12,7 +12,7 @@ class OpsFetchCommands extends BaseCommand
     protected $name        = 'ops:fetch-commands';
     protected $description = 'Fetch unread ops commands from IMAP and store them in bf_ops_command_inbox';
 
-    protected OpsCommandInboxModel $model;
+    private ?OpsCommandInboxModel $model = null;
 
     protected function svc(): \App\Services\OpsCommandService
     {
@@ -114,8 +114,8 @@ class OpsFetchCommands extends BaseCommand
             'received_at'    => isset($overview->date) ? date('Y-m-d H:i:s', strtotime((string) $overview->date)) : null,
         ];
 
-        $this->model->insert($data);
-        $insertId = (int) $this->model->getInsertID();
+        $this->model()->insert($data);
+        $insertId = (int) $this->model()->getInsertID();
 
         imap_setflag_full($imap, (string) $emailNumber, '\\Seen');
 
@@ -145,6 +145,15 @@ class OpsFetchCommands extends BaseCommand
             4       => imap_qprint($body),
             default => $body,
         };
+    }
+
+    private function model(): OpsCommandInboxModel
+    {
+        if ($this->model === null) {
+            $this->model = new OpsCommandInboxModel();
+        }
+
+        return $this->model;
     }
 
     protected function stripHtml(string $body): string
