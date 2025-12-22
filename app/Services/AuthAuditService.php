@@ -230,8 +230,7 @@ class AuthAuditService
 
     private function sendSupportEmail(string $subjectPrefix, string $email, string $status, array $meta): void
     {
-        $emailService = Services::email();
-        $subject      = sprintf('%s | %s | %s', $subjectPrefix, $status, $meta['event_id'] ?? '');
+        $subject = sprintf('%s | %s | %s', $subjectPrefix, $status, $meta['event_id'] ?? '');
 
         $messageLines = [
             sprintf('Status: %s', $status),
@@ -260,7 +259,6 @@ class AuthAuditService
 
         try {
             $mail = service('mailService');
-
             $result = $mail->send(
                 $this->supportEmail,
                 $subject,
@@ -273,22 +271,21 @@ class AuthAuditService
                     'text'       => $message,
                 ]
             );
-
-            if (! ($result['ok'] ?? false)) {
-                log_message('warning', 'Registration audit email could not be sent (mailService): {reason}', [
-                    'reason' => $result['error'] ?? 'unknown',
-                ]);
-
-                // fallback attempt using CI Email (best-effort)
-                $this->sendViaCiEmailFallback($subject, $message);
-            }
         } catch (Throwable $e) {
-            // Never block registration because audit email failed
-            log_message('error', 'AuthAuditService: support email failed (non-fatal): {msg}', [
+            log_message('error', 'AuthAuditService: mailService->send threw (non-fatal): {msg}', [
                 'msg' => $e->getMessage(),
             ]);
 
-            // best-effort fallback using CI Email
+            $this->sendViaCiEmailFallback($subject, $message);
+            return;
+        }
+
+        if (! ($result['ok'] ?? false)) {
+            log_message('warning', 'Registration audit email could not be sent (mailService): {reason}', [
+                'reason' => $result['error'] ?? 'unknown',
+            ]);
+
+            // fallback attempt using CI Email (best-effort)
             $this->sendViaCiEmailFallback($subject, $message);
         }
     }
