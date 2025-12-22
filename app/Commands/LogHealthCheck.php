@@ -83,8 +83,8 @@ class LogHealthcheck extends BaseCommand
         $path = $fileConfig['path'] ?? WRITEPATH . 'logs/';
         $path = $path === '' ? WRITEPATH . 'logs/' : rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
-        $extension = $fileConfig['fileExtension'] ?? 'log';
-        $extension = $extension === '' ? 'log' : $extension;
+        $extension = $fileConfig['fileExtension'] ?? 'php';
+        $extension = $extension === '' ? 'php' : $extension;
 
         return $path . 'log-' . date('Y-m-d') . '.' . $extension;
     }

@@ -229,4 +229,37 @@ class LogSummarize extends BaseCommand
             CLI::write("Last processed timestamp updated to: {$maxTsString}", 'yellow');
         }
     }
+    
+    private function resolveDailyLogCandidates(string $date): array
+    {
+        $loggerConfig = config('Logger');
+        $fileConfig   = $loggerConfig->handlers[\CodeIgniter\Log\Handlers\FileHandler::class] ?? [];
+
+        $path = $fileConfig['path'] ?? WRITEPATH . 'logs/';
+        $path = $path === '' ? WRITEPATH . 'logs/' : rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+
+        $ext = $fileConfig['fileExtension'] ?? 'php';
+        $ext = $ext === '' ? 'php' : $ext;
+
+        $candidates = [
+            $path . 'log-' . $date . '.' . $ext,
+            $path . 'log-' . $date . '.php',
+            $path . 'log-' . $date . '.log',
+        ];
+
+        // Unique, preserve order
+        return array_values(array_unique($candidates));
+    }
+
+    private function resolveDailyLogPath(string $date): ?string
+    {
+        foreach ($this->resolveDailyLogCandidates($date) as $file) {
+            if (is_file($file) && filesize($file) > 0) {
+                return $file;
+            }
+        }
+
+        return null;
+    }
+
 }

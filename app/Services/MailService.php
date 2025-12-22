@@ -14,7 +14,7 @@ class MailService
 
     public function __construct(?MailProviderInterface $provider = null, ?MailQueueModel $queue = null)
     {
-        $driver        = strtolower((string) getenv('mail.driver'));
+        $driver         = strtolower((string) getenv('mail.driver'));
         $this->provider = $provider ?? $this->resolveProvider($driver);
         $this->queue    = $queue ?? new MailQueueModel();
     }
@@ -24,13 +24,16 @@ class MailService
         // Normalize
         $provider = strtolower(trim((string) $provider));
 
-        // Default if missing
         if ($provider === '') {
-            $provider = strtolower(trim((string) getenv('mail.provider'))) ?: 'smtp';
+            $provider = strtolower(trim((string) getenv('mail.provider')));
+        }
 
-            if ($provider === '' || $provider === '0') {
-                $provider = 'smtp';
-            }
+        if ($provider === '') {
+            $provider = strtolower(trim((string) getenv('email.protocol')));
+        }
+
+        if ($provider === '') {
+            $provider = 'smtp';
 
             // Non-fatal: warn but do not block user flows like registration
             log_message('warning', 'MailService: mail provider was empty; defaulting to "smtp". Check env mail.provider');
