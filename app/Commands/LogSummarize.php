@@ -4,6 +4,7 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Log\Handlers\FileHandler;
 
 class LogSummarize extends BaseCommand
 {
@@ -40,9 +41,17 @@ class LogSummarize extends BaseCommand
      */
     protected function summarizeForDate(string $date): void
     {
-        $logFile   = WRITEPATH . "logs/log-{$date}.log";
-        $outFile   = WRITEPATH . "logs/summary-{$date}.log";
-        $stateFile = WRITEPATH . "logs/summary-{$date}.state";
+        $logFile = $this->resolveDailyLogPath($date);
+
+        if ($logFile === null) {
+            $candidates = $this->resolveDailyLogCandidates($date);
+            CLI::error("No log file found for {$date}. Checked: " . implode(', ', $candidates));
+            return;
+        }
+
+        $logDir    = rtrim(dirname($logFile), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $outFile   = $logDir . "summary-{$date}.log";
+        $stateFile = $logDir . "summary-{$date}.state";
 
         if (! is_file($logFile)) {
             CLI::error("No log file found for {$date}: {$logFile}");
@@ -233,7 +242,7 @@ class LogSummarize extends BaseCommand
     private function resolveDailyLogCandidates(string $date): array
     {
         $loggerConfig = config('Logger');
-        $fileConfig   = $loggerConfig->handlers[\CodeIgniter\Log\Handlers\FileHandler::class] ?? [];
+        $fileConfig   = $loggerConfig->handlers[FileHandler::class] ?? [];
 
         $path = $fileConfig['path'] ?? WRITEPATH . 'logs/';
         $path = $path === '' ? WRITEPATH . 'logs/' : rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
