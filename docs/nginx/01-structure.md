@@ -31,3 +31,4 @@ We run Nginx entirely under `~/nginx` (no sudo).
 - All temp & logs are in `~/nginx`.
 - Only include from `sites-enabled/*`.
 - Keep *one* `nginx.conf` at the top-level; archive old ones in `~/nginx/archive/`.
+- For PID/reload/start issues use [User-Space NGINX Start/Reload/PID](../troubleshooting/nginx/01_user_space_nginx_start_reload_pid.md); for `location` context errors see [Location Directive Fix](../troubleshooting/nginx/02_location_directive_not_allowed_here.md); for clean URL routing see [CI4 routing guide](../troubleshooting/ci4-routing/01_index_php_vs_clean_urls.md).

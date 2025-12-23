@@ -50,3 +50,8 @@ user-space daemon reads `conf/nginx.conf`, which defines logging formats, the `$
    ```
 
 Refer to [`docs/nginx/mymiwallet.md`](./mymiwallet.md) for the annotated vhost.
+
+## Troubleshooting references
+- For PID/reload/start issues in user-space nginx, use the [User-Space NGINX Start/Reload/PID runbook](../troubleshooting/nginx/01_user_space_nginx_start_reload_pid.md).
+- If `location` blocks trigger config errors, see ["location directive is not allowed here" fix](../troubleshooting/nginx/02_location_directive_not_allowed_here.md).
+- When pretty URLs fail but `/index.php/...` works, follow the [CI4 routing clean URL guide](../troubleshooting/ci4-routing/01_index_php_vs_clean_urls.md).

@@ -29,6 +29,8 @@ ss -ltnp | awk '/:9001|:9072/ {print $0}'
 curl -I http://127.0.0.1:9001/healthz
 curl -I http://127.0.0.1:9072/
 tail -n 100 ~/nginx/logs/error.log
+# If nginx reload/start issues appear, follow docs/troubleshooting/nginx/01_user_space_nginx_start_reload_pid.md
+# If `location` context errors appear, see docs/troubleshooting/nginx/02_location_directive_not_allowed_here.md
 ```
 
 ## Recovery Steps

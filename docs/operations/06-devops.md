@@ -23,6 +23,7 @@ Covers DreamHost deployment configuration, logging posture, and post-release val
 - Public `.htaccess` includes hardened MIME and security rules for Apache fallback usage.【F:public/.htaccess†L1-L160】
 - Nginx site config proxies to PHP upstream and sets root to `/public`, confirming expected layout.【F:nginx/sites-available/mymiwallet.conf†L13-L68】
 - PHP runtime currently 8.4 CLI; deployment target requires 8.2 alignment.【2d35f8†L1-L4】
+- For live triage, see docs/troubleshooting/README.md and run [daily ops checks](../troubleshooting/runbooks/00_daily_ops.md) plus [master checklist](../troubleshooting/checklists/00_master_checklist.md).
 
 ## Required Fixes / Tasks
 - [ ] Provision DreamHost deploy checklist including PHP version pinning and log directory creation (owner: Codex).
