@@ -15,6 +15,8 @@ Manual checklist to verify deployment health on DreamHost after pushing changes.
 5. Run application smoke endpoints:
    - `curl -s https://www.mymiwallet.com/healthz`
    - `curl -s https://www.mymiwallet.com/_ops/opcache-reset -H 'X-OPCACHE-RESET: <token>'`
+   - For route sanity, run `./scripts/smoke_routes.sh` (see docs/troubleshooting/scripts/01_smoke_routes_usage.md).
+   - For nginx config issues, consult docs/troubleshooting/nginx/01_user_space_nginx_start_reload_pid.md and docs/troubleshooting/nginx/02_location_directive_not_allowed_here.md.
 6. Record findings in `/home/mymiteam/logs/devops-smoke-$(date +%F).md`.
 
 ## Validation
