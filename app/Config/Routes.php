@@ -251,6 +251,18 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('sharePost/(:num)/(:segment)', 'ManagementController::sharePost/$1/$2');
         $routes->get('triggerPostAutogenOnEmpty', 'ManagementController::triggerPostAutogenOnEmpty');
         $routes->get('updateMarketDataForAlerts', 'ManagementController::updateMarketDataForAlerts');
+        $routes->get('getSocialPlatforms', 'MarketingController::getSocialPlatforms');
+        $routes->get('getSocialCommunities', 'MarketingController::getSocialCommunities');
+        $routes->match(['GET', 'POST'], 'saveSocialCommunity', 'MarketingController::saveSocialCommunity');
+        $routes->get('getPostTemplates', 'MarketingController::getPostTemplates');
+        $routes->match(['GET', 'POST'], 'savePostTemplate', 'MarketingController::savePostTemplate');
+        $routes->get('generatePlatformPosts/(:num)', 'MarketingController::generatePlatformPosts/$1');
+        $routes->get('generatePlatformPosts', 'MarketingController::generatePlatformPosts');
+        $routes->get('generateDailyCommunityPosts', 'MarketingController::generateDailyCommunityPosts');
+        $routes->get('exportGeneratedPostJson/(:num)', 'MarketingController::exportGeneratedPostJson/$1');
+        $routes->get('generateRevenueDocs', 'MarketingController::generateRevenueDocs');
+        $routes->get('cronGenerateDailyCommunityPosts', 'MarketingController::cronGenerateDailyCommunityPosts');
+        $routes->get('cronQueueDistribution', 'MarketingController::cronQueueDistribution');
 
         $routes->group('Advisor', static function($routes) {
             $routes->post('generateNow', 'AdvisorController::generateNow');
@@ -714,6 +726,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->post('Scrape-Link', 'MarketingController::scrapeLink');
         $routes->get('sendNotification', 'MarketingController::sendNotification');
         $routes->get('sendNewsletter', 'MarketingController::sendScheduleNewsletter');
+        $routes->get('Communities', 'MarketingController::communities');
         $routes->get('Test', 'MarketingController::test');
         $routes->get('Twitter', 'MarketingController::twitterDashboard');
         $routes->get('Video-Creator', 'MarketingController::videoCreator');
