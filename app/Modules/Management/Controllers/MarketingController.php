@@ -7,8 +7,9 @@ use Config\Services;
 use App\Config\{APIs, Auth, SiteSettings, SocialMedia};
 use App\Controllers\UserController;
 use App\Libraries\{HtmlFormatter, MyMIAnalytics, MyMIAlerts, MyMIBudget, MyMIDashboard, MyMIExchange, MyMIMarketing, MyMIUser};
-use App\Models\{AlertsModel, AnnouncementModel, InvestmentModel, ManagementModel, MarketingModel, MyMIGoldModel, SolanaModel, UserModel};
-use App\Services\{DashboardService, GoalTrackingService, MarketingService, SolanaService, UserService};
+use App\Models\{AlertsModel, AnnouncementModel, InvestmentModel, ManagementModel, MarketingModel, MyMIGoldModel, SocialCommunityModel, SocialDistributionQueueModel, SocialGeneratedPostModel, SocialPlatformModel, SocialPostTemplateModel, SolanaModel, UserModel};
+use App\Services\{DashboardService, GoalTrackingService, MarketingService, SocialPostFormatter, SolanaService, UserService};
+use App\Commands\RevenueStreamsScan;
 use CodeIgniter\API\ResponseTrait;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -50,6 +51,13 @@ class MarketingController extends UserController
     protected $departmentTasks;
     protected $marketing;
     protected $reporting;
+    protected $db;
+    protected $socialPlatformModel;
+    protected $socialCommunityModel;
+    protected $socialTemplateModel;
+    protected $socialGeneratedPostModel;
+    protected $socialDistributionQueueModel;
+    protected $postFormatter;
 
     public function __construct()
     {
@@ -75,6 +83,13 @@ class MarketingController extends UserController
         $this->alertsModel = new AlertsModel();
         $this->investmentModel = new InvestmentModel();
         $this->marketingModel = new MarketingModel();
+        $this->socialPlatformModel = new SocialPlatformModel();
+        $this->socialCommunityModel = new SocialCommunityModel();
+        $this->socialTemplateModel = new SocialPostTemplateModel();
+        $this->socialGeneratedPostModel = new SocialGeneratedPostModel();
+        $this->socialDistributionQueueModel = new SocialDistributionQueueModel();
+        $this->postFormatter = new SocialPostFormatter();
+        $this->db = \Config\Database::connect();
         // $this->userModel = new UserModel();
 
         // Load libraries
@@ -2425,6 +2440,355 @@ class MarketingController extends UserController
         }
     }
     
+    // ---------------------------------------------------------
+    // Communities Hub + Social Platform APIs
+    // ---------------------------------------------------------
+    public function communities()
+    {
+        $data = $this->commonData();
+        $data['pageTitle'] = 'Communities Hub';
+        return view('App\\Modules\\Management\\Views\\Marketing\\communities', $data);
+    }
+
+    public function getSocialPlatforms()
+    {
+        $platforms = $this->ensurePlatformsSeeded();
+        return $this->respond(['status' => 'ok', 'platforms' => $platforms]);
+    }
+
+    public function getSocialCommunities()
+    {
+        $platformId = (int) $this->request->getGetPost('platform_id');
+        $communities = $platformId > 0 ? $this->socialCommunityModel->forPlatform($platformId) : $this->socialCommunityModel->findAll();
+        return $this->respond(['status' => 'ok', 'communities' => $communities]);
+    }
+
+    public function saveSocialCommunity()
+    {
+        $data = [
+            'platform_id'    => (int) $this->request->getPost('platform_id'),
+            'community_name' => trim((string) $this->request->getPost('community_name')),
+            'community_type' => trim((string) $this->request->getPost('community_type')),
+            'community_url'  => trim((string) $this->request->getPost('community_url')),
+            'join_url'       => trim((string) $this->request->getPost('join_url')),
+            'invite_code'    => trim((string) $this->request->getPost('invite_code')),
+            'is_primary'     => (int) $this->request->getPost('is_primary') === 1 ? 1 : 0,
+            'status'         => $this->request->getPost('status') ?? 'active',
+            'notes'          => $this->request->getPost('notes'),
+        ];
+
+        if (empty($data['platform_id']) || empty($data['community_name'])) {
+            return $this->failValidationErrors('platform_id and community_name are required');
+        }
+
+        $id = (int) $this->request->getPost('id');
+        if ($id > 0) {
+            $this->socialCommunityModel->update($id, $data);
+        } else {
+            $this->socialCommunityModel->insert($data);
+            $id = $this->socialCommunityModel->getInsertID();
+        }
+
+        return $this->respond(['status' => 'ok', 'id' => $id]);
+    }
+
+    public function getPostTemplates()
+    {
+        $platformId = (int) $this->request->getGetPost('platform_id');
+        if ($platformId > 0) {
+            $templates = $this->socialTemplateModel->findByPlatform($platformId);
+        } else {
+            $templates = $this->socialTemplateModel->findAll();
+        }
+        return $this->respond(['status' => 'ok', 'templates' => $templates]);
+    }
+
+    public function savePostTemplate()
+    {
+        $data = [
+            'platform_id'    => (int) $this->request->getPost('platform_id'),
+            'template_key'   => trim((string) $this->request->getPost('template_key')),
+            'title'          => trim((string) $this->request->getPost('title')),
+            'max_chars'      => $this->request->getPost('max_chars') !== null ? (int) $this->request->getPost('max_chars') : null,
+            'hashtag_limit'  => $this->request->getPost('hashtag_limit') !== null ? (int) $this->request->getPost('hashtag_limit') : null,
+            'supports_links' => (int) $this->request->getPost('supports_links') === 0 ? 0 : 1,
+            'supports_mentions' => (int) $this->request->getPost('supports_mentions') === 0 ? 0 : 1,
+            'supports_tickers' => (int) $this->request->getPost('supports_tickers') === 0 ? 0 : 1,
+            'rules_json'     => $this->request->getPost('rules_json'),
+            'body_template'  => $this->request->getPost('body_template') ?? '{HOOK} {VALUE} {CTA} {LINKS} {HASHTAGS} {TICKERS}',
+        ];
+
+        if (empty($data['platform_id']) || empty($data['template_key'])) {
+            return $this->failValidationErrors('platform_id and template_key are required');
+        }
+
+        $id = (int) $this->request->getPost('id');
+        if ($id > 0) {
+            $this->socialTemplateModel->update($id, $data);
+        } else {
+            $this->socialTemplateModel->insert($data);
+            $id = $this->socialTemplateModel->getInsertID();
+        }
+
+        return $this->respond(['status' => 'ok', 'id' => $id]);
+    }
+
+    public function generatePlatformPosts($summaryId = null)
+    {
+        $summaryId = $summaryId ?? (int) $this->request->getGetPost('summary_id');
+        $summary = $this->fetchSummaryById((int) $summaryId);
+        if (! $summary) {
+            return $this->failNotFound('Summary not found');
+        }
+
+        $result = $this->generatePlatformPostPackFromSummaryData($summary);
+        return $this->respond(['status' => 'ok', 'generated' => $result]);
+    }
+
+    public function generateDailyCommunityPosts()
+    {
+        $limit = (int) ($this->request->getGetPost('limit') ?? 5);
+        $rows = $this->db->table('bf_marketing_scraper')
+            ->where('DATE(created_on)', date('Y-m-d'))
+            ->orderBy('feature_score', 'DESC')
+            ->limit($limit)
+            ->get()
+            ->getResultArray();
+
+        $generated = [];
+        foreach ($rows as $row) {
+            $generated[] = $this->generatePlatformPostPackFromSummaryData($row);
+        }
+
+        return $this->respond(['status' => 'ok', 'generated' => $generated]);
+    }
+
+    public function exportGeneratedPostJson($id = null)
+    {
+        $id = $id ?? (int) $this->request->getGet('id');
+        $post = $this->socialGeneratedPostModel->find($id);
+        if (! $post) {
+            return $this->failNotFound('Generated post not found');
+        }
+
+        return $this->respond(['status' => 'ok', 'post' => $post]);
+    }
+
+    public function generateRevenueDocs()
+    {
+        $command = new RevenueStreamsScan();
+        ob_start();
+        $command->run([]);
+        $output = trim(ob_get_clean());
+
+        return $this->respond([
+            'status' => 'ok',
+            'message' => $output,
+        ]);
+    }
+
+    public function cronGenerateDailyCommunityPosts()
+    {
+        return $this->generateDailyCommunityPosts();
+    }
+
+    public function cronQueueDistribution()
+    {
+        $approved = $this->socialGeneratedPostModel->where('status', 'approved')->findAll();
+        $queued = 0;
+
+        foreach ($approved as $row) {
+            $existing = $this->socialDistributionQueueModel
+                ->where('generated_post_id', $row['id'])
+                ->first();
+
+            if ($existing) {
+                continue;
+            }
+
+            $payload = [
+                'post_body' => $row['post_body'],
+                'platform'  => $row['platform_id'],
+                'cta_link'  => $row['cta_link'],
+            ];
+
+            $this->socialDistributionQueueModel->insert([
+                'generated_post_id' => $row['id'],
+                'channel_key'       => 'manual_export',
+                'payload_json'      => json_encode($payload),
+                'status'            => 'pending',
+            ]);
+            $queued++;
+        }
+
+        return $this->respond(['status' => 'ok', 'queued' => $queued]);
+    }
+
+    protected function ensurePlatformsSeeded(): array
+    {
+        $configPlatforms = config('SocialPlatforms')->platforms;
+        $existing = $this->socialPlatformModel->findAll();
+        $existingKeys = array_column($existing, 'platform_key');
+
+        foreach ($configPlatforms as $key => $meta) {
+            if (in_array($key, $existingKeys, true)) {
+                continue;
+            }
+            $this->socialPlatformModel->insert(array_merge([
+                'platform_key' => $key,
+            ], $meta));
+        }
+
+        return $this->socialPlatformModel->orderBy('display_name', 'ASC')->findAll();
+    }
+
+    protected function ensureDefaultTemplates(array $platform): array
+    {
+        $defaults = config('SocialPlatforms')->defaultTemplates;
+        $existing = $this->socialTemplateModel->findByPlatform((int) $platform['id']);
+        $existingKeys = array_column($existing, 'template_key');
+
+        foreach ($defaults as $key => $body) {
+            if (in_array($key, $existingKeys, true)) {
+                continue;
+            }
+            $this->socialTemplateModel->insert([
+                'platform_id'    => $platform['id'],
+                'template_key'   => $key,
+                'title'          => ucfirst(str_replace('_', ' ', $key)),
+                'max_chars'      => null,
+                'hashtag_limit'  => 5,
+                'supports_links' => 1,
+                'supports_mentions' => 1,
+                'supports_tickers' => 1,
+                'body_template'  => $body,
+                'rules_json'     => json_encode(['auto_seeded' => true]),
+            ]);
+        }
+
+        return $this->socialTemplateModel->findByPlatform((int) $platform['id']);
+    }
+
+    protected function fetchSummaryById(int $id): ?array
+    {
+        if ($id <= 0) {
+            return null;
+        }
+
+        $row = $this->db->table('bf_marketing_scraper')->where('id', $id)->get()->getRowArray();
+        if (! $row) {
+            return null;
+        }
+
+        return $row;
+    }
+
+    protected function generatePlatformPostPackFromSummaryData(array $summary): array
+    {
+        $platforms = $this->ensurePlatformsSeeded();
+        $generated = [];
+        $tickers = $this->extractTickers($summary['keywords'] ?? $summary['summary'] ?? '');
+        $links = $this->extractLinks($summary);
+        $templatesByPlatform = [];
+
+        foreach ($platforms as $platform) {
+            $templatesByPlatform[$platform['platform_key']] = $this->ensureDefaultTemplates($platform);
+        }
+
+        foreach ($platforms as $platform) {
+            $platformTemplates = $templatesByPlatform[$platform['platform_key']] ?? [];
+            foreach ($platformTemplates as $template) {
+                $payload = [
+                    'hook'        => $summary['title'] ?? 'Daily summary',
+                    'value'       => $summary['summary'] ?? ($summary['content'] ?? ''),
+                    'cta'         => 'Join Discord for the full breakdown',
+                    'links'       => $links,
+                    'hashtags'    => $this->extractHashtags($summary),
+                    'tickers'     => $tickers,
+                    'template_key'=> $template['template_key'],
+                    'constraints' => [
+                        'max_chars'     => $template['max_chars'],
+                        'hashtag_limit' => $template['hashtag_limit'],
+                    ],
+                ];
+
+                try {
+                    $formatted = $this->postFormatter->format($platform['platform_key'], $payload);
+                    $this->socialGeneratedPostModel->insert([
+                        'source_type'  => 'marketing_scraper',
+                        'source_id'    => (int) ($summary['id'] ?? 0),
+                        'platform_id'  => $platform['id'],
+                        'community_id' => null,
+                        'template_id'  => $template['id'] ?? null,
+                        'post_title'   => $formatted['post_title'],
+                        'post_body'    => $formatted['post_body'],
+                        'hashtags'     => $formatted['hashtags'],
+                        'tickers'      => $formatted['tickers'],
+                        'cta_link'     => $formatted['cta_link'],
+                        'status'       => 'draft',
+                    ]);
+
+                    $generated[] = [
+                        'platform' => $platform['platform_key'],
+                        'template' => $template['template_key'],
+                        'post_id'  => $this->socialGeneratedPostModel->getInsertID(),
+                    ];
+                } catch (\Throwable $e) {
+                    log_message('error', 'Failed to format platform post: ' . $e->getMessage());
+                }
+            }
+        }
+
+        return $generated;
+    }
+
+    protected function extractTickers($payload): array
+    {
+        $tickers = [];
+        if (is_string($payload)) {
+            preg_match_all('/\\b[A-Z]{2,5}\\b/', $payload, $matches);
+            $tickers = $matches[0] ?? [];
+        } elseif (is_array($payload)) {
+            $decoded = $payload;
+            foreach ($decoded as $item) {
+                if (is_string($item)) {
+                    preg_match_all('/\\b[A-Z]{2,5}\\b/', $item, $matches);
+                    $tickers = array_merge($tickers, $matches[0] ?? []);
+                }
+            }
+        } else {
+            $decoded = json_decode((string) $payload, true) ?: [];
+            foreach ($decoded as $item) {
+                if (is_string($item)) {
+                    preg_match_all('/\\b[A-Z]{2,5}\\b/', $item, $matches);
+                    $tickers = array_merge($tickers, $matches[0] ?? []);
+                }
+            }
+        }
+
+        return array_values(array_unique($tickers));
+    }
+
+    protected function extractLinks(array $summary): array
+    {
+        $links = [];
+        if (! empty($summary['links'])) {
+            $links = is_array($summary['links']) ? $summary['links'] : json_decode($summary['links'], true) ?: [];
+        }
+        if (! empty($summary['url'])) {
+            $links[] = $summary['url'];
+        }
+        return array_values(array_unique(array_filter($links)));
+    }
+
+    protected function extractHashtags(array $summary): array
+    {
+        $keywords = [];
+        if (! empty($summary['keywords'])) {
+            $keywords = is_array($summary['keywords']) ? $summary['keywords'] : (json_decode($summary['keywords'], true) ?: []);
+        }
+        return array_map(static fn ($k) => preg_replace('/\\s+/', '', strtolower((string) $k)), array_slice($keywords, 0, 6));
+    }
     
 }
 ?>
