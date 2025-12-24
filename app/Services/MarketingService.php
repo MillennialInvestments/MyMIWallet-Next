@@ -2,8 +2,10 @@
 namespace App\Services;
 
 use App\Libraries\{BaseLoader, MyMIMarketing};
-use App\Models\{MarketingModel};
+use App\Models\{MarketingModel, SocialGeneratedPostModel, SocialPlatformModel, SocialPostTemplateModel};
+use App\Services\SocialPostFormatter;
 use GuzzleHttp\Client;
+use Config\Database;
 
 class MarketingService
 {
@@ -11,11 +13,19 @@ class MarketingService
     protected $MyMIMarketing;
     protected $marketingModel;
     protected $httpClient;
+    protected $postFormatter;
+    protected $socialPlatformModel;
+    protected $socialTemplateModel;
+    protected $socialGeneratedPostModel;
 
     public function __construct()
     {
         $this->MyMIMarketing = new MyMIMarketing();
         $this->marketingModel = new MarketingModel();
+        $this->postFormatter = new SocialPostFormatter();
+        $this->socialPlatformModel = new SocialPlatformModel();
+        $this->socialTemplateModel = new SocialPostTemplateModel();
+        $this->socialGeneratedPostModel = new SocialGeneratedPostModel();
 
         // ✅ Set up memory-safe Guzzle client
         $this->httpClient = new Client([
@@ -308,6 +318,158 @@ class MarketingService
     public function generateDailyMarketCampaign(array $options = []): array
     {
         return $this->getMyMIMarketing()->generateDailyCampaignPackage($options);
+    }
+
+    public function generatePlatformPostPackFromSummary(int $summaryId): array
+    {
+        $db = Database::connect();
+        $summary = $db->table('bf_marketing_scraper')->where('id', $summaryId)->get()->getRowArray();
+        if (! $summary) {
+            return [];
+        }
+
+        $platforms = $this->seedDefaultPlatforms();
+        $generated = [];
+        $tickers = $this->extractTickersFromSummary($summary);
+        $links = $this->extractLinksFromSummary($summary);
+
+        foreach ($platforms as $platform) {
+            $templates = $this->socialTemplateModel->findByPlatform((int) $platform['id']);
+            foreach ($templates as $template) {
+                $payload = [
+                    'hook'        => $summary['title'] ?? 'Daily summary',
+                    'value'       => $summary['summary'] ?? ($summary['content'] ?? ''),
+                    'cta'         => 'Join Discord for the full breakdown',
+                    'links'       => $links,
+                    'hashtags'    => $this->extractHashtagsFromSummary($summary),
+                    'tickers'     => $tickers,
+                    'template_key'=> $template['template_key'],
+                    'constraints' => [
+                        'max_chars'     => $template['max_chars'],
+                        'hashtag_limit' => $template['hashtag_limit'],
+                    ],
+                ];
+
+                $formatted = $this->postFormatter->format($platform['platform_key'], $payload);
+                $this->socialGeneratedPostModel->insert([
+                    'source_type'  => 'marketing_scraper',
+                    'source_id'    => $summaryId,
+                    'platform_id'  => $platform['id'],
+                    'community_id' => null,
+                    'template_id'  => $template['id'],
+                    'post_title'   => $formatted['post_title'],
+                    'post_body'    => $formatted['post_body'],
+                    'hashtags'     => $formatted['hashtags'],
+                    'tickers'      => $formatted['tickers'],
+                    'cta_link'     => $formatted['cta_link'],
+                    'status'       => 'draft',
+                ]);
+
+                $generated[] = [
+                    'platform' => $platform['platform_key'],
+                    'template' => $template['template_key'],
+                    'post_id'  => $this->socialGeneratedPostModel->getInsertID(),
+                ];
+            }
+        }
+
+        return $generated;
+    }
+
+    public function generateDailyCommunityPosts(int $limit = 5): array
+    {
+        $db = Database::connect();
+        $rows = $db->table('bf_marketing_scraper')
+            ->where('DATE(created_on)', date('Y-m-d'))
+            ->orderBy('feature_score', 'DESC')
+            ->limit($limit)
+            ->get()
+            ->getResultArray();
+
+        $batch = [];
+        foreach ($rows as $row) {
+            $batch[] = $this->generatePlatformPostPackFromSummary((int) $row['id']);
+        }
+        return $batch;
+    }
+
+    protected function seedDefaultPlatforms(): array
+    {
+        $configPlatforms = config('SocialPlatforms')->platforms;
+        $existing = $this->socialPlatformModel->findAll();
+        $existingKeys = array_column($existing, 'platform_key');
+
+        foreach ($configPlatforms as $key => $meta) {
+            if (in_array($key, $existingKeys, true)) {
+                continue;
+            }
+            $this->socialPlatformModel->insert(array_merge(['platform_key' => $key], $meta));
+        }
+
+        $platforms = $this->socialPlatformModel->findAll();
+        foreach ($platforms as $platform) {
+            $defaults = config('SocialPlatforms')->defaultTemplates;
+            $existingTemplates = $this->socialTemplateModel->findByPlatform((int) $platform['id']);
+            $existingKeys = array_column($existingTemplates, 'template_key');
+            foreach ($defaults as $key => $body) {
+                if (in_array($key, $existingKeys, true)) {
+                    continue;
+                }
+                $this->socialTemplateModel->insert([
+                    'platform_id'    => $platform['id'],
+                    'template_key'   => $key,
+                    'title'          => ucfirst(str_replace('_', ' ', $key)),
+                    'max_chars'      => null,
+                    'hashtag_limit'  => 5,
+                    'supports_links' => 1,
+                    'supports_mentions' => 1,
+                    'supports_tickers' => 1,
+                    'body_template'  => $body,
+                    'rules_json'     => json_encode(['auto_seeded' => true]),
+                ]);
+            }
+        }
+
+        return $this->socialPlatformModel->findAll();
+    }
+
+    protected function extractTickersFromSummary(array $summary): array
+    {
+        $tickers = [];
+        $payload = $summary['keywords'] ?? $summary['summary'] ?? '';
+        if (is_string($payload)) {
+            preg_match_all('/\\b[A-Z]{2,5}\\b/', $payload, $matches);
+            $tickers = $matches[0] ?? [];
+        } elseif (is_array($payload)) {
+            foreach ($payload as $item) {
+                if (is_string($item)) {
+                    preg_match_all('/\\b[A-Z]{2,5}\\b/', $item, $matches);
+                    $tickers = array_merge($tickers, $matches[0] ?? []);
+                }
+            }
+        }
+        return array_values(array_unique($tickers));
+    }
+
+    protected function extractLinksFromSummary(array $summary): array
+    {
+        $links = [];
+        if (! empty($summary['links'])) {
+            $links = is_array($summary['links']) ? $summary['links'] : json_decode($summary['links'], true) ?: [];
+        }
+        if (! empty($summary['url'])) {
+            $links[] = $summary['url'];
+        }
+        return array_values(array_unique(array_filter($links)));
+    }
+
+    protected function extractHashtagsFromSummary(array $summary): array
+    {
+        $keywords = [];
+        if (! empty($summary['keywords'])) {
+            $keywords = is_array($summary['keywords']) ? $summary['keywords'] : (json_decode($summary['keywords'], true) ?: []);
+        }
+        return array_map(static fn ($k) => preg_replace('/\\s+/', '', strtolower((string) $k)), array_slice($keywords, 0, 6));
     }
 }
 ?>
