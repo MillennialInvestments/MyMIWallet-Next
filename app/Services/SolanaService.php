@@ -25,6 +25,8 @@ class SolanaService
     private int $maxMemoEntries = 100;      // max entries in memo to avoid memory bloat
     private int $maxMemoSize = 5 * 1024 * 1024; // max total size of memo in bytes
     private string $networkStatusCacheKey = 'solana:network_status';
+    private array $rateLimitLog = [];
+    private array $circuitLog = [];
 
     public function __construct()
     {
@@ -33,7 +35,9 @@ class SolanaService
 
         $primary  = getenv('SOLANA_RPC_PRIMARY') ?: 'https://api.mainnet-beta.solana.com';
         $fallback = getenv('SOLANA_RPC_FALLBACKS') ?: '';
-        $endpoints = array_merge([$primary], array_map('trim', explode(',', $fallback)));
+        $defaultFallbacks = ['https://rpc.ankr.com/solana', 'https://solana-api.projectserum.com'];
+        $fallbackList = $fallback ? array_map('trim', explode(',', $fallback)) : $defaultFallbacks;
+        $endpoints = array_merge([$primary], $fallbackList);
         $this->rpcEndpoints = array_values(array_filter(array_unique($endpoints)));
         $this->wsEndpoint = getenv('SOLANA_WS_PRIMARY') ?: 'wss://api.mainnet-beta.solana.com';
 
@@ -47,107 +51,12 @@ class SolanaService
     /** Core JSON-RPC caller with retries & endpoint failover */
     private function rpc(string $method, array $params = [])
     {
-        $client = \Config\Services::curlrequest();
-
-        // Total attempt cap across all endpoints (prevents long stalls)
-        $attemptsPerEndpoint = 2;
-        $maxGlobalAttempts   = max(2, count($this->rpcEndpoints) * $attemptsPerEndpoint);
-
-        $baseBackoffMs = 200;   // start backoff at 200ms
-        $maxBackoffMs  = 2000;  // cap at 2s
-
-        $payload = [
-            'jsonrpc' => '2.0',
-            'id'      => 1,
-            'method'  => $method,
-            'params'  => $params
-        ];
-
-        $lastError = null;
-        $globalAttempts = 0;
-
-        foreach ($this->rpcEndpoints as $base) {
-            $url = rtrim($base, '/');
-
-            // Skip endpoints with open circuits
-            if ($this->isCircuitOpen($url)) {
-                log_message('debug', "SolanaService RPC: skip {$url} (circuit open)");
-                continue;
-            }
-
-            $backoffMs = $baseBackoffMs;
-
-            for ($i = 0; $i < $attemptsPerEndpoint; $i++) {
-                $globalAttempts++;
-                if ($globalAttempts > $maxGlobalAttempts) {
-                    $lastError = $lastError ?: new \RuntimeException('Global attempt cap reached');
-                    break 2; // break out of both loops
-                }
-
-                try {
-                    if (defined('CI_DEBUG') && CI_DEBUG) {
-                        log_message('debug', 'HTTP POST '.$url.' | payload:'.json_encode($payload));
-                    }
-                    $resp = $client->request('POST', $url, [
-                        'headers' => ['Content-Type' => 'application/json'],
-                        'timeout' => 10,
-                        'json'    => $payload,
-                    ]);
-                    $code = (int) $resp->getStatusCode();
-                    $body = (string) $resp->getBody();
-
-                    // Treat 403/429/408/5xx as retryable per our policy
-                    if ($code >= 500 || in_array($code, [403, 408, 429], true)) {
-                        throw new \RuntimeException("HTTP {$code}");
-                    }
-
-                    $decoded = $body !== '' ? json_decode($body, true) : null;
-                    if (!is_array($decoded)) {
-                        throw new \RuntimeException('JSON decode error');
-                    }
-                    if (isset($decoded['error'])) {
-                        // JSON-RPC error can be transient; try next attempt
-                        throw new \RuntimeException(json_encode($decoded['error']));
-                    }
-
-                    // Success:
-                    $this->noteSuccess($url);
-                    return $decoded;
-
-                } catch (\Throwable $e) {
-                    $lastError = $e;
-                    $msg = $e->getMessage() ?? 'unknown';
-                    $logLevel = str_contains($msg, 'HTTP 429') ? 'warning' : 'error';
-                    log_message($logLevel, "SolanaService RPC fail {$method} @ {$url} -> {$msg}");
-
-                    // Determine if we should open the circuit and how long
-                    $penalty = null;
-
-                    // Common transient statuses in message:
-                    if (str_contains($msg, 'HTTP 429') || str_contains($msg, 'HTTP 403')) {
-                        // brief open (rate-limit / forbidden)
-                        $penalty = 30;
-                    }
-                    if (stripos($msg, 'Could not resolve host') !== false ||
-                        stripos($msg, 'getaddrinfo failed') !== false ||
-                        stripos($msg, 'Name or service not known') !== false) {
-                        // DNS issue: open a bit longer
-                        $penalty = max($penalty ?? 0, 120);
-                    }
-
-                    $this->noteFailure($url, $penalty);
-
-                    // Backoff before next try on this endpoint, then either re-try
-                    // the same endpoint (within attemptsPerEndpoint) or move to next endpoint
-                    usleep($backoffMs * 1000);
-                    $backoffMs = min($maxBackoffMs, (int)($backoffMs * 1.8) + random_int(10, 40));
-                }
-            }
-            // exhausted attempts for this endpoint; move to next endpoint
+        $normalized = $this->rpcRequestNormalized($method, $params);
+        if ($normalized['ok']) {
+            return is_array($normalized['data']) ? $normalized['data'] : ($normalized['raw'] ?? []);
         }
 
-        // After all endpoints exhausted:
-        throw new \RuntimeException("All Solana RPC endpoints failed for {$method}: ".($lastError?->getMessage() ?? 'unknown'));
+        throw new \RuntimeException("All Solana RPC endpoints failed for {$method}: ".($normalized['error'] ?? 'unknown'));
     }
 
 
@@ -729,19 +638,18 @@ class SolanaService
 
         for ($i = 0; $i <= $maxRetries; $i++) {
             try {
-                $resp = $this->rpc('getSignaturesForAddress', [$address, ['limit' => $limit]]);
-                if (!isset($resp['error'])) {
-                    return $this->memo[$key] = $resp['result'] ?? [];
+                $resp = $this->rpcRequestNormalized('getSignaturesForAddress', [$address, ['limit' => $limit]]);
+                if ($resp['ok']) {
+                    $payload = $resp['data'] ?? [];
+                    return $this->memo[$key] = $payload['result'] ?? ($payload['data'] ?? []);
                 }
-                $err = (string)($resp['error']['message'] ?? 'unknown');
+                $err = (string)($resp['error'] ?? 'unknown');
             } catch (\Throwable $rpcError) {
                 $err = $rpcError->getMessage() ?: 'unknown';
             }
 
             if (str_contains($err, '429') && $i < $maxRetries) {
-                log_message('warning', 'SolanaService: rate limited on {endpoint} for getSignaturesForAddress', [
-                    'endpoint' => $this->rpcEndpoints[0] ?? 'unknown',
-                ]);
+                $this->logRateLimit($this->rpcEndpoints[0] ?? 'unknown', 'getSignaturesForAddress', 0);
                 usleep($delayMs * 1000);
                 $delayMs = min(2000, (int)($delayMs * 1.8 + random_int(5, 35)));
                 continue;
@@ -773,15 +681,18 @@ class SolanaService
         return true;
     }
 
-    private function noteFailure(string $endpoint, int $penaltySeconds = null): void
+    private function noteFailure(string $endpoint, int $penaltySeconds = null, bool $forceOpen = false): void
     {
         $s = &$this->circuit[$endpoint];
         if (!isset($s)) $s = ['failCount' => 0, 'openUntil' => 0];
         $s['failCount']++;
-        if ($s['failCount'] >= $this->circuitFailThresh) {
+        if ($forceOpen || $s['failCount'] >= $this->circuitFailThresh) {
             $openFor = $penaltySeconds ?? $this->circuitOpenSeconds;
             $s['openUntil'] = time() + $openFor;
-            log_message('notice', "SolanaService: circuit OPEN for {$endpoint} ({$openFor}s)");
+            if (($this->circuitLog[$endpoint] ?? 0) < time()) {
+                $this->circuitLog[$endpoint] = time() + $openFor;
+                log_message('notice', "SolanaService: circuit OPEN for {$endpoint} ({$openFor}s)");
+            }
         }
     }
 
@@ -845,4 +756,137 @@ class SolanaService
         }
     }
 
+    private function rpcRequestNormalized(string $method, array $params = []): array
+    {
+        $client = \Config\Services::curlrequest();
+        $attemptsPerEndpoint = 2;
+        $maxGlobalAttempts   = max(2, count($this->rpcEndpoints) * $attemptsPerEndpoint);
+        $baseBackoffMs = 200;
+        $maxBackoffMs  = 2000;
+
+        $payload = [
+            'jsonrpc' => '2.0',
+            'id'      => 1,
+            'method'  => $method,
+            'params'  => $params
+        ];
+
+        $lastError  = null;
+        $lastStatus = null;
+        $lastRaw    = null;
+        $globalAttempts = 0;
+
+        foreach ($this->rpcEndpoints as $base) {
+            $url = rtrim($base, '/');
+
+            if ($this->isCircuitOpen($url)) {
+                if (($this->circuitLog[$url] ?? 0) < time()) {
+                    $this->circuitLog[$url] = time() + 5;
+                    log_message('notice', "SolanaService RPC: skip {$url} (circuit open)");
+                }
+                continue;
+            }
+
+            $backoffMs = $baseBackoffMs;
+
+            for ($i = 0; $i < $attemptsPerEndpoint; $i++) {
+                $globalAttempts++;
+                if ($globalAttempts > $maxGlobalAttempts) {
+                    $lastError = $lastError ?: new \RuntimeException('Global attempt cap reached');
+                    break 2;
+                }
+
+                try {
+                    if (defined('CI_DEBUG') && CI_DEBUG) {
+                        log_message('debug', 'HTTP POST '.$url.' | payload:'.json_encode($payload));
+                    }
+
+                    $resp = $client->request('POST', $url, [
+                        'headers' => ['Content-Type' => 'application/json'],
+                        'timeout' => 10,
+                        'json'    => $payload,
+                    ]);
+
+                    $code = (int) $resp->getStatusCode();
+                    $body = (string) $resp->getBody();
+                    $lastStatus = $code;
+                    $lastRaw    = $body;
+
+                    if ($code === 429) {
+                        $retryAfter = (int) ($resp->getHeaderLine('Retry-After') ?: 0);
+                        $this->logRateLimit($url, $method, $retryAfter);
+                        $this->noteFailure($url, max($retryAfter, 30), true);
+                        usleep($backoffMs * 1000);
+                        $backoffMs = min($maxBackoffMs, (int)($backoffMs * 2) + random_int(25, 75));
+                        continue;
+                    }
+
+                    if ($code >= 500 || in_array($code, [403, 408], true)) {
+                        throw new \RuntimeException("HTTP {$code}");
+                    }
+
+                    $decoded = $body !== '' ? json_decode($body, true) : null;
+                    if (!is_array($decoded)) {
+                        throw new \RuntimeException('JSON decode error');
+                    }
+                    if (isset($decoded['error'])) {
+                        throw new \RuntimeException(json_encode($decoded['error']));
+                    }
+
+                    $this->noteSuccess($url);
+                    return [
+                        'ok'     => true,
+                        'status' => $code,
+                        'data'   => $decoded,
+                        'error'  => null,
+                        'raw'    => $body,
+                    ];
+                } catch (\Throwable $e) {
+                    $lastError = $e;
+                    $msg = $e->getMessage() ?? 'unknown';
+                    $logLevel = str_contains($msg, 'HTTP 429') ? 'notice' : 'error';
+                    log_message($logLevel, "SolanaService RPC fail {$method} @ {$url} -> {$msg}");
+
+                    $penalty = null;
+                    if (str_contains($msg, 'HTTP 429') || str_contains($msg, 'HTTP 403')) {
+                        $penalty = 45;
+                    }
+                    if (stripos($msg, 'Could not resolve host') !== false ||
+                        stripos($msg, 'getaddrinfo failed') !== false ||
+                        stripos($msg, 'Name or service not known') !== false) {
+                        $penalty = max($penalty ?? 0, 120);
+                    }
+
+                    $this->noteFailure($url, $penalty);
+
+                    usleep($backoffMs * 1000);
+                    $backoffMs = min($maxBackoffMs, (int)($backoffMs * 1.8) + random_int(10, 40));
+                }
+            }
+        }
+
+        return [
+            'ok'     => false,
+            'status' => $lastStatus,
+            'data'   => null,
+            'error'  => $lastError?->getMessage(),
+            'raw'    => $lastRaw,
+        ];
+    }
+
+    private function logRateLimit(string $endpoint, string $method, int $retryAfter): void
+    {
+        $window = $retryAfter > 0 ? $retryAfter : 60;
+        $nextAllowedLog = $this->rateLimitLog[$endpoint] ?? 0;
+        if ($nextAllowedLog > time()) {
+            return;
+        }
+
+        $this->rateLimitLog[$endpoint] = time() + $window;
+        log_message(
+            'notice',
+            'SolanaService: rate limited on {endpoint} for {method}; pausing {seconds}s',
+            ['endpoint' => $endpoint, 'method' => $method, 'seconds' => $window]
+        );
+    }
 }

@@ -4,8 +4,8 @@ namespace App\Libraries;
 use App\Libraries\{BaseLoader, MyMIFinnhub};
 use App\Modules\APIs\Models\MarketingNewsContentModel;
 use CodeIgniter\HTTP\CURLRequest;
-use Config\ApiEndpoints;
 use Config\Services;
+use App\Config\APISettings;
 
 #[\AllowDynamicProperties]
 class MyMINews {
@@ -24,9 +24,11 @@ class MyMINews {
 
         helper(['date', 'url']);
 
-        // Assume ApiEndpoints is a configuration file you created in the Config directory
-        $config = new ApiEndpoints();
-        $this->newsApiKey = $config->newsapiAI['API_KEY'];
+        /** @var APISettings $config */
+        $config = config('APISettings');
+        $this->newsApiKey = getenv('NEWSAPI_ORG_API_KEY')
+            ?: getenv('NEWSAPI_AI_KEY')
+            ?: ($config->newsapiOrgApiKey ?? '');
         $this->finnhub = service('myMIFinnhub');
     }
 

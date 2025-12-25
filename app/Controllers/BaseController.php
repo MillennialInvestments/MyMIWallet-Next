@@ -39,6 +39,8 @@ abstract class BaseController extends Controller
     protected string $theme = 'public';
     protected array $csp = [];
     protected ?string $cspNonce = null;
+    protected bool $telemetryEnabled = false;
+    protected int $maxListItems = 250;
 
     protected array $pageDefaults = [
         'pageName'  => '',
@@ -105,6 +107,7 @@ abstract class BaseController extends Controller
         $this->socialMedia  = config('SocialMedia');
         $this->debug        = (int)($this->siteSettings->debug ?? 0);
         $this->cuID         = $this->resolveCurrentUserId();
+        $this->telemetryEnabled = (bool) env('app.debugTelemetry', false);
 
         // CSP
         $this->csp = [
@@ -171,6 +174,7 @@ abstract class BaseController extends Controller
 
     protected function commonData(): array|ResponseInterface
     {
+        $this->logTelemetryMemory('commonData:start');
         $cuID = $this->getCuID();
         $this->data['cuID'] = $cuID;
 
@@ -286,6 +290,12 @@ abstract class BaseController extends Controller
             $this->data['currentUser'] = null;
         }
 
+        $shouldLoadHeavy = $this->shouldLoadHeavyData();
+        if (! $shouldLoadHeavy) {
+            $this->logTelemetryMemory('commonData:light-return');
+            return $this->data;
+        }
+
         // --- Dashboard info
         try {
             $dashboardInfo = $this->getMyMIDashboard()->dashboardInfo($cuID);
@@ -319,7 +329,7 @@ abstract class BaseController extends Controller
             if (!empty($userBudget)) {
                 $setValue('userBudget', $userBudget);
                 if (!empty($userBudget['userActiveBudgetRecords'])) $setValue('userActiveBudgetRecords', $userBudget['userActiveBudgetRecords']);
-                if (!empty($userBudget['userBudgetRecords']))       $setValue('userBudgetRecords', $userBudget['userBudgetRecords']);
+                if (!empty($userBudget['userBudgetRecords']))       $setValue('userBudgetRecords', array_slice($userBudget['userBudgetRecords'], 0, $this->maxListItems));
                 if (array_key_exists('totalAccountBalance', $userBudget)) {
                     $this->data['totalAccountBalance'] = (float)$userBudget['totalAccountBalance'];
                     $this->data['totalAccountBalanceFMT'] = $userBudget['totalAccountBalanceFMT'] ?? number_format($this->data['totalAccountBalance'], 2);
@@ -332,7 +342,7 @@ abstract class BaseController extends Controller
             }
             if ($this->data['userBudgetRecords'] === []) {
                 $records = $bs->getUserBudgetRecords($this->cuID) ?? [];
-                if (!empty($records)) $setValue('userBudgetRecords', $records);
+                if (!empty($records)) $setValue('userBudgetRecords', array_slice($records, 0, $this->maxListItems));
             }
         } catch (\Throwable $e) {
             log_message('error', 'BaseController commonData(): getUserBudget failed: '.$e->getMessage());
@@ -349,7 +359,17 @@ abstract class BaseController extends Controller
                 log_message('notice', 'BaseController commonData(): Solana network degraded, skipping live calls');
             } else {
                 try {
-                    $solanaSummary = $this->getMyMISolana()->getUserSolana($this->cuID) ?? [];
+                    $solanaSummaryRaw = $this->getMyMISolana()->getUserSolana($this->cuID);
+                    if (! is_array($solanaSummaryRaw)) {
+                        log_message('debug', 'BaseController commonData(): MyMISolana returned non-array, applying defaults');
+                        $solanaSummaryRaw = [];
+                    }
+                    $solanaSummary = array_merge([
+                        'cuSolanaDW'          => [],
+                        'cuSolanaTotal'       => 0.0,
+                        'cuSolanaValue'       => 0.0,
+                        'solanaNetworkStatus' => ['healthy' => false, 'status' => 'unavailable'],
+                    ], $solanaSummaryRaw);
                 } catch (\Throwable $inner) {
                     log_message('error', 'BaseController commonData(): MyMISolana getUserSolana failed: '.$inner->getMessage());
                 }
@@ -361,8 +381,9 @@ abstract class BaseController extends Controller
                     if (!empty($solanaSummary['solanaNetworkStatus'])) $setValue('solanaNetworkStatus', $solanaSummary['solanaNetworkStatus']);
                 }
 
-                $address = $solanaSummary['cuSolanaDW']['public_token']
-                    ?? $solanaSummary['cuSolanaDW']['address']
+                $walletRow = is_array($solanaSummary['cuSolanaDW'] ?? null) ? $solanaSummary['cuSolanaDW'] : [];
+                $address = $walletRow['public_token']
+                    ?? $walletRow['address']
                     ?? $solanaSummary['address_b58']
                     ?? null;
 
@@ -433,6 +454,7 @@ abstract class BaseController extends Controller
         }
 
         $this->data['totalAccountBalanceFMT'] = number_format((float)$this->data['totalAccountBalance'], 2);
+        $this->logTelemetryMemory('commonData:end');
         return $this->data;
     }
 
@@ -612,6 +634,45 @@ abstract class BaseController extends Controller
         $merged = array_replace_recursive($this->pageDefaults, $data);
         $merged['layout'] = $theme;
         return $merged;
+    }
+
+    protected function shouldLoadHeavyData(): bool
+    {
+        $path = strtolower(trim((string) $this->request->getUri()->getPath(), '/'));
+        if ($path === '') {
+            return false;
+        }
+
+        $heavyPrefixes = [
+            'dashboard',
+            'account',
+            'wallets',
+            'trade-tracker',
+            'my-account',
+            'mymi-wallet',
+            'profile',
+            'performance',
+            'schedule',
+        ];
+
+        foreach ($heavyPrefixes as $prefix) {
+            if (str_starts_with($path, $prefix)) {
+                return true;
+            }
+        }
+
+        return $this->request->isAJAX();
+    }
+
+    protected function logTelemetryMemory(string $label): void
+    {
+        if (! $this->telemetryEnabled) {
+            return;
+        }
+
+        $usageKb = (int) (memory_get_usage(true) / 1024);
+        $peakKb  = (int) (memory_get_peak_usage(true) / 1024);
+        log_message('debug', "telemetry:{$label} mem={$usageKb}KB peak={$peakKb}KB");
     }
 
     /**

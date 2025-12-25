@@ -119,42 +119,47 @@ class MyMISolana implements CryptoCurrencyInterface
         $cuID = $this->resolveCuID($cuID);
         if ($cuID === null) {
             log_message('error', 'MyMISolana::getUserSolana called without a valid user context; aborting.');
-            return null;
+            return $this->emptySummary();
         }
 
-        $def            = $this->getUserDefaultSolana($cuID);
-        $cuSolanaDW     = $def['cuSolanaDW']    ?? null;
-        $addressBase58  = $def['address_b58']   ?? null;
+        try {
+            $def            = $this->getUserDefaultSolana($cuID);
+            $cuSolanaDW     = $def['cuSolanaDW']    ?? null;
+            $addressBase58  = $def['address_b58']   ?? null;
 
-        $cuSolanaTotal  = $def['cuSolanaTotal'] ?? 0;
-        $cuSolanaAssets = ($this->siteSettings->solanaUserAssets === 1)
-                            ? $this->solanaModel->getUserTokens($cuID)
-                            : [];
+            $cuSolanaTotal  = $def['cuSolanaTotal'] ?? 0;
+            $cuSolanaAssets = ($this->siteSettings->solanaUserAssets === 1)
+                                ? $this->solanaModel->getUserTokens($cuID)
+                                : [];
 
-        $solanaPrice    = $this->getSolanaPrice();
-        $cuSolanaValue  = $cuSolanaTotal * $solanaPrice;
-        $cuSolanaPerc   = $this->calculateUserSolanaPercentage($cuSolanaTotal, $cuSolanaValue);
-        $netStatus      = $this->getNetworkStatus();
-        $marketData     = $this->getSolanaMarketData();
+            $solanaPrice    = (float) $this->getSolanaPrice();
+            $cuSolanaValue  = $cuSolanaTotal * $solanaPrice;
+            $cuSolanaPerc   = $this->calculateUserSolanaPercentage($cuSolanaTotal, $cuSolanaValue);
+            $netStatus      = $this->getNetworkStatus();
+            $marketData     = $this->getSolanaMarketData();
 
-        // Transactions need the Base58 address (never hex)
-        $transactions   = $this->getTransactions($cuID, $addressBase58);
-        $plData         = $this->calculatePL($transactions);
+            // Transactions need the Base58 address (never hex)
+            $transactions   = $this->getTransactions($cuID, $addressBase58);
+            $plData         = $this->calculatePL($transactions);
 
-        return [
-            'cuSolanaDW'        => $cuSolanaDW,
-            'solanaNetworkStatus'=> $netStatus,
-            'cuSolanaTotal'     => $cuSolanaTotal,
-            'cuSolanaValue'     => $cuSolanaValue,
-            'cuSolanaPercentage'=> $cuSolanaPerc,
-            'solanaPrice'       => $solanaPrice,
-            'solanaMTDPL'       => $plData['mtd']    ?? 'N/A',
-            'solanaDailyPL'     => $plData['daily']  ?? 'N/A',
-            'solanaHourlyPL'    => $plData['hourly'] ?? 'N/A',
-            'solanaMarketCap'   => $marketData['market_cap'] ?? '0.00',
-            'solanaDailyVolume' => $marketData['volume_array']['h24'] ?? 0,
-            'solanaHourlyVolume'=> $marketData['volume_array']['h1']  ?? 0,
-        ];
+            return [
+                'cuSolanaDW'        => $cuSolanaDW,
+                'solanaNetworkStatus'=> $netStatus,
+                'cuSolanaTotal'     => $cuSolanaTotal,
+                'cuSolanaValue'     => $cuSolanaValue,
+                'cuSolanaPercentage'=> $cuSolanaPerc,
+                'solanaPrice'       => $solanaPrice,
+                'solanaMTDPL'       => $plData['mtd']    ?? 'N/A',
+                'solanaDailyPL'     => $plData['daily']  ?? 'N/A',
+                'solanaHourlyPL'    => $plData['hourly'] ?? 'N/A',
+                'solanaMarketCap'   => $marketData['market_cap'] ?? 0.0,
+                'solanaDailyVolume' => $marketData['volume_array']['h24'] ?? 0,
+                'solanaHourlyVolume'=> $marketData['volume_array']['h1']  ?? 0,
+            ];
+        } catch (\Throwable $e) {
+            log_message('error', 'MyMISolana::getUserSolana failed: {msg}', ['msg' => $e->getMessage()]);
+            return $this->emptySummary();
+        }
     }
 
     public function getSolanaTokens() { 
@@ -572,11 +577,14 @@ class MyMISolana implements CryptoCurrencyInterface
     
         // Fetch market data from the Solana model
         $getMarketData = $this->solanaModel->getSOLMarketData();
+        if (! is_array($getMarketData)) {
+            $getMarketData = [];
+        }
         
         // Ensure that the market data is an array before processing
-        $getMarketVolume = is_string($getMarketData['volume']) ? json_decode($getMarketData['volume'], true) : $getMarketData['volume'];
-        $getMarketVolumeArray = is_string($getMarketData['volume_array']) ? json_decode($getMarketData['volume_array'], true) : $getMarketData['volume_array'];
-    
+        $getMarketVolume = is_string($getMarketData['volume'] ?? null) ? json_decode($getMarketData['volume'], true) : ($getMarketData['volume'] ?? []);
+        $getMarketVolumeArray = is_string($getMarketData['volume_array'] ?? null) ? json_decode($getMarketData['volume_array'], true) : ($getMarketData['volume_array'] ?? []);
+
         // Handle cases where the volume data may not be an array (e.g., float or other types)
         if (!is_array($getMarketVolumeArray)) {
             log_message('error', 'Expected volume_array to be an array but received: ' . print_r($getMarketVolumeArray, true));
@@ -595,13 +603,14 @@ class MyMISolana implements CryptoCurrencyInterface
     
         if (json_last_error() !== JSON_ERROR_NONE) {
             log_message('critical', 'Failed to decode volume_array JSON: ' . json_last_error_msg());
-            return json_encode(['error' => 'Failed to decode volume_array JSON'], true);
+            $getMarketVolumeArray = [
+                'h24' => 0,
+                'h6'  => 0,
+                'h1'  => 0,
+                'm5'  => 0,
+            ];
         }
-    
-        if ($this->debug === 1) {
-            // log_message('debug', 'MyMISolana L383 - getSolanaMarketData - Volume Data: ' . print_r($getMarketVolumeArray, true));
-        }
-    
+
         // Construct the market data array
         $marketData = [
             'currentPrice' => $getMarketData['coin_value'] ?? 0.0,
@@ -618,6 +627,24 @@ class MyMISolana implements CryptoCurrencyInterface
         $this->cache->save($cacheKeySanitized, $marketData, 600); // Cache for 10 minutes
         return $marketData;
     }   
+
+    private function emptySummary(): array
+    {
+        return [
+            'cuSolanaDW'          => [],
+            'solanaNetworkStatus' => ['healthy' => false, 'status' => 'unavailable'],
+            'cuSolanaTotal'       => 0.0,
+            'cuSolanaValue'       => 0.0,
+            'cuSolanaPercentage'  => 0.0,
+            'solanaPrice'         => 0.0,
+            'solanaMTDPL'         => 'N/A',
+            'solanaDailyPL'       => 'N/A',
+            'solanaHourlyPL'      => 'N/A',
+            'solanaMarketCap'     => 0.0,
+            'solanaDailyVolume'   => 0,
+            'solanaHourlyVolume'  => 0,
+        ];
+    }
 
     public function getAssetByID($assetID) {
         $getTokenInfo = $this->solanaModel->getTokenInfoByID($assetID); 
