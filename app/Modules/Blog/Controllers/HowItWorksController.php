@@ -70,7 +70,8 @@ class HowItWorksController extends UserController
         $this->data['date']                             = $this->siteSettings->date;
 
         // Add or merge existing $this->data with new values
-        if (!empty($userAccount['cuEmail'])) {
+        $account = is_array($this->userAccount ?? null) ? $this->userAccount : [];
+        if (!empty($account['cuEmail'])) {
             $this->data['cuRole']                       = $this->userAccount['cuRole'];
             $this->data['cuUserType']                   = $this->userAccount['cuUserType'];
             $this->data['cuEmail']                      = $this->userAccount['cuEmail'];
@@ -115,6 +116,9 @@ class HowItWorksController extends UserController
 
     public function show(string $slug = 'overview'): ResponseInterface
     {
+        $normalizedSlug = $this->normalizeSlug($slug);
+
+        // 1) CI4 markdown-based docs
         $map = [
             'overview'         => '01_Overview.md',
             'alerts'           => '02_Alerts_Dashboard_Guide.md',
@@ -124,28 +128,43 @@ class HowItWorksController extends UserController
             'account-settings' => '06_Account_Settings_and_Social_Media_Linking.md',
         ];
 
-        if (! array_key_exists($slug, $map)) {
-            throw PageNotFoundException::forPageNotFound();
+        if (array_key_exists($normalizedSlug, $map)) {
+            $file = $this->ci4DocsPath . $map[$normalizedSlug];
+            if (is_file($file)) {
+                $markdown     = file_get_contents($file) ?: '';
+                $contentHtml  = $this->parseMarkdownToHtml($markdown);
+                $data = [
+                    'layout'      => 'public',
+                    'title'       => $this->getGuideTitle($normalizedSlug),
+                    'slug'        => $normalizedSlug,
+                    'contentHtml' => $contentHtml,
+                    'navItems'    => $this->getNavItems(),
+                ];
+
+                return $this->respondWithRendered('App\\Modules\\Blog\\Views\\HowItWorks\\index', $data);
+            }
         }
 
-        $file = $this->ci4DocsPath . $map[$slug];
-
-        if (! is_file($file)) {
-            throw PageNotFoundException::forPageNotFound();
-        }
-
-        $markdown = file_get_contents($file) ?: '';
-        $contentHtml = $this->parseMarkdownToHtml($markdown);
-
-        $data = [
-            'layout'      => 'public',
-            'title'       => $this->getGuideTitle($slug),
-            'slug'        => $slug,
-            'contentHtml' => $contentHtml,
-            'navItems'    => $this->getNavItems(),
+        // 2) Static How-It-Works views (dash-friendly slug mapping)
+        $viewMap = [
+            'registering-an-account'   => 'App\Modules\Blog\Views\HowItWorks\Registering_An_Account',
+            'personal-budgeting'       => 'App\Modules\Blog\Views\HowItWorks\Personal_Budgeting',
+            'investment-dashboard'     => 'App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management',
+            'setting-financial-goals'  => 'App\Modules\Blog\Views\HowItWorks\Determining_Your_Financial_Goals',
+            'mymi-gold'                => 'App\Modules\Blog\Views\HowItWorks\MyMI_Gold',
+            'mymi-exchange'            => 'App\Modules\Blog\Views\HowItWorks\Manage_Finances',
+            'features-and-plans'       => 'App\Modules\Blog\Views\HowItWorks\Features_And_Plans',
+            'manage-finances'          => 'App\Modules\Blog\Views\HowItWorks\Manage_Finances',
         ];
 
-        return $this->renderTheme('App\\Modules\\Blog\\Views\\HowItWorks\\index', $data);
+        if (isset($viewMap[$normalizedSlug])) {
+            return $this->respondWithRendered($viewMap[$normalizedSlug], $this->commonData());
+        }
+
+        // Graceful 404 (no exception)
+        return $this->response
+            ->setStatusCode(404)
+            ->setBody(view('errors/html/error_404'));
     }
 
     public function discord(): ResponseInterface
@@ -176,21 +195,21 @@ class HowItWorksController extends UserController
             ->setBody(view('Modules/Blog/HowItWorks/Streaming', $data));
     }
 
-    public function DetermineYourFinancialGoals()
+    public function DetermineYourFinancialGoals(): ResponseInterface
     {
-        $this->data['pageTitle']                    = 'Determine Your Financial Goals | How It Works | MyMI Wallet';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $this->renderTheme('App\Modules\Blog\Views\HowItWorks\Determining_Your_Financial_Goals', $this->data);
+        $data = $this->commonData(); // Ensure this is correctly populating $this->data
+        $data['pageTitle'] = 'Determine Your Financial Goals | How It Works | MyMI Wallet';
+        return $this->respondWithRendered('App\Modules\Blog\Views\HowItWorks\Determining_Your_Financial_Goals', $data);
     }
 
-    public function RegisteringAnAccount()
+    public function RegisteringAnAccount(): ResponseInterface
     {
-        $this->data['pageTitle']                    = 'Registering An Account | How It Works | MyMI Wallet';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $this->renderTheme('App\Modules\Blog\Views\HowItWorks\Registering_An_Account', $this->data);
+        $data = $this->commonData(); // Ensure this is correctly populating $this->data
+        $data['pageTitle'] = 'Registering An Account | How It Works | MyMI Wallet';
+        return $this->respondWithRendered('App\Modules\Blog\Views\HowItWorks\Registering_An_Account', $data);
     }
 
-    public function MyMIGold() {
+    public function MyMIGold(): ResponseInterface {
         $this->data['pageTitle'] = 'MyMI Gold | How It Works | MyMI Wallet';
         $this->data['goldValue'] = null;
         $this->data['getCoinValue'] = null;
@@ -216,10 +235,10 @@ class HowItWorksController extends UserController
             }
         }
 
-        return $this->renderTheme('App\Modules\Blog\Views\HowItWorks\MyMI_Gold', $this->data);
+        return $this->respondWithRendered('App\Modules\Blog\Views\HowItWorks\MyMI_Gold', $this->data);
     }
 
-    public function PurchaseMyMIGold() {
+    public function PurchaseMyMIGold(): ResponseInterface {
         $getCoinValue = $this->MyMIGoldModel->getCoinValue();
         $getInitialCoinValue = $this->MyMIGoldModel->getInitialCoinValue();
         
@@ -234,7 +253,7 @@ class HowItWorksController extends UserController
     
         // Pass the structured data array to the view
         $content = view('Modules\Blog\Views\HowItWorks\Purchase_MyMI_Gold', $data);
-        return $this->renderPage('Home', 'Automated', $content);
+        return $this->response->setStatusCode(200)->setBody($this->renderPage('Home', 'Automated', $content));
     }
 
     protected function parseMarkdownToHtml(string $markdown): string
@@ -411,5 +430,22 @@ class HowItWorksController extends UserController
     public function render(string $view, array $data = [], array $options = []): string
     {
         return $this->renderTheme($view, $data);
+    }
+
+    private function normalizeSlug(string $slug): string
+    {
+        $slug = trim(strtolower($slug));
+        $slug = str_replace([' ', '_'], '-', $slug);
+        return preg_replace('/[^a-z0-9\-]+/', '-', $slug);
+    }
+
+    private function respondWithRendered(string $view, array $data = []): ResponseInterface
+    {
+        $rendered = $this->renderTheme($view, $data);
+        if ($rendered instanceof ResponseInterface) {
+            return $rendered;
+        }
+
+        return $this->response->setStatusCode(200)->setBody($rendered);
     }
 }
