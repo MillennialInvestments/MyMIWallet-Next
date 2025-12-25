@@ -1378,7 +1378,7 @@ $routes->group('ScriptStudio', ['namespace' => 'App\\Modules\\ScriptStudio\\Cont
 });
 
 // Public: How It Works (new public views)
-$routes->group('how-it-works', static function ($routes) {
+$routes->group('how-it-works', ['namespace' => 'App\\Modules\\Blog\\Controllers'], static function ($routes) {
     $routes->get('/', 'HowItWorksController::index');
     $routes->get('budgeting', 'HowItWorksController::budgeting');
     $routes->get('investing', 'HowItWorksController::investing');
@@ -1387,6 +1387,7 @@ $routes->group('how-it-works', static function ($routes) {
     $routes->get('projects', 'HowItWorksController::projects');
     $routes->get('security', 'HowItWorksController::security');
     $routes->get('pricing', 'HowItWorksController::pricing');
+    $routes->get('(:any)', 'HowItWorksController::show/$1');
 });
 
 // Customer Support:
@@ -1541,6 +1542,7 @@ $routes->group('Knowledgebase', ['namespace' => 'App\Modules\User\Controllers'],
     $routes->get('Trade-Tracker', 'KnowledgebaseController::tradeTracker');
     $routes->get('Tutorials', 'KnowledgebaseController::tutorials');
     $routes->get('Types-Of-Accounts', 'KnowledgebaseController::typesOfAccounts');
+    $routes->get('(:any)', 'KnowledgebaseController::show/$1');
     // Define other routes for 'blog' module
 });
 
