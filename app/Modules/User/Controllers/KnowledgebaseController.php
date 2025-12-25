@@ -291,6 +291,7 @@ use App\Config\{Auth, SiteSettings, SocialMedia};
 use App\Models\{DashboardModel, ExchangeModel, PageSEOModel, PublicModel, SubscribeModel};
 use App\Libraries\{MyMIAnalytics, MyMICoin, MyMIUser};
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\HTTP\ResponseInterface;
 
 #[\AllowDynamicProperties]
 class KnowledgebaseController extends UserController
@@ -339,36 +340,37 @@ class KnowledgebaseController extends UserController
 
         // Add or merge existing $this->data with new values
         $this->data['cuID']                             = $this->cuID;
-        if (!empty($userAccount['cuEmail'])) {
-            $this->data['cuRole']                       = $this->userAccount['cuRole'];
-            $this->data['cuUserType']                   = $this->userAccount['cuUserType'];
-            $this->data['cuEmail']                      = $this->userAccount['cuEmail'];
-            $this->data['cuUsername']                   = $this->userAccount['cuUsername'];
-            $this->data['cuDisplayName']                = $this->userAccount['cuDisplayName'];
-            $this->data['cuFirstName']                  = $this->userAccount['cuFirstName'];
-            $this->data['cuMiddleName']                 = $this->userAccount['cuMiddleName'];
-            $this->data['cuLastName']                   = $this->userAccount['cuLastName'];
-            $this->data['cuNameSuffix']                 = $this->userAccount['cuNameSuffix'];
-            $this->data['cuNameInitials']               = $this->userAccount['cuNameInitials'];
-            $this->data['cuKYC']                        = $this->userAccount['cuKYC'];
-            $this->data['cuDOB']                        = $this->userAccount['cuDOB'];
-            $this->data['cuSSN']                        = $this->userAccount['cuSSN'];
-            $this->data['cuPhone']                      = $this->userAccount['cuPhone'];
-            $this->data['cuAddress']                    = $this->userAccount['cuAddress'];
-            $this->data['cuCity']                       = $this->userAccount['cuCity'];
-            $this->data['cuState']                      = $this->userAccount['cuState'];
-            $this->data['cuCountry']                    = $this->userAccount['cuCountry'];
-            $this->data['cuZipCode']                    = $this->userAccount['cuZipCode'];
-            $this->data['cuMailingAddress']             = $this->userAccount['cuMailingAddress'];
-            $this->data['cuEmployment']                 = $this->userAccount['cuEmployment'];
-            $this->data['cuOccupation']                 = $this->userAccount['cuOccupation'];
-            $this->data['cuSalary']                     = $this->userAccount['cuSalary'];
-            $this->data['cuProofIdentity']              = $this->userAccount['cuProofIdentity'];
-            $this->data['cuProofAddress']               = $this->userAccount['cuProofAddress'];
-            $this->data['cuPublicKey']                  = $this->userAccount['cuPublicKey'];
-            $this->data['cuPrivateKey']                 = $this->userAccount['cuPrivateKey'];
-            $this->data['cuReferrer']                   = $this->userAccount['cuReferrer'];
-            $this->data['cuReferrerCode']               = $this->userAccount['cuReferrerCode'];
+        $account                                        = is_array($this->userAccount) ? $this->userAccount : [];
+        if (!empty($account['cuEmail'])) {
+            $this->data['cuRole']                       = $account['cuRole'];
+            $this->data['cuUserType']                   = $account['cuUserType'];
+            $this->data['cuEmail']                      = $account['cuEmail'];
+            $this->data['cuUsername']                   = $account['cuUsername'];
+            $this->data['cuDisplayName']                = $account['cuDisplayName'];
+            $this->data['cuFirstName']                  = $account['cuFirstName'];
+            $this->data['cuMiddleName']                 = $account['cuMiddleName'];
+            $this->data['cuLastName']                   = $account['cuLastName'];
+            $this->data['cuNameSuffix']                 = $account['cuNameSuffix'];
+            $this->data['cuNameInitials']               = $account['cuNameInitials'];
+            $this->data['cuKYC']                        = $account['cuKYC'];
+            $this->data['cuDOB']                        = $account['cuDOB'];
+            $this->data['cuSSN']                        = $account['cuSSN'];
+            $this->data['cuPhone']                      = $account['cuPhone'];
+            $this->data['cuAddress']                    = $account['cuAddress'];
+            $this->data['cuCity']                       = $account['cuCity'];
+            $this->data['cuState']                      = $account['cuState'];
+            $this->data['cuCountry']                    = $account['cuCountry'];
+            $this->data['cuZipCode']                    = $account['cuZipCode'];
+            $this->data['cuMailingAddress']             = $account['cuMailingAddress'];
+            $this->data['cuEmployment']                 = $account['cuEmployment'];
+            $this->data['cuOccupation']                 = $account['cuOccupation'];
+            $this->data['cuSalary']                     = $account['cuSalary'];
+            $this->data['cuProofIdentity']              = $account['cuProofIdentity'];
+            $this->data['cuProofAddress']               = $account['cuProofAddress'];
+            $this->data['cuPublicKey']                  = $account['cuPublicKey'];
+            $this->data['cuPrivateKey']                 = $account['cuPrivateKey'];
+            $this->data['cuReferrer']                   = $account['cuReferrer'];
+            $this->data['cuReferrerCode']               = $account['cuReferrerCode'];
         } else {
             
         }
@@ -376,95 +378,126 @@ class KnowledgebaseController extends UserController
         return $this->data;
 }
  
-    public function index()
+    public function index(): ResponseInterface
     {
         $this->data['pageTitle']                        = 'MyMI Knowledgebase | MyMI Wallet | The Future of Finance';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $this->renderTheme('UserModule\Views\Knowledgebase\index', $this->data);
+        $data = $this->commonData(); // Ensure this is correctly populating $this->data
+        return $this->respondWithRendered('UserModule\Views\Knowledgebase\index', $data);
     }
 
-    public function accountBilling()
+    public function show(string $slug = 'index'): ResponseInterface
+    {
+        $normalized = $this->normalizeSlug($slug);
+        $slugMap = [
+            'index'                => 'UserModule\Views\Knowledgebase\index',
+            'account-and-billing'  => 'UserModule\Views\Knowledgebase\Account_Billing',
+            'assets'               => 'UserModule\Views\Knowledgebase\Assets',
+            'getting-started'      => 'UserModule\Views\Knowledgebase\Getting_Started',
+            'integrating-wallets'  => 'UserModule\Views\Knowledgebase\Integrating_Wallets',
+            'investor-profile'     => 'UserModule\Views\Knowledgebase\Investor_Profile',
+            'kyc-verification'     => 'UserModule\Views\Knowledgebase\KYC_Verification',
+            'mymi-partnerships'    => 'UserModule\Views\Knowledgebase\Partnerships',
+            'promoted-articles'    => 'UserModule\Views\Knowledgebase\Promoted_Articles',
+            'technical-support'    => 'UserModule\Views\Knowledgebase\Technical_Support',
+            'trade-tracker'        => 'UserModule\Views\Knowledgebase\Trade_Tracker',
+            'tutorials'            => 'UserModule\Views\Knowledgebase\Tutorials',
+            'types-of-accounts'    => 'UserModule\Views\Knowledgebase\Types_Of_Accounts',
+        ];
+
+        if (isset($slugMap[$normalized])) {
+            $data = $this->commonData();
+            $data['pageTitle'] = ($data['pageTitle'] ?? 'Knowledgebase') . ' | MyMI Wallet';
+            return $this->respondWithRendered($slugMap[$normalized], $data);
+        }
+
+        // Graceful 404 that avoids exceptions in logs
+        return $this->response
+            ->setStatusCode(404)
+            ->setBody(view('errors/html/error_404'));
+    }
+
+    public function accountBilling(): ResponseInterface
     {        
         $this->data['pageTitle']                        = 'Accounts and Billing | MyMI Knowledgebase | MyMI Wallet';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $this->renderTheme('UserModule\Views\Knowledgebase\Account_Billing', $this->data);
+        $data = $this->commonData(); // Ensure this is correctly populating $this->data
+        return $this->respondWithRendered('UserModule\Views\Knowledgebase\Account_Billing', $data);
     }
 
-    public function assets()
+    public function assets(): ResponseInterface
     {        
         $this->data['pageTitle']                        = 'Assets | MyMI Knowledgebase | MyMI Wallet';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $this->renderTheme('UserModule\Views\Knowledgebase\Assets', $this->data);
+        $data = $this->commonData(); // Ensure this is correctly populating $this->data
+        return $this->respondWithRendered('UserModule\Views\Knowledgebase\Assets', $data);
     }
 
-    public function gettingStarted()
+    public function gettingStarted(): ResponseInterface
     {        
         $this->data['pageTitle']                        = 'Getting Started | MyMI Knowledgebase | MyMI Wallet';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $this->renderTheme('UserModule\Views\Knowledgebase\Getting_Started', $this->data);
+        $data = $this->commonData(); // Ensure this is correctly populating $this->data
+        return $this->respondWithRendered('UserModule\Views\Knowledgebase\Getting_Started', $data);
     }
 
-    public function integratingWallets()
+    public function integratingWallets(): ResponseInterface
     {        
         $this->data['pageTitle']                        = 'Integrating Wallets | MyMI Knowledgebase | MyMI Wallet';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $this->renderTheme('UserModule\Views\Knowledgebase\Integrating_Wallets', $this->data);
+        $data = $this->commonData(); // Ensure this is correctly populating $this->data
+        return $this->respondWithRendered('UserModule\Views\Knowledgebase\Integrating_Wallets', $data);
     }
 
-    public function investorProfile()
+    public function investorProfile(): ResponseInterface
     {        
         $this->data['pageTitle']                        = 'Investor Profile | MyMI Knowledgebase | MyMI Wallet';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $this->renderTheme('UserModule\Views\Knowledgebase\Investor_Profile', $this->data);
+        $data = $this->commonData(); // Ensure this is correctly populating $this->data
+        return $this->respondWithRendered('UserModule\Views\Knowledgebase\Investor_Profile', $data);
     }
 
-    public function KYCVerification()
+    public function KYCVerification(): ResponseInterface
     {        
         $this->data['pageTitle']                        = 'KYC Verification | MyMI Knowledgebase | MyMI Wallet';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $this->renderTheme('UserModule\Views\Knowledgebase\KYC_Verification', $this->data);
+        $data = $this->commonData(); // Ensure this is correctly populating $this->data
+        return $this->respondWithRendered('UserModule\Views\Knowledgebase\KYC_Verification', $data);
     }
 
-    public function partnerships()
+    public function partnerships(): ResponseInterface
     {        
         $this->data['pageTitle']                        = 'MyMI Partnerships | MyMI Knowledgebase | MyMI Wallet';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $this->renderTheme('UserModule\Views\Knowledgebase\Partnerships', $this->data);
+        $data = $this->commonData(); // Ensure this is correctly populating $this->data
+        return $this->respondWithRendered('UserModule\Views\Knowledgebase\Partnerships', $data);
     }
 
-    public function promotedArticles()
+    public function promotedArticles(): ResponseInterface
     {        
         $this->data['pageTitle']                        = 'Promoted Articles | MyMI Knowledgebase | MyMI Wallet';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $this->renderTheme('UserModule\Views\Knowledgebase\Promoted_Articles', $this->data);
+        $data = $this->commonData(); // Ensure this is correctly populating $this->data
+        return $this->respondWithRendered('UserModule\Views\Knowledgebase\Promoted_Articles', $data);
     }
 
-    public function technicalSupport()
+    public function technicalSupport(): ResponseInterface
     {        
         $this->data['pageTitle']                        = 'Technical Support | MyMI Knowledgebase | MyMI Wallet';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $this->renderTheme('UserModule\Views\Knowledgebase\Technical_Support', $this->data);
+        $data = $this->commonData(); // Ensure this is correctly populating $this->data
+        return $this->respondWithRendered('UserModule\Views\Knowledgebase\Technical_Support', $data);
     }
 
-    public function tradeTracker()
+    public function tradeTracker(): ResponseInterface
     {        
         $this->data['pageTitle']                        = 'Trade Tracker | MyMI Knowledgebase | MyMI Wallet';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $this->renderTheme('UserModule\Views\Knowledgebase\Trade_Tracker', $this->data);
+        $data = $this->commonData(); // Ensure this is correctly populating $this->data
+        return $this->respondWithRendered('UserModule\Views\Knowledgebase\Trade_Tracker', $data);
     }
 
-    public function tutorials()
+    public function tutorials(): ResponseInterface
     {        
         $this->data['pageTitle']                        = 'Tutorials | MyMI Knowledgebase | MyMI Wallet';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $this->renderTheme('UserModule\Views\Knowledgebase\Tutorials', $this->data);
+        $data = $this->commonData(); // Ensure this is correctly populating $this->data
+        return $this->respondWithRendered('UserModule\Views\Knowledgebase\Tutorials', $data);
     }
 
-    public function typesOfAccounts()
+    public function typesOfAccounts(): ResponseInterface
     {        
         $this->data['pageTitle']                        = 'Type of Accounts | MyMI Knowledgebase | MyMI Wallet';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $this->renderTheme('UserModule\Views\Knowledgebase\Types_Of_Accounts', $this->data);
+        $data = $this->commonData(); // Ensure this is correctly populating $this->data
+        return $this->respondWithRendered('UserModule\Views\Knowledgebase\Types_Of_Accounts', $data);
     }
 
     // Additional methods...
@@ -489,4 +522,21 @@ class KnowledgebaseController extends UserController
     }    
     
     /* end ./application/controllers/home.php */
+
+    private function normalizeSlug(string $slug): string
+    {
+        $slug = strtolower(trim($slug));
+        $slug = str_replace([' ', '_'], '-', $slug);
+        return preg_replace('/[^a-z0-9\-]/', '-', $slug);
+    }
+
+    private function respondWithRendered(string $view, array $data = []): ResponseInterface
+    {
+        $rendered = $this->renderTheme($view, $data);
+        if ($rendered instanceof ResponseInterface) {
+            return $rendered;
+        }
+
+        return $this->response->setStatusCode(200)->setBody($rendered);
+    }
 }
