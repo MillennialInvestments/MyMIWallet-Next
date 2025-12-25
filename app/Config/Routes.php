@@ -1364,6 +1364,18 @@ $routes->group('ScriptStudio', ['namespace' => 'App\\Modules\\ScriptStudio\\Cont
     $routes->get('Export/(:num)/(:segment)', 'ScriptStudioController::export/$1/$2');
 });
 
+// Public: How It Works (new public views)
+$routes->group('how-it-works', static function ($routes) {
+    $routes->get('/', 'HowItWorksController::index');
+    $routes->get('budgeting', 'HowItWorksController::budgeting');
+    $routes->get('investing', 'HowItWorksController::investing');
+    $routes->get('crypto', 'HowItWorksController::crypto');
+    $routes->get('alerts', 'HowItWorksController::alerts');
+    $routes->get('projects', 'HowItWorksController::projects');
+    $routes->get('security', 'HowItWorksController::security');
+    $routes->get('pricing', 'HowItWorksController::pricing');
+});
+
 // Customer Support:
 $routes->group('Support', ['namespace' => 'App\Modules\Support\Controllers'], function($routes) {
     $routes->get('/', 'SupportController::index');
