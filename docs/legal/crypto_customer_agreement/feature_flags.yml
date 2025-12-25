@@ -1,0 +1,11 @@
+features:
+  spot_trading: true
+  wallet_transfers: true
+  staking: false
+  fiat_onramp_offramp: true
+  dex_swaps: false
+  margin: false
+  derivatives: false
+  lending_borrow: false
+  nft: false
+  api_trading: false
