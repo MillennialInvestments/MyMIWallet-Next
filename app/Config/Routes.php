@@ -1378,7 +1378,7 @@ $routes->group('ScriptStudio', ['namespace' => 'App\\Modules\\ScriptStudio\\Cont
 });
 
 // Public: How It Works (new public views)
-$routes->group('how-it-works', ['namespace' => 'App\\Modules\\Blog\\Controllers'], static function ($routes) {
+$routes->group('How-It-Works', ['namespace' => 'App\\Modules\\Blog\\Controllers'], static function ($routes) {
     $routes->get('/', 'HowItWorksController::index');
     $routes->get('budgeting', 'HowItWorksController::budgeting');
     $routes->get('investing', 'HowItWorksController::investing');
