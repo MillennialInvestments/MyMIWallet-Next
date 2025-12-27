@@ -1941,4 +1941,29 @@ $routes->group('API/Management', ['namespace' => 'App\\Modules\\APIs\\Controller
 if (file_exists(APPPATH . "Modules/Management/Config/Routes.php")) {
     require APPPATH . "Modules/Management/Config/Routes.php";
 }
+
+// Tax user module (nested under User module)
+$routes->group('Tax', ['namespace' => 'App\\Modules\\User\\Tax\\Controllers', 'filter' => 'login'], static function ($routes) {
+    $routes->get('/', 'Tax::index');
+    $routes->match(['get', 'post'], 'create', 'Tax::create');
+    $routes->get('edit/(:num)', 'Tax::edit/$1');
+    $routes->get('view/(:num)', 'Tax::view/$1');
+    $routes->get('preview/(:num)', 'Tax::preview/$1');
+    $routes->post('ajax/saveLine', 'Tax::ajaxSaveLine');
+    $routes->post('ajax/saveAllocation', 'Tax::ajaxSaveAllocation');
+    $routes->get('ajax/recalc/(:num)', 'Tax::ajaxRecalc/$1');
+    $routes->get('export/json/(:num)', 'Tax::exportJson/$1');
+    $routes->get('export/csv/(:num)', 'Tax::exportCsv/$1');
+});
+
+// Tax admin module nested under Management
+$routes->group('Admin/Tax', ['namespace' => 'App\\Modules\\Management\\TaxAdmin\\Controllers', 'filter' => 'login'], static function ($routes) {
+    $routes->get('/', 'TaxConfig::index');
+    $routes->get('Templates', 'TaxConfig::templates');
+    $routes->match(['get', 'post'], 'Templates/edit/(:num)', 'TaxConfig::editTemplate/$1');
+    $routes->match(['get', 'post'], 'Jurisdictions', 'TaxConfig::jurisdictions');
+    $routes->get('Rates', 'TaxConfig::rates');
+    $routes->match(['get', 'post'], 'Rates/create', 'TaxConfig::createRate');
+    $routes->match(['get', 'post'], 'Rates/edit/(:num)', 'TaxConfig::editRate/$1');
+});
 ?>
