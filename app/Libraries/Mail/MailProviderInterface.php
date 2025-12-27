@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Libraries\Mail\Contracts;
+namespace App\Libraries\Mail;
 
 interface MailProviderInterface
 {

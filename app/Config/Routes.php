@@ -590,7 +590,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     // ------------------------
     // ✅ ManagementController
     // ------------------------
-    $routes->group('Management', function($routes) {
+$routes->group('Management', function($routes) {
         $routes->get('banUnverifiedUsers', 'ManagementController::banUnverifiedUsers');
         $routes->get('processQueuedEmails', 'ManagementController::processQueuedEmails');
         $routes->get('resendActivationEmailsBatch', 'ManagementController::resendActivationEmailsBatch');
@@ -598,6 +598,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('sendTestActivationEmail', 'ManagementController::sendTestActivationEmail');
         $routes->post('saveSuggestion', 'ManagementController::saveSuggestion');
     });
+    $routes->get('SMTP/test', 'App\\Modules\\Management\\Controllers\\SmtpTestController::probe', ['filter' => 'login']);
 
     // ------------------------
     // ✅ MarketingController
