@@ -83,3 +83,64 @@ This keeps PHP workers free for dynamic traffic and mirrors the behaviour of the
    - `php-fpm` is listening on the expected `fastcgi_pass` target (`127.0.0.1:9071` or the Unix socket).
    - `SCRIPT_FILENAME` resolves to an existing `index.php`.
 3. Keep `app.indexPage` blank in `.env` to ensure CodeIgniter honours the rewritten routes.
+
+## Current mymiwallet.conf
+
+mymiteam@vps33344:~/nginx/sites-available$ cat mymiwallet.conf
+# ===== mymiwallet vhost (user-space) =====
+server {
+    listen 9010;
+    server_name mymiwallet.com www.mymiwallet.com;
+
+    # CI4 docroot
+    root /home/mymiteam/mymiwallet/site/current/public;
+    index index.php;
+
+    # --- ACME Challenge (Let's Encrypt) ---
+    location ^~ /.well-known/acme-challenge/ {
+        default_type "text/plain";
+        root /home/mymiteam/mymiwallet/site/current/public;
+        try_files $uri =404;
+        access_log off;
+        log_not_found off;
+    }
+
+    # --- Server-level maintenance guard ---
+    if (-f $document_root/maintenance.html) { return 503; }
+    error_page 503 @maintenance;
+
+    # Primary router
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # Static assets
+    location ~* \.(?:css|js|jpg|jpeg|png|gif|webp|ico|svg|woff2?|ttf|otf)$ {
+        expires 7d;
+        access_log off;
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # PHP handler
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO       $fastcgi_path_info;
+        fastcgi_param PATH_TRANSLATED $document_root$fastcgi_path_info;
+        fastcgi_index index.php;
+        fastcgi_pass php82;  # matches upstream in nginx.conf
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_read_timeout 120s;
+    }
+
+    # Maintenance fallback endpoint
+    location @maintenance {
+        add_header Retry-After 300 always;
+        try_files /maintenance.html =503;
+    }
+
+    # Security hardening
+    location ~* \.(?:env|ini|log|sql|sqlite)$ { deny all; }
+    location ~* ^/(app|system|writable)/      { deny all; }
+}
