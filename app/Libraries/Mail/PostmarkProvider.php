@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Libraries\Mail\Providers;
-
-use App\Libraries\Mail\Contracts\MailProviderInterface;
+namespace App\Libraries\Mail;
 
 class PostmarkProvider implements MailProviderInterface
 {
