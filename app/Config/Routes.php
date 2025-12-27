@@ -449,6 +449,17 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     });
 
     // ------------------------
+    // ✅ OverledgerController
+    // ------------------------
+    $routes->group('Overledger', static function($routes) {
+        $routes->get('health', 'OverledgerController::health');
+        $routes->get('networks', 'OverledgerController::networks');
+        $routes->get('balance', 'OverledgerController::balance');
+        $routes->post('tx/prepare', 'OverledgerController::prepare');
+        $routes->post('tx/submit', 'OverledgerController::submit');
+    });
+
+    // ------------------------
     // ✅ BudgetController
     // ------------------------
     $routes->group('Budget', function($routes) {
