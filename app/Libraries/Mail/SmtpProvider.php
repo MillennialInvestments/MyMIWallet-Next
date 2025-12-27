@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Libraries\Mail\Providers;
-
-use App\Libraries\Mail\Contracts\MailProviderInterface;
+namespace App\Libraries\Mail;
 
 class SmtpProvider implements MailProviderInterface
 {
     public function send(array $payload): array
     {
-        $email = service('email');
+        $email  = service('email');
+        $config = config('Email');
 
-        $fromEmail = $payload['from_email'] ?? getenv('mail.from.email') ?? getenv('email.fromEmail');
-        $fromName  = $payload['from_name'] ?? getenv('mail.from.name') ?? getenv('email.fromName');
+        $fromEmail = $payload['from_email'] ?? getenv('mail.from.email') ?? getenv('email.fromEmail') ?? $config->fromEmail;
+        $fromName  = $payload['from_name'] ?? getenv('mail.from.name') ?? getenv('email.fromName') ?? $config->fromName;
 
         $email->setFrom($fromEmail, $fromName);
         $email->setTo($payload['to'] ?? '');
@@ -29,6 +28,14 @@ class SmtpProvider implements MailProviderInterface
             $email->setReplyTo($payload['reply_to']);
         }
 
+        $meta = [
+            'host'     => $config->SMTPHost,
+            'port'     => $config->SMTPPort,
+            'protocol' => $config->protocol,
+            'crypto'   => $config->SMTPCrypto,
+            'from'     => $fromEmail,
+        ];
+
         if (! $email->send(false)) {
             $debug = $email->printDebugger(['headers', 'subject', 'body']);
             return [
@@ -36,7 +43,7 @@ class SmtpProvider implements MailProviderInterface
                 'provider'   => 'smtp',
                 'message_id' => null,
                 'error'      => 'SMTP send failed',
-                'meta'       => ['debug' => $debug],
+                'meta'       => array_merge($meta, ['debug' => $debug]),
             ];
         }
 
@@ -45,7 +52,7 @@ class SmtpProvider implements MailProviderInterface
             'provider'   => 'smtp',
             'message_id' => null,
             'error'      => null,
-            'meta'       => [],
+            'meta'       => $meta,
         ];
     }
 }

@@ -142,8 +142,7 @@ class AuthController extends Controller
             // Keep both `error` (string) and `errors` (array) for view compatibility
             return redirect()->back()
                 ->withInput()
-                ->with('error', $errorMsg)
-                ->with('errors', [$errorMsg]);
+                ->with('error', $errorMsg);
         }
 
         // ✅ SUCCESS: secure the user identity for the rest of the app
@@ -396,6 +395,21 @@ class AuthController extends Controller
 
                 return redirect()->back()->withInput()->with('errors', $users->errors());
             }
+
+            $newUserId       = (int) ($users->getInsertID() ?? 0);
+            $loginIdentifier = $this->config->validFields === ['email'] ? 'email' : 'username';
+            log_message(
+                'info',
+                'Registration created user_id={id}, email={email}, username={username}, active={active}, requiresActivation={requiresActivation}, loginIdentifier={loginIdentifier}',
+                [
+                    'id'                 => $newUserId,
+                    'email'              => $user->email ?? null,
+                    'username'           => $user->username ?? null,
+                    'active'             => $user->active ?? null,
+                    'requiresActivation' => $this->config->requireActivation !== null,
+                    'loginIdentifier'    => $loginIdentifier,
+                ]
+            );
 
             if ($this->config->requireActivation !== null) {
                 $activator = service('activator');
