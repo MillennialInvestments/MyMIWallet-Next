@@ -2,169 +2,70 @@
 
 namespace Config;
 
-use CodeIgniter\Config\Filters as BaseFilters;
-use CodeIgniter\Filters\Cors;
+use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
-use CodeIgniter\Filters\ForceHTTPS;
 use CodeIgniter\Filters\Honeypot;
 use CodeIgniter\Filters\InvalidChars;
-use CodeIgniter\Filters\PageCache;
-use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
 
-class Filters extends BaseFilters
+class Filters extends BaseConfig
 {
     /**
      * Configures aliases for Filter classes to
      * make reading things nicer and simpler.
      *
-     * @var array<string, class-string|list<class-string>>
-     *
-     * [filter_name => classname]
-     * or [filter_name => [classname1, classname2, ...]]
+     * @var array<string, class-string|list<class-string>> [filter_name => classname]
+     *                                                     or [filter_name => [classname1, classname2, ...]]
      */
     public array $aliases = [
-        'cronKey'       => \App\Filters\CronKeyFilter::class,
+        // PATCH: session security filters
+        'sessionTracker'  => \App\Filters\SessionTrackerFilter::class,
+        'sessionRevoked'  => \App\Filters\SessionRevokedFilter::class,
+        // PATCH: register RBAC permission filter
+        'permission'     => \App\Filters\PermissionFilter::class,
+        // PATCH: API token authentication filter
+        'apiToken'       => \App\Filters\ApiTokenAuthFilter::class,
+        // PATCH: feature flag route filter
+        'feature'        => \App\Filters\FeatureFlagFilter::class,
+        // PATCH: anti-abuse filters
+        'ratelimit'     => \App\Filters\RateLimitFilter::class,
+        'captcha'       => \App\Filters\CaptchaFilter::class,
+        'emailVerified' => \App\Filters\EmailVerifiedFilter::class,
+        'idempotency'  => \App\Filters\IdempotencyFilter::class,
+        // PATCH: observability filters
+        'observability' => \App\Filters\ObservabilityFilter::class,
+        'jsonException' => \App\Filters\JsonExceptionFilter::class,
+        'maintenance'   => \App\Filters\MaintenanceFilter::class,
+        'login'         => \App\Filters\LoginFilter::class,
+        'authcheck'     => \App\Filters\AuthCheckFilter::class,
         'csrf'          => CSRF::class,
+        'auth'          => \App\Filters\AuthFilter::class,  
+        'cronKey'       => \App\Filters\CronKeyFilter::class,   
+        // 'csp'           => \App\Filters\CspFilter::class,
+        
+        'cspoff'        => \App\Filters\CspOff::class,
         'toolbar'       => DebugToolbar::class,
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
-        'secureheaders' => SecureHeaders::class,
-        'cors'          => Cors::class,
-        'forcehttps'    => ForceHTTPS::class,
-        'pagecache'     => PageCache::class,
-        'performance'   => PerformanceMetrics::class,
-
-        // Myth:Auth filters
-        'login'      => \Myth\Auth\Filters\LoginFilter::class,
-        'role'       => \Myth\Auth\Filters\RoleFilter::class,
-        'permission' => \Myth\Auth\Filters\PermissionFilter::class,
-
-    ];
-
-    /**
-     * List of special required filters.
-     *
-     * The filters listed here are special. They are applied before and after
-     * other kinds of filters, and always applied even if a route does not exist.
-     *
-     * Filters set by default provide framework functionality. If removed,
-     * those functions will no longer work.
-     *
-     * @see https://codeigniter.com/user_guide/incoming/filters.html#provided-filters
-     *
-     * @var array{before: list<string>, after: list<string>}
-     */
-    public array $required = [
-        'before' => [
-            'forcehttps', // Force Global Secure Requests
-            'pagecache',  // Web Page Caching
-        ],
-        'after' => [
-            'pagecache',   // Web Page Caching
-            'performance', // Performance Metrics
-            'toolbar',     // Debug Toolbar
-        ],
+        // 'secureheaders' => SecureHeaders::class,
+        // Safe no-op filter to satisfy routes that reference "except"
+        'except'        => \App\Filters\ExceptFilter::class,
     ];
 
     /**
      * List of filter aliases that are always
      * applied before and after every request.
      *
-     * @var array{
-     *     before: array<string, array{except: list<string>|string}>|list<string>,
-     *     after: array<string, array{except: list<string>|string}>|list<string>
-     * }
+     * @var array<string, array<string, array<string, string>>>|array<string, list<string>>
      */
     public array $globals = [
         'before' => [
+            'maintenance',
+            // PATCH: request observability
+            'observability',
+            'sessionRevoked',
             // 'csrf' => [
-            //     'authcheck' => [
-            //         'except' => [
-            //             'login',
-            //             'register',
-            //             'forgot',
-            //             'reset',
-            //             'forgot-password',
-            //             'reset-password',
-            //             'Auth/forgot-password',
-            //             'Auth/reset-password',
-            //             'activate-account',
-            //             'activate-account/*',
-            //             'Auth/activate-account',
-            //             'Auth/activate-account/*',
-            //             '/Apex/*',
-            //             '/API/*',
-            //             '/API/Management/*',
-            //             '/APIs/*',
-            //             'About-Us',
-            //             'Blog',
-            //             '/Blog/*',
-            //             'Corporate-Earnings',
-            //             '/Corporate-Earnings/*',
-            //             'Economic-Calendar',
-            //             '/Economic-Calendar/*',
-            //             'Getting-Started',
-            //             '/Getting-Started/*',
-            //             '/How-It-Works',
-            //             '/How-It-Works/*',
-            //             '/Memberships',
-            //             '/Memberships/*',
-            //             '/Preview/*',
-            //             '/Privacy-Policy',
-            //             '/Terms-Of-Service',
-            //             '/TBI',
-            //             '/TBI/*',
-            //             '/Tim',
-            //             '/Tim/*',
-            //             '/Discord',
-            //             '/Discord/*',
-            //             '/Facebook',
-            //             '/Facebook/*',
-            //             '/ITT',
-            //             '/ITT/*',
-            //             '/Monetized-Creators',
-            //             '/Monetized-Creators/*',
-            //             '/Alicia',
-            //             '/Alicia/*',
-            //             '/AnneAlicia',
-            //             '/AnneAlicia/*',
-            //             '/Deon',
-            //             '/Deon/*',
-            //             '/Dubose',
-            //             '/Dubose/*',
-            //             '/Jasmine',
-            //             '/Jasmine/*',
-            //             '/Jailin',
-            //             '/Jailin/*',
-            //             '/Jeremy',
-            //             '/Jeremy/*',
-            //             '/Kristie',
-            //             '/Kristie/*',
-            //             '/Ken',
-            //             '/Ken/*',
-            //             '/Manee',
-            //             '/Manee/*',
-            //             '/MattCardon',
-            //             '/MattCardon/*',
-            //             '/MattHill',
-            //             '/MattHill/*',
-            //             '/Michael',
-            //             '/Michael/*',
-            //             '/LinkedIn',
-            //             '/LinkedIn/*',
-            //             '/Support',
-            //             '/Support/*',
-            //             '/Twitter',
-            //             '/Twitter/*',
-            //             '/X',
-            //             '/X/*',
-            //             '/YouTube',
-            //             '/YouTube/*',
-            //             '/',
-            //         ],
-            //     ],
             //     'except' => [
             //         'register',
             //         'Discord/register',
@@ -195,47 +96,113 @@ class Filters extends BaseFilters
             //         'index.php/Exchange/Solana/provisionDefaultWallet',
             //         'Exchange/Solana/provisionDefaultWallet',
             //     ],
-            // ],            
-            'login' => [
-                'before' => [
-                    'Account',
-                    'Account/*',
-                    'Alerts',
-                    'Alerts/*',
-                    'API',
-                    'API/*',
-                    'Budget',
-                    'Budget/*',
-                    'Dashboard',
-                    'Dashboard/*',
-                    'Exchange',
-                    'Exchange/*',
-                    'Investments',
-                    'Investments/*',
-                    'Management',
-                    'Management/*',
-                    'My-Investments',
-                    'My-Trades',
-                    'My-Referrals',
-                    'My-Referrals/*',
-                    'MyMI-Gold',
-                    'MyMI-Gold/*',
-                    'MyMI-Wallet',
-                    'MyMI-Wallet/*',
-                    'Preview/Alert/*',
-                    'Referrals',
-                    'Referrals/*',
-                    'Trade-Tracker',
-                    'Trade-Tracker/*',
-                    'Wallets',
-                    'Wallets/*',
+            // ],
+            'authcheck' => [
+                'except' => [
+                    'login',
+                    'register',
+                    'forgot',
+                    'reset',
+                    'forgot-password',
+                    'reset-password',
+                    'health',
+                    'healthz',
+                    'status',
+                    'landing',
+                    'landing/*',
+                    'api/health',
+                    'API/Health',
+                    'API/health',
+                    'Auth/forgot-password',
+                    'Auth/reset-password',
+                    'activate-account',
+                    'activate-account/*',
+                    'Auth/activate-account',
+                    'Auth/activate-account/*',
+                    'auth/provider/*',
+                    'auth/provider/*/callback',
+                    'Auth/provider/*',
+                    'Auth/provider/*/callback',
+                    '/Apex/*',
+                    '/API/*',
+                    '/API/Management/*',
+                    '/APIs/*',
+                    'About-Us',
+                    'Blog',
+                    '/Blog/*',
+                    'Corporate-Earnings',
+                    '/Corporate-Earnings/*',
+                    'Economic-Calendar',
+                    '/Economic-Calendar/*',
+                    'Getting-Started',
+                    '/Getting-Started/*',
+                    '/How-It-Works',
+                    '/How-It-Works/*',
+                    '/Memberships',
+                    '/Memberships/*',
+                    '/Preview/*',
+                    '/Privacy-Policy',
+                    '/Terms-Of-Service',
+                    '/TBI',
+                    '/TBI/*',
+                    '/Tim',
+                    '/Tim/*',
+                    '/Discord',
+                    '/Discord/*',
+                    '/Facebook',
+                    
+                    '/Facebook/*',
+                    '/ITT',
+                    '/ITT/*',
+                    '/Monetized-Creators',
+                    '/Monetized-Creators/*',
+                    '/Alicia',
+                    '/Alicia/*',
+                    '/AnneAlicia',
+                    '/AnneAlicia/*',
+                    '/Deon',
+                    '/Deon/*',
+                    '/Dubose',
+                    '/Dubose/*',
+                    '/Jasmine',
+                    '/Jasmine/*',
+                    '/Jailin',
+                    '/Jailin/*',
+                    '/Jeremy',
+                    '/Jeremy/*',
+                    '/Kristie',
+                    '/Kristie/*',
+                    '/Ken',
+                    '/Ken/*',
+                    '/Manee',
+                    '/Manee/*',
+                    '/MattCardon',
+                    '/MattCardon/*',
+                    '/MattHill',
+                    '/MattHill/*',
+                    '/Michael',
+                    '/Michael/*',
+                    '/LinkedIn',
+                    '/LinkedIn/*',
+                    '/Support',
+                    '/Support/*',
+                    '/Twitter',
+                    '/Twitter/*',
+                    '/X',
+                    '/X/*',
+                    '/YouTube',
+                    '/YouTube/*',
+                    '/',
                 ],
             ],
-            // 'honeypot',
-            // 'csrf',
-            // 'invalidchars',
+
         ],
         'after' => [
+            // 'csp' => ['except' => ['API/*', 'assets/*']],
+            'cspoff',
+            'sessionTracker',
+            'observability',
+            'jsonException',
             // 'honeypot',
             // 'secureheaders',
         ],
@@ -246,13 +213,11 @@ class Filters extends BaseFilters
      * particular HTTP method (GET, POST, etc.).
      *
      * Example:
-     * 'POST' => ['foo', 'bar']
+     * 'post' => ['foo', 'bar']
      *
      * If you use this, you should disable auto-routing because auto-routing
      * permits any HTTP method to access a controller. Accessing the controller
      * with a method you don't expect could bypass the filter.
-     *
-     * @var array<string, list<string>>
      */
     public array $methods = [];
 
@@ -262,8 +227,36 @@ class Filters extends BaseFilters
      *
      * Example:
      * 'isLoggedIn' => ['before' => ['account/*', 'profiles/*']]
-     *
-     * @var array<string, array<string, list<string>>>
      */
-    public array $filters = ['toolbar' => ['after' => ['*']]];
+    public array $filters = [
+        'cronKey' => [
+            'before' => [
+                'API/Alerts/fetchEmailAlerts',
+                'API/Alerts/distributeAlerts',
+                'API/Alerts/sendDiscordAlerts',
+                'API/Alerts/fetchEmailsOnly',
+                'API/Alerts/sendDiscordAlertsBySymbol',
+                'API/Alerts/sendDiscordAlertsBySymbol/*',
+            ],
+        ],
+        'csrf' => [
+            'before' => [
+                'login',
+                'logout',
+                'register',
+                'register/*',
+                'forgot',
+                'forgot-password',
+                'reset-password',
+                'activate',
+                'activate-account',
+                'activate-account/*',
+                'resend-activation',
+                'resend-activate-account',
+                'Auth/*',
+                'get2FAQRCode',
+                'verify2FACode',
+            ],
+        ],
+    ];
 }
