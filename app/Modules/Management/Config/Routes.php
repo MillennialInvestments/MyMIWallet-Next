@@ -20,3 +20,12 @@ $routes->group('Management/OpsInbox', ['filter' => 'role:admin'], static functio
     $r->post('approve/(:num)', 'App\\Modules\\Management\\Controllers\\OpsInboxController::markApproved/$1');
     $r->post('reject/(:num)', 'App\\Modules\\Management\\Controllers\\OpsInboxController::reject/$1');
 });
+
+$routes->group('Management/Viewer', ['filter' => 'role:admin'], static function ($r) {
+    $r->get('/', 'App\\Modules\\Management\\Controllers\\ViewerController::index');
+    $r->get('list', 'App\\Modules\\Management\\Controllers\\ViewerController::list');
+    $r->post('preview', 'App\\Modules\\Management\\Controllers\\ViewerController::preview');
+    $r->post('request', 'App\\Modules\\Management\\Controllers\\ViewerController::request');
+    $r->post('snapshots/save', 'App\\Modules\\Management\\Controllers\\ViewerController::saveSnapshot');
+    $r->get('snapshots/(:num)', 'App\\Modules\\Management\\Controllers\\ViewerController::showSnapshot/$1');
+});
