@@ -569,6 +569,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         // $routes->get('refreshActiveTradesPrices/(:any)', 'InvestmentsController::refreshActiveTradesPrices/$1');
         $routes->get('getSymbolsByTradeType/(:segment)', 'InvestmentsController::getSymbolsByTradeType/$1');
         $routes->get('getInvestmentData/(:segment)', 'InvestmentsController::getInvestmentData/$1');
+        $routes->get('searchTickers', 'InvestmentsController::searchTickers');
         $routes->get('news',              'InvestmentsController::listNews');
         $routes->get('news/(:num)',       'InvestmentsController::getNews/$1');
         $routes->post('news',             'InvestmentsController::createNews');
