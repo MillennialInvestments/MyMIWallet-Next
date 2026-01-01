@@ -4,6 +4,11 @@
 
 The dashboard provides real-time visibility into AI spend, usage, and controls. It is built with the existing Management module (Bootstrap / NK block style) and uses Fetch API to retrieve JSON from the AI Ops endpoints.
 
+## Access URLs
+- **CI4 Dashboard:** `https://mymiwallet.com/Management/AiOps` (proxied to the main app on port `9010`).
+- **n8n Webhooks/Base URL:** `https://aiops.mymiwallet.com` (port `8500` behind Nginx).
+- **Chat UI:** `https://chat.mymiwallet.com` (port `8300` behind Nginx).
+
 ## UI behavior
 
 - **Master Switch:** global toggle that disables all AI automation when OFF.

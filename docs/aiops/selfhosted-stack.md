@@ -9,8 +9,8 @@
 
 ## Port Map & Reverse Proxy (placeholders)
 - Ollama: `11434` (must stay private; reverse proxy with basic auth if exposed internally).
-- Open WebUI: `3000` (proxy via Nginx with auth/IP allowlists).
-- n8n: `5678` (proxy with HTTPS and signed webhook checks).
+- Open WebUI / Chat UI: `8300` (proxy via Nginx with auth/IP allowlists).
+- n8n: `8500` (proxy with HTTPS and signed webhook checks).
 - Redis: `6379` (LAN-only; never exposed to the internet).
 - Postgres: `5432` (LAN-only; managed security groups/firewall).
 
