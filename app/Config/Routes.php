@@ -198,15 +198,11 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->match(['GET', 'POST'], 'Status/(:segment)', 'APIController::status');
     $routes->get('Health', 'HealthController::index');              // /API/Health
     $routes->get('Ops/OPcacheReset', 'OpsController::opcacheReset'); // /API/Ops/OPcacheReset
-    $routes->group('AiOps', ['filter' => 'permission:admin.access'], static function($routes) {
+    $routes->group('AiOps', static function($routes) {
         $routes->get('status', 'AiOpsController::status');
-        $routes->get('checkCapsAndAlert', 'AiOpsController::checkCapsAndAlert');
-        $routes->get('runMarketingDaily', 'AiOpsController::runMarketingDaily');
-        $routes->get('runAlertsDigest', 'AiOpsController::runAlertsDigest');
-        $routes->get('runAnalyticsWeekly', 'AiOpsController::runAnalyticsWeekly');
         $routes->post('toggle', 'AiOpsController::toggle');
-        $routes->post('setCaps', 'AiOpsController::setCaps');
-        $routes->get('events', 'AiOpsController::events');
+        $routes->post('run', 'AiOpsController::run');
+        $routes->post('receiveResult', 'AiOpsController::receiveResult');
     });
     $routes->post('Alerts/backfillEmailAlerts', 'AlertsController::backfillEmailAlerts');
     $routes->get('cronFetchAndGenerateNews', 'ManagementController::cronFetchAndGenerateNews');
