@@ -16,7 +16,7 @@
 
 ## Throttling and spam prevention
 - Lightweight throttling caps alerts to **5 per 15 minutes** per IP and per email hash using the configured cache store. When the ceiling is reached, auditing still records the attempt row but skips sending emails and logs the throttling decision.
-- Throttle keys: `auth_audit:ip:<ip>` and `auth_audit:email:<sha256>`.
+- Throttle keys: `auth_audit_ip_<sha256(ip)>`, `auth_audit_email_<sha256(email)>`, and a combined `auth_audit_pair_<sha256(email|ip)>`. Raw email/IP are not embedded in the key names to avoid reserved characters and to reduce PII leakage.
 
 ## Database audit trail
 Every registration POST is stored in `bf_auth_registration_attempts` with status transitions to `success` or `failed`.
