@@ -12,57 +12,76 @@ class HealthController extends BaseController
 {
     public function healthz(): ResponseInterface
     {
-        $checks = [
-            'database' => $this->databaseCheck(),
-            'cache'    => $this->cacheCheck(),
-        ];
-
+        $checks = $this->collectChecks();
         $isHealthy = $this->areChecksPassing($checks);
 
         if (! $isHealthy) {
-            log_message('error', 'Healthz check failed: {checks}', ['checks' => $checks]);
+            $this->logCheckFailure('healthz', $checks);
         }
 
-        return $this->response->setStatusCode($isHealthy ? 200 : 503)
+        return $this->response
+            ->setStatusCode($isHealthy ? 200 : 503)
             ->setJSON([
                 'status'    => $isHealthy ? 'ok' : 'degraded',
-                'timestamp' => date(DATE_ATOM),
+                'timestamp' => $this->now(),
                 'checks'    => $checks,
             ]);
     }
 
     public function diag(): ResponseInterface
     {
-        $checks = [
-            'database' => $this->databaseCheck(),
-            'cache'    => $this->cacheCheck(),
-        ];
+        $checks = $this->collectChecks();
         $isHealthy = $this->areChecksPassing($checks);
 
         if (! $isHealthy) {
-            log_message('error', 'Diagnostic check failed: {checks}', ['checks' => $checks]);
+            $this->logCheckFailure('diag', $checks);
         }
 
-        $system = [
-            'status'        => $isHealthy ? 'ok' : 'degraded',
-            'timestamp'     => date(DATE_ATOM),
-            'environment'   => ENVIRONMENT,
-            'php_version'   => PHP_VERSION,
-            'ci_version'    => CodeIgniter::CI_VERSION,
-            'git_ref'       => $this->gitRef(),
-            'app_timezone'  => date_default_timezone_get(),
-            'memory_usage'  => memory_get_usage(true),
-        ];
-
-        return $this->response->setStatusCode($isHealthy ? 200 : 503)
+        return $this->response
+            ->setStatusCode($isHealthy ? 200 : 503)
             ->setJSON([
-                'system' => $system,
+                'system' => [
+                    'status'       => $isHealthy ? 'ok' : 'degraded',
+                    'timestamp'    => $this->now(),
+                    'app_version'  => $this->appVersion(),
+                    'git_ref'      => $this->gitRef(),
+                    'php_version'  => PHP_VERSION,
+                    'ci_version'   => CodeIgniter::CI_VERSION,
+                    'timezone'     => date_default_timezone_get(),
+                    'memory_usage' => memory_get_usage(true),
+                ],
                 'checks' => $checks,
             ]);
     }
 
+    /**
+     * @return array<string,array<string,int|string|null>>
+     */
+    private function collectChecks(): array
+    {
+        return [
+            'database' => $this->databaseCheck(),
+            'cache'    => $this->cacheCheck(),
+        ];
+    }
+
+    private function now(): string
+    {
+        return date(DATE_ATOM);
+    }
+
+    private function logCheckFailure(string $endpoint, array $checks): void
+    {
+        log_message('error', 'System check failed for {endpoint}', [
+            'endpoint' => $endpoint,
+            'checks'   => $checks,
+        ]);
+    }
+
     private function databaseCheck(): array
     {
+        $started = microtime(true);
+
         try {
             $db = db_connect();
             $ok = $db->isConnected() || $db->simpleQuery('SELECT 1');
@@ -70,17 +89,23 @@ class HealthController extends BaseController
             return [
                 'status' => $ok ? 'ok' : 'fail',
                 'detail' => $ok ? 'database reachable' : 'database unreachable',
+                'ms'     => $this->durationMs($started),
             ];
         } catch (Throwable $e) {
+            log_message('error', 'Database health probe failed: {message}', ['message' => $e->getMessage()]);
+
             return [
                 'status' => 'fail',
                 'detail' => 'database error',
+                'ms'     => $this->durationMs($started),
             ];
         }
     }
 
     private function cacheCheck(): array
     {
+        $started = microtime(true);
+
         try {
             $cache = cache();
             $key   = 'healthz_ping';
@@ -91,11 +116,15 @@ class HealthController extends BaseController
             return [
                 'status' => $ok ? 'ok' : 'fail',
                 'detail' => $ok ? 'cache read/write ok' : 'cache read/write failed',
+                'ms'     => $this->durationMs($started),
             ];
         } catch (Throwable $e) {
+            log_message('error', 'Cache health probe failed: {message}', ['message' => $e->getMessage()]);
+
             return [
                 'status' => 'fail',
                 'detail' => 'cache error',
+                'ms'     => $this->durationMs($started),
             ];
         }
     }
@@ -116,6 +145,25 @@ class HealthController extends BaseController
         return true;
     }
 
+    private function appVersion(): ?string
+    {
+        $envVersion = getenv('APP_VERSION');
+        if (is_string($envVersion) && $envVersion !== '') {
+            return $envVersion;
+        }
+
+        $composerPath = ROOTPATH . 'composer.json';
+        if (is_readable($composerPath)) {
+            $composer = json_decode((string) file_get_contents($composerPath), true);
+
+            if (is_array($composer) && isset($composer['version']) && is_string($composer['version'])) {
+                return $composer['version'];
+            }
+        }
+
+        return null;
+    }
+
     private function gitRef(): ?string
     {
         $headPath = ROOTPATH . '.git/HEAD';
@@ -132,5 +180,10 @@ class HealthController extends BaseController
         }
 
         return substr($head, 0, 12) ?: null;
+    }
+
+    private function durationMs(float $started): int
+    {
+        return (int) round((microtime(true) - $started) * 1000);
     }
 }

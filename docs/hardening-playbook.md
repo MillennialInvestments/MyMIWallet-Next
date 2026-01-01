@@ -36,6 +36,7 @@ Verify health endpoints (after Codex adds them)
 
 curl -sS https://www.mymiwallet.com/system/healthz | jq .
 curl -sS https://www.mymiwallet.com/system/diag | jq .
+  # Expect JSON with status/timestamp/checks for healthz and system metadata (app_version, git_ref, php_version, ci_version) for diag.
 
 
 Run smoke tests (if CIUnit configured)

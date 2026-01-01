@@ -3,8 +3,8 @@
 Use this playbook to process `docs/gap-audit/gap_tracker.csv` one row at a time without losing place.
 
 ## Cursor (do not remove)
-- CURRENT_ROW_INDEX: **4** _(1-based, excludes header)_
-- CURRENT_GAP_ID: **GAP-DEVOPS-001**
+- CURRENT_ROW_INDEX: **5** _(1-based, excludes header)_
+- CURRENT_GAP_ID: **GAP-PREDICTIONS-001**
 - CURRENT_PRIORITY: **P1**
 
 > Cursor selection rules:
@@ -43,17 +43,17 @@ Use this playbook to process `docs/gap-audit/gap_tracker.csv` one row at a time 
 Copy everything inside the block into Codex to execute the current row.
 
 ```
-Gap ID: GAP-DEVOPS-001
-Row Index: 4
+Gap ID: GAP-PREDICTIONS-001
+Row Index: 5
 Priority: P1
-Module: DevOps
-Requirement: Add /system/healthz and /system/diag endpoints plus standards configs per hardening playbook
+Module: Predictions
+Requirement: Add migrations for predictions markets/options/orders/trades/positions/liquidity/settlements/payouts
 Acceptance Criteria:
-  - Expose GET /system/healthz returning JSON with service status, timestamp, and basic dependency checks; respond 200 when healthy.
-  - Expose GET /system/diag returning diagnostic JSON (app version, build/git ref, db/cache/connectivity probes) without leaking secrets.
-  - Register explicit routes (no auto-routing) and secure to allow safe public health checks while avoiding sensitive data exposure.
-  - Add minimal tests or cURL verification steps referenced in docs/hardening-playbook.md lines 35-71 and ensure logging for failures.
-Files Likely Impacted: app/Config/Routes.php; new/updated controller under app/Controllers (or app/Modules/*) for System/Health; optional view/json responders; docs/hardening-playbook.md if examples added.
+  - Create migrations that define tables for markets, options, orders, trades, positions, liquidity, settlements, and payouts using CI4 migration conventions.
+  - Register migrations with spark so they can be executed via CLI.
+  - Ensure foreign keys/indexes cover common lookups (user, market, option, order identifiers) with safe defaults.
+  - Provide brief docs or inline comments on running the migrations and any seed data if applicable.
+Files Likely Impacted: app/Database/Migrations/*; docs/predictions/README.md; spark or composer.json if migration namespace registration is required.
 Mandatory Outputs:
   - Implement required code/docs changes for this Gap (or docs-only when applicable).
   - Update the matching row in docs/gap-audit/gap_tracker.csv (Status, Code Evidence, Notes, Completed Date, Target Version as needed).
@@ -61,14 +61,14 @@ Mandatory Outputs:
 ```
 
 ## LAST COMPLETED ROW (Audit Log)
-- Row Index: 15
-  - Gap ID: GAP-SEARCH-001
-  - Summary: Registered explicit GET /API/Investments/searchTickers route with documented limit clamp/local-first behavior and updated tracker/testing notes.
-  - Files changed: app/Config/Routes.php; docs/search/README.md; docs/gap-audit/gap_tracker.csv
-  - How to test: php spark routes | grep -i searchTickers; curl -s '${BASE_URL}/API/Investments/searchTickers?query=AAPL&limit=5'
+- Row Index: 4
+  - Gap ID: GAP-DEVOPS-001
+  - Summary: Hardened /system/healthz and /system/diag to return structured JSON (status, timestamp, dependency checks, app_version/git_ref metadata) with latency logging and failure telemetry, plus feature tests and doc curl guidance.
+  - Files changed: app/Controllers/System/HealthController.php; tests/feature/SystemHealthEndpointsTest.php; docs/hardening-playbook.md; docs/gap-audit/gap_tracker.csv; docs/gap-audit/next-steps.md
+  - How to test: curl -sS '${BASE_URL}/system/healthz' | jq . ; curl -sS '${BASE_URL}/system/diag' | jq . ; phpunit (once composer install succeeds)
   - Follow-ups created: None
 
 ## Backlog snapshot (auto-generated helper)
-- Remaining counts (Status != Completed): **P1: 6**, **P2: 2**, **P3: 0**
-- Top remaining P1 Gap IDs (row order): GAP-DEVOPS-001, GAP-PREDICTIONS-001, GAP-PREDICTIONS-002, GAP-WALLETS-001, GAP-CRON-001, GAP-SECURITY-001
+- Remaining counts (Status != Completed): **P1: 5**, **P2: 2**, **P3: 0**
+- Top remaining P1 Gap IDs (row order): GAP-PREDICTIONS-001, GAP-PREDICTIONS-002, GAP-WALLETS-001, GAP-CRON-001, GAP-SECURITY-001
 - Modules with most open gaps: Marketing (17), User (8), Investments (7), Codex (5), Docs (5)
