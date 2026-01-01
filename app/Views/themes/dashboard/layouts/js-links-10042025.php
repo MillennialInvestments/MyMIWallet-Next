@@ -3,6 +3,7 @@
 $nonce             = $nonce             ?? ['style' => '', 'script' => ''];
 $needsMarketCharts = $needsMarketCharts ?? false;
 $useSummernote     = $useSummernote     ?? false;
+$debugSidebar      = isset($siteSettings) ? ($siteSettings->debug ?? 0) : 0;
 
 // Versioned assets (cache-busting)
 $navbarSearchPath = FCPATH . 'assets/js/navbar-search.js';
@@ -34,6 +35,10 @@ $gdInvestV        = is_file($gdInvestPath) ? filemtime($gdInvestPath) : '1';
 <!-- Theme bundle -->
 <script src="<?= base_url('assets/js/bundle.js?ver=3.0.3'); ?>"               <?= $nonce['script'] ?> defer></script>
 <script src="<?= base_url('assets/js/scripts.js'); ?>"                         <?= $nonce['script'] ?> defer></script>
+<script <?= $nonce['script'] ?>>
+  window.MYMI_DEBUG_SIDEBAR = <?= $debugSidebar ? 'true' : 'false' ?>;
+</script>
+<script src="<?= base_url('assets/js/sidebar-menu-fix.js'); ?>"                <?= $nonce['script'] ?> defer></script>
 
 <!-- Versioned utilities -->
 <script src="<?= base_url('assets/js/navbar-search.js') . '?v=' . $navbarSearchV; ?>" <?= $nonce['script'] ?> defer></script>
