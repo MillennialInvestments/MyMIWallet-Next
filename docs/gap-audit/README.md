@@ -4,7 +4,7 @@ This folder contains a recurring documentation-only audit that compares what the
 
 ## How to Use This Audit
 - Start with `gap_report.md` for the latest status, priority calls, and the “Top 25 Next Tasks.”
-- Use `gap_tracker.csv` to plan and delegate fixes; each row maps a doc requirement to code evidence and a gap ID.
+- Use `docs/gap_tracker/gap_tracker.csv` to plan and delegate fixes; each row maps a doc requirement to code evidence and a gap ID. The spark command `php spark gap:sync` keeps this sheet enriched and writes reports under `docs/gap_tracker/reports/`.
 - Review `unresolved_questions.md` for items that need a product/engineering decision before implementation.
 
 ## Update Cadence
@@ -25,4 +25,3 @@ This folder contains a recurring documentation-only audit that compares what the
 4. File new rows in `gap_tracker.csv` with gap IDs and priorities.
 5. Update `gap_report.md` summaries and the Top 25 task list.
 6. Capture any ambiguities in `unresolved_questions.md`.
-
