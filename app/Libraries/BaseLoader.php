@@ -133,10 +133,6 @@ trait BaseLoader
             $this->cuID = $cuID;
         }
 
-        if ($cuID === null) {
-            log_message('debug', 'BaseLoader: no authenticated user; proceeding with guest defaults.');
-        }
-
         $this->data['cuID'] = $cuID;
 
         // ---- Site settings & request basics ----
@@ -152,7 +148,7 @@ trait BaseLoader
 
         // ---- User account info (null-safe) ----
         $userAccount = [];
-        if ($cuID !== null) {
+        if ($cuID !== null && $cuID > 0) {
             try {
                 $myMiUser = $this->di('MyMIUser', fn () => new MyMIUser());
                 $userAccount = $myMiUser->getUserInformation($cuID);

@@ -43,12 +43,8 @@ class UserModel extends Model
         parent::__construct();
         $this->auth = service('authentication');
         $this->session = session();        
-        
-        $this->cuID = $this->auth->id() ?? $this->session->get('user_id');
-        $cuID = $this->cuID;
-        if (empty($this->cuID)) {
-            log_message('debug', 'UserModel - no user session (public request).');
-        }
+
+        $this->cuID = (int) ($this->auth->id() ?? $this->session->get('user_id') ?? 0);
     }
     /**
      * The id of a group to assign.

@@ -540,7 +540,6 @@ class MyMIUser
         $cuID = (int) ($cuID ?? $this->session->get('user_id') ?? $this->auth->id() ?? 0);
 
         if ($cuID <= 0) {
-            log_message('debug', 'MyMIUser::getUserInformation skipped (empty userId).');
             return [];
         }
 
