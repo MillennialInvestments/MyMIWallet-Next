@@ -16,15 +16,18 @@ Guide manual verification of marketing, alerts, and distribution CRON endpoints.
    - `processAllTradeAlerts` (every 15 minutes) and `sendAllDiscordAlerts` (hourly or manual trigger).
 3. Manually trigger key endpoints with the cron key:
    - `curl -s "https://www.mymiwallet.com/API/Management/cronFetchAndGenerateNews?cronKey=$CRON_SHARED_KEY"`.
-   - `curl -s "https://www.mymiwallet.com/API/Management/processAllTradeAlerts?cronKey=$CRON_SHARED_KEY"`.
+   - `curl -s -H "X-Idempotency-Key=$(date +%Y%m%d-%H%M)-alerts" "https://www.mymiwallet.com/API/Management/processAllTradeAlerts?cronKey=$CRON_SHARED_KEY"`.
+   - `curl -s -H "X-Idempotency-Key=$(date +%Y%m%d-%H%M)-digest" "https://www.mymiwallet.com/API/Marketing/generateDailyContentDigest?cronKey=$CRON_SHARED_KEY"`.
    - `curl -s "https://www.mymiwallet.com/API/Management/sendAllDiscordAlerts?cronKey=$CRON_SHARED_KEY"`.
-4. Tail logs (`tail -n 100 ~/cron_logs/*.log`) to verify success messages.
-5. Record results in `/home/mymiteam/logs/marketing-cron-$(date +%F).md` and attach any failures for follow-up.
+4. Tail logs (`tail -n 100 ~/cron_logs/*.log`) to verify success messages and confirm idempotency keys are echoed in the log lines.
+5. Optional: verify idempotency persistence with `mysql -e "SELECT key,status_code,response_json FROM bf_idempotency ORDER BY id DESC LIMIT 5" mymi"`.
+6. Record results in `/home/mymiteam/logs/marketing-cron-$(date +%F).md` and attach any failures for follow-up.
 
 ## Validation
 - Each endpoint returns JSON `status: success`.
 - Discord/Zapier webhooks confirm receipt (check external dashboards).
-- `writable/logs` or cron logs contain timestamps for the manual run.
+- `writable/logs` or cron logs contain timestamps for the manual run (look for `processAllTradeAlerts completed (key=...)` and `Peak Memory Usage` lines).
+- Corresponding `bf_idempotency` row exists for each supplied `X-Idempotency-Key`.
 
 ## Rollback
 - Restore previous crontab backup with `crontab ~/cron-backup-YYYYMMDDHHMM.txt` if edits fail.
