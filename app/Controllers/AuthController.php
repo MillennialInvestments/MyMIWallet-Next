@@ -660,7 +660,7 @@ class AuthController extends Controller
 
     private function determineRedirectDestination(): string
     {
-        $redirectURL = $this->session->get('redirect_url');
+        $redirectURL = (string) ($this->session->get('redirect_url') ?? '');
 
         if (! $this->isValidRedirectTarget($redirectURL)) {
             $redirectURL = $this->dashboardUrl();
@@ -694,7 +694,11 @@ class AuthController extends Controller
             return false;
         }
 
-        if ($this->isRootDestination($url) || $this->isLoginDestination($url)) {
+        if ($this->isRootDestination($url) || $this->isLoginDestination($url) || $this->isLogoutDestination($url)) {
+            return false;
+        }
+
+        if ($this->isExternalDestination($url)) {
             return false;
         }
 
@@ -735,6 +739,39 @@ class AuthController extends Controller
         $loginPath = $this->normalisePath(site_url('login'));
 
         return $path === $loginPath;
+    }
+
+    private function isLogoutDestination(?string $url): bool
+    {
+        if ($url === null) {
+            return false;
+        }
+
+        return stripos($url, '/logout') !== false;
+    }
+
+    private function isExternalDestination(string $url): bool
+    {
+        $appBase = site_url();
+        $appHost = parse_url($appBase, PHP_URL_HOST);
+
+        $parsedHost = parse_url($url, PHP_URL_HOST);
+        $scheme     = parse_url($url, PHP_URL_SCHEME);
+
+        if ($scheme !== null && ! in_array(strtolower($scheme), ['http', 'https'], true)) {
+            return true;
+        }
+
+        // Relative paths are allowed
+        if ($parsedHost === null) {
+            return false;
+        }
+
+        if ($appHost === null) {
+            return true;
+        }
+
+        return strcasecmp($parsedHost, $appHost) !== 0;
     }
 
     private function normalisePath(?string $url): string

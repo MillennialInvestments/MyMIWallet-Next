@@ -935,8 +935,6 @@ abstract class BaseController extends Controller
             $this->user = $this->myMiUser->getUserInformation($userId);
         } else {
             $this->user = null;
-            // Downgrade the noisy WARNING to a DEBUG-only log:
-            log_message('debug', 'Public request: no user session.');
         }
     }
 

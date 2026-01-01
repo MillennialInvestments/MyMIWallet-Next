@@ -1925,6 +1925,15 @@ $routes->group('system', static function($routes) {
     $routes->get('diag',    'System\HealthController::diag');
 });
 
+$routes->get('Support/FAQ', 'App\\Modules\\Support\\Controllers\\Support::faq');
+$routes->get('Subscribe/Daily-Financial-News', static function () {
+    return redirect()->to(site_url('Subscribe'));
+});
+$routes->get('Blog/Investing', 'App\\Modules\\Blog\\Controllers\\InvestingController::index');
+$routes->get('Blog/Investing/(:any)', static function () {
+    return redirect()->to(site_url('Blog/Investing'));
+});
+
 $routes->group('API/Management', ['namespace' => 'App\\Modules\\APIs\\Controllers'], static function($routes) {
     $routes->post('runCronManually', 'ManagementController::runCronManually');
     $routes->post('runDailyAlphaVantageDataPipeline', 'ManagementController::runDailyAlphaVantageDataPipeline');
@@ -1953,7 +1962,7 @@ if (file_exists(APPPATH . "Modules/Management/Config/Routes.php")) {
 // Tax user module (nested under User module)
 $routes->group('Tax', ['namespace' => 'App\\Modules\\User\\Tax\\Controllers', 'filter' => 'login'], static function ($routes) {
     $routes->get('/', 'Tax::index');
-    $routes->match(['get', 'post'], 'create', 'Tax::create');
+    $routes->match(['GET', 'POST'], 'create', 'Tax::create');
     $routes->get('edit/(:num)', 'Tax::edit/$1');
     $routes->get('view/(:num)', 'Tax::view/$1');
     $routes->get('preview/(:num)', 'Tax::preview/$1');
@@ -1968,10 +1977,10 @@ $routes->group('Tax', ['namespace' => 'App\\Modules\\User\\Tax\\Controllers', 'f
 $routes->group('Admin/Tax', ['namespace' => 'App\\Modules\\Management\\TaxAdmin\\Controllers', 'filter' => 'login'], static function ($routes) {
     $routes->get('/', 'TaxConfig::index');
     $routes->get('Templates', 'TaxConfig::templates');
-    $routes->match(['get', 'post'], 'Templates/edit/(:num)', 'TaxConfig::editTemplate/$1');
-    $routes->match(['get', 'post'], 'Jurisdictions', 'TaxConfig::jurisdictions');
+    $routes->match(['GET', 'POST'], 'Templates/edit/(:num)', 'TaxConfig::editTemplate/$1');
+    $routes->match(['GET', 'POST'], 'Jurisdictions', 'TaxConfig::jurisdictions');
     $routes->get('Rates', 'TaxConfig::rates');
-    $routes->match(['get', 'post'], 'Rates/create', 'TaxConfig::createRate');
-    $routes->match(['get', 'post'], 'Rates/edit/(:num)', 'TaxConfig::editRate/$1');
+    $routes->match(['GET', 'POST'], 'Rates/create', 'TaxConfig::createRate');
+    $routes->match(['GET', 'POST'], 'Rates/edit/(:num)', 'TaxConfig::editRate/$1');
 });
 ?>
