@@ -198,6 +198,16 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->match(['GET', 'POST'], 'Status/(:segment)', 'APIController::status');
     $routes->get('Health', 'HealthController::index');              // /API/Health
     $routes->get('Ops/OPcacheReset', 'OpsController::opcacheReset'); // /API/Ops/OPcacheReset
+    $routes->group('AiOps', ['filter' => 'permission:admin.access'], static function($routes) {
+        $routes->get('status', 'AiOpsController::status');
+        $routes->get('checkCapsAndAlert', 'AiOpsController::checkCapsAndAlert');
+        $routes->get('runMarketingDaily', 'AiOpsController::runMarketingDaily');
+        $routes->get('runAlertsDigest', 'AiOpsController::runAlertsDigest');
+        $routes->get('runAnalyticsWeekly', 'AiOpsController::runAnalyticsWeekly');
+        $routes->post('toggle', 'AiOpsController::toggle');
+        $routes->post('setCaps', 'AiOpsController::setCaps');
+        $routes->get('events', 'AiOpsController::events');
+    });
     $routes->post('Alerts/backfillEmailAlerts', 'AlertsController::backfillEmailAlerts');
     $routes->get('cronFetchAndGenerateNews', 'ManagementController::cronFetchAndGenerateNews');
     $routes->post('Management/backfillMarketingEmails', 'ManagementController::backfillMarketingEmails');
@@ -941,6 +951,7 @@ $routes->group('Dashboard', ['namespace' => 'App\Modules\User\Controllers','filt
 
 $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers'],  function($routes) {
     $routes->get('/', 'ManagementController::index');
+    $routes->get('AiOps', 'AiOpsManagementController::index', ['filter' => 'permission:admin.access']);
     $routes->group('Admin', function($routes) {
         $routes->get('/', 'AdminController::index');
     });
