@@ -107,6 +107,8 @@ class Filters extends BaseConfig
                     'reset-password',
                     'health',
                     'healthz',
+                    'system/healthz',
+                    'system/diag',
                     'status',
                     'landing',
                     'landing/*',

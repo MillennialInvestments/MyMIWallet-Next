@@ -30,9 +30,7 @@ $routes->set404Override();
 // });
 
 // Simple health check that should return 200 without auth
-$routes->get('healthz', static function () {
-    return service('response')->setJSON(['ok' => true, 'time' => time()]);
-});
+$routes->get('healthz', 'System\HealthController::healthz', ['as' => 'healthz']);
 
 // Docs index for AI orchestration
 $routes->group('API/Docs', ['namespace' => 'App\Modules\APIs\Controllers'], static function($routes) {
