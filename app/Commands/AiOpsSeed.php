@@ -19,17 +19,14 @@ class AiOpsSeed extends BaseCommand
         $builder = $db->table('bf_ai_ops_caps');
 
         $defaults = [
-            ['subsystem' => 'chatgpt_marketing',   'cap_usd' => 30, 'cap_tokens' => null, 'is_enabled' => 1],
-            ['subsystem' => 'chatgpt_alerts',      'cap_usd' => 25, 'cap_tokens' => null, 'is_enabled' => 1],
-            ['subsystem' => 'chatgpt_analytics',   'cap_usd' => 15, 'cap_tokens' => null, 'is_enabled' => 1],
-            ['subsystem' => 'codex_codegen',       'cap_usd' => 40, 'cap_tokens' => null, 'is_enabled' => 1],
-            ['subsystem' => 'codex_docs_alignment','cap_usd' => 10, 'cap_tokens' => null, 'is_enabled' => 0],
-            ['subsystem' => 'ai_github_reviews',   'cap_usd' => 20, 'cap_tokens' => null, 'is_enabled' => 1],
+            ['subsystem' => 'selfhost_gap_sync', 'cap_type' => 'CAPACITY', 'cap_value' => 100, 'is_enabled' => 1],
+            ['subsystem' => 'selfhost_marketing_drafts', 'cap_type' => 'CAPACITY', 'cap_value' => 100, 'is_enabled' => 1],
+            ['subsystem' => 'selfhost_pr_review', 'cap_type' => 'CAPACITY', 'cap_value' => 100, 'is_enabled' => 1],
         ];
 
         $db->transStart();
         foreach ($defaults as $row) {
-            $row['reset_period'] = 'monthly';
+            $row['reset_period'] = 'MONTHLY';
             $row['updated_at']   = date('Y-m-d H:i:s');
             $existing            = $builder->where('subsystem', $row['subsystem'])->get()->getFirstRow();
 

@@ -3,6 +3,7 @@
 namespace App\Config;
 
 use CodeIgniter\Config\BaseConfig;
+use App\Libraries\SiteSettingsOverride;
 
 if (!class_exists(\App\Config\SiteSettings::class, false)) {
     // The class does not exist, so we can define it safely.
@@ -140,29 +141,32 @@ if (!class_exists(\App\Config\SiteSettings::class, false)) {
         ];
 
         // =====================================================================
-        // AI OPS / COST CONTROL (MASTER SWITCH + SUBSYSTEM SWITCHES)
+        // AI OPS CONTROL PLANE (Self-host + Hosted AI governance)
         // =====================================================================
-        public bool $aiOpsEnabled = true;              // Master kill-switch
-        public bool $aiOpsAllowOverride = false;       // If true, allows admin override beyond caps (dashboard only)
+        public bool $aiOpsEnabled              = true;  // Master kill-switch
+        public bool $aiOpsAllowOverride        = false; // Admin-only override beyond capacity/caps
 
-        // Per subsystem toggles
-        public bool $aiChatgptApiEnabled = true;
-        public bool $aiCodexApiEnabled   = true;
-        public bool $aiGithubReviewsEnabled = true;
+        // Subsystem toggles
+        public bool $aiSelfHostedEnabled       = true;  // Allows n8n/Ollama workflows
+        public bool $aiChatgptPlusEnabled      = true;  // Informational toggle (not enforced)
+        public bool $aiCodexEnabled            = true;  // Informational toggle (enforced in code workflow triggers)
+        public bool $aiGithubReviewEnabled     = true;  // Enables PR helper workflow
 
-        // Automation toggles (granular “levers”)
-        public bool $aiAutoMarketingEnabled = true;
-        public bool $aiAutoAlertsEnabled    = true;
-        public bool $aiAutoAnalyticsEnabled = true;
-        public bool $aiDocsAlignmentEnabled = false;   // heavier job; off by default
+        // Automation toggles
+        public bool $aiGapTrackerSyncEnabled   = true;
+        public bool $aiAutoMarketingDraftsEnabled = true;
+        public bool $aiAutoAlertsDigestEnabled = true;
+        public bool $aiDocsAlignmentEnabled    = false;
 
         // Alerting
-        public int  $aiOpsAlertThresholdPct = 80;      // email at 80%
-        public string $aiOpsAlertEmail = 'team@mymiwallet.com';
+        public int $aiOpsAlertThresholdPct     = 80;    // 80% capacity
+        public string $aiOpsAlertEmail         = 'team@mymiwallet.com';
 
-        // Safety defaults for token ceilings (soft constraints; enforced in code)
-        public int $aiMaxTokensPerRequest = 1200;
-        public int $aiMaxRequestsPerMinute = 30;
+        // Rate safety (soft limits; used by job runner)
+        public int $aiOpsMaxRunsPerHour        = 6;
+        public int $aiOpsMaxRuntimeSeconds     = 900;   // 15 mins per job default
+        public int $aiMaxTokensPerRequest      = 1200;
+        public int $aiMaxRequestsPerMinute     = 30;
         public function __construct()
         {
             parent::__construct();
@@ -184,12 +188,13 @@ if (!class_exists(\App\Config\SiteSettings::class, false)) {
             $cachedToggles = [
                 'aiOpsEnabled',
                 'aiOpsAllowOverride',
-                'aiChatgptApiEnabled',
-                'aiCodexApiEnabled',
-                'aiGithubReviewsEnabled',
-                'aiAutoMarketingEnabled',
-                'aiAutoAlertsEnabled',
-                'aiAutoAnalyticsEnabled',
+                'aiSelfHostedEnabled',
+                'aiChatgptPlusEnabled',
+                'aiCodexEnabled',
+                'aiGithubReviewEnabled',
+                'aiGapTrackerSyncEnabled',
+                'aiAutoMarketingDraftsEnabled',
+                'aiAutoAlertsDigestEnabled',
                 'aiDocsAlignmentEnabled',
             ];
             foreach ($cachedToggles as $toggleKey) {
@@ -197,6 +202,12 @@ if (!class_exists(\App\Config\SiteSettings::class, false)) {
                 if ($cached !== null) {
                     $this->$toggleKey = $cached;
                 }
+            }
+
+            // Apply DB overrides when available
+            if (class_exists(SiteSettingsOverride::class)) {
+                $override = new SiteSettingsOverride();
+                $override->apply($this);
             }
 
             // Load the App config
