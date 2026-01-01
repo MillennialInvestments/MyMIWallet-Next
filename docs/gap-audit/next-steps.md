@@ -3,8 +3,8 @@
 Use this playbook to process `docs/gap-audit/gap_tracker.csv` one row at a time without losing place.
 
 ## Cursor (do not remove)
-- CURRENT_ROW_INDEX: **90** _(1-based, excludes header)_
-- CURRENT_GAP_ID: **GAP-CRON-001**
+- CURRENT_ROW_INDEX: **91** _(1-based, excludes header)_
+- CURRENT_GAP_ID: **GAP-SECURITY-001**
 - CURRENT_PRIORITY: **P1**
 
 > Cursor selection rules:
@@ -43,16 +43,16 @@ Use this playbook to process `docs/gap-audit/gap_tracker.csv` one row at a time 
 Copy everything inside the block into Codex to execute the current row.
 
 ```
-Gap ID: GAP-CRON-001
-Row Index: 90
+Gap ID: GAP-SECURITY-001
+Row Index: 91
 Priority: P1
-Module: Cron
-Requirement: Publish cron manifest and idempotency/telemetry for alerts, marketing, news pipelines
+Module: Security
+Requirement: Remove vendored JS and enforce npm/Vite-built assets
 Acceptance Criteria:
-  - Produce a consolidated cron manifest with cadence, owners, and endpoints referenced in docs/operations/04-cron-automation.md.
-  - Add idempotency tokens/logging around trade alerts and marketing digest cron endpoints so reruns are safe.
-  - Provide telemetry/validation steps aligned with marketing-cron-playbook.md and update documentation accordingly.
-Files Likely Impacted: docs/operations/04-cron-automation.md; app/Modules/APIs/Controllers/ManagementController.php; app/Modules/APIs/Controllers/MarketingController.php
+  - Eliminate checked-in vendor JS under public/assets in favor of Vite-built bundles per docs/security/2025-10-remediation.md.
+  - Update build instructions to cover npm/Vite workflow and ensure routes/layouts reference the built assets.
+  - Document any temporary shims or exclusions if full replacement is not possible in this pass.
+Files Likely Impacted: docs/security/2025-10-remediation.md; public/assets/js; public/assets/vendor; package.json; vite.config.*; relevant view/layout files
 Mandatory Outputs:
   - Implement required code/docs changes for this Gap (or docs-only when applicable).
   - Update the matching row in docs/gap-audit/gap_tracker.csv (Status, Code Evidence, Notes, Completed Date, Target Version as needed).
@@ -60,14 +60,14 @@ Mandatory Outputs:
 ```
 
 ## LAST COMPLETED ROW (Audit Log)
-- Row Index: 21
-  - Gap ID: GAP-WALLETS-001
-  - Summary: Added a cached `/API/Wallets/summary` endpoint plus a `wallets:warm-summary-cache` CLI to pre-hydrate wallet dashboards, and documented cache keys/verification steps.
-  - Files changed: app/Modules/APIs/Controllers/WalletsController.php; app/Services/WalletSummaryService.php; app/Commands/WalletsWarmSummaryCache.php; app/Config/Routes.php; docs/wallets/wallets-index.md; docs/gap-audit/gap_tracker.csv; docs/gap-audit/next-steps.md
-  - How to test: curl -s (authenticated) `${BASE_URL}/API/Wallets/summary` | jq '.data.meta'; php spark wallets:warm-summary-cache --user {id} to confirm cache warming output
+- Row Index: 90
+  - Gap ID: GAP-CRON-001
+  - Summary: Added a consolidated cron manifest, idempotent guards with telemetry for trade-alert and marketing digest cron endpoints, and refreshed the marketing cron playbook with idempotency verification steps.
+  - Files changed: app/Modules/APIs/Controllers/ManagementController.php; docs/operations/04-cron-automation.md; docs/ops/runbooks/marketing-cron-playbook.md; docs/gap-audit/gap_tracker.csv; docs/gap-audit/next-steps.md
+  - How to test: curl -H "X-Idempotency-Key=$(date +%s)" "${BASE_URL}/API/Management/processAllTradeAlerts?cronKey=${CRON_SHARED_KEY}&batch_size=50" then curl -H "X-Idempotency-Key=$(date +%s)-digest" "${BASE_URL}/API/Marketing/generateDailyContentDigest?cronKey=${CRON_SHARED_KEY}"; verify log markers and bf_idempotency rows.
   - Follow-ups created: None
 
 ## Backlog snapshot (auto-generated helper)
-- Remaining counts (Status != Completed): **P1: 2**, **P2: 2**, **P3: 0**
-- Top remaining P1 Gap IDs (row order): GAP-CRON-001, GAP-SECURITY-001
+- Remaining counts (Status != Completed): **P1: 1**, **P2: 2**, **P3: 0**
+- Top remaining P1 Gap IDs (row order): GAP-SECURITY-001
 - Modules with most open gaps: Marketing (17), User (8), Investments (7), Codex (5), Docs (5)
