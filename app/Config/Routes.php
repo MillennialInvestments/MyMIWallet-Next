@@ -845,6 +845,7 @@ $routes->group('Management', function($routes) {
 
         // ✅ Add this so /API/Wallets resolves to WalletsController::index
         $routes->get('/', 'WalletsController::index');
+        $routes->get('summary', 'WalletsController::summary');
 
         // (keep your existing routes)
         $routes->get('providers', 'WalletsController::providers');
