@@ -1,0 +1,10 @@
+parameters:
+  level: 6
+  paths:
+    - app
+  excludes_analyse:
+    - vendor
+  tmpDir: writable/cache/phpstan
+  bootstrapFiles:
+    - vendor/autoload.php
+  checkMissingIterableValueType: false
