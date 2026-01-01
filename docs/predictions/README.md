@@ -85,6 +85,8 @@ $result = $predictions->placeOrder([
 - **User UI** (`app/Config/Routes.php`)
   - `GET /Predictions/Markets` — now ships with search, state, and mode filters.
   - `GET /Predictions/Market/{id}` — market detail + options overview.
+  - Controller namespace: `App\Modules\User\Controllers\PredictionsController` (routes were corrected from the legacy `App\Modules\Predictions\Controllers` namespace).
+  - Verify registration with `php spark routes | grep Predictions` (after running `composer install`) to confirm the UI endpoints resolve to the User module controller.
 - **API** (`/API/Predictions`)
   - `GET /markets?state=&category=&search=&limit=&mode=` — filtered discovery feed.
   - `POST /markets/create` — create a market (admin/oracle).
