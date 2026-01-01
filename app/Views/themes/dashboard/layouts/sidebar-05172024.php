@@ -273,7 +273,7 @@ if ($agent->isMobile()) {
 							</a>
 						</li>
                         <li class="nk-menu-item has-sub">
-                            <a href="#" class="nk-menu-link nk-menu-toggle" data-bs-toggle="toggle" data-bs-target="#sidebarSupportMenu" data-bs-original-title="" title="">
+                            <a href="#" class="nk-menu-link nk-menu-toggle">
                                 <span class="nk-menu-icon"><em class="icon ni ni-tile-thumb"></em></span>
                                 <span class="nk-menu-text">My Sports</span>
                             </a>
@@ -332,7 +332,7 @@ if ($agent->isMobile()) {
                         </li>
 
                         <!-- <li class="nk-menu-item has-sub">
-                            <a href="#" class="nk-menu-link nk-menu-toggle" data-bs-toggle="toggle" data-bs-target="#sidebarSupportMenu" data-bs-original-title="" title="">
+                            <a href="#" class="nk-menu-link nk-menu-toggle">
                                 <span class="nk-menu-icon"><em class="icon ni ni-tile-thumb"></em></span>
                                 <span class="nk-menu-text">Support</span>
                             </a>

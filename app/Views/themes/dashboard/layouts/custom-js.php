@@ -135,30 +135,6 @@ if ($useGoogleAnalytics ?? true) {
         });
 
         $(function() {
-            console.log('Document is ready');
-            $('.nk-menu-item.has-sub.nk-menu-sub').removeClass('active current-page');
-            $('.nk-menu-toggle').on('click', function(e) {
-                e.preventDefault();
-                let $submenu = $(this).next('.nk-menu-sub');
-                $submenu.slideToggle();
-                $(this).parent().toggleClass('active');
-            });
-            $(document).on('click', function(e) {
-                if (!$(e.target).closest('.nk-menu-item.has-sub').length) {
-                    $('.nk-menu-sub').slideUp();
-                    $('.nk-menu-item.has-sub').removeClass('active');
-                }
-            });
-            $('.nk-nav-toggle').on('click', function(e) {
-                e.preventDefault();
-                var sidebarId = $(this).data('target');
-                $('#' + sidebarId).toggleClass('show');
-            });
-            $(document).on('click', function(e) {
-                if (!$(e.target).closest('#sidebarMenu, .nk-nav-toggle').length) {
-                    $('#sidebarMenu').removeClass('show');
-                }
-            });
             <?php if (!empty($useSummernote)) : ?>
             if ($.fn.summernote) {
                 $('.summernote').summernote({

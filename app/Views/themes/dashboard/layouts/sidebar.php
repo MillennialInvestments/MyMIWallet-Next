@@ -214,7 +214,7 @@ $agent                  = service('request')->getUserAgent();
                                 <span class="nk-menu-icon"><em class="icon ni ni-coin"></em></span>
                                 <span class="nk-menu-text text-yellow">My Account</span>
                             </a>
-                            <ul class="nk-menu-sub" style="display:none !important;">
+                            <ul class="nk-menu-sub">
                                 <li class="nk-menu-item">
                                     <a class="nk-menu-link" href="<?php echo site_url('/Account'); ?>">
                                         <span class="nk-menu-text">Account</span>
@@ -304,7 +304,7 @@ $agent                  = service('request')->getUserAgent();
                                 <span class="nk-menu-icon"><em class="icon ni ni-coin"></em></span>
                                 <span class="nk-menu-text text-yellow">MyMI Exchange</span>
                             </a>
-                            <ul class="nk-menu-sub" style="display:none !important;">
+                            <ul class="nk-menu-sub">
                                 <li class="nk-menu-item">
                                     <a href="<?php echo site_url('/Exchange/Solana'); ?>" class="nk-menu-link">
                                         <span class="nk-menu-icon"><em class="icon ni ni-layers"></em></span><span class="nk-menu-text">Exchange</span>
@@ -514,7 +514,7 @@ $agent                  = service('request')->getUserAgent();
 							</a>
 						</li>
                         <li class="nk-menu-item has-sub">
-                            <a href="#" class="nk-menu-link nk-menu-toggle" data-bs-toggle="toggle" data-bs-target="#sidebarSupportMenu">
+                            <a href="#" class="nk-menu-link nk-menu-toggle">
                                 <span class="nk-menu-icon"><em class="icon ni ni-tile-thumb"></em></span>
                                 <span class="nk-menu-text">My Sports</span>
                             </a>
@@ -545,7 +545,7 @@ $agent                  = service('request')->getUserAgent();
 							</a>
 						</li> 
                         <!-- <li class="nk-menu-item has-sub">
-                            <a href="#" class="nk-menu-link nk-menu-toggle" data-bs-toggle="toggle" data-bs-target="#sidebarSupportMenu" data-bs-original-title="" title="">
+                            <a href="#" class="nk-menu-link nk-menu-toggle">
                                 <span class="nk-menu-icon"><em class="icon ni ni-tile-thumb"></em></span>
                                 <span class="nk-menu-text">Support</span>
                             </a>
