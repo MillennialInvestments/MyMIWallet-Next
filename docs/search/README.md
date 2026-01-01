@@ -15,6 +15,11 @@
 3. The dropdown lists up to eight tickers; selecting one navigates directly to `/Investments/Symbol/{symbol}`.
 4. Submitting the form (Enter or Search button) navigates to `/Search?query=...`, which renders the results list using the same API.
 
+## Testing Notes
+
+- Verify the route is registered: `php spark routes | grep -i searchTickers`.
+- Sample request: `curl -s '${BASE_URL}/API/Investments/searchTickers?query=AAPL&limit=5'`.
+
 ## Future Enhancements
 
 - Extend `/API/Investments/searchTickers` with additional providers (e.g., cached MarketAux) before hitting AlphaVantage.
