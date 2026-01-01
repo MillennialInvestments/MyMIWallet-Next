@@ -3,7 +3,7 @@
 Use this playbook to process `docs/gap-audit/gap_tracker.csv` one row at a time without losing place.
 
 ## Cursor (do not remove)
-- CURRENT_ROW_INDEX: **3** _(1-based, excludes header)_
+- CURRENT_ROW_INDEX: **4** _(1-based, excludes header)_
 - CURRENT_GAP_ID: **GAP-DEVOPS-001**
 - CURRENT_PRIORITY: **P1**
 
@@ -44,7 +44,7 @@ Copy everything inside the block into Codex to execute the current row.
 
 ```
 Gap ID: GAP-DEVOPS-001
-Row Index: 3
+Row Index: 4
 Priority: P1
 Module: DevOps
 Requirement: Add /system/healthz and /system/diag endpoints plus standards configs per hardening playbook
@@ -61,15 +61,14 @@ Mandatory Outputs:
 ```
 
 ## LAST COMPLETED ROW (Audit Log)
-- Pending — no rows completed in this run yet. After finishing a row, replace this bullet with a summary:
-  - Row Index: _
-  - Gap ID: _
-  - Summary: _
-  - Files changed: _
-  - How to test: _
-  - Follow-ups created: _
+- Row Index: 15
+  - Gap ID: GAP-SEARCH-001
+  - Summary: Registered explicit GET /API/Investments/searchTickers route with documented limit clamp/local-first behavior and updated tracker/testing notes.
+  - Files changed: app/Config/Routes.php; docs/search/README.md; docs/gap-audit/gap_tracker.csv
+  - How to test: php spark routes | grep -i searchTickers; curl -s '${BASE_URL}/API/Investments/searchTickers?query=AAPL&limit=5'
+  - Follow-ups created: None
 
 ## Backlog snapshot (auto-generated helper)
-- Remaining counts (Status != Completed): **P1: 7**, **P2: 2**, **P3: 0**
-- Top remaining P1 Gap IDs (row order): GAP-DEVOPS-001, GAP-PREDICTIONS-001, GAP-SEARCH-001, GAP-PREDICTIONS-002, GAP-WALLETS-001, GAP-CRON-001, GAP-SECURITY-001
+- Remaining counts (Status != Completed): **P1: 6**, **P2: 2**, **P3: 0**
+- Top remaining P1 Gap IDs (row order): GAP-DEVOPS-001, GAP-PREDICTIONS-001, GAP-PREDICTIONS-002, GAP-WALLETS-001, GAP-CRON-001, GAP-SECURITY-001
 - Modules with most open gaps: Marketing (17), User (8), Investments (7), Codex (5), Docs (5)
