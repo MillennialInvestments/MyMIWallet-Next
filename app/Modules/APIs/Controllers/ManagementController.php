@@ -4,7 +4,7 @@ namespace App\Modules\APIs\Controllers;
 use App\Controllers\BaseController;
 use App\Modules\APIs\Controllers\MarketingController;
 use App\Libraries\{MyMIAlerts, MyMIMarketing, MyMIDiscord, KimiSuggestions};
-use App\Models\{AlertsModel, ExchangeModel, MarketingModel, MarketingNewsletterModel, ReferralModel, SupportModel, UserModel, WeeklyStreamWatchlistModel};
+use App\Models\{AlertsModel, ExchangeModel, IdempotencyModel, MarketingModel, MarketingNewsletterModel, ReferralModel, SupportModel, UserModel, WeeklyStreamWatchlistModel};
 use App\Services\{AlphaVantagePipelineService, MarketingService, WeeklyStreamService};
 use App\Support\Http;
 use CodeIgniter\Log\Handlers\FileHandler;
@@ -31,6 +31,7 @@ class ManagementController extends \App\Controllers\BaseController
     protected AlphaVantagePipelineService $alphaVantageService;
     protected WeeklyStreamWatchlistModel $weeklyWatchlistModel;
     protected WeeklyStreamService $weeklyStreamService;
+    protected IdempotencyModel $idempotencyModel;
 
     public function _remap($method, ...$params)
     {
@@ -163,6 +164,7 @@ class ManagementController extends \App\Controllers\BaseController
         $this->alphaVantageService = new AlphaVantagePipelineService();
         $this->weeklyWatchlistModel = model(WeeklyStreamWatchlistModel::class);
         $this->weeklyStreamService  = new WeeklyStreamService();
+        $this->idempotencyModel     = model(IdempotencyModel::class);
     }
 
     public function Run_CRON_Tasks()
@@ -181,6 +183,70 @@ class ManagementController extends \App\Controllers\BaseController
     public function runCRONTasks()
     {
         return $this->Run_CRON_Tasks();
+    }
+
+    private function getRequestIdempotencyKey(): ?string
+    {
+        $key = $this->request->getHeaderLine('X-Idempotency-Key')
+            ?: $this->request->getGet('idempotency_key')
+            ?: $this->request->getGet('idempotencyKey');
+
+        return $key !== '' ? $key : null;
+    }
+
+    private function isIdempotencyExpired(?string $expiresAt): bool
+    {
+        return empty($expiresAt) || strtotime($expiresAt) <= time();
+    }
+
+    private function reserveIdempotencyKey(string $operation, ?string $incomingKey, int $ttlMinutes = 60): array
+    {
+        $key       = trim($incomingKey ?: sprintf('%s:%s', $operation, date('Y-m-d-H')));
+        $now       = date('Y-m-d H:i:s');
+        $expiresAt = date('Y-m-d H:i:s', strtotime("+{$ttlMinutes} minutes"));
+
+        $existing = $this->idempotencyModel->findByKey($key);
+        if ($existing && ! $this->isIdempotencyExpired($existing['expires_at'] ?? null)) {
+            log_message('notice', sprintf('♻️ %s replay blocked by idempotency key %s', $operation, $key));
+
+            return ['ok' => false, 'key' => $key];
+        }
+
+        $payload = [
+            'key'           => $key,
+            'state'         => $operation,
+            'status_code'   => null,
+            'response_json' => null,
+            'created_at'    => $existing['created_at'] ?? $now,
+            'updated_at'    => $now,
+            'expires_at'    => $expiresAt,
+        ];
+
+        if ($existing) {
+            $this->idempotencyModel->update($existing['id'], $payload);
+        } else {
+            $this->idempotencyModel->insert($payload);
+        }
+
+        log_message('info', sprintf('🔐 Reserved idempotency key %s for %s (ttl=%d minutes)', $key, $operation, $ttlMinutes));
+
+        return ['ok' => true, 'key' => $key];
+    }
+
+    private function finalizeIdempotencyKey(?string $key, int $statusCode, array $response = []): void
+    {
+        if (! $key) {
+            return;
+        }
+
+        $this->idempotencyModel
+            ->where('key', $key)
+            ->set([
+                'status_code'   => $statusCode,
+                'response_json' => $response ? json_encode($response) : null,
+                'updated_at'    => date('Y-m-d H:i:s'),
+            ])
+            ->update();
     }
 
     protected function executeCronWorkflow(): array
@@ -966,16 +1032,37 @@ class ManagementController extends \App\Controllers\BaseController
     {
         log_message('debug', '🧠 Start Memory Usage: ' . memory_get_usage(true));
         @ini_set('memory_limit', '768M');
-    
+
+        $idempotency = $this->reserveIdempotencyKey(
+            'cron:marketing-daily-digest',
+            $this->getRequestIdempotencyKey(),
+            90
+        );
+
+        if (! $idempotency['ok']) {
+            return Http::jsonSuccess([
+                'status'          => 'skipped',
+                'reason'          => 'idempotency_replay',
+                'idempotency_key' => $idempotency['key'],
+            ]);
+        }
+
         $limit = 5;
         $summary = [];
-    
+
         try {
             $records = $this->marketingModel->getValidUnprocessedEmails($limit);
-    
+
             if (!is_array($records) || empty($records)) {
                 log_message('info', '🚫 No valid records returned from getValidUnprocessedEmails().');
-                return Http::jsonSuccess(['status' => 'no_data', 'message' => 'No valid records to process.']);
+                $response = [
+                    'status'          => 'no_data',
+                    'message'         => 'No valid records to process.',
+                    'idempotency_key' => $idempotency['key'],
+                ];
+                $this->finalizeIdempotencyKey($idempotency['key'], 200, $response);
+
+                return Http::jsonSuccess($response);
             }
     
             foreach ($records as $record) {
@@ -1019,11 +1106,20 @@ class ManagementController extends \App\Controllers\BaseController
                     log_message('error', "❌ Error processing record ID {$recordId}: {$e->getMessage()}");
                 }
             }
-    
+
             log_message('debug', '🏁 Peak Memory Usage: ' . memory_get_peak_usage(true));
-            return Http::jsonSuccess(['status' => 'success', 'digest' => $summary]);
-    
+            $response = [
+                'status'          => 'success',
+                'digest'          => $summary,
+                'idempotency_key' => $idempotency['key'],
+            ];
+
+            $this->finalizeIdempotencyKey($idempotency['key'], 200, $response);
+
+            return Http::jsonSuccess($response);
+
         } catch (\Throwable $e) {
+            $this->finalizeIdempotencyKey($idempotency['key'] ?? null, 500, ['error' => $e->getMessage()]);
             log_message('error', '❌ generateDailyContentDigest fatal error: ' . $e->getMessage());
             return Http::jsonError($e->getMessage(), 500);
         }
@@ -1444,15 +1540,70 @@ class ManagementController extends \App\Controllers\BaseController
      */
     public function processAllTradeAlerts()
     {
+        $token    = $this->request->getHeaderLine('X-CRON-Key') ?: $this->request->getGet('cronKey');
+        $expected = env('CRON_SHARED_KEY');
+
+        if (! $expected || ! hash_equals((string) $expected, (string) $token)) {
+            log_message('warning', '🚫 Management API - processAllTradeAlerts blocked - invalid token');
+            return $this->failForbidden('Invalid CRON key.');
+        }
+
+        $batchSize = (int) ($this->request->getGet('batch_size') ?? 50);
+        $idempotency = $this->reserveIdempotencyKey(
+            'cron:trade-alerts',
+            $this->getRequestIdempotencyKey(),
+            45
+        );
+
+        if (! $idempotency['ok']) {
+            return Http::jsonSuccess([
+                'status'          => 'skipped',
+                'reason'          => 'idempotency_replay',
+                'idempotency_key' => $idempotency['key'],
+            ]);
+        }
+
+        $start         = microtime(true);
+        $pendingBefore = $this->alertsModel->builder()->where('status', 'Pending')->countAllResults();
+        $summary = [
+            'idempotency_key' => $idempotency['key'],
+            'pending_before'  => $pendingBefore,
+            'batch_size'      => $batchSize,
+        ];
+
         try {
             log_message('info', '⚡ Management API - processAllTradeAlerts triggered.');
 
-            $this->alertManager->fetchAndStoreAlertsEmails();
-            $this->alertManager->processTradeAlertsInBatches(50);
+            $emailsFetched = $this->alertManager->fetchAndStoreAlertsEmails();
+            $summary['emails_ingested'] = $emailsFetched ? 'fetched' : 'none';
+
+            $this->alertManager->processTradeAlertsInBatches($batchSize);
+            $summary['pending_after'] = $this->alertsModel->builder()->where('status', 'Pending')->countAllResults();
+
             $this->alertManager->updateAlerts();
 
-            return Http::jsonSuccess(['status' => 'success', 'message' => 'All trade alerts processed successfully.']);
+            $summary['duration_ms'] = (int) ((microtime(true) - $start) * 1000);
+
+            $this->finalizeIdempotencyKey($idempotency['key'], 200, $summary);
+            log_message(
+                'info',
+                sprintf(
+                    '✅ processAllTradeAlerts completed (key=%s) pending_before=%d pending_after=%d duration_ms=%d',
+                    $summary['idempotency_key'],
+                    $summary['pending_before'],
+                    $summary['pending_after'],
+                    $summary['duration_ms']
+                )
+            );
+
+            return Http::jsonSuccess([
+                'status'          => 'success',
+                'message'         => 'All trade alerts processed successfully.',
+                'idempotency_key' => $summary['idempotency_key'],
+                'summary'         => $summary,
+            ]);
         } catch (\Exception $e) {
+            $this->finalizeIdempotencyKey($idempotency['key'], 500, ['error' => $e->getMessage()]);
             log_message('error', '❌ Management API - Error processing trade alerts: ' . $e->getMessage());
             return Http::jsonError($e->getMessage(), 500);
         }
