@@ -4,3 +4,109 @@
 /* add any one-off sizes you use frequently */
 .h-300px{height:300px!important;}
 .h-30vw{height:30vw!important;}
+/* assets/css/inline-fixes.css */
+
+/* Fix: Dashlite/theme overrides turning outline button text white without hover background */
+.btn-outline-primary:hover,
+.btn-outline-primary:focus,
+.btn-outline-primary:active,
+.btn-outline-primary.active {
+  color: #fff !important;
+  background-color: var(--bs-primary) !important;
+  border-color: var(--bs-primary) !important;
+}
+
+/* Optional: if you use other outline variants, enable these too */
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus,
+.btn-outline-secondary:active,
+.btn-outline-secondary.active {
+  color: #fff !important;
+  background-color: var(--bs-secondary) !important;
+  border-color: var(--bs-secondary) !important;
+}
+
+.btn-outline-success:hover,
+.btn-outline-success:focus,
+.btn-outline-success:active,
+.btn-outline-success.active {
+  color: #fff !important;
+  background-color: var(--bs-success) !important;
+  border-color: var(--bs-success) !important;
+}
+
+.btn-outline-danger:hover,
+.btn-outline-danger:focus,
+.btn-outline-danger:active,
+.btn-outline-danger.active {
+  color: #fff !important;
+  background-color: var(--bs-danger) !important;
+  border-color: var(--bs-danger) !important;
+}
+/* =========================================================
+   Button hover "resize/jump" fixes (Dashlite/theme overrides)
+   ========================================================= */
+
+/* 1) Prevent font-weight changes from resizing buttons */
+.btn,
+.btn:hover,
+.btn:focus,
+.btn:active {
+  font-weight: inherit !important;
+}
+
+/* 2) Lock border width so hover doesn't change the box size */
+.btn {
+  border-width: 1px !important;
+  padding: 0.65rem 0.65rem;
+}
+a:hover, a:focus {
+    color: white!important;;
+}
+/* If your theme forces outline buttons to thicker borders on hover, hard-lock it */
+.btn-outline-primary,
+.btn-outline-secondary,
+.btn-outline-success,
+.btn-outline-danger,
+.btn-outline-warning,
+.btn-outline-info,
+.btn-outline-dark {
+  border-width: 1px !important;
+}
+
+/* 3) If your "Quick Links" buttons are meant to be full-width, make it explicit */
+.quick-links .btn,
+.quick-links .btn-group,
+.quick-links a.btn,
+.quick-links button.btn {
+  width: 100%;
+}
+
+/* 4) Stop any hover transform that can feel like a resize */
+.btn:hover {
+  transform: none !important;
+  padding: 0.6rem !important;
+}
+
+/* 5) Keep line-height stable (some themes change it on hover) */
+/* .btn {
+  line-height: 1 !important;
+} */
+/* =========================================================
+   STOP global focus styling from breaking buttons/links
+   ========================================================= */
+
+/* Remove the global focus paint from interactive UI elements */
+a:focus, a:focus-visible,
+button:focus, button:focus-visible,
+.btn:focus, .btn:focus-visible {
+  background-color: inherit !important;
+  color: white !important;
+  outline: none !important;
+}
+
+/* Apply a proper Bootstrap-like focus ring instead */
+.btn:focus,
+.btn:focus-visible {
+  box-shadow: 0 0 0 .25rem rgba(13,110,253,.25) !important;
+}

@@ -47,7 +47,7 @@ echo view('themes/dashboard/layouts/header', $subViewData);
                         <div class="mb-3 pl-md-5 ml-xl-5 pl-xl-3">
                             <?= view('App\Views\Auth\_message_block') ?>
                             <div class="row justify-content-center pt-md-0 pt-md-0 pl-md-5 pr-md-3 px-xxl-0 pb-md-3">
-                                <div class="col-12 pl-md-2 pl-xxl-3 pr-xl-0 pr-md-0 pt-5 pt-md-3 pt-xxl-0">
+                                <div class="col-12 pl-md-2 pl-xxl-3 pr-xl-0 pr-md-0 pt-5 pt-md-3 pt-xxl-4">
                                     <?php
                                     // // Display messages and content
                                     // echo session()->getFlashdata('message');
