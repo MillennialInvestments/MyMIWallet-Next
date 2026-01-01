@@ -6,6 +6,7 @@ use App\Libraries\CrudCacheInvalidator;
 use App\Libraries\MyMIPlaid;
 use App\Models\WalletModel;
 use App\Services\WalletService;
+use App\Services\WalletSummaryService;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\RESTful\ResourceController;
 
@@ -21,6 +22,7 @@ class WalletsController extends ResourceController
     protected $auth;
 
     private ?CrudCacheInvalidator $crudCacheInvalidator = null;
+    private ?WalletSummaryService $walletSummaryService = null;
 
     public function __construct()
     {
@@ -69,6 +71,15 @@ class WalletsController extends ResourceController
         return $sid ? (int) $sid : null;
     }
 
+    protected function getWalletSummaryService(): WalletSummaryService
+    {
+        if ($this->walletSummaryService === null) {
+            $this->walletSummaryService = new WalletSummaryService();
+        }
+
+        return $this->walletSummaryService;
+    }
+
     /** GET /API/Wallets
      * Returns all wallets for current user (optionally filter by ?category=)
      */
@@ -105,6 +116,29 @@ class WalletsController extends ResourceController
             return $this->respond(['status' => 'success', 'data' => $rows]);
         } catch (\Throwable $e) {
             log_message('error', 'WalletsController::index error: {msg}', ['msg' => $e->getMessage()]);
+            return $this->failServerError($e->getMessage());
+        }
+    }
+
+    /** GET /API/Wallets/summary */
+    public function summary(): ResponseInterface
+    {
+        try {
+            $uid = $this->currentUserId();
+            if (!$uid && function_exists('auth') && auth()->loggedIn()) {
+                $uid = (int) auth()->id();
+            }
+            if (!$uid) {
+                return $this->failUnauthorized('Unauthorized');
+            }
+
+            $forceRefresh = filter_var($this->request->getGet('refresh'), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? false;
+            $service      = $this->getWalletSummaryService();
+            $data         = $service->buildSummary($uid, $forceRefresh);
+
+            return $this->respond(['status' => 'success', 'data' => $data]);
+        } catch (\Throwable $e) {
+            log_message('error', 'WalletsController::summary error: {msg}', ['msg' => $e->getMessage()]);
             return $this->failServerError($e->getMessage());
         }
     }

@@ -101,6 +101,51 @@ These structures should be reused when exposing `/API/Wallets/summary` in a foll
 
 ## Known Follow-ups
 
-* JSON endpoints for summary/accounts/positions to hydrate the dashboard asynchronously.
+* Front-end hydration that consumes `/API/Wallets/summary` to replace the current server-rendered flow.
 * Client-side status badges consuming `walletDataSources` for “Live / Cached / Degraded” UI.
-* Budget snapshot pre-warming CLI command for nightly cache hydration.
+* Broader cache warmers for heavy providers (e.g., Plaid + Solana) once provider SLAs are finalized.
+
+## API: `/API/Wallets/summary`
+
+* **Method**: `GET`
+* **Auth**: requires logged-in session (401 otherwise).
+* **Query params**:
+  * `refresh=1` — bypass cache and rebuild on-demand.
+* **Response shape**:
+  * `financialSummary` → values + formatted currency (netWorth, totalAssets, liabilities, credit utilization breakdown).
+  * `walletSummaries` → legacy rollups from `MyMIWallet::getWalletSummaries`.
+  * `wallets` → active wallet rows for the user (filtered via `WalletModel::listByUser(..., true)`).
+  * `accountCollections` → bank/credit/crypto/debt/investment arrays from `AccountService`.
+  * `positions` → holdings + realized P/L from `Fin\PositionService::computePortfolio`.
+  * `alerts` → latest 10 non-closed alerts created by the user (falls back to `user_id` column if available).
+  * `meta` → `generatedAt`, `source` (`fresh` or `cache`), and the cache key used.
+* **Cache**: `wallets:summary:{userId}` (15 minute TTL), sanitized via `sanitizedCacheKey()`.
+
+Verification tips:
+
+```bash
+# Expect success + meta.source=fresh on first call
+curl -s -b "your_session_cookie" "${BASE_URL}/API/Wallets/summary" | jq '.status,.data.meta'
+
+# Force a rebuild and confirm generatedAt changes
+curl -s -b "your_session_cookie" "${BASE_URL}/API/Wallets/summary?refresh=1" | jq '.data.meta'
+```
+
+## CLI: Warm cache ahead of dashboard loads
+
+* **Command**: `php spark wallets:warm-summary-cache`
+* **Purpose**: Pre-hydrates `/API/Wallets/summary` cache for all active, non-deleted users. Safe to run multiple times (idempotent).
+* **Flags**:
+  * `--user {id}` — target a single user instead of all active accounts.
+* **Outputs**: Per-user status lines showing cache writes or errors.
+
+Validation steps:
+
+```bash
+# Warm caches for all active users (e.g., nightly cron)
+php spark wallets:warm-summary-cache
+
+# Warm a single user and inspect cache source afterward
+php spark wallets:warm-summary-cache --user 42
+curl -s -b "session_for_42" "${BASE_URL}/API/Wallets/summary" | jq '.data.meta.source'
+```
