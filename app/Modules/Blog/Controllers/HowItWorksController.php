@@ -33,6 +33,7 @@ class HowItWorksController extends UserController
     protected $pageSEOModel;
     protected $subscribeModel;
     protected $userModel;
+    protected ?array $userAccount = null;
     protected ?MyMIGold $myMIGold = null;
 
     public function __construct()
