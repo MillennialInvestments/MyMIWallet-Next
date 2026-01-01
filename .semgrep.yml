@@ -1,0 +1,30 @@
+rules:
+  - id: ci4-sql-raw-query
+    patterns:
+      - pattern: db_connect()->query($QUERY)
+    message: "Prefer Query Builder instead of raw queries when possible."
+    languages: [php]
+    severity: INFO
+    paths:
+      include:
+        - app/**
+  - id: ci4-request-validation
+    patterns:
+      - pattern: $REQ->getPost($PARAM)
+      - pattern-not: $REQ->getPost($PARAM, FILTER_...)
+    message: "Validate and sanitize request input."
+    languages: [php]
+    severity: WARNING
+    paths:
+      include:
+        - app/**
+  - id: disallow-shell-exec
+    pattern-either:
+      - pattern: shell_exec(...)
+      - pattern: `exec(...)`
+    message: "Avoid direct shell execution in PHP unless absolutely necessary."
+    languages: [php]
+    severity: ERROR
+    paths:
+      include:
+        - app/**
