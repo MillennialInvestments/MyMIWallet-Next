@@ -138,6 +138,31 @@ if (!class_exists(\App\Config\SiteSettings::class, false)) {
         public $allowed_senders = [
             '3185485805',
         ];
+
+        // =====================================================================
+        // AI OPS / COST CONTROL (MASTER SWITCH + SUBSYSTEM SWITCHES)
+        // =====================================================================
+        public bool $aiOpsEnabled = true;              // Master kill-switch
+        public bool $aiOpsAllowOverride = false;       // If true, allows admin override beyond caps (dashboard only)
+
+        // Per subsystem toggles
+        public bool $aiChatgptApiEnabled = true;
+        public bool $aiCodexApiEnabled   = true;
+        public bool $aiGithubReviewsEnabled = true;
+
+        // Automation toggles (granular “levers”)
+        public bool $aiAutoMarketingEnabled = true;
+        public bool $aiAutoAlertsEnabled    = true;
+        public bool $aiAutoAnalyticsEnabled = true;
+        public bool $aiDocsAlignmentEnabled = false;   // heavier job; off by default
+
+        // Alerting
+        public int  $aiOpsAlertThresholdPct = 80;      // email at 80%
+        public string $aiOpsAlertEmail = 'team@mymiwallet.com';
+
+        // Safety defaults for token ceilings (soft constraints; enforced in code)
+        public int $aiMaxTokensPerRequest = 1200;
+        public int $aiMaxRequestsPerMinute = 30;
         public function __construct()
         {
             parent::__construct();
@@ -153,6 +178,25 @@ if (!class_exists(\App\Config\SiteSettings::class, false)) {
             $envFlag = getenv('AI_ENABLE_KIMI_K2');
             if ($envFlag !== false && $envFlag !== null) {
                 $this->enableKimiK2 = filter_var($envFlag, FILTER_VALIDATE_BOOL);
+            }
+
+            // Load cached AI Ops toggles if present
+            $cachedToggles = [
+                'aiOpsEnabled',
+                'aiOpsAllowOverride',
+                'aiChatgptApiEnabled',
+                'aiCodexApiEnabled',
+                'aiGithubReviewsEnabled',
+                'aiAutoMarketingEnabled',
+                'aiAutoAlertsEnabled',
+                'aiAutoAnalyticsEnabled',
+                'aiDocsAlignmentEnabled',
+            ];
+            foreach ($cachedToggles as $toggleKey) {
+                $cached = cache('aiops:' . $toggleKey);
+                if ($cached !== null) {
+                    $this->$toggleKey = $cached;
+                }
             }
 
             // Load the App config
