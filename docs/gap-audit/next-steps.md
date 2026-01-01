@@ -3,8 +3,8 @@
 Use this playbook to process `docs/gap-audit/gap_tracker.csv` one row at a time without losing place.
 
 ## Cursor (do not remove)
-- CURRENT_ROW_INDEX: **17** _(1-based, excludes header)_
-- CURRENT_GAP_ID: **GAP-PREDICTIONS-002**
+- CURRENT_ROW_INDEX: **21** _(1-based, excludes header)_
+- CURRENT_GAP_ID: **GAP-WALLETS-001**
 - CURRENT_PRIORITY: **P1**
 
 > Cursor selection rules:
@@ -43,16 +43,16 @@ Use this playbook to process `docs/gap-audit/gap_tracker.csv` one row at a time 
 Copy everything inside the block into Codex to execute the current row.
 
 ```
-Gap ID: GAP-PREDICTIONS-002
-Row Index: 17
+Gap ID: GAP-WALLETS-001
+Row Index: 21
 Priority: P1
-Module: Predictions
-Requirement: Fix /Predictions/* UI routes pointing to missing namespace
+Module: Wallets
+Requirement: Implement /API/Wallets/summary JSON endpoint and nightly cache pre-warm CLI for dashboard hydration
 Acceptance Criteria:
-  - Point /Predictions/* UI routes at the correct controller namespace (App\Modules\User\Controllers) so pages render without 404s.
-  - Confirm spark route listing shows the predictions UI endpoints bound to the resolved controller.
-  - Add a short note in docs/predictions/README.md describing the corrected route namespace and how to verify access.
-Files Likely Impacted: app/Config/Routes.php; docs/predictions/README.md
+  - Create /API/Wallets/summary route returning JSON of wallet balances, positions, and alerts for the authenticated user (use existing models/services where possible).
+  - Add CLI command to pre-warm wallet summary cache for all active users; idempotent and safe to re-run.
+  - Document the route and CLI usage under docs/wallets/wallets-index.md, including cache keys and validation steps.
+Files Likely Impacted: app/Config/Routes.php; docs/wallets/wallets-index.md
 Mandatory Outputs:
   - Implement required code/docs changes for this Gap (or docs-only when applicable).
   - Update the matching row in docs/gap-audit/gap_tracker.csv (Status, Code Evidence, Notes, Completed Date, Target Version as needed).
@@ -60,14 +60,14 @@ Mandatory Outputs:
 ```
 
 ## LAST COMPLETED ROW (Audit Log)
-- Row Index: 5
-  - Gap ID: GAP-PREDICTIONS-001
-  - Summary: Added CI4 migrations for predictions markets, options, orders, trades, positions, liquidity, settlements, and payouts with indexes/foreign keys plus README notes on running migrations and verifying registration.
-  - Files changed: app/Database/Migrations/2025-09-09-000010_CreatePredictionsMarkets.php; app/Database/Migrations/2025-09-09-000020_CreatePredictionsOptions.php; app/Database/Migrations/2025-09-09-000030_CreatePredictionsOrders.php; app/Database/Migrations/2025-09-09-000040_CreatePredictionsTrades.php; app/Database/Migrations/2025-09-09-000050_CreatePredictionsPositions.php; app/Database/Migrations/2025-09-09-000060_CreatePredictionsLiquidity.php; app/Database/Migrations/2025-09-09-000070_CreatePredictionsSettlementsPayouts.php; docs/predictions/README.md; docs/gap-audit/gap_tracker.csv; docs/gap-audit/next-steps.md
-  - How to test: php spark migrate -n App ; php spark migrate:status
+- Row Index: 17
+  - Gap ID: GAP-PREDICTIONS-002
+  - Summary: Pointed /Predictions/* UI routes to the User module controller namespace and documented verification steps in the predictions README.
+  - Files changed: app/Config/Routes.php; docs/predictions/README.md; docs/gap-audit/gap_tracker.csv; docs/gap-audit/next-steps.md
+  - How to test: php spark routes | grep Predictions (after composer install) to confirm UI endpoints resolve to App\Modules\User\Controllers\PredictionsController
   - Follow-ups created: None
 
 ## Backlog snapshot (auto-generated helper)
-- Remaining counts (Status != Completed): **P1: 4**, **P2: 2**, **P3: 0**
-- Top remaining P1 Gap IDs (row order): GAP-PREDICTIONS-002, GAP-WALLETS-001, GAP-CRON-001, GAP-SECURITY-001
+- Remaining counts (Status != Completed): **P1: 3**, **P2: 2**, **P3: 0**
+- Top remaining P1 Gap IDs (row order): GAP-WALLETS-001, GAP-CRON-001, GAP-SECURITY-001
 - Modules with most open gaps: Marketing (17), User (8), Investments (7), Codex (5), Docs (5)

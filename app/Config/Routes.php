@@ -1338,7 +1338,7 @@ $routes->group('Investments', ['namespace' => 'App\Modules\User\Controllers', 'f
 });
 
 // Predictions (User)
-$routes->group('Predictions', ['namespace' => 'App\Modules\Predictions\Controllers'], static function($routes) {
+$routes->group('Predictions', ['namespace' => 'App\Modules\User\Controllers'], static function($routes) {
     $routes->get('/', 'PredictionsController::index');
     $routes->get('Markets', 'PredictionsController::markets');
     $routes->get('Market/(:num)', 'PredictionsController::view/$1');
