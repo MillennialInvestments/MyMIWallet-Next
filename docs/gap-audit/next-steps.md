@@ -3,8 +3,8 @@
 Use this playbook to process `docs/gap-audit/gap_tracker.csv` one row at a time without losing place.
 
 ## Cursor (do not remove)
-- CURRENT_ROW_INDEX: **21** _(1-based, excludes header)_
-- CURRENT_GAP_ID: **GAP-WALLETS-001**
+- CURRENT_ROW_INDEX: **90** _(1-based, excludes header)_
+- CURRENT_GAP_ID: **GAP-CRON-001**
 - CURRENT_PRIORITY: **P1**
 
 > Cursor selection rules:
@@ -43,16 +43,16 @@ Use this playbook to process `docs/gap-audit/gap_tracker.csv` one row at a time 
 Copy everything inside the block into Codex to execute the current row.
 
 ```
-Gap ID: GAP-WALLETS-001
-Row Index: 21
+Gap ID: GAP-CRON-001
+Row Index: 90
 Priority: P1
-Module: Wallets
-Requirement: Implement /API/Wallets/summary JSON endpoint and nightly cache pre-warm CLI for dashboard hydration
+Module: Cron
+Requirement: Publish cron manifest and idempotency/telemetry for alerts, marketing, news pipelines
 Acceptance Criteria:
-  - Create /API/Wallets/summary route returning JSON of wallet balances, positions, and alerts for the authenticated user (use existing models/services where possible).
-  - Add CLI command to pre-warm wallet summary cache for all active users; idempotent and safe to re-run.
-  - Document the route and CLI usage under docs/wallets/wallets-index.md, including cache keys and validation steps.
-Files Likely Impacted: app/Config/Routes.php; docs/wallets/wallets-index.md
+  - Produce a consolidated cron manifest with cadence, owners, and endpoints referenced in docs/operations/04-cron-automation.md.
+  - Add idempotency tokens/logging around trade alerts and marketing digest cron endpoints so reruns are safe.
+  - Provide telemetry/validation steps aligned with marketing-cron-playbook.md and update documentation accordingly.
+Files Likely Impacted: docs/operations/04-cron-automation.md; app/Modules/APIs/Controllers/ManagementController.php; app/Modules/APIs/Controllers/MarketingController.php
 Mandatory Outputs:
   - Implement required code/docs changes for this Gap (or docs-only when applicable).
   - Update the matching row in docs/gap-audit/gap_tracker.csv (Status, Code Evidence, Notes, Completed Date, Target Version as needed).
@@ -60,14 +60,14 @@ Mandatory Outputs:
 ```
 
 ## LAST COMPLETED ROW (Audit Log)
-- Row Index: 17
-  - Gap ID: GAP-PREDICTIONS-002
-  - Summary: Pointed /Predictions/* UI routes to the User module controller namespace and documented verification steps in the predictions README.
-  - Files changed: app/Config/Routes.php; docs/predictions/README.md; docs/gap-audit/gap_tracker.csv; docs/gap-audit/next-steps.md
-  - How to test: php spark routes | grep Predictions (after composer install) to confirm UI endpoints resolve to App\Modules\User\Controllers\PredictionsController
+- Row Index: 21
+  - Gap ID: GAP-WALLETS-001
+  - Summary: Added a cached `/API/Wallets/summary` endpoint plus a `wallets:warm-summary-cache` CLI to pre-hydrate wallet dashboards, and documented cache keys/verification steps.
+  - Files changed: app/Modules/APIs/Controllers/WalletsController.php; app/Services/WalletSummaryService.php; app/Commands/WalletsWarmSummaryCache.php; app/Config/Routes.php; docs/wallets/wallets-index.md; docs/gap-audit/gap_tracker.csv; docs/gap-audit/next-steps.md
+  - How to test: curl -s (authenticated) `${BASE_URL}/API/Wallets/summary` | jq '.data.meta'; php spark wallets:warm-summary-cache --user {id} to confirm cache warming output
   - Follow-ups created: None
 
 ## Backlog snapshot (auto-generated helper)
-- Remaining counts (Status != Completed): **P1: 3**, **P2: 2**, **P3: 0**
-- Top remaining P1 Gap IDs (row order): GAP-WALLETS-001, GAP-CRON-001, GAP-SECURITY-001
+- Remaining counts (Status != Completed): **P1: 2**, **P2: 2**, **P3: 0**
+- Top remaining P1 Gap IDs (row order): GAP-CRON-001, GAP-SECURITY-001
 - Modules with most open gaps: Marketing (17), User (8), Investments (7), Codex (5), Docs (5)
