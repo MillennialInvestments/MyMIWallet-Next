@@ -3,31 +3,64 @@
 namespace App\Filters;
 
 use CodeIgniter\Filters\FilterInterface;
-use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class LoginFilter extends BaseFilter implements FilterInterface
+class LoginFilter implements FilterInterface
 {
     /**
-     * Verifies that a user is logged in, or redirects to login.
-     *
-     * @param array|null $arguments
-     *
-     * @return RedirectResponse|void
+     * Myth/Auth route names that should not be intercepted by this filter.
+     * Adjust to match your app if you renamed routes.
      */
+    protected array $reservedRoutes = [
+        'login',
+        'logout',
+        'register',
+        'forgot',
+        'reset-password',
+    ];
+
     public function before(RequestInterface $request, $arguments = null)
     {
-        // Make sure this isn't already a Myth\Auth routes.
+        // 1) Skip reserved auth routes
         foreach ($this->reservedRoutes as $reservedRoute) {
-            if (url_is(route_to($reservedRoute))) {
-                return;
+            try {
+                $route = route_to($reservedRoute);
+                if ($route && url_is($route)) {
+                    return;
+                }
+            } catch (\Throwable $e) {
+                // route_to() will throw if a route name doesn't exist — ignore safely
             }
         }
 
-        // If no user is logged in then send them to the login form.
-        if (! $this->authenticate->check()) {
-            $session    = session();
+        // 2) If Myth/Auth is present, use it (preferred)
+        if (function_exists('logged_in')) {
+            if (! logged_in()) {
+                $session    = session();
+                $currentUrl = current_url();
+
+                if (! $session->has('redirect_url')) {
+                    $session->set('redirect_url', $currentUrl);
+                }
+
+                log_message('debug', 'LoginFilter redirecting guest to login from: ' . $currentUrl);
+
+                return redirect()->to(site_url('login'));
+            }
+
+            return;
+        }
+
+        // 3) Fallback: session-based login checks (covers non-Myth setups)
+        $session = session();
+        $isLoggedIn =
+            (bool) $session->get('logged_in')
+            || (bool) $session->get('isLoggedIn')
+            || (bool) $session->get('user_id')
+            || (bool) $session->get('cuID');
+
+        if (! $isLoggedIn) {
             $currentUrl = current_url();
 
             if (! $session->has('redirect_url')) {
@@ -38,14 +71,12 @@ class LoginFilter extends BaseFilter implements FilterInterface
 
             return redirect()->to(site_url('login'));
         }
+
+        return;
     }
 
-    /**
-     * @param array|null $arguments
-     *
-     * @return void
-     */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
+        // no-op
     }
 }

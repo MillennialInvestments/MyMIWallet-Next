@@ -33,8 +33,8 @@ echo view('themes/public/layouts/header', $subViewData);
                     <?php echo view('themes/public/layouts/_sitenav', $subViewData); ?>
                     <div class="nk-content content-wrapper mt-0 p-0">
                         <div class="pt-5 pt-lg-5 mb-3">
-                            <div class="row justify-content-center pt-4 pt-xl-3">
-                                <div class="col-12 pr-md-0 pt-4 pt-xl-0">
+                            <div class="row justify-content-center">
+                                <div class="col-12 pr-md-0 pt-xl-0">
                                     <?php
                                     // // Display messages and content
                                     //echo session()->getFlashdata('message');

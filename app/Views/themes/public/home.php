@@ -126,7 +126,7 @@ $socialPlatforms = [
 
 <!-- Hero Section -->
 <section class="hero-section pt-0 full-width">
-    <div class="container-fluid p-5">
+    <div class="container-fluid p-5 pt-0">
         <div class="row align-items-center">
             <div class="col-lg-2"></div>
             <div class="col-lg-4" data-aos="fade-right" data-aos-duration="1000">
@@ -137,11 +137,11 @@ $socialPlatforms = [
                     <h3 class="lead mb-4">
                         From budgeting and goal setting to investing and crypto, MyMI Wallet gives you the tools to manage and grow your financial life. 
                     </h3>
-                    <div class="video-container position-relative rounded-4 overflow-hidden shadow-lg">
+                    <!-- <div class="video-container position-relative rounded-4 overflow-hidden shadow-lg">
                         <div class="ratio ratio-16x9">
                             <iframe src="<?= $socialMedia->promotional_yt_video ?>" title="MyMI Wallet Overview" allowfullscreen></iframe>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="d-flex flex-wrap gap-2 mt-4">
                         <a href="<?= $btnURL ?>" class="btn btn-warning btn-lg">
                             <?= $btnText ?> <i class="fas fa-arrow-right ms-2"></i>

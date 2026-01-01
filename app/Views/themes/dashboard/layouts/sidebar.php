@@ -151,11 +151,16 @@ $agent                  = service('request')->getUserAgent();
                                 <span class="nk-menu-icon"><em class="icon ni ni-coin"></em></span>
                                 <span class="nk-menu-text text-yellow">Purchase Now!</span>
                             </a>
-                            <ul class="nk-menu-sub" style="display:none !important;">
+                            <ul class="nk-menu-sub">
                                 <li class="nk-menu-item">
-                                    <button class="nk-menu-link btn dynamicModalLoader" data-formtype="Purchase" data-endpoint="purchasePaypal" title="">
+                                    <a href="#"
+                                        class="nk-menu-link dynamicModalLoader"
+                                        data-formtype="Purchase"
+                                        data-endpoint="purchasePaypal"
+                                        role="button">
                                         <span class="nk-menu-text">Purchase</span>
-                                    </button>
+                                    </a>
+
                                 </li>
                                 <?php if($siteSettings->monthlyMemberships === 1): ?>
                                 <li class="nk-menu-item">

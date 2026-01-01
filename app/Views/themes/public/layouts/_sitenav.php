@@ -31,7 +31,7 @@ $brandAlt = 'MyMI Wallet - Investment Accounting/Analytical Software & Crypto As
     </button> -->
 
     <div class="navbar-collapse intro-nav" id="publicNavbarNav" style="display:block">
-      <ul class="navbar-nav w-100 w-lg-auto mt-1 ps-4 ps-lg-0 align-items-lg-center gap-lg-2">
+      <ul class="navbar-nav w-100 w-lg-auto mt-0 ps-4 ps-lg-0 align-items-lg-center gap-lg-2">
         <li class="nav-item intro-nav-item">
           <a href="<?= $homeUrl ?>" class="link-to nav-link intro-nav-link">Home</a>
         </li>
@@ -58,7 +58,7 @@ $brandAlt = 'MyMI Wallet - Investment Accounting/Analytical Software & Crypto As
         <!-- spacer that only grows on lg+ to push the last item right -->
         <li class="d-none d-lg-block flex-lg-grow-1"></li>
 
-        <li class="nav-item intro-nav-item py-1 ps-lg-1 ms-lg-0">
+        <li class="nav-item intro-nav-item pb-1 ps-lg-1 ms-lg-0">
           <?php if ($isLoggedIn): ?>
             <a href="<?= $dashboardUrl ?>" class="btn btn-primary text-white"><span>ACCOUNT</span></a>
             <a href="<?= site_url('/logout') ?>" class="btn btn-primary text-white"><span><em class="icon ni ni-signout"></em></span></a>
