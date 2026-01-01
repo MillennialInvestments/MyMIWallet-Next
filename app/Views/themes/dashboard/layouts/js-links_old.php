@@ -19,6 +19,8 @@ $subViewData                = [
 <!-- JavaScript -->
 <script src="<?php echo base_url('/assets/js/bundle.js?ver=3.1.0'); ?>"></script>
 <script src="<?php echo base_url('/assets/js/scripts.js?ver=3.1.0'); ?>"></script>
+<script>window.MYMI_DEBUG_SIDEBAR = false;</script>
+<script src="<?php echo base_url('/assets/js/sidebar-menu-fix.js'); ?>" defer></script>
 <script src="<?php echo base_url('/assets/js/charts/gd-invest.js?ver=3.1.0'); ?>"></script>
 <!-- Updated Bootstrap Select JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js"></script>

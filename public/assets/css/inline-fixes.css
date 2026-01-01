@@ -110,3 +110,12 @@ button:focus, button:focus-visible,
 .btn:focus-visible {
   box-shadow: 0 0 0 .25rem rgba(13,110,253,.25) !important;
 }
+
+/* Sidebar submenu visibility guard (class-driven only) */
+.nk-menu-item.has-sub > .nk-menu-sub {
+  display: none;
+}
+
+.nk-menu-item.has-sub.active > .nk-menu-sub {
+  display: block;
+}
