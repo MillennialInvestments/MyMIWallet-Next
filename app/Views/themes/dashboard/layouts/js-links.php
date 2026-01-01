@@ -11,6 +11,7 @@ $scriptNonceValue = $csp['script'] ?? '';
 if (!$scriptNonceValue && is_string($scriptNonceAttr) && $scriptNonceAttr !== '') {
     $scriptNonceValue = trim(str_replace(['nonce="', '"'], '', $scriptNonceAttr));
 }
+$debugSidebar = isset($siteSettings) ? ($siteSettings->debug ?? 0) : 0;
 $subViewData = $subViewData ?? [];
 // 1) jQuery FIRST (NO defer)
 ?>
@@ -21,6 +22,10 @@ $subViewData = $subViewData ?? [];
 
 <?php // 3) Theme base (defines NioApp) BEFORE any code that requires it ?>
 <script src="<?= base_url('assets/js/scripts.js'); ?>" <?= $scriptNonceAttr ?> defer></script>
+<script <?= $scriptNonceAttr ?>>
+  window.MYMI_DEBUG_SIDEBAR = <?= $debugSidebar ? 'true' : 'false' ?>;
+</script>
+<script src="<?= base_url('assets/js/sidebar-menu-fix.js'); ?>" <?= $scriptNonceAttr ?> defer></script>
 
 <?php if ($u = asset_if_exists('assets/js/fetch-helper.js')): ?>
   <script src="<?= $u ?>" <?= $scriptNonceAttr ?> defer></script>
@@ -108,4 +113,3 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 </script>
-
