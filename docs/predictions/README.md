@@ -30,7 +30,25 @@ Run the CI4 migrations to create the predictions schema:
 | `2025-09-09-000060_CreatePredictionsLiquidity` | Liquidity provider stakes |
 | `2025-09-09-000070_CreatePredictionsSettlementsPayouts` | Resolver records and payout queue |
 
-Use `php spark migrate` to apply pending migrations locally.
+Run the CI4 migrations from the project root (Spark auto-discovers `app/Database/Migrations`, so no extra registration is required):
+
+```bash
+php spark migrate -n App          # apply the predictions tables
+php spark migrate:status          # verify they are registered
+```
+
+Indexes/foreign keys are included for common lookups:
+
+- `bf_predictions_markets`: `state`, `category`, `lock_at`, `created_by` (FK to `users.id`)
+- `bf_predictions_options`: `market_id`, `is_winner`
+- `bf_predictions_orders`: `user_id`, `market_id`, `option_id`, `state`
+- `bf_predictions_trades`: `order_id`, `user_id`, `market_id`, `option_id`
+- `bf_predictions_positions`: unique (`user_id`, `market_id`, `option_id`) for accumulation
+- `bf_predictions_liquidity`: (`market_id`, `option_id`), `provider_user_id`, `state`
+- `bf_predictions_settlements`: `market_id`, `winning_option_id`
+- `bf_predictions_payouts`: `user_id`, `market_id`, `position_id`, `status`
+
+No seed data is required; the tables initialize empty and are populated by market creation/order placement flows.
 
 ## Library Usage
 
