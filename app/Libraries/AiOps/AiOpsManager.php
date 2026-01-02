@@ -108,7 +108,7 @@ class AiOpsManager
             return;
         }
 
-        $run = $this->db->table('bf_ai_ops_runs')->where('id', $runId)->get()->getFirstRowArray();
+        $run = $this->db->table('bf_ai_ops_runs')->where('id', $runId)->get()->getRowArray();
         if (! $run) {
             return;
         }
@@ -261,7 +261,19 @@ class AiOpsManager
 
     protected function getCap(string $subsystem): ?array
     {
-        return $this->db->table('bf_ai_ops_caps')->where('subsystem', $subsystem)->get()->getFirstRowArray() ?: null;
+        $db = db_connect();
+        $query = $db->table('bf_ai_ops_caps')
+                    ->where('subsystem', $subsystem)
+                    ->limit(1)
+                    ->get();
+
+        $row = $query->getRowArray(); // 
+        if (empty($row)) {
+            log_message('debug', "AiOpsManager: No cap found for subsystem '{$subsystem}'");
+            return null; // or your default structure
+        }
+        return $row;
+
     }
 
     protected function getUsageRow(string $subsystem, string $monthKey): array
@@ -270,7 +282,7 @@ class AiOpsManager
             ->where('subsystem', $subsystem)
             ->where('month_key', $monthKey)
             ->get()
-            ->getFirstRowArray() ?? [];
+            ->getRowArray() ?? [];
     }
 
     protected function updateUsage(string $subsystem, string $monthKey, int $runtimeSeconds, int $requests = 0, int $cacheHits = 0, int $errors = 0): void
@@ -363,7 +375,7 @@ class AiOpsManager
             ->where('subsystem', $subsystem)
             ->where('event_type', 'ALERT_80_SENT')
             ->get()
-            ->getFirstRow();
+            ->getRowArray();
     }
 
     protected function tablesReady(): bool

@@ -13,16 +13,12 @@ class GapTrackerSync extends BaseCommand
     protected $description = 'Enrich gap tracker CSV and produce a report.';
     protected $usage       = 'php spark gap:sync [--limit=25] [--priority=P1] [--dry-run] [--report-only]';
 
-    protected AiOpsManager $manager;
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->manager = new AiOpsManager();
-    }
+    protected ?AiOpsManager $manager = null;
 
     public function run(array $params)
     {
+        $this->manager ??= new AiOpsManager();
+
         $limit      = (int) (CLI::getOption('limit') ?? 25);
         $priority   = CLI::getOption('priority');
         $dryRun     = CLI::getOption('dry-run') !== null;
@@ -42,8 +38,12 @@ class GapTrackerSync extends BaseCommand
             $reportDir  = ROOTPATH . 'docs/gap_tracker/reports/';
             $rows       = $this->readCsv($csvPath);
             $headers    = array_shift($rows);
+            foreach ($rows as $i => $r) {
+                $rows[$i] = $this->normalizeRowKeys($r);
+            }
+
             $processed  = 0;
-            $fillCounts = array_fill_keys($headers, 0);
+            $fillCounts = array_fill_keys(array_unique(array_merge($headers, ['ID','Title','Effort'])), 0);
             $blockers   = [];
 
             foreach ($rows as &$row) {
@@ -147,16 +147,37 @@ class GapTrackerSync extends BaseCommand
         if ($term === '') {
             return null;
         }
-        $paths = [ROOTPATH . 'docs', ROOTPATH . 'app/Config/Routes.php', ROOTPATH . 'app/Modules'];
+
+        // Keep paths tight for performance
+        $paths = [
+            ROOTPATH . 'app/Modules',
+            ROOTPATH . 'app/Config/Routes.php',
+            ROOTPATH . 'docs',
+        ];
         $escapedPaths = array_map('escapeshellarg', $paths);
-        $command = 'rg -n --max-count 1 ' . escapeshellarg($term) . ' ' . implode(' ', $escapedPaths);
-        @exec($command, $output, $code);
-        if ($code === 0 && ! empty($output)) {
-            return $output[0];
+
+        // Prefer rg if installed (fast)
+        $rgPath = trim((string) @shell_exec('command -v rg 2>/dev/null'));
+        if ($rgPath !== '') {
+            $cmd = escapeshellcmd($rgPath) . ' -n --max-count 1 ' . escapeshellarg($term) . ' ' . implode(' ', $escapedPaths) . ' 2>/dev/null';
+            @exec($cmd, $out, $code);
+            if ($code === 0 && !empty($out)) {
+                return $out[0];
+            }
+            return null;
+        }
+
+        // Fallback to grep (available on most systems)
+        // -R recursive, -n line numbers, -I skip binary, -m 1 first match
+        $cmd = 'grep -RIn -I -m 1 ' . escapeshellarg($term) . ' ' . implode(' ', $escapedPaths) . ' 2>/dev/null';
+        @exec($cmd, $out, $code);
+        if ($code === 0 && !empty($out)) {
+            return $out[0];
         }
 
         return null;
     }
+
 
     protected function isBlocked(array $row): bool
     {
@@ -231,4 +252,24 @@ class GapTrackerSync extends BaseCommand
 
         return $path;
     }
+
+    protected function normalizeRowKeys(array $row): array
+    {
+        // Map CSV headers → internal keys used by this command
+        $map = [
+            'Gap ID'            => 'ID',
+            'Requirement'       => 'Title',
+            'Estimated Effort'  => 'Effort',
+            // keep others as-is
+        ];
+
+        foreach ($map as $from => $to) {
+            if (array_key_exists($from, $row) && !array_key_exists($to, $row)) {
+                $row[$to] = $row[$from];
+            }
+        }
+
+        return $row;
+    }
+
 }
