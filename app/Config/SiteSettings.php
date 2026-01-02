@@ -198,7 +198,7 @@ if (!class_exists(\App\Config\SiteSettings::class, false)) {
                 'aiDocsAlignmentEnabled',
             ];
             foreach ($cachedToggles as $toggleKey) {
-                $cached = cache('aiops:' . $toggleKey);
+                $cached = cache('aiops_' . $toggleKey);
                 if ($cached !== null) {
                     $this->$toggleKey = $cached;
                 }
