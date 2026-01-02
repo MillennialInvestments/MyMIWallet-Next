@@ -127,14 +127,20 @@ class GapTrackerSync extends BaseCommand
 
         foreach ($defaults as $key => $value) {
             if (array_key_exists($key, $row) && trim((string) $row[$key]) === '') {
-                $row[$key] = $key === 'Code Evidence' ? ($this->findEvidence($row['Title'] ?? '') ?? '') : $value;
+                if ($key === 'Code Evidence') {
+                    $needle = $row['ID'] ?? ($row['Gap ID'] ?? ($row['Title'] ?? ''));
+                    $row[$key] = $this->findEvidence((string) $needle) ?? '';
+                } else {
+                    $row[$key] = $value;
+                }
                 $fillCounts[$key] = ($fillCounts[$key] ?? 0) + 1;
             }
         }
 
         // If still no evidence, leave empty for blocker tracking
         if (empty($row['Code Evidence'])) {
-            $row['Code Evidence'] = $this->findEvidence($row['Title'] ?? '') ?? '';
+            $needle = $row['ID'] ?? ($row['Gap ID'] ?? ($row['Title'] ?? ''));
+            $row['Code Evidence'] = $this->findEvidence((string) $needle) ?? '';
             if (! empty($row['Code Evidence'])) {
                 $fillCounts['Code Evidence'] = ($fillCounts['Code Evidence'] ?? 0) + 1;
             }
