@@ -1,94 +1,112 @@
-# n8n responsibilities for the Four-System operating model
+# n8n responsibilities — Four-Pillar constitution
 
-This doc is the single source of truth for what n8n owns inside the Four Actors model. n8n acts as the internal expert systems engineer and integrator: it does not change code directly, and it writes its outputs under `docs/` for Codex and ChatGPT to consume. All execution must respect CI4 as the system of record (auth, persistence, feature flags).
+This document is the authoritative charter for how n8n operates inside the Four-Pillar system (ChatGPT ⇄ chat.mymiwallet.com ⇄ n8n ⇄ Codex ⇄ CI4). n8n is the expert systems engineer and orchestrator: it owns detection, prioritization, reporting, and instruction writing. Codex performs surgical code execution only, CI4 remains the system of record, and ChatGPT provides strategic reasoning.
 
-## Guardrails
+## Role and scope
 
-- **Scope:** n8n builds automation, orchestration, and reporting only. No direct DB writes—use CI4 endpoints.
-- **Outputs live in `/docs`.** Every workflow writes to the paths listed below so the other actors can pick them up.
-- **Cost controls:** Follow the AIOps policy check and budget guardrails documented in `docs/ops/aiops-n8n-workflows.md`.
-- **No surprise logic:** If a workflow is not listed here, do not invent it. Escalate through docs when something new is required.
+- Maintain gap tracking, ChatGPT memory digestion, static analysis, budget monitoring, report generation, and instruction writing.
+- Emit artifacts exclusively under `docs/` so humans, ChatGPT, Codex, and chat.mymiwallet.com share the same view of work.
+- Never let Codex set priorities or invent work; it executes what n8n has queued.
+- Keep CI4 (auth, persistence, feature flags) as the primary authority—n8n does not bypass it with direct database writes.
 
-## A. Documentation Automation — `docs_inventory_builder`
+## Hard guardrails
 
-**Purpose:** Scan `docs/**` and surface inventory + gap reports for humans and Codex.
+- **No direct code or DB writes.** Use CI4 APIs or documented endpoints if state changes are required.
+- **No surprise automation.** If a workflow is not described here, publish a doc first and wait for approval.
+- **Cost controls.** Follow `docs/ops/aiops-n8n-workflows.md` and related AIOps/budget guardrails; enforce hard stops to avoid surprise billing.
+- **Docs-first communication.** All outputs live in `docs/`; redact secrets and avoid embedding credentials.
+- **Strict actor boundaries.** ChatGPT reasons, n8n orchestrates, Codex executes, CI4 records.
 
-**Outputs:**
-- `docs/inventory/docs_index.json` — machine-readable index of docs (path, title, last modified, owner hints).
-- `docs/inventory/docs_gaps.md` — human-friendly gap notes (missing sections, stale files, docs without code references).
+## Core workflows
 
-**Notes:**
-- Keep scans read-only. Do not edit docs; only emit reports.
-- Prefer shallow scans (avoid expensive recursive work) and reuse cached metadata when possible.
+### 1) ChatGPT memory ingestor — `chatgpt_memory_ingestor`
 
-## B. Codebase Observability — `static_analysis_runner`
+**Purpose:** Convert the monthly ChatGPT `data.json` export into durable institutional memory without conflicting with code or docs.
 
-**Purpose:** Run the non-AI “first pass” checks and surface findings for engineers.
+**Inputs:**
+- `docs/chatgpt/raw/data.json`
+- `docs/chatgpt/processed/last_ingest.meta.json`
 
-**Tools:** PHPStan, PHPUnit (safe subset), ESLint (if present).
+**Processing logic (mandatory):**
+- Hash each conversation using its title, first user message, and timestamps.
+- Compare against the previous ingest to label threads as `completed`, `unresolved`, `recurring`, or `new`.
+- Redact secrets and avoid replaying old conversations; operate purely from the export.
 
-**Outputs:**
-- `docs/reports/code_health.md` — summary of lint/test status, failing paths, and suggested owners.
-- `docs/reports/security_findings.md` — security-oriented highlights that need follow-up.
+**Outputs (authoritative):**
+- `docs/chatgpt/processed/index.json`
+- `docs/chatgpt/processed/completed.json`
+- `docs/chatgpt/processed/unresolved.json` and `docs/chatgpt/processed/unresolved.md`
+- `docs/chatgpt/processed/recurring_topics.json`
+- `docs/chatgpt/processed/last_ingest.meta.json`
+- `docs/chatgpt/diffs/new_since_last_run.md` (primary human diff of new items since the last ingest)
 
-**Notes:**
-- Only run safe test suites; flag anything skipped due to environment limits.
-- Do not auto-fix; Codex will act on the findings.
+**Cadence:** Trigger manually after each upload or via the scheduled nightly scan. The diff file is the first thing humans should read.
 
-## C. Cost & Usage Monitoring — `ai_budget_watchdog`
+### 2) Gap tracker intelligence — `gap_tracker_brain`
 
-**Purpose:** Keep AIOps spend within bounds and warn before hitting limits.
-
-**Inputs:** `config/runtime.json`, chat usage logs, AIOps usage snapshots.
-
-**Outputs:**
-- `docs/ops/ai_usage_snapshot.md` — current-day usage, 80% warnings, and any hard-stop notices.
-
-**Notes:**
-- Emit at most one 80% warning per day.
-- Respect `aiops_enabled` / `aiops_llm_enabled` toggles; never override them.
-
-## D. ChatGPT data.json Intelligence Ingestion — `chatgpt_memory_ingestor`
-
-**Purpose:** Convert `/docs/chatgpt/data.json` exports into durable institutional memory.
-
-**Outputs:**
-- `docs/chatgpt/knowledge_index.json` — structured index of projects and domains discussed.
-- `docs/chatgpt/unresolved_threads.md` — open questions or tasks that lack closure.
-- `docs/chatgpt/decision_log.md` — finalized architectural or product decisions.
-
-**Notes:**
-- Treat exported data as read-only; redact secrets before writing outputs.
-- Keep entries deduped and link back to source conversations when possible.
-
-## E. Gap Tracker Intelligence — `gap_tracker_brain`
-
-**Purpose:** Enrich `gap_tracker.csv` with priority, effort, and dependencies using available inventories and scans.
+**Purpose:** Prioritize known gaps without editing the source tracker.
 
 **Inputs:** `gap_tracker.csv`, docs inventory, static analysis outputs.
 
 **Outputs:**
-- `docs/gap-audit/next_actions.md` — human-ready next actions grouped by priority.
-- `docs/gap-audit/codex_queue.md` — backlog ordered for Codex execution.
+- `docs/gap-audit/next_actions.md` — prioritized human next steps.
+- `docs/gap-audit/codex_queue.md` — execution-ordered backlog for Codex.
 
-**Notes:**
-- Do not change `gap_tracker.csv`; only read it.
-- When data is missing, label the assumption rather than fabricating values.
+**Rules:** Do not modify `gap_tracker.csv`; label assumptions when data is missing.
 
-## F. Instruction Feedback Loop — `instruction_feedback_loop`
+### 3) Codebase observability — `static_analysis_runner`
 
-**Purpose:** Route actionable instructions to the right actor without bypassing guardrails.
+**Purpose:** Run safe first-pass checks and surface actionable findings.
+
+**Tools:** PHPStan, PHPUnit (safe subset), ESLint (if present).
 
 **Outputs:**
-- `docs/codex/*.md` — implementation tasks for Codex (code changes, migrations, fixes).
-- `docs/chatgpt/*.md` — reasoning or decision records for ChatGPT (architecture reviews, tradeoff analysis).
+- `docs/reports/code_health.md` — lint/test status and failing paths.
+- `docs/reports/security_findings.md` — security-oriented highlights requiring follow-up.
 
-**Notes:**
-- Separate human-facing instructions from machine-facing data; avoid mixing summaries with tasks.
-- Never ask Codex to set priorities—only execute what n8n has ranked.
+**Rules:** Only run suites that are safe for the environment; flag anything skipped.
 
-## What to hand to Codex right now
+### 4) Cost and usage monitoring — `ai_budget_watchdog`
 
-> Implement all n8n workflows described in this document and **scaffold their output directories only**. Do **not** add logic beyond what’s instructed here.
+**Purpose:** Enforce budget guardrails for AIOps and related automation.
 
-Codex should create the folders/files listed above, wire any necessary runtime config placeholders, and stop. No production workflow logic ships in this step.
+**Inputs:** `config/runtime.json`, chat usage logs, AIOps snapshots.
+
+**Outputs:** `docs/ops/ai_usage_snapshot.md` — current usage, 80% warnings, and hard-stop notices.
+
+**Rules:** Emit at most one 80% warning per day; respect `aiops_enabled` / `aiops_llm_enabled` toggles.
+
+### 5) Instruction feedback loop — `instruction_feedback_loop`
+
+**Purpose:** Route tasks to the right actor while preserving boundaries.
+
+**Outputs:**
+- `docs/codex/queued/*.md` — implementation tasks for Codex (no prioritization by Codex).
+- `docs/chatgpt/requests/*.md` — reasoning/strategy tasks for ChatGPT.
+- `docs/chatgpt/processed/*.md` — summaries that humans and chat.mymiwallet.com can surface.
+
+**Rules:**
+- Do not mix human summaries with machine instructions; keep files atomic.
+- Command translations from chat.mymiwallet.com (e.g., `/n8n run chatgpt_ingest`, `/codex queue performance_review`, `/strategy validate auth model`) should land in the corresponding docs paths.
+
+### 6) Documentation inventory — `docs_inventory_builder`
+
+**Purpose:** Keep a current index of `docs/**` and highlight gaps for humans and Codex.
+
+**Outputs:**
+- `docs/inventory/docs_index.json`
+- `docs/inventory/docs_gaps.md`
+
+**Rules:** Read-only scans only; prefer shallow scans and cached metadata.
+
+## Operating cadence
+
+- Monthly: ingest the ChatGPT export via `chatgpt_memory_ingestor` and review `docs/chatgpt/diffs/new_since_last_run.md`.
+- Weekly (or on change): refresh gap tracking, static analysis, and docs inventory so Codex executes current priorities.
+- Daily: run `ai_budget_watchdog` to enforce spend controls and publish any warnings.
+
+## Non-negotiables
+
+- n8n owns gap tracking, ChatGPT memory digestion, static analysis, budget monitoring, report generation, and instruction writing.
+- Codex executes only what n8n has queued under `docs/codex/`; it does not decide priorities.
+- ChatGPT provides strategic reasoning and validation; chat.mymiwallet.com is a command interface, not an AI brain.

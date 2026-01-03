@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "last_ingest_started_at": null,
+  "last_ingest_completed_at": null,
+  "source_hash": null,
+  "conversation_count": 0,
+  "notes": "Updated by chatgpt_memory_ingestor to track the last run and source artifact."
+}
