@@ -1,13 +1,5 @@
 {
-  "daily": {
-    "date": "",
-    "tokens": 0,
-    "cost": 0
-  },
-  "monthly": {
-    "month": "",
-    "tokens": 0,
-    "cost": 0
-  },
-  "lastAlertSent": null
+  "month": "",
+  "totalUsd": 0,
+  "lastAlertSent": 0
 }
