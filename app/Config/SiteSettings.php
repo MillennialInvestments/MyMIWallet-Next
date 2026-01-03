@@ -152,6 +152,13 @@ if (!class_exists(\App\Config\SiteSettings::class, false)) {
         public bool $aiCodexEnabled            = true;  // Informational toggle (enforced in code workflow triggers)
         public bool $aiGithubReviewEnabled     = true;  // Enables PR helper workflow
 
+        // AIOps guardrails (LLM budgeting + gating)
+        public bool $aiops_enabled              = true;
+        public bool $aiops_llm_enabled          = true;
+        public float $aiops_daily_cap_usd       = 10.00;
+        public int $aiops_hard_stop_percent     = 80;
+        public string $aiops_alert_email        = 'team@mymiwallet.com';
+
         // Automation toggles
         public bool $aiGapTrackerSyncEnabled   = true;
         public bool $aiAutoMarketingDraftsEnabled = true;
@@ -196,6 +203,8 @@ if (!class_exists(\App\Config\SiteSettings::class, false)) {
                 'aiAutoMarketingDraftsEnabled',
                 'aiAutoAlertsDigestEnabled',
                 'aiDocsAlignmentEnabled',
+                'aiops_enabled',
+                'aiops_llm_enabled',
             ];
             foreach ($cachedToggles as $toggleKey) {
                 $cached = cache('aiops_' . $toggleKey);
