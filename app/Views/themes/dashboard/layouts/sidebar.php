@@ -784,11 +784,16 @@ $agent                  = service('request')->getUserAgent();
 							<span class="nk-menu-icon"><em class="icon ni ni-property-add"></em></span><span class="nk-menu-text">Content Creator</span>
 							</a>
 						</li>     -->
-						<li class="nk-menu-item">
-							<a href="<?php echo site_url('Management/Exchange'); ?>" class="nk-menu-link">
-							<span class="nk-menu-icon"><em class="icon ni ni-coins"></em></span><span class="nk-menu-text">Exchange</span>
-							</a>
-						</li>
+							<li class="nk-menu-item">
+								<a href="<?php echo site_url('Management/Exchange'); ?>" class="nk-menu-link">
+								<span class="nk-menu-icon"><em class="icon ni ni-coins"></em></span><span class="nk-menu-text">Exchange</span>
+								</a>
+							</li>
+							<li class="nk-menu-item">
+								<a class="nk-menu-link" href="<?php echo site_url('/Management/Docs'); ?>">
+									<span class="nk-menu-icon"><em class="icon ni ni-book-read"></em></span><span class="nk-menu-text">Docs Browser</span>
+								</a>
+							</li>
                         <!-- <li class="nk-menu-item">
 							<a href="<?php //echo site_url('Management/Investment'); ?>" class="nk-menu-link">
 							<span class="nk-menu-icon"><em class="icon ni ni-sign-usd"></em></span><span class="nk-menu-text">Investments</span>
