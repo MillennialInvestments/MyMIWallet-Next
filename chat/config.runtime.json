@@ -1,0 +1,7 @@
+{
+  "enabled": true,
+  "provider": "openai",
+  "monthlyBudgetUsd": 25,
+  "alertThresholdPercent": 80,
+  "hardStopPercent": 95
+}
