@@ -24,12 +24,19 @@ const MYMI_USAGE_WEBHOOK_URL = process.env.MYMI_USAGE_WEBHOOK_URL || '';
 const MYMI_USAGE_WEBHOOK_SECRET = process.env.MYMI_USAGE_WEBHOOK_SECRET || '';
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4o-mini';
+const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'http://localhost:11434';
+const COST_PER_1K = {
+  'gpt-4o-mini': 0.00015,
+  'gpt-4o': 0.005,
+  'gpt-3.5-turbo': 0.0005
+};
 
 const CONFIG_PATH = path.join(__dirname, 'config.runtime.json');
 const USAGE_PATH = path.join(__dirname, 'usage.json');
 const LOG_PATH = path.join(__dirname, 'logs', 'chat.log');
 const TEN_SECONDS = 10 * 1000;
-const COST_PER_KTOKEN_USD = 0.00015; // rough estimate for budgeting; adjust when pricing changes
+const DEFAULT_PROVIDER = 'openai';
+const DEFAULT_MODEL = 'gpt-4o-mini';
 
 const runtimeCache = { config: null, loadedAt: 0 };
 
@@ -76,25 +83,35 @@ app.post('/api/chat', async (req, res) => {
   }
 
   const usage = await loadUsage();
-  const estimate = estimateUsage(messages);
-  const projected = computeProjectedUsage(usage, estimate, config);
-  if (projected.blocked) {
-    return res.status(projected.status).json({ error: projected.reason });
+  const estimate = estimateUsage(messages, config.providerModel);
+  const hardStopValue = Number(config.monthlyBudgetUsd || 0) * (Number(config.hardStopPercent || 95) / 100);
+  const projectedTotal = usage.totalUsd + estimate.costUsd;
+
+  if (hardStopValue > 0 && usage.totalUsd >= hardStopValue) {
+    return res.status(429).json({ error: 'Monthly AI budget exhausted' });
   }
 
-  let openAIResponse;
+  if (hardStopValue > 0 && projectedTotal >= hardStopValue) {
+    return res.status(429).json({ error: 'Monthly AI budget exhausted' });
+  }
+
+  let llmResponse;
   try {
-    openAIResponse = await callOpenAI(messages, { temperature });
+    llmResponse = await callLLM(messages, {
+      temperature,
+      provider: config.provider,
+      model: config.providerModel
+    });
   } catch (err) {
-    await appendLog(`OpenAI call failed: ${err.message}`);
+    await appendLog(`LLM call failed: ${err.message}`);
     return res.status(502).json({ error: 'Upstream provider error' });
   }
 
-  const updatedUsage = await persistUsage(usage, estimate, config);
+  const updatedUsage = await persistUsage(usage, estimate);
   await maybeSendAlert(updatedUsage, config);
   await sendUsageWebhook(updatedUsage, estimate);
 
-  return res.json({ reply: openAIResponse });
+  return res.json({ reply: llmResponse });
 });
 
 app.use((req, res) => {
@@ -109,14 +126,22 @@ async function loadRuntimeConfig() {
   try {
     const raw = await fs.promises.readFile(CONFIG_PATH, 'utf8');
     const parsed = JSON.parse(raw);
-    runtimeCache.config = parsed;
+    runtimeCache.config = {
+      enabled: parsed.enabled !== false,
+      provider: parsed.provider || DEFAULT_PROVIDER,
+      providerModel: parsed.providerModel || OPENAI_MODEL || DEFAULT_MODEL,
+      monthlyBudgetUsd: Number(parsed.monthlyBudgetUsd ?? 0),
+      alertThresholdPercent: Number(parsed.alertThresholdPercent ?? 80),
+      hardStopPercent: Number(parsed.hardStopPercent ?? 95)
+    };
     runtimeCache.loadedAt = now;
-    return parsed;
+    return runtimeCache.config;
   } catch (err) {
     await appendLog(`Failed to read config.runtime.json: ${err.message}`);
     const fallback = {
       enabled: true,
-      provider: 'openai',
+      provider: DEFAULT_PROVIDER,
+      providerModel: OPENAI_MODEL || DEFAULT_MODEL,
       monthlyBudgetUsd: 25,
       alertThresholdPercent: 80,
       hardStopPercent: 95
@@ -139,9 +164,9 @@ async function ensureUsageFile() {
 function createEmptyUsage() {
   const now = new Date();
   return {
-    daily: { date: now.toISOString().slice(0, 10), tokens: 0, cost: 0 },
-    monthly: { month: `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, '0')}`, tokens: 0, cost: 0 },
-    lastAlertSent: null
+    month: `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, '0')}`,
+    totalUsd: 0,
+    lastAlertSent: 0
   };
 }
 
@@ -155,66 +180,55 @@ async function loadUsage() {
 
 function normalizeUsage(usage) {
   const now = new Date();
-  const today = now.toISOString().slice(0, 10);
   const monthKey = `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, '0')}`;
-  if (usage.daily?.date !== today) {
-    usage.daily = { date: today, tokens: 0, cost: 0 };
+  const normalized = {
+    month: usage.month || usage.monthly?.month || monthKey,
+    totalUsd: Number.isFinite(usage.totalUsd) ? Number(usage.totalUsd) : Number(usage.monthly?.cost || 0),
+    lastAlertSent: Number.isFinite(usage.lastAlertSent) ? Number(usage.lastAlertSent) : 0
+  };
+
+  if (normalized.month !== monthKey) {
+    normalized.month = monthKey;
+    normalized.totalUsd = 0;
+    normalized.lastAlertSent = 0;
   }
-  if (usage.monthly?.month !== monthKey) {
-    usage.monthly = { month: monthKey, tokens: 0, cost: 0 };
-    usage.lastAlertSent = null;
-  }
-  return usage;
+  return normalized;
 }
 
-async function persistUsage(currentUsage, estimate, config) {
+async function persistUsage(currentUsage, estimate) {
   const usage = normalizeUsage(currentUsage);
-  usage.daily.tokens += estimate.tokens;
-  usage.daily.cost += estimate.cost;
-  usage.monthly.tokens += estimate.tokens;
-  usage.monthly.cost += estimate.cost;
+  usage.totalUsd += estimate.costUsd;
   await fs.promises.writeFile(USAGE_PATH, JSON.stringify(usage, null, 2));
-  await appendLog(`Usage updated: daily=$${usage.daily.cost.toFixed(6)}, monthly=$${usage.monthly.cost.toFixed(6)}`);
+  await appendLog(`Usage updated: month=${usage.month}, totalUsd=$${usage.totalUsd.toFixed(6)}`);
   return usage;
 }
 
-function estimateUsage(messages) {
-  const totalChars = messages.reduce((sum, msg) => sum + (msg?.content?.length || 0), 0);
-  const tokens = Math.ceil(totalChars / 4);
-  const cost = (tokens / 1000) * COST_PER_KTOKEN_USD;
-  return { tokens, cost };
-}
-
-function computeProjectedUsage(usage, estimate, config) {
-  const monthlyBudget = Number(config.monthlyBudgetUsd || 0);
-  const projectedMonthlyCost = usage.monthly.cost + estimate.cost;
-  const projectedDailyCost = usage.daily.cost + estimate.cost;
-  const dailyBudget = monthlyBudget > 0 ? monthlyBudget / 30 : 0;
-  if (monthlyBudget > 0) {
-    const monthlyPercent = (projectedMonthlyCost / monthlyBudget) * 100;
-    if (monthlyPercent >= (config.hardStopPercent || 95)) {
-      return { blocked: true, status: 429, reason: 'Monthly usage cap reached' };
-    }
-  }
-  if (dailyBudget > 0) {
-    const dailyPercent = (projectedDailyCost / dailyBudget) * 100;
-    if (dailyPercent >= (config.hardStopPercent || 95)) {
-      return { blocked: true, status: 429, reason: 'Daily usage cap reached' };
-    }
-  }
-  return { blocked: false };
+function estimateUsage(messages, providerModel) {
+  const estimatedTokens = Math.ceil(JSON.stringify(messages).length / 4);
+  const tokenCost = COST_PER_1K[providerModel] || 0.001;
+  const costUsd = (estimatedTokens / 1000) * tokenCost;
+  return { tokens: estimatedTokens, costUsd };
 }
 
 async function maybeSendAlert(usage, config) {
   const monthlyBudget = Number(config.monthlyBudgetUsd || 0);
   const alertThreshold = Number(config.alertThresholdPercent || 80);
   if (!monthlyBudget || !alertThreshold) return;
-  const percent = (usage.monthly.cost / monthlyBudget) * 100;
-  if (percent >= alertThreshold && !usage.lastAlertSent) {
-    await sendAlertEmail(percent);
-    usage.lastAlertSent = new Date().toISOString();
+  const percentUsed = Math.floor((usage.totalUsd / monthlyBudget) * 100);
+  if (percentUsed >= alertThreshold && usage.lastAlertSent < alertThreshold) {
+    await sendAlertNotification(percentUsed, usage);
+    usage.lastAlertSent = alertThreshold;
     await fs.promises.writeFile(USAGE_PATH, JSON.stringify(usage, null, 2));
   }
+}
+
+async function sendAlertNotification(percentUsed, usage) {
+  try {
+    await sendAlertEmail(percentUsed);
+  } catch (err) {
+    await appendLog(`Alert email failed: ${err.message}`);
+  }
+  await sendUsageWebhook(usage, null, { alertPercent: percentUsed });
 }
 
 async function sendAlertEmail(percent) {
@@ -243,7 +257,7 @@ async function sendAlertEmail(percent) {
   await appendLog(`[ALERT] ${subject} - ${body}`);
 }
 
-async function sendUsageWebhook(usage, estimate) {
+async function sendUsageWebhook(usage, estimate, extra = {}) {
   if (!MYMI_USAGE_WEBHOOK_URL) return;
   try {
     await fetch(MYMI_USAGE_WEBHOOK_URL, {
@@ -255,15 +269,26 @@ async function sendUsageWebhook(usage, estimate) {
       body: JSON.stringify({
         source: 'chat',
         timestamp: new Date().toISOString(),
-        usage: {
-          monthly: usage.monthly,
-          daily: usage.daily,
-          lastCall: estimate
-        }
+        usage,
+        estimate,
+        ...extra
       })
     });
   } catch (err) {
     await appendLog(`Usage webhook failed: ${err.message}`);
+  }
+}
+
+async function callLLM(messages, opts = {}) {
+  const runtime = await loadRuntimeConfig();
+  const provider = opts.provider || runtime.provider;
+  switch (provider) {
+    case 'openai':
+      return callOpenAI(messages, opts);
+    case 'ollama':
+      return callOllama(messages, opts);
+    default:
+      throw new Error('Unknown provider');
   }
 }
 
@@ -278,7 +303,7 @@ async function callOpenAI(messages, opts = {}) {
       Authorization: `Bearer ${OPENAI_API_KEY}`
     },
     body: JSON.stringify({
-      model: OPENAI_MODEL,
+      model: opts.model || OPENAI_MODEL || DEFAULT_MODEL,
       messages,
       temperature: opts.temperature ?? 0.7
     })
@@ -290,6 +315,32 @@ async function callOpenAI(messages, opts = {}) {
   }
   const data = await response.json();
   const reply = data?.choices?.[0]?.message?.content;
+  return reply || 'No response received.';
+}
+
+async function callOllama(messages, opts = {}) {
+  const model = opts.model || 'llama3';
+  const response = await fetch(`${OLLAMA_BASE_URL}/api/chat`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      model,
+      messages,
+      options: {
+        temperature: opts.temperature ?? 0.7
+      }
+    })
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`Ollama request failed (${response.status}): ${text}`);
+  }
+
+  const data = await response.json();
+  const reply = data?.message?.content || data?.choices?.[0]?.message?.content;
   return reply || 'No response received.';
 }
 

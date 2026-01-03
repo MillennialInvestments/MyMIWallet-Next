@@ -1,6 +1,7 @@
 {
   "enabled": true,
   "provider": "openai",
+  "providerModel": "gpt-4o-mini",
   "monthlyBudgetUsd": 25,
   "alertThresholdPercent": 80,
   "hardStopPercent": 95
