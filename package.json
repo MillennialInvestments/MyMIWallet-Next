@@ -1,8 +1,13 @@
 {
   "name": "mymiwallet-utils",
   "version": "1.0.0",
-  "description": "Utility scripts for MyMI Wallet documentation pipelines",
+  "description": "Utility scripts and workspaces for MyMI Wallet documentation pipelines",
+  "private": true,
   "type": "module",
+  "workspaces": [
+    "mobile",
+    "packages/*"
+  ],
   "scripts": {
     "import-and-categorize": "node scripts/import_and_categorize.js"
   },
