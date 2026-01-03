@@ -204,6 +204,15 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->post('run', 'AiOpsController::run');
         $routes->post('receiveResult', 'AiOpsController::receiveResult');
     });
+    $routes->group('AIOps', static function($routes) {
+        $routes->get('health', 'AIOpsController::health');
+        $routes->post('policy/check', 'AIOpsController::policyCheck');
+        $routes->post('usage/log', 'AIOpsController::logUsage');
+        $routes->post('cache/store', 'AIOpsController::cacheStore');
+        $routes->get('cache/get', 'AIOpsController::cacheGet');
+        $routes->post('test/policy', 'AIOpsController::testPolicy');
+        $routes->post('toggle', 'AIOpsController::toggle', ['filter' => 'permission:admin.access']);
+    });
     $routes->post('Alerts/backfillEmailAlerts', 'AlertsController::backfillEmailAlerts');
     $routes->get('cronFetchAndGenerateNews', 'ManagementController::cronFetchAndGenerateNews');
     $routes->post('Management/backfillMarketingEmails', 'ManagementController::backfillMarketingEmails');
