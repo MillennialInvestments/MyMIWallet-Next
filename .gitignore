@@ -18,6 +18,9 @@ app/_backup_autoload_skip/
 phpunit.xml
 phpunit.xml.dist
 *.map
+!/chat/.env.example
+/chat/chat.pid
+/chat/logs/chat.log
 
 # local-only
 app/Config/APIs.php
