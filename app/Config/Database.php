@@ -26,7 +26,7 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'mysql.mymiwallet.com',
+        'hostname'     => 'https://mysql.mymiwallet.com',
         'username'     => 'mymiteam',
         'password'     => 'Dawg@073120.dawg',
         'database'     => 'mymiwallet',
