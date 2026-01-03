@@ -20,3 +20,9 @@ $routes->group('Management/OpsInbox', ['filter' => 'role:admin'], static functio
     $r->post('approve/(:num)', 'App\\Modules\\Management\\Controllers\\OpsInboxController::markApproved/$1');
     $r->post('reject/(:num)', 'App\\Modules\\Management\\Controllers\\OpsInboxController::reject/$1');
 });
+
+$routes->group('Management', ['namespace' => 'App\\Modules\\Management\\Controllers'], static function($routes) {
+    $routes->get('Docs', 'DocsController::index');
+    $routes->get('Docs/browse/(:any)', 'DocsController::browse/$1');
+    $routes->get('Docs/view/(:any)', 'DocsController::view/$1');
+});
