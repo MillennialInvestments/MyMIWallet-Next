@@ -1,0 +1,18 @@
+{
+  "chat": {
+    "plans": {
+      "free": { "monthlyUsd": 1 },
+      "basic": { "monthlyUsd": 5 },
+      "pro": { "monthlyUsd": 20 },
+      "premium": { "monthlyUsd": 50 }
+    },
+    "alertPercent": 80
+  },
+  "aiops": {
+    "workflows": {
+      "gap_analysis": { "monthlyUsd": 5 },
+      "doc_generation": { "monthlyUsd": 10 },
+      "code_review": { "monthlyUsd": 15 }
+    }
+  }
+}

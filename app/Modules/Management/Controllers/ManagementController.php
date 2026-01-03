@@ -7,7 +7,7 @@ use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
 use App\Config\{Auth, SiteSettings, SocialMedia}; 
 use App\Controllers\UserController;
-use App\Libraries\{MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIUser, MyMIWallet, MyMIWallets};
+use App\Libraries\{AiCostControls, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIUser, MyMIWallet, MyMIWallets};
 use App\Models\{AccountsModel, BudgetModel, ContentIdeaModel, ContentPostModel, ContentScannerIngestModel, MarketingNewsletterModel, UserModel, WalletModel, WeeklyStreamWatchlistModel};
 use App\Services\{AccountService, BudgetService, DashboardService, GoalTrackingService, MarketingService, SolanaService, UserService, WalletService, WeeklyStreamService};
 // use App\Modules\User\Libraries\{DashboardLibrary}; 
@@ -34,6 +34,7 @@ class ManagementController extends UserController
     protected $walletService;
     protected $budgetModel;
     protected $MyMIDashboard;
+    protected AiCostControls $aiCostControls;
     protected WeeklyStreamService $weeklyStreamService;
     protected WeeklyStreamWatchlistModel $weeklyWatchlistModel;
     protected MarketingNewsletterModel $newsletterModel;
@@ -48,6 +49,7 @@ class ManagementController extends UserController
         $this->weeklyStreamService = new WeeklyStreamService();
         $this->weeklyWatchlistModel = new WeeklyStreamWatchlistModel();
         $this->newsletterModel = new MarketingNewsletterModel();
+        $this->aiCostControls = new AiCostControls();
 
         if (!function_exists('getCuID')) {
             helper('cuID');
@@ -153,6 +155,8 @@ class ManagementController extends UserController
             'newsletter_status'  => $newsletter['status'] ?? 'not generated',
         ];
         $this->data['contentEngine'] = $this->buildContentEngineSummary();
+        $this->data['chatUsage'] = $this->aiCostControls->getChatUsageSummary();
+        $this->data['chatConfig'] = $this->aiCostControls->chatRuntimeConfig();
         return $this->renderTheme('App\Modules\Management\Views\index', $this->data);
     }
 

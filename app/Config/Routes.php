@@ -88,6 +88,7 @@ $routes->group('', ['namespace' => 'App\Controllers'], static function($routes) 
     $routes->get('health', 'Health::index');     // JSON {"status":"ok",...}
     $routes->get('status', 'Health::status');    // plain "OK"
     $routes->get('api/health', 'Api\\HealthController::index'); // convenient alias
+    $routes->get('api/admin/chat-usage', 'Api\\AdminChatUsageController::index', ['filter' => 'permission:admin.access']);
 
     // Ops (protected by X-OPCACHE-RESET header)
     $routes->get('_ops/opcache-reset', 'Ops::opcacheReset');
@@ -301,6 +302,12 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->group('Referrals', ['filter' => 'login'], static function($routes) {
         $routes->post('bulk-update-status', 'ReferralController::bulkUpdateStatus');
         $routes->post('bulk-delete', 'ReferralController::bulkDelete');
+    });
+
+    $routes->group('Management/Chat', ['namespace' => 'App\\Modules\\Management\\Controllers', 'filter' => 'permission:admin.access'], static function($routes) {
+        $routes->get('Usage', 'ChatUsageController::index');
+        $routes->post('Settings', 'ChatUsageController::saveSettings');
+        $routes->post('ResetUser', 'ChatUsageController::resetUser');
     });
 
     // ------------------------
