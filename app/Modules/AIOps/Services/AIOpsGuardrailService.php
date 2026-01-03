@@ -3,11 +3,13 @@
 namespace App\Modules\AIOps\Services;
 
 use App\Config\SiteSettings;
+use App\Libraries\AiCostControls;
 use App\Libraries\SiteSettingsOverride;
 use App\Modules\AIOps\Models\AIOpsBudgetModel;
 use App\Modules\AIOps\Models\AIOpsCacheModel;
 use App\Modules\AIOps\Models\AIOpsDedupeModel;
 use App\Modules\AIOps\Models\AIOpsUsageModel;
+use App\Modules\AIOps\Models\AIOpsWorkflowUsageModel;
 use App\Modules\AIOps\Models\AIOpsWorkflowsModel;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\I18n\Time;
@@ -19,9 +21,11 @@ class AIOpsGuardrailService
     protected AIOpsUsageModel $usageModel;
     protected AIOpsBudgetModel $budgetModel;
     protected AIOpsWorkflowsModel $workflowsModel;
+    protected AIOpsWorkflowUsageModel $workflowUsageModel;
     protected AIOpsCacheModel $cacheModel;
     protected AIOpsDedupeModel $dedupeModel;
     protected SiteSettings $settings;
+    protected AiCostControls $costControls;
 
     public function __construct()
     {
@@ -29,8 +33,10 @@ class AIOpsGuardrailService
         $this->usageModel     = new AIOpsUsageModel($this->db);
         $this->budgetModel    = new AIOpsBudgetModel($this->db);
         $this->workflowsModel = new AIOpsWorkflowsModel($this->db);
+        $this->workflowUsageModel = new AIOpsWorkflowUsageModel($this->db);
         $this->cacheModel     = new AIOpsCacheModel($this->db);
         $this->dedupeModel    = new AIOpsDedupeModel($this->db);
+        $this->costControls   = new AiCostControls($this->db);
         $this->settings       = (new SiteSettingsOverride())->apply(config('SiteSettings'));
     }
 
@@ -40,6 +46,7 @@ class AIOpsGuardrailService
             $this->usageModel->getTable(),
             $this->budgetModel->getTable(),
             $this->workflowsModel->getTable(),
+            $this->workflowUsageModel->getTable(),
             $this->cacheModel->getTable(),
             $this->dedupeModel->getTable(),
         ];
@@ -210,6 +217,38 @@ class AIOpsGuardrailService
         ]);
     }
 
+    public function checkWorkflowBudget(?string $workflowId, ?string $workflowSlug, ?float $estimatedCost): array
+    {
+        if ($workflowId === null && $workflowSlug === null) {
+            return [
+                'allowed' => true,
+                'limit'   => null,
+                'usage'   => null,
+            ];
+        }
+
+        $limit = $this->costControls->getWorkflowLimit($workflowId) ?? $this->costControls->getWorkflowLimit($workflowSlug);
+        if ($limit === null) {
+            return [
+                'allowed' => true,
+                'limit'   => null,
+                'usage'   => null,
+            ];
+        }
+
+        $usage     = $this->costControls->fetchWorkflowUsage($workflowId ?? $workflowSlug);
+        $projected = ($usage['usd_used'] ?? 0) + ($estimatedCost ?? 0);
+        $percent   = $limit > 0 ? (int) floor(($projected / $limit) * 100) : null;
+
+        return [
+            'allowed'       => $estimatedCost === null ? true : $projected < $limit,
+            'limit'         => $limit,
+            'usage'         => $usage,
+            'percent'       => $percent,
+            'projected_usd' => $projected,
+        ];
+    }
+
     public function logUsage(array $payload): array
     {
         $now = Time::now()->toDateTimeString();
@@ -223,6 +262,7 @@ class AIOpsGuardrailService
             'cost_est'      => (float) ($payload['cost_est'] ?? 0),
             'subsystem'     => $payload['subsystem'] ?? '',
             'request_id'    => $payload['request_id'] ?? '',
+            'workflow_id'   => $payload['workflow_id'] ?? null,
             'workflow_slug' => $payload['workflow_slug'] ?? null,
             'user_id'       => $payload['user_id'] ?? null,
             'meta_json'     => isset($payload['meta']) ? json_encode($payload['meta']) : null,
@@ -230,6 +270,11 @@ class AIOpsGuardrailService
         ];
 
         $this->usageModel->insertUsage($data);
+        if (! empty($payload['workflow_id']) || ! empty($payload['workflow_slug'])) {
+            $workflowId   = $payload['workflow_id'] ?? $payload['workflow_slug'];
+            $workflowSlug = $payload['workflow_slug'] ?? $payload['workflow_id'] ?? null;
+            $this->costControls->incrementWorkflowUsage($workflowId, $workflowSlug, (float) $data['cost_est']);
+        }
 
         $budget = $this->getTodayBudgetSummary();
         $updatedUsed = round(($budget['used'] ?? 0) + $data['cost_est'], 4);

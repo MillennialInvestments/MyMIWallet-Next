@@ -71,10 +71,16 @@ class AIOpsController extends BaseController
         }
 
         $workflowSlug = $payload['workflow_slug'] ?? null;
+        $workflowId   = $payload['workflow_id'] ?? $workflowSlug ?? null;
+        $estimatedCost= isset($payload['estimated_cost']) ? (float) $payload['estimated_cost'] : null;
         $subsystem    = $payload['subsystem'] ?? null;
         $sourceType   = $payload['source_type'] ?? '';
         $sourceId     = $payload['source_id'] ?? '';
         $scope        = $payload['cache_scope'] ?? 'default';
+
+        if ($workflowId === null || $estimatedCost === null) {
+            return $this->failValidationErrors('workflow_id and estimated_cost are required');
+        }
 
         $contentHash  = $this->guardrail->hashContent($validation['title'], $validation['content'], $sourceType, (string) $sourceId);
         $cacheKey     = $this->guardrail->generateCacheKey($scope, $contentHash);
@@ -121,6 +127,21 @@ class AIOpsController extends BaseController
             ]);
         }
 
+        $workflowBudget = $this->guardrail->checkWorkflowBudget((string) $workflowId, $workflowSlug, $estimatedCost);
+        if (isset($workflowBudget['usage']['__exists'])) {
+            unset($workflowBudget['usage']['__exists']);
+        }
+        if (! $workflowBudget['allowed']) {
+            return $this->respond([
+                'allowed'        => false,
+                'reason'         => 'WORKFLOW_BUDGET',
+                'request_id'     => $requestId,
+                'workflow_id'    => $workflowId,
+                'workflow_budget'=> $workflowBudget,
+                'budget'         => $budget,
+            ]);
+        }
+
         // Record dedupe for the new hash.
         $this->guardrail->touchDedupe($contentHash, $sourceType, $sourceId);
 
@@ -130,7 +151,9 @@ class AIOpsController extends BaseController
             'request_id'   => $requestId,
             'content_hash' => $contentHash,
             'cache_key'    => $cacheKey,
+            'workflow_id'  => $workflowId,
             'workflow_slug'=> $workflowSlug,
+            'workflow_budget'=> $workflowBudget,
             'budget'       => $budget,
         ]);
     }

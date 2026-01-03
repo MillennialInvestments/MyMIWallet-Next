@@ -19,6 +19,7 @@ class AIOpsUsageModel extends Model
         'cost_est',
         'subsystem',
         'request_id',
+        'workflow_id',
         'workflow_slug',
         'user_id',
         'meta_json',

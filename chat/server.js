@@ -7,6 +7,8 @@ import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import { spawn } from 'child_process';
+import jwt from 'jsonwebtoken';
+import { createCostControls } from '../tools/ai-cost-controls/index.js';
 
 dotenv.config();
 
@@ -19,12 +21,16 @@ const APP_BASE_URL = process.env.APP_BASE_URL || '';
 const BASIC_AUTH_ACTIVE = (process.env.BASIC_AUTH_ACTIVE || 'true').toLowerCase() === 'true';
 const BASIC_AUTH_USER = process.env.BASIC_AUTH_USER || 'team';
 const BASIC_AUTH_PASS = process.env.BASIC_AUTH_PASS || 'change_me';
+const SSO_ENABLED = (process.env.SSO_ENABLED || 'false').toLowerCase() === 'true';
+const SSO_JWT_ISSUER = process.env.SSO_JWT_ISSUER || 'https://mymiwallet.com';
+const SSO_JWT_AUDIENCE = process.env.SSO_JWT_AUDIENCE || 'chat.mymiwallet.com';
+const SSO_JWT_SECRET = process.env.SSO_JWT_SECRET || '';
 const ALERT_EMAIL_TO = process.env.ALERT_EMAIL_TO || 'team@mymiwallet.com';
 const MYMI_USAGE_WEBHOOK_URL = process.env.MYMI_USAGE_WEBHOOK_URL || '';
 const MYMI_USAGE_WEBHOOK_SECRET = process.env.MYMI_USAGE_WEBHOOK_SECRET || '';
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4o-mini';
-const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'http://localhost:11434';
+const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'https://aiops.mymiwallet.com';
 const COST_PER_1K = {
   'gpt-4o-mini': 0.00015,
   'gpt-4o': 0.005,
@@ -39,6 +45,15 @@ const DEFAULT_PROVIDER = 'openai';
 const DEFAULT_MODEL = 'gpt-4o-mini';
 
 const runtimeCache = { config: null, loadedAt: 0 };
+let costControls;
+
+try {
+  costControls = createCostControls({
+    configPath: path.join(__dirname, '..', 'config', 'ai-cost-controls.json')
+  });
+} catch (err) {
+  appendLog(`Cost control initialization failed: ${err.message}`);
+}
 
 const app = express();
 app.disable('x-powered-by');
@@ -47,6 +62,7 @@ app.use(compression());
 app.use(express.json({ limit: '1mb' }));
 app.use(requestLogger);
 app.use(corsGuard);
+app.use(jwtAuthMiddleware);
 if (BASIC_AUTH_ACTIVE) {
   app.use(basicAuthMiddleware);
 }
@@ -82,8 +98,23 @@ app.post('/api/chat', async (req, res) => {
     return res.status(400).json({ error: 'messages array required' });
   }
 
-  const usage = await loadUsage();
   const estimate = estimateUsage(messages, config.providerModel);
+  const actor = resolveActor(req);
+  const monthKey = costControls?.monthKey ? costControls.monthKey() : null;
+
+  if (costControls) {
+    try {
+      const userUsage = await costControls.fetchChatUsage(actor.userId, monthKey || undefined);
+      const planCap = costControls.planLimit(actor.plan);
+      if (planCap && userUsage.usd_used + estimate.costUsd >= planCap) {
+        return res.status(429).json({ error: 'Monthly AI limit reached for your plan' });
+      }
+    } catch (err) {
+      await appendLog(`Per-user usage check failed: ${err.message}`);
+    }
+  }
+
+  const usage = await loadUsage();
   const hardStopValue = Number(config.monthlyBudgetUsd || 0) * (Number(config.hardStopPercent || 95) / 100);
   const projectedTotal = usage.totalUsd + estimate.costUsd;
 
@@ -108,8 +139,19 @@ app.post('/api/chat', async (req, res) => {
   }
 
   const updatedUsage = await persistUsage(usage, estimate);
+  if (costControls) {
+    try {
+      await costControls.incrementChatUsage(
+        { userId: actor.userId, email: actor.email, plan: actor.plan },
+        { tokens: estimate.tokens, costUsd: estimate.costUsd },
+        monthKey || undefined
+      );
+    } catch (err) {
+      await appendLog(`Unable to record chat_usage row: ${err.message}`);
+    }
+  }
   await maybeSendAlert(updatedUsage, config);
-  await sendUsageWebhook(updatedUsage, estimate);
+  await sendUsageWebhook(updatedUsage, estimate, { user: actor });
 
   return res.json({ reply: llmResponse });
 });
@@ -344,20 +386,88 @@ async function callOllama(messages, opts = {}) {
   return reply || 'No response received.';
 }
 
-function basicAuthMiddleware(req, res, next) {
+function jwtAuthMiddleware(req, res, next) {
+  if (!SSO_ENABLED) {
+    return next();
+  }
+
   const authHeader = req.headers.authorization || '';
-  const [, encoded] = authHeader.split(' ');
-  if (!encoded) {
+  const [scheme, token] = authHeader.split(' ');
+  if (!token || (scheme || '').toLowerCase() !== 'bearer') {
+    return next();
+  }
+  if (!SSO_JWT_SECRET) {
+    appendLog('SSO is enabled but SSO_JWT_SECRET is not set.');
+    return res.status(401).json({ error: 'SSO misconfigured' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, SSO_JWT_SECRET, {
+      algorithms: ['HS256', 'RS256'],
+      issuer: SSO_JWT_ISSUER,
+      audience: SSO_JWT_AUDIENCE
+    });
+    req.user = normalizeUser(decoded);
+    return next();
+  } catch (err) {
+    appendLog(`JWT validation failed: ${err.message}`);
+    return res.status(401).json({ error: 'Invalid or expired SSO token' });
+  }
+}
+
+function basicAuthMiddleware(req, res, next) {
+  if (req.user) {
+    return next();
+  }
+
+  const authHeader = req.headers.authorization || '';
+  const [scheme, encoded] = authHeader.split(' ');
+  if (!encoded || (scheme || '').toLowerCase() !== 'basic') {
     res.set('WWW-Authenticate', 'Basic realm="chat"');
     return res.status(401).send('Authentication required');
   }
+
   const decoded = Buffer.from(encoded, 'base64').toString('utf8');
   const [user, pass] = decoded.split(':');
   if (user === BASIC_AUTH_USER && pass === BASIC_AUTH_PASS) {
     return next();
   }
+
   res.set('WWW-Authenticate', 'Basic realm="chat"');
   return res.status(401).send('Unauthorized');
+}
+
+function normalizeUser(payload = {}) {
+  const rawId = payload.sub ?? payload.user_id ?? payload.id;
+  const numericId = Number(rawId);
+  const id = Number.isFinite(numericId) ? numericId : null;
+  return {
+    id,
+    email: payload.email,
+    role: payload.role || 'user',
+    plan: payload.plan || 'free',
+    raw: payload
+  };
+}
+
+function resolveActor(req) {
+  if (req.user) {
+    return {
+      userId: Number.isFinite(req.user.id) ? req.user.id : 0,
+      email: req.user.email,
+      plan: (req.user.plan || '').toLowerCase() || 'free',
+      role: req.user.role || 'user',
+      authType: 'sso'
+    };
+  }
+
+  return {
+    userId: 0,
+    email: `${BASIC_AUTH_USER}@mymiwallet.com`,
+    plan: 'premium',
+    role: 'admin',
+    authType: 'basic'
+  };
 }
 
 function corsGuard(req, res, next) {
