@@ -1,0 +1,15 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "jsx": "react-jsx",
+    "paths": {
+      "mymi-sdk": ["../packages/mymi-sdk/src"],
+      "@/components/*": ["./src/components/*"],
+      "@/screens/*": ["./src/screens/*"],
+      "@/hooks/*": ["./src/hooks/*"]
+    }
+  },
+  "include": ["./app", "./src", "expo-env.d.ts"],
+  "exclude": ["node_modules"]
+}
