@@ -1,7 +1,6 @@
 const http = require('http');
-const { request } = require('http');
 
-const LISTEN_HOST = '127.0.0.1';
+const LISTEN_HOST = '0.0.0.0';
 const LISTEN_PORT = 8500;
 
 const TARGET_HOST = '127.0.0.1';
@@ -16,12 +15,12 @@ const server = http.createServer((req, res) => {
     headers: { ...req.headers },
   };
 
-  // Preserve original Host header for n8n routing
+  // keep the host header (helps apps that route by host)
   opts.headers.host = req.headers.host;
 
-  const proxyReq = request(opts, (proxyRes) => {
+  const proxyReq = http.request(opts, (proxyRes) => {
     res.writeHead(proxyRes.statusCode || 502, proxyRes.headers);
-    proxyRes.pipe(res, { end: true });
+    proxyRes.pipe(res);
   });
 
   proxyReq.on('error', (err) => {
@@ -29,11 +28,7 @@ const server = http.createServer((req, res) => {
     res.end('Bridge error: ' + err.message);
   });
 
-  req.pipe(proxyReq, { end: true });
-});
-
-server.on('clientError', (err, socket) => {
-  try { socket.end('HTTP/1.1 400 Bad Request\\r\\n\\r\\n'); } catch {}
+  req.pipe(proxyReq);
 });
 
 server.listen(LISTEN_PORT, LISTEN_HOST, () => {
