@@ -19,6 +19,7 @@ class OpsRunsModel extends Model
         'attempts',
         'payload_json',
         'result_json',
+        'output_json',
         'last_error',
         'started_at',
         'finished_at',
@@ -51,6 +52,7 @@ class OpsRunsModel extends Model
 
         if ($result !== null) {
             $data['result_json'] = json_encode($result, JSON_UNESCAPED_SLASHES);
+            $data['output_json'] = $data['result_json'];
         }
 
         if ($error !== null) {

@@ -44,38 +44,43 @@ class OpsQueueModel extends Model
      */
     public function claimPending(int $limit, int $lockSeconds = 300): array
     {
+        if ($limit <= 0) {
+            return [];
+        }
+
         /** @var BaseConnection $db */
         $db = $this->db;
-        $db->transStart();
-
         $now = date('Y-m-d H:i:s');
-        $rows = $db->table($this->table)
-            ->where('status', 'pending')
-            ->groupStart()
-                ->where('locked_until IS NULL', null, false)
-                ->orWhere('locked_until <', $now)
-            ->groupEnd()
-            ->orderBy('id', 'ASC')
-            ->limit($limit)
-            ->get()
-            ->getResultArray();
-
-        $claimed = [];
         $lockUntil = date('Y-m-d H:i:s', time() + $lockSeconds);
 
+        $db->transBegin();
+        $rows = $db->query(
+            "SELECT * FROM {$this->table} WHERE status = 'pending' AND (locked_until IS NULL OR locked_until < ?) ORDER BY id ASC LIMIT ? FOR UPDATE",
+            [$now, $limit]
+        )->getResultArray();
+
+        $claimed = [];
+
         foreach ($rows as $row) {
-            $db->table($this->table)
+            $updated = $db->table($this->table)
                 ->where('id', $row['id'])
-                ->update([
-                    'status'       => 'running',
-                    'attempts'     => (int) $row['attempts'] + 1,
-                    'locked_until' => $lockUntil,
-                    'updated_at'   => $now,
-                ]);
-            $row['status']       = 'running';
-            $row['attempts']     = (int) $row['attempts'] + 1;
-            $row['locked_until'] = $lockUntil;
-            $claimed[] = $row;
+                ->where('status', 'pending')
+                ->groupStart()
+                    ->where('locked_until IS NULL', null, false)
+                    ->orWhere('locked_until <', $now)
+                ->groupEnd()
+                ->set('status', 'running')
+                ->set('attempts', (int) $row['attempts'] + 1)
+                ->set('locked_until', $lockUntil)
+                ->set('updated_at', $now)
+                ->update();
+
+            if ($updated) {
+                $row['status']       = 'running';
+                $row['attempts']     = (int) $row['attempts'] + 1;
+                $row['locked_until'] = $lockUntil;
+                $claimed[]           = $row;
+            }
         }
 
         $db->transComplete();

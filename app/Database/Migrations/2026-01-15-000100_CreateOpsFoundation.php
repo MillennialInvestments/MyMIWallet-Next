@@ -10,6 +10,12 @@ class CreateOpsFoundation extends Migration
 {
     public function up(): void
     {
+        $tableAttributes = [
+            'ENGINE'  => 'InnoDB',
+            'DEFAULT CHARSET' => 'utf8mb4',
+            'COLLATE' => 'utf8mb4_unicode_ci',
+        ];
+
         // bf_ops_jobs
         $this->forge->addField([
             'id'           => ['type' => 'BIGINT', 'unsigned' => true, 'auto_increment' => true],
@@ -25,7 +31,7 @@ class CreateOpsFoundation extends Migration
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addKey('job_key', true); // unique
-        $this->forge->createTable('bf_ops_jobs', true);
+        $this->forge->createTable('bf_ops_jobs', true, $tableAttributes);
 
         // bf_ops_queue
         $this->forge->addField([
@@ -43,7 +49,7 @@ class CreateOpsFoundation extends Migration
         $this->forge->addKey('status');
         $this->forge->addKey('job_key');
         $this->forge->addKey('locked_until');
-        $this->forge->createTable('bf_ops_queue', true);
+        $this->forge->createTable('bf_ops_queue', true, $tableAttributes);
 
         // bf_ops_job_runs
         $this->forge->addField([
@@ -54,6 +60,7 @@ class CreateOpsFoundation extends Migration
             'attempts'    => ['type' => 'INT', 'constraint' => 11, 'default' => 0],
             'payload_json'=> ['type' => 'LONGTEXT', 'null' => true],
             'result_json' => ['type' => 'LONGTEXT', 'null' => true],
+            'output_json' => ['type' => 'LONGTEXT', 'null' => true],
             'last_error'  => ['type' => 'LONGTEXT', 'null' => true],
             'started_at'  => ['type' => 'DATETIME', 'null' => true],
             'finished_at' => ['type' => 'DATETIME', 'null' => true],
@@ -63,7 +70,8 @@ class CreateOpsFoundation extends Migration
         $this->forge->addKey('id', true);
         $this->forge->addKey('job_id');
         $this->forge->addKey('status');
-        $this->forge->createTable('bf_ops_job_runs', true);
+        $this->forge->addKey('started_at');
+        $this->forge->createTable('bf_ops_job_runs', true, $tableAttributes);
 
         // bf_runtime_config
         $this->forge->addField([
@@ -75,7 +83,7 @@ class CreateOpsFoundation extends Migration
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addKey('config_key');
-        $this->forge->createTable('bf_runtime_config', true);
+        $this->forge->createTable('bf_runtime_config', true, $tableAttributes);
 
         // bf_ai_usage
         $this->forge->addField([
@@ -92,7 +100,7 @@ class CreateOpsFoundation extends Migration
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addKey('subsystem');
-        $this->forge->createTable('bf_ai_usage', true);
+        $this->forge->createTable('bf_ai_usage', true, $tableAttributes);
     }
 
     public function down(): void

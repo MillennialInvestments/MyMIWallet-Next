@@ -32,8 +32,8 @@ class OpsController extends BaseController
 
     public function status(): ResponseInterface
     {
-        if (! $this->authorized()) {
-            return $this->failUnauthorized('Unauthorized');
+        if (($auth = $this->authorizeRequest()) !== true) {
+            return $auth;
         }
 
         $counts = $this->queue->statusCounts();
@@ -57,8 +57,8 @@ class OpsController extends BaseController
 
     public function dispatch(): ResponseInterface
     {
-        if (! $this->authorized()) {
-            return $this->failUnauthorized('Unauthorized');
+        if (($auth = $this->authorizeRequest()) !== true) {
+            return $auth;
         }
 
         if (! $this->request->is('post')) {
@@ -90,9 +90,21 @@ class OpsController extends BaseController
         ]);
     }
 
-    protected function authorized(): bool
+    /**
+     * @return bool|ResponseInterface
+     */
+    protected function authorizeRequest()
     {
-        return $this->isAdmin() || $this->validHmac();
+        if ($this->isAdmin()) {
+            return true;
+        }
+
+        $hmacResult = $this->validateHmac();
+        if ($hmacResult === true) {
+            return true;
+        }
+
+        return $this->failUnauthorized(is_string($hmacResult) ? $hmacResult : 'Unauthorized');
     }
 
     protected function isAdmin(): bool
@@ -116,22 +128,37 @@ class OpsController extends BaseController
         return false;
     }
 
-    protected function validHmac(): bool
+    /**
+     * @return true|string Returns true if valid, otherwise an error message.
+     */
+    protected function validateHmac()
     {
         $secret = env('ops.sharedSecret') ?? env('app.opsSharedSecret');
         if (! $secret) {
-            return false;
+            return 'Missing shared secret';
         }
 
-        $headerSig = $this->request->getHeaderLine('X-Ops-Signature');
-        if ($headerSig === '') {
-            return false;
+        $headerSig  = $this->request->getHeaderLine('X-MyMI-Signature');
+        $headerTime = $this->request->getHeaderLine('X-MyMI-Timestamp');
+
+        if ($headerSig === '' || $headerTime === '') {
+            return 'Missing HMAC headers';
         }
 
-        $body    = $this->request->getBody();
-        $message = $body !== '' ? $body : $this->request->getUri()->getPath();
-        $expected = hash_hmac('sha256', $message, $secret);
+        if (! ctype_digit($headerTime)) {
+            return 'Invalid timestamp';
+        }
 
-        return hash_equals($expected, trim($headerSig));
+        $timestamp = (int) $headerTime;
+        if (abs(time() - $timestamp) > 300) {
+            return 'Timestamp too old';
+        }
+
+        $path = '/' . ltrim($this->request->getUri()->getPath(), '/');
+        $body = (string) $this->request->getBody();
+        $message = $headerTime . "\n" . $path . "\n" . $body;
+        $expected = base64_encode(hash_hmac('sha256', $message, $secret, true));
+
+        return hash_equals($expected, trim($headerSig)) ? true : 'Invalid signature';
     }
 }

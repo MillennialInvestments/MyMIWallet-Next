@@ -108,6 +108,13 @@
 <script>
 (function() {
     const initialData = <?php echo json_encode($ops ?? [], JSON_UNESCAPED_SLASHES); ?>;
+    <?php if (function_exists('csrf_hash')): ?>
+    const csrfHeader = '<?php echo csrf_header(); ?>';
+    const csrfToken = '<?php echo csrf_hash(); ?>';
+    <?php else: ?>
+    const csrfHeader = null;
+    const csrfToken = null;
+    <?php endif; ?>
     const jobsTableBody = document.querySelector('#ops-jobs-table tbody');
     const runsTableBody = document.querySelector('#ops-runs-table tbody');
     const runWorkerBtn = document.getElementById('ops-run-worker');
@@ -164,19 +171,27 @@
     }
 
     function fetchStatus() {
-        fetch('<?php echo site_url('Management/Ops/ajaxStatus'); ?>', {headers: {'X-Requested-With': 'XMLHttpRequest'}})
+        const headers = {'X-Requested-With': 'XMLHttpRequest'};
+        if (csrfHeader && csrfToken) {
+            headers[csrfHeader] = csrfToken;
+        }
+        fetch('<?php echo site_url('Management/Ops/ajaxStatus'); ?>', {headers})
             .then(res => res.json())
             .then(updateUI)
             .catch(() => {});
     }
 
     function dispatchJob(jobKey) {
+        const headers = {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        };
+        if (csrfHeader && csrfToken) {
+            headers[csrfHeader] = csrfToken;
+        }
         fetch('<?php echo site_url('Management/Ops/ajaxDispatch'); ?>', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest'
-            },
+            headers,
             body: JSON.stringify({job_key: jobKey})
         })
         .then(res => res.json())
