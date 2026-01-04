@@ -1,1 +1,192 @@
-[]
+# Build: ChatGPT Export → CSV Pipeline (REAL CODE + n8n import JSON)
+
+## What went wrong
+You only produced documentation and placeholder files. That is NOT the task.
+
+## Non-negotiable requirements
+You MUST implement working code and a runnable workflow. Do NOT add placeholder `docs/chatgpt/raw/conversations.json` or overwrite real exports.
+
+### Deliverables (must all be created)
+1) CI4 Spark command that reads:
+   - docs/chatgpt/raw/conversations.json
+   and writes:
+   - docs/chatgpt/derived/chatgpt_messages.csv
+   - docs/chatgpt/derived/chatgpt_conversations.csv
+   - docs/chatgpt/state/chatgpt_export_state.json
+
+2) CI4 service/library that does parsing + CSV generation (called by Spark command).
+
+3) CI4 API endpoint (OpsController) to trigger the Spark command (secure, admin only) and return JSON status:
+   - POST /API/Ops/chatgpt/export
+   body: { "mode": "full"|"quick" }
+   response: { status, files, counts, duration_ms }
+
+4) Importable n8n workflow JSON saved in repo:
+   - docs/n8n/workflows/chatgpt_export_to_csv.workflow.json
+   This must be a workflow that triggers the pipeline by either:
+   - HTTP Request -> POST /API/Ops/chatgpt/export
+   OR
+   - Execute Command -> php spark ops:chatgpt-export
+
+5) Verification output saved to:
+   - docs/chatgpt/derived/verify_last_run.md
+   containing:
+   - timestamp
+   - counts
+   - file sizes
+   - first 3 lines of each CSV (header + 2 rows)
+
+## Safety / repo rules
+- DO NOT commit a fake conversations.json like "[]".
+- Ensure raw export remains external input. Keep:
+  - docs/chatgpt/raw/.gitkeep
+  but not a placeholder conversations.json.
+- If conversations.json already exists in repo from prior commit, remove it and add a note in docs/chatgpt/raw/README.md telling user to upload the real export file there.
+
+## Paths + environment
+- Repo root is the current CI4 project root (same as spark commands).
+- The export file is:
+  docs/chatgpt/raw/conversations.json
+
+## Stage A — Implement CI4 Command + Service
+
+### A1) New command
+Create:
+- app/Commands/ChatGPTExport.php
+
+Command name:
+- ops:chatgpt-export
+
+Usage:
+- php spark ops:chatgpt-export
+Options:
+- --input=docs/chatgpt/raw/conversations.json
+- --outdir=docs/chatgpt/derived
+- --state=docs/chatgpt/state/chatgpt_export_state.json
+- --mode=full|quick (quick skips tag scan + heavy checks)
+
+Exit codes:
+- 0 success
+- 2 missing input file
+- 3 invalid JSON
+- 4 write error
+
+### A2) New service
+Create:
+- app/Libraries/Ops/ChatGPTExportService.php
+
+Responsibilities:
+- read json file
+- parse multiple export variants:
+  - array root
+  - { conversations: [] }
+  - mapping object keyed by message id
+- normalize message text:
+  - content.parts array
+  - content.text
+  - string content
+- output CSV safely:
+  - proper CSV escaping for quotes/newlines/commas
+- compute hash per row:
+  - sha256(conversation_id|message_id|role|message_text)
+
+Output schema MUST match docs/chatgpt/workflows/export_to_csv.md
+
+### A3) State file behavior
+State file:
+- docs/chatgpt/state/chatgpt_export_state.json
+Should store:
+- lastRunAt
+- lastSourceHash
+- lastConversationCount
+- lastMessageRowCount
+
+State hash:
+- sha256(messagesCsv) OR sha256(raw json)
+
+### A4) Create directories if missing
+- docs/chatgpt/derived
+- docs/chatgpt/state
+
+## Stage B — Add secured Ops API endpoint
+
+### B1) Route
+Add to app/Config/Routes.php (your existing Ops routes pattern):
+- $routes->post('API/Ops/chatgpt/export', 'App\Modules\APIs\Controllers\OpsController::chatgptExport');
+
+### B2) Controller method
+In:
+- app/Modules/APIs/Controllers/OpsController.php
+Add method:
+- chatgptExport()
+
+Security:
+- require logged-in admin OR require an internal token header:
+  - X-MyMI-Ops-Token: <env OPS_TOKEN>
+Use config:
+- OPS_TOKEN in .env
+
+Implementation:
+- call the service directly OR call the Spark command via PHP
+Preferred: call service directly for speed and better errors.
+
+Return JSON:
+{
+  status: "success"|"error",
+  message,
+  files: { messagesCsv, convosCsv, stateJson },
+  counts: { conversations, messages },
+  duration_ms
+}
+
+## Stage C — n8n workflow JSON (importable)
+
+Create:
+- docs/n8n/workflows/chatgpt_export_to_csv.workflow.json
+
+Workflow requirements:
+- Trigger: Cron daily 03:10 America/Chicago
+- Step 1: HTTP Request node:
+  - POST https://aiops.mymiwallet.com (or directly to mymiwallet.com if that’s where API is served)
+  - URL should be: https://mymiwallet.com/API/Ops/chatgpt/export (adjust to actual)
+  - Headers:
+    - Content-Type: application/json
+    - X-MyMI-Ops-Token: {{$env.OPS_TOKEN}}
+  - Body: { "mode": "full" }
+
+- Step 2: If error, send alert:
+  - email or webhook log (use existing patterns in Ops module)
+
+If your deployment cannot hit API internally, provide an alternate workflow JSON:
+- docs/n8n/workflows/chatgpt_export_to_csv_execute.workflow.json
+that uses Execute Command:
+- cd /path/to/repo && php spark ops:chatgpt-export --mode=full
+
+## Stage D — Verify end-to-end
+Add a script or doc output:
+- docs/chatgpt/derived/verify_last_run.md
+Write:
+- date/time
+- counts
+- file sizes
+- first 3 lines (header + 2 rows) from each CSV
+
+Also ensure:
+- `php spark ops:chatgpt-export` runs successfully on server.
+
+## Acceptance tests (must pass)
+1) If docs/chatgpt/raw/conversations.json is missing:
+   - command exits with code 2
+   - prints clear message
+
+2) If invalid JSON:
+   - exits code 3
+
+3) With valid export:
+   - writes both CSVs + state
+   - message CSV includes non-empty message_text values
+   - conversation CSV has 1 row per conversation
+
+## IMPORTANT
+Do NOT stop at documentation.
+You must implement the CI4 code + workflow JSON + verification file.
