@@ -314,6 +314,12 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->post('ResetUser', 'ChatUsageController::resetUser');
     });
 
+    $routes->group('Management/Ops', ['namespace' => 'App\\Modules\\Management\\Controllers', 'filter' => 'permission:admin.access'], static function($routes) {
+        $routes->get('/', 'OpsController::index');
+        $routes->get('ajaxStatus', 'OpsController::ajaxStatus');
+        $routes->post('ajaxDispatch', 'OpsController::ajaxDispatch');
+    });
+
     // ------------------------
     // ✅ AlertsController
     // ------------------------
