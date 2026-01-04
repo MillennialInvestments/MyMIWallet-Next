@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\APIs\Controllers;
 
 use App\Controllers\BaseController;
+use App\Libraries\Ops\OpsReportWriter;
 use App\Libraries\Ops\OpsJobRegistry;
 use App\Models\OpsJobsModel;
 use App\Models\OpsQueueModel;
@@ -36,9 +37,15 @@ class OpsController extends BaseController
             return $auth;
         }
 
+        $queueId  = $this->request->getGet('queue_id');
         $counts = $this->queue->statusCounts();
         $jobs   = $this->jobs->orderBy('id', 'ASC')->limit(50)->findAll();
         $runs   = [];
+        $queueRun = null;
+
+        if ($queueId !== null) {
+            $queueRun = $this->runs->findByQueueId((int) $queueId);
+        }
 
         foreach ($jobs as &$job) {
             $lastRun = $this->runs->lastRunForJob((int) $job['id']);
@@ -52,6 +59,7 @@ class OpsController extends BaseController
             'queue_counts' => $counts,
             'jobs'         => $jobs,
             'recent_runs'  => $runs,
+            'queue_run'    => $queueRun,
         ]);
     }
 
@@ -87,6 +95,84 @@ class OpsController extends BaseController
         return $this->respondCreated([
             'status'   => 'queued',
             'queue_id' => $queueId,
+        ]);
+    }
+
+    public function ingestReport(): ResponseInterface
+    {
+        if (($auth = $this->authorizeRequest()) !== true) {
+            return $auth;
+        }
+
+        if (! $this->request->is('post')) {
+            return $this->fail('Invalid method', 405);
+        }
+
+        $payload      = $this->request->getJSON(true) ?? $this->request->getPost();
+        $jobKey       = $payload['job_key'] ?? null;
+        $markdown     = $payload['report_markdown'] ?? $payload['markdown'] ?? null;
+        $runId        = isset($payload['run_id']) ? (int) $payload['run_id'] : null;
+        $queueId      = isset($payload['queue_id']) ? (int) $payload['queue_id'] : null;
+        $dateOverride = $payload['report_date'] ?? null;
+
+        if (! $jobKey || ! is_string($jobKey)) {
+            return $this->failValidationErrors('job_key is required');
+        }
+
+        if (! is_string($markdown) || trim($markdown) === '') {
+            return $this->failValidationErrors('report_markdown is required');
+        }
+
+        $writer     = new OpsReportWriter();
+        $reportPath = $writer->write($jobKey, $markdown, is_string($dateOverride) ? $dateOverride : null);
+
+        if ($runId) {
+            $this->runs->updateOutputTextByRunId($runId, $markdown);
+        } elseif ($queueId) {
+            $this->runs->updateOutputTextByQueueId($queueId, $markdown);
+        }
+
+        return $this->respondCreated([
+            'status'      => 'stored',
+            'job_key'     => $jobKey,
+            'report_path' => $reportPath,
+            'run_id'      => $runId,
+            'queue_id'    => $queueId,
+        ]);
+    }
+
+    public function latestReport(): ResponseInterface
+    {
+        if (($auth = $this->authorizeRequest()) !== true) {
+            return $auth;
+        }
+
+        $baseDir = ROOTPATH . 'docs/ops/reports';
+        if (! is_dir($baseDir)) {
+            return $this->failNotFound('No reports directory');
+        }
+
+        $latestFile = null;
+        $latestMtime = 0;
+        foreach (glob($baseDir . '/*/*') ?: [] as $file) {
+            if (! is_file($file)) {
+                continue;
+            }
+            $mtime = filemtime($file) ?: 0;
+            if ($mtime > $latestMtime) {
+                $latestMtime = $mtime;
+                $latestFile  = $file;
+            }
+        }
+
+        if (! $latestFile) {
+            return $this->failNotFound('No reports found');
+        }
+
+        return $this->respond([
+            'path'     => str_replace(ROOTPATH, '', $latestFile),
+            'modified' => date('c', (int) $latestMtime),
+            'content'  => file_get_contents($latestFile),
         ]);
     }
 

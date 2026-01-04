@@ -23,6 +23,38 @@
         <span class="hint">Shift + Enter for new line</span>
       </div>
     </form>
+
+    <section class="ops-panel" aria-label="Ops command center">
+      <div class="ops-header">
+        <div>
+          <div class="ops-title">Ops commands</div>
+          <div class="ops-subtitle">Dispatch ops jobs from your phone</div>
+        </div>
+        <div class="ops-actions">
+          <button type="button" id="ops-status-btn">/API/Ops/status</button>
+          <button type="button" id="ops-latest-btn">/API/Ops/reports/latest</button>
+        </div>
+      </div>
+      <div class="ops-grid">
+        <label>
+          Base URL
+          <input id="ops-base-url" type="url" placeholder="https://mymiwallet.com" />
+        </label>
+        <label>
+          Shared secret
+          <input id="ops-secret" type="password" placeholder="HMAC secret" />
+        </label>
+        <label>
+          Job key
+          <input id="ops-job-key" type="text" placeholder="ops.health.check" />
+        </label>
+        <div class="ops-actions-row">
+          <button type="button" id="ops-dispatch-btn">Dispatch</button>
+          <span class="ops-hint">Jobs: ops.health.check, ops.logs.triage_daily, ops.security.headers_scan</span>
+        </div>
+      </div>
+      <pre id="ops-output" aria-live="polite"></pre>
+    </section>
   </main>
 
   <template id="message-template">

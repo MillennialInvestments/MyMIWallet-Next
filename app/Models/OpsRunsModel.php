@@ -20,6 +20,7 @@ class OpsRunsModel extends Model
         'payload_json',
         'result_json',
         'output_json',
+        'output_text',
         'last_error',
         'started_at',
         'finished_at',
@@ -53,6 +54,13 @@ class OpsRunsModel extends Model
         if ($result !== null) {
             $data['result_json'] = json_encode($result, JSON_UNESCAPED_SLASHES);
             $data['output_json'] = $data['result_json'];
+            if (isset($result['output_text'])) {
+                $data['output_text'] = is_scalar($result['output_text'])
+                    ? (string) $result['output_text']
+                    : json_encode($result['output_text'], JSON_UNESCAPED_SLASHES);
+            } elseif (isset($result['report_markdown'])) {
+                $data['output_text'] = (string) $result['report_markdown'];
+            }
         }
 
         if ($error !== null) {
@@ -66,6 +74,29 @@ class OpsRunsModel extends Model
     {
         return $this->where('job_id', $jobId)
             ->orderBy('started_at', 'DESC')
+            ->orderBy('id', 'DESC')
+            ->first();
+    }
+
+    public function updateOutputTextByRunId(int $runId, string $markdown): void
+    {
+        $this->update($runId, [
+            'output_text' => $markdown,
+            'updated_at'  => date('Y-m-d H:i:s'),
+        ]);
+    }
+
+    public function updateOutputTextByQueueId(int $queueId, string $markdown): void
+    {
+        $run = $this->where('queue_id', $queueId)->orderBy('id', 'DESC')->first();
+        if ($run) {
+            $this->updateOutputTextByRunId((int) $run['id'], $markdown);
+        }
+    }
+
+    public function findByQueueId(int $queueId): ?array
+    {
+        return $this->where('queue_id', $queueId)
             ->orderBy('id', 'DESC')
             ->first();
     }

@@ -200,6 +200,8 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->get('Health', 'HealthController::index');              // /API/Health
     $routes->get('Ops/status', 'OpsController::status');
     $routes->post('Ops/dispatch', 'OpsController::dispatch');
+    $routes->post('Ops/ingestReport', 'OpsController::ingestReport');
+    $routes->get('Ops/reports/latest', 'OpsController::latestReport');
     $routes->get('Ops/OPcacheReset', 'OpsController::opcacheReset'); // /API/Ops/OPcacheReset
     $routes->group('AiOps', static function($routes) {
         $routes->get('status', 'AiOpsController::status');
