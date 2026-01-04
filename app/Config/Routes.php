@@ -198,6 +198,8 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->match(['GET', 'POST'], 'Status', 'APIController::status');
     $routes->match(['GET', 'POST'], 'Status/(:segment)', 'APIController::status');
     $routes->get('Health', 'HealthController::index');              // /API/Health
+    $routes->get('Ops/status', 'OpsController::status');
+    $routes->post('Ops/dispatch', 'OpsController::dispatch');
     $routes->get('Ops/OPcacheReset', 'OpsController::opcacheReset'); // /API/Ops/OPcacheReset
     $routes->group('AiOps', static function($routes) {
         $routes->get('status', 'AiOpsController::status');
@@ -964,6 +966,9 @@ $routes->group('Dashboard', ['namespace' => 'App\Modules\User\Controllers','filt
 $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers'],  function($routes) {
     $routes->get('/', 'ManagementController::index');
     $routes->get('AiOps', 'AiOpsManagementController::index', ['filter' => 'permission:admin.access']);
+    $routes->get('Ops', 'OpsController::index', ['filter' => 'permission:admin.access']);
+    $routes->get('Ops/ajaxStatus', 'OpsController::ajaxStatus', ['filter' => 'permission:admin.access']);
+    $routes->post('Ops/ajaxDispatch', 'OpsController::ajaxDispatch', ['filter' => 'permission:admin.access']);
     $routes->group('Admin', function($routes) {
         $routes->get('/', 'AdminController::index');
     });
