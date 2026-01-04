@@ -60,49 +60,9 @@ class OpsJobRegistry
 
     protected function registerDefaults(): void
     {
-        $this->register('ops.logs.summarize', function (): array {
-            // Minimal stub that confirms execution.
-            return [
-                'status'  => 'ok',
-                'message' => 'Log summary stub ok',
-                'summary' => 'stub ok',
-            ];
-        });
+        $this->register('ops.logs.summarize', fn(array $payload = []): array => $this->handleSummarizeLogs($payload));
 
-        $this->register('ops.docs.inventory_scan', function (): array {
-            $docsDir = ROOTPATH . 'docs';
-            $outputDir = $docsDir . DIRECTORY_SEPARATOR . 'ops';
-            $target = $outputDir . DIRECTORY_SEPARATOR . 'docs_inventory.md';
-            $files = [];
-
-            if (is_dir($docsDir)) {
-                $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($docsDir));
-                foreach ($iterator as $file) {
-                    if ($file->isDir()) {
-                        continue;
-                    }
-                    $path = str_replace(ROOTPATH, '', $file->getPathname());
-                    $files[] = $path;
-                }
-            }
-
-            if (! is_dir($outputDir)) {
-                mkdir($outputDir, 0775, true);
-            }
-
-            $content = "# Docs Inventory\n\nGenerated at " . date('Y-m-d H:i:s') . "\n\n";
-            foreach ($files as $file) {
-                $content .= "- {$file}\n";
-            }
-
-            file_put_contents($target, $content);
-
-            return [
-                'status' => 'ok',
-                'written' => $target,
-                'count' => count($files),
-            ];
-        });
+        $this->register('ops.docs.inventory_scan', fn(array $payload = []): array => $this->handleDocsInventory($payload));
 
         $this->register('marketing.generate_digest', function (array $payload = []): array {
             if (class_exists(MyMIMarketing::class)) {
@@ -114,7 +74,8 @@ class OpsJobRegistry
 
                     return [
                         'status' => 'ok',
-                        'digest' => $digest,
+                        'output' => $digest,
+                        'handler' => MyMIMarketing::class,
                     ];
                 } catch (Throwable $e) {
                     return [
@@ -127,6 +88,7 @@ class OpsJobRegistry
             return [
                 'status'  => 'ok',
                 'message' => 'Marketing digest stub executed',
+                'output'  => ['payload' => $payload],
             ];
         });
 
@@ -140,7 +102,8 @@ class OpsJobRegistry
 
                     return [
                         'status' => 'ok',
-                        'result' => $result,
+                        'output' => $result,
+                        'handler' => MyMIAlerts::class,
                     ];
                 } catch (Throwable $e) {
                     return [
@@ -153,6 +116,7 @@ class OpsJobRegistry
             return [
                 'status'  => 'ok',
                 'message' => 'Alerts process stub executed',
+                'output'  => ['payload' => $payload],
             ];
         });
 
@@ -160,7 +124,130 @@ class OpsJobRegistry
             return [
                 'status'  => 'ok',
                 'message' => 'Worker kick acknowledged',
+                'ts'      => date('c'),
             ];
         });
+    }
+
+    protected function handleSummarizeLogs(array $payload = []): array
+    {
+        $logsDir = rtrim(WRITEPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'logs';
+        if (! is_dir($logsDir)) {
+            return [
+                'status'  => 'error',
+                'message' => 'Logs directory not found',
+                'path'    => $logsDir,
+            ];
+        }
+
+        $files = array_filter(glob($logsDir . DIRECTORY_SEPARATOR . '*') ?: [], 'is_file');
+        $summaries = [];
+        $totalErrors = 0;
+        $totalWarnings = 0;
+
+        foreach ($files as $file) {
+            $tailLines = $this->tailFile($file, 60);
+            $errors    = $this->countKeywords($tailLines, ['ERROR', 'CRITICAL', 'ALERT']);
+            $warnings  = $this->countKeywords($tailLines, ['WARNING', 'WARN']);
+            $summaries[] = [
+                'file'        => basename($file),
+                'size_bytes'  => filesize($file) ?: 0,
+                'modified_at' => filemtime($file) ? date('c', (int) filemtime($file)) : null,
+                'errors'      => $errors,
+                'warnings'    => $warnings,
+                'tail'        => array_slice($tailLines, -20),
+            ];
+            $totalErrors   += $errors;
+            $totalWarnings += $warnings;
+        }
+
+        return [
+            'status'        => 'ok',
+            'generated_at'  => date('c'),
+            'file_count'    => count($summaries),
+            'total_errors'  => $totalErrors,
+            'total_warnings'=> $totalWarnings,
+            'files'         => $summaries,
+        ];
+    }
+
+    protected function handleDocsInventory(array $payload = []): array
+    {
+        $docsDir   = ROOTPATH . 'docs';
+        $outputDir = $docsDir . DIRECTORY_SEPARATOR . 'ops';
+        $target    = $outputDir . DIRECTORY_SEPARATOR . 'docs_inventory.md';
+        $files     = [];
+
+        if (is_dir($docsDir)) {
+            $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($docsDir));
+            foreach ($iterator as $file) {
+                if ($file->isDir()) {
+                    continue;
+                }
+                $path = str_replace(ROOTPATH, '', $file->getPathname());
+                $files[] = $path;
+            }
+        }
+
+        if (! is_dir($outputDir)) {
+            mkdir($outputDir, 0775, true);
+        }
+
+        $content = "# Docs Inventory\n\nGenerated at " . date('Y-m-d H:i:s') . "\n\n";
+        foreach ($files as $file) {
+            $content .= "- {$file}\n";
+        }
+
+        file_put_contents($target, $content);
+
+        return [
+            'status'   => 'ok',
+            'written'  => $target,
+            'count'    => count($files),
+            'files'    => $files,
+            'payload'  => $payload,
+        ];
+    }
+
+    /**
+     * @param array<int,string> $lines
+     */
+    protected function countKeywords(array $lines, array $keywords): int
+    {
+        $count = 0;
+        foreach ($lines as $line) {
+            foreach ($keywords as $keyword) {
+                if (stripos($line, $keyword) !== false) {
+                    $count++;
+                    break;
+                }
+            }
+        }
+
+        return $count;
+    }
+
+    /**
+     * @return array<int,string>
+     */
+    protected function tailFile(string $file, int $lines = 50): array
+    {
+        if (! is_file($file) || ! is_readable($file)) {
+            return [];
+        }
+
+        $buffer = [];
+        $spl = new \SplFileObject($file, 'r');
+        $spl->seek(PHP_INT_MAX);
+        $lastLine = $spl->key();
+        $target = max(0, $lastLine - $lines + 1);
+        $spl->seek($target);
+
+        while (! $spl->eof()) {
+            $buffer[] = trim((string) $spl->current());
+            $spl->next();
+        }
+
+        return array_values(array_filter($buffer, static fn($line) => $line !== ''));
     }
 }

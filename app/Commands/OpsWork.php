@@ -43,17 +43,22 @@ class OpsWork extends BaseCommand
         $processed = 0;
 
         while ($processed < $limit) {
-            $batch = $this->queue->claimPending($limit - $processed);
-            if ($batch === []) {
-                break;
-            }
-
-            foreach ($batch as $item) {
-                $this->handleItem($item);
-                $processed++;
-                if ($processed >= $limit) {
-                    break 2;
+            try {
+                $batch = $this->queue->claimPending($limit - $processed);
+                if ($batch === []) {
+                    break;
                 }
+
+                foreach ($batch as $item) {
+                    $this->handleItem($item);
+                    $processed++;
+                    if ($processed >= $limit) {
+                        break 2;
+                    }
+                }
+            } catch (Throwable $e) {
+                CLI::error('Worker loop failed: ' . $e->getMessage());
+                break;
             }
         }
 
@@ -64,33 +69,42 @@ class OpsWork extends BaseCommand
     {
         $payload = json_decode($item['payload_json'] ?? 'null', true) ?? [];
         $jobKey  = $item['job_key'];
-        $job     = $this->jobs->findByKey($jobKey);
-
-        if (! $job) {
-            $this->queue->markFailed((int) $item['id'], 'Unknown job key: ' . $jobKey);
-            CLI::error("Unknown job {$jobKey}");
-            return;
-        }
-
-        if (! (int) $job['is_enabled']) {
-            $this->queue->markFailed((int) $item['id'], 'Job disabled: ' . $jobKey);
-            CLI::write("Job {$jobKey} disabled", 'yellow');
-            return;
-        }
-
-        $runId = $this->runs->startRun((int) $job['id'], (int) $item['id'], (int) $item['attempts'], $payload);
+        $queueId = (int) $item['id'];
+        $job     = null;
+        $runId   = null;
 
         try {
+            $job = $this->jobs->findByKey($jobKey);
+            if (! $job) {
+                $this->queue->markFailed($queueId, 'Unknown job key: ' . $jobKey);
+                CLI::error("Unknown job {$jobKey}");
+                return;
+            }
+
+            $runId = $this->runs->startRun((int) $job['id'], $queueId, (int) $item['attempts'], $payload);
+
+            if (! (int) $job['is_enabled']) {
+                $message = 'Job disabled: ' . $jobKey;
+                $this->runs->finishRun($runId, 'failed', null, $message);
+                $this->queue->markFailed($queueId, $message, false);
+                CLI::write("Job {$jobKey} disabled", 'yellow');
+                return;
+            }
+
             $result = $this->registry->dispatch($jobKey, $payload);
             $this->runs->finishRun($runId, 'success', $result);
-            $this->queue->markCompleted((int) $item['id']);
+            $this->queue->markCompleted($queueId);
             $this->jobs->touchLastRun((int) $job['id']);
             CLI::write("Job {$jobKey} completed", 'green');
         } catch (Throwable $e) {
-            $retryable = ((int) $item['attempts']) < (int) $job['max_attempts'];
+            $retryable = $job ? ((int) $item['attempts']) < (int) $job['max_attempts'] : false;
             $message   = mb_substr($e->getMessage(), 0, 2000);
-            $this->runs->finishRun($runId, 'failed', null, $message);
-            $this->queue->markFailed((int) $item['id'], $message, $retryable);
+
+            if ($runId !== null) {
+                $this->runs->finishRun($runId, 'failed', null, $message);
+            }
+
+            $this->queue->markFailed($queueId, $message, $retryable);
             CLI::error("Job {$jobKey} failed: {$message}");
         }
     }
