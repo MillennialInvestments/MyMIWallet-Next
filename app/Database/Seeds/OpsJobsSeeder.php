@@ -12,6 +12,48 @@ class OpsJobsSeeder extends Seeder
     {
         $jobs = [
             [
+                'job_key'      => 'ops.health.check',
+                'name'         => 'Ops Health Check',
+                'description'  => 'Checks key endpoints, DB connectivity, and disk space.',
+                'handler'      => 'OpsJobRegistry::healthCheck',
+                'max_attempts' => 3,
+            ],
+            [
+                'job_key'      => 'ops.logs.triage_daily',
+                'name'         => 'Daily Log Triage',
+                'description'  => 'Scan writable/logs for ERROR/WARNING in last 24h.',
+                'handler'      => 'OpsJobRegistry::logsTriageDaily',
+                'max_attempts' => 3,
+            ],
+            [
+                'job_key'      => 'ops.security.headers_scan',
+                'name'         => 'Security Headers Scan',
+                'description'  => 'Ensure HSTS/CSP/XFO/etc headers are present.',
+                'handler'      => 'OpsJobRegistry::securityHeadersScan',
+                'max_attempts' => 3,
+            ],
+            [
+                'job_key'      => 'ops.routes.smoke_test',
+                'name'         => 'Routes Smoke Test',
+                'description'  => 'Hit curated CI4 routes and record failures.',
+                'handler'      => 'OpsJobRegistry::routesSmokeTest',
+                'max_attempts' => 3,
+            ],
+            [
+                'job_key'      => 'ops.db.maintenance',
+                'name'         => 'Ops DB Maintenance',
+                'description'  => 'Optimize ops tables and purge stale queue/run rows.',
+                'handler'      => 'OpsJobRegistry::dbMaintenance',
+                'max_attempts' => 1,
+            ],
+            [
+                'job_key'      => 'ops.docs.sync_from_chatgpt_export',
+                'name'         => 'Docs Sync from ChatGPT Export',
+                'description'  => 'Pull new ChatGPT exports into docs + indexes.',
+                'handler'      => 'OpsJobRegistry::docsSyncFromChatgptExport',
+                'max_attempts' => 3,
+            ],
+            [
                 'job_key'      => 'ops.logs.summarize',
                 'name'         => 'Summarize Logs',
                 'description'  => 'Summarize application logs for quick review.',
