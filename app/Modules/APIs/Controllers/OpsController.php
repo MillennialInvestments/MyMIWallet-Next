@@ -11,6 +11,7 @@ use App\Models\OpsJobsModel;
 use App\Models\OpsQueueModel;
 use App\Models\OpsRunsModel;
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use Throwable;
 
@@ -70,7 +71,7 @@ class OpsController extends BaseController
         }
 
         if (! $this->request->is('post')) {
-            return $this->fail('Invalid method', 405);
+            return $this->respondError('Invalid method', Response::HTTP_METHOD_NOT_ALLOWED);
         }
 
         $payload = $this->request->getJSON(true) ?? $this->request->getPost();
@@ -78,16 +79,16 @@ class OpsController extends BaseController
         $jobData = $payload['payload'] ?? [];
 
         if (! $jobKey) {
-            return $this->failValidationErrors('job_key is required');
+            return $this->respondError('job_key is required', Response::HTTP_BAD_REQUEST);
         }
 
         $job = $this->jobs->findByKey($jobKey);
         if (! $job) {
-            return $this->failNotFound('Job not found');
+            return $this->respondError('Job not found', Response::HTTP_NOT_FOUND);
         }
 
         if (! (int) $job['is_enabled']) {
-            return $this->failForbidden('Job disabled');
+            return $this->respondError('Job disabled', Response::HTTP_FORBIDDEN);
         }
 
         $queueId = $this->queue->enqueue($jobKey, is_array($jobData) ? $jobData : []);
@@ -105,7 +106,7 @@ class OpsController extends BaseController
         }
 
         if (! $this->request->is('post')) {
-            return $this->fail('Invalid method', 405);
+            return $this->respondError('Invalid method', Response::HTTP_METHOD_NOT_ALLOWED);
         }
 
         $payload      = $this->request->getJSON(true) ?? $this->request->getPost();
@@ -116,11 +117,11 @@ class OpsController extends BaseController
         $dateOverride = $payload['report_date'] ?? null;
 
         if (! $jobKey || ! is_string($jobKey)) {
-            return $this->failValidationErrors('job_key is required');
+            return $this->respondError('job_key is required', Response::HTTP_BAD_REQUEST);
         }
 
         if (! is_string($markdown) || trim($markdown) === '') {
-            return $this->failValidationErrors('report_markdown is required');
+            return $this->respondError('report_markdown is required', Response::HTTP_BAD_REQUEST);
         }
 
         $writer     = new OpsReportWriter();
@@ -149,7 +150,7 @@ class OpsController extends BaseController
 
         $baseDir = ROOTPATH . 'docs/ops/reports';
         if (! is_dir($baseDir)) {
-            return $this->failNotFound('No reports directory');
+            return $this->respondError('No reports directory', Response::HTTP_NOT_FOUND);
         }
 
         $latestFile = null;
@@ -166,7 +167,7 @@ class OpsController extends BaseController
         }
 
         if (! $latestFile) {
-            return $this->failNotFound('No reports found');
+            return $this->respondError('No reports found', Response::HTTP_NOT_FOUND);
         }
 
         return $this->respond([
@@ -190,7 +191,7 @@ class OpsController extends BaseController
             return true;
         }
 
-        return $this->failUnauthorized(is_string($hmacResult) ? $hmacResult : 'Unauthorized');
+        return $this->respondError(is_string($hmacResult) ? $hmacResult : 'Unauthorized', Response::HTTP_UNAUTHORIZED);
     }
 
     protected function isAdmin(): bool
@@ -246,5 +247,13 @@ class OpsController extends BaseController
         $expected = base64_encode(hash_hmac('sha256', $message, $secret, true));
 
         return hash_equals($expected, trim($headerSig)) ? true : 'Invalid signature';
+    }
+
+    protected function respondError(string $message, int $statusCode): ResponseInterface
+    {
+        return $this->respond([
+            'status'  => 'error',
+            'message' => $message,
+        ], $statusCode);
     }
 }

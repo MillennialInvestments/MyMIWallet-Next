@@ -30,7 +30,7 @@ class CreateOpsFoundation extends Migration
             'updated_at'   => ['type' => 'DATETIME', 'null' => true],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->addKey('job_key', true); // unique
+        $this->forge->addKey('job_key', false, true);
         $this->forge->createTable('bf_ops_jobs', true, $tableAttributes);
 
         // bf_ops_queue
@@ -61,6 +61,7 @@ class CreateOpsFoundation extends Migration
             'payload_json'=> ['type' => 'LONGTEXT', 'null' => true],
             'result_json' => ['type' => 'LONGTEXT', 'null' => true],
             'output_json' => ['type' => 'LONGTEXT', 'null' => true],
+            'output_text' => ['type' => 'LONGTEXT', 'null' => true],
             'last_error'  => ['type' => 'LONGTEXT', 'null' => true],
             'started_at'  => ['type' => 'DATETIME', 'null' => true],
             'finished_at' => ['type' => 'DATETIME', 'null' => true],
