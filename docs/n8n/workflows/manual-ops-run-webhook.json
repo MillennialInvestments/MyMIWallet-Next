@@ -1,0 +1,94 @@
+{
+  "name": "Manual Ops Run (Webhook)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ops-run-now",
+        "responseMode": "lastNode",
+        "options": {
+          "responseContentType": "application/json"
+        }
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -640,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": false,
+        "values": {
+          "string": [
+            {
+              "name": "baseUrl",
+              "value": "={{$json.baseUrl || 'https://mymiwallet.com'}}"
+            },
+            {
+              "name": "sharedSecret",
+              "value": "={{$json.sharedSecret || 'YOUR_OPS_SHARED_SECRET'}}"
+            }
+          ],
+          "boolean": [],
+          "number": [],
+          "array": [
+            {
+              "name": "jobs",
+              "value": "={{$json.job_key ? [$json.job_key] : ($json.jobs || ['ops.health.check'])}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Normalize Input",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        -420,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "const crypto = require('crypto');\nconst baseUrl = $json.baseUrl || 'https://mymiwallet.com';\nconst sharedSecret = $json.sharedSecret || '';\nconst jobs = Array.isArray($json.jobs) ? $json.jobs : [];\nconst payload = $json.payload || {};\n\nasync function signedRequest(path, method = 'GET', body = '') {\n  const ts = Math.floor(Date.now() / 1000).toString();\n  const msg = `${ts}\\n${path}\\n${body}`;\n  const signature = crypto.createHmac('sha256', sharedSecret).update(msg).digest('base64');\n  const options = { method, uri: `${baseUrl}${path}` };\n  options.headers = { 'X-MyMI-Timestamp': ts, 'X-MyMI-Signature': signature };\n  if (method === 'POST') {\n    options.body = body;\n    options.headers['Content-Type'] = 'application/json';\n  }\n  const response = await this.helpers.httpRequest(options);\n  return typeof response === 'string' ? JSON.parse(response) : response;\n}\n\nconst results = [];\nfor (const jobKey of jobs) {\n  const dispatchBody = JSON.stringify({ job_key: jobKey, payload });\n  const dispatch = await signedRequest('/API/Ops/dispatch', 'POST', dispatchBody);\n  const queueId = dispatch.queue_id;\n\n  let status;\n  for (let attempt = 0; attempt < 12; attempt++) {\n    await new Promise((resolve) => setTimeout(resolve, 5000));\n    status = await signedRequest(`/API/Ops/status?queue_id=${queueId}`, 'GET', '');\n    if (status.queue_run && status.queue_run.status !== 'running') {\n      break;\n    }\n  }\n\n  const run = status?.queue_run || null;\n  const markdown = run?.output_text || (run?.output_json ? JSON.stringify(run.output_json) : `Queue ${queueId} finished with status ${run?.status || 'unknown'}`);\n\n  await signedRequest('/API/Ops/ingestReport', 'POST', JSON.stringify({ job_key: jobKey, run_id: run?.id || null, queue_id: queueId, report_markdown: markdown }));\n\n  results.push({ job_key: jobKey, queue_id: queueId, status: run?.status || 'unknown', report_snippet: markdown.slice(0, 400) });\n}\n\nreturn results.map((row) => ({ json: row }));"
+      },
+      "name": "Dispatch + Poll + Ingest",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [
+        -180,
+        260
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Normalize Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Input": {
+      "main": [
+        [
+          {
+            "node": "Dispatch + Poll + Ingest",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "version": 1
+}

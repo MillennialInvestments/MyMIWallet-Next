@@ -80,3 +80,118 @@ messageInput.addEventListener('keydown', (e) => {
 });
 
 addMessage('assistant', 'Welcome to MyMI Chat. Start by typing your question.');
+
+const opsOutput = document.getElementById('ops-output');
+const opsBaseInput = document.getElementById('ops-base-url');
+const opsSecretInput = document.getElementById('ops-secret');
+const opsJobKeyInput = document.getElementById('ops-job-key');
+const opsDispatchBtn = document.getElementById('ops-dispatch-btn');
+const opsStatusBtn = document.getElementById('ops-status-btn');
+const opsLatestBtn = document.getElementById('ops-latest-btn');
+
+if (opsBaseInput) {
+  opsBaseInput.value = window.location.origin;
+}
+
+let lastQueueId = null;
+
+function setOpsOutput(message) {
+  if (opsOutput) {
+    opsOutput.textContent = message;
+  }
+}
+
+function bufferToBase64(buffer) {
+  let binary = '';
+  const bytes = new Uint8Array(buffer);
+  for (let i = 0; i < bytes.byteLength; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary);
+}
+
+async function signPayload(path, body, secret) {
+  const encoder = new TextEncoder();
+  const key = await crypto.subtle.importKey('raw', encoder.encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, [
+    'sign'
+  ]);
+  const timestamp = Math.floor(Date.now() / 1000).toString();
+  const message = `${timestamp}\n${path}\n${body}`;
+  const signatureBuffer = await crypto.subtle.sign('HMAC', key, encoder.encode(message));
+  return { timestamp, signature: bufferToBase64(signatureBuffer) };
+}
+
+async function opsFetch(path, method = 'GET', bodyObj = null) {
+  if (!opsBaseInput || !opsSecretInput) return {};
+  const baseUrl = opsBaseInput.value.trim() || window.location.origin;
+  const secret = opsSecretInput.value.trim();
+  if (!secret) {
+    throw new Error('Shared secret is required');
+  }
+
+  const body = bodyObj ? JSON.stringify(bodyObj) : '';
+  const { timestamp, signature } = await signPayload(path, body, secret);
+  const headers = {
+    'X-MyMI-Timestamp': timestamp,
+    'X-MyMI-Signature': signature,
+    'Content-Type': 'application/json'
+  };
+
+  const response = await fetch(`${baseUrl}${path}`, {
+    method,
+    headers,
+    body: method === 'POST' ? body : undefined
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`HTTP ${response.status}: ${text}`);
+  }
+
+  return response.json();
+}
+
+opsDispatchBtn?.addEventListener('click', async () => {
+  const jobKey = opsJobKeyInput?.value.trim();
+  if (!jobKey) {
+    setOpsOutput('Enter a job key to dispatch (e.g., ops.health.check)');
+    return;
+  }
+
+  try {
+    setOpsOutput('Dispatching job...');
+    const res = await opsFetch('/API/Ops/dispatch', 'POST', { job_key: jobKey });
+    lastQueueId = res.queue_id || null;
+    setOpsOutput(`Queued ${jobKey}. queue_id=${lastQueueId || 'n/a'}`);
+  } catch (err) {
+    console.error(err);
+    setOpsOutput(`Dispatch failed: ${err.message}`);
+  }
+});
+
+opsStatusBtn?.addEventListener('click', async () => {
+  try {
+    setOpsOutput('Checking status...');
+    const path = lastQueueId ? `/API/Ops/status?queue_id=${lastQueueId}` : '/API/Ops/status';
+    const res = await opsFetch(path, 'GET');
+    if (res?.queue_run?.queue_id) {
+      lastQueueId = res.queue_run.queue_id;
+    }
+    setOpsOutput(JSON.stringify(res, null, 2));
+  } catch (err) {
+    console.error(err);
+    setOpsOutput(`Status failed: ${err.message}`);
+  }
+});
+
+opsLatestBtn?.addEventListener('click', async () => {
+  try {
+    setOpsOutput('Fetching latest report...');
+    const res = await opsFetch('/API/Ops/reports/latest', 'GET');
+    const content = res?.content || JSON.stringify(res, null, 2);
+    setOpsOutput(content);
+  } catch (err) {
+    console.error(err);
+    setOpsOutput(`Latest report failed: ${err.message}`);
+  }
+});
