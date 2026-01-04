@@ -91,11 +91,13 @@ class OpsJobRegistry
                         'status' => 'ok',
                         'output' => $digest,
                         'handler' => MyMIMarketing::class,
+                        'output_text' => is_scalar($digest) ? (string) $digest : json_encode($digest, JSON_UNESCAPED_SLASHES),
                     ];
                 } catch (Throwable $e) {
                     return [
                         'status' => 'error',
                         'message' => $e->getMessage(),
+                        'output_text' => $e->getMessage(),
                     ];
                 }
             }
@@ -104,6 +106,7 @@ class OpsJobRegistry
                 'status'  => 'ok',
                 'message' => 'Marketing digest stub executed',
                 'output'  => ['payload' => $payload],
+                'output_text' => 'Marketing digest stub executed',
             ];
         });
 
@@ -119,11 +122,13 @@ class OpsJobRegistry
                         'status' => 'ok',
                         'output' => $result,
                         'handler' => MyMIAlerts::class,
+                        'output_text' => is_scalar($result) ? (string) $result : json_encode($result, JSON_UNESCAPED_SLASHES),
                     ];
                 } catch (Throwable $e) {
                     return [
                         'status' => 'error',
                         'message' => $e->getMessage(),
+                        'output_text' => $e->getMessage(),
                     ];
                 }
             }
@@ -132,6 +137,7 @@ class OpsJobRegistry
                 'status'  => 'ok',
                 'message' => 'Alerts process stub executed',
                 'output'  => ['payload' => $payload],
+                'output_text' => 'Alerts process stub executed',
             ];
         });
 
@@ -660,6 +666,13 @@ class OpsJobRegistry
             $totalWarnings += $warnings;
         }
 
+        $summaryText  = "Log scan at " . date('c') . "\n";
+        $summaryText .= "Files: " . count($summaries) . "\n";
+        $summaryText .= "Errors: {$totalErrors} | Warnings: {$totalWarnings}\n";
+        foreach (array_slice($summaries, 0, 3) as $row) {
+            $summaryText .= "- {$row['file']}: {$row['errors']} errors, {$row['warnings']} warnings\n";
+        }
+
         return [
             'status'        => 'ok',
             'generated_at'  => date('c'),
@@ -667,6 +680,7 @@ class OpsJobRegistry
             'total_errors'  => $totalErrors,
             'total_warnings'=> $totalWarnings,
             'files'         => $summaries,
+            'output_text'   => $summaryText,
         ];
     }
 
@@ -705,6 +719,7 @@ class OpsJobRegistry
             'count'    => count($files),
             'files'    => $files,
             'payload'  => $payload,
+            'output_text' => "Docs inventory written to {$target} (" . count($files) . " files)",
         ];
     }
 
