@@ -167,3 +167,78 @@ button:disabled {
   text-align: center;
   margin-top: 24px;
 }
+
+.ops-panel {
+  margin-top: 32px;
+  background: #0a1d17;
+  border: 1px solid #123227;
+  border-radius: 12px;
+  padding: 16px;
+  color: #d8ede3;
+}
+
+.ops-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.ops-title {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.ops-subtitle {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.ops-actions button {
+  margin-left: 6px;
+}
+
+.ops-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.ops-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: #e6f2ed;
+}
+
+.ops-grid input {
+  padding: 8px 10px;
+  border: 1px solid #1f3b2e;
+  border-radius: 8px;
+  background: #0f241d;
+  color: #e6f2ed;
+}
+
+.ops-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ops-hint {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.ops-panel pre {
+  background: #06120d;
+  border: 1px solid #123227;
+  border-radius: 8px;
+  padding: 10px;
+  min-height: 80px;
+  overflow-x: auto;
+  color: #c6e7da;
+}
