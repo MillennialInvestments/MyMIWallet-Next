@@ -78,6 +78,9 @@ try {
 }
 
 const app = express();
+// TRUST PROXY: required when behind Nginx/Reverse proxy
+// "1" = trust first proxy hop (recommended for single Nginx in front)
+app.set('trust proxy', 1);
 app.disable('x-powered-by');
 app.use(helmet());
 app.use(compression());
