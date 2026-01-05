@@ -7,7 +7,6 @@ import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import { spawn } from 'child_process';
-import { createCostControls } from '../tools/ai-cost-controls/index.js';
 
 let jwt;
 try {
@@ -57,15 +56,25 @@ const DEFAULT_MODEL = 'gpt-4o-mini';
 
 const runtimeCache = { config: null, loadedAt: 0 };
 let costControls;
+let createCostControlsFn = null;
 const staticDir = path.join(__dirname, 'public');
 const BASE_PATH = normalizeBasePath(CHAT_BASE_PATH);
 
 try {
-  costControls = createCostControls({
-    configPath: path.join(__dirname, '..', 'config', 'ai-cost-controls.json')
-  });
+  const costControlsModule = await import('../tools/ai-cost-controls/index.js');
+  createCostControlsFn = costControlsModule.createCostControls;
 } catch (err) {
-  appendLog(`Cost control initialization failed: ${err.message}`);
+  await appendLog(`Cost controls module unavailable: ${err.message}`);
+}
+
+try {
+  if (createCostControlsFn) {
+    costControls = createCostControlsFn({
+      configPath: path.join(__dirname, '..', 'config', 'ai-cost-controls.json')
+    });
+  }
+} catch (err) {
+  await appendLog(`Cost control initialization failed: ${err.message}`);
 }
 
 const app = express();
