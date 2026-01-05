@@ -4,8 +4,28 @@ const messageInput = document.getElementById('message');
 const sendBtn = document.getElementById('send-btn');
 const statusEl = document.getElementById('status');
 const template = document.getElementById('message-template');
+const modeBadge = document.getElementById('mode-badge');
+const actionsSubtitle = document.getElementById('actions-subtitle');
+const userEmailEl = document.getElementById('user-email');
+const userRolesEl = document.getElementById('user-roles');
+const userTierEl = document.getElementById('user-tier');
+const accessDeniedEl = document.getElementById('access-denied');
+const managementActions = document.getElementById('management-actions');
+const userActions = document.getElementById('user-actions');
+const opsStatusBtn = document.getElementById('ops-status-btn');
+const latestErrorsBtn = document.getElementById('latest-errors-btn');
+const runCronBtn = document.getElementById('run-cron-btn');
+const budgetBtn = document.getElementById('budget-btn');
+const portfolioBtn = document.getElementById('portfolio-btn');
+const tradeAlertsBtn = document.getElementById('trade-alerts-btn');
+const marketBtn = document.getElementById('market-question-btn');
+const marketTickerInput = document.getElementById('market-ticker');
 
 const conversation = [];
+const MODE = window.location.pathname.startsWith('/m') ? 'management' : 'user';
+const managementRoles = ['admin', 'ops', 'manager'];
+let currentUser = { roles: [], tier: 'FREE', userId: null };
+let accessDenied = false;
 
 function addMessage(role, content) {
   const clone = template.content.firstElementChild.cloneNode(true);
@@ -21,11 +41,89 @@ function setStatus(text, isError = false) {
   statusEl.style.color = isError ? '#ef4444' : '#9ca3af';
 }
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const content = messageInput.value.trim();
-  if (!content) return;
+function setModeBadge() {
+  if (modeBadge) {
+    modeBadge.textContent = MODE === 'management' ? 'Management Mode' : 'User Mode';
+    modeBadge.className = MODE === 'management' ? 'badge badge-warn' : 'badge badge-ok';
+  }
+  if (actionsSubtitle) {
+    actionsSubtitle.textContent =
+      MODE === 'management'
+        ? 'Ops tooling guarded by CI4 roles (admin/ops/manager).'
+        : 'Budgeting, portfolio, and premium alerts personalized to you.';
+  }
+}
 
+function normalizeProfile(payload) {
+  const data = payload?.data || {};
+  const roles = Array.isArray(data.roles) ? data.roles.map((r) => (r || '').toLowerCase()) : [];
+  const tier = (data.tier || 'FREE').toString().toUpperCase();
+  return {
+    userId: data.userId ?? null,
+    roles,
+    tier,
+  };
+}
+
+function updateProfileUi() {
+  userEmailEl.textContent = currentUser.userId ? `User #${currentUser.userId}` : 'Guest session';
+  userRolesEl.textContent = currentUser.roles.length ? currentUser.roles.join(', ') : 'none';
+  userTierEl.textContent = currentUser.tier;
+}
+
+function enforceManagementGate() {
+  if (MODE !== 'management') {
+    accessDenied = false;
+    return;
+  }
+
+  const allowed = currentUser.roles.some((role) => managementRoles.includes(role));
+  accessDenied = !allowed;
+  accessDeniedEl.hidden = allowed;
+  form.classList.toggle('disabled', !allowed);
+  Array.from(document.querySelectorAll('button')).forEach((btn) => {
+    if (btn.dataset?.ignoreGate !== 'true') {
+      btn.disabled = !allowed;
+    }
+  });
+  if (!allowed) {
+    setStatus('Access denied — management role required', true);
+  } else {
+    setStatus('Secure session');
+  }
+}
+
+async function fetchProfile() {
+  setStatus('Loading session...');
+  try {
+    const res = await fetch('/api/me', { credentials: 'include' });
+    if (!res.ok) {
+      throw new Error(`Profile lookup failed (${res.status})`);
+    }
+    const payload = await res.json();
+    currentUser = normalizeProfile(payload);
+    updateProfileUi();
+    enforceManagementGate();
+    if (!accessDenied) {
+      setStatus('Secure session');
+    }
+  } catch (err) {
+    console.error(err);
+    setStatus('Unable to load profile', true);
+  }
+}
+
+function toggleActions() {
+  if (MODE === 'management') {
+    managementActions?.classList.remove('hidden');
+    userActions?.classList.add('hidden');
+  } else {
+    managementActions?.classList.add('hidden');
+    userActions?.classList.remove('hidden');
+  }
+}
+
+async function sendChatMessage(content) {
   sendBtn.disabled = true;
   setStatus('Sending...');
   addMessage('user', content);
@@ -36,20 +134,18 @@ form.addEventListener('submit', async (e) => {
     const response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: conversation })
+      body: JSON.stringify({ messages: conversation }),
     });
 
     if (response.status === 503) {
       setStatus('Service disabled', true);
       addMessage('assistant', 'Chat is temporarily disabled.');
-      sendBtn.disabled = false;
       return;
     }
 
     if (response.status === 429) {
       setStatus('Usage cap reached', true);
       addMessage('assistant', 'Usage limits reached. Please try again later.');
-      sendBtn.disabled = false;
       return;
     }
 
@@ -70,6 +166,55 @@ form.addEventListener('submit', async (e) => {
     sendBtn.disabled = false;
     messageInput.focus();
   }
+}
+
+function formatToolResponse(body) {
+  if (!body) return 'No response received.';
+  if (typeof body === 'string') return body;
+  if (body.reply) return body.reply;
+  if (body.data) return JSON.stringify(body.data, null, 2);
+  return JSON.stringify(body, null, 2);
+}
+
+async function sendToolRequest(tool, context = {}, message = '') {
+  if (accessDenied) {
+    addMessage('assistant', 'Access denied. Management role required.');
+    return;
+  }
+  setStatus(`Running ${tool}...`);
+  addMessage('user', `Run ${tool}${message ? ` — ${message}` : ''}`);
+
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mode: MODE, tool, context, message }),
+    });
+
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || `Tool failed (${res.status})`);
+    }
+
+    const payload = await res.json();
+    const formatted = formatToolResponse(payload);
+    addMessage('assistant', formatted);
+    setStatus('Secure session');
+  } catch (err) {
+    console.error(err);
+    addMessage('assistant', `Tool error: ${err.message}`);
+    setStatus('Tool error', true);
+  }
+}
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (accessDenied) {
+    return;
+  }
+  const content = messageInput.value.trim();
+  if (!content) return;
+  sendChatMessage(content);
 });
 
 messageInput.addEventListener('keydown', (e) => {
@@ -79,119 +224,18 @@ messageInput.addEventListener('keydown', (e) => {
   }
 });
 
-addMessage('assistant', 'Welcome to MyMI Chat. Start by typing your question.');
-
-const opsOutput = document.getElementById('ops-output');
-const opsBaseInput = document.getElementById('ops-base-url');
-const opsSecretInput = document.getElementById('ops-secret');
-const opsJobKeyInput = document.getElementById('ops-job-key');
-const opsDispatchBtn = document.getElementById('ops-dispatch-btn');
-const opsStatusBtn = document.getElementById('ops-status-btn');
-const opsLatestBtn = document.getElementById('ops-latest-btn');
-
-if (opsBaseInput) {
-  opsBaseInput.value = window.location.origin;
-}
-
-let lastQueueId = null;
-
-function setOpsOutput(message) {
-  if (opsOutput) {
-    opsOutput.textContent = message;
-  }
-}
-
-function bufferToBase64(buffer) {
-  let binary = '';
-  const bytes = new Uint8Array(buffer);
-  for (let i = 0; i < bytes.byteLength; i++) {
-    binary += String.fromCharCode(bytes[i]);
-  }
-  return btoa(binary);
-}
-
-async function signPayload(path, body, secret) {
-  const encoder = new TextEncoder();
-  const key = await crypto.subtle.importKey('raw', encoder.encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, [
-    'sign'
-  ]);
-  const timestamp = Math.floor(Date.now() / 1000).toString();
-  const message = `${timestamp}\n${path}\n${body}`;
-  const signatureBuffer = await crypto.subtle.sign('HMAC', key, encoder.encode(message));
-  return { timestamp, signature: bufferToBase64(signatureBuffer) };
-}
-
-async function opsFetch(path, method = 'GET', bodyObj = null) {
-  if (!opsBaseInput || !opsSecretInput) return {};
-  const baseUrl = opsBaseInput.value.trim() || window.location.origin;
-  const secret = opsSecretInput.value.trim();
-  if (!secret) {
-    throw new Error('Shared secret is required');
-  }
-
-  const body = bodyObj ? JSON.stringify(bodyObj) : '';
-  const { timestamp, signature } = await signPayload(path, body, secret);
-  const headers = {
-    'X-MyMI-Timestamp': timestamp,
-    'X-MyMI-Signature': signature,
-    'Content-Type': 'application/json'
-  };
-
-  const response = await fetch(`${baseUrl}${path}`, {
-    method,
-    headers,
-    body: method === 'POST' ? body : undefined
-  });
-
-  if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`HTTP ${response.status}: ${text}`);
-  }
-
-  return response.json();
-}
-
-opsDispatchBtn?.addEventListener('click', async () => {
-  const jobKey = opsJobKeyInput?.value.trim();
-  if (!jobKey) {
-    setOpsOutput('Enter a job key to dispatch (e.g., ops.health.check)');
-    return;
-  }
-
-  try {
-    setOpsOutput('Dispatching job...');
-    const res = await opsFetch('/API/Ops/dispatch', 'POST', { job_key: jobKey });
-    lastQueueId = res.queue_id || null;
-    setOpsOutput(`Queued ${jobKey}. queue_id=${lastQueueId || 'n/a'}`);
-  } catch (err) {
-    console.error(err);
-    setOpsOutput(`Dispatch failed: ${err.message}`);
-  }
+opsStatusBtn?.addEventListener('click', () => sendToolRequest('ops_status'));
+latestErrorsBtn?.addEventListener('click', () => sendToolRequest('latest_errors'));
+runCronBtn?.addEventListener('click', () => sendToolRequest('run_cron'));
+budgetBtn?.addEventListener('click', () => sendToolRequest('budget_snapshot'));
+portfolioBtn?.addEventListener('click', () => sendToolRequest('portfolio_overview'));
+tradeAlertsBtn?.addEventListener('click', () => sendToolRequest('trade_alerts'));
+marketBtn?.addEventListener('click', () => {
+  const ticker = marketTickerInput.value.trim() || 'AAPL';
+  sendToolRequest('market_question', { ticker });
 });
 
-opsStatusBtn?.addEventListener('click', async () => {
-  try {
-    setOpsOutput('Checking status...');
-    const path = lastQueueId ? `/API/Ops/status?queue_id=${lastQueueId}` : '/API/Ops/status';
-    const res = await opsFetch(path, 'GET');
-    if (res?.queue_run?.queue_id) {
-      lastQueueId = res.queue_run.queue_id;
-    }
-    setOpsOutput(JSON.stringify(res, null, 2));
-  } catch (err) {
-    console.error(err);
-    setOpsOutput(`Status failed: ${err.message}`);
-  }
-});
-
-opsLatestBtn?.addEventListener('click', async () => {
-  try {
-    setOpsOutput('Fetching latest report...');
-    const res = await opsFetch('/API/Ops/reports/latest', 'GET');
-    const content = res?.content || JSON.stringify(res, null, 2);
-    setOpsOutput(content);
-  } catch (err) {
-    console.error(err);
-    setOpsOutput(`Latest report failed: ${err.message}`);
-  }
-});
+addMessage('assistant', 'Welcome to MyMI Chat. Start by typing your question or choose a quick action.');
+setModeBadge();
+toggleActions();
+fetchProfile();

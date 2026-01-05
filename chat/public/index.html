@@ -10,10 +10,52 @@
 <body>
   <header>
     <div class="logo">MyMI Chat</div>
-    <div class="status" id="status">Secure session</div>
+    <div class="header-meta">
+      <span class="badge" id="mode-badge">User Mode</span>
+      <div class="status" id="status">Loading...</div>
+    </div>
   </header>
 
   <main>
+    <section class="session" aria-label="Session information">
+      <div class="session-row">
+        <div>
+          <div class="session-label">Signed in</div>
+          <div class="session-value" id="user-email">Guest</div>
+        </div>
+        <div class="session-meta">
+          <span class="pill" id="user-roles">roles</span>
+          <span class="pill" id="user-tier">tier</span>
+        </div>
+      </div>
+      <div class="access-denied" id="access-denied" hidden>Access denied — admin/ops/manager required for management mode.</div>
+    </section>
+
+    <section class="actions" aria-label="Quick actions">
+      <div class="actions-header">
+        <div>
+          <div class="actions-title">Quick actions</div>
+          <div class="actions-subtitle" id="actions-subtitle"></div>
+        </div>
+      </div>
+
+      <div class="action-group" id="management-actions">
+        <button type="button" id="ops-status-btn">Ops Status</button>
+        <button type="button" id="latest-errors-btn">Latest Errors</button>
+        <button type="button" id="run-cron-btn">Run Cron</button>
+      </div>
+
+      <div class="action-group" id="user-actions">
+        <button type="button" id="budget-btn">Budget Snapshot</button>
+        <button type="button" id="portfolio-btn">Portfolio Overview</button>
+        <button type="button" id="trade-alerts-btn">Trade Alerts</button>
+        <div class="market-row">
+          <input id="market-ticker" type="text" placeholder="Ticker or sector (e.g., AAPL)" aria-label="Ticker" />
+          <button type="button" id="market-question-btn">Ask about ticker</button>
+        </div>
+      </div>
+    </section>
+
     <section class="transcript" id="transcript" aria-live="polite"></section>
     <form id="chat-form">
       <label class="sr-only" for="message">Your message</label>
@@ -23,38 +65,6 @@
         <span class="hint">Shift + Enter for new line</span>
       </div>
     </form>
-
-    <section class="ops-panel" aria-label="Ops command center">
-      <div class="ops-header">
-        <div>
-          <div class="ops-title">Ops commands</div>
-          <div class="ops-subtitle">Dispatch ops jobs from your phone</div>
-        </div>
-        <div class="ops-actions">
-          <button type="button" id="ops-status-btn">/API/Ops/status</button>
-          <button type="button" id="ops-latest-btn">/API/Ops/reports/latest</button>
-        </div>
-      </div>
-      <div class="ops-grid">
-        <label>
-          Base URL
-          <input id="ops-base-url" type="url" placeholder="https://mymiwallet.com" />
-        </label>
-        <label>
-          Shared secret
-          <input id="ops-secret" type="password" placeholder="HMAC secret" />
-        </label>
-        <label>
-          Job key
-          <input id="ops-job-key" type="text" placeholder="ops.health.check" />
-        </label>
-        <div class="ops-actions-row">
-          <button type="button" id="ops-dispatch-btn">Dispatch</button>
-          <span class="ops-hint">Jobs: ops.health.check, ops.logs.triage_daily, ops.security.headers_scan</span>
-        </div>
-      </div>
-      <pre id="ops-output" aria-live="polite"></pre>
-    </section>
   </main>
 
   <template id="message-template">

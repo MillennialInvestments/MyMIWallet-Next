@@ -18,6 +18,7 @@ const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT || 8300;
 const HOST = process.env.BIND_HOST || '0.0.0.0';
 const APP_BASE_URL = process.env.APP_BASE_URL || '';
+const CHAT_BASE_PATH = process.env.CHAT_BASE_PATH || '';
 const BASIC_AUTH_ACTIVE = (process.env.BASIC_AUTH_ACTIVE || 'true').toLowerCase() === 'true';
 const BASIC_AUTH_USER = process.env.BASIC_AUTH_USER || 'team';
 const BASIC_AUTH_PASS = process.env.BASIC_AUTH_PASS || 'change_me';
@@ -31,6 +32,9 @@ const MYMI_USAGE_WEBHOOK_SECRET = process.env.MYMI_USAGE_WEBHOOK_SECRET || '';
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4o-mini';
 const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'https://aiops.mymiwallet.com';
+const CI4_BASE_URL = process.env.CI4_BASE_URL || 'https://www.mymiwallet.com';
+const CI4_ME_ENDPOINT = process.env.CI4_ME_ENDPOINT || '/API/Chat/me';
+const CI4_TOOL_ENDPOINT = process.env.CI4_TOOL_ENDPOINT || '/API/Chat/tool';
 const COST_PER_1K = {
   'gpt-4o-mini': 0.00015,
   'gpt-4o': 0.005,
@@ -46,6 +50,8 @@ const DEFAULT_MODEL = 'gpt-4o-mini';
 
 const runtimeCache = { config: null, loadedAt: 0 };
 let costControls;
+const staticDir = path.join(__dirname, 'public');
+const BASE_PATH = normalizeBasePath(CHAT_BASE_PATH);
 
 try {
   costControls = createCostControls({
@@ -76,25 +82,72 @@ app.use(
   })
 );
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(staticDir));
+if (BASE_PATH) {
+  app.use(BASE_PATH, express.static(staticDir));
+}
+app.use('/m', express.static(staticDir));
+if (BASE_PATH) {
+  app.use(withBasePath('/m'), express.static(staticDir));
+}
+app.use('/u', express.static(staticDir));
+if (BASE_PATH) {
+  app.use(withBasePath('/u'), express.static(staticDir));
+}
 
-app.get('/health', async (_req, res) => {
+app.get([withBasePath('/health'), '/health'], async (_req, res) => {
   const config = await loadRuntimeConfig();
   res.status(200).json({ status: 'ok', enabled: config.enabled !== false });
 });
 
-app.get('/', (_req, res) => {
+app.get(['/', '/m', '/u', withBasePath('/'), withBasePath('/m'), withBasePath('/u')], (_req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.post('/api/chat', async (req, res) => {
+app.get(['/api/me', withBasePath('/api/me')], async (req, res) => {
+  try {
+    const profile = await ci4Fetch(req, CI4_ME_ENDPOINT);
+    return res.json(profile);
+  } catch (err) {
+    await appendLog(`CI4 /api/me proxy failed: ${err.message}`);
+    const status = Number.isFinite(err?.status) ? err.status : 502;
+    return res.status(status).json({ error: 'Unable to load profile' });
+  }
+});
+
+app.post(['/api/chat', withBasePath('/api/chat')], async (req, res) => {
   const config = await loadRuntimeConfig();
   if (!config.enabled) {
     return res.status(503).json({ error: 'Chat temporarily disabled' });
   }
 
   const { messages = [], temperature = 0.7 } = req.body || {};
-  if (!Array.isArray(messages) || messages.length === 0) {
+  const hasMessages = Array.isArray(messages) && messages.length > 0;
+  const isToolRequest = !hasMessages && (req.body?.tool || req.body?.mode);
+
+  if (isToolRequest) {
+    const payload = {
+      mode: (req.body.mode || 'user').toLowerCase(),
+      tool: req.body.tool,
+      message: req.body.message || '',
+      context: req.body.context || {}
+    };
+
+    if (!payload.tool) {
+      return res.status(400).json({ error: 'tool is required for tool-mode requests' });
+    }
+
+    try {
+      const response = await ci4Fetch(req, CI4_TOOL_ENDPOINT, payload);
+      return res.json(response);
+    } catch (err) {
+      await appendLog(`CI4 tool proxy failed (${payload.tool}): ${err.message}`);
+      const status = Number.isFinite(err?.status) ? err.status : 502;
+      return res.status(status).json({ error: 'Tool call failed' });
+    }
+  }
+
+  if (!hasMessages) {
     return res.status(400).json({ error: 'messages array required' });
   }
 
@@ -495,6 +548,76 @@ async function appendLog(message) {
   await fs.promises.mkdir(path.dirname(LOG_PATH), { recursive: true });
   const line = `[${new Date().toISOString()}] ${message}\n`;
   await fs.promises.appendFile(LOG_PATH, line);
+}
+
+function normalizeBasePath(pathname = '') {
+  const trimmed = (pathname || '').trim();
+  if (!trimmed) return '';
+  const noTrailing = trimmed.replace(/\/+$/, '');
+  return noTrailing.startsWith('/') ? noTrailing : `/${noTrailing}`;
+}
+
+function withBasePath(pathname = '/') {
+  if (!BASE_PATH) return pathname;
+  const suffix = pathname.startsWith('/') ? pathname : `/${pathname}`;
+  return `${BASE_PATH}${suffix === '/' ? '' : suffix}`;
+}
+
+function extractAuth(req) {
+  const headers = {};
+  const forward = ['authorization', 'cookie'];
+  forward.forEach(key => {
+    if (req.headers[key]) {
+      headers[key] = req.headers[key];
+    }
+  });
+  return headers;
+}
+
+async function ci4Fetch(req, endpoint, payload) {
+  const controller = new AbortController();
+  const timeoutMs = Number(process.env.CI4_TIMEOUT_MS || 8000);
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  const url = buildAbsoluteUrl(endpoint);
+  const headers = {
+    'Content-Type': 'application/json',
+    ...extractAuth(req)
+  };
+
+  try {
+    const response = await fetch(url, {
+      method: payload ? 'POST' : 'GET',
+      headers,
+      body: payload ? JSON.stringify(payload) : undefined,
+      signal: controller.signal
+    });
+
+    const text = await response.text();
+    let data = text;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      // Keep raw text when JSON parse fails
+    }
+
+    if (!response.ok) {
+      const error = new Error(`Status ${response.status}: ${text.slice(0, 300)}`);
+      error.status = response.status;
+      throw error;
+    }
+
+    return data;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function buildAbsoluteUrl(endpoint) {
+  try {
+    return new URL(endpoint, CI4_BASE_URL).toString();
+  } catch (err) {
+    throw new Error(`Invalid CI4 endpoint: ${endpoint}`);
+  }
 }
 
 app.listen(PORT, HOST, () => {
