@@ -5,7 +5,9 @@
 - **Stop:** `cd ~/mymiwallet/site/current/chat && ./stop-chat.sh`
 - PID file: `chat/chat.pid`
 
-**After every pull/deploy:** `cd ~/mymiwallet/site/current/chat && npm ci`
+**After every pull/deploy:**
+- `(cd ~/mymiwallet/site/current/chat && npm ci)`
+- `(cd ~/mymiwallet/site/current/tools/ai-cost-controls && npm ci)`
 
 ## Logs
 - Chat runtime: `tail -n 200 chat/logs/chat.log`
