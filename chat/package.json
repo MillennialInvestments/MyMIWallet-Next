@@ -17,7 +17,15 @@
     "express": "^4.19.2",
     "express-rate-limit": "^7.2.0",
     "helmet": "^7.1.0",
+<<<<<<< HEAD
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.0"
+||||||| parent of 1200c5692 (01/05/2026 - AIOPS & Chat updates - TBJ)
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.11.0"
+=======
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.16.0"
+>>>>>>> 1200c5692 (01/05/2026 - AIOPS & Chat updates - TBJ)
   }
 }
