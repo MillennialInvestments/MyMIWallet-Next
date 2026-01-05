@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "name": "ai-cost-controls",
   "version": "1.0.0",
@@ -9,3 +10,21 @@
     "mysql2": "^3.11.3"
   }
 }
+||||||| parent of 1200c5692 (01/05/2026 - AIOPS & Chat updates - TBJ)
+=======
+{
+  "name": "ai-cost-controls",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mysql2": "^3.16.0"
+  }
+}
+>>>>>>> 1200c5692 (01/05/2026 - AIOPS & Chat updates - TBJ)
