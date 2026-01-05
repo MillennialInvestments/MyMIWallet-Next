@@ -7,8 +7,15 @@ import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import { spawn } from 'child_process';
-import jwt from 'jsonwebtoken';
 import { createCostControls } from '../tools/ai-cost-controls/index.js';
+
+let jwt;
+try {
+  ({ default: jwt } = await import('jsonwebtoken'));
+} catch (err) {
+  console.error('[FATAL] Missing dependency: jsonwebtoken');
+  process.exit(1);
+}
 
 dotenv.config();
 
