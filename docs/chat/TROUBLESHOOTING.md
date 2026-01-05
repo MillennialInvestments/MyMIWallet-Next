@@ -22,6 +22,15 @@
   - Check `config/ai-cost-controls.json` path and permissions.
   - Chat now continues to run even if cost controls fail to load; per-user usage limits will be temporarily skipped.
 
+### ERR_ERL_UNEXPECTED_X_FORWARDED_FOR
+- **Cause:** When Nginx or another reverse proxy is in front of chat, Express must trust the proxy to read `X-Forwarded-For`. Without it, `express-rate-limit` may treat the header as spoofed and throw `ERR_ERL_UNEXPECTED_X_FORWARDED_FOR`.
+- **Fix:** Add `app.set('trust proxy', 1);` immediately after `const app = express();` in `chat/server.js` so Express trusts the first proxy hop (single Nginx).
+- **Verify:**
+  - Restart chat: `cd ~/mymiwallet/site/current/chat && ./stop-chat.sh && ./start-chat.sh`
+  - Health check: `curl -sS https://chat.mymiwallet.com/health`
+  - Access `/` in a browser and tail logs: `tail -f logs/chat.log | grep -i forwarded`
+  - Confirm no `ERR_ERL_UNEXPECTED_X_FORWARDED_FOR` errors appear after requests.
+
 ## Verification checklist
 - `./stop-chat.sh && ./start-chat.sh`
 - `lsof -iTCP:8500 -sTCP:LISTEN -n -P`
