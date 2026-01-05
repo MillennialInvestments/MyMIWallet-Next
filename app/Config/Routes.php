@@ -232,6 +232,8 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('Notes', 'AIController::listNotes');
         $routes->post('LinkSettings', 'AIController::updateLinkSettings');
     });
+    $routes->get('Chat/me', 'ChatController::me');
+    $routes->post('Chat/tool', 'ChatController::tool');
 
     $routes->group('Management', ['filter' => 'cronKey'], function($routes) {
         $routes->get('Run-CRON-Tasks', 'ManagementController::Run_CRON_Tasks');
