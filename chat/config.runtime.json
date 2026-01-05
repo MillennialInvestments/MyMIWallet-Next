@@ -1,7 +1,9 @@
 {
   "enabled": true,
-  "provider": "openai",
-  "providerModel": "gpt-4o-mini",
+  "provider": "ollama",
+  "providerModel": "llama3.1",
+  "providerB": "openai",
+  "providerModelB": "gpt-4o-mini",
   "monthlyBudgetUsd": 25,
   "alertThresholdPercent": 80,
   "hardStopPercent": 95
