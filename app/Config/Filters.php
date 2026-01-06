@@ -246,5 +246,28 @@ class Filters extends BaseConfig
                 'API/Alerts/sendDiscordAlertsBySymbol/*',
             ],
         ],
+        'csrf' => [
+            'before' => [
+                'login',
+                'logout',
+                'register',
+                'register/*',
+                'forgot',
+                'forgot-password',
+                'reset-password',
+                'activate',
+                'activate-account',
+                'activate-account/*',
+                'resend-activation',
+                'resend-activate-account',
+                'Auth/*',
+                'get2FAQRCode',
+                'verify2FACode',
+            ],
+            'except' => [
+                'API/*',
+                'api/*',
+            ],
+        ],
     ];
 }

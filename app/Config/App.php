@@ -211,13 +211,13 @@ class App extends BaseConfig
      * @see http://www.html5rocks.com/en/tutorials/security/content-security-policy/
      * @see http://www.w3.org/TR/CSP/
      */
-    public bool $CSPEnabled = false;
+    public bool $CSPEnabled = true;
 
     // Make sure it's explicitly a string:
-    public string $cookiePrefix   = '';            // ✅ empty string, NOT null
-    public string $cookieDomain   = '.mymiwallet.com'; // share across app + chat
-    public string $cookiePath     = '/';           // default OK
-    public bool   $cookieSecure   = true;          // enforce HTTPS cookie transport
-    public bool   $cookieHTTPOnly = true;
+    public string $cookiePrefix   = '';      // ✅ empty string, NOT null
+    public string $cookieDomain   = '.mymiwallet.com';      // fine as empty string
+    public string $cookiePath     = '/';     // default OK
+    public bool   $cookieSecure   = true;   // or true, depending on your HTTPS setup
+    public bool   $cookieHTTPOnly = true; // recommended you leave this as true
     public string $cookieSameSite = 'Lax';         // allow main + subdomain navigation
 }

@@ -87,10 +87,36 @@ app.use(compression());
 app.use(express.json({ limit: '1mb' }));
 app.use(requestLogger);
 app.use(corsGuard);
+
+// Public health endpoint BEFORE auth
+app.get('/health', async (req, res) => {
+  const ip = req.ip || '';
+  if (!(ip.includes('127.0.0.1') || ip.includes('::1'))) {
+    return res.status(401).send('Authentication required');
+  }
+  const config = await loadRuntimeConfig();
+  res.status(200).json({ status: 'ok', enabled: config.enabled !== false });
+});
+
+
 app.use(jwtAuthMiddleware);
+// DO NOT apply basic auth globally. We'll apply it only to /m routes.
+
+// Management area: protect with Basic Auth
 if (BASIC_AUTH_ACTIVE) {
-  app.use(basicAuthMiddleware);
+    const mgmtAuth = (req, res, next) => {
+    if (!BASIC_AUTH_ACTIVE) return next();
+    return basicAuthMiddleware(req, res, next);
+    };
+
+    app.get('/m', mgmtAuth, (_req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    });
+
+    // Anything admin-only:
+    app.use('/api/admin', mgmtAuth);
 }
+
 app.use(
   rateLimit({
     windowMs: 60 * 1000,
