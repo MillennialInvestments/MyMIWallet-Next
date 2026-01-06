@@ -214,10 +214,10 @@ class App extends BaseConfig
     public bool $CSPEnabled = false;
 
     // Make sure it's explicitly a string:
-    public string $cookiePrefix   = '';      // ✅ empty string, NOT null
-    public string $cookieDomain   = '';      // fine as empty string
-    public string $cookiePath     = '/';     // default OK
-    public bool   $cookieSecure   = false;   // or true, depending on your HTTPS setup
+    public string $cookiePrefix   = '';            // ✅ empty string, NOT null
+    public string $cookieDomain   = '.mymiwallet.com'; // share across app + chat
+    public string $cookiePath     = '/';           // default OK
+    public bool   $cookieSecure   = true;          // enforce HTTPS cookie transport
     public bool   $cookieHTTPOnly = true;
-    public string $cookieSameSite = 'Lax';   // or 'None'/'Strict' as needed
+    public string $cookieSameSite = 'Lax';         // allow main + subdomain navigation
 }
