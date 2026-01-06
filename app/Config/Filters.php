@@ -3,7 +3,6 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
-use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Filters\Honeypot;
 use CodeIgniter\Filters\InvalidChars;
@@ -39,7 +38,7 @@ class Filters extends BaseConfig
         'maintenance'   => \App\Filters\MaintenanceFilter::class,
         'login'         => \App\Filters\LoginFilter::class,
         'authcheck'     => \App\Filters\AuthCheckFilter::class,
-        'csrf'          => CSRF::class,
+        'csrf'          => \App\Filters\CsrfDebugFilter::class,
         'auth'          => \App\Filters\AuthFilter::class,  
         'cronKey'       => \App\Filters\CronKeyFilter::class,   
         // 'csp'           => \App\Filters\CspFilter::class,
@@ -65,6 +64,12 @@ class Filters extends BaseConfig
             // PATCH: request observability
             'observability',
             'sessionRevoked',
+            'csrf' => [
+                'except' => [
+                    'API/*',
+                    'api/*',
+                ],
+            ],
             // 'csrf' => [
             //     'except' => [
             //         'register',
@@ -239,25 +244,6 @@ class Filters extends BaseConfig
                 'API/Alerts/fetchEmailsOnly',
                 'API/Alerts/sendDiscordAlertsBySymbol',
                 'API/Alerts/sendDiscordAlertsBySymbol/*',
-            ],
-        ],
-        'csrf' => [
-            'before' => [
-                'login',
-                'logout',
-                'register',
-                'register/*',
-                'forgot',
-                'forgot-password',
-                'reset-password',
-                'activate',
-                'activate-account',
-                'activate-account/*',
-                'resend-activation',
-                'resend-activate-account',
-                'Auth/*',
-                'get2FAQRCode',
-                'verify2FACode',
             ],
         ],
     ];
