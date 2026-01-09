@@ -104,6 +104,8 @@ $routes->group('', ['namespace' => 'App\Controllers'], static function ($routes)
 
     $routes->get('register', 'AuthController::register', ['as' => 'register']);
     $routes->post('register', 'AuthController::attemptRegister', ['as' => 'register-attempt']);
+    $routes->get('register/success', 'AuthController::registerSuccess', ['as' => 'register-success']);
+    $routes->post('register/resend-activation', 'AuthController::resendRegistrationActivation', ['as' => 'register-resend-activation']);
 // });
 
 // $routes->group('', ['namespace' => 'App\Controllers'], static function ($routes) {
@@ -971,6 +973,12 @@ $routes->group('Dashboard', ['namespace' => 'App\Modules\User\Controllers','filt
     $routes->get('onboarding', 'DashboardController::onboarding', ['as' => 'onboarding']);
     $routes->get('checkOnboardingStatus', 'DashboardController::checkOnboardingStatus', ['as' => 'check-onboarding-status']);
     $routes->post('completeOnboardingStep/(:segment)', 'DashboardController::completeOnboardingStep/$1', ['as' => 'complete-onboarding-step']);
+    $routes->get('onboarding/progress', 'OnboardingWalkthroughController::progress', ['as' => 'onboarding-progress']);
+    $routes->post('onboarding/profile', 'OnboardingWalkthroughController::saveProfile', ['as' => 'onboarding-save-profile']);
+    $routes->post('onboarding/budget-income', 'OnboardingWalkthroughController::saveBudgetIncome', ['as' => 'onboarding-save-income']);
+    $routes->post('onboarding/credit-debt', 'OnboardingWalkthroughController::saveCreditDebt', ['as' => 'onboarding-save-credit-debt']);
+    $routes->post('onboarding/recurring-expense', 'OnboardingWalkthroughController::saveRecurringExpense', ['as' => 'onboarding-save-recurring']);
+    $routes->post('onboarding/watchlist', 'OnboardingWalkthroughController::saveWatchlist', ['as' => 'onboarding-save-watchlist']);
 });
 
 $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers'],  function($routes) {

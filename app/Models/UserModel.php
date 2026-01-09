@@ -141,6 +141,24 @@ class UserModel extends Model
         }
 
         $incompleteSteps = [];
+        if (isset($profile['steps_json']) && !empty($profile['steps_json'])) {
+            $steps = json_decode($profile['steps_json'], true) ?? [];
+            foreach ($steps as $stage => $items) {
+                if (!is_array($items)) {
+                    continue;
+                }
+                foreach ($items as $key => $value) {
+                    if ($key === 'completed') {
+                        continue;
+                    }
+                    if (empty($value)) {
+                        $incompleteSteps[] = $stage . '.' . $key;
+                    }
+                }
+            }
+            return $incompleteSteps;
+        }
+
         foreach ($profile as $step => $status) {
             if ($step !== 'id' && $step !== 'user_id' && $step !== 'reminder_last_sent' && $status == 0) {
                 $incompleteSteps[] = $step;
@@ -336,8 +354,28 @@ class UserModel extends Model
     // Update specific onboarding step
     public function updateOnboardingStep($userId, $step, $status = 1)
     {
+        if ($this->db->fieldExists($step, 'bf_user_onboarding')) {
+            return $this->db->table('bf_user_onboarding')->where('user_id', $userId)->set([
+                $step => $status,
+                'updated_at' => date('Y-m-d H:i:s')
+            ])->update();
+        }
+
+        $row = $this->getOnboardingStatus($userId);
+        $steps = json_decode($row['steps_json'] ?? '', true) ?? [];
+
+        if (strpos($step, '.') !== false) {
+            [$stage, $item] = explode('.', $step, 2);
+            if (!isset($steps[$stage]) || !is_array($steps[$stage])) {
+                $steps[$stage] = [];
+            }
+            $steps[$stage][$item] = (int) $status === 1;
+        } else {
+            $steps[$step] = (int) $status === 1;
+        }
+
         return $this->db->table('bf_user_onboarding')->where('user_id', $userId)->set([
-            $step => $status,
+            'steps_json' => json_encode($steps, JSON_PRETTY_PRINT),
             'updated_at' => date('Y-m-d H:i:s')
         ])->update();
     }
