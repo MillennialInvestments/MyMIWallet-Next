@@ -6,7 +6,7 @@ use App\Config\{Auth, SiteSettings, SocialMedia};
 use App\Controllers\UserController;
 use App\Libraries\{MyMIAlerts, MyMIAnalytics, MyMIAssistant, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIInvestments, MyMIMarketing, MyMIOnboarding, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets};
 use App\Models\{AccountsModel, AlertsModel, DashboardModel, DiscordLinkModel, MarketingModel, SolanaModel, UserModel};
-use App\Services\{AccountService, BudgetService, DashboardService, EmailService, SolanaService, UserService};
+use App\Services\{AccountService, BudgetService, DashboardService, EmailService, OnboardingProgressService, SolanaService, UserService};
 use CodeIgniter\API\ResponseTrait;
 use Myth\Auth\Authorization\GroupModel;
 use DateTime;
@@ -122,6 +122,22 @@ class DashboardController extends UserController
         $this->data['cuWalletCount'] = $userInfo['cuWalletCount'];
         $this->data['MyMIGCoinSum'] = $userInfo['MyMIGCoinSum'];
         $this->data['walletID'] = $userInfo['walletID'];
+
+        /** @var OnboardingProgressService $onboardingProgress */
+        $onboardingProgress = service('onboardingProgressService');
+        $progressPayload = $onboardingProgress->computeProgress($cuID);
+        $this->data['onboardingProgress'] = $progressPayload;
+        $this->data['onboardingIncomplete'] = ! ($progressPayload['isComplete'] ?? false);
+
+        if ($this->session->get('onboarding_show_modal')) {
+            $this->data['onboardingShowModal'] = true;
+            $this->session->remove('onboarding_show_modal');
+            log_message('info', 'DashboardController: onboarding walkthrough modal triggered for user_id={id}', [
+                'id' => $cuID,
+            ]);
+        } else {
+            $this->data['onboardingShowModal'] = false;
+        }
 
         $userSolanaData = $this->getSolanaService()->getSolanaData($cuID);
         $addrRow = model(\App\Models\SolanaModel::class)->getDefaultAddressFromExchangeTable($cuID);

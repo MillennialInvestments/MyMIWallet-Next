@@ -60,7 +60,7 @@ class Auth extends \Myth\Auth\Config\Auth
      * @var array<string, string>
      */
     public $redirects = [
-        'register' => '/Dashboard',
+        'register' => '/register/success',
         'login'    => '/Dashboard',
         'logout'   => '/',
     ];

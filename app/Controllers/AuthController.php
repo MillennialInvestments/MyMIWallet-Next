@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Services\AuthAuditService;
+use App\Services\OnboardingProgressService;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\Session\Session;
@@ -185,6 +186,21 @@ class AuthController extends Controller
             log_message('error', 'Auth attemptLogin() - login succeeded but userId could not be resolved.');
         }
 
+        $user = $this->auth->user();
+        if ($user && (int) ($user->active ?? 0) === 1 && $userId !== null) {
+            /** @var OnboardingProgressService $onboardingProgress */
+            $onboardingProgress = service('onboardingProgressService');
+            $onboardingProgress->markVerifiedLogin((int) $userId);
+
+            if ($onboardingProgress->shouldTriggerWalkthrough((int) $userId)) {
+                $onboardingProgress->markWalkthroughStarted((int) $userId);
+                $this->session->set('onboarding_show_modal', true);
+                log_message('info', 'Auth attemptLogin() onboarding walkthrough queued for user_id={id}', [
+                    'id' => (int) $userId,
+                ]);
+            }
+        }
+
         // Force password reset branch
         if ($this->auth->user()->force_pass_reset === true) {
             return redirect()
@@ -332,6 +348,8 @@ class AuthController extends Controller
         $auditService = service('authAuditService');
         $request      = $this->request;
         $email        = strtolower(trim((string) ($request->getPost('email') ?? '')));
+        /** @var OnboardingProgressService $onboardingProgress */
+        $onboardingProgress = service('onboardingProgressService');
 
         $auditContext = $auditService->notifyRegistrationAttempt($email, $request);
 
@@ -411,6 +429,10 @@ class AuthController extends Controller
                 ]
             );
 
+            if ($newUserId > 0) {
+                $onboardingProgress->ensureRecord($newUserId);
+            }
+
             if ($this->config->requireActivation !== null) {
                 $activator = service('activator');
                 $sent      = $activator->send($user);
@@ -425,19 +447,88 @@ class AuthController extends Controller
 
                 $auditService->notifyRegistrationResult($email, 'success', $request, null, $auditContext);
 
+                log_message('info', 'Registration redirecting to success guide for user_id={id}', ['id' => $newUserId]);
+
                 // Success!
-                return redirect()->route('login')->with('message', lang('Auth.activationSuccess'));
+                return redirect()->to(site_url('register/success'))->with('message', lang('Auth.activationSuccess'));
             }
 
             $auditService->notifyRegistrationResult($email, 'success', $request, null, $auditContext);
 
+            log_message('info', 'Registration redirecting to success guide for user_id={id}', ['id' => $newUserId]);
+
             // Success!
-            return redirect()->route('login')->with('message', lang('Auth.registerSuccess'));
+            return redirect()->to(site_url('register/success'))->with('message', lang('Auth.registerSuccess'));
         } catch (Throwable $e) {
             $auditService->notifyRegistrationResult($email, 'failed', $request, $e, $auditContext);
 
             return redirect()->back()->withInput()->with('error', lang('Auth.unknownError'));
         }
+    }
+
+    public function registerSuccess()
+    {
+        $this->data = [
+            'config'       => $this->config,
+            'message'      => session('message'),
+            'siteSettings' => config('SiteSettings'),
+            'socialMedia'  => config('SocialMedia'),
+        ];
+
+        log_message('info', 'AuthController::registerSuccess view rendered.');
+
+        return $this->_render('App\\Views\\Auth\\register_success', $this->data);
+    }
+
+    public function resendRegistrationActivation()
+    {
+        if ($this->config->requireActivation === null) {
+            log_message('info', 'Registration resend activation skipped: activation disabled.');
+            return redirect()->to(site_url('register/success'))->with('message', lang('Auth.activationSuccess'));
+        }
+
+        $email = strtolower(trim((string) $this->request->getPost('email')));
+        $throttler = service('throttler');
+        $throttleKey = md5('register-resend:' . ($email ?: 'unknown') . ':' . $this->request->getIPAddress());
+
+        if ($throttler->check($throttleKey, 2, MINUTE) === false) {
+            log_message('warning', 'Registration resend activation throttled for {email} from {ip}', [
+                'email' => $email ?: 'unknown',
+                'ip'    => $this->request->getIPAddress(),
+            ]);
+
+            return redirect()->to(site_url('register/success'))
+                ->with('message', 'If an account exists, we will resend a verification email shortly.');
+        }
+
+        if ($email === '') {
+            log_message('notice', 'Registration resend activation requested without email.');
+            return redirect()->to(site_url('register/success'))
+                ->with('message', 'If an account exists, we will resend a verification email shortly.');
+        }
+
+        $users = model(UserModel::class);
+        $user = $users->where('email', $email)->where('active', 0)->first();
+
+        if ($user) {
+            $activator = service('activator');
+            $sent = $activator->send($user);
+            if (! $sent) {
+                log_message('error', 'Registration resend activation failed for {email}: {error}', [
+                    'email' => $email,
+                    'error' => $activator->error() ?? lang('Auth.unknownError'),
+                ]);
+            } else {
+                log_message('info', 'Registration resend activation succeeded for {email}', ['email' => $email]);
+            }
+        } else {
+            log_message('notice', 'Registration resend activation request had no matching inactive user for {email}', [
+                'email' => $email,
+            ]);
+        }
+
+        return redirect()->to(site_url('register/success'))
+            ->with('message', 'If an account exists, we will resend a verification email shortly.');
     }
 
     //--------------------------------------------------------------------
