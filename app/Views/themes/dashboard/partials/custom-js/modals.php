@@ -2,6 +2,7 @@
 $subViewData                            = [];
 // echo view('UserModule\Views\Dashboard\Investor_Profile\Security\Reset_Password');
 echo view('ManagementModule\Views\Marketing\index\modals');
+echo view('UserModule\Views\Dashboard\modals\onboarding', $subViewData);
 ?>
 <!-- Modal Structure -->
 <div class="modal fade" id="connectWalletModal" aria-hidden="true" aria-labelledby="connectWalletModalLabel" tabindex="-1">
