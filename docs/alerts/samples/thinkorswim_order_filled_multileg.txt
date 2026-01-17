@@ -1,0 +1,14 @@
+Subject: thinkorswim Alert: Order Filled
+
+Order Filled
+Strategy: Vertical Spread
+Symbol: SPY
+Action: SELL
+Filled Qty: 1
+Filled Price: 4.25
+Filled at: Aug 12, 2024 02:48 PM ET
+Order ID: TOS-321654987
+Account: PaperMoney
+Legs:
+- SELL SPY 450C 09/20/24
+- BUY SPY 455C 09/20/24

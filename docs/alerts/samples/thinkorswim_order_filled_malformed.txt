@@ -1,0 +1,9 @@
+Subject: thinkorswim Alert: Order Filled
+
+Order Filled
+Symbol: ???
+Action: BUY
+Filled Qty:
+Filled at: Aug 12, 2024 03:10 PM ET
+Order ID:
+Account: PaperMoney
