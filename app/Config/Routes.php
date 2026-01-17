@@ -331,6 +331,11 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     // ✅ AlertsController
     // ------------------------
     $routes->group('Alerts', function($routes) {
+        $routes->get('ingestCsvSignals', 'AlertsController::ingestCsvSignals');
+        $routes->get('signals', 'AlertsController::getSignals');
+        $routes->get('signalFiles', 'AlertsController::getSignalFiles');
+        $routes->get('previewSignalFile/(:num)', 'AlertsController::previewSignalFile/$1');
+        $routes->get('recalcSignalScores', 'AlertsController::recalcSignalScores');
         $routes->match(['GET', 'POST'], 'addTradeAlert', 'AlertsController::addTradeAlert');
         $routes->match(['GET', 'POST'], 'backfillCategories', 'AlertsController::backfillCategories');
         $routes->match(['GET', 'POST'], 'createTradeAlert/(:segment)', 'AlertsController::addTradeAlert');
@@ -986,6 +991,7 @@ $routes->group('Dashboard', ['namespace' => 'App\Modules\User\Controllers','filt
 
 $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers'],  function($routes) {
     $routes->get('/', 'ManagementController::index');
+    $routes->get('Signals', 'SignalsController::index');
     $routes->get('AiOps', 'AiOpsManagementController::index', ['filter' => 'permission:admin.access']);
     $routes->get('Ops', 'OpsController::index', ['filter' => 'permission:admin.access']);
     $routes->get('Ops/ajaxStatus', 'OpsController::ajaxStatus', ['filter' => 'permission:admin.access']);
