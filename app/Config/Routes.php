@@ -15,6 +15,9 @@ helper('ai');
 // $routes->get('favicon.ico', 'Assets::favicon');
 // Optional, but helpful:
 $routes->addRedirect('index.php/(:any)', '$1', 301);
+$routes->get('assets/(:any)', static function () {
+    throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+});
 
 
 // --- BEGIN: Default + explicit routes ---
