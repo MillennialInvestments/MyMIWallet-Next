@@ -1,0 +1,10 @@
+Subject: thinkorswim Alert: Order Filled
+
+Order Filled
+Symbol: NVDA
+Action: SELL
+Filled Qty: 5
+Filled Price: 451.25
+Filled at: Aug 12, 2024 11:32 AM ET
+Order ID: TOS-987654321
+Account: Live

@@ -1962,6 +1962,12 @@ $routes->group('API/Bitcoin', static function($routes) {
     $routes->post('broadcastSignedTx', 'App\Modules\APIs\Controllers\BitcoinController::broadcastSignedTx');
 });
 
+$routes->group('API/Alerts', ['namespace' => 'App\\Modules\\APIs\\Controllers'], static function($routes) {
+    $routes->match(['GET', 'POST'], 'processBrokerEmails', 'AlertsController::processBrokerEmails');
+    $routes->match(['GET', 'POST'], 'processAllEmails', 'AlertsController::processAllEmails');
+    $routes->get('previewScraper/(:num)', 'AlertsController::previewScraper/$1');
+});
+
 $routes->group('system', static function($routes) {
     $routes->get('healthz', 'System\HealthController::healthz');
     $routes->get('diag',    'System\HealthController::diag');
