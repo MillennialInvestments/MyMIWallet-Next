@@ -23,6 +23,8 @@ if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {
     exit(1);
 }
 
+ini_set('memory_limit', '768M');
+
 /*
  *---------------------------------------------------------------
  * SET THE CURRENT DIRECTORY
@@ -35,6 +37,13 @@ define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
 // Ensure the current directory is pointing to the front controller's directory
 if (getcwd() . DIRECTORY_SEPARATOR !== FCPATH) {
     chdir(FCPATH);
+}
+
+// Guard against accidentally routing static assets through CI.
+$uriPath = ltrim((string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH), '/');
+if ($uriPath !== '' && (str_starts_with($uriPath, 'assets/') || str_ends_with($uriPath, '.map') || str_ends_with($uriPath, '.xml'))) {
+    header('HTTP/1.1 404 Not Found', true, 404);
+    exit(1);
 }
 
 /*
