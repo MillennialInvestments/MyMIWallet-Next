@@ -13,6 +13,7 @@ class MyMI extends BaseConfig
         'enableAlphaVantage'     => false, // External AlphaVantage calls initiated from the Alerts dashboard
         'enableSolanaSummary'    => false, // SolanaService summary fetches triggered by this page
         'enableFullWalletBlocks' => false, // Retrieve full wallet sidebar blocks via MyMIWallets
+        'enableSignalHotFilter'  => false, // Soft filter: prioritize alerts that match weekly CSV signals
         'maxAlertsPerPage'       => 50,    // Hard cap on open alerts fetched for dashboard tables
     ];
 }
