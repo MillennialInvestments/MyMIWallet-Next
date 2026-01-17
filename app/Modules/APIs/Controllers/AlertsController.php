@@ -15,6 +15,7 @@ use App\Libraries\{
     MyMIRobinhood,
     MyMISEC
 };
+use App\Libraries\Brokers\ThinkorSwimParser;
 use App\Models\AlertsModel;
 use App\Tasks\ProcessTradeAlertChanges;
 use DateTime;
@@ -1953,6 +1954,100 @@ class AlertsController extends ResourceController
                 'message' => $e->getMessage()
             ], 500);
         }
+    }
+
+    public function processBrokerEmails()
+    {
+        if ($response = $this->enforceCronKey()) {
+            return $response;
+        }
+
+        log_message('info', '⚡ processBrokerEmails - Started.');
+        $report = [];
+
+        try {
+            $processed = $this->alertsModel->processScrapedSymbols(null, 'thinkorswim', $report);
+            log_message('info', '✅ processBrokerEmails - Completed.', $report);
+            return $this->respond([
+                'status' => 'success',
+                'data' => [
+                    'processed' => $processed,
+                    'report' => $report,
+                ],
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', '❌ processBrokerEmails - Error: ' . $e->getMessage());
+            return $this->respond([
+                'status' => 'error',
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function processAllEmails()
+    {
+        if ($response = $this->enforceCronKey()) {
+            return $response;
+        }
+
+        log_message('info', '⚡ processAllEmails - Started.');
+        $report = [];
+
+        try {
+            $this->alertManager->fetchAndStoreAlertsEmails();
+            $processed = $this->alertsModel->processScrapedSymbols(null, null, $report);
+            log_message('info', '✅ processAllEmails - Completed.', $report);
+            return $this->respond([
+                'status' => 'success',
+                'data' => [
+                    'processed' => $processed,
+                    'report' => $report,
+                ],
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', '❌ processAllEmails - Error: ' . $e->getMessage());
+            return $this->respond([
+                'status' => 'error',
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function previewScraper($id)
+    {
+        if ($guard = $this->guardAdmin()) {
+            return $guard;
+        }
+
+        $record = $this->db->table('bf_investment_scraper')->where('id', (int) $id)->get()->getRowArray();
+        if (! $record) {
+            return $this->respond([
+                'status' => 'error',
+                'message' => 'Scraper record not found.',
+            ], 404);
+        }
+
+        $subject = (string) ($record['email_subject'] ?? '');
+        $body = (string) ($record['email_body'] ?? '');
+        $parser = new ThinkorSwimParser();
+
+        $parsed = null;
+        $parserMatch = null;
+        if ($parser->canParse($subject, $body)) {
+            $parsed = $parser->parse($subject, $body);
+            $parserMatch = ThinkorSwimParser::class;
+        }
+
+        return $this->respond([
+            'status' => 'success',
+            'data' => [
+                'record_id' => $record['id'],
+                'source' => $record['source'] ?? null,
+                'subject' => $subject,
+                'parsed' => $parsed,
+                'parser' => $parserMatch,
+            ],
+        ]);
     }
 
     // Process the CSV file and save fundamentals in the database

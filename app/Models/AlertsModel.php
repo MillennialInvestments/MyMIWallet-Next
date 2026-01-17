@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Libraries\Brokers\ThinkorSwimParser;
+use App\Libraries\MyMIDiscord;
 use CodeIgniter\Model;
 use Config\APIs;
 
@@ -42,6 +44,8 @@ class AlertsModel extends Model
         'custom_scripts_analytics','order_status',
         // Marketing alignment fields
         'keywords','last_marketed_at','marketing_status','distribution_channels',
+        // Broker execution alert fields
+        'source','account_type','broker_order_id','execution_id','filled_qty','filled_price','filled_at','side','notified_discord',
     ];
 
     protected $validationRules = [
@@ -1376,11 +1380,36 @@ class AlertsModel extends Model
             ->getResultArray();
     }
 
-    public function getPendingScraperRecords($limit = 200)
+    public function getPendingScraperRecords(int $limit = 200, ?string $sourceFilter = null): array
     {
-        return $this->db->table('bf_investment_scraper')
-            ->select('id, email_subject, email_body, email_date, category, tag, class, segment, summary, email_identifier')
-            ->where('status', 'In Review')
+        $select = [
+            'id',
+            'email_subject',
+            'email_body',
+            'email_date',
+            'category',
+            'tag',
+            'class',
+            'segment',
+            'summary',
+            'email_identifier',
+        ];
+
+        foreach (['source', 'account_type', 'message_hash'] as $column) {
+            if ($this->hasColumn('bf_investment_scraper', $column)) {
+                $select[] = $column;
+            }
+        }
+
+        $builder = $this->db->table('bf_investment_scraper')
+            ->select(implode(', ', $select))
+            ->where('status', 'In Review');
+
+        if (! empty($sourceFilter) && $this->hasColumn('bf_investment_scraper', 'source')) {
+            $builder->where('source', $sourceFilter);
+        }
+
+        return $builder
             ->limit($limit)
             ->get()
             ->getResultArray();
@@ -1859,6 +1888,19 @@ class AlertsModel extends Model
             ->getRowArray();
     }
 
+    public function findScraperByMessageHash(string $source, string $messageHash): ?array
+    {
+        if (! $this->hasColumn('bf_investment_scraper', 'message_hash') || ! $this->hasColumn('bf_investment_scraper', 'source')) {
+            return null;
+        }
+
+        return $this->db->table('bf_investment_scraper')
+            ->where('source', $source)
+            ->where('message_hash', $messageHash)
+            ->get()
+            ->getRowArray();
+    }
+
     public function insertScraperEmail(array $data): bool
     {
         return (bool) $this->db->table('bf_investment_scraper')->insert($data);
@@ -2208,6 +2250,14 @@ class AlertsModel extends Model
             $data['email_identifier'] = $snapshot['email_identifier'];
         }
 
+        if ($this->hasColumn('bf_investment_alert_history', 'trade_alert_id') && isset($snapshot['trade_alert_id'])) {
+            $data['trade_alert_id'] = $snapshot['trade_alert_id'];
+        }
+
+        if ($this->hasColumn('bf_investment_alert_history', 'execution_id') && isset($snapshot['execution_id'])) {
+            $data['execution_id'] = $snapshot['execution_id'];
+        }
+
         if ($this->hasColumn('bf_investment_alert_history', 'created_on')) {
             $data['created_on'] = $snapshot['created_on'] ?? date('Y-m-d H:i:s');
         }
@@ -2219,21 +2269,43 @@ class AlertsModel extends Model
         }
     }
 
-    public function processScrapedSymbols(?callable $symbolExtractor = null): bool
+    public function processScrapedSymbols(?callable $symbolExtractor = null, ?string $sourceFilter = null, ?array &$report = null): bool
     {
-        log_message('info', '⚡ Processing scraped emails for trade alerts...');
+        $runId = bin2hex(random_bytes(8));
+        $start = microtime(true);
+        $report = [
+            'run_id' => $runId,
+            'source_filter' => $sourceFilter,
+            'processed' => 0,
+            'inserted' => 0,
+            'duplicates' => 0,
+            'parse_failures' => 0,
+            'started_at' => date('Y-m-d H:i:s'),
+        ];
 
-        $records = $this->getPendingScraperRecords();
+        log_message('info', '⚡ Processing scraped emails for trade alerts...', [
+            'run_id' => $runId,
+            'source_filter' => $sourceFilter,
+        ]);
+
+        $records = $this->getPendingScraperRecords(200, $sourceFilter);
         if (empty($records)) {
-            log_message('info', '⚠️ No new emails found to process.');
+            log_message('info', '⚠️ No new emails found to process.', ['run_id' => $runId]);
+            $report['duration_ms'] = (int) ((microtime(true) - $start) * 1000);
+            $report['memory_peak'] = memory_get_peak_usage(true);
             return false;
         }
 
         $processed = false;
 
         foreach ($records as $record) {
-            $processed = $this->processScraperRecordPayload($record, $symbolExtractor) || $processed;
+            $processed = $this->processScraperRecordPayload($record, $symbolExtractor, $report) || $processed;
         }
+
+        $report['duration_ms'] = (int) ((microtime(true) - $start) * 1000);
+        $report['memory_peak'] = memory_get_peak_usage(true);
+
+        log_message('info', '✅ Scraper processing summary', $report);
 
         return $processed;
     }
@@ -2249,13 +2321,79 @@ class AlertsModel extends Model
         return $this->processScraperRecordPayload($record, $symbolExtractor);
     }
 
-    protected function processScraperRecordPayload(array $record, ?callable $symbolExtractor = null): bool
+    protected function processScraperRecordPayload(array $record, ?callable $symbolExtractor = null, ?array &$report = null): bool
     {
         log_message('info', "📩 Processing Email ID: {$record['id']}");
 
         $subject = (string) ($record['email_subject'] ?? '');
         $body    = (string) ($record['email_body'] ?? '');
         $text    = trim($subject . ' ' . $body);
+
+        if ($report === null) {
+            $report = [];
+        }
+
+        $brokerPayload = $this->parseBrokerExecutionPayload($subject, $body, $report);
+        if ($brokerPayload !== null) {
+            $symbol = strtoupper($brokerPayload['symbol']);
+            if (! $this->ensureTickerExists($symbol)) {
+                log_message('warning', "⚠️ Skipping broker alert for {$symbol}; unable to verify ticker existence.");
+                $this->markScraperRecordProcessed($record['id']);
+                return false;
+            }
+
+            $alertData = [
+                'ticker'            => $symbol,
+                'status'            => 'In Review',
+                'category'          => $record['category'] ?? 'Broker Fill',
+                'tag'               => $record['tag'] ?? null,
+                'class'             => $record['class'] ?? null,
+                'segment'           => $record['segment'] ?? null,
+                'created_on'        => date('Y-m-d H:i:s'),
+                'last_updated'      => date('Y-m-d'),
+                'last_updated_time' => date('H:i:s'),
+                'source'            => $brokerPayload['source'],
+                'account_type'      => $brokerPayload['account_type'],
+                'broker_order_id'   => $brokerPayload['broker_order_id'] ?? null,
+                'execution_id'      => $brokerPayload['execution_id'],
+                'filled_qty'        => $brokerPayload['filled_qty'],
+                'filled_price'      => $brokerPayload['filled_price'],
+                'filled_at'         => $brokerPayload['filled_at'],
+                'side'              => $brokerPayload['side'],
+                'price'             => $brokerPayload['filled_price'],
+                'current_price'     => $brokerPayload['filled_price'],
+                'alert_created'     => 1,
+                'send_alert'        => 0,
+                'notification_sent' => 0,
+                'notified_discord'  => 0,
+            ];
+
+            $upserted = $this->upsertExecutionAlert($alertData);
+            if ($upserted['status'] === 'inserted') {
+                $report['inserted'] = ($report['inserted'] ?? 0) + 1;
+                $alertId = $upserted['id'] ?? null;
+                $this->recordAlertHistory([
+                    'ticker'           => $symbol,
+                    'alerted_on'       => $brokerPayload['filled_at'] ?? ($record['email_date'] ?? date('Y-m-d H:i:s')),
+                    'status'           => 'Filled',
+                    'category'         => $alertData['category'],
+                    'occurrences'      => 1,
+                    'email_identifier' => $record['email_identifier'] ?? null,
+                    'trade_alert_id'   => $alertId,
+                    'execution_id'     => $alertData['execution_id'],
+                ]);
+
+                if ($alertId !== null) {
+                    $this->queueExecutionDiscordAlert(array_merge($alertData, ['id' => $alertId]));
+                }
+            } elseif ($upserted['status'] === 'duplicate') {
+                $report['duplicates'] = ($report['duplicates'] ?? 0) + 1;
+            }
+
+            $report['processed'] = ($report['processed'] ?? 0) + 1;
+            $this->markScraperRecordProcessed($record['id']);
+            return true;
+        }
 
         $symbols = $symbolExtractor ? (array) $symbolExtractor($text) : $this->defaultSymbolExtractor($text);
         $symbols = array_values(array_unique(array_map('strtoupper', $symbols)));
@@ -2297,6 +2435,7 @@ class AlertsModel extends Model
             $this->recordAlertHistory($historyPayload);
         }
 
+        $report['processed'] = ($report['processed'] ?? 0) + 1;
         $this->markScraperRecordProcessed($record['id']);
         return true;
     }
@@ -2318,6 +2457,125 @@ class AlertsModel extends Model
         return array_values(array_filter($symbols, static function (string $symbol) use ($stoplist): bool {
             return $symbol !== '' && !in_array($symbol, $stoplist, true);
         }));
+    }
+
+    private function parseBrokerExecutionPayload(string $subject, string $body, ?array &$report = null): ?array
+    {
+        foreach ($this->getBrokerParsers() as $parser) {
+            if (! $parser->canParse($subject, $body)) {
+                continue;
+            }
+
+            $parsed = $parser->parse($subject, $body);
+            if ($parsed === null) {
+                if ($report !== null) {
+                    $report['parse_failures'] = ($report['parse_failures'] ?? 0) + 1;
+                }
+                continue;
+            }
+
+            return $parsed;
+        }
+
+        return null;
+    }
+
+    /**
+     * @return array<int, \\App\\Libraries\\Brokers\\BrokerParserInterface>
+     */
+    private function getBrokerParsers(): array
+    {
+        return [
+            new ThinkorSwimParser(),
+        ];
+    }
+
+    public function upsertExecutionAlert(array $payload): array
+    {
+        $executionId = $payload['execution_id'] ?? null;
+        if (! $executionId) {
+            log_message('warning', 'upsertExecutionAlert skipped: missing execution_id.');
+            return ['status' => 'error', 'message' => 'Missing execution_id'];
+        }
+
+        try {
+            $this->db->transStart();
+
+            $existing = $this->db->table('bf_investment_trade_alerts')
+                ->select('id')
+                ->where('execution_id', $executionId)
+                ->get()
+                ->getRowArray();
+
+            if ($existing) {
+                $this->db->transComplete();
+                log_message('info', 'upsertExecutionAlert duplicate skipped.', [
+                    'execution_id' => $executionId,
+                    'existing_id' => $existing['id'] ?? null,
+                ]);
+                return ['status' => 'duplicate', 'id' => $existing['id'] ?? null];
+            }
+
+            $this->db->table('bf_investment_trade_alerts')->insert($payload);
+            $insertId = (int) $this->db->insertID();
+
+            $this->db->transComplete();
+
+            if ($this->db->transStatus() === false || $insertId === 0) {
+                log_message('error', 'upsertExecutionAlert insert failed.', [
+                    'execution_id' => $executionId,
+                    'db_error' => $this->db->error(),
+                ]);
+                return ['status' => 'error', 'message' => 'Insert failed'];
+            }
+
+            log_message('info', 'upsertExecutionAlert inserted.', [
+                'execution_id' => $executionId,
+                'id' => $insertId,
+            ]);
+
+            return ['status' => 'inserted', 'id' => $insertId];
+        } catch (\\Throwable $e) {
+            log_message('error', 'upsertExecutionAlert exception: ' . $e->getMessage());
+            return ['status' => 'error', 'message' => $e->getMessage()];
+        }
+    }
+
+    private function queueExecutionDiscordAlert(array $alert): void
+    {
+        if (! empty($alert['notified_discord'])) {
+            return;
+        }
+
+        $accountType = strtolower((string) ($alert['account_type'] ?? 'paper'));
+        $channelKey = $accountType === 'live' ? 'trade_alerts' : 'paper_trades';
+        $filledPrice = isset($alert['filled_price']) ? number_format((float) $alert['filled_price'], 4) : '0.00';
+        $filledQty = $alert['filled_qty'] ?? '';
+        $filledAt = $alert['filled_at'] ?? '';
+        $sourceLabel = strtoupper((string) ($alert['source'] ?? 'BROKER'));
+        $accountLabel = ucfirst($accountType);
+
+        $content = "**{$alert['ticker']}** — {$alert['side']} @ {$filledPrice}\n"
+            . "Qty: {$filledQty}\n"
+            . "Timestamp: {$filledAt}\n"
+            . "Source: {$sourceLabel} {$accountLabel}";
+
+        $discord = new MyMIDiscord();
+        $queued = $discord->enqueuePlain($channelKey, $content, [
+            'dedupe_key' => $alert['execution_id'] ?? null,
+            'priority' => 6,
+        ]);
+
+        if ($queued && ! empty($alert['id'])) {
+            $this->markTradeAlertDiscordNotified((int) $alert['id']);
+        }
+    }
+
+    public function markTradeAlertDiscordNotified(int $alertId): bool
+    {
+        return (bool) $this->db->table('bf_investment_trade_alerts')
+            ->where('id', $alertId)
+            ->update(['notified_discord' => 1]);
     }
     public function processTradeAlertsInBatches($batchSize = 50)
     {
@@ -2377,7 +2635,7 @@ class AlertsModel extends Model
         }
 
         try {
-            $inserted = $this->db->table($this->table)->insert($emailData);
+            $inserted = $this->db->table('bf_investment_scraper')->insert($emailData);
             if (!$inserted) {
                 throw new \Exception(json_encode($this->db->error()));
             }

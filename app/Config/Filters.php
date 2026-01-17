@@ -241,6 +241,8 @@ class Filters extends BaseConfig
                 'API/Alerts/fetchEmailAlerts',
                 'API/Alerts/distributeAlerts',
                 'API/Alerts/sendDiscordAlerts',
+                'API/Alerts/processBrokerEmails',
+                'API/Alerts/processAllEmails',
                 'API/Alerts/fetchEmailsOnly',
                 'API/Alerts/sendDiscordAlertsBySymbol',
                 'API/Alerts/sendDiscordAlertsBySymbol/*',
