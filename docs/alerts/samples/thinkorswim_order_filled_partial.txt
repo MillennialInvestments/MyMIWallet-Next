@@ -1,0 +1,10 @@
+Subject: thinkorswim Alert: Order Filled (Partial)
+
+Order Filled (Partial)
+Symbol: TSLA
+Action: BUY
+Filled Qty: 3
+Filled Price: 248.10
+Filled at: Aug 12, 2024 01:05 PM ET
+Order ID: TOS-555444333
+Account: Paper

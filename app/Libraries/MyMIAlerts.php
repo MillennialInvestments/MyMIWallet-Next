@@ -710,6 +710,49 @@ class MyMIAlerts
         return null;
     }
 
+    private function canonicalizeEmailText(string $content): string
+    {
+        $decoded = html_entity_decode($content, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $stripped = strip_tags($decoded);
+        $normalized = preg_replace('/\\s+/', ' ', $stripped ?? '');
+        return trim($normalized ?? '');
+    }
+
+    private function detectBrokerSource(string $subject, string $sender, string $body): ?string
+    {
+        $haystack = strtolower($subject . ' ' . $sender . ' ' . $body);
+        if (str_contains($haystack, 'thinkorswim') || str_contains($haystack, 'td ameritrade')) {
+            return 'thinkorswim';
+        }
+
+        return null;
+    }
+
+    private function detectAccountType(string $content): string
+    {
+        $lower = strtolower($content);
+        if (str_contains($lower, 'live') || str_contains($lower, 'real money')) {
+            return 'live';
+        }
+
+        if (str_contains($lower, 'paper') || str_contains($lower, 'papermoney') || str_contains($lower, 'simulated')) {
+            return 'paper';
+        }
+
+        return 'paper';
+    }
+
+    private function scraperColumnExists(string $column): bool
+    {
+        foreach ($this->db->getFieldData('bf_investment_scraper') as $field) {
+            if (strcasecmp($field->name, $column) === 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function ingestEmailPayload(array $payload): ?array
     {
         $subject    = trim((string) ($payload['subject'] ?? 'No Subject'));
@@ -719,6 +762,17 @@ class MyMIAlerts
         $sender     = $this->formatSender($payload['sender'] ?? '[Unknown Sender]');
 
         $identifier = $payload['identifier'] ?? md5($subject . $date . $sender);
+
+        $source = $this->detectBrokerSource($subject, $rawSender ?: $sender, $body) ?? 'unknown';
+        $accountType = $source === 'thinkorswim'
+            ? $this->detectAccountType($subject . ' ' . $body)
+            : null;
+        $messageHash = hash('sha256', $this->canonicalizeEmailText($subject . "\n" . $body));
+
+        if ($this->alertsModel->findScraperByMessageHash($source, $messageHash)) {
+            log_message('info', sprintf('⚠️ Duplicate alert email skipped (source=%s hash=%s)', $source, $messageHash));
+            return null;
+        }
 
         if ($this->alertsModel->isEmailProcessed($identifier)) {
             log_message('info', sprintf('⚠️ Duplicate alert email skipped (%s)', $identifier));
@@ -773,6 +827,16 @@ class MyMIAlerts
             'segment'          => $segment,
             'created_on'       => date('Y-m-d H:i:s'),
         ];
+
+        if ($this->scraperColumnExists('source')) {
+            $emailData['source'] = $source;
+        }
+        if ($accountType !== null && $this->scraperColumnExists('account_type')) {
+            $emailData['account_type'] = $accountType;
+        }
+        if ($this->scraperColumnExists('message_hash')) {
+            $emailData['message_hash'] = $messageHash;
+        }
 
         $insertId = $this->alertsModel->storeEmails($emailData);
 
@@ -2225,6 +2289,7 @@ class MyMIAlerts
 
         $discord->dispatch('alerts.opened', $payload);
         $this->alertsModel->updateMarketingContent($tradeAlert['id'], ['notification_sent' => 1]);
+        $this->alertsModel->markTradeAlertDiscordNotified((int) $tradeAlert['id']);
         log_message('info', "✅ Discord alert queued for: {$tradeAlert['ticker']}");
     }
 
@@ -2296,6 +2361,14 @@ class MyMIAlerts
             'data'   => $response,
             'alert'  => $alert,
         ];
+    }
+
+    /**
+     * Placeholder hook for future trade narrative generation (voice/video scripts).
+     */
+    public function generateTradeNarrative(array $alert): string
+    {
+        return (string) ($alert['analysis_summary'] ?? ($alert['trade_description'] ?? ''));
     }
     
     public function sendDiscordTradeAlert($tradeAlert, $tier) {

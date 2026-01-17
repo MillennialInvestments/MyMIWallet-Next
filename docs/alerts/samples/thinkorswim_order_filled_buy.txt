@@ -1,0 +1,10 @@
+Subject: thinkorswim Alert: Order Filled
+
+Order Filled
+Symbol: AAPL
+Action: BUY
+Filled Qty: 10
+Filled Price: 189.50
+Filled at: Aug 12, 2024 10:15 AM ET
+Order ID: TOS-123456789
+Account: PaperMoney
