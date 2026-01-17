@@ -15,8 +15,11 @@ use App\Libraries\{
     MyMIRobinhood,
     MyMISEC
 };
+use App\Libraries\Signals\MyMISignalIngestor;
 use App\Libraries\Brokers\ThinkorSwimParser;
 use App\Models\AlertsModel;
+use App\Models\SignalFilesModel;
+use App\Models\SignalsModel;
 use App\Tasks\ProcessTradeAlertChanges;
 use DateTime;
 
@@ -2728,6 +2731,119 @@ class AlertsController extends ResourceController
             log_message('error', 'genKeys error: {msg}', ['msg' => $e->getMessage()]);
             return Http::jsonError('Key generation failed', 500);
         }
+    }
+
+    public function ingestCsvSignals()
+    {
+        // Token guard: reuse your existing token patterns.
+        $token = $this->request->getGet('token');
+        // TODO: replace with your existing guard method or env var compare.
+        // if (! $this->isValidCronToken($token)) return $this->failUnauthorized('Invalid token');
+
+        $week = $this->request->getGet('week');
+        if (! $week) {
+            // default current ISO week
+            $dt = new \DateTime();
+            $week = $dt->format('o') . '-' . $dt->format('W');
+        }
+
+        $baseDir = FCPATH . 'assets/documents/Alerts'; // matches public/assets/...
+
+        $svc = new MyMISignalIngestor();
+        $result = $svc->ingestWeek($week, $baseDir);
+
+        // Cross-file reinforcement pass
+        $signalsModel = new SignalsModel();
+        $recalc = $signalsModel->recalcWeeklyScores($week);
+
+        return $this->respond([
+            'status' => 'success',
+            'data' => [
+                'ingest' => $result,
+                'recalc' => $recalc,
+            ],
+        ]);
+    }
+
+    public function getSignals()
+    {
+        $week = $this->request->getGet('week');
+        if (! $week) {
+            $dt = new \DateTime();
+            $week = $dt->format('o') . '-' . $dt->format('W');
+        }
+
+        $model = new SignalsModel();
+        $rows = $model->listSignals($week, 5000);
+
+        return $this->respond([
+            'status' => 'success',
+            'data' => $rows,
+        ]);
+    }
+
+    public function getSignalFiles()
+    {
+        $week = $this->request->getGet('week');
+        if (! $week) {
+            $dt = new \DateTime();
+            $week = $dt->format('o') . '-' . $dt->format('W');
+        }
+
+        $model = new SignalFilesModel();
+        $rows = $model->where('week_key', $week)->orderBy('processed_at', 'DESC')->findAll();
+
+        return $this->respond([
+            'status' => 'success',
+            'data' => $rows,
+        ]);
+    }
+
+    public function previewSignalFile($id)
+    {
+        $files = new SignalFilesModel();
+        $file = $files->find($id);
+
+        if (! $file || empty($file['file_path']) || ! is_file($file['file_path'])) {
+            return $this->failNotFound('Signal file not found');
+        }
+
+        // Load first ~50 rows for preview
+        $rows = [];
+        $handle = fopen($file['file_path'], 'r');
+        if ($handle) {
+            $header = fgetcsv($handle);
+            $count = 0;
+            while (($r = fgetcsv($handle)) !== false && $count < 50) {
+                $rows[] = $r;
+                $count++;
+            }
+            fclose($handle);
+        }
+
+        // Render modal partial (HTML)
+        return view('App\\Modules\\Management\\Views\\Signals\\modals\\preview_file', [
+            'file' => $file,
+            'header' => $header ?? [],
+            'rows' => $rows,
+        ]);
+    }
+
+    public function recalcSignalScores()
+    {
+        $week = $this->request->getGet('week');
+        if (! $week) {
+            $dt = new \DateTime();
+            $week = $dt->format('o') . '-' . $dt->format('W');
+        }
+
+        $model = new SignalsModel();
+        $recalc = $model->recalcWeeklyScores($week);
+
+        return $this->respond([
+            'status' => 'success',
+            'data' => $recalc,
+        ]);
     }
 
     /**

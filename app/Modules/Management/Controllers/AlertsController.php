@@ -9,7 +9,7 @@ use Myth\Auth\Authorization\GroupModel;
 use App\Config\{Auth, SiteSettings, SocialMedia}; 
 use App\Controllers\UserController;
 use App\Libraries\{MyMIAdvisor, MyMIAlerts, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIUser, MyMIWallet, MyMIWallets};
-use App\Models\{AccountsModel, AlertsModel, BudgetModel, UserModel};
+use App\Models\{AccountsModel, AlertsModel, BudgetModel, SignalsModel, UserModel};
 // use App\Modules\User\Libraries\{DashboardLibrary}; 
 use CodeIgniter\API\ResponseTrait; // Import the ResponseTrait
 use Google\Cloud\TextToSpeech\V1\TextToSpeechClient;
@@ -633,6 +633,22 @@ class AlertsController extends UserController
             return false;
         }
     
+        if (!empty($this->alertsFlags['enableSignalHotFilter'])) {
+            $dt = new \DateTime();
+            $weekKey = $dt->format('o') . '-' . $dt->format('W');
+            $signalsModel = new SignalsModel();
+            $symbol = $alert['ticker'] ?? '';
+            $isHot = $signalsModel->isSymbolHotThisWeek($symbol, $weekKey);
+
+            if (!$isHot) {
+                $alert['distribution_priority'] = 'low';
+                $alert['signal_hot'] = false;
+                log_message('info', "Signal-hot filter (soft): {$symbol} not found for {$weekKey}; continuing with low-priority distribution.");
+            } else {
+                $alert['signal_hot'] = true;
+            }
+        }
+
         // Distribute alert (e.g., send emails, generate promotions)
         $this->sendPromotionalEmail($alert);
         $this->alertsModel->incrementDistributedCount($alert['ticker']);
