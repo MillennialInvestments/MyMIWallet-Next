@@ -39,6 +39,36 @@ class SupportController extends UserController
         return $this->renderTheme('SupportModule\Views\Support\index', $data);
     }
 
+    public function view(string $slug = '')
+    {
+        $slug = trim($slug);
+        if ($slug === '') {
+            return redirect()->to(site_url('Support'));
+        }
+
+        $data = $this->commonData();
+        $normalized = strtolower($slug);
+
+        if ($normalized === 'faq') {
+            return $this->renderTheme('SupportModule/Support/faq', $data);
+        }
+
+        $article = $this->supportModel?->findBySlug($slug);
+        if (! empty($article)) {
+            $data['article'] = $article;
+            return $this->renderTheme('SupportModule/Support/article', $data);
+        }
+
+        $viewCandidate = 'SupportModule/Support/' . str_replace('-', '_', strtolower($slug));
+        if ($this->viewExists($viewCandidate)) {
+            return $this->renderTheme($viewCandidate, $data);
+        }
+
+        log_message('info', 'SupportController::view - slug not found: ' . $slug);
+
+        return redirect()->to(site_url('Support'))->with('warning', 'Support page not found.');
+    }
+
     public function article(string $slug = 'welcome')
     {
         $data = $this->commonData();

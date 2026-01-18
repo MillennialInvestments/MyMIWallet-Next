@@ -152,9 +152,9 @@ class BlogController extends UserController
 
         $blogPost = $this->blogModel->getPostBySlug($slug);
 
-        if (!$blogPost) {
-            log_message('error', 'BlogController::viewBlog - post not found for slug: ' . $slug);
-            throw new \CodeIgniter\Exceptions\PageNotFoundException('Blog post not found');
+        if (! $blogPost) {
+            log_message('warning', 'BlogController::viewBlog - post not found for slug: ' . $slug);
+            return redirect()->to(site_url('Blog'))->with('warning', 'Blog post not found.');
         }
 
         $data = $this->commonData();
@@ -168,9 +168,21 @@ class BlogController extends UserController
         return $output;
     }
 
-    public function view(string $category, string $slug)
+    public function view(string $categoryOrSlug, ?string $slug = null)
     {
-        return $this->viewBlog($slug);
+        if ($slug !== null) {
+            return $this->viewBlog($slug);
+        }
+
+        $candidate = trim($categoryOrSlug);
+        if ($candidate !== '') {
+            $blogPost = $this->blogModel->getPostBySlug($candidate);
+            if ($blogPost) {
+                return $this->viewBlog($candidate);
+            }
+        }
+
+        return $this->category($categoryOrSlug);
     }
 
     public function category(string $category)

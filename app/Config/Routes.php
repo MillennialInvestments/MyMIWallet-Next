@@ -49,7 +49,7 @@ $routes->setAutoRoute(false);
 $routes->get('/', 'Home::index');
 $routes->addRedirect('Home', '/', 301);
 $routes->addRedirect('News', 'Blog/News-And-Updates', 301);
-$routes->get('Stock/(:segment)/(:segment)', 'App\\Modules\\Management\\Controllers\\AlertsController::stockOverview/$1/$2');
+$routes->get('Stock/(:segment)/(:segment)', 'StockController::show/$1/$2');
 // $routes->get('Dashboard', 'App\\Modules\\User\\Controllers\\BudgetController::index', ['filter' => 'login']);
 
 // app/Config/Routes.php
@@ -968,7 +968,7 @@ $routes->group('Blog', ['namespace' => 'App\Modules\Blog\Controllers'],  functio
     });
 
     $routes->get('(:segment)/(:segment)', 'BlogController::view/$1/$2');
-    $routes->get('(:segment)', 'BlogController::category/$1');
+    $routes->get('(:segment)', 'BlogController::view/$1');
 });
 
 // Dashboard
@@ -1457,11 +1457,11 @@ $routes->group('Support', ['namespace' => 'App\Modules\Support\Controllers'], fu
     $routes->get('/', 'SupportController::index');
     $routes->get('Article/(:segment)', 'SupportController::article/$1');
     $routes->get('Discord', 'SupportController::discordOnboarding');
-    $routes->get('FAQ', 'SupportController::faq');
-    $routes->post('Feedback', 'SupportController::feedback');
-    $routes->get('Test', 'SupportController::test');
-    $routes->get('Test-Email', 'SupportController::sendTestEmail');
-    // Define other routes for 'blog' module
+    $routes->get('FAQ', 'SupportController::view/FAQ');
+    $routes->match(['get', 'post'], 'Feedback', 'SupportController::view/Feedback');
+    $routes->get('Test', 'SupportController::view/Test');
+    $routes->get('Test-Email', 'SupportController::view/Test-Email');
+    $routes->get('(:any)', 'SupportController::view/$1');
 });
 
 // How It Works (public CI4 user guides)
@@ -1985,7 +1985,7 @@ $routes->group('system', static function($routes) {
     $routes->get('diag',    'System\HealthController::diag');
 });
 
-$routes->get('Support/FAQ', 'App\\Modules\\Support\\Controllers\\Support::faq');
+$routes->get('Support/FAQ', 'App\\Modules\\Support\\Controllers\\SupportController::view/FAQ');
 $routes->get('Subscribe/Daily-Financial-News', static function () {
     return redirect()->to(site_url('Subscribe'));
 });

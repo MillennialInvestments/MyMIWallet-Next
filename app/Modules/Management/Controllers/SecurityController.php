@@ -701,11 +701,12 @@ class SecurityController extends UserController
 
     private function setSecureCookie($name, $value)
     {
+        $secureFlag = (bool) (config('App')->cookieSecure ?? true);
         $cookie = [
             'name' => $name,
             'value' => $value,
             'expire' => '86500',
-            'secure' => true,
+            'secure' => $secureFlag,
         ];
         set_cookie($cookie);
     }

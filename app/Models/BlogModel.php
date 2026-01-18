@@ -10,7 +10,18 @@ class BlogModel extends Model
     protected $primaryKey = 'id';
     protected $returnType = 'object';
     protected $useSoftDeletes = false;
-    protected $allowedFields = [];
+    protected $allowedFields = [
+        'slug',
+        'title',
+        'excerpt',
+        'content',
+        'author',
+        'published_at',
+        'cover_image',
+        'updated_at',
+        'status',
+        'meta_json',
+    ];
 
     public function getPostBySlug(string $slug): ?array
     {
