@@ -44,7 +44,7 @@ $timeInterval = match ($accountIntervals) {
     'Monthly' => $monthsLeft,
     'Quarterly' => floor($monthsLeft / 3),
     'Semi-Annually' => floor($monthsLeft / 6),
-    'Annually' => floor($monthsLeft / 12),
+    'Annually', 'Annual' => floor($monthsLeft / 12),
     default => 0,
 };
 
@@ -67,7 +67,7 @@ while ($i <= $timeInterval) {
                 'Monthly' => 'P1M',
                 'Quarterly' => 'P3M',
                 'Semi-Annually' => 'P6M',
-                'Annually' => 'P1Y',
+                'Annually', 'Annual' => 'P1Y',
                 default => 'P1M',
             };
             $dueDate->add(new DateInterval($addUnit));

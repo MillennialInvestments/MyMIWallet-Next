@@ -97,10 +97,15 @@ if(!empty($getAccountInfo)) {
     }
     // echo $accountIsDebtText;  
     $accountIntervals                   = $getAccountInfo['accountIntervals']; 
+    $accountRecurringSchedule           = $getAccountInfo['accountRecurringSchedule'] ?? $accountIntervals ?? '';
     $accountDesignatedDate              = $getAccountInfo['accountDesDate'];   
 }
 $accountTypeAltText                         = $accountType;
 $accountTypeAltURl                          = site_url('/Budget/Add/' . $accountType);
+// Recurring schedule inventory: recurring_schedule stores the selected cadence,
+// and intervals remains the field used by the legacy schedule generation logic.
+$budgetService = new \App\Services\BudgetService($cuID ?? null);
+$recurringScheduleOptions = $budgetService->getRecurringSchedules(strtolower((string) $accountType));
 
 // Fetch related records based on name or source_type
 $relatedRecords = array_filter($userBudget['userBudgetRecords'], function ($record) use ($accountName, $accountSourceType) {
@@ -137,6 +142,7 @@ $fieldData = array(
     'accountGrossAmount'                => $accountGrossAmount,
     'accountRecurringAccount'           => $accountRecurringAccount,
     'accountRecurringPrimary'           => $accountRecurringPrimary,
+    'accountRecurringSchedule'          => $accountRecurringSchedule,
     'accountType'                       => $accountType,
     'accountSourceType'                 => $accountSourceType,
     'accountIsDebt'                     => $accountIsDebt,
@@ -147,6 +153,7 @@ $fieldData = array(
     'accountDesDate'                    => $accountDesignatedDate,
     'accountWeeksLeft'                  => $accountWeeksLeft,
     'accountType'	                    => $accountType,
+    'recurringScheduleOptions'          => $recurringScheduleOptions,
 );
 
 $viewFileData                           = [
@@ -237,17 +244,21 @@ if (document.referrer && !isDisallowed(document.referrer)) {
 }
 
 console.log("Redirect URL: " + redirectURL);
-function showDiv(select){
-    if(select.value=="Yes"){
-        document.getElementById('recurring_fields').style.display = "block";
-        // const redirectURL                   = <?php //echo '\'' . site_url('/Budget/Recurring-Account/Schedule') . '\'';?>;
-    } else if (select.value=="No"){
-        document.getElementById('recurring_fields').style.display = "none";
-        // const redirectURL                   = <?php //echo '\'' . site_url('/Budget') . '\'';?>;
+function toggleRecurringSchedule(selectEl) {
+    const scheduleDiv = document.getElementById('recurring_schedule_wrapper');
+    const scheduleSelect = document.getElementById('recurring_schedule');
+
+    if (!scheduleDiv || !scheduleSelect || !selectEl) {
+        return;
     }
-    // Temporary URL Redirect while waiting Recurring Schedule Override Feature - 11012022
-    // const redirectURL                       = <?php //echo '\'' . site_url('/Budget') . '\'';?>;
-} 
+
+    if (selectEl.value === "Yes") {
+        scheduleDiv.style.display = "block";
+    } else {
+        scheduleDiv.style.display = "none";
+        scheduleSelect.value = "";
+    }
+}
 // Determine redirect URL client-side
 function isDisallowed(referrer) {
     const disallowedPrefixes = [
@@ -307,4 +318,11 @@ if (addAccountForm) {
         }
     });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const recurringAccountSelect = document.getElementById('recurring_account');
+    if (recurringAccountSelect) {
+        toggleRecurringSchedule(recurringAccountSelect);
+    }
+});
 </script> 
