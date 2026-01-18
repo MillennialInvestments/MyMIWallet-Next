@@ -4,7 +4,6 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\Cookie\Cookie;
 use Config\Database;
 use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
@@ -21,8 +20,14 @@ class AuthAudit extends BaseCommand
     private array $results = [];
     private array $failures = [];
     private array $warnings = [];
+    private $db;
 
     private const MAX_FAILURES = 25;
+
+    public function __construct()
+    {
+        $this->db = Database::connect();
+    }
 
     public function run(array $params)
     {
@@ -35,7 +40,7 @@ class AuthAudit extends BaseCommand
             'memory_start' => $memoryStart,
         ]);
 
-        $db = Database::connect();
+        $db = $this->db;
         $authConfig = config('Auth');
         $sessionConfig = config('Session');
         $appConfig = config('App');
@@ -46,7 +51,7 @@ class AuthAudit extends BaseCommand
 
         $this->auditConfig($authConfig, $sessionConfig, $appConfig, $securityConfig);
 
-        $this->runTest('Registration: Valid registration', function () use (&$testUser, &$createdUser, $authConfig) {
+        $this->runTest('Registration: Valid registration', function () use (&$testUser, &$createdUser, $authConfig, $db) {
             $result = $this->createEphemeralTestUser($authConfig);
 
             if (! $result) {
@@ -219,10 +224,21 @@ class AuthAudit extends BaseCommand
                 $issues[] = 'Config\App::$cookieSameSite must be Lax, Strict, or None.';
             }
 
-            try {
-                Cookie::validatePrefix($appConfig->cookiePrefix);
-            } catch (Throwable $e) {
-                $issues[] = 'Cookie::validatePrefix failed: ' . $e->getMessage();
+            $cookiePrefix = $appConfig->cookiePrefix;
+            if (! is_string($cookiePrefix)) {
+                $issues[] = 'Config\App::$cookiePrefix must be a string.';
+            } elseif ($cookiePrefix !== '' && ! preg_match('/^[0-9A-Za-z_]+$/', $cookiePrefix)) {
+                $issues[] = 'Config\App::$cookiePrefix must be alphanumeric/underscore only.';
+            }
+
+            $cookiePath = $appConfig->cookiePath;
+            if (! is_string($cookiePath) || $cookiePath === '' || $cookiePath[0] !== '/') {
+                $issues[] = 'Config\App::$cookiePath must start with "/".';
+            }
+
+            $cookieDomain = (string) ($appConfig->cookieDomain ?? '');
+            if ($cookieDomain !== '' && $cookieDomain !== '.mymiwallet.com') {
+                $issues[] = 'Config\App::$cookieDomain should be ".mymiwallet.com".';
             }
 
             if ($sessionConfig->driver === \CodeIgniter\Session\Handlers\FileHandler::class) {
@@ -233,7 +249,6 @@ class AuthAudit extends BaseCommand
             }
 
             $baseHost = parse_url($appConfig->baseURL ?? '', PHP_URL_HOST);
-            $cookieDomain = (string) ($appConfig->cookieDomain ?? '');
             if ($cookieDomain !== '' && $baseHost !== null && $baseHost !== '') {
                 $normalizedCookieDomain = ltrim($cookieDomain, '.');
                 if (! str_contains($baseHost, $normalizedCookieDomain)) {
@@ -253,7 +268,7 @@ class AuthAudit extends BaseCommand
         });
 
         $this->runTest('Session & Cookie: Secure cookie alignment', function () use ($appConfig, $sessionConfig) {
-            if ($appConfig->cookieSecure && $sessionConfig->cookieSecure) {
+            if ($appConfig->cookieSecure === $sessionConfig->cookieSecure) {
                 return $this->resultPass('Secure cookie flags aligned.');
             }
 
@@ -689,9 +704,9 @@ class AuthAudit extends BaseCommand
 
     private function createEphemeralTestUser($authConfig): ?array
     {
-        $suffix = date('YmdHis') . '_' . bin2hex(random_bytes(3));
-        $username = substr('test_auth_' . $suffix, 0, 30);
-        $email = 'test_auth_' . $suffix . '@mymiwallet.local';
+        $suffix = (string) time() . random_int(100, 999);
+        $username = substr('testauth_' . $suffix, 0, 30);
+        $email = 'testauth_' . $suffix . '@mymiwallet.local';
         $password = 'Test!Auth' . bin2hex(random_bytes(4)) . '1a';
 
         $validation = $this->validateRegistrationData([
