@@ -33,6 +33,7 @@ class AuthAudit extends BaseCommand
 
     public function run(array $params)
     {
+        $this->db = Database::connect();
         $startTime   = microtime(true);
         $startedAt   = date('Y-m-d H:i:s');
         $memoryStart = memory_get_usage(true);
@@ -55,6 +56,16 @@ class AuthAudit extends BaseCommand
         $createdUser = false;
 
         $this->auditConfig($authConfig, $sessionConfig, $appConfig, $securityConfig);
+
+        $this->runTest('Audit: Ensure dedicated test user', function () use (&$testUser, $db) {
+            $seededUser = $this->ensureAuditUser($db);
+            if (! $seededUser) {
+                return $this->resultWarning('Unable to provision audit user.');
+            }
+
+            $testUser ??= $seededUser;
+            return $this->resultPass('Audit user available.');
+        });
 
         $this->runTest('Registration: Valid registration', function () use (&$testUser, &$createdUser, $authConfig, $db) {
             $result = $this->createEphemeralTestUser($authConfig);
@@ -794,6 +805,11 @@ class AuthAudit extends BaseCommand
             return null;
         }
 
+        $auditUser = $this->ensureAuditUser($db);
+        if ($auditUser) {
+            return $auditUser;
+        }
+
         $builder = $db->table('users');
         $builder->select('id, email, username, password_hash');
         $builder->like('email', 'test_auth_', 'after');
@@ -878,7 +894,7 @@ class AuthAudit extends BaseCommand
     {
         $validation = Services::validation();
         $rules = config('Validation')->registrationRules ?? [
-            'username' => 'required|alpha_numeric_space|min_length[3]|max_length[30]|is_unique[users.username]',
+            'username' => 'required|regex_match[/^[A-Za-z0-9 _-]+$/]|min_length[3]|max_length[30]|is_unique[users.username]',
             'email' => 'required|valid_email|is_unique[users.email]',
         ];
 
@@ -896,6 +912,38 @@ class AuthAudit extends BaseCommand
         }
 
         return ['success' => true, 'errors' => []];
+    }
+
+    private function ensureAuditUser($db): ?array
+    {
+        if (! $db || ! $db->tableExists('users')) {
+            return null;
+        }
+
+        try {
+            $seeder = Services::seeder();
+            $seeder->call(\App\Database\Seeds\AuthAuditUserSeeder::class);
+        } catch (Throwable $e) {
+            $this->addResult('Audit: Seed user', 'warning', 'Seeder failed to run.', [
+                'message' => $e->getMessage(),
+            ]);
+            return null;
+        }
+
+        $users = model(MythUserModel::class);
+        $user = $users->where('email', \App\Database\Seeds\AuthAuditUserSeeder::EMAIL)->first();
+        if (! $user) {
+            return null;
+        }
+
+        return [
+            'id' => (int) $user->id,
+            'email' => $user->email,
+            'username' => $user->username,
+            'password' => \App\Database\Seeds\AuthAuditUserSeeder::PASSWORD,
+            'password_hash' => $user->password_hash ?? '',
+            'activate_hash' => $user->activate_hash ?? null,
+        ];
     }
 
     private function validateForgotData(array $data): array

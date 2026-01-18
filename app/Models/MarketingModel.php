@@ -2509,7 +2509,7 @@ class MarketingModel extends Model
      */
     public function getPlatforms(bool $includeInactive = false): array
     {
-        $cacheKey = 'marketing:platforms:' . ($includeInactive ? 'all' : 'active');
+        $cacheKey = sanitizeCacheKey('marketing:platforms:' . ($includeInactive ? 'all' : 'active'));
 
         return cache()->remember($cacheKey, 300, function () use ($includeInactive) {
             $builder = $this->db->table('bf_marketing_platforms');
@@ -2525,7 +2525,7 @@ class MarketingModel extends Model
      */
     public function getPlatformByKey(string $key): ?array
     {
-        $cacheKey = 'marketing:platform:' . $key;
+        $cacheKey = sanitizeCacheKey('marketing:platform:' . $key);
 
         return cache()->remember($cacheKey, 300, function () use ($key) {
             return $this->db->table('bf_marketing_platforms')
@@ -2542,7 +2542,7 @@ class MarketingModel extends Model
     {
         $data['is_active'] = $data['is_active'] ?? 1;
         $this->db->table('bf_marketing_platforms')->insert($data);
-        cache()->deleteMatching('marketing:platform*');
+        cache()->deleteMatching(sanitizeCacheKey('marketing:platform') . '*');
         return (int) $this->db->insertID();
     }
 
@@ -2550,7 +2550,7 @@ class MarketingModel extends Model
     public function updatePlatform(int $id, array $data): bool
     {
         $result = $this->db->table('bf_marketing_platforms')->where('id', $id)->update($data);
-        cache()->deleteMatching('marketing:platform*');
+        cache()->deleteMatching(sanitizeCacheKey('marketing:platform') . '*');
         return $result;
     }
 
@@ -2558,7 +2558,7 @@ class MarketingModel extends Model
     public function deletePlatform(int $id): bool
     {
         $result = $this->db->table('bf_marketing_platforms')->where('id', $id)->update(['is_active' => 0]);
-        cache()->deleteMatching('marketing:platform*');
+        cache()->deleteMatching(sanitizeCacheKey('marketing:platform') . '*');
         return $result;
     }
 
@@ -2567,7 +2567,7 @@ class MarketingModel extends Model
      */
     public function getPlatformRules(?int $platformId = null): array
     {
-        $cacheKey = 'marketing:rules:' . ($platformId ?? 'global');
+        $cacheKey = sanitizeCacheKey('marketing:rules:' . ($platformId ?? 'global'));
 
         return cache()->remember($cacheKey, 300, function () use ($platformId) {
             $builder = $this->db->table('bf_marketing_platform_rules');
@@ -2595,7 +2595,7 @@ class MarketingModel extends Model
         ];
 
         $result = $this->db->table('bf_marketing_platform_rules')->replace($data);
-        cache()->deleteMatching('marketing:rules:*');
+        cache()->deleteMatching(sanitizeCacheKey('marketing:rules') . '*');
         return $result;
     }
 
@@ -2603,7 +2603,7 @@ class MarketingModel extends Model
     public function deleteRule(int $id): bool
     {
         $result = $this->db->table('bf_marketing_platform_rules')->where('id', $id)->update(['is_active' => 0]);
-        cache()->deleteMatching('marketing:rules:*');
+        cache()->deleteMatching(sanitizeCacheKey('marketing:rules') . '*');
         return $result;
     }
 

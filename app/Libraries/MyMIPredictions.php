@@ -127,7 +127,7 @@ class MyMIPredictions
             ]);
         }
         $this->db->transComplete();
-        cache()->delete("pred.market.$marketId");
+        cache()->delete(sanitizeCacheKey("pred.market.$marketId"));
         return $marketId;
     }
 
@@ -136,7 +136,7 @@ class MyMIPredictions
         $m = $this->getMarket($marketId, false);
         if (!in_array($m['state'], ['OPEN','DRAFT'], true)) return false;
         $ok = $this->markets->update($marketId, ['state'=>'LOCKED','updated_at'=>$this->now()]);
-        cache()->delete("pred.market.$marketId");
+        cache()->delete(sanitizeCacheKey("pred.market.$marketId"));
         return (bool)$ok;
     }
 
@@ -145,7 +145,7 @@ class MyMIPredictions
         $m = $this->getMarket($marketId, false);
         if (in_array($m['state'], ['RESOLVED','CANCELED'], true)) return false;
         $ok = $this->markets->update($marketId, ['state'=>'CANCELED','updated_at'=>$this->now()]);
-        cache()->delete("pred.market.$marketId");
+        cache()->delete(sanitizeCacheKey("pred.market.$marketId"));
         return (bool)$ok;
     }
 
@@ -176,7 +176,7 @@ class MyMIPredictions
             $bips = (int)round($p * 10000);
             $this->options->update((int)$o['id'], ['odds_bips'=>$bips,'updated_at'=>$now]);
         }
-        cache()->delete("pred.market.$marketId");
+        cache()->delete(sanitizeCacheKey("pred.market.$marketId"));
         return true;
     }
 
@@ -295,7 +295,7 @@ class MyMIPredictions
         $this->options->addLiquidityGold($optionId, $amount);
 
         $this->db->transComplete();
-        cache()->delete("pred.market.$marketId");
+        cache()->delete(sanitizeCacheKey("pred.market.$marketId"));
 
         log_message('info', 'Predictions: order placed uid={uid} mid={mid} oid={oid} opt={opt} amt={amt} fee={fee} odds={odds}', [
             'uid'=>$userId,'mid'=>$marketId,'oid'=>$orderId,'opt'=>$optionId,'amt'=>$amount,'fee'=>$feeAmt,'odds'=>$fillBips
@@ -338,7 +338,7 @@ class MyMIPredictions
         ]);
         $this->db->transComplete();
 
-        cache()->delete("pred.market.$marketId");
+        cache()->delete(sanitizeCacheKey("pred.market.$marketId"));
         return ['ok'=>true,'enqueued'=>$count];
     }
 
