@@ -47,6 +47,10 @@ if ($pageURIA === 'Dashboard') {
 //      ->full_url(current_url())
 //      ->comment($accountType) //Token identify Action
 //      ->log(); //Add Database Entry
+// Recurring schedule inventory: recurring_schedule values are stored in bf_users_budgeting,
+// while intervals drives forecast/schedule generation for recurring entries.
+$budgetService = new \App\Services\BudgetService($cuID ?? null);
+$recurringScheduleOptions = $budgetService->getRecurringSchedules(strtolower((string) $accountType));
 $fieldData = array(
     'errorClass'                        => $errorClass,
     'controlClass'                      => $controlClass,
@@ -67,11 +71,13 @@ $fieldData = array(
     'accountNetAmount'                  => '',
     'accountGrossAmount'                => '',
     'accountRecurringAccount'           => '',
+    'accountRecurringSchedule'          => '',
     'accountType'                       => $accountType,
     'accountSourceType'                 => '',
     'accountIntervals'                  => '',
     'accountDesignatedDate'             => '',
     'accountWeeksLeft'                  => '',
+    'recurringScheduleOptions'          => $recurringScheduleOptions,
 );
 // print_r($fieldData); 
 ?>
@@ -291,15 +297,19 @@ $fieldData = array(
 </div>
 <?php endif; ?>
 <script <?= $nonce['script'] ?? '' ?>>
-    let redirectURL; // Declare redirectURL here so it's available throughout the script
+    function toggleRecurringSchedule(selectEl) {
+        const scheduleDiv = document.getElementById('recurring_schedule_wrapper');
+        const scheduleSelect = document.getElementById('recurring_schedule');
 
-    function showDiv(select) {
-        if (select.value == "Yes") {
-            document.getElementById('recurring_fields').style.display = "block";
-            redirectURL = '<?php echo site_url('/Budget/Recurring-Account/Schedule'); ?>';
-        } else if (select.value == "No") {
-            document.getElementById('recurring_fields').style.display = "none";
-            redirectURL = '<?php echo site_url('/Budget'); ?>';
+        if (!scheduleDiv || !scheduleSelect || !selectEl) {
+            return;
+        }
+
+        if (selectEl.value === 'Yes') {
+            scheduleDiv.style.display = 'block';
+        } else {
+            scheduleDiv.style.display = 'none';
+            scheduleSelect.value = '';
         }
     }
 
@@ -359,5 +369,11 @@ $fieldData = array(
             }
         });
     }
-</script>
 
+    document.addEventListener('DOMContentLoaded', () => {
+        const recurringAccountSelect = document.getElementById('recurring_account');
+        if (recurringAccountSelect) {
+            toggleRecurringSchedule(recurringAccountSelect);
+        }
+    });
+</script>

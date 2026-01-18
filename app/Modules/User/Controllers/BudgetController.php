@@ -404,7 +404,10 @@ class BudgetController extends UserController
         $nickname   = $json['nickname'] ?? $username;
         $netAmount  = $this->sanitizeCurrency($json['net_amount'] ?? 0);
         $grossAmount= $this->sanitizeCurrency($json['gross_amount'] ?? 0);
+        // Recurring schedule inventory: recurring_schedule is stored alongside recurring_account,
+        // while intervals remains the legacy schedule engine field.
         $recurringAccount = $json['recurring_account'] ?? 'No';
+        $recurringSchedule = $json['recurring_schedule'] ?? null;
         
         $accountType = isset($json['account_type']) ? trim((string) $json['account_type']) : null;
         $sourceType  = isset($json['source_type']) ? trim((string) $json['source_type']) : null;
@@ -443,6 +446,7 @@ class BudgetController extends UserController
             'gross_amount'      => $grossAmount,
             'paid'              => 0,
             'recurring_account' => $recurringAccount,
+            'recurring_schedule'=> $recurringSchedule,
             'account_type'      => $accountType,
             'source_type'       => $sourceType,
             'is_debt'           => $isDebt,
@@ -450,6 +454,13 @@ class BudgetController extends UserController
         ];
         // Insert or update logic as before, ensuring the array keys match your table column names
         try {
+            log_message('debug', 'BudgetController::accountManager recurring payload: ' . json_encode([
+                'recurring_account' => $recurringAccount,
+                'recurring_schedule' => $recurringSchedule,
+                'intervals' => $intervals,
+                'account_type' => $accountType,
+            ]));
+
             $formMode                           = $json['form_mode'];
             switch ($formMode) {
                 case 'Add':
@@ -486,7 +497,7 @@ class BudgetController extends UserController
                         log_message('debug', 'BudgetController L473 - Sending $accountData to Model: ' . print_r($accountData, true));
                     }
 
-                    $insertedID = (int) $this->budgetModel->insertAccount($accountData);
+                    $insertedID = (int) $this->budgetService->save($accountData);
                     if ($insertedID > 0) {
                         $this->invalidateCrudCache(array_filter([
                             'budget',
@@ -509,7 +520,7 @@ class BudgetController extends UserController
                         return $this->respondFailure('Account identifier is required for updates.', 400);
                     }
 
-                    $updated = $this->budgetModel->updateAccount($accountId, $accountData);
+                    $updated = $this->budgetService->update($accountId, $accountData);
                     if ($updated) {
                         $this->invalidateCrudCache(array_filter([
                             'budget',
@@ -528,7 +539,7 @@ class BudgetController extends UserController
                     return $this->respondFailure('Unable to update the budget record.', 500);
         
                  case 'Copy':
-                    $insertedID = (int) $this->budgetModel->insertAccount($accountData);
+                    $insertedID = (int) $this->budgetService->save($accountData);
                     if ($insertedID > 0) {
                         $this->invalidateCrudCache(array_filter([
                             'budget',
@@ -549,6 +560,9 @@ class BudgetController extends UserController
                     session()->setFlashdata('alert-class', 'danger');
                     return $this->respondFailure('Invalid form mode supplied.', 400);
             }
+        } catch (\UnexpectedValueException $e) {
+            log_message('debug', 'BudgetController::accountManager recurring validation failed: ' . $e->getMessage());
+            return $this->respondFailure($e->getMessage(), 422);
         } catch (\Throwable $e) {
             $this->logException('accountManager', $e, $userId, ['payloadKeys' => array_keys($json)]);
             return $this->respondFailure('An unexpected error occurred while processing the account.', 500);
