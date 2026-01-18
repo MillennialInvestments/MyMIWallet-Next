@@ -2535,7 +2535,7 @@ class AlertsModel extends Model
             ]);
 
             return ['status' => 'inserted', 'id' => $insertId];
-        } catch (\\Throwable $e) {
+        } catch (\Throwable $e) {
             log_message('error', 'upsertExecutionAlert exception: ' . $e->getMessage());
             return ['status' => 'error', 'message' => $e->getMessage()];
         }
