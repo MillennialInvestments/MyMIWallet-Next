@@ -92,7 +92,7 @@ class BlogController extends UserController
 
     public function index()
     {
-        $cacheKey = 'blog:page:' . md5(current_url());
+        $cacheKey = sanitizeCacheKey('blog:page:' . md5(current_url()));
         $skipCache = false;
         if (service('auth')->loggedIn() && service('auth')->user()->isAdmin()) {
             $skipCache = true;
@@ -139,7 +139,7 @@ class BlogController extends UserController
     // View a Single Blog by Slug
     public function viewBlog(string $slug)
     {
-        $cacheKey = 'blog:page:' . md5(current_url());
+        $cacheKey = sanitizeCacheKey('blog:page:' . md5(current_url()));
         $skipCache = false;
         if (service('auth')->loggedIn() && service('auth')->user()->isAdmin()) {
             $skipCache = true;
@@ -187,7 +187,7 @@ class BlogController extends UserController
 
     public function category(string $category)
     {
-        $cacheKey = 'blog:page:' . md5(current_url());
+        $cacheKey = sanitizeCacheKey('blog:page:' . md5(current_url()));
         $skipCache = false;
         if (service('auth')->loggedIn() && service('auth')->user()->isAdmin()) {
             $skipCache = true;

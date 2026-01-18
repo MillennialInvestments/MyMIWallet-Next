@@ -13,7 +13,7 @@ class Flags
      */
     public static function enabled(string $flag, array $ctx = []): bool
     {
-        $cacheKey = 'flags:'.$flag;
+        $cacheKey = sanitizeCacheKey('flags:' . $flag);
         $row = cache()->remember($cacheKey, 30, static function() use ($flag) {
             return (new FeatureFlagModel())->getByFlag($flag) ?: null;
         });
@@ -27,7 +27,8 @@ class Flags
 
         $uid = (int)($ctx['user_id'] ?? (session('cuID') ?? 0));
         if ($uid > 0) {
-            $ovr = cache()->remember("flags:ovr:$flag:$uid", 30, static function() use ($flag, $uid) {
+            $overrideKey = sanitizeCacheKey("flags:ovr:$flag:$uid");
+            $ovr = cache()->remember($overrideKey, 30, static function() use ($flag, $uid) {
                 return (new FeatureFlagOverrideModel())->where(['flag'=>$flag,'user_id'=>$uid])->first() ?: null;
             });
             if ($ovr !== null) return (bool)$ovr['allow'];
@@ -60,6 +61,6 @@ class Flags
     /** Invalidate caches after update */
     public static function bust(string $flag): void
     {
-        cache()->delete('flags:'.$flag);
+        cache()->delete(sanitizeCacheKey('flags:' . $flag));
     }
 }

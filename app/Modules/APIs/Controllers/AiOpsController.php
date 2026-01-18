@@ -85,7 +85,7 @@ class AiOpsController extends BaseController
         $override  = new SiteSettingsOverride();
         $override->save($key, (string) $value, $userId);
 
-        cache()->save('aiops:' . $key, filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? $value, 60 * 60 * 24 * 30);
+        cache()->save(sanitizeCacheKey('aiops:' . $key), filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? $value, 60 * 60 * 24 * 30);
         $this->manager->logEvent('ai_ops', 'TOGGLE_CHANGED', 'AI Ops toggle changed', [
             'key'   => $key,
             'value' => $value,
