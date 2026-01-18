@@ -29,7 +29,7 @@
                                         <h5 class="card-title"><?= esc($blog->title) ?></h5>
                                     </div>
                                     <div class="card-body">
-                                        <p><?= esc(substr(strip_tags($blog->content), 0, 150)) ?>...</p>
+                                        <p><?= esc($blog->excerpt ?? '') ?></p>
                                         <small><strong>Created On:</strong> <?= esc($blog->created_on) ?></small>
                                         <br>
                                         <small><strong>Status:</strong> <?= esc(ucfirst($blog->status)) ?></small>
