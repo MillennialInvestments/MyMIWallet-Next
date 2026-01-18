@@ -68,6 +68,8 @@ class Filters extends BaseConfig
                 'except' => [
                     'API/*',
                     'api/*',
+                    'debugbar*',
+                    '_debugbar*',
                 ],
             ],
             // 'csrf' => [
@@ -200,6 +202,8 @@ class Filters extends BaseConfig
                     '/YouTube',
                     '/YouTube/*',
                     '/',
+                    'debugbar*',
+                    '_debugbar*',
                 ],
             ],
 
@@ -269,6 +273,8 @@ class Filters extends BaseConfig
             'except' => [
                 'API/*',
                 'api/*',
+                'debugbar*',
+                '_debugbar*',
             ],
         ],
     ];
