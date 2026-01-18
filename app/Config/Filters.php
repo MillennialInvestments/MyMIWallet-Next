@@ -63,6 +63,7 @@ class Filters extends BaseConfig
             'maintenance',
             // PATCH: request observability
             'observability',
+            'ratelimit',
             'sessionRevoked',
             'csrf' => [
                 'except' => [

@@ -455,7 +455,9 @@ class MarketingService
     {
         $links = [];
         if (! empty($summary['links'])) {
-            $links = is_array($summary['links']) ? $summary['links'] : json_decode($summary['links'], true) ?: [];
+            $links = is_array($summary['links'])
+                ? $summary['links']
+                : (json_decode($summary['links'], true) ?: []);
         }
         if (! empty($summary['url'])) {
             $links[] = $summary['url'];
