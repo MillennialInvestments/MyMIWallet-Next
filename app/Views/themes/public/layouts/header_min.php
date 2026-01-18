@@ -25,6 +25,7 @@ $nonce = $nonce ?? ['style' => '', 'script' => ''];
     <link rel="stylesheet" href="<?= base_url('assets/css/dashlite3.css?ver=3.0.2'); ?>" <?= $nonce['style'] ?? '' ?>>
     <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap-select.min.css'); ?>" <?= $nonce['style'] ?? '' ?>>
     <link rel="stylesheet" href="<?= base_url('assets/css/responsive-overrides.css'); ?>" <?= $nonce['style'] ?? '' ?>>
+    <link rel="stylesheet" href="<?= base_url('assets/css/mymiwallet.mobile.css') . '?v=' . (is_file(FCPATH.'assets/css/mymiwallet.mobile.css') ? filemtime(FCPATH.'assets/css/mymiwallet.mobile.css') : '1'); ?>" <?= $nonce['style'] ?? '' ?>>
 
     <?php // No inline <style nonce="<?= esc($csp['style']) >"> here. Move any previous inline CSS into responsive-overrides.css ?>
     <?php // echo service('assets')->css(); ?>
