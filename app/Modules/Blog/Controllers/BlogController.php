@@ -137,6 +137,25 @@ class BlogController extends UserController
 
         return $this->renderTheme('blog/view', $data);
     }
+
+    public function view(string $category, string $slug)
+    {
+        return $this->viewBlog($slug);
+    }
+
+    public function category(string $category)
+    {
+        $data = $this->commonData();
+        $data['pageTitle'] = sprintf('MyMI Blog | %s', ucwords(str_replace('-', ' ', $category)));
+
+        $perPage = 12;
+        $posts   = $this->blogModel->getPublishedListing($perPage);
+
+        $data['posts'] = $posts;
+        $data['pager'] = $this->blogModel->pager;
+
+        return $this->renderTheme('App\Modules\Blog\Views\index', $data);
+    }
     // Additional methods...
 
     private function renderPage($pageName, $pageType, $content)

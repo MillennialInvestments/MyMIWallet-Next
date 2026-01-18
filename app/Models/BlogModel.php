@@ -14,35 +14,57 @@ class BlogModel extends Model
 
     public function getPostBySlug(string $slug): ?array
     {
-        return $this->asArray()
+        $builder = $this->asArray()
             ->select('id, slug, title, excerpt, content, author, published_at, cover_image, updated_at')
-            ->where('slug', $slug)
-            ->where('status', 'published')
+            ->where('slug', $slug);
+
+        $builder = $this->applyPublishedScope($builder);
+
+        return $builder
             ->limit(1)
             ->first();
     }
 
     public function getPublishedListing(int $perPage = 12): array
     {
-        return $this->asArray()
-            ->select('id, slug, title, excerpt, published_at, cover_image')
-            ->where('status', 'published')
+        $builder = $this->asArray()
+            ->select('id, slug, title, excerpt, published_at, cover_image');
+
+        $builder = $this->applyPublishedScope($builder);
+
+        return $builder
             ->orderBy('published_at', 'DESC')
             ->paginate($perPage);
     }
     public function getTotalPublishedPosts(): int
     {
-        return $this->where('status', 'published')->countAllResults();
+        $builder = $this->builder();
+
+        $builder = $this->applyPublishedScope($builder);
+
+        return $builder->countAllResults();
     }
 
     public function getRecentPosts(int $limit = 5): array
     {
-        return $this->asArray()
-            ->select('id, slug, title, excerpt, published_at, cover_image')
-            ->where('status', 'published')
+        $builder = $this->asArray()
+            ->select('id, slug, title, excerpt, published_at, cover_image');
+
+        $builder = $this->applyPublishedScope($builder);
+
+        return $builder
             ->orderBy('published_at', 'DESC')
             ->limit($limit)
             ->findAll();
+    }
+
+    private function applyPublishedScope($builder)
+    {
+        if ($this->db->fieldExists('status', $this->table)) {
+            $builder->where('status', 'published');
+        }
+
+        return $builder;
     }
     
 }
