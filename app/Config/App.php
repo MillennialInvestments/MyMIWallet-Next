@@ -217,7 +217,7 @@ class App extends BaseConfig
     public string $cookiePrefix   = '';      // ✅ empty string, NOT null
     public string $cookieDomain   = '.mymiwallet.com';      // fine as empty string
     public string $cookiePath     = '/';     // default OK
-    public bool   $cookieSecure   = true;   // or true, depending on your HTTPS setup
+    public bool   $cookieSecure   = ENVIRONMENT === 'production';   // or true, depending on your HTTPS setup
     public bool   $cookieHTTPOnly = true; // recommended you leave this as true
     public string $cookieSameSite = 'Lax';         // allow main + subdomain navigation
 }

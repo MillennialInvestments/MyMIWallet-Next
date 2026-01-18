@@ -39,7 +39,7 @@ class Session extends BaseConfig
      *
      * Cookie will only be set if a secure HTTPS connection exists.
      */
-    public bool $cookieSecure = true;
+    public bool $cookieSecure = ENVIRONMENT === 'production';
 
     /**
      * --------------------------------------------------------------------------
