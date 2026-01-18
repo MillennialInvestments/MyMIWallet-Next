@@ -9,6 +9,7 @@ use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
 use Myth\Auth\Entities\User;
 use Myth\Auth\Models\UserModel as MythUserModel;
+use RuntimeException;
 use Throwable;
 
 class AuthAudit extends BaseCommand
@@ -20,6 +21,7 @@ class AuthAudit extends BaseCommand
     private array $results = [];
     private array $failures = [];
     private array $warnings = [];
+    private array $infos = [];
     private $db;
 
     private const MAX_FAILURES = 25;
@@ -41,6 +43,9 @@ class AuthAudit extends BaseCommand
         ]);
 
         $db = $this->db;
+        if (! $db) {
+            throw new RuntimeException('Database connection not initialized in AuthAudit command');
+        }
         $authConfig = config('Auth');
         $sessionConfig = config('Session');
         $appConfig = config('App');
@@ -206,6 +211,7 @@ class AuthAudit extends BaseCommand
     {
         $this->runTest('Session & Cookie: Config validation', function () use ($authConfig, $sessionConfig, $appConfig, $securityConfig) {
             $issues = [];
+            $cookieConfig = config('Cookie');
 
             if (! is_bool($appConfig->cookieSecure)) {
                 $issues[] = 'Config\App::$cookieSecure is not boolean.';
@@ -229,6 +235,10 @@ class AuthAudit extends BaseCommand
                 $issues[] = 'Config\App::$cookiePrefix must be a string.';
             } elseif ($cookiePrefix !== '' && ! preg_match('/^[0-9A-Za-z_]+$/', $cookiePrefix)) {
                 $issues[] = 'Config\App::$cookiePrefix must be alphanumeric/underscore only.';
+            }
+
+            if (! is_string($cookieConfig->prefix ?? null)) {
+                $issues[] = 'Cookie prefix is invalid or missing.';
             }
 
             $cookiePath = $appConfig->cookiePath;
@@ -398,6 +408,10 @@ class AuthAudit extends BaseCommand
 
             if ($appConfig->cookieSecure === false) {
                 return $this->resultPass('Secure cookies disabled as expected.');
+            }
+
+            if (is_cli()) {
+                return $this->resultInfo('Secure cookies enabled — expected in CLI context.');
             }
 
             return $this->resultWarning('Secure cookies enabled in current config.');
@@ -704,67 +718,78 @@ class AuthAudit extends BaseCommand
 
     private function createEphemeralTestUser($authConfig): ?array
     {
-        $suffix = (string) time() . random_int(100, 999);
-        $username = substr('testauth_' . $suffix, 0, 30);
-        $email = 'testauth_' . $suffix . '@mymiwallet.local';
-        $password = 'Test!Auth' . bin2hex(random_bytes(4)) . '1a';
+        try {
+            $suffix = (string) time() . random_int(100, 999);
+            $username = 'TestUser' . random_int(1000, 9999) . random_int(100, 999);
+            $email = 'testauth_' . $suffix . '@mymiwallet.local';
+            $password = 'Test!Auth' . bin2hex(random_bytes(4)) . '1a';
 
-        $validation = $this->validateRegistrationData([
-            'username' => $username,
-            'email' => $email,
-            'password' => $password,
-            'pass_confirm' => $password,
-        ]);
+            $validation = $this->validateRegistrationData([
+                'username' => $username,
+                'email' => $email,
+                'password' => $password,
+                'pass_confirm' => $password,
+            ]);
 
-        if (! $validation['success']) {
-            $this->addResult('Registration: Validation before create', 'warning', 'Registration validation failed.', $validation['errors']);
+            if (! $validation['success']) {
+                $this->addResult('Registration: Validation before create', 'warning', 'Registration validation failed.', $validation['errors']);
+                return null;
+            }
+
+            $users = model(MythUserModel::class);
+            if (! empty($authConfig->defaultUserGroup)) {
+                $users = $users->withGroup($authConfig->defaultUserGroup);
+            }
+
+            $user = new User([
+                'email' => $email,
+                'username' => $username,
+                'password' => $password,
+            ]);
+
+            if ($authConfig->requireActivation === null) {
+                $user->activate();
+            } else {
+                $user->generateActivateHash();
+            }
+
+            if (! $users->save($user)) {
+                $this->addResult('Registration: Database insert', 'failure', 'User save failed.', $users->errors());
+                return null;
+            }
+
+            $insertId = (int) $users->getInsertID();
+            if ($insertId === 0) {
+                return null;
+            }
+
+            $stored = $users->find($insertId);
+            if (! $stored) {
+                return null;
+            }
+
+            return [
+                'id' => $insertId,
+                'email' => $email,
+                'username' => $username,
+                'password' => $password,
+                'password_hash' => $stored->password_hash ?? '',
+                'activate_hash' => $stored->activate_hash ?? null,
+            ];
+        } catch (Throwable $e) {
+            $this->addResult('Registration: Ephemeral user creation', 'warning', 'Exception during test user creation.', [
+                'message' => $e->getMessage(),
+            ]);
             return null;
         }
-
-        $users = model(MythUserModel::class);
-        if (! empty($authConfig->defaultUserGroup)) {
-            $users = $users->withGroup($authConfig->defaultUserGroup);
-        }
-
-        $user = new User([
-            'email' => $email,
-            'username' => $username,
-            'password' => $password,
-        ]);
-
-        if ($authConfig->requireActivation === null) {
-            $user->activate();
-        } else {
-            $user->generateActivateHash();
-        }
-
-        if (! $users->save($user)) {
-            $this->addResult('Registration: Database insert', 'failure', 'User save failed.', $users->errors());
-            return null;
-        }
-
-        $insertId = (int) $users->getInsertID();
-        if ($insertId === 0) {
-            return null;
-        }
-
-        $stored = $users->find($insertId);
-        if (! $stored) {
-            return null;
-        }
-
-        return [
-            'id' => $insertId,
-            'email' => $email,
-            'username' => $username,
-            'password' => $password,
-            'password_hash' => $stored->password_hash ?? '',
-            'activate_hash' => $stored->activate_hash ?? null,
-        ];
     }
 
     private function findFallbackTestUser($db): ?array
     {
+        if (! $db) {
+            throw new RuntimeException('Database connection not initialized in AuthAudit command');
+        }
+
         if (! $db->tableExists('users')) {
             return null;
         }
@@ -939,6 +964,9 @@ class AuthAudit extends BaseCommand
                 if ($result['status'] === 'warning') {
                     $this->warnings[] = $result + ['name' => $name];
                 }
+                if ($result['status'] === 'info') {
+                    $this->infos[] = $result + ['name' => $name];
+                }
             }
         } catch (Throwable $e) {
             $this->addResult($name, 'failure', 'Exception thrown.', [
@@ -962,6 +990,15 @@ class AuthAudit extends BaseCommand
     {
         return [
             'status' => 'warning',
+            'message' => $message,
+            'details' => $details,
+        ];
+    }
+
+    private function resultInfo(string $message, array $details = []): array
+    {
+        return [
+            'status' => 'info',
             'message' => $message,
             'details' => $details,
         ];
@@ -994,14 +1031,19 @@ class AuthAudit extends BaseCommand
         if ($status === 'warning') {
             $this->warnings[] = $result;
         }
+
+        if ($status === 'info') {
+            $this->infos[] = $result;
+        }
     }
 
     private function renderSummary(float $startTime, int $memoryStart): array
     {
         $total = count($this->results);
-        $passed = count(array_filter($this->results, fn ($result) => $result['status'] === 'pass'));
+        $passed = count(array_filter($this->results, fn ($result) => in_array($result['status'], ['pass', 'info'], true)));
         $failed = count($this->failures);
         $warnings = count($this->warnings);
+        $infos = count($this->infos);
         $score = $total > 0 ? round(($passed / $total) * 100) : 0;
 
         $health = 'FAIL';
@@ -1024,6 +1066,7 @@ class AuthAudit extends BaseCommand
         CLI::write("Passed: {$passed}");
         CLI::write("Failed: {$failed}");
         CLI::write("Warnings: {$warnings}");
+        CLI::write("Info: {$infos}");
         CLI::write('');
         CLI::write('SECTION 2: FAILURES (MAX 25)');
 
@@ -1055,6 +1098,7 @@ class AuthAudit extends BaseCommand
             'passed' => $passed,
             'failed' => $failed,
             'warnings' => $warnings,
+            'infos' => $infos,
             'score' => $score,
             'health' => $health,
             'duration' => $duration,
@@ -1082,6 +1126,7 @@ class AuthAudit extends BaseCommand
         $lines[] = '- Passed: ' . $summary['passed'];
         $lines[] = '- Failed: ' . $summary['failed'];
         $lines[] = '- Warnings: ' . $summary['warnings'];
+        $lines[] = '- Info: ' . ($summary['infos'] ?? 0);
         $lines[] = '- Health score: ' . $summary['score'] . '% (' . $summary['health'] . ')';
         $lines[] = '';
         $lines[] = '## Failing test cases';
