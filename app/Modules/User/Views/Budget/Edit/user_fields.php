@@ -238,7 +238,7 @@ $formCustomText			        = $siteSettings->formCustomText;
 <div class="form-group row mb-2">
     <label class="col-6 form-label" for="recurring_account">Recurring Account?</label>
     <div class="col-6">
-        <select name="recurring_account" class="form-control" id="recurring_account" required>
+        <select name="recurring_account" class="form-control" id="recurring_account" onchange="toggleRecurringSchedule(this)" required>
             <?php
                 $recurring_account_values = array(
                     $accountRecurringAccount        => $accountRecurringAccount,
@@ -255,72 +255,27 @@ $formCustomText			        = $siteSettings->formCustomText;
     </div>
 </div>
 <?php 
-if (!empty($accountRecurringAccount) || $accountRecurringAccount === 'Yes') {
-    $recurringAccountStyle                          = 'display:block'; 
-} elseif (empty($accountRecurringAccount) || $accountRecurringAccount === 'No') {
-    $recurringAccountStyle                          = 'display:none;'; 
-}
+// Recurring schedule inventory: recurring_schedule remains the stored cadence,
+// while intervals is the legacy field still used for schedule generation.
+$recurringAccountStyle = ($accountRecurringAccount === 'Yes') ? 'display:block' : 'display:none;';
 ?>
-<div class="form-group row mb-2" id="recurring_fields" style="display: none;">
-    <label class="col-6 form-label" for="intervals">Time Intervals</label>
+<div class="form-group row mb-2" id="recurring_schedule_wrapper" style="<?php echo $recurringAccountStyle; ?>">
+    <label class="col-6 form-label" for="recurring_schedule">Recurring Schedule</label>
     <div class="col-6">
-        <select name="intervals" class="form-control" id="intervals">
+        <select name="recurring_schedule" class="form-control" id="recurring_schedule">
             <?php
-                if ($accountType === 'Income') {
-                    $intervals_values = array(
-                        $accountIntervals           => $accountIntervals,
-                        'N/A'                       => 'Select-An-Option',
-                        'Hourly'    		        => 'Hourly',
-                        'Daily'    		            => 'Daily',
-                        'Weekly'    	        	=> 'Weekly',
-                        'Bi-Weekly'    	        	=> 'Bi-Weekly',
-                        '15th/Last'    	        	=> '15th/Last Day',
-                        'Monthly'    	        	=> 'Monthly',
-                        'Quarterly'    	        	=> 'Quarterly',
-                        'Semi-Annual'    	        => 'Semi-Annual',
-                        'Annually'    	            => 'Annually',
-                    );
-                } elseif ($accountType === 'Expense') {
-                    $intervals_values = array(
-                        $accountIntervals           => $accountIntervals,
-                        'N/A'                       => 'Select-An-Option',
-                        'Hourly'    		        => 'Hourly',
-                        'Daily'    		            => 'Daily',
-                        'Weekly'    	        	=> 'Weekly',
-                        'Bi-Weekly'    	        	=> 'Bi-Weekly',
-                        '15th/Last'    	        	=> '15th/Last Day',
-                        'Monthly'    	        	=> 'Monthly',
-                        'Quarterly'    	        	=> 'Quarterly',
-                        'Semi-Annual'    	        => 'Semi-Annual',
-                        'Annually'    	            => 'Annually',
-                    );
-                } else {
-                    $intervals_values = array(
-                        $accountIntervals           => $accountIntervals,
-                        'N/A'                       => 'Select-An-Option',
-                        'Hourly'    		        => 'Hourly',
-                        'Daily'    		            => 'Daily',
-                        'Weekly'    	        	=> 'Weekly',
-                        'Bi-Weekly'    	        	=> 'Bi-Weekly',
-                        '15th/Last'    	        	=> '15th/Last Day',
-                        'Monthly'    	        	=> 'Monthly',
-                        'Quarterly'    	        	=> 'Quarterly',
-                        'Semi-Annual'    	        => 'Semi-Annual',
-                        'Annually'    	            => 'Annually',
-                    );
+                $scheduleOptions = $recurringScheduleOptions ?? [];
+                $currentSchedule = $accountRecurringSchedule ?? '';
+                if ($currentSchedule === 'Annually') {
+                    $currentSchedule = 'Annual';
                 }
-                foreach ($intervals_values as $value => $displayText) {
-                    $selected = $accountIntervals == $value ? 'selected' : '';
-                    echo "<option value=\"$value\" $selected>$displayText</option>";
+                echo '<option value="">Select-An-Option</option>';
+                foreach ($scheduleOptions as $scheduleOption) {
+                    $selected = $currentSchedule === $scheduleOption ? 'selected' : '';
+                    echo '<option value="' . esc($scheduleOption) . "\" $selected>" . esc($scheduleOption) . '</option>';
                 }
             ?>
         </select>
     </div>
 </div>
-<script <?= $nonce['script'] ?? '' ?>>
-    document.getElementById('recurring_account').addEventListener('change', function() {
-        var display = this.value === 'Yes' ? 'block' : 'none';
-        document.getElementById('recurring_fields').style.display = display;
-    });
-</script>
 <hr>
