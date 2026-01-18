@@ -1037,10 +1037,13 @@ class MarketingController extends UserController
         // Store generated content in `bf_marketing_scraper` as automated logs
         foreach ($generatedContent as $content) {
             $slug = $this->marketingModel->createSlug($content['title']);
+            $cleanedContent = strip_tags($content['summary'] ?? $content['content'] ?? '');
+            $excerpt = mb_strimwidth($cleanedContent, 0, 220, '…');
         
             $this->db->table('bf_marketing_blog_posts')->insert([
                 'title'       => $content['title'] ?? 'Generated Content',
                 'content'     => $content['summary'] ?? '',
+                'excerpt'     => $excerpt,
                 'slug'        => $slug,
                 'tags'        => implode(',', $content['keywords'] ?? []),
                 'created_on'  => date('Y-m-d H:i:s'),
@@ -1059,6 +1062,34 @@ class MarketingController extends UserController
         }        
 
         return $generatedContent;
+    }
+
+    public function backfillBlogExcerpts()
+    {
+        $blogTable = $this->db->table('bf_marketing_blog_posts');
+        $posts = $blogTable
+            ->groupStart()
+            ->where('excerpt IS NULL', null, false)
+            ->orWhere('excerpt', '')
+            ->groupEnd()
+            ->limit(50)
+            ->get()
+            ->getResultArray();
+
+        $updated = 0;
+        foreach ($posts as $post) {
+            $excerpt = mb_strimwidth(strip_tags($post['content'] ?? ''), 0, 220, '…');
+            $this->db->table('bf_marketing_blog_posts')
+                ->where('id', $post['id'])
+                ->update(['excerpt' => $excerpt]);
+            $updated++;
+        }
+
+        log_message('debug', '[BlogExcerpt] Backfilled excerpts for {count} posts', ['count' => $updated]);
+        return $this->response->setJSON([
+            'status' => 'success',
+            'updated' => $updated,
+        ]);
     }
 
     public function generateContent($platform, $postId) {
