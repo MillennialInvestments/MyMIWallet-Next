@@ -13,7 +13,7 @@ use App\Controllers\UserController;
 class NewsAndUpdates extends UserController
 {
     use ResponseTrait;
-    private $siteSettings;
+    protected $siteSettings;
     private $subscribeModel;
     private $userModel;
     private $pageSEOModel;
