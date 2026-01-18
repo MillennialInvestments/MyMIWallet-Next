@@ -47,6 +47,9 @@ $routes->setAutoRoute(false);
 
 
 $routes->get('/', 'Home::index');
+$routes->addRedirect('Home', '/', 301);
+$routes->addRedirect('News', 'Blog/News-And-Updates', 301);
+$routes->get('Stock/(:segment)/(:segment)', 'App\\Modules\\Management\\Controllers\\AlertsController::stockOverview/$1/$2');
 // $routes->get('Dashboard', 'App\\Modules\\User\\Controllers\\BudgetController::index', ['filter' => 'login']);
 
 // app/Config/Routes.php
@@ -963,6 +966,9 @@ $routes->group('Blog', ['namespace' => 'App\Modules\Blog\Controllers'],  functio
         $routes->get('/', 'PersonalBudgetingController::index');
         $routes->get('The-Importance-of-Personal-Financial-Budgeting', 'PersonalBudgetingController::TheImportanceOfPersonalFinancialBudgeting');
     });
+
+    $routes->get('(:segment)/(:segment)', 'BlogController::view/$1/$2');
+    $routes->get('(:segment)', 'BlogController::category/$1');
 });
 
 // Dashboard

@@ -47,6 +47,15 @@ class UserController extends BaseController
             return $this->cuID;
         }
 
+        $session = function_exists('session') ? session() : null;
+        if ($session && $session->has('user_id')) {
+            $value = $session->get('user_id');
+            if (is_numeric($value) && (int) $value > 0) {
+                $this->cuID = (int) $value;
+                return $this->cuID;
+            }
+        }
+
         $resolved = parent::resolveCurrentUserId();
         if ($resolved !== null) {
             $this->cuID = (int) $resolved;
@@ -59,12 +68,6 @@ class UserController extends BaseController
                 $this->cuID = (int) $id;
                 return $this->cuID;
             }
-        }
-
-        static $logged = false;
-        if (! $logged) {
-            log_message('error', 'UserController::resolveCurrentUserId - No current user ID resolved.');
-            $logged = true;
         }
 
         return null;
