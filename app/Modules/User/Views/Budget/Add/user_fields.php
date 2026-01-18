@@ -203,7 +203,7 @@ if ($formMode === 'Add') {
 <div class="<?php echo $formGroup; ?> mb-2">
     <label class="col-6 form-label" for="recurring_account">Recurring Account?</label>
     <div class="col-6">
-        <select class="<?php echo $formControl; ?>" id="recurring_account" name="recurring_account" style="height:40px;padding:10px" onchange="showDiv(this)">
+        <select class="<?php echo $formControl; ?>" id="recurring_account" name="recurring_account" style="height:40px;padding:10px" onchange="toggleRecurringSchedule(this)">
             <?php 
             $recurring_account_values = array(
                 $accountRecurringAccount        => $accountRecurringAccount,
@@ -220,65 +220,23 @@ if ($formMode === 'Add') {
     </div>
 </div>
 <?php
-if (!empty($accountRecurringAccount) || $accountRecurringAccount === 'Yes') {
-    $recurringAccountStyle                          = 'display:block'; 
-} else {
-    $recurringAccountStyle                          = 'display:none;'; 
-}
+// Recurring schedule inventory: account recurrence is stored with recurring_account,
+// schedule values are stored in recurring_schedule while intervals powers forecast logic.
+$recurringAccountStyle = ($accountRecurringAccount === 'Yes') ? 'display:block' : 'display:none;';
 ?>
-<div id="recurring_fields" style="<?php echo $recurringAccountStyle; ?>">
-    <div class="<?php echo $formGroup; ?> mb-2 hide">
-        <label class="col-6 form-label" for="intervals">Time Intervals</label>
+<div id="recurring_schedule_wrapper" style="<?php echo $recurringAccountStyle; ?>">
+    <div class="<?php echo $formGroup; ?> mb-2">
+        <label class="col-6 form-label" for="recurring_schedule">Recurring Schedule</label>
         <div class="col-6">
-            <select class="<?php echo $formControl; ?>" id="intervals" name="intervals" style="height:40px;padding:10px">
-                <?php 
-                if ($accountType === 'Income') {
-                    $intervals_values = array(
-                        $accountIntervals           => $accountIntervals,
-                        'N/A'                       => 'Select-An-Option',
-                        'Hourly'    		        => 'Hourly',
-                        'Daily'    		            => 'Daily',
-                        'Weekly'    	        	=> 'Weekly',
-                        'Bi-Weekly'    	        	=> 'Bi-Weekly',
-                        '15th/Last'    	        	=> '15th/Last Day',
-                        'Monthly'    	        	=> 'Monthly',
-                        'Quarterly'    	        	=> 'Quarterly',
-                        'Semi-Annual'    	        => 'Semi-Annual',
-                        'Annually'    	            => 'Annually',
-                    );
-                } elseif ($accountType === 'Expense') {
-                    $intervals_values = array(
-                        $accountIntervals           => $accountIntervals,
-                        'N/A'                       => 'Select-An-Option',
-                        'Hourly'    		        => 'Hourly',
-                        'Daily'    		            => 'Daily',
-                        'Weekly'    	        	=> 'Weekly',
-                        'Bi-Weekly'    	        	=> 'Bi-Weekly',
-                        '15th/Last'    	        	=> '15th/Last Day',
-                        'Monthly'    	        	=> 'Monthly',
-                        'Quarterly'    	        	=> 'Quarterly',
-                        'Semi-Annual'    	        => 'Semi-Annual',
-                        'Annually'    	            => 'Annually',
-                    );
-                } else {
-                    $intervals_values = array(
-                        $accountIntervals           => $accountIntervals,
-                        'N/A'                       => 'Select-An-Option',
-                        'Hourly'    		        => 'Hourly',
-                        'Daily'    		            => 'Daily',
-                        'Weekly'    	        	=> 'Weekly',
-                        'Bi-Weekly'    	        	=> 'Bi-Weekly',
-                        '15th/Last'    	        	=> '15th/Last Day',
-                        'Monthly'    	        	=> 'Monthly',
-                        'Quarterly'    	        	=> 'Quarterly',
-                        'Semi-Annual'    	        => 'Semi-Annual',
-                        'Annually'    	            => 'Annually',
-                    );
+            <select class="<?php echo $formControl; ?>" id="recurring_schedule" name="recurring_schedule" style="height:40px;padding:10px">
+                <?php
+                $scheduleOptions = $recurringScheduleOptions ?? [];
+                $currentSchedule = old('recurring_schedule') ?: ($accountRecurringSchedule ?? '');
+                echo '<option value="">Select-An-Option</option>';
+                foreach ($scheduleOptions as $scheduleOption) {
+                    $selected = $currentSchedule === $scheduleOption ? ' selected="selected"' : '';
+                    echo '<option value="' . esc($scheduleOption) . '"' . $selected . '>' . esc($scheduleOption) . '</option>';
                 }
-                foreach ($intervals_values as $value => $display_text) {
-                    $selected = old('intervals') == $value ? ' selected="selected"' : "";
-                    echo '<option value="' . esc($value) . '"' . $selected . '>' . esc($display_text) . '</option>';
-                } 
                 ?>
             </select>
         </div>

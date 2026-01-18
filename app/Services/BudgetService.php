@@ -217,12 +217,108 @@ class BudgetService
             'gross_amount'      => $gross,
             'paid'              => (int) ($input['paid'] ?? 0),
             'recurring_account' => (string) ($input['recurring_account'] ?? 'No'),
+            'recurring_schedule'=> $input['recurring_schedule'] ?? null,
             'account_type'      => isset($input['account_type']) ? trim((string) $input['account_type']) : null,
             'source_type'       => $source,
             'is_debt'           => $isDebt ? 1 : 0,
             'intervals'         => $input['intervals'] ?? null,
             'due_date_estimated'=> $dueDate['estimated'],
         ];
+    }
+
+    /**
+     * Recurring schedule inventory: recurring_schedule stores the selected cadence while
+     * intervals remains the legacy driver for forecast/schedule generation.
+     */
+    public function getRecurringSchedules(string $category): array
+    {
+        return match (strtolower(trim($category))) {
+            'income' => ['Weekly', 'Bi-Weekly', 'Monthly'],
+            'expense' => ['Monthly', 'Quarterly', 'Annual'],
+            default => [],
+        };
+    }
+
+    public function applyRecurringScheduleRules(array $data): array
+    {
+        $recurringAccount = trim((string) ($data['recurring_account'] ?? 'No'));
+        $scheduleValue = $data['recurring_schedule'] ?? ($data['intervals'] ?? null);
+        $accountType = (string) ($data['account_type'] ?? '');
+        $allowedSchedules = $this->getRecurringSchedules($accountType);
+
+        log_message('debug', 'BudgetService::applyRecurringScheduleRules input: ' . json_encode([
+            'recurring_account' => $recurringAccount,
+            'recurring_schedule' => $scheduleValue,
+            'account_type' => $accountType,
+        ]));
+
+        if (strcasecmp($recurringAccount, 'Yes') !== 0) {
+            $data['recurring_schedule'] = null;
+            $data['intervals'] = null;
+            return $data;
+        }
+
+        $normalizedSchedule = $this->normalizeRecurringScheduleValue($scheduleValue, $allowedSchedules);
+        if ($normalizedSchedule === null) {
+            throw new UnexpectedValueException('Recurring schedule is required and must match the allowed options.');
+        }
+
+        $data['recurring_schedule'] = $normalizedSchedule;
+        $data['intervals'] = $normalizedSchedule;
+
+        return $data;
+    }
+
+    public function save(array $data): int
+    {
+        $data = $this->applyRecurringScheduleRules($data);
+
+        log_message('debug', 'BudgetService::save normalized recurring payload: ' . json_encode([
+            'recurring_account' => $data['recurring_account'] ?? null,
+            'recurring_schedule' => $data['recurring_schedule'] ?? null,
+            'intervals' => $data['intervals'] ?? null,
+        ]));
+
+        return (int) $this->budgetModel->insertAccount($data);
+    }
+
+    public function update(int $accountId, array $data): bool
+    {
+        $data = $this->applyRecurringScheduleRules($data);
+
+        log_message('debug', 'BudgetService::update normalized recurring payload: ' . json_encode([
+            'account_id' => $accountId,
+            'recurring_account' => $data['recurring_account'] ?? null,
+            'recurring_schedule' => $data['recurring_schedule'] ?? null,
+            'intervals' => $data['intervals'] ?? null,
+        ]));
+
+        return $this->budgetModel->updateAccount($accountId, $data);
+    }
+
+    private function normalizeRecurringScheduleValue(?string $scheduleValue, array $allowedSchedules): ?string
+    {
+        if (!is_string($scheduleValue)) {
+            return null;
+        }
+
+        $scheduleValue = trim($scheduleValue);
+        if ($scheduleValue === '') {
+            return null;
+        }
+
+        $normalized = strtolower($scheduleValue);
+        if ($normalized === 'annually') {
+            $scheduleValue = 'Annual';
+        }
+
+        foreach ($allowedSchedules as $allowed) {
+            if (strcasecmp($allowed, $scheduleValue) === 0) {
+                return $allowed;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -1605,6 +1701,7 @@ class BudgetService
             'quarterly' => 'P3M',
             'semi-annually' => 'P6M',
             'annually' => 'P1Y',
+            'annual' => 'P1Y',
         ];
     
         if (!array_key_exists($recurringSchedule, $intervalMap)) {
@@ -1737,7 +1834,7 @@ class BudgetService
                     'monthly' => 'P1M',
                     'quarterly' => 'P3M',
                     'semi-annually' => 'P6M',
-                    'annually' => 'P1Y',
+                    'annually', 'annual' => 'P1Y',
                     default => 'P1M',
                 };
     
