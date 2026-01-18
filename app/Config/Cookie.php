@@ -54,7 +54,7 @@ class Cookie extends BaseConfig
      *
      * Cookie will only be set if a secure HTTPS connection exists.
      */
-    public $secure = ENVIRONMENT === 'production' ? 'auto' : false;
+    public $secure = ENVIRONMENT === 'production' ? true : false;
 
     /**
      * --------------------------------------------------------------------------
