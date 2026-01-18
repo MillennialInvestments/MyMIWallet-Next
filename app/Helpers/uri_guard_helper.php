@@ -56,8 +56,16 @@ if (! function_exists('guard_uri_placeholders')) {
         try {
             $uri       = $request->getUri();
             $uriString = (string) $uri;
-            $path      = $uri->getPath();
+            $path      = ltrim($uri->getPath(), '/');
             $decoded   = rawurldecode($uriString);
+
+            if (str_starts_with($path, 'wp-includes/')
+                || str_starts_with($path, 'wp-admin/')
+                || $path === 'wp-login.php'
+                || $path === 'xmlrpc.php'
+            ) {
+                return;
+            }
 
             $session = Services::session(null);
             $userId  = $session?->get('user_id') ?? $session?->get('cuID') ?? 'guest';
