@@ -92,6 +92,17 @@ class BlogController extends UserController
 
     public function index()
     {
+        $cacheKey = 'blog:page:' . md5(current_url());
+        $skipCache = false;
+        if (service('auth')->loggedIn() && service('auth')->user()->isAdmin()) {
+            $skipCache = true;
+        }
+
+        if (empty($skipCache) && ($cached = cache($cacheKey))) {
+            log_message('debug', '[BlogCache] Cache hit: {url}', ['url' => current_url()]);
+            return $cached;
+        }
+
         $this->data['pageTitle'] = 'MyMI Blog | MyMI Wallet | The Future of Finance';
         $this->data              = $this->commonData();
 
@@ -101,7 +112,11 @@ class BlogController extends UserController
         $this->data['posts'] = $posts;
         $this->data['pager'] = $this->blogModel->pager;
 
-        return $this->renderTheme('App\Modules\Blog\Views\index', $this->data);
+        $output = $this->renderTheme('App\Modules\Blog\Views\index', $this->data);
+        cache()->save($cacheKey, $output, 3600);
+        log_message('debug', '[BlogCache] Cached page: {url}', ['url' => current_url()]);
+
+        return $output;
     }
 
     public function account_manager() {
@@ -124,6 +139,17 @@ class BlogController extends UserController
     // View a Single Blog by Slug
     public function viewBlog(string $slug)
     {
+        $cacheKey = 'blog:page:' . md5(current_url());
+        $skipCache = false;
+        if (service('auth')->loggedIn() && service('auth')->user()->isAdmin()) {
+            $skipCache = true;
+        }
+
+        if (empty($skipCache) && ($cached = cache($cacheKey))) {
+            log_message('debug', '[BlogCache] Cache hit: {url}', ['url' => current_url()]);
+            return $cached;
+        }
+
         $blogPost = $this->blogModel->getPostBySlug($slug);
 
         if (!$blogPost) {
@@ -135,7 +161,11 @@ class BlogController extends UserController
         $data['pageTitle'] = $blogPost['title'] ?? 'Blog Article';
         $data['blogPost']  = $blogPost;
 
-        return $this->renderTheme('blog/view', $data);
+        $output = $this->renderTheme('blog/view', $data);
+        cache()->save($cacheKey, $output, 3600);
+        log_message('debug', '[BlogCache] Cached page: {url}', ['url' => current_url()]);
+
+        return $output;
     }
 
     public function view(string $category, string $slug)
@@ -145,6 +175,17 @@ class BlogController extends UserController
 
     public function category(string $category)
     {
+        $cacheKey = 'blog:page:' . md5(current_url());
+        $skipCache = false;
+        if (service('auth')->loggedIn() && service('auth')->user()->isAdmin()) {
+            $skipCache = true;
+        }
+
+        if (empty($skipCache) && ($cached = cache($cacheKey))) {
+            log_message('debug', '[BlogCache] Cache hit: {url}', ['url' => current_url()]);
+            return $cached;
+        }
+
         $data = $this->commonData();
         $data['pageTitle'] = sprintf('MyMI Blog | %s', ucwords(str_replace('-', ' ', $category)));
 
@@ -154,7 +195,11 @@ class BlogController extends UserController
         $data['posts'] = $posts;
         $data['pager'] = $this->blogModel->pager;
 
-        return $this->renderTheme('App\Modules\Blog\Views\index', $data);
+        $output = $this->renderTheme('App\Modules\Blog\Views\index', $data);
+        cache()->save($cacheKey, $output, 3600);
+        log_message('debug', '[BlogCache] Cached page: {url}', ['url' => current_url()]);
+
+        return $output;
     }
     // Additional methods...
 

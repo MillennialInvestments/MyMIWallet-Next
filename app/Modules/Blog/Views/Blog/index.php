@@ -27,7 +27,7 @@ $viewFileData = [
                                     <div class="card mb-3">
                                         <div class="card-body">
                                             <h5 class="card-title"><?= esc($blog->title) ?></h5>
-                                            <p class="card-text"><?= esc(substr(strip_tags($blog->content), 0, 150)) ?>...</p>
+                                            <p class="card-text"><?= esc($blog->excerpt ?? '') ?></p>
                                             <a href="<?= base_url('Blog/Post/' . $blog->slug) ?>" class="btn btn-primary">Read More</a>
                                             <a href="<?= base_url('Management/Marketing/PublishBlog/' . $blog->id) ?>" class="btn btn-success">Publish</a>
                                         </div>

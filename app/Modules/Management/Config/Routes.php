@@ -6,6 +6,7 @@ $routes->group('Management/Marketing', ['filter' => 'auth'], static function($r)
     $r->post('Blogger/schedule', 'App\\Modules\\Management\\Controllers\\Marketing\\BloggerController::schedule');
     $r->get('Blogger/preview/(:any)', 'App\\Modules\\Management\\Controllers\\Marketing\\BloggerController::preview/$1');
     $r->post('Blogger/save', 'App\\Modules\\Management\\Controllers\\Marketing\\BloggerController::save');
+    $r->post('Blogs/Backfill-Excerpts', 'App\\Modules\\Management\\Controllers\\MarketingController::backfillBlogExcerpts');
 });
 
 $routes->group('Management/ContentEngine', ['filter' => 'auth'], static function($r){
