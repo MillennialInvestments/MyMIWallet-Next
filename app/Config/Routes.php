@@ -109,6 +109,7 @@ $routes->group('', ['namespace' => 'App\Controllers'], static function($routes) 
 $routes->group('', ['namespace' => 'App\Controllers'], static function ($routes) {
     $routes->get('login', 'AuthController::login', ['as' => 'login']);
     $routes->post('login', 'AuthController::attemptLogin', ['as' => 'auth/attemptLogin']);
+    $routes->post('auth/resend-activation', 'AuthController::resendActivationCode', ['as' => 'auth/resend-activation']);
     $routes->get('logout', 'AuthController::logout');
     $routes->post('logout', 'AuthController::logout', ['as' => 'auth/logout']);
 

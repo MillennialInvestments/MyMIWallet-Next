@@ -1,7 +1,6 @@
 <?php
 $this->config = config('Auth');
 $config = $this->config;
-$message = $message ?? session('message');
 ?>
 <?= $this->extend($config->viewLayout) ?>
 <?= $this->section('main') ?>
@@ -14,9 +13,7 @@ $message = $message ?? session('message');
                     <h2 class="card-title mb-3">You're registered 🎉</h2>
                     <p class="text-muted">Thanks for joining MyMI Wallet. Follow these steps to finish your setup.</p>
 
-                    <?php if (! empty($message)): ?>
-                        <div class="alert alert-info"><?= esc($message) ?></div>
-                    <?php endif; ?>
+                    <?= view('App\Views\partials\auth_flash') ?>
 
                     <ol class="list-group list-group-numbered mb-4">
                         <li class="list-group-item">
