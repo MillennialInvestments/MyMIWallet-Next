@@ -659,7 +659,7 @@ class MyMIInvestments
             ];
         }
 
-        $cacheKey = "investment_dashboard_{$cuID}";
+        $cacheKey = sanitizeCacheKey(cachekey_user('investment_dashboard', $cuID));
         $cachedData = $this->cache->get($cacheKey);
     
         if ($cachedData !== null) {
@@ -1022,8 +1022,7 @@ class MyMIInvestments
 
     public function calculateTaxLiability($cuID)
     {
-        $cacheKey = "tax_liability_{$cuID}";
-        $cacheKeySanitized = sanitizeCacheKey($cacheKey);
+        $cacheKeySanitized = sanitizeCacheKey(cachekey_user('tax_liability', $cuID));
         $cachedData = $this->cache->get($cacheKeySanitized);
 
         if ($cachedData !== null) {
