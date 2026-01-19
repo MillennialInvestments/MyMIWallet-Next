@@ -6,12 +6,11 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\Test\FeatureResponse;
-use CodeIgniter\Test\FeatureTestTrait;
+use CodeIgniter\HTTP\ResponseInterface;
+use Config\Services;
 
 class RoutesAuthAudit extends BaseCommand
 {
-    use FeatureTestTrait;
 
     protected $group       = 'maintenance';
     protected $name        = 'routes:auth-audit';
@@ -194,22 +193,30 @@ class RoutesAuthAudit extends BaseCommand
         return 0;
     }
 
-    private function requestRoute(string $method, string $path): FeatureResponse
+    private function requestRoute(string $method, string $path): ResponseInterface
     {
         $method = strtoupper($method);
+        $client = Services::curlrequest();
+        $baseUrl = rtrim((string) config('App')->baseURL, '/');
+        $path = ltrim($path, '/');
+        $url = $baseUrl . '/' . $path;
+        $options = [
+            'headers' => ['Accept' => 'text/html'],
+            'http_errors' => false,
+        ];
 
         if ($method === 'POST') {
-            return $this->post($path, [], ['headers' => ['Accept' => 'text/html']]);
+            return $client->post($url, $options);
         }
 
-        return $this->get($path, ['headers' => ['Accept' => 'text/html']]);
+        return $client->get($url, $options);
     }
 
     /**
      * @param array<string, mixed> $route
      * @return array{status: string, message: string}
      */
-    private function evaluateResponse(array $route, FeatureResponse $response): array
+    private function evaluateResponse(array $route, ResponseInterface $response): array
     {
         $status        = $response->getStatusCode();
         $allowedStatus = $route['allowedStatus'] ?? [200];
