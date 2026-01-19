@@ -271,6 +271,19 @@ class AuthController extends Controller
             }
         }
 
+        if (! empty($referralCode)) {
+            $this->session->set('referral_code', $referralCode);
+        }
+
+        if (empty($referralCode)) {
+            $referralCode = $this->session->get('referral_code');
+        }
+
+        log_message('info', '[REGISTRATION] Form loaded', [
+            'referral_code' => $referralCode ?: $this->session->get('referral_code'),
+            'ip'            => $this->request->getIPAddress(),
+        ]);
+
         return $this->_render($this->config->views['register'], [
             'config'       => $this->config,
             'referralCode' => $referralCode,
@@ -351,12 +364,32 @@ class AuthController extends Controller
         /** @var OnboardingProgressService $onboardingProgress */
         $onboardingProgress = service('onboardingProgressService');
 
+        $referralCode = trim((string) ($request->getPost('referralCode') ?? $request->getPost('referral') ?? ''));
+        if ($referralCode === '') {
+            $referralCode = (string) ($this->session->get('referral_code') ?? '');
+        }
+
+        if ($referralCode !== '') {
+            $this->session->set('referral_code', $referralCode);
+        }
+
+        log_message('info', '[REGISTRATION] Submission received', [
+            'email'         => $email,
+            'referral_code' => $referralCode ?: null,
+            'ip'            => $request->getIPAddress(),
+        ]);
+
         $auditContext = $auditService->notifyRegistrationAttempt($email, $request);
 
         // Check if registration is allowed
         if (! $this->config->allowRegistration) {
             $auditService->notifyRegistrationResult($email, 'failed', $request, null, $auditContext + [
                 'error' => lang('Auth.registerDisabled'),
+            ]);
+
+            log_message('error', '[REGISTRATION] Registration disabled', [
+                'email' => $email,
+                'ip'    => $request->getIPAddress(),
             ]);
 
             return redirect()->back()->withInput()->with('error', lang('Auth.registerDisabled'));
@@ -376,8 +409,17 @@ class AuthController extends Controller
                     'error' => json_encode($this->validator->getErrors()),
                 ]);
 
+                log_message('warning', '[REGISTRATION] Validation failed (basic fields)', [
+                    'email'  => $email,
+                    'errors' => $this->validator->getErrors(),
+                ]);
+
                 return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
             }
+
+            log_message('info', '[REGISTRATION] Validation passed (basic fields)', [
+                'email' => $email,
+            ]);
 
             // Validate passwords since they can only be validated properly here
             $rules = [
@@ -390,13 +432,25 @@ class AuthController extends Controller
                     'error' => json_encode($this->validator->getErrors()),
                 ]);
 
+                log_message('warning', '[REGISTRATION] Validation failed (password fields)', [
+                    'email'  => $email,
+                    'errors' => $this->validator->getErrors(),
+                ]);
+
                 return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
             }
+
+            log_message('info', '[REGISTRATION] Validation passed (password fields)', [
+                'email' => $email,
+            ]);
 
             // Save the user
             $allowedPostFields = array_merge(['password'], $this->config->validFields, $this->config->personalFields);
             $postData          = $this->request->getPost($allowedPostFields);
             $postData['email'] = $email;
+            if ($referralCode !== '') {
+                $postData['referral_code'] = $referralCode;
+            }
             $user              = new User($postData);
 
             $this->config->requireActivation === null ? $user->activate() : $user->generateActivateHash();
@@ -409,6 +463,11 @@ class AuthController extends Controller
             if (! $users->save($user)) {
                 $auditService->notifyRegistrationResult($email, 'failed', $request, null, $auditContext + [
                     'error' => json_encode($users->errors()),
+                ]);
+
+                log_message('error', '[REGISTRATION] User record creation failed', [
+                    'email'  => $email,
+                    'errors' => $users->errors(),
                 ]);
 
                 return redirect()->back()->withInput()->with('errors', $users->errors());
@@ -429,8 +488,21 @@ class AuthController extends Controller
                 ]
             );
 
+            log_message('info', '[REGISTRATION] User record created', [
+                'user_id' => $newUserId,
+                'email'   => $user->email ?? null,
+            ]);
+
             if ($newUserId > 0) {
                 $onboardingProgress->ensureRecord($newUserId);
+            }
+
+            if ($referralCode !== '') {
+                log_message('info', '[REGISTRATION] Referral applied', [
+                    'user_id'       => $newUserId,
+                    'email'         => $user->email ?? null,
+                    'referral_code' => $referralCode,
+                ]);
             }
 
             if ($this->config->requireActivation !== null) {
@@ -442,12 +514,25 @@ class AuthController extends Controller
                         'error' => $activator->error() ?? lang('Auth.unknownError'),
                     ]);
 
+                    log_message('error', '[REGISTRATION] Activation email failed to send', [
+                        'user_id' => $newUserId,
+                        'email'   => $user->email ?? null,
+                        'error'   => $activator->error() ?? lang('Auth.unknownError'),
+                    ]);
+
                     return redirect()->back()->withInput()->with('error', $activator->error() ?? lang('Auth.unknownError'));
                 }
 
                 $auditService->notifyRegistrationResult($email, 'success', $request, null, $auditContext);
 
+                log_message('info', '[REGISTRATION] Activation email queued', [
+                    'user_id' => $newUserId,
+                    'email'   => $user->email ?? null,
+                ]);
+
                 log_message('info', 'Registration redirecting to success guide for user_id={id}', ['id' => $newUserId]);
+
+                $this->session->remove('referral_code');
 
                 // Success!
                 return redirect()->to(site_url('register/success'))->with('message', lang('Auth.activationSuccess'));
@@ -457,10 +542,17 @@ class AuthController extends Controller
 
             log_message('info', 'Registration redirecting to success guide for user_id={id}', ['id' => $newUserId]);
 
+            $this->session->remove('referral_code');
+
             // Success!
             return redirect()->to(site_url('register/success'))->with('message', lang('Auth.registerSuccess'));
         } catch (Throwable $e) {
             $auditService->notifyRegistrationResult($email, 'failed', $request, $e, $auditContext);
+
+            log_message('error', '[REGISTRATION] Exception during registration', [
+                'email' => $email,
+                'error' => $e->getMessage(),
+            ]);
 
             return redirect()->back()->withInput()->with('error', lang('Auth.unknownError'));
         }
@@ -672,10 +764,16 @@ class AuthController extends Controller
     public function activateAccount()
     {
         $users = model(UserModel::class);
+        $token = (string) $this->request->getGet('token');
+
+        log_message('info', '[ACTIVATION] Activation link hit', [
+            'token' => $token,
+            'ip'    => $this->request->getIPAddress(),
+        ]);
 
         // First things first - log the activation attempt.
         $users->logActivationAttempt(
-            $this->request->getGet('token'),
+            $token,
             $this->request->getIPAddress(),
             (string) $this->request->getUserAgent()
         );
@@ -683,22 +781,48 @@ class AuthController extends Controller
         $throttler = service('throttler');
 
         if ($throttler->check(md5($this->request->getIPAddress()), 2, MINUTE) === false) {
+            log_message('warning', '[ACTIVATION] Activation throttled', [
+                'token' => $token,
+                'ip'    => $this->request->getIPAddress(),
+            ]);
             return service('response')->setStatusCode(429)->setBody(lang('Auth.tooManyRequests', [$throttler->getTokentime()]));
         }
 
-        $user = $users->where('activate_hash', $this->request->getGet('token'))
+        $user = $users->where('activate_hash', $token)
             ->where('active', 0)
             ->first();
 
         if (null === $user) {
+            log_message('error', '[ACTIVATION] Activation failed: user not found', [
+                'token' => $token,
+                'ip'    => $this->request->getIPAddress(),
+            ]);
             return redirect()->route('login')->with('error', lang('Auth.activationNoUser'));
         }
+
+        log_message('debug', '[ACTIVATION] Token validated for user', [
+            'user_id' => $user->id ?? null,
+            'email'   => $user->email ?? null,
+        ]);
 
         $user->activate();
 
         $users->save($user);
 
-        return redirect()->route('login')->with('message', lang('Auth.registerSuccess'));
+        log_message('info', '[ACTIVATION] Account activated', [
+            'user_id' => $user->id ?? null,
+            'email'   => $user->email ?? null,
+        ]);
+
+        log_message('info', '[ACTIVATION] Redirect issued', [
+            'destination' => route_to('login'),
+            'user_id'     => $user->id ?? null,
+        ]);
+
+        return redirect()->route('login')->with('auth_message', [
+            'type' => 'success',
+            'text' => 'Your account has been successfully activated. You may now log in.',
+        ]);
     }
 
     /**
