@@ -27,3 +27,7 @@ $routes->group('Management', ['namespace' => 'App\\Modules\\Management\\Controll
     $routes->get('Docs/browse/(:any)', 'DocsController::browse/$1');
     $routes->get('Docs/view/(:any)', 'DocsController::view/$1');
 });
+
+$routes->group('Management/Users', ['namespace' => 'App\\Modules\\Management\\Controllers', 'filter' => 'auth'], static function($routes) {
+    $routes->get('Referral-Report', 'UsersController::referralReport');
+});

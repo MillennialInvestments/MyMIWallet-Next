@@ -9,6 +9,7 @@
 			<div class="card">
 				<h2 class="card-header"><?=lang('Auth.loginTitle')?></h2>
 				<div class="card-body">
+					<?php $showResendActivation = (bool) session()->getFlashdata('auth_show_resend'); ?>
 
 					<?= view('App\Views\Auth\_message_block') ?>
 
@@ -67,6 +68,28 @@
 <?php if ($config->activeResetter): ?>
 					<p><a href="<?= url_to('forgot') ?>"><?=lang('Auth.forgotYourPassword')?></a></p>
 <?php endif; ?>
+
+					<p>
+						<a class="text-decoration-none" data-bs-toggle="collapse" href="#resend-activation" role="button" aria-expanded="<?= $showResendActivation ? 'true' : 'false' ?>" aria-controls="resend-activation">
+							Resend activation email
+						</a>
+					</p>
+
+					<div class="collapse <?= $showResendActivation ? 'show' : '' ?>" id="resend-activation">
+						<div class="card card-bordered">
+							<div class="card-body">
+								<form action="<?= site_url('auth/resend-activation') ?>" method="post">
+									<?= csrf_field() ?>
+									<div class="form-group">
+										<label for="resend-email">Email</label>
+										<input type="email" class="form-control" id="resend-email" name="email" value="<?= esc(old('login')) ?>" placeholder="Email address" required>
+									</div>
+									<br>
+									<button type="submit" class="btn btn-outline-primary btn-block">Resend Activation Email</button>
+								</form>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 
