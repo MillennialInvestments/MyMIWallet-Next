@@ -42,6 +42,14 @@ function cat_title($c){
     'investment'=>'Investments',
   ][$c] ?? ucfirst($c);
 }
+
+$setupStatus = $setupStatus ?? [];
+$setupPrefs = $setupPrefs ?? [];
+$showSetupBanner = ! empty($setupStatus)
+  && ! ($setupStatus['overall_complete'] ?? false)
+  && ! ($setupPrefs['dismiss_all'] ?? false)
+  && ! ($setupPrefs['dismiss_wallets'] ?? false)
+  && ($setupStatus['missing']['wallets'] ?? false);
 ?>
 
 <div class="nk-block">
@@ -58,6 +66,16 @@ function cat_title($c){
       <div class="nk-block-head-content"></div>
     </div>
   </div>
+
+  <?php if ($showSetupBanner): ?>
+  <div class="alert alert-info d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4" data-setup-banner="wallets">
+    <div>
+      <strong>Continue setup</strong>
+      <div class="small text-muted">Add at least one wallet to connect your accounts.</div>
+    </div>
+    <button class="btn btn-primary dynamicModalLoader" data-formtype="Setup" data-endpoint="continueSetup" data-accountid="wallets">Continue setup</button>
+  </div>
+  <?php endif; ?>
 
   <!-- Category tabs -->
   <ul class="nav nav-tabs mt-2 mb-3">

@@ -708,6 +708,14 @@ class WalletsController extends UserController
             'generatedAt' => date(DateTime::ATOM),
         ];
 
+        if ($cuID > 0) {
+            /** @var \App\Services\SetupStatusService $setupService */
+            $setupService = service('setupStatusService');
+            $this->data['setupStatus'] = $setupService->getSetupStatus($cuID);
+            $this->data['setupPrefs'] = $setupService->getDismissPreferences($cuID);
+            $this->data['setupContext'] = 'wallets';
+        }
+
         return $this->renderTheme('App\\Modules\\User\\Views\\Wallets\\index', $this->data);
     }
 
