@@ -8,7 +8,7 @@ use Myth\Auth\Authorization\GroupModel;
 use App\Config\{Auth, SiteSettings, SocialMedia}; 
 use App\Controllers\UserController;
 use App\Libraries\{AiCostControls, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIUser, MyMIWallet, MyMIWallets};
-use App\Models\{AccountsModel, BudgetModel, ContentIdeaModel, ContentPostModel, ContentScannerIngestModel, MarketingNewsletterModel, UserModel, WalletModel, WeeklyStreamWatchlistModel};
+use App\Models\{AccountsModel, AuthHealthRunModel, BudgetModel, ContentIdeaModel, ContentPostModel, ContentScannerIngestModel, MarketingNewsletterModel, UserModel, WalletModel, WeeklyStreamWatchlistModel};
 use App\Services\{AccountService, BudgetService, DashboardService, GoalTrackingService, MarketingService, SolanaService, UserService, WalletService, WeeklyStreamService};
 // use App\Modules\User\Libraries\{DashboardLibrary}; 
 use DateTime;
@@ -136,6 +136,8 @@ class ManagementController extends UserController
         log_message('info', 'ManagementController L117 - Starting Page Load');
         $this->data['pageTitle']                    = 'MyMI Management | MyMI Wallet | The Future of Finance';
         $this->commonData(); // Ensure this is correctly populating $this->data
+        $authHealthModel = new AuthHealthRunModel();
+        $latestAuthHealth = $authHealthModel->getLatestRun();
         $weekStart = $this->weeklyStreamService->getDefaultWeekStart()->format('Y-m-d');
         $latestWeek = $this->weeklyWatchlistModel
             ->select('week_start_date')
@@ -154,6 +156,7 @@ class ManagementController extends UserController
             'symbol_count'       => $symbolCount,
             'newsletter_status'  => $newsletter['status'] ?? 'not generated',
         ];
+        $this->data['authHealth'] = $this->buildAuthHealthWidget($latestAuthHealth);
         $this->data['contentEngine'] = $this->buildContentEngineSummary();
         $this->data['chatUsage'] = $this->aiCostControls->getChatUsageSummary();
         $this->data['chatConfig'] = $this->aiCostControls->chatRuntimeConfig();
@@ -220,6 +223,24 @@ class ManagementController extends UserController
         return [
             'ingests' => $summary,
             'latest_ingest_id' => $latestId,
+        ];
+    }
+
+    protected function buildAuthHealthWidget(?array $latest): array
+    {
+        $failures = [];
+        if ($latest) {
+            $details = json_decode($latest['details_json'] ?? '', true) ?? [];
+            foreach (($details['steps'] ?? []) as $step) {
+                if (($step['status'] ?? '') !== 'PASS') {
+                    $failures[] = $step['key'] ?? 'unknown';
+                }
+            }
+        }
+
+        return [
+            'latest' => $latest,
+            'failures' => array_slice($failures, 0, 3),
         ];
     }
 

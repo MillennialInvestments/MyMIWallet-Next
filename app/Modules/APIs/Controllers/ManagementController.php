@@ -5,7 +5,7 @@ use App\Controllers\BaseController;
 use App\Modules\APIs\Controllers\MarketingController;
 use App\Libraries\{MyMIAlerts, MyMIMarketing, MyMIDiscord, KimiSuggestions};
 use App\Models\{AlertsModel, ExchangeModel, IdempotencyModel, MarketingModel, MarketingNewsletterModel, ReferralModel, SupportModel, UserModel, WeeklyStreamWatchlistModel};
-use App\Services\{AlphaVantagePipelineService, MarketingService, WeeklyStreamService};
+use App\Services\{AlphaVantagePipelineService, AuthSmokeService, MarketingService, WeeklyStreamService};
 use App\Support\Http;
 use CodeIgniter\Log\Handlers\FileHandler;
 use CodeIgniter\RESTful\ResourceController;
@@ -113,6 +113,26 @@ class ManagementController extends \App\Controllers\BaseController
             'db_log_ok'    => $dbLogOk,
             'marker'       => $marker,
             'timestamp'    => date('c'),
+        ]);
+    }
+
+    public function runAuthSmoke()
+    {
+        $authGuard = $this->guardAdmin();
+        if ($authGuard) {
+            return $authGuard;
+        }
+
+        $service = new AuthSmokeService();
+        $result = $service->run();
+
+        return $this->response->setJSON([
+            'status' => $result['status'] ?? 'FAIL',
+            'run_id' => $result['run_id'] ?? null,
+            'summary' => $result['summary'] ?? 'Auth smoke completed.',
+            'details' => $result['details'] ?? null,
+            'score' => $result['score'] ?? 0,
+            'duration_ms' => $result['duration_ms'] ?? 0,
         ]);
     }
 
