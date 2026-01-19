@@ -348,7 +348,7 @@ class WalletsController extends UserController
             return $this->budgetSnapshot;
         }
 
-        $cacheKey = 'wallets:budget:' . $cuID;
+        $cacheKey = cachekey_user('wallets:budget', $cuID);
         $cacheKeySanitized = \sanitizedCacheKey($cacheKey);
         $cache    = service('cache');
         if ($cache) {

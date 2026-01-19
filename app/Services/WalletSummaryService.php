@@ -47,6 +47,10 @@ class WalletSummaryService
         if (! $forceRefresh && $this->cache) {
             $cached = $this->cache->get($cacheKey);
             if (is_array($cached)) {
+                log_message('debug', '[CACHE] Dashboard cache hit', [
+                    'key'     => $cacheKey,
+                    'user_id' => $userId,
+                ]);
                 $cached['meta']['source'] = 'cache';
                 return $cached;
             }
@@ -85,7 +89,7 @@ class WalletSummaryService
 
     private function cacheKey(int $userId): string
     {
-        $key = 'wallets:summary:' . $userId;
+        $key = cachekey_user('wallets:summary', $userId);
         if (function_exists('sanitizedCacheKey')) {
             return \sanitizedCacheKey($key);
         }

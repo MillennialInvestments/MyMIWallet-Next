@@ -648,6 +648,11 @@ class DashboardController extends UserController
             return redirect()->to(site_url('login'));
         }
 
+        log_message('debug', '[DASHBOARD] Enter', [
+            'user_id'    => $activeUserId,
+            'session_id' => session_id(),
+        ]);
+
         // ✅ Only now build userService/commonData
         // $this->userService = new \App\Services\UserService($this->siteSettings, $activeUserId, $this->request);
         // $userData          = $this->userService->commonData();
