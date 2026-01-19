@@ -1,6 +1,7 @@
 <?php
 $flashError  = session('error');
 $flashErrors = (array) (session('errors') ?? []);
+$authMessage = session()->getFlashdata('auth_message');
 
 // Avoid showing the same message twice when both keys contain the same string.
 if (is_string($flashError)) {
@@ -13,6 +14,13 @@ if (is_string($flashError)) {
 <?php if (session()->has('message')) : ?>
 	<div class="alert alert-success">
 		<?= session('message') ?>
+	</div>
+<?php endif ?>
+
+<?php if (is_array($authMessage) && ! empty($authMessage['text'])) : ?>
+	<?php $alertType = $authMessage['type'] ?? 'success'; ?>
+	<div class="alert alert-<?= esc($alertType) ?>">
+		<?= esc($authMessage['text']) ?>
 	</div>
 <?php endif ?>
 
