@@ -186,6 +186,16 @@ class AuthController extends Controller
             log_message('error', 'Auth attemptLogin() - login succeeded but userId could not be resolved.');
         }
 
+        if ($userId !== null && $userId > 0) {
+            $this->session->regenerate(true);
+            $this->clearUserCacheKeys((int) $userId);
+            log_message('info', '[AUTH] Login success', [
+                'user_id'    => (int) $userId,
+                'session_id' => session_id(),
+                'ip'         => service('request')->getIPAddress(),
+            ]);
+        }
+
         $user = $this->auth->user();
         if ($user && (int) ($user->active ?? 0) === 1 && $userId !== null) {
             /** @var OnboardingProgressService $onboardingProgress */
@@ -221,11 +231,60 @@ class AuthController extends Controller
      */
     public function logout()
     {
+        $userId = (int) ($this->session->get('user_id') ?? $this->auth->id() ?? 0);
+        if ($userId > 0) {
+            $this->clearUserCacheKeys($userId);
+        }
+
         if ($this->auth->check()) {
             $this->auth->logout();
         }
 
-        return redirect()->to(site_url('/'));
+        $this->session->destroy();
+
+        $response = redirect()->to(site_url('/'));
+        $response->deleteCookie('remember');
+
+        return $response;
+    }
+
+    private function clearUserCacheKeys(int $userId): void
+    {
+        if ($userId <= 0) {
+            return;
+        }
+
+        $cache = service('cache');
+        if (! $cache) {
+            return;
+        }
+
+        $keys = [
+            cachekey_user('dashboardData', $userId),
+            cachekey_user('budgetData', $userId),
+            cachekey_user('walletData', $userId),
+            cachekey_user('wallets:summary', $userId),
+            cachekey_user('wallets:budget', $userId),
+            cachekey_user('investment_dashboard', $userId),
+            cachekey_user('tax_liability', $userId),
+        ];
+
+        foreach ($keys as $key) {
+            $cache->delete($key);
+            if (function_exists('sanitizedCacheKey')) {
+                $sanitized = sanitizedCacheKey($key);
+                if ($sanitized !== $key) {
+                    $cache->delete($sanitized);
+                }
+            }
+        }
+
+        if (method_exists($cache, 'deleteMatching')) {
+            $budgetPattern = 'budget:*:uid:' . $userId;
+            $walletPattern = 'wallets:*:uid:' . $userId;
+            $cache->deleteMatching(function_exists('sanitizedCacheKey') ? sanitizedCacheKey($budgetPattern) : $budgetPattern);
+            $cache->deleteMatching(function_exists('sanitizedCacheKey') ? sanitizedCacheKey($walletPattern) : $walletPattern);
+        }
     }
 
     //--------------------------------------------------------------------
