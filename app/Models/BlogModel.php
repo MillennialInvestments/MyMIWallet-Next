@@ -1,81 +1,83 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use CodeIgniter\Model;
 
 class BlogModel extends Model
 {
-    protected $table      = 'bf_marketing_blog_posts';
+    protected $table = 'blog_posts';
     protected $primaryKey = 'id';
-    protected $returnType = 'object';
+    protected $returnType = 'array';
     protected $useSoftDeletes = false;
+    protected $useTimestamps = true;
+    protected $createdField = 'created_at';
+    protected $updatedField = 'updated_at';
     protected $allowedFields = [
-        'slug',
         'title',
-        'excerpt',
+        'slug',
         'content',
-        'author',
+        'meta_description',
+        'meta_keywords',
+        'featured_image',
+        'category_id',
         'published_at',
-        'cover_image',
+        'created_at',
         'updated_at',
-        'status',
-        'meta_json',
     ];
 
     public function getPostBySlug(string $slug): ?array
     {
-        $builder = $this->asArray()
-            ->select('id, slug, title, excerpt, content, author, published_at, cover_image, updated_at')
-            ->where('slug', $slug);
-
-        $builder = $this->applyPublishedScope($builder);
-
-        return $builder
-            ->limit(1)
+        return $this->asArray()
+            ->where('slug', $slug)
+            ->where('published_at <=', date('Y-m-d H:i:s'))
             ->first();
     }
 
-    public function getPublishedListing(int $perPage = 12): array
+    public function getRecentPosts(int $limit): array
     {
-        $builder = $this->asArray()
-            ->select('id, slug, title, excerpt, published_at, cover_image');
-
-        $builder = $this->applyPublishedScope($builder);
-
-        return $builder
-            ->orderBy('published_at', 'DESC')
-            ->paginate($perPage);
-    }
-    public function getTotalPublishedPosts(): int
-    {
-        $builder = $this->builder();
-
-        $builder = $this->applyPublishedScope($builder);
-
-        return $builder->countAllResults();
-    }
-
-    public function getRecentPosts(int $limit = 5): array
-    {
-        $builder = $this->asArray()
-            ->select('id, slug, title, excerpt, published_at, cover_image');
-
-        $builder = $this->applyPublishedScope($builder);
-
-        return $builder
+        return $this->asArray()
+            ->where('published_at <=', date('Y-m-d H:i:s'))
             ->orderBy('published_at', 'DESC')
             ->limit($limit)
             ->findAll();
     }
 
-    private function applyPublishedScope($builder)
+    public function getPostsByCategory(int $categoryId): array
     {
-        if ($this->db->fieldExists('status', $this->table)) {
-            $builder->where('status', 'published');
+        return $this->asArray()
+            ->where('category_id', $categoryId)
+            ->where('published_at <=', date('Y-m-d H:i:s'))
+            ->orderBy('published_at', 'DESC')
+            ->findAll();
+    }
+
+    public function getRelatedPosts(int $currentPostId, int $categoryId, int $limit = 3): array
+    {
+        return $this->asArray()
+            ->select('id, title, slug, published_at, featured_image')
+            ->where('category_id', $categoryId)
+            ->where('id !=', $currentPostId)
+            ->where('published_at <=', date('Y-m-d H:i:s'))
+            ->orderBy('published_at', 'DESC')
+            ->limit($limit)
+            ->findAll();
+    }
+
+    public function getCategoryBySlug(string $slug): ?array
+    {
+        if (! $this->db->tableExists('blog_categories')) {
+            return null;
         }
 
-        return $builder;
+        $category = $this->db->table('blog_categories')
+            ->select('id, name, slug, meta_description, meta_keywords')
+            ->where('slug', $slug)
+            ->get()
+            ->getRowArray();
+
+        return $category ?: null;
     }
-    
 }
