@@ -20,7 +20,8 @@ class UserModel extends Model
     protected $useSoftDeletes = true;
     protected $allowedFields  = [
         'email', 'username', 'password_hash', '2fa_secret', 'reset_hash', 'reset_at', 'reset_expires', 'activate_hash',
-        'status', 'status_message', 'active', 'force_pass_reset', 'permissions', 'deleted_at', 'anonymous_id', 'ip_address', 'created_at', 'user_id', 'comment', 'ticker'
+        'status', 'status_message', 'active', 'force_pass_reset', 'permissions', 'deleted_at', 'anonymous_id', 'ip_address', 'created_at', 'user_id', 'comment', 'ticker',
+        'referral_code', 'referred_by_user_id',
     ];
     protected $useTimestamps   = true;
     protected $validationRules = [
