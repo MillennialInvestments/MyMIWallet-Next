@@ -141,6 +141,13 @@ $allViewData = array(
     'userAgent' => $userAgent ?? null,
     'creditAvailableFMT' => $creditAvailableFMT,
 );
+$setupStatus = $setupStatus ?? [];
+$setupPrefs = $setupPrefs ?? [];
+$showSetupBanner = ! empty($setupStatus)
+    && ! ($setupStatus['overall_complete'] ?? false)
+    && ! ($setupPrefs['dismiss_all'] ?? false)
+    && ! ($setupPrefs['dismiss_budget'] ?? false)
+    && ($setupStatus['missing']['budget'] ?? false);
 ?>
 <div data-budget-dashboard hidden></div>
 <!-- <div class="alert alert-info mt-3" data-budget-session-note>Budget data requires a logged-in session. If you're in Incognito or blocked third-party cookies, sign in again in a normal window.</div> -->
@@ -155,6 +162,15 @@ $allViewData = array(
     .nk-order-ovwg-data .amount { font-size: 1.25rem; font-weight: 700; }
     .statusRed { color: #e85347; font-weight: 600; }
 </style>
+<?php if ($showSetupBanner): ?>
+<div class="alert alert-info d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4" data-setup-banner="budget">
+    <div>
+        <strong>Continue setup</strong>
+        <div class="small text-muted">Add income and expenses to unlock your budget overview.</div>
+    </div>
+    <button class="btn btn-primary dynamicModalLoader" data-formtype="Setup" data-endpoint="continueSetup" data-accountid="budget">Continue setup</button>
+</div>
+<?php endif; ?>
 <?php
 $debug = (int) ($siteSettings->debug ?? 0);
 

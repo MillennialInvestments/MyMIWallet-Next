@@ -709,6 +709,12 @@ class DashboardController extends UserController
             $this->data['aiNotes']      = [];
         }
 
+        /** @var \App\Services\SetupStatusService $setupService */
+        $setupService = service('setupStatusService');
+        $this->data['setupStatus'] = $setupService->getSetupStatus($activeUserId);
+        $this->data['setupPrefs'] = $setupService->getDismissPreferences($activeUserId);
+        $this->data['setupContext'] = 'dashboard';
+
         return $this->renderTheme('User/Dashboard/index', $this->data);
     }
 
@@ -810,6 +816,11 @@ class DashboardController extends UserController
     {
         if ($this->debug == 1) {
             log_message('debug', "DashboardController L516 - loadModalContent called with formtype: $formtype, endpoint: $endpoint, accountid: $accountid, category: $category, platform: $platform");
+        }
+
+        if ($formtype === 'Setup' && $endpoint === 'continueSetup') {
+            $context = $category ?: $accountid;
+            return $this->continueSetupModal(is_string($context) ? $context : null);
         }
 
         $cuID = $this->resolveCuID($this->cuID);
@@ -1127,6 +1138,53 @@ class DashboardController extends UserController
 
         $this->data['incompleteSteps'] = $this->MyMIOnboarding->checkOnboardingStatus($this->cuID);
         return $this->renderTheme('App\Modules\User\Views\Dashboard\Onboarding', $this->data);
+    }
+
+    public function continueSetupModal(?string $context = null)
+    {
+        $userId = (int) ($this->cuID ?? session('user_id') ?? 0);
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setBody('Unauthorized');
+        }
+
+        $context = strtolower(trim((string) ($context ?: $this->request->getGet('context') ?: 'dashboard')));
+        $context = in_array($context, ['budget', 'wallets', 'dashboard'], true) ? $context : 'dashboard';
+
+        $this->commonData();
+
+        /** @var \App\Services\SetupStatusService $setupService */
+        $setupService = service('setupStatusService');
+        $this->data['setupStatus'] = $setupService->getSetupStatus($userId);
+        $this->data['setupPrefs'] = $setupService->getDismissPreferences($userId);
+        $this->data['setupContext'] = $context;
+
+        return view('UserModule\Views\Setup\continue_setup_modal', $this->data);
+    }
+
+    public function dismissSetup()
+    {
+        $userId = (int) ($this->cuID ?? session('user_id') ?? 0);
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+        }
+
+        $scope = strtolower(trim((string) $this->request->getPost('scope')));
+        $dismiss = (int) ($this->request->getPost('dismiss') ?? 0) === 1;
+
+        /** @var \App\Services\SetupStatusService $setupService */
+        $setupService = service('setupStatusService');
+        $result = $setupService->updateDismissPreference($userId, $scope, $dismiss);
+
+        log_message('info', '[SETUP] Dismiss updated', [
+            'user_id' => $userId,
+            'scope'   => $scope,
+            'dismiss' => $dismiss ? 1 : 0,
+        ]);
+
+        return $this->response->setJSON($result + [
+            'csrfName' => csrf_token(),
+            'csrfHash' => csrf_hash(),
+        ]);
     }
 
     public function performance()

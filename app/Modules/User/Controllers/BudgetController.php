@@ -273,6 +273,14 @@ class BudgetController extends UserController
             }
         }
 
+        if (! empty($activeUserId)) {
+            /** @var \App\Services\SetupStatusService $setupService */
+            $setupService = service('setupStatusService');
+            $this->data['setupStatus'] = $setupService->getSetupStatus((int) $activeUserId);
+            $this->data['setupPrefs'] = $setupService->getDismissPreferences((int) $activeUserId);
+            $this->data['setupContext'] = 'budget';
+        }
+
         // Render the page
         return $this->renderTheme('App\Modules\User\Views\Budget\index', $this->data);
     }
