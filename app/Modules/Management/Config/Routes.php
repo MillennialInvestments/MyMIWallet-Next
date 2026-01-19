@@ -31,3 +31,8 @@ $routes->group('Management', ['namespace' => 'App\\Modules\\Management\\Controll
 $routes->group('Management/Users', ['namespace' => 'App\\Modules\\Management\\Controllers', 'filter' => 'auth'], static function($routes) {
     $routes->get('Referral-Report', 'UsersController::referralReport');
 });
+
+$routes->group('Management/AuthHealth', ['namespace' => 'App\\Modules\\Management\\Controllers', 'filter' => 'permission:admin.access'], static function($routes) {
+    $routes->get('/', 'AuthHealthController::index');
+    $routes->get('details/(:num)', 'AuthHealthController::details/$1');
+});

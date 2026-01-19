@@ -37,6 +37,12 @@ $targetWallets = (float)($reporting['targetWallets'] ?? 0);
 $targetUsers = (float)($reporting['targetUsers'] ?? 0);
 $targetPartners = (float)($reporting['targetPartners'] ?? 0);
 $discordHealth = $discordHealth ?? ['queued' => 0, 'failed24h' => 0, 'dead7d' => 0, 'nextQuietResume' => null, 'channels' => []];
+$authHealth = $authHealth ?? ['latest' => null, 'failures' => []];
+$authLatest = $authHealth['latest'] ?? null;
+$authFailures = $authHealth['failures'] ?? [];
+$authStatus = $authLatest['status'] ?? 'UNKNOWN';
+$authSummary = $authLatest['summary'] ?? 'No runs recorded yet.';
+$authRunAt = $authLatest['run_at'] ?? null;
 ?>
 
 <div class="nk-block">
@@ -191,6 +197,27 @@ $discordHealth = $discordHealth ?? ['queued' => 0, 'failed24h' => 0, 'dead7d' =>
                             </tbody>
                         </table>
                         <a href="<?php echo site_url('Management/Discord'); ?>" class="btn btn-outline-primary btn-sm">Manage Discord</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6 mt-3 mt-lg-0">
+                <div class="card card-bordered">
+                    <div class="card-inner">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="mb-0">Auth Health</h5>
+                            <span class="badge <?= $authStatus === 'PASS' ? 'bg-success' : ($authStatus === 'FAIL' ? 'bg-danger' : 'bg-secondary'); ?>">
+                                <?= esc($authStatus); ?>
+                            </span>
+                        </div>
+                        <p class="mb-1"><strong>Last run:</strong> <?= $authRunAt ? esc(date('M j, g:i A', strtotime($authRunAt))) : 'Never'; ?></p>
+                        <p class="mb-2 text-soft"><?= esc($authSummary); ?></p>
+                        <?php if ($authStatus === 'FAIL' && ! empty($authFailures)): ?>
+                            <div class="small mb-2">
+                                <strong>Top issues:</strong>
+                                <?= esc(implode(', ', $authFailures)); ?>
+                            </div>
+                        <?php endif; ?>
+                        <a href="<?= site_url('Management/AuthHealth'); ?>" class="btn btn-outline-primary btn-sm">View Auth Health History</a>
                     </div>
                 </div>
             </div>
