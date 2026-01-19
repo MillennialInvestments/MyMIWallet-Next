@@ -203,6 +203,51 @@ class UsersController extends UserController
         return $this->renderTheme('App\Modules\Management\Views\Alerts\index', $this->data);
     }
 
+    public function referralReport()
+    {
+        $this->data['pageTitle'] = 'Referral Report | Management | MyMI Wallet';
+        $this->commonData();
+
+        $filters = [
+            'referral_code' => trim((string) $this->request->getGet('referral_code')),
+            'status'        => trim((string) $this->request->getGet('status')),
+            'start_date'    => trim((string) $this->request->getGet('start_date')),
+            'end_date'      => trim((string) $this->request->getGet('end_date')),
+        ];
+
+        $builder = $this->userModel->builder();
+        $builder->select(
+            'users.id, users.email, users.username, users.created_at, users.referral_code, users.active,' .
+            ' referrer.email AS referrer_email, referrer.username AS referrer_username'
+        );
+        $builder->join('users AS referrer', 'referrer.id = users.referred_by_user_id', 'left');
+
+        if ($filters['referral_code'] !== '') {
+            $builder->like('users.referral_code', $filters['referral_code']);
+        }
+
+        if ($filters['status'] === 'active') {
+            $builder->where('users.active', 1);
+        } elseif ($filters['status'] === 'inactive') {
+            $builder->where('users.active', 0);
+        }
+
+        if ($filters['start_date'] !== '') {
+            $builder->where('users.created_at >=', $filters['start_date'] . ' 00:00:00');
+        }
+
+        if ($filters['end_date'] !== '') {
+            $builder->where('users.created_at <=', $filters['end_date'] . ' 23:59:59');
+        }
+
+        $builder->orderBy('users.created_at', 'desc');
+
+        $this->data['referralReport'] = $builder->get()->getResultArray();
+        $this->data['filters'] = $filters;
+
+        return $this->renderTheme('App\Modules\Management\Views\Users\Referral_Report', $this->data);
+    }
+
     public function exportUsers()
     {
         $tableName = 'users';

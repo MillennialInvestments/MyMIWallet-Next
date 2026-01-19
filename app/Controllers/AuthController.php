@@ -88,14 +88,25 @@ class AuthController extends Controller
         }
 
         if (! $this->validate($rules)) {
+            $errors = $this->validator->getErrors();
+            $this->setAuthMessage('danger', $this->formatValidationErrors($errors));
+            log_message('warning', '[AUTH] Login validation failed', [
+                'errors' => $errors,
+                'ip'     => $this->request->getIPAddress(),
+            ]);
             return redirect()->back()
                 ->withInput()
-                ->with('errors', $this->validator->getErrors());
+                ->with('errors', $errors);
         }
 
         $login    = $this->request->getPost('login');
         $password = $this->request->getPost('password');
         $remember = (bool) $this->request->getPost('remember');
+
+        log_message('info', '[AUTH] Login attempt', [
+            'login' => $login,
+            'ip'    => $this->request->getIPAddress(),
+        ]);
 
         log_message(
             'debug',
@@ -130,6 +141,7 @@ class AuthController extends Controller
         if (! $this->auth->attempt($credentials, $remember)) {
             // LocalAuthenticator exposes `error()` (single last error message)
             $errorMsg = $this->auth->error() ?? lang('Auth.badAttempt');
+            $inactiveMessage = lang('Auth.notActivated');
 
             log_message(
                 'debug',
@@ -140,10 +152,24 @@ class AuthController extends Controller
                 )
             );
 
-            // Keep both `error` (string) and `errors` (array) for view compatibility
+            if ($errorMsg === $inactiveMessage || stripos($errorMsg, 'not activated') !== false) {
+                $this->setAuthMessage('warning', 'Your account is not activated yet. Please activate it using the email link, or resend the activation email below.');
+                $this->session->setFlashdata('auth_show_resend', true);
+                log_message('info', '[AUTH] Login inactive', [
+                    'login' => $login,
+                    'ip'    => $this->request->getIPAddress(),
+                ]);
+            } else {
+                $this->setAuthMessage('danger', 'Login failed. Please check your email and password.');
+                log_message('warning', '[AUTH] Login failed', [
+                    'login' => $login,
+                    'error' => $errorMsg,
+                    'ip'    => $this->request->getIPAddress(),
+                ]);
+            }
+
             return redirect()->back()
-                ->withInput()
-                ->with('error', $errorMsg);
+                ->withInput();
         }
 
         // ✅ SUCCESS: secure the user identity for the rest of the app
@@ -221,7 +247,10 @@ class AuthController extends Controller
         // Final redirect with success message
         return $this->redirectAfterLogin()
             ->withCookies()
-            ->with('message', lang('Auth.loginSuccess'));
+            ->with('auth_message', [
+                'type' => 'success',
+                'text' => lang('Auth.loginSuccess'),
+            ]);
     }
 
 
@@ -241,8 +270,15 @@ class AuthController extends Controller
         }
 
         $this->session->destroy();
+        $this->session = service('session');
+        $this->setAuthMessage('success', 'You have been logged out.');
 
-        $response = redirect()->to(site_url('/'));
+        log_message('info', '[AUTH] Logout', [
+            'user_id' => $userId,
+            'ip'      => service('request')->getIPAddress(),
+        ]);
+
+        $response = redirect()->route('login');
         $response->deleteCookie('remember');
 
         return $response;
@@ -303,9 +339,10 @@ class AuthController extends Controller
 
         // Check if registration is allowed
         if (! $this->config->allowRegistration) {
+            $this->setAuthMessage('danger', lang('Auth.registerDisabled'));
             return redirect()->back()
                 ->withInput()
-                ->with('error', lang('Auth.registerDisabled'));
+                ->with('errors', ['register' => lang('Auth.registerDisabled')]);
         }
 
         // Use the controller's request instance
@@ -451,7 +488,8 @@ class AuthController extends Controller
                 'ip'    => $request->getIPAddress(),
             ]);
 
-            return redirect()->back()->withInput()->with('error', lang('Auth.registerDisabled'));
+            $this->setAuthMessage('danger', lang('Auth.registerDisabled'));
+            return redirect()->back()->withInput();
         }
 
         $users = model(UserModel::class);
@@ -473,7 +511,9 @@ class AuthController extends Controller
                     'errors' => $this->validator->getErrors(),
                 ]);
 
-                return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+                $errors = $this->validator->getErrors();
+                $this->setAuthMessage('danger', $this->formatValidationErrors($errors));
+                return redirect()->back()->withInput()->with('errors', $errors);
             }
 
             log_message('info', '[REGISTRATION] Validation passed (basic fields)', [
@@ -496,7 +536,9 @@ class AuthController extends Controller
                     'errors' => $this->validator->getErrors(),
                 ]);
 
-                return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+                $errors = $this->validator->getErrors();
+                $this->setAuthMessage('danger', $this->formatValidationErrors($errors));
+                return redirect()->back()->withInput()->with('errors', $errors);
             }
 
             log_message('info', '[REGISTRATION] Validation passed (password fields)', [
@@ -529,7 +571,9 @@ class AuthController extends Controller
                     'errors' => $users->errors(),
                 ]);
 
-                return redirect()->back()->withInput()->with('errors', $users->errors());
+                $errors = $users->errors();
+                $this->setAuthMessage('danger', $this->formatValidationErrors($errors));
+                return redirect()->back()->withInput()->with('errors', $errors);
             }
 
             $newUserId       = (int) ($users->getInsertID() ?? 0);
@@ -557,6 +601,10 @@ class AuthController extends Controller
             }
 
             if ($referralCode !== '') {
+                log_message('info', '[REFERRAL] Registration attributed', [
+                    'new_user_id'   => $newUserId,
+                    'referral_code' => $referralCode,
+                ]);
                 log_message('info', '[REGISTRATION] Referral applied', [
                     'user_id'       => $newUserId,
                     'email'         => $user->email ?? null,
@@ -579,7 +627,8 @@ class AuthController extends Controller
                         'error'   => $activator->error() ?? lang('Auth.unknownError'),
                     ]);
 
-                    return redirect()->back()->withInput()->with('error', $activator->error() ?? lang('Auth.unknownError'));
+                    $this->setAuthMessage('danger', $activator->error() ?? lang('Auth.unknownError'));
+                    return redirect()->back()->withInput();
                 }
 
                 $auditService->notifyRegistrationResult($email, 'success', $request, null, $auditContext);
@@ -594,7 +643,14 @@ class AuthController extends Controller
                 $this->session->remove('referral_code');
 
                 // Success!
-                return redirect()->to(site_url('register/success'))->with('message', lang('Auth.activationSuccess'));
+                $message = lang('Auth.activationSuccess');
+                if ($referralCode !== '') {
+                    $message .= ' Referral applied: ' . $referralCode . '.';
+                }
+                return redirect()->to(site_url('register/success'))->with('auth_message', [
+                    'type' => 'success',
+                    'text' => $message,
+                ]);
             }
 
             $auditService->notifyRegistrationResult($email, 'success', $request, null, $auditContext);
@@ -604,7 +660,14 @@ class AuthController extends Controller
             $this->session->remove('referral_code');
 
             // Success!
-            return redirect()->to(site_url('register/success'))->with('message', lang('Auth.registerSuccess'));
+            $message = lang('Auth.registerSuccess');
+            if ($referralCode !== '') {
+                $message .= ' Referral applied: ' . $referralCode . '.';
+            }
+            return redirect()->to(site_url('register/success'))->with('auth_message', [
+                'type' => 'success',
+                'text' => $message,
+            ]);
         } catch (Throwable $e) {
             $auditService->notifyRegistrationResult($email, 'failed', $request, $e, $auditContext);
 
@@ -613,7 +676,8 @@ class AuthController extends Controller
                 'error' => $e->getMessage(),
             ]);
 
-            return redirect()->back()->withInput()->with('error', lang('Auth.unknownError'));
+            $this->setAuthMessage('danger', lang('Auth.unknownError'));
+            return redirect()->back()->withInput();
         }
     }
 
@@ -621,7 +685,6 @@ class AuthController extends Controller
     {
         $this->data = [
             'config'       => $this->config,
-            'message'      => session('message'),
             'siteSettings' => config('SiteSettings'),
             'socialMedia'  => config('SocialMedia'),
         ];
@@ -635,7 +698,10 @@ class AuthController extends Controller
     {
         if ($this->config->requireActivation === null) {
             log_message('info', 'Registration resend activation skipped: activation disabled.');
-            return redirect()->to(site_url('register/success'))->with('message', lang('Auth.activationSuccess'));
+            return redirect()->to(site_url('register/success'))->with('auth_message', [
+                'type' => 'info',
+                'text' => lang('Auth.activationSuccess'),
+            ]);
         }
 
         $email = strtolower(trim((string) $this->request->getPost('email')));
@@ -649,13 +715,19 @@ class AuthController extends Controller
             ]);
 
             return redirect()->to(site_url('register/success'))
-                ->with('message', 'If an account exists, we will resend a verification email shortly.');
+                ->with('auth_message', [
+                    'type' => 'info',
+                    'text' => 'If an account exists for that email, we sent an activation email.',
+                ]);
         }
 
         if ($email === '') {
             log_message('notice', 'Registration resend activation requested without email.');
             return redirect()->to(site_url('register/success'))
-                ->with('message', 'If an account exists, we will resend a verification email shortly.');
+                ->with('auth_message', [
+                    'type' => 'info',
+                    'text' => 'If an account exists for that email, we sent an activation email.',
+                ]);
         }
 
         $users = model(UserModel::class);
@@ -679,7 +751,10 @@ class AuthController extends Controller
         }
 
         return redirect()->to(site_url('register/success'))
-            ->with('message', 'If an account exists, we will resend a verification email shortly.');
+            ->with('auth_message', [
+                'type' => 'info',
+                'text' => 'If an account exists for that email, we sent an activation email.',
+            ]);
     }
 
     //--------------------------------------------------------------------
@@ -692,7 +767,8 @@ class AuthController extends Controller
     public function forgotPassword()
     {
         if ($this->config->activeResetter === null) {
-            return redirect()->route('login')->with('error', lang('Auth.forgotDisabled'));
+            $this->setAuthMessage('danger', lang('Auth.forgotDisabled'));
+            return redirect()->route('login');
         }
 
         return $this->_render($this->config->views['forgot'], ['config' => $this->config]);
@@ -705,7 +781,8 @@ class AuthController extends Controller
     public function attemptForgot()
     {
         if ($this->config->activeResetter === null) {
-            return redirect()->route('login')->with('error', lang('Auth.forgotDisabled'));
+            $this->setAuthMessage('danger', lang('Auth.forgotDisabled'));
+            return redirect()->route('login');
         }
 
         $rules = [
@@ -716,15 +793,28 @@ class AuthController extends Controller
         ];
 
         if (! $this->validate($rules)) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+            $errors = $this->validator->getErrors();
+            $this->setAuthMessage('danger', $this->formatValidationErrors($errors));
+            return redirect()->back()->withInput()->with('errors', $errors);
         }
 
         $users = model(UserModel::class);
 
-        $user = $users->where('email', $this->request->getPost('email'))->first();
+        $email = (string) $this->request->getPost('email');
+        log_message('info', '[AUTH] Password reset requested', [
+            'email' => $email,
+            'ip'    => $this->request->getIPAddress(),
+        ]);
+
+        $user = $users->where('email', $email)->first();
 
         if (null === $user) {
-            return redirect()->back()->with('error', lang('Auth.forgotNoUser'));
+            $this->setAuthMessage('danger', lang('Auth.forgotNoUser'));
+            log_message('warning', '[AUTH] Password reset request: user not found', [
+                'email' => $email,
+                'ip'    => $this->request->getIPAddress(),
+            ]);
+            return redirect()->back();
         }
 
         // Save the reset hash /
@@ -735,10 +825,19 @@ class AuthController extends Controller
         $sent     = $resetter->send($user);
 
         if (! $sent) {
-            return redirect()->back()->withInput()->with('error', $resetter->error() ?? lang('Auth.unknownError'));
+            $this->setAuthMessage('danger', $resetter->error() ?? lang('Auth.unknownError'));
+            log_message('error', '[AUTH] Password reset email failed', [
+                'email' => $email,
+                'error' => $resetter->error() ?? lang('Auth.unknownError'),
+            ]);
+            return redirect()->back()->withInput();
         }
 
-        return redirect()->route('reset-password')->with('message', lang('Auth.forgotEmailSent'));
+        $this->setAuthMessage('success', lang('Auth.forgotEmailSent'));
+        log_message('info', '[AUTH] Password reset email sent', [
+            'email' => $email,
+        ]);
+        return redirect()->route('reset-password');
     }
 
     /**
@@ -747,7 +846,8 @@ class AuthController extends Controller
     public function resetPassword()
     {
         if ($this->config->activeResetter === null) {
-            return redirect()->route('login')->with('error', lang('Auth.forgotDisabled'));
+            $this->setAuthMessage('danger', lang('Auth.forgotDisabled'));
+            return redirect()->route('login');
         }
 
         $token = $this->request->getGet('token');
@@ -767,7 +867,8 @@ class AuthController extends Controller
     public function attemptReset()
     {
         if ($this->config->activeResetter === null) {
-            return redirect()->route('login')->with('error', lang('Auth.forgotDisabled'));
+            $this->setAuthMessage('danger', lang('Auth.forgotDisabled'));
+            return redirect()->route('login');
         }
 
         $users = model(UserModel::class);
@@ -788,7 +889,9 @@ class AuthController extends Controller
         ];
 
         if (! $this->validate($rules)) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+            $errors = $this->validator->getErrors();
+            $this->setAuthMessage('danger', $this->formatValidationErrors($errors));
+            return redirect()->back()->withInput()->with('errors', $errors);
         }
 
         $user = $users->where('email', $this->request->getPost('email'))
@@ -796,12 +899,14 @@ class AuthController extends Controller
             ->first();
 
         if (null === $user) {
-            return redirect()->back()->with('error', lang('Auth.forgotNoUser'));
+            $this->setAuthMessage('danger', lang('Auth.forgotNoUser'));
+            return redirect()->back();
         }
 
         // Reset token still valid?
         if (! empty($user->reset_expires) && time() > $user->reset_expires->getTimestamp()) {
-            return redirect()->back()->withInput()->with('error', lang('Auth.resetTokenExpired'));
+            $this->setAuthMessage('danger', lang('Auth.resetTokenExpired'));
+            return redirect()->back()->withInput();
         }
 
         // Success! Save the new password, and cleanup the reset hash.
@@ -812,7 +917,11 @@ class AuthController extends Controller
         $user->force_pass_reset = false;
         $users->save($user);
 
-        return redirect()->route('login')->with('message', lang('Auth.resetSuccess'));
+        $this->setAuthMessage('success', lang('Auth.resetSuccess'));
+        log_message('info', '[AUTH] Password reset completed', [
+            'email' => $this->request->getPost('email'),
+        ]);
+        return redirect()->route('login');
     }
 
     /**
@@ -823,7 +932,7 @@ class AuthController extends Controller
     public function activateAccount()
     {
         $users = model(UserModel::class);
-        $token = (string) $this->request->getGet('token');
+        $token = (string) ($this->request->getPost('activation_code') ?: $this->request->getGet('token'));
 
         log_message('info', '[ACTIVATION] Activation link hit', [
             'token' => $token,
@@ -847,16 +956,34 @@ class AuthController extends Controller
             return service('response')->setStatusCode(429)->setBody(lang('Auth.tooManyRequests', [$throttler->getTokentime()]));
         }
 
-        $user = $users->where('activate_hash', $token)
-            ->where('active', 0)
-            ->first();
+        if ($token === '') {
+            $this->setAuthMessage('danger', 'Activation token is missing. Please request a new activation email.');
+            $this->session->setFlashdata('auth_show_resend', true);
+            log_message('warning', '[ACTIVATION] Activation failed: missing token', [
+                'ip' => $this->request->getIPAddress(),
+            ]);
+            return redirect()->route('login');
+        }
+
+        $user = $users->where('activate_hash', $token)->first();
 
         if (null === $user) {
             log_message('error', '[ACTIVATION] Activation failed: user not found', [
                 'token' => $token,
                 'ip'    => $this->request->getIPAddress(),
             ]);
-            return redirect()->route('login')->with('error', lang('Auth.activationNoUser'));
+            $this->setAuthMessage('danger', 'Activation link is invalid or expired. Please request a new activation email.');
+            $this->session->setFlashdata('auth_show_resend', true);
+            return redirect()->route('login');
+        }
+
+        if ((int) ($user->active ?? 0) === 1) {
+            log_message('info', '[ACTIVATION] Account already active', [
+                'user_id' => $user->id ?? null,
+                'email'   => $user->email ?? null,
+            ]);
+            $this->setAuthMessage('info', 'Your account is already activated. Please log in.');
+            return redirect()->route('login');
         }
 
         log_message('debug', '[ACTIVATION] Token validated for user', [
@@ -892,6 +1019,7 @@ class AuthController extends Controller
     public function resendActivateAccount()
     {
         if ($this->config->requireActivation === null) {
+            $this->setAuthMessage('info', 'Activation is not required for this account.');
             return redirect()->route('login');
         }
 
@@ -911,18 +1039,106 @@ class AuthController extends Controller
             ->first();
 
         if (null === $user) {
-            return redirect()->route('login')->with('error', lang('Auth.activationNoUser'));
+            $this->setAuthMessage('danger', lang('Auth.activationNoUser'));
+            $this->session->setFlashdata('auth_show_resend', true);
+            return redirect()->route('login');
         }
 
         $activator = service('activator');
         $sent      = $activator->send($user);
 
         if (! $sent) {
-            return redirect()->back()->withInput()->with('error', $activator->error() ?? lang('Auth.unknownError'));
+            $this->setAuthMessage('danger', $activator->error() ?? lang('Auth.unknownError'));
+            return redirect()->back()->withInput();
         }
 
         // Success!
-        return redirect()->route('login')->with('message', lang('Auth.activationSuccess'));
+        return redirect()->route('login')->with('auth_message', [
+            'type' => 'success',
+            'text' => lang('Auth.activationSuccess'),
+        ]);
+    }
+
+    public function resendActivation()
+    {
+        if ($this->config->requireActivation === null) {
+            $this->setAuthMessage('info', 'Activation is not required for this account.');
+            return redirect()->route('login');
+        }
+
+        return $this->_render($this->config->views['resendActivation'] ?? 'App\\Views\\Auth\\resend_activation', [
+            'config' => $this->config,
+            'email'  => '',
+        ]);
+    }
+
+    public function resendActivationCode()
+    {
+        $email = strtolower(trim((string) $this->request->getPost('email')));
+        $ip    = $this->request->getIPAddress();
+
+        log_message('info', '[AUTH] Resend activation requested', [
+            'email' => $email ?: 'unknown',
+            'ip'    => $ip,
+        ]);
+
+        $throttler   = service('throttler');
+        $throttleKey = md5('resend-activation:' . ($email ?: 'unknown') . ':' . $ip);
+
+        if ($throttler->check($throttleKey, 3, MINUTE) === false) {
+            log_message('warning', '[AUTH] Resend activation throttled', [
+                'email' => $email ?: 'unknown',
+                'ip'    => $ip,
+            ]);
+            return redirect()->route('login')->with('auth_message', [
+                'type' => 'info',
+                'text' => 'If an account exists for that email, we sent an activation email.',
+            ]);
+        }
+
+        if ($email === '') {
+            log_message('notice', '[AUTH] Resend activation missing email', [
+                'ip' => $ip,
+            ]);
+            return redirect()->route('login')->with('auth_message', [
+                'type' => 'info',
+                'text' => 'If an account exists for that email, we sent an activation email.',
+            ]);
+        }
+
+        $users = model(UserModel::class);
+        $user  = $users->where('email', $email)->first();
+
+        if ($user && (int) ($user->active ?? 0) === 0) {
+            $activator = service('activator');
+            $sent      = $activator->send($user);
+
+            if ($sent) {
+                log_message('info', '[AUTH] Resend activation sent', [
+                    'email' => $email,
+                    'user_id' => $user->id ?? null,
+                ]);
+            } else {
+                log_message('error', '[AUTH] Resend activation send failed', [
+                    'email' => $email,
+                    'error' => $activator->error() ?? lang('Auth.unknownError'),
+                ]);
+            }
+        } elseif ($user && (int) ($user->active ?? 0) === 1) {
+            log_message('info', '[AUTH] Resend activation ignored (already active)', [
+                'email' => $email,
+                'user_id' => $user->id ?? null,
+            ]);
+        } else {
+            log_message('notice', '[AUTH] Resend activation email not found', [
+                'email' => $email,
+            ]);
+        }
+
+        return redirect()->route('login')->with('auth_message', [
+            'type' => 'info',
+            'text' => 'If an account exists for that email, we sent an activation email.',
+        ]);
     }
 
     private function redirectAfterLogin(): RedirectResponse
@@ -1071,5 +1287,33 @@ class AuthController extends Controller
     protected function _render(string $view, array $data = [])
     {
         return view($view, $data);
+    }
+
+    private function setAuthMessage(string $type, string $text, ?string $title = null): void
+    {
+        $payload = [
+            'type' => $type,
+            'text' => $text,
+        ];
+
+        if ($title) {
+            $payload['title'] = $title;
+        }
+
+        $this->session->setFlashdata('auth_message', $payload);
+    }
+
+    private function formatValidationErrors(array $errors): string
+    {
+        $messages = array_values(array_filter(array_map('trim', $errors)));
+        if ($messages === []) {
+            return 'Please check the highlighted fields and try again.';
+        }
+
+        if (count($messages) === 1) {
+            return $messages[0];
+        }
+
+        return implode(' ', $messages);
     }
 }

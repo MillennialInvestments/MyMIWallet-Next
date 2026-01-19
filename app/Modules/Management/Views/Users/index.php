@@ -37,6 +37,8 @@ $viewFileData = [
                         <p id="private_key"></p>
                         <p id="address"></p>
                         <a href="<?= site_url('/Trade-Tracker'); ?>">Back to Dashboard</a>
+                        <span class="mx-2">|</span>
+                        <a href="<?= site_url('Management/Users/Referral-Report'); ?>">Referral Report</a>
                     </div>
                 </div>
             </div>
