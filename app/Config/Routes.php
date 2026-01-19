@@ -50,6 +50,10 @@ $routes->get('/', 'Home::index');
 $routes->addRedirect('Home', '/', 301);
 $routes->addRedirect('News', 'Blog/News-And-Updates', 301);
 $routes->get('Stock/(:segment)/(:segment)', 'StockController::show/$1/$2');
+// SEO Blog Routes
+$routes->get('blog', 'Blog::index');
+$routes->get('blog/category/(:segment)', 'Blog::category/$1');
+$routes->get('blog/(:segment)', 'Blog::post/$1');
 // $routes->get('Dashboard', 'App\\Modules\\User\\Controllers\\BudgetController::index', ['filter' => 'login']);
 
 // app/Config/Routes.php
