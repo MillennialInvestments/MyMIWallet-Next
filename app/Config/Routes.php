@@ -2007,6 +2007,7 @@ $routes->group('API/Management', ['namespace' => 'App\\Modules\\APIs\\Controller
     $routes->post('triggerPostAutogenOnEmpty', 'ManagementController::triggerPostAutogenOnEmpty');
     $routes->get('exportPostJson/(:num)', 'ManagementController::exportPostJson/$1');
     $routes->get('logHealthcheck', 'ManagementController::logHealthcheck');
+    $routes->post('runAuthSmoke', 'ManagementController::runAuthSmoke');
     $routes->post('generateVoiceScriptManually', 'ManagementController::generateVoiceScriptManually');
     $routes->post('processAllTradeAlerts', 'ManagementController::processAllTradeAlerts');
     $routes->post('distributeTodaysNewsContent', 'ManagementController::distributeTodaysNewsContent');
