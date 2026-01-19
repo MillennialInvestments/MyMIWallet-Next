@@ -710,7 +710,9 @@ class BudgetController extends UserController
     {
         $contextKey = empty($context) ? '' : ':' . md5(json_encode($context));
 
-        return sprintf('budget:%s:%d%s', $segment, $userId, $contextKey);
+        $baseKey = sprintf('budget:%s%s', $segment, $contextKey);
+
+        return cachekey_user($baseKey, $userId);
     }
 
     protected function rememberUserData(string $segment, int $userId, callable $callback, array $context = []): array

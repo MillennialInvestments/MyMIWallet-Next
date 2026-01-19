@@ -41,6 +41,7 @@ class Filters extends BaseConfig
         'csrf'          => \App\Filters\CsrfDebugFilter::class,
         'auth'          => \App\Filters\AuthFilter::class,  
         'cronKey'       => \App\Filters\CronKeyFilter::class,   
+        'noStore'       => \App\Filters\NoStoreFilter::class,
         // 'csp'           => \App\Filters\CspFilter::class,
         
         'cspoff'        => \App\Filters\CspOff::class,
