@@ -71,6 +71,13 @@ $displayName       = $cuDisplayName ?? $cuUsername ?? 'Investor';
 $availableToInvest = $budgetSummary['availableToInvest'] ?? 0.0;
 $aiSessionKey      = $aiSessionKey ?? '';
 $aiNotesList       = $aiNotes ?? [];
+$setupStatus       = $setupStatus ?? [];
+$setupPrefs        = $setupPrefs ?? [];
+$setupContext      = $setupContext ?? 'dashboard';
+$showSetupBanner   = ! empty($setupStatus)
+    && ! ($setupStatus['overall_complete'] ?? false)
+    && ! ($setupPrefs['dismiss_all'] ?? false)
+    && ! ($setupPrefs['dismiss_dashboard'] ?? false);
 ?>
 <div class="nk-block-head nk-block-head-sm">
     <div class="nk-block-between">
@@ -120,13 +127,13 @@ $aiNotesList       = $aiNotes ?? [];
 </ul>
 <?php endif; ?>
 
-<?php if (!empty($onboardingIncomplete)): ?>
-<div class="alert alert-info d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+<?php if ($showSetupBanner): ?>
+<div class="alert alert-info d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4" data-setup-banner="dashboard">
     <div>
         <strong>Continue setup</strong>
         <div class="small text-muted">Complete your onboarding checklist to unlock personalized budget and investment insights.</div>
     </div>
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#onboardingWalkthroughModal">Continue setup</button>
+    <button class="btn btn-primary dynamicModalLoader" data-formtype="Setup" data-endpoint="continueSetup" data-accountid="dashboard">Continue setup</button>
 </div>
 <?php endif; ?>
 
