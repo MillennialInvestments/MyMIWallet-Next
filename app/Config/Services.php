@@ -5,6 +5,7 @@ namespace Config;
 use App\Libraries\{CrudCacheInvalidator, KimiClient, MyMIAnalytics, MyMIInvestments};
 use App\Services\AuthAuditService;
 use App\Services\OnboardingProgressService;
+use App\Services\SetupStatusService;
 use CodeIgniter\Config\BaseService;
 
 /**
@@ -81,6 +82,17 @@ class Services extends BaseService
         }
 
         return new OnboardingProgressService();
+    }
+
+    public static function setupStatusService(bool $getShared = true): SetupStatusService
+    {
+        if ($getShared) {
+            /** @var SetupStatusService $service */
+            $service = static::getSharedInstance('setupStatusService');
+            return $service;
+        }
+
+        return new SetupStatusService();
     }
 
     public static function mailService(bool $getShared = true)
