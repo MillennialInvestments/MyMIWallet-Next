@@ -36,3 +36,8 @@ $routes->group('Management/AuthHealth', ['namespace' => 'App\\Modules\\Managemen
     $routes->get('/', 'AuthHealthController::index');
     $routes->get('details/(:num)', 'AuthHealthController::details/$1');
 });
+
+$routes->group('Management', ['namespace' => 'App\\Modules\\Management\\Controllers', 'filter' => 'permission:admin.access'], static function($routes) {
+    $routes->get('AuthFunnel', 'AuthFunnelController::authFunnel');
+    $routes->get('Referrals', 'AuthFunnelController::referrals');
+});

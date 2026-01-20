@@ -67,6 +67,8 @@ class AuthController extends Controller
             $this->rememberRedirectUrl(previous_url());
         }
 
+        service('eventTracker')->track('auth.login_view');
+
         return $this->_render($this->config->views['login'], ['config' => $this->config]);
     }
 
@@ -77,6 +79,10 @@ class AuthController extends Controller
     public function attemptLogin()
     {
         helper('auth');
+
+        service('eventTracker')->track('auth.login_attempt', [
+            'login_type' => $this->config->validFields === ['email'] ? 'email' : 'username',
+        ]);
 
         $rules = [
             'login'    => 'required',
@@ -89,6 +95,10 @@ class AuthController extends Controller
 
         if (! $this->validate($rules)) {
             $errors = $this->validator->getErrors();
+            service('eventTracker')->track('auth.login_fail', [
+                'reason' => 'validation',
+                'summary' => $this->validationSummary($errors),
+            ]);
             $this->setAuthMessage('danger', $this->formatValidationErrors($errors));
             log_message('warning', '[AUTH] Login validation failed', [
                 'errors' => $errors,
@@ -153,6 +163,9 @@ class AuthController extends Controller
             );
 
             if ($errorMsg === $inactiveMessage || stripos($errorMsg, 'not activated') !== false) {
+                service('eventTracker')->track('auth.login_inactive', [
+                    'reason' => 'inactive',
+                ]);
                 $this->setAuthMessage('warning', 'Your account is not activated yet. Please activate it using the email link, or resend the activation email below.');
                 $this->session->setFlashdata('auth_show_resend', true);
                 log_message('info', '[AUTH] Login inactive', [
@@ -160,6 +173,9 @@ class AuthController extends Controller
                     'ip'    => $this->request->getIPAddress(),
                 ]);
             } else {
+                service('eventTracker')->track('auth.login_fail', [
+                    'reason' => 'invalid_credentials',
+                ]);
                 $this->setAuthMessage('danger', 'Login failed. Please check your email and password.');
                 log_message('warning', '[AUTH] Login failed', [
                     'login' => $login,
@@ -215,6 +231,7 @@ class AuthController extends Controller
         if ($userId !== null && $userId > 0) {
             $this->session->regenerate(true);
             $this->clearUserCacheKeys((int) $userId);
+            service('eventTracker')->track('auth.login_success', [], (int) $userId);
             log_message('info', '[AUTH] Login success', [
                 'user_id'    => (int) $userId,
                 'session_id' => session_id(),
@@ -226,7 +243,13 @@ class AuthController extends Controller
         if ($user && (int) ($user->active ?? 0) === 1 && $userId !== null) {
             /** @var OnboardingProgressService $onboardingProgress */
             $onboardingProgress = service('onboardingProgressService');
-            $onboardingProgress->markVerifiedLogin((int) $userId);
+            $isFirstLogin = $onboardingProgress->markVerifiedLogin((int) $userId);
+
+            if ($isFirstLogin) {
+                service('eventTracker')->track('referral.converted', [
+                    'source' => 'first_login',
+                ], (int) $userId, 'referral');
+            }
 
             if ($onboardingProgress->shouldTriggerWalkthrough((int) $userId)) {
                 $onboardingProgress->markWalkthroughStarted((int) $userId);
@@ -272,6 +295,8 @@ class AuthController extends Controller
         $this->session->destroy();
         $this->session = service('session');
         $this->setAuthMessage('success', 'You have been logged out.');
+
+        service('eventTracker')->track('auth.logout', [], $userId > 0 ? $userId : null);
 
         log_message('info', '[AUTH] Logout', [
             'user_id' => $userId,
@@ -344,6 +369,9 @@ class AuthController extends Controller
 
         if (! empty($referralCode)) {
             $this->session->set('referral_code', $referralCode);
+            service('eventTracker')->track('referral.captured', [
+                'source' => $request->getGet('ref') ? 'query' : 'segment',
+            ]);
         }
 
         if (empty($referralCode)) {
@@ -354,6 +382,8 @@ class AuthController extends Controller
             'referral_code' => $referralCode ?: $this->session->get('referral_code'),
             'ip'            => $this->request->getIPAddress(),
         ]);
+
+        service('eventTracker')->track('auth.register_view');
 
         return $this->_render($this->config->views['register'], [
             'config'       => $this->config,
@@ -442,6 +472,9 @@ class AuthController extends Controller
 
         if ($referralCode !== '') {
             $this->session->set('referral_code', $referralCode);
+            service('eventTracker')->track('referral.captured', [
+                'source' => 'post',
+            ]);
         }
 
         log_message('info', '[REGISTRATION] Submission received', [
@@ -450,12 +483,17 @@ class AuthController extends Controller
             'ip'            => $request->getIPAddress(),
         ]);
 
+        service('eventTracker')->track('auth.register_submit');
+
         $auditContext = $auditService->notifyRegistrationAttempt($email, $request);
 
         // Check if registration is allowed
         if (! $this->config->allowRegistration) {
             $auditService->notifyRegistrationResult($email, 'failed', $request, null, $auditContext + [
                 'error' => lang('Auth.registerDisabled'),
+            ]);
+            service('eventTracker')->track('auth.register_fail', [
+                'reason' => 'disabled',
             ]);
 
             log_message('error', '[REGISTRATION] Registration disabled', [
@@ -479,6 +517,10 @@ class AuthController extends Controller
             if (! $this->validate($rules)) {
                 $auditService->notifyRegistrationResult($email, 'failed', $request, null, $auditContext + [
                     'error' => json_encode($this->validator->getErrors()),
+                ]);
+                service('eventTracker')->track('auth.register_fail', [
+                    'reason' => 'validation_basic',
+                    'summary' => $this->validationSummary($this->validator->getErrors()),
                 ]);
 
                 log_message('warning', '[REGISTRATION] Validation failed (basic fields)', [
@@ -504,6 +546,10 @@ class AuthController extends Controller
             if (! $this->validate($rules)) {
                 $auditService->notifyRegistrationResult($email, 'failed', $request, null, $auditContext + [
                     'error' => json_encode($this->validator->getErrors()),
+                ]);
+                service('eventTracker')->track('auth.register_fail', [
+                    'reason' => 'validation_password',
+                    'summary' => $this->validationSummary($this->validator->getErrors()),
                 ]);
 
                 log_message('warning', '[REGISTRATION] Validation failed (password fields)', [
@@ -540,6 +586,10 @@ class AuthController extends Controller
                 $auditService->notifyRegistrationResult($email, 'failed', $request, null, $auditContext + [
                     'error' => json_encode($users->errors()),
                 ]);
+                service('eventTracker')->track('auth.register_fail', [
+                    'reason' => 'save_failed',
+                    'summary' => $this->validationSummary($users->errors()),
+                ]);
 
                 log_message('error', '[REGISTRATION] User record creation failed', [
                     'email'  => $email,
@@ -552,6 +602,7 @@ class AuthController extends Controller
             }
 
             $newUserId       = (int) ($users->getInsertID() ?? 0);
+            service('eventTracker')->track('auth.register_success', [], $newUserId);
             $loginIdentifier = $this->config->validFields === ['email'] ? 'email' : 'username';
             log_message(
                 'info',
@@ -585,6 +636,9 @@ class AuthController extends Controller
                     'email'         => $user->email ?? null,
                     'referral_code' => $referralCode,
                 ]);
+                service('eventTracker')->track('referral.applied', [
+                    'source' => 'register',
+                ], $newUserId, 'referral');
             }
 
             if ($this->config->requireActivation !== null) {
@@ -594,6 +648,9 @@ class AuthController extends Controller
                 if (! $sent) {
                     $auditService->notifyRegistrationResult($email, 'failed', $request, null, $auditContext + [
                         'error' => $activator->error() ?? lang('Auth.unknownError'),
+                    ]);
+                    service('eventTracker')->track('auth.register_fail', [
+                        'reason' => 'activation_send_failed',
                     ]);
 
                     log_message('error', '[REGISTRATION] Activation email failed to send', [
@@ -607,6 +664,7 @@ class AuthController extends Controller
                 }
 
                 $auditService->notifyRegistrationResult($email, 'success', $request, null, $auditContext);
+                service('eventTracker')->track('auth.activation_email_sent', [], $newUserId);
 
                 log_message('info', '[REGISTRATION] Activation email queued', [
                     'user_id' => $newUserId,
@@ -645,6 +703,9 @@ class AuthController extends Controller
             ]);
         } catch (Throwable $e) {
             $auditService->notifyRegistrationResult($email, 'failed', $request, $e, $auditContext);
+            service('eventTracker')->track('auth.register_fail', [
+                'reason' => 'exception',
+            ]);
 
             log_message('error', '[REGISTRATION] Exception during registration', [
                 'email' => $email,
@@ -671,6 +732,10 @@ class AuthController extends Controller
 
     public function resendRegistrationActivation()
     {
+        service('eventTracker')->track('auth.resend_activation_requested', [
+            'source' => 'register_success',
+        ]);
+
         if ($this->config->requireActivation === null) {
             log_message('info', 'Registration resend activation skipped: activation disabled.');
             return redirect()->to(site_url('register/success'))->with('auth_message', [
@@ -717,6 +782,7 @@ class AuthController extends Controller
                     'error' => $activator->error() ?? lang('Auth.unknownError'),
                 ]);
             } else {
+                service('eventTracker')->track('auth.resend_activation_sent', [], (int) ($user->id ?? 0));
                 log_message('info', 'Registration resend activation succeeded for {email}', ['email' => $email]);
             }
         } else {
@@ -909,6 +975,10 @@ class AuthController extends Controller
         $users = model(UserModel::class);
         $token = (string) ($this->request->getPost('activation_code') ?: $this->request->getGet('token'));
 
+        service('eventTracker')->track('auth.activate_click', [
+            'has_token' => $token !== '',
+        ]);
+
         log_message('info', '[ACTIVATION] Activation link hit', [
             'token' => $token,
             'ip'    => $this->request->getIPAddress(),
@@ -934,6 +1004,9 @@ class AuthController extends Controller
         if ($token === '') {
             $this->setAuthMessage('danger', 'Activation token is missing. Please request a new activation email.');
             $this->session->setFlashdata('auth_show_resend', true);
+            service('eventTracker')->track('auth.activate_fail', [
+                'reason' => 'missing_token',
+            ]);
             log_message('warning', '[ACTIVATION] Activation failed: missing token', [
                 'ip' => $this->request->getIPAddress(),
             ]);
@@ -947,6 +1020,9 @@ class AuthController extends Controller
                 'token' => $token,
                 'ip'    => $this->request->getIPAddress(),
             ]);
+            service('eventTracker')->track('auth.activate_fail', [
+                'reason' => 'user_not_found',
+            ]);
             $this->setAuthMessage('danger', 'Activation link is invalid or expired. Please request a new activation email.');
             $this->session->setFlashdata('auth_show_resend', true);
             return redirect()->route('login');
@@ -957,6 +1033,9 @@ class AuthController extends Controller
                 'user_id' => $user->id ?? null,
                 'email'   => $user->email ?? null,
             ]);
+            service('eventTracker')->track('auth.activate_fail', [
+                'reason' => 'already_active',
+            ], (int) ($user->id ?? 0));
             $this->setAuthMessage('info', 'Your account is already activated. Please log in.');
             return redirect()->route('login');
         }
@@ -974,6 +1053,7 @@ class AuthController extends Controller
             'user_id' => $user->id ?? null,
             'email'   => $user->email ?? null,
         ]);
+        service('eventTracker')->track('auth.activate_success', [], (int) ($user->id ?? 0));
 
         log_message('info', '[ACTIVATION] Redirect issued', [
             'destination' => route_to('login'),
@@ -1052,6 +1132,10 @@ class AuthController extends Controller
         $email = strtolower(trim((string) $this->request->getPost('email')));
         $ip    = $this->request->getIPAddress();
 
+        service('eventTracker')->track('auth.resend_activation_requested', [
+            'source' => 'login',
+        ]);
+
         log_message('info', '[AUTH] Resend activation requested', [
             'email' => $email ?: 'unknown',
             'ip'    => $ip,
@@ -1089,6 +1173,7 @@ class AuthController extends Controller
             $sent      = $activator->send($user);
 
             if ($sent) {
+                service('eventTracker')->track('auth.resend_activation_sent', [], (int) ($user->id ?? 0));
                 log_message('info', '[AUTH] Resend activation sent', [
                     'email' => $email,
                     'user_id' => $user->id ?? null,
@@ -1290,5 +1375,15 @@ class AuthController extends Controller
         }
 
         return implode(' ', $messages);
+    }
+
+    private function validationSummary(array $errors): array
+    {
+        $fields = array_keys(array_filter($errors));
+
+        return [
+            'fields' => $fields,
+            'count'  => count($fields),
+        ];
     }
 }
