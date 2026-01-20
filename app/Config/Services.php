@@ -4,6 +4,7 @@ namespace Config;
 
 use App\Libraries\{CrudCacheInvalidator, KimiClient, MyMIAnalytics, MyMIInvestments, SafeCache};
 use App\Services\AuthAuditService;
+use App\Services\EventTracker;
 use App\Services\OnboardingProgressService;
 use App\Services\SetupStatusService;
 use CodeIgniter\Config\BaseService;
@@ -71,6 +72,17 @@ class Services extends BaseService
         }
 
         return new AuthAuditService();
+    }
+
+    public static function eventTracker(bool $getShared = true): EventTracker
+    {
+        if ($getShared) {
+            /** @var EventTracker $service */
+            $service = static::getSharedInstance('eventTracker');
+            return $service;
+        }
+
+        return new EventTracker();
     }
 
     public static function onboardingProgressService(bool $getShared = true): OnboardingProgressService
