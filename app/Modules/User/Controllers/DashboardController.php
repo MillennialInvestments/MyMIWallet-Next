@@ -132,6 +132,7 @@ class DashboardController extends UserController
         if ($this->session->get('onboarding_show_modal')) {
             $this->data['onboardingShowModal'] = true;
             $this->session->remove('onboarding_show_modal');
+            service('eventTracker')->track('setup.guided_open', [], (int) $cuID, 'onboarding');
             log_message('info', 'DashboardController: onboarding walkthrough modal triggered for user_id={id}', [
                 'id' => $cuID,
             ]);
@@ -1158,6 +1159,10 @@ class DashboardController extends UserController
         $this->data['setupPrefs'] = $setupService->getDismissPreferences($userId);
         $this->data['setupContext'] = $context;
 
+        service('eventTracker')->track('setup.modal_open', [
+            'context' => $context,
+        ], $userId, 'onboarding');
+
         return view('UserModule\Views\Setup\continue_setup_modal', $this->data);
     }
 
@@ -1174,6 +1179,16 @@ class DashboardController extends UserController
         /** @var \App\Services\SetupStatusService $setupService */
         $setupService = service('setupStatusService');
         $result = $setupService->updateDismissPreference($userId, $scope, $dismiss);
+
+        if ($dismiss) {
+            if ($scope === 'all') {
+                service('eventTracker')->track('setup.dismiss_all', [], $userId, 'onboarding');
+            } else {
+                service('eventTracker')->track('setup.dismiss_context', [
+                    'context' => $scope,
+                ], $userId, 'onboarding');
+            }
+        }
 
         log_message('info', '[SETUP] Dismiss updated', [
             'user_id' => $userId,

@@ -47,11 +47,11 @@ class OnboardingProgressService
         return $table->where('user_id', $userId)->get()->getRowArray() ?? $payload;
     }
 
-    public function markVerifiedLogin(int $userId): void
+    public function markVerifiedLogin(int $userId): bool
     {
         $record = $this->ensureRecord($userId);
         if (! empty($record['first_verified_login_at'])) {
-            return;
+            return false;
         }
 
         $this->db->table('bf_user_onboarding')
@@ -62,6 +62,8 @@ class OnboardingProgressService
             ]);
 
         log_message('info', 'OnboardingProgressService: first verified login recorded for user_id={id}', ['id' => $userId]);
+
+        return true;
     }
 
     public function shouldTriggerWalkthrough(int $userId): bool
@@ -160,7 +162,8 @@ class OnboardingProgressService
             'updated_at' => $now,
         ];
 
-        if (! empty($steps['completed']) && empty($record['walkthrough_completed_at'])) {
+        $isFirstComplete = ! empty($steps['completed']) && empty($record['walkthrough_completed_at']);
+        if ($isFirstComplete) {
             $update['walkthrough_completed_at'] = $now;
             log_message('info', 'OnboardingProgressService: walkthrough completed for user_id={id}', ['id' => $userId]);
         }
@@ -168,6 +171,13 @@ class OnboardingProgressService
         $this->db->table('bf_user_onboarding')
             ->where('user_id', $userId)
             ->update($update);
+
+        if ($isFirstComplete) {
+            service('eventTracker')->track('setup.complete', [], $userId, 'onboarding');
+            service('eventTracker')->track('referral.converted', [
+                'source' => 'first_setup_complete',
+            ], $userId, 'referral');
+        }
 
         return $steps;
     }
