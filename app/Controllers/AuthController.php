@@ -1254,6 +1254,10 @@ class AuthController extends Controller
             return false;
         }
 
+        if (! $this->passesRedirectValidation($url)) {
+            return false;
+        }
+
         if ($this->isRootDestination($url) || $this->isLoginDestination($url) || $this->isLogoutDestination($url)) {
             return false;
         }
@@ -1263,6 +1267,24 @@ class AuthController extends Controller
         }
 
         return true;
+    }
+
+    private function passesRedirectValidation(string $url): bool
+    {
+        if (filter_var($url, FILTER_VALIDATE_URL)) {
+            return true;
+        }
+
+        $parts = parse_url($url);
+        if ($parts === false) {
+            return false;
+        }
+
+        if (isset($parts['scheme']) || isset($parts['host'])) {
+            return false;
+        }
+
+        return trim((string) ($parts['path'] ?? '')) !== '';
     }
 
     private function isRootDestination(?string $url): bool

@@ -108,7 +108,7 @@ class HealthController extends BaseController
 
         try {
             $cache = cache();
-            $key   = 'healthz_ping';
+            $key   = sanitizeCacheKey('healthz_ping');
             $value = (string) time();
             $cache->save($key, $value, 30);
             $ok = $cache->get($key) === $value;

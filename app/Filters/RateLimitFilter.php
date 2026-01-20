@@ -21,7 +21,7 @@ class RateLimitFilter implements FilterInterface
 
         if (! $this->isAuthenticated() && $this->isBot($request)) {
             $cache = cache();
-            $key = 'ratelimit:bot:' . sha1($request->getIPAddress() . '|' . $request->getHeaderLine('User-Agent'));
+            $key = sanitizeCacheKey('ratelimit:bot:' . sha1($request->getIPAddress() . '|' . $request->getHeaderLine('User-Agent')));
             $attempts = (int) ($cache->get($key) ?? 0);
             $attempts++;
             $cache->save($key, $attempts, 60);

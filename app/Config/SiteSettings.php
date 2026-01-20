@@ -207,7 +207,8 @@ if (!class_exists(\App\Config\SiteSettings::class, false)) {
                 'aiops_llm_enabled',
             ];
             foreach ($cachedToggles as $toggleKey) {
-                $cached = cache('aiops_' . $toggleKey);
+                $cacheKey = sanitizeCacheKey('aiops_' . $toggleKey);
+                $cached = cache($cacheKey);
                 if ($cached !== null) {
                     $this->$toggleKey = $cached;
                 }
