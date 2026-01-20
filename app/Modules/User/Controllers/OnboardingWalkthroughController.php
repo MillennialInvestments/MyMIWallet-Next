@@ -94,6 +94,14 @@ class OnboardingWalkthroughController extends BaseController
         $progress = service('onboardingProgressService');
         $progress->markStep($userId, 'stage_a', 'profile', true);
         $progress->markStep($userId, 'stage_a', 'employment', $employmentType !== '');
+        service('eventTracker')->track('setup.step_completed', [
+            'step_key' => 'stage_a.profile',
+        ], $userId, 'onboarding');
+        if ($employmentType !== '') {
+            service('eventTracker')->track('setup.step_completed', [
+                'step_key' => 'stage_a.employment',
+            ], $userId, 'onboarding');
+        }
 
         return $this->respondSuccess('Profile saved.', $progress->computeProgress($userId));
     }
@@ -155,6 +163,9 @@ class OnboardingWalkthroughController extends BaseController
         /** @var OnboardingProgressService $progress */
         $progress = service('onboardingProgressService');
         $progress->markStep($userId, 'stage_b', 'income', true);
+        service('eventTracker')->track('setup.step_completed', [
+            'step_key' => 'stage_b.income',
+        ], $userId, 'onboarding');
 
         return $this->respondSuccess('Income saved.', $progress->computeProgress($userId));
     }
@@ -231,6 +242,9 @@ class OnboardingWalkthroughController extends BaseController
         /** @var OnboardingProgressService $progress */
         $progress = service('onboardingProgressService');
         $progress->markStep($userId, 'stage_b', 'credit_debt', true);
+        service('eventTracker')->track('setup.step_completed', [
+            'step_key' => 'stage_b.credit_debt',
+        ], $userId, 'onboarding');
 
         return $this->respondSuccess('Credit/debt saved.', $progress->computeProgress($userId));
     }
@@ -291,6 +305,9 @@ class OnboardingWalkthroughController extends BaseController
         /** @var OnboardingProgressService $progress */
         $progress = service('onboardingProgressService');
         $progress->markStep($userId, 'stage_b', 'recurring_expenses', true);
+        service('eventTracker')->track('setup.step_completed', [
+            'step_key' => 'stage_b.recurring_expenses',
+        ], $userId, 'onboarding');
 
         return $this->respondSuccess('Recurring expense saved.', $progress->computeProgress($userId));
     }
@@ -329,6 +346,9 @@ class OnboardingWalkthroughController extends BaseController
         /** @var OnboardingProgressService $progress */
         $progress = service('onboardingProgressService');
         $progress->markStep($userId, 'stage_b', 'watchlist', true);
+        service('eventTracker')->track('setup.step_completed', [
+            'step_key' => 'stage_b.watchlist',
+        ], $userId, 'onboarding');
 
         return $this->respondSuccess('Watchlist saved.', $progress->computeProgress($userId));
     }
