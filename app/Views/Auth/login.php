@@ -68,6 +68,7 @@
 <?php if ($config->activeResetter): ?>
 					<p><a href="<?= url_to('forgot') ?>"><?=lang('Auth.forgotYourPassword')?></a></p>
 <?php endif; ?>
+					<p><a href="<?= site_url('Support/Account') ?>">Need help?</a></p>
 
 					<p>
 						<a class="text-decoration-none" data-bs-toggle="collapse" href="#resend-activation" role="button" aria-expanded="<?= $showResendActivation ? 'true' : 'false' ?>" aria-controls="resend-activation">

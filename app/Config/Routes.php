@@ -1009,6 +1009,14 @@ $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers
     $routes->get('Ops', 'OpsController::index', ['filter' => 'permission:admin.access']);
     $routes->get('Ops/ajaxStatus', 'OpsController::ajaxStatus', ['filter' => 'permission:admin.access']);
     $routes->post('Ops/ajaxDispatch', 'OpsController::ajaxDispatch', ['filter' => 'permission:admin.access']);
+    $routes->group('AccountRescue', ['filter' => 'permission:admin.access'], function($routes) {
+        $routes->get('/', 'AccountRescueController::index');
+        $routes->post('lookup', 'AccountRescueController::lookup');
+        $routes->post('resend-activation', 'AccountRescueController::resendActivation');
+        $routes->post('manual-activate', 'AccountRescueController::manualActivate');
+        $routes->post('force-password-reset', 'AccountRescueController::forcePasswordReset');
+        $routes->post('unlock-account', 'AccountRescueController::unlockAccount');
+    });
     $routes->group('Admin', function($routes) {
         $routes->get('/', 'AdminController::index');
     });
@@ -1462,6 +1470,9 @@ $routes->group('How-It-Works', ['namespace' => 'App\\Modules\\Blog\\Controllers'
 // Customer Support:
 $routes->group('Support', ['namespace' => 'App\Modules\Support\Controllers'], function($routes) {
     $routes->get('/', 'SupportController::index');
+    $routes->get('Account', 'AccountSupportController::index');
+    $routes->post('resendActivation', 'AccountSupportController::resendActivation');
+    $routes->post('sendPasswordReset', 'AccountSupportController::sendPasswordReset');
     $routes->get('Article/(:segment)', 'SupportController::article/$1');
     $routes->get('Discord', 'SupportController::discordOnboarding');
     $routes->get('FAQ', 'SupportController::view/FAQ');
@@ -1470,6 +1481,8 @@ $routes->group('Support', ['namespace' => 'App\Modules\Support\Controllers'], fu
     $routes->get('Test-Email', 'SupportController::view/Test-Email');
     $routes->get('(:any)', 'SupportController::view/$1');
 });
+
+$routes->get('help/account', 'App\\Modules\\Support\\Controllers\\AccountSupportController::index');
 
 // How It Works (public CI4 user guides)
 $routes->group('', ['namespace' => 'App\Modules\Blog\Controllers'], static function ($routes) {
