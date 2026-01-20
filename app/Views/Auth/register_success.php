@@ -44,6 +44,7 @@ $config = $this->config;
                         </div>
                     </div>
 
+                    <p class="text-muted small mt-3"><a href="<?= site_url('Support/Account') ?>">Didn’t get the email?</a> Use our Account Help Center for activation or password support.</p>
                     <p class="text-muted small mt-4">Need help? Reach out to <a href="mailto:support@mymiwallet.com">support@mymiwallet.com</a>.</p>
                 </div>
             </div>
