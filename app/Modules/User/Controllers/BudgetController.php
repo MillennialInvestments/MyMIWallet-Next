@@ -3,11 +3,10 @@
 use App\Controllers\BaseController;
 use Config\Services;
 use App\Controllers\UserController;
-use App\Libraries\{MyMIDashboard};
+use App\Libraries\{MyMIDashboard, SafeCache};
 use App\Models\{AccountsModel, BudgetModel};
 use App\Services\{AccountService, BudgetService, DashboardService, GoalTrackingService, MarketingService, SolanaService, UserService, WalletService};
 use CodeIgniter\API\ResponseTrait;
-use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\I18n\Time;
@@ -41,7 +40,7 @@ class BudgetController extends UserController
     protected $userService;
     protected $walletService;
     protected $budgetModel;
-    protected CacheInterface $cache;
+    protected SafeCache $safeCache;
     protected int $apiCacheTtl = 60;
     protected array $cacheHits = [
         'budget-records'     => false,
@@ -74,7 +73,7 @@ class BudgetController extends UserController
         $this->solanaService  = new SolanaService();
         $this->accountsModel = new AccountsModel();
         $this->budgetModel = new BudgetModel();
-        $this->cache = Services::cache();
+        $this->safeCache = service('safeCache');
         $this->logger = service('logger');
         log_message('debug', 'BudgetController L53 Initialized with cuID: ' . var_export($this->cuID, true));
         log_message(
@@ -714,19 +713,9 @@ class BudgetController extends UserController
         }
     }
 
-    protected function buildUserCacheKey(string $segment, int $userId, array $context = []): string
-    {
-        $contextKey = empty($context) ? '' : ':' . md5(json_encode($context));
-
-        $baseKey = sprintf('budget:%s%s', $segment, $contextKey);
-
-        return cachekey_user($baseKey, $userId);
-    }
-
     protected function rememberUserData(string $segment, int $userId, callable $callback, array $context = []): array
     {
-        $cacheKey = \sanitizedCacheKey($this->buildUserCacheKey($segment, $userId, $context));
-        $cached   = $this->cache->get($cacheKey);
+        $cached = $this->safeCache->getUser('budget', $segment, $userId, $context);
 
         if ($cached !== null) {
             $this->cacheHits[$segment] = true;
@@ -734,7 +723,7 @@ class BudgetController extends UserController
         }
 
         $data = $callback();
-        $this->cache->save($cacheKey, $data, $this->apiCacheTtl);
+        $this->safeCache->saveUser('budget', $segment, $userId, $data, $this->apiCacheTtl, $context);
         $this->cacheHits[$segment] = false;
 
         return ['data' => $data, 'fromCache' => false];

@@ -348,11 +348,9 @@ class WalletsController extends UserController
             return $this->budgetSnapshot;
         }
 
-        $cacheKey = cachekey_user('wallets:budget', $cuID);
-        $cacheKeySanitized = \sanitizedCacheKey($cacheKey);
-        $cache    = service('cache');
-        if ($cache) {
-            $cached = $cache->get($cacheKeySanitized);
+        $safeCache = service('safeCache');
+        if ($safeCache) {
+            $cached = $safeCache->getUser('wallets', 'budget', $cuID);
             if (is_array($cached)) {
                 $cached['meta']['source'] = 'cache';
                 $this->budgetSnapshot = $cached + $defaults;
@@ -388,8 +386,8 @@ class WalletsController extends UserController
                 ],
             ];
 
-            if ($cache) {
-                $cache->save($cacheKeySanitized, $this->budgetSnapshot, 60);
+            if ($safeCache) {
+                $safeCache->saveUser('wallets', 'budget', $cuID, $this->budgetSnapshot, 60);
             }
         } catch (\Throwable $e) {
             log_message('error', 'WalletsController::loadBudgetSnapshot failed: {message}', [
