@@ -325,11 +325,13 @@ class UserModel extends Model
      */
     public function logResetAttempt(string $email, ?string $token = null, ?string $ipAddress = null, ?string $userAgent = null)
     {
+        $tokenHash = $token ? sha1($token) : null;
+
         $this->db->table('auth_reset_attempts')->insert([
             'email'      => $email,
             'ip_address' => $ipAddress,
             'user_agent' => $userAgent,
-            'token'      => $token,
+            'token'      => $tokenHash,
             'created_at' => date('Y-m-d H:i:s'),
         ]);
     }
@@ -339,10 +341,12 @@ class UserModel extends Model
      */
     public function logActivationAttempt(?string $token = null, ?string $ipAddress = null, ?string $userAgent = null)
     {
+        $tokenHash = $token ? sha1($token) : null;
+
         $this->db->table('auth_activation_attempts')->insert([
             'ip_address' => $ipAddress,
             'user_agent' => $userAgent,
-            'token'      => $token,
+            'token'      => $tokenHash,
             'created_at' => date('Y-m-d H:i:s'),
         ]);
     }
