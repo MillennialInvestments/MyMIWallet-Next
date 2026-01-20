@@ -290,37 +290,12 @@ class AuthController extends Controller
             return;
         }
 
-        $cache = service('cache');
-        if (! $cache) {
+        $safeCache = service('safeCache');
+        if (! $safeCache) {
             return;
         }
 
-        $keys = [
-            cachekey_user('dashboardData', $userId),
-            cachekey_user('budgetData', $userId),
-            cachekey_user('walletData', $userId),
-            cachekey_user('wallets:summary', $userId),
-            cachekey_user('wallets:budget', $userId),
-            cachekey_user('investment_dashboard', $userId),
-            cachekey_user('tax_liability', $userId),
-        ];
-
-        foreach ($keys as $key) {
-            $cache->delete($key);
-            if (function_exists('sanitizedCacheKey')) {
-                $sanitized = sanitizedCacheKey($key);
-                if ($sanitized !== $key) {
-                    $cache->delete($sanitized);
-                }
-            }
-        }
-
-        if (method_exists($cache, 'deleteMatching')) {
-            $budgetPattern = 'budget:*:uid:' . $userId;
-            $walletPattern = 'wallets:*:uid:' . $userId;
-            $cache->deleteMatching(function_exists('sanitizedCacheKey') ? sanitizedCacheKey($budgetPattern) : $budgetPattern);
-            $cache->deleteMatching(function_exists('sanitizedCacheKey') ? sanitizedCacheKey($walletPattern) : $walletPattern);
-        }
+        $safeCache->clearUserNamespace($userId);
     }
 
     //--------------------------------------------------------------------

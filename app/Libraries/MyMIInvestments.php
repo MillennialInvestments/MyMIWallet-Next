@@ -5,7 +5,7 @@ namespace App\Libraries;
 use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
 use App\Config\{APIs, SiteSettings};
-use App\Libraries\{BaseLoader, FRED, MyMICoin, MyMIDashboard, MyMIFractalAnalyzer, MyMIGold, MyMIMarketing, MyMIWallet, SafeProcess};
+use App\Libraries\{BaseLoader, CacheKey, FRED, MyMICoin, MyMIDashboard, MyMIFractalAnalyzer, MyMIGold, MyMIMarketing, MyMIWallet, SafeCache, SafeProcess};
 use App\Models\{InvestmentModel, MgmtBudgetModel, UserModel, WalletModel};
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\HTTP\CURLRequest;
@@ -20,6 +20,7 @@ class MyMIInvestments
     protected $APIs;
     protected $alphavantageKey;
     protected $cache;
+    protected $safeCache;
     protected $cuID;
     protected $curlRequest;
     protected $logger;
@@ -44,6 +45,7 @@ class MyMIInvestments
         $this->auth = service('authentication');
         $this->session = Services::session();
         $this->cache = service('cache');
+        $this->safeCache = service('safeCache');
         $this->logger = service('logger');
         $this->curlRequest = service('curlrequest');
         $this->APIs = config('APISettings');
@@ -659,8 +661,8 @@ class MyMIInvestments
             ];
         }
 
-        $cacheKey = sanitizeCacheKey(cachekey_user('investment_dashboard', $cuID));
-        $cachedData = $this->cache->get($cacheKey);
+        $cacheKey = CacheKey::user('investments', 'dashboard', $cuID);
+        $cachedData = $this->safeCache ? $this->safeCache->getUser('investments', 'dashboard', $cuID) : $this->cache->get($cacheKey);
     
         if ($cachedData !== null) {
             return $cachedData;
@@ -671,12 +673,12 @@ class MyMIInvestments
     
         // Check if queue is available, if not, skip queue processing
         if ($this->queue) {
-            $this->queue->push(function () use ($cuID, $cacheKey) {
-                $this->prepareInvestmentDashboard($cuID, $cacheKey);
+            $this->queue->push(function () use ($cuID) {
+                $this->prepareInvestmentDashboard($cuID);
             });
         } else {
             log_message('warning', 'Queue service is not initialized, processing investment dashboard synchronously.');
-            $this->prepareInvestmentDashboard($cuID, $cacheKey); // Fallback to synchronous processing
+            $this->prepareInvestmentDashboard($cuID); // Fallback to synchronous processing
         }
 
         log_message(
@@ -760,7 +762,7 @@ class MyMIInvestments
         return $volatilityReport;
     }   
     
-    private function prepareInvestmentDashboard($cuID, $cacheKey)
+    private function prepareInvestmentDashboard($cuID)
     {
         $investDashboard = [
             'cuAlerts' => $this->getAlertsByUserAccess($cuID)['cuAlerts'],
@@ -780,7 +782,9 @@ class MyMIInvestments
             'retirementSummary' => $this->getUserRetirementPlans($cuID), 
         ];
     
-        // $this->cache->save($cacheKey, $investDashboard, 3600);
+        if ($this->safeCache) {
+            $this->safeCache->saveUser('investments', 'dashboard', (int) $cuID, $investDashboard, 3600);
+        }
         return $investDashboard;
     } 
     
@@ -845,9 +849,8 @@ class MyMIInvestments
     }
     
     // Helper method for processing tax liability
-    private function processTaxLiability($cuID, $cacheKey)
+    private function processTaxLiability($cuID)
     {
-        $cacheKeySanitized = sanitizeCacheKey($cacheKey);
         $userInvestments = $this->investmentModel->getUserInvestments($cuID);
         $taxLiability = 0;
     
@@ -858,7 +861,11 @@ class MyMIInvestments
     
         // Updated to use MyMIFractalAnalyzer
         $fractalTaxLiability = $this->MyMIFractalAnalyzer->analyze($taxLiability);
-        $this->cache->save($cacheKeySanitized, $fractalTaxLiability, 3600);
+        if ($this->safeCache) {
+            $this->safeCache->saveUser('tax', 'liability', (int) $cuID, $fractalTaxLiability, 3600);
+        } else {
+            $this->cache->save(CacheKey::user('tax', 'liability', (int) $cuID), $fractalTaxLiability, 3600);
+        }
     
         return $fractalTaxLiability;
     }    
@@ -1022,8 +1029,8 @@ class MyMIInvestments
 
     public function calculateTaxLiability($cuID)
     {
-        $cacheKeySanitized = sanitizeCacheKey(cachekey_user('tax_liability', $cuID));
-        $cachedData = $this->cache->get($cacheKeySanitized);
+        $cacheKey = CacheKey::user('tax', 'liability', $cuID);
+        $cachedData = $this->safeCache ? $this->safeCache->getUser('tax', 'liability', $cuID) : $this->cache->get($cacheKey);
 
         if ($cachedData !== null) {
             return $cachedData;
@@ -1031,14 +1038,14 @@ class MyMIInvestments
     
         // Check if queue is available
         if ($this->queue) {
-            $this->queue->push(function() use ($cuID, $cacheKeySanitized) {
-                $this->processTaxLiability($cuID, $cacheKeySanitized);
+            $this->queue->push(function() use ($cuID) {
+                $this->processTaxLiability($cuID);
             });
             return ['status' => 'Processing', 'message' => 'Tax liability is being calculated.'];
         } else {
             // Fallback: Synchronously process tax liability if queue is unavailable
             log_message('warning', 'Queue service is not initialized, processing tax liability synchronously.');
-            return $this->processTaxLiability($cuID, $cacheKeySanitized);
+            return $this->processTaxLiability($cuID);
         }
     }
 
