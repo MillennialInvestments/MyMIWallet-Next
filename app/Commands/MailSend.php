@@ -16,7 +16,7 @@ class MailSend extends BaseCommand
     public function run(array $params)
     {
         $limit      = (int) ($params[0] ?? 25);
-        $mail       = service('mailService');
+        $mail       = new MailService();
         $startedAt  = microtime(true);
         $result     = $mail instanceof MailService ? $mail->processQueue($limit) : ['sent' => 0, 'failed' => 0, 'deferred' => 0];
         $durationMs = (int) ((microtime(true) - $startedAt) * 1000);
