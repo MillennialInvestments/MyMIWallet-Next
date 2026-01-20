@@ -79,6 +79,7 @@ class AccountSupportController extends UserController
                         'ip' => $ip,
                         'error' => $activator->error() ?? lang('Auth.unknownError'),
                     ]);
+                    return $this->respondFailure();
                 }
             } elseif ($user && (int) ($user->active ?? 0) === 1) {
                 $result = 'already_active';
@@ -102,6 +103,7 @@ class AccountSupportController extends UserController
                         'ip' => $ip,
                         'error' => $resetter->error() ?? lang('Auth.unknownError'),
                     ]);
+                    return $this->respondFailure();
                 }
             } else {
                 $result = 'no_user';
@@ -130,6 +132,25 @@ class AccountSupportController extends UserController
 
         session()->setFlashdata('auth_message', [
             'type' => 'info',
+            'text' => $message,
+        ]);
+
+        return redirect()->back();
+    }
+
+    private function respondFailure(): ResponseInterface|RedirectResponse
+    {
+        $message = 'We couldn’t send your email right now. Please try again or contact support.';
+
+        if ($this->request->isAJAX()) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => $message,
+            ]);
+        }
+
+        session()->setFlashdata('auth_message', [
+            'type' => 'danger',
             'text' => $message,
         ]);
 
