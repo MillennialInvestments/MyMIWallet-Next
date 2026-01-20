@@ -781,6 +781,11 @@ class AuthController extends Controller
                     'email' => $email,
                     'error' => $activator->error() ?? lang('Auth.unknownError'),
                 ]);
+                return redirect()->to(site_url('register/success'))
+                    ->with('auth_message', [
+                        'type' => 'danger',
+                        'text' => 'We couldn’t send your email right now. Please try again or contact support.',
+                    ]);
             } else {
                 service('eventTracker')->track('auth.resend_activation_sent', [], (int) ($user->id ?? 0));
                 log_message('info', 'Registration resend activation succeeded for {email}', ['email' => $email]);
@@ -1183,6 +1188,10 @@ class AuthController extends Controller
                 log_message('error', '[AUTH] Resend activation send failed', [
                     'email' => $email,
                     'error' => $activator->error() ?? lang('Auth.unknownError'),
+                ]);
+                return redirect()->route('login')->with('auth_message', [
+                    'type' => 'danger',
+                    'text' => 'We couldn’t send your email right now. Please try again or contact support.',
                 ]);
             }
         } elseif ($user && (int) ($user->active ?? 0) === 1) {

@@ -37,6 +37,11 @@ $routes->group('Management/AuthHealth', ['namespace' => 'App\\Modules\\Managemen
     $routes->get('details/(:num)', 'AuthHealthController::details/$1');
 });
 
+$routes->group('Management/EmailOutbox', ['namespace' => 'App\\Modules\\Management\\Controllers', 'filter' => 'permission:admin.access'], static function($routes) {
+    $routes->get('/', 'EmailOutboxController::index');
+    $routes->post('send-test', 'EmailOutboxController::sendTest');
+});
+
 $routes->group('Management', ['namespace' => 'App\\Modules\\Management\\Controllers', 'filter' => 'permission:admin.access'], static function($routes) {
     $routes->get('AuthFunnel', 'AuthFunnelController::authFunnel');
     $routes->get('Referrals', 'AuthFunnelController::referrals');

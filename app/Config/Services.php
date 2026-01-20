@@ -113,7 +113,7 @@ class Services extends BaseService
             return static::getSharedInstance('mailService');
         }
 
-        return new \App\Services\MailService();
+        return new \App\Libraries\MailService();
     }
 
     public static function safeCache(bool $getShared = true): SafeCache
