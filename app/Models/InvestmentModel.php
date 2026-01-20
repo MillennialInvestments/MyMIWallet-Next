@@ -136,9 +136,10 @@ class InvestmentModel extends Model
 
         if ($result) {
             // Clear related cache
-            $cache = \Config\Services::cache();
-            $cacheKey = "investment_overview_user_{$investmentData['user_id']}";
-            $cache->delete(sanitizeCacheKey($cacheKey));
+            $safeCache = service('safeCache');
+            if ($safeCache) {
+                $safeCache->deleteUser('investments', 'overview', (int) $investmentData['user_id']);
+            }
         }
     
         return $result;
@@ -230,9 +231,10 @@ class InvestmentModel extends Model
 
     private function clearCache($userId)
     {
-        $cache = \Config\Services::cache();
-        $cacheKey = "investment_overview_user_{$userId}";
-        $cache->delete(sanitizeCacheKey($cacheKey));
+        $safeCache = service('safeCache');
+        if ($safeCache) {
+            $safeCache->deleteUser('investments', 'overview', (int) $userId);
+        }
     }
 
     public function closeTrade($trade_id, $data)
@@ -269,9 +271,10 @@ class InvestmentModel extends Model
     
         if ($result && $trade) {
             // Clear related cache
-            $cache = \Config\Services::cache();
-            $cacheKey = "investment_overview_user_{$trade['user_id']}";
-            $cache->delete(sanitizeCacheKey($cacheKey));
+            $safeCache = service('safeCache');
+            if ($safeCache) {
+                $safeCache->deleteUser('investments', 'overview', (int) $trade['user_id']);
+            }
         }
     
         return $result;
@@ -786,10 +789,11 @@ class InvestmentModel extends Model
     
         if ($result) {
             // Clear related cache
-            $cache = \Config\Services::cache();
             $trade = $this->find($id);
-            $cacheKey = "investment_overview_user_{$trade['user_id']}";
-            $cache->delete(sanitizeCacheKey($cacheKey));
+            $safeCache = service('safeCache');
+            if ($safeCache && $trade) {
+                $safeCache->deleteUser('investments', 'overview', (int) $trade['user_id']);
+            }
         }
     
         return $result;
@@ -1070,15 +1074,8 @@ class InvestmentModel extends Model
 
     private function getPortfolioPerformance($userId)
     {
-        // Use CodeIgniter Cache
-        $cache = \Config\Services::cache();
-    
-        // Define a unique cache key for the user's portfolio performance
-        $cacheKey = "portfolio_performance_user_$userId";
-    
-        // Check if data exists in cache
-        $cacheKeySanitized = sanitizeCacheKey($cacheKey);
-        $cachedData = $cache->get($cacheKeySanitized);
+        $safeCache = service('safeCache');
+        $cachedData = $safeCache ? $safeCache->getUser('investments', 'portfolio-performance', (int) $userId) : null;
         if ($cachedData) {
             return $cachedData; // Return cached data if available
         }
@@ -1095,7 +1092,9 @@ class InvestmentModel extends Model
         }
     
         // Save the result to the cache with a TTL of 10 minutes
-        $cache->save($cacheKeySanitized, $performanceMetrics, 600);
+        if ($safeCache) {
+            $safeCache->saveUser('investments', 'portfolio-performance', (int) $userId, $performanceMetrics, 600);
+        }
     
         return $performanceMetrics;
     }    
@@ -1350,7 +1349,7 @@ class InvestmentModel extends Model
     }
 
     private function getCacheKey($userId) {
-        return sanitizeCacheKey("investment_overview_user_{$userId}");
+        return \App\Libraries\CacheKey::user('investments', 'overview', (int) $userId);
     }   
 
     public function getCurrentInvestmentsValue($userId) {

@@ -2,7 +2,7 @@
 
 namespace Config;
 
-use App\Libraries\{CrudCacheInvalidator, KimiClient, MyMIAnalytics, MyMIInvestments};
+use App\Libraries\{CrudCacheInvalidator, KimiClient, MyMIAnalytics, MyMIInvestments, SafeCache};
 use App\Services\AuthAuditService;
 use App\Services\OnboardingProgressService;
 use App\Services\SetupStatusService;
@@ -102,6 +102,17 @@ class Services extends BaseService
         }
 
         return new \App\Services\MailService();
+    }
+
+    public static function safeCache(bool $getShared = true): SafeCache
+    {
+        if ($getShared) {
+            /** @var SafeCache $service */
+            $service = static::getSharedInstance('safeCache');
+            return $service;
+        }
+
+        return new SafeCache();
     }
     
     /*
