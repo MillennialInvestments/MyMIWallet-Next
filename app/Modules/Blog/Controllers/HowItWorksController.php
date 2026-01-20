@@ -315,12 +315,19 @@ class HowItWorksController extends UserController
         $offset = ($page - 1) * $perPage;
 
         $userId = (int) ($this->auth->id() ?? $this->session->get('user_id') ?? 0);
-        $cacheKey = "howitworks:dailynews:uid{$userId}:p{$page}:pp{$perPage}";
         $ttl = 300; // 5 min
+        $safeCache = service('safeCache');
+        $cacheParams = ['page' => $page, 'perPage' => $perPage];
+        $cachedHtml = null;
 
-        $cacheKeySanitized = sanitizeCacheKey($cacheKey);
-        if ($html = cache($cacheKeySanitized )) {
-            return $this->response->setBody($html);
+        if ($safeCache) {
+            $cachedHtml = $userId > 0
+                ? $safeCache->getUser('howitworks', 'dailynews', $userId, $cacheParams)
+                : $safeCache->getGuest('howitworks', 'dailynews', $cacheParams);
+        }
+
+        if (is_string($cachedHtml)) {
+            return $this->response->setBody($cachedHtml);
         }
 
         $model = model(MarketingModel::class);
@@ -338,8 +345,13 @@ class HowItWorksController extends UserController
         $this->data['hasMore'] = count($rows) === $perPage;
 
         $html = $this->renderTheme('App\Modules\Blog\Views\HowItWorks\Daily_Financial_News', $this->data);
-        $cacheKeySanitized = sanitizeCacheKey($cacheKey);
-        cache()->save($cacheKeySanitized, $html, $ttl);
+        if ($safeCache) {
+            if ($userId > 0) {
+                $safeCache->saveUser('howitworks', 'dailynews', $userId, $html, $ttl, $cacheParams);
+            } else {
+                $safeCache->saveGuest('howitworks', 'dailynews', $html, $ttl, $cacheParams);
+            }
+        }
         return $this->response->setBody($html);
     } 
 

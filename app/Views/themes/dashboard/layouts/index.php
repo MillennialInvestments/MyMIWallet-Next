@@ -62,6 +62,7 @@ echo view('themes/dashboard/layouts/header', $subViewData);
                     // Assume $viewFileData is passed from the controller
                     echo view('themes/dashboard/layouts/footer', $subViewData); 
                     echo view('UserModule\Views\Dashboard\index\transaction-modal', $subViewData);
+                    echo view('partials/debug_hud');
                     ?>
                 </div>
             </div>

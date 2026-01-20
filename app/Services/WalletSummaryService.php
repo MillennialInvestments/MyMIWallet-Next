@@ -4,10 +4,11 @@ namespace App\Services;
 
 use App\Libraries\MyMIBudget;
 use App\Libraries\MyMIWallet;
+use App\Libraries\SafeCache;
+use App\Libraries\CacheKey;
 use App\Models\AlertsModel;
 use App\Models\WalletModel;
 use App\Services\Fin\PositionService;
-use CodeIgniter\Cache\CacheInterface;
 
 class WalletSummaryService
 {
@@ -17,7 +18,7 @@ class WalletSummaryService
     private MyMIBudget $budgetLibrary;
     private MyMIWallet $walletLibrary;
     private AlertsModel $alertsModel;
-    private ?CacheInterface $cache = null;
+    private ?SafeCache $safeCache = null;
 
     public function __construct(
         ?WalletModel $walletModel = null,
@@ -33,7 +34,7 @@ class WalletSummaryService
         $this->budgetLibrary   = $budgetLibrary   ?? new MyMIBudget();
         $this->walletLibrary   = $walletLibrary   ?? new MyMIWallet();
         $this->alertsModel     = $alertsModel     ?? new AlertsModel();
-        $this->cache           = service('cache');
+        $this->safeCache       = service('safeCache');
     }
 
     public function buildSummary(int $userId, bool $forceRefresh = false): array
@@ -42,10 +43,10 @@ class WalletSummaryService
             return [];
         }
 
-        $cacheKey = $this->cacheKey($userId);
+        $cacheKey = CacheKey::user('wallets', 'summary', $userId);
 
-        if (! $forceRefresh && $this->cache) {
-            $cached = $this->cache->get($cacheKey);
+        if (! $forceRefresh && $this->safeCache) {
+            $cached = $this->safeCache->getUser('wallets', 'summary', $userId);
             if (is_array($cached)) {
                 log_message('debug', '[CACHE] Dashboard cache hit', [
                     'key'     => $cacheKey,
@@ -80,21 +81,11 @@ class WalletSummaryService
             'alerts'            => $alerts,
         ];
 
-        if ($this->cache) {
-            $this->cache->save($cacheKey, $payload, 900);
+        if ($this->safeCache) {
+            $this->safeCache->saveUser('wallets', 'summary', $userId, $payload, 900);
         }
 
         return $payload;
-    }
-
-    private function cacheKey(int $userId): string
-    {
-        $key = cachekey_user('wallets:summary', $userId);
-        if (function_exists('sanitizedCacheKey')) {
-            return \sanitizedCacheKey($key);
-        }
-
-        return preg_replace('/[^A-Za-z0-9_\-:]/', '_', $key);
     }
 
     private function getBudgetSnapshot(int $userId): array
