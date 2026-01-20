@@ -979,8 +979,11 @@ class AuthController extends Controller
             'has_token' => $token !== '',
         ]);
 
+        $tokenHash = $token !== '' ? sha1($token) : null;
+
         log_message('info', '[ACTIVATION] Activation link hit', [
-            'token' => $token,
+            'has_token' => $token !== '',
+            'token_hash' => $tokenHash,
             'ip'    => $this->request->getIPAddress(),
         ]);
 
@@ -995,37 +998,35 @@ class AuthController extends Controller
 
         if ($throttler->check(md5($this->request->getIPAddress()), 2, MINUTE) === false) {
             log_message('warning', '[ACTIVATION] Activation throttled', [
-                'token' => $token,
+                'token_hash' => $tokenHash,
                 'ip'    => $this->request->getIPAddress(),
             ]);
             return service('response')->setStatusCode(429)->setBody(lang('Auth.tooManyRequests', [$throttler->getTokentime()]));
         }
 
         if ($token === '') {
-            $this->setAuthMessage('danger', 'Activation token is missing. Please request a new activation email.');
-            $this->session->setFlashdata('auth_show_resend', true);
+            $this->setAuthMessage('warning', 'That activation link is invalid or expired. Enter your email to send a new one.');
             service('eventTracker')->track('auth.activate_fail', [
-                'reason' => 'missing_token',
+                'reason' => 'invalid',
             ]);
             log_message('warning', '[ACTIVATION] Activation failed: missing token', [
                 'ip' => $this->request->getIPAddress(),
             ]);
-            return redirect()->route('login');
+            return redirect()->to(site_url('Support/Account'));
         }
 
         $user = $users->where('activate_hash', $token)->first();
 
         if (null === $user) {
             log_message('error', '[ACTIVATION] Activation failed: user not found', [
-                'token' => $token,
+                'token_hash' => $tokenHash,
                 'ip'    => $this->request->getIPAddress(),
             ]);
             service('eventTracker')->track('auth.activate_fail', [
-                'reason' => 'user_not_found',
+                'reason' => 'invalid',
             ]);
-            $this->setAuthMessage('danger', 'Activation link is invalid or expired. Please request a new activation email.');
-            $this->session->setFlashdata('auth_show_resend', true);
-            return redirect()->route('login');
+            $this->setAuthMessage('warning', 'That activation link is invalid or expired. Enter your email to send a new one.');
+            return redirect()->to(site_url('Support/Account'));
         }
 
         if ((int) ($user->active ?? 0) === 1) {

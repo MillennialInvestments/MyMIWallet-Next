@@ -41,6 +41,7 @@
                     <hr>
 
                     <p><a href="<?= site_url('/resend-activation') ?>">Resend Activation Code?</a></p>
+                    <p><a href="<?= site_url('Support/Account') ?>">Didn’t get the email?</a></p>
                 </div>
             </div>
         </div>
