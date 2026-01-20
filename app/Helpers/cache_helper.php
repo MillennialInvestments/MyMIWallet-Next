@@ -5,13 +5,10 @@ declare(strict_types=1);
 if (! function_exists('sanitize_cache_key')) {
     /**
      * Sanitize a cache key to satisfy PSR-16 / CI cache restrictions.
-     *
-     * Reserved characters: {}()/\\@:
      */
     function sanitize_cache_key(string $key): string
     {
-        // Replace reserved characters with underscores
-        $key = preg_replace('/[{}()\/\\@:]+/', '_', $key);
+        $key = preg_replace('/[^a-zA-Z0-9_\-]/', '_', $key);
 
         // Collapse multiple underscores and trim
         $key = preg_replace('/_+/', '_', $key);

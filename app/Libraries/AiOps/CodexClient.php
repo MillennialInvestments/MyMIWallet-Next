@@ -88,7 +88,7 @@ class CodexClient
             'params' => $payload['params'] ?? $payload,
         ]);
 
-        return 'ai:' . $subsystem . ':' . sha1($signature);
+        return sanitizeCacheKey('ai:' . $subsystem . ':' . sha1($signature));
     }
 
     protected function getTtlSeconds(string $subsystem): int

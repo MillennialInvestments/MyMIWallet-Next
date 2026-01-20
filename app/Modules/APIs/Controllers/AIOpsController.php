@@ -259,7 +259,8 @@ class AIOpsController extends BaseController
             }
 
             $this->settingsOverride->save($key, (string) $value, $userId);
-            cache()->save('aiops_' . $key, $this->castSetting($settings->$key ?? $value, $value), 86400);
+            $cacheKey = sanitizeCacheKey('aiops_' . $key);
+            cache()->save($cacheKey, $this->castSetting($settings->$key ?? $value, $value), 86400);
         }
 
         return $this->respond(['status' => 'ok']);
