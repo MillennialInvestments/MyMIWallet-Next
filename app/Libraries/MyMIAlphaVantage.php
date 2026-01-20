@@ -71,7 +71,7 @@ class MyMIAlphaVantage
 
     protected function rateLimiterCacheKey(): string
     {
-        return 'alphavantage_rate_' . date('YmdHi');
+        return sanitizeCacheKey('alphavantage_rate_' . date('YmdHi'));
     }
 
     protected function acquireRateSlots(int $slots = 1): bool

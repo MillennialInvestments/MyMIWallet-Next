@@ -187,7 +187,7 @@ class AuthAuditService
         $normalized = strtolower(trim($value));
         $hash       = hash('sha256', $normalized);
 
-        return "auth_audit_{$type}_{$hash}";
+        return sanitizeCacheKey("auth_audit_{$type}_{$hash}");
     }
 
     public function debugCacheRoundTrip(string $email, string $ip): array

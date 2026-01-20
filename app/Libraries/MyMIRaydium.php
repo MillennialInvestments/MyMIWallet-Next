@@ -51,7 +51,7 @@ class MyMIRaydium
 
     public function getPools(): array
     {
-        $cacheKey = 'raydium_pools';
+        $cacheKey = sanitizeCacheKey('raydium_pools');
         $pools = $this->cache->get($cacheKey);
         if (!$pools) {
             $pools = $this->request('/v2/pools');
