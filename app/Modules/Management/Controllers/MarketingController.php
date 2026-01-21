@@ -58,9 +58,11 @@ class MarketingController extends UserController
     protected $socialGeneratedPostModel;
     protected $socialDistributionQueueModel;
     protected $postFormatter;
+    protected bool $marketingContextInitialized = false;
 
     public function __construct()
     {
+        parent::__construct();
         $this->API = config('APISettings');
         $this->auth = service('authentication');        
         // Get the logger instance from CodeIgniter's Services
@@ -99,14 +101,8 @@ class MarketingController extends UserController
         // $this->MyMIDashboard = new MyMIDashboard();
         // $this->MyMIUser = service('MyMIUser');
         // $this->HtmlFormatter = new HtmlFormatter();
-        // $this->MyMIMarketing = new MyMIMarketing(); // Ensure this is correctly initialized
-        // $this->marketing = $this->getMyMIMarketing()->marketing(); 
-
-        // Load Services 
-        // $this->userAccount = $this->getMyMIUser()->getUserInformation($this->cuID);
-        $this->userDashboard = $this->getMyMIDashboard()->dashboardInfo($this->cuID);
-        $this->departmentTasks = $this->getMyMIAnalytics()->get_department_tasks($this->uri->getSegment(2), ['Page SEO Edit']);
-        $this->getBlogPosts = $this->getMyMIMarketing()->getBlogPosts();
+        $this->marketing = new MyMIMarketing();
+        $this->MyMIMarketing = $this->marketing;
 
         // Initialize UserService and pass required dependencies
         $this->cuID = $this->session->get('user_id') ?? $this->auth->id();
@@ -115,16 +111,14 @@ class MarketingController extends UserController
             throw new \RuntimeException('User ID could not be retrieved.');
         }
         log_message('debug', "InvestmentsController: cuID initialized as {$this->cuID}");
-        $this->userAccount = $this->getMyMIUser()->getUserInformation($this->cuID);
-        $userBudget = $this->getMyMIBudget()->getUserBudget($this->cuID); 
-        log_message('info', 'DashboardController L72 - $checkingSummary: ' . $userBudget['checkingSummary']);
-        $this->data['checkingSummary'] = $userBudget['checkingSummary'];
+        log_message('debug', 'MarketingController initialized');
 
 
     }
 
     public function commonData(): array {
         $this->data = parent::commonData();
+        $this->initializeMarketingContext();
         // Fetch user data via a UserService
         // if (!empty($this->getuserService()->commonData())) { 
         //     $userData = $this->getuserService()->commonData();  // Assume this service optimally fetches all user-related data
@@ -187,6 +181,25 @@ class MarketingController extends UserController
         }
         return $this->data;
 }
+
+    protected function initializeMarketingContext(): void
+    {
+        if ($this->marketingContextInitialized) {
+            return;
+        }
+
+        $this->marketingContextInitialized = true;
+        $this->userDashboard = $this->getMyMIDashboard()->dashboardInfo($this->cuID);
+        $this->departmentTasks = $this->getMyMIAnalytics()->get_department_tasks(
+            $this->uri->getSegment(2),
+            ['Page SEO Edit']
+        );
+        $this->getBlogPosts = $this->getMyMIMarketing()->getBlogPosts();
+        $this->userAccount = $this->getMyMIUser()->getUserInformation($this->cuID);
+        $userBudget = $this->getMyMIBudget()->getUserBudget($this->cuID);
+        log_message('info', 'DashboardController L72 - $checkingSummary: ' . ($userBudget['checkingSummary'] ?? ''));
+        $this->data['checkingSummary'] = $userBudget['checkingSummary'] ?? null;
+    }
       
     // ***STANDARD PAGES***
 
