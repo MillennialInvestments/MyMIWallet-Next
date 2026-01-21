@@ -165,7 +165,7 @@ $routes->group('', ['namespace' => 'App\Controllers'], static function ($routes)
 });
 
 // All Remaining Custom Routes
-$routes->group('', ['namespace' => 'App\Modules\User\Controllers','filter' => 'login,noStore'], function($routes) {
+$routes->group('', ['namespace' => 'App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
     $routes->get('/Account', 'DashboardController::account', ['as' => 'account']);
     $routes->get('/Account/Activity', 'DashboardController::activity', ['as' => 'activity']);
     $routes->get('/Account/Billing', 'DashboardController::billing', ['as' => 'billing']);
@@ -979,7 +979,7 @@ $routes->group('Blog', ['namespace' => 'App\Modules\Blog\Controllers'],  functio
 });
 
 // Dashboard
-$routes->group('Dashboard', ['namespace' => 'App\Modules\User\Controllers','filter' => 'login,noStore'], function($routes) {
+$routes->group('Dashboard', ['namespace' => 'App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
     $routes->get('/', 'DashboardController::index', ['as' => 'dashboard']);
     $routes->get('Transaction-Modal/(:segment)', 'DashboardController::loadModalContent/$1', ['as' => 'load-modal-1-segment']);
     $routes->get('Transaction-Modal/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2', ['as' => 'load-modal-2-segment']);
@@ -1246,7 +1246,7 @@ $routes->group('Auctions', static function($routes) {
 
 // Budget:
 // $routes->get('Budget', 'BudgetController::index', ['namespace' => 'App\Modules\User\Controllers', 'filter' => 'login']);
-$routes->group('Budget', ['namespace' => 'App\Modules\User\Controllers', 'filter' => 'login,noStore'], function($routes) {
+$routes->group('Budget', ['namespace' => 'App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
     $routes->get('/', 'BudgetController::index');
     $routes->get('Search/(:any)', 'BudgetController::index');
     // --- Budget: "This Month" views ---
@@ -1507,7 +1507,7 @@ $routes->group('Referrals', ['namespace' => 'App\Modules\User\Controllers', 'fil
 });
 
 // User - Wallets
-$routes->group('Wallets', ['namespace' => 'App\Modules\User\Controllers', 'filter' => 'login,noStore'], function($routes) {
+$routes->group('Wallets', ['namespace' => 'App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
     $routes->get('/', 'WalletsController::index', ['as' => 'wallets.index']);
     $routes->match(['GET', 'POST'], 'All', 'WalletsController::all', ['as' => 'wallets.all']);
     $routes->match(['GET', 'POST'], 'Account-Manager', 'WalletsController::accountManager', ['as' => 'wallets.account-manager']);
