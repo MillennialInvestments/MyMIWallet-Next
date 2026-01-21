@@ -33,8 +33,9 @@ class HowTosController extends UserController
     protected $MyMIDashboard;
     protected $helpers = ['auth', 'form', 'url'];
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->auth = service('authentication');
         $this->session = Services::session();
         $this->siteSettings = config('SiteSettings');

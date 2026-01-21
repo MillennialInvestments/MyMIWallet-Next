@@ -12,8 +12,9 @@ class SupportController extends Controller
     /** @var SupportModel */
     protected $supportModel;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->supportModel = new SupportModel();
     }
 

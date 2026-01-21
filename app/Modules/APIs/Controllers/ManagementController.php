@@ -172,7 +172,7 @@ class ManagementController extends \App\Controllers\BaseController
         parent::initController($request, $response, $logger);
 
         $this->alertManager        = new MyMIAlerts();
-        $this->MyMIMarketing       = new MyMIMarketing();
+        $this->MyMIMarketing       = service('MyMIMarketing');
         $this->alertsModel         = model(AlertsModel::class);
         $this->exchangeModel       = model(ExchangeModel::class);
         $this->marketingModel      = model(MarketingModel::class);
@@ -273,12 +273,10 @@ class ManagementController extends \App\Controllers\BaseController
     {
         log_message('info', '🛠️ ManagementController::Run_CRON_Tasks() initiated.');
 
-        $marketingController = new MarketingController();
-
         // Step 1: Fetch and Generate News (MarketAux)
         log_message('info', '📌 Step 1: cronFetchAndGenerateNews()');
         try {
-            $marketingController->cronFetchAndGenerateNews();
+            $this->cronFetchAndGenerateNews();
         } catch (\Throwable $e) {
             log_message('error', '❌ cronFetchAndGenerateNews failed: ' . $e->getMessage());
         }
@@ -292,7 +290,7 @@ class ManagementController extends \App\Controllers\BaseController
         try {
             $todayNews = $this->marketingModel->getTodaysScrapedContent();
             if (!empty($todayNews)) {
-                $marketingController->generateDailyContentDigest();
+                $this->generateDailyContentDigest();
             } else {
                 log_message('info', '🛑 Skipping summary generation — no scraped news available today.');
             }
@@ -303,7 +301,7 @@ class ManagementController extends \App\Controllers\BaseController
         // Step 4: Fetch Inbox Emails
         log_message('info', '📌 Step 4: cronFetchInbox()');
         try {
-            $marketingController->cronFetchInbox();
+            $this->cronFetchInbox();
         } catch (\Throwable $e) {
             log_message('error', '❌ cronFetchInbox() failed: ' . $e->getMessage());
         }
@@ -311,7 +309,7 @@ class ManagementController extends \App\Controllers\BaseController
         // Step 5: Analyze Inbox Content
         log_message('info', '📌 Step 5: cronAnalyzeContent()');
         try {
-            $marketingController->cronAnalyzeContent();
+            $this->cronAnalyzeContent();
         } catch (\Throwable $e) {
             log_message('error', '❌ cronAnalyzeContent() failed: ' . $e->getMessage());
         }
@@ -319,7 +317,7 @@ class ManagementController extends \App\Controllers\BaseController
         // Step 6: Backfill Incomplete Emails
         log_message('info', '📌 Step 6: reprocessIncompleteEmails()');
         try {
-            $marketingController->runBackfillForTempEmails();
+            $this->runBackfillForTempEmails();
         } catch (\Throwable $e) {
             log_message('error', '❌ reprocessIncompleteEmails() failed: ' . $e->getMessage());
         }
@@ -327,7 +325,7 @@ class ManagementController extends \App\Controllers\BaseController
         // Step 7: Process SMS Text Messages
         log_message('info', '📌 Step 7: cronProcessSMSMarketingIdeas()');
         try {
-            $marketingController->cronProcessSMSMarketingIdeas();
+            $this->cronProcessSMSMarketingIdeas();
         } catch (\Throwable $e) {
             log_message('error', '❌ cronProcessSMSMarketingIdeas() failed: ' . $e->getMessage());
         }

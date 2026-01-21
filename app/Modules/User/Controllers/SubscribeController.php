@@ -8,9 +8,9 @@ class SubscribeController extends UserController
 {
     private $siteSettings;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
-        parent::__construct();
+        parent::initController($request, $response, $logger);
         // Load necessary models, libraries, etc.
         $this->marketingModel = new MarketingModel();
         $this->budgetModel = new BudgetModel();

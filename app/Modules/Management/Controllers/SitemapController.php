@@ -12,8 +12,9 @@ class SitemapController extends \App\Controllers\BaseController
     protected $sitemapModel;
     protected $articles;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->sitemapModel = new SitemapModel();
         $this->articles = [
             [

@@ -21,8 +21,9 @@ class Tax extends BaseController
     protected TaxJurisdictionModel $taxJurisdictionModel;
     protected int $currentUserId;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->taxReturnModel       = model(TaxReturnModel::class);
         $this->taxTemplateModel     = model(TaxTemplateModel::class);
         $this->taxJurisdictionModel = model(TaxJurisdictionModel::class);

@@ -35,7 +35,9 @@ class ReferralController extends UserController {
     protected $userModel;
     protected $walletModel;
 
-    public function __construct() {
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+    {
+        parent::initController($request, $response, $logger);
         // Initialize services and libraries
         $this->auth = service('authentication');
         $this->email = Services::email();

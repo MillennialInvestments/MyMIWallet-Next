@@ -16,8 +16,9 @@ class UserController extends BaseController
     /** Only declare properties NOT already provided by BaseLoader */
     protected UserModel $userModel;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         // CI4 base Controller already has $request; no need to redeclare it.
         // BaseLoader should define $MyMIExchange, $MyMIMarketing, $MyMIUser.
         // If BaseLoader does not new() them, we assign to the trait properties here.

@@ -19,8 +19,9 @@ class DoorDashController extends UserController
     protected $helpers = (['auth']);
     protected $siteSettings;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         // Assuming siteSettings is loaded from a config or similar in CI4
         $this->auth         = service('authentication'); // Use the 'authentication' service
         $this->siteSettings = config('SiteSettings');

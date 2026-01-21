@@ -9,8 +9,9 @@ class AuctionsController extends UserController
     protected AuctionItemModel $itemModel;
     protected AuctionLotModel $lotModel;
     protected AuctionBidModel $bidModel;
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->itemModel = new AuctionItemModel();
         $this->lotModel  = new AuctionLotModel();
         $this->bidModel  = new AuctionBidModel();

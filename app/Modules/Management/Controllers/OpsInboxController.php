@@ -13,9 +13,9 @@ class OpsInboxController extends UserController
     protected OpsCommandService $ops;
     protected array $helpers = ['url', 'form', 'text'];
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
-        parent::__construct();
+        parent::initController($request, $response, $logger);
         $this->ops = new OpsCommandService();
     }
 
