@@ -10,6 +10,7 @@
 /**/*.orig.php
 /**/* copy.php
 app/_backup_autoload_skip/
+app/FiltersO/
 .env
 .env.*
 *.log

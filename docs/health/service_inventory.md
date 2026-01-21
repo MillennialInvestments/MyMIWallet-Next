@@ -128,7 +128,7 @@ Public callable methods extracted from `app/Libraries`, `app/Services`, `app/Com
 | Line | Method signature | Called by (sample) |
 | --- | --- | --- |
 | 8 | `__construct(private BaseConnection $db)` | app/Config/APISettings.php; app/Config/App.php; app/Config/ContentEngine.php; app/Config/Database.php; app/Config/Discord.php; app/Config/Email.php; app/Config/Hybridauth.php; app/Config/Kimi.php |
-| 15 | `attempt(string $scope, string $key, int $limit, int $perSeconds, int $blockSecondsOnExceed = 0)` | app/Controllers/AuthController.php; app/FiltersO/RateLimitFilter.php |
+| 15 | `attempt(string $scope, string $key, int $limit, int $perSeconds, int $blockSecondsOnExceed = 0)` | app/Controllers/AuthController.php; app/Filters/RateLimitFilter.php |
 
 ## app/Libraries/AiCostControls.php
 
@@ -1027,7 +1027,7 @@ Public callable methods extracted from `app/Libraries`, `app/Services`, `app/Com
 | 38 | `user($userId)` | app/Controllers/AuthController.php; app/Controllers/BaseController.php; app/Controllers/Debug.php; app/Helpers/cuID_helper.php; app/Libraries/BaseLoader.php; app/Modules/APIs/Controllers/AlertsController.php; app/Modules/APIs/Controllers/BudgetController.php; app/Modules/APIs/Controllers/ContentEngineController.php |
 | 39 | `beta($beta)` | app/Modules/Management/Views/Marketing/Blog/Subscribe.php; app/Modules/Management/Views/Marketing/Schedule/Add.php; app/Modules/Management/Views/Projects/Add.php; app/Modules/User/Views/Budget/Add-New.php; app/Modules/User/Views/Budget/Add.php; app/Modules/User/Views/Budget/Copy-12242023.php; app/Modules/User/Views/Budget/Copy.php; app/Modules/User/Views/Budget/Edit.php |
 | 40 | `type($type)` | app/Modules/Management/Views/Marketing/Blog/Subscribe.php; app/Modules/Management/Views/Marketing/Schedule/Add.php; app/Modules/Management/Views/Projects/Add.php; app/Modules/User/Views/Budget/Add-New.php; app/Modules/User/Views/Budget/Add.php; app/Modules/User/Views/Budget/Copy-12242023.php; app/Modules/User/Views/Budget/Copy.php; app/Modules/User/Views/Budget/Edit.php |
-| 41 | `id($typeId)` | app/ConfigO/Services.php; app/Controllers/BaseController.php; app/Controllers/Home.php; app/Filters/PermissionFilter.php; app/Filters/RoleFilter.php; app/FiltersO/AuthFilter.php; app/FiltersO/RoleFilter.php; app/Helpers/cuID_helper.php |
+| 41 | `id($typeId)` | app/ConfigO/Services.php; app/Controllers/BaseController.php; app/Controllers/Home.php; app/Filters/PermissionFilter.php; app/Filters/RoleFilter.php; app/Filters/AuthFilter.php; app/Filters/RoleFilter.php; app/Helpers/cuID_helper.php |
 | 42 | `controller($controller)` | app/Modules/Management/Views/Marketing/Blog/Subscribe.php; app/Modules/Management/Views/Marketing/Schedule/Add.php; app/Modules/Management/Views/Projects/Add.php; app/Modules/User/Views/Budget/Add-New.php; app/Modules/User/Views/Budget/Add.php; app/Modules/User/Views/Budget/Copy-12242023.php; app/Modules/User/Views/Budget/Copy.php; app/Modules/User/Views/Budget/Edit.php |
 | 43 | `method($method)` | app/Modules/Management/Views/Marketing/Blog/Subscribe.php; app/Modules/Management/Views/Marketing/Schedule/Add.php; app/Modules/Management/Views/Projects/Add.php; app/Modules/User/Views/Budget/Add-New.php; app/Modules/User/Views/Budget/Add.php; app/Modules/User/Views/Budget/Copy-12242023.php; app/Modules/User/Views/Budget/Copy.php; app/Modules/User/Views/Budget/Edit.php |
 | 44 | `url($url)` | app/Modules/Management/Views/Marketing/Blog/Subscribe.php; app/Modules/Management/Views/Marketing/Schedule/Add.php; app/Modules/Management/Views/Projects/Add.php; app/Modules/User/Views/Budget/Add-New.php; app/Modules/User/Views/Budget/Add.php; app/Modules/User/Views/Budget/Copy-12242023.php; app/Modules/User/Views/Budget/Copy.php; app/Modules/User/Views/Budget/Edit.php |
@@ -1261,7 +1261,7 @@ Public callable methods extracted from `app/Libraries`, `app/Services`, `app/Com
 | 172 | `callContractFunction($contractAddress, $functionName, $parameters)` | app/Modules/Exchange/Controllers/MetaMaskController.php |
 | 180 | `connect(array $opts = [])` | app/Commands/LogHealthcheck.php; app/Libraries/ContentEngine/ScannerIngestService.php; app/Libraries/MyMIAdvisor.php; app/Libraries/MyMIAlerts.php; app/Libraries/MyMIBudget.php; app/Libraries/MyMIDashboard.php; app/Libraries/MyMIGold.php; app/Libraries/MyMILogger.php |
 | 190 | `challenge()` | - |
-| 203 | `verify(string $address, string $signature)` | app/FiltersO/CaptchaFilter.php; app/Libraries/MyMIDigibyte.php; app/Modules/User/Controllers/AccountController.php |
+| 203 | `verify(string $address, string $signature)` | app/Filters/CaptchaFilter.php; app/Libraries/MyMIDigibyte.php; app/Modules/User/Controllers/AccountController.php |
 | 227 | `signAndSendTx(array $payload)` | - |
 
 ## app/Libraries/MyMIMomentum.php
@@ -1314,7 +1314,7 @@ Public callable methods extracted from `app/Libraries`, `app/Services`, `app/Com
 | 18 | `__construct()` | app/Config/APISettings.php; app/Config/App.php; app/Config/ContentEngine.php; app/Config/Database.php; app/Config/Discord.php; app/Config/Email.php; app/Config/Hybridauth.php; app/Config/Kimi.php |
 | 39 | `connect(array $opts = [])` | app/Commands/LogHealthcheck.php; app/Libraries/ContentEngine/ScannerIngestService.php; app/Libraries/MyMIAdvisor.php; app/Libraries/MyMIAlerts.php; app/Libraries/MyMIBudget.php; app/Libraries/MyMIDashboard.php; app/Libraries/MyMIGold.php; app/Libraries/MyMILogger.php |
 | 48 | `challenge()` | - |
-| 60 | `verify(string $address, string $signature)` | app/FiltersO/CaptchaFilter.php; app/Libraries/MyMIDigibyte.php; app/Modules/User/Controllers/AccountController.php |
+| 60 | `verify(string $address, string $signature)` | app/Filters/CaptchaFilter.php; app/Libraries/MyMIDigibyte.php; app/Modules/User/Controllers/AccountController.php |
 | 80 | `disconnect()` | - |
 | 85 | `getBalance(string $address, ?string $mint = null)` | app/Libraries/MyMIBitcoin.php; app/Libraries/MyMIDigibyte.php; app/Libraries/MyMIEthereum.php; app/Libraries/MyMIExchange.php; app/Libraries/MyMIGold.php; app/Libraries/MyMIInfura.php; app/Libraries/MyMIInvestments.php; app/Libraries/MyMISolflare.php |
 | 90 | `getTokenAccounts(string $address)` | app/Libraries/MyMISolana.php; app/Libraries/MyMISolflare.php; app/Libraries/MyMITrustWallet.php; app/Modules/APIs/Controllers/UserController.php; app/Services/SolanaService.php |
@@ -1633,7 +1633,7 @@ Public callable methods extracted from `app/Libraries`, `app/Services`, `app/Com
 | 14 | `__construct()` | app/Config/APISettings.php; app/Config/App.php; app/Config/ContentEngine.php; app/Config/Database.php; app/Config/Discord.php; app/Config/Email.php; app/Config/Hybridauth.php; app/Config/Kimi.php |
 | 34 | `connect(array $opts = [])` | app/Commands/LogHealthcheck.php; app/Libraries/ContentEngine/ScannerIngestService.php; app/Libraries/MyMIAdvisor.php; app/Libraries/MyMIAlerts.php; app/Libraries/MyMIBudget.php; app/Libraries/MyMIDashboard.php; app/Libraries/MyMIGold.php; app/Libraries/MyMILogger.php |
 | 43 | `challenge()` | - |
-| 55 | `verify(string $address, string $signature)` | app/FiltersO/CaptchaFilter.php; app/Libraries/MyMIDigibyte.php; app/Modules/User/Controllers/AccountController.php |
+| 55 | `verify(string $address, string $signature)` | app/Filters/CaptchaFilter.php; app/Libraries/MyMIDigibyte.php; app/Modules/User/Controllers/AccountController.php |
 | 75 | `disconnect()` | - |
 | 80 | `getBalance(string $address, ?string $mint = null)` | app/Libraries/MyMIBitcoin.php; app/Libraries/MyMIDigibyte.php; app/Libraries/MyMIEthereum.php; app/Libraries/MyMIExchange.php; app/Libraries/MyMIGold.php; app/Libraries/MyMIInfura.php; app/Libraries/MyMIInvestments.php; app/Libraries/MyMIPhantom.php |
 | 85 | `getTokenAccounts(string $address)` | app/Libraries/MyMIPhantom.php; app/Libraries/MyMISolana.php; app/Libraries/MyMITrustWallet.php; app/Modules/APIs/Controllers/UserController.php; app/Services/SolanaService.php |
@@ -1668,7 +1668,7 @@ Public callable methods extracted from `app/Libraries`, `app/Services`, `app/Com
 | 14 | `__construct()` | app/Config/APISettings.php; app/Config/App.php; app/Config/ContentEngine.php; app/Config/Database.php; app/Config/Discord.php; app/Config/Email.php; app/Config/Hybridauth.php; app/Config/Kimi.php |
 | 35 | `connect(array $opts = [])` | app/Commands/LogHealthcheck.php; app/Libraries/ContentEngine/ScannerIngestService.php; app/Libraries/MyMIAdvisor.php; app/Libraries/MyMIAlerts.php; app/Libraries/MyMIBudget.php; app/Libraries/MyMIDashboard.php; app/Libraries/MyMIGold.php; app/Libraries/MyMILogger.php |
 | 44 | `challenge(string $chain)` | - |
-| 57 | `verify(string $chain, string $address, string $signature)` | app/FiltersO/CaptchaFilter.php; app/Libraries/MyMIDigibyte.php; app/Modules/User/Controllers/AccountController.php |
+| 57 | `verify(string $chain, string $address, string $signature)` | app/Filters/CaptchaFilter.php; app/Libraries/MyMIDigibyte.php; app/Modules/User/Controllers/AccountController.php |
 | 100 | `disconnect()` | - |
 | 105 | `getBalance(string $address, ?string $mint = null)` | app/Libraries/MyMIBitcoin.php; app/Libraries/MyMIDigibyte.php; app/Libraries/MyMIEthereum.php; app/Libraries/MyMIExchange.php; app/Libraries/MyMIGold.php; app/Libraries/MyMIInfura.php; app/Libraries/MyMIInvestments.php; app/Libraries/MyMIPhantom.php |
 | 110 | `getTokenAccounts(string $address)` | app/Libraries/MyMIPhantom.php; app/Libraries/MyMISolana.php; app/Libraries/MyMISolflare.php; app/Modules/APIs/Controllers/UserController.php; app/Services/SolanaService.php |
