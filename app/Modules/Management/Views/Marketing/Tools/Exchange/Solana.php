@@ -9,7 +9,7 @@
                                 <h6 class="title">Assets</h6>
                             </div>
                             <div class="card-tools me-n1">
-                                <div class="drodown">
+                                <div class="dropdown">
                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger full-width" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <ul class="link-list-opt no-bdr">
@@ -49,7 +49,7 @@
                                 <h6 class="title">Promote</h6>
                             </div>
                             <div class="card-tools me-n1">
-                                <div class="drodown">
+                                <div class="dropdown">
                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger full-width" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <ul class="link-list-opt no-bdr">
@@ -88,7 +88,7 @@
                                 <h6 class="title">Discord Communities</h6>
                             </div>
                             <div class="card-tools me-n1">
-                                <div class="drodown">
+                                <div class="dropdown">
                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger full-width" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <ul class="link-list-opt no-bdr">
@@ -127,7 +127,7 @@
                                 <h6 class="title">Facebook Pages/Groups</h6>
                             </div>
                             <div class="card-tools me-n1">
-                                <div class="drodown">
+                                <div class="dropdown">
                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger full-width" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <ul class="link-list-opt no-bdr">
@@ -166,7 +166,7 @@
                                 <h6 class="title">X (Twitter) Pages</h6>
                             </div>
                             <div class="card-tools me-n1">
-                                <div class="drodown">
+                                <div class="dropdown">
                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger full-width" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <ul class="link-list-opt no-bdr">
@@ -205,7 +205,7 @@
                                 <h6 class="title">Websites / Links</h6>
                             </div>
                             <div class="card-tools me-n1">
-                                <div class="drodown">
+                                <div class="dropdown">
                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger full-width" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <ul class="link-list-opt no-bdr">

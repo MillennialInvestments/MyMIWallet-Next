@@ -124,7 +124,7 @@ $viewFileData                       = array(
                                             <h6 class="title">Services</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger full-width" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">
@@ -164,7 +164,7 @@ $viewFileData                       = array(
                                             <h6 class="title">Subscriptions</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger full-width" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">
@@ -203,7 +203,7 @@ $viewFileData                       = array(
                                             <h6 class="title">Wallets</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger full-width" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">
@@ -242,7 +242,7 @@ $viewFileData                       = array(
                                             <h6 class="title">Assets</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger full-width" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">
@@ -281,7 +281,7 @@ $viewFileData                       = array(
                                             <h6 class="title">Spend</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger full-width" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">
@@ -320,7 +320,7 @@ $viewFileData                       = array(
                                             <h6 class="title">Tasks</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger full-width" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">

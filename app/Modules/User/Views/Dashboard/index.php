@@ -1,5 +1,22 @@
 <?php
 use CodeIgniter\I18n\Time;
+$nonce = is_array($nonce ?? null) ? $nonce : [];
+
+if (!function_exists('miw_news_preview')) {
+    function miw_news_preview(string $text, int $limit = 160): string
+    {
+        $text = trim(strip_tags($text));
+        if ($text === '') {
+            return '';
+        }
+
+        if (mb_strlen($text) <= $limit) {
+            return $text;
+        }
+
+        return mb_substr($text, 0, $limit) . '…';
+    }
+}
 
 if (!function_exists('miw_format_currency')) {
     function miw_format_currency($value): string
@@ -98,7 +115,7 @@ $showSetupBanner   = ! empty($setupStatus)
                         <li><a href="/Advisor#panel-health" class="btn btn-white btn-dim btn-outline-info"><em class="icon ni ni-bulb"></em><span>AI Financial Review</span></a></li>
                         <?php endif; ?>
                         <li class="nk-block-tools-opt">
-                            <div class="drodown">
+                            <div class="dropdown">
                                 <a href="#" class="dropdown-toggle btn btn-icon btn-primary" data-bs-toggle="dropdown"><em class="icon ni ni-plus text-white"></em></a>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <ul class="link-list-opt no-bdr">

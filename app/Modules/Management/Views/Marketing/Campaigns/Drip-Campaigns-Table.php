@@ -15,7 +15,7 @@
                             </a>
                         </span>
                         <span class="col">
-                            <div class="drodown">
+                            <div class="dropdown">
                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger pt-3 full-width" data-bs-toggle="dropdown">
                                     <em class="icon ni ni-more-h"></em>
                                 </a>

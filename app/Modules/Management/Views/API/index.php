@@ -94,7 +94,7 @@ $alertsBySource                     = ['User' => 15, 'System' => 20]; // Example
                                             <h6 class="title">Action Center</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">
@@ -150,7 +150,7 @@ $alertsBySource                     = ['User' => 15, 'System' => 20]; // Example
                                         <p>Performance metrics on alert handling and resolution.</p>
                                     </div>
                                     <div class="card-tools mt-n1 me-n1">
-                                        <div class="drodown">
+                                        <div class="dropdown">
                                             <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
                                                 <ul class="link-list-opt no-bdr">
@@ -206,7 +206,7 @@ $alertsBySource                     = ['User' => 15, 'System' => 20]; // Example
                                             <h6 class="title">Alerts Overview</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">
@@ -246,7 +246,7 @@ $alertsBySource                     = ['User' => 15, 'System' => 20]; // Example
                                             <h6 class="title">Alert Trends</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">
@@ -286,7 +286,7 @@ $alertsBySource                     = ['User' => 15, 'System' => 20]; // Example
                                             <h6 class="title">Alert Sources</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">
@@ -326,7 +326,7 @@ $alertsBySource                     = ['User' => 15, 'System' => 20]; // Example
                                             <h6 class="title">Create Alert</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">
@@ -367,7 +367,7 @@ $alertsBySource                     = ['User' => 15, 'System' => 20]; // Example
                                             <h6 class="title">Resolution Time</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">
@@ -414,7 +414,7 @@ $alertsBySource                     = ['User' => 15, 'System' => 20]; // Example
                                                 <h6 class="title">Create Alert</h6>
                                             </div>
                                         </a>
-                                        <div class="drodown">
+                                        <div class="dropdown">
                                             <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                             <div class="dropdown-menu dropdown-menu-end">
                                                 <ul class="link-list-opt no-bdr">
@@ -444,7 +444,7 @@ $alertsBySource                     = ['User' => 15, 'System' => 20]; // Example
                                                 <h6 class="title">Review Alerts</h6>
                                             </div>
                                         </a>
-                                        <div class="drodown">
+                                        <div class="dropdown">
                                             <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                             <div class="dropdown-menu dropdown-menu-end">
                                                 <ul class="link-list-opt no-bdr">
@@ -473,7 +473,7 @@ $alertsBySource                     = ['User' => 15, 'System' => 20]; // Example
                                                 <h6 class="title">Alert Reports</h6>
                                             </div>
                                         </a>
-                                        <div class="drodown">
+                                        <div class="dropdown">
                                             <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                             <div class="dropdown-menu dropdown-menu-end">
                                                 <ul class="link-list-opt no-bdr">
@@ -510,7 +510,7 @@ $alertsBySource                     = ['User' => 15, 'System' => 20]; // Example
                                                 <!-- <span class="sub-text">Techyspec</span> -->
                                             </div>
                                         </a>
-                                        <!-- <div class="drodown">
+                                        <!-- <div class="dropdown">
                                             <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                             <div class="dropdown-menu dropdown-menu-end">
                                                 <ul class="link-list-opt no-bdr">

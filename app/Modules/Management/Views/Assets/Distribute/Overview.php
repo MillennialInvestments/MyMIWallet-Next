@@ -36,7 +36,7 @@ $viewFileData                       = array(
                                             <h6 class="title">User Overview</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">

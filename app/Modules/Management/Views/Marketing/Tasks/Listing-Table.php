@@ -11,7 +11,7 @@
                             <a class="link py-3" href="<?php echo site_url('Management/Marketing/Campaigns/Create'); ?>"><i class="icon ni ni-plus-circle"></i> <span class="pl-0" style="padding-top:3px;">Add Campaign</span></a>
                         </span>
                         <span class="col">
-                            <div class="drodown">
+                            <div class="dropdown">
                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger pt-3 full-width" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <ul class="link-list-opt no-bdr">

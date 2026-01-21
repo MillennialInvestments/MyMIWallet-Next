@@ -166,7 +166,7 @@ echo '
                                 <div class="kanban-item">
                                     <div class="kanban-item-title">
                                         <h6 class="title">' . $institute_name . ' - ' . $institute_account . '</h6>
-                                        <div class="drodown">
+                                        <div class="dropdown">
                                             <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
                                                 <div class="user-avatar-group">
                                                     <a class="btn btn-primary btn-sm text-white" href="' . site_url('Wallets/Link-Account/Details/' . $institute_id) . '">Manage</a>

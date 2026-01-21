@@ -47,7 +47,7 @@
                             <p>In last 30 days most sold medicine.</p>
                         </div>
                         <div class="card-tools mt-n1 me-n1">
-                            <div class="drodown">
+                            <div class="dropdown">
                                 <a href="#" class="dropdown-toggle dropdown-indicator btn btn-sm btn-outline-light btn-white" data-bs-toggle="dropdown">30 Days</a>
                                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
                                     <ul class="link-list-opt no-bdr">

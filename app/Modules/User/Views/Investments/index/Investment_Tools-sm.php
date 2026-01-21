@@ -10,7 +10,7 @@ $investmentTools = $investDashboard['investmentTools'];
                     <h6 class="title">Investment Tools</h6>
                 </div>
                 <div class="card-tools me-n1">
-                    <div class="drodown">
+                    <div class="dropdown">
                         <a href="#" class="btn btn-icon btn-trigger dropdown-toggle" data-bs-toggle="dropdown">
                             <em class="icon ni ni-more-h"></em>
                         </a>

@@ -9,7 +9,7 @@
                                 <h6 class="title">Assets Created</h6>
                             </div>
                             <div class="card-tools me-n1">
-                                <div class="drodown">
+                                <div class="dropdown">
                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <ul class="link-list-opt no-bdr">
@@ -50,7 +50,7 @@
                                 <h6 class="title">Exchange Orders</h6>
                             </div>
                             <div class="card-tools me-n1">
-                                <div class="drodown">
+                                <div class="dropdown">
                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <ul class="link-list-opt no-bdr">
@@ -90,7 +90,7 @@
                                 <h6 class="title">Trades Tracked</h6>
                             </div>
                             <div class="card-tools me-n1">
-                                <div class="drodown">
+                                <div class="dropdown">
                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <ul class="link-list-opt no-bdr">
@@ -130,7 +130,7 @@
                                 <h6 class="title">Partner Accounts</h6>
                             </div>
                             <div class="card-tools me-n1">
-                                <div class="drodown">
+                                <div class="dropdown">
                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <ul class="link-list-opt no-bdr">
@@ -170,7 +170,7 @@
                                 <h5 class="title">User Accounts</h5>
                             </div>
                             <div class="card-tools me-n1">
-                                <div class="drodown">
+                                <div class="dropdown">
                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <ul class="link-list-opt no-bdr">
@@ -210,7 +210,7 @@
                                 <h6 class="title">Wallets Created</h6>
                             </div>
                             <div class="card-tools me-n1">
-                                <div class="drodown">
+                                <div class="dropdown">
                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <ul class="link-list-opt no-bdr">

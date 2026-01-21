@@ -12,7 +12,7 @@
                                     <h6 class="title">Create Alert</h6>
                                 </div>
                             </a>
-                            <div class="drodown">
+                            <div class="dropdown">
                                 <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <ul class="link-list-opt no-bdr">
@@ -42,7 +42,7 @@
                                     <h6 class="title">Review Alerts</h6>
                                 </div>
                             </a>
-                            <div class="drodown">
+                            <div class="dropdown">
                                 <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <ul class="link-list-opt no-bdr">
@@ -71,7 +71,7 @@
                                     <h6 class="title">Alert Reports</h6>
                                 </div>
                             </a>
-                            <div class="drodown">
+                            <div class="dropdown">
                                 <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <ul class="link-list-opt no-bdr">

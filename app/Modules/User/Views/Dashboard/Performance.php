@@ -12,7 +12,7 @@
                 <div class="toggle-expand-content" data-content="pageMenu">
                     <ul class="nk-block-tools g-3">
                         <li>
-                            <div class="drodown">
+                            <div class="dropdown">
                                 <a href="#" class="dropdown-toggle btn btn-white btn-dim btn-outline-light" data-bs-toggle="dropdown"><em class="d-none d-sm-inline icon ni ni-calender-date"></em><span><span class="d-none d-md-inline">Last</span> 30 Days</span><em class="dd-indc icon ni ni-chevron-right"></em></a>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <ul class="link-list-opt no-bdr">
@@ -458,7 +458,7 @@
                                 <span class="sub-text">info@softnio.com</span>
                             </div>
                             <div class="user-action">
-                                <div class="drodown">
+                                <div class="dropdown">
                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger me-n1" data-bs-toggle="dropdown" aria-expanded="false"><em class="icon ni ni-more-h"></em></a>
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <ul class="link-list-opt no-bdr">
@@ -480,7 +480,7 @@
                                 <span class="sub-text">sharon-90@example.com</span>
                             </div>
                             <div class="user-action">
-                                <div class="drodown">
+                                <div class="dropdown">
                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger me-n1" data-bs-toggle="dropdown" aria-expanded="false"><em class="icon ni ni-more-h"></em></a>
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <ul class="link-list-opt no-bdr">
@@ -502,7 +502,7 @@
                                 <span class="sub-text">gloria_72@example.com</span>
                             </div>
                             <div class="user-action">
-                                <div class="drodown">
+                                <div class="dropdown">
                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger me-n1" data-bs-toggle="dropdown" aria-expanded="false"><em class="icon ni ni-more-h"></em></a>
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <ul class="link-list-opt no-bdr">
@@ -524,7 +524,7 @@
                                 <span class="sub-text">phillip-85@example.com</span>
                             </div>
                             <div class="user-action">
-                                <div class="drodown">
+                                <div class="dropdown">
                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger me-n1" data-bs-toggle="dropdown" aria-expanded="false"><em class="icon ni ni-more-h"></em></a>
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <ul class="link-list-opt no-bdr">
