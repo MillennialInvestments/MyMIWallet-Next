@@ -120,7 +120,7 @@ abstract class BaseController extends Controller
         $this->applyContentSecurityPolicy($response);
 
         // Nonces/renderer exposure
-        $this->nonceAttributes = $this->data['nonce'] ?? ['script' => '', 'style' => ''];
+        $this->nonceAttributes = $this->normalizeNonceAttributes($this->data['nonce'] ?? ['script' => '', 'style' => '']);
         $this->data['nonce']   = $this->nonceAttributes;
 
         Services::renderer()->setData([
@@ -204,7 +204,7 @@ abstract class BaseController extends Controller
         $this->data['userAgent']   = $this->data['userAgent']   ?? $this->request->getUserAgent();
         $this->data['cuID']        = $this->data['cuID']        ?? $this->resolveCurrentUserId();
         $this->data['csp']         = $this->data['csp']         ?? $this->csp;
-        $this->data['nonce']       = $this->data['nonce']       ?? $this->nonceAttributes;
+        $this->data['nonce']       = $this->normalizeNonceAttributes($this->data['nonce'] ?? $this->nonceAttributes);
 
         // Expose URI segments count for footer
         try {
@@ -1086,6 +1086,40 @@ abstract class BaseController extends Controller
     private function cspAttr(string $type, string $raw): string
     {
         return $raw ? 'nonce="' . esc($raw, 'attr') . '"' : '';
+    }
+
+    /**
+     * Normalize nonce values into full HTML attributes.
+     *
+     * @param array|string|null $nonce
+     * @return array{script:string,style:string}
+     */
+    private function normalizeNonceAttributes(array|string|null $nonce): array
+    {
+        if (is_array($nonce)) {
+            $script = (string)($nonce['script'] ?? '');
+            $style  = (string)($nonce['style'] ?? '');
+        } else {
+            $script = (string)($nonce ?? '');
+            $style  = (string)($nonce ?? '');
+        }
+
+        return [
+            'script' => $this->formatNonceAttribute($script),
+            'style'  => $this->formatNonceAttribute($style),
+        ];
+    }
+
+    private function formatNonceAttribute(string $nonce): string
+    {
+        $nonce = trim($nonce);
+        if ($nonce === '') {
+            return '';
+        }
+
+        return str_contains($nonce, 'nonce=')
+            ? $nonce
+            : 'nonce="' . esc($nonce, 'attr') . '"';
     }
 
     private function applyCspRelaxed(ResponseInterface $response): void
