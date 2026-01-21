@@ -39,8 +39,9 @@ class NotificationController extends UserController
     protected $userBudget; 
     protected $userDashboard; 
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         // Set Controller Settings
         $this->auth                                 = service('authentication');
         $this->request                              = service('request'); 
@@ -55,7 +56,7 @@ class NotificationController extends UserController
 //         $this->MyMIAlerts                           = new MyMIAlerts(); // replaced by BaseController getter 
 //         $this->MyMIBudget                           = new MyMIBudget(); // replaced by BaseController getter 
 //         $this->MyMIDashboard                        = new MyMIDashboard(); // replaced by BaseController getter 
-//         $this->MyMIMarketing                        = new MyMIMarketing(); // replaced by BaseController getter 
+//         $this->MyMIMarketing                        = service('MyMIMarketing'); // replaced by BaseController getter 
 //         $this->MyMIUser                             = new MyMIUser(); // replaced by BaseController getter 
         // Check multiple sources for user ID
 

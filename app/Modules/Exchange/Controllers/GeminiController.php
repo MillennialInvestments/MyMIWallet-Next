@@ -9,7 +9,9 @@ class GeminiController extends UserController {
     protected MyMIGemini $MyMIGemini;
     protected $APIs; 
 
-    public function __construct() {
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+    {
+        parent::initController($request, $response, $logger);
         $this->APIs         = config('APISettings'); 
         $apiKey             = $this->APIs->geminiAPIKey;
         $apiSecret          = $this->APIs->geminiAPISecret;

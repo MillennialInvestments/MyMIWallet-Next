@@ -11,8 +11,9 @@ class EmailController extends UserController
 {
     protected $emailService;
     protected $emailModel;
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         helper(['auth', 'form']);
         $this->emailService = new EmailService();
         $this->emailModel = new EmailModel();

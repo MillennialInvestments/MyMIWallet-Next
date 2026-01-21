@@ -38,8 +38,9 @@ class DashboardController extends UserController
     protected $userService;
     protected ?MyMIInvestments $MyMIInvestments = null;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->auth = service('authentication');
         $this->session = Services::session();
         $this->request = service('request');
@@ -470,7 +471,7 @@ class DashboardController extends UserController
                 if (!isset($this->marketingModel)) {
                     $this->marketingModel = new MarketingModel();
                 }
-                // $this->MyMIMarketing                        = new MyMIMarketing();
+                // $this->MyMIMarketing                        = service('MyMIMarketing');
                 $this->data['recentMarketingPosts']         = $this->getMyMIMarketing()->getRecentPosts(10);
 
                 $this->data['managementTeam']               = $this->getMyMIMarketing()->getManagementTeam(); 
@@ -516,7 +517,7 @@ class DashboardController extends UserController
                             return "Error: Post not found.";
                         }
                     
-                        $marketing = new MyMIMarketing();
+                        $marketing = service('MyMIMarketing');
                     
                         // Clean, summarize, extract
                         $cleanedSummary = $marketing->cleanHtmlSummaryPreview($post['summary'] ?? '');
@@ -1266,7 +1267,7 @@ class DashboardController extends UserController
         }
 
         if (!empty($tokenInfo)) {
-//             $this->MyMIMarketing = new MyMIMarketing(); // replaced by BaseController getter
+//             $this->MyMIMarketing = service('MyMIMarketing'); // replaced by BaseController getter
             try {
                 $scrapedData = $this->getMyMIMarketing()->scrapeTokenContent($tokenInfo);
             } catch (\Exception $e) {

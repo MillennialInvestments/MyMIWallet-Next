@@ -12,8 +12,9 @@ class Blog extends BaseController
 {
     protected BlogModel $blogModel;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         helper(['text', 'url']);
         $this->blogModel = new BlogModel();
     }

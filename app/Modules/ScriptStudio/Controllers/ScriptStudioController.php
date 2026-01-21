@@ -35,8 +35,9 @@ class ScriptStudioController extends BaseController
     /** @var string[] */
     protected array $logicTypeOptions = ['Study', 'Scanner', 'Strategy'];
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         helper(['form', 'text']);
         $this->scriptModel  = new ScriptModel();
         $this->scriptEngine = new ScriptEngine();

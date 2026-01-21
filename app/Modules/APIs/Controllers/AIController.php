@@ -30,8 +30,9 @@ class AIController extends BaseController
         return $this->$method(...$params);
     }
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->assistant = new MyMIAssistant();
         $this->linkModel = new DiscordLinkModel();
     }

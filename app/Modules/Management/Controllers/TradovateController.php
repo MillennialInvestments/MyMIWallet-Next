@@ -15,8 +15,9 @@ class TradovateController extends \App\Controllers\BaseController
     private $clientSecret;
     private $redirectUri;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->client = new Client();
         $this->tradovateApiUrl = 'https://demo.tradovateapi.com/v1'; // Use the appropriate API endpoint
         $this->clientId = getenv('TRADOVATE_CLIENT_ID'); // Ensure these are set in your .env file

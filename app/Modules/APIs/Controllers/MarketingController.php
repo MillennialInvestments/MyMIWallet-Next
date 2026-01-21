@@ -49,7 +49,7 @@ class MarketingController extends \App\Controllers\BaseController
     ) {
         parent::initController($request, $response, $logger);
 
-        $this->MyMIMarketing    = new MyMIMarketing();
+        $this->MyMIMarketing    = service('MyMIMarketing');
         $this->marketingModel   = model(MarketingModel::class);
         $this->marketingService = new MarketingService();
     }
@@ -1382,7 +1382,7 @@ class MarketingController extends \App\Controllers\BaseController
     {
         helper('text');
         $marketingModel = new MarketingModel();
-        $marketing = new MyMIMarketing();
+        $marketing = service('MyMIMarketing');
     
         // Get 3 highest-scoring posts not promoted yet
         $buffer = $marketingModel->getTopBufferPosts(3, 6.5);
@@ -1830,7 +1830,7 @@ class MarketingController extends \App\Controllers\BaseController
     public function rankBufferPostsDaily()
     {
         $marketingModel = new MarketingModel();
-        $marketing = new MyMIMarketing();
+        $marketing = service('MyMIMarketing');
         $threshold = getenv('MARKETING_TFIDF_THRESHOLD') ?: 7.5;
     
         $pendingPosts = $marketingModel->getPendingBufferItems();

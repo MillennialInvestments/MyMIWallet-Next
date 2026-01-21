@@ -14,9 +14,9 @@ class PredictionsApiController extends UserController
     protected array $data = [];
     protected array $helpers = ['url', 'form', 'security'];
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
-        parent::__construct();
+        parent::initController($request, $response, $logger);
     }
 
     public function latest(): ResponseInterface

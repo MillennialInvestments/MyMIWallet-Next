@@ -39,8 +39,9 @@ class AdminController extends UserController
     protected $userDashboard;
     protected $userWallets; 
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->auth                                 = service('authentication');
         $this->API                                  = config('APISettings');
         $this->siteSettings                         = config('SiteSettings');

@@ -60,9 +60,9 @@ class MarketingController extends UserController
     protected $postFormatter;
     protected bool $marketingContextInitialized = false;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
-        parent::__construct();
+        parent::initController($request, $response, $logger);
         $this->API = config('APISettings');
         $this->auth = service('authentication');        
         // Get the logger instance from CodeIgniter's Services
@@ -91,7 +91,7 @@ class MarketingController extends UserController
         $this->socialGeneratedPostModel = new SocialGeneratedPostModel();
         $this->socialDistributionQueueModel = new SocialDistributionQueueModel();
         $this->postFormatter = new SocialPostFormatter();
-        $this->MyMIMarketing = new MyMIMarketing();
+        $this->MyMIMarketing = service('MyMIMarketing');
         $this->db = \Config\Database::connect();
         // $this->userModel = new UserModel();
 
@@ -102,7 +102,7 @@ class MarketingController extends UserController
         // $this->MyMIDashboard = new MyMIDashboard();
         // $this->MyMIUser = service('MyMIUser');
         // $this->HtmlFormatter = new HtmlFormatter();
-        // $this->MyMIMarketing = new MyMIMarketing(); // Ensure this is correctly initialized
+        // $this->MyMIMarketing = service('MyMIMarketing'); // Ensure this is correctly initialized
         // $this->marketing = $this->getMyMIMarketing()->marketing(); 
 
         // Load Services 
