@@ -70,7 +70,7 @@ if ($pageURIB === 'Assets') {
                                             <h6 class="title">Action Center</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">
@@ -124,7 +124,7 @@ if ($pageURIB === 'Assets') {
                                         <p>Last 12 Months of Total Monthly Spend &amp; Total Transaction Fees.</p>
                                     </div>
                                     <div class="card-tools mt-n1 me-n1">
-                                        <div class="drodown">
+                                        <div class="dropdown">
                                             <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
                                                 <ul class="link-list-opt no-bdr">
@@ -184,7 +184,7 @@ if ($pageURIB === 'Assets') {
                                                     <a class="link py-3" href="<?php echo site_url('Management/Assets/Create'); ?>"><i class="icon ni ni-plus-circle"></i> Add Asset</a>
                                                 </span>
                                                 <span class="col">
-                                                    <div class="drodown">
+                                                    <div class="dropdown">
                                                         <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                         <div class="dropdown-menu dropdown-menu-end">
                                                             <ul class="link-list-opt no-bdr">

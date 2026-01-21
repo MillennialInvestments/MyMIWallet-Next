@@ -293,7 +293,7 @@ if ($accountRecAccount === 'Yes') {
                             <div class="card-tools me-n1">
                                 <a class="btn btn-success text-white" href="<?php echo site_url('/Budget/Approve-Recurring-Schedule/' . $accountID); ?>">Approve</a>
                                 <a class="btn btn-danger text-white" href="<?php echo site_url('/Budget/Cancel-Account/' . $accountID); ?>">Cancel</a>
-                                <!-- <div class="drodown">
+                                <!-- <div class="dropdown">
                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger full-width" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <ul class="link-list-opt no-bdr">
@@ -324,7 +324,7 @@ if ($accountRecAccount === 'Yes') {
                             <div class="card-tools me-n1">
                                 <a class="btn btn-success text-white" href="<?php echo site_url('/Budget/Approve-Recurring-Schedule/' . $accountID); ?>">Approve</a>
                                 <a class="btn btn-danger text-white" href="<?php echo site_url('/Budget/Cancel-Account/' . $accountID); ?>">Cancel</a>
-                                <!-- <div class="drodown">
+                                <!-- <div class="dropdown">
                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger full-width" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <ul class="link-list-opt no-bdr">
@@ -449,7 +449,7 @@ if ($accountRecAccount === 'Yes') {
                                 <a class="btn btn-success text-white">Approve</a>
                                 <a class="btn btn-primary text-white">Edit</a>
                                 <a class="btn btn-danger text-white">Delete</a>
-                                <!-- <div class="drodown">
+                                <!-- <div class="dropdown">
                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger full-width" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <ul class="link-list-opt no-bdr">

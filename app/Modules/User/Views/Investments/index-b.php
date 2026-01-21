@@ -9,7 +9,7 @@
                                 <h6 class="title">Portfolio Manager</h6>
                             </div>
                             <div class="card-tools me-n1">
-                                <div class="drodown">
+                                <div class="dropdown">
                                     <a href="#" class="btn btn-icon btn-trigger dropdown-toggle" data-bs-toggle="dropdown">
                                         <em class="icon ni ni-more-h"></em>
                                     </a>
@@ -173,7 +173,7 @@
                                             <h6 class="title">Today's News</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="btn btn-icon btn-trigger dropdown-toggle" data-bs-toggle="dropdown">
                                                     <em class="icon ni ni-more-h"></em>
                                                 </a>
@@ -210,7 +210,7 @@
                                             <h6 class="title">My Performance</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="btn btn-icon btn-trigger dropdown-toggle" data-bs-toggle="dropdown">
                                                     <em class="icon ni ni-more-h"></em>
                                                 </a>
@@ -254,7 +254,7 @@
                                             <h6 class="title">My Insights</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="btn btn-icon btn-trigger dropdown-toggle" data-bs-toggle="dropdown">
                                                     <em class="icon ni ni-more-h"></em>
                                                 </a>
@@ -297,7 +297,7 @@
                                             <h6 class="title">My Goals</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="btn btn-icon btn-trigger dropdown-toggle" data-bs-toggle="dropdown">
                                                     <em class="icon ni ni-more-h"></em>
                                                 </a>
@@ -340,7 +340,7 @@
                                             <h6 class="title">My Reports</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="btn btn-icon btn-trigger dropdown-toggle" data-bs-toggle="dropdown">
                                                     <em class="icon ni ni-more-h"></em>
                                                 </a>
@@ -383,7 +383,7 @@
                                             <h6 class="title">My Alerts</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="btn btn-icon btn-trigger dropdown-toggle" data-bs-toggle="dropdown">
                                                     <em class="icon ni ni-more-h"></em>
                                                 </a>
@@ -426,7 +426,7 @@
                                             <h6 class="title">Stocks Overview</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="btn btn-icon btn-trigger dropdown-toggle" data-bs-toggle="dropdown">
                                                     <em class="icon ni ni-more-h"></em>
                                                 </a>
@@ -469,7 +469,7 @@
                                             <h6 class="title">Cryptos Overview</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="btn btn-icon btn-trigger dropdown-toggle" data-bs-toggle="dropdown">
                                                     <em class="icon ni ni-more-h"></em>
                                                 </a>
@@ -512,7 +512,7 @@
                                             <h6 class="title">Market News</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="btn btn-icon btn-trigger dropdown-toggle" data-bs-toggle="dropdown">
                                                     <em class="icon ni ni-more-h"></em>
                                                 </a>
@@ -549,7 +549,7 @@
                                             <h6 class="title">Investment Research</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="btn btn-icon btn-trigger dropdown-toggle" data-bs-toggle="dropdown">
                                                     <em class="icon ni ni-more-h"></em>
                                                 </a>
@@ -592,7 +592,7 @@
                                             <h6 class="title">Investment Tools</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="btn btn-icon btn-trigger dropdown-toggle" data-bs-toggle="dropdown">
                                                     <em class="icon ni ni-more-h"></em>
                                                 </a>

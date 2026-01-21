@@ -29,7 +29,7 @@ $nextMonthMonthly    = $nextMonthsExpense;
                 <p>View Your Month-to-Month Financial Growth</p>
             </div>
             <div class="card-tools mt-n1 me-n1">
-                <div class="drodown">
+                <div class="dropdown">
                     <a href="#" class="dropdown-toggle btn btn-primary full-width" data-bs-toggle="dropdown">
                         Chart Settings
                     </a>

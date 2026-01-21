@@ -183,7 +183,7 @@ foreach($userBudgetAccounts['getUserBudgetAccounts'] as $budgetAccounts) {
                                 <h6 class="title"><?php echo $accountType; ?> Action Center</h6>
                             </div>
                             <div class="card-tools me-n1">
-                                <div class="drodown">
+                                <div class="dropdown">
                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger full-width" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <ul class="link-list-opt no-bdr">
@@ -247,7 +247,7 @@ foreach($userBudgetAccounts['getUserBudgetAccounts'] as $budgetAccounts) {
                             <p>Last 12 Months of Total Monthly Spend &amp; Total Transaction Fees.</p>
                         </div>
                         <div class="card-tools mt-n1 me-n1">
-                            <div class="drodown">
+                            <div class="dropdown">
                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger full-width" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                 <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
                                     <ul class="link-list-opt no-bdr">
@@ -327,7 +327,7 @@ foreach($userBudgetAccounts['getUserBudgetAccounts'] as $budgetAccounts) {
                                         <p>Last 12 Months of Total Monthly Spend &amp; Total Transaction Fees.</p>
                                     </div>
                                     <div class="card-tools mt-n1 me-n1">
-                                        <div class="drodown">
+                                        <div class="dropdown">
                                             <a href="#" class="dropdown-toggle btn btn-icon btn-trigger full-width" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
                                                 <ul class="link-list-opt no-bdr">

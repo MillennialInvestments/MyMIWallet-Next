@@ -5,7 +5,7 @@
                 <h6 class="title">Income Breakdown</h6>
             </div>
             <div class="card-tools">
-                <div class="drodown">
+                <div class="dropdown">
                     <a href="#" class="btn btn-outline-light btn-sm btn-white dropdown-indicator dropdown-toggle" data-bs-toggle="dropdown">30 Days</a>
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
                         <ul class="link-list-opt no-bdr">

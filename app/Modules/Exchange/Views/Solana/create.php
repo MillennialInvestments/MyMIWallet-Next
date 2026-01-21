@@ -90,7 +90,7 @@ $allViewData = array(
                     <ul class="nk-block-tools g-3">
                         <li><a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#connectWalletModal"><em class="icon ni ni-plus"></em><span>Connect Wallet</span></a></li>
                         <li class="nk-block-tools-opt">
-                            <div class="drodown">
+                            <div class="dropdown">
                                 <a href="#" class="dropdown-toggle btn btn-icon btn-primary" data-bs-toggle="dropdown"><em class="icon ni ni-plus"></em></a>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <ul class="link-list-opt no-bdr">
@@ -369,7 +369,7 @@ $allViewData = array(
                             <p>Create and Manage Your World in Solana!</p>
                         </div>
                         <div class="card-tools mt-n4 me-n1">
-                            <div class="drodown">
+                            <div class="dropdown">
                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                 <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
                                     <ul class="link-list-opt no-bdr">

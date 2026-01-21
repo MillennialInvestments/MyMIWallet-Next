@@ -70,7 +70,7 @@ $viewFileData                       = array(
                                             <h6 class="title">Action Center</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">
@@ -124,7 +124,7 @@ $viewFileData                       = array(
                                         <p>Last 12 Months of Total Monthly Spend &amp; Total Transaction Fees.</p>
                                     </div>
                                     <div class="card-tools mt-n1 me-n1">
-                                        <div class="drodown">
+                                        <div class="dropdown">
                                             <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
                                                 <ul class="link-list-opt no-bdr">
@@ -179,7 +179,7 @@ $viewFileData                       = array(
                                             <h6 class="title">Partner Accounts</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">
@@ -218,7 +218,7 @@ $viewFileData                       = array(
                                             <h6 class="title">Assets Created</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">
@@ -258,7 +258,7 @@ $viewFileData                       = array(
                                             <h6 class="title">Pending Applications</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">
@@ -297,7 +297,7 @@ $viewFileData                       = array(
                                             <h6 class="title">Partner Support</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">
@@ -336,7 +336,7 @@ $viewFileData                       = array(
                                             <h6 class="title">Transactions Fees</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">
@@ -375,7 +375,7 @@ $viewFileData                       = array(
                                             <h6 class="title">Referrals</h6>
                                         </div>
                                         <div class="card-tools me-n1">
-                                            <div class="drodown">
+                                            <div class="dropdown">
                                                 <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">
@@ -422,7 +422,7 @@ $viewFileData                       = array(
                                                 <!-- <span class="sub-text">Softnio</span> -->
                                             </div>
                                         </a>
-                                        <div class="drodown">
+                                        <div class="dropdown">
                                             <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                             <div class="dropdown-menu dropdown-menu-end">
                                                 <ul class="link-list-opt no-bdr">
@@ -482,7 +482,7 @@ $viewFileData                       = array(
                                                 <!-- <span class="sub-text">Runnergy</span> -->
                                             </div>
                                         </a>
-                                        <div class="drodown">
+                                        <div class="dropdown">
                                             <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                             <div class="dropdown-menu dropdown-menu-end">
                                                 <ul class="link-list-opt no-bdr">
@@ -532,7 +532,7 @@ $viewFileData                       = array(
                                                 <!-- <span class="sub-text">Techyspec</span> -->
                                             </div>
                                         </a>
-                                        <div class="drodown">
+                                        <div class="dropdown">
                                             <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                             <div class="dropdown-menu dropdown-menu-end">
                                                 <ul class="link-list-opt no-bdr">

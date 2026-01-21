@@ -71,7 +71,7 @@ $viewFileData                               = array(
                             <div class="card-inner">
                                 <div class="team">
                                     <div class="team-options">
-                                        <div class="drodown">
+                                        <div class="dropdown">
                                             <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                             <div class="dropdown-menu dropdown-menu-end">
                                                 <ul class="link-list-opt no-bdr">
@@ -121,7 +121,7 @@ $viewFileData                               = array(
                                                 <p>In last 30 days <em class="icon ni ni-info" data-bs-toggle="tooltip" data-bs-placement="right" title="Referral Informations"></em></p>
                                             </div>
                                             <div class="card-tools mt-n1 me-n1">
-                                                <div class="drodown">
+                                                <div class="dropdown">
                                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                     <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
                                                         <ul class="link-list-opt no-bdr">

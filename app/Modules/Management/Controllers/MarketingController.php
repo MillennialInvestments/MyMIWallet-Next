@@ -91,6 +91,7 @@ class MarketingController extends UserController
         $this->socialGeneratedPostModel = new SocialGeneratedPostModel();
         $this->socialDistributionQueueModel = new SocialDistributionQueueModel();
         $this->postFormatter = new SocialPostFormatter();
+        $this->MyMIMarketing = new MyMIMarketing();
         $this->db = \Config\Database::connect();
         // $this->userModel = new UserModel();
 
@@ -101,8 +102,14 @@ class MarketingController extends UserController
         // $this->MyMIDashboard = new MyMIDashboard();
         // $this->MyMIUser = service('MyMIUser');
         // $this->HtmlFormatter = new HtmlFormatter();
-        $this->marketing = new MyMIMarketing();
-        $this->MyMIMarketing = $this->marketing;
+        // $this->MyMIMarketing = new MyMIMarketing(); // Ensure this is correctly initialized
+        // $this->marketing = $this->getMyMIMarketing()->marketing(); 
+
+        // Load Services 
+        // $this->userAccount = $this->getMyMIUser()->getUserInformation($this->cuID);
+        $this->userDashboard = $this->getMyMIDashboard()->dashboardInfo($this->cuID);
+        $this->departmentTasks = $this->getMyMIAnalytics()->get_department_tasks($this->uri->getSegment(2), ['Page SEO Edit']);
+        $this->getBlogPosts = $this->MyMIMarketing()->getBlogPosts();
 
         // Initialize UserService and pass required dependencies
         $this->cuID = $this->session->get('user_id') ?? $this->auth->id();
@@ -2817,7 +2824,7 @@ class MarketingController extends UserController
     {
         $links = [];
         if (! empty($summary['links'])) {
-            $links = is_array($summary['links']) ? $summary['links'] : json_decode($summary['links'], true) ?: [];
+            $links = is_array($summary['links']) ? $summary['links'] : (json_decode($summary['links'], true) ?: []);
         }
         if (! empty($summary['url'])) {
             $links[] = $summary['url'];

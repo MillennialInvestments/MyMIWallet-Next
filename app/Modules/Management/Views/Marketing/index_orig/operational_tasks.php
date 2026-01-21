@@ -10,7 +10,7 @@
                             <!-- <span class="sub-text">Softnio</span> -->
                         </div>
                     </a>
-                    <div class="drodown">
+                    <div class="dropdown">
                         <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <ul class="link-list-opt no-bdr">
@@ -63,7 +63,7 @@
                             <!-- <span class="sub-text">Runnergy</span> -->
                         </div>
                     </a>
-                    <div class="drodown">
+                    <div class="dropdown">
                         <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <ul class="link-list-opt no-bdr">
@@ -113,7 +113,7 @@
                             <!-- <span class="sub-text">Techyspec</span> -->
                         </div>
                     </a>
-                    <div class="drodown">
+                    <div class="dropdown">
                         <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <ul class="link-list-opt no-bdr">
@@ -159,7 +159,7 @@
                             <!-- <span class="sub-text">Softnio</span> -->
                         </div>
                     </a>
-                    <div class="drodown">
+                    <div class="dropdown">
                         <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <ul class="link-list-opt no-bdr">
@@ -212,7 +212,7 @@
                             <!-- <span class="sub-text">Runnergy</span> -->
                         </div>
                     </a>
-                    <div class="drodown">
+                    <div class="dropdown">
                         <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <ul class="link-list-opt no-bdr">
@@ -262,7 +262,7 @@
                             <!-- <span class="sub-text">Techyspec</span> -->
                         </div>
                     </a>
-                    <div class="drodown">
+                    <div class="dropdown">
                         <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <ul class="link-list-opt no-bdr">
