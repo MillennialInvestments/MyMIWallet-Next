@@ -16,6 +16,11 @@ class LogSummarize extends BaseCommand
         'date' => 'Optional: "yesterday" or YYYY-MM-DD (defaults to today).',
     ];
 
+    protected function generateTriageLogLines(string $date): array
+    {
+        return [];
+    }
+
     public function run(array $params)
     {
         // Determine target date
@@ -76,6 +81,9 @@ class LogSummarize extends BaseCommand
         }
 
         $lines       = file($logFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $triageLines = $this->generateTriageLogLines($date);
+        $lines = array_merge($lines, $triageLines);
+
         $pattern     = '/^(DEBUG|INFO|NOTICE|WARNING|ERROR|CRITICAL)\s*-\s*' .
                        '(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})\s*-->\s*(.*)$/';
         $maxTsString = $lastProcessedTs; // track the latest timestamp we see
