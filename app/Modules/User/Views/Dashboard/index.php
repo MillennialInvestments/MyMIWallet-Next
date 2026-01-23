@@ -91,6 +91,16 @@ $aiNotesList       = $aiNotes ?? [];
 $setupStatus       = $setupStatus ?? [];
 $setupPrefs        = $setupPrefs ?? [];
 $setupContext      = $setupContext ?? 'dashboard';
+$squeezeHighRiskCount = (int) ($squeezeHighRiskCount ?? 0);
+$squeezeState = 'success';
+$squeezeStateLabel = 'Calm';
+if ($squeezeHighRiskCount >= 3) {
+    $squeezeState = 'danger';
+    $squeezeStateLabel = 'High';
+} elseif ($squeezeHighRiskCount >= 1) {
+    $squeezeState = 'warning';
+    $squeezeStateLabel = 'Elevated';
+}
 $showSetupBanner   = ! empty($setupStatus)
     && ! ($setupStatus['overall_complete'] ?? false)
     && ! ($setupPrefs['dismiss_all'] ?? false)
@@ -291,6 +301,33 @@ $showSetupBanner   = ! empty($setupStatus)
                     <?php endif; ?>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Short Squeeze Activity Tile (insertion point) -->
+    <div class="row g-gs mt-1">
+        <div class="col-lg-4 col-md-6">
+            <a class="card card-bordered card-full h-100" href="<?= site_url('investments/squeeze'); ?>" title="High short interest + low float can cause violent moves. These events are often mechanical and short-lived." data-bs-toggle="tooltip">
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-2">
+                        <div class="card-title">
+                            <h6 class="subtitle">📉 Market Stress: Short Squeeze Activity</h6>
+                        </div>
+                        <div class="card-tools">
+                            <span class="badge bg-<?= esc($squeezeState); ?>"><?= esc($squeezeStateLabel); ?></span>
+                        </div>
+                    </div>
+                    <div class="card-amount">
+                        <span class="amount"><?= esc($squeezeHighRiskCount); ?></span>
+                        <span class="change <?= $squeezeHighRiskCount > 0 ? 'text-warning' : 'text-success'; ?>">
+                            <em class="icon ni ni-alert-circle"></em> Mechanical squeeze risk detected
+                        </span>
+                    </div>
+                    <div class="small text-soft mt-2">
+                        High short interest + low float can cause violent moves. These events are often mechanical and short-lived.
+                    </div>
+                </div>
+            </a>
         </div>
     </div>
 
