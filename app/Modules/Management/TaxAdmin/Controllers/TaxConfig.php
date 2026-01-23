@@ -24,8 +24,9 @@ class TaxConfig extends BaseController
     protected TaxAuditLogModel $audit;
     protected int $adminUserId = 0;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->templates     = model(TaxTemplatesModel::class);
         $this->lines         = model(TaxLinesModel::class);
         $this->jurisdictions = model(TaxJurisdictionsModel::class);

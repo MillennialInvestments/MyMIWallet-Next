@@ -47,8 +47,9 @@ class ProjectsController extends UserController
     protected $supportService; 
     protected $userService; 
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->auth = service('authentication');
         $this->request = service('request');
         $this->session = Services::session();

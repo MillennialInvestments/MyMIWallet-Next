@@ -13,11 +13,6 @@ class DevelopmentController extends UserController
     protected array $data = [];
     protected array $helpers = ['url', 'form', 'security'];
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function index(): string
     {
         $this->data = $this->commonData();

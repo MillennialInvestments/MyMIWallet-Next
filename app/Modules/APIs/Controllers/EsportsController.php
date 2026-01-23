@@ -35,8 +35,9 @@ class EsportsController extends BaseController
     protected int $maxJobAttempts;
     protected int $jobRetryBase;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->esportsModel   = Services::esportsModel();
         $this->esportsLibrary = Services::myMIEsports();
         $this->db              = $this->esportsModel->db ?? db_connect();

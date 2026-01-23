@@ -9,8 +9,9 @@ class DocsController extends BaseController
 {
     protected string $docsRoot;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->docsRoot = rtrim(ROOTPATH . 'docs', DIRECTORY_SEPARATOR);
     }
 

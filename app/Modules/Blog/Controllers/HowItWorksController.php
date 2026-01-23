@@ -36,8 +36,9 @@ class HowItWorksController extends UserController
     protected ?array $userAccount = null;
     protected ?MyMIGold $myMIGold = null;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->auth                                     = service('authentication'); // Use the 'authentication' service
         $this->request                                  = service('request');
         $this->session                                  = Services::session();

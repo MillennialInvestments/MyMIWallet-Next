@@ -20,9 +20,9 @@ class HowItWorks extends UserController
     private $subscribeModel;
     private $userModel;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
-        parent::__construct();
+        parent::initController($request, $response, $logger);
         helper(['directory', 'form', 'file', 'url']);
 
         $this->myMIAnalytics = new MyMIAnalytics();

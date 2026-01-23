@@ -15,8 +15,9 @@ class ProjectsController extends BaseController
     protected ProjectsModel $projectsModel;
     protected ProjectInboxModel $inbox;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->projectsService = new MyMIProjects();
         $this->projectsModel = new ProjectsModel();
         $this->inbox = new ProjectInboxModel();

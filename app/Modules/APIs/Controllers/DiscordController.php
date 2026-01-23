@@ -18,8 +18,9 @@ class DiscordController extends BaseController
     protected DiscordLinkModel $linkModel;
     protected MyMIAssistant $assistant;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->discord = new MyMIDiscord();
         $this->cfg     = config('Discord');
         $this->linkModel = new DiscordLinkModel();

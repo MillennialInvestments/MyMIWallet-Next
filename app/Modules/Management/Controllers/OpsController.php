@@ -19,9 +19,9 @@ class OpsController extends UserController
     protected OpsQueueModel $queue;
     protected OpsRunsModel $runs;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
-        parent::__construct();
+        parent::initController($request, $response, $logger);
         $this->jobs  = new OpsJobsModel();
         $this->queue = new OpsQueueModel();
         $this->runs  = new OpsRunsModel();

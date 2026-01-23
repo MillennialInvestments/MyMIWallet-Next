@@ -53,8 +53,9 @@ class WalletsController extends UserController
     protected $userSolana;
     protected $userWallets; 
     
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         // Set Controller Settings
         $this->auth                                 = service('authentication'); // Use the 'authentication' service
         $this->request                              = service('request'); 

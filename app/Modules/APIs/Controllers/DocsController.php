@@ -10,8 +10,9 @@ class DocsController extends BaseController
 {
     private DocsIndex $index;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->index = new DocsIndex();
     }
 

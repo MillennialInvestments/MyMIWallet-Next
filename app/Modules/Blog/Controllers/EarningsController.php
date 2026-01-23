@@ -31,8 +31,9 @@ class EarningsController extends UserController
     protected $subscribeModel;
     protected $userModel;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->auth                                     = service('authentication'); // Use the 'authentication' service
         $this->session                                  = Services::session();
         $this->siteSettings                             = config('SiteSettings');
