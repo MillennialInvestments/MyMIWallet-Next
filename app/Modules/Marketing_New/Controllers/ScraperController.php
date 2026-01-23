@@ -17,8 +17,9 @@ class ScraperController extends UserController
     protected $contentGenerator;
     protected $marketingModel;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->scraper = new WebScraper();
         $this->contentGenerator = new ContentGenerator();
         $this->marketingModel = new MarketingModel();

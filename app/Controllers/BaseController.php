@@ -86,6 +86,7 @@ abstract class BaseController extends Controller
         LoggerInterface $logger
     ) {
         parent::initController($request, $response, $logger);
+        log_message('debug', static::class . ' initController executed');
 
         // Pick theme by first URI segment when not running in CLI
         if (! ($this->request instanceof CLIRequest)) {

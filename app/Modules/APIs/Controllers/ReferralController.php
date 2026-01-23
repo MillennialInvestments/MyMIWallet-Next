@@ -13,8 +13,9 @@ class ReferralController extends BaseController
     protected $session;
     protected ?int $currentUserId = null;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->referralModel = new ReferralModel();
         $this->auth = service('authentication');
         $this->session = service('session');

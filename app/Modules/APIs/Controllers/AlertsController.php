@@ -79,14 +79,15 @@ class AlertsController extends ResourceController
         return null;
     }
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->alertManager = new MyMIAlerts();
         $this->alertsModel = new AlertsModel();
-        $this->MyMIMarketing = new MyMIMarketing();
+        $this->MyMIMarketing = service('MyMIMarketing');
 //         $this->MyMIAlphaVantage = new MyMIAlphaVantage(); // replaced by BaseController getter
 //         $this->MyMIInvestments = new MyMIInvestments(); // replaced by BaseController getter
-//         $this->MyMIMarketing = new MyMIMarketing(); // replaced by BaseController getter
+//         $this->MyMIMarketing = service('MyMIMarketing'); // replaced by BaseController getter
 //         $this->MyMISEC = new MyMISEC(); // replaced by BaseController getter
     }
 
@@ -1792,7 +1793,7 @@ class AlertsController extends ResourceController
             return $this->respond(['status' => 'error', 'message' => 'Failed to generate content'], 500);
         }
     
-//         $this->MyMIMarketing = new MyMIMarketing(); // replaced by BaseController getter
+//         $this->MyMIMarketing = service('MyMIMarketing'); // replaced by BaseController getter
         $result = $this->getMyMIMarketing()->distributeContentToSocialMedia($response['marketing_content']);
     
         return $this->respond([

@@ -23,9 +23,9 @@ class SupportController extends UserController
     protected ?array $userAccount = null;
     protected $reportingCache = null;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
-        // parent::__construct();
+        parent::initController($request, $response, $logger);
         $this->supportModel   = model(SupportModel::class);
         $this->userModel      = model(UserModel::class);
         $this->pageSEOModel   = model(PageSEOModel::class);

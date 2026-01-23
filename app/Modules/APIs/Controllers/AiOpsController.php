@@ -12,8 +12,9 @@ class AiOpsController extends BaseController
 
     protected AiOpsManager $manager;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->manager = new AiOpsManager();
     }
 

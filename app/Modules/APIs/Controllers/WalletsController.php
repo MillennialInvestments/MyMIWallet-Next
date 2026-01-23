@@ -24,8 +24,9 @@ class WalletsController extends ResourceController
     private ?CrudCacheInvalidator $crudCacheInvalidator = null;
     private ?WalletSummaryService $walletSummaryService = null;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->wallets = new WalletModel();
         $this->auth    = service('authentication'); // Myth\Auth
         helper(['text', 'url']);

@@ -18,8 +18,9 @@ class DripCampaignController extends UserController
     protected $dripModel;
     protected $userAccount;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->dripModel = new DripCampaignModel();
         $this->session = service('session');
         $this->request = service('request');

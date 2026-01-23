@@ -15,8 +15,9 @@ class EmailController extends \App\Controllers\BaseController
     protected $campaignModel;
     protected $emailModel;
 
-    public function __construct()
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
         $this->campaignModel = new CampaignModel();
         $this->emailModel = new EmailModel();
     }
