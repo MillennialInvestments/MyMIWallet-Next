@@ -1,0 +1,26 @@
+.squeeze-dashboard .card {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.squeeze-flag {
+    margin-right: 4px;
+}
+
+.skeleton-line {
+    height: 12px;
+    background: #e9ecef;
+    border-radius: 4px;
+}
+
+.fade-card {
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 12px;
+    background: #fff;
+}
+
+.chart-wrapper {
+    position: relative;
+    height: 220px;
+}

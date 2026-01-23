@@ -1,4 +1,5 @@
 <!-- application/modules/User/views/Investments/index/Insights.php -->
+<?php $squeezeRadar = $squeezeRadar ?? []; ?>
 <div class="nk-block nk-block-lg">
     <div class="row g-gs">
         <!-- Active Trades Section -->
@@ -134,6 +135,81 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Short Squeeze Radar (insertion point) -->
+            <div class="card card-bordered mt-3">
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-2">
+                        <div class="card-title">
+                            <h6 class="title">🔥 Short Squeeze Radar</h6>
+                            <p class="text-soft small">Mechanical squeeze risk only. High scores can fade quickly without catalysts.</p>
+                        </div>
+                        <div class="card-tools">
+                            <a class="btn btn-sm btn-outline-primary" href="<?= site_url('investments/squeeze'); ?>">View Squeeze Analysis</a>
+                        </div>
+                    </div>
+                    <?php if (!empty($squeezeRadar)): ?>
+                        <div class="table-responsive">
+                            <table class="table table-sm align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Symbol</th>
+                                        <th>Score</th>
+                                        <th>Float</th>
+                                        <th>SI %</th>
+                                        <th>Turnover</th>
+                                        <th>Zoom-Out</th>
+                                        <th class="text-end">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($squeezeRadar as $row): ?>
+                                        <?php
+                                            $symbol = strtoupper((string) ($row['symbol'] ?? ''));
+                                            $scoreTotal = (int) ($row['score_total'] ?? 0);
+                                            $inputs = $row['inputs'] ?? [];
+                                            $floatShares = (int) ($inputs['float_shares'] ?? 0);
+                                            $siPct = (float) ($inputs['short_interest_pct'] ?? 0);
+                                            $volumeToday = (float) ($inputs['volume_today'] ?? 0);
+                                            $turnover = $floatShares > 0 ? ($volumeToday / $floatShares) : 0;
+                                            $floatBadge = 'High';
+                                            if ($floatShares > 0 && $floatShares <= 5000000) {
+                                                $floatBadge = 'Low';
+                                            } elseif ($floatShares > 0 && $floatShares <= 15000000) {
+                                                $floatBadge = 'Med';
+                                            }
+                                            $zoomOut = $row['zoomout'] ?? [];
+                                            $zoomFlag = (!empty($zoomOut['trend_state']) && $zoomOut['trend_state'] === 'downtrend')
+                                                || (!empty($zoomOut['fundamentals_state']) && $zoomOut['fundamentals_state'] === 'weak');
+                                            $scoreBadge = $scoreTotal >= 80 ? 'danger' : ($scoreTotal >= 60 ? 'warning' : 'info');
+                                            $siClass = $siPct >= 100 ? 'text-danger' : ($siPct >= 50 ? 'text-warning' : 'text-muted');
+                                        ?>
+                                        <tr>
+                                            <td><a href="<?= site_url('investments/squeeze'); ?>?symbol=<?= esc($symbol); ?>"><?= esc($symbol); ?></a></td>
+                                            <td><span class="badge bg-<?= $scoreBadge; ?>"><?= esc($scoreTotal); ?></span></td>
+                                            <td><span class="badge bg-outline-secondary"><?= esc($floatBadge); ?></span></td>
+                                            <td><span class="<?= $siClass; ?>"><?= esc(number_format($siPct, 2)); ?></span></td>
+                                            <td><?= esc(number_format($turnover, 1)); ?>x</td>
+                                            <td>
+                                                <?php if ($zoomFlag): ?>
+                                                    <span data-bs-toggle="tooltip" title="Mechanical unwind risk">⚠️</span>
+                                                <?php else: ?>
+                                                    —
+                                                <?php endif; ?>
+                                            </td>
+                                            <td class="text-end">
+                                                <a class="btn btn-sm btn-outline-primary" href="<?= site_url('investments/squeeze'); ?>?symbol=<?= esc($symbol); ?>">View</a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php else: ?>
+                        <div class="text-soft">No squeeze scorecards available. Run a manual scorecard to populate this list.</div>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -204,6 +280,25 @@
             .catch(error => console.error('Error fetching watchlist data:', error));
     }
 
+    const squeezeBaseUrl = <?= json_encode(site_url('investments/squeeze')); ?>;
+
+    function squeezeBadge(score, symbol) {
+        if (score === null || score === undefined) {
+            return '';
+        }
+
+        let badgeClass = 'bg-warning';
+        if (score >= 80) {
+            badgeClass = 'bg-danger';
+        } else if (score >= 60) {
+            badgeClass = 'bg-warning';
+        } else {
+            badgeClass = 'bg-info';
+        }
+
+        return `<a href="${squeezeBaseUrl}?symbol=${symbol}" class="badge ${badgeClass} ms-2" data-bs-toggle="tooltip" title="High short interest / low float detected. Zoom-Out analysis recommended.">🔥 Squeeze</a>`;
+    }
+
     function populateWatchlistTable(data) {
         const watchlistTableBody = document.getElementById('watchlistTableBody');
         watchlistTableBody.innerHTML = ''; // Clear existing rows
@@ -212,7 +307,9 @@
         data.forEach(asset => {
             const row = document.createElement('tr');
             row.classList.add('nk-tb-item');
-            row.innerHTML = `<td class="nk-tb-col">${asset.symbol}</td>
+            const squeezeScore = asset.squeeze ? parseFloat(asset.squeeze.score_total) : null;
+            const symbol = asset.symbol || '';
+            row.innerHTML = `<td class="nk-tb-col">${symbol}${squeezeBadge(squeezeScore, symbol)}</td>
                             <td class="nk-tb-col">${asset.current_price}</td>`;
             fragment.appendChild(row);
         });

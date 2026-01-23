@@ -689,6 +689,171 @@ class MyMIInvestments
     
         return ['status' => 'Processing', 'message' => 'Dashboard data is being prepared.', 'investmentOverview' => $investmentOverview];
     }
+
+    public function getSqueezeRadar(int $limit = 10): array
+    {
+        $limit = $limit > 0 ? $limit : 10;
+        $cacheKey = CacheKey::global('squeeze', 'radar', ['limit' => $limit]);
+        $cached = $this->safeCache ? $this->safeCache->get($cacheKey) : $this->cache->get($cacheKey);
+        if ($cached !== null) {
+            return is_array($cached) ? $cached : [];
+        }
+
+        try {
+            $db = db_connect();
+            $rows = $db->table('bf_squeeze_scorecards')
+                ->orderBy('as_of_datetime', 'DESC')
+                ->limit($limit)
+                ->get()
+                ->getResultArray();
+        } catch (\Throwable $e) {
+            log_message('debug', 'MyMIInvestments::getSqueezeRadar failed: {msg}', ['msg' => $e->getMessage()]);
+            return [];
+        }
+
+        $symbols = array_values(array_unique(array_filter(array_map(static fn ($row) => strtoupper((string) ($row['symbol'] ?? '')), $rows))));
+        $zoomMap = $this->getSqueezeZoomOutMap($symbols);
+
+        $items = array_map(function (array $row) use ($zoomMap) {
+            $flags = json_decode($row['flags_json'] ?? '[]', true) ?: [];
+            $inputs = json_decode($row['inputs_json'] ?? '[]', true) ?: [];
+            $symbol = strtoupper((string) ($row['symbol'] ?? ''));
+            $row['flags'] = $flags;
+            $row['inputs'] = $inputs;
+            $row['zoomout'] = $zoomMap[$symbol] ?? null;
+            return $row;
+        }, $rows);
+
+        if ($this->safeCache) {
+            $this->safeCache->save($cacheKey, $items, 300);
+        } else {
+            $this->cache->save($cacheKey, $items, 300);
+        }
+
+        return $items;
+    }
+
+    public function getSqueezeHighRiskCount(int $threshold = 80, int $hours = 24): int
+    {
+        $threshold = $threshold > 0 ? $threshold : 80;
+        $hours = $hours > 0 ? $hours : 24;
+        $cacheKey = CacheKey::global('squeeze', 'high-risk', ['threshold' => $threshold, 'hours' => $hours]);
+        $cached = $this->safeCache ? $this->safeCache->get($cacheKey) : $this->cache->get($cacheKey);
+        if ($cached !== null) {
+            return (int) $cached;
+        }
+
+        try {
+            $db = db_connect();
+            $since = date('Y-m-d H:i:s', strtotime("-{$hours} hours"));
+            $count = (int) $db->table('bf_squeeze_scorecards')
+                ->where('score_total >=', $threshold)
+                ->where('as_of_datetime >=', $since)
+                ->countAllResults();
+        } catch (\Throwable $e) {
+            log_message('debug', 'MyMIInvestments::getSqueezeHighRiskCount failed: {msg}', ['msg' => $e->getMessage()]);
+            return 0;
+        }
+
+        if ($this->safeCache) {
+            $this->safeCache->save($cacheKey, $count, 300);
+        } else {
+            $this->cache->save($cacheKey, $count, 300);
+        }
+
+        return $count;
+    }
+
+    public function getSqueezeBySymbols(array $symbols, int $hours = 24): array
+    {
+        $symbols = array_values(array_unique(array_filter(array_map(static fn ($symbol) => strtoupper(trim((string) $symbol)), $symbols))));
+        if (empty($symbols)) {
+            return [];
+        }
+
+        $cacheKey = CacheKey::global('squeeze', 'symbols', ['symbols' => $symbols, 'hours' => $hours]);
+        $cached = $this->safeCache ? $this->safeCache->get($cacheKey) : $this->cache->get($cacheKey);
+        if ($cached !== null) {
+            return is_array($cached) ? $cached : [];
+        }
+
+        try {
+            $db = db_connect();
+            $since = date('Y-m-d H:i:s', strtotime("-{$hours} hours"));
+            $placeholders = implode(',', array_fill(0, count($symbols), '?'));
+            $sql = "
+                SELECT s1.*
+                FROM bf_squeeze_scorecards s1
+                INNER JOIN (
+                    SELECT symbol, MAX(as_of_datetime) AS max_dt
+                    FROM bf_squeeze_scorecards
+                    WHERE symbol IN ({$placeholders})
+                    AND as_of_datetime >= ?
+                    GROUP BY symbol
+                ) s2 ON s1.symbol = s2.symbol AND s1.as_of_datetime = s2.max_dt
+            ";
+            $query = $db->query($sql, array_merge($symbols, [$since]));
+            $rows = $query->getResultArray();
+        } catch (\Throwable $e) {
+            log_message('debug', 'MyMIInvestments::getSqueezeBySymbols failed: {msg}', ['msg' => $e->getMessage()]);
+            return [];
+        }
+
+        $map = [];
+        foreach ($rows as $row) {
+            $symbol = strtoupper((string) ($row['symbol'] ?? ''));
+            if ($symbol === '') {
+                continue;
+            }
+            $flags = json_decode($row['flags_json'] ?? '[]', true) ?: [];
+            $map[$symbol] = array_merge($row, ['flags' => $flags]);
+        }
+
+        if ($this->safeCache) {
+            $this->safeCache->save($cacheKey, $map, 300);
+        } else {
+            $this->cache->save($cacheKey, $map, 300);
+        }
+
+        return $map;
+    }
+
+    private function getSqueezeZoomOutMap(array $symbols): array
+    {
+        if (empty($symbols)) {
+            return [];
+        }
+
+        try {
+            $db = db_connect();
+            $placeholders = implode(',', array_fill(0, count($symbols), '?'));
+            $sql = "
+                SELECT z1.*
+                FROM bf_squeeze_zoomout z1
+                INNER JOIN (
+                    SELECT symbol, MAX(as_of_date) AS max_date
+                    FROM bf_squeeze_zoomout
+                    WHERE symbol IN ({$placeholders})
+                    GROUP BY symbol
+                ) z2 ON z1.symbol = z2.symbol AND z1.as_of_date = z2.max_date
+            ";
+            $query = $db->query($sql, $symbols);
+            $rows = $query->getResultArray();
+        } catch (\Throwable $e) {
+            log_message('debug', 'MyMIInvestments::getSqueezeZoomOutMap failed: {msg}', ['msg' => $e->getMessage()]);
+            return [];
+        }
+
+        $map = [];
+        foreach ($rows as $row) {
+            $symbol = strtoupper((string) ($row['symbol'] ?? ''));
+            if ($symbol !== '') {
+                $map[$symbol] = $row;
+            }
+        }
+
+        return $map;
+    }
     
     public function getInvestmentInsights($topic = null, $complexityLevel = null)
     {
