@@ -669,6 +669,15 @@ class DashboardController extends UserController
             ]);
         }
 
+        try {
+            $this->data['squeezeHighRiskCount'] = $this->getMyMIInvestments()->getSqueezeHighRiskCount(80, 24);
+        } catch (\Throwable $e) {
+            log_message('debug', 'DashboardController::index squeeze count unavailable: {msg}', [
+                'msg' => $e->getMessage(),
+            ]);
+            $this->data['squeezeHighRiskCount'] = 0;
+        }
+
         helper(['news']);
 
         try {

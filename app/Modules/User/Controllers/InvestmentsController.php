@@ -245,6 +245,13 @@ class InvestmentsController extends UserController
     
         // Pass other data as needed
         $this->commonData(); // Ensure other necessary data is prepared
+
+        try {
+            $this->data['squeezeRadar'] = $this->getMyMIInvestments()->getSqueezeRadar(10);
+        } catch (\Throwable $e) {
+            log_message('debug', 'InvestmentsController::index squeeze radar unavailable: {msg}', ['msg' => $e->getMessage()]);
+            $this->data['squeezeRadar'] = [];
+        }
     
         return $this->renderTheme('App\Modules\User\Views\Investments\index', $this->data);
     }    
@@ -646,6 +653,13 @@ class InvestmentsController extends UserController
     {
         try {
             $watchlist = $this->investmentModel->getUserWatchlist($cuID);
+            $symbols = array_values(array_unique(array_filter(array_map(static fn ($row) => strtoupper((string) ($row['symbol'] ?? '')), $watchlist))));
+            $squeezeMap = $symbols ? $this->getMyMIInvestments()->getSqueezeBySymbols($symbols) : [];
+            foreach ($watchlist as &$row) {
+                $symbol = strtoupper((string) ($row['symbol'] ?? ''));
+                $row['squeeze'] = $squeezeMap[$symbol] ?? null;
+            }
+            unset($row);
             return $this->response->setJSON(['status' => 'success', 'data' => $watchlist]);
         } catch (\Exception $e) {
             return $this->response->setStatusCode(500)
