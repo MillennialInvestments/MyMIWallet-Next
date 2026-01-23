@@ -15,7 +15,9 @@ class API_Squeeze extends CI_Controller
     {
         try {
             $symbol = $this->input->get('symbol');
-            $items = $this->squeeze->getLatestScorecards(50, $symbol);
+            $limit = (int) $this->input->get('limit');
+            $limit = $limit > 0 ? min($limit, 200) : 50;
+            $items = $this->squeeze->getLatestScorecards($limit, $symbol);
             $formatted = [];
             foreach ($items as $item) {
                 $flags = json_decode($item['flags_json'] ?? '[]', true) ?: [];

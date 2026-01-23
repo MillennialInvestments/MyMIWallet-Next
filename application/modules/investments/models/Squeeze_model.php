@@ -86,7 +86,11 @@ class Squeeze_model extends CI_Model
 
     public function getLatestScorecards($limit = 25, $symbol = null)
     {
-        $cacheKey = $symbol ? "squeeze:scorecard:{$symbol}" : 'squeeze:scorecard:latest';
+        $limit = (int) $limit;
+        $limit = $limit > 0 ? $limit : 25;
+        $cacheKey = $symbol
+            ? "squeeze:scorecard:{$symbol}:{$limit}"
+            : "squeeze:scorecard:latest:{$limit}";
         $cached = $this->cacheGet($cacheKey);
         if ($cached) {
             return $cached;
@@ -101,7 +105,7 @@ class Squeeze_model extends CI_Model
         $query = $this->db->get();
         $rows = $query->result_array();
 
-        $ttl = $symbol ? 300 : 300;
+        $ttl = 300;
         $this->cacheSet($cacheKey, $rows, $ttl);
 
         return $rows;
@@ -144,6 +148,62 @@ class Squeeze_model extends CI_Model
         $rows = $query->result_array();
 
         $this->cacheSet($cacheKey, $rows, 1800);
+
+        return $rows;
+    }
+
+    public function getHighRiskCount($threshold = 80, $hours = 24)
+    {
+        $threshold = (int) $threshold;
+        $hours = (int) $hours;
+        $cacheKey = "squeeze:scorecard:highrisk:{$threshold}:{$hours}";
+        $cached = $this->cacheGet($cacheKey);
+        if ($cached !== null) {
+            return (int) $cached;
+        }
+
+        $since = date('Y-m-d H:i:s', strtotime("-{$hours} hours"));
+        $this->db->from('bf_squeeze_scorecards');
+        $this->db->where('score_total >=', $threshold);
+        $this->db->where('as_of_datetime >=', $since);
+        $count = (int) $this->db->count_all_results();
+
+        $this->cacheSet($cacheKey, $count, 300);
+
+        return $count;
+    }
+
+    public function getLatestBySymbols(array $symbols)
+    {
+        $symbols = array_filter(array_unique(array_map('strtoupper', $symbols)));
+        if (empty($symbols)) {
+            return [];
+        }
+
+        $hash = substr(sha1(implode('|', $symbols)), 0, 12);
+        $cacheKey = "squeeze:scorecard:symbols:{$hash}";
+        $cached = $this->cacheGet($cacheKey);
+        if ($cached) {
+            return $cached;
+        }
+
+        $symbolsList = $this->db->escape($symbols);
+        $symbolsSql = implode(',', $symbolsList);
+        $sql = "
+            SELECT s1.*
+            FROM bf_squeeze_scorecards s1
+            INNER JOIN (
+                SELECT symbol, MAX(as_of_datetime) AS max_dt
+                FROM bf_squeeze_scorecards
+                WHERE symbol IN ({$symbolsSql})
+                GROUP BY symbol
+            ) s2 ON s1.symbol = s2.symbol AND s1.as_of_datetime = s2.max_dt
+        ";
+
+        $query = $this->db->query($sql);
+        $rows = $query ? $query->result_array() : [];
+
+        $this->cacheSet($cacheKey, $rows, 300);
 
         return $rows;
     }

@@ -103,6 +103,7 @@ $subViewData = [
     'userTopLoser' => $userInvestments['userTopLoser'] ?? [],
     'userWatchlist' => $userInvestments['userWatchlist'] ?? [],
     'economicData' => $investDashboard['economicData'] ?? [],
+    'squeezeRadar' => $squeezeRadar ?? [],
 ];
 $investmentPartialData = is_array($subViewData ?? null) ? $subViewData : [];
 $actionCenterData      = $investmentPartialData['actionCenter'] ?? $investmentPartialData;
