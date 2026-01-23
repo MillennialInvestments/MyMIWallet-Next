@@ -8,6 +8,15 @@ use Throwable;
 
 class InventoryScanner
 {
+    private const REQUIRED_TABLES = [
+        'bf_user_events',
+        'bf_email_outbox',
+        'bf_ai_usage',
+        'bf_marketing_scraper',
+        'bf_marketing_blog_posts',
+        'bf_ops_schema_audit',
+    ];
+
     public function buildInventory(int $limit = 0): array
     {
         $migrationData = $this->scanMigrations();
@@ -15,6 +24,7 @@ class InventoryScanner
 
         $tables = array_unique(array_merge(array_keys($migrationData['tables']), array_keys($codeData['tables'])));
         $tables = array_values(array_filter($tables, static fn (string $table): bool => str_starts_with($table, 'bf_')));
+        $tables = array_values(array_unique(array_merge($tables, self::REQUIRED_TABLES)));
         sort($tables);
 
         if ($limit > 0) {
