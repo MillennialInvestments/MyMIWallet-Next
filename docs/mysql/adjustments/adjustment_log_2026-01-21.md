@@ -1,0 +1,2 @@
+-- MyMI Wallet adjustment SQL
+
