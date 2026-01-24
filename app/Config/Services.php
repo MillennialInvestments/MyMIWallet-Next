@@ -9,6 +9,8 @@ use App\Services\EventTracker;
 use App\Services\OnboardingProgressService;
 use App\Services\Psr4AuditService;
 use App\Services\SetupStatusService;
+use App\Services\Forecasting\ForecastAccuracyEvaluator;
+use App\Services\Forecasting\ForecastAggregationService;
 use App\Services\Forecasting\MyMIForecaster;
 use App\Services\Forecasting\Providers\AlphaVantageProvider;
 use CodeIgniter\Config\BaseService;
@@ -196,6 +198,37 @@ class Services extends BaseService
         $config = config('MyMIForecasting');
 
         return new MyMIForecaster($provider, $forecastModel, $alertsModel, $cache, $config);
+    }
+
+    public static function forecastAggregation(bool $getShared = true): ForecastAggregationService
+    {
+        if ($getShared) {
+            /** @var ForecastAggregationService $service */
+            $service = static::getSharedInstance('forecastAggregation');
+            return $service;
+        }
+
+        $forecastModel = model(\App\Models\InvestmentPriceForecastModel::class);
+        $alertsModel = model(\App\Models\AlertsModel::class);
+        $config = config('MyMIForecasting');
+
+        return new ForecastAggregationService($forecastModel, $alertsModel, $config);
+    }
+
+    public static function forecastAccuracyEvaluator(bool $getShared = true): ForecastAccuracyEvaluator
+    {
+        if ($getShared) {
+            /** @var ForecastAccuracyEvaluator $service */
+            $service = static::getSharedInstance('forecastAccuracyEvaluator');
+            return $service;
+        }
+
+        $historyModel = model(\App\Models\InvestmentForecastHistoryModel::class);
+        $accuracyModel = model(\App\Models\InvestmentForecastAccuracyModel::class);
+        $provider = new AlphaVantageProvider();
+        $config = config('MyMIForecasting');
+
+        return new ForecastAccuracyEvaluator($historyModel, $accuracyModel, $provider, $config);
     }
     
     /*
