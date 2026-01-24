@@ -33,5 +33,18 @@ php spark auth:smoke
 - Test user cannot be created/updated.
 - Health run insert failure.
 
+## Implementation
+- File: `app/Commands/Auth/Smoke.php`
+- Service: `app/Services/AuthSmokeService.php`
+
+## Example Output
+```
+Starting auth:smoke
+Auth smoke test
+status: PASS
+score: 100
+summary: Auth smoke test succeeded
+```
+
 ## Status
-- Existing
+- Implemented

@@ -32,5 +32,20 @@ php spark auth:funnel-check
 - Missing `bf_user_events` table.
 - No recent events to analyze.
 
+## Implementation
+- File: `app/Commands/Auth/FunnelCheck.php`
+- Service: `app/Services/Spark/AuthFunnelCheckService.php`
+
+## Example Output
+```
+Starting auth:funnel-check
+Auth funnel check (last 24h)
+activation_email_sent: 12
+activate_success: 11
+register_success: 10
+login_success: 9
+resend_activation_requested: 1
+```
+
 ## Status
-- Existing
+- Implemented
