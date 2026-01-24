@@ -725,8 +725,16 @@ class DashboardController extends UserController
         $this->data['setupStatus'] = $setupService->getSetupStatus($activeUserId);
         $this->data['setupPrefs'] = $setupService->getDismissPreferences($activeUserId);
         $this->data['setupContext'] = 'dashboard';
+        $this->data['forecastHeatmapEnabled'] = true;
+        $this->data['forecastHeatmapDefaultTimeframe'] = '5m';
 
         return $this->renderTheme('User/Dashboard/index', $this->data);
+    }
+
+    public function getForecastHighlights()
+    {
+        $forecaster = service('mymiForecaster');
+        return $this->respond($forecaster->getForecastHighlights());
     }
 
 

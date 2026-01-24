@@ -3,7 +3,9 @@
 use App\Controllers\UserController;
 use App\Config\{Auth, SiteSettings, SocialMedia};
 use App\Libraries\{MyMIBudget, MyMIDashboard, MyMICoin, MyMIGold, MyMIInvestments, MyMIMarketData, MyMIMarketing, MyMIReferrals, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets, MyMISimulator, FRED, MyMIFractalAnalyzer};
-use App\Models\{AccountsModel, BudgetModel, InvestmentModel, MarketingModel, MgmtBudgetModel, MyMIGoldModel, UserModel, WalletModel, InvestmentPriceForecastModel, InvestmentForecastHistoryModel};
+use App\Models\{AccountsModel, AlertsModel, BudgetModel, InvestmentForecastAccuracyModel, InvestmentForecastHistoryModel, InvestmentModel, InvestmentPriceForecastModel, MarketingModel, MgmtBudgetModel, MyMIGoldModel, UserModel, WalletModel};
+use App\Services\Forecasting\ForecastAggregationService;
+use App\Services\Forecasting\ForecastAccuracyEvaluator;
 use App\Services\{BudgetService, DashboardService, GoalTrackingService, InvestmentService, SolanaService, UserService, WalletService};
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Cache\CacheInterface;
@@ -250,6 +252,170 @@ class InvestmentsController extends UserController
 
         return view('App\\Modules\\User\\Views\\Investments\\forecast_modal', $data);
     }
+
+    public function getForecastDetails(string $ticker)
+    {
+        $ticker = strtoupper(trim($ticker));
+        if ($ticker === '') {
+            return $this->failValidationError('Ticker is required.');
+        }
+
+        $forecastModel = new InvestmentPriceForecastModel();
+        $historyModel = new InvestmentForecastHistoryModel();
+        $accuracyModel = new InvestmentForecastAccuracyModel();
+
+        $latestForecasts = $forecastModel
+            ->where('ticker', $ticker)
+            ->orderBy('updated_at', 'DESC')
+            ->findAll();
+
+        $grouped = [];
+        foreach ($latestForecasts as $forecast) {
+            $timeframe = $forecast['timeframe'] ?? 'n/a';
+            $indicators = json_decode($forecast['indicators_json'] ?? '{}', true) ?? [];
+            $forecast['indicators'] = $indicators;
+            $grouped[$timeframe] = $forecast;
+        }
+
+        $history = $historyModel
+            ->where('ticker', $ticker)
+            ->orderBy('recorded_at', 'DESC')
+            ->limit(10)
+            ->findAll();
+
+        $accuracyRows = $accuracyModel
+            ->where('ticker', $ticker)
+            ->orderBy('created_at', 'DESC')
+            ->findAll();
+
+        $hitTotal = count($accuracyRows);
+        $hitCount = 0;
+        foreach ($accuracyRows as $row) {
+            if (($row['hit_result'] ?? '') === 'hit') {
+                $hitCount++;
+            }
+        }
+
+        $rolling = [];
+        foreach ([7, 30] as $days) {
+            $cutoff = strtotime("-{$days} days");
+            $windowRows = array_filter($accuracyRows, static function ($row) use ($cutoff) {
+                $createdAt = $row['created_at'] ?? null;
+                return $createdAt && strtotime($createdAt) >= $cutoff;
+            });
+            $windowTotal = count($windowRows);
+            $windowHits = 0;
+            foreach ($windowRows as $row) {
+                if (($row['hit_result'] ?? '') === 'hit') {
+                    $windowHits++;
+                }
+            }
+            $rolling[$days . 'd'] = $windowTotal > 0 ? round(($windowHits / $windowTotal) * 100, 1) : 0;
+        }
+
+        $accuracySummary = [
+            'hit_rate' => $hitTotal > 0 ? round(($hitCount / $hitTotal) * 100, 1) : 0,
+            'total' => $hitTotal,
+            'rolling' => $rolling,
+        ];
+
+        return $this->respond([
+            'ticker' => $ticker,
+            'latest' => $grouped,
+            'history' => $history,
+            'accuracy' => $accuracySummary,
+        ]);
+    }
+
+    public function getConfidenceHeatmap()
+    {
+        $timeframe = (string) ($this->request->getGet('timeframe') ?? '5m');
+        $window = (int) ($this->request->getGet('window') ?? 60);
+        $window = max(5, min(1440, $window));
+
+        $cacheKey = 'forecast_heatmap_' . $timeframe . '_' . $window;
+        $cached = $this->cache->get($cacheKey);
+        if ($cached) {
+            return $this->respond($cached);
+        }
+
+        /** @var ForecastAggregationService $aggregation */
+        $aggregation = service('forecastAggregation');
+        $payload = $aggregation->buildHeatmap($timeframe, $window);
+
+        $this->cache->save($cacheKey, $payload, config('MyMIForecasting')->cacheTtls['heatmap'] ?? 60);
+
+        return $this->respond($payload);
+    }
+
+    public function getForecastAccuracySummary()
+    {
+        $window = (string) ($this->request->getGet('window') ?? '7d');
+
+        $cacheKey = 'forecast_accuracy_' . $window;
+        $cached = $this->cache->get($cacheKey);
+        if ($cached) {
+            return $this->respond($cached);
+        }
+
+        /** @var ForecastAccuracyEvaluator $evaluator */
+        $evaluator = service('forecastAccuracyEvaluator');
+        $payload = $evaluator->buildAccuracySummary($window);
+
+        $this->cache->save($cacheKey, $payload, config('MyMIForecasting')->cacheTtls['accuracySummary'] ?? 120);
+
+        return $this->respond($payload);
+    }
+
+    public function getForecastHighlights()
+    {
+        $forecaster = service('mymiForecaster');
+        return $this->respond($forecaster->getForecastHighlights());
+    }
+
+    public function reforecastTicker()
+    {
+        $ticker = strtoupper(trim((string) $this->request->getPost('ticker')));
+        if ($ticker === '') {
+            return $this->failValidationError('Ticker is required.');
+        }
+
+        $timeframesInput = trim((string) $this->request->getPost('timeframes'));
+        $timeframes = $timeframesInput !== '' ? array_filter(array_map('trim', explode(',', $timeframesInput))) : [];
+
+        $forecaster = service('mymiForecaster');
+        $results = $forecaster->forecastForTicker($ticker, $timeframes);
+
+        $alertsModel = new AlertsModel();
+        $best = null;
+        foreach ($results as $result) {
+            if (! $best || ((int) ($result['confidence_score'] ?? 0)) > (int) ($best['confidence_score'] ?? 0)) {
+                $best = $result;
+            }
+        }
+
+        if ($best) {
+            $alertsModel
+                ->where('ticker', $ticker)
+                ->set([
+                    'latest_forecast_id' => $best['id'] ?? null,
+                    'forecast_confidence' => $best['confidence_score'] ?? 0,
+                    'forecast_direction' => $best['forecast_direction'] ?? 'neutral',
+                    'forecast_target_price' => $best['target_price'] ?? null,
+                    'forecast_range_low' => $best['range_low'] ?? null,
+                    'forecast_range_high' => $best['range_high'] ?? null,
+                    'forecast_updated_at' => $best['updated_at'] ?? date('Y-m-d H:i:s'),
+                ])
+                ->update();
+        }
+
+        return $this->respond([
+            'status' => 'success',
+            'ticker' => $ticker,
+            'timeframes' => array_keys($results),
+        ]);
+    }
+
 
     private function userAccountData()
     {

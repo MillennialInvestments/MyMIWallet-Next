@@ -75,4 +75,19 @@ class InvestmentPriceForecastModel extends Model
             ->orderBy('updated_at', 'DESC')
             ->findAll();
     }
+
+    public function getLatestForecastsForTickers(array $tickers, array $timeframes = []): array
+    {
+        if (empty($tickers)) {
+            return [];
+        }
+
+        $builder = $this->whereIn('ticker', array_map('strtoupper', $tickers));
+
+        if (! empty($timeframes)) {
+            $builder = $builder->whereIn('timeframe', $timeframes);
+        }
+
+        return $builder->orderBy('updated_at', 'DESC')->findAll();
+    }
 }

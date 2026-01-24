@@ -116,6 +116,114 @@ $actionCenterData['riskTools']       = $actionCenterData['riskTools']       ?? [
 $actionCenterData['insights']        = $actionCenterData['insights']        ?? [];
 ?>
 
+<div class="nk-block">
+    <div class="card card-bordered">
+        <div class="card-inner">
+            <div class="card-title-group align-start mb-3">
+                <div class="card-title">
+                    <h6 class="subtitle">Forecast Intelligence</h6>
+                    <span class="text-soft">Heatmap confidence, accuracy tracking, and manual refresh controls.</span>
+                </div>
+            </div>
+            <ul class="nav nav-tabs mb-3" id="forecastTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="forecast-heatmap-tab" data-bs-toggle="tab" data-bs-target="#forecast-heatmap-pane" type="button" role="tab">Heatmap</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="forecast-accuracy-tab" data-bs-toggle="tab" data-bs-target="#forecast-accuracy-pane" type="button" role="tab">Accuracy</button>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="forecast-heatmap-pane" role="tabpanel">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-2 gap-2">
+                        <div class="small text-soft" id="investmentsHeatmapStatus">Loading heatmap…</div>
+                        <div class="d-flex gap-2 align-items-center">
+                            <select id="investmentsHeatmapTimeframe" class="form-select form-select-sm">
+                                <option value="5m">5m</option>
+                                <option value="10m">10m</option>
+                            </select>
+                            <button class="btn btn-sm btn-outline-primary" type="button" id="investmentsHeatmapRefresh">Refresh</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-sm" id="investmentsHeatmapTable">
+                            <thead>
+                                <tr>
+                                    <th>Ticker</th>
+                                    <th>5m</th>
+                                    <th>10m</th>
+                                    <th>Updated</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="forecast-accuracy-pane" role="tabpanel">
+                    <div class="row g-gs">
+                        <div class="col-lg-6">
+                            <div class="border rounded-3 p-3 h-100">
+                                <h6 class="mb-2">Hit Rate by Timeframe</h6>
+                                <canvas id="forecastAccuracyChart" height="180"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="border rounded-3 p-3 h-100">
+                                <h6 class="mb-2">Rolling Hit Rate</h6>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <div>
+                                        <div class="text-soft small">7d</div>
+                                        <div class="fw-bold" id="forecastRolling7d">--%</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-soft small">30d</div>
+                                        <div class="fw-bold" id="forecastRolling30d">--%</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-soft small">Last Eval</div>
+                                        <div class="fw-bold" id="forecastAccuracyUpdated">--</div>
+                                    </div>
+                                </div>
+                                <div class="small text-soft">Confidence → Accuracy</div>
+                                <ul class="list-unstyled mb-0" id="forecastConfidenceBuckets"></ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="border rounded-3 p-3 h-100">
+                                <h6 class="mb-2">Top Performing Tickers</h6>
+                                <table class="table table-sm mb-0" id="forecastTopTickers">
+                                    <thead>
+                                        <tr>
+                                            <th>Ticker</th>
+                                            <th class="text-end">Hit Rate</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="border rounded-3 p-3 h-100">
+                                <h6 class="mb-2">Worst Performing Tickers</h6>
+                                <table class="table table-sm mb-0" id="forecastWorstTickers">
+                                    <thead>
+                                        <tr>
+                                            <th>Ticker</th>
+                                            <th class="text-end">Hit Rate</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <style <?= $nonce['style'] ?? '' ?>>
 @media only screen and (max-width: 768px) {
     #userBudgetingDatatable_filter {
@@ -267,6 +375,183 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     fetchInvestmentData();
+});
+</script>
+<script <?= $nonce['script'] ?? '' ?>>
+document.addEventListener('DOMContentLoaded', function () {
+    const heatmapTable = document.getElementById('investmentsHeatmapTable');
+    const heatmapStatus = document.getElementById('investmentsHeatmapStatus');
+    const heatmapSelect = document.getElementById('investmentsHeatmapTimeframe');
+    const heatmapRefresh = document.getElementById('investmentsHeatmapRefresh');
+    const accuracyChartEl = document.getElementById('forecastAccuracyChart');
+    const rolling7d = document.getElementById('forecastRolling7d');
+    const rolling30d = document.getElementById('forecastRolling30d');
+    const accuracyUpdated = document.getElementById('forecastAccuracyUpdated');
+    const confidenceBuckets = document.getElementById('forecastConfidenceBuckets');
+    const topTickersTable = document.querySelector('#forecastTopTickers tbody');
+    const worstTickersTable = document.querySelector('#forecastWorstTickers tbody');
+    const csrfToken = '<?= csrf_hash(); ?>';
+
+    function badgeClass(confidence) {
+        if (confidence >= 75) return 'bg-success';
+        if (confidence >= 60) return 'bg-warning';
+        if (confidence >= 40) return 'bg-info';
+        return 'bg-secondary';
+    }
+
+    function openForecastModal(ticker) {
+        if (typeof window.dynamicModalLoader === 'function') {
+            window.dynamicModalLoader('/Investments/forecastModal/' + ticker);
+        } else {
+            window.location.href = '/Investments/forecastModal/' + ticker;
+        }
+    }
+
+    function renderHeatmap(data) {
+        if (!heatmapTable) return;
+        const tbody = heatmapTable.querySelector('tbody');
+        tbody.innerHTML = '';
+
+        (data.matrix || []).forEach(row => {
+            const info5m = row.timeframes?.['5m'] || { confidence: 0 };
+            const info10m = row.timeframes?.['10m'] || { confidence: 0 };
+            const updatedAt = Object.values(row.timeframes || {}).map(item => item.updated_at).filter(Boolean).sort().pop() || '—';
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><strong>${row.ticker}</strong></td>
+                <td><span class=\"badge ${badgeClass(info5m.confidence)}\">${info5m.confidence}%</span></td>
+                <td><span class=\"badge ${badgeClass(info10m.confidence)}\">${info10m.confidence}%</span></td>
+                <td class=\"small text-soft\">${updatedAt}</td>
+                <td class=\"text-end\"></td>
+            `;
+
+            const actionCell = tr.querySelector('td.text-end');
+            const viewButton = document.createElement('button');
+            viewButton.type = 'button';
+            viewButton.className = 'btn btn-sm btn-outline-primary me-1';
+            viewButton.textContent = 'View Details';
+            viewButton.addEventListener('click', () => openForecastModal(row.ticker));
+
+            const reforecastButton = document.createElement('button');
+            reforecastButton.type = 'button';
+            reforecastButton.className = 'btn btn-sm btn-outline-warning';
+            reforecastButton.textContent = 'Re-Forecast';
+            reforecastButton.addEventListener('click', () => reforecastTicker(row.ticker));
+
+            actionCell.appendChild(viewButton);
+            actionCell.appendChild(reforecastButton);
+            tbody.appendChild(tr);
+        });
+
+        if (heatmapStatus) {
+            heatmapStatus.textContent = data.matrix && data.matrix.length ? 'Heatmap updated.' : 'No forecast data available.';
+        }
+    }
+
+    function loadHeatmap() {
+        const timeframe = heatmapSelect?.value || '5m';
+        fetch(`/API/Investments/getConfidenceHeatmap?timeframe=${encodeURIComponent(timeframe)}&window=60`)
+            .then(resp => resp.json())
+            .then(data => renderHeatmap(data))
+            .catch(() => {
+                if (heatmapStatus) {
+                    heatmapStatus.textContent = 'Unable to load heatmap.';
+                }
+            });
+    }
+
+    function reforecastTicker(ticker) {
+        const timeframe = heatmapSelect?.value || '5m';
+        const payload = new URLSearchParams();
+        payload.append('ticker', ticker);
+        payload.append('timeframes', timeframe);
+
+        fetch('/API/Investments/reforecastTicker', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRF-TOKEN': csrfToken,
+            },
+            body: payload.toString(),
+        })
+            .then(resp => resp.json())
+            .then(() => loadHeatmap())
+            .catch(() => {
+                if (heatmapStatus) {
+                    heatmapStatus.textContent = 'Re-forecast failed.';
+                }
+            });
+    }
+
+    function renderTickerTable(tableBody, rows) {
+        if (!tableBody) return;
+        tableBody.innerHTML = '';
+        (rows || []).forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${row.label}</td>
+                <td class=\"text-end\">${row.hit_rate}%</td>
+            `;
+            tableBody.appendChild(tr);
+        });
+    }
+
+    function renderAccuracySummary(data) {
+        if (rolling7d) rolling7d.textContent = `${data.rollingHitRate?.['7d'] ?? 0}%`;
+        if (rolling30d) rolling30d.textContent = `${data.rollingHitRate?.['30d'] ?? 0}%`;
+        if (accuracyUpdated) accuracyUpdated.textContent = data.lastEvaluatedAt || '--';
+
+        if (confidenceBuckets) {
+            confidenceBuckets.innerHTML = '';
+            (data.confidenceBuckets || []).forEach(bucket => {
+                const li = document.createElement('li');
+                li.className = 'd-flex justify-content-between small mb-1';
+                li.innerHTML = `<span>${bucket.label}</span><span>${bucket.hit_rate}%</span>`;
+                confidenceBuckets.appendChild(li);
+            });
+        }
+
+        renderTickerTable(topTickersTable, data.topTickers);
+        renderTickerTable(worstTickersTable, data.worstTickers);
+
+        if (accuracyChartEl && window.Chart) {
+            const labels = (data.accuracyByTimeframe || []).map(row => row.label);
+            const values = (data.accuracyByTimeframe || []).map(row => row.hit_rate);
+            new Chart(accuracyChartEl.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: 'Hit Rate',
+                        data: values,
+                        backgroundColor: '#6576ff',
+                    }],
+                },
+                options: {
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, max: 100 } },
+                },
+            });
+        }
+    }
+
+    function loadAccuracySummary() {
+        fetch('/API/Investments/getForecastAccuracySummary?window=7d')
+            .then(resp => resp.json())
+            .then(data => renderAccuracySummary(data))
+            .catch(() => {});
+    }
+
+    if (heatmapSelect) {
+        heatmapSelect.addEventListener('change', loadHeatmap);
+    }
+    if (heatmapRefresh) {
+        heatmapRefresh.addEventListener('click', loadHeatmap);
+    }
+
+    loadHeatmap();
+    loadAccuracySummary();
 });
 </script>
 <script <?= $nonce['script'] ?? '' ?>>

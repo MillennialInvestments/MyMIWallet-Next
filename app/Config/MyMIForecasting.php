@@ -33,7 +33,9 @@ class MyMIForecasting extends BaseConfig
      * Confidence thresholds for UI badges.
      */
     public array $confidenceThresholds = [
-        'high'   => 70,
+        'low'    => 40,
+        'mid'    => 60,
+        'high'   => 75,
         'medium' => 50,
     ];
 
@@ -41,8 +43,10 @@ class MyMIForecasting extends BaseConfig
      * Cache TTLs in seconds.
      */
     public array $cacheTtls = [
-        'latestForecast' => 300,
-        'highlights'     => 60,
+        'latestForecast'  => 300,
+        'highlights'      => 60,
+        'heatmap'         => 60,
+        'accuracySummary' => 120,
     ];
 
     /**
@@ -59,6 +63,30 @@ class MyMIForecasting extends BaseConfig
     public array $thresholds = [
         'emaSeparation'   => 0.003,
         'highVolatility'  => 0.04,
+    ];
+
+    /**
+     * Indicator weights (expanded for aggregation and scoring).
+     */
+    public array $indicatorWeights = [
+        'trend'              => 0.5,
+        'momentum'           => 0.3,
+        'volatility'         => 0.1,
+        'support_resistance' => 0.1,
+    ];
+
+    /**
+     * Forecast evaluation windows (minutes).
+     */
+    public array $evaluationWindows = [15, 30, 60, 240, 1440];
+
+    /**
+     * Rate limit handling toggles.
+     */
+    public array $rateLimitHandling = [
+        'enabled' => true,
+        'sleepSeconds' => 60,
+        'maxRetries' => 2,
     ];
 
     /**

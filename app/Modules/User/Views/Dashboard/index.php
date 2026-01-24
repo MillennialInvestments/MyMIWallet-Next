@@ -666,6 +666,65 @@ $showSetupBanner   = ! empty($setupStatus)
     </div>
 </div>
 
+<?php if (!empty($forecastHeatmapEnabled)): ?>
+<div class="nk-block mt-4">
+    <div class="row g-gs">
+        <div class="col-lg-8">
+            <div class="card card-bordered h-100">
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-2">
+                        <div class="card-title">
+                            <h6 class="subtitle">Confidence Heatmap</h6>
+                            <span class="text-soft">Latest forecast confidence by ticker and timeframe.</span>
+                        </div>
+                        <div class="card-tools">
+                            <select id="forecastHeatmapTimeframe" class="form-select form-select-sm">
+                                <option value="5m" <?= ($forecastHeatmapDefaultTimeframe ?? '5m') === '5m' ? 'selected' : '' ?>>5m</option>
+                                <option value="10m" <?= ($forecastHeatmapDefaultTimeframe ?? '5m') === '10m' ? 'selected' : '' ?>>10m</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="small text-soft mb-2" id="forecastHeatmapStatus">Loading heatmap…</div>
+                    <div class="table-responsive">
+                        <table class="table table-sm" id="forecastHeatmapTable">
+                            <thead>
+                                <tr>
+                                    <th>Ticker</th>
+                                    <th>Timeframes</th>
+                                    <th>Updated</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card card-bordered h-100">
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-2">
+                        <div class="card-title">
+                            <h6 class="subtitle">Forecast Highlights</h6>
+                            <span class="text-soft">Top bullish/bearish and recently updated alerts.</span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="small text-soft">Rolling 7-day hit rate</div>
+                        <h4 class="mb-0" id="forecastQualityRate">--%</h4>
+                        <div class="small text-soft" id="forecastQualityUpdated">Last evaluated: --</div>
+                    </div>
+                    <div id="forecastHighlights">
+                        <div class="text-soft small">Loading highlights…</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
 <style <?= $nonce['style'] ?? ''; ?>>
     .nk-order-ovwg-data .amount { font-weight: 700; }
     .nk-order-ovwg-data .info { color: #8094ae; font-size: 0.9rem; }
@@ -678,6 +737,155 @@ $showSetupBanner   = ! empty($setupStatus)
 
 <script <?= $nonce['script'] ?? ''; ?>>
 (function() {
+    const heatmapTable = document.getElementById('forecastHeatmapTable');
+    const heatmapStatus = document.getElementById('forecastHeatmapStatus');
+    const heatmapSelect = document.getElementById('forecastHeatmapTimeframe');
+    const highlightsWrap = document.getElementById('forecastHighlights');
+    const qualityRate = document.getElementById('forecastQualityRate');
+    const qualityUpdated = document.getElementById('forecastQualityUpdated');
+
+    function badgeForConfidence(confidence) {
+        if (confidence >= 75) return 'bg-success';
+        if (confidence >= 60) return 'bg-warning';
+        if (confidence >= 40) return 'bg-info';
+        return 'bg-secondary';
+    }
+
+    function openForecastModal(ticker) {
+        if (typeof window.dynamicModalLoader === 'function') {
+            window.dynamicModalLoader('/Investments/forecastModal/' + ticker);
+        } else {
+            window.location.href = '/Investments/forecastModal/' + ticker;
+        }
+    }
+
+    function renderHeatmap(data) {
+        if (!heatmapTable) return;
+        const tbody = heatmapTable.querySelector('tbody');
+        tbody.innerHTML = '';
+
+        (data.matrix || []).forEach(row => {
+            const tr = document.createElement('tr');
+            const latestUpdate = Object.values(row.timeframes || {}).map(item => item.updated_at).filter(Boolean).sort().pop() || '—';
+
+            const tfBadges = document.createElement('div');
+            tfBadges.className = 'd-flex flex-wrap gap-1';
+            Object.entries(row.timeframes || {}).forEach(([timeframe, info]) => {
+                const badge = document.createElement('span');
+                badge.className = `badge ${badgeForConfidence(info.confidence)} text-uppercase`;
+                badge.textContent = `${timeframe}: ${info.confidence}%`;
+                tfBadges.appendChild(badge);
+            });
+
+            tr.innerHTML = `
+                <td><strong>${row.ticker}</strong></td>
+                <td></td>
+                <td class="small text-soft">${latestUpdate}</td>
+                <td class="text-end"></td>
+            `;
+            tr.children[1].appendChild(tfBadges);
+
+            const actionCell = tr.children[3];
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'btn btn-sm btn-outline-primary';
+            button.textContent = 'View';
+            button.addEventListener('click', () => openForecastModal(row.ticker));
+            actionCell.appendChild(button);
+
+            tbody.appendChild(tr);
+        });
+
+        if (heatmapStatus) {
+            heatmapStatus.textContent = data.matrix && data.matrix.length ? 'Updated just now.' : 'No forecast data available.';
+        }
+    }
+
+    function loadHeatmap() {
+        if (!heatmapSelect) return;
+        const timeframe = heatmapSelect.value || '5m';
+        fetch(`/API/Investments/getConfidenceHeatmap?timeframe=${encodeURIComponent(timeframe)}&window=60`)
+            .then(resp => resp.json())
+            .then(data => renderHeatmap(data))
+            .catch(() => {
+                if (heatmapStatus) {
+                    heatmapStatus.textContent = 'Unable to load heatmap.';
+                }
+            });
+    }
+
+    function renderHighlights(data) {
+        if (!highlightsWrap) return;
+        const sections = [
+            { label: 'Bullish', items: data.bullish || [] },
+            { label: 'Bearish', items: data.bearish || [] },
+            { label: 'Recently Updated', items: data.recent || [] },
+        ];
+
+        highlightsWrap.innerHTML = '';
+        sections.forEach(section => {
+            const header = document.createElement('div');
+            header.className = 'text-soft small mb-1';
+            header.textContent = section.label;
+            highlightsWrap.appendChild(header);
+
+            const list = document.createElement('ul');
+            list.className = 'list-unstyled mb-3';
+            section.items.slice(0, 5).forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'd-flex justify-content-between align-items-center mb-1';
+                const link = document.createElement('button');
+                link.type = 'button';
+                link.className = 'btn btn-link btn-sm p-0';
+                link.textContent = item.ticker || item.symbol || '—';
+                link.addEventListener('click', () => openForecastModal(item.ticker || item.symbol || ''));
+                const badge = document.createElement('span');
+                badge.className = `badge ${badgeForConfidence(item.forecast_confidence || 0)}`;
+                badge.textContent = `${item.forecast_confidence || 0}%`;
+                li.appendChild(link);
+                li.appendChild(badge);
+                list.appendChild(li);
+            });
+            highlightsWrap.appendChild(list);
+        });
+    }
+
+    function loadHighlights() {
+        fetch('/API/Investments/getForecastHighlights')
+            .then(resp => resp.json())
+            .then(data => renderHighlights(data))
+            .catch(() => {
+                if (highlightsWrap) {
+                    highlightsWrap.innerHTML = '<div class="text-soft small">Unable to load highlights.</div>';
+                }
+            });
+    }
+
+    function loadForecastQuality() {
+        fetch('/API/Investments/getForecastAccuracySummary?window=7d')
+            .then(resp => resp.json())
+            .then(data => {
+                if (qualityRate) {
+                    qualityRate.textContent = `${data.rollingHitRate?.['7d'] ?? 0}%`;
+                }
+                if (qualityUpdated) {
+                    qualityUpdated.textContent = `Last evaluated: ${data.lastEvaluatedAt || '—'}`;
+                }
+            })
+            .catch(() => {
+                if (qualityRate) {
+                    qualityRate.textContent = '--%';
+                }
+            });
+    }
+
+    if (heatmapSelect) {
+        heatmapSelect.addEventListener('change', loadHeatmap);
+    }
+    loadHeatmap();
+    loadHighlights();
+    loadForecastQuality();
+
     const sparklineEl = document.getElementById('netWorthSparkline');
     const allocationEl = document.getElementById('allocationChart');
 
