@@ -628,6 +628,9 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->post('news/(:num)',      'InvestmentsController::updateNews/$1');
         $routes->delete('news/(:num)',    'InvestmentsController::deleteNews/$1');
         $routes->post('validateSymbol',    'InvestmentsController::validateSymbol');
+        $routes->get('getForecastHighlights', 'InvestmentsController::getForecastHighlights');
+        $routes->post('refreshForecasts', 'InvestmentsController::refreshForecasts');
+        $routes->post('reforecastTicker', 'InvestmentsController::reforecastTicker');
         // $routes->get('removeTradeFromWatchlist/(:num)', 'InvestmentsController::removeTradeFromWatchlist/$1'); // NOT COMPLETED Remove Trade from Watchlist
         // $routes->post('updateTradeNotes', 'InvestmentsController::updateTradeNotes'); // NOT COMPLETED Update Trade Notes
         // $routes->post('updateTradeTargetPrice', 'InvestmentsController::updateTradeTargetPrice'); // NOT COMPLETED Update Trade Target Price
@@ -1383,6 +1386,7 @@ $routes->match(['GET', 'POST'], 'My-Trades', 'App\Modules\User\Controllers\Inves
 // Investments:
 $routes->group('Investments', ['namespace' => 'App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {
     $routes->match(['GET', 'POST'], '/', 'InvestmentsController::index');
+    $routes->get('forecastModal/(:segment)', 'InvestmentsController::forecastModal/$1');
     $routes->post('Account-Manager', 'InvestmentsController::accountManager'); // Account Manager to handle adding, editing, deleting Investments Records to/from Database
     $routes->match(['GET', 'POST'], 'Add', 'InvestmentsController::add'); // Add New Investment Records to Database
     $routes->match(['GET', 'POST'], 'Add/(:segment)', 'InvestmentsController::add'); // Add New Investment Records to Database
