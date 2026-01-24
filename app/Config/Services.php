@@ -37,7 +37,9 @@ class Services extends BaseService
         }
 
         if (is_ci()) {
-            return CoreServices::cache($getShared);
+            $cacheConfig = config('Cache');
+            $cacheConfig->handler = 'dummy';
+            $cacheConfig->backupHandler = 'dummy';
         }
 
         return CoreServices::cache($getShared);
@@ -50,7 +52,9 @@ class Services extends BaseService
         }
 
         if (is_ci()) {
-            return CoreServices::responsecache($getShared);
+            $cacheConfig = config('Cache');
+            $cacheConfig->handler = 'dummy';
+            $cacheConfig->backupHandler = 'dummy';
         }
 
         return CoreServices::responsecache($getShared);
