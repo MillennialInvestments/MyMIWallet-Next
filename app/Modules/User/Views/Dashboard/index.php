@@ -332,6 +332,44 @@ $showSetupBanner   = ! empty($setupStatus)
     </div>
 
     <div class="row g-gs mt-1">
+        <div class="col-12">
+            <div class="card card-bordered card-full h-100">
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-3">
+                        <div class="card-title">
+                            <h6 class="subtitle">Forecast Highlights</h6>
+                            <span class="text-soft">Top bullish/bearish signals and recent forecast updates.</span>
+                        </div>
+                        <div class="card-tools">
+                            <button class="btn btn-sm btn-outline-primary" type="button" id="refreshForecastHighlights">Refresh</button>
+                        </div>
+                    </div>
+                    <div class="row g-3" id="forecastHighlights">
+                        <div class="col-md-4">
+                            <h6 class="text-soft mb-2">Top Bullish</h6>
+                            <ul class="list-group list-group-sm" id="forecastHighlightsBullish">
+                                <li class="list-group-item text-soft">Loading...</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="text-soft mb-2">Top Bearish</h6>
+                            <ul class="list-group list-group-sm" id="forecastHighlightsBearish">
+                                <li class="list-group-item text-soft">Loading...</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="text-soft mb-2">Recently Updated</h6>
+                            <ul class="list-group list-group-sm" id="forecastHighlightsRecent">
+                                <li class="list-group-item text-soft">Loading...</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-gs mt-1">
         <div class="col-xxl-6">
             <div class="card card-bordered card-full h-100">
                 <div class="card-inner">
@@ -710,6 +748,49 @@ $showSetupBanner   = ! empty($setupStatus)
             });
         }
     });
+
+    async function loadForecastHighlights() {
+        const bullishList = document.getElementById('forecastHighlightsBullish');
+        const bearishList = document.getElementById('forecastHighlightsBearish');
+        const recentList = document.getElementById('forecastHighlightsRecent');
+
+        if (!bullishList || !bearishList || !recentList) {
+            return;
+        }
+
+        try {
+            const response = await fetch('/API/Investments/getForecastHighlights');
+            const json = await response.json();
+            const data = json?.data || {};
+
+            const renderList = (list, items) => {
+                list.innerHTML = '';
+                if (!items || items.length === 0) {
+                    list.innerHTML = '<li class=\"list-group-item text-soft\">No data.</li>';
+                    return;
+                }
+                items.forEach((item) => {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                    li.innerHTML = `<span class=\"fw-semibold\">${item.ticker ?? '-'}</span><span class=\"badge bg-outline-primary\">${item.forecast_confidence ?? 0}%</span>`;
+                    list.appendChild(li);
+                });
+            };
+
+            renderList(bullishList, data.bullish);
+            renderList(bearishList, data.bearish);
+            renderList(recentList, data.recent);
+        } catch (err) {
+            console.error('Forecast highlights load failed', err);
+        }
+    }
+
+    const refreshButton = document.getElementById('refreshForecastHighlights');
+    if (refreshButton) {
+        refreshButton.addEventListener('click', loadForecastHighlights);
+    }
+
+    loadForecastHighlights();
 
     const aiChatLog     = document.getElementById('aiChatLog');
     const aiChatInput   = document.getElementById('aiChatInput');
