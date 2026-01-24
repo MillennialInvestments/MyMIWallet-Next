@@ -13,6 +13,7 @@ use CodeIgniter\API\ResponseTrait; // Import the ResponseTrait
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Database;
+use Config\Services;
 
 #[\AllowDynamicProperties]
 class ManagementController extends \App\Controllers\BaseController
@@ -113,6 +114,21 @@ class ManagementController extends \App\Controllers\BaseController
             'db_log_ok'    => $dbLogOk,
             'marker'       => $marker,
             'timestamp'    => date('c'),
+        ]);
+    }
+
+    public function getAutoloadHealth(): ResponseInterface
+    {
+        $authGuard = $this->guardAdmin();
+        if ($authGuard) {
+            return $authGuard;
+        }
+
+        $health = Services::autoloadHealthService()->getStatus();
+
+        return $this->response->setJSON([
+            'status' => 'ok',
+            'data'   => $health,
         ]);
     }
 

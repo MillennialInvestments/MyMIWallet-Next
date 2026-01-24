@@ -43,6 +43,20 @@ $authFailures = $authHealth['failures'] ?? [];
 $authStatus = $authLatest['status'] ?? 'UNKNOWN';
 $authSummary = $authLatest['summary'] ?? 'No runs recorded yet.';
 $authRunAt = $authLatest['run_at'] ?? null;
+$autoloadHealth = $autoloadHealth ?? [
+    'total_classes' => 0,
+    'psr4_ok' => 0,
+    'violations' => 0,
+    'legacy_files' => 0,
+    'last_scan' => null,
+];
+$autoloadViolations = (int) ($autoloadHealth['violations'] ?? 0);
+$autoloadStatusClass = $autoloadViolations === 0
+    ? 'bg-success'
+    : ($autoloadViolations <= 2 ? 'bg-warning text-dark' : 'bg-danger');
+$autoloadStatusLabel = $autoloadViolations === 0
+    ? 'Healthy'
+    : ($autoloadViolations <= 2 ? 'Needs Review' : 'Critical');
 ?>
 
 <div class="nk-block">
@@ -85,6 +99,38 @@ $authRunAt = $authLatest['run_at'] ?? null;
         </div>
         <div class="card card-bordered mb-3">
             <div class="card-inner">
+                <div class="d-flex justify-content-between flex-wrap align-items-center">
+                    <div>
+                        <h5 class="mb-1">Autoload Health</h5>
+                        <div class="small text-soft">Last scan: <span id="autoload-health-scan"><?= esc($autoloadHealth['last_scan'] ?? 'N/A'); ?></span></div>
+                    </div>
+                    <div class="text-end">
+                        <span class="badge <?= $autoloadStatusClass; ?>" id="autoload-health-status"><?= esc($autoloadStatusLabel); ?></span>
+                        <div class="small text-soft">Violations: <strong id="autoload-health-violations"><?= $autoloadViolations; ?></strong></div>
+                    </div>
+                </div>
+                <div class="row text-center mt-3">
+                    <div class="col-6 col-md-3">
+                        <div class="small text-soft">Total</div>
+                        <div class="fw-bold" id="autoload-health-total"><?= (int) ($autoloadHealth['total_classes'] ?? 0); ?></div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="small text-soft">PSR-4 OK</div>
+                        <div class="fw-bold" id="autoload-health-ok"><?= (int) ($autoloadHealth['psr4_ok'] ?? 0); ?></div>
+                    </div>
+                    <div class="col-6 col-md-3 mt-2 mt-md-0">
+                        <div class="small text-soft">Legacy Files</div>
+                        <div class="fw-bold" id="autoload-health-legacy"><?= (int) ($autoloadHealth['legacy_files'] ?? 0); ?></div>
+                    </div>
+                    <div class="col-6 col-md-3 mt-2 mt-md-0">
+                        <div class="small text-soft">Docs</div>
+                        <a class="btn btn-outline-primary btn-sm" href="<?= site_url('docs/optimize/psr4_fixes_latest.md'); ?>" target="_blank" rel="noopener">View fixes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card card-bordered mb-3">
+            <div class="card-inner">
                 <div class="d-flex justify-content-between flex-wrap align-items-center mb-2">
                     <div>
                         <h5 class="mb-1">Saturday Stream Prep</h5>
@@ -103,6 +149,51 @@ $authRunAt = $authLatest['run_at'] ?? null;
                 </div>
             </div>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const endpoint = '<?= site_url('API/Management/getAutoloadHealth'); ?>';
+                fetch(endpoint, { credentials: 'same-origin' })
+                    .then((response) => response.ok ? response.json() : null)
+                    .then((payload) => {
+                        if (!payload || !payload.data) {
+                            return;
+                        }
+                        const data = payload.data;
+                        const violations = Number(data.violations ?? 0);
+                        const status = document.getElementById('autoload-health-status');
+                        const scan = document.getElementById('autoload-health-scan');
+                        const badgeClass = violations === 0
+                            ? 'bg-success'
+                            : (violations <= 2 ? 'bg-warning text-dark' : 'bg-danger');
+                        const badgeLabel = violations === 0
+                            ? 'Healthy'
+                            : (violations <= 2 ? 'Needs Review' : 'Critical');
+
+                        if (status) {
+                            status.className = 'badge ' + badgeClass;
+                            status.textContent = badgeLabel;
+                        }
+                        if (scan) {
+                            scan.textContent = data.last_scan ?? 'N/A';
+                        }
+                        const fields = {
+                            'autoload-health-violations': violations,
+                            'autoload-health-total': data.total_classes ?? 0,
+                            'autoload-health-ok': data.psr4_ok ?? 0,
+                            'autoload-health-legacy': data.legacy_files ?? 0,
+                        };
+                        Object.entries(fields).forEach(([id, value]) => {
+                            const el = document.getElementById(id);
+                            if (el) {
+                                el.textContent = value;
+                            }
+                        });
+                    })
+                    .catch(() => {
+                        // Silent fail, keep server-rendered values.
+                    });
+            });
+        </script>
         <?= view('App\\Modules\\Management\\Views\\ContentEngine\\index', ['contentEngine' => $contentEngine ?? []]); ?>
         <div class="row my-3">
             <!-- Example Action Card -->

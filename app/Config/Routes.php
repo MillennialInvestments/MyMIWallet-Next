@@ -234,6 +234,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->post('Alerts/backfillEmailAlerts', 'AlertsController::backfillEmailAlerts');
     $routes->get('cronFetchAndGenerateNews', 'ManagementController::cronFetchAndGenerateNews');
     $routes->post('Management/backfillMarketingEmails', 'ManagementController::backfillMarketingEmails');
+    $routes->get('Management/getAutoloadHealth', 'ManagementController::getAutoloadHealth', ['filter' => 'permission:admin.access']);
 
     // Public Discord help/onboarding endpoints
     $routes->post('Discord/completeOnboardingStep', 'DiscordController::completeOnboardingStep');
