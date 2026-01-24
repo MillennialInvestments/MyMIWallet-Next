@@ -148,6 +148,16 @@ class App extends BaseConfig
      */
     public string $charset = 'UTF-8';
 
+    /**
+     * --------------------------------------------------------------------------
+     * Configuration Caching
+     * --------------------------------------------------------------------------
+     *
+     * Enables caching of configuration files for performance. Disable this if
+     * any config may contain non-serializable values (like Closures).
+     */
+    public bool $cacheConfig = false;
+
     public function __construct()
     {
         parent::__construct();
