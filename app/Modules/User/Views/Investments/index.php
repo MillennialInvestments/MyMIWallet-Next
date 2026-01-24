@@ -34,6 +34,11 @@
 // $investment_availabilityStatus = $userAssessment['investment_availability'] == 'Yes' ? 'Completed' : 'Pending';
 // // log_message('debug', 'Investments\index L31 - $userInvestments Array: ' . (print_r($userInvestments, true)));
 $investmentOverview = $userInvestments['investmentOverview'] ?? []; 
+$forecastConfig = config('MyMIForecasting');
+$showHeatmap = $forecastConfig->features['confidenceHeatmaps'] ?? false;
+$showAccuracy = $forecastConfig->features['accuracyTracking'] ?? false;
+$heatmapTimeframes = $forecastConfig->heatmap['timeframes'] ?? ['5m', '15m', '1h'];
+$heatmapWindow = $forecastConfig->heatmap['defaultWindow'] ?? '6h';
 // log_message('debug', 'Investments\index L33 - $investmentOverview Array: ' . (print_r($investmentOverview, true)));
 $subViewData = [
     'beta' => $beta,
@@ -155,6 +160,113 @@ $actionCenterData['insights']        = $actionCenterData['insights']        ?? [
         <div class="col-md-12 col-xl-9">
             <?php echo view('UserModule\Views\Investments\index\Month_to_Month', $investmentPartialData); ?>
         </div>
+        <?php if ($showHeatmap): ?>
+        <div class="col-12">
+            <div class="card card-bordered">
+                <div class="card-inner">
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                        <div>
+                            <h6 class="subtitle mb-1">Confidence Heatmap</h6>
+                            <div class="text-soft small">Toggle to reveal cached conviction signals across watchlist tickers.</div>
+                        </div>
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="investmentsHeatmapToggle">
+                                <label class="form-check-label" for="investmentsHeatmapToggle">Show Confidence Heatmap</label>
+                            </div>
+                            <span class="badge bg-danger">0-40</span>
+                            <span class="badge bg-warning text-dark">41-65</span>
+                            <span class="badge bg-success">66-100</span>
+                        </div>
+                    </div>
+                    <div class="mt-3" id="investmentsHeatmapContainer" hidden>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered align-middle text-center" id="investmentsHeatmapTable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-start">Ticker</th>
+                                        <?php foreach ($heatmapTimeframes as $timeframe): ?>
+                                            <th><?= esc($timeframe); ?></th>
+                                        <?php endforeach; ?>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="<?= count($heatmapTimeframes) + 1 ?>" class="text-soft">Toggle heatmap to load cached data.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="small text-soft" id="investmentsHeatmapStatus">Heatmap idle.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+        <?php if ($showAccuracy): ?>
+        <div class="col-12">
+            <div class="card card-bordered">
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-2">
+                        <div class="card-title">
+                            <h6 class="subtitle">Forecast Accuracy Tracking</h6>
+                            <span class="text-soft">Rolling accuracy, direction bias, and confidence correlation.</span>
+                        </div>
+                        <div class="card-tools">
+                            <span class="badge bg-outline-primary">Admin-only (soon)</span>
+                        </div>
+                    </div>
+                    <ul class="nav nav-tabs nav-tabs-sm" id="forecastAccuracyTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="accuracy-summary-tab" data-bs-toggle="tab" data-bs-target="#accuracy-summary" type="button" role="tab">Rolling Stats</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="accuracy-timeframe-tab" data-bs-toggle="tab" data-bs-target="#accuracy-timeframe" type="button" role="tab">By Timeframe</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="accuracy-direction-tab" data-bs-toggle="tab" data-bs-target="#accuracy-direction" type="button" role="tab">By Direction</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="accuracy-confidence-tab" data-bs-toggle="tab" data-bs-target="#accuracy-confidence" type="button" role="tab">Confidence vs Accuracy</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content pt-3" id="forecastAccuracyContent">
+                        <div class="tab-pane fade show active" id="accuracy-summary" role="tabpanel">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="border rounded p-3 h-100">
+                                        <div class="text-soft small">Rolling 7-Day</div>
+                                        <div class="fw-semibold" id="accuracyRolling7">--</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="border rounded p-3 h-100">
+                                        <div class="text-soft small">Rolling 30-Day</div>
+                                        <div class="fw-semibold" id="accuracyRolling30">--</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="accuracy-timeframe" role="tabpanel">
+                            <ul class="list-group list-group-sm" id="accuracyByTimeframe">
+                                <li class="list-group-item text-soft">Loading timeframe accuracy...</li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade" id="accuracy-direction" role="tabpanel">
+                            <ul class="list-group list-group-sm" id="accuracyByDirection">
+                                <li class="list-group-item text-soft">Loading direction accuracy...</li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade" id="accuracy-confidence" role="tabpanel">
+                            <ul class="list-group list-group-sm" id="accuracyConfidenceCorrelation">
+                                <li class="list-group-item text-soft">Loading confidence correlation...</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
         <div class="col-md-12 col-xl-3">
             <div class="nk-block nk-block-lg">
                 <div class="row g-gs">
@@ -241,6 +353,151 @@ $actionCenterData['insights']        = $actionCenterData['insights']        ?? [
         <?php endif; ?>
     </div>
 </div>
+
+<script <?= $nonce['script'] ?? '' ?>>
+document.addEventListener('DOMContentLoaded', () => {
+    const heatmapToggle = document.getElementById('investmentsHeatmapToggle');
+    const heatmapContainer = document.getElementById('investmentsHeatmapContainer');
+    const heatmapTable = document.getElementById('investmentsHeatmapTable');
+    const heatmapStatus = document.getElementById('investmentsHeatmapStatus');
+    const heatmapTimeframes = <?= json_encode($heatmapTimeframes, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>;
+
+    const renderHeatmap = (payload, cached) => {
+        if (!heatmapTable) {
+            return;
+        }
+        const tbody = heatmapTable.querySelector('tbody');
+        tbody.innerHTML = '';
+        const tickers = payload?.tickers || Object.keys(payload?.grid || {});
+
+        if (!tickers.length) {
+            tbody.innerHTML = `<tr><td colspan="${heatmapTimeframes.length + 1}" class="text-soft">No cached heatmap data yet.</td></tr>`;
+            if (heatmapStatus) {
+                heatmapStatus.textContent = cached ? 'Cache ready.' : 'Waiting for cached confidence data.';
+            }
+            return;
+        }
+
+        tickers.slice(0, 15).forEach((ticker) => {
+            const row = document.createElement('tr');
+            const label = document.createElement('td');
+            label.className = 'text-start fw-semibold';
+            label.textContent = ticker;
+            row.appendChild(label);
+
+            heatmapTimeframes.forEach((tf) => {
+                const cell = document.createElement('td');
+                const value = payload?.grid?.[ticker]?.[tf];
+                const confidence = Number.isFinite(Number(value)) ? Number(value) : null;
+                cell.textContent = confidence !== null ? `${confidence}%` : '—';
+                if (confidence !== null) {
+                    if (confidence <= 40) {
+                        cell.classList.add('bg-danger', 'text-white');
+                    } else if (confidence <= 65) {
+                        cell.classList.add('bg-warning', 'text-dark');
+                    } else {
+                        cell.classList.add('bg-success', 'text-white');
+                    }
+                    cell.title = `${ticker} ${tf}: ${confidence}%`;
+                }
+                row.appendChild(cell);
+            });
+
+            tbody.appendChild(row);
+        });
+
+        if (heatmapStatus) {
+            heatmapStatus.textContent = cached ? 'Using cached confidence snapshots.' : 'Heatmap cache refreshed.';
+        }
+    };
+
+    const loadHeatmap = async () => {
+        if (!heatmapTable) {
+            return;
+        }
+        if (heatmapStatus) {
+            heatmapStatus.textContent = 'Loading heatmap...';
+        }
+        try {
+            const response = await fetch(`/API/Investments/getConfidenceHeatmap?timeframe=all&window=<?= esc($heatmapWindow, 'url') ?>`);
+            const json = await response.json();
+            renderHeatmap(json?.data || {}, json?.cached);
+        } catch (error) {
+            console.error('Heatmap load failed', error);
+            if (heatmapStatus) {
+                heatmapStatus.textContent = 'Heatmap unavailable.';
+            }
+        }
+    };
+
+    if (heatmapToggle && heatmapContainer) {
+        heatmapToggle.addEventListener('change', () => {
+            heatmapContainer.hidden = !heatmapToggle.checked;
+            if (heatmapToggle.checked) {
+                loadHeatmap();
+            }
+        });
+    }
+
+    <?php if ($showAccuracy): ?>
+    const accuracyRolling7 = document.getElementById('accuracyRolling7');
+    const accuracyRolling30 = document.getElementById('accuracyRolling30');
+    const accuracyByTimeframe = document.getElementById('accuracyByTimeframe');
+    const accuracyByDirection = document.getElementById('accuracyByDirection');
+    const accuracyConfidence = document.getElementById('accuracyConfidenceCorrelation');
+
+    const renderAccuracyList = (container, items, formatter) => {
+        if (!container) return;
+        container.innerHTML = '';
+        if (!items || items.length === 0) {
+            container.innerHTML = '<li class="list-group-item text-soft">No accuracy data yet.</li>';
+            return;
+        }
+        items.forEach((item) => {
+            const li = document.createElement('li');
+            li.className = 'list-group-item d-flex justify-content-between align-items-center';
+            li.innerHTML = formatter(item);
+            container.appendChild(li);
+        });
+    };
+
+    const loadAccuracy = async () => {
+        try {
+            const response = await fetch('/API/Investments/getForecastAccuracySummary?days=30');
+            const json = await response.json();
+            const data = json?.data || {};
+
+            if (accuracyRolling7) {
+                const rolling7 = data?.rolling?.['7d'];
+                accuracyRolling7.textContent = rolling7
+                    ? `Hit Rate ${rolling7.hitRate}% (${rolling7.hits}/${rolling7.total}) • Avg MFE ${rolling7.avgMfe} • Avg MAE ${rolling7.avgMae}`
+                    : '--';
+            }
+            if (accuracyRolling30) {
+                const rolling30 = data?.rolling?.['30d'];
+                accuracyRolling30.textContent = rolling30
+                    ? `Hit Rate ${rolling30.hitRate}% (${rolling30.hits}/${rolling30.total}) • Avg MFE ${rolling30.avgMfe} • Avg MAE ${rolling30.avgMae}`
+                    : '--';
+            }
+
+            renderAccuracyList(accuracyByTimeframe, data?.byTimeframe, (item) =>
+                `<span>${item.label}</span><span class="badge bg-outline-primary">${item.hitRate}% (${item.hits}/${item.total})</span>`
+            );
+            renderAccuracyList(accuracyByDirection, data?.byDirection, (item) =>
+                `<span>${item.label}</span><span class="badge bg-outline-primary">${item.hitRate}% (${item.hits}/${item.total})</span>`
+            );
+            renderAccuracyList(accuracyConfidence, data?.confidenceCorrelation, (item) =>
+                `<span>${item.bucket}</span><span class="badge bg-outline-primary">${item.hitRate}% (${item.total})</span>`
+            );
+        } catch (error) {
+            console.error('Accuracy load failed', error);
+        }
+    };
+
+    loadAccuracy();
+    <?php endif; ?>
+});
+</script>
 
 <script <?= $nonce['script'] ?? '' ?>>
 document.addEventListener('DOMContentLoaded', () => {
