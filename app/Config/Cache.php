@@ -10,6 +10,7 @@ use CodeIgniter\Cache\Handlers\PredisHandler;
 use CodeIgniter\Cache\Handlers\RedisHandler;
 use CodeIgniter\Cache\Handlers\WincacheHandler;
 use CodeIgniter\Config\BaseConfig;
+use function is_ci;
 
 class Cache extends BaseConfig
 {
@@ -140,6 +141,21 @@ class Cache extends BaseConfig
         'redis'     => RedisHandler::class,
         'wincache'  => WincacheHandler::class,
     ];
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        if (! function_exists('is_ci')) {
+            require APPPATH . 'Helpers/ci_guard_helper.php';
+        }
+
+        if (is_ci()) {
+            $this->handler = 'dummy';
+            $this->backupHandler = 'dummy';
+            $this->file['storePath'] = WRITEPATH . 'cache/';
+        }
+    }
 
     /**
      * --------------------------------------------------------------------------

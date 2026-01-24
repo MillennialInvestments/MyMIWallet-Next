@@ -14,6 +14,22 @@ error_reporting(E_ALL & ~E_DEPRECATED);
 // error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT & ~E_USER_NOTICE & ~E_USER_DEPRECATED);
 ini_set('display_errors', '0');
 
+if (! function_exists('is_ci')) {
+    require APPPATH . 'Helpers/ci_guard_helper.php';
+}
+
+if (is_ci()) {
+    $autoloader = Config\Services::autoloader();
+    if (method_exists($autoloader, 'disableCache')) {
+        $autoloader->disableCache();
+    }
+
+    $locator = Config\Services::locator();
+    if (method_exists($locator, 'disableCache')) {
+        $locator->disableCache();
+    }
+}
+
 /*
  |--------------------------------------------------------------------------
  | DEBUG MODE

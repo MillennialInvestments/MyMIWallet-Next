@@ -1,0 +1,20 @@
+<?php
+
+declare(strict_types=1);
+
+$root = dirname(__DIR__, 2);
+
+define('APPPATH', $root . '/app/');
+
+require $root . '/app/Services/Psr4AuditService.php';
+
+$service = new \App\Services\Psr4AuditService();
+$results = $service->audit();
+$violations = $results['summary']['violations'] ?? 0;
+
+if ($violations > 0) {
+    fwrite(STDERR, "❌ PSR-4 violations detected: {$violations}\n");
+    exit(1);
+}
+
+echo "✅ PSR-4 compliance verified.\n";
