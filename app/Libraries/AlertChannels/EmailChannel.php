@@ -1,5 +1,5 @@
 <?php
-namespace App\Libraries\AlertsChannels;
+namespace App\Libraries\AlertChannels;
 
 use App\Libraries\AlertChannelInterface;
 
