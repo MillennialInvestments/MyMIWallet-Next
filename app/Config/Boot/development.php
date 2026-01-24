@@ -13,6 +13,22 @@
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
+if (! function_exists('is_ci')) {
+    require APPPATH . 'Helpers/ci_guard_helper.php';
+}
+
+if (is_ci()) {
+    $autoloader = Config\Services::autoloader();
+    if (method_exists($autoloader, 'disableCache')) {
+        $autoloader->disableCache();
+    }
+
+    $locator = Config\Services::locator();
+    if (method_exists($locator, 'disableCache')) {
+        $locator->disableCache();
+    }
+}
+
 /*
  |--------------------------------------------------------------------------
  | DEBUG BACKTRACES

@@ -12,6 +12,8 @@ use App\Services\SetupStatusService;
 use App\Services\Forecasting\MyMIForecaster;
 use App\Services\Forecasting\Providers\AlphaVantageProvider;
 use CodeIgniter\Config\BaseService;
+use CodeIgniter\Config\Services as CoreServices;
+use function is_ci;
 
 /**
  * Services Configuration file.
@@ -28,6 +30,32 @@ use CodeIgniter\Config\BaseService;
  */
 class Services extends BaseService
 {
+    public static function cache(bool $getShared = true)
+    {
+        if (! function_exists('is_ci')) {
+            require APPPATH . 'Helpers/ci_guard_helper.php';
+        }
+
+        if (is_ci()) {
+            return CoreServices::cache($getShared);
+        }
+
+        return CoreServices::cache($getShared);
+    }
+
+    public static function responsecache(bool $getShared = true)
+    {
+        if (! function_exists('is_ci')) {
+            require APPPATH . 'Helpers/ci_guard_helper.php';
+        }
+
+        if (is_ci()) {
+            return CoreServices::responsecache($getShared);
+        }
+
+        return CoreServices::responsecache($getShared);
+    }
+
     public static function crudCacheInvalidator(bool $getShared = true): CrudCacheInvalidator
     {
         if ($getShared) {
