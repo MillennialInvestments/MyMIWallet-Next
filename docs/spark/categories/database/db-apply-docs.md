@@ -33,5 +33,17 @@ php spark db:apply-docs [options]
 - Database connection errors.
 - SQL execution errors (check `writable/db_inventory/*.log`).
 
+## Implementation
+- File: `app/Commands/Database/ApplyDocs.php`
+- Service: `app/Services/Spark/DbApplyDocsService.php`
+
+## Example Output
+```
+Starting db:apply-docs
+Dry-run complete. SQL compiled only.
+executed_statements: 0
+log_path: /path/to/writable/db_inventory/apply_2024-03-02_120000.log
+```
+
 ## Status
-- Existing
+- Implemented

@@ -31,5 +31,23 @@ php spark logs:healthcheck
 - Log file path missing/unwritable.
 - Database log sink missing.
 
+## Implementation
+- File: `app/Commands/Logs/Healthcheck.php`
+- Service: `app/Services/Spark/LogHealthcheckService.php`
+
+## Example Output
+```
+Starting logs:healthcheck
+
+Log healthcheck summary
+----------------------------------------
+marker: 1f2c3d4a5b6c
+file_log_path: /path/to/writable/logs/log-2024-03-02.php
+file_log_ok=true
+db_log_ok=true
+db_rows=1
+overall=PASS
+```
+
 ## Status
-- Existing
+- Implemented

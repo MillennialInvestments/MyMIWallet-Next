@@ -34,5 +34,22 @@ php spark auth:audit
 - Unable to create or clean up test users.
 - Audit log insert failures (check `bf_error_logs`).
 
+## Implementation
+- File: `app/Commands/Auth/Audit.php`
+- Service: `app/Services/Spark/AuthAuditRunner.php`
+
+## Example Output
+```
+Starting auth:audit
+
+MyMI Wallet — Myth/Auth Audit Report
+Tests executed: 24
+Passed: 22
+Failed: 1
+Warnings: 1
+Score: 92%
+Status: WARNING
+```
+
 ## Status
-- Existing
+- Implemented

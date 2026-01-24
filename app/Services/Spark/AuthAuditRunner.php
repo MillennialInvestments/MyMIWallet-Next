@@ -1,9 +1,7 @@
 <?php
 
-namespace App\Commands;
+namespace App\Services\Spark;
 
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
 use Config\Database;
 use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
@@ -12,12 +10,8 @@ use Myth\Auth\Models\UserModel as MythUserModel;
 use RuntimeException;
 use Throwable;
 
-class AuthAudit extends BaseCommand
+class AuthAuditRunner
 {
-    protected $group       = 'maintenance';
-    protected $name        = 'auth:audit';
-    protected $description = 'Audit Myth:Auth authentication and account lifecycle safely.';
-
     private array $results = [];
     private array $failures = [];
     private array $warnings = [];
@@ -31,17 +25,33 @@ class AuthAudit extends BaseCommand
         $this->db = Database::connect();
     }
 
-    public function run(array $params)
+    public function run(bool $dryRun = false): array
     {
         $this->db = Database::connect();
         $startTime   = microtime(true);
         $startedAt   = date('Y-m-d H:i:s');
         $memoryStart = memory_get_usage(true);
 
-        log_message('info', 'auth:audit started', [
-            'started_at'   => $startedAt,
-            'memory_start' => $memoryStart,
-        ]);
+        if ($dryRun) {
+            return [
+                'dry_run'  => true,
+                'summary'  => [
+                    'total'        => 0,
+                    'passed'       => 0,
+                    'failed'       => 0,
+                    'warnings'     => 0,
+                    'infos'        => 0,
+                    'score'        => 0,
+                    'health'       => 'DRY-RUN',
+                    'duration'     => microtime(true) - $startTime,
+                    'memory_start' => $memoryStart,
+                    'memory_end'   => memory_get_usage(true),
+                    'started_at'   => $startedAt,
+                ],
+                'results'  => [],
+                'issues'   => [],
+            ];
+        }
 
         $db = $this->db;
         if (! $db) {
@@ -213,9 +223,16 @@ class AuthAudit extends BaseCommand
             });
         }
 
-        $summary = $this->renderSummary($startTime, $memoryStart);
+        $summary = $this->buildSummary($startTime, $memoryStart, $startedAt);
         $this->writeAuditReport($summary);
         $this->insertAuditLog($db, $summary);
+
+        return [
+            'dry_run' => false,
+            'summary' => $summary,
+            'results' => $this->results,
+            'issues'  => array_merge($this->failures, $this->warnings),
+        ];
     }
 
     private function auditConfig($authConfig, $sessionConfig, $appConfig, $securityConfig): void
@@ -1085,7 +1102,7 @@ class AuthAudit extends BaseCommand
         }
     }
 
-    private function renderSummary(float $startTime, int $memoryStart): array
+    private function buildSummary(float $startTime, int $memoryStart, string $startedAt): array
     {
         $total = count($this->results);
         $passed = count(array_filter($this->results, fn ($result) => in_array($result['status'], ['pass', 'info'], true)));
@@ -1104,43 +1121,6 @@ class AuthAudit extends BaseCommand
         $duration = microtime(true) - $startTime;
         $memoryEnd = memory_get_usage(true);
 
-        CLI::newLine();
-        CLI::write('========================================');
-        CLI::write('MyMI Wallet — Myth/Auth Audit Report');
-        CLI::write('========================================');
-        CLI::write('');
-        CLI::write('SECTION 1: TEST COUNTS');
-        CLI::write("Tests executed: {$total}");
-        CLI::write("Passed: {$passed}");
-        CLI::write("Failed: {$failed}");
-        CLI::write("Warnings: {$warnings}");
-        CLI::write("Info: {$infos}");
-        CLI::write('');
-        CLI::write('SECTION 2: FAILURES (MAX 25)');
-
-        if ($failed === 0 && $warnings === 0) {
-            CLI::write('None.');
-        } else {
-            $listed = 0;
-            foreach (array_merge($this->failures, $this->warnings) as $issue) {
-                if ($listed >= self::MAX_FAILURES) {
-                    break;
-                }
-                $listed++;
-                $details = $issue['details'] ?? [];
-                $detailText = $details !== [] ? json_encode($details) : '';
-                CLI::write("{$listed}. {$issue['name']} [{$issue['status']}] - {$issue['message']} {$detailText}");
-            }
-        }
-
-        CLI::write('');
-        CLI::write('SECTION 3: AUTH HEALTH SCORE');
-        CLI::write("Score: {$score}%");
-        CLI::write("Status: {$health}");
-        CLI::write('');
-        CLI::write('Runtime: ' . round($duration, 2) . 's');
-        CLI::write('Memory: ' . number_format($memoryEnd / 1024 / 1024, 2) . ' MB');
-
         return [
             'total' => $total,
             'passed' => $passed,
@@ -1152,6 +1132,7 @@ class AuthAudit extends BaseCommand
             'duration' => $duration,
             'memory_start' => $memoryStart,
             'memory_end' => $memoryEnd,
+            'started_at' => $startedAt,
         ];
     }
 
