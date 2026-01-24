@@ -1,27 +1,14 @@
 <?php
 
-namespace App\Commands;
+namespace App\Services\Spark;
 
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
-
-class DbApplyDocs extends BaseCommand
+class DbApplyDocsService
 {
     private ?\mysqli $mysqli = null;
 
-    protected $group       = 'maintenance';
-    protected $name        = 'db:apply-docs';
-    protected $description = 'Compile SQL from docs/mysql and apply safely with audit logging.';
-    protected $usage       = 'db:apply-docs [options]';
-    protected $options     = [
-        '--dry-run'  => 'Compile SQL without executing statements.',
-        '--db-group' => 'Database group to use (default: default).',
-    ];
-
-    public function run(array $params)
+    public function run(array $options, bool $dryRun = false): array
     {
-        $dryRun = CLI::getOption('dry-run') !== null;
-        $dbGroup = (string) (CLI::getOption('db-group') ?? 'default');
+        $dbGroup = (string) ($options['db-group'] ?? 'default');
 
         $outputDir = WRITEPATH . 'db_inventory';
         if (! is_dir($outputDir)) {
@@ -35,9 +22,12 @@ class DbApplyDocs extends BaseCommand
         $scriptPath = ROOTPATH . 'scripts/extract_sql_from_md.sh';
         if (! file_exists($scriptPath)) {
             $this->logLine($logHandle, 'SQL extraction script missing: ' . $scriptPath);
-            CLI::error('SQL extraction script missing.');
             fclose($logHandle);
-            return;
+            return [
+                'ok' => false,
+                'message' => 'SQL extraction script missing.',
+                'log_path' => $logPath,
+            ];
         }
 
         $command = 'bash ' . escapeshellarg($scriptPath) . ' 2>&1';
@@ -50,26 +40,37 @@ class DbApplyDocs extends BaseCommand
         $compiledPath = $outputDir . '/compiled_adjustments.sql';
         if (! file_exists($compiledPath)) {
             $this->logLine($logHandle, 'Compiled SQL not found.');
-            CLI::error('Compiled SQL not found.');
             fclose($logHandle);
-            return;
+            return [
+                'ok' => false,
+                'message' => 'Compiled SQL not found.',
+                'log_path' => $logPath,
+            ];
         }
 
         $this->logLine($logHandle, 'Compiled SQL: ' . $compiledPath);
         if ($dryRun) {
             $this->logLine($logHandle, 'Dry-run enabled. No SQL executed.');
-            CLI::write('Dry-run complete. SQL compiled only.');
             fclose($logHandle);
-            return;
+            return [
+                'ok' => true,
+                'executed' => 0,
+                'dry_run' => true,
+                'log_path' => $logPath,
+                'compiled_path' => $compiledPath,
+            ];
         }
 
         $dbConfig = config('Database');
         $groupConfig = $dbConfig->{$dbGroup} ?? null;
         if (! $groupConfig) {
             $this->logLine($logHandle, 'Database group not found: ' . $dbGroup);
-            CLI::error('Database group not found.');
             fclose($logHandle);
-            return;
+            return [
+                'ok' => false,
+                'message' => 'Database group not found.',
+                'log_path' => $logPath,
+            ];
         }
 
         $hostname = $groupConfig['hostname'] ?? $groupConfig->hostname ?? 'localhost';
@@ -85,9 +86,12 @@ class DbApplyDocs extends BaseCommand
 
         if ($mysqli->connect_errno) {
             $this->logLine($logHandle, 'MySQL connect error: ' . $mysqli->connect_error);
-            CLI::error('MySQL connection failed.');
             fclose($logHandle);
-            return;
+            return [
+                'ok' => false,
+                'message' => 'MySQL connection failed.',
+                'log_path' => $logPath,
+            ];
         }
 
         $this->mysqli = $mysqli;
@@ -113,7 +117,6 @@ class DbApplyDocs extends BaseCommand
             if (! $mysqli->query($trimmed)) {
                 $this->logLine($logHandle, 'SQL error: ' . $mysqli->error);
                 $this->logLine($logHandle, 'Statement: ' . $trimmed);
-                CLI::error('SQL execution failed. See log.');
                 break;
             }
 
@@ -129,7 +132,13 @@ class DbApplyDocs extends BaseCommand
         $this->logLine($logHandle, "db:apply-docs finished. Statements executed: {$executed}");
         fclose($logHandle);
 
-        CLI::write('db:apply-docs complete');
+        return [
+            'ok' => true,
+            'executed' => $executed,
+            'dry_run' => false,
+            'log_path' => $logPath,
+            'compiled_path' => $compiledPath,
+        ];
     }
 
     private function normalizeHostname(string $hostname): string

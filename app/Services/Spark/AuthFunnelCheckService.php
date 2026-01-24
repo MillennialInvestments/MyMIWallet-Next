@@ -1,58 +1,42 @@
 <?php
 
-declare(strict_types=1);
+namespace App\Services\Spark;
 
-namespace App\Commands;
-
-use CodeIgniter\CLI\BaseCommand;
-use CodeIgniter\CLI\CLI;
 use DateInterval;
 use DateTimeImmutable;
 
-class AuthFunnelCheck extends BaseCommand
+class AuthFunnelCheckService
 {
-    protected $group       = 'maintenance';
-    protected $name        = 'auth:funnel-check';
-    protected $description = 'Check auth funnel sanity and alert on drop-offs.';
-
-    public function run(array $params)
+    public function run(DateTimeImmutable $start, DateTimeImmutable $end): array
     {
         $db = db_connect();
         if (! $db->tableExists('bf_user_events')) {
-            CLI::write('bf_user_events table missing.');
-            return EXIT_ERROR;
+            return [
+                'ok' => false,
+                'message' => 'bf_user_events table missing.',
+            ];
         }
 
-        $end = new DateTimeImmutable('now');
-        $start = $end->sub(new DateInterval('P1D'));
-
         $counts = $this->fetchCounts($start, $end);
-
-        CLI::write('Auth funnel check (last 24h)');
-        CLI::write('----------------------------------------');
-        CLI::write('activation_email_sent: ' . $counts['auth.activation_email_sent']);
-        CLI::write('activate_success: ' . $counts['auth.activate_success']);
-        CLI::write('register_success: ' . $counts['auth.register_success']);
-        CLI::write('login_success: ' . $counts['auth.login_success']);
-        CLI::write('resend_activation_requested: ' . $counts['auth.resend_activation_requested']);
+        $alerts = [];
 
         if ($counts['auth.activation_email_sent'] > 0 && $counts['auth.activate_success'] === 0) {
-            log_message('error', '[FUNNEL] Activation email sent but no activation success in 24h.');
-            CLI::write('ALERT: activation sent > 0 but activation success = 0');
+            $alerts[] = 'Activation email sent but no activation success in 24h.';
         }
 
         if ($counts['auth.register_success'] > 0 && $counts['auth.login_success'] === 0) {
-            log_message('error', '[FUNNEL] Register success but no login success in 24h.');
-            CLI::write('ALERT: register success > 0 but login success = 0');
+            $alerts[] = 'Register success but no login success in 24h.';
         }
 
-        $resendSpike = $this->resendSpikeDetected($end, $counts['auth.resend_activation_requested']);
-        if ($resendSpike) {
-            log_message('warning', '[FUNNEL] Resend activation requests spiking in last 24h.');
-            CLI::write('WARN: resend activation spike detected');
+        if ($this->resendSpikeDetected($end, $counts['auth.resend_activation_requested'])) {
+            $alerts[] = 'Resend activation requests spiking in last 24h.';
         }
 
-        return EXIT_SUCCESS;
+        return [
+            'ok' => true,
+            'counts' => $counts,
+            'alerts' => $alerts,
+        ];
     }
 
     private function fetchCounts(DateTimeImmutable $start, DateTimeImmutable $end): array
