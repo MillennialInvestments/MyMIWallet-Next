@@ -43,6 +43,8 @@ class MyMIForecasting extends BaseConfig
     public array $cacheTtls = [
         'latestForecast' => 300,
         'highlights'     => 60,
+        'heatmap'        => 300,
+        'accuracy'       => 300,
     ];
 
     /**
@@ -65,4 +67,31 @@ class MyMIForecasting extends BaseConfig
      * Default data source tag.
      */
     public string $defaultDataSource = 'alphavantage';
+
+    /**
+     * Feature flags for modular releases.
+     */
+    public array $features = [
+        'forecastDetailUi'   => true,
+        'confidenceHeatmaps' => true,
+        'accuracyTracking'   => true,
+    ];
+
+    /**
+     * Confidence heatmap defaults.
+     */
+    public array $heatmap = [
+        'defaultWindow' => '6h',
+        'timeframes'    => ['5m', '15m', '1h', '4h', '1d'],
+        'requireCache'  => true,
+    ];
+
+    /**
+     * Forecast accuracy evaluation settings.
+     */
+    public array $accuracy = [
+        'evaluationMinutes' => [15, 30, 60, 240, 1440],
+        'batchLimit'        => 200,
+        'cacheDays'         => 30,
+    ];
 }

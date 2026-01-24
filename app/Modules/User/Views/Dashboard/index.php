@@ -79,6 +79,11 @@ $allocationChartData = [
     'values' => $allocationValues,
 ];
 
+$forecastConfig = config('MyMIForecasting');
+$showConfidenceHeatmap = $forecastConfig->features['confidenceHeatmaps'] ?? false;
+$heatmapTimeframes = $forecastConfig->heatmap['timeframes'] ?? ['5m', '15m', '1h'];
+$heatmapWindow = $forecastConfig->heatmap['defaultWindow'] ?? '6h';
+
 $activeProjects    = $projectsSummary['topProjects'] ?? [];
 $recentAlerts      = $alertsSummary['recent'] ?? [];
 $newsItems         = $newsSummary['items'] ?? [];
@@ -368,6 +373,46 @@ $showSetupBanner   = ! empty($setupStatus)
             </div>
         </div>
     </div>
+
+    <?php if ($showConfidenceHeatmap): ?>
+    <div class="row g-gs mt-1">
+        <div class="col-12">
+            <div class="card card-bordered card-full h-100">
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-3">
+                        <div class="card-title">
+                            <h6 class="subtitle">Confidence Heatmap</h6>
+                            <span class="text-soft">Where conviction is strongest right now across tickers and timeframes.</span>
+                        </div>
+                        <div class="card-tools d-flex align-items-center gap-2">
+                            <span class="badge bg-danger">0-40</span>
+                            <span class="badge bg-warning text-dark">41-65</span>
+                            <span class="badge bg-success">66-100</span>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered align-middle text-center" id="confidenceHeatmapTable">
+                            <thead>
+                                <tr>
+                                    <th class="text-start">Ticker</th>
+                                    <?php foreach ($heatmapTimeframes as $timeframe): ?>
+                                        <th><?= esc($timeframe); ?></th>
+                                    <?php endforeach; ?>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="<?= count($heatmapTimeframes) + 1 ?>" class="text-soft">Loading heatmap…</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="small text-soft mt-2" id="confidenceHeatmapStatus">Using cached confidence snapshots.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
 
     <div class="row g-gs mt-1">
         <div class="col-xxl-6">
@@ -791,6 +836,69 @@ $showSetupBanner   = ! empty($setupStatus)
     }
 
     loadForecastHighlights();
+
+    <?php if ($showConfidenceHeatmap): ?>
+    async function loadConfidenceHeatmap() {
+        const table = document.getElementById('confidenceHeatmapTable');
+        const status = document.getElementById('confidenceHeatmapStatus');
+        if (!table || !status) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`/API/Investments/getConfidenceHeatmap?timeframe=all&window=<?= esc($heatmapWindow, 'url') ?>`);
+            const json = await response.json();
+            const data = json?.data || {};
+            const grid = data.grid || {};
+            const timeframes = <?= json_encode($heatmapTimeframes, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>;
+            const tickers = data.tickers || Object.keys(grid);
+
+            const tbody = table.querySelector('tbody');
+            tbody.innerHTML = '';
+
+            if (!tickers.length) {
+                tbody.innerHTML = `<tr><td colspan="${timeframes.length + 1}" class="text-soft">No cached heatmap data yet.</td></tr>`;
+                status.textContent = json?.cached ? 'Cache ready.' : 'Waiting for cached confidence data.';
+                return;
+            }
+
+            tickers.slice(0, 12).forEach((ticker) => {
+                const row = document.createElement('tr');
+                const label = document.createElement('td');
+                label.className = 'text-start fw-semibold';
+                label.textContent = ticker;
+                row.appendChild(label);
+
+                timeframes.forEach((tf) => {
+                    const cell = document.createElement('td');
+                    const value = grid?.[ticker]?.[tf];
+                    const confidence = Number.isFinite(Number(value)) ? Number(value) : null;
+                    cell.textContent = confidence !== null ? `${confidence}%` : '—';
+                    if (confidence !== null) {
+                        if (confidence <= 40) {
+                            cell.classList.add('bg-danger', 'text-white');
+                        } else if (confidence <= 65) {
+                            cell.classList.add('bg-warning', 'text-dark');
+                        } else {
+                            cell.classList.add('bg-success', 'text-white');
+                        }
+                        cell.title = `${ticker} ${tf}: ${confidence}%`;
+                    }
+                    row.appendChild(cell);
+                });
+
+                tbody.appendChild(row);
+            });
+
+            status.textContent = json?.cached ? 'Using cached confidence snapshots.' : 'Heatmap cache refreshed.';
+        } catch (err) {
+            console.error('Confidence heatmap load failed', err);
+            status.textContent = 'Heatmap unavailable.';
+        }
+    }
+
+    loadConfidenceHeatmap();
+    <?php endif; ?>
 
     const aiChatLog     = document.getElementById('aiChatLog');
     const aiChatInput   = document.getElementById('aiChatInput');

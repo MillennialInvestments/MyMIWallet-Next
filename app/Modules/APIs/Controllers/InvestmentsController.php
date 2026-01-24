@@ -9,7 +9,7 @@ use App\Config\{Auth, SiteSettings, SocialMedia};
 use App\Controllers\UserController;
 use App\Libraries\{BaseLoader, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIUser, MyMIWallet, MyMIWallets};
 use App\Modules\User\Libraries\{DashboardLibrary};
-use App\Models\{InvestmentModel, PageSEOModel, ReferralModel, SubscribeModel, UserModel, AlertsModel};
+use App\Models\{InvestmentModel, PageSEOModel, ReferralModel, SubscribeModel, UserModel, AlertsModel, InvestmentPriceForecastModel, InvestmentForecastHistoryModel};
 use App\Services\{InvestmentService};
 use CodeIgniter\API\ResponseTrait;
 use App\Modules\APIs\Models\InvestmentsNewsModel;
@@ -212,6 +212,177 @@ class InvestmentsController extends UserController
         return [
             'activeTrades' => $tradeList,
         ];
+    }
+
+    public function getForecastDetails(string $ticker)
+    {
+        $ticker = strtoupper(trim($ticker));
+        if ($ticker === '') {
+            return $this->failValidationError('Ticker is required.');
+        }
+
+        $config = config('MyMIForecasting');
+        if (! ($config->features['forecastDetailUi'] ?? true)) {
+            return $this->failForbidden('Forecast detail UI is disabled.');
+        }
+
+        $forecastModel = model(InvestmentPriceForecastModel::class);
+        $historyModel = model(InvestmentForecastHistoryModel::class);
+
+        $latestForecasts = $forecastModel
+            ->where('ticker', $ticker)
+            ->orderBy('updated_at', 'DESC')
+            ->findAll();
+
+        $history = $historyModel
+            ->where('ticker', $ticker)
+            ->orderBy('recorded_at', 'DESC')
+            ->limit(10)
+            ->findAll();
+
+        $payload = $this->buildForecastDetailsPayload($ticker, $latestForecasts, $history);
+
+        return $this->respond($payload);
+    }
+
+    public function getConfidenceHeatmap()
+    {
+        $config = config('MyMIForecasting');
+        if (! ($config->features['confidenceHeatmaps'] ?? true)) {
+            return $this->failForbidden('Confidence heatmaps are disabled.');
+        }
+
+        $timeframe = (string) ($this->request->getGet('timeframe') ?? 'all');
+        $window = (string) ($this->request->getGet('window') ?? ($config->heatmap['defaultWindow'] ?? '6h'));
+        $refresh = filter_var($this->request->getGet('refresh'), FILTER_VALIDATE_BOOLEAN);
+
+        $aggregation = service('forecastAggregationService');
+        $result = $aggregation->getConfidenceHeatmap($timeframe, $window, $refresh);
+
+        return $this->respond([
+            'status' => 'success',
+            'cached' => $result['cached'],
+            'timeframe' => $timeframe,
+            'window' => $window,
+            'data' => $result['payload'],
+        ]);
+    }
+
+    public function getTopConfidenceBySector()
+    {
+        $config = config('MyMIForecasting');
+        if (! ($config->features['confidenceHeatmaps'] ?? true)) {
+            return $this->failForbidden('Confidence heatmaps are disabled.');
+        }
+
+        $timeframe = (string) ($this->request->getGet('timeframe') ?? 'all');
+        $refresh = filter_var($this->request->getGet('refresh'), FILTER_VALIDATE_BOOLEAN);
+
+        $aggregation = service('forecastAggregationService');
+        $result = $aggregation->getTopConfidenceBySector($timeframe, $refresh);
+
+        return $this->respond([
+            'status' => 'success',
+            'cached' => $result['cached'],
+            'timeframe' => $timeframe,
+            'data' => $result['payload'],
+        ]);
+    }
+
+    public function getConfidenceDistribution()
+    {
+        $config = config('MyMIForecasting');
+        if (! ($config->features['confidenceHeatmaps'] ?? true)) {
+            return $this->failForbidden('Confidence heatmaps are disabled.');
+        }
+
+        $timeframe = (string) ($this->request->getGet('timeframe') ?? 'all');
+        $refresh = filter_var($this->request->getGet('refresh'), FILTER_VALIDATE_BOOLEAN);
+
+        $aggregation = service('forecastAggregationService');
+        $result = $aggregation->getConfidenceDistribution($timeframe, $refresh);
+
+        return $this->respond([
+            'status' => 'success',
+            'cached' => $result['cached'],
+            'timeframe' => $timeframe,
+            'data' => $result['payload'],
+        ]);
+    }
+
+    public function getForecastAccuracySummary()
+    {
+        $config = config('MyMIForecasting');
+        if (! ($config->features['accuracyTracking'] ?? true)) {
+            return $this->failForbidden('Forecast accuracy tracking is disabled.');
+        }
+
+        $days = (int) ($this->request->getGet('days') ?? ($config->accuracy['cacheDays'] ?? 30));
+        $days = max(1, min(90, $days));
+
+        $evaluator = service('forecastAccuracyEvaluator');
+        $payload = $evaluator->getAccuracyDashboardData($days);
+
+        return $this->respond([
+            'status' => 'success',
+            'days' => $days,
+            'data' => $payload,
+        ]);
+    }
+
+    private function buildForecastDetailsPayload(string $ticker, array $latestForecasts, array $history): array
+    {
+        $timeframes = [];
+
+        foreach ($latestForecasts as $forecast) {
+            $timeframe = (string) ($forecast['timeframe'] ?? '');
+            if ($timeframe === '') {
+                continue;
+            }
+
+            $timeframes[$timeframe] = [
+                'direction' => $forecast['forecast_direction'] ?? 'neutral',
+                'confidence' => (int) ($forecast['confidence_score'] ?? 0),
+                'target' => $forecast['target_price'] ?? null,
+                'range' => [
+                    $forecast['range_low'] ?? null,
+                    $forecast['range_high'] ?? null,
+                ],
+                'indicators' => $this->decodeIndicators($forecast['indicators_json'] ?? null),
+                'updated_at' => $forecast['updated_at'] ?? $forecast['created_at'] ?? null,
+            ];
+        }
+
+        $historyPayload = array_map(static function (array $snapshot): array {
+            return [
+                'recorded_at' => $snapshot['recorded_at'] ?? null,
+                'timeframe' => $snapshot['timeframe'] ?? null,
+                'direction' => $snapshot['forecast_direction'] ?? null,
+                'confidence' => (int) ($snapshot['confidence_score'] ?? 0),
+                'target' => $snapshot['target_price'] ?? null,
+                'range' => [
+                    $snapshot['range_low'] ?? null,
+                    $snapshot['range_high'] ?? null,
+                ],
+                'indicators' => $this->decodeIndicators($snapshot['indicators_json'] ?? null),
+            ];
+        }, $history);
+
+        return [
+            'ticker' => $ticker,
+            'timeframes' => $timeframes,
+            'history' => $historyPayload,
+        ];
+    }
+
+    private function decodeIndicators(?string $payload): array
+    {
+        if (! $payload) {
+            return [];
+        }
+
+        $decoded = json_decode($payload, true);
+        return is_array($decoded) ? $decoded : [];
     }
 
     public function searchTickers()
