@@ -161,6 +161,7 @@ class ManagementController extends UserController
         $this->data['contentEngine'] = $this->buildContentEngineSummary();
         $this->data['chatUsage'] = $this->aiCostControls->getChatUsageSummary();
         $this->data['chatConfig'] = $this->aiCostControls->chatRuntimeConfig();
+        $this->data['autoloadHealth'] = Services::autoloadHealthService()->getStatus();
         return $this->renderTheme('App\Modules\Management\Views\index', $this->data);
     }
 
