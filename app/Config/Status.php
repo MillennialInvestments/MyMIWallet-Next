@@ -1,4 +1,7 @@
 <?php
+
+namespace Config;
+
 final class Status
 {
     public const ACTIVE = 1;

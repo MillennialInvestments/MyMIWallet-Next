@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Blog\Controllers;
+namespace App\Modules\Advertise\Controllers;
 
 use Config\Services; 
 use App\Config\{SiteSettings, SocialMedia}; 
