@@ -1,7 +1,8 @@
 <?php 
 
-namespace App\Modules\Users\Controllers;
+namespace App\Modules\User\Controllers;
 
+use App\Controllers\UserController;
 use App\Models\TrackerModel;
 
 #[\AllowDynamicProperties]

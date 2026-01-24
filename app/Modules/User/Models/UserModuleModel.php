@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Users\Models;
+namespace App\Modules\User\Models;
 
 use CodeIgniter\Model;
 use Faker\Generator;

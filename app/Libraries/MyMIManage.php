@@ -1,6 +1,6 @@
 <?php
 
-namespace Apps\Libraries;
+namespace App\Libraries;
 
 use App\Libraries\{BaseLoader, MyMIUser}; 
 use App\Models\InvestorModel; 
