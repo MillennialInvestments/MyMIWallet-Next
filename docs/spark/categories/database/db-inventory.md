@@ -34,5 +34,20 @@ php spark db:inventory [options]
 - Database connection errors.
 - File permissions prevent writing to `writable/db_inventory` or `/docs/mysql`.
 
+## Implementation
+- File: `app/Commands/Database/Inventory.php`
+- Service: `app/Services/Spark/DbInventoryService.php`
+
+## Example Output
+```
+Starting db:inventory
+db:inventory summary
+status: aligned
+missing_tables: 0
+missing_columns: 0
+missing_indexes: 0
+output_dir: /path/to/writable/db_inventory
+```
+
 ## Status
-- Existing
+- Implemented

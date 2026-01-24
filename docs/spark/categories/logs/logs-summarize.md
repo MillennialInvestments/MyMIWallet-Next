@@ -31,5 +31,18 @@ php spark logs:summarize [date|yesterday]
 - Log file not found for the date.
 - Insufficient permissions to read/write log directory.
 
+## Implementation
+- File: `app/Commands/Logs/Summarize.php`
+- Service: `app/Services/Spark/LogSummarizeService.php`
+
+## Example Output
+```
+Starting logs:summarize
+Summary generated for 2024-03-02: /path/to/writable/logs/summary-2024-03-02.log
+Last processed timestamp updated to: 2024-03-02 09:42:10
+total_entries=128
+new_entries=12
+```
+
 ## Status
-- Existing
+- Implemented
