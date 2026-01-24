@@ -20,16 +20,14 @@ class QueueConfig
         $queue->setAsGlobal();
         $queue->setEventDispatcher(new Dispatcher(new Container));
 
-        $queue->getContainer()->bind('config', function () {
-            return [
-                'queue.default' => 'database',
-                'queue.connections.database' => [
-                    'driver' => 'database',
-                    'table' => 'jobs',
-                    'queue' => 'default',
-                    'retry_after' => 90,
-                ],
-            ];
-        });
+        $queue->getContainer()->instance('config', [
+            'queue.default' => 'database',
+            'queue.connections.database' => [
+                'driver' => 'database',
+                'table' => 'jobs',
+                'queue' => 'default',
+                'retry_after' => 90,
+            ],
+        ]);
     }
 }
