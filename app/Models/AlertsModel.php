@@ -44,6 +44,8 @@ class AlertsModel extends Model
         'custom_scripts_analytics','order_status',
         // Marketing alignment fields
         'keywords','last_marketed_at','marketing_status','distribution_channels',
+        // Forecast fields
+        'latest_forecast_id','forecast_confidence','forecast_direction','forecast_target_price','forecast_range_low','forecast_range_high','forecast_updated_at',
         // Broker execution alert fields
         'source','account_type','broker_order_id','execution_id','filled_qty','filled_price','filled_at','side','notified_discord',
     ];
@@ -1855,6 +1857,7 @@ class AlertsModel extends Model
                     'last_updated' => date('Y-m-d H:i:s'),
                     'date'         => $emailDate,
                 ]);
+            $this->triggerForecasting((int) $existingAlert['id'], $tradeData['ticker']);
         } else {
             $tradeData['status']       = 'In Review';
             $tradeData['created_on']   = date('Y-m-d H:i:s');
@@ -1865,6 +1868,8 @@ class AlertsModel extends Model
 
             if ($result) {
                 log_message('info', "✅ New trade alert inserted: " . json_encode($tradeData));
+                $alertId = (int) $this->db->insertID();
+                $this->triggerForecasting($alertId, $tradeData['ticker']);
             } else {
                 log_message('error', "❌ Failed to insert trade alert: " . json_encode($this->db->error()));
             }
@@ -2205,6 +2210,8 @@ class AlertsModel extends Model
                 ->where('id', $existing['id'])
                 ->update($update);
 
+            $this->triggerForecasting((int) $existing['id'], $ticker);
+
             return array_merge($existing, $update);
         }
 
@@ -2224,7 +2231,41 @@ class AlertsModel extends Model
         $this->db->table('bf_investment_trade_alerts')->insert($insert);
         $insert['id'] = $this->db->insertID();
 
+        $this->triggerForecasting((int) $insert['id'], $ticker);
+
         return $insert;
+    }
+
+    private function triggerForecasting(int $alertId, string $ticker): void
+    {
+        $config = config('MyMIForecasting');
+        if (! $config || ! $config->enabled) {
+            return;
+        }
+
+        if (trim($ticker) === '') {
+            return;
+        }
+
+        try {
+            $forecaster = service('mymiForecaster');
+            if (! $forecaster) {
+                return;
+            }
+
+            if (! $config->runInline) {
+                $forecaster->enqueueForecastJob($alertId, $ticker, ['timeframes' => $config->defaultTimeframes]);
+                log_message('info', 'FORECAST: job queued for {ticker}', ['ticker' => $ticker]);
+                return;
+            }
+
+            $forecaster->forecastForAlert($alertId, $ticker, ['timeframes' => $config->defaultTimeframes]);
+        } catch (\Throwable $e) {
+            log_message('error', 'FORECAST: trigger failed for {ticker}: {msg}', [
+                'ticker' => $ticker,
+                'msg' => $e->getMessage(),
+            ]);
+        }
     }
 
     public function recordAlertHistory(array $snapshot): void

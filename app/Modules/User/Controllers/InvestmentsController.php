@@ -3,7 +3,7 @@
 use App\Controllers\UserController;
 use App\Config\{Auth, SiteSettings, SocialMedia};
 use App\Libraries\{MyMIBudget, MyMIDashboard, MyMICoin, MyMIGold, MyMIInvestments, MyMIMarketData, MyMIMarketing, MyMIReferrals, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets, MyMISimulator, FRED, MyMIFractalAnalyzer};
-use App\Models\{AccountsModel, BudgetModel, InvestmentModel, MarketingModel, MgmtBudgetModel, MyMIGoldModel, UserModel, WalletModel};
+use App\Models\{AccountsModel, BudgetModel, InvestmentModel, MarketingModel, MgmtBudgetModel, MyMIGoldModel, UserModel, WalletModel, InvestmentPriceForecastModel, InvestmentForecastHistoryModel};
 use App\Services\{BudgetService, DashboardService, GoalTrackingService, InvestmentService, SolanaService, UserService, WalletService};
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Cache\CacheInterface;
@@ -218,6 +218,38 @@ class InvestmentsController extends UserController
         $this->data['totalAccountBalanceFMT'] = $totalAccountBalanceFMT;
         return $this->data;
 }
+
+    public function forecastModal(string $ticker)
+    {
+        $ticker = strtoupper(trim($ticker));
+        if ($ticker === '') {
+            throw PageNotFoundException::forPageNotFound();
+        }
+
+        $forecastModel = new InvestmentPriceForecastModel();
+        $historyModel = new InvestmentForecastHistoryModel();
+        $config = config('MyMIForecasting');
+
+        $latestForecasts = $forecastModel
+            ->where('ticker', $ticker)
+            ->orderBy('updated_at', 'DESC')
+            ->findAll();
+
+        $history = $historyModel
+            ->where('ticker', $ticker)
+            ->orderBy('recorded_at', 'DESC')
+            ->limit(10)
+            ->findAll();
+
+        $data = [
+            'ticker' => $ticker,
+            'latestForecasts' => $latestForecasts,
+            'historySnapshots' => $history,
+            'confidenceThresholds' => $config->confidenceThresholds ?? [],
+        ];
+
+        return view('App\\Modules\\User\\Views\\Investments\\forecast_modal', $data);
+    }
 
     private function userAccountData()
     {

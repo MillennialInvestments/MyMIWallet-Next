@@ -116,7 +116,13 @@ $alertNews = $alertNews ?? [];
                                     <th>Volume</th>
                                     <th>Type</th>
                                     <th>Status</th>
+                                    <th>Forecast</th>
+                                    <th>Confidence</th>
+                                    <th>Target</th>
+                                    <th>Range</th>
+                                    <th>Updated</th>
                                     <th>Chart</th>
+                                    <th>Actions</th>
                                     <?php if (aiKimiEnabled()): ?>
                                         <th class="text-center">AI</th>
                                     <?php endif; ?>
@@ -154,6 +160,21 @@ $alertNews = $alertNews ?? [];
                                             <td><?= esc(number_format((float) ($alert['volume'] ?? 0))); ?></td>
                                             <td><?= esc($alert['alert_type'] ?? $alert['status'] ?? '—'); ?></td>
                                             <td><?= esc($alert['status'] ?? 'Opened'); ?></td>
+                                            <?php
+                                            $forecastDirection = $alert['forecast_direction'] ?? 'neutral';
+                                            $forecastConfidence = (int) ($alert['forecast_confidence'] ?? 0);
+                                            $forecastBadge = 'bg-secondary';
+                                            if ($forecastConfidence >= 70) {
+                                                $forecastBadge = 'bg-success';
+                                            } elseif ($forecastConfidence >= 50) {
+                                                $forecastBadge = 'bg-warning';
+                                            }
+                                            ?>
+                                            <td><span class="badge <?= esc($forecastBadge, 'attr'); ?> text-uppercase"><?= esc($forecastDirection); ?></span></td>
+                                            <td><?= esc($forecastConfidence); ?>%</td>
+                                            <td><?= esc(number_format((float) ($alert['forecast_target_price'] ?? 0), 2)); ?></td>
+                                            <td><?= esc(number_format((float) ($alert['forecast_range_low'] ?? 0), 2)); ?> - <?= esc(number_format((float) ($alert['forecast_range_high'] ?? 0), 2)); ?></td>
+                                            <td><?= esc($alert['forecast_updated_at'] ?? '—'); ?></td>
                                             <td>
                                                 <?php if (! empty($alert['chart_link'])): ?>
                                                     <a href="<?= esc($alert['chart_link'], 'attr'); ?>" target="_blank" rel="noopener" class="btn btn-xs btn-outline-primary">
@@ -167,6 +188,10 @@ $alertNews = $alertNews ?? [];
                                                 <?php else: ?>
                                                     <span class="text-soft">N/A</span>
                                                 <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-xs btn-outline-secondary forecast-refresh-btn" data-ticker="<?= esc($ticker, 'attr'); ?>">Re-Forecast</button>
+                                                <button class="btn btn-xs btn-outline-primary mt-1 forecast-modal-btn" data-ticker="<?= esc($ticker, 'attr'); ?>">Details</button>
                                             </td>
                                             <?php if (aiKimiEnabled()): ?>
                                                 <td class="text-center">
@@ -182,12 +207,12 @@ $alertNews = $alertNews ?? [];
                                                     <?php endif; ?>
                                                 </td>
                                             <?php endif; ?>
-                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>
+                                    <?php $colspan = aiKimiEnabled() ? 16 : 15; ?>
                                     <tr>
-                                        <td colspan="9" class="text-center text-soft">
+                                        <td colspan="<?= esc($colspan, 'attr'); ?>" class="text-center text-soft">
                                             No open alerts yet. Create or import alerts to get started.
                                         </td>
                                     </tr>
@@ -364,6 +389,48 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
     <?php endif; ?>
+
+    document.querySelectorAll('.forecast-refresh-btn').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+            const ticker = btn.getAttribute('data-ticker');
+            if (!ticker) return;
+
+            btn.disabled = true;
+            btn.textContent = 'Refreshing...';
+
+            try {
+                const response = await fetch('/API/Investments/reforecastTicker', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({ ticker, timeframes: '5m,10m' }),
+                });
+                const json = await response.json();
+                if (json?.status === 'success') {
+                    window.location.reload();
+                }
+            } catch (e) {
+                console.error('Forecast refresh failed', e);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Re-Forecast';
+            }
+        });
+    });
+
+    document.querySelectorAll('.forecast-modal-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const ticker = btn.getAttribute('data-ticker');
+            if (!ticker) return;
+            const url = `/Investments/forecastModal/${ticker}`;
+            if (typeof window.dynamicModalLoader === 'function') {
+                window.dynamicModalLoader(url);
+            } else {
+                window.location.href = url;
+            }
+        });
+    });
 
     const alertLabels = <?= json_encode($chartLabels, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
     const alertPrices = <?= json_encode($chartPrices, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;

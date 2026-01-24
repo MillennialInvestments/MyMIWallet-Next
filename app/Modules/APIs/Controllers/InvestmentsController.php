@@ -9,7 +9,7 @@ use App\Config\{Auth, SiteSettings, SocialMedia};
 use App\Controllers\UserController;
 use App\Libraries\{BaseLoader, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIUser, MyMIWallet, MyMIWallets};
 use App\Modules\User\Libraries\{DashboardLibrary};
-use App\Models\{InvestmentModel, PageSEOModel, ReferralModel, SubscribeModel, UserModel};
+use App\Models\{InvestmentModel, PageSEOModel, ReferralModel, SubscribeModel, UserModel, AlertsModel};
 use App\Services\{InvestmentService};
 use CodeIgniter\API\ResponseTrait;
 use App\Modules\APIs\Models\InvestmentsNewsModel;
@@ -35,6 +35,7 @@ class InvestmentsController extends UserController
     protected $userModel;
     protected $investmentService;
     protected InvestmentsNewsModel $newsModel;
+    protected AlertsModel $alertsModel;
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
         parent::initController($request, $response, $logger);
@@ -54,6 +55,7 @@ class InvestmentsController extends UserController
         // $this->cuID                         = $this->auth->id() ?? $this->session->get('user_id') ?? 0;
         $this->investmentService            = new InvestmentService();
         $this->newsModel                    = new InvestmentsNewsModel();
+        $this->alertsModel                  = new AlertsModel();
     }
 
     public function commonData(): array {
@@ -326,6 +328,82 @@ class InvestmentsController extends UserController
         }
     }
 
+    private function guardAdmin(): ?\CodeIgniter\HTTP\ResponseInterface
+    {
+        if (! $this->auth || ! method_exists($this->auth, 'check') || ! $this->auth->check()) {
+            return $this->failUnauthorized('Unauthorized.');
+        }
+
+        $user = method_exists($this->auth, 'user') ? $this->auth->user() : null;
+        $authorizer = service('authorization');
+        if ($authorizer && $user && ! ($authorizer->inGroup('admin', $user->id) || $authorizer->inGroup('superadmin', $user->id))) {
+            return $this->failForbidden('Insufficient permissions.');
+        }
+
+        return null;
+    }
+
+    public function getForecastHighlights()
+    {
+        $forecaster = service('mymiForecaster');
+        $payload = $forecaster->getForecastHighlights();
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'data' => $payload,
+        ]);
+    }
+
+    public function refreshForecasts()
+    {
+        if ($guard = $this->guardAdmin()) {
+            return $guard;
+        }
+
+        $limit = (int) ($this->request->getPost('limit') ?? 50);
+        $limit = max(1, min(200, $limit));
+
+        $forecaster = service('mymiForecaster');
+        $config = config('MyMIForecasting');
+        $summary = ($config && ! $config->runInline)
+            ? $forecaster->processQueuedJobs($limit)
+            : $forecaster->refreshForecastsForOpenAlerts($limit);
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'data' => $summary,
+        ]);
+    }
+
+    public function reforecastTicker()
+    {
+        if ($guard = $this->guardAdmin()) {
+            return $guard;
+        }
+
+        $ticker = strtoupper(trim((string) ($this->request->getPost('ticker') ?? $this->request->getGet('ticker'))));
+        if ($ticker === '') {
+            return $this->failValidationErrors('Ticker is required.');
+        }
+
+        $timeframesInput = $this->request->getPost('timeframes') ?? $this->request->getGet('timeframes');
+        $timeframes = $timeframesInput ? array_map('trim', explode(',', (string) $timeframesInput)) : [];
+
+        $alert = $this->alertsModel->getLatestTradeAlertBySymbol($ticker) ?? [];
+        $alertId = (int) ($alert['id'] ?? 0);
+
+        $forecaster = service('mymiForecaster');
+        $options = $timeframes ? ['timeframes' => $timeframes] : [];
+        $result = $alertId > 0
+            ? $forecaster->forecastForAlert($alertId, $ticker, $options)
+            : $forecaster->forecastForTicker($ticker, $timeframes);
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'data' => $result,
+        ]);
+    }
+
     public function listNews()
     {
         try {
@@ -436,4 +514,3 @@ class InvestmentsController extends UserController
         ]);
     }
 }
-
