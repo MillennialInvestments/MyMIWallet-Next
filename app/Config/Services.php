@@ -7,6 +7,8 @@ use App\Services\AuthAuditService;
 use App\Services\EventTracker;
 use App\Services\OnboardingProgressService;
 use App\Services\SetupStatusService;
+use App\Services\Forecasting\MyMIForecaster;
+use App\Services\Forecasting\Providers\AlphaVantageProvider;
 use CodeIgniter\Config\BaseService;
 
 /**
@@ -125,6 +127,23 @@ class Services extends BaseService
         }
 
         return new SafeCache();
+    }
+
+    public static function mymiForecaster(bool $getShared = true): MyMIForecaster
+    {
+        if ($getShared) {
+            /** @var MyMIForecaster $service */
+            $service = static::getSharedInstance('mymiForecaster');
+            return $service;
+        }
+
+        $provider = new AlphaVantageProvider();
+        $forecastModel = model(\App\Models\InvestmentPriceForecastModel::class);
+        $alertsModel = model(\App\Models\AlertsModel::class);
+        $cache = cache();
+        $config = config('MyMIForecasting');
+
+        return new MyMIForecaster($provider, $forecastModel, $alertsModel, $cache, $config);
     }
     
     /*
