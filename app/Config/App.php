@@ -158,9 +158,22 @@ class App extends BaseConfig
      */
     public bool $cacheConfig = false;
 
+    /**
+     * --------------------------------------------------------------------------
+     * Autoloader Optimization
+     * --------------------------------------------------------------------------
+     *
+     * Whether to optimize the autoloader in production.
+     */
+    public bool $optimizeAutoloader = false;
+
     public function __construct()
     {
         parent::__construct();
+
+        if (! function_exists('is_ci')) {
+            require APPPATH . 'Helpers/ci_guard_helper.php';
+        }
 
         $baseURL = env('app.baseURL');
         if (! empty($baseURL)) {
@@ -169,6 +182,11 @@ class App extends BaseConfig
 
         $this->indexPage = env('app.indexPage', '');
         $this->debugHUD = filter_var(env('app.debugHUD', $this->debugHUD), FILTER_VALIDATE_BOOLEAN);
+
+        if (is_ci()) {
+            $this->cacheConfig = false;
+            $this->optimizeAutoloader = false;
+        }
     }
 
     /**

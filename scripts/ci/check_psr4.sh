@@ -2,7 +2,7 @@
 set -e
 
 echo "Running PSR-4 audit..."
-php spark audit:psr4 --ci
+php scripts/ci/psr4_audit.php
 
 if [ $? -ne 0 ]; then
   echo "❌ PSR-4 violations detected. Build failed."

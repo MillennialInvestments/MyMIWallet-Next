@@ -3,6 +3,7 @@
 namespace Config;
 
 use CodeIgniter\Database\Config;
+use function is_ci;
 
 /**
  * Database Configuration
@@ -53,23 +54,23 @@ class Database extends Config
      * running PHPUnit database tests.
      */
     public array $tests = [
-        'DSN'         => '',
-        'hostname'    => 'mysql.thegighop.com',
-        'username'    => 'timoteo2392',
-        'password'    => 'Dawg@239223',
-        'database'    => 'thegighop',
+        'DSN'         => 'sqlite::memory:',
+        'hostname'    => '',
+        'username'    => '',
+        'password'    => '',
+        'database'    => ':memory:',
         'DBDriver'    => 'SQLite3',
-        'DBPrefix'    => 'bf_',  // Needed to ensure we're working correctly with prefixes live. DO NOT REMOVE FOR CI DEVS
+        'DBPrefix'    => 'bf_',
         'pConnect'    => false,
         'DBDebug'     => true,
         'charset'     => 'utf8',
         'DBCollat'    => 'utf8_general_ci',
         'swapPre'     => '',
-        'encrypt'     => true,
-        'compress'    => true,
-        'strictOn'    => true,
+        'encrypt'     => false,
+        'compress'    => false,
+        'strictOn'    => false,
         'failover'    => [],
-        'port'        => 3306,
+        'port'        => 0,
         'foreignKeys' => true,
         'busyTimeout' => 1000,
     ];
@@ -77,6 +78,14 @@ class Database extends Config
     public function __construct()
     {
         parent::__construct();
+
+        if (! function_exists('is_ci')) {
+            require APPPATH . 'Helpers/ci_guard_helper.php';
+        }
+
+        if (is_ci()) {
+            $this->defaultGroup = 'tests';
+        }
 
         // Ensure that we always set the database group to 'tests' if
         // we are currently running an automated test suite, so that
