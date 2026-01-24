@@ -4,8 +4,10 @@ namespace Config;
 
 use App\Libraries\{CrudCacheInvalidator, KimiClient, MyMIAnalytics, MyMIInvestments, SafeCache};
 use App\Services\AuthAuditService;
+use App\Services\AutoloadHealthService;
 use App\Services\EventTracker;
 use App\Services\OnboardingProgressService;
+use App\Services\Psr4AuditService;
 use App\Services\SetupStatusService;
 use App\Services\Forecasting\MyMIForecaster;
 use App\Services\Forecasting\Providers\AlphaVantageProvider;
@@ -74,6 +76,28 @@ class Services extends BaseService
         }
 
         return new AuthAuditService();
+    }
+
+    public static function psr4AuditService(bool $getShared = true): Psr4AuditService
+    {
+        if ($getShared) {
+            /** @var Psr4AuditService $service */
+            $service = static::getSharedInstance('psr4AuditService');
+            return $service;
+        }
+
+        return new Psr4AuditService();
+    }
+
+    public static function autoloadHealthService(bool $getShared = true): AutoloadHealthService
+    {
+        if ($getShared) {
+            /** @var AutoloadHealthService $service */
+            $service = static::getSharedInstance('autoloadHealthService');
+            return $service;
+        }
+
+        return new AutoloadHealthService();
     }
 
     public static function eventTracker(bool $getShared = true): EventTracker
