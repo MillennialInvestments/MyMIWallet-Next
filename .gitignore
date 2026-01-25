@@ -2,6 +2,8 @@
 /writable/*
 /public/writable/
 # Allow checked-in smoke sample
+!/writable/logs/
+!/writable/triage/
 !/writable/samples/
 !/writable/samples/*
 !/writable/samples/daily_gainers.json

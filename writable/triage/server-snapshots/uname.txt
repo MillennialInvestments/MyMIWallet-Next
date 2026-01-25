@@ -1,0 +1,1 @@
+Linux vps33344 6.8.0-84-generic #84~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Sep  9 14:29:36 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
