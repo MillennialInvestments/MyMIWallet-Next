@@ -96,8 +96,8 @@ $routes->group('debug', ['namespace' => 'App\Controllers\Debug'], static functio
 // App Health and Ops endpoints
 $routes->group('', ['namespace' => 'App\Controllers'], static function($routes) {
     // Health
-    $routes->get('health', 'Health::index');     // JSON {"status":"ok",...}
-    $routes->get('status', 'Health::status');    // plain "OK"
+    $routes->get('health', 'Health::index', ['filter' => 'responsecache:60']);     // JSON {"status":"ok",...}
+    $routes->get('status', 'Health::status', ['filter' => 'responsecache:60']);    // plain "OK"
     $routes->get('api/health', 'Api\\HealthController::index'); // convenient alias
     $routes->get('api/admin/chat-usage', 'Api\\AdminChatUsageController::index', ['filter' => 'permission:admin.access']);
 
