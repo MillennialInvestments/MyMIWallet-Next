@@ -254,4 +254,10 @@ class App extends BaseConfig
     public bool $debugHUD = false;
     public bool   $cookieHTTPOnly = true; // recommended you leave this as true
     public string $cookieSameSite = 'Lax';         // allow main + subdomain navigation
+
+    /** 
+     * Maintenance Mode
+     */
+    public bool $maintenanceMode = false;
+
 }
