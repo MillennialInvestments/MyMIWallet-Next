@@ -8,7 +8,7 @@ use Config\MyMI as MyMIConfig;
 use Myth\Auth\Authorization\GroupModel;
 use App\Config\{Auth, SiteSettings, SocialMedia}; 
 use App\Controllers\UserController;
-use App\Libraries\{MyMIAdvisor, MyMIAlerts, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIUser, MyMIWallet, MyMIWallets};
+use App\Libraries\{CacheKey, MyMIAdvisor, MyMIAlerts, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIUser, MyMIWallet, MyMIWallets, SafeCache};
 use App\Models\{AccountsModel, AlertsModel, BudgetModel, SignalsModel, UserModel};
 // use App\Modules\User\Libraries\{DashboardLibrary}; 
 use CodeIgniter\API\ResponseTrait; // Import the ResponseTrait
@@ -54,6 +54,7 @@ class AlertsController extends UserController
     protected $userDashboard;
     protected $userWallets;
     protected array $alertsFlags = [];
+    protected SafeCache $safeCache;
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
@@ -65,6 +66,7 @@ class AlertsController extends UserController
         $this->siteSettings                         = config('SiteSettings');
         $this->socialMedia                          = config('SocialMedia');
         $this->session                              = Services::session();
+        $this->safeCache                            = Services::safeCache();
         $this->debug                                = $this->siteSettings->debug;
         $this->uri                                  = $this->request->getUri();
         $config                                     = new MyMIConfig();
@@ -279,11 +281,11 @@ class AlertsController extends UserController
         $this->logMem('end');
 
         // ── Opportunistic CRON trigger based on idle timeout ───────────────────
-        $lastActiveKey = sanitizeCacheKey('user_alerts_activity_' . $this->cuID);
-        $lastActive = cache()->get($lastActiveKey);
+        $lastActiveKey = CacheKey::user('alerts', 'activity', (int) $this->cuID);
+        $lastActive = $this->safeCache->get($lastActiveKey);
         $now        = time();
         if (!$lastActive || ($now - $lastActive) > 900) { // 15 min
-            cache()->save($lastActiveKey, $now, 3600);
+            $this->safeCache->saveUser('alerts', 'activity', (int) $this->cuID, $now, 3600);
             exec('php ' . FCPATH . 'spark trade:processAlerts > /dev/null 2>/dev/null &');
             log_message('debug', "Triggered processAlerts CRON for user {$this->cuID}");
         }
@@ -532,11 +534,11 @@ class AlertsController extends UserController
         $this->commonData();
 
         // Async cron trigger
-        $lastActiveKey = sanitizeCacheKey('user_alerts_activity_' . $this->cuID);
-        $lastActive = cache()->get($lastActiveKey);
+        $lastActiveKey = CacheKey::user('alerts', 'activity', (int) $this->cuID);
+        $lastActive = $this->safeCache->get($lastActiveKey);
         $now = time();
         if (!$lastActive || ($now - $lastActive) > 300) {
-            cache()->save($lastActiveKey, $now, 3600);
+            $this->safeCache->saveUser('alerts', 'activity', (int) $this->cuID, $now, 3600);
             exec('php ' . FCPATH . 'spark trade:processAlerts > /dev/null 2>/dev/null &');
         }
 
