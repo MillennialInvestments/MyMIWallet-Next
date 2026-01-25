@@ -240,6 +240,11 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->post('Discord/completeOnboardingStep', 'DiscordController::completeOnboardingStep');
     $routes->match(['GET', 'POST'], 'Status/(:segment)', 'APIController::status');
     $routes->match(['GET', 'POST'], 'Investments/getSymbolsByTradeType/(:segment)', 'APIController::getSymbolsByTradeType/$1');
+    $routes->get('Investments/getForecastDetails/(:segment)', 'InvestmentsController::getForecastDetails/$1');
+    $routes->get('Investments/getConfidenceHeatmap', 'InvestmentsController::getConfidenceHeatmap');
+    $routes->get('Investments/getTopConfidenceBySector', 'InvestmentsController::getTopConfidenceBySector');
+    $routes->get('Investments/getConfidenceDistribution', 'InvestmentsController::getConfidenceDistribution');
+    $routes->get('Investments/getForecastAccuracySummary', 'InvestmentsController::getForecastAccuracySummary');
 
     $routes->group('AI', function($routes) {
         $routes->post('Chat', 'AIController::postChat');

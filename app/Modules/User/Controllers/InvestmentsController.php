@@ -247,10 +247,72 @@ class InvestmentsController extends UserController
             'ticker' => $ticker,
             'latestForecasts' => $latestForecasts,
             'historySnapshots' => $history,
+            'forecastDetails' => $this->buildForecastDetailsPayload($ticker, $latestForecasts, $history),
             'confidenceThresholds' => $config->confidenceThresholds ?? [],
+            'featureFlags' => $config->features ?? [],
+            'heatmapColors' => [
+                'low' => '#e85347',
+                'medium' => '#f4bd0e',
+                'high' => '#1ee0ac',
+            ],
         ];
 
-        return view('App\\Modules\\User\\Views\\Investments\\forecast_modal', $data);
+        return view('Investments/forecast_detail_modal', $data);
+    }
+
+    private function buildForecastDetailsPayload(string $ticker, array $latestForecasts, array $history): array
+    {
+        $timeframes = [];
+
+        foreach ($latestForecasts as $forecast) {
+            $timeframe = (string) ($forecast['timeframe'] ?? '');
+            if ($timeframe === '') {
+                continue;
+            }
+
+            $timeframes[$timeframe] = [
+                'direction' => $forecast['forecast_direction'] ?? 'neutral',
+                'confidence' => (int) ($forecast['confidence_score'] ?? 0),
+                'target' => $forecast['target_price'] ?? null,
+                'range' => [
+                    $forecast['range_low'] ?? null,
+                    $forecast['range_high'] ?? null,
+                ],
+                'indicators' => $this->decodeIndicators($forecast['indicators_json'] ?? null),
+                'updated_at' => $forecast['updated_at'] ?? $forecast['created_at'] ?? null,
+            ];
+        }
+
+        $historyPayload = array_map(static function (array $snapshot): array {
+            return [
+                'recorded_at' => $snapshot['recorded_at'] ?? null,
+                'timeframe' => $snapshot['timeframe'] ?? null,
+                'direction' => $snapshot['forecast_direction'] ?? null,
+                'confidence' => (int) ($snapshot['confidence_score'] ?? 0),
+                'target' => $snapshot['target_price'] ?? null,
+                'range' => [
+                    $snapshot['range_low'] ?? null,
+                    $snapshot['range_high'] ?? null,
+                ],
+                'indicators' => $this->decodeIndicators($snapshot['indicators_json'] ?? null),
+            ];
+        }, $history);
+
+        return [
+            'ticker' => $ticker,
+            'timeframes' => $timeframes,
+            'history' => $historyPayload,
+        ];
+    }
+
+    private function decodeIndicators(?string $payload): array
+    {
+        if (! $payload) {
+            return [];
+        }
+
+        $decoded = json_decode($payload, true);
+        return is_array($decoded) ? $decoded : [];
     }
 
     public function getForecastDetails(string $ticker)
