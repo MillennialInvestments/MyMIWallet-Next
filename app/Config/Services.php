@@ -12,9 +12,8 @@ use App\Services\SetupStatusService;
 use App\Services\Forecasting\ForecastAccuracyEvaluator;
 use App\Services\Forecasting\ForecastAggregationService;
 use App\Services\Forecasting\MyMIForecaster;
-use App\Services\Forecasting\ForecastAggregationService;
-use App\Services\Forecasting\ForecastAccuracyEvaluator;
 use App\Services\Forecasting\Providers\AlphaVantageProvider;
+use Config\Cache;
 use CodeIgniter\Config\BaseService;
 use CodeIgniter\Config\Services as CoreServices;
 use function is_ci;
@@ -61,8 +60,13 @@ class Services extends BaseService
             $cacheConfig->backupHandler = 'dummy';
         }
 
-        return CoreServices::responsecache($getShared);
+        return parent::responsecache($config, $getShared);
     }
+
+    // public static function responsecache(?Cache $config = null, bool $getShared = true)
+    // {
+    //     return parent::responsecache($config, $getShared);
+    // }
 
     public static function crudCacheInvalidator(bool $getShared = true): CrudCacheInvalidator
     {
