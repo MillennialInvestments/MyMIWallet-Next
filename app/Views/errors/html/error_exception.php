@@ -3,6 +3,7 @@ use CodeIgniter\HTTP\Header;
 use CodeIgniter\CodeIgniter;
 
 $errorId = uniqid('error', true);
+$cspNonce = $cspNonce ?? (service('renderer')->getData('cspNonce') ?? '');
 ?>
 <!doctype html>
 <html>
@@ -11,15 +12,15 @@ $errorId = uniqid('error', true);
     <meta name="robots" content="noindex">
 
     <title><?= esc($title) ?></title>
-    <style>
+    <style nonce="<?= esc($cspNonce) ?>">
         <?= preg_replace('#[\r\n\t ]+#', ' ', file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'debug.css')) ?>
     </style>
 
-    <script>
+    <script nonce="<?= esc($cspNonce) ?>">
         <?= file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'debug.js') ?>
     </script>
 </head>
-<body onload="init()">
+<body>
 
     <!-- Header -->
     <div class="header">
@@ -113,7 +114,7 @@ $errorId = uniqid('error', true);
                                 &nbsp;&nbsp;&mdash;&nbsp;&nbsp;<?= esc($row['class'] . $row['type'] . $row['function']) ?>
                                 <?php if (! empty($row['args'])) : ?>
                                     <?php $argsId = $errorId . 'args' . $index ?>
-                                    ( <a href="#" onclick="return toggle('<?= esc($argsId, 'attr') ?>');">arguments</a> )
+                                    ( <a href="#" class="js-toggle-args" data-args-id="<?= esc($argsId, 'attr') ?>">arguments</a> )
                                     <div class="args" id="<?= esc($argsId, 'attr') ?>">
                                         <table cellspacing="0">
 
@@ -251,7 +252,7 @@ $errorId = uniqid('error', true);
                 <table>
                     <tbody>
                         <tr>
-                            <td style="width: 10em">Path</td>
+                            <td class="debug-col-md">Path</td>
                             <td><?= esc($request->getUri()) ?></td>
                         </tr>
                         <tr>
@@ -263,7 +264,7 @@ $errorId = uniqid('error', true);
                             <td><?= esc($request->getIPAddress()) ?></td>
                         </tr>
                         <tr>
-                            <td style="width: 10em">Is AJAX Request?</td>
+                            <td class="debug-col-md">Is AJAX Request?</td>
                             <td><?= $request->isAJAX() ? 'yes' : 'no' ?></td>
                         </tr>
                         <tr>
@@ -294,7 +295,7 @@ $errorId = uniqid('error', true);
 
                     <h3>$<?= esc($var) ?></h3>
 
-                    <table style="width: 100%">
+                    <table class="debug-table-full">
                         <thead>
                             <tr>
                                 <th>Key</th>
@@ -370,7 +371,7 @@ $errorId = uniqid('error', true);
             <div class="content" id="response">
                 <table>
                     <tr>
-                        <td style="width: 15em">Response Status</td>
+                        <td class="debug-col-lg">Response Status</td>
                         <td><?= esc($response->getStatusCode() . ' - ' . $response->getReasonPhrase()) ?></td>
                     </tr>
                 </table>
@@ -430,7 +431,7 @@ $errorId = uniqid('error', true);
                             <td><?= esc(static::describeMemory(memory_get_usage(true))) ?></td>
                         </tr>
                         <tr>
-                            <td style="width: 12em">Peak Memory Usage:</td>
+                            <td class="debug-col-sm">Peak Memory Usage:</td>
                             <td><?= esc(static::describeMemory(memory_get_peak_usage(true))) ?></td>
                         </tr>
                         <tr>
@@ -447,5 +448,22 @@ $errorId = uniqid('error', true);
     </div> <!-- /container -->
     <?php endif; ?>
 
+<script nonce="<?= esc($cspNonce) ?>">
+    document.addEventListener('DOMContentLoaded', function () {
+        if (typeof init === 'function') {
+            init();
+        }
+
+        document.querySelectorAll('.js-toggle-args').forEach(function (link) {
+            link.addEventListener('click', function (event) {
+                event.preventDefault();
+                var targetId = link.getAttribute('data-args-id');
+                if (typeof toggle === 'function') {
+                    toggle(targetId);
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

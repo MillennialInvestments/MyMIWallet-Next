@@ -24,24 +24,18 @@ echo theme_view('custom-js/Google_Analytics');
 echo theme_view('custom-js/selectpicker');
 //~ echo theme_view('custom-js/Facebook_Analytics');
 ?>
+<?php $cspNonce = $cspNonce ?? (service('renderer')->getData('cspNonce') ?? ''); ?>
 
-<script <?= $nonce['script'] ?? '' ?>>
+<script nonce="<?= esc($cspNonce) ?>">
 window.onload = function() {
   $("#navbarSupportedContent").hide();
 };
 </script>
 
-<!-- <script src="https://www.google.com/recaptcha/api.js?render=<?php //echo RECAPTCHA_SITE_KEY; ?>" <?= $nonce['script'] ?? '' ?>></script>
-<script <?= $nonce['script'] ?? '' ?>>
-    grecaptcha.ready(function() {
-        grecaptcha.execute('<?php //echo RECAPTCHA_SITE_KEY; ?>', {action: 'form_submission'}).then(function(token) {
-            document.querySelector('.g-recaptcha-response').value = token;
-        });
-    });
-</script> -->
+<!-- recaptcha script removed (CSP nonce required when reinstated). -->
 <?php if ($pageURISegmentA === 'Dashboard') { ?>
 	
-	<script <?= $nonce['script'] ?? '' ?>>
+	<script nonce="<?= esc($cspNonce) ?>">
 		$(function () {
 			$('[data-bs-toggle="tooltip"]').tooltip()
 		})
@@ -50,7 +44,7 @@ window.onload = function() {
 <?php
 }
 ?>
-<script type="text/javascript" <?= $nonce['script'] ?? '' ?>>
+<script type="text/javascript" nonce="<?= esc($cspNonce) ?>">
     $(document).ready(function() {
         // Get the user's timezone offset in minutes
         var timezoneOffset = new Date().getTimezoneOffset();

@@ -46,14 +46,14 @@ $subViewData = [
 </main>
 
 <!-- Local, self-hosted JS only. No inline scripts. -->
-<script src="<?= base_url('assets/vendor/bootstrap5/bootstrap.bundle.min.js'); ?>" <?= $nonce['script'] ?? '' ?> defer></script>
+<script src="<?= base_url('assets/vendor/bootstrap5/bootstrap.bundle.min.js'); ?>" defer></script>
 <?php /* If you actually use AOS on this page, keep these two lines:
 <link rel="stylesheet" href="<?= base_url('assets/vendor/aos/aos.css'); ?>">
 <script src="<?= base_url('assets/vendor/aos/aos.js'); ?>" defer></script>
 */ ?>
 
 <!-- Optional page init without inline: put any previous inline jQuery/DOM code here -->
-<script src="<?= base_url('assets/js/login-init.js'); ?>" <?= $nonce['script'] ?? '' ?> defer></script>
+<script src="<?= base_url('assets/js/login-init.js'); ?>" defer></script>
 
 <?= view('App\Views\themes\public\layouts\footer', $subViewData) ?>
 <?= $this->renderSection('pageScripts') ?>
