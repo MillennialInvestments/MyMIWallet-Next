@@ -36,6 +36,10 @@ $routes->set404Override();
 // Simple health check that should return 200 without auth
 $routes->get('healthz', 'System\HealthController::healthz', ['as' => 'healthz']);
 $routes->get('API/Ops/health-score', 'OpsHealth::score');
+$routes->group('admin/ops', ['filter' => 'permission:admin.access'], static function ($routes) {
+    $routes->get('health', 'OpsHealth::index');
+    $routes->post('health/run', 'OpsHealth::run');
+});
 
 // Docs index for AI orchestration
 $routes->group('API/Docs', ['namespace' => 'App\Modules\APIs\Controllers'], static function($routes) {
