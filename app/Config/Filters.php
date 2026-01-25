@@ -51,6 +51,7 @@ class Filters extends BaseConfig
         // 'secureheaders' => SecureHeaders::class,
         // Safe no-op filter to satisfy routes that reference "except"
         'except'        => \App\Filters\ExceptFilter::class,
+        'responsecache' => \CodeIgniter\Filters\ResponseCache::class,
     ];
 
     /**
