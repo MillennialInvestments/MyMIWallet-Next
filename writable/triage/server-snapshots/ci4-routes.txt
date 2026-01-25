@@ -1,0 +1,7 @@
+
+CodeIgniter v4.6.3 Command Line Tool - Server Time: 2026-01-25 17:26:48 UTC+00:00
+
+[CodeIgniter\Filters\Exceptions\FilterException]
+"role" filter must have a matching alias defined.
+at SYSTEMPATH/Filters/Filters.php:590
+
