@@ -2,8 +2,17 @@
 
 namespace App\Services\Env;
 
+use Config\Ops;
+
 class EnvInspector
 {
+    private Ops $ops;
+
+    public function __construct()
+    {
+        $this->ops = config(Ops::class);
+    }
+
     public function inspect(): array
     {
         $checks = [];
@@ -76,20 +85,21 @@ class EnvInspector
         $addCheck(
             'cron.supervisor_reboot',
             $cronHasSupervisor ? 'ok' : 'warning',
-            $cronHasSupervisor ? '@reboot supervisor job detected.' : 'No @reboot supervisor job detected.',
-            ['matched' => $cronHasSupervisor]
+            $cronHasSupervisor ? '@reboot supervisor job detected.' : 'No @reboot supervisor job detected (DreamHost panel can also manage this).',
+            ['matched' => $cronHasSupervisor, 'panel_note' => 'DreamHost panel cron or web restart can substitute if @reboot is unavailable.']
         );
 
         $supervisorConfig = $this->discoverSupervisorConfig($home);
+        $supervisorConfigPath = $supervisorConfig['path'] ?? null;
         $addCheck(
             'supervisor.config_exists',
-            $supervisorConfig !== null ? 'ok' : 'warning',
-            $supervisorConfig !== null ? 'Supervisor config found.' : 'Supervisor config not found.',
-            ['path' => $supervisorConfig]
+            $supervisorConfigPath !== null ? 'ok' : 'warning',
+            $supervisorConfigPath !== null ? 'Supervisor config found.' : 'Supervisor config not found under ~/supervisor.',
+            $supervisorConfig
         );
 
         $supervisorRunning = $this->commandHasProcess('supervisord');
-        $supervisorCleanStop = $supervisorConfig !== null && $this->configHasAutostartDisabled($supervisorConfig);
+        $supervisorCleanStop = $supervisorConfigPath !== null && $this->configHasAutostartDisabled($supervisorConfigPath);
         $supervisorStatus = ($supervisorRunning || $supervisorCleanStop) ? 'ok' : 'warning';
         $supervisorMessage = $supervisorRunning
             ? 'Supervisor process running.'
@@ -125,6 +135,15 @@ class EnvInspector
             ['count' => count($phpSockets)]
         );
 
+        $phpBackend = $this->detectPhpBackend($phpSockets);
+        $backendStatus = $phpBackend['healthy'] ? 'ok' : 'warning';
+        $addCheck(
+            'php.backend_detected',
+            $backendStatus,
+            $phpBackend['healthy'] ? 'PHP backend detected via process or socket.' : 'PHP backend not detected (no php-cgi/php82.cgi process or socket).',
+            $phpBackend
+        );
+
         [$activeServer, $serverData] = $this->detectWebServer();
         $serverStatus = $activeServer !== 'none' ? 'ok' : 'warning';
         $addCheck(
@@ -141,6 +160,15 @@ class EnvInspector
             $nginxConfigStatus,
             $nginxConfig !== null ? 'Nginx config discovered.' : 'Nginx config not found in user-space paths.',
             ['path' => $nginxConfig]
+        );
+
+        $nginxTest = $this->runNginxConfigTest($home);
+        $nginxTestStatus = $nginxTest['status'] ?? 'warning';
+        $addCheck(
+            'web.nginx_config_test',
+            $nginxTestStatus,
+            $nginxTest['message'] ?? 'Nginx config test not run.',
+            $nginxTest
         );
 
         $fastcgiValid = $nginxConfig !== null ? $this->configHasFastcgi($nginxConfig) : null;
@@ -176,6 +204,15 @@ class EnvInspector
             $writableOk ? 'ok' : 'critical',
             $writableOk ? 'writable/ permissions OK.' : 'writable/ is not writable.',
             ['path' => WRITEPATH]
+        );
+
+        $cacheDirs = $this->validateCacheDirs();
+        $cacheStatus = $cacheDirs['ok'] ? 'ok' : 'critical';
+        $addCheck(
+            'ci4.cache_dirs',
+            $cacheStatus,
+            $cacheDirs['ok'] ? 'Writable cache/session/debugbar dirs OK.' : 'One or more cache/session/debugbar dirs are missing or not writable.',
+            $cacheDirs
         );
 
         $maintenanceActive = $this->maintenanceModeDetected();
@@ -299,21 +336,21 @@ class EnvInspector
 
     public function persistReport(array $report, string $markdown, bool $pack = false): array
     {
-        $directory = rtrim(WRITEPATH, '/') . '/env';
+        $directory = rtrim(WRITEPATH, '/') . '/triage/envdoctor';
         if (!is_dir($directory)) {
-            mkdir($directory, 0755, true);
+            mkdir($directory, 0775, true);
         }
 
-        $date = date('Ymd');
-        $jsonPath = $directory . "/env-doctor-{$date}.json";
-        $mdPath = $directory . "/env-doctor-{$date}.md";
+        $stamp = date('Y-m-d-His');
+        $jsonPath = $directory . "/envdoctor-{$stamp}.json";
+        $mdPath = $directory . "/envdoctor-{$stamp}.md";
 
         file_put_contents($jsonPath, json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
         file_put_contents($mdPath, $markdown);
 
         $packPath = null;
         if ($pack) {
-            $packPath = $this->createPack($directory, $jsonPath, $mdPath, $date);
+            $packPath = $this->createPack($directory, $jsonPath, $mdPath, $stamp);
         }
 
         return [
@@ -325,12 +362,12 @@ class EnvInspector
 
     public function loadLatestReport(): ?array
     {
-        $directory = rtrim(WRITEPATH, '/') . '/env';
+        $directory = rtrim(WRITEPATH, '/') . '/triage/envdoctor';
         if (!is_dir($directory)) {
             return null;
         }
 
-        $files = glob($directory . '/env-doctor-*.json') ?: [];
+        $files = glob($directory . '/envdoctor-*.json') ?: [];
         if ($files === []) {
             return null;
         }
@@ -343,7 +380,15 @@ class EnvInspector
         }
 
         $decoded = json_decode($payload, true);
-        return is_array($decoded) ? $decoded : null;
+        if (! is_array($decoded)) {
+            return null;
+        }
+
+        return [
+            'report' => $decoded,
+            'path' => $latest,
+            'modified_at' => date('c', (int) (filemtime($latest) ?: time())),
+        ];
     }
 
     public function topFindings(array $report, int $limit = 5): array
@@ -377,12 +422,15 @@ class EnvInspector
             'supervisor.process' => 'Start supervisord if it should be running, or set autostart=false if intentionally stopped.',
             'php.socket_presence' => 'Confirm PHP-FPM or php-cgi is running and sockets are created.',
             'php.socket_conflicts' => 'Disable extra PHP sockets and ensure nginx/apache points to the correct one.',
+            'php.backend_detected' => 'Ensure php-cgi/php82.cgi or supervisord processes are running and sockets exist.',
             'web.active_server' => 'Start nginx/apache user-space process or verify hosting service status.',
             'web.nginx_config' => 'Ensure nginx.conf exists in user-space path and is loaded.',
+            'web.nginx_config_test' => 'Run nginx -t in your user-space nginx home and fix config errors.',
             'web.fastcgi_validation' => 'Add fastcgi_pass (or proxy_pass) for PHP handling in nginx config.',
             'web.apache_handler' => 'Configure Apache PHP handler (SetHandler/ProxyPassMatch) if using Apache.',
             'ci4.public_index' => 'Restore public/index.php from the CI4 deployment bundle.',
             'ci4.writable_permissions' => 'Fix writable/ permissions for the web user.',
+            'ci4.cache_dirs' => 'Ensure writable/cache, writable/session, and writable/debugbar are writable by the web user.',
             'ci4.maintenance_mode' => 'Disable maintenance mode when deployments complete.',
             'ci4.latest_log_errors' => 'Review recent log errors and resolve recurring issues.',
             'system.disk_usage' => 'Free disk space or expand storage when below 10% free.',
@@ -458,22 +506,39 @@ class EnvInspector
         return false;
     }
 
-    private function discoverSupervisorConfig(string $home): ?string
+    private function isSocket(string $path): bool
     {
+        if (! file_exists($path)) {
+            return false;
+        }
+
+        return filetype($path) === 'socket';
+    }
+
+    private function discoverSupervisorConfig(string $home): array
+    {
+        $homeSupervisorDir = rtrim($home, '/') . '/supervisor';
         $paths = [
+            $homeSupervisorDir . '/supervisord.conf',
+            $homeSupervisorDir . '/supervisord.ini',
             $home . '/.config/supervisor/supervisord.conf',
-            $home . '/supervisor/supervisord.conf',
             $home . '/etc/supervisord.conf',
             $home . '/supervisord.conf',
         ];
 
         foreach ($paths as $path) {
             if (is_file($path)) {
-                return $path;
+                return [
+                    'path' => $path,
+                    'in_home_supervisor' => str_starts_with($path, $homeSupervisorDir),
+                ];
             }
         }
 
-        return null;
+        return [
+            'path' => null,
+            'in_home_supervisor' => false,
+        ];
     }
 
     private function configHasAutostartDisabled(?string $path): bool
@@ -500,9 +565,24 @@ class EnvInspector
             $home . '/.php',
             $home . '/.php-fpm',
             $home . '/tmp',
+            $home . '/.local/phpcgi/run',
         ];
 
         $sockets = [];
+        $candidates = $this->ops->dreamhostSocketCandidates ?? [];
+        foreach ($candidates as $candidate) {
+            $candidate = str_replace('%HOME%', $home, $candidate);
+            if (str_contains($candidate, '*')) {
+                foreach (glob($candidate) ?: [] as $match) {
+                    if ($this->isSocket($match)) {
+                        $sockets[] = $match;
+                    }
+                }
+            } elseif ($this->isSocket($candidate)) {
+                $sockets[] = $candidate;
+            }
+        }
+
         foreach ($dirs as $dir) {
             if (!is_dir($dir)) {
                 continue;
@@ -516,6 +596,85 @@ class EnvInspector
         }
 
         return array_values(array_unique($sockets));
+    }
+
+    private function detectPhpBackend(array $phpSockets): array
+    {
+        $ps = $this->runCommand('ps aux | egrep "php82\\.cgi|php-cgi|supervisord" | grep -v egrep');
+        $procDetected = $ps['exit_code'] === 0 && $ps['output'] !== [];
+        $socketDetected = $phpSockets !== [];
+
+        return [
+            'healthy' => $procDetected || $socketDetected,
+            'process_detected' => $procDetected,
+            'socket_detected' => $socketDetected,
+            'process_output' => $ps['output'],
+            'sockets' => $phpSockets,
+        ];
+    }
+
+    private function runNginxConfigTest(string $home): array
+    {
+        $prefix = $this->ops->homeNginxPrefix ?: ($home . '/nginx');
+        $prefix = rtrim($prefix, '/');
+        $nginxBin = $prefix . '/sbin/nginx';
+        $configPath = 'conf/nginx.conf';
+
+        if (! is_file($nginxBin)) {
+            return [
+                'status' => 'warning',
+                'message' => 'Nginx binary not found in user-space prefix.',
+                'binary' => $nginxBin,
+                'prefix' => $prefix,
+            ];
+        }
+
+        $command = sprintf(
+            '%s -t -p %s -c %s',
+            escapeshellarg($nginxBin),
+            escapeshellarg($prefix),
+            escapeshellarg($configPath)
+        );
+        $result = $this->runCommand($command);
+
+        return [
+            'status' => $result['exit_code'] === 0 ? 'ok' : 'warning',
+            'message' => $result['exit_code'] === 0 ? 'nginx -t succeeded.' : 'nginx -t failed.',
+            'command' => $command,
+            'output' => $result['output'],
+            'prefix' => $prefix,
+        ];
+    }
+
+    private function validateCacheDirs(): array
+    {
+        $paths = [
+            'cache' => WRITEPATH . 'cache',
+            'session' => WRITEPATH . 'session',
+            'debugbar' => WRITEPATH . 'debugbar',
+        ];
+
+        $details = [];
+        $ok = true;
+
+        foreach ($paths as $key => $path) {
+            $exists = is_dir($path);
+            $writable = $exists && is_writable($path);
+            $details[$key] = [
+                'path' => $path,
+                'exists' => $exists,
+                'writable' => $writable,
+            ];
+
+            if (! $exists || ! $writable) {
+                $ok = false;
+            }
+        }
+
+        return [
+            'ok' => $ok,
+            'dirs' => $details,
+        ];
     }
 
     private function detectWebServer(): array
@@ -727,8 +886,8 @@ class EnvInspector
 
     private function createPack(string $directory, string $jsonPath, string $mdPath, string $date): ?string
     {
-        $packPath = $directory . "/env-doctor-pack-{$date}.tar.gz";
-        $tarPath = $directory . "/env-doctor-pack-{$date}.tar";
+        $packPath = $directory . "/envdoctor-pack-{$date}.tar.gz";
+        $tarPath = $directory . "/envdoctor-pack-{$date}.tar";
 
         if (file_exists($packPath)) {
             unlink($packPath);
