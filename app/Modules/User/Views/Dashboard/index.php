@@ -96,6 +96,11 @@ $aiNotesList       = $aiNotes ?? [];
 $setupStatus       = $setupStatus ?? [];
 $setupPrefs        = $setupPrefs ?? [];
 $setupContext      = $setupContext ?? 'dashboard';
+$opsHealth         = is_array($opsHealth ?? null) ? $opsHealth : [];
+$opsScore          = $opsHealth['score'] ?? null;
+$opsStatus         = $opsHealth['status'] ?? 'unknown';
+$opsGeneratedAt    = $opsHealth['generated_at'] ?? null;
+$opsFindings       = is_array($opsHealth['top_findings'] ?? null) ? $opsHealth['top_findings'] : [];
 $squeezeHighRiskCount = (int) ($squeezeHighRiskCount ?? 0);
 $squeezeState = 'success';
 $squeezeStateLabel = 'Calm';
@@ -333,6 +338,47 @@ $showSetupBanner   = ! empty($setupStatus)
                     </div>
                 </div>
             </a>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="card card-bordered card-full h-100" data-ops-health>
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-2">
+                        <div class="card-title">
+                            <h6 class="subtitle">🩺 Ops Health</h6>
+                        </div>
+                        <div class="card-tools">
+                            <?php
+                            $opsBadge = 'success';
+                            if ($opsStatus === 'warning') {
+                                $opsBadge = 'warning';
+                            } elseif ($opsStatus === 'critical') {
+                                $opsBadge = 'danger';
+                            }
+                            ?>
+                            <span class="badge bg-<?= esc($opsBadge); ?>" data-ops-health-status><?= esc(strtoupper($opsStatus)); ?></span>
+                        </div>
+                    </div>
+                    <div class="card-amount">
+                        <span class="amount" data-ops-health-score><?= $opsScore !== null ? esc((string) $opsScore) : '—'; ?></span>
+                        <span class="change text-soft" data-ops-health-label>Health score</span>
+                    </div>
+                    <div class="small text-soft mt-2" data-ops-health-run>
+                        Last run: <?= esc(miw_relative_time($opsGeneratedAt)); ?>
+                    </div>
+                    <div class="mt-2">
+                        <div class="small text-muted">Top warnings</div>
+                        <ul class="list-unstyled mt-1 mb-0" data-ops-health-warnings>
+                            <?php if ($opsFindings): ?>
+                                <?php foreach (array_slice($opsFindings, 0, 3) as $finding): ?>
+                                    <li class="small text-soft">• <?= esc($finding['message'] ?? 'Issue detected'); ?></li>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <li class="small text-soft">• No warnings detected.</li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1226,4 +1272,67 @@ $showSetupBanner   = ! empty($setupStatus)
         });
     }
 })();
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const card = document.querySelector('[data-ops-health]');
+    if (!card) {
+        return;
+    }
+
+    fetch('<?= esc(site_url('ops/health')); ?>', { headers: { 'Accept': 'application/json' } })
+        .then(response => response.ok ? response.json() : null)
+        .then(data => {
+            if (!data) {
+                return;
+            }
+
+            const scoreEl = card.querySelector('[data-ops-health-score]');
+            const statusEl = card.querySelector('[data-ops-health-status]');
+            const runEl = card.querySelector('[data-ops-health-run]');
+            const warningsEl = card.querySelector('[data-ops-health-warnings]');
+
+            if (scoreEl) {
+                scoreEl.textContent = data.score ?? '—';
+            }
+
+            if (statusEl) {
+                const status = (data.status || 'unknown').toUpperCase();
+                statusEl.textContent = status;
+                statusEl.classList.remove('bg-success', 'bg-warning', 'bg-danger');
+                if (status === 'CRITICAL') {
+                    statusEl.classList.add('bg-danger');
+                } else if (status === 'WARNING') {
+                    statusEl.classList.add('bg-warning');
+                } else {
+                    statusEl.classList.add('bg-success');
+                }
+            }
+
+            if (runEl) {
+                runEl.textContent = `Last run: ${data.generated_at || '—'}`;
+            }
+
+            if (warningsEl) {
+                warningsEl.innerHTML = '';
+                const findings = Array.isArray(data.top_findings) ? data.top_findings.slice(0, 3) : [];
+                if (findings.length === 0) {
+                    const li = document.createElement('li');
+                    li.className = 'small text-soft';
+                    li.textContent = '• No warnings detected.';
+                    warningsEl.appendChild(li);
+                } else {
+                    findings.forEach(item => {
+                        const li = document.createElement('li');
+                        li.className = 'small text-soft';
+                        li.textContent = `• ${item.message || 'Issue detected'}`;
+                        warningsEl.appendChild(li);
+                    });
+                }
+            }
+        })
+        .catch(() => {
+            // Ignore fetch errors; keep server-rendered state.
+        });
+});
 </script>

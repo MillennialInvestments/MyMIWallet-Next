@@ -3,6 +3,7 @@
 namespace App\Commands;
 
 use App\Services\Triage\CommandRunner;
+use App\Services\Ops\EnvDoctorService;
 use CodeIgniter\CLI\CLI;
 use Config\Ops;
 
@@ -31,8 +32,6 @@ class Fix503 extends SafeBaseCommand
 
         $this->initializeLog();
         $this->ops = config(Ops::class);
-        $doctorPath = WRITEPATH . 'triage/503/envdoctor-' . date('Y-m-d-His') . '.json';
-        $this->logStep('ENVDOCTOR', 'INFO', 'Will write: ' . $doctorPath);
 
         $runner = new CommandRunner();
         $autoFixAllowed = ! $dryRun;
@@ -42,12 +41,24 @@ class Fix503 extends SafeBaseCommand
         $rootCause = 'Undetermined (see log)';
         $riskLevel = 'LOW';
         $recommendations = [
-            'Review php-fpm pool config',
-            'Add watchdog to detect worker death',
+            'Review PHP handler configuration in your DreamHost panel.',
+            'Add watchdogs/alerts to detect backend worker failures.',
         ];
 
         $this->logStep('INIT', 'OK', 'Log created at ' . $this->logPath);
         $this->logStep('INIT', 'INFO', 'dry_run=' . ($dryRun ? 'true' : 'false'));
+
+        $envDoctor = new EnvDoctorService();
+        $envRun = $envDoctor->run(false);
+        $envSummary = $envDoctor->summarizeReport($envRun['report']);
+        $envPaths = $envRun['paths'];
+        $this->logStep('ENVDOCTOR', 'OK', sprintf(
+            'status=%s score=%s json=%s md=%s',
+            $envSummary['status'] ?? 'unknown',
+            (string) ($envSummary['score'] ?? 0),
+            $envPaths['json'] ?? 'n/a',
+            $envPaths['markdown'] ?? 'n/a'
+        ));
 
         $this->runWebReachability($runner);
 
@@ -63,15 +74,19 @@ class Fix503 extends SafeBaseCommand
         if (! $phpBackend['healthy']) {
             $rootCause = $phpBackend['root_cause'] ?? 'PHP backend not running';
             $riskLevel = 'HIGH';
+            $recommendations[] = 'Panel action: DreamHost > Websites > Manage Domains > Toggle PHP version to restart php-cgi.';
+            $recommendations[] = 'Verify php82.cgi/php-cgi or supervisord is running for your user.';
         }
 
-        $socketMismatch = $this->runSocketCheck($runner);
-        $restartQueued = false;
+        $socketCheck = $this->runSocketCheck($runner);
+        $socketMismatch = $socketCheck['mismatch'] ?? false;
         if ($socketMismatch) {
-            $rootCause = 'PHP-FPM socket mismatch';
+            $rootCause = 'PHP backend socket mismatch';
             $riskLevel = 'MEDIUM';
-            $restartQueued = true;
-            $this->logStep('PHP-FPM-RESTART', 'INFO', 'Restart queued for phase 7');
+            $actionsNotTaken[] = 'Restart PHP handler (DreamHost panel required)';
+            if (! empty($socketCheck['snippet_path'])) {
+                $recommendations[] = 'Apply nginx fastcgi_pass fix: ' . $socketCheck['snippet_path'];
+            }
         }
 
         $cliHealthy = $this->runCliHealth($runner);
@@ -100,28 +115,17 @@ class Fix503 extends SafeBaseCommand
 
         $this->runPhpFpmLogs($runner);
 
-        if ($restartQueued && $autoFixAllowed) {
-            if ($restartQueued) {
-                $actionsNotTaken[] = 'Restarted php8.2-fpm (DreamHost: systemctl not available)';
-                $recommendations[] = 'DreamHost panel: restart web server / toggle PHP handler for the domain to refresh backend';
-                $recommendations[] = 'If using home-nginx, run: nginx -p ~/nginx -c conf/nginx.conf -t && nginx -p ~/nginx -c conf/nginx.conf -s reload';
-            }
-
-            $status = $restartResult['exit_code'] === 0 ? 'OK' : 'FAIL';
-            $this->logStep('PHP-FPM-RESTART', $status, 'systemctl restart php8.2-fpm');
-            $this->logOutput('PHP-FPM-RESTART', $restartResult['output']);
-
-            if ($status === 'OK') {
-                $actionsTaken[] = 'Restarted php8.2-fpm';
-            } else {
-                $actionsNotTaken[] = 'Restarted php8.2-fpm (restart failed)';
-            }
-        } elseif ($restartQueued) {
-            $actionsNotTaken[] = 'Restarted php8.2-fpm (blocked by auto-fix guard)';
+        if ($socketMismatch) {
+            $recommendations[] = 'Panel action: DreamHost > Websites > Manage Domains > Toggle PHP version or restart web server.';
+            $recommendations[] = 'Panel action: DreamHost > Websites > Manage Domains > Restart the site if PHP handler is stuck.';
+            $recommendations[] = 'If using home-nginx, run: nginx -p ~/nginx -c conf/nginx.conf -t && nginx -p ~/nginx -c conf/nginx.conf -s reload';
         }
         
         $this->confidence = $this->calculateConfidenceScore($rootCause);
         $recommendations[] = 'Confidence score: ' . number_format($this->confidence * 100, 0) . '%';
+        $recommendations[] = 'EnvDoctor summary: status=' . ($envSummary['status'] ?? 'unknown') . ' score=' . ($envSummary['score'] ?? 0);
+        $recommendations[] = 'EnvDoctor JSON: ' . ($envPaths['json'] ?? 'n/a');
+        $recommendations[] = 'EnvDoctor Markdown: ' . ($envPaths['markdown'] ?? 'n/a');
 
         $this->printReport($rootCause, $actionsTaken, $actionsNotTaken, $riskLevel, $recommendations);
 
@@ -139,7 +143,7 @@ class Fix503 extends SafeBaseCommand
         // Simple, deterministic scoring that you can tune later.
         return match ($rootCause) {
             'Disk/inode usage above 90%' => 0.95,
-            'PHP-FPM socket mismatch' => 0.90,
+            'PHP backend socket mismatch' => 0.90,
             'Writable permissions misconfigured' => 0.80,
             'CI4 bootstrap failure' => 0.75,
             'PHP backend not running' => 0.70,
@@ -183,6 +187,16 @@ class Fix503 extends SafeBaseCommand
 
         foreach ($candidates as $cand) {
             $path = str_replace('%HOME%', $home, $cand);
+            if (str_contains($path, '*')) {
+                $glob = glob($path) ?: [];
+                foreach ($glob as $match) {
+                    $r = $runner->run('test -S ' . escapeshellarg($match) . ' && echo FOUND || echo MISSING');
+                    if (in_array('FOUND', $r['output'], true)) {
+                        return ['found' => true, 'path' => $match];
+                    }
+                }
+                continue;
+            }
             // Avoid file_exists() on remote paths if perms are weird; use test -S
             $r = $runner->run('test -S ' . escapeshellarg($path) . ' && echo FOUND || echo MISSING');
             if (in_array('FOUND', $r['output'], true)) {
@@ -202,7 +216,7 @@ class Fix503 extends SafeBaseCommand
 
         // DreamHost: php82.cgi is the reality; systemctl is a trap.
         if (($this->ops->platform ?? 'generic') === 'dreamhost') {
-            $ps = $runner->run('ps aux | egrep "php82\\.cgi|php-cgi|spawn-fcgi|supervisord" | grep -v egrep');
+            $ps = $runner->run('ps aux | egrep "php82\\.cgi|php-cgi|supervisord" | grep -v egrep');
             $sock = $this->detectDreamHostSocket($runner);
 
             $hasProc = $ps['exit_code'] === 0 && count($ps['output']) > 0;
@@ -284,24 +298,7 @@ class Fix503 extends SafeBaseCommand
         return $diskWarn || $inodeWarn;
     }
 
-    private function runPhpFpmStatus(CommandRunner $runner): bool
-    {
-        $systemctl = $runner->run('systemctl status php8.2-fpm');
-        $ps = $runner->run('ps aux | grep php-fpm');
-
-        $running = $systemctl['exit_code'] === 0;
-        $workerCount = $this->countWorkers($ps['output']);
-
-        $status = $running ? 'OK' : 'FAIL';
-        $detail = sprintf('running=%s workers=%d', $running ? 'true' : 'false', $workerCount);
-        $this->logStep('PHP-FPM-CHECK', $status, $detail);
-        $this->logOutput('PHP-FPM-CHECK', $systemctl['output']);
-        $this->logOutput('PHP-FPM-PROCESS', $ps['output']);
-
-        return $running;
-    }
-
-    private function runSocketCheck(CommandRunner $runner): bool
+    private function runSocketCheck(CommandRunner $runner): array
     {
         // Goal: detect mismatch between nginx fastcgi_pass and the actual available socket
         $home = rtrim(getenv('HOME') ?: '/home/' . get_current_user(), '/');
@@ -333,6 +330,7 @@ class Fix503 extends SafeBaseCommand
             }
 
             $mismatch = ! empty($missing);
+            $snippetPath = null;
 
             $this->logStep('PHP-SOCKET', $mismatch ? 'FAIL' : 'OK', sprintf(
                 'platform=dreamhost detected=%s expected=%s',
@@ -348,12 +346,22 @@ class Fix503 extends SafeBaseCommand
                 $this->logStep('NGINX-FIX-GEN', 'OK', 'Wrote suggested config: ' . $snippetPath);
             }
 
-            return $mismatch;
+            return [
+                'mismatch' => $mismatch,
+                'expected' => $expected,
+                'detected' => $detectedSock,
+                'snippet_path' => $snippetPath,
+            ];
         }
 
         // Generic minimal behavior: if we can't read system nginx, don't guess.
         $this->logStep('PHP-SOCKET', 'WARN', 'platform=generic socket check skipped (no privileged access)');
-        return false;
+        return [
+            'mismatch' => false,
+            'expected' => null,
+            'detected' => null,
+            'snippet_path' => null,
+        ];
     }
 
     private function writeNginxFastCgiFixSnippet(string $path, ?string $socketPath): void
@@ -535,19 +543,6 @@ class Fix503 extends SafeBaseCommand
         }
 
         return $max;
-    }
-
-    private function countWorkers(array $lines): int
-    {
-        $count = 0;
-
-        foreach ($lines as $line) {
-            if (str_contains($line, 'php-fpm: pool') || str_contains($line, 'php-fpm: master process')) {
-                $count++;
-            }
-        }
-
-        return $count;
     }
 
     private function extractFastCgiTargets(array $lines): array

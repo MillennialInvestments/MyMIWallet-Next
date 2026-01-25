@@ -4,7 +4,7 @@ namespace App\Commands\Env;
 
 use App\Commands\SafeBaseCommand;
 use App\Libraries\DiscordAlert;
-use App\Services\Env\EnvInspector;
+use App\Services\Ops\EnvDoctorService;
 use CodeIgniter\CLI\CLI;
 
 class EnvDoctor extends SafeBaseCommand
@@ -12,19 +12,25 @@ class EnvDoctor extends SafeBaseCommand
     protected $group       = 'env';
     protected $name        = 'env:doctor';
     protected $description = 'Environment diagnostics and snapshot.';
+    protected $options     = [
+        '--notify=discord' => 'Send summary to Discord.',
+        '--pack' => 'Bundle JSON/Markdown into a tar.gz for sharing.',
+    ];
 
     public function run(array $params)
     {
         [, $flags] = $this->parseParams($params);
         $pack = isset($flags['pack']);
         $cron = isset($flags['cron']);
+        $notifyDiscord = isset($flags['notify=discord']) || isset($flags['notify-discord']);
 
-        $inspector = new EnvInspector();
-        $previous = $inspector->loadLatestReport();
+        $doctor = new EnvDoctorService();
+        $previousPayload = $doctor->loadLatestReport();
+        $previous = $previousPayload['report'] ?? null;
 
-        $report = $inspector->inspect();
-        $markdown = $inspector->formatMarkdown($report);
-        $paths = $inspector->persistReport($report, $markdown, $pack && ! $cron);
+        $result = $doctor->run($pack && ! $cron);
+        $report = $result['report'];
+        $paths = $result['paths'];
 
         if (! $cron) {
             $summary = $report['summary'] ?? ['counts' => ['ok' => 0, 'warning' => 0, 'critical' => 0]];
@@ -46,7 +52,7 @@ class EnvDoctor extends SafeBaseCommand
             }
         }
 
-        if ($cron) {
+        if ($cron || $notifyDiscord) {
             $this->notifyDiscordIfNeeded($report, $previous);
         }
 

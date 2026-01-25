@@ -7,6 +7,7 @@ use App\Controllers\UserController;
 use App\Libraries\{MyMIAlerts, MyMIAnalytics, MyMIAssistant, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIInvestments, MyMIMarketing, MyMIOnboarding, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets};
 use App\Models\{AccountsModel, AlertsModel, DashboardModel, DiscordLinkModel, MarketingModel, SolanaModel, UserModel};
 use App\Services\{AccountService, BudgetService, DashboardService, EmailService, OnboardingProgressService, SolanaService, UserService};
+use App\Services\Ops\EnvDoctorService;
 use CodeIgniter\API\ResponseTrait;
 use Myth\Auth\Authorization\GroupModel;
 use DateTime;
@@ -129,6 +130,13 @@ class DashboardController extends UserController
         $progressPayload = $onboardingProgress->computeProgress($cuID);
         $this->data['onboardingProgress'] = $progressPayload;
         $this->data['onboardingIncomplete'] = ! ($progressPayload['isComplete'] ?? false);
+
+        try {
+            $this->data['opsHealth'] = (new EnvDoctorService())->latestSummary();
+        } catch (\Throwable $e) {
+            log_message('warning', 'DashboardController opsHealth unavailable: {msg}', ['msg' => $e->getMessage()]);
+            $this->data['opsHealth'] = null;
+        }
 
         if ($this->session->get('onboarding_show_modal')) {
             $this->data['onboardingShowModal'] = true;
