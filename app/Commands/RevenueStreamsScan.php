@@ -2,14 +2,17 @@
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class RevenueStreamsScan extends BaseCommand
+class RevenueStreamsScan extends SafeBaseCommand
 {
     protected $group       = 'marketing';
     protected $name        = 'revenue:scan';
     protected $description = 'Scan the repository for monetizable features and generate revenue stream docs.';
+    protected $options     = [
+        '--dry-run' => 'Preview actions without writing documentation',
+    ];
 
     protected array $keywords = [
         'membership',
@@ -38,10 +41,15 @@ class RevenueStreamsScan extends BaseCommand
 
     public function run(array $params)
     {
+        log_message('info', '[spark:revenue:scan] Started', ['params' => $params]);
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
+
         $docsDir = WRITEPATH ? rtrim(realpath('docs/revenue_streams') ?: 'docs/revenue_streams', '/') : 'docs/revenue_streams';
         if (! is_dir($docsDir) && ! mkdir($docsDir, 0775, true) && ! is_dir($docsDir)) {
             CLI::error('Unable to create docs directory: ' . $docsDir);
-            return;
+            log_message('error', '[spark:revenue:scan] Failed', ['reason' => 'Unable to create docs directory']);
+            return EXIT_ERROR;
         }
 
         $records = $this->scanRepository();
@@ -56,11 +64,22 @@ class RevenueStreamsScan extends BaseCommand
         ];
 
         foreach ($filesWritten as $path => $content) {
+            if ($dryRun) {
+                CLI::write("Dry-run: would generate {$path}", 'yellow');
+                continue;
+            }
             file_put_contents($path, $content);
             CLI::write("Generated: {$path}");
         }
 
         CLI::write('Scan complete. Streams found: ' . count($records));
+
+        log_message('info', '[spark:revenue:scan] Completed', [
+            'streams' => count($records),
+            'dry_run' => $dryRun,
+        ]);
+
+        return EXIT_SUCCESS;
     }
 
     protected function scanRepository(): array
@@ -275,5 +294,10 @@ MD;
             }
         }
         return implode("\n", $lines);
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }

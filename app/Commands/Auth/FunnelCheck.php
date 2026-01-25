@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Commands\Auth;
 
 use App\Services\Spark\AuthFunnelCheckService;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use DateInterval;
 use DateTimeImmutable;
 
-class FunnelCheck extends BaseCommand
+class FunnelCheck extends SafeBaseCommand
 {
     protected $group       = 'auth';
     protected $name        = 'auth:funnel-check';
@@ -19,15 +19,15 @@ class FunnelCheck extends BaseCommand
     protected $arguments = [];
     protected $options = [
         '--dry-run' => 'Preview actions without writing data',
-        '--force'   => 'Required for destructive actions',
     ];
 
     public function run(array $params)
     {
-        log_message('info', '[spark:auth:funnel-check] Started');
+        log_message('info', '[spark:auth:funnel-check] Started', ['params' => $params]);
         CLI::write('Starting auth:funnel-check', 'yellow');
 
-        $dryRun = $this->option('dry-run') !== null || ! $this->option('force');
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
         if ($dryRun) {
             CLI::write('Dry-run enabled (read-only checks will still run).', 'yellow');
         }

@@ -3,15 +3,15 @@
 namespace App\Commands\Logs;
 
 use App\Services\Spark\LogSummarizeService;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class Summarize extends BaseCommand
+class Summarize extends SafeBaseCommand
 {
     protected $group       = 'logs';
     protected $name        = 'logs:summarize';
     protected $description = 'Summarize CI4 logs for a given date, including new entries since the last run.';
-    protected $usage       = 'logs:summarize [date|yesterday] [--dry-run] [--force]';
+    protected $usage       = 'logs:summarize [date|yesterday] [--dry-run]';
 
     protected $arguments = [
         'date' => 'Optional: "yesterday" or YYYY-MM-DD (defaults to today).',
@@ -19,7 +19,6 @@ class Summarize extends BaseCommand
 
     protected $options = [
         '--dry-run' => 'Preview actions without writing data',
-        '--force'   => 'Required for destructive actions',
     ];
 
     public function run(array $params)
@@ -40,15 +39,14 @@ class Summarize extends BaseCommand
         // -----------------------------
         // Dry-run handling (correct)
         // -----------------------------
-        $dryRun = isset($flags['dry-run']);
+        $dryRun = $this->resolveDryRun($flags);
 
         // -----------------------------
         // Destructive safety guard
         // -----------------------------
-        if ($this->isDestructive() && ! isset($flags['force'])) {
-            CLI::error('This action is destructive. Re-run with --force to proceed.');
-            log_message('warning', '[spark:logs:summarize] Blocked destructive run (missing --force)');
-            return EXIT_ERROR;
+        $blocked = $this->guardDestructive($flags, $params);
+        if ($blocked !== null) {
+            return $blocked;
         }
 
         // -----------------------------
@@ -122,30 +120,5 @@ class Summarize extends BaseCommand
         }
 
         return date('Y-m-d');
-    }
-
-    /**
-     * CI4-safe param parser.
-     *
-     * Returns:
-     *   [
-     *     array $args,   // positional arguments
-     *     array $flags   // ['flag' => true]
-     *   ]
-     */
-    protected function parseParams(array $params): array
-    {
-        $args  = [];
-        $flags = [];
-
-        foreach ($params as $param) {
-            if (str_starts_with($param, '--')) {
-                $flags[ltrim($param, '-')] = true;
-            } else {
-                $args[] = $param;
-            }
-        }
-
-        return [$args, $flags];
     }
 }

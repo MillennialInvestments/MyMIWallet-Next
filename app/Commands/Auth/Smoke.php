@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Commands\Auth;
 
 use App\Services\AuthSmokeService;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class Smoke extends BaseCommand
+class Smoke extends SafeBaseCommand
 {
     protected $group       = 'auth';
     protected $name        = 'auth:smoke';
@@ -17,18 +17,18 @@ class Smoke extends BaseCommand
     protected $arguments = [];
     protected $options = [
         '--dry-run' => 'Preview actions without writing data',
-        '--force'   => 'Required for destructive actions',
     ];
 
     public function run(array $params)
     {
-        log_message('info', '[spark:auth:smoke] Started');
+        log_message('info', '[spark:auth:smoke] Started', ['params' => $params]);
         CLI::write('Starting auth:smoke', 'yellow');
 
-        $dryRun = $this->option('dry-run') !== null || ! $this->option('force');
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
         if ($dryRun) {
-            CLI::write('Dry-run enabled. Use --force to execute the smoke test.', 'yellow');
-            log_message('info', '[spark:auth:smoke] Dry-run completed');
+            CLI::write('Dry-run enabled. Smoke test will not execute.', 'yellow');
+            log_message('info', '[spark:auth:smoke] Completed', ['dry_run' => true]);
             return EXIT_SUCCESS;
         }
 
@@ -62,6 +62,7 @@ class Smoke extends BaseCommand
         log_message('info', '[spark:auth:smoke] Completed', [
             'status' => $result['status'] ?? 'UNKNOWN',
             'score'  => $result['score'] ?? 0,
+            'dry_run' => false,
         ]);
 
         return ($result['status'] ?? '') === 'PASS' ? EXIT_SUCCESS : EXIT_ERROR;

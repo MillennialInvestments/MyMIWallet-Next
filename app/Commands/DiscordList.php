@@ -1,17 +1,24 @@
 <?php namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Discord as DiscordConfig;
 
-class DiscordList extends BaseCommand
+class DiscordList extends SafeBaseCommand
 {
     protected $group       = 'Discord';
     protected $name        = 'discord:list';
     protected $description = 'List configured Discord channels/webhooks/IDs from config and database.';
+    protected $options     = [
+        '--dry-run' => 'Preview actions without querying the database',
+    ];
 
     public function run(array $params)
     {
+        log_message('info', '[spark:discord:list] Started', ['params' => $params]);
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
+
         /** @var DiscordConfig $cfg */
         $cfg = config('Discord');
 
@@ -27,10 +34,17 @@ class DiscordList extends BaseCommand
         $this->printConfigChannelIds($cfg);
 
         // 4. Show bf_discord_channels rows from DB
-        $this->printDbChannels();
+        if ($dryRun) {
+            CLI::write('-- Database checks skipped (dry-run) --', 'yellow');
+        } else {
+            $this->printDbChannels();
 
         // 5. Show core subscriptions for scanners and system channels
-        $this->printDbSubscriptions();
+            $this->printDbSubscriptions();
+        }
+
+        log_message('info', '[spark:discord:list] Completed', ['dry_run' => $dryRun]);
+        return EXIT_SUCCESS;
     }
 
     protected function printEnvSummary(DiscordConfig $cfg): void
@@ -187,5 +201,10 @@ class DiscordList extends BaseCommand
         }
 
         CLI::newLine();
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }

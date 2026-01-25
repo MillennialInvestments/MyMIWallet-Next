@@ -3,14 +3,17 @@
 namespace App\Commands;
 
 use App\Models\OpsCommandInboxModel;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class OpsFetchCommands extends BaseCommand
+class OpsFetchCommands extends SafeBaseCommand
 {
     protected $group       = 'ops';
     protected $name        = 'ops:fetch-commands';
     protected $description = 'Fetch unread ops commands from IMAP and store them in bf_ops_command_inbox';
+    protected $options     = [
+        '--dry-run' => 'Preview actions without storing inbox items',
+    ];
 
     private ?OpsCommandInboxModel $model = null;
 
@@ -27,9 +30,14 @@ class OpsFetchCommands extends BaseCommand
 
     public function run(array $params)
     {
+        log_message('info', '[spark:ops:fetch-commands] Started', ['params' => $params]);
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
+
         if (! function_exists('imap_open')) {
             CLI::error('IMAP extension not available.');
-            return;
+            log_message('error', '[spark:ops:fetch-commands] Failed', ['reason' => 'IMAP extension missing']);
+            return EXIT_ERROR;
         }
 
         $host          = trim((string) getenv('MYMI_OPS_IMAP_HOST'));
@@ -41,7 +49,8 @@ class OpsFetchCommands extends BaseCommand
 
         if ($host === '' || $user === '' || $pass === '') {
             CLI::error('IMAP credentials are not configured.');
-            return;
+            log_message('error', '[spark:ops:fetch-commands] Failed', ['reason' => 'IMAP credentials missing']);
+            return EXIT_ERROR;
         }
 
         $mailbox = sprintf('{%s}%s', $host, $mailboxFolder);
@@ -50,7 +59,8 @@ class OpsFetchCommands extends BaseCommand
 
         if (! $imap) {
             CLI::error('Unable to connect to IMAP mailbox.');
-            return;
+            log_message('error', '[spark:ops:fetch-commands] Failed', ['reason' => 'Unable to connect to IMAP']);
+            return EXIT_ERROR;
         }
 
         $emails = imap_search($imap, 'UNSEEN') ?: [];
@@ -58,17 +68,25 @@ class OpsFetchCommands extends BaseCommand
         if (empty($emails)) {
             CLI::write('No unread messages found.');
             imap_close($imap);
-            return;
+            log_message('info', '[spark:ops:fetch-commands] Completed', ['messages' => 0, 'dry_run' => $dryRun]);
+            return EXIT_SUCCESS;
         }
 
         foreach ($emails as $emailNumber) {
-            $this->processMessage($imap, (int) $emailNumber, $allowed, $sharedToken);
+            $this->processMessage($imap, (int) $emailNumber, $allowed, $sharedToken, $dryRun);
         }
 
         imap_close($imap);
+
+        log_message('info', '[spark:ops:fetch-commands] Completed', [
+            'messages' => count($emails),
+            'dry_run' => $dryRun,
+        ]);
+
+        return EXIT_SUCCESS;
     }
 
-    protected function processMessage($imap, int $emailNumber, array $allowedSenders, string $sharedToken): void
+    protected function processMessage($imap, int $emailNumber, array $allowedSenders, string $sharedToken, bool $dryRun): void
     {
         $overviewList = imap_fetch_overview($imap, (string) $emailNumber, 0);
         $overview     = $overviewList[0] ?? null;
@@ -113,6 +131,11 @@ class OpsFetchCommands extends BaseCommand
             'status'         => $status,
             'received_at'    => isset($overview->date) ? date('Y-m-d H:i:s', strtotime((string) $overview->date)) : null,
         ];
+
+        if ($dryRun) {
+            CLI::write(json_encode(['id' => 'dry-run', 'status' => $status, 'from' => $fromEmail]));
+            return;
+        }
 
         $this->model()->insert($data);
         $insertId = (int) $this->model()->getInsertID();
@@ -235,5 +258,10 @@ class OpsFetchCommands extends BaseCommand
         }
 
         return $output;
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }

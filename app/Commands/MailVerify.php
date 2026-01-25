@@ -4,23 +4,33 @@ declare(strict_types=1);
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class MailVerify extends BaseCommand
+class MailVerify extends SafeBaseCommand
 {
     protected $group       = 'maintenance';
     protected $name        = 'mail:verify';
     protected $description = 'Verify SMTP settings by sending a diagnostic email.';
     protected $usage       = 'mail:verify you@example.com';
+    protected $arguments   = [
+        'to' => 'Recipient email address.',
+    ];
+    protected $options     = [
+        '--dry-run' => 'Preview actions without sending email',
+    ];
 
     public function run(array $params)
     {
-        $to = $params[0] ?? null;
+        log_message('info', '[spark:mail:verify] Started', ['params' => $params]);
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
+        $to = $args[0] ?? null;
 
         if (! $to) {
             CLI::error('Usage: php spark mail:verify you@example.com');
-            return 1;
+            log_message('error', '[spark:mail:verify] Failed', ['reason' => 'Missing recipient email']);
+            return EXIT_ERROR;
         }
 
         $config = config('Email');
@@ -41,6 +51,9 @@ class MailVerify extends BaseCommand
         $error = null;
 
         try {
+            if ($dryRun) {
+                CLI::write('Dry-run enabled. Email will not be sent.', 'yellow');
+            } else {
             $mailer->clear(true);
             $mailer->setFrom($config->fromEmail, $config->fromName ?? 'MyMI Wallet Support');
             $mailer->setReplyTo($config->replyToEmail ?? $config->fromEmail, $config->replyToName ?? $config->fromName);
@@ -51,6 +64,7 @@ class MailVerify extends BaseCommand
 
             if (! $sent) {
                 $error = strip_tags($mailer->printDebugger(['headers', 'subject'])) ?: 'Unknown email error.';
+            }
             }
         } catch (\Throwable $e) {
             $error = $e->getMessage();
@@ -69,8 +83,15 @@ class MailVerify extends BaseCommand
         CLI::write(sprintf('To: %s', $to));
         CLI::write(sprintf('Duration: %dms', $durationMs));
 
+        if ($dryRun) {
+            CLI::write('Result: dry-run (no email sent)', 'yellow');
+            log_message('info', '[spark:mail:verify] Completed', ['to' => $to, 'dry_run' => true]);
+            return EXIT_SUCCESS;
+        }
+
         if ($sent) {
             CLI::write('Result: success', 'green');
+            log_message('info', '[spark:mail:verify] Completed', ['to' => $to, 'dry_run' => false]);
             return 0;
         }
 
@@ -84,7 +105,9 @@ class MailVerify extends BaseCommand
             'duration_ms' => $durationMs,
         ]);
 
-        return 1;
+        log_message('error', '[spark:mail:verify] Failed', ['reason' => $error ?? 'unknown']);
+
+        return EXIT_ERROR;
     }
 
     private function maskValue(?string $value): string
@@ -98,5 +121,10 @@ class MailVerify extends BaseCommand
         }
 
         return substr($value, 0, 2) . str_repeat('*', max(0, strlen($value) - 4)) . substr($value, -2);
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }

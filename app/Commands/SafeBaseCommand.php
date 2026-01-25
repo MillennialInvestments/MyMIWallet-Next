@@ -8,7 +8,13 @@ use CodeIgniter\CLI\CLI;
 abstract class SafeBaseCommand extends BaseCommand
 {
     /**
-     * Parse CI4 CLI params into args + flags.
+     * CI4-safe param parser.
+     *
+     * Returns:
+     *   [
+     *     array $args,   // positional arguments
+     *     array $flags   // ['flag' => true]
+     *   ]
      */
     protected function parseParams(array $params): array
     {
@@ -27,15 +33,7 @@ abstract class SafeBaseCommand extends BaseCommand
     }
 
     /**
-     * Override in destructive commands.
-     */
-    protected function isDestructive(): bool
-    {
-        return false;
-    }
-
-    /**
-     * Standard dry-run resolver.
+     * Resolve dry-run state using standardized flags.
      */
     protected function resolveDryRun(array $flags): bool
     {
@@ -43,37 +41,27 @@ abstract class SafeBaseCommand extends BaseCommand
     }
 
     /**
-     * Enforce destructive safety.
+     * Enforce destructive command guard rails.
+     *
+     * @return int|null EXIT_ERROR when blocked, or null when allowed.
      */
-    protected function enforceSafety(array $flags): void
+    protected function guardDestructive(array $flags, array $params): ?int
     {
-        if ($this->isDestructive() && ! isset($flags['force'])) {
-            CLI::error('This action is destructive. Re-run with --force to proceed.');
-            log_message('warning', '[spark] Destructive command blocked', [
-                'command' => static::class,
-                'flags'   => $flags,
-            ]);
-            exit(EXIT_ERROR);
+        if (! $this->isDestructive()) {
+            return null;
         }
+
+        if (isset($flags['force'])) {
+            return null;
+        }
+
+        CLI::error('This action is destructive. Re-run with --force to proceed.');
+        log_message('warning', sprintf('[spark:%s] Destructive command blocked', $this->name ?? 'unknown'), [
+            'params' => $params,
+        ]);
+
+        return EXIT_ERROR;
     }
 
-    /**
-     * Standardized logging helpers.
-     */
-    protected function logStart(array $context = []): void
-    {
-        log_message('info', '[spark] Started ' . static::class, $context);
-    }
-
-    protected function logSuccess(array $context = []): void
-    {
-        log_message('info', '[spark] Completed ' . static::class, $context);
-    }
-
-    protected function logFailure(string $message, array $context = []): void
-    {
-        log_message('error', '[spark] Failed ' . static::class, array_merge([
-            'message' => $message,
-        ], $context));
-    }
+    abstract protected function isDestructive(): bool;
 }

@@ -3,33 +3,35 @@
 namespace App\Commands\Database;
 
 use App\Services\Spark\DbApplyDocsService;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class ApplyDocs extends BaseCommand
+class ApplyDocs extends SafeBaseCommand
 {
     protected $group       = 'database';
     protected $name        = 'db:apply-docs';
     protected $description = 'Compile SQL from docs/mysql and apply statements with audit logging.';
-    protected $usage       = 'db:apply-docs [options]';
+    protected $usage       = 'db:apply-docs [db-group] [--dry-run]';
+    protected $arguments   = [
+        'db-group' => 'Optional: database group to use (default: default).',
+    ];
     protected $options     = [
         '--dry-run'  => 'Compile SQL without executing statements.',
-        '--db-group' => 'Database group to use (default: default).',
-        '--force'    => 'Required for destructive actions',
     ];
 
     public function run(array $params)
     {
-        log_message('info', '[spark:db:apply-docs] Started');
+        log_message('info', '[spark:db:apply-docs] Started', ['params' => $params]);
         CLI::write('Starting db:apply-docs', 'yellow');
 
-        $dryRun = $this->option('dry-run') !== null || ! $this->option('force');
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
         if ($dryRun) {
-            CLI::write('Dry-run enabled. Use --force to execute SQL.', 'yellow');
+            CLI::write('Dry-run enabled. SQL will be compiled only.', 'yellow');
         }
 
         $options = [
-            'db-group' => $this->option('db-group') ?? 'default',
+            'db-group' => $args[0] ?? 'default',
         ];
 
         $service = new DbApplyDocsService();

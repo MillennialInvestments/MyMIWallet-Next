@@ -2,19 +2,26 @@
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
 
-class AiOpsSeed extends BaseCommand
+class AiOpsSeed extends SafeBaseCommand
 {
     protected $group       = 'AiOps';
     protected $name        = 'aiops:seed';
     protected $description = 'Seed default AI Ops caps and pricing configuration.';
     protected $usage       = 'php spark aiops:seed';
+    protected $options     = [
+        '--dry-run' => 'Preview actions without writing to the database',
+    ];
 
     public function run(array $params)
     {
+        log_message('info', '[spark:aiops:seed] Started', ['params' => $params]);
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
+
         $db      = db_connect();
         $builder = $db->table('bf_ai_ops_caps');
 
@@ -23,6 +30,12 @@ class AiOpsSeed extends BaseCommand
             ['subsystem' => 'selfhost_marketing_drafts', 'cap_type' => 'CAPACITY', 'cap_value' => 100, 'is_enabled' => 1],
             ['subsystem' => 'selfhost_pr_review', 'cap_type' => 'CAPACITY', 'cap_value' => 100, 'is_enabled' => 1],
         ];
+
+        if ($dryRun) {
+            CLI::write('Dry-run enabled. AI Ops caps will not be written.', 'yellow');
+            log_message('info', '[spark:aiops:seed] Completed', ['dry_run' => true]);
+            return EXIT_SUCCESS;
+        }
 
         $db->transStart();
         foreach ($defaults as $row) {
@@ -41,9 +54,17 @@ class AiOpsSeed extends BaseCommand
 
         if ($db->transStatus() === false) {
             CLI::error('Failed to seed AI Ops caps.');
-            return;
+            log_message('error', '[spark:aiops:seed] Failed', ['reason' => 'Transaction failed']);
+            return EXIT_ERROR;
         }
 
         CLI::write('AI Ops caps seeded successfully.', 'green');
+        log_message('info', '[spark:aiops:seed] Completed', ['dry_run' => false]);
+        return EXIT_SUCCESS;
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }

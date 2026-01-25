@@ -3,10 +3,10 @@
 namespace App\Commands\Auth;
 
 use App\Services\Spark\AuthAuditRunner;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class Audit extends BaseCommand
+class Audit extends SafeBaseCommand
 {
     protected $group       = 'auth';
     protected $name        = 'auth:audit';
@@ -15,20 +15,20 @@ class Audit extends BaseCommand
     protected $arguments = [];
     protected $options = [
         '--dry-run' => 'Preview actions without writing data',
-        '--force'   => 'Required for destructive actions',
     ];
 
     private const MAX_FAILURES = 25;
 
     public function run(array $params)
     {
-        log_message('info', '[spark:auth:audit] Started');
+        log_message('info', '[spark:auth:audit] Started', ['params' => $params]);
         CLI::write('Starting auth:audit', 'yellow');
 
-        $dryRun = $this->option('dry-run') !== null || ! $this->option('force');
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
 
         if ($dryRun) {
-            CLI::write('Dry-run enabled. Use --force to execute full audit.', 'yellow');
+            CLI::write('Dry-run enabled. Running audit without writing changes.', 'yellow');
             CLI::write('Planned actions: create test users, validate login/logout flows, write audit report.');
         }
 
