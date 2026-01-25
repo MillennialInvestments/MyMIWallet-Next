@@ -11,10 +11,12 @@ class Summarize extends BaseCommand
     protected $group       = 'logs';
     protected $name        = 'logs:summarize';
     protected $description = 'Summarize CI4 logs for a given date, including new entries since the last run.';
-    protected $usage       = 'logs:summarize [date|yesterday]';
-    protected $arguments   = [
+    protected $usage       = 'logs:summarize [date|yesterday] [--dry-run] [--force]';
+
+    protected $arguments = [
         'date' => 'Optional: "yesterday" or YYYY-MM-DD (defaults to today).',
     ];
+
     protected $options = [
         '--dry-run' => 'Preview actions without writing data',
         '--force'   => 'Required for destructive actions',
@@ -22,54 +24,93 @@ class Summarize extends BaseCommand
 
     public function run(array $params)
     {
-        log_message('info', '[spark:logs:summarize] Started');
         CLI::write('Starting logs:summarize', 'yellow');
+        log_message('info', '[spark:logs:summarize] Started', ['params' => $params]);
 
-        $targetDate = $this->resolveTargetDate($params[0] ?? null);
-        $dryRun = $this->option('dry-run') !== null || ! $this->option('force');
+        // -----------------------------
+        // Parse args + flags (CI4-safe)
+        // -----------------------------
+        [$args, $flags] = $this->parseParams($params);
 
-        $service = new LogSummarizeService();
-        $result = $service->summarizeForDate($targetDate, $dryRun);
+        $targetDate = $this->resolveTargetDate($args[0] ?? null);
 
-        if (! $result['ok']) {
-            $message = $result['message'] ?? 'Unable to summarize logs.';
-            $candidates = $result['candidates'] ?? [];
-            if ($candidates !== []) {
-                $message .= ' Checked: ' . implode(', ', $candidates);
-            }
-            CLI::error($message);
-            log_message('error', '[spark:logs:summarize] Failed', ['message' => $message]);
+        // -----------------------------
+        // Safety guard (future-proof)
+        // -----------------------------
+        // -----------------------------
+        // Dry-run handling (correct)
+        // -----------------------------
+        $dryRun = isset($flags['dry-run']);
+
+        // -----------------------------
+        // Destructive safety guard
+        // -----------------------------
+        if ($this->isDestructive() && ! isset($flags['force'])) {
+            CLI::error('This action is destructive. Re-run with --force to proceed.');
+            log_message('warning', '[spark:logs:summarize] Blocked destructive run (missing --force)');
             return EXIT_ERROR;
         }
 
+        // -----------------------------
+        // Execute service
+        // -----------------------------
+        $service = new LogSummarizeService();
+        $result  = $service->summarizeForDate($targetDate, $dryRun);
+
+        if (! ($result['ok'] ?? false)) {
+            $message = $result['message'] ?? 'Unable to summarize logs.';
+            if (! empty($result['candidates'])) {
+                $message .= ' Checked: ' . implode(', ', $result['candidates']);
+            }
+
+            CLI::error($message);
+            log_message('error', '[spark:logs:summarize] Failed', [
+                'date'    => $targetDate,
+                'dryRun'  => $dryRun,
+                'message' => $message,
+            ]);
+
+            return EXIT_ERROR;
+        }
+
+        // -----------------------------
+        // Output
+        // -----------------------------
         if ($dryRun) {
             CLI::write("Dry-run: would write summary to {$result['out_file']}", 'yellow');
             CLI::write("Dry-run: would update state to {$result['state_file']}", 'yellow');
         } else {
             CLI::write("Summary generated for {$targetDate}: {$result['out_file']}", 'green');
-            if ($result['max_ts'] !== null) {
+            if (! empty($result['max_ts'])) {
                 CLI::write('Last processed timestamp updated to: ' . $result['max_ts'], 'yellow');
             }
         }
 
-        CLI::write('total_entries=' . $result['total']);
-        CLI::write('new_entries=' . $result['new_total']);
+        CLI::write('total_entries=' . ($result['total'] ?? 0));
+        CLI::write('new_entries=' . ($result['new_total'] ?? 0));
 
         log_message('info', '[spark:logs:summarize] Completed', [
-            'date'       => $targetDate,
-            'total'      => $result['total'],
-            'new_total'  => $result['new_total'],
-            'dry_run'    => $dryRun,
+            'date'      => $targetDate,
+            'total'     => $result['total'] ?? 0,
+            'new_total' => $result['new_total'] ?? 0,
+            'dry_run'   => $dryRun,
         ]);
 
         return EXIT_SUCCESS;
     }
 
+    /**
+     * Whether this command can destroy or mutate historical data.
+     * Override to TRUE in future commands that prune, rewrite, or delete.
+     */
     protected function isDestructive(): bool
     {
         return false;
     }
 
+    /**
+     * Resolve the target date argument.
+     */
     private function resolveTargetDate(?string $arg): string
     {
         if ($arg === 'yesterday') {
@@ -81,5 +122,30 @@ class Summarize extends BaseCommand
         }
 
         return date('Y-m-d');
+    }
+
+    /**
+     * CI4-safe param parser.
+     *
+     * Returns:
+     *   [
+     *     array $args,   // positional arguments
+     *     array $flags   // ['flag' => true]
+     *   ]
+     */
+    protected function parseParams(array $params): array
+    {
+        $args  = [];
+        $flags = [];
+
+        foreach ($params as $param) {
+            if (str_starts_with($param, '--')) {
+                $flags[ltrim($param, '-')] = true;
+            } else {
+                $args[] = $param;
+            }
+        }
+
+        return [$args, $flags];
     }
 }
