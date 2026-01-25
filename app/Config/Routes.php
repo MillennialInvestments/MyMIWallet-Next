@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 // app/Config/Routes.php
+use App\Modules\Advisor\Controllers\AdvisorController;
 use CodeIgniter\Router\RouteCollection;
 use Config\Services; // ← add this line
 
@@ -198,11 +199,11 @@ $routes->group('', ['namespace' => 'App\Modules\User\Controllers', 'filter' => [
 });
 
 
-$routes->group('Advisor', ['namespace' => 'App\\Modules\\Advisor\\Controllers'], function($routes) {
-    $routes->get('/', 'AdvisorController::index');
-    $routes->post('generateInsight', 'AdvisorController::generateAdvisorInsight');
-    $routes->post('generateStoryboard', 'AdvisorController::generateNewsStoryboard');
-    $routes->post('tradeAnalysis/(:num)', 'AdvisorController::generateTradeAnalysis/$1');
+$routes->group('Advisor', static function($routes) {
+    $routes->get('/', [AdvisorController::class, 'index']);
+    $routes->post('generateInsight', [AdvisorController::class, 'generateAdvisorInsight']);
+    $routes->post('generateStoryboard', [AdvisorController::class, 'generateNewsStoryboard']);
+    $routes->post('tradeAnalysis/(:num)', [AdvisorController::class, 'generateTradeAnalysis']);
 });
 
 $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function($routes) {
@@ -304,7 +305,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('cronQueueDistribution', 'MarketingController::cronQueueDistribution');
 
         $routes->group('Advisor', static function($routes) {
-            $routes->post('generateNow', 'AdvisorController::generateNow');
+            $routes->post('generateNow', [AdvisorController::class, 'generateNow']);
         });
 
         $routes->group('Projects', static function($routes) {
@@ -1229,13 +1230,13 @@ $routes->group('Search', ['namespace' => 'App\Modules\APIs\Controllers'], functi
 });
 
 // Advisor
-$routes->group('Advisor', ['namespace' => 'App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {
-    $routes->match(['GET', 'POST'], '/', 'AdvisorController::index');
+$routes->group('Advisor', ['filter' => 'login'], function($routes) {
+    $routes->match(['GET', 'POST'], '/', [AdvisorController::class, 'index']);
 });
 
 // Advisors
-$routes->group('Advisors', ['namespace' => 'App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {
-    $routes->match(['GET', 'POST'], '/', 'AdvisorController::index');
+$routes->group('Advisors', ['filter' => 'login'], function($routes) {
+    $routes->match(['GET', 'POST'], '/', [AdvisorController::class, 'index']);
 });
 
 // Alerts:
