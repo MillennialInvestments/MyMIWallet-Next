@@ -27,6 +27,7 @@ class Toolbar extends BaseConfig
      * Enable toolbar only when debugging outside production.
      */
     public bool $enabled = (CI_DEBUG && ENVIRONMENT !== 'production');
+    // public bool $enabled = false;
 
     public function __construct()
     {

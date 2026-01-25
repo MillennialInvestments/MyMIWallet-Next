@@ -49,11 +49,6 @@ class Services extends BaseService
         return CoreServices::cache($config, $getShared);
     }
 
-    public static function responsecache(?Cache $config = null, bool $getShared = true)
-    {
-        return parent::responsecache($config, $getShared);
-    }
-
     public static function crudCacheInvalidator(bool $getShared = true): CrudCacheInvalidator
     {
         if ($getShared) {
