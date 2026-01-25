@@ -28,3 +28,9 @@ app/Config/APIs.php
 scripts/social_output/
 scripts/social_input.json
 writable/logs/deploy-*.log
+application/helpers/squeeze_helper.php
+application/libraries/MyMISqueeze.php
+application/modules/investments/controllers/API_Squeeze.php
+application/helpers/squeeze_helper.php
+application/libraries/MyMISqueeze.php
+application/modules/investments/controllers/API_Squeeze.php
