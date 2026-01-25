@@ -2,10 +2,47 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\Controller;
+use App\Services\Env\EnvInspector;
 
-class OpsHealth extends Controller
+class OpsHealth extends UserController
 {
+    public function index()
+    {
+        $inspector = new EnvInspector();
+        $report = $inspector->loadLatestReport();
+
+        $summary = $report['summary'] ?? ['score' => 0, 'counts' => ['ok' => 0, 'warning' => 0, 'critical' => 0]];
+        $status = $report['status'] ?? 'unknown';
+        $score = (int) ($summary['score'] ?? 0);
+        $colorState = match ($status) {
+            'ok' => 'green',
+            'warning' => 'yellow',
+            'critical' => 'red',
+            default => 'gray',
+        };
+
+        $data = [
+            'pageTitle' => 'Server Health | MyMI Wallet',
+            'healthScore' => $score,
+            'healthStatus' => $status,
+            'colorState' => $colorState,
+            'latestTimestamp' => $report['generated_at'] ?? null,
+            'topFindings' => $report ? $inspector->topFindings($report, 5) : [],
+        ];
+
+        return $this->renderTheme('admin/health/index', $data);
+    }
+
+    public function run()
+    {
+        $inspector = new EnvInspector();
+        $report = $inspector->inspect();
+        $markdown = $inspector->formatMarkdown($report);
+        $inspector->persistReport($report, $markdown, false);
+
+        return redirect()->to(site_url('admin/ops/health'))->with('message', 'Env Doctor run completed.');
+    }
+
     public function score()
     {
         $home = rtrim(getenv('HOME') ?: $_SERVER['HOME'] ?? '', '/');
