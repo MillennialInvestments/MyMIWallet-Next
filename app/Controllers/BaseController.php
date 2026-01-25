@@ -88,6 +88,10 @@ abstract class BaseController extends Controller
         parent::initController($request, $response, $logger);
         log_message('debug', static::class . ' initController executed');
 
+        if (is_cli()) {
+            return;
+        }
+
         // Pick theme by first URI segment when not running in CLI
         if (! ($this->request instanceof CLIRequest)) {
             $uri   = $this->request->getUri();          // <-- accessor, not $this->request->uri
@@ -111,11 +115,12 @@ abstract class BaseController extends Controller
         $this->telemetryEnabled = (bool) env('app.debugTelemetry', false);
 
         // CSP
+        $this->data['cspNonce'] = bin2hex(random_bytes(16));
+        $this->cspNonce = $this->data['cspNonce'];
         $this->csp = [
-            'script' => $this->generateNonce(),
-            'style'  => $this->generateNonce(),
+            'script' => $this->cspNonce,
+            'style'  => $this->cspNonce,
         ];
-        $this->cspNonce = $this->csp['script'];
 
         // Apply CSP once based on mode
         $this->applyContentSecurityPolicy($response);
@@ -1033,6 +1038,10 @@ abstract class BaseController extends Controller
     // BaseController.php — drop in these methods
     protected function applyContentSecurityPolicy(ResponseInterface $response): void
     {
+        if (is_cli()) {
+            return;
+        }
+
         $mode = strtolower((string) (getenv('APP_CSP_MODE') ?: 'permissive'));
 
         if ($mode === 'relaxed') {
@@ -1058,21 +1067,24 @@ abstract class BaseController extends Controller
 
         if ($mode === 'permissive') {
             $this->csp['mode']   = 'permissive';
-            $this->csp['script'] = '';
-            $this->csp['style']  = '';
+            $this->csp['script'] = $this->cspNonce ?? $this->generateNonce();
+            $this->csp['style']  = $this->cspNonce ?? $this->generateNonce();
 
             $this->applyCspRelaxed($response);
 
             $this->data['csp']   = $this->csp;
-            $this->data['nonce'] = ['script' => '', 'style' => ''];
+            $this->data['nonce'] = [
+                'script' => $this->cspAttr('script', $this->csp['script'] ?? ''),
+                'style'  => $this->cspAttr('style',  $this->csp['style']  ?? ''),
+            ];
             $this->nonceAttributes = $this->data['nonce'];
             return;
         }
 
         // STRICT by default
         $this->csp['mode']   = 'strict';
-        $this->csp['script'] = $this->csp['script'] ?? $this->generateNonce();
-        $this->csp['style']  = $this->csp['style']  ?? $this->generateNonce();
+        $this->csp['script'] = $this->cspNonce ?? $this->generateNonce();
+        $this->csp['style']  = $this->cspNonce ?? $this->generateNonce();
 
         $this->applyCspStrict($response);
 
@@ -1125,14 +1137,17 @@ abstract class BaseController extends Controller
 
     private function applyCspRelaxed(ResponseInterface $response): void
     {
-        // PERMISSIVE: allows inline <script> and style="", and whitelists your CDNs/widgets
+        // PERMISSIVE: nonce-based inline, allows broader CDNs/widgets
+        $scriptNonce = $this->csp['script'] ?? '';
+        $styleNonce  = $this->csp['style']  ?? '';
+
         $directives = [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' https://code.jquery.com https://cdn.jsdelivr.net https://cdn.datatables.net https://cdnjs.cloudflare.com https://unpkg.com https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://www.gstatic.com https://s3.tradingview.com https://www.tradingview.com https://maxcdn.bootstrapcdn.com https://stackpath.bootstrapcdn.com https://connect.facebook.net https://www.clarity.ms https://scripts.clarity.ms",
-            "script-src-elem 'self' 'unsafe-inline' https://code.jquery.com https://cdn.jsdelivr.net https://cdn.datatables.net https://cdnjs.cloudflare.com https://unpkg.com https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://www.gstatic.com https://s3.tradingview.com https://www.tradingview.com https://maxcdn.bootstrapcdn.com https://stackpath.bootstrapcdn.com https://connect.facebook.net https://www.clarity.ms https://scripts.clarity.ms",
+            "script-src 'self' 'nonce-{$scriptNonce}' https://code.jquery.com https://cdn.jsdelivr.net https://cdn.datatables.net https://cdnjs.cloudflare.com https://unpkg.com https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://www.gstatic.com https://s3.tradingview.com https://www.tradingview.com https://maxcdn.bootstrapcdn.com https://stackpath.bootstrapcdn.com https://connect.facebook.net https://www.clarity.ms https://scripts.clarity.ms",
+            "script-src-elem 'self' 'nonce-{$scriptNonce}' https://code.jquery.com https://cdn.jsdelivr.net https://cdn.datatables.net https://cdnjs.cloudflare.com https://unpkg.com https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://www.gstatic.com https://s3.tradingview.com https://www.tradingview.com https://maxcdn.bootstrapcdn.com https://stackpath.bootstrapcdn.com https://connect.facebook.net https://www.clarity.ms https://scripts.clarity.ms",
             "connect-src 'self' https: https://www.google-analytics.com https://www.googletagmanager.com https://s3.tradingview.com https://www.tradingview.com https://connect.facebook.net https://www.clarity.ms",
-            "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com https://unpkg.com https://maxcdn.bootstrapcdn.com https://stackpath.bootstrapcdn.com",
-            "style-src-elem 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com https://unpkg.com https://maxcdn.bootstrapcdn.com https://stackpath.bootstrapcdn.com",
+            "style-src 'self' 'nonce-{$styleNonce}' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com https://unpkg.com https://maxcdn.bootstrapcdn.com https://stackpath.bootstrapcdn.com",
+            "style-src-elem 'self' 'nonce-{$styleNonce}' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com https://unpkg.com https://maxcdn.bootstrapcdn.com https://stackpath.bootstrapcdn.com",
 
             "img-src 'self' data: https:",
             "font-src 'self' data: https: https://fonts.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://maxcdn.bootstrapcdn.com https://stackpath.bootstrapcdn.com https://static.tradingview.com",

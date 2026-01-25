@@ -7,8 +7,8 @@ $siteSettings = $siteSettings ?? [];
 $pageTitle    = $pageTitle    ?? ($meta['title'] ?? 'MyMI Wallet');
 
 // CSP nonces from BaseController
-$csp   = $csp   ?? ['style' => '', 'script' => ''];
-$nonce = $nonce ?? ['style' => '', 'script' => ''];
+$csp      = $csp ?? ['style' => '', 'script' => ''];
+$cspNonce = $cspNonce ?? $csp['script'] ?? '';
 ?>
 <!doctype html>
 <head>
@@ -19,18 +19,18 @@ $nonce = $nonce ?? ['style' => '', 'script' => ''];
     <link rel="shortcut icon" href="<?= base_url('favicon.ico'); ?>" type="image/x-icon">
 
     <!-- Local, self-hosted CSS only -->
-    <link rel="stylesheet" href="<?= base_url('assets/vendor/bootstrap5/bootstrap.min.css'); ?>" <?= $nonce['style'] ?? '' ?>>
-    <link rel="stylesheet" href="<?= base_url('assets/vendor/fontawesome/css/all.min.css'); ?>" <?= $nonce['style'] ?? '' ?>>
-    <link rel="stylesheet" href="<?= base_url('assets/css/dashlite.css'); ?>" <?= $nonce['style'] ?? '' ?>>
-    <link rel="stylesheet" href="<?= base_url('assets/css/dashlite3.css?ver=3.0.2'); ?>" <?= $nonce['style'] ?? '' ?>>
-    <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap-select.min.css'); ?>" <?= $nonce['style'] ?? '' ?>>
-    <link rel="stylesheet" href="<?= base_url('assets/css/responsive-overrides.css'); ?>" <?= $nonce['style'] ?? '' ?>>
-    <link rel="stylesheet" href="<?= base_url('assets/css/mymiwallet.mobile.css') . '?v=' . (is_file(FCPATH.'assets/css/mymiwallet.mobile.css') ? filemtime(FCPATH.'assets/css/mymiwallet.mobile.css') : '1'); ?>" <?= $nonce['style'] ?? '' ?>>
+    <link rel="stylesheet" href="<?= base_url('assets/vendor/bootstrap5/bootstrap.min.css'); ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/vendor/fontawesome/css/all.min.css'); ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/dashlite.css'); ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/dashlite3.css?ver=3.0.2'); ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap-select.min.css'); ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/responsive-overrides.css'); ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/mymiwallet.mobile.css') . '?v=' . (is_file(FCPATH.'assets/css/mymiwallet.mobile.css') ? filemtime(FCPATH.'assets/css/mymiwallet.mobile.css') : '1'); ?>">
 
     <?php // No inline <style nonce="<?= esc($csp['style']) >"> here. Move any previous inline CSS into responsive-overrides.css ?>
     <?php // echo service('assets')->css(); ?>
-    <script <?= $nonce['script'] ?? '' ?>>
-    window.__CSP_NONCE__ = <?= json_encode($csp['script'] ?? '') ?>;
+    <script nonce="<?= esc($cspNonce) ?>">
+    window.__CSP_NONCE__ = <?= json_encode($cspNonce) ?>;
 
     (function () {
         var originalAppendChild = Document.prototype.appendChild;

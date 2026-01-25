@@ -81,7 +81,7 @@
             <button type="submit" class="btn btn-block btn-primary">Register</button>
             
             <div class="control-group form-row pt-3">
-                <div class="controls col-12 pl-0" style="margin-left: 0px;">
+                <div class="controls col-12 pl-0 ms-0">
                     <div class="accordion-item">            
                         <a href="#" class="accordion-head border-bottom collapsed" data-bs-toggle="collapse" data-bs-target="#accordion-item-2-2">           
                             <strong>Service Disclosure</strong>                   

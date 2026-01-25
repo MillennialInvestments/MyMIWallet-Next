@@ -35,7 +35,8 @@
 ?>
 
 <!-- SCRIPTS -->
-<script <?= $nonce['script'] ?? '' ?>>
+<?php $cspNonce = $cspNonce ?? (service('renderer')->getData('cspNonce') ?? ''); ?>
+<script nonce="<?= esc($cspNonce) ?>">
     function toggleMenu() {
         var menuItems = document.getElementsByClassName('menu-item');
         for (var i = 0; i < menuItems.length; i++) {
@@ -44,14 +45,14 @@
         }
     }
 </script>
-<script <?= $nonce['script'] ?? '' ?>>
+<script nonce="<?= esc($cspNonce) ?>">
 window.onload = function() {
   $("#navbarSupportedContent").hide();
 };
 </script>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-168714029-1" <?= $nonce['script'] ?? '' ?>></script>
-<script <?= $nonce['script'] ?? '' ?>>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-168714029-1"></script>
+<script nonce="<?= esc($cspNonce) ?>">
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -59,7 +60,7 @@ window.onload = function() {
   gtag('config', 'UA-168714029-1');
 </script>
 <!-- Meta Pixel Code -->
-<script <?= $nonce['script'] ?? '' ?>>
+<script nonce="<?= esc($cspNonce) ?>">
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -76,7 +77,7 @@ src="https://www.facebook.com/tr?id=1066980131308331&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
  <!-- Clarity tracking code for https://mymiwallet.com/ -->
-<script>
+<script nonce="<?= esc($cspNonce) ?>">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";

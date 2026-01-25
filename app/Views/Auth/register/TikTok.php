@@ -5,7 +5,8 @@ $subViewData = [
     'uri'       => $uri,
 ]; 
 ?>
-<style <?= $nonce['style'] ?? '' ?>>
+<?php $cspNonce = $cspNonce ?? (service('renderer')->getData('cspNonce') ?? ''); ?>
+<style nonce="<?= esc($cspNonce) ?>">
     #gettingStartedBanner {
         background-image: url('<?php echo base_url('assets/images/MyMI-Walllet-Background.jpeg'); ?>');
         background-size: cover;
@@ -33,6 +34,10 @@ $subViewData = [
     .promo-content a {
         color: #000000; /* TikTok Black */
     }
+
+    .tiktok-cta {
+        background-color: #000000;
+    }
 </style>
 
 <div id="gettingStartedBanner">
@@ -50,7 +55,7 @@ $subViewData = [
                 <li>💡 <strong>Investment Challenges:</strong> Participate in community-driven challenges that make learning fun.</li>
                 <li>📈 <strong>Market Updates:</strong> Stay ahead of market trends with our trending stock and crypto insights.</li>
             </ul>
-            <p>Ready to follow? <a href="<?= $socialMedia->tiktok ?>" class="btn btn-md" style="background-color: #000000;">Follow MyMI Wallet on TikTok</a> and join the financial revolution today!</p>
+            <p>Ready to follow? <a href="<?= $socialMedia->tiktok ?>" class="btn btn-md tiktok-cta">Follow MyMI Wallet on TikTok</a> and join the financial revolution today!</p>
             
             <?php echo view('themes/public/resources/ytPromoVideo', $subViewData); ?>
         </div>

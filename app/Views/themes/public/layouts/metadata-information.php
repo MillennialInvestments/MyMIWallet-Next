@@ -17,6 +17,7 @@ $page_description = $seoData['page_description'] ?? 'Experience the future of fi
 $page_url         = $seoData['page_url']         ?? $thisURL;
 $page_image       = $seoData['page_image']       ?? $defaultImage;
 $page_type        = $seoData['page_type']        ?? 'Manual';
+$cspNonce = $cspNonce ?? (service('renderer')->getData('cspNonce') ?? '');
 ?>
 <title><?= esc($page_title) ?></title>
 <meta name="description" content="<?= esc($page_description) ?>">
@@ -30,7 +31,7 @@ $page_type        = $seoData['page_type']        ?? 'Manual';
 <meta name="twitter:description" content="<?= esc($page_description) ?>">
 <meta name="twitter:image" content="<?= esc($page_image) ?>">
 <meta name="yandex-verification" content="071f602413eb4421" />
-<script type="application/ld+json" <?= $nonce['script'] ?? '' ?>>
+<script type="application/ld+json" nonce="<?= esc($cspNonce) ?>">
 <?= $metaService->getStructuredData([
     'page_title' => $page_title,
     'page_description' => $page_description,

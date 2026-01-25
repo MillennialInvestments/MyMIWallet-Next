@@ -6,7 +6,8 @@ $subViewData = [
 $referralCode = $uri->getSegment(3) ?? 'default'; // e.g., /MonetizedCreators/ref12345
 ?>
 
-<style <?= $nonce['style'] ?? '' ?>>
+<?php $cspNonce = $cspNonce ?? (service('renderer')->getData('cspNonce') ?? ''); ?>
+<style nonce="<?= esc($cspNonce) ?>">
     #landingBanner {
         background-image: url('<?php echo base_url('assets/images/MyMI-Walllet-Background.jpeg'); ?>');
         background-size: cover;
