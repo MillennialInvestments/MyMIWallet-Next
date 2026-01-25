@@ -4,9 +4,13 @@ namespace App\Commands;
 
 use App\Services\Triage\CommandRunner;
 use CodeIgniter\CLI\CLI;
+use Config\Ops;
 
 class Fix503 extends SafeBaseCommand
 {
+    private Ops $ops;
+    private float $confidence = 0.0;
+
     protected $group = 'ops';
     protected $name = 'fix:503';
     protected $description = 'Diagnose and attempt safe auto-fixes for 503 errors.';
@@ -26,6 +30,10 @@ class Fix503 extends SafeBaseCommand
         $dryRun = $this->resolveDryRun($flags);
 
         $this->initializeLog();
+        $this->ops = config(Ops::class);
+        $doctorPath = WRITEPATH . 'triage/503/envdoctor-' . date('Y-m-d-His') . '.json';
+        $this->logStep('ENVDOCTOR', 'INFO', 'Will write: ' . $doctorPath);
+
         $runner = new CommandRunner();
         $autoFixAllowed = ! $dryRun;
 
@@ -51,9 +59,9 @@ class Fix503 extends SafeBaseCommand
             $actionsNotTaken[] = 'Auto-fix skipped due to disk/inode threshold';
         }
 
-        $phpFpmRunning = $this->runPhpFpmStatus($runner);
-        if (! $phpFpmRunning) {
-            $rootCause = 'PHP-FPM not running';
+        $phpBackend = $this->runPhpBackendStatus($runner); // new
+        if (! $phpBackend['healthy']) {
+            $rootCause = $phpBackend['root_cause'] ?? 'PHP backend not running';
             $riskLevel = 'HIGH';
         }
 
@@ -93,7 +101,12 @@ class Fix503 extends SafeBaseCommand
         $this->runPhpFpmLogs($runner);
 
         if ($restartQueued && $autoFixAllowed) {
-            $restartResult = $runner->run('systemctl restart php8.2-fpm');
+            if ($restartQueued) {
+                $actionsNotTaken[] = 'Restarted php8.2-fpm (DreamHost: systemctl not available)';
+                $recommendations[] = 'DreamHost panel: restart web server / toggle PHP handler for the domain to refresh backend';
+                $recommendations[] = 'If using home-nginx, run: nginx -p ~/nginx -c conf/nginx.conf -t && nginx -p ~/nginx -c conf/nginx.conf -s reload';
+            }
+
             $status = $restartResult['exit_code'] === 0 ? 'OK' : 'FAIL';
             $this->logStep('PHP-FPM-RESTART', $status, 'systemctl restart php8.2-fpm');
             $this->logOutput('PHP-FPM-RESTART', $restartResult['output']);
@@ -106,6 +119,9 @@ class Fix503 extends SafeBaseCommand
         } elseif ($restartQueued) {
             $actionsNotTaken[] = 'Restarted php8.2-fpm (blocked by auto-fix guard)';
         }
+        
+        $this->confidence = $this->calculateConfidenceScore($rootCause);
+        $recommendations[] = 'Confidence score: ' . number_format($this->confidence * 100, 0) . '%';
 
         $this->printReport($rootCause, $actionsTaken, $actionsNotTaken, $riskLevel, $recommendations);
 
@@ -116,6 +132,19 @@ class Fix503 extends SafeBaseCommand
         ]);
 
         return EXIT_SUCCESS;
+    }
+
+    private function calculateConfidenceScore(string $rootCause): float
+    {
+        // Simple, deterministic scoring that you can tune later.
+        return match ($rootCause) {
+            'Disk/inode usage above 90%' => 0.95,
+            'PHP-FPM socket mismatch' => 0.90,
+            'Writable permissions misconfigured' => 0.80,
+            'CI4 bootstrap failure' => 0.75,
+            'PHP backend not running' => 0.70,
+            default => 0.40,
+        };
     }
 
     protected function isDestructive(): bool
@@ -146,6 +175,69 @@ class Fix503 extends SafeBaseCommand
             $this->logStep($step, 'INFO', $line);
         }
     }
+
+    private function detectDreamHostSocket(CommandRunner $runner): array
+    {
+        $home = rtrim(getenv('HOME') ?: '/home/' . get_current_user(), '/');
+        $candidates = $this->ops->dreamhostSocketCandidates ?? [];
+
+        foreach ($candidates as $cand) {
+            $path = str_replace('%HOME%', $home, $cand);
+            // Avoid file_exists() on remote paths if perms are weird; use test -S
+            $r = $runner->run('test -S ' . escapeshellarg($path) . ' && echo FOUND || echo MISSING');
+            if (in_array('FOUND', $r['output'], true)) {
+                return ['found' => true, 'path' => $path];
+            }
+        }
+
+        // fallback scan (cheap)
+        $scan = $runner->run('find ' . escapeshellarg($home) . ' -maxdepth 4 -name "*.sock" 2>/dev/null | head -n 25');
+        $found = $scan['exit_code'] === 0 && ! empty($scan['output']);
+        return ['found' => $found, 'path' => $found ? $scan['output'][0] : null, 'candidates_checked' => count($candidates)];
+    }
+
+    private function runPhpBackendStatus(CommandRunner $runner): array
+    {
+        $home = rtrim(getenv('HOME') ?: '/home/' . get_current_user(), '/');
+
+        // DreamHost: php82.cgi is the reality; systemctl is a trap.
+        if (($this->ops->platform ?? 'generic') === 'dreamhost') {
+            $ps = $runner->run('ps aux | egrep "php82\\.cgi|php-cgi|spawn-fcgi|supervisord" | grep -v egrep');
+            $sock = $this->detectDreamHostSocket($runner);
+
+            $hasProc = $ps['exit_code'] === 0 && count($ps['output']) > 0;
+            $hasSock = $sock['found'];
+
+            $healthy = $hasProc || $hasSock;
+
+            $this->logStep('PHP-BACKEND', $healthy ? 'OK' : 'FAIL', sprintf(
+                'platform=dreamhost proc=%s sock=%s sock_path=%s',
+                $hasProc ? 'true' : 'false',
+                $hasSock ? 'true' : 'false',
+                $sock['path'] ?? ''
+            ));
+            $this->logOutput('PHP-BACKEND', $ps['output']);
+
+            return [
+                'healthy' => $healthy,
+                'root_cause' => $healthy ? null : 'DreamHost PHP backend not detected (no php-cgi process or socket found)',
+                'socket' => $sock,
+            ];
+        }
+
+        // Generic server path (non-DreamHost) — keep minimal, no auth prompts.
+        $ps = $runner->run('ps aux | grep -E "php-fpm: master process|php-fpm: pool" | grep -v grep');
+        $running = $ps['exit_code'] === 0 && count($ps['output']) > 0;
+
+        $this->logStep('PHP-BACKEND', $running ? 'OK' : 'FAIL', 'platform=generic ps php-fpm');
+        $this->logOutput('PHP-BACKEND', $ps['output']);
+
+        return [
+            'healthy' => $running,
+            'root_cause' => $running ? null : 'php-fpm not running (no master/pool processes found)',
+        ];
+    }
+
 
     private function runWebReachability(CommandRunner $runner): void
     {
@@ -211,35 +303,77 @@ class Fix503 extends SafeBaseCommand
 
     private function runSocketCheck(CommandRunner $runner): bool
     {
-        $nginx = $runner->run('grep fastcgi_pass /etc/nginx/sites-enabled/*');
-        $sockets = $runner->run('ls /run/php/');
+        // Goal: detect mismatch between nginx fastcgi_pass and the actual available socket
+        $home = rtrim(getenv('HOME') ?: '/home/' . get_current_user(), '/');
+        $platform = $this->ops->platform ?? 'generic';
 
-        $fastcgiTargets = $this->extractFastCgiTargets($nginx['output']);
-        $available = $sockets['output'];
+        $expected = null;
+        $detectedSock = null;
 
-        $missing = [];
-        foreach ($fastcgiTargets as $target) {
-            if (! str_starts_with($target, 'unix:')) {
-                continue;
+        if ($platform === 'dreamhost') {
+            $sock = $this->detectDreamHostSocket($runner);
+            $detectedSock = $sock['path'] ?? null;
+
+            // Read home nginx site configs (your $HOME/nginx sites-enabled or conf)
+            $ngPrefix = $this->ops->homeNginxPrefix ?? ($home . '/nginx');
+            $grep = $runner->run('grep -R --line-number "fastcgi_pass" ' . escapeshellarg($ngPrefix) . ' 2>/dev/null | head -n 30');
+            $fastcgiTargets = $this->extractFastCgiTargets($grep['output']);
+
+            // If nginx points to unix socket, verify it matches detected sock
+            $missing = [];
+            foreach ($fastcgiTargets as $t) {
+                $t = trim($t);
+                if (str_starts_with($t, 'unix:')) {
+                    $path = str_replace('unix:', '', $t);
+                    $expected = $path;
+                    if ($detectedSock && $path !== $detectedSock) {
+                        $missing[] = $path . ' != ' . $detectedSock;
+                    }
+                }
             }
 
-            $socketPath = str_replace('unix:', '', $target);
-            $socketName = basename($socketPath);
-            if (! in_array($socketName, $available, true)) {
-                $missing[] = $socketPath;
+            $mismatch = ! empty($missing);
+
+            $this->logStep('PHP-SOCKET', $mismatch ? 'FAIL' : 'OK', sprintf(
+                'platform=dreamhost detected=%s expected=%s',
+                (string) $detectedSock,
+                (string) $expected
+            ));
+            $this->logOutput('PHP-SOCKET', $grep['output']);
+
+            if ($mismatch) {
+                // Generate a suggested nginx snippet (no sudo)
+                $snippetPath = WRITEPATH . 'triage/503/nginx-fastcgi-fix-' . date('Y-m-d-His') . '.conf';
+                $this->writeNginxFastCgiFixSnippet($snippetPath, $detectedSock);
+                $this->logStep('NGINX-FIX-GEN', 'OK', 'Wrote suggested config: ' . $snippetPath);
             }
+
+            return $mismatch;
         }
 
-        $status = empty($missing) ? 'OK' : 'FAIL';
-        $detail = empty($missing)
-            ? 'fastcgi sockets available'
-            : 'missing sockets: ' . implode(', ', $missing);
+        // Generic minimal behavior: if we can't read system nginx, don't guess.
+        $this->logStep('PHP-SOCKET', 'WARN', 'platform=generic socket check skipped (no privileged access)');
+        return false;
+    }
 
-        $this->logStep('PHP-FPM-SOCKET', $status, $detail);
-        $this->logOutput('PHP-FPM-SOCKET', $nginx['output']);
-        $this->logOutput('PHP-FPM-SOCKET', $sockets['output']);
+    private function writeNginxFastCgiFixSnippet(string $path, ?string $socketPath): void
+    {
+        $socketPath = $socketPath ?: '/home/USER/.php.sock';
 
-        return ! empty($missing);
+        $content = <<<CONF
+    # Suggested DreamHost nginx fastcgi_pass alignment
+    # Replace your existing fastcgi_pass with the detected socket:
+    #
+    #   fastcgi_pass unix:{$socketPath};
+    #
+    # If your config uses an upstream block, ensure it references the same unix socket.
+
+    CONF;
+
+        if (! is_dir(dirname($path))) {
+            mkdir(dirname($path), 0775, true);
+        }
+        file_put_contents($path, $content);
     }
 
     private function runCliHealth(CommandRunner $runner, bool $afterFix = false): bool
