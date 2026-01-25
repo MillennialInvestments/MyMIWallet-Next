@@ -20,15 +20,18 @@ class MigrateDryRun extends SafeBaseCommand
         $table = $config->table ?? 'migrations';
 
         $applied = [];
+        $lastBatch = 0;
         if ($db->tableExists($table)) {
-            $rows = $db->table($table)->select('version')->get()->getResultArray();
+            $rows = $db->table($table)->select('version,batch')->get()->getResultArray();
             foreach ($rows as $row) {
                 $applied[] = (string) $row['version'];
+                $lastBatch = max($lastBatch, (int) ($row['batch'] ?? 0));
             }
         } else {
             CLI::write('Warning: migrations table not found. Assuming no migrations applied.', 'yellow');
         }
 
+        $nextBatch = $lastBatch + 1;
         $migrations = $this->discoverMigrations();
         $pending = array_values(array_filter($migrations, static fn(array $migration) => !in_array($migration['version'], $applied, true)));
 
@@ -40,12 +43,7 @@ class MigrateDryRun extends SafeBaseCommand
             return EXIT_SUCCESS;
         }
 
-        foreach ($pending as $migration) {
-            CLI::write('Migration: ' . $migration['class']);
-            CLI::write('  Version: ' . $migration['version']);
-            CLI::write('  Estimated impact: ' . $migration['impact']);
-            CLI::newLine();
-        }
+        CLI::write($this->formatMarkdownPlan($pending, $nextBatch));
 
         return EXIT_SUCCESS;
     }
@@ -56,7 +54,7 @@ class MigrateDryRun extends SafeBaseCommand
     }
 
     /**
-     * @return array<int,array{version:string,class:string,impact:string}>
+     * @return array<int,array{version:string,class:string,impact:string,filename:string,tables:array<int,string>}>
      */
     private function discoverMigrations(): array
     {
@@ -71,12 +69,15 @@ class MigrateDryRun extends SafeBaseCommand
             }
             [$version, $rest] = explode('_', $base, 2);
             $class = $this->extractClassName($file) ?? str_replace('.php', '', $rest);
-            $impact = $this->estimateImpact($file);
+            $tables = $this->extractTables($file);
+            $impact = $this->estimateImpact($tables);
 
             $migrations[] = [
                 'version' => $version,
                 'class' => $class,
                 'impact' => $impact,
+                'filename' => $base,
+                'tables' => $tables,
             ];
         }
 
@@ -99,22 +100,56 @@ class MigrateDryRun extends SafeBaseCommand
         return null;
     }
 
-    private function estimateImpact(string $file): string
+    private function estimateImpact(array $tables): string
     {
-        $content = file_get_contents($file);
-        if ($content === false) {
-            return 'Unknown';
-        }
-
-        $tables = [];
-        if (preg_match_all('/(?:createTable|dropTable|addColumn|dropColumn|modifyColumn|addField)\\s*\\(\\s*[\\\'\\\"]([^\\\'\\\"]+)[\\\'\\\"]/', $content, $matches)) {
-            $tables = array_values(array_unique($matches[1]));
-        }
-
         if ($tables === []) {
             return 'Unknown tables';
         }
 
         return sprintf('Touches %d table(s): %s', count($tables), implode(', ', $tables));
+    }
+
+    private function extractTables(string $file): array
+    {
+        $content = file_get_contents($file);
+        if ($content === false) {
+            return [];
+        }
+
+        if (preg_match_all('/(?:createTable|dropTable|addColumn|dropColumn|modifyColumn|addField)\\s*\\(\\s*[\\\'\\\"]([^\\\'\\\"]+)[\\\'\\\"]/', $content, $matches)) {
+            return array_values(array_unique($matches[1]));
+        }
+
+        return [];
+    }
+
+    /**
+     * @param array<int,array{version:string,class:string,impact:string,filename:string,tables:array<int,string>}> $pending
+     */
+    private function formatMarkdownPlan(array $pending, int $batch): string
+    {
+        $lines = [];
+        $lines[] = '## Migration Dry-Run Plan';
+        $lines[] = '';
+        $lines[] = '- Estimated batch: **' . $batch . '**';
+        $lines[] = '- Pending migrations: **' . count($pending) . '**';
+        $lines[] = '';
+        $lines[] = '| Migration | Filename | Estimated Batch | Affected Tables |';
+        $lines[] = '| --- | --- | --- | --- |';
+
+        foreach ($pending as $migration) {
+            $tables = $migration['tables'] !== [] ? implode(', ', $migration['tables']) : 'Unknown';
+            $lines[] = sprintf(
+                '| %s | %s | %d | %s |',
+                $migration['class'],
+                $migration['filename'],
+                $batch,
+                $tables
+            );
+        }
+
+        $lines[] = '';
+
+        return implode("\n", $lines);
     }
 }
