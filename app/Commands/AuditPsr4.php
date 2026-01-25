@@ -4,20 +4,32 @@ declare(strict_types=1);
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
 
-class AuditPsr4 extends BaseCommand
+class AuditPsr4 extends SafeBaseCommand
 {
     protected $group       = 'maintenance';
     protected $name        = 'audit:psr4';
     protected $description = 'Audit PSR-4 compliance for the app namespace.';
+    protected $options     = [
+        '--ci' => 'Exit non-zero if violations are detected.',
+        '--json' => 'Output JSON instead of CLI formatting.',
+        '--dry-run' => 'Preview actions without writing data',
+    ];
 
     public function run(array $params)
     {
-        $ciMode = in_array('--ci', $params, true);
-        $jsonMode = in_array('--json', $params, true);
+        log_message('info', '[spark:audit:psr4] Started', ['params' => $params]);
+        [$args, $flags] = $this->parseParams($params);
+        $ciMode = isset($flags['ci']);
+        $jsonMode = isset($flags['json']);
+        $dryRun = $this->resolveDryRun($flags);
+
+        if ($dryRun) {
+            CLI::write('Dry-run enabled. Audit will still run (read-only).', 'yellow');
+        }
 
         $audit = Services::psr4AuditService()->audit();
         $summary = $audit['summary'];
@@ -25,17 +37,23 @@ class AuditPsr4 extends BaseCommand
 
         if ($jsonMode) {
             CLI::write(json_encode($audit, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-            return $violations > 0 ? 1 : 0;
+            if ($violations > 0) {
+                log_message('error', '[spark:audit:psr4] Failed', ['reason' => 'Violations detected']);
+            }
+            log_message('info', '[spark:audit:psr4] Completed', ['violations' => $violations, 'dry_run' => $dryRun]);
+            return $violations > 0 ? EXIT_ERROR : EXIT_SUCCESS;
         }
 
         if ($ciMode) {
             if ($violations > 0) {
                 CLI::write('❌ PSR-4 violations detected. Build failed.', 'red');
-                return 1;
+                log_message('error', '[spark:audit:psr4] Failed', ['reason' => 'Violations detected']);
+                return EXIT_ERROR;
             }
 
             CLI::write('✅ PSR-4 compliance verified.', 'green');
-            return 0;
+            log_message('info', '[spark:audit:psr4] Completed', ['violations' => $violations, 'dry_run' => $dryRun]);
+            return EXIT_SUCCESS;
         }
 
         $this->renderIssues($audit['issues']);
@@ -48,7 +66,16 @@ class AuditPsr4 extends BaseCommand
         CLI::write('Legacy files: ' . (int) $summary['legacy_files']);
         CLI::write('Last scan: ' . ($summary['last_scan'] ?? 'unknown'));
 
-        return $violations > 0 ? 1 : 0;
+        if ($violations > 0) {
+            log_message('error', '[spark:audit:psr4] Failed', ['reason' => 'Violations detected']);
+        }
+
+        log_message('info', '[spark:audit:psr4] Completed', [
+            'violations' => $violations,
+            'dry_run' => $dryRun,
+        ]);
+
+        return $violations > 0 ? EXIT_ERROR : EXIT_SUCCESS;
     }
 
     /**
@@ -94,5 +121,10 @@ class AuditPsr4 extends BaseCommand
 
             CLI::newLine();
         }
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }

@@ -3,31 +3,43 @@
 namespace App\Commands;
 
 use App\Libraries\AiOps\AiOpsManager;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class GapTrackerSync extends BaseCommand
+class GapTrackerSync extends SafeBaseCommand
 {
     protected $group       = 'GapTracker';
     protected $name        = 'gap:sync';
     protected $description = 'Enrich gap tracker CSV and produce a report.';
-    protected $usage       = 'php spark gap:sync [--limit=25] [--priority=P1] [--dry-run] [--report-only]';
+    protected $usage       = 'php spark gap:sync [limit] [priority] [--dry-run] [--report-only]';
+    protected $arguments   = [
+        'limit' => 'Optional: max rows to process (default 25).',
+        'priority' => 'Optional: priority filter (e.g., P1).',
+    ];
+    protected $options     = [
+        '--dry-run'    => 'Preview actions without writing files',
+        '--report-only'=> 'Generate report without updating CSV',
+    ];
 
     protected ?AiOpsManager $manager = null;
 
     public function run(array $params)
     {
+        log_message('info', '[spark:gap:sync] Started', ['params' => $params]);
+        [$args, $flags] = $this->parseParams($params);
+
         $this->manager ??= new AiOpsManager();
 
-        $limit      = (int) (CLI::getOption('limit') ?? 25);
-        $priority   = CLI::getOption('priority');
-        $dryRun     = CLI::getOption('dry-run') !== null;
-        $reportOnly = CLI::getOption('report-only') !== null;
+        $limit      = (int) ($args[0] ?? 25);
+        $priority   = $args[1] ?? null;
+        $dryRun = $this->resolveDryRun($flags);
+        $reportOnly = isset($flags['report-only']);
 
         $gate = $this->manager->canRun('selfhost_gap_sync', 'gap_sync');
         if (! $gate['allowed']) {
             CLI::error('Gap sync blocked: ' . $gate['reason']);
-            return;
+            log_message('error', '[spark:gap:sync] Failed', ['reason' => $gate['reason']]);
+            return EXIT_ERROR;
         }
 
         $runId     = $this->manager->startRun('gap_sync', 'selfhost_gap_sync', ['limit' => $limit, 'priority' => $priority, 'dryRun' => $dryRun, 'reportOnly' => $reportOnly]);
@@ -73,10 +85,21 @@ class GapTrackerSync extends BaseCommand
             $message = 'Gap sync completed: ' . $processed . ' rows processed.';
             $this->manager->finishRun($runId, 'SUCCESS', $message, ['report' => $reportPath], $runtime, $processed, 0, 0);
             CLI::write($message . ' Report: ' . $reportPath, 'green');
+
+            log_message('info', '[spark:gap:sync] Completed', [
+                'processed' => $processed,
+                'report' => $reportPath,
+                'dry_run' => $dryRun,
+                'report_only' => $reportOnly,
+            ]);
+
+            return EXIT_SUCCESS;
         } catch (\Throwable $e) {
             $runtime = (int) round(microtime(true) - $startedAt);
             $this->manager->finishRun($runId, 'ERROR', $e->getMessage(), ['trace' => $e->getTraceAsString()], $runtime, 0, 0, 1);
             CLI::error('Gap sync failed: ' . $e->getMessage());
+            log_message('error', '[spark:gap:sync] Failed', ['reason' => $e->getMessage()]);
+            return EXIT_ERROR;
         }
     }
 
@@ -278,4 +301,8 @@ class GapTrackerSync extends BaseCommand
         return $row;
     }
 
+    protected function isDestructive(): bool
+    {
+        return false;
+    }
 }

@@ -3,24 +3,37 @@
 namespace App\Commands;
 
 use App\Services\ConfigLintService;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class ConfigLint extends BaseCommand
+class ConfigLint extends SafeBaseCommand
 {
     protected $group = 'config';
     protected $name = 'config:lint';
     protected $description = 'Lint Config/Services.php overrides against CI4 service signatures.';
     protected $usage = 'config:lint';
+    protected $options = [
+        '--dry-run' => 'Preview actions without writing data',
+    ];
 
     public function run(array $params)
     {
+        log_message('info', '[spark:config:lint] Started', ['params' => $params]);
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
+
+        if ($dryRun) {
+            CLI::write('Dry-run enabled. Running lint without changes.', 'yellow');
+        }
+
         $service = new ConfigLintService();
         $lint = $service->lint();
 
         if (! $lint['ok']) {
-            CLI::write('[FAIL] Config lint unavailable: ' . ($lint['error'] ?? 'Unknown error.'), 'red');
-            return 1;
+            $message = '[FAIL] Config lint unavailable: ' . ($lint['error'] ?? 'Unknown error.');
+            CLI::write($message, 'red');
+            log_message('error', '[spark:config:lint] Failed', ['reason' => $lint['error'] ?? 'Unknown error.']);
+            return EXIT_ERROR;
         }
 
         foreach ($lint['results'] as $serviceName => $result) {
@@ -33,6 +46,21 @@ class ConfigLint extends BaseCommand
             CLI::write($line, $color);
         }
 
-        return $lint['has_failures'] ? 1 : 0;
+        $hasFailures = (bool) ($lint['has_failures'] ?? false);
+        if ($hasFailures) {
+            log_message('error', '[spark:config:lint] Failed', ['reason' => 'Config lint failures detected.']);
+        }
+
+        log_message('info', '[spark:config:lint] Completed', [
+            'has_failures' => $hasFailures,
+            'dry_run' => $dryRun,
+        ]);
+
+        return $hasFailures ? EXIT_ERROR : EXIT_SUCCESS;
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }

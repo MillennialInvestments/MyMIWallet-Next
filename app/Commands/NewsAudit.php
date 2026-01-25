@@ -2,15 +2,18 @@
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Database;
 
-class NewsAudit extends BaseCommand
+class NewsAudit extends SafeBaseCommand
 {
     protected $group       = 'maintenance';
     protected $name        = 'news:audit';
     protected $description = 'Audit recent marketing news ingestion, summarization, and post generation.';
+    protected $options     = [
+        '--dry-run' => 'Preview actions without writing audit artifacts',
+    ];
 
     private const TEMP_LIMIT = 250;
     private const FINAL_LIMIT = 250;
@@ -25,6 +28,10 @@ class NewsAudit extends BaseCommand
 
     public function run(array $params)
     {
+        log_message('info', '[spark:news:audit] Started', ['params' => $params]);
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
+
         $startTime = microtime(true);
         $startedAt = date('Y-m-d H:i:s');
         $memoryStart = memory_get_usage(true);
@@ -337,24 +344,11 @@ class NewsAudit extends BaseCommand
             'health_status' => $healthStatus,
         ]);
 
-        $this->writeAuditMarkdown([
-            'started_at' => $startedAt,
-            'duration_ms' => $durationMs,
-            'memory_peak' => $memoryPeak,
-            'temp_scanned' => $tempCount,
-            'final_scanned' => $finalCount,
-            'posts_scanned' => $postsCount,
-            'valid_percent' => $validPercent,
-            'skipped_percent' => $skippedPercent,
-            'broken_percent' => $brokenPercent,
-            'health_status' => $healthStatus,
-            'issues' => $issues,
-        ]);
-
-        $this->insertAuditLog($db, [
-            'level' => 'info',
-            'message' => 'news:audit completed',
-            'context' => json_encode([
+        if (! $dryRun) {
+            $this->writeAuditMarkdown([
+                'started_at' => $startedAt,
+                'duration_ms' => $durationMs,
+                'memory_peak' => $memoryPeak,
                 'temp_scanned' => $tempCount,
                 'final_scanned' => $finalCount,
                 'posts_scanned' => $postsCount,
@@ -362,13 +356,42 @@ class NewsAudit extends BaseCommand
                 'skipped_percent' => $skippedPercent,
                 'broken_percent' => $brokenPercent,
                 'health_status' => $healthStatus,
-            ], JSON_UNESCAPED_SLASHES),
-            'created_at' => date('Y-m-d H:i:s'),
-        ]);
+                'issues' => $issues,
+            ]);
+
+            $this->insertAuditLog($db, [
+                'level' => 'info',
+                'message' => 'news:audit completed',
+                'context' => json_encode([
+                    'temp_scanned' => $tempCount,
+                    'final_scanned' => $finalCount,
+                    'posts_scanned' => $postsCount,
+                    'valid_percent' => $validPercent,
+                    'skipped_percent' => $skippedPercent,
+                    'broken_percent' => $brokenPercent,
+                    'health_status' => $healthStatus,
+                ], JSON_UNESCAPED_SLASHES),
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+        } else {
+            CLI::write('dry_run=true (no audit artifacts written)', 'yellow');
+        }
 
         CLI::newLine();
         CLI::write('Audit duration: ' . $durationMs . ' ms');
         CLI::write('Memory peak: ' . $this->formatBytes($memoryPeak));
+
+        if ($healthStatus === 'FAIL') {
+            log_message('error', '[spark:news:audit] Failed', ['reason' => 'Health status FAIL']);
+        }
+
+        log_message('info', '[spark:news:audit] Completed', [
+            'temp_scanned' => $tempCount,
+            'final_scanned' => $finalCount,
+            'posts_scanned' => $postsCount,
+            'health_status' => $healthStatus,
+            'dry_run' => $dryRun,
+        ]);
 
         return $healthStatus === 'FAIL' ? EXIT_ERROR : EXIT_SUCCESS;
     }
@@ -719,5 +742,10 @@ class NewsAudit extends BaseCommand
         } catch (\Throwable $e) {
             log_message('warning', 'news:audit failed to insert audit log: {error}', ['error' => $e->getMessage()]);
         }
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }

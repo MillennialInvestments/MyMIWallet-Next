@@ -4,29 +4,48 @@ namespace App\Commands;
 
 use App\Models\UserModel;
 use App\Services\WalletSummaryService;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class WalletsWarmSummaryCache extends BaseCommand
+class WalletsWarmSummaryCache extends SafeBaseCommand
 {
     protected $group       = 'wallets';
     protected $name        = 'wallets:warm-summary-cache';
     protected $description = 'Pre-warm the /API/Wallets/summary cache for active users.';
-    protected $usage       = 'wallets:warm-summary-cache [--user 123]';
+    protected $usage       = 'wallets:warm-summary-cache [user-id] [--dry-run]';
+    protected $arguments   = [
+        'user-id' => 'Optional user ID to warm (default: all active).',
+    ];
+    protected $options     = [
+        '--dry-run' => 'Preview actions without warming cache',
+    ];
 
     private ?WalletSummaryService $summaryService = null;
 
     public function run(array $params)
     {
-        $explicitUser = (int) (CLI::getOption('user') ?? 0);
+        log_message('info', '[spark:wallets:warm-summary-cache] Started', ['params' => $params]);
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
+        $explicitUser = (int) ($args[0] ?? 0);
         $userIds      = $explicitUser > 0 ? [$explicitUser] : $this->activeUserIds();
 
         if (empty($userIds)) {
             CLI::write('No active users found to warm cache for.', 'yellow');
-            return;
+            log_message('info', '[spark:wallets:warm-summary-cache] Completed', ['users' => 0, 'dry_run' => $dryRun]);
+            return EXIT_SUCCESS;
         }
 
         CLI::write(sprintf('Warming wallet summary cache for %d user(s)...', count($userIds)));
+
+        if ($dryRun) {
+            CLI::write('Dry-run enabled. Cache warm skipped.', 'yellow');
+            log_message('info', '[spark:wallets:warm-summary-cache] Completed', [
+                'users' => count($userIds),
+                'dry_run' => true,
+            ]);
+            return EXIT_SUCCESS;
+        }
 
         foreach ($userIds as $uid) {
             try {
@@ -38,6 +57,12 @@ class WalletsWarmSummaryCache extends BaseCommand
         }
 
         CLI::write('Wallet summary cache warm complete.');
+        log_message('info', '[spark:wallets:warm-summary-cache] Completed', [
+            'users' => count($userIds),
+            'dry_run' => false,
+        ]);
+
+        return EXIT_SUCCESS;
     }
 
     private function activeUserIds(): array
@@ -59,5 +84,10 @@ class WalletsWarmSummaryCache extends BaseCommand
         }
 
         return $this->summaryService;
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }
