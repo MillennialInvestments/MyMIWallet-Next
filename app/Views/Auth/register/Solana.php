@@ -4,7 +4,8 @@ $subViewData = [
     'uri'         => $uri,
 ]; 
 ?>
-<style <?= $nonce['style'] ?? '' ?>>
+<?php $cspNonce = $cspNonce ?? (service('renderer')->getData('cspNonce') ?? ''); ?>
+<style nonce="<?= esc($cspNonce) ?>">
     #exchangeBanner {
         background-image: url('<?php echo base_url('assets/images/MyMI-Walllet-Background.jpeg'); ?>');
         background-size: cover;

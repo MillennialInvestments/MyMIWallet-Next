@@ -25,8 +25,8 @@
     </div>
 </div>
 
-
-<script <?= $nonce['script'] ?? '' ?>>
+<?php $cspNonce = $cspNonce ?? (service('renderer')->getData('cspNonce') ?? ''); ?>
+<script nonce="<?= esc($cspNonce) ?>">
     function ensureSafeFetchJson() {
         if (typeof window.safeFetchJson === 'function') {
             return window.safeFetchJson;

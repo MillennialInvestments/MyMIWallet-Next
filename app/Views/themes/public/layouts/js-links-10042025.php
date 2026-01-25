@@ -4,42 +4,43 @@
 $nonce = $nonce ?? ['style' => '', 'script' => ''];
 $csp   = $csp   ?? ['style' => '', 'script' => ''];
 
-$scriptNonceAttr  = $nonce['script'] ?? '';
-$scriptNonceValue = $csp['script'] ?? '';
+$cspNonce = $cspNonce ?? $csp['script'] ?? '';
+$scriptNonceValue = $cspNonce;
+$scriptNonceAttr  = '';
 ?>
 
 <!-- Ensure the page-wide runtime nonce is available (no-op if already set in <head>) -->
-<script <?= $scriptNonceAttr ?>>
+<script nonce="<?= esc($cspNonce) ?>">
   window.__CSP_NONCE__ = window.__CSP_NONCE__ || <?= json_encode($scriptNonceValue) ?>;
 </script>
 
 <!-- Core deps (global) -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" <?= $scriptNonceAttr ?> crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" <?= $scriptNonceAttr ?> defer></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
 
 <!-- Plugins you were already using globally -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js" <?= $scriptNonceAttr ?> defer></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js" defer></script>
 
 <!-- DataTables 1.11.5 (current production set) -->
-<script src="https://cdn.jsdelivr.net/npm/datatables.net@1.11.5/js/jquery.dataTables.min.js" <?= $scriptNonceAttr ?> defer></script>
-<script src="https://cdn.jsdelivr.net/npm/datatables.net-bs5@1.11.5/js/dataTables.bootstrap5.min.js" <?= $scriptNonceAttr ?> defer></script>
+<script src="https://cdn.jsdelivr.net/npm/datatables.net@1.11.5/js/jquery.dataTables.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/datatables.net-bs5@1.11.5/js/dataTables.bootstrap5.min.js" defer></script>
 
 <!-- Chart.js (v2.1.2 per your asset list) -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.1.2/dist/Chart.min.js" <?= $scriptNonceAttr ?> defer></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.1.2/dist/Chart.min.js" defer></script>
 
 <!-- Your app bundle (keep after vendor libs) -->
-<script src="<?= base_url('assets/js/bundle.js?ver=3.0.3'); ?>" <?= $scriptNonceAttr ?>></script>
+<script src="<?= base_url('assets/js/bundle.js?ver=3.0.3'); ?>"></script>
 
 <!-- AOS (already present in your file) -->
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js" <?= $scriptNonceAttr ?>></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <?php
 $navbarSearch = FCPATH . 'assets/js/navbar-search.js';
 $navbarSearchV = is_file($navbarSearch) ? filemtime($navbarSearch) : time();
 ?>
-<script defer src="<?= base_url('assets/js/navbar-search.js') . '?v=' . $navbarSearchV; ?>" <?= $scriptNonceAttr ?>></script>
+<script defer src="<?= base_url('assets/js/navbar-search.js') . '?v=' . $navbarSearchV; ?>"></script>
 
 <!-- TradingView library -->
-<script <?= $scriptNonceAttr ?> src="https://s3.tradingview.com/tv.js" defer></script>
+<script src="https://s3.tradingview.com/tv.js" defer></script>
 
 <!-- Optional libs (commented out until needed on a given page) -->
 
@@ -73,11 +74,11 @@ $navbarSearchV = is_file($navbarSearch) ? filemtime($navbarSearch) : time();
 */ ?>
 
 <!-- Existing inline initializers (kept) -->
-<script <?= $scriptNonceAttr ?>>
+<script nonce="<?= esc($cspNonce) ?>">
 AOS.init({ duration: 800, easing: 'slide', once: true });
 </script>
 
-<script <?= $scriptNonceAttr ?>>
+<script nonce="<?= esc($cspNonce) ?>">
 (function($) {
     var $win = $(window),
         $body = $('body'),

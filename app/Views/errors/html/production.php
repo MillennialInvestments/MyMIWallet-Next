@@ -6,7 +6,8 @@
 
     <title><?= lang('Errors.whoops') ?></title>
 
-    <style>
+    <?php $cspNonce = $cspNonce ?? (service('renderer')->getData('cspNonce') ?? ''); ?>
+    <style nonce="<?= esc($cspNonce) ?>">
         <?= preg_replace('#[\r\n\t ]+#', ' ', file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'debug.css')) ?>
     </style>
 </head>

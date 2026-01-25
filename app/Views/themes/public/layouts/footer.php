@@ -1,6 +1,7 @@
 <?php 
 // app/Views/themes/public/layouts/footer.php
 $nonce = $nonce ?? ['style' => '', 'script' => ''];
+$cspNonce = $cspNonce ?? ($csp['script'] ?? (service('renderer')->getData('cspNonce') ?? ''));
 // Prepare data for views
 $viewFileData = [
     'siteSettings'          => $siteSettings,
@@ -48,7 +49,7 @@ echo view('themes/public/layouts/js-links', $viewFileData);
 echo view('themes/public/layouts/custom-js', $viewFileData);
 ?>
 
-<script <?= $nonce['script'] ?? '' ?>>
+<script nonce="<?= esc($cspNonce) ?>">
 document.addEventListener('DOMContentLoaded', function () {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js')
