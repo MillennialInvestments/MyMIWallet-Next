@@ -1,21 +1,38 @@
 <?php
-defined('BASEPATH') || exit('No direct script access allowed');
 
-class SqueezeController extends CI_Controller
+namespace App\Modules\APIs\Controllers;
+
+use App\Controllers\BaseController;
+use App\Libraries\MyMISqueeze;
+use App\Models\SqueezeModel;
+use CodeIgniter\API\ResponseTrait;
+
+#[\AllowDynamicProperties]
+class SqueezeController extends BaseController
 {
-    public function __construct()
-    {
-        parent::__construct();
-        $this->load->model('investments/Squeeze_model', 'squeeze');
-        $this->load->library('MyMISqueeze');
-        $this->load->helper('squeeze');
+    use ResponseTrait;
+
+    protected SqueezeModel $squeeze;
+    protected MyMISqueeze $mymisqueeze;
+
+    public function initController(
+        \CodeIgniter\HTTP\RequestInterface $request,
+        \CodeIgniter\HTTP\ResponseInterface $response,
+        \Psr\Log\LoggerInterface $logger
+    ): void {
+        parent::initController($request, $response, $logger);
+
+        helper('squeeze');
+
+        $this->squeeze = new SqueezeModel();
+        $this->mymisqueeze = new MyMISqueeze();
     }
 
     public function scorecard()
     {
         try {
-            $symbol = $this->input->get('symbol');
-            $limit = (int) $this->input->get('limit');
+            $symbol = $this->request->getGet('symbol');
+            $limit = (int) $this->request->getGet('limit');
             $limit = $limit > 0 ? min($limit, 200) : 50;
             $items = $this->squeeze->getLatestScorecards($limit, $symbol);
             $formatted = [];
@@ -42,51 +59,54 @@ class SqueezeController extends CI_Controller
                     'latest' => $latest,
                 ],
             ];
-            squeeze_json_response($payload);
-        } catch (Exception $exception) {
+            return $this->respond($payload, 200);
+        } catch (\Throwable $exception) {
             log_message('error', 'Scorecard API error: ' . $exception->getMessage());
-            squeeze_json_response(['status' => 'error', 'message' => 'Unable to fetch scorecards.'], 500);
+            return $this->respond(['status' => 'error', 'message' => 'Unable to fetch scorecards.'], 500);
         }
     }
 
     public function zoomout()
     {
         try {
-            $symbol = $this->input->get('symbol');
-            $date = $this->input->get('date') ?? date('Y-m-d');
+            $symbol = $this->request->getGet('symbol');
+            $date = $this->request->getGet('date') ?? date('Y-m-d');
             $row = $this->squeeze->getZoomOut($symbol, $date);
 
-            squeeze_json_response([
+            return $this->respond([
                 'status' => 'success',
                 'data' => $row,
-            ]);
-        } catch (Exception $exception) {
+            ], 200);
+        } catch (\Throwable $exception) {
             log_message('error', 'Zoomout API error: ' . $exception->getMessage());
-            squeeze_json_response(['status' => 'error', 'message' => 'Unable to fetch zoom out.'], 500);
+            return $this->respond(['status' => 'error', 'message' => 'Unable to fetch zoom out.'], 500);
         }
     }
 
     public function fade()
     {
         try {
-            $symbol = $this->input->get('symbol');
-            $date = $this->input->get('date') ?? date('Y-m-d');
+            $symbol = $this->request->getGet('symbol');
+            $date = $this->request->getGet('date') ?? date('Y-m-d');
             $rows = $this->squeeze->getFadeSetups($symbol, $date);
 
-            squeeze_json_response([
+            return $this->respond([
                 'status' => 'success',
                 'data' => $rows,
-            ]);
-        } catch (Exception $exception) {
+            ], 200);
+        } catch (\Throwable $exception) {
             log_message('error', 'Fade API error: ' . $exception->getMessage());
-            squeeze_json_response(['status' => 'error', 'message' => 'Unable to fetch fade setups.'], 500);
+            return $this->respond(['status' => 'error', 'message' => 'Unable to fetch fade setups.'], 500);
         }
     }
 
     public function run()
     {
         try {
-            $payload = json_decode($this->input->raw_input_stream, true);
+            $payload = $this->request->getJSON(true);
+            if (!is_array($payload)) {
+                $payload = json_decode((string) $this->request->getBody(), true) ?? [];
+            }
             $symbols = $payload['symbols'] ?? [];
             $mode = $payload['mode'] ?? 'daily';
 
@@ -96,8 +116,7 @@ class SqueezeController extends CI_Controller
             }
 
             if (empty($symbols)) {
-                squeeze_json_response(['status' => 'error', 'message' => 'No symbols supplied.'], 400);
-                return;
+                return $this->respond(['status' => 'error', 'message' => 'No symbols supplied.'], 400);
             }
 
             $processed = 0;
@@ -226,7 +245,7 @@ class SqueezeController extends CI_Controller
                 memory_get_usage(true)
             ));
 
-            squeeze_json_response([
+            return $this->respond([
                 'status' => 'success',
                 'data' => [
                     'symbols_processed' => $processed,
@@ -234,10 +253,10 @@ class SqueezeController extends CI_Controller
                     'zoomout' => $insertedZoomout,
                     'fade_setups' => $insertedFade,
                 ],
-            ]);
-        } catch (Exception $exception) {
+            ], 200);
+        } catch (\Throwable $exception) {
             log_message('error', 'Squeeze run error: ' . $exception->getMessage());
-            squeeze_json_response(['status' => 'error', 'message' => 'Unable to run squeeze analysis.'], 500);
+            return $this->respond(['status' => 'error', 'message' => 'Unable to run squeeze analysis.'], 500);
         }
     }
 
