@@ -35,5 +35,6 @@ class Ops extends BaseConfig
         '%HOME%/.php82.sock',
         '%HOME%/.local/phpcgi/run/php-cgi-82.sock',
         '%HOME%/.local/phpcgi/run/php-cgi.sock',
+        '%HOME%/.local/phpcgi/run/*.sock',
     ];
 }
