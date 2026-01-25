@@ -2,6 +2,7 @@
 
 namespace App\Services\Spark;
 
+use App\Services\ConfigLintService;
 use CodeIgniter\Log\Handlers\FileHandler;
 
 class LogSummarizeService
@@ -192,6 +193,10 @@ class LogSummarizeService
             $summary[] = '';
         }
 
+        $configLint = $this->buildConfigLintBlock();
+        $summary = array_merge($summary, $configLint['lines']);
+        $summary[] = '';
+
         return [
             'lines'     => $summary,
             'levels'    => $levels,
@@ -232,5 +237,47 @@ class LogSummarizeService
         }
 
         return null;
+    }
+
+    /**
+     * @return array{lines: array<int, string>}
+     */
+    private function buildConfigLintBlock(): array
+    {
+        $service = new ConfigLintService();
+        $lint = $service->lint();
+
+        $lines = [
+            '---- CONFIG LINT ----',
+        ];
+
+        if (! $lint['ok']) {
+            $lines[] = 'CRITICAL: Config lint unavailable — ' . ($lint['error'] ?? 'Unknown error');
+            return ['lines' => $lines];
+        }
+
+        foreach ($lint['results'] as $serviceName => $result) {
+            $status = strtoupper($result['status']);
+            $line = sprintf('%s Services::%s', $this->statusGlyph($status), $serviceName);
+            if ($result['message'] !== '') {
+                $line .= ' — ' . $result['message'];
+            }
+            $lines[] = $line;
+        }
+
+        if ($lint['has_failures']) {
+            $lines[] = 'CRITICAL: Config lint failures detected.';
+        }
+
+        return ['lines' => $lines];
+    }
+
+    private function statusGlyph(string $status): string
+    {
+        return match ($status) {
+            'FAIL' => '❌',
+            'WARN' => '⚠️',
+            default => '✅',
+        };
     }
 }

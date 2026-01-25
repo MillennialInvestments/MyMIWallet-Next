@@ -1,0 +1,33 @@
+name: CI Config Guard (CI4)
+
+on:
+  pull_request:
+    paths:
+      - 'app/Config/Services.php'
+      - 'app/Config/Filters.php'
+      - 'app/Config/App.php'
+  push:
+    branches: [main, develop]
+    paths:
+      - 'app/Config/Services.php'
+      - 'app/Config/Filters.php'
+      - 'app/Config/App.php'
+
+jobs:
+  config_lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Run config lint
+        run: php spark config:lint

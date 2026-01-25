@@ -33,40 +33,26 @@ use function is_ci;
  */
 class Services extends BaseService
 {
-    public static function cache(bool $getShared = true)
+    public static function cache(?Cache $config = null, bool $getShared = true)
     {
         if (! function_exists('is_ci')) {
             require APPPATH . 'Helpers/ci_guard_helper.php';
         }
 
         if (is_ci()) {
-            $cacheConfig = config('Cache');
+            $cacheConfig = $config ?? config('Cache');
             $cacheConfig->handler = 'dummy';
             $cacheConfig->backupHandler = 'dummy';
+            $config = $cacheConfig;
         }
 
-        return CoreServices::cache($getShared);
+        return CoreServices::cache($config, $getShared);
     }
 
-    public static function responsecache(bool $getShared = true)
+    public static function responsecache(?Cache $config = null, bool $getShared = true)
     {
-        if (! function_exists('is_ci')) {
-            require APPPATH . 'Helpers/ci_guard_helper.php';
-        }
-
-        if (is_ci()) {
-            $cacheConfig = config('Cache');
-            $cacheConfig->handler = 'dummy';
-            $cacheConfig->backupHandler = 'dummy';
-        }
-
         return parent::responsecache($config, $getShared);
     }
-
-    // public static function responsecache(?Cache $config = null, bool $getShared = true)
-    // {
-    //     return parent::responsecache($config, $getShared);
-    // }
 
     public static function crudCacheInvalidator(bool $getShared = true): CrudCacheInvalidator
     {
