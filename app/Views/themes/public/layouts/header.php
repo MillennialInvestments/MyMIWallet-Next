@@ -7,6 +7,7 @@ $meta        = $meta        ?? [];
 $siteSettings= $siteSettings?? [];
 $pageTitle   = $pageTitle   ?? ($meta['title'] ?? 'MyMI Wallet');
 helper('security');
+$cspNonce = $cspNonce ?? ($csp['script'] ?? (service('renderer')->getData('cspNonce') ?? ''));
 $viewFileData               = [
     'siteSettings'          => $siteSettings,
     'uri'                   => $uri,
@@ -29,10 +30,10 @@ $viewFileData               = [
         <!-- <script src="https://www.google.com/recaptcha/api.js?render=<?php // echo config('App')->recaptchaSiteKey; ?>"></script> -->
     <?php //endif; ?>
     <link rel="shortcut icon" href="<?= base_url('favicon.ico'); ?>" type="image/x-icon">
-    <style <?= $nonce['style'] ?? '' ?>>
+    <style nonce="<?= esc($cspNonce) ?>">
         .grecaptcha-badge{visibility: hidden}
     </style>
-    <script <?= $nonce['script'] ?? '' ?>>
+    <script nonce="<?= esc($cspNonce) ?>">
         // grecaptcha.ready(function() {
         //     grecaptcha.execute('<?php //echo RECAPTCHA_SITE_KEY; ?>', {action: 'form_submission'}).then(function(token) {
         //         document.querySelector('.g-recaptcha-response').value = token;
@@ -44,8 +45,8 @@ $viewFileData               = [
         <meta name="csrf-token"  content="<?= esc(csrf_hash(), 'attr') ?>">
     <?php endif; ?>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2FS4BNS0SL" <?= $nonce['script'] ?? '' ?>></script>
-    <script <?= $nonce['script'] ?? '' ?>>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2FS4BNS0SL"></script>
+    <script nonce="<?= esc($cspNonce) ?>">
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
@@ -54,7 +55,7 @@ $viewFileData               = [
     </script>
 
     <!-- Meta Pixel Code -->
-    <script <?= $nonce['style'] ?? '' ?>>
+    <script nonce="<?= esc($cspNonce) ?>">
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -73,7 +74,7 @@ $viewFileData               = [
     <?php if (ENVIRONMENT !== 'production'): ?>
         <script src="<?= base_url('assets/js/dev-html-guard.js') ?>" defer></script>
         <!-- Clarity tracking code for https://mymiwallet.com/ -->
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="<?= esc($cspNonce) ?>">
             (function(c,l,a,r,i,t,y){
                 c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
                 t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;

@@ -5,7 +5,8 @@ $subViewData = [
 ]; 
 ?>
 
-<style <?= $nonce['style'] ?? '' ?>>
+<?php $cspNonce = $cspNonce ?? (service('renderer')->getData('cspNonce') ?? ''); ?>
+<style nonce="<?= esc($cspNonce) ?>">
   #missionRegisterBanner {
     background-image: url(<?php echo base_url('assets/images/Partners/TBI-Solutions-Background1.png'); ?>);
     background-size: contain;

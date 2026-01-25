@@ -91,7 +91,8 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('scripts') ?>
-<script>
+<?php $cspNonce = $cspNonce ?? (service('renderer')->getData('cspNonce') ?? ''); ?>
+<script nonce="<?= esc($cspNonce) ?>">
     window.dashboardTemplateReady = true;
 </script>
 <?= $this->endSection() ?>

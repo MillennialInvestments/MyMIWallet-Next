@@ -103,10 +103,11 @@ $breadcrumbSchema = [
         </section>
     <?php endif; ?>
 
-    <script type="application/ld+json">
+    <?php $cspNonce = $cspNonce ?? (service('renderer')->getData('cspNonce') ?? ''); ?>
+    <script type="application/ld+json" nonce="<?= esc($cspNonce) ?>">
         <?= json_encode($articleSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?>
     </script>
-    <script type="application/ld+json">
+    <script type="application/ld+json" nonce="<?= esc($cspNonce) ?>">
         <?= json_encode($breadcrumbSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?>
     </script>
 </body>

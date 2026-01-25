@@ -192,3 +192,19 @@ td pre {
 .args {
     display: none;
 }
+
+.debug-table-full {
+    width: 100%;
+}
+
+.debug-col-lg {
+    width: 15em;
+}
+
+.debug-col-md {
+    width: 10em;
+}
+
+.debug-col-sm {
+    width: 12em;
+}
