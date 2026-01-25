@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import json
 import os
+import re
 import subprocess
 import sys
 import textwrap
@@ -261,6 +262,70 @@ def build_no_diff_message(context: str) -> str:
     return f"No diff available to review for {context}."
 
 
+def detect_guardrail_findings(diff_text: str) -> list[str]:
+    findings = []
+    current_file = ""
+    for raw_line in diff_text.splitlines():
+        if raw_line.startswith("diff --git"):
+            parts = raw_line.split(" ")
+            if len(parts) >= 4:
+                current_file = parts[3].replace("b/", "")
+            continue
+        if raw_line.startswith("+++ b/"):
+            current_file = raw_line.replace("+++ b/", "")
+            continue
+        if not raw_line.startswith("+") or raw_line.startswith("+++"):
+            continue
+        line = raw_line[1:]
+
+        if re.search(r"(?:Services|CoreServices|parent)::\\w+\\(\\s*(true|false)\\b", line):
+            findings.append(
+                "CI4 ≥4.5 expects config-first service signatures; boolean-first calls are invalid and can fatal at bootstrap. "
+                "Fix: pass the config object as arg #1 and move the boolean to arg #2, e.g. "
+                "`Services::cache($config, true)` or update the override signature."
+            )
+
+        if re.search(r"public\\s+static\\s+function\\s+\\w+\\(\\s*bool\\s+\\$getShared", line):
+            findings.append(
+                "CI4 ≥4.5 service overrides must accept the config object as the first parameter. "
+                "Why invalid: boolean-first overrides mismatch the core signature and can break container resolution. "
+                "Fix: `public static function serviceName(?ConfigClass $config = null, bool $getShared = true)`."
+            )
+
+        if "responsecache" in line.lower() and current_file and not current_file.endswith(
+            ("app/Config/Filters.php", "app/Config/Routes.php")
+        ):
+            findings.append(
+                "CI4 ≥4.5 response caching must be applied via Filters/Routes only. "
+                "Why invalid: response cache usage outside Filters/Routes risks bootstrap-time fatals on CLI/HEAD. "
+                "Fix: attach `responsecache` via route options or controller filters."
+            )
+
+        if current_file.startswith("app/Config/Boot/") and "Services::" in line:
+            findings.append(
+                "CI4 ≥4.5 bootstrap must remain minimal; service execution in boot files can trigger early session/cache mutations. "
+                "Fix: defer service usage to controllers/filters and keep boot files limited to autoloader and environment setup."
+            )
+
+    unique = []
+    for finding in findings:
+        if finding not in unique:
+            unique.append(finding)
+    return unique
+
+
+def append_guardrail_block(body: str, findings: list[str]) -> str:
+    if not findings:
+        return body
+    bullets = "\n".join(f"- {finding}" for finding in findings)
+    guardrail_block = textwrap.dedent(
+        f"""
+        \n\n## 🔒 Config Guardrails (Auto-detected)\n{bullets}
+        """
+    ).strip()
+    return body + "\n\n" + guardrail_block
+
+
 def main() -> int:
     payload = load_event_payload()
     event_name = os.getenv("GITHUB_EVENT_NAME", "")
@@ -279,6 +344,8 @@ def main() -> int:
                 body = build_no_diff_message("this pull request")
             else:
                 body = build_review(diff_text, modes)
+                guardrails = detect_guardrail_findings(diff_text)
+                body = append_guardrail_block(body, guardrails)
             comment = format_review_comment(body)
             post_pr_comment(payload, comment)
         else:
