@@ -1,32 +1,36 @@
 # Advanced Forecasting Overview
 
-## How the Systems Work Together
-**Forecast Detail UI** provides explainability on a single forecast (direction, confidence, indicators, history).
+## Purpose
+Defines the deterministic v1 forecasting stack used across dashboards, alerts, and forecasting utilities.
 
-**Confidence Heatmaps** surface conviction across many tickers/timeframes using cached aggregation.
+## Key components
+- **Config**: `app/Config/MyMIForecasting.php` (timeframes, thresholds, evaluation windows, cache TTLs).
+- **Data tables**:
+  - `bf_investment_price_forecasts` (latest state per ticker/timeframe)
+  - `bf_investment_forecast_history` (append-only snapshots)
+  - `bf_investment_forecast_accuracy` (evaluation results)
+  - `bf_investment_trade_alerts` denormalized fields
+- **Services**:
+  - `MyMIForecaster` (builds forecasts)
+  - `ForecastAggregationService` (heatmaps + movers)
+  - `ForecastAccuracyEvaluator` (accuracy evaluation + summaries)
 
-**Forecast Accuracy Tracking** measures how forecasts perform over time and feeds analytics.
+## Endpoints
+- `GET /API/Investments/getForecastHighlights`
+- `GET /API/Investments/getForecastDetails/{ticker}`
+- `GET /API/Investments/getConfidenceHeatmap?timeframe=5m&window=60`
+- `GET /API/Investments/getForecastAccuracySummary?window=7d`
+- `POST /API/Investments/reforecastTicker`
 
-These systems are **independent but compatible**—each can ship on its own and relies on feature flags for safe rollout.
+## Caching / performance
+- Heatmaps cached for 60 seconds.
+- Accuracy summaries cached for 120 seconds.
+- Highlights cached via `MyMIForecaster`.
+- Dashboards use denormalized forecast fields to avoid per-row external calls.
 
-## User-Facing vs Internal
-| Feature | User-facing | Internal |
-| --- | --- | --- |
-| Forecast Detail Modal | ✅ | — |
-| Confidence Heatmap Widget | ✅ | — |
-| Accuracy Evaluation Engine | — | ✅ (CRON) |
-| Accuracy Panels | ✅ (read-only) | ✅ |
+## UI blocks where used
+- Executive Dashboard: forecast highlights + confidence heatmap cards.
+- Investments Dashboard: heatmap panel, accuracy tab, forecast modal.
 
-## Feature Flags & Safety
-All three features are toggleable through `Config\MyMIForecasting`:
-- `forecastDetailUi`
-- `confidenceHeatmaps`
-- `accuracyTracking`
-
-UI components read cached data and fail gracefully when disabled or empty.
-
-## Path to ML
-1. **Explainability first** (Detail UI).
-2. **Conviction maps** (Heatmaps) to guide user attention.
-3. **Measured performance** (Accuracy Tracking) to calibrate confidence.
-4. **ML Feedback Loop** using accuracy metrics to tune weights or inform future model training.
+## Rule: no external calls from UI
+All dashboard UI components must call internal `/API/Investments/*` endpoints only.

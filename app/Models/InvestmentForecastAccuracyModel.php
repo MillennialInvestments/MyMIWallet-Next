@@ -12,14 +12,34 @@ class InvestmentForecastAccuracyModel extends Model
         'forecast_id',
         'ticker',
         'timeframe',
+        'evaluation_window',
         'forecast_direction',
-        'forecast_target',
-        'actual_price',
-        'hit_target',
-        'max_favorable_excursion',
-        'max_adverse_excursion',
-        'evaluation_minutes',
-        'recorded_at',
+        'confidence_score',
+        'target_price',
+        'range_low',
+        'range_high',
+        'hit_result',
+        'mfe',
+        'mae',
+        'window_start',
+        'window_end',
+        'evaluated_at',
+        'notes',
+        'created_at',
     ];
     protected $useTimestamps = false;
+
+    public function insertAccuracyRow(array $payload): int
+    {
+        $this->insert($payload);
+        return (int) $this->getInsertID();
+    }
+
+    public function hasEvaluation(int $forecastId, int $windowMinutes): bool
+    {
+        return (bool) $this->where([
+            'forecast_id' => $forecastId,
+            'evaluation_window' => $windowMinutes,
+        ])->first();
+    }
 }

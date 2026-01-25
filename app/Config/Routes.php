@@ -634,9 +634,12 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->post('news/(:num)',      'InvestmentsController::updateNews/$1');
         $routes->delete('news/(:num)',    'InvestmentsController::deleteNews/$1');
         $routes->post('validateSymbol',    'InvestmentsController::validateSymbol');
-        $routes->get('getForecastHighlights', 'InvestmentsController::getForecastHighlights');
+        $routes->get('getForecastHighlights', '\\App\\Modules\\User\\Controllers\\DashboardController::getForecastHighlights', ['filter' => 'login']);
+        $routes->get('getForecastDetails/(:segment)', '\\App\\Modules\\User\\Controllers\\InvestmentsController::getForecastDetails/$1', ['filter' => 'login']);
+        $routes->get('getConfidenceHeatmap', '\\App\\Modules\\User\\Controllers\\InvestmentsController::getConfidenceHeatmap', ['filter' => 'login']);
+        $routes->get('getForecastAccuracySummary', '\\App\\Modules\\User\\Controllers\\InvestmentsController::getForecastAccuracySummary', ['filter' => 'login']);
         $routes->post('refreshForecasts', 'InvestmentsController::refreshForecasts');
-        $routes->post('reforecastTicker', 'InvestmentsController::reforecastTicker');
+        $routes->post('reforecastTicker', '\\App\\Modules\\User\\Controllers\\InvestmentsController::reforecastTicker', ['filter' => 'login']);
         // $routes->get('removeTradeFromWatchlist/(:num)', 'InvestmentsController::removeTradeFromWatchlist/$1'); // NOT COMPLETED Remove Trade from Watchlist
         // $routes->post('updateTradeNotes', 'InvestmentsController::updateTradeNotes'); // NOT COMPLETED Update Trade Notes
         // $routes->post('updateTradeTargetPrice', 'InvestmentsController::updateTradeTargetPrice'); // NOT COMPLETED Update Trade Target Price

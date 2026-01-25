@@ -3,290 +3,297 @@
 namespace App\Services\Forecasting;
 
 use App\Models\InvestmentForecastAccuracyModel;
-use App\Models\InvestmentPriceForecastModel;
-use CodeIgniter\Cache\CacheInterface;
-use CodeIgniter\Database\BaseConnection;
-use Config\MyMIForecasting;
-use Config\Services;
+use App\Models\InvestmentForecastHistoryModel;
 
 class ForecastAccuracyEvaluator
 {
-    private MarketDataProviderInterface $marketDataProvider;
-    private InvestmentPriceForecastModel $forecastModel;
+    private InvestmentForecastHistoryModel $historyModel;
     private InvestmentForecastAccuracyModel $accuracyModel;
-    private CacheInterface $cache;
-    private BaseConnection $db;
-    private MyMIForecasting $config;
+    private MarketDataProviderInterface $provider;
+    private \Config\MyMIForecasting $config;
 
     public function __construct(
-        MarketDataProviderInterface $marketDataProvider,
-        ?InvestmentPriceForecastModel $forecastModel = null,
-        ?InvestmentForecastAccuracyModel $accuracyModel = null,
-        ?CacheInterface $cache = null,
-        ?BaseConnection $db = null,
-        ?MyMIForecasting $config = null
+        InvestmentForecastHistoryModel $historyModel,
+        InvestmentForecastAccuracyModel $accuracyModel,
+        MarketDataProviderInterface $provider,
+        \Config\MyMIForecasting $config
     ) {
-        $this->marketDataProvider = $marketDataProvider;
-        $this->forecastModel = $forecastModel ?? model(InvestmentPriceForecastModel::class);
-        $this->accuracyModel = $accuracyModel ?? model(InvestmentForecastAccuracyModel::class);
-        $this->cache = $cache ?? Services::cache();
-        $this->db = $db ?? db_connect();
-        $this->config = $config ?? config('MyMIForecasting');
+        $this->historyModel = $historyModel;
+        $this->accuracyModel = $accuracyModel;
+        $this->provider = $provider;
+        $this->config = $config;
     }
 
-    public function evaluateDueForecasts(int $limit = 200): array
+    public function evaluateExpiredForecasts(int $limit = 100): array
     {
-        if (! ($this->config->features['accuracyTracking'] ?? true)) {
-            return ['status' => 'disabled', 'processed' => 0, 'inserted' => 0];
-        }
+        $summary = [
+            'evaluated' => 0,
+            'skipped' => 0,
+            'errors' => 0,
+        ];
 
-        $windows = $this->config->accuracy['evaluationMinutes'] ?? [15, 30, 60, 240, 1440];
-        sort($windows);
-        $minWindow = (int) ($windows[0] ?? 15);
-        $limit = $limit > 0 ? $limit : ($this->config->accuracy['batchLimit'] ?? 200);
+        $windows = $this->config->evaluationWindows;
+        rsort($windows);
+        $oldestWindow = (int) end($windows);
+        $cutoff = date('Y-m-d H:i:s', strtotime("-{$oldestWindow} minutes"));
 
-        $cutoff = (new \DateTimeImmutable('now'))->modify("-{$minWindow} minutes")->format('Y-m-d H:i:s');
-        $forecasts = $this->forecastModel->where('updated_at <=', $cutoff)
-            ->orderBy('updated_at', 'ASC')
+        $candidates = $this->historyModel
+            ->where('recorded_at <=', $cutoff)
+            ->orderBy('recorded_at', 'ASC')
             ->limit($limit)
             ->findAll();
 
-        $processed = 0;
-        $inserted = 0;
-        $skipped = 0;
-
-        foreach ($forecasts as $forecast) {
-            $processed++;
-            $forecastId = (int) ($forecast['id'] ?? 0);
-            $updatedAt = $forecast['updated_at'] ?? $forecast['created_at'] ?? null;
-            if (! $forecastId || ! $updatedAt) {
-                $skipped++;
-                continue;
-            }
-
-            $forecastTime = new \DateTimeImmutable($updatedAt);
-            $marketData = $this->marketDataProvider->fetchTimeSeries($forecast['ticker'], $forecast['timeframe']);
-            $candles = $marketData['candles'] ?? [];
-
+        foreach ($candidates as $snapshot) {
             foreach ($windows as $windowMinutes) {
-                if ($forecastTime->modify("+{$windowMinutes} minutes") > new \DateTimeImmutable('now')) {
+                $recordedAt = $snapshot['recorded_at'] ?? null;
+                if (! $recordedAt) {
+                    $summary['skipped']++;
                     continue;
                 }
 
-                if ($this->alreadyEvaluated($forecastId, (int) $windowMinutes)) {
+                $eligibleAt = strtotime($recordedAt . " +{$windowMinutes} minutes");
+                if ($eligibleAt > time()) {
                     continue;
                 }
 
-                $slice = $this->filterCandles($candles, $forecastTime, (int) $windowMinutes);
-                if (empty($slice)) {
-                    $skipped++;
+                $forecastId = (int) ($snapshot['forecast_id'] ?? 0);
+                if ($forecastId <= 0 || $this->accuracyModel->hasEvaluation($forecastId, $windowMinutes)) {
+                    $summary['skipped']++;
                     continue;
                 }
 
-                $metrics = $this->calculateMetrics($forecast, $slice);
-                $payload = [
-                    'forecast_id' => $forecastId,
-                    'ticker' => strtoupper((string) ($forecast['ticker'] ?? '')),
-                    'timeframe' => (string) ($forecast['timeframe'] ?? ''),
-                    'forecast_direction' => (string) ($forecast['forecast_direction'] ?? 'neutral'),
-                    'forecast_target' => $forecast['target_price'] ?? null,
-                    'actual_price' => $metrics['actual_price'],
-                    'hit_target' => $metrics['hit_target'],
-                    'max_favorable_excursion' => $metrics['mfe'],
-                    'max_adverse_excursion' => $metrics['mae'],
-                    'evaluation_minutes' => (int) $windowMinutes,
-                    'recorded_at' => (new \DateTimeImmutable('now'))->format('Y-m-d H:i:s'),
-                ];
-
-                if ($this->accuracyModel->insert($payload)) {
-                    $inserted++;
+                try {
+                    $evaluation = $this->evaluateSnapshot($snapshot, $windowMinutes);
+                    $this->accuracyModel->insertAccuracyRow($evaluation);
+                    $summary['evaluated']++;
+                } catch (\Throwable $e) {
+                    $summary['errors']++;
+                    log_message('error', 'FORECAST: accuracy evaluation failed {ticker}: {msg}', [
+                        'ticker' => $snapshot['ticker'] ?? 'unknown',
+                        'msg' => $e->getMessage(),
+                    ]);
                 }
             }
         }
 
-        return [
-            'status' => 'ok',
-            'processed' => $processed,
-            'inserted' => $inserted,
-            'skipped' => $skipped,
-        ];
+        return $summary;
     }
 
-    public function getAccuracyDashboardData(int $days = 30): array
+    public function buildAccuracySummary(string $window = '7d'): array
     {
-        $cacheKey = sanitizeCacheKey("forecast:accuracy:dashboard:{$days}");
-        if (($cached = $this->cache->get($cacheKey)) !== null) {
-            return $cached;
+        $days = (int) preg_replace('/\D/', '', $window);
+        $days = $days > 0 ? $days : 7;
+        $cutoff = date('Y-m-d H:i:s', strtotime("-{$days} days"));
+
+        $rows = $this->accuracyModel
+            ->where('created_at >=', $cutoff)
+            ->orderBy('created_at', 'DESC')
+            ->findAll();
+
+        $byTimeframe = [];
+        $byDirection = [];
+        $byTicker = [];
+        $confidenceBuckets = [
+            '0-49' => ['hits' => 0, 'total' => 0],
+            '50-69' => ['hits' => 0, 'total' => 0],
+            '70-84' => ['hits' => 0, 'total' => 0],
+            '85-100' => ['hits' => 0, 'total' => 0],
+        ];
+        $lastEvaluatedAt = null;
+
+        foreach ($rows as $row) {
+            $hit = ($row['hit_result'] ?? '') === 'hit' ? 1 : 0;
+            $timeframe = $row['timeframe'] ?? 'n/a';
+            $direction = $row['forecast_direction'] ?? 'neutral';
+            $ticker = $row['ticker'] ?? 'n/a';
+            $confidence = (int) ($row['confidence_score'] ?? 0);
+
+            $byTimeframe[$timeframe]['hits'] = ($byTimeframe[$timeframe]['hits'] ?? 0) + $hit;
+            $byTimeframe[$timeframe]['total'] = ($byTimeframe[$timeframe]['total'] ?? 0) + 1;
+
+            $byDirection[$direction]['hits'] = ($byDirection[$direction]['hits'] ?? 0) + $hit;
+            $byDirection[$direction]['total'] = ($byDirection[$direction]['total'] ?? 0) + 1;
+
+            $byTicker[$ticker]['hits'] = ($byTicker[$ticker]['hits'] ?? 0) + $hit;
+            $byTicker[$ticker]['total'] = ($byTicker[$ticker]['total'] ?? 0) + 1;
+
+            if ($confidence >= 85) {
+                $confidenceBuckets['85-100']['total']++;
+                $confidenceBuckets['85-100']['hits'] += $hit;
+            } elseif ($confidence >= 70) {
+                $confidenceBuckets['70-84']['total']++;
+                $confidenceBuckets['70-84']['hits'] += $hit;
+            } elseif ($confidence >= 50) {
+                $confidenceBuckets['50-69']['total']++;
+                $confidenceBuckets['50-69']['hits'] += $hit;
+            } else {
+                $confidenceBuckets['0-49']['total']++;
+                $confidenceBuckets['0-49']['hits'] += $hit;
+            }
+
+            if (! $lastEvaluatedAt || ($row['created_at'] ?? '') > $lastEvaluatedAt) {
+                $lastEvaluatedAt = $row['created_at'] ?? $lastEvaluatedAt;
+            }
         }
 
-        $since = (new \DateTimeImmutable('now'))->modify("-{$days} days")->format('Y-m-d H:i:s');
+        $accuracyByTimeframe = $this->formatHitRates($byTimeframe);
+        $accuracyByDirection = $this->formatHitRates($byDirection);
+        $tickerRates = $this->formatHitRates($byTicker);
 
-        $payload = [
-            'rolling' => [
-                '7d' => $this->getRollingStats(7),
-                '30d' => $this->getRollingStats(30),
+        usort($tickerRates, static fn ($a, $b) => $b['hit_rate'] <=> $a['hit_rate']);
+        $topTickers = array_slice($tickerRates, 0, 5);
+        $worstTickers = array_slice(array_reverse($tickerRates), 0, 5);
+
+        return [
+            'window' => $window,
+            'accuracyByTimeframe' => $accuracyByTimeframe,
+            'accuracyByDirection' => $accuracyByDirection,
+            'rollingHitRate' => [
+                '7d' => $this->computeRollingHitRate(7),
+                '30d' => $this->computeRollingHitRate(30),
             ],
-            'byTimeframe' => $this->getGroupStats('timeframe', $since),
-            'byDirection' => $this->getGroupStats('forecast_direction', $since),
-            'confidenceCorrelation' => $this->getConfidenceCorrelation($since),
+            'confidenceBuckets' => $this->formatBuckets($confidenceBuckets),
+            'topTickers' => $topTickers,
+            'worstTickers' => $worstTickers,
+            'lastEvaluatedAt' => $lastEvaluatedAt,
         ];
-
-        $ttl = $this->config->cacheTtls['accuracy'] ?? 300;
-        $this->cache->save($cacheKey, $payload, $ttl);
-
-        return $payload;
     }
 
-    private function alreadyEvaluated(int $forecastId, int $windowMinutes): bool
+    private function evaluateSnapshot(array $snapshot, int $windowMinutes): array
     {
-        return (bool) $this->accuracyModel
-            ->where('forecast_id', $forecastId)
-            ->where('evaluation_minutes', $windowMinutes)
-            ->countAllResults();
-    }
+        $ticker = $snapshot['ticker'] ?? '';
+        $timeframe = $snapshot['timeframe'] ?? '5m';
+        $target = isset($snapshot['target_price']) ? (float) $snapshot['target_price'] : null;
+        $direction = $snapshot['forecast_direction'] ?? 'neutral';
+        $rangeLow = isset($snapshot['range_low']) ? (float) $snapshot['range_low'] : null;
+        $rangeHigh = isset($snapshot['range_high']) ? (float) $snapshot['range_high'] : null;
 
-    private function filterCandles(array $candles, \DateTimeImmutable $start, int $windowMinutes): array
-    {
-        $end = $start->modify("+{$windowMinutes} minutes");
-        return array_values(array_filter($candles, static function (array $candle) use ($start, $end): bool {
-            $time = isset($candle['time']) ? new \DateTimeImmutable($candle['time']) : null;
-            if (! $time) {
-                return false;
-            }
-            return $time >= $start && $time <= $end;
-        }));
-    }
+        $response = $this->provider->fetchTimeSeries($ticker, $timeframe);
+        $candles = $response['candles'] ?? [];
+        $minutes = $this->timeframeToMinutes($timeframe);
+        $sliceCount = max(1, (int) ceil($windowMinutes / max($minutes, 1)));
+        $slice = array_slice($candles, -$sliceCount);
 
-    private function calculateMetrics(array $forecast, array $candles): array
-    {
-        $highs = array_column($candles, 'high');
-        $lows = array_column($candles, 'low');
-        $last = end($candles);
-        $actualPrice = (float) ($last['close'] ?? $last['price'] ?? 0);
+        $highs = array_column($slice, 'high');
+        $lows = array_column($slice, 'low');
+        $closes = array_column($slice, 'close');
 
-        $baseline = $this->resolveBaseline($forecast, $actualPrice);
-        $maxHigh = ! empty($highs) ? max($highs) : $actualPrice;
-        $minLow = ! empty($lows) ? min($lows) : $actualPrice;
-        $direction = $forecast['forecast_direction'] ?? 'neutral';
-        $target = isset($forecast['target_price']) ? (float) $forecast['target_price'] : null;
+        $maxHigh = ! empty($highs) ? max($highs) : null;
+        $minLow = ! empty($lows) ? min($lows) : null;
+        $endClose = ! empty($closes) ? end($closes) : null;
 
-        $hitTarget = 0;
-        if ($target !== null) {
-            if ($direction === 'bullish') {
-                $hitTarget = $maxHigh >= $target ? 1 : 0;
-            } elseif ($direction === 'bearish') {
-                $hitTarget = $minLow <= $target ? 1 : 0;
-            }
+        $entry = $target ?? $endClose ?? 0.0;
+        $hitResult = 'unknown';
+
+        if ($direction === 'bullish' && $target !== null && $maxHigh !== null) {
+            $hitResult = $maxHigh >= $target ? 'hit' : 'miss';
+        } elseif ($direction === 'bearish' && $target !== null && $minLow !== null) {
+            $hitResult = $minLow <= $target ? 'hit' : 'miss';
+        } elseif ($direction === 'neutral' && $rangeLow !== null && $rangeHigh !== null && $maxHigh !== null && $minLow !== null) {
+            $hitResult = ($minLow >= $rangeLow && $maxHigh <= $rangeHigh) ? 'hit' : 'miss';
         }
 
-        if ($direction === 'bearish') {
-            $mfe = $baseline - $minLow;
-            $mae = $maxHigh - $baseline;
-        } else {
-            $mfe = $maxHigh - $baseline;
-            $mae = $baseline - $minLow;
+        $mfe = null;
+        $mae = null;
+        if ($maxHigh !== null && $minLow !== null) {
+            if ($direction === 'bearish') {
+                $mfe = $entry - $minLow;
+                $mae = $maxHigh - $entry;
+            } else {
+                $mfe = $maxHigh - $entry;
+                $mae = $entry - $minLow;
+            }
         }
 
         return [
-            'actual_price' => $actualPrice,
-            'hit_target' => $hitTarget,
-            'mfe' => max(0, $mfe),
-            'mae' => max(0, $mae),
+            'forecast_id' => $snapshot['forecast_id'] ?? null,
+            'ticker' => $ticker,
+            'timeframe' => $timeframe,
+            'evaluation_window' => $windowMinutes,
+            'forecast_direction' => $direction,
+            'confidence_score' => (int) ($snapshot['confidence_score'] ?? 0),
+            'target_price' => $target,
+            'range_low' => $rangeLow,
+            'range_high' => $rangeHigh,
+            'hit_result' => $hitResult,
+            'mfe' => $mfe,
+            'mae' => $mae,
+            'window_start' => $snapshot['recorded_at'] ?? null,
+            'window_end' => date('Y-m-d H:i:s'),
+            'evaluated_at' => date('Y-m-d H:i:s'),
+            'notes' => $response['status'] ?? null,
+            'created_at' => date('Y-m-d H:i:s'),
         ];
     }
 
-    private function resolveBaseline(array $forecast, float $fallback): float
+    private function timeframeToMinutes(string $timeframe): int
     {
-        $low = isset($forecast['range_low']) ? (float) $forecast['range_low'] : null;
-        $high = isset($forecast['range_high']) ? (float) $forecast['range_high'] : null;
-        $target = isset($forecast['target_price']) ? (float) $forecast['target_price'] : null;
-
-        if ($low !== null && $high !== null && $low > 0 && $high > 0) {
-            return ($low + $high) / 2;
+        if (preg_match('/(\d+)([mhd])/', $timeframe, $matches)) {
+            $value = (int) $matches[1];
+            $unit = $matches[2];
+            return match ($unit) {
+                'h' => $value * 60,
+                'd' => $value * 1440,
+                default => $value,
+            };
         }
 
-        if ($target !== null && $target > 0) {
-            return $target;
-        }
-
-        return $fallback;
+        return 5;
     }
 
-    private function getRollingStats(int $days): array
+    private function formatHitRates(array $groups): array
     {
-        $since = (new \DateTimeImmutable('now'))->modify("-{$days} days")->format('Y-m-d H:i:s');
-        $builder = $this->db->table('bf_investment_forecast_accuracy')
-            ->select('COUNT(*) as total, SUM(hit_target) as hits, AVG(max_favorable_excursion) as avg_mfe, AVG(max_adverse_excursion) as avg_mae', false)
-            ->where('recorded_at >=', $since);
-        $row = $builder->get()->getRowArray() ?? [];
-
-        $total = (int) ($row['total'] ?? 0);
-        $hits = (int) ($row['hits'] ?? 0);
-
-        return [
-            'total' => $total,
-            'hits' => $hits,
-            'hitRate' => $total > 0 ? round(($hits / $total) * 100, 2) : 0,
-            'avgMfe' => round((float) ($row['avg_mfe'] ?? 0), 4),
-            'avgMae' => round((float) ($row['avg_mae'] ?? 0), 4),
-        ];
-    }
-
-    private function getGroupStats(string $field, string $since): array
-    {
-        $builder = $this->db->table('bf_investment_forecast_accuracy')
-            ->select($field . ' as label, COUNT(*) as total, SUM(hit_target) as hits, AVG(max_favorable_excursion) as avg_mfe, AVG(max_adverse_excursion) as avg_mae', false)
-            ->where('recorded_at >=', $since)
-            ->groupBy($field)
-            ->orderBy('total', 'DESC');
-
-        $rows = $builder->get()->getResultArray();
-
-        return array_map(static function (array $row): array {
-            $total = (int) ($row['total'] ?? 0);
-            $hits = (int) ($row['hits'] ?? 0);
-
-            return [
-                'label' => $row['label'] ?? 'unknown',
-                'total' => $total,
+        $rows = [];
+        foreach ($groups as $label => $data) {
+            $total = (int) ($data['total'] ?? 0);
+            $hits = (int) ($data['hits'] ?? 0);
+            $rows[] = [
+                'label' => $label,
+                'hit_rate' => $total > 0 ? round(($hits / $total) * 100, 1) : 0,
                 'hits' => $hits,
-                'hitRate' => $total > 0 ? round(($hits / $total) * 100, 2) : 0,
-                'avgMfe' => round((float) ($row['avg_mfe'] ?? 0), 4),
-                'avgMae' => round((float) ($row['avg_mae'] ?? 0), 4),
+                'total' => $total,
             ];
-        }, $rows);
-    }
-
-    private function getConfidenceCorrelation(string $since): array
-    {
-        if (! $this->db->tableExists('bf_investment_price_forecasts')) {
-            return [];
         }
 
-        $builder = $this->db->table('bf_investment_forecast_accuracy as fa')
-            ->select("CASE
-                WHEN pf.confidence_score BETWEEN 0 AND 40 THEN '0-40'
-                WHEN pf.confidence_score BETWEEN 41 AND 65 THEN '41-65'
-                WHEN pf.confidence_score BETWEEN 66 AND 100 THEN '66-100'
-                ELSE 'unknown'
-            END AS bucket", false)
-            ->select('COUNT(*) as total, SUM(fa.hit_target) as hits', false)
-            ->join('bf_investment_price_forecasts as pf', 'pf.id = fa.forecast_id', 'left')
-            ->where('fa.recorded_at >=', $since)
-            ->groupBy('bucket')
-            ->orderBy('bucket', 'ASC');
+        return $rows;
+    }
 
-        $rows = $builder->get()->getResultArray();
-
-        return array_map(static function (array $row): array {
-            $total = (int) ($row['total'] ?? 0);
-            $hits = (int) ($row['hits'] ?? 0);
-
-            return [
-                'bucket' => $row['bucket'] ?? 'unknown',
+    private function formatBuckets(array $buckets): array
+    {
+        $rows = [];
+        foreach ($buckets as $label => $data) {
+            $total = (int) ($data['total'] ?? 0);
+            $hits = (int) ($data['hits'] ?? 0);
+            $rows[] = [
+                'label' => $label,
+                'hit_rate' => $total > 0 ? round(($hits / $total) * 100, 1) : 0,
+                'hits' => $hits,
                 'total' => $total,
-                'hitRate' => $total > 0 ? round(($hits / $total) * 100, 2) : 0,
             ];
-        }, $rows);
+        }
+
+        return $rows;
+    }
+
+    private function computeRollingHitRate(int $days): float
+    {
+        $cutoff = date('Y-m-d H:i:s', strtotime("-{$days} days"));
+        $rows = $this->accuracyModel
+            ->where('created_at >=', $cutoff)
+            ->findAll();
+
+        $total = count($rows);
+        if ($total === 0) {
+            return 0.0;
+        }
+
+        $hits = 0;
+        foreach ($rows as $row) {
+            if (($row['hit_result'] ?? '') === 'hit') {
+                $hits++;
+            }
+        }
+
+        return round(($hits / $total) * 100, 1);
     }
 }

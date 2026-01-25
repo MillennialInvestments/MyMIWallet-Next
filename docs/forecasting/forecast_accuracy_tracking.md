@@ -1,40 +1,36 @@
 # Forecast Accuracy Tracking
 
-## Goal
-Measure how good forecasts are over time to evolve MyMI from opinion to measured intelligence.
+## Endpoints
+- `GET /API/Investments/getForecastAccuracySummary?window=7d`
+- CLI evaluation: `php spark forecasts:evaluate 100`
 
-## Definitions
-- **Hit Target:** target price reached within the evaluation window.
-- **MFE (Max Favorable Excursion):** best move in the forecast direction.
-- **MAE (Max Adverse Excursion):** worst move against the forecast.
-
-## Evaluation Windows
-Default windows (minutes): 15, 30, 60, 240, 1440.
-
-## Evaluation Flow
-1. Forecasts are evaluated after the window elapses.
-2. Price series is pulled for the same timeframe.
-3. MFE/MAE are computed from candle highs/lows within the window.
-4. Results are stored and **never overwritten**.
-
-CRON entry:
-```bash
-php spark forecasts:evaluate
+## Payload example
+```json
+{
+  "window": "7d",
+  "accuracyByTimeframe": [
+    { "label": "5m", "hit_rate": 58.2, "hits": 120, "total": 206 }
+  ],
+  "accuracyByDirection": [
+    { "label": "bullish", "hit_rate": 62.0, "hits": 90, "total": 145 }
+  ],
+  "rollingHitRate": { "7d": 58.2, "30d": 54.1 },
+  "confidenceBuckets": [
+    { "label": "70-84", "hit_rate": 66.4, "hits": 55, "total": 83 }
+  ],
+  "topTickers": [{ "label": "AAPL", "hit_rate": 72.1, "hits": 10, "total": 14 }],
+  "worstTickers": [{ "label": "TSLA", "hit_rate": 31.2, "hits": 5, "total": 16 }],
+  "lastEvaluatedAt": "2025-02-10 10:00:00"
+}
 ```
 
-## Storage
-Table: `bf_investment_forecast_accuracy`
-- `forecast_id`, `ticker`, `timeframe`
-- `forecast_direction`, `forecast_target`
-- `actual_price`, `hit_target`
-- `max_favorable_excursion`, `max_adverse_excursion`
-- `evaluation_minutes`, `recorded_at`
+## UI blocks where used
+- Investments Dashboard: Accuracy tab (chart + tables).
+- Executive Dashboard: Forecast Quality KPI card.
 
-## Bias Controls
-- Separate evaluation windows prevent single-horizon bias.
-- Directional hit rates and MFE/MAE are displayed separately.
+## Caching / performance expectations
+- Cached for 120 seconds.
+- Evaluations are appended-only in `bf_investment_forecast_accuracy`.
 
-## Future ML Feedback Loop
-- Integrate accuracy outcomes into model weighting.
-- Penalize signals with high MAE / low hit rates.
-- Create per-market confidence calibration curves.
+## Rule: no external calls from UI
+Accuracy charts must only call the internal summary endpoint.
