@@ -2,22 +2,38 @@
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class ForecastRefresh extends BaseCommand
+class ForecastRefresh extends SafeBaseCommand
 {
     protected $group = 'Forecasts';
     protected $name = 'forecasts:refresh';
     protected $description = 'Refresh forecasts for open alerts.';
+    protected $usage = 'forecasts:refresh [limit] [--dry-run]';
+    protected $arguments = [
+        'limit' => 'Optional: max alerts to refresh (default 50, max 200).',
+    ];
+    protected $options = [
+        '--dry-run' => 'Preview actions without running refresh jobs',
+    ];
 
     public function run(array $params)
     {
-        $limit = (int) ($params[0] ?? 50);
+        log_message('info', '[spark:forecasts:refresh] Started', ['params' => $params]);
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
+        $limit = (int) ($args[0] ?? 50);
         $limit = max(1, min(200, $limit));
 
         CLI::write('Forecast refresh starting...', 'green');
         log_message('info', 'FORECAST: CLI refresh started', ['limit' => $limit]);
+
+        if ($dryRun) {
+            CLI::write('Dry-run enabled. Forecast refresh skipped.', 'yellow');
+            log_message('info', '[spark:forecasts:refresh] Completed', ['limit' => $limit, 'dry_run' => true]);
+            return EXIT_SUCCESS;
+        }
 
         $forecaster = service('mymiForecaster');
         $config = config('MyMIForecasting');
@@ -35,5 +51,18 @@ class ForecastRefresh extends BaseCommand
         }
 
         log_message('info', 'FORECAST: CLI refresh completed', $summary);
+        log_message('info', '[spark:forecasts:refresh] Completed', [
+            'limit' => $limit,
+            'processed' => count($summary['processed'] ?? []),
+            'rate_limited' => $summary['rate_limited'] ?? 0,
+            'dry_run' => false,
+        ]);
+
+        return EXIT_SUCCESS;
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }

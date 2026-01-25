@@ -8,19 +8,21 @@ use App\Libraries\Ops\OpsJobRegistry;
 use App\Models\OpsJobsModel;
 use App\Models\OpsQueueModel;
 use App\Models\OpsRunsModel;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use Throwable;
 
-class OpsWork extends BaseCommand
+class OpsWork extends SafeBaseCommand
 {
     protected $group       = 'ops';
     protected $name        = 'ops:work';
     protected $description = 'Process operations queue items.';
-    protected $usage       = 'php spark ops:work --limit=25';
-    protected $arguments   = [];
+    protected $usage       = 'php spark ops:work [limit] [--dry-run]';
+    protected $arguments   = [
+        'limit' => 'Maximum number of jobs to process in this run (default 25).',
+    ];
     protected $options     = [
-        '--limit' => 'Maximum number of jobs to process in this run (default 25).',
+        '--dry-run' => 'Preview actions without processing jobs',
     ];
 
     protected OpsQueueModel $queue;
@@ -30,9 +32,18 @@ class OpsWork extends BaseCommand
 
     public function run(array $params): void
     {
-        $limit = (int) CLI::getOption('limit');
+        log_message('info', '[spark:ops:work] Started', ['params' => $params]);
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
+        $limit = (int) ($args[0] ?? 25);
         if ($limit <= 0) {
             $limit = 25;
+        }
+
+        if ($dryRun) {
+            CLI::write('Dry-run enabled. Queue processing skipped.', 'yellow');
+            log_message('info', '[spark:ops:work] Completed', ['processed' => 0, 'dry_run' => true]);
+            return;
         }
 
         $this->queue    = new OpsQueueModel();
@@ -58,11 +69,13 @@ class OpsWork extends BaseCommand
                 }
             } catch (Throwable $e) {
                 CLI::error('Worker loop failed: ' . $e->getMessage());
+                log_message('error', '[spark:ops:work] Failed', ['reason' => $e->getMessage()]);
                 break;
             }
         }
 
         CLI::write("Processed {$processed} job(s)", 'green');
+        log_message('info', '[spark:ops:work] Completed', ['processed' => $processed, 'dry_run' => false]);
     }
 
     protected function handleItem(array $item): void
@@ -107,5 +120,10 @@ class OpsWork extends BaseCommand
             $this->queue->markFailed($queueId, $message, $retryable);
             CLI::error("Job {$jobKey} failed: {$message}");
         }
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }

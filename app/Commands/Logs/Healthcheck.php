@@ -3,10 +3,10 @@
 namespace App\Commands\Logs;
 
 use App\Services\Spark\LogHealthcheckService;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class Healthcheck extends BaseCommand
+class Healthcheck extends SafeBaseCommand
 {
     protected $group       = 'logs';
     protected $name        = 'logs:healthcheck';
@@ -15,15 +15,15 @@ class Healthcheck extends BaseCommand
     protected $arguments = [];
     protected $options = [
         '--dry-run' => 'Preview actions without writing data',
-        '--force'   => 'Required for destructive actions',
     ];
 
     public function run(array $params)
     {
-        log_message('info', '[spark:logs:healthcheck] Started');
+        log_message('info', '[spark:logs:healthcheck] Started', ['params' => $params]);
         CLI::write('Starting logs:healthcheck', 'yellow');
 
-        $dryRun = $this->option('dry-run') !== null || ! $this->option('force');
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
 
         $service = new LogHealthcheckService();
         $result = $service->run($dryRun);

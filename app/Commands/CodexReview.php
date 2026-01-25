@@ -2,24 +2,32 @@
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class CodexReview extends BaseCommand
+class CodexReview extends SafeBaseCommand
 {
     protected $group       = 'ops';
     protected $name        = 'codex:review';
     protected $description = 'Generate Codex review artifacts (summary + prompt payload)';
+    protected $options     = [
+        '--dry-run' => 'Preview actions without writing output files',
+    ];
 
     public function run(array $params)
     {
+        log_message('info', '[spark:codex:review] Started', ['params' => $params]);
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
+
         $outputDir = rtrim(getenv('REVIEW_OUTPUT_DIR') ?: 'docs/codex/reviews', '/');
         $lookback  = (int) (getenv('REVIEW_LOOKBACK_COMMITS') ?: 10);
         $today     = date('Y-m-d');
 
         if (! is_dir($outputDir) && ! mkdir($outputDir, 0775, true) && ! is_dir($outputDir)) {
             CLI::error('Unable to create review output directory: ' . $outputDir);
-            return;
+            log_message('error', '[spark:codex:review] Failed', ['reason' => 'Unable to create review output directory']);
+            return EXIT_ERROR;
         }
 
         $status       = $this->execSafe('git status --short');
@@ -30,11 +38,22 @@ class CodexReview extends BaseCommand
         $reviewPath = $outputDir . '/review-' . $today . '.md';
         $promptPath = $outputDir . '/review-prompt-' . $today . '.md';
 
-        file_put_contents($reviewPath, $this->renderReview($today, $status, $recentCommits, $changedFiles, $docsDrift));
-        file_put_contents($promptPath, $this->renderPromptPayload($today, $status, $recentCommits, $changedFiles, $docsDrift));
+        if ($dryRun) {
+            CLI::write('Dry-run enabled. Review files will not be written.', 'yellow');
+        } else {
+            file_put_contents($reviewPath, $this->renderReview($today, $status, $recentCommits, $changedFiles, $docsDrift));
+            file_put_contents($promptPath, $this->renderPromptPayload($today, $status, $recentCommits, $changedFiles, $docsDrift));
+        }
 
         CLI::write('Generated: ' . $reviewPath);
         CLI::write('Generated: ' . $promptPath);
+
+        log_message('info', '[spark:codex:review] Completed', [
+            'output_dir' => $outputDir,
+            'dry_run' => $dryRun,
+        ]);
+
+        return EXIT_SUCCESS;
     }
 
     protected function execSafe(string $command): string
@@ -140,5 +159,10 @@ MD;
 ## Ask
 Generate a concise risk-aware review, flag missing docs or auth gaps, and propose next steps.
 MD;
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }

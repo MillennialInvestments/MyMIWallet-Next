@@ -3,21 +3,28 @@
 namespace App\Commands;
 
 use App\Models\AlertsModel;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Database;
 use ReflectionMethod;
 
-class AlertsAudit extends BaseCommand
+class AlertsAudit extends SafeBaseCommand
 {
     protected $group       = 'maintenance';
     protected $name        = 'alerts:audit';
     protected $description = 'Audit recent scraped alert emails against generated trade alerts.';
+    protected $options     = [
+        '--dry-run' => 'Preview actions without writing audit artifacts',
+    ];
 
     private ?ReflectionMethod $symbolExtractor = null;
 
     public function run(array $params)
     {
+        log_message('info', '[spark:alerts:audit] Started', ['params' => $params]);
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
+
         $startTime = microtime(true);
         $startedAt = date('Y-m-d H:i:s');
         $memoryStart = memory_get_usage(true);
@@ -258,38 +265,54 @@ class AlertsAudit extends BaseCommand
             'percent_mapped' => $percentMapped,
         ]);
 
-        $this->writeAuditMarkdown([
-            'started_at' => $startedAt,
-            'duration_ms' => $durationMs,
-            'memory_peak' => $memoryPeak,
-            'emails_scanned' => $emailCount,
-            'alerts_scanned' => $alertCount,
-            'emails_with_alerts' => $emailsWithAlerts,
-            'emails_missing_alerts' => $emailsMissingAlerts,
-            'alerts_without_source' => $alertsWithoutSource,
-            'symbol_mismatches' => $symbolMismatchCount,
-            'health_status' => $healthStatus,
-            'percent_mapped' => $percentMapped,
-            'issues' => $issues,
-        ]);
-
-        $this->insertAuditLog($db, [
-            'level' => 'info',
-            'message' => 'alerts:audit completed',
-            'context' => json_encode([
+        if (! $dryRun) {
+            $this->writeAuditMarkdown([
+                'started_at' => $startedAt,
+                'duration_ms' => $durationMs,
+                'memory_peak' => $memoryPeak,
                 'emails_scanned' => $emailCount,
                 'alerts_scanned' => $alertCount,
+                'emails_with_alerts' => $emailsWithAlerts,
                 'emails_missing_alerts' => $emailsMissingAlerts,
+                'alerts_without_source' => $alertsWithoutSource,
                 'symbol_mismatches' => $symbolMismatchCount,
                 'health_status' => $healthStatus,
                 'percent_mapped' => $percentMapped,
-            ], JSON_UNESCAPED_SLASHES),
-            'created_at' => date('Y-m-d H:i:s'),
-        ]);
+                'issues' => $issues,
+            ]);
+
+            $this->insertAuditLog($db, [
+                'level' => 'info',
+                'message' => 'alerts:audit completed',
+                'context' => json_encode([
+                    'emails_scanned' => $emailCount,
+                    'alerts_scanned' => $alertCount,
+                    'emails_missing_alerts' => $emailsMissingAlerts,
+                    'symbol_mismatches' => $symbolMismatchCount,
+                    'health_status' => $healthStatus,
+                    'percent_mapped' => $percentMapped,
+                ], JSON_UNESCAPED_SLASHES),
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+        } else {
+            CLI::write('dry_run=true (no audit artifacts written)', 'yellow');
+        }
 
         CLI::newLine();
         CLI::write('Audit duration: ' . $durationMs . ' ms');
         CLI::write('Memory peak: ' . $this->formatBytes($memoryPeak));
+
+        if ($healthStatus === 'FAIL') {
+            log_message('error', '[spark:alerts:audit] Failed', ['reason' => 'Health status FAIL']);
+        }
+
+        log_message('info', '[spark:alerts:audit] Completed', [
+            'emails_scanned' => $emailCount,
+            'alerts_scanned' => $alertCount,
+            'health_status' => $healthStatus,
+            'percent_mapped' => $percentMapped,
+            'dry_run' => $dryRun,
+        ]);
 
         return $healthStatus === 'FAIL' ? EXIT_ERROR : EXIT_SUCCESS;
     }
@@ -558,5 +581,10 @@ class AlertsAudit extends BaseCommand
         } catch (\Throwable $e) {
             log_message('warning', 'alerts:audit failed to insert audit log: {error}', ['error' => $e->getMessage()]);
         }
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }
