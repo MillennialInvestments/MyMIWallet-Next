@@ -9,6 +9,8 @@ use App\Services\EventTracker;
 use App\Services\OnboardingProgressService;
 use App\Services\Psr4AuditService;
 use App\Services\SetupStatusService;
+use App\Services\Forecasting\ForecastAccuracyEvaluator;
+use App\Services\Forecasting\ForecastAggregationService;
 use App\Services\Forecasting\MyMIForecaster;
 use App\Services\Forecasting\ForecastAggregationService;
 use App\Services\Forecasting\ForecastAccuracyEvaluator;
@@ -204,19 +206,19 @@ class Services extends BaseService
         return new MyMIForecaster($provider, $forecastModel, $alertsModel, $cache, $config);
     }
 
-    public static function forecastAggregationService(bool $getShared = true): ForecastAggregationService
+    public static function forecastAggregation(bool $getShared = true): ForecastAggregationService
     {
         if ($getShared) {
             /** @var ForecastAggregationService $service */
-            $service = static::getSharedInstance('forecastAggregationService');
+            $service = static::getSharedInstance('forecastAggregation');
             return $service;
         }
 
-        $cache = cache();
-        $db = db_connect();
+        $forecastModel = model(\App\Models\InvestmentPriceForecastModel::class);
+        $alertsModel = model(\App\Models\AlertsModel::class);
         $config = config('MyMIForecasting');
 
-        return new ForecastAggregationService($cache, $db, $config);
+        return new ForecastAggregationService($forecastModel, $alertsModel, $config);
     }
 
     public static function forecastAccuracyEvaluator(bool $getShared = true): ForecastAccuracyEvaluator
@@ -227,14 +229,12 @@ class Services extends BaseService
             return $service;
         }
 
-        $provider = new AlphaVantageProvider();
-        $forecastModel = model(\App\Models\InvestmentPriceForecastModel::class);
+        $historyModel = model(\App\Models\InvestmentForecastHistoryModel::class);
         $accuracyModel = model(\App\Models\InvestmentForecastAccuracyModel::class);
-        $cache = cache();
-        $db = db_connect();
+        $provider = new AlphaVantageProvider();
         $config = config('MyMIForecasting');
 
-        return new ForecastAccuracyEvaluator($provider, $forecastModel, $accuracyModel, $cache, $db, $config);
+        return new ForecastAccuracyEvaluator($historyModel, $accuracyModel, $provider, $config);
     }
     
     /*

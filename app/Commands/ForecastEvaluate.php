@@ -9,22 +9,23 @@ class ForecastEvaluate extends BaseCommand
 {
     protected $group = 'Forecasts';
     protected $name = 'forecasts:evaluate';
-    protected $description = 'Evaluate forecast accuracy snapshots.';
+    protected $description = 'Evaluate forecasts for accuracy windows.';
 
     public function run(array $params)
     {
-        $limit = (int) ($params[0] ?? 200);
+        $limit = (int) ($params[0] ?? 100);
         $limit = max(1, min(500, $limit));
 
         CLI::write('Forecast accuracy evaluation starting...', 'green');
+        log_message('info', 'FORECAST: CLI evaluate started', ['limit' => $limit]);
 
         $evaluator = service('forecastAccuracyEvaluator');
-        $summary = $evaluator->evaluateDueForecasts($limit);
+        $summary = $evaluator->evaluateExpiredForecasts($limit);
 
-        CLI::write('Processed: ' . ($summary['processed'] ?? 0), 'yellow');
-        CLI::write('Inserted: ' . ($summary['inserted'] ?? 0), 'yellow');
-        CLI::write('Skipped: ' . ($summary['skipped'] ?? 0), 'yellow');
+        CLI::write('Evaluated: ' . $summary['evaluated'], 'yellow');
+        CLI::write('Skipped: ' . $summary['skipped'], 'yellow');
+        CLI::write('Errors: ' . $summary['errors'], 'red');
 
-        log_message('info', 'FORECAST: accuracy evaluation completed', $summary);
+        log_message('info', 'FORECAST: CLI evaluate completed', $summary);
     }
 }

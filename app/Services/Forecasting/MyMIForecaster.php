@@ -328,6 +328,7 @@ class MyMIForecaster
                     'support' => $donchian['low'],
                     'resistance' => $donchian['high'],
                 ],
+                'combined_score' => $score,
                 'source' => $this->config->defaultDataSource,
             ]),
             'data_source'         => $this->config->defaultDataSource,
