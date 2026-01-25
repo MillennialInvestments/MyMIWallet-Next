@@ -8,6 +8,8 @@
 /public/uploads/
 /node_modules/
 /**/*.orig.php
+*.orig.php
+*.copy.php
 /**/* copy.php
 app/_backup_autoload_skip/
 app/FiltersO/

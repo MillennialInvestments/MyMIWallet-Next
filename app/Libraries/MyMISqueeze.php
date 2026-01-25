@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Libraries;
+
 defined('BASEPATH') || exit('No direct script access allowed');
 
 class MyMISqueeze
