@@ -1,30 +1,48 @@
 <?php namespace App\Commands;
 
 use App\Libraries\MyMIDiscord;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Discord as DiscordConfig;
 
-class DiscordWireCheck extends BaseCommand
+class DiscordWireCheck extends SafeBaseCommand
 {
     protected $group       = 'Discord';
     protected $name        = 'discord:wire-check';
     protected $description = 'Validate Discord env vars, tables, and queue health for MyMIDiscord.';
     protected $usage       = 'php spark discord:wire-check';
+    protected $options     = [
+        '--dry-run' => 'Preview actions without querying the database',
+    ];
 
     public function run(array $params)
     {
+        log_message('info', '[spark:discord:wire-check] Started', ['params' => $params]);
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
+
         $cfg = config('Discord');
         $discord = new MyMIDiscord(); // hydrate env + config
 
         CLI::write('=== Discord Wire Check ===', 'yellow');
         $missing = $this->printEnvStatus($cfg);
-        $this->printTableStatus();
-        $this->printQueueSnapshot();
+        if ($dryRun) {
+            CLI::write('-- Database checks skipped (dry-run) --', 'yellow');
+        } else {
+            $this->printTableStatus();
+            $this->printQueueSnapshot();
+        }
 
         log_message('info', 'discord:wire-check complete', [
             'missing_env' => $missing,
         ]);
+
+        log_message('info', '[spark:discord:wire-check] Completed', [
+            'missing_env' => $missing,
+            'dry_run' => $dryRun,
+        ]);
+
+        return EXIT_SUCCESS;
     }
 
     protected function printEnvStatus(DiscordConfig $cfg): array
@@ -106,5 +124,10 @@ class DiscordWireCheck extends BaseCommand
             CLI::write('  (unable to query queue: ' . $e->getMessage() . ')', 'red');
         }
         CLI::newLine();
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }

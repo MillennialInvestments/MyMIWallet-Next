@@ -2,20 +2,27 @@
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
-class CacheAudit extends BaseCommand
+class CacheAudit extends SafeBaseCommand
 {
     protected $group = 'cache';
     protected $name = 'cache:audit';
     protected $description = 'Scan the repo for unsafe cache key usage.';
     protected $usage = 'cache:audit';
+    protected $options = [
+        '--dry-run' => 'Preview actions without writing data',
+    ];
 
     public function run(array $params)
     {
+        log_message('info', '[spark:cache:audit] Started', ['params' => $params]);
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
+
         $issues = [];
         $path = ROOTPATH;
         $excluded = ['vendor', 'writable', 'node_modules', '.git', 'system', 'builds'];
@@ -76,7 +83,11 @@ class CacheAudit extends BaseCommand
 
         if (empty($issues)) {
             CLI::write('Cache audit: no issues found.', 'green');
-            return 0;
+            log_message('info', '[spark:cache:audit] Completed', [
+                'issues' => 0,
+                'dry_run' => $dryRun,
+            ]);
+            return EXIT_SUCCESS;
         }
 
         CLI::write(sprintf('Cache audit: %d issue(s) found.', count($issues)), 'red');
@@ -87,7 +98,13 @@ class CacheAudit extends BaseCommand
             CLI::write('   suggestion: Use SafeCache::saveUser(...) / CacheKey::user(...) for user-scoped data.');
         }
 
-        return 1;
+        log_message('error', '[spark:cache:audit] Failed', [
+            'reason' => 'Cache audit issues detected.',
+            'issues' => count($issues),
+            'dry_run' => $dryRun,
+        ]);
+
+        return EXIT_ERROR;
     }
 
     private function analyzeKey(string $key): array
@@ -108,5 +125,10 @@ class CacheAudit extends BaseCommand
         }
 
         return $reasons;
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }

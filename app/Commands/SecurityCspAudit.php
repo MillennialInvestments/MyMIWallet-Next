@@ -2,20 +2,27 @@
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
-class SecurityCspAudit extends BaseCommand
+class SecurityCspAudit extends SafeBaseCommand
 {
     protected $group = 'security';
     protected $name = 'security:csp:audit';
     protected $description = 'Scan view templates for CSP-unsafe inline scripts, styles, and handlers.';
     protected $usage = 'security:csp:audit';
+    protected $options = [
+        '--dry-run' => 'Preview actions without writing data',
+    ];
 
     public function run(array $params)
     {
+        log_message('info', '[spark:security:csp:audit] Started', ['params' => $params]);
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
+
         $root = ROOTPATH;
         $scanRoots = [
             $root . 'app/Views/errors',
@@ -103,7 +110,8 @@ class SecurityCspAudit extends BaseCommand
 
         if ($issues === []) {
             CLI::write('CSP audit: no inline violations found.', 'green');
-            return 0;
+            log_message('info', '[spark:security:csp:audit] Completed', ['issues' => 0, 'dry_run' => $dryRun]);
+            return EXIT_SUCCESS;
         }
 
         CLI::write(sprintf('CSP audit: %d issue(s) found.', count($issues)), 'red');
@@ -111,7 +119,13 @@ class SecurityCspAudit extends BaseCommand
             CLI::write(sprintf(' - %s:%d (%s)', $issue['file'], $issue['line'], $issue['issue']), 'yellow');
         }
 
-        return 1;
+        log_message('error', '[spark:security:csp:audit] Failed', [
+            'reason' => 'CSP audit issues detected',
+            'issues' => count($issues),
+            'dry_run' => $dryRun,
+        ]);
+
+        return EXIT_ERROR;
     }
 
     /**
@@ -124,5 +138,10 @@ class SecurityCspAudit extends BaseCommand
             'line' => $line,
             'issue' => $issue,
         ];
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }

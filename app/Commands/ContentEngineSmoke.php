@@ -9,22 +9,36 @@ use App\Libraries\ContentEngine\PostDraftService;
 use App\Libraries\ContentEngine\ScannerIngestService;
 use App\Libraries\ContentEngine\ScannerScoringService;
 use App\Models\ContentPostModel;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class ContentEngineSmoke extends BaseCommand
+class ContentEngineSmoke extends SafeBaseCommand
 {
     protected $group = 'content';
     protected $name = 'contentengine:smoke';
     protected $description = 'End-to-end smoke test for the Content Engine ingest → scoring → drafts pipeline.';
+    protected $options = [
+        '--dry-run' => 'Preview actions without writing ingest data',
+    ];
 
     public function run(array $params)
     {
+        log_message('info', '[spark:contentengine:smoke] Started', ['params' => $params]);
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
+
         $config = config(ContentEngineConfig::class);
         $path = WRITEPATH . 'samples/daily_gainers.json';
         if (! is_file($path)) {
             CLI::error('Sample file missing: ' . $path);
-            return;
+            log_message('error', '[spark:contentengine:smoke] Failed', ['reason' => 'Sample file missing']);
+            return EXIT_ERROR;
+        }
+
+        if ($dryRun) {
+            CLI::write('Dry-run enabled. Smoke test will not run.', 'yellow');
+            log_message('info', '[spark:contentengine:smoke] Completed', ['dry_run' => true]);
+            return EXIT_SUCCESS;
         }
 
         $payload = json_decode((string) file_get_contents($path), true);
@@ -62,5 +76,17 @@ class ContentEngineSmoke extends BaseCommand
 
         $postTotal = $postModel->where('idea_id', $top[0]['id'] ?? null)->countAllResults();
         CLI::write('Preview drafts available for first idea: ' . $postTotal);
+
+        log_message('info', '[spark:contentengine:smoke] Completed', [
+            'ingest_id' => $ingestId,
+            'dry_run' => false,
+        ]);
+
+        return EXIT_SUCCESS;
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }

@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 
-class RoutesAuthAudit extends BaseCommand
+class RoutesAuthAudit extends SafeBaseCommand
 {
 
     protected $group       = 'maintenance';
     protected $name        = 'routes:auth-audit';
     protected $description = 'Audit public routes for unauthenticated access regressions.';
+    protected $options     = [
+        '--dry-run' => 'Preview actions without making HTTP requests',
+    ];
 
     /**
      * @var array<int, array<string, mixed>>
@@ -156,10 +159,24 @@ class RoutesAuthAudit extends BaseCommand
 
     public function run(array $params)
     {
+        log_message('info', '[spark:routes:auth-audit] Started', ['params' => $params]);
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
+
         $failures = 0;
         $warnings = 0;
 
         CLI::write('Running public route auth audit...', 'yellow');
+
+        if ($dryRun) {
+            CLI::write('Dry-run enabled. Route checks skipped.', 'yellow');
+            log_message('info', '[spark:routes:auth-audit] Completed', [
+                'failures' => 0,
+                'warnings' => 0,
+                'dry_run' => true,
+            ]);
+            return EXIT_SUCCESS;
+        }
 
         foreach ($this->publicRoutes as $route) {
             $response = $this->requestRoute($route['method'], $route['path']);
@@ -187,8 +204,15 @@ class RoutesAuthAudit extends BaseCommand
         CLI::write(sprintf('Audit complete. Failures: %d. Warnings: %d.', $failures, $warnings));
 
         if ($failures > 0) {
+            log_message('error', '[spark:routes:auth-audit] Failed', ['reason' => 'Route audit failures detected']);
             return 1;
         }
+
+        log_message('info', '[spark:routes:auth-audit] Completed', [
+            'failures' => $failures,
+            'warnings' => $warnings,
+            'dry_run' => false,
+        ]);
 
         return 0;
     }
@@ -245,5 +269,10 @@ class RoutesAuthAudit extends BaseCommand
         }
 
         return ['status' => 'warn', 'message' => sprintf('unexpected status %d', $status)];
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }

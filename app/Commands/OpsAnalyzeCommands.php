@@ -3,14 +3,17 @@
 namespace App\Commands;
 
 use App\Services\OpsCommandService;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class OpsAnalyzeCommands extends BaseCommand
+class OpsAnalyzeCommands extends SafeBaseCommand
 {
     protected $group       = 'ops';
     protected $name        = 'ops:analyze-commands';
     protected $description = 'Analyze parsed ops inbox items and generate AI plans';
+    protected $options     = [
+        '--dry-run' => 'Preview actions without updating inbox items',
+    ];
 
     protected OpsCommandService $service;
 
@@ -28,11 +31,22 @@ class OpsAnalyzeCommands extends BaseCommand
 
     public function run(array $params)
     {
+        log_message('info', '[spark:ops:analyze-commands] Started', ['params' => $params]);
+        [$args, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
+
+        if ($dryRun) {
+            CLI::write('Dry-run enabled. No inbox items will be updated.', 'yellow');
+            log_message('info', '[spark:ops:analyze-commands] Completed', ['dry_run' => true]);
+            return EXIT_SUCCESS;
+        }
+
         $items = $this->svc()->listInbox(['status' => ['Parsed']]);
 
         if (empty($items)) {
             CLI::write('No Parsed inbox items found.');
-            return;
+            log_message('info', '[spark:ops:analyze-commands] Completed', ['items' => 0]);
+            return EXIT_SUCCESS;
         }
 
         $apiKey   = trim((string) getenv('OPENAI_API_KEY'));
@@ -41,10 +55,11 @@ class OpsAnalyzeCommands extends BaseCommand
 
         if ($apiKey === '' || str_contains($apiKey, 'REPLACE_ME')) {
             foreach ($items as $item) {
-                $this->service->markStatus((int) $item['id'], 'Blocked', ['reason' => 'OPENAI_API_KEY missing']);
+                $this->svc()->markStatus((int) $item['id'], 'Blocked', ['reason' => 'OPENAI_API_KEY missing']);
                 CLI::write(json_encode(['id' => $item['id'], 'status' => 'Blocked', 'reason' => 'OPENAI_API_KEY missing']));
             }
-            return;
+            log_message('error', '[spark:ops:analyze-commands] Failed', ['reason' => 'OPENAI_API_KEY missing']);
+            return EXIT_ERROR;
         }
 
         $client = service('curlrequest');
@@ -70,8 +85,9 @@ class OpsAnalyzeCommands extends BaseCommand
                 $statusCode = $response->getStatusCode();
 
                 if ($statusCode >= 400) {
-                    $this->service->markStatus($id, 'Failed', ['reason' => 'HTTP ' . $statusCode]);
+                    $this->svc()->markStatus($id, 'Failed', ['reason' => 'HTTP ' . $statusCode]);
                     CLI::error("Analysis failed for ID {$id}: HTTP {$statusCode}");
+                    log_message('error', '[spark:ops:analyze-commands] Failed', ['reason' => 'HTTP ' . $statusCode, 'id' => $id]);
                     continue;
                 }
 
@@ -80,20 +96,23 @@ class OpsAnalyzeCommands extends BaseCommand
 
                 [$summary, $plan] = $this->extractPlan($content);
 
-                $this->service->upsertAnalysis($id, [
+                $this->svc()->upsertAnalysis($id, [
                     'summary' => $summary,
                     'plan'    => $plan,
                 ]);
 
-                $this->service->markStatus($id, 'Ready');
+                $this->svc()->markStatus($id, 'Ready');
 
                 CLI::write(json_encode(['id' => $id, 'status' => 'Ready', 'summary' => $summary]));
             } catch (\Throwable $e) {
-                $this->service->markStatus($id, 'Failed', ['reason' => $e->getMessage()]);
-                log_message('error', 'OpsAnalyzeCommands: analysis failed: ' . $e->getMessage());
+                $this->svc()->markStatus($id, 'Failed', ['reason' => $e->getMessage()]);
+                log_message('error', '[spark:ops:analyze-commands] Failed', ['reason' => $e->getMessage(), 'id' => $id]);
                 CLI::error("Analysis failed for ID {$id}: {$e->getMessage()}");
             }
         }
+
+        log_message('info', '[spark:ops:analyze-commands] Completed', ['items' => count($items)]);
+        return EXIT_SUCCESS;
     }
 
     protected function buildPrompt(array $item): array
@@ -132,5 +151,10 @@ class OpsAnalyzeCommands extends BaseCommand
         }
 
         return [$summary, $plan];
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }
