@@ -554,6 +554,28 @@ class InvestmentsController extends UserController
         return $this->renderTheme('App\Modules\User\Views\Investments\Add', $this->data);
     }
 
+    public function squeezes()
+    {
+        // Assuming you have a model or service that fetches user investments
+        $cuID = $this->cuID; // User ID
+        $userInvestments = $this->investmentService->getInvestmentData($cuID); // Adjust this line to your implementation
+
+        // Pass investments to the view
+        $this->data['userInvestments'] = $userInvestments;
+    
+        // Pass other data as needed
+        $this->commonData(); // Ensure other necessary data is prepared
+
+        try {
+            $this->data['squeezeRadar'] = $this->getMyMIInvestments()->getSqueezeRadar(10);
+        } catch (\Throwable $e) {
+            log_message('debug', 'InvestmentsController::index squeeze radar unavailable: {msg}', ['msg' => $e->getMessage()]);
+            $this->data['squeezeRadar'] = [];
+        }
+    
+        return $this->renderTheme('App\Modules\User\Views\Investments\index', $this->data);
+    }   
+
     private function resolveSubViewPath(string $base, string $relative, string $fallback = 'Investments\\Add\\stock_fields'): string
     {
         $candidate = $this->joinViewPath($base, $relative);

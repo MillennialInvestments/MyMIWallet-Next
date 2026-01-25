@@ -330,6 +330,13 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->post('bulk-delete', 'ReferralController::bulkDelete');
     });
 
+    $routes->group('Squeeze', ['filter' => 'login'], static function($routes) {
+        $routes->get('scorecard', 'SqueezeController::scorecard');
+        $routes->get('zoomout', 'SqueezeController::zoomout');
+        $routes->get('fade', 'SqueezeController::fade');
+        $routes->post('run', 'SqueezeController::run');
+    });
+
     $routes->group('Management/Chat', ['namespace' => 'App\\Modules\\Management\\Controllers', 'filter' => 'permission:admin.access'], static function($routes) {
         $routes->get('Usage', 'ChatUsageController::index');
         $routes->post('Settings', 'ChatUsageController::saveSettings');
@@ -1405,6 +1412,7 @@ $routes->group('Investments', ['namespace' => 'App\Modules\User\Controllers', 'f
     $routes->match(['GET', 'POST'], 'Retirement', 'InvestmentsController::retirement');
     $routes->match(['GET', 'POST'], 'Save', 'InvestmentsController::save'); // Save Investment Record Data to Database
     $routes->match(['GET', 'POST'], 'Services', 'InvestmentsController::services');
+    $routes->match(['GET', 'POST'], 'Squeezes', 'InvestmentsController::squeezes');
     $routes->match(['GET', 'POST'], 'Test', 'InvestmentsController::test');
     $routes->match(['GET', 'POST'], 'Watchlist', 'InvestmentsController::watchlist');
 
