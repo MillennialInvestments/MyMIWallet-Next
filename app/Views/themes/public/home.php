@@ -149,7 +149,7 @@ $socialPlatforms = [
                     </div>
                 </div>
                 <div class="hero-content text-white mt-5 p-4">
-                    <h1 class="display-4 fw-bold mb-3 text-center">Join The Community!<br><hr></h1>
+                    <h1 class="display-4 fw-bold mb-3 text-left">Join The Community!<br><hr></h1>
                     <div class="d-flex flex-wrap gap-3 mt-2 mb-4 align-items-center justify-content-center">
                         <?php foreach ($socialPlatforms as $platform => $details): ?>
                             <a href="<?= $details['url'] ?>" target="_blank" 

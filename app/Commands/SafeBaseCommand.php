@@ -4,9 +4,20 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\Commands;
+use Psr\Log\LoggerInterface;
 
 abstract class SafeBaseCommand extends BaseCommand
 {
+    /**
+     * ⚠️ DO NOT CHANGE THIS SIGNATURE
+     * Must match CodeIgniter\CLI\BaseCommand exactly (CI 4.6+)
+     */
+    public function __construct(LoggerInterface $logger, Commands $commands)
+    {
+        parent::__construct($logger, $commands);
+    }
+
     /**
      * CI4-safe param parser.
      */
