@@ -2,7 +2,6 @@
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
 
@@ -12,6 +11,11 @@ class AppUpdate extends SafeBaseCommand
     protected string $group = 'app';
     protected string $description = 'Run safe application update tasks.';
     protected string $usage = 'app:update';
+
+    protected function isDestructive(): bool
+    {
+        return false;
+    }
 
     public function run(array $params)
     {
@@ -25,4 +29,10 @@ class AppUpdate extends SafeBaseCommand
 
         CLI::write('✔ App update complete', 'green');
     }
+
+    protected function isDestructive(): bool
+    {
+        return false;
+    }
+
 }
