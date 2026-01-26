@@ -6,8 +6,8 @@ use CodeIgniter\CLI\CLI;
 
 class DiscordTestLiquidity extends SafeBaseCommand
 {
-    protected $group       = 'Discord';
-    protected $name        = 'discord:test-liquidity';
+    protected string $group       = 'Discord';
+    protected string $name        = 'discord:test-liquidity';
     protected $description = 'Send a test Liquidity Scan alert to alerts.liquidity channel';
     protected $arguments   = [
         'ticker' => 'Optional ticker symbol (default TEST).',

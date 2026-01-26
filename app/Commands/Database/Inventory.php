@@ -8,8 +8,8 @@ use CodeIgniter\CLI\CLI;
 
 class Inventory extends SafeBaseCommand
 {
-    protected $group       = 'database';
-    protected $name        = 'db:inventory';
+    protected string $group       = 'database';
+    protected string $name        = 'db:inventory';
     protected $description = 'Scan code and migrations to inventory MyMI Wallet tables and generate integrity docs/SQL adjustments.';
     protected $usage       = 'db:inventory [write-docs] [write-sql] [limit] [db-group] [--dry-run]';
     protected $arguments   = [

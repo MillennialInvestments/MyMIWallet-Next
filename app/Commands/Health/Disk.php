@@ -8,8 +8,8 @@ use CodeIgniter\CLI\CLI;
 
 class Disk extends SafeBaseCommand
 {
-    protected $group = 'health';
-    protected $name = 'health:disk';
+    protected string $group = 'health';
+    protected string $name = 'health:disk';
     protected $description = 'Check disk and inode usage for the host.';
 
     public function run(array $params)

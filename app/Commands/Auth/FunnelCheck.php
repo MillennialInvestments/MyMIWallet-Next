@@ -12,8 +12,8 @@ use DateTimeImmutable;
 
 class FunnelCheck extends SafeBaseCommand
 {
-    protected $group       = 'auth';
-    protected $name        = 'auth:funnel-check';
+    protected string $group       = 'auth';
+    protected string $name        = 'auth:funnel-check';
     protected $description = 'Check auth funnel sanity using recent user events and emit alerts on drop-offs.';
 
     protected $arguments = [];

@@ -7,8 +7,8 @@ use CodeIgniter\CLI\CLI;
 
 class CodexReview extends SafeBaseCommand
 {
-    protected $group       = 'ops';
-    protected $name        = 'codex:review';
+    protected string $group       = 'ops';
+    protected string $name        = 'codex:review';
     protected $description = 'Generate Codex review artifacts (summary + prompt payload)';
     protected $options     = [
         '--dry-run' => 'Preview actions without writing output files',

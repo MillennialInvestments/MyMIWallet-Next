@@ -5,18 +5,22 @@ namespace App\Commands\Ops;
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use Config\Services;
 use ReflectionClass;
+use Throwable;
 
 class CommandsAudit extends SafeBaseCommand
 {
-    protected $group = 'ops';
-    protected $name = 'ops:commands:audit';
-    protected $description = 'Audit registered Spark commands for validity.';
-    protected $usage = 'ops:commands:audit';
+    protected string $group = 'ops';
+    protected string $name = 'ops:commands:audit';
+    protected string $description = 'Audit registered Spark commands for validity.';
+    protected string $usage = 'ops:commands:audit';
 
     public function run(array $params)
     {
-        $commands = config('Console')->commands ?? [];
+        $console = config('Console');
+        $commands = $console->commands ?? [];
+        $logger = Services::logger();
 
         $rows = [];
         $hasInvalid = false;
@@ -26,9 +30,11 @@ class CommandsAudit extends SafeBaseCommand
             $name = '';
             $group = '';
             $valid = true;
+            $reasons = [];
 
             if (! $exists) {
                 $valid = false;
+                $reasons[] = 'Class not found';
             } else {
                 $reflection = new ReflectionClass($commandClass);
                 $defaults = $reflection->getDefaultProperties();
@@ -37,18 +43,22 @@ class CommandsAudit extends SafeBaseCommand
 
                 if (! $reflection->isSubclassOf(BaseCommand::class)) {
                     $valid = false;
+                    $reasons[] = 'Does not extend BaseCommand';
                 }
 
                 if ($name === '' || ! str_contains($name, ':')) {
                     $valid = false;
+                    $reasons[] = 'Missing or invalid $name';
                 }
 
                 if ($group === '') {
                     $valid = false;
+                    $reasons[] = 'Missing $group';
                 }
 
                 if (! $reflection->hasMethod('run')) {
                     $valid = false;
+                    $reasons[] = 'Missing run(array $params)';
                 } else {
                     $method = $reflection->getMethod('run');
                     $methodParams = $method->getParameters();
@@ -57,7 +67,15 @@ class CommandsAudit extends SafeBaseCommand
 
                     if ($firstParam === null || $paramType === null || $paramType->getName() !== 'array') {
                         $valid = false;
+                        $reasons[] = 'run() signature must accept array $params';
                     }
+                }
+
+                try {
+                    $reflection->newInstance($logger, (array) $console);
+                } catch (Throwable $e) {
+                    $valid = false;
+                    $reasons[] = 'Instantiation failed: ' . $e->getMessage();
                 }
             }
 
@@ -67,6 +85,7 @@ class CommandsAudit extends SafeBaseCommand
                 $name !== '' ? $name : '-',
                 $group !== '' ? $group : '-',
                 $valid ? 'Y' : 'N',
+                $reasons ? implode('; ', $reasons) : '-',
             ];
 
             if (! $valid) {
@@ -74,7 +93,7 @@ class CommandsAudit extends SafeBaseCommand
             }
         }
 
-        $headers = ['Class', 'Exists', 'Name', 'Group', 'Valid'];
+        $headers = ['Class', 'Exists', 'Name', 'Group', 'Valid', 'Reasons'];
         $widths = array_map('strlen', $headers);
 
         foreach ($rows as $row) {
@@ -105,7 +124,7 @@ class CommandsAudit extends SafeBaseCommand
         }
 
         if ($hasInvalid) {
-            CLI::error('One or more registered commands are invalid.');
+            CLI::error('One or more registered commands are invalid. See reasons above.');
             return EXIT_ERROR;
         }
 

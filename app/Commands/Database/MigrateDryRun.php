@@ -9,8 +9,8 @@ use Config\Migrations;
 
 class MigrateDryRun extends SafeBaseCommand
 {
-    protected $group       = 'database';
-    protected $name        = 'migrate:dry-run';
+    protected string $group       = 'database';
+    protected string $name        = 'migrate:dry-run';
     protected $description = 'List pending migrations without executing them.';
 
     public function run(array $params)
