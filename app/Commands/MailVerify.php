@@ -9,8 +9,8 @@ use CodeIgniter\CLI\CLI;
 
 class MailVerify extends SafeBaseCommand
 {
-    protected $group       = 'maintenance';
-    protected $name        = 'mail:verify';
+    protected string $group       = 'maintenance';
+    protected string $name        = 'mail:verify';
     protected $description = 'Verify SMTP settings by sending a diagnostic email.';
     protected $usage       = 'mail:verify you@example.com';
     protected $arguments   = [

@@ -8,8 +8,8 @@ use CodeIgniter\CLI\CLI;
 
 class OpsFetchCommands extends SafeBaseCommand
 {
-    protected $group       = 'ops';
-    protected $name        = 'ops:fetch-commands';
+    protected string $group       = 'ops';
+    protected string $name        = 'ops:fetch-commands';
     protected $description = 'Fetch unread ops commands from IMAP and store them in bf_ops_command_inbox';
     protected $options     = [
         '--dry-run' => 'Preview actions without storing inbox items',

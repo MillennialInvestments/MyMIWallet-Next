@@ -8,8 +8,8 @@ use CodeIgniter\CLI\CLI;
 
 class MailSend extends SafeBaseCommand
 {
-    protected $group       = 'Mail';
-    protected $name        = 'mail:send';
+    protected string $group       = 'Mail';
+    protected string $name        = 'mail:send';
     protected $description = 'Process and send queued mail jobs.';
     protected $usage       = 'mail:send [limit]';
     protected $arguments   = [
