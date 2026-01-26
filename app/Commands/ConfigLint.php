@@ -8,8 +8,8 @@ use CodeIgniter\CLI\CLI;
 
 class ConfigLint extends SafeBaseCommand
 {
-    protected $group = 'config';
-    protected $name = 'config:lint';
+    protected string $group = 'config';
+    protected string $name = 'config:lint';
     protected $description = 'Lint Config/Services.php overrides against CI4 service signatures.';
     protected $usage = 'config:lint';
     protected $options = [

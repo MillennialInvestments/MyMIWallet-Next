@@ -4,17 +4,21 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use Psr\Log\LoggerInterface;
 
 abstract class SafeBaseCommand extends BaseCommand
 {
     /**
+     * DO NOT CHANGE THIS SIGNATURE.
+     * Spark requires it exactly.
+     */
+    public function __construct(LoggerInterface $logger, array $config)
+    {
+        parent::__construct($logger, $config);
+    }
+
+    /**
      * CI4-safe param parser.
-     *
-     * Returns:
-     *   [
-     *     array $args,   // positional arguments
-     *     array $flags   // ['flag' => true]
-     *   ]
      */
     protected function parseParams(array $params): array
     {
@@ -32,22 +36,17 @@ abstract class SafeBaseCommand extends BaseCommand
         return [$args, $flags];
     }
 
-    /**
-     * Resolve dry-run state using standardized flags.
-     */
     protected function resolveDryRun(array $flags): bool
     {
         return isset($flags['dry-run']);
     }
 
     /**
-     * Enforce destructive command guard rails.
-     *
-     * @return int|null EXIT_ERROR when blocked, or null when allowed.
+     * Guard destructive commands
      */
-    protected function guardDestructive(array $flags, array $params): ?int
+    protected function guardDestructive(array $flags): ?int
     {
-        if (! $this->isDestructive()) {
+        if (!method_exists($this, 'isDestructive') || ! $this->isDestructive()) {
             return null;
         }
 
@@ -55,20 +54,7 @@ abstract class SafeBaseCommand extends BaseCommand
             return null;
         }
 
-        CLI::error('This action is destructive. Re-run with --force to proceed.');
-        log_message('warning', sprintf('[spark:%s] Destructive command blocked', $this->name ?? 'unknown'), [
-            'params' => $params,
-        ]);
-
+        CLI::error('This action is destructive. Re-run with --force.');
         return EXIT_ERROR;
     }
-
-    protected function guardPathForSecrets(string $path): void
-    {
-        if (str_contains($path, '.env')) {
-            throw new \RuntimeException('Refusing to write .env or secrets to disk.');
-        }
-    }
-
-    abstract protected function isDestructive(): bool;
 }

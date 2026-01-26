@@ -6,8 +6,8 @@ use CodeIgniter\CLI\CLI;
 
 class RuntimeCheck extends SafeBaseCommand
 {
-    protected $group       = 'app';
-    protected $name        = 'runtime:check';
+    protected string $group       = 'app';
+    protected string $name        = 'runtime:check';
     protected $description = 'Validate runtime invariants (nginx, php, permissions, etc.).';
 
     protected function isDestructive(): bool

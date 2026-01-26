@@ -8,8 +8,8 @@ use CodeIgniter\CLI\CLI;
 
 class OpsAnalyzeCommands extends SafeBaseCommand
 {
-    protected $group       = 'ops';
-    protected $name        = 'ops:analyze-commands';
+    protected string $group       = 'ops';
+    protected string $name        = 'ops:analyze-commands';
     protected $description = 'Analyze parsed ops inbox items and generate AI plans';
     protected $options     = [
         '--dry-run' => 'Preview actions without updating inbox items',

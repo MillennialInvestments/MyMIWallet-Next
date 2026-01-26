@@ -8,8 +8,8 @@ use CodeIgniter\CLI\CLI;
 
 class Audit extends SafeBaseCommand
 {
-    protected $group       = 'auth';
-    protected $name        = 'auth:audit';
+    protected string $group       = 'auth';
+    protected string $name        = 'auth:audit';
     protected $description = 'Audit Myth:Auth authentication and account lifecycle flows end-to-end, including registration, login, and reset flows.';
 
     protected $arguments = [];

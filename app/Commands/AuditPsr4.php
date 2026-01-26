@@ -10,8 +10,8 @@ use Config\Services;
 
 class AuditPsr4 extends SafeBaseCommand
 {
-    protected $group       = 'maintenance';
-    protected $name        = 'audit:psr4';
+    protected string $group       = 'maintenance';
+    protected string $name        = 'audit:psr4';
     protected $description = 'Audit PSR-4 compliance for the app namespace.';
     protected $options     = [
         '--ci' => 'Exit non-zero if violations are detected.',

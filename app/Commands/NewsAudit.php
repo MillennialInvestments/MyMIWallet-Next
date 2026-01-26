@@ -8,8 +8,8 @@ use Config\Database;
 
 class NewsAudit extends SafeBaseCommand
 {
-    protected $group       = 'maintenance';
-    protected $name        = 'news:audit';
+    protected string $group       = 'maintenance';
+    protected string $name        = 'news:audit';
     protected $description = 'Audit recent marketing news ingestion, summarization, and post generation.';
     protected $options     = [
         '--dry-run' => 'Preview actions without writing audit artifacts',

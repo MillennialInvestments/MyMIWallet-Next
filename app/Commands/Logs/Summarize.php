@@ -8,8 +8,8 @@ use CodeIgniter\CLI\CLI;
 
 class Summarize extends SafeBaseCommand
 {
-    protected $group       = 'logs';
-    protected $name        = 'logs:summarize';
+    protected string $group       = 'logs';
+    protected string $name        = 'logs:summarize';
     protected $description = 'Summarize CI4 logs for a given date, including new entries since the last run.';
     protected $usage       = 'logs:summarize [date|yesterday] [--dry-run]';
 
