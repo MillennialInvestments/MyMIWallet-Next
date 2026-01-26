@@ -4,19 +4,9 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use Psr\Log\LoggerInterface;
 
 abstract class SafeBaseCommand extends BaseCommand
 {
-    /**
-     * DO NOT CHANGE THIS SIGNATURE.
-     * Spark requires it exactly.
-     */
-    public function __construct(LoggerInterface $logger, array $config)
-    {
-        parent::__construct($logger, $config);
-    }
-
     /**
      * CI4-safe param parser.
      */
