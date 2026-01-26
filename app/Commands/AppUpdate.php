@@ -29,4 +29,10 @@ class AppUpdate extends SafeBaseCommand
 
         CLI::write('✔ App update complete', 'green');
     }
+
+    protected function isDestructive(): bool
+    {
+        return false;
+    }
+
 }
