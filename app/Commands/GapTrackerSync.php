@@ -8,8 +8,8 @@ use CodeIgniter\CLI\CLI;
 
 class GapTrackerSync extends SafeBaseCommand
 {
-    protected string $group       = 'GapTracker';
-    protected string $name        = 'gap:sync';
+    protected $group       = 'GapTracker';
+    protected $name        = 'gap:sync';
     protected $description = 'Enrich gap tracker CSV and produce a report.';
     protected $usage       = 'php spark gap:sync [limit] [priority] [--dry-run] [--report-only]';
     protected $arguments   = [

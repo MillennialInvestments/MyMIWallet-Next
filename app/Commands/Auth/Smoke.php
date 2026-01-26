@@ -10,8 +10,8 @@ use CodeIgniter\CLI\CLI;
 
 class Smoke extends SafeBaseCommand
 {
-    protected string $group       = 'auth';
-    protected string $name        = 'auth:smoke';
+    protected $group       = 'auth';
+    protected $name        = 'auth:smoke';
     protected $description = 'Run a safe authentication smoke test and record health results for ops visibility.';
 
     protected $arguments = [];

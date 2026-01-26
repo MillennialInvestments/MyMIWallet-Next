@@ -8,8 +8,8 @@ use Config\Services;
 
 class AiOpsSeed extends SafeBaseCommand
 {
-    protected string $group       = 'AiOps';
-    protected string $name        = 'aiops:seed';
+    protected $group       = 'AiOps';
+    protected $name        = 'aiops:seed';
     protected $description = 'Seed default AI Ops caps and pricing configuration.';
     protected $usage       = 'php spark aiops:seed';
     protected $options     = [

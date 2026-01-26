@@ -14,8 +14,8 @@ use Throwable;
 
 class OpsWork extends SafeBaseCommand
 {
-    protected string $group       = 'ops';
-    protected string $name        = 'ops:work';
+    protected $group       = 'ops';
+    protected $name        = 'ops:work';
     protected $description = 'Process operations queue items.';
     protected $usage       = 'php spark ops:work [limit] [--dry-run]';
     protected $arguments   = [

@@ -9,8 +9,8 @@ use CodeIgniter\CLI\CLI;
 
 class Services extends SafeBaseCommand
 {
-    protected string $group = 'health';
-    protected string $name = 'health:services';
+    protected $group = 'health';
+    protected $name = 'health:services';
     protected $description = 'Detect web server + PHP handler status without systemctl.';
 
     public function run(array $params)

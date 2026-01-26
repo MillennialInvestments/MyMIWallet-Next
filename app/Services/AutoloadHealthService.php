@@ -14,7 +14,16 @@ class AutoloadHealthService
     }
 
     /**
-     * @return array{total_classes:int, psr4_ok:int, violations:int, legacy_files:int, last_scan:string}
+     * @return array{
+     *  total_classes:int,
+     *  psr4_ok:int,
+     *  violations:int,
+     *  real_violations:int,
+     *  legacy_globals:int,
+     *  legacy_files:int,
+     *  ignored_files:int,
+     *  last_scan:string
+     * }
      */
     public function getStatus(): array
     {
