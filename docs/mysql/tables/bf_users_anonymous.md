@@ -1,27 +1,45 @@
--- Table: bf_users_anonymous
--- Sources: code: app/Models/UserModel.php:178
--- Suspected columns: ip_address
+# bf_users_anonymous
+
+## Source
+- Migration: _None_
+- Model:
+- Code references: app/Models/UserModel.php:178
+
+## Create table
+```sql
 CREATE TABLE IF NOT EXISTS `bf_users_anonymous` (
-  `ip_address` TEXT NULL
+  `id` int NOT NULL DEFAULT NULL AUTO_INCREMENT,
+  `anonymous_id` varchar(20) NOT NULL DEFAULT NULL,
+  `ip_address` varchar(45) NOT NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP DEFAULT_GENERATED
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
 
--- Column adjustments
-SET @col_exists := (SELECT COUNT(*) FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = 'bf_users_anonymous' AND column_name = 'ip_address');
-SET @sql := IF(@col_exists = 0, 'ALTER TABLE `bf_users_anonymous` ADD COLUMN `ip_address` TEXT NULL', 'SELECT ''column ip_address already exists''');
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
+## Required columns
+- id int NOT NULL
+- anonymous_id varchar(20) NOT NULL
+- ip_address varchar(45) NOT NULL
+- created_at timestamp NULL
 
--- Index adjustments
+## Required indexes
+- _No indexes defined_
 
--- Verification
+## Verification
+```sql
 SHOW CREATE TABLE `bf_users_anonymous`;
+```
+
+```sql
 SELECT COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE, COLUMN_DEFAULT, EXTRA
 FROM information_schema.columns
 WHERE table_schema = DATABASE() AND table_name = 'bf_users_anonymous'
 ORDER BY ORDINAL_POSITION;
+```
+
+```sql
 SELECT INDEX_NAME, NON_UNIQUE, COLUMN_NAME, SEQ_IN_INDEX
 FROM information_schema.statistics
 WHERE table_schema = DATABASE() AND table_name = 'bf_users_anonymous'
 ORDER BY INDEX_NAME, SEQ_IN_INDEX;
+```
 

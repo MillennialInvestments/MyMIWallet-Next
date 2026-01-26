@@ -3,6 +3,20 @@
 This document captures the layout that DreamHost's user-space Nginx uses for the MyMI Wallet deployment. The goal is to make it
 straightforward to audit the configs when troubleshooting pretty URLs, PHP-FPM connectivity, or CDN/proxy-related issues.
 
+# MyMI Wallet – nginx Architecture (Authoritative)
+
+## Environment
+- Host: DreamHost VPS (no sudo)
+- nginx: user-space build
+- PHP backend: DreamHost-managed CGI
+- Framework: CodeIgniter 4
+
+---
+
+## ✅ Single Source of Truth
+
+**DO NOT EDIT ANY FILE EXCEPT:**
+
 ## Process tree
 
 ```text

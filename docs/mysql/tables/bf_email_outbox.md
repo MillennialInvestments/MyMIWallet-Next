@@ -1,9 +1,9 @@
 # bf_email_outbox
 
 ## Source
-- Migration: app/Database/Migrations/2026-03-05-000100_CreateEmailOutbox.php
-- Model: app/Models/EmailOutboxModel.php
-- Code references: app/Models/EmailOutboxModel.php
+- Migration: 2026-03-05-000100_CreateEmailOutbox.php
+- Model:
+- Code references: app/Database/Migrations/2026-03-05-000100_CreateEmailOutbox.php:73, app/Database/Migrations/2026-03-05-000100_CreateEmailOutbox.php:78, app/Libraries/DbInventory/InventoryScanner.php:13, app/Libraries/DbInventory/SqlGenerator.php:9, app/Models/EmailOutboxModel.php:11, docs/spark/categories/alerts/mail-send-test.md:14
 
 ## Create table
 ```sql
@@ -49,5 +49,20 @@ CREATE TABLE IF NOT EXISTS `bf_email_outbox` (
 
 ## Verification
 ```sql
-SHOW CREATE TABLE bf_email_outbox;
+SHOW CREATE TABLE `bf_email_outbox`;
 ```
+
+```sql
+SELECT COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE, COLUMN_DEFAULT, EXTRA
+FROM information_schema.columns
+WHERE table_schema = DATABASE() AND table_name = 'bf_email_outbox'
+ORDER BY ORDINAL_POSITION;
+```
+
+```sql
+SELECT INDEX_NAME, NON_UNIQUE, COLUMN_NAME, SEQ_IN_INDEX
+FROM information_schema.statistics
+WHERE table_schema = DATABASE() AND table_name = 'bf_email_outbox'
+ORDER BY INDEX_NAME, SEQ_IN_INDEX;
+```
+
