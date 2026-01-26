@@ -7,15 +7,10 @@ use Config\Services;
 
 class AppUpdate extends SafeBaseCommand
 {
-    protected string $name = 'app:update';
-    protected string $group = 'app';
-    protected string $description = 'Run safe application update tasks.';
-    protected string $usage = 'app:update';
-
-    protected function isDestructive(): bool
-    {
-        return false;
-    }
+    protected $name = 'app:update';
+    protected $group = 'app';
+    protected $description = 'Run safe application update tasks.';
+    protected $usage = 'app:update';
 
     public function run(array $params)
     {
