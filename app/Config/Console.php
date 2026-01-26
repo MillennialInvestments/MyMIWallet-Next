@@ -10,6 +10,7 @@ class Console extends BaseConfig
         \App\Commands\AppUpdate::class,
         \App\Commands\Ops\CommandsAudit::class,
         \App\Commands\Ops\CommandsAutofix::class,
+        \App\Commands\Runtime\Diagnose502::class,
     ];
 
     public bool $showHelp = true;
