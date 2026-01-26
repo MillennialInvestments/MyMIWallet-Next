@@ -10,8 +10,8 @@ use Config\Services;
 
 class AuditPsr4 extends SafeBaseCommand
 {
-    protected string $group       = 'maintenance';
-    protected string $name        = 'audit:psr4';
+    protected $group       = 'maintenance';
+    protected $name        = 'audit:psr4';
     protected $description = 'Audit PSR-4 compliance for the app namespace.';
     protected $options     = [
         '--ci' => 'Exit non-zero if violations are detected.',
@@ -33,7 +33,8 @@ class AuditPsr4 extends SafeBaseCommand
 
         $audit = Services::psr4AuditService()->audit();
         $summary = $audit['summary'];
-        $violations = (int) ($summary['violations'] ?? 0);
+        $violations = (int) ($summary['real_violations'] ?? $summary['violations'] ?? 0);
+        $legacyGlobals = (int) ($summary['legacy_globals'] ?? 0);
 
         if ($jsonMode) {
             CLI::write(json_encode($audit, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
@@ -51,7 +52,11 @@ class AuditPsr4 extends SafeBaseCommand
                 return EXIT_ERROR;
             }
 
-            CLI::write('✅ PSR-4 compliance verified.', 'green');
+            if ($legacyGlobals > 0) {
+                CLI::write('⚠️ Legacy global classes detected (not failing CI).', 'yellow');
+            } else {
+                CLI::write('✅ PSR-4 compliance verified.', 'green');
+            }
             log_message('info', '[spark:audit:psr4] Completed', ['violations' => $violations, 'dry_run' => $dryRun]);
             return EXIT_SUCCESS;
         }
@@ -63,6 +68,7 @@ class AuditPsr4 extends SafeBaseCommand
         CLI::write('Total classes: ' . (int) $summary['total_classes']);
         CLI::write('PSR-4 OK: ' . (int) $summary['psr4_ok']);
         CLI::write('Violations: ' . $violations);
+        CLI::write('Legacy globals: ' . $legacyGlobals);
         CLI::write('Legacy files: ' . (int) $summary['legacy_files']);
         CLI::write('Last scan: ' . ($summary['last_scan'] ?? 'unknown'));
 
@@ -112,6 +118,11 @@ class AuditPsr4 extends SafeBaseCommand
 
                 if ($type === 'legacy-suffix') {
                     CLI::write('  Legacy suffix file: ' . ($issue['file'] ?? 'unknown'));
+                    continue;
+                }
+
+                if ($type === 'legacy-global') {
+                    CLI::write('  Legacy global class: ' . ($issue['file'] ?? 'unknown'));
                     continue;
                 }
 

@@ -14,8 +14,8 @@ use CodeIgniter\CLI\CLI;
 
 class ContentEngineSmoke extends SafeBaseCommand
 {
-    protected string $group = 'content';
-    protected string $name = 'contentengine:smoke';
+    protected $group = 'content';
+    protected $name = 'contentengine:smoke';
     protected $description = 'End-to-end smoke test for the Content Engine ingest → scoring → drafts pipeline.';
     protected $options = [
         '--dry-run' => 'Preview actions without writing ingest data',

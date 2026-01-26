@@ -8,8 +8,8 @@ use CodeIgniter\CLI\CLI;
 
 class ApplyDocs extends SafeBaseCommand
 {
-    protected string $group       = 'database';
-    protected string $name        = 'db:apply-docs';
+    protected $group       = 'database';
+    protected $name        = 'db:apply-docs';
     protected $description = 'Compile SQL from docs/mysql and apply statements with audit logging.';
     protected $usage       = 'db:apply-docs [db-group] [--dry-run]';
     protected $arguments   = [

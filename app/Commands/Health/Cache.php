@@ -7,8 +7,8 @@ use CodeIgniter\CLI\CLI;
 
 class Cache extends SafeBaseCommand
 {
-    protected string $group = 'health';
-    protected string $name = 'health:cache';
+    protected $group = 'health';
+    protected $name = 'health:cache';
     protected $description = 'Check CI4 writable cache directories for access.';
 
     public function run(array $params)

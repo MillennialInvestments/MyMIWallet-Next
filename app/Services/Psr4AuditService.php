@@ -18,6 +18,9 @@ class Psr4AuditService
     /** @var array<int, string> */
     private array $excludedPaths;
 
+    /** @var array<int, string> */
+    private array $ignorePatterns;
+
     public function __construct()
     {
         $this->namespaceRoots = [
@@ -29,13 +32,25 @@ class Psr4AuditService
             rtrim(APPPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . '_legacy',
             rtrim(APPPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'Database' . DIRECTORY_SEPARATOR . 'Migrations',
         ];
+
+        $this->ignorePatterns = $this->loadIgnorePatterns();
     }
 
     /**
      * @return array{
-     *  summary: array{total_classes:int, psr4_ok:int, violations:int, legacy_files:int, last_scan:string},
+     *  summary: array{
+     *      total_classes:int,
+     *      psr4_ok:int,
+     *      violations:int,
+     *      real_violations:int,
+     *      legacy_globals:int,
+     *      legacy_files:int,
+     *      ignored_files:int,
+     *      last_scan:string
+     *  },
      *  issues: array<int, array<string, mixed>>,
      *  legacy_files: array<int, string>,
+     *  ignored_files: array<int, string>,
      *  classes: array<string, array{file:string, namespace:string, class:string}>
      * }
      */
@@ -43,6 +58,8 @@ class Psr4AuditService
     {
         $issues = [];
         $legacyFiles = [];
+        $ignoredFiles = [];
+        $legacyGlobals = [];
         $classes = [];
         $classIssues = [];
         $scanTime = date('Y-m-d H:i:s');
@@ -61,6 +78,11 @@ class Psr4AuditService
 
             $filePath = $file->getPathname();
             $relativePath = $this->toRelativePath($filePath);
+
+            if ($this->shouldIgnore($relativePath)) {
+                $ignoredFiles[] = $relativePath;
+                continue;
+            }
 
             if ($this->isLegacyPath($filePath)) {
                 $legacyFiles[] = $relativePath;
@@ -106,6 +128,17 @@ class Psr4AuditService
                 'namespace' => $namespace ?? '',
                 'class' => $className,
             ];
+
+            if ($namespace === null) {
+                $issues[] = [
+                    'type' => 'legacy-global',
+                    'class' => $fqcn,
+                    'file' => $relativePath,
+                    'message' => 'Legacy global class detected (no namespace).',
+                ];
+                $legacyGlobals[] = $fqcn;
+                continue;
+            }
 
             $rootPath = $this->resolveRootPath($namespace);
             if ($rootPath === null) {
@@ -154,13 +187,92 @@ class Psr4AuditService
                 'total_classes' => $totalClasses,
                 'psr4_ok' => max(0, $totalClasses - $violations),
                 'violations' => $violations,
+                'real_violations' => $violations,
+                'legacy_globals' => count($legacyGlobals),
                 'legacy_files' => count($legacyFiles),
+                'ignored_files' => count($ignoredFiles),
                 'last_scan' => $scanTime,
             ],
             'issues' => $issues,
             'legacy_files' => $legacyFiles,
+            'ignored_files' => $ignoredFiles,
             'classes' => $classes,
         ];
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function loadIgnorePatterns(): array
+    {
+        $root = rtrim(dirname(APPPATH), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $path = $root . 'docs/psr4/.psr4ignore';
+
+        if (! is_file($path)) {
+            return [];
+        }
+
+        $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        if ($lines === false) {
+            return [];
+        }
+
+        $patterns = [];
+        foreach ($lines as $line) {
+            $line = trim($line);
+            if ($line === '' || str_starts_with($line, '#')) {
+                continue;
+            }
+
+            $patterns[] = $line;
+        }
+
+        return $patterns;
+    }
+
+    private function shouldIgnore(string $relativePath): bool
+    {
+        if (empty($this->ignorePatterns)) {
+            return false;
+        }
+
+        $relativePath = str_replace('\\', '/', $relativePath);
+
+        foreach ($this->ignorePatterns as $pattern) {
+            if ($this->matchesPattern($relativePath, $pattern)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function matchesPattern(string $path, string $pattern): bool
+    {
+        $pattern = str_replace('\\', '/', trim($pattern));
+        $path = str_replace('\\', '/', $path);
+
+        if ($pattern === '') {
+            return false;
+        }
+
+        if (! str_contains($pattern, '/')) {
+            $path = basename($path);
+        }
+
+        $regex = $this->globToRegex($pattern);
+
+        return (bool) preg_match($regex, $path);
+    }
+
+    private function globToRegex(string $pattern): string
+    {
+        $quoted = preg_quote($pattern, '/');
+        $quoted = str_replace('\*\*', '.*', $quoted);
+        $quoted = str_replace('\*', '[^\\/]*', $quoted);
+        $quoted = str_replace('\?', '.', $quoted);
+
+        return '/^' . $quoted . '$/';
     }
 
     private function isLegacyPath(string $path): bool

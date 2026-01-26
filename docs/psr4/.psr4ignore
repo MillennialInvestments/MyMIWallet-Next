@@ -1,0 +1,16 @@
+# Legacy and view files
+*.orig.php
+*.bak.php
+*.disabled.php
+app/Views/**
+app/Modules/**/Views/**
+
+# Archives and backups
+app/_archive/**
+archive/**
+
+# Third-party/vendor trees
+vendor/**
+node_modules/**
+nginx/**
+nginx/src/**

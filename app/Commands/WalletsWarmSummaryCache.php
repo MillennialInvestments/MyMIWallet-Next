@@ -9,8 +9,8 @@ use CodeIgniter\CLI\CLI;
 
 class WalletsWarmSummaryCache extends SafeBaseCommand
 {
-    protected string $group       = 'wallets';
-    protected string $name        = 'wallets:warm-summary-cache';
+    protected $group       = 'wallets';
+    protected $name        = 'wallets:warm-summary-cache';
     protected $description = 'Pre-warm the /API/Wallets/summary cache for active users.';
     protected $usage       = 'wallets:warm-summary-cache [user-id] [--dry-run]';
     protected $arguments   = [

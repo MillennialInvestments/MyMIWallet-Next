@@ -6,8 +6,8 @@ use Config\Discord as DiscordConfig;
 
 class DiscordList extends SafeBaseCommand
 {
-    protected string $group       = 'Discord';
-    protected string $name        = 'discord:list';
+    protected $group       = 'Discord';
+    protected $name        = 'discord:list';
     protected $description = 'List configured Discord channels/webhooks/IDs from config and database.';
     protected $options     = [
         '--dry-run' => 'Preview actions without querying the database',
