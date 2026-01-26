@@ -4,13 +4,14 @@ namespace App\Commands\Health;
 
 use App\Commands\SafeBaseCommand;
 use App\Services\Triage\CommandRunner;
+use App\Services\Triage\HostingModeDetector;
 use CodeIgniter\CLI\CLI;
 
 class Services extends SafeBaseCommand
 {
     protected $group = 'health';
     protected $name = 'health:services';
-    protected $description = 'Check PHP-FPM service status and workers.';
+    protected $description = 'Detect web server + PHP handler status without systemctl.';
 
     public function run(array $params)
     {
@@ -18,37 +19,29 @@ class Services extends SafeBaseCommand
         CLI::write('Running service health checks...', 'yellow');
 
         $runner = new CommandRunner();
-        $systemctl = $runner->run('systemctl status php8.2-fpm');
-        $ps = $runner->run('ps aux | grep php-fpm');
+        $detector = new HostingModeDetector($runner);
+        $status = $detector->detect();
 
         CLI::newLine();
-        CLI::write('systemctl status php8.2-fpm');
-        CLI::write('----------------------------------------');
-        foreach ($systemctl['output'] as $line) {
-            CLI::write($line);
-        }
-
-        CLI::newLine();
-        CLI::write('ps aux | grep php-fpm');
-        CLI::write('----------------------------------------');
-        foreach ($ps['output'] as $line) {
-            CLI::write($line);
-        }
-
-        $workerCount = $this->countWorkers($ps['output']);
-        $running = $systemctl['exit_code'] === 0;
-
-        CLI::newLine();
-        CLI::write('php_fpm_running=' . ($running ? 'true' : 'false'));
-        CLI::write('php_fpm_workers=' . $workerCount);
+        CLI::write('web_server=' . ($status['web_server'] ?? 'unknown'));
+        CLI::write('php_mode=' . ($status['php_mode'] ?? 'unknown'));
+        CLI::write('php_workers=' . (string) ($status['php_workers'] ?? 0));
+        CLI::write('fastcgi_upstream=' . ($status['fastcgi_upstream'] ?? 'n/a'));
+        CLI::write('ports_listening=' . implode(',', $status['ports'] ?? []));
+        CLI::write('hosting_mode=' . ($status['hosting_mode'] ?? 'UNKNOWN'));
+        CLI::write('overall=' . ($status['overall'] ?? 'WARN'));
 
         log_message('info', '[spark:health:services] Completed', [
-            'php_fpm_running' => $running,
-            'php_fpm_workers' => $workerCount,
-            'systemctl_exit' => $systemctl['exit_code'],
+            'web_server' => $status['web_server'] ?? 'unknown',
+            'php_mode' => $status['php_mode'] ?? 'unknown',
+            'php_workers' => $status['php_workers'] ?? 0,
+            'fastcgi_upstream' => $status['fastcgi_upstream'] ?? null,
+            'ports' => $status['ports'] ?? [],
+            'hosting_mode' => $status['hosting_mode'] ?? 'UNKNOWN',
+            'overall' => $status['overall'] ?? 'WARN',
         ]);
 
-        return $running ? EXIT_SUCCESS : EXIT_ERROR;
+        return ($status['overall'] ?? 'WARN') === 'PASS' ? EXIT_SUCCESS : EXIT_ERROR;
     }
 
     protected function isDestructive(): bool
@@ -56,16 +49,4 @@ class Services extends SafeBaseCommand
         return false;
     }
 
-    private function countWorkers(array $lines): int
-    {
-        $count = 0;
-
-        foreach ($lines as $line) {
-            if (str_contains($line, 'php-fpm: pool') || str_contains($line, 'php-fpm: master process')) {
-                $count++;
-            }
-        }
-
-        return $count;
-    }
 }
