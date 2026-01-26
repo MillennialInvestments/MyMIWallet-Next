@@ -6,8 +6,8 @@ use CodeIgniter\CLI\CLI;
 
 class DiscordProcessQueue extends SafeBaseCommand
 {
-    protected string $group       = 'Discord';
-    protected string $name        = 'discord:process-queue';
+    protected $group       = 'Discord';
+    protected $name        = 'discord:process-queue';
     protected $description = 'Process queued Discord messages respecting quiet hours and pacing.';
     protected $usage       = 'php spark discord:process-queue [limit]';
     protected $arguments   = [

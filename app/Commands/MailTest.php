@@ -7,8 +7,8 @@ use CodeIgniter\CLI\CLI;
 
 class MailTest extends SafeBaseCommand
 {
-    protected string $group       = 'maintenance';
-    protected string $name        = 'mail:test';
+    protected $group       = 'maintenance';
+    protected $name        = 'mail:test';
     protected $description = 'Send a DreamHost SMTP test email and output transport diagnostics.';
     protected $arguments   = [
         'to' => 'Recipient email address.',

@@ -10,8 +10,8 @@ use CodeIgniter\CLI\CLI;
 
 class MailSendTest extends SafeBaseCommand
 {
-    protected string $group       = 'maintenance';
-    protected string $name        = 'mail:send-test';
+    protected $group       = 'maintenance';
+    protected $name        = 'mail:send-test';
     protected $description = 'Send a test email using branded templates.';
     protected $usage       = 'mail:send-test [to] [template] [--dry-run]';
     protected $arguments   = [

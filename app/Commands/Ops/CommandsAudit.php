@@ -11,10 +11,10 @@ use Throwable;
 
 class CommandsAudit extends SafeBaseCommand
 {
-    protected string $group = 'ops';
-    protected string $name = 'ops:commands:audit';
-    protected string $description = 'Audit registered Spark commands for validity.';
-    protected string $usage = 'ops:commands:audit';
+    protected $group = 'ops';
+    protected $name = 'ops:commands:audit';
+    protected $description = 'Audit registered Spark commands for validity.';
+    protected $usage = 'ops:commands:audit';
 
     public function run(array $params)
     {

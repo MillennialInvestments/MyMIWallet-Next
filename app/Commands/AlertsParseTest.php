@@ -8,8 +8,8 @@ use CodeIgniter\CLI\CLI;
 
 class AlertsParseTest extends SafeBaseCommand
 {
-    protected string $group       = 'alerts';
-    protected string $name        = 'alerts:parse-test';
+    protected $group       = 'alerts';
+    protected $name        = 'alerts:parse-test';
     protected $description = 'Parse a broker email sample and output normalized execution data.';
     protected $usage       = 'alerts:parse-test [file] [subject] [--dry-run]';
     protected $arguments   = [

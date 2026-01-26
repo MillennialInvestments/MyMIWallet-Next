@@ -7,8 +7,8 @@ use CodeIgniter\CLI\CLI;
 
 class TestEmail extends SafeBaseCommand
 {
-    protected string $group       = 'maintenance';
-    protected string $name        = 'email:test';
+    protected $group       = 'maintenance';
+    protected $name        = 'email:test';
     protected $description = 'Send a test email using the current SMTP configuration.';
     protected $arguments   = [
         'to' => 'Recipient email address.',
