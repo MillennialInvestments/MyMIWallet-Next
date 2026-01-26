@@ -3,97 +3,72 @@
 namespace App\Commands\Ops;
 
 use App\Commands\SafeBaseCommand;
-use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use Config\Services;
-use ReflectionClass;
-use Throwable;
 
 class CommandsAudit extends SafeBaseCommand
 {
     protected $group = 'ops';
     protected $name = 'ops:commands:audit';
-    protected $description = 'Audit registered Spark commands for validity.';
+    protected $description = 'Audit Spark commands for illegal constructors.';
     protected $usage = 'ops:commands:audit';
 
     public function run(array $params)
     {
-        $console = config('Console');
-        $commands = $console->commands ?? [];
-        $logger = Services::logger();
+        $scanner = new CommandConstructorScanner();
+        $entries = $scanner->scan(ROOTPATH . 'app/Commands');
+
+        if ($entries === []) {
+            CLI::write('No Spark command classes found.', 'yellow');
+            return EXIT_SUCCESS;
+        }
 
         $rows = [];
-        $hasInvalid = false;
+        $hasIllegal = false;
 
-        foreach ($commands as $commandClass) {
-            $exists = class_exists($commandClass);
-            $name = '';
-            $group = '';
-            $valid = true;
-            $reasons = [];
+        foreach ($entries as $entry) {
+            $file = $this->relativePath($entry['file']);
+            $status = $entry['illegal'] ? '❌ ILLEGAL CONSTRUCTOR' : 'OK';
 
-            if (! $exists) {
-                $valid = false;
-                $reasons[] = 'Class not found';
-            } else {
-                $reflection = new ReflectionClass($commandClass);
-                $defaults = $reflection->getDefaultProperties();
-                $name = (string) ($defaults['name'] ?? '');
-                $group = (string) ($defaults['group'] ?? '');
-
-                if (! $reflection->isSubclassOf(BaseCommand::class)) {
-                    $valid = false;
-                    $reasons[] = 'Does not extend BaseCommand';
-                }
-
-                if ($name === '' || ! str_contains($name, ':')) {
-                    $valid = false;
-                    $reasons[] = 'Missing or invalid $name';
-                }
-
-                if ($group === '') {
-                    $valid = false;
-                    $reasons[] = 'Missing $group';
-                }
-
-                if (! $reflection->hasMethod('run')) {
-                    $valid = false;
-                    $reasons[] = 'Missing run(array $params)';
-                } else {
-                    $method = $reflection->getMethod('run');
-                    $methodParams = $method->getParameters();
-                    $firstParam = $methodParams[0] ?? null;
-                    $paramType = $firstParam?->getType();
-
-                    if ($firstParam === null || $paramType === null || $paramType->getName() !== 'array') {
-                        $valid = false;
-                        $reasons[] = 'run() signature must accept array $params';
-                    }
-                }
-
-                try {
-                    $reflection->newInstance($logger, (array) $console);
-                } catch (Throwable $e) {
-                    $valid = false;
-                    $reasons[] = 'Instantiation failed: ' . $e->getMessage();
-                }
+            if ($entry['illegal']) {
+                $file .= ':' . $entry['constructorLine'];
+                $hasIllegal = true;
             }
 
             $rows[] = [
-                $commandClass,
-                $exists ? 'Y' : 'N',
-                $name !== '' ? $name : '-',
-                $group !== '' ? $group : '-',
-                $valid ? 'Y' : 'N',
-                $reasons ? implode('; ', $reasons) : '-',
+                $entry['class'],
+                $file,
+                $status,
             ];
-
-            if (! $valid) {
-                $hasInvalid = true;
-            }
         }
 
-        $headers = ['Class', 'Exists', 'Name', 'Group', 'Valid', 'Reasons'];
+        $this->renderTable(['Command', 'File', 'Status'], $rows);
+
+        if (! $hasIllegal) {
+            CLI::write('All Spark commands are constructor-safe.', 'green');
+            return EXIT_SUCCESS;
+        }
+
+        CLI::error('❌ ILLEGAL COMMAND CONSTRUCTOR');
+        foreach ($rows as $row) {
+            if ($row[2] !== '❌ ILLEGAL CONSTRUCTOR') {
+                continue;
+            }
+
+            CLI::error($row[0]);
+            CLI::error($row[1]);
+            CLI::error('Run ops:commands:autofix --force or remove constructor manually.');
+        }
+
+        return EXIT_ERROR;
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
+    }
+
+    private function renderTable(array $headers, array $rows): void
+    {
         $widths = array_map('strlen', $headers);
 
         foreach ($rows as $row) {
@@ -122,18 +97,16 @@ class CommandsAudit extends SafeBaseCommand
             }
             CLI::write($rowLine);
         }
-
-        if ($hasInvalid) {
-            CLI::error('One or more registered commands are invalid. See reasons above.');
-            return EXIT_ERROR;
-        }
-
-        CLI::write('All registered commands are valid.', 'green');
-        return EXIT_SUCCESS;
     }
 
-    protected function isDestructive(): bool
+    private function relativePath(string $path): string
     {
-        return false;
+        $root = rtrim(ROOTPATH, '/\\') . DIRECTORY_SEPARATOR;
+
+        if (str_starts_with($path, $root)) {
+            return ltrim(substr($path, strlen($root)), '/\\');
+        }
+
+        return $path;
     }
 }
