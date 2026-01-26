@@ -2,7 +2,9 @@
 
 namespace App\Commands;
 
+use App\Helpers\TriageSanitizer;
 use App\Services\Triage\CommandRunner;
+use App\Services\Triage\HostingModeDetector;
 use App\Services\Ops\EnvDoctorService;
 use CodeIgniter\CLI\CLI;
 use Config\Ops;
@@ -21,6 +23,8 @@ class Fix503 extends SafeBaseCommand
     ];
 
     private string $logPath;
+    private string $summaryPath;
+    private string $reportTimestamp;
 
     public function run(array $params)
     {
@@ -37,15 +41,18 @@ class Fix503 extends SafeBaseCommand
         $autoFixAllowed = ! $dryRun;
 
         $actionsTaken = [];
-        $actionsNotTaken = ['Nginx restart (manual required)'];
+        $actionsNotTaken = ['Web server restart (manual required)'];
         $rootCause = 'Undetermined (see log)';
         $riskLevel = 'LOW';
         $recommendations = [
             'Review PHP handler configuration in your DreamHost panel.',
             'Add watchdogs/alerts to detect backend worker failures.',
         ];
+        $manualRestartCommands = [];
+        $gitWarnings = [];
 
         $this->logStep('INIT', 'OK', 'Log created at ' . $this->logPath);
+        $this->logStep('INIT', 'OK', 'Summary created at ' . $this->summaryPath);
         $this->logStep('INIT', 'INFO', 'dry_run=' . ($dryRun ? 'true' : 'false'));
 
         $envDoctor = new EnvDoctorService();
@@ -60,6 +67,19 @@ class Fix503 extends SafeBaseCommand
             $envPaths['markdown'] ?? 'n/a'
         ));
 
+        $hostingStatus = $this->runHostingModeDetection($runner);
+        $manualRestartCommands = $this->suggestManualRestartCommands($runner, $hostingStatus);
+        if (($hostingStatus['php_mode'] ?? 'unknown') === 'unknown' || (int) ($hostingStatus['php_workers'] ?? 0) === 0) {
+            $rootCause = 'No php handler detected — you must restart the PHP handler (hosting specific)';
+            $riskLevel = 'HIGH';
+        }
+
+        $gitWarnings = $this->runGitSafetyCheck($runner);
+        if ($gitWarnings !== []) {
+            $this->logStep('GIT-SAFETY', 'WARN', implode('; ', $gitWarnings));
+            $recommendations[] = 'Git safety warning: ' . implode('; ', $gitWarnings);
+        }
+
         $this->runWebReachability($runner);
 
         $diskIssue = $this->runDiskChecks($runner);
@@ -70,15 +90,14 @@ class Fix503 extends SafeBaseCommand
             $actionsNotTaken[] = 'Auto-fix skipped due to disk/inode threshold';
         }
 
-        $phpBackend = $this->runPhpBackendStatus($runner); // new
+        $phpBackend = $this->runPhpBackendStatus($runner, $hostingStatus);
         if (! $phpBackend['healthy']) {
             $rootCause = $phpBackend['root_cause'] ?? 'PHP backend not running';
             $riskLevel = 'HIGH';
-            $recommendations[] = 'Panel action: DreamHost > Websites > Manage Domains > Toggle PHP version to restart php-cgi.';
-            $recommendations[] = 'Verify php82.cgi/php-cgi or supervisord is running for your user.';
+            $recommendations[] = 'Verify php-cgi/php-fpm processes or supervisor (if applicable) are running.';
         }
 
-        $socketCheck = $this->runSocketCheck($runner);
+        $socketCheck = $this->runSocketCheck($runner, $hostingStatus);
         $socketMismatch = $socketCheck['mismatch'] ?? false;
         if ($socketMismatch) {
             $rootCause = 'PHP backend socket mismatch';
@@ -89,20 +108,28 @@ class Fix503 extends SafeBaseCommand
             }
         }
 
-        $cliHealthy = $this->runCliHealth($runner);
-        if (! $cliHealthy) {
+        $envExists = $this->runEnvPresence();
+        $publicIndexExists = $this->runPublicIndexCheck();
+        $vendorAutoloadExists = $this->runVendorAutoloadCheck();
+
+        $cliEnvOk = $this->runCliEnv($runner);
+        $cliRoutesOk = $this->runCliRoutes($runner);
+        $ci4BootOk = $cliEnvOk && $cliRoutesOk;
+        if (! $ci4BootOk) {
             $rootCause = $rootCause === 'Undetermined (see log)' ? 'CI4 bootstrap failure' : $rootCause;
             $riskLevel = $riskLevel === 'LOW' ? 'MEDIUM' : $riskLevel;
             if ($autoFixAllowed) {
-                $this->runCacheReset($runner);
+                $this->runCacheReset($runner, $autoFixAllowed);
                 $actionsTaken[] = 'Cleared CI4 cache';
-                $cliHealthy = $this->runCliHealth($runner, true);
+                $cliEnvOk = $this->runCliEnv($runner, true);
+                $cliRoutesOk = $this->runCliRoutes($runner, true);
+                $ci4BootOk = $cliEnvOk && $cliRoutesOk;
             } else {
                 $actionsNotTaken[] = 'Cleared CI4 cache (blocked by auto-fix guard)';
             }
         }
 
-        $this->runComposerAutoload($runner);
+        $this->runComposerAutoload($runner, $autoFixAllowed);
 
         $permissionsFixed = $this->runWritablePermissions($runner, $autoFixAllowed);
         if ($permissionsFixed) {
@@ -115,17 +142,50 @@ class Fix503 extends SafeBaseCommand
 
         $this->runPhpFpmLogs($runner);
 
+        $envSnapshot = $this->writeEnvSnapshot();
+
         if ($socketMismatch) {
             $recommendations[] = 'Panel action: DreamHost > Websites > Manage Domains > Toggle PHP version or restart web server.';
             $recommendations[] = 'Panel action: DreamHost > Websites > Manage Domains > Restart the site if PHP handler is stuck.';
             $recommendations[] = 'If using home-nginx, run: nginx -p ~/nginx -c conf/nginx.conf -t && nginx -p ~/nginx -c conf/nginx.conf -s reload';
         }
-        
+
+        foreach ($manualRestartCommands as $command) {
+            $recommendations[] = 'Manual restart: ' . $command;
+        }
+
         $this->confidence = $this->calculateConfidenceScore($rootCause);
         $recommendations[] = 'Confidence score: ' . number_format($this->confidence * 100, 0) . '%';
         $recommendations[] = 'EnvDoctor summary: status=' . ($envSummary['status'] ?? 'unknown') . ' score=' . ($envSummary['score'] ?? 0);
         $recommendations[] = 'EnvDoctor JSON: ' . ($envPaths['json'] ?? 'n/a');
         $recommendations[] = 'EnvDoctor Markdown: ' . ($envPaths['markdown'] ?? 'n/a');
+
+        $appLogTail = $this->readAppLogTail(50);
+
+        $this->writeSummary([
+            'root_cause' => $rootCause,
+            'risk_level' => $riskLevel,
+            'hosting_mode' => $hostingStatus['hosting_mode'] ?? 'UNKNOWN',
+            'web_server' => $hostingStatus['web_server'] ?? 'unknown',
+            'php_mode' => $hostingStatus['php_mode'] ?? 'unknown',
+            'php_workers' => $hostingStatus['php_workers'] ?? 0,
+            'fastcgi_upstream' => $hostingStatus['fastcgi_upstream'] ?? null,
+            'ports' => $hostingStatus['ports'] ?? [],
+            'sockets' => $hostingStatus['sockets'] ?? [],
+            'php_backend_healthy' => $phpBackend['healthy'] ?? false,
+            'ci4_env_ok' => $cliEnvOk ?? false,
+            'ci4_routes_ok' => $cliRoutesOk ?? false,
+            'ci4_boot_ok' => $ci4BootOk ?? false,
+            'env_exists' => $envExists ?? false,
+            'public_index_exists' => $publicIndexExists ?? false,
+            'vendor_autoload_exists' => $vendorAutoloadExists ?? false,
+            'actions_taken' => $actionsTaken,
+            'actions_not_taken' => $actionsNotTaken,
+            'manual_restart_commands' => $manualRestartCommands,
+            'recommendations' => $recommendations,
+            'env_snapshot_path' => $envSnapshot,
+            'app_log_tail' => $appLogTail,
+        ]);
 
         $this->printReport($rootCause, $actionsTaken, $actionsNotTaken, $riskLevel, $recommendations);
 
@@ -147,6 +207,7 @@ class Fix503 extends SafeBaseCommand
             'Writable permissions misconfigured' => 0.80,
             'CI4 bootstrap failure' => 0.75,
             'PHP backend not running' => 0.70,
+            'No php handler detected — you must restart the PHP handler (hosting specific)' => 0.85,
             default => 0.40,
         };
     }
@@ -163,92 +224,57 @@ class Fix503 extends SafeBaseCommand
             mkdir($directory, 0775, true);
         }
 
-        $this->logPath = sprintf('%s/503-%s.log', rtrim($directory, '/'), date('Y-m-d-His'));
+        $this->reportTimestamp = date('Y-m-d-His');
+        $this->logPath = sprintf('%s/503-%s.log', rtrim($directory, '/'), $this->reportTimestamp);
+        $this->summaryPath = sprintf('%s/503-%s.summary.md', rtrim($directory, '/'), $this->reportTimestamp);
+        $this->guardPathForSecrets($this->logPath);
+        $this->guardPathForSecrets($this->summaryPath);
         file_put_contents($this->logPath, '');
     }
 
     private function logStep(string $step, string $status, string $detail): void
     {
+        $detail = TriageSanitizer::sanitizeText($detail);
         $line = sprintf('[%s] [%s] [%s] %s', date('H:i:s'), $step, $status, $detail);
         file_put_contents($this->logPath, $line . PHP_EOL, FILE_APPEND);
     }
 
     private function logOutput(string $step, array $lines): void
     {
-        foreach ($lines as $line) {
+        foreach (TriageSanitizer::sanitizeLines($lines) as $line) {
             $this->logStep($step, 'INFO', $line);
         }
     }
 
-    private function detectDreamHostSocket(CommandRunner $runner): array
+    private function runPhpBackendStatus(CommandRunner $runner, array $hostingStatus): array
     {
-        $home = rtrim(getenv('HOME') ?: '/home/' . get_current_user(), '/');
-        $candidates = $this->ops->dreamhostSocketCandidates ?? [];
+        $phpMode = $hostingStatus['php_mode'] ?? 'unknown';
+        $phpWorkers = (int) ($hostingStatus['php_workers'] ?? 0);
+        $sockets = $hostingStatus['sockets'] ?? [];
 
-        foreach ($candidates as $cand) {
-            $path = str_replace('%HOME%', $home, $cand);
-            if (str_contains($path, '*')) {
-                $glob = glob($path) ?: [];
-                foreach ($glob as $match) {
-                    $r = $runner->run('test -S ' . escapeshellarg($match) . ' && echo FOUND || echo MISSING');
-                    if (in_array('FOUND', $r['output'], true)) {
-                        return ['found' => true, 'path' => $match];
-                    }
-                }
-                continue;
+        $healthy = $phpMode !== 'unknown' && ($phpWorkers > 0 || $sockets !== []);
+
+        if (! $healthy) {
+            $pgrep = $runner->run('pgrep -af \"php-fpm|php-cgi|cgi-fcgi|lsphp\"');
+            $hasProc = ($pgrep['exit_code'] ?? 1) === 0 && ! empty($pgrep['output']);
+            if ($hasProc) {
+                $healthy = true;
             }
-            // Avoid file_exists() on remote paths if perms are weird; use test -S
-            $r = $runner->run('test -S ' . escapeshellarg($path) . ' && echo FOUND || echo MISSING');
-            if (in_array('FOUND', $r['output'], true)) {
-                return ['found' => true, 'path' => $path];
-            }
+            $this->logOutput('PHP-BACKEND', $pgrep['output'] ?? []);
         }
 
-        // fallback scan (cheap)
-        $scan = $runner->run('find ' . escapeshellarg($home) . ' -maxdepth 4 -name "*.sock" 2>/dev/null | head -n 25');
-        $found = $scan['exit_code'] === 0 && ! empty($scan['output']);
-        return ['found' => $found, 'path' => $found ? $scan['output'][0] : null, 'candidates_checked' => count($candidates)];
-    }
-
-    private function runPhpBackendStatus(CommandRunner $runner): array
-    {
-        $home = rtrim(getenv('HOME') ?: '/home/' . get_current_user(), '/');
-
-        // DreamHost: php82.cgi is the reality; systemctl is a trap.
-        if (($this->ops->platform ?? 'generic') === 'dreamhost') {
-            $ps = $runner->run('ps aux | egrep "php82\\.cgi|php-cgi|supervisord" | grep -v egrep');
-            $sock = $this->detectDreamHostSocket($runner);
-
-            $hasProc = $ps['exit_code'] === 0 && count($ps['output']) > 0;
-            $hasSock = $sock['found'];
-
-            $healthy = $hasProc || $hasSock;
-
-            $this->logStep('PHP-BACKEND', $healthy ? 'OK' : 'FAIL', sprintf(
-                'platform=dreamhost proc=%s sock=%s sock_path=%s',
-                $hasProc ? 'true' : 'false',
-                $hasSock ? 'true' : 'false',
-                $sock['path'] ?? ''
-            ));
-            $this->logOutput('PHP-BACKEND', $ps['output']);
-
-            return [
-                'healthy' => $healthy,
-                'root_cause' => $healthy ? null : 'DreamHost PHP backend not detected (no php-cgi process or socket found)',
-                'socket' => $sock,
-            ];
-        }
-
-        // Generic server path (non-DreamHost) — keep minimal, no auth prompts.
-        $ps = $runner->run('ps aux | grep -E "php-fpm: master process|php-fpm: pool" | grep -v grep');
-        $running = $ps['exit_code'] === 0 && count($ps['output']) > 0;
-
-        $this->logStep('PHP-BACKEND', $running ? 'OK' : 'FAIL', 'platform=generic ps php-fpm');
-        $this->logOutput('PHP-BACKEND', $ps['output']);
+        $this->logStep('PHP-BACKEND', $healthy ? 'OK' : 'FAIL', sprintf(
+            'mode=%s workers=%d sockets=%d',
+            $phpMode,
+            $phpWorkers,
+            is_array($sockets) ? count($sockets) : 0
+        ));
 
         return [
-            'healthy' => $running,
-            'root_cause' => $running ? null : 'php-fpm not running (no master/pool processes found)',
+            'healthy' => $healthy,
+            'root_cause' => $healthy ? null : 'PHP backend not detected (no php handler process or socket found)',
+            'mode' => $phpMode,
+            'workers' => $phpWorkers,
         ];
     }
 
@@ -298,69 +324,60 @@ class Fix503 extends SafeBaseCommand
         return $diskWarn || $inodeWarn;
     }
 
-    private function runSocketCheck(CommandRunner $runner): array
+    private function runSocketCheck(CommandRunner $runner, array $hostingStatus): array
     {
-        // Goal: detect mismatch between nginx fastcgi_pass and the actual available socket
-        $home = rtrim(getenv('HOME') ?: '/home/' . get_current_user(), '/');
-        $platform = $this->ops->platform ?? 'generic';
-
-        $expected = null;
-        $detectedSock = null;
-
-        if ($platform === 'dreamhost') {
-            $sock = $this->detectDreamHostSocket($runner);
-            $detectedSock = $sock['path'] ?? null;
-
-            // Read home nginx site configs (your $HOME/nginx sites-enabled or conf)
-            $ngPrefix = $this->ops->homeNginxPrefix ?? ($home . '/nginx');
-            $grep = $runner->run('grep -R --line-number "fastcgi_pass" ' . escapeshellarg($ngPrefix) . ' 2>/dev/null | head -n 30');
-            $fastcgiTargets = $this->extractFastCgiTargets($grep['output']);
-
-            // If nginx points to unix socket, verify it matches detected sock
-            $missing = [];
-            foreach ($fastcgiTargets as $t) {
-                $t = trim($t);
-                if (str_starts_with($t, 'unix:')) {
-                    $path = str_replace('unix:', '', $t);
-                    $expected = $path;
-                    if ($detectedSock && $path !== $detectedSock) {
-                        $missing[] = $path . ' != ' . $detectedSock;
-                    }
-                }
-            }
-
-            $mismatch = ! empty($missing);
-            $snippetPath = null;
-
-            $this->logStep('PHP-SOCKET', $mismatch ? 'FAIL' : 'OK', sprintf(
-                'platform=dreamhost detected=%s expected=%s',
-                (string) $detectedSock,
-                (string) $expected
-            ));
-            $this->logOutput('PHP-SOCKET', $grep['output']);
-
-            if ($mismatch) {
-                // Generate a suggested nginx snippet (no sudo)
-                $snippetPath = WRITEPATH . 'triage/503/nginx-fastcgi-fix-' . date('Y-m-d-His') . '.conf';
-                $this->writeNginxFastCgiFixSnippet($snippetPath, $detectedSock);
-                $this->logStep('NGINX-FIX-GEN', 'OK', 'Wrote suggested config: ' . $snippetPath);
-            }
-
+        // Goal: detect mismatch between nginx fastcgi_pass and available sockets (no sudo)
+        $webServer = $hostingStatus['web_server'] ?? 'unknown';
+        if ($webServer !== 'nginx') {
+            $this->logStep('PHP-SOCKET', 'WARN', 'web_server=' . $webServer . ' socket check skipped');
             return [
-                'mismatch' => $mismatch,
-                'expected' => $expected,
-                'detected' => $detectedSock,
-                'snippet_path' => $snippetPath,
+                'mismatch' => false,
+                'expected' => null,
+                'detected' => null,
+                'snippet_path' => null,
             ];
         }
 
-        // Generic minimal behavior: if we can't read system nginx, don't guess.
-        $this->logStep('PHP-SOCKET', 'WARN', 'platform=generic socket check skipped (no privileged access)');
+        $fastcgiTargets = $hostingStatus['fastcgi_targets'] ?? [];
+        $detectedSockets = $hostingStatus['sockets'] ?? [];
+
+        $expectedSockets = [];
+        foreach ($fastcgiTargets as $target) {
+            if (str_starts_with($target, 'unix:')) {
+                $expectedSockets[] = str_replace('unix:', '', $target);
+            }
+        }
+
+        $expectedSockets = array_values(array_unique($expectedSockets));
+        $detectedSockets = is_array($detectedSockets) ? $detectedSockets : [];
+
+        $mismatch = false;
+        if ($expectedSockets !== []) {
+            $matches = array_intersect($expectedSockets, $detectedSockets);
+            $mismatch = $matches === [];
+        }
+
+        $snippetPath = null;
+        $detectedSock = $detectedSockets[0] ?? null;
+        $expected = $expectedSockets[0] ?? null;
+
+        $this->logStep('PHP-SOCKET', $mismatch ? 'FAIL' : 'OK', sprintf(
+            'expected=%s detected=%s',
+            (string) $expected,
+            (string) $detectedSock
+        ));
+
+        if ($mismatch && $detectedSock) {
+            $snippetPath = WRITEPATH . 'triage/503/nginx-fastcgi-fix-' . date('Y-m-d-His') . '.conf';
+            $this->writeNginxFastCgiFixSnippet($snippetPath, $detectedSock);
+            $this->logStep('NGINX-FIX-GEN', 'OK', 'Wrote suggested config: ' . $snippetPath);
+        }
+
         return [
-            'mismatch' => false,
-            'expected' => null,
-            'detected' => null,
-            'snippet_path' => null,
+            'mismatch' => $mismatch,
+            'expected' => $expected,
+            'detected' => $detectedSock,
+            'snippet_path' => $snippetPath,
         ];
     }
 
@@ -378,25 +395,294 @@ class Fix503 extends SafeBaseCommand
 
     CONF;
 
+        $this->guardPathForSecrets($path);
         if (! is_dir(dirname($path))) {
             mkdir(dirname($path), 0775, true);
         }
         file_put_contents($path, $content);
     }
 
-    private function runCliHealth(CommandRunner $runner, bool $afterFix = false): bool
+    private function runHostingModeDetection(CommandRunner $runner): array
     {
-        $result = $runner->run('php spark app:config');
-        $status = $result['exit_code'] === 0 ? 'OK' : 'FAIL';
-        $detail = $afterFix ? 'php spark app:config (post-fix)' : 'php spark app:config';
+        $detector = new HostingModeDetector($runner);
+        $status = $detector->detect();
 
-        $this->logStep('CI4-CLI', $status, $detail);
-        $this->logOutput('CI4-CLI', $result['output']);
+        $this->logStep('HOSTING-MODE', $status['overall'] ?? 'WARN', sprintf(
+            'web_server=%s php_mode=%s hosting_mode=%s',
+            $status['web_server'] ?? 'unknown',
+            $status['php_mode'] ?? 'unknown',
+            $status['hosting_mode'] ?? 'UNKNOWN'
+        ));
+        $this->logStep('HOSTING-MODE', 'INFO', 'ports=' . implode(',', $status['ports'] ?? []));
+        if (! empty($status['fastcgi_targets'])) {
+            $this->logOutput('HOSTING-MODE', $status['fastcgi_targets']);
+        }
+
+        return $status;
+    }
+
+    private function suggestManualRestartCommands(CommandRunner $runner, array $hostingStatus): array
+    {
+        $commands = [];
+
+        $systemctl = $runner->run('command -v systemctl');
+        if (($systemctl['exit_code'] ?? 1) === 0) {
+            $commands[] = 'systemctl restart php-fpm (or php8.2-fpm)';
+        }
+
+        $service = $runner->run('command -v service');
+        if (($service['exit_code'] ?? 1) === 0) {
+            $commands[] = 'service php-fpm restart';
+        }
+
+        if (($hostingStatus['php_mode'] ?? '') === 'fpm') {
+            $commands[] = 'killall -USR2 php-fpm';
+        }
+
+        if (($this->ops->platform ?? '') === 'dreamhost') {
+            $commands[] = 'DreamHost panel: Websites > Manage Domains > Toggle PHP version to restart php-cgi';
+        }
+
+        if (($hostingStatus['web_server'] ?? '') === 'nginx') {
+            $commands[] = 'nginx -t && nginx -s reload (user-space nginx)';
+        }
+
+        return array_values(array_unique($commands));
+    }
+
+    private function runGitSafetyCheck(CommandRunner $runner): array
+    {
+        $warnings = [];
+
+        $status = $runner->run('git status --porcelain');
+        $this->logStep('GIT-SAFETY', $status['exit_code'] === 0 ? 'OK' : 'WARN', 'git status --porcelain');
+        $this->logOutput('GIT-SAFETY', $status['output']);
+
+        $trackedWritable = $runner->run('git ls-files writable');
+        if (! empty($trackedWritable['output'])) {
+            $warnings[] = 'writable/ has tracked files; do NOT commit and update .gitignore to ignore writable/**';
+        }
+
+        return $warnings;
+    }
+
+    private function runEnvPresence(): bool
+    {
+        $envPath = ROOTPATH . '.env';
+        $exists = is_file($envPath);
+        $this->logStep('ENV-FILE', $exists ? 'OK' : 'FAIL', 'path=' . $envPath);
+        return $exists;
+    }
+
+    private function runPublicIndexCheck(): bool
+    {
+        $path = ROOTPATH . 'public/index.php';
+        $exists = is_file($path);
+        $this->logStep('PUBLIC-INDEX', $exists ? 'OK' : 'FAIL', 'path=' . $path);
+        return $exists;
+    }
+
+    private function runVendorAutoloadCheck(): bool
+    {
+        $path = ROOTPATH . 'vendor/autoload.php';
+        $exists = is_file($path);
+        $this->logStep('VENDOR-AUTOLOAD', $exists ? 'OK' : 'FAIL', 'path=' . $path);
+        return $exists;
+    }
+
+    private function writeEnvSnapshot(): ?string
+    {
+        $envPath = ROOTPATH . '.env';
+        if (! is_file($envPath)) {
+            $this->logStep('ENV-SNAPSHOT', 'WARN', 'env file missing; snapshot skipped');
+            return null;
+        }
+
+        $lines = file($envPath, FILE_IGNORE_NEW_LINES) ?: [];
+        $values = [
+            'APP_ENV' => 'unknown',
+            'APP_DEBUG' => 'false',
+            'OPENAI_API_KEY' => 'MISSING',
+            'DISCORD_TOKEN' => 'MISSING',
+            'DATABASE_HOST' => 'MISSING',
+            'DATABASE_PASSWORD' => 'MISSING',
+        ];
+
+        foreach ($lines as $line) {
+            $line = trim($line);
+            if ($line === '' || str_starts_with($line, '#') || ! str_contains($line, '=')) {
+                continue;
+            }
+
+            [$key, $value] = explode('=', $line, 2);
+            $key = trim($key);
+            $value = trim($value);
+
+            if (! array_key_exists($key, $values)) {
+                continue;
+            }
+
+            if (in_array($key, ['APP_ENV', 'APP_DEBUG'], true)) {
+                $values[$key] = $value;
+            } else {
+                $values[$key] = 'PRESENT';
+            }
+        }
+
+        $snapshotPath = WRITEPATH . 'triage/503/env-summary-' . $this->reportTimestamp . '.txt';
+        $this->guardPathForSecrets($snapshotPath);
+
+        $output = [];
+        foreach ($values as $key => $value) {
+            $output[] = $key . '=' . $value;
+        }
+
+        file_put_contents($snapshotPath, implode(PHP_EOL, $output) . PHP_EOL);
+        $this->logStep('ENV-SNAPSHOT', 'OK', 'Wrote sanitized env snapshot: ' . $snapshotPath);
+
+        return $snapshotPath;
+    }
+
+    /**
+     * @return string[]
+     */
+    private function readAppLogTail(int $lines = 50): array
+    {
+        $logDir = WRITEPATH . 'logs';
+        if (! is_dir($logDir)) {
+            $this->logStep('APP-LOG', 'WARN', 'writable/logs not found');
+            return [];
+        }
+
+        $files = glob($logDir . '/*.log') ?: [];
+        if ($files === []) {
+            $this->logStep('APP-LOG', 'WARN', 'No log files found');
+            return [];
+        }
+
+        usort($files, static fn(string $a, string $b): int => filemtime($b) <=> filemtime($a));
+        $latest = $files[0];
+        $content = file($latest, FILE_IGNORE_NEW_LINES) ?: [];
+        $tail = array_slice($content, -1 * $lines);
+
+        $this->logStep('APP-LOG', 'OK', 'tail ' . $lines . ' ' . $latest);
+
+        return TriageSanitizer::sanitizeLines($tail);
+    }
+
+    private function writeSummary(array $data): void
+    {
+        $this->guardPathForSecrets($this->summaryPath);
+
+        $lines = [
+            '# 503 Forensic Report',
+            '',
+            '## Root Cause + Next Steps',
+            '',
+            '- **Root Cause:** ' . ($data['root_cause'] ?? 'unknown'),
+            '- **Risk Level:** ' . ($data['risk_level'] ?? 'unknown'),
+            '',
+            '## Hosting Mode Detection',
+            '',
+            '- **Hosting Mode:** ' . ($data['hosting_mode'] ?? 'UNKNOWN'),
+            '- **Web Server:** ' . ($data['web_server'] ?? 'unknown'),
+            '- **PHP Mode:** ' . ($data['php_mode'] ?? 'unknown'),
+            '- **PHP Workers:** ' . (string) ($data['php_workers'] ?? 0),
+            '- **FastCGI Upstream:** ' . ($data['fastcgi_upstream'] ?? 'n/a'),
+            '- **Ports Listening:** ' . implode(', ', $data['ports'] ?? []),
+            '',
+            '## PHP Handler Presence',
+            '',
+            '- **PHP Backend Healthy:** ' . (($data['php_backend_healthy'] ?? false) ? 'yes' : 'no'),
+            '- **Sockets:** ' . implode(', ', $data['sockets'] ?? []),
+            '',
+            '## CI4 Boot Status',
+            '',
+            '- **.env exists:** ' . (($data['env_exists'] ?? false) ? 'yes' : 'no'),
+            '- **public/index.php exists:** ' . (($data['public_index_exists'] ?? false) ? 'yes' : 'no'),
+            '- **vendor/autoload.php exists:** ' . (($data['vendor_autoload_exists'] ?? false) ? 'yes' : 'no'),
+            '- **php spark env:** ' . (($data['ci4_env_ok'] ?? false) ? 'ok' : 'fail'),
+            '- **php spark routes:** ' . (($data['ci4_routes_ok'] ?? false) ? 'ok' : 'fail'),
+            '- **CI4 boot status:** ' . (($data['ci4_boot_ok'] ?? false) ? 'ok' : 'fail'),
+            '',
+            '## Actions',
+            '',
+            '### Taken',
+        ];
+
+        foreach ($data['actions_taken'] ?? [] as $action) {
+            $lines[] = '- ' . $action;
+        }
+        if (($data['actions_taken'] ?? []) === []) {
+            $lines[] = '- None';
+        }
+
+        $lines[] = '';
+        $lines[] = '### Not Taken';
+        foreach ($data['actions_not_taken'] ?? [] as $action) {
+            $lines[] = '- ' . $action;
+        }
+
+        $lines[] = '';
+        $lines[] = '## Manual Restart Commands';
+        if (($data['manual_restart_commands'] ?? []) === []) {
+            $lines[] = '- None';
+        } else {
+            foreach ($data['manual_restart_commands'] as $command) {
+                $lines[] = '- ' . $command;
+            }
+        }
+
+        $lines[] = '';
+        $lines[] = '## Recommendations';
+        foreach ($data['recommendations'] ?? [] as $recommendation) {
+            $lines[] = '- ' . $recommendation;
+        }
+
+        if (! empty($data['env_snapshot_path'])) {
+            $lines[] = '';
+            $lines[] = '## Sanitized Env Snapshot';
+            $lines[] = '- ' . $data['env_snapshot_path'];
+        }
+
+        $lines[] = '';
+        $lines[] = '## App Log Tail (last 50 lines)';
+        $lines[] = '```';
+        foreach ($data['app_log_tail'] ?? [] as $line) {
+            $lines[] = $line;
+        }
+        $lines[] = '```';
+
+        $content = implode(PHP_EOL, TriageSanitizer::sanitizeLines($lines));
+        file_put_contents($this->summaryPath, $content . PHP_EOL);
+        $this->logStep('SUMMARY', 'OK', 'Wrote summary: ' . $this->summaryPath);
+    }
+
+    private function runCliEnv(CommandRunner $runner, bool $afterFix = false): bool
+    {
+        $result = $runner->run('php spark env');
+        $status = $result['exit_code'] === 0 ? 'OK' : 'FAIL';
+        $detail = $afterFix ? 'php spark env (post-fix)' : 'php spark env';
+
+        $this->logStep('CI4-ENV', $status, $detail);
+        $this->logOutput('CI4-ENV', $result['output']);
 
         return $result['exit_code'] === 0;
     }
 
-    private function runCacheReset(CommandRunner $runner): void
+    private function runCliRoutes(CommandRunner $runner, bool $afterFix = false): bool
+    {
+        $result = $runner->run('php spark routes');
+        $status = $result['exit_code'] === 0 ? 'OK' : 'FAIL';
+        $detail = $afterFix ? 'php spark routes (post-fix)' : 'php spark routes';
+
+        $this->logStep('CI4-ROUTES', $status, $detail);
+        $this->logOutput('CI4-ROUTES', $result['output']);
+
+        return $result['exit_code'] === 0;
+    }
+
+    private function runCacheReset(CommandRunner $runner, bool $autoFixAllowed): void
     {
         $paths = [
             WRITEPATH . 'cache/*',
@@ -405,6 +691,14 @@ class Fix503 extends SafeBaseCommand
         ];
 
         foreach ($paths as $path) {
+            if (! str_starts_with($path, WRITEPATH)) {
+                $this->logStep('CACHE-RESET', 'WARN', 'Skipped unsafe path: ' . $path);
+                continue;
+            }
+            if (! $autoFixAllowed) {
+                $this->logStep('CACHE-RESET', 'SKIP', 'dry_run or auto-fix disabled: ' . $path);
+                continue;
+            }
             $result = $runner->run('rm -rf ' . $path);
             $status = $result['exit_code'] === 0 ? 'OK' : 'FAIL';
             $this->logStep('CACHE-RESET', $status, 'rm -rf ' . $path);
@@ -412,8 +706,19 @@ class Fix503 extends SafeBaseCommand
         }
     }
 
-    private function runComposerAutoload(CommandRunner $runner): void
+    private function runComposerAutoload(CommandRunner $runner, bool $autoFixAllowed): void
     {
+        if (! $autoFixAllowed) {
+            $this->logStep('AUTOLOAD', 'SKIP', 'dry_run or auto-fix disabled');
+            return;
+        }
+
+        $available = $runner->run('command -v composer');
+        if (($available['exit_code'] ?? 1) !== 0) {
+            $this->logStep('AUTOLOAD', 'SKIP', 'composer not available');
+            return;
+        }
+
         $result = $runner->run('composer dump-autoload -o');
         $status = $result['exit_code'] === 0 ? 'OK' : 'WARN';
 
@@ -473,6 +778,11 @@ class Fix503 extends SafeBaseCommand
         CLI::newLine();
         CLI::write('Root Cause:');
         CLI::write('✔ ' . $rootCause);
+        CLI::newLine();
+
+        CLI::write('Artifacts:');
+        CLI::write('Log: ' . $this->logPath);
+        CLI::write('Summary: ' . $this->summaryPath);
         CLI::newLine();
 
         CLI::write('Actions Taken:');
@@ -543,19 +853,6 @@ class Fix503 extends SafeBaseCommand
         }
 
         return $max;
-    }
-
-    private function extractFastCgiTargets(array $lines): array
-    {
-        $targets = [];
-
-        foreach ($lines as $line) {
-            if (preg_match('/fastcgi_pass\\s+([^;]+);/', $line, $matches)) {
-                $targets[] = trim($matches[1]);
-            }
-        }
-
-        return $targets;
     }
 
     private function extractPermissions(array $lines): ?string
