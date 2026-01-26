@@ -25,3 +25,6 @@ jobs:
           php spark spark:purge-fastcgi
           php spark spark:diagnose-503
           php spark logs:full-report today
+
+      - name: 502 Diagnose Smoke Test
+        run: php spark runtime:diagnose-502 --self-test
