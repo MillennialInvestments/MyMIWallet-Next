@@ -7,6 +7,7 @@
 !/writable/samples/
 !/writable/samples/*
 !/writable/samples/daily_gainers.json
+writable/triage/server-snapshots/env-copy.txt
 /public/uploads/
 /node_modules/
 /**/*.orig.php

@@ -23,3 +23,4 @@ jq -e '.status=="aligned"' writable/db_inventory/inventory.json || exit 1
 ```
 
 DreamHost compatibility: TCP MySQL only, no sockets, no sudo, no composer.
+

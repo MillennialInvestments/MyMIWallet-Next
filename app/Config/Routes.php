@@ -28,6 +28,7 @@ $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
 
+$routes->get('/', 'Home::index');
 // Explicit home route. If you don't have Home::index, temporarily redirect to /login.
 // $routes->get('/', function () {
 //     return redirect()->to('/login');  // change to 'Home::index' once that exists
@@ -52,7 +53,6 @@ $routes->setAutoRoute(false);
 // --- END: Default + explicit routes ---
 
 
-$routes->get('/', 'Home::index');
 $routes->addRedirect('Home', '/', 301);
 $routes->addRedirect('News', 'Blog/News-And-Updates', 301);
 $routes->get('Stock/(:segment)/(:segment)', 'StockController::show/$1/$2');

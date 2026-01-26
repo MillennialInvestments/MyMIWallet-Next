@@ -1,27 +1,40 @@
--- Table: bf_external_sites
--- Sources: code: app/Models/AnnouncementsModel.php:66
+# bf_external_sites
+
+## Source
+- Migration: _None_
+- Model:
+- Code references: app/Models/AnnouncementsModel.php:66
+
+## Create table
+```sql
 CREATE TABLE IF NOT EXISTS `bf_external_sites` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
 
--- Column adjustments
-SET @col_exists := (SELECT COUNT(*) FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = 'bf_external_sites' AND column_name = 'id');
-SET @sql := IF(@col_exists = 0, 'ALTER TABLE `bf_external_sites` ADD COLUMN `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT', 'SELECT ''column id already exists''');
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
+## Required columns
+- id INT(11) UNSIGNED NOT NULL
 
--- Index adjustments
+## Required indexes
+- PRIMARY (id)
 
--- Verification
+## Verification
+```sql
 SHOW CREATE TABLE `bf_external_sites`;
+```
+
+```sql
 SELECT COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE, COLUMN_DEFAULT, EXTRA
 FROM information_schema.columns
 WHERE table_schema = DATABASE() AND table_name = 'bf_external_sites'
 ORDER BY ORDINAL_POSITION;
+```
+
+```sql
 SELECT INDEX_NAME, NON_UNIQUE, COLUMN_NAME, SEQ_IN_INDEX
 FROM information_schema.statistics
 WHERE table_schema = DATABASE() AND table_name = 'bf_external_sites'
 ORDER BY INDEX_NAME, SEQ_IN_INDEX;
+```
 

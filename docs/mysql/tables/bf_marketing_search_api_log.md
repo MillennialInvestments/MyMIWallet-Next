@@ -1,27 +1,51 @@
--- Table: bf_marketing_search_api_log
--- Sources: code: app/Models/MarketingModel.php:871, app/Models/MarketingModel.php:1926
+# bf_marketing_search_api_log
+
+## Source
+- Migration: _None_
+- Model:
+- Code references: app/Models/MarketingModel.php:871, app/Models/MarketingModel.php:1926
+
+## Create table
+```sql
 CREATE TABLE IF NOT EXISTS `bf_marketing_search_api_log` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `id` int NOT NULL DEFAULT NULL AUTO_INCREMENT,
+  `query` varchar(255) NOT NULL DEFAULT NULL,
+  `source` varchar(50) NOT NULL DEFAULT NULL,
+  `response_code` int NULL DEFAULT NULL,
+  `success` tinyint(1) NULL DEFAULT 0,
+  `ip_address` varchar(45) NULL DEFAULT NULL,
+  `created_at` datetime NULL DEFAULT CURRENT_TIMESTAMP DEFAULT_GENERATED
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
 
--- Column adjustments
-SET @col_exists := (SELECT COUNT(*) FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = 'bf_marketing_search_api_log' AND column_name = 'id');
-SET @sql := IF(@col_exists = 0, 'ALTER TABLE `bf_marketing_search_api_log` ADD COLUMN `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT', 'SELECT ''column id already exists''');
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
+## Required columns
+- id int NOT NULL
+- query varchar(255) NOT NULL
+- source varchar(50) NOT NULL
+- response_code int NULL
+- success tinyint(1) NULL
+- ip_address varchar(45) NULL
+- created_at datetime NULL
 
--- Index adjustments
+## Required indexes
+- _No indexes defined_
 
--- Verification
+## Verification
+```sql
 SHOW CREATE TABLE `bf_marketing_search_api_log`;
+```
+
+```sql
 SELECT COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE, COLUMN_DEFAULT, EXTRA
 FROM information_schema.columns
 WHERE table_schema = DATABASE() AND table_name = 'bf_marketing_search_api_log'
 ORDER BY ORDINAL_POSITION;
+```
+
+```sql
 SELECT INDEX_NAME, NON_UNIQUE, COLUMN_NAME, SEQ_IN_INDEX
 FROM information_schema.statistics
 WHERE table_schema = DATABASE() AND table_name = 'bf_marketing_search_api_log'
 ORDER BY INDEX_NAME, SEQ_IN_INDEX;
+```
 

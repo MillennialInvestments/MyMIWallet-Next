@@ -1,27 +1,49 @@
--- Table: bf_investment_strategies
--- Sources: code: app/Models/InvestmentModel.php:1327, app/Models/InvestmentModel.php:1346, app/Models/InvestmentModel.php:1444, app/Models/InvestmentModel.php:1566, app/Libraries/MyMIInvestments.php:1334, app/Libraries/MyMIInvestments.php:1342, app/Libraries/MyMIInvestments.php:1392, app/Libraries/MyMIInvestments.php:1400, app/Libraries/MyMIInvestments.php:1407
+# bf_investment_strategies
+
+## Source
+- Migration: _None_
+- Model:
+- Code references: app/Libraries/MyMIInvestments.php:1499, app/Libraries/MyMIInvestments.php:1507, app/Libraries/MyMIInvestments.php:1557, app/Libraries/MyMIInvestments.php:1565, app/Libraries/MyMIInvestments.php:1572, app/Models/InvestmentModel.php:1327, app/Models/InvestmentModel.php:1346, app/Models/InvestmentModel.php:1444, app/Models/InvestmentModel.php:1566
+
+## Create table
+```sql
 CREATE TABLE IF NOT EXISTS `bf_investment_strategies` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `id` int NOT NULL DEFAULT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL DEFAULT NULL,
+  `strategy_name` varchar(255) NOT NULL DEFAULT NULL,
+  `description` text NULL DEFAULT NULL,
+  `created_on` datetime NULL DEFAULT CURRENT_TIMESTAMP DEFAULT_GENERATED,
+  `modified_on` datetime NULL DEFAULT CURRENT_TIMESTAMP DEFAULT_GENERATED ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
 
--- Column adjustments
-SET @col_exists := (SELECT COUNT(*) FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = 'bf_investment_strategies' AND column_name = 'id');
-SET @sql := IF(@col_exists = 0, 'ALTER TABLE `bf_investment_strategies` ADD COLUMN `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT', 'SELECT ''column id already exists''');
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
+## Required columns
+- id int NOT NULL
+- user_id int NOT NULL
+- strategy_name varchar(255) NOT NULL
+- description text NULL
+- created_on datetime NULL
+- modified_on datetime NULL
 
--- Index adjustments
+## Required indexes
+- _No indexes defined_
 
--- Verification
+## Verification
+```sql
 SHOW CREATE TABLE `bf_investment_strategies`;
+```
+
+```sql
 SELECT COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE, COLUMN_DEFAULT, EXTRA
 FROM information_schema.columns
 WHERE table_schema = DATABASE() AND table_name = 'bf_investment_strategies'
 ORDER BY ORDINAL_POSITION;
+```
+
+```sql
 SELECT INDEX_NAME, NON_UNIQUE, COLUMN_NAME, SEQ_IN_INDEX
 FROM information_schema.statistics
 WHERE table_schema = DATABASE() AND table_name = 'bf_investment_strategies'
 ORDER BY INDEX_NAME, SEQ_IN_INDEX;
+```
 

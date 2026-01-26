@@ -1,27 +1,57 @@
--- Table: bf_discord_ai_sessions
--- Sources: code: app/Models/DiscordAiSessionModel.php:9
+# bf_discord_ai_sessions
+
+## Source
+- Migration: _None_
+- Model:
+- Code references: app/Models/DiscordAiSessionModel.php:9
+
+## Create table
+```sql
 CREATE TABLE IF NOT EXISTS `bf_discord_ai_sessions` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `id` int unsigned NOT NULL DEFAULT NULL AUTO_INCREMENT,
+  `user_id` int unsigned NULL DEFAULT NULL,
+  `discord_user_id` varchar(64) NULL DEFAULT NULL,
+  `channel_id` varchar(64) NULL DEFAULT NULL,
+  `session_key` varchar(64) NOT NULL DEFAULT NULL,
+  `topic` varchar(255) NULL DEFAULT NULL,
+  `context_json` json NULL DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP DEFAULT_GENERATED,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP DEFAULT_GENERATED ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
 
--- Column adjustments
-SET @col_exists := (SELECT COUNT(*) FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = 'bf_discord_ai_sessions' AND column_name = 'id');
-SET @sql := IF(@col_exists = 0, 'ALTER TABLE `bf_discord_ai_sessions` ADD COLUMN `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT', 'SELECT ''column id already exists''');
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
+## Required columns
+- id int unsigned NOT NULL
+- user_id int unsigned NULL
+- discord_user_id varchar(64) NULL
+- channel_id varchar(64) NULL
+- session_key varchar(64) NOT NULL
+- topic varchar(255) NULL
+- context_json json NULL
+- is_active tinyint(1) NOT NULL
+- created_at datetime NOT NULL
+- updated_at datetime NOT NULL
 
--- Index adjustments
+## Required indexes
+- _No indexes defined_
 
--- Verification
+## Verification
+```sql
 SHOW CREATE TABLE `bf_discord_ai_sessions`;
+```
+
+```sql
 SELECT COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE, COLUMN_DEFAULT, EXTRA
 FROM information_schema.columns
 WHERE table_schema = DATABASE() AND table_name = 'bf_discord_ai_sessions'
 ORDER BY ORDINAL_POSITION;
+```
+
+```sql
 SELECT INDEX_NAME, NON_UNIQUE, COLUMN_NAME, SEQ_IN_INDEX
 FROM information_schema.statistics
 WHERE table_schema = DATABASE() AND table_name = 'bf_discord_ai_sessions'
 ORDER BY INDEX_NAME, SEQ_IN_INDEX;
+```
 

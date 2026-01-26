@@ -1,9 +1,9 @@
 # bf_user_events
 
 ## Source
-- Migration: app/Database/Migrations/2026-03-01-000100_CreateUserEvents.php
+- Migration: 2026-03-01-000100_CreateUserEvents.php
 - Model:
-- Code references: app/Services/EventTracker.php, app/Modules/Management/Controllers/AuthFunnelController.php, app/Commands/AuthFunnelCheck.php
+- Code references: app/Database/Migrations/2026-03-01-000100_CreateUserEvents.php:11, app/Database/Migrations/2026-03-01-000100_CreateUserEvents.php:64, app/Database/Migrations/2026-03-01-000100_CreateUserEvents.php:70, app/Database/Migrations/2026-03-01-000100_CreateUserEvents.php:71, app/Libraries/DbInventory/InventoryScanner.php:12, app/Libraries/DbInventory/SqlGenerator.php:8, app/Modules/Management/Controllers/AuthFunnelController.php:103, app/Modules/Management/Controllers/AuthFunnelController.php:107, app/Modules/Management/Controllers/AuthFunnelController.php:143, app/Modules/Management/Controllers/AuthFunnelController.php:147, app/Modules/Management/Controllers/AuthFunnelController.php:168, app/Modules/Management/Controllers/AuthFunnelController.php:172, app/Modules/Management/Controllers/AuthFunnelController.php:197, app/Modules/Management/Controllers/AuthFunnelController.php:201, app/Services/EventTracker.php:20, app/Services/EventTracker.php:54, app/Services/Spark/AuthFunnelCheckService.php:13, app/Services/Spark/AuthFunnelCheckService.php:16, app/Services/Spark/AuthFunnelCheckService.php:54, app/Services/Spark/AuthFunnelCheckService.php:79, docs/cron/jobs/auth_funnel_check.md:22, docs/spark/categories/auth/auth-funnel-check.md:13, docs/spark/categories/auth/auth-funnel-check.md:32, docs/spark/roadmap.md:9, docs/spark/inventory.md:9
 
 ## Create table
 ```sql
@@ -47,5 +47,20 @@ CREATE TABLE IF NOT EXISTS `bf_user_events` (
 
 ## Verification
 ```sql
-SHOW CREATE TABLE bf_user_events;
+SHOW CREATE TABLE `bf_user_events`;
 ```
+
+```sql
+SELECT COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE, COLUMN_DEFAULT, EXTRA
+FROM information_schema.columns
+WHERE table_schema = DATABASE() AND table_name = 'bf_user_events'
+ORDER BY ORDINAL_POSITION;
+```
+
+```sql
+SELECT INDEX_NAME, NON_UNIQUE, COLUMN_NAME, SEQ_IN_INDEX
+FROM information_schema.statistics
+WHERE table_schema = DATABASE() AND table_name = 'bf_user_events'
+ORDER BY INDEX_NAME, SEQ_IN_INDEX;
+```
+

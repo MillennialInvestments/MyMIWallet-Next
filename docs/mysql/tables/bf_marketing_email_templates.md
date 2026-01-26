@@ -1,27 +1,49 @@
--- Table: bf_marketing_email_templates
--- Sources: code: app/Models/Marketing/EmailTemplateModel.php:10
+# bf_marketing_email_templates
+
+## Source
+- Migration: _None_
+- Model:
+- Code references: app/Models/Marketing/EmailTemplateModel.php:10
+
+## Create table
+```sql
 CREATE TABLE IF NOT EXISTS `bf_marketing_email_templates` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `id` int unsigned NOT NULL DEFAULT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL DEFAULT NULL,
+  `subject` varchar(255) NOT NULL DEFAULT NULL,
+  `content` text NULL DEFAULT NULL,
+  `created_at` datetime NULL DEFAULT NULL,
+  `updated_at` datetime NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
 
--- Column adjustments
-SET @col_exists := (SELECT COUNT(*) FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = 'bf_marketing_email_templates' AND column_name = 'id');
-SET @sql := IF(@col_exists = 0, 'ALTER TABLE `bf_marketing_email_templates` ADD COLUMN `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT', 'SELECT ''column id already exists''');
-PREPARE stmt FROM @sql;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
+## Required columns
+- id int unsigned NOT NULL
+- title varchar(255) NOT NULL
+- subject varchar(255) NOT NULL
+- content text NULL
+- created_at datetime NULL
+- updated_at datetime NULL
 
--- Index adjustments
+## Required indexes
+- _No indexes defined_
 
--- Verification
+## Verification
+```sql
 SHOW CREATE TABLE `bf_marketing_email_templates`;
+```
+
+```sql
 SELECT COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE, COLUMN_DEFAULT, EXTRA
 FROM information_schema.columns
 WHERE table_schema = DATABASE() AND table_name = 'bf_marketing_email_templates'
 ORDER BY ORDINAL_POSITION;
+```
+
+```sql
 SELECT INDEX_NAME, NON_UNIQUE, COLUMN_NAME, SEQ_IN_INDEX
 FROM information_schema.statistics
 WHERE table_schema = DATABASE() AND table_name = 'bf_marketing_email_templates'
 ORDER BY INDEX_NAME, SEQ_IN_INDEX;
+```
 
