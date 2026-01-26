@@ -6,8 +6,8 @@ use CodeIgniter\CLI\CLI;
 
 class DiscordTest extends SafeBaseCommand
 {
-    protected string $group       = 'Discord';
-    protected string $name        = 'discord:test';
+    protected $group       = 'Discord';
+    protected $name        = 'discord:test';
     protected $description = 'Send a test payload through the Discord queue pipeline.';
     protected $arguments   = [
         'channel' => 'Optional channel key (default staging).',

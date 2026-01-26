@@ -8,8 +8,8 @@ use CodeIgniter\CLI\CLI;
 
 class Healthcheck extends SafeBaseCommand
 {
-    protected string $group       = 'logs';
-    protected string $name        = 'logs:healthcheck';
+    protected $group       = 'logs';
+    protected $name        = 'logs:healthcheck';
     protected $description = 'Emit test logs and verify file + DB log sinks are functioning.';
 
     protected $arguments = [];

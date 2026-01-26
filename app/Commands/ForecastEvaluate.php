@@ -7,8 +7,8 @@ use CodeIgniter\CLI\CLI;
 
 class ForecastEvaluate extends SafeBaseCommand
 {
-    protected string $group = 'Forecasts';
-    protected string $name = 'forecasts:evaluate';
+    protected $group = 'Forecasts';
+    protected $name = 'forecasts:evaluate';
     protected $description = 'Evaluate forecasts for accuracy windows.';
     protected $usage = 'forecasts:evaluate [limit] [--dry-run]';
     protected $arguments = [

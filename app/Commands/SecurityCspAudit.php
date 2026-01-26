@@ -9,8 +9,8 @@ use RecursiveIteratorIterator;
 
 class SecurityCspAudit extends SafeBaseCommand
 {
-    protected string $group = 'security';
-    protected string $name = 'security:csp:audit';
+    protected $group = 'security';
+    protected $name = 'security:csp:audit';
     protected $description = 'Scan view templates for CSP-unsafe inline scripts, styles, and handlers.';
     protected $usage = 'security:csp:audit';
     protected $options = [

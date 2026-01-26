@@ -7,8 +7,8 @@ use CodeIgniter\CLI\CLI;
 
 class RevenueStreamsScan extends SafeBaseCommand
 {
-    protected string $group       = 'marketing';
-    protected string $name        = 'revenue:scan';
+    protected $group       = 'marketing';
+    protected $name        = 'revenue:scan';
     protected $description = 'Scan the repository for monetizable features and generate revenue stream docs.';
     protected $options     = [
         '--dry-run' => 'Preview actions without writing documentation',

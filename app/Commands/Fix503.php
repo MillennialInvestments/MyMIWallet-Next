@@ -14,8 +14,8 @@ class Fix503 extends SafeBaseCommand
     private Ops $ops;
     private float $confidence = 0.0;
 
-    protected string $group = 'ops';
-    protected string $name = 'fix:503';
+    protected $group = 'ops';
+    protected $name = 'fix:503';
     protected $description = 'Diagnose and attempt safe auto-fixes for 503 errors.';
     protected $usage = 'fix:503';
     protected $options = [

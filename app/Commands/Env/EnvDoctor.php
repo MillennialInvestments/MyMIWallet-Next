@@ -9,8 +9,8 @@ use CodeIgniter\CLI\CLI;
 
 class EnvDoctor extends SafeBaseCommand
 {
-    protected string $group       = 'env';
-    protected string $name        = 'env:doctor';
+    protected $group       = 'env';
+    protected $name        = 'env:doctor';
     protected $description = 'Environment diagnostics and snapshot.';
     protected $options     = [
         '--notify=discord' => 'Send summary to Discord.',

@@ -12,8 +12,8 @@ use Config\Services;
 class RoutesAuthAudit extends SafeBaseCommand
 {
 
-    protected string $group       = 'maintenance';
-    protected string $name        = 'routes:auth-audit';
+    protected $group       = 'maintenance';
+    protected $name        = 'routes:auth-audit';
     protected $description = 'Audit public routes for unauthenticated access regressions.';
     protected $options     = [
         '--dry-run' => 'Preview actions without making HTTP requests',

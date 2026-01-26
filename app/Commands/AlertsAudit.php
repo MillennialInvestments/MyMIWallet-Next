@@ -10,8 +10,8 @@ use ReflectionMethod;
 
 class AlertsAudit extends SafeBaseCommand
 {
-    protected string $group       = 'maintenance';
-    protected string $name        = 'alerts:audit';
+    protected $group       = 'maintenance';
+    protected $name        = 'alerts:audit';
     protected $description = 'Audit recent scraped alert emails against generated trade alerts.';
     protected $options     = [
         '--dry-run' => 'Preview actions without writing audit artifacts',

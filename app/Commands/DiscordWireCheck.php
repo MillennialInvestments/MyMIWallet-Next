@@ -7,8 +7,8 @@ use Config\Discord as DiscordConfig;
 
 class DiscordWireCheck extends SafeBaseCommand
 {
-    protected string $group       = 'Discord';
-    protected string $name        = 'discord:wire-check';
+    protected $group       = 'Discord';
+    protected $name        = 'discord:wire-check';
     protected $description = 'Validate Discord env vars, tables, and queue health for MyMIDiscord.';
     protected $usage       = 'php spark discord:wire-check';
     protected $options     = [
