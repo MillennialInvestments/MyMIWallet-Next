@@ -63,5 +63,12 @@ abstract class SafeBaseCommand extends BaseCommand
         return EXIT_ERROR;
     }
 
+    protected function guardPathForSecrets(string $path): void
+    {
+        if (str_contains($path, '.env')) {
+            throw new \RuntimeException('Refusing to write .env or secrets to disk.');
+        }
+    }
+
     abstract protected function isDestructive(): bool;
 }
