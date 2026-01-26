@@ -30,6 +30,8 @@ class Console extends BaseConfig
 
         \App\Commands\ConfigLint::class,
         \App\Commands\CacheAudit::class,
+
+        \App\Commands\Ops\CommandsAudit::class,
     ];
 
     // public array $commands = [
