@@ -7,8 +7,8 @@ use CodeIgniter\CLI\CLI;
 
 class ForecastRefresh extends SafeBaseCommand
 {
-    protected $group = 'Forecasts';
-    protected $name = 'forecasts:refresh';
+    protected string $group = 'Forecasts';
+    protected string $name = 'forecasts:refresh';
     protected $description = 'Refresh forecasts for open alerts.';
     protected $usage = 'forecasts:refresh [limit] [--dry-run]';
     protected $arguments = [

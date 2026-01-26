@@ -13,8 +13,8 @@ use CodeIgniter\CLI\CLI;
 
 class ContentIngestSample extends SafeBaseCommand
 {
-    protected $group = 'content';
-    protected $name = 'content:ingest-sample';
+    protected string $group = 'content';
+    protected string $name = 'content:ingest-sample';
     protected $description = 'Load sample Daily Top Gainers JSON, ingest, score, and print the top 5 ideas.';
     protected $options = [
         '--dry-run' => 'Preview actions without writing ingest data',

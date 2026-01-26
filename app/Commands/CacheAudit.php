@@ -9,8 +9,8 @@ use RecursiveIteratorIterator;
 
 class CacheAudit extends SafeBaseCommand
 {
-    protected $group = 'cache';
-    protected $name = 'cache:audit';
+    protected string $group = 'cache';
+    protected string $name = 'cache:audit';
     protected $description = 'Scan the repo for unsafe cache key usage.';
     protected $usage = 'cache:audit';
     protected $options = [

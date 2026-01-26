@@ -8,8 +8,8 @@ use CodeIgniter\CLI\CLI;
 
 class GitSafety extends SafeBaseCommand
 {
-    protected $group = 'health';
-    protected $name = 'health:git-safety';
+    protected string $group = 'health';
+    protected string $name = 'health:git-safety';
     protected $description = 'Check git ignore rules for env/writable and tracked secrets.';
 
     public function run(array $params)

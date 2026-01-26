@@ -4,9 +4,19 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use Psr\Log\LoggerInterface;
 
 abstract class SafeBaseCommand extends BaseCommand
 {
+    /**
+     * DO NOT CHANGE THIS SIGNATURE.
+     * Spark requires it exactly.
+     */
+    public function __construct(LoggerInterface $logger, array $config)
+    {
+        parent::__construct($logger, $config);
+    }
+
     /**
      * CI4-safe param parser.
      */
@@ -31,9 +41,12 @@ abstract class SafeBaseCommand extends BaseCommand
         return isset($flags['dry-run']);
     }
 
-    protected function guardDestructive(array $flags, array $params): ?int
+    /**
+     * Guard destructive commands
+     */
+    protected function guardDestructive(array $flags): ?int
     {
-        if (! method_exists($this, 'isDestructive') || ! $this->isDestructive()) {
+        if (!method_exists($this, 'isDestructive') || ! $this->isDestructive()) {
             return null;
         }
 
@@ -41,17 +54,7 @@ abstract class SafeBaseCommand extends BaseCommand
             return null;
         }
 
-        CLI::error('This action is destructive. Re-run with --force to proceed.');
+        CLI::error('This action is destructive. Re-run with --force.');
         return EXIT_ERROR;
     }
-
-    /**
-     * Default: non-destructive.
-     * Commands can override to true.
-     */
-    protected function isDestructive(): bool
-    {
-        return false;
-    }
-
 }
