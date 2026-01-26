@@ -4,46 +4,25 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use Config\Services;
 
-class AppUpdate extends BaseCommand
+class AppUpdate extends SafeBaseCommand
 {
-    protected $group       = 'app';
-    protected $name        = 'app:update';
-    protected $description = 'Refresh autoload, clear caches, and verify runtime health.';
+    protected string $name = 'app:update';
+    protected string $group = 'app';
+    protected string $description = 'Run safe application update tasks.';
+    protected string $usage = 'app:update';
 
     public function run(array $params)
     {
-        CLI::write('MyMI Wallet – App Update', 'yellow');
-        CLI::newLine();
+        CLI::write('Starting app update...', 'green');
 
-        CLI::write('Running composer dump-autoload…', 'green');
-        $this->runShell('composer dump-autoload');
+        Services::cache()->clean();
+        CLI::write('✔ Cache cleared');
 
-        CLI::newLine();
-        CLI::write('Clearing CI4 cache…', 'green');
-        $this->runShell('php spark cache:clear');
+        passthru('composer dump-autoload');
+        CLI::write('✔ Autoload rebuilt');
 
-        CLI::newLine();
-        CLI::write('Running runtime:check…', 'green');
-        $this->runShell('php spark runtime:check');
-
-        CLI::newLine();
-        CLI::write('✅ App update complete.', 'green');
-    }
-
-    protected function runShell(string $command): void
-    {
-        $output = [];
-        $code   = 0;
-
-        exec($command . ' 2>&1', $output, $code);
-
-        foreach ($output as $line) {
-            CLI::write($line);
-        }
-
-        if ($code !== 0) {
-            CLI::error("Command failed: {$command}");
-        }
+        CLI::write('✔ App update complete', 'green');
     }
 }
