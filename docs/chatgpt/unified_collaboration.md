@@ -214,6 +214,12 @@ Is reversible
 
 Is traceable
 
+Codex guardrails (Spark commands):
+
+- Codex must never generate a Spark command with a `__construct()` method.
+- All Spark commands must extend `SafeBaseCommand`.
+- Any deviation is a build-blocking defect.
+
 📁 REQUIRED DOC STRUCTURE
 docs/
   ops/
