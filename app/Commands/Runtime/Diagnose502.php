@@ -4,166 +4,71 @@ namespace App\Commands\Runtime;
 
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
-use Config\Database;
 
 class Diagnose502 extends SafeBaseCommand
 {
-    protected $group       = 'runtime';
-    protected $name        = 'runtime:diagnose-502';
-    protected $description = 'Diagnose common causes of HTTP 502 / Bad Gateway errors.';
-    protected $aliases     = ['runtime:fix-502'];
-    protected $usage       = "runtime:diagnose-502 [--self-test] [--dry-run]\nruntime:fix-502 --force [--dry-run]";
-    protected $options     = [
-        '--self-test' => 'Run a non-destructive smoke test of diagnostics and output formatting',
-        '--dry-run'   => 'Report actions without making changes (fix mode only)',
-        '--force'     => 'Allow destructive actions in fix mode',
+    protected $group = 'runtime';
+    protected $name = 'runtime:diagnose-502';
+    protected $description = 'Diagnose and optionally fix 502/503 runtime issues';
+    protected $options = [
+        '--force' => 'Apply safe fixes (clear cache, remove stale sockets) after diagnostics',
     ];
-
-    private bool $destructive = false;
-    private bool $selfTestMode = false;
 
     public function run(array $params)
     {
-        log_message('info', '[runtime:diagnose-502] start', ['params' => $params]);
-
         [$args, $flags] = $this->parseParams($params);
-        $dryRun = $this->resolveDryRun($flags);
-        $selfTest = isset($flags['self-test']);
-        $commandName = $this->detectCommandName();
-        $fixMode = $commandName === 'runtime:fix-502';
+        $fixMode = isset($flags['force']);
 
-        $this->selfTestMode = $selfTest;
-        $this->destructive = $fixMode;
-
-        if ($selfTest) {
-            return $this->runSelfTest();
-        }
-
+        CLI::write('Runtime 502/503 Diagnostics', 'yellow');
         if ($fixMode) {
-            $guard = $this->guardDestructive($flags);
-            if ($guard !== null) {
-                $this->recordFailure('Fix mode blocked: --force required');
-                return $guard;
-            }
-        }
-
-        CLI::write('Runtime 502 Diagnostics', 'yellow');
-        if ($fixMode) {
-            CLI::write('Fix mode enabled (safe actions only).', 'yellow');
+            CLI::write('Fix mode enabled (--force).', 'yellow');
+        } else {
+            CLI::write('Detection mode only. Re-run with --force to apply safe fixes.', 'yellow');
         }
         CLI::newLine();
 
-        $phpStatus = $this->checkPhpRuntime();
-        $socketStatus = $this->checkSockets($phpStatus);
-        $nginxScan = $this->scanNginxConfigs();
-        $logScan = $this->scanNginxLogs();
+        $phpStatus = $this->checkPhpHandler();
+        $socketStatus = $this->checkFastCgiSockets($phpStatus);
+        $configStatus = $this->scanNginxConfigs($socketStatus);
+        $writableStatus = $this->checkWritablePaths();
+        $cacheStatus = $this->checkCacheState();
 
         if ($fixMode) {
-            $this->applyFixes($socketStatus, $dryRun);
+            $this->applyFixes($socketStatus, $cacheStatus, $writableStatus);
         }
 
         $summary = [
-            'PHP runtime mismatch' => $phpStatus['mismatch'] ? '❌' : '✔',
+            'PHP handler detected' => $phpStatus['status'] ? '✔' : '❌',
             'FastCGI socket present' => $socketStatus['present'] ? '✔' : '❌',
-            'Nginx fastcgi_pass invalid' => $nginxScan['invalid'] ? '❌' : '✔',
-            'Recent 502 errors detected' => $logScan['recent_errors'] ? '✔' : '❌',
+            'fastcgi_pass mismatch' => $configStatus['mismatch'] ? '❌' : '✔',
+            'Writable permissions' => $writableStatus['ok'] ? '✔' : '❌',
+            'Cache state' => $cacheStatus['healthy'] ? '✔' : '⚠',
         ];
 
         CLI::newLine();
-        CLI::write('502 Diagnosis Summary', 'yellow');
-        CLI::write('─────────────────────');
+        CLI::write('Diagnosis Summary', 'yellow');
+        CLI::write('─────────────────');
         foreach ($summary as $label => $status) {
-            CLI::write(str_pad($label, 28) . ' ' . $status);
+            CLI::write(str_pad($label, 26) . ' ' . $status);
         }
 
-        $blockingIssues = $phpStatus['mismatch']
+        $blockingIssues = ! $phpStatus['status']
             || ! $socketStatus['present']
-            || $nginxScan['invalid']
-            || $logScan['recent_errors'];
-
-        log_message('info', '[runtime:diagnose-502] completed', [
-            'blocking' => $blockingIssues,
-            'fix_mode' => $fixMode,
-            'dry_run'  => $dryRun,
-        ]);
+            || $configStatus['mismatch']
+            || ! $writableStatus['ok'];
 
         return $blockingIssues ? EXIT_ERROR : EXIT_SUCCESS;
     }
 
-    protected function isDestructive(): bool
+    private function checkPhpHandler(): array
     {
-        return $this->destructive;
-    }
-
-    private function runSelfTest(): int
-    {
-        CLI::write('Runtime 502 Self-Test', 'yellow');
-        CLI::newLine();
-
-        $home = $this->homeDir();
-        $testFiles = [
-            $home . '/nginx/conf/nginx.conf',
-            $home . '/nginx/sites-enabled',
-            $home . '/nginx/logs/error.log',
-        ];
-
-        foreach ($testFiles as $path) {
-            $status = is_readable($path) || is_dir($path) ? '✔' : '⚠';
-            CLI::write(sprintf('%s File access check: %s', $status, $path));
-        }
-
-        $sampleConfig = 'server { fastcgi_pass 127.0.0.1:9000; }';
-        $configHits = $this->scanConfigContent($sampleConfig);
-        CLI::write(
-            sprintf('%s Regex scan (config): %s hits', $configHits !== [], count($configHits)),
-            $configHits !== [] ? 'green' : 'red'
-        );
-
-        $sampleLog = [
-            'connect() failed (111: Connection refused) while connecting to upstream',
-            'upstream prematurely closed connection while reading response header',
-            'Bad Gateway',
-        ];
-        $logHits = $this->scanLogLines($sampleLog);
-        CLI::write(
-            sprintf('%s Regex scan (logs): %s hits', $logHits !== [], count($logHits)),
-            $logHits !== [] ? 'green' : 'red'
-        );
-
-        $summary = [
-            'PHP runtime mismatch' => '✔',
-            'FastCGI socket present' => '✔',
-            'Nginx fastcgi_pass invalid' => '❌',
-            'Recent 502 errors detected' => '✔',
-        ];
-
-        CLI::newLine();
-        CLI::write('502 Diagnosis Summary', 'yellow');
-        CLI::write('─────────────────────');
-        foreach ($summary as $label => $status) {
-            CLI::write(str_pad($label, 28) . ' ' . $status);
-        }
-
-        CLI::newLine();
-        CLI::write('Self-test complete (no destructive actions taken).', 'green');
-
-        return EXIT_SUCCESS;
-    }
-
-    private function checkPhpRuntime(): array
-    {
-        $cliVersion = PHP_VERSION;
-        CLI::write('✔ PHP CLI: ' . $cliVersion);
-
         $home = $this->homeDir();
         $handlerSources = [];
-        $dreamhostSocket = $home . '/.php.sock';
-        $phpFpmSocket = '/tmp/php-fpm.sock';
 
-        if (is_file($dreamhostSocket)) {
+        if (is_file($home . '/.php.sock')) {
             $handlerSources[] = 'dreamhost';
         }
-        if ($this->processExists('php-fpm') || is_file($phpFpmSocket)) {
+        if ($this->processExists('php-fpm') || is_file('/tmp/php-fpm.sock')) {
             $handlerSources[] = 'php-fpm';
         }
         if ($this->processExists('php-cgi')) {
@@ -179,89 +84,76 @@ class Diagnose502 extends SafeBaseCommand
             $handler = 'php-cgi';
         }
 
-        $mismatch = $handler === 'unknown' || count($handlerSources) > 1;
-        $handlerLabel = $handler === 'unknown' ? 'unknown' : $handler;
-        $handlerStatus = $mismatch ? '⚠' : '✔';
-        CLI::write(sprintf('%s Web handler: %s', $handlerStatus, $handlerLabel));
+        $status = $handler !== 'unknown';
+        $label = $status ? '✔' : '❌';
+        CLI::write(sprintf('%s PHP handler: %s', $label, $handler));
 
-        if ($mismatch) {
-            $this->recordFailure(sprintf('PHP runtime mismatch: handler=%s sources=%s', $handlerLabel, implode(',', $handlerSources)));
+        if (count($handlerSources) > 1) {
+            CLI::write('⚠ Multiple PHP handlers detected: ' . implode(', ', $handlerSources));
         }
 
         return [
-            'cli_version' => $cliVersion,
-            'handler' => $handlerLabel,
-            'handler_sources' => $handlerSources,
-            'mismatch' => $mismatch,
+            'status' => $status,
+            'handler' => $handler,
+            'sources' => $handlerSources,
         ];
     }
 
-    private function checkSockets(array $phpStatus): array
+    private function checkFastCgiSockets(array $phpStatus): array
     {
         CLI::newLine();
-        CLI::write('FastCGI / Socket Validation', 'yellow');
+        CLI::write('FastCGI / Socket Checks', 'yellow');
 
         $home = $this->homeDir();
-        $checks = [];
-
         $sockets = [
             'dreamhost' => $home . '/.php.sock',
             'php-fpm' => '/tmp/php-fpm.sock',
         ];
 
-        foreach ($sockets as $type => $path) {
-            if ($type === 'php-fpm' && ! in_array('php-fpm', $phpStatus['handler_sources'], true) && ! is_file($path)) {
+        $present = false;
+        $stale = false;
+        $issues = [];
+
+        foreach ($sockets as $label => $path) {
+            if ($label === 'php-fpm' && ! in_array('php-fpm', $phpStatus['sources'], true) && ! is_file($path)) {
                 continue;
             }
 
-            $checks[$type] = $this->inspectSocket($path);
-        }
+            $exists = file_exists($path);
+            $socketStale = $exists ? $this->isSocketStale($path) : false;
+            $present = $present || ($exists && ! $socketStale);
+            $stale = $stale || $socketStale;
 
-        $issues = [];
-        $present = false;
-        foreach ($checks as $type => $result) {
-            if ($result['present'] && ! $result['stale']) {
-                $present = true;
+            if (! $exists) {
+                $issues[] = sprintf('%s socket missing: %s', $label, $path);
             }
-            if (! $result['present']) {
-                $issues[] = sprintf('%s socket missing: %s', $type, $result['path']);
-            }
-            if ($result['permission_denied']) {
-                $issues[] = sprintf('%s socket permission denied: %s', $type, $result['path']);
-            }
-            if ($result['stale']) {
-                $issues[] = sprintf('%s socket stale: %s', $type, $result['path']);
+            if ($socketStale) {
+                $issues[] = sprintf('%s socket stale: %s', $label, $path);
             }
 
-            $status = $result['present'] && ! $result['stale'] ? '✔' : '⚠';
-            $detail = $result['present'] ? $result['path'] : 'missing';
-            if ($result['stale']) {
-                $detail .= ' (stale)';
-            }
-            if ($result['permission_denied']) {
-                $detail .= ' (permission denied)';
-            }
-            CLI::write(sprintf('%s %s', $status, $detail));
+            $status = $exists && ! $socketStale ? '✔' : '⚠';
+            CLI::write(sprintf('%s %s', $status, $exists ? $path : 'missing'));
         }
 
         foreach ($issues as $issue) {
-            $this->recordFailure($issue);
+            CLI::write('⚠ ' . $issue);
         }
 
         return [
             'present' => $present,
+            'stale' => $stale,
             'issues' => $issues,
-            'checks' => $checks,
         ];
     }
 
-    private function scanNginxConfigs(): array
+    private function scanNginxConfigs(array $socketStatus): array
     {
         CLI::newLine();
-        CLI::write('Nginx Configuration Scan (read-only)', 'yellow');
+        CLI::write('Nginx fastcgi_pass Scan', 'yellow');
 
         $files = $this->listNginxConfigFiles();
-        $hits = [];
+        $targets = [];
+        $mismatches = [];
 
         foreach ($files as $file) {
             $content = @file_get_contents($file);
@@ -269,239 +161,111 @@ class Diagnose502 extends SafeBaseCommand
                 continue;
             }
 
-            $fileHits = $this->scanConfigContent($content);
-            foreach ($fileHits as $hit) {
-                $hits[] = sprintf('%s in %s', $hit, $file);
-            }
-        }
+            $found = $this->extractFastCgiTargets($content);
+            foreach ($found as $target) {
+                $targets[] = $target;
 
-        $invalid = $hits !== [];
-        if ($invalid) {
-            $this->recordFailure('Nginx fastcgi_pass invalid: ' . implode('; ', $hits));
+                if ($this->isFastCgiMismatch($target)) {
+                    $mismatches[] = sprintf('%s in %s', $target, $file);
+                }
+            }
         }
 
         if ($files === []) {
             CLI::write('⚠ No nginx configs found in user space.');
         }
 
-        foreach (array_unique($hits) as $hit) {
-            CLI::write('⚠ ' . $hit);
+        foreach (array_unique($targets) as $target) {
+            CLI::write('• fastcgi_pass ' . $target);
         }
 
-        if (! $invalid) {
-            CLI::write('✔ No invalid fastcgi_pass entries detected.');
+        foreach (array_unique($mismatches) as $issue) {
+            CLI::write('⚠ Mismatch: ' . $issue);
+        }
+
+        if ($targets === []) {
+            CLI::write('⚠ No fastcgi_pass directives detected.');
         }
 
         return [
-            'invalid' => $invalid,
-            'hits' => array_values(array_unique($hits)),
-            'files' => $files,
+            'targets' => array_values(array_unique($targets)),
+            'mismatch' => $mismatches !== [],
         ];
     }
 
-    private function scanNginxLogs(): array
+    private function checkWritablePaths(): array
     {
         CLI::newLine();
-        CLI::write('Log Scan (last 500 lines)', 'yellow');
+        CLI::write('Writable Permissions', 'yellow');
 
-        $files = $this->listNginxLogFiles();
-        $matches = [];
+        $paths = [
+            WRITEPATH,
+            rtrim(WRITEPATH, '/') . '/cache',
+            rtrim(WRITEPATH, '/') . '/sessions',
+            rtrim(WRITEPATH, '/') . '/logs',
+        ];
 
-        foreach ($files as $file) {
-            $lines = $this->tailLines($file, 500);
-            if ($lines === []) {
+        $issues = [];
+        foreach ($paths as $path) {
+            if (! is_dir($path)) {
+                CLI::write('⚠ Missing: ' . $path);
+                $issues[] = $path;
                 continue;
             }
 
-            $fileMatches = $this->scanLogLines($lines);
-            foreach ($fileMatches as $match) {
-                $matches[] = sprintf('%s in %s', $match, $file);
+            if (! is_writable($path)) {
+                CLI::write('❌ Not writable: ' . $path);
+                $issues[] = $path;
+                continue;
             }
-        }
 
-        $recentErrors = $matches !== [];
-        if ($recentErrors) {
-            $this->recordFailure('Recent 502 errors detected: ' . implode('; ', $matches));
-        }
-
-        if ($files === []) {
-            CLI::write('⚠ No nginx error logs found.');
-        }
-
-        foreach (array_unique($matches) as $match) {
-            CLI::write('⚠ ' . $match);
-        }
-
-        if (! $recentErrors) {
-            CLI::write('✔ No recent 502 patterns found.');
+            CLI::write('✔ Writable: ' . $path);
         }
 
         return [
-            'recent_errors' => $recentErrors,
-            'matches' => array_values(array_unique($matches)),
-            'files' => $files,
+            'ok' => $issues === [],
+            'issues' => $issues,
         ];
     }
 
-    private function applyFixes(array $socketStatus, bool $dryRun): void
+    private function checkCacheState(): array
     {
         CLI::newLine();
-        CLI::write('Safe Fix Actions', 'yellow');
+        CLI::write('Cache State', 'yellow');
 
-        $this->removeStaleSocket($socketStatus, $dryRun);
-        $this->restartPhpCgi($dryRun);
-        $this->clearWritableCache($dryRun);
-        $this->clearWritableSessions($dryRun);
-    }
+        $cachePath = rtrim(WRITEPATH, '/') . '/cache';
+        $count = $this->countFiles($cachePath);
+        $healthy = $count < 5000;
+        $label = $healthy ? '✔' : '⚠';
 
-    private function removeStaleSocket(array $socketStatus, bool $dryRun): void
-    {
-        $dreamhost = $socketStatus['checks']['dreamhost'] ?? null;
-        if ($dreamhost === null || ! $dreamhost['stale']) {
-            return;
-        }
-
-        $before = [
-            'path' => $dreamhost['path'],
-            'exists' => $dreamhost['present'],
-        ];
-
-        if ($dryRun) {
-            CLI::write('⚠ Dry-run: would remove stale PHP socket ' . $dreamhost['path']);
-            $this->recordAction('dry-run remove stale socket', $before, ['removed' => false]);
-            return;
-        }
-
-        $removed = @unlink($dreamhost['path']);
-        $after = [
-            'removed' => $removed,
-            'exists' => file_exists($dreamhost['path']),
-        ];
-
-        if ($removed) {
-            CLI::write('✔ Removed stale PHP socket');
-        } else {
-            CLI::write('⚠ Failed to remove stale PHP socket');
-        }
-
-        $this->recordAction('remove stale socket', $before, $after);
-    }
-
-    private function restartPhpCgi(bool $dryRun): void
-    {
-        $user = get_current_user();
-        $processes = $this->findProcesses('php-cgi');
-        $before = [
-            'user' => $user,
-            'process_count' => count($processes),
-        ];
-
-        if ($processes === []) {
-            CLI::write('⚠ PHP handler restart not permitted (shared host)');
-            $this->recordAction('restart php-cgi', $before, ['skipped' => true, 'reason' => 'no php-cgi process detected']);
-            return;
-        }
-
-        if ($dryRun) {
-            CLI::write('⚠ Dry-run: would restart php-cgi processes');
-            $this->recordAction('dry-run restart php-cgi', $before, ['skipped' => true]);
-            return;
-        }
-
-        $command = sprintf('pkill -u %s php-cgi 2>/dev/null', escapeshellarg($user));
-        $resultCode = 0;
-        @exec($command, $output, $resultCode);
-
-        if ($resultCode === 0) {
-            CLI::write('✔ Restarted php-cgi processes (if supervisor restarts are enabled)');
-            $this->recordAction('restart php-cgi', $before, ['result_code' => $resultCode]);
-            return;
-        }
-
-        CLI::write('⚠ PHP handler restart not permitted (shared host)');
-        $this->recordAction('restart php-cgi', $before, ['result_code' => $resultCode, 'skipped' => true]);
-    }
-
-    private function clearWritableCache(bool $dryRun): void
-    {
-        $path = rtrim(WRITEPATH, '/') . '/cache';
-        $before = ['path' => $path, 'count' => $this->countFiles($path)];
-
-        if ($dryRun) {
-            CLI::write('⚠ Dry-run: would clear writable cache');
-            $this->recordAction('dry-run clear cache', $before, ['cleared' => false]);
-            return;
-        }
-
-        $cleared = $this->clearDirectoryFiles($path);
-        $after = ['count' => $this->countFiles($path)];
-
-        if ($cleared) {
-            CLI::write('✔ Cleared writable cache');
-        } else {
-            CLI::write('⚠ No writable cache cleared');
-        }
-
-        $this->recordAction('clear writable cache', $before, $after);
-    }
-
-    private function clearWritableSessions(bool $dryRun): void
-    {
-        $path = rtrim(WRITEPATH, '/') . '/sessions';
-        $before = ['path' => $path, 'count' => $this->countFiles($path)];
-
-        if ($dryRun) {
-            CLI::write('⚠ Dry-run: would clear writable sessions');
-            $this->recordAction('dry-run clear sessions', $before, ['cleared' => false]);
-            return;
-        }
-
-        $cleared = $this->clearDirectoryFiles($path);
-        $after = ['count' => $this->countFiles($path)];
-
-        if ($cleared) {
-            CLI::write('✔ Cleared writable sessions');
-        } else {
-            CLI::write('⚠ No writable sessions cleared');
-        }
-
-        $this->recordAction('clear writable sessions', $before, $after);
-    }
-
-    private function inspectSocket(string $path): array
-    {
-        $present = file_exists($path);
-        $permissionDenied = false;
-        $stale = false;
-
-        if ($present) {
-            $permissionDenied = ! is_readable($path) || ! is_writable($path);
-            $stale = $this->isSocketStale($path);
-        }
+        CLI::write(sprintf('%s Cache files: %d', $label, $count));
 
         return [
-            'path' => $path,
-            'present' => $present,
-            'permission_denied' => $permissionDenied,
-            'stale' => $stale,
+            'count' => $count,
+            'healthy' => $healthy,
+            'path' => $cachePath,
         ];
     }
 
-    private function isSocketStale(string $path): bool
+    private function applyFixes(array $socketStatus, array $cacheStatus, array $writableStatus): void
     {
-        if (! file_exists($path)) {
-            return false;
+        CLI::newLine();
+        CLI::write('Safe Fixes (--force)', 'yellow');
+
+        if (! $writableStatus['ok']) {
+            CLI::write('⚠ Skipping cache cleanup: writable paths are not healthy.');
+        } else {
+            $cleared = $this->clearDirectoryFiles($cacheStatus['path']);
+            CLI::write($cleared ? '✔ Cleared writable cache' : '⚠ No cache files cleared');
         }
 
-        $errno = 0;
-        $errstr = '';
-        $client = @stream_socket_client('unix://' . $path, $errno, $errstr, 0.5);
-        if ($client !== false) {
-            fclose($client);
-            return false;
+        if ($socketStatus['stale']) {
+            $dreamhostSocket = $this->homeDir() . '/.php.sock';
+            if (file_exists($dreamhostSocket) && $this->isSocketStale($dreamhostSocket)) {
+                $removed = @unlink($dreamhostSocket);
+                CLI::write($removed ? '✔ Removed stale PHP socket' : '⚠ Unable to remove stale PHP socket');
+            }
         }
-
-        return $errstr !== '';
     }
 
     private function listNginxConfigFiles(): array
@@ -523,96 +287,35 @@ class Diagnose502 extends SafeBaseCommand
         return array_values(array_unique($files));
     }
 
-    private function listNginxLogFiles(): array
+    private function extractFastCgiTargets(string $content): array
     {
-        $home = $this->homeDir();
-        $files = [];
-
-        $primary = $home . '/nginx/logs/error.log';
-        if ($this->isLogCandidate($primary)) {
-            $files[] = $primary;
-        }
-
-        foreach (glob($home . '/nginx/logs/*.error.log') ?: [] as $file) {
-            if ($this->isLogCandidate($file)) {
-                $files[] = $file;
+        $targets = [];
+        if (preg_match_all('/fastcgi_pass\s+([^;\s]+)\s*;?/i', $content, $matches)) {
+            foreach ($matches[1] as $match) {
+                $targets[] = trim($match);
             }
         }
 
-        return array_values(array_unique($files));
+        return $targets;
     }
 
-    private function scanConfigContent(string $content): array
+    private function isFastCgiMismatch(string $target): bool
     {
-        $patterns = [
-            'fastcgi_pass 127.0.0.1:9000' => '/fastcgi_pass\s+127\.0\.0\.1:9000/i',
-            'php-fpm' => '/\bphp-fpm\b/i',
-            'php-cgi' => '/\bphp-cgi\b/i',
-            'hardcoded port' => '/fastcgi_pass\s+[^;]*(9000|9071)\b/i',
-        ];
+        $target = trim($target);
 
-        $hits = [];
-        foreach ($patterns as $label => $pattern) {
-            if (preg_match($pattern, $content)) {
-                $hits[] = $label;
+        if (str_starts_with($target, 'unix:')) {
+            $path = substr($target, 5);
+            return ! file_exists($path);
+        }
+
+        if (preg_match('/127\.0\.0\.1:(\d+)/', $target, $matches)) {
+            $port = (int) $matches[1];
+            if ($port === 9000 || $port === 9071) {
+                return ! $this->processExists('php-fpm');
             }
         }
 
-        return $hits;
-    }
-
-    private function scanLogLines(array $lines): array
-    {
-        $patterns = [
-            'connect() failed' => '/connect\(\) failed/i',
-            'no such file or directory' => '/no such file or directory/i',
-            'upstream prematurely closed connection' => '/upstream prematurely closed connection/i',
-            'Bad Gateway' => '/Bad Gateway/i',
-        ];
-
-        $hits = [];
-        foreach ($lines as $line) {
-            foreach ($patterns as $label => $pattern) {
-                if (preg_match($pattern, $line)) {
-                    $hits[] = $label;
-                }
-            }
-        }
-
-        return array_values(array_unique($hits));
-    }
-
-    private function tailLines(string $path, int $maxLines): array
-    {
-        if (! is_readable($path)) {
-            return [];
-        }
-
-        $handle = @fopen($path, 'rb');
-        if (! $handle) {
-            return [];
-        }
-
-        $buffer = '';
-        $chunkSize = 4096;
-        fseek($handle, 0, SEEK_END);
-        $fileSize = ftell($handle);
-
-        while ($fileSize > 0 && substr_count($buffer, "\n") <= $maxLines) {
-            $readSize = $fileSize > $chunkSize ? $chunkSize : $fileSize;
-            $fileSize -= $readSize;
-            fseek($handle, $fileSize);
-            $buffer = fread($handle, $readSize) . $buffer;
-        }
-
-        fclose($handle);
-
-        $lines = preg_split("/\r?\n/", trim($buffer));
-        if (! is_array($lines)) {
-            return [];
-        }
-
-        return array_slice($lines, -$maxLines);
+        return false;
     }
 
     private function isConfigCandidate(string $path): bool
@@ -636,32 +339,10 @@ class Diagnose502 extends SafeBaseCommand
         return true;
     }
 
-    private function isLogCandidate(string $path): bool
-    {
-        if (! is_file($path)) {
-            return false;
-        }
-
-        if (preg_match('/\.(bak|off)$/', $path)) {
-            return false;
-        }
-
-        if (str_contains($path, '_archive/')) {
-            return false;
-        }
-
-        return true;
-    }
-
     private function processExists(string $process): bool
     {
-        return $this->findProcesses($process) !== [];
-    }
-
-    private function findProcesses(string $process): array
-    {
         if (! function_exists('exec')) {
-            return [];
+            return false;
         }
 
         $command = sprintf('pgrep -l %s 2>/dev/null', escapeshellarg($process));
@@ -669,82 +350,24 @@ class Diagnose502 extends SafeBaseCommand
         $result = 1;
         @exec($command, $output, $result);
 
-        if ($result !== 0) {
-            return [];
-        }
-
-        return $output;
+        return $result === 0 && $output !== [];
     }
 
-    private function recordFailure(string $message): void
+    private function isSocketStale(string $path): bool
     {
-        log_message('warning', '[runtime:diagnose-502] ' . $message);
-        $this->recordLogEntry('warning', $message, []);
-    }
-
-    private function recordAction(string $action, array $before, array $after): void
-    {
-        $message = sprintf('%s | before=%s | after=%s', $action, json_encode($before), json_encode($after));
-        log_message('info', '[runtime:diagnose-502] ' . $message);
-        $this->recordLogEntry('info', $message, [
-            'before' => $before,
-            'after' => $after,
-        ]);
-    }
-
-    private function recordLogEntry(string $level, string $message, array $context): void
-    {
-        if ($this->selfTestMode) {
-            return;
-        }
-
-        $payload = [
-            'severity' => $level,
-            'message' => $message,
-            'context' => json_encode($context),
-            'created_at' => date('Y-m-d H:i:s'),
-        ];
-
-        $inserted = $this->insertIntoErrorLogs($payload);
-
-        if (! $inserted) {
-            $this->writeFallbackLog($level, $message, $context);
-        }
-    }
-
-    private function insertIntoErrorLogs(array $payload): bool
-    {
-        try {
-            $db = Database::connect();
-            if (! method_exists($db, 'tableExists') || ! $db->tableExists('bf_error_logs')) {
-                return false;
-            }
-
-            $columns = $db->getFieldNames('bf_error_logs');
-        } catch (\Throwable $e) {
+        if (! file_exists($path)) {
             return false;
         }
 
-        $available = array_map('strtolower', $columns);
-        $filtered = array_intersect_key($payload, array_flip($available));
-
-        if ($filtered === []) {
+        $errno = 0;
+        $errstr = '';
+        $client = @stream_socket_client('unix://' . $path, $errno, $errstr, 0.5);
+        if ($client !== false) {
+            fclose($client);
             return false;
         }
 
-        try {
-            $db->table('bf_error_logs')->insert($filtered);
-            return true;
-        } catch (\Throwable $e) {
-            return false;
-        }
-    }
-
-    private function writeFallbackLog(string $level, string $message, array $context): void
-    {
-        $path = rtrim(WRITEPATH, '/') . '/logs/runtime-502.log';
-        $entry = sprintf('[%s] [%s] %s %s', date('Y-m-d H:i:s'), strtoupper($level), $message, json_encode($context));
-        @file_put_contents($path, $entry . PHP_EOL, FILE_APPEND);
+        return $errstr !== '';
     }
 
     private function clearDirectoryFiles(string $path): bool
@@ -784,14 +407,6 @@ class Diagnose502 extends SafeBaseCommand
         }
 
         return $count;
-    }
-
-    private function detectCommandName(): string
-    {
-        $argv = $_SERVER['argv'] ?? [];
-        $command = $argv[1] ?? $this->name;
-
-        return is_string($command) ? $command : $this->name;
     }
 
     private function homeDir(): string
