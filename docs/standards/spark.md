@@ -19,6 +19,10 @@ These rules lock down Spark command behavior to prevent silent command loss and 
 
 CodeIgniter 4 instantiates Spark commands internally, and constructor mismatches cause commands to disappear from `spark list` without a clear error. Cache invalidation does not resolve constructor signature violations. Removing constructors from command classes and enforcing a single base class keeps registration deterministic and prevents silent runtime loss.
 
+## 📝 Recent Root Cause & Fix
+
+`runtime:diagnose-502` was missing from `spark list` because the command metadata and signature drifted from CI4 discovery rules (it did not match the exact SafeBaseCommand signature, and the required Spark metadata/usage strings were not aligned). CI4 only discovers commands that are properly registered in `app/Config/Console.php`, extend the expected base class without constructors/typed properties, and expose the plain (untyped) `$group`, `$name`, `$description`, and `$usage` properties. Keeping these values exact and untyped, plus clearing the Spark command cache, restores command discovery and prevents silent drops in the future.
+
 ## Runtime Diagnostics Commands
 
 Runtime diagnostics commands inspect web infrastructure (PHP handlers, sockets, nginx configs, logs) to explain 502/503 conditions without destabilizing shared-host environments.
