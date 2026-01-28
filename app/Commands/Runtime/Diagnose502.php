@@ -2,14 +2,14 @@
 
 namespace App\Commands\Runtime;
 
-use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class Diagnose502 extends SafeBaseCommand
+class Diagnose502 extends \App\Commands\SafeBaseCommand
 {
     protected $group = 'runtime';
     protected $name = 'runtime:diagnose-502';
-    protected $description = 'Diagnose and optionally fix 502/503 runtime issues';
+    protected $description = 'Diagnose and optionally remediate 502/503 gateway errors';
+    protected $usage = 'runtime:diagnose-502 [--force]';
     protected $options = [
         '--force' => 'Apply safe fixes (clear cache, remove stale sockets) after diagnostics',
     ];
