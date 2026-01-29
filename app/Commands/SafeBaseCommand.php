@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
@@ -16,16 +18,9 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
     protected bool $defaultDryRun = false;
 
     /**
-     * ⚠️ DO NOT CHANGE THIS SIGNATURE
-     * Must match CodeIgniter\CLI\BaseCommand exactly (CI 4.6+)
-     */
-    public function __construct(LoggerInterface $logger, Commands $commands)
-    {
-        parent::__construct($logger, $commands);
-    }
-
-    /**
      * CI4-safe param parser.
+     *
+     * @return array{0: array<int, string>, 1: array<string, bool>}
      */
     protected function parseParams(array $params): array
     {
@@ -76,7 +71,9 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
     }
 
     /**
-     * Guard destructive commands
+     * Guard destructive commands.
+     *
+     * @return int|null EXIT_ERROR when blocked, null when allowed
      */
     protected function guardDestructive(array $flags, bool $dryRun): void
     {
@@ -108,5 +105,13 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
             'supports_dry_run' => $this->supportsDryRun(),
             'ai_ops_runnable' => $this->isAiOpsRunnable(),
         ]);
+    }
+
+    /**
+     * Override in child commands if destructive.
+     */
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }
