@@ -9,6 +9,7 @@ use App\Libraries\Ops\Analyzers\CspAnalyzer;
 use App\Libraries\Ops\Analyzers\Psr4Analyzer;
 use App\Libraries\Ops\Analyzers\RoutesAnalyzer;
 use App\Libraries\Ops\Analyzers\RuntimeAnalyzer;
+use App\Libraries\Ops\Issue;
 use App\Models\AiOpsTaskModel;
 use CodeIgniter\CLI\CLI;
 
@@ -76,7 +77,8 @@ class NextSteps extends SafeBaseCommand
     {
         $severity = strtoupper((string) ($issue['severity'] ?? 'P2'));
         $title = strtolower((string) ($issue['title'] ?? ''));
-        $evidence = strtolower(json_encode($issue['evidence'] ?? [], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+        $evidencePayload = $issue['evidence'] ?? [];
+        $evidence = strtolower(json_encode($evidencePayload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
 
         if (preg_match('/constructor|runtime|fastcgi|php-fpm|php-cgi|writable|vendor missing|cache boot|502|503|504/', $title . ' ' . $evidence)) {
             $severity = 'P0';
@@ -87,7 +89,17 @@ class NextSteps extends SafeBaseCommand
         }
 
         $issue['severity'] = $severity;
-        $issue['id'] = $issue['id'] ?? sha1($severity . $issue['title']);
+        $issue['evidence'] = is_array($evidencePayload) ? $evidencePayload : [];
+        $issue['suggested_fix'] = $issue['suggested_fix'] ?? [];
+        $issue['owner'] = $issue['owner'] ?? 'human';
+        $issue['status'] = $issue['status'] ?? 'open';
+        $issue['codex_prompt'] = $issue['codex_prompt'] ?? ($issue['ai_prompt'] ?? '');
+        $issue['chatgpt_prompt'] = $issue['chatgpt_prompt'] ?? ($issue['ai_prompt'] ?? '');
+        $issue['auto_queue'] = (bool) ($issue['auto_queue'] ?? (($issue['owner'] ?? 'human') !== 'human'));
+
+        $hash = $issue['task_key'] ?? $issue['id'] ?? Issue::hash($issue);
+        $issue['task_key'] = $hash;
+        $issue['id'] = $hash;
 
         return $issue;
     }
@@ -122,14 +134,16 @@ class NextSteps extends SafeBaseCommand
         $lines[] = '# Next Steps';
         $lines[] = '';
         $lines[] = sprintf('✅ Current Status Snapshot (%s)', $generatedAt);
+        $lines[] = sprintf('- Environment: %s', $this->resolveEnvironmentLabel());
+        $lines[] = '';
         $lines[] = '';
         $lines[] = $this->renderIssueSection('🔥 P0 (Must fix now)', $groups['P0']);
         $lines[] = $this->renderIssueSection('⚠️ P1 (Fix this week)', $groups['P1']);
         $lines[] = $this->renderIssueSection('🧹 P2 (Cleanup/backlog)', $groups['P2']);
 
         $lines[] = $this->renderAiWorkQueue($issues);
-        $lines[] = $this->renderPromptSection('📌 “Ask ChatGPT” prompts', $issues, 'chatgpt');
-        $lines[] = $this->renderPromptSection('🤖 “Ask Codex” prompts', $issues, 'codex');
+        $lines[] = $this->renderPromptSection('📌 Copy/paste prompts for ChatGPT', $issues, 'chatgpt');
+        $lines[] = $this->renderPromptSection('🤖 Copy/paste prompts for Codex', $issues, 'codex');
 
         $lines[] = '✅ Completion checklist';
         $lines[] = '';
@@ -181,7 +195,7 @@ class NextSteps extends SafeBaseCommand
      */
     private function renderAiWorkQueue(array $issues): string
     {
-        $queue = array_values(array_filter($issues, static fn (array $issue): bool => ($issue['owner'] ?? 'human') !== 'human'));
+        $queue = array_values(array_filter($issues, static fn (array $issue): bool => (bool) ($issue['auto_queue'] ?? false)));
         $lines = ['🧠 AI Work Queue (things your worker can do safely)', ''];
 
         if ($queue === []) {
@@ -213,12 +227,14 @@ class NextSteps extends SafeBaseCommand
         }
 
         foreach ($filtered as $issue) {
-            if (($issue['ai_prompt'] ?? '') === '') {
+            $promptKey = $target === 'chatgpt' ? 'chatgpt_prompt' : 'codex_prompt';
+            $prompt = (string) ($issue[$promptKey] ?? '');
+            if ($prompt === '') {
                 continue;
             }
             $lines[] = sprintf('**%s**', $issue['title']);
             $lines[] = '```';
-            $lines[] = $issue['ai_prompt'];
+            $lines[] = $prompt;
             $lines[] = '```';
             $lines[] = '';
         }
@@ -276,6 +292,7 @@ class NextSteps extends SafeBaseCommand
 
         $payload = [
             'generated_at' => $generatedAt,
+            'environment' => $this->resolveEnvironmentLabel(),
             'issue_count' => count($issues),
             'issues' => array_values($issues),
         ];
@@ -387,6 +404,14 @@ class NextSteps extends SafeBaseCommand
         }
 
         return $value;
+    }
+
+    private function resolveEnvironmentLabel(): string
+    {
+        $env = env('CI_ENVIRONMENT', 'production');
+        $host = gethostname() ?: 'unknown-host';
+
+        return sprintf('%s (%s)', $env, $host);
     }
 
     protected function isDestructive(): bool
