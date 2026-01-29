@@ -1,19 +1,23 @@
 # spark:ops:work
 
 ## Purpose
-Process operations queue items and dispatch registered jobs.
+Process AiOps task queue items, claim locks, and record task runs.
 
 ## Usage
-php spark ops:work --limit=25
+php spark ops:work 10 --lock=15
 
 ## Arguments
-- --limit (int) – Maximum number of jobs to process (default: 25).
+- `limit` (int) – Maximum number of tasks to process (default: 10).
+
+## Options
+- `--lock` (int) – Lock duration in minutes (default: 15).
+- `--dry-run` – Preview without claiming tasks.
 
 ## What It Touches
-- Database tables: `bf_ops_queue`, `bf_ops_jobs`, `bf_ops_job_runs`
-- Files/directories: None
+- Database tables: `bf_aiops_tasks`, `bf_aiops_task_runs`
+- Files/directories: Optional `writable/triage/patches` in safe mode.
 - Cache: None
-- External APIs: Depends on job handlers.
+- External APIs: None (unless task handlers call them).
 
 ## Read / Write Classification
 - ✅ Read-only
@@ -29,8 +33,8 @@ php spark ops:work --limit=25
 - spark:ops:analyze-commands
 
 ## Failure Modes
-- Unknown job key in queue.
-- Handler exceptions (job marked failed).
+- No tasks available (worker exits cleanly).
+- Handler exceptions (task marked failed, run logged).
 
 ## Status
 - Existing
