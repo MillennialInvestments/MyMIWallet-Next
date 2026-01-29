@@ -5,7 +5,7 @@ This map inventories the end-to-end Spark management commands needed to operate 
 | Category | Command Name | Purpose | Trigger | Risk Level | Automation Ready |
 | --- | --- | --- | --- | --- | --- |
 | Runtime | runtime:check | Confirm runtime sanity (PHP handler, writable, cache, routes). | On incident or deploy | Medium | Assisted |
-| Runtime | runtime:diagnose-502 | Diagnose 502/503 gateways and optionally apply safe fixes. | On 502/503 | High | Assisted (auto-fix w/ --force) |
+| Runtime | runtime:diagnose-502 | Diagnose 502/503 gateways and optionally apply safe fixes. | On 502/503 | High | Assisted (auto-fix w/ --approve) |
 | Runtime | spark:diagnose-503 | Legacy 503 diagnostics for cache, writable, upstream. | On 503 | Medium | Manual |
 | Runtime | fix:503 | Apply safe 503 remediation steps. | On 503 | High | Approved Auto |
 | Runtime | spark:purge-fastcgi | Remove stale FastCGI config targets. | On socket mismatch | High | Approved Auto |
@@ -67,4 +67,3 @@ This map inventories the end-to-end Spark management commands needed to operate 
 | Growth (Proposed) | growth:retention-watch | **Proposed**: Detect churn or retention anomalies via metrics. | Weekly | Medium | Assisted |
 | User Experience (Proposed) | ux:journey-audit | **Proposed**: Validate key user journeys for regressions. | Weekly | Medium | Assisted |
 | Financial / Revenue (Proposed) | revenue:cost-forecast | **Proposed**: Forecast API/infra spend and flag overruns. | Weekly | Medium | Assisted |
-

@@ -2,21 +2,26 @@
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class TrafficSpikeGuard extends BaseCommand
+class TrafficSpikeGuard extends SafeBaseCommand
 {
     protected $group       = 'maintenance';
     protected $name        = 'spark:traffic-spike-guard';
     protected $description = 'Detect traffic/error spikes that commonly lead to 503 and alert Discord.';
     protected $usage       = 'spark:traffic-spike-guard [--lines=500] [--threshold=15] [--discord]';
+    protected $options     = [
+        '--lines' => 'Number of log lines to scan (default 500)',
+        '--threshold' => 'Spike threshold per metric (default 15)',
+        '--discord' => 'Send alert to Discord if spike detected',
+    ];
 
     public function run(array $params)
     {
+        [, $flags] = $this->parseParams($params);
         $lines = 500;
         $threshold = 15;
-        $discord = in_array('--discord', $params, true);
+        $discord = isset($flags['discord']);
 
         foreach ($params as $p) {
             if (preg_match('/^--lines=(\d+)$/', $p, $m)) $lines = (int) $m[1];
@@ -100,5 +105,10 @@ class TrafficSpikeGuard extends BaseCommand
                 'timeout' => 5,
             ]
         ]));
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }

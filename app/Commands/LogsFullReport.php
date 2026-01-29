@@ -2,10 +2,9 @@
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class LogsFullReport extends BaseCommand
+class LogsFullReport extends SafeBaseCommand
 {
     protected $group       = 'maintenance';
     protected $name        = 'logs:full-report';
@@ -14,15 +13,21 @@ class LogsFullReport extends BaseCommand
     protected $arguments   = [
         'date' => 'Optional: today|yesterday|YYYY-MM-DD (defaults to today).',
     ];
+    protected $options     = [
+        '--save' => 'Write the report to writable/reports/logs',
+        '--fix-hints' => 'Include fix hints in the report',
+        '--discord' => 'Send a condensed summary to Discord',
+    ];
 
     public function run(array $params)
     {
-        $arg = $params[0] ?? 'today';
+        [$args, $flags] = $this->parseParams($params);
+        $arg = $args[0] ?? 'today';
         $date = $this->resolveDate($arg);
 
-        $save     = in_array('--save', $params, true);
-        $fixHints = in_array('--fix-hints', $params, true);
-        $discord  = in_array('--discord', $params, true);
+        $save     = isset($flags['save']);
+        $fixHints = isset($flags['fix-hints']);
+        $discord  = isset($flags['discord']);
 
         $records = [];
 
@@ -280,7 +285,7 @@ class LogsFullReport extends BaseCommand
             $hints[] = "- Memory exhaustion detected: batch heavy jobs (Marketing digest, large email summaries) and avoid loading large HTML into memory.";
         }
         if (stripos($joined, 'controller.sock failed (111: Connection refused)') !== false) {
-            $hints[] = "- Upstream socket refused: you still have php-pm / fastcgi sock references in webserver config. Run `php spark spark:purge-fastcgi --apply` and restart web stack in DreamHost panel.";
+            $hints[] = "- Upstream socket refused: you still have php-pm / fastcgi sock references in webserver config. Run `php spark spark:purge-fastcgi --approve` and restart web stack in DreamHost panel.";
         }
         if (stripos($joined, 'FactoriesCache') !== false || stripos($joined, 'FileVarExportHandler') !== false) {
             $hints[] = "- Config cache corruption: delete `writable/cache/FactoriesCache_*` and re-test.";
@@ -328,6 +333,11 @@ class LogsFullReport extends BaseCommand
                 'timeout' => 5,
             ]
         ]));
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 
     private function guessLevel(string $line, string $source): string

@@ -15,7 +15,7 @@ These methods do not exist on CI4 `BaseCommand` and will throw runtime errors.
 
 ## Required Base Command
 
-All Spark commands must extend `App\Commands\SafeBaseCommand`. This provides the CI4-safe parser, dry-run resolution, and destructive guards. Commands should not duplicate these helpers.
+All Spark commands must extend `App\Commands\SafeBaseCommand`. This provides the CI4-safe parser, intent logging, dry-run resolution, and destructive guards. Commands should not duplicate these helpers.
 
 ## Required Param Parsing Pattern
 
@@ -45,6 +45,8 @@ Usage in `run`:
 [$args, $flags] = $this->parseParams($params);
 ```
 
+> `parseParams()` now logs intent and enforces approval guards automatically.
+
 ## Destructive vs Non-Destructive Rules
 
 Every command **must** define:
@@ -62,7 +64,7 @@ Examples: summarize, healthcheck, report, audit, analyze.
 
 - ✅ **Write output by default**
 - ✅ **Support optional `--dry-run`**
-- ❌ **Never require `--force`**
+- ❌ **Never require `--approve`**
 - ❌ **Never auto-enable dry-run**
 
 Dry-run handling (use the base helper):
@@ -75,18 +77,9 @@ $dryRun = $this->resolveDryRun($flags);
 
 Examples: prune, purge, delete, rewrite, backfill (when overwriting data).
 
-- ❌ **Must not run without `--force`**
+- ❌ **Must not run without `--approve`**
 - ✅ **May support `--dry-run`**
-- ✅ **Must hard-fail when `--force` is missing**
-
-Guard pattern (use the base helper):
-
-```php
-$blocked = $this->guardDestructive($flags, $params);
-if ($blocked !== null) {
-    return $blocked;
-}
-```
+- ✅ **Must hard-fail when `--approve` is missing**
 
 ## Logging Requirements
 

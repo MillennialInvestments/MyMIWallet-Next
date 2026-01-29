@@ -11,12 +11,13 @@ class MailSend extends SafeBaseCommand
     protected $group       = 'Mail';
     protected $name        = 'mail:send';
     protected $description = 'Process and send queued mail jobs.';
-    protected $usage       = 'mail:send [limit]';
+    protected $usage       = 'mail:send [limit] [--dry-run] [--approve]';
     protected $arguments   = [
         'limit' => 'Optional: max number of queued emails to send (default 25).',
     ];
     protected $options = [
         '--dry-run' => 'Preview actions without sending emails',
+        '--approve' => 'Acknowledge and send queued emails',
     ];
 
     public function run(array $params)
@@ -60,6 +61,6 @@ class MailSend extends SafeBaseCommand
 
     protected function isDestructive(): bool
     {
-        return false;
+        return true;
     }
 }

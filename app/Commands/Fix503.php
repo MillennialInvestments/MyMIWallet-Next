@@ -17,9 +17,10 @@ class Fix503 extends SafeBaseCommand
     protected $group = 'ops';
     protected $name = 'fix:503';
     protected $description = 'Diagnose and attempt safe auto-fixes for 503 errors.';
-    protected $usage = 'fix:503';
+    protected $usage = 'fix:503 [--dry-run] [--approve]';
     protected $options = [
         '--dry-run' => 'Run diagnostics without taking any corrective actions',
+        '--approve' => 'Acknowledge and apply corrective actions',
     ];
 
     private string $logPath;
@@ -214,7 +215,7 @@ class Fix503 extends SafeBaseCommand
 
     protected function isDestructive(): bool
     {
-        return false;
+        return true;
     }
 
     private function initializeLog(): void

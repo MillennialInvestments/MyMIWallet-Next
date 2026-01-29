@@ -7,21 +7,23 @@ use CodeIgniter\CLI\CLI;
 
 class CommandsAutofix extends SafeBaseCommand
 {
+    protected bool $defaultDryRun = true;
     protected $group = 'ops';
     protected $name = 'ops:commands:autofix';
     protected $description = 'Auto-fix Spark commands that define illegal constructors.';
-    protected $usage = 'ops:commands:autofix [--dry-run] [--force]';
+    protected $usage = 'ops:commands:autofix [--dry-run] [--approve]';
     protected $options = [
         '--dry-run' => 'Preview changes without modifying files (default)',
-        '--force' => 'Apply fixes and write updated files',
+        '--approve' => 'Apply fixes and write updated files',
     ];
 
     public function run(array $params)
     {
         [, $flags] = $this->parseParams($params);
         $dryRun = $this->resolveDryRun($flags);
+        $approved = isset($flags['approve']);
 
-        if (! isset($flags['force'])) {
+        if (! $approved) {
             $dryRun = true;
         }
 
@@ -41,7 +43,7 @@ class CommandsAutofix extends SafeBaseCommand
         CLI::write(sprintf('Found %d illegal constructor(s).', count($violations)), 'yellow');
 
         if ($dryRun) {
-            CLI::write('Dry-run mode enabled. Use --force to apply fixes.', 'yellow');
+            CLI::write('Dry-run mode enabled. Use --approve to apply fixes.', 'yellow');
         }
 
         foreach ($violations as $entry) {
