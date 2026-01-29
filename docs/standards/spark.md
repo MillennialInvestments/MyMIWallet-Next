@@ -14,6 +14,8 @@ These rules lock down Spark command behavior to prevent silent command loss and 
 - Resolve dependencies inside `run()` via `Config\Services` or helpers like `service()`.
 - Register each command explicitly in `app/Config/Console.php`.
 - Run `php spark ops:commands:audit` before merge.
+- Use discovery-safe metadata: untyped `$group`, `$name`, `$description`, `$usage`, `$options` fields only.
+- Avoid typed properties for Spark metadata; typed properties can break discovery.
 
 ## 🔥 Rationale
 
@@ -59,11 +61,15 @@ Supported emit modes:
 Issue schema fields:
 
 - `id` (stable hash)
+- `task_key` (same as `id`)
 - `domain` (`dev|ops|security|ux|marketing`)
 - `severity` (`P0|P1|P2`)
 - `title`
 - `evidence` (file paths/log excerpts/command outputs)
 - `suggested_fix` (short steps)
-- `ai_prompt` (agent prompt)
+- `ai_prompt` (legacy single prompt)
+- `codex_prompt` (copy/paste prompt block)
+- `chatgpt_prompt` (copy/paste prompt block)
 - `owner` (`human|codex|aiops`)
 - `status` (`open|queued|done`)
+- `auto_queue` (`true|false`)

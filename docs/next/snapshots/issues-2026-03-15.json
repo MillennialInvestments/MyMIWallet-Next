@@ -1,0 +1,43 @@
+{
+  "generated_at": "2026-03-15T12:00:00Z",
+  "environment": "production (example-host)",
+  "issue_count": 2,
+  "issues": [
+    {
+      "id": "5f7e0a4b2b0b6cbb4f7a43f4b04a6a8b1387b7d0",
+      "task_key": "5f7e0a4b2b0b6cbb4f7a43f4b04a6a8b1387b7d0",
+      "domain": "ops",
+      "severity": "P1",
+      "title": "Update ops:work pipeline logging",
+      "evidence": {
+        "file": "app/Commands/OpsWork.php"
+      },
+      "suggested_fix": [
+        "Add bf_aiops_task_runs logging for every worker execution."
+      ],
+      "codex_prompt": "Add bf_aiops_task_runs logging to ops:work and ensure task runs are persisted.",
+      "chatgpt_prompt": "Summarize missing logging in ops:work and propose a safe patch plan.",
+      "owner": "human",
+      "status": "open",
+      "auto_queue": false
+    },
+    {
+      "id": "6f3d415d2a1d1db5d1c15d9a3cfc8b5f4c6d4c33",
+      "task_key": "6f3d415d2a1d1db5d1c15d9a3cfc8b5f4c6d4c33",
+      "domain": "ops",
+      "severity": "P2",
+      "title": "Add chat env template CI validation",
+      "evidence": {
+        "file": "scripts/ci/check-chat-env.sh"
+      },
+      "suggested_fix": [
+        "Ensure staging/prod templates include required keys and add CI validation."
+      ],
+      "codex_prompt": "Add a CI script to validate chat env template keys and include staging/prod templates.",
+      "chatgpt_prompt": "Summarize required chat env keys and how to validate them in CI.",
+      "owner": "codex",
+      "status": "open",
+      "auto_queue": true
+    }
+  ]
+}
