@@ -9,21 +9,21 @@ class Diagnose502 extends \App\Commands\SafeBaseCommand
     protected $group = 'runtime';
     protected $name = 'runtime:diagnose-502';
     protected $description = 'Diagnose and optionally remediate 502/503 gateway errors';
-    protected $usage = 'runtime:diagnose-502 [--force]';
+    protected $usage = 'runtime:diagnose-502 [--approve]';
     protected $options = [
-        '--force' => 'Apply safe fixes (clear cache, remove stale sockets) after diagnostics',
+        '--approve' => 'Apply safe fixes (clear cache, remove stale sockets) after diagnostics',
     ];
 
     public function run(array $params)
     {
         [$args, $flags] = $this->parseParams($params);
-        $fixMode = isset($flags['force']);
+        $fixMode = isset($flags['approve']);
 
         CLI::write('Runtime 502/503 Diagnostics', 'yellow');
         if ($fixMode) {
-            CLI::write('Fix mode enabled (--force).', 'yellow');
+            CLI::write('Fix mode enabled (--approve).', 'yellow');
         } else {
-            CLI::write('Detection mode only. Re-run with --force to apply safe fixes.', 'yellow');
+            CLI::write('Detection mode only. Re-run with --approve to apply safe fixes.', 'yellow');
         }
         CLI::newLine();
 
@@ -250,7 +250,7 @@ class Diagnose502 extends \App\Commands\SafeBaseCommand
     private function applyFixes(array $socketStatus, array $cacheStatus, array $writableStatus): void
     {
         CLI::newLine();
-        CLI::write('Safe Fixes (--force)', 'yellow');
+        CLI::write('Safe Fixes (--approve)', 'yellow');
 
         if (! $writableStatus['ok']) {
             CLI::write('⚠ Skipping cache cleanup: writable paths are not healthy.');

@@ -20,11 +20,12 @@ class NextSteps extends SafeBaseCommand
     protected $group = 'ops';
     protected $name = 'ops:next-steps';
     protected $description = 'Generate next-steps issues from audit commands and write docs/snapshots.';
-    protected $usage = 'ops:next-steps [--emit=docs|db|both] [--date=YYYY-MM-DD]';
+    protected $usage = 'ops:next-steps [--emit=docs|db|both] [--date=YYYY-MM-DD] [--dry-run] [--approve]';
     protected $options = [
         '--emit' => 'docs (default), db, or both',
         '--date' => 'Override the snapshot date (YYYY-MM-DD)',
         '--dry-run' => 'Run analyzers but skip writes',
+        '--approve' => 'Acknowledge and write docs/snapshots/tasks',
     ];
 
     public function run(array $params)
@@ -418,6 +419,6 @@ class NextSteps extends SafeBaseCommand
 
     protected function isDestructive(): bool
     {
-        return false;
+        return true;
     }
 }

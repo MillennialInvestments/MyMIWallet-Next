@@ -17,7 +17,7 @@ This roadmap sequences the rollout of management commands toward a fully autonom
 - Ensure vendor bootstrapping so `php spark list` runs.
 
 **Risk controls**
-- Use Assisted mode by default; `--force` required for remediation.
+- Use Assisted mode by default; `--approve` required for remediation.
 - Write all incident findings to `/docs/next/`.
 
 **Metrics improved**
@@ -52,9 +52,9 @@ This roadmap sequences the rollout of management commands toward a fully autonom
 
 **Commands involved**
 - ops:next-steps, ops:work
-- runtime:diagnose-502 --force
+- runtime:diagnose-502 --approve
 - fix:503, spark:purge-fastcgi, spark:restart-safe
-- runtime:cache-boot --force (proposed)
+- runtime:cache-boot --approve (proposed)
 - ops:next-steps:sync (proposed)
 
 **Dependencies**
@@ -62,7 +62,7 @@ This roadmap sequences the rollout of management commands toward a fully autonom
 - OpsWorker available for scheduled execution.
 
 **Risk controls**
-- Approved Auto only with explicit `--force`.
+- Approved Auto only with explicit `--approve`.
 - Issue queue must support human override and rollback.
 
 **Metrics improved**
@@ -109,4 +109,3 @@ This roadmap sequences the rollout of management commands toward a fully autonom
 - Autonomous resolution rate
 - Predictive incident prevention
 - Reduced human intervention to approvals only
-

@@ -34,20 +34,9 @@ class Summarize extends SafeBaseCommand
         $targetDate = $this->resolveTargetDate($args[0] ?? null);
 
         // -----------------------------
-        // Safety guard (future-proof)
-        // -----------------------------
-        // -----------------------------
         // Dry-run handling (correct)
         // -----------------------------
         $dryRun = $this->resolveDryRun($flags);
-
-        // -----------------------------
-        // Destructive safety guard
-        // -----------------------------
-        $blocked = $this->guardDestructive($flags, $params);
-        if ($blocked !== null) {
-            return $blocked;
-        }
 
         // -----------------------------
         // Execute service

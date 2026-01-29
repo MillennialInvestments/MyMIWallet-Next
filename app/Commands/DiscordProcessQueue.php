@@ -9,12 +9,13 @@ class DiscordProcessQueue extends SafeBaseCommand
     protected $group       = 'Discord';
     protected $name        = 'discord:process-queue';
     protected $description = 'Process queued Discord messages respecting quiet hours and pacing.';
-    protected $usage       = 'php spark discord:process-queue [limit]';
+    protected $usage       = 'php spark discord:process-queue [limit] [--dry-run] [--approve]';
     protected $arguments   = [
         'limit' => 'Optional: max messages to process (default 25).',
     ];
     protected $options     = [
         '--dry-run' => 'Preview actions without processing the queue',
+        '--approve' => 'Acknowledge and send queued messages',
     ];
 
     public function run(array $params)
@@ -62,6 +63,6 @@ class DiscordProcessQueue extends SafeBaseCommand
 
     protected function isDestructive(): bool
     {
-        return false;
+        return true;
     }
 }

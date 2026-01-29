@@ -6,7 +6,7 @@
 | --- | --- |
 | Manual | Human runs command and applies changes. |
 | Assisted | Command suggests actions or writes reports; no changes by default. |
-| Approved Auto | Requires explicit `--force` or similar confirmation. |
+| Approved Auto | Requires explicit `--approve` or similar confirmation. |
 | Fully Autonomous | Runs via OpsWorker/AiOps tasks without manual intervention. |
 
 ## Command → Tier Mapping
@@ -27,7 +27,7 @@
 
 ### Assisted
 - runtime:check
-- runtime:diagnose-502 (without --force)
+- runtime:diagnose-502 (without --approve)
 - spark:diagnose-503
 - spark:traffic-spike-guard
 - env:doctor
@@ -54,6 +54,7 @@
 - auth:audit
 - auth:funnel-check
 - ops:commands:audit
+- ops:lint:commands
 - ops:commands:inventory (proposed)
 - config:drift (proposed)
 - db:drift (proposed)
@@ -65,7 +66,7 @@
 - ops:next-steps:sync (proposed, in dry-run)
 
 ### Approved Auto
-- runtime:diagnose-502 --force
+- runtime:diagnose-502 --approve
 - fix:503
 - spark:purge-fastcgi
 - spark:restart-safe
@@ -77,10 +78,17 @@
 - ops:analyze-commands
 - ops:next-steps
 - ops:commands:autofix
-- runtime:triage (proposed with --force)
-- runtime:cache-boot (proposed with --force)
+- runtime:triage (proposed with --approve)
+- runtime:cache-boot (proposed with --approve)
 - ops:next-steps:sync (proposed in enqueue mode)
 
 ### Fully Autonomous
 - ops:work
 
+## Safety Contract Mapping
+
+The command tiers map directly to runtime safety enforcement in `SafeBaseCommand`:
+
+- **Manual / Assisted**: default behavior, no approval required, `--dry-run` preferred for rehearsals.
+- **Approved Auto**: destructive commands must receive `--approve`, otherwise they hard-fail or run in `--dry-run`.
+- **Fully Autonomous**: commands are marked AiOps runnable and are safe to run from automation pipelines.

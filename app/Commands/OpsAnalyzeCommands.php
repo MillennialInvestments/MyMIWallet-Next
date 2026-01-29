@@ -13,6 +13,7 @@ class OpsAnalyzeCommands extends SafeBaseCommand
     protected $description = 'Analyze parsed ops inbox items and generate AI plans';
     protected $options     = [
         '--dry-run' => 'Preview actions without updating inbox items',
+        '--approve' => 'Acknowledge and update inbox items',
     ];
 
     protected OpsCommandService $service;
@@ -155,6 +156,6 @@ class OpsAnalyzeCommands extends SafeBaseCommand
 
     protected function isDestructive(): bool
     {
-        return false;
+        return true;
     }
 }

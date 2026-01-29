@@ -12,12 +12,13 @@ class WalletsWarmSummaryCache extends SafeBaseCommand
     protected $group       = 'wallets';
     protected $name        = 'wallets:warm-summary-cache';
     protected $description = 'Pre-warm the /API/Wallets/summary cache for active users.';
-    protected $usage       = 'wallets:warm-summary-cache [user-id] [--dry-run]';
+    protected $usage       = 'wallets:warm-summary-cache [user-id] [--dry-run] [--approve]';
     protected $arguments   = [
         'user-id' => 'Optional user ID to warm (default: all active).',
     ];
     protected $options     = [
         '--dry-run' => 'Preview actions without warming cache',
+        '--approve' => 'Acknowledge and warm summary cache',
     ];
 
     private ?WalletSummaryService $summaryService = null;
@@ -88,6 +89,6 @@ class WalletsWarmSummaryCache extends SafeBaseCommand
 
     protected function isDestructive(): bool
     {
-        return false;
+        return true;
     }
 }

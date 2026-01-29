@@ -13,7 +13,7 @@ Each command below is **design-only**; no PHP code is requested.
 - **Group:** runtime
 - **Description:** Consolidate 502/503 diagnostics, envdoctor snapshots, cache boot checks, and FastCGI scans into a single report.
 - **Audits:** FastCGI socket/handler mismatches, writable permissions, cache boot, current runtime status.
-- **Fixes:** None by default; suggests `--force` actions (cache clear, stale socket cleanup) if available.
+- **Fixes:** None by default; suggests `--approve` actions (cache clear, stale socket cleanup) if available.
 - **Mode:** suggestive (audit-only by default).
 - **Safe-mode behavior:** read-only; writes summary to `docs/next/` and `writable/triage/`.
 - **AiOps enqueue:** If failures detected, enqueue tasks via `ops:next-steps` to bf_aiops_tasks.
@@ -24,8 +24,8 @@ Each command below is **design-only**; no PHP code is requested.
 - **Description:** Validate cache boot health and warm critical cache keys.
 - **Audits:** writable/cache existence, write permissions, cache service readiness.
 - **Fixes:** Clear cache, recreate cache directories, and warm key summaries.
-- **Mode:** auto-fix with `--force`.
-- **Safe-mode behavior:** without `--force`, only reports and suggests fixes.
+- **Mode:** auto-fix with `--approve`.
+- **Safe-mode behavior:** without `--approve`, only reports and suggests fixes.
 - **AiOps enqueue:** Queue cache repair tasks when cache health fails.
 - **Writes to /docs/next:** `docs/next/Cache-Boot-Report.md`.
 
@@ -118,4 +118,3 @@ Each command below is **design-only**; no PHP code is requested.
 - **Safe-mode behavior:** read-only diff if `--dry-run`.
 - **AiOps enqueue:** Only net-new issues are queued.
 - **Writes to /docs/next:** `docs/next/Next-Steps-Diff.md`.
-

@@ -2,19 +2,27 @@
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class PurgeFastCGI extends BaseCommand
+class PurgeFastCGI extends SafeBaseCommand
 {
     protected $group       = 'maintenance';
     protected $name        = 'spark:purge-fastcgi';
     protected $description = 'Detect and neutralize legacy FastCGI/php-pm socket references safely.';
-    protected $usage       = 'spark:purge-fastcgi [--apply]';
+    protected $usage       = 'spark:purge-fastcgi [--approve]';
+    protected $options     = [
+        '--approve' => 'Acknowledge and rename files that reference FastCGI/php-pm sockets',
+    ];
 
     public function run(array $params)
     {
-        $apply = in_array('--apply', $params, true);
+        [, $flags] = $this->parseParams($params);
+        $apply = isset($flags['approve']);
+
+        if (isset($flags['apply'])) {
+            CLI::error('Use --approve instead of --apply.');
+            return EXIT_ERROR;
+        }
 
         CLI::write('Scanning for php-pm / fastcgi / controller.sock references…', 'yellow');
 
@@ -74,7 +82,12 @@ class PurgeFastCGI extends BaseCommand
         }
 
         CLI::newLine();
-        CLI::write($apply ? 'Disabled hit files (*.disabled).' : 'Re-run with --apply to disable.', 'yellow');
+        CLI::write($apply ? 'Disabled hit files (*.disabled).' : 'Re-run with --approve to disable.', 'yellow');
         CLI::write('After disabling, restart stack via DreamHost panel (no sudo).', 'yellow');
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }

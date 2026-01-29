@@ -28,6 +28,12 @@ to your `app` folder. The affected files can be copied or merged from
 Copy `env` to `.env` and tailor for your app, specifically the baseURL
 and any database settings.
 
+## Spark Runtime Validation & Safety
+
+- **Static validation**: `php spark ops:commands:audit` and `php spark ops:lint:commands` enforce constructor safety, metadata, and docs coverage. See `docs/management/Command_Runtime_Audit.md`.
+- **Runtime validation**: Spark boot prerequisites (vendor, boot files, .env) are documented in `docs/management/Spark_Bootstrap_Requirements.md`.
+- **Automatic enforcement**: destructive commands require `--approve` and support `--dry-run` via `SafeBaseCommand`.
+
 ## Important Change with index.php
 
 `index.php` is no longer in the root of the project! It has been moved inside the *public* folder,

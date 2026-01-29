@@ -2,19 +2,22 @@
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class Diagnose503 extends BaseCommand
+class Diagnose503 extends SafeBaseCommand
 {
     protected $group       = 'maintenance';
     protected $name        = 'spark:diagnose-503';
     protected $description = 'Diagnose common 503 causes (cache, maintenance filter, upstream, writable).';
     protected $usage       = 'spark:diagnose-503 [--discord]';
+    protected $options     = [
+        '--discord' => 'Send failures to Discord if configured',
+    ];
 
     public function run(array $params)
     {
-        $discord = in_array('--discord', $params, true);
+        [, $flags] = $this->parseParams($params);
+        $discord = isset($flags['discord']);
 
         $results = [];
 
@@ -49,7 +52,7 @@ class Diagnose503 extends BaseCommand
         CLI::write('Suggested Actions:', 'yellow');
 
         if ($upstreamRefused) {
-            CLI::write('- Your web server is still pointing at php-pm controller.sock (refused). Run: php spark spark:purge-fastcgi --apply', 'white');
+            CLI::write('- Your web server is still pointing at php-pm controller.sock (refused). Run: php spark spark:purge-fastcgi --approve', 'white');
             CLI::write('- Then restart the site stack in DreamHost panel (Apache/PHP-FPM).', 'white');
         }
 
@@ -78,5 +81,10 @@ class Diagnose503 extends BaseCommand
                 'timeout' => 5,
             ]
         ]));
+    }
+
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }
