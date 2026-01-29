@@ -15,6 +15,7 @@ class Services extends SafeBaseCommand
 
     public function run(array $params)
     {
+        $this->parseParams($params);
         log_message('info', '[spark:health:services] Started', ['params' => $params]);
         CLI::write('Running service health checks...', 'yellow');
 

@@ -15,6 +15,7 @@ class MigrateDryRun extends SafeBaseCommand
 
     public function run(array $params)
     {
+        $this->parseParams($params);
         $config = config(Migrations::class);
         $db = Database::connect();
         $table = $config->table ?? 'migrations';

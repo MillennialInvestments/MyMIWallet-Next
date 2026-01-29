@@ -218,7 +218,7 @@ Codex guardrails (Spark commands):
 
 - Codex must never generate a Spark command with a `__construct()` method.
 - All Spark commands must extend `SafeBaseCommand`.
-- Any command that diagnoses or fixes infrastructure issues must support `--dry-run`, require `--force` for destructive actions, and never modify system configs.
+- Any command that diagnoses or fixes infrastructure issues must support `--dry-run`, require `--approve` for destructive actions, and never modify system configs.
 - Any deviation is a build-blocking defect.
 
 📁 REQUIRED DOC STRUCTURE

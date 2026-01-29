@@ -17,6 +17,7 @@ class RuntimeCheck extends SafeBaseCommand
 
     public function run(array $params)
     {
+        $this->parseParams($params);
         CLI::write('MyMI Wallet – Runtime Check', 'yellow');
         CLI::newLine();
 

@@ -23,8 +23,8 @@ This document translates existing documentation into a management-oriented Spark
 | Category | Command name (proposed) | Purpose | Inputs | Outputs | Safe / Destructive | Emits ops:next-steps? | AIOps-eligible? |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Runtime & Infra | runtime:triage | Consolidate runtime + envdoctor + FastCGI triage into one report. | Server snapshots, cache state, socket checks | `docs/next/Runtime-Triage.md` + snapshot JSON | Read-only | Yes | Yes |【F:docs/management/Recommended_New_Commands.md†L12-L21】
-| Runtime & Infra | runtime:cache-boot | Validate cache boot and warm critical caches. | Cache paths, writable perms | `docs/next/Cache-Boot-Report.md` | Guarded (--force) | Yes | Yes |【F:docs/management/Recommended_New_Commands.md†L22-L31】
-| Runtime & Infra | runtime:diagnose-502 | Existing command for 502/503 diagnostics. | N/A | CLI output + logs | Guarded (--force) | Yes | Yes |【F:docs/management/Management_Command_Map.md†L7-L10】
+| Runtime & Infra | runtime:cache-boot | Validate cache boot and warm critical caches. | Cache paths, writable perms | `docs/next/Cache-Boot-Report.md` | Guarded (--approve) | Yes | Yes |【F:docs/management/Recommended_New_Commands.md†L22-L31】
+| Runtime & Infra | runtime:diagnose-502 | Existing command for 502/503 diagnostics. | N/A | CLI output + logs | Guarded (--approve) | Yes | Yes |【F:docs/management/Management_Command_Map.md†L7-L10】
 | User Lifecycle | auth:smoke | Existing auth smoke tests for login flows. | Auth endpoints | CLI output + logs | Read-only | Yes | Yes |【F:docs/management/Management_Command_Map.md†L48-L50】
 | User Lifecycle | ux:journey-audit | Validate critical onboarding/UX journeys. | Auth + onboarding steps | `docs/next/UX-Journey.md` | Read-only | Yes | Yes |【F:docs/management/Recommended_New_Commands.md†L92-L100】
 | Financial Health | budget:health-audit | (Proposed) Audit budget summary health and degraded flags. | `/API/Budget/*` responses | `docs/next/Budget-Health.md` | Read-only | Yes | Yes |【F:docs/budget/budget-controller.md†L1-L110】
@@ -48,7 +48,7 @@ This document translates existing documentation into a management-oriented Spark
 | Command | Safety class | Rationale |
 | --- | --- | --- |
 | runtime:triage | Read-only | Report-only output to `docs/next/`. |【F:docs/management/Recommended_New_Commands.md†L12-L21】
-| runtime:cache-boot | Guarded (--force) | Cache changes are allowed only with explicit confirmation. |【F:docs/management/Recommended_New_Commands.md†L22-L31】
+| runtime:cache-boot | Guarded (--approve) | Cache changes are allowed only with explicit confirmation. |【F:docs/management/Recommended_New_Commands.md†L22-L31】
 | config:drift | Read-only | Drift reports should not edit config. |【F:docs/management/Recommended_New_Commands.md†L32-L40】
 | db:drift | Read-only | Schema diffs require human approval for fixes. |【F:docs/management/Recommended_New_Commands.md†L52-L60】
 | security:secrets-audit | Read-only | Detection-only with redaction guidance. |【F:docs/management/Recommended_New_Commands.md†L62-L70】
@@ -70,4 +70,3 @@ This document translates existing documentation into a management-oriented Spark
 | ux:journey-audit | Yes | Yes | Yes | Yes (`docs/next/UX-Journey.md`) | No |【F:docs/management/Recommended_New_Commands.md†L92-L100】
 | ops:next-steps | N/A | Yes | Optional | Yes (`docs/next/Next-Steps.md`) | Yes |【F:docs/management/Management_Command_Map.md†L53-L56】
 | ops:work | N/A | N/A | Optional | Task logs | Yes |【F:docs/management/Management_Command_Map.md†L55-L56】
-

@@ -41,8 +41,8 @@
 - App\Services\Spark\DbApplyDocsService
 
 ## Risks
-- Auth audits and smoke tests create/update test users; use `--force` in low-traffic windows.
-- db:apply-docs can execute schema changes; requires `--force` and manual review.
+- Auth audits and smoke tests create/update test users; use `--approve` in low-traffic windows.
+- db:apply-docs can execute schema changes; requires `--approve` and manual review.
 - logs:summarize writes summary/state files; use dry-run to preview when needed.
 
 ## CRON suitability

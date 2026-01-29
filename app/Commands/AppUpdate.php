@@ -14,6 +14,7 @@ class AppUpdate extends SafeBaseCommand
 
     public function run(array $params)
     {
+        $this->parseParams($params);
         CLI::write('Starting app update...', 'green');
 
         Services::cache()->clean();

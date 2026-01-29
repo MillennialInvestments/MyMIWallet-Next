@@ -13,6 +13,7 @@ class OpsFetchCommands extends SafeBaseCommand
     protected $description = 'Fetch unread ops commands from IMAP and store them in bf_ops_command_inbox';
     protected $options     = [
         '--dry-run' => 'Preview actions without storing inbox items',
+        '--approve' => 'Acknowledge and store inbox items',
     ];
 
     private ?OpsCommandInboxModel $model = null;
@@ -262,6 +263,6 @@ class OpsFetchCommands extends SafeBaseCommand
 
     protected function isDestructive(): bool
     {
-        return false;
+        return true;
     }
 }

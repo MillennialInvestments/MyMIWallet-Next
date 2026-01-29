@@ -10,12 +10,13 @@ class ForecastRefresh extends SafeBaseCommand
     protected $group = 'Forecasts';
     protected $name = 'forecasts:refresh';
     protected $description = 'Refresh forecasts for open alerts.';
-    protected $usage = 'forecasts:refresh [limit] [--dry-run]';
+    protected $usage = 'forecasts:refresh [limit] [--dry-run] [--approve]';
     protected $arguments = [
         'limit' => 'Optional: max alerts to refresh (default 50, max 200).',
     ];
     protected $options = [
         '--dry-run' => 'Preview actions without running refresh jobs',
+        '--approve' => 'Acknowledge and run forecast refresh jobs',
     ];
 
     public function run(array $params)
@@ -63,6 +64,6 @@ class ForecastRefresh extends SafeBaseCommand
 
     protected function isDestructive(): bool
     {
-        return false;
+        return true;
     }
 }

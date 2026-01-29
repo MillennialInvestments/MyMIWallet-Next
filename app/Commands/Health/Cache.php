@@ -13,6 +13,7 @@ class Cache extends SafeBaseCommand
 
     public function run(array $params)
     {
+        $this->parseParams($params);
         log_message('info', '[spark:health:cache] Started', ['params' => $params]);
         CLI::write('Running cache health checks...', 'yellow');
 

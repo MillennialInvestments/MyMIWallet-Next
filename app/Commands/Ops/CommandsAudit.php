@@ -14,6 +14,7 @@ class CommandsAudit extends SafeBaseCommand
 
     public function run(array $params)
     {
+        $this->parseParams($params);
         $scanner = new CommandConstructorScanner();
         $entries = $scanner->scan(ROOTPATH . 'app/Commands');
 
@@ -56,7 +57,7 @@ class CommandsAudit extends SafeBaseCommand
 
             CLI::error($row[0]);
             CLI::error($row[1]);
-            CLI::error('Run ops:commands:autofix --force or remove constructor manually.');
+            CLI::error('Run ops:commands:autofix --approve or remove constructor manually.');
         }
 
         return EXIT_ERROR;

@@ -14,6 +14,7 @@ class Disk extends SafeBaseCommand
 
     public function run(array $params)
     {
+        $this->parseParams($params);
         log_message('info', '[spark:health:disk] Started', ['params' => $params]);
         CLI::write('Running disk health checks...', 'yellow');
 
