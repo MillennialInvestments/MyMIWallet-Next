@@ -3,6 +3,10 @@
 /public/writable/
 # Allow checked-in smoke sample
 !/writable/logs/
+!/writable/cache/
+!/writable/cache/.gitkeep
+!/writable/cache/FactoriesCache/
+!/writable/cache/FactoriesCache/.gitkeep
 !/writable/triage/
 !/writable/samples/
 !/writable/samples/*

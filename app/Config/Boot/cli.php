@@ -1,6 +1,7 @@
 <?php
 
 use Config\Console;
+use Config\Services;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,5 +16,21 @@ $console = new Console();
 foreach ($console->commands as $command) {
     if (class_exists($command)) {
         \CodeIgniter\CLI\CommandRunner::addCommand($command);
+    }
+}
+
+if (! function_exists('is_ci')) {
+    require APPPATH . 'Helpers/ci_guard_helper.php';
+}
+
+if (is_ci()) {
+    $autoloader = Services::autoloader();
+    if (method_exists($autoloader, 'disableCache')) {
+        $autoloader->disableCache();
+    }
+
+    $locator = Services::locator();
+    if (method_exists($locator, 'disableCache')) {
+        $locator->disableCache();
     }
 }
