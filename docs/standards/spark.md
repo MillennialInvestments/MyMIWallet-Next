@@ -42,3 +42,28 @@ Runtime diagnostics commands inspect web infrastructure (PHP handlers, sockets, 
 **Why fixes are intentionally limited**
 - Shared VPS/DreamHost environments prohibit system config edits and service restarts.
 - SafeBaseCommand guardrails enforce `--force` and `--dry-run` so diagnostics never escalate risk by default.
+
+## ops:next-steps (AIOps snapshot)
+
+`ops:next-steps` aggregates existing audit commands into a single Issue list and writes:
+
+- `docs/next/Next-Steps.md` (human-friendly “what to do next”)
+- `docs/next/snapshots/issues-YYYY-MM-DD.json` (machine-readable snapshot)
+
+Supported emit modes:
+
+- `--emit=docs` (default) writes docs + snapshot.
+- `--emit=db` enqueues issues into `bf_aiops_tasks`.
+- `--emit=both` does both.
+
+Issue schema fields:
+
+- `id` (stable hash)
+- `domain` (`dev|ops|security|ux|marketing`)
+- `severity` (`P0|P1|P2`)
+- `title`
+- `evidence` (file paths/log excerpts/command outputs)
+- `suggested_fix` (short steps)
+- `ai_prompt` (agent prompt)
+- `owner` (`human|codex|aiops`)
+- `status` (`open|queued|done`)
