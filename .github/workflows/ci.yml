@@ -20,6 +20,11 @@ jobs:
       - name: Install
         run: composer install --no-interaction --no-progress
 
+      - name: Spark Writable Bootstrap
+        run: |
+          mkdir -p writable/cache/FactoriesCache writable/logs
+          chmod -R 777 writable
+
       - name: Spark Command Contract Check
         run: |
           php spark ops:commands:audit
