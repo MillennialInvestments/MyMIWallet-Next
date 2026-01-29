@@ -2,7 +2,7 @@
 
 ## Baseline requirements
 All Spark commands **must**:
-- Extend `BaseCommand`.
+- Extend `SafeBaseCommand`.
 - Use clear, consistent `$group` naming.
 - Log start + completion events (CLI output and `log_message`).
 - Never silently fail; every failure must emit CLI output and log entries.
@@ -10,7 +10,7 @@ All Spark commands **must**:
 
 ## Destructive safeguards
 Commands that delete or irreversibly alter data **must**:
-- Require `--force` (or equivalent explicit confirmation).
+- Require `--approve` (or equivalent explicit confirmation).
 - Echo impacted counts before execution.
 - Log the operator, timestamp, and scope of data affected.
 

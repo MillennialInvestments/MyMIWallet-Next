@@ -23,3 +23,7 @@ jobs:
       - name: Spark Command Contract Check
         run: |
           php spark ops:commands:audit
+
+      - name: Spark Command Lint
+        run: |
+          php spark ops:lint:commands

@@ -14,6 +14,7 @@ class GitSafety extends SafeBaseCommand
 
     public function run(array $params)
     {
+        $this->parseParams($params);
         log_message('info', '[spark:health:git-safety] Started', ['params' => $params]);
         CLI::write('Running git safety checks...', 'yellow');
 

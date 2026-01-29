@@ -43,7 +43,7 @@ Runtime diagnostics commands inspect web infrastructure (PHP handlers, sockets, 
 
 **Why fixes are intentionally limited**
 - Shared VPS/DreamHost environments prohibit system config edits and service restarts.
-- SafeBaseCommand guardrails enforce `--force` and `--dry-run` so diagnostics never escalate risk by default.
+- SafeBaseCommand guardrails enforce `--approve` and `--dry-run` so diagnostics never escalate risk by default.
 
 ## ops:next-steps (AIOps snapshot)
 
