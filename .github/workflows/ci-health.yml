@@ -20,6 +20,11 @@ jobs:
       - name: Install
         run: composer install --no-interaction --no-progress
 
+      - name: Spark Writable Bootstrap
+        run: |
+          mkdir -p writable/cache/FactoriesCache writable/logs
+          chmod -R 777 writable
+
       - name: Spark Diagnostics
         run: |
           php spark spark:purge-fastcgi

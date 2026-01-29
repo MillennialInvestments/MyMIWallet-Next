@@ -29,5 +29,10 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --no-progress --prefer-dist
 
+      - name: Spark Writable Bootstrap
+        run: |
+          mkdir -p writable/cache/FactoriesCache writable/logs
+          chmod -R 777 writable
+
       - name: Run config lint
         run: php spark config:lint
