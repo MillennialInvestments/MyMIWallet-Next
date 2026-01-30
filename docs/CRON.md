@@ -10,3 +10,11 @@ Add the following entries to your DreamHost user crontab to keep the Discord que
 ```
 
 The weekday job runs every two minutes during market hours (America/Chicago). Weekends are throttled to once every ten minutes to keep rate limits healthy.
+
+## Spark Doctor (Nightly)
+
+Run the Spark command audit nightly to keep command discovery healthy.
+
+```
+0 3 * * * cd /home/mymiteam/mymiwallet/site/current && php spark spark:doctor
+```
