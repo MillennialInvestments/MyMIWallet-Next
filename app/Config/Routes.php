@@ -218,6 +218,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->match(['GET', 'POST'], 'Status', 'APIController::status');
     $routes->match(['GET', 'POST'], 'Status/(:segment)', 'APIController::status');
     $routes->get('Health', 'HealthController::index');              // /API/Health
+    $routes->get('Health/spark', 'HealthController::spark');        // /API/Health/spark
     $routes->get('Ops/status', 'OpsController::status');
     $routes->post('Ops/dispatch', 'OpsController::dispatch');
     $routes->post('Ops/ingestReport', 'OpsController::ingestReport');

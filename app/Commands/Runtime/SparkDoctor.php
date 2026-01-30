@@ -1,12 +1,6 @@
 <?php
+
 namespace App\Commands\Runtime;
-// ---
-
-// # 5️⃣ 🚑 Add `spark:doctor` command (pre-deploy health check)
-
-// ### 📄 `app/Commands/Runtime/SparkDoctor.php`
-
-// ```
 
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
@@ -15,7 +9,7 @@ class SparkDoctor extends SafeBaseCommand
 {
     protected $group       = 'Runtime';
     protected $name        = 'spark:doctor';
-    protected $description = 'Validate Spark command health and CI4 compatibility';
+    protected $description = 'Validate Spark command discovery and CI4 compatibility';
     protected $usage       = 'spark:doctor';
 
     public function run(array $params)
@@ -29,7 +23,17 @@ class SparkDoctor extends SafeBaseCommand
         }
 
         if ($code !== 0) {
-            CLI::error('Spark Doctor failed. Fix issues before deploy.');
+            service('discord')->send(
+                '🚨 Spark Doctor FAILED on ' . gethostname()
+            );
+
+            service('email')->send(
+                'support@mymiwallet.com',
+                'Spark Doctor Failure',
+                implode("\n", $output)
+            );
+
+            CLI::error('Spark Doctor FAILED. Fix Spark commands before deploy.');
             return EXIT_ERROR;
         }
 
