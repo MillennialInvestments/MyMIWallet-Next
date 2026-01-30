@@ -1,0 +1,2611 @@
+# AI-Ops: Doc Change Log
+> Auto-generated. Do not edit manually.
+> Run: 2026-01-30T13:50:28Z
+
+- docs/CRON.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/Kimi/README.md
+  - Last updated: 2025-12-11
+  - Change type: new
+- docs/Kimi/audit-2025-12-11.md
+  - Last updated: 2025-12-11
+  - Change type: new
+- docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md
+  - Last updated: 2025-12-11
+  - Change type: new
+- docs/OVERVIEW.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/README.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/adr/0001-standards-and-response-contract.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/adr/_index.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ai-cost-controls.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/ai-ops/README.md
+  - Last updated: 2026-01-01
+  - Change type: new
+- docs/ai-ops/api-automations.md
+  - Last updated: 2026-01-01
+  - Change type: new
+- docs/ai-ops/cost-budget.md
+  - Last updated: 2026-01-01
+  - Change type: new
+- docs/ai-ops/cron-jobs.md
+  - Last updated: 2026-01-01
+  - Change type: new
+- docs/ai-ops/dashboard.md
+  - Last updated: 2026-01-02
+  - Change type: new
+- docs/ai-ops/observability-policy.md
+  - Last updated: 2026-01-01
+  - Change type: new
+- docs/aiops-budgeting.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/aiops/README.md
+  - Last updated: 2026-01-02
+  - Change type: new
+- docs/aiops/runbooks/dreamhost-proxy-ports.md
+  - Last updated: 2026-01-02
+  - Change type: new
+- docs/aiops/runbooks/operations.md
+  - Last updated: 2026-01-01
+  - Change type: new
+- docs/aiops/runbooks/security-hardening.md
+  - Last updated: 2026-01-01
+  - Change type: new
+- docs/aiops/selfhosted-stack.md
+  - Last updated: 2026-01-02
+  - Change type: new
+- docs/aiops/workflows/n8n-workflows.md
+  - Last updated: 2026-01-01
+  - Change type: new
+- docs/alerts/alerts_marketing_pipline.md
+  - Last updated: 2025-11-22
+  - Change type: new
+- docs/alerts/thinkorswim_broker_ingestion.md
+  - Last updated: 2026-01-17
+  - Change type: new
+- docs/architecture/marketing_module_lifecycle.md
+  - Last updated: 2026-01-21
+  - Change type: new
+- docs/auctions/_index.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/auctions/auction-schema.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/audit/alerts_audit_last_run.md
+  - Last updated: 2026-01-21
+  - Change type: new
+- docs/audit/auth_audit_last_run.md
+  - Last updated: 2026-01-21
+  - Change type: new
+- docs/auth/auth_smoke.md
+  - Last updated: 2026-01-21
+  - Change type: new
+- docs/auth/onboarding_first_login_modal.md
+  - Last updated: 2026-01-17
+  - Change type: new
+- docs/auth/register_success_page.md
+  - Last updated: 2026-01-17
+  - Change type: new
+- docs/auth/registration_flow_audit.md
+  - Last updated: 2026-01-17
+  - Change type: new
+- docs/automation/ai_code_review.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/automation/communities/cron_plan.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/automation/communities/distribution_matrix.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/automation/communities/post_generation_rules.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/bitcoin-standardization.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/budget/UI-Suggestions.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/budget/_index.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/budget/budget-controller.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/budgeting/_index.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/budgeting/architecture.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/categorized/README.md
+  - Last updated: 2025-11-30
+  - Change type: new
+- docs/chat-auth-flow.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/chat/ARCHITECTURE.md
+  - Last updated: 2026-01-05
+  - Change type: new
+- docs/chat/CI4_INTEGRATION.md
+  - Last updated: 2026-01-05
+  - Change type: new
+- docs/chat/CI4_SSO_COOKIES.md
+  - Last updated: 2026-01-06
+  - Change type: new
+- docs/chat/DEPLOYMENT.md
+  - Last updated: 2026-01-05
+  - Change type: new
+- docs/chat/ENV.md
+  - Last updated: 2026-01-05
+  - Change type: new
+- docs/chat/OPS.md
+  - Last updated: 2026-01-05
+  - Change type: new
+- docs/chat/README.md
+  - Last updated: 2026-01-05
+  - Change type: new
+- docs/chat/TROUBLESHOOTING.md
+  - Last updated: 2026-01-05
+  - Change type: new
+- docs/chatgpt/README.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/chatgpt/codex_executive_director/summary.md
+  - Last updated: 2025-12-20
+  - Change type: new
+- docs/chatgpt/decision_log.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/chatgpt/diffs/new_since_last_run.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/chatgpt/extraction_standards_step_1.md
+  - Last updated: 2025-12-20
+  - Change type: new
+- docs/chatgpt/extraction_standards_step_2.md
+  - Last updated: 2025-12-20
+  - Change type: new
+- docs/chatgpt/extraction_standards_step_3.md
+  - Last updated: 2025-12-20
+  - Change type: new
+- docs/chatgpt/mymi_alert_system/inventory.md
+  - Last updated: 2025-12-20
+  - Change type: new
+- docs/chatgpt/mymi_alert_system/standards.md
+  - Last updated: 2025-12-21
+  - Change type: new
+- docs/chatgpt/mymi_alert_system/summary.md
+  - Last updated: 2025-12-20
+  - Change type: new
+- docs/chatgpt/processed/unresolved.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/chatgpt/prompt_template.md
+  - Last updated: 2025-12-20
+  - Change type: new
+- docs/chatgpt/prompt_templates.md
+  - Last updated: 2025-12-21
+  - Change type: new
+- docs/chatgpt/unified_collaboration.md
+  - Last updated: 2026-01-30
+  - Change type: new
+- docs/chatgpt/unresolved_threads.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/chatgpt/workflows/export_to_csv.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/ci/psr4_ci_gate.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/ci4/constructor-audit.md
+  - Last updated: 2026-01-23
+  - Change type: new
+- docs/ci4/controller_library_usage.md
+  - Last updated: 2026-01-21
+  - Change type: new
+- docs/codex/00_master_plan.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/codex/01_pr1_foundations.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/codex/02_pr2_worker_and_registry.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/codex/03_pr3_management_ui.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/codex/04_pr4_chat_management_ui.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/codex/05_pr5_n8n_docs_automation.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/communities/discord.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/communities/facebook.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/communities/linkedin.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/communities/stocktwits.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/communities/templates_library.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/communities/test_plan.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/communities/tiktok.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/communities/twitch.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/communities/x_twitter.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/communities/youtube.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/content_engine/api_endpoints.md
+  - Last updated: 2025-12-16
+  - Change type: new
+- docs/content_engine/cron_jobs.md
+  - Last updated: 2025-12-16
+  - Change type: new
+- docs/content_engine/json_contract.md
+  - Last updated: 2025-12-16
+  - Change type: new
+- docs/content_engine/overview.md
+  - Last updated: 2025-12-16
+  - Change type: new
+- docs/content_engine/scoring_rules.md
+  - Last updated: 2025-12-16
+  - Change type: new
+- docs/content_engine/security.md
+  - Last updated: 2025-12-16
+  - Change type: new
+- docs/content_engine/sql_patch_notes.md
+  - Last updated: 2025-12-16
+  - Change type: new
+- docs/content_engine/troubleshooting.md
+  - Last updated: 2025-12-16
+  - Change type: new
+- docs/content_engine/ui_workflow.md
+  - Last updated: 2025-12-16
+  - Change type: new
+- docs/content_hub_inventory/content_hub_inventory.md
+  - Last updated: 2025-11-17
+  - Change type: new
+- docs/cron/README.md
+  - Last updated: 2025-12-21
+  - Change type: new
+- docs/cron/jobs/auth_funnel_check.md
+  - Last updated: 2026-01-21
+  - Change type: new
+- docs/cron/jobs/codex_review.md
+  - Last updated: 2025-12-21
+  - Change type: new
+- docs/cron/jobs/deploy_pull_restart.md
+  - Last updated: 2025-12-21
+  - Change type: new
+- docs/cron/jobs/health_check.md
+  - Last updated: 2025-12-21
+  - Change type: new
+- docs/cron/jobs/log_summarize_and_diff.md
+  - Last updated: 2025-12-21
+  - Change type: new
+- docs/cron/jobs/marketing_daily_run.md
+  - Last updated: 2025-12-21
+  - Change type: new
+- docs/cron/jobs/ops_analyze_commands.md
+  - Last updated: 2025-12-21
+  - Change type: new
+- docs/cron/jobs/ops_fetch_commands.md
+  - Last updated: 2025-12-21
+  - Change type: new
+- docs/csp-and-commondata.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/dashboard/autoload_health_widget.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/dashboards/AlertsController.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/dashboards/BudgetController.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/dashboards/DashboardController.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/dashboards/InvestmentsController.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/dashboards/Investments_index.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/dashboards/README.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/dashboards/WalletsController.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/dashboards/dashboard_template.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/deploy/quality_gates.md
+  - Last updated: 2026-01-21
+  - Change type: new
+- docs/discord/README.md
+  - Last updated: 2025-12-07
+  - Change type: new
+- docs/discord/_index.md
+  - Last updated: 2025-12-05
+  - Change type: new
+- docs/discord/_inventory.md
+  - Last updated: 2025-12-05
+  - Change type: new
+- docs/discord/alerts_automation.md
+  - Last updated: 2025-11-27
+  - Change type: new
+- docs/discord/discord_integration_overview.md
+  - Last updated: 2025-11-25
+  - Change type: new
+- docs/discord/discord_schema_v3.sql.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/discord/discord_seed_v3.sql.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/discord/discord_to_ci4_commands.md
+  - Last updated: 2025-11-26
+  - Change type: new
+- docs/discord/earnings_calendar_automation.md
+  - Last updated: 2025-11-26
+  - Change type: new
+- docs/discord/environments.md
+  - Last updated: 2025-12-05
+  - Change type: new
+- docs/discord/events_matrix.md
+  - Last updated: 2025-12-05
+  - Change type: new
+- docs/discord/marketing_news_automation.md
+  - Last updated: 2025-12-10
+  - Change type: new
+- docs/discord/mee6_and_mymi_automation.md
+  - Last updated: 2025-12-05
+  - Change type: new
+- docs/discord/my_midiscord_server_setup_and_alert_routing.md
+  - Last updated: 2025-12-05
+  - Change type: new
+- docs/discord/mysql_discord_schema.md
+  - Last updated: 2025-12-05
+  - Change type: new
+- docs/discord/operations_and_montioring.md
+  - Last updated: 2025-11-26
+  - Change type: new
+- docs/discord/premium_flows_and_upsell.md
+  - Last updated: 2025-12-05
+  - Change type: new
+- docs/discord/python_workers.md
+  - Last updated: 2025-12-05
+  - Change type: new
+- docs/discord/server_setup_and_alert_routing.md
+  - Last updated: 2025-12-05
+  - Change type: new
+- docs/discord/server_setup_and_ci4_integration.md
+  - Last updated: 2025-12-07
+  - Change type: new
+- docs/discord/server_setup_support_category.md
+  - Last updated: 2025-12-07
+  - Change type: new
+- docs/discord/streaming_setup.md
+  - Last updated: 2025-12-07
+  - Change type: new
+- docs/discord/where_to_share_what.md
+  - Last updated: 2025-12-07
+  - Change type: new
+- docs/discord_schema.sql.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/discord_seed.sql.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/email/deliverability.md
+  - Last updated: 2026-01-21
+  - Change type: new
+- docs/emergency-playbook.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/errors/marketingcontroller_mymimarketing_undefined.md
+  - Last updated: 2026-01-21
+  - Change type: new
+- docs/esports_preflight.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/exports_schema.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/forecasting/01_data_flow.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/forecasting/02_forecasting_inputs.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/forecasting/03_analysis_modules.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/forecasting/04_forecast_model.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/forecasting/05_confidence_scoring.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/forecasting/06_database_schema.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/forecasting/07_integration_points.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/forecasting/08_ui_and_dashboard.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/forecasting/09_future_extensions.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/forecasting/10_dashboard_integration.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/forecasting/README.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/forecasting/advanced_forecasting_overview.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/forecasting/confidence_heatmaps.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/forecasting/forecast_accuracy_tracking.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/forecasting/forecast_detail_ui.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/functional_inventory/docs_to_code_map.md
+  - Last updated: 2025-12-10
+  - Change type: new
+- docs/functional_inventory/feature_inventory.md
+  - Last updated: 2025-11-24
+  - Change type: new
+- docs/funnels/community_funnel.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/funnels/discord_to_website_to_memberships.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/funnels/platform_to_discord.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/gap-audit/README.md
+  - Last updated: 2026-01-01
+  - Change type: new
+- docs/gap-audit/codex_queue.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/gap-audit/gap_report.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/gap-audit/next-steps.md
+  - Last updated: 2026-01-01
+  - Change type: new
+- docs/gap-audit/unresolved_questions.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/gap_tracker/README.md
+  - Last updated: 2026-01-01
+  - Change type: new
+- docs/gap_tracker/items/GAP-AI-001.md
+  - Last updated: 2026-01-02
+  - Change type: new
+- docs/gap_tracker/items/GAP-DOCS-001.md
+  - Last updated: 2026-01-02
+  - Change type: new
+- docs/gap_tracker/reports/gap_sync_2026-01-01.md
+  - Last updated: 2026-01-02
+  - Change type: new
+- docs/gap_tracker/reports/gap_sync_2026-01-02.md
+  - Last updated: 2026-01-02
+  - Change type: new
+- docs/go-live/README.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/go-live/go_live_checklist.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/go-live/operational_usage.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/hardening-playbook.md
+  - Last updated: 2026-01-01
+  - Change type: new
+- docs/health/README.md
+  - Last updated: 2026-01-17
+  - Change type: new
+- docs/health/api_inventory.md
+  - Last updated: 2026-01-17
+  - Change type: new
+- docs/health/fix-503.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/health/health-cache.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/health/health-disk.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/health/health-services.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/health/health_checks_matrix.md
+  - Last updated: 2026-01-17
+  - Change type: new
+- docs/health/health_runner_design.md
+  - Last updated: 2026-01-17
+  - Change type: new
+- docs/health/health_test_checklist.md
+  - Last updated: 2026-01-17
+  - Change type: new
+- docs/health/integrations_inventory.md
+  - Last updated: 2026-01-17
+  - Change type: new
+- docs/health/modules/alerts.md
+  - Last updated: 2026-01-17
+  - Change type: new
+- docs/health/modules/auth.md
+  - Last updated: 2026-01-17
+  - Change type: new
+- docs/health/modules/budget.md
+  - Last updated: 2026-01-17
+  - Change type: new
+- docs/health/modules/discord_zapier.md
+  - Last updated: 2026-01-17
+  - Change type: new
+- docs/health/modules/investments.md
+  - Last updated: 2026-01-17
+  - Change type: new
+- docs/health/modules/marketing.md
+  - Last updated: 2026-01-17
+  - Change type: new
+- docs/health/modules/system_ops.md
+  - Last updated: 2026-01-17
+  - Change type: new
+- docs/health/service_inventory.md
+  - Last updated: 2026-01-21
+  - Change type: new
+- docs/hygiene/weekly_repo_hygiene.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/indicators/README.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/indicators/_template.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/indicators/mymi-momentum-suite-public.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/integrations/technology_investor_integrations.md
+  - Last updated: 2025-12-31
+  - Change type: new
+- docs/inventory/docs_gaps.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/kimi-k2-integration.md
+  - Last updated: 2025-12-11
+  - Change type: new
+- docs/legal/crypto_customer_agreement/README.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/legal/crypto_customer_agreement/agreement.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/legal/crypto_customer_agreement/compiled_agreement.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/legal/crypto_customer_agreement/sections/00_preamble.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/legal/crypto_customer_agreement/sections/01_definitions.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/legal/crypto_customer_agreement/sections/02_account_eligibility.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/legal/crypto_customer_agreement/sections/03_services_overview.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/legal/crypto_customer_agreement/sections/04_orders_pricing_execution.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/legal/crypto_customer_agreement/sections/05_fees_taxes.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/legal/crypto_customer_agreement/sections/06_custody_title_control.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/legal/crypto_customer_agreement/sections/07_wallet_transfers.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/legal/crypto_customer_agreement/sections/08_staking.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/legal/crypto_customer_agreement/sections/09_risk_disclosures.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/legal/crypto_customer_agreement/sections/10_compliance_sanctions_law_enforcement.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/legal/crypto_customer_agreement/sections/11_account_security_unauthorized_activity.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/legal/crypto_customer_agreement/sections/12_suspension_termination.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/legal/crypto_customer_agreement/sections/13_disclaimers_limitation_liability_indemnity.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/legal/crypto_customer_agreement/sections/14_dispute_resolution_arbitration.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/legal/crypto_customer_agreement/sections/15_communications_esign.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/legal/crypto_customer_agreement/sections/16_misc_governing_law_changes.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/logs/_index.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/logs/log-2025-10-06.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/management/Automation_Levels.md
+  - Last updated: 2026-01-30
+  - Change type: new
+- docs/management/Command_Discovery_And_Design.md
+  - Last updated: 2026-01-30
+  - Change type: new
+- docs/management/Command_Gap_Analysis.md
+  - Last updated: 2026-01-29
+  - Change type: new
+- docs/management/Command_Runtime_Audit.md
+  - Last updated: 2026-01-30
+  - Change type: new
+- docs/management/Management_Command_Map.md
+  - Last updated: 2026-01-30
+  - Change type: new
+- docs/management/Management_Roadmap.md
+  - Last updated: 2026-01-30
+  - Change type: new
+- docs/management/Recommended_New_Commands.md
+  - Last updated: 2026-01-30
+  - Change type: new
+- docs/management/Spark_Bootstrap_Requirements.md
+  - Last updated: 2026-01-30
+  - Change type: new
+- docs/marketing/01-mymi-gold-and-coin.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/marketing/02-budgeting-and-investments-libraries.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/marketing/03-mymiexchange-solana.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/marketing/04-mymialerts-premium.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/marketing/05-memberships-and-custom-plans.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/marketing/06-referrals-rewards.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/marketing/07-myprojects-real-estate.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/marketing/08-mymi-apis-self-host.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/marketing/09-discord-coffee-and-stocks.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/marketing/10-linkedin-groups-guide.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/marketing/11-facebook-groups-guide.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/marketing/12-discord-no-links-guide.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/marketing/13-x-twitter-guide.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/marketing/14-stocktwits-guide.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/marketing/15-youtube-guide.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/marketing/16-tiktok-guide.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/marketing/README.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/marketing/_assets/README.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/marketing/_index.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/marketing/_templates/CAMPAIGN_TEMPLATE.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/marketing/_templates/Coffee-and-Stocks/Facebook_Event_Template.md
+  - Last updated: 2025-12-19
+  - Change type: new
+- docs/marketing/_templates/Coffee-and-Stocks/Prism_Live_Stream_Template.md
+  - Last updated: 2025-12-21
+  - Change type: new
+- docs/marketing/index.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/marketing/marketing-intake.md
+  - Last updated: 2026-01-21
+  - Change type: new
+- docs/mdit/phase1_implementation_notes.md
+  - Last updated: 2026-01-30
+  - Change type: new
+- docs/mobile/replit/00_overview.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/mobile/replit/01_replit_setup.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/mobile/replit/02_architecture.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/mobile/replit/03_ci4_api_contracts.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/mobile/replit/04_npm_shared_package.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/mobile/replit/05_security.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/mobile/replit/06_mvp_checklist.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/mobile/replit/07_deploy_and_release.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/mobile/replit/missing_endpoints.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/mobile/replit/patches/mobile_endpoints.php.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/mysql/README.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/adjustments/adjustment_log_2026-01-21.md
+  - Last updated: 2026-01-23
+  - Change type: new
+- docs/mysql/adjustments/adjustment_log_2026-01-25.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/squeeze_scorecard.md
+  - Last updated: 2026-01-23
+  - Change type: new
+- docs/mysql/tables/_index.md
+  - Last updated: 2026-01-29
+  - Change type: new
+- docs/mysql/tables/bf_act_logger.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_action_login.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_ai_ops_caps.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_ai_ops_events.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_ai_ops_runs.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_ai_ops_usage.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_ai_usage.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_aiops_budget.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_aiops_cache.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_aiops_dedupe.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_aiops_registry.md
+  - Last updated: 2026-01-29
+  - Change type: new
+- docs/mysql/tables/bf_aiops_runs.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_aiops_settings.md
+  - Last updated: 2026-01-29
+  - Change type: new
+- docs/mysql/tables/bf_aiops_task_runs.md
+  - Last updated: 2026-01-29
+  - Change type: new
+- docs/mysql/tables/bf_aiops_tasks.md
+  - Last updated: 2026-01-29
+  - Change type: new
+- docs/mysql/tables/bf_aiops_usage.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_aiops_workflow_usage.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_aiops_workflows.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_announcements.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_api_requests.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_api_responses.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_api_tokens.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_applications.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_asset_management.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_assets.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_auction_activity.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_auction_balances.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_auction_bids.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_auction_items.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_auction_lots.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_auction_payments.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_auction_settlements.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_auction_watchlist.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_auctions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_audience.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_audit_logs.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_audit_trail.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_auth_health_runs.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_auth_registration_attempts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_backup_manifests.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_campaign_auto_logs.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_campaigns.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_chat_tool_runs.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_circuit_breakers.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_company_logos.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_contactus.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_content_enrichment_cache.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_content_ideas.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_content_posts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_content_scanner_ingest.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_content_scanner_rows.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_contractors.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_csrf_tokens.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_dashboard_construction_to_do_list.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_dashboard_navbar.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_dashboard_navbar_indash.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_dashboard_upgrade.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_dashboard_upgrades.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_dashboards.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_discord_achievements.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_discord_ai_messages.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_discord_ai_notes.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_discord_ai_sessions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_discord_channels.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_discord_events.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_discord_events_log.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_discord_links.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_discord_logs.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_discord_message_history.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_discord_policies.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_discord_queue.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_discord_rate_limits.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_discord_subscriptions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_discord_templates.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_discord_user_achievements.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_email_distribution_lists.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_email_drip_campaign_steps.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_email_drip_campaigns.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_email_drip_email_tracking.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_email_list_members.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_email_open_tracking.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_email_outbox.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_email_tag_usage.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_email_user_drip_progress.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_employees.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_error_logs.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_esports_creators.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_esports_disputes.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_esports_entries.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_esports_escrows.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_esports_events.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_esports_jobs.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_esports_payouts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_esports_pools.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_esports_sponsorships.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_esports_webhooks.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_exchange_auctions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_exchanges.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_exchanges_assets.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_exchanges_assets_ledger.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_exchanges_blockchains.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_exchanges_coin_addresses.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_exchanges_coin_listing.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_exchanges_listing_request.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_exchanges_order.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_exchanges_orders.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_external_sites.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_failed_jobs.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_feature_flag_overrides.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_feature_flags.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_fin_positions_daily.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_fin_prices_eod.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_fin_risk_breaches.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_fin_risk_budgets.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_fin_trades.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_financial_goals.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_gdpr_requests.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_go_live_checklist.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_health_registry.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_health_run_results.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_health_runs.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_idempotency.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_inbound_webhooks.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_integrations_accounts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_integrations_events.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_integrations_sync_jobs.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_integrations_webhooks.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_internal_team_messages.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_advisor_log.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_alert_enrichment.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_alert_history.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_alert_jobs.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_alerts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_calendar.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_chart_analysis.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_economic_data.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_filings.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_forecast_accuracy.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_forecast_history.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_forecast_jobs.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_fundamentals.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_goals.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_price_forecasts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_scraper.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_signal_files.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_signals.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_stock_listing.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_strategies.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_technical_snapshots.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_tickers.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_tickers_nw.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_trade_alert_changes.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_trade_alert_enrichment.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_trade_alerts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investment_trades.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investments_news.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_investments_overview.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_jobs.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_leads.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_legal_holds.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_mail_queue.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_management_alerts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_management_positions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_management_tasks.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_market_news.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_analysis.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_blog_posts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_buffer.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_calendar.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_campaigns.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_content_enrichment_cache.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_email_bounces.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_email_open_tracking.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_email_queue.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_email_templates.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_generated_content.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_generated_posts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_ideas.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_news_content.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_newsletters.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_page_seo.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_page_views.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_page_views_per_user.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_platform_rules.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_platforms.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_post_queue.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_posts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_raw_emails.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_schedule.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_scraper.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_search_api_log.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_search_engine_usage.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_social_templates.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_suggestions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_taxonomy.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_temp_scraper.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_marketing_visuals.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_messaging.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_mymi_news.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_mymi_research.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_mymicoin_overview.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_mymigold_overview.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_onboarding_progress.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_onboarding_steps.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_ops_command_inbox.md
+  - Last updated: 2026-01-29
+  - Change type: new
+- docs/mysql/tables/bf_ops_job_runs.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_ops_jobs.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_ops_queue.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_ops_runs.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_ops_schema_audit.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_page_seo.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_password_history.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_password_reset_attempts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_permission_role.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_permissions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_posts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_predictions_liquidity.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_predictions_markets.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_predictions_options.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_predictions_orders.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_predictions_payouts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_predictions_positions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_predictions_settlements.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_predictions_trades.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_privacy_requests.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_project_commitments.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_project_distributions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_project_payouts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_project_scheduling.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_project_token_allocations.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_project_tokens.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_project_withdrawals.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_projects.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_projects_inbox.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_projects_revenue_distributions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_push_subscriptions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_quantities.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_questions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_redirect_links.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_referrals.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_role_user.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_roles.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_runtime_config.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_script_studio.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_search_logs.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_security.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_security_events.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_security_log.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_security_settings.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_services.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_site_settings_overrides.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_social_communities.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_social_distribution_queue.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_social_generated_posts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_social_platforms.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_social_post_templates.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_squeeze_fade_setups.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_squeeze_scorecards.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_squeeze_universe.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_squeeze_zoomout.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_suggestions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_support_feedback.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_support_kb_articles.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_support_requests.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_tax_audit_log.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_tax_jurisdictions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_tax_rates.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_tax_rates_ibfk_1.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_tax_return_lines.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_tax_return_lines_ibfk_1.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_tax_return_templates.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_timezone.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_token_holders.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_token_transfers.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_tokens.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_trade_alert_enrichment.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_user_2fa.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_user_broker_links.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_user_consent.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_user_employment.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_user_events.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_user_onboarding.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_user_permission_overrides.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_user_profiles.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_user_roles.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_user_sessions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_user_setup_preferences.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_user_tax_return_jurisdictions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_user_tax_return_jurisdictions_ibfk_1.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_user_tax_return_jurisdictions_ibfk_2.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_user_tax_return_values.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_user_tax_return_values_ibfk_1.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_user_tax_return_values_ibfk_2.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_user_tax_returns.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_user_tax_returns_ibfk_1.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_user_tokens.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_user_wallets.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_account_ledger.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_accounting_accounts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_anonymous.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_audit_log.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_bank_accounts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_bank_transactions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_brokerage_accounts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_budgeting.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_budgeting_forecast.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_certified_advisors.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_coin_purchases.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_comments.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_credit_accounts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_crypto_accounts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_debt_accounts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_discord_links.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_ecommerce_accounts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_email_subscriptions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_financial_institutions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_goal_checklist.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_goal_completions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_invest_accounts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_investments.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_link_clicks.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_loan_accounts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_memberships.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_notification_subscriptions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_post_likes.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_posts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_promotional_messages.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_promotions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_public_tokens.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_purchases.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_rate_limits.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_referral_program.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_referrals.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_retirement_goals.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_retirement_plans.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_services.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_services_purchases.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_sessions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_stock_research.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_subscribers.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_subscriptions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_trades.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_trades_configs.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_trading_accounts.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_wallet.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_wallet_brokerages.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_wallet_transactions.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_wallets.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_users_watchlist.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_wallet_providers.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_wallets.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_webhook_outbox.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/mysql/tables/bf_weekly_stream_watchlist.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/n8n/README.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/next/Next-Steps.md
+  - Last updated: 2026-01-29
+  - Change type: new
+- docs/next/bf_aiops_task_runs/README.md
+  - Last updated: 2026-01-30
+  - Change type: new
+- docs/nginx/01-structure.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/nginx/README.md
+  - Last updated: 2026-01-26
+  - Change type: new
+- docs/nginx/_index.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/nginx/config-nginx.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/nginx/mymiwallet.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/nginx/nginx.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/nginx/production.md
+  - Last updated: 2025-12-21
+  - Change type: new
+- docs/notes/2025-11-23-alerts-preview-lazy-refresh-and-advisor-errors.md
+  - Last updated: 2025-11-23
+  - Change type: new
+- docs/notes/2025-12-01-feature-corrections.md
+  - Last updated: 2025-12-01
+  - Change type: new
+- docs/onboarding/budget_investments_quick_setup.md
+  - Last updated: 2026-01-17
+  - Change type: new
+- docs/operations/01-foundation.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/operations/01-foundation.report.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/operations/02-libraries.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/operations/03-controllers.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/operations/04-cron-automation.md
+  - Last updated: 2026-01-01
+  - Change type: new
+- docs/operations/05-database.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/operations/06-devops.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/operations/07-marketing-growth.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/operations/08-security-compliance.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/operations/09-frontend-ui.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/operations/10-roadmap.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/operations/_index.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops-runbook.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/ops/01-foundation.report.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/01-psr4-autoload-audit.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/500-audit.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/502-playbook.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/ops/_index.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/_inventory.docs.toc.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/_inventory.docs.tree.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/ai_usage_snapshot.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/ops/aiops-guardrails-architecture.md
+  - Last updated: 2026-01-03
+  - Change type: new
+- docs/ops/aiops-n8n-workflows.md
+  - Last updated: 2026-01-03
+  - Change type: new
+- docs/ops/aiops-schema-endpoints-spec.md
+  - Last updated: 2026-01-03
+  - Change type: new
+- docs/ops/auth/00-inventory.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/auth/01-routing-and-filters.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/auth/02-config-audit.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/auth/03-database.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/auth/04-controller-contracts.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/auth/05-registration.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/auth/06-authentication.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/auth/07-password-reset.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/auth/08-2fa.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/auth/09-authorization.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/auth/10-social-oauth.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/auth/11-ux-and-csp.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/auth/12-logging-and-errors.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/auth/13-security-review.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/auth/14-acceptance-tests.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/auth/99-final-report.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/auth/CHANGELOG.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/auth_redirect_fix.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/backfill_emails.md
+  - Last updated: 2025-12-08
+  - Change type: new
+- docs/ops/chat-health.md
+  - Last updated: 2026-01-29
+  - Change type: new
+- docs/ops/ci4_logging_fixes_2025-12-22.md
+  - Last updated: 2025-12-22
+  - Change type: new
+- docs/ops/control_plane_assumptions.md
+  - Last updated: 2025-12-21
+  - Change type: new
+- docs/ops/cron_auth.md
+  - Last updated: 2025-12-21
+  - Change type: new
+- docs/ops/cron_kick.md
+  - Last updated: 2025-12-20
+  - Change type: new
+- docs/ops/daily_runbook.md
+  - Last updated: 2025-12-20
+  - Change type: new
+- docs/ops/docs_alignment_report_2025-12-09.md
+  - Last updated: 2025-12-10
+  - Change type: new
+- docs/ops/docs_browser.md
+  - Last updated: 2026-01-03
+  - Change type: new
+- docs/ops/docs_index.md
+  - Last updated: 2025-12-10
+  - Change type: new
+- docs/ops/envdoctor.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/ops/filters_audit_2025-12-31.md
+  - Last updated: 2026-01-01
+  - Change type: new
+- docs/ops/filters_smoke_test.md
+  - Last updated: 2026-01-01
+  - Change type: new
+- docs/ops/fix503.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/ops/log-fixes/2026-01-01.md
+  - Last updated: 2026-01-01
+  - Change type: new
+- docs/ops/logging_healthcheck.md
+  - Last updated: 2025-12-21
+  - Change type: new
+- docs/ops/logs/2025-12-25_fixes.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/ops/logs/logging_audit_2025-12-21.md
+  - Last updated: 2025-12-21
+  - Change type: new
+- docs/ops/logs/logging_breakpoint_report-2025_12_21.md
+  - Last updated: 2025-12-21
+  - Change type: new
+- docs/ops/marketing_ignite.md
+  - Last updated: 2025-12-20
+  - Change type: new
+- docs/ops/migration-dry-run.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/ops/n8n-capabilities-for-mymiwallet.md
+  - Last updated: 2026-01-03
+  - Change type: new
+- docs/ops/n8n_responsibilities.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/ops/npm-stack-recommendations.md
+  - Last updated: 2026-01-03
+  - Change type: new
+- docs/ops/post-deploy-checklist.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/ops/reviews/_index.md
+  - Last updated: 2025-12-10
+  - Change type: new
+- docs/ops/runbooks/alphavantage-rotation-playbook.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/runbooks/database-log-review.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/runbooks/devops-smoke-test.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/ops/runbooks/env-baseline-keys.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/runbooks/logger-repair.md
+  - Last updated: 2025-12-10
+  - Change type: new
+- docs/ops/runbooks/marketing-cron-playbook.md
+  - Last updated: 2026-01-01
+  - Change type: new
+- docs/ops/runbooks/routes-audit-playbook.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/runbooks/ui-error-uat.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/ops/scripts.md
+  - Last updated: 2025-12-21
+  - Change type: new
+- docs/ops/scripts_index.md
+  - Last updated: 2025-12-20
+  - Change type: new
+- docs/ops/sidebar_toggle_audit.md
+  - Last updated: 2026-01-02
+  - Change type: new
+- docs/ops/sidebar_toggle_changelog.md
+  - Last updated: 2026-01-02
+  - Change type: new
+- docs/ops/unexpected-token-lt-audit.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/optimize/psr4_audit_2026-01-24.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/optimize/psr4_cleanup_round2_summary.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/optimize/psr4_enforcement_summary.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/optimize/psr4_fixes_2026-01-24.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/optimize/psr4_fixes_latest.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/optimize/spark_audit_psr4.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/page_seo/page_seo_inventory.md
+  - Last updated: 2025-11-28
+  - Change type: new
+- docs/php-errors-playbook.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/platform_formats/discord.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/platform_formats/facebook.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/platform_formats/linkedin.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/platform_formats/stocktwits.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/platform_formats/tiktok.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/platform_formats/twitch.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/platform_formats/x_twitter.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/platform_formats/youtube.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/predictions/README.md
+  - Last updated: 2026-01-01
+  - Change type: new
+- docs/predictions/_index.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/predictions/mysql-migrations.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/product/Next_Codex_Tasks.md
+  - Last updated: 2026-01-29
+  - Change type: new
+- docs/repo-review.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/reports/code_health.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/reports/security_findings.md
+  - Last updated: 2026-01-04
+  - Change type: new
+- docs/resolutions/2025-10-07-psr4-fixes.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/resolutions/2025-10-09-docs-alignment-kickoff.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/resolutions/PR-128-resolution.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/resolutions/_index.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/revenue_streams/README.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/revenue_streams/revenue_streams_by_module.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/revenue_streams/revenue_streams_by_pricing_tier.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/revenue_streams/revenue_streams_by_user_type.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/revenue_streams/revenue_streams_full.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/routes/controller_method_inventory.md
+  - Last updated: 2025-12-16
+  - Change type: new
+- docs/routes/routes_audit.md
+  - Last updated: 2025-12-16
+  - Change type: new
+- docs/routes/routes_maintenance_rules.md
+  - Last updated: 2025-12-16
+  - Change type: new
+- docs/routes/routes_smoke_tests.md
+  - Last updated: 2025-12-16
+  - Change type: new
+- docs/search/README.md
+  - Last updated: 2026-01-01
+  - Change type: new
+- docs/search/_index.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/security/2025-10-remediation.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/security/CSRF_API_EXCEPTIONS.md
+  - Last updated: 2026-01-06
+  - Change type: new
+- docs/security/CSRF_LOGIN_FIX.md
+  - Last updated: 2026-01-06
+  - Change type: new
+- docs/security/_index.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/security/auth_filter_fixes.md
+  - Last updated: 2026-01-18
+  - Change type: new
+- docs/security/auth_registration_audit.md
+  - Last updated: 2025-12-16
+  - Change type: new
+- docs/security/csp.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/security/public_routes_inventory.md
+  - Last updated: 2026-01-18
+  - Change type: new
+- docs/server/bootstrap-checklist.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/server/env-doctor.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/server/migration-playbook.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/spark/COMMAND_AUDIT.md
+  - Last updated: 2026-01-26
+  - Change type: new
+- docs/spark/README.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/cadence.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/aiops/aiops-seed.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/alerts/alerts-audit.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/alerts/alerts-parse-test.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/alerts/discord-list.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/alerts/discord-process-queue.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/alerts/discord-test-liquidity.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/alerts/discord-test.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/alerts/discord-wire-check.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/alerts/email-test.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/alerts/mail-send-test.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/alerts/mail-send.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/alerts/mail-test.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/alerts/mail-verify.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/auth/auth-audit.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/spark/categories/auth/auth-funnel-check.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/spark/categories/auth/auth-smoke.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/spark/categories/cache/cache-audit.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/database/db-apply-docs.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/spark/categories/database/db-inventory.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/spark/categories/diagnostics/codex-review.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/forecasting/forecasts-refresh.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/logs/logs-healthcheck.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/spark/categories/logs/logs-summarize.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/spark/categories/maintenance/gap-sync.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/marketing/content-ingest-sample.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/marketing/contentengine-smoke.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/marketing/news-audit.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/marketing/revenue-scan.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/security/routes-auth-audit.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/system/ops-analyze-commands.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/system/ops-fetch-commands.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/categories/system/ops-work.md
+  - Last updated: 2026-01-29
+  - Change type: new
+- docs/spark/categories/users/wallets-warm-summary-cache.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/cli-standards.md
+  - Last updated: 2026-01-30
+  - Change type: new
+- docs/spark/inventory.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/spark/merge-report.md
+  - Last updated: 2026-01-30
+  - Change type: new
+- docs/spark/roadmap.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/safety-matrix.md
+  - Last updated: 2026-01-24
+  - Change type: new
+- docs/spark/standards.md
+  - Last updated: 2026-01-30
+  - Change type: new
+- docs/sql/mysql.md
+  - Last updated: 2025-12-21
+  - Change type: new
+- docs/standards/autoloading.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/standards/ci4_upgrade_guard.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/standards/psr4_autoloading.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/standards/spark.md
+  - Last updated: 2026-01-30
+  - Change type: new
+- docs/standards/status_codes.md
+  - Last updated: 2026-01-18
+  - Change type: new
+- docs/syndication_inventory/syndication_inventory.md
+  - Last updated: 2025-11-17
+  - Change type: new
+- docs/tasks/_index.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/tax/README.md
+  - Last updated: 2025-12-31
+  - Change type: new
+- docs/testing/auth_onboarding_test_plan.md
+  - Last updated: 2026-01-17
+  - Change type: new
+- docs/trading/datapoint-groups/MyMI-Momentum-and-Inflow-Core.md
+  - Last updated: 2026-01-21
+  - Change type: new
+- docs/trading/glossary/Trading-Terms.md
+  - Last updated: 2026-01-21
+  - Change type: new
+- docs/trading/rules/MyMI-Trade-Rules.md
+  - Last updated: 2026-01-21
+  - Change type: new
+- docs/trading/thinkorswim/scanners/MyMI-Inflow-Surge.md
+  - Last updated: 2026-01-21
+  - Change type: new
+- docs/trading/thinkorswim/scanners/MyMI-Momentum-Alignment.md
+  - Last updated: 2026-01-21
+  - Change type: new
+- docs/trading/thinkorswim/studies/MyMI-Momentum-Pressure.md
+  - Last updated: 2026-01-21
+  - Change type: new
+- docs/trading/thinkorswim/studies/MyMI-VWAP-EMA-Stack.md
+  - Last updated: 2026-01-21
+  - Change type: new
+- docs/trading/tradingview/indicators/MyMI-Flow-Momentum.md
+  - Last updated: 2026-01-21
+  - Change type: new
+- docs/trading/workflows/MyMI-Daily-Trading-Workflow.md
+  - Last updated: 2026-01-21
+  - Change type: new
+- docs/triage/rules.md
+  - Last updated: 2026-01-25
+  - Change type: new
+- docs/troubleshooting/README.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/troubleshooting/checklists/00_master_checklist.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/troubleshooting/ci4-routing/01_index_php_vs_clean_urls.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/troubleshooting/nginx/01_user_space_nginx_start_reload_pid.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/troubleshooting/nginx/02_location_directive_not_allowed_here.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/troubleshooting/runbooks/00_daily_ops.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/troubleshooting/scripts/01_smoke_routes_usage.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/troubleshooting/scripts/02_lint_no_route_tokens_usage.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/troubleshooting/scripts/README.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/troubleshooting/ssl/01_acme_http01_404_fix.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/troubleshooting/ssl/02_testing_with_expired_cert.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/troubleshooting/ssl/03_acmesh_value_too_large_terminal_crash.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/troubleshooting/templates/incident_template.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/ui/how_it_works_pages.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/ui/mobile-qa-checklist.md
+  - Last updated: 2026-01-18
+  - Change type: new
+- docs/ui/mobile-responsiveness-audit.md
+  - Last updated: 2026-01-18
+  - Change type: new
+- docs/ui/public_view_standard.md
+  - Last updated: 2025-12-27
+  - Change type: new
+- docs/user-guides/ci4/01_Overview.md
+  - Last updated: 2025-12-07
+  - Change type: new
+- docs/user-guides/ci4/02_Alerts_Dashboard_Guide.md
+  - Last updated: 2025-12-07
+  - Change type: new
+- docs/user-guides/ci4/03_Marketing_Dashboard_Guide.md
+  - Last updated: 2025-12-07
+  - Change type: new
+- docs/user-guides/ci4/04_Earnings_Dashboard_Guide.md
+  - Last updated: 2025-12-07
+  - Change type: new
+- docs/user-guides/ci4/05_Investments_and_Portfolio_Guide.md
+  - Last updated: 2025-12-07
+  - Change type: new
+- docs/user-guides/ci4/06_Account_Settings_and_Social_Media_Linking.md
+  - Last updated: 2025-12-07
+  - Change type: new
+- docs/user-guides/discord/00_Overview.md
+  - Last updated: 2025-12-07
+  - Change type: new
+- docs/user-guides/discord/01_Getting_Started.md
+  - Last updated: 2025-12-07
+  - Change type: new
+- docs/user-guides/discord/02_Using_MyMI_Discord_Tools.md
+  - Last updated: 2025-12-07
+  - Change type: new
+- docs/user-guides/discord/03_Trade_Alerts_in_Discord.md
+  - Last updated: 2025-12-07
+  - Change type: new
+- docs/user-guides/discord/04_Marketing_News_Guide.md
+  - Last updated: 2025-12-07
+  - Change type: new
+- docs/user-guides/discord/05_Earnings_Calendar_Guide.md
+  - Last updated: 2025-12-07
+  - Change type: new
+- docs/user-guides/discord/06_System_Status_and_Operations.md
+  - Last updated: 2025-12-07
+  - Change type: new
+- docs/wallets/_index.md
+  - Last updated: 2025-11-08
+  - Change type: new
+- docs/wallets/wallets-index.md
+  - Last updated: 2026-01-01
+  - Change type: new
+- docs/wallets/wallets_workflow.md
+  - Last updated: 2025-11-16
+  - Change type: new

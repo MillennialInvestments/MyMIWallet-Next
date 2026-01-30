@@ -1,0 +1,809 @@
+# AI-Ops: Gap Report
+> Auto-generated. Do not edit manually.
+> Run: 2026-01-30T13:50:28Z
+
+## Undocumented Code (best-effort)
+- app/Modules/AIOps/Models/AIOpsBudgetModel.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/AIOps/Models/AIOpsCacheModel.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/AIOps/Models/AIOpsDedupeModel.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/AIOps/Models/AIOpsUsageModel.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/AIOps/Services/AIOpsGuardrailService.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/AIController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/AIOpsController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/AiOpsController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/AlertsPublicController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/AuctionsController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/BitcoinController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/BrokerSmokeController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/ChatController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/ContentEngineController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/DiscordController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/DocsController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/DoorDashController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/DripCampaignController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/EmailController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/EsportsController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/HealthController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/KeysController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/ManagementController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/MditAdminController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/MditBaseController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/MditDepositController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/MditInvestorController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/MditIssuanceController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/MditRedemptionController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/MditWebhookController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/OpsController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/PredictionsController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/ProjectsController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/ReferralController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/SearchController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/SolanaController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/SqueezeController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/SupportController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/UserController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/Webhooks/EmailBounceController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/Webhooks/TradingViewController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/Webhooks/ZapierController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/ZapierController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Models/InvestmentsNewsModel.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Models/InvestmentsTickersModel.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Models/MarketingNewsContentModel.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Admin/Controllers/BackupsController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Admin/Controllers/FlagsController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Admin/Controllers/PrivacyController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Advertise/Controllers/FeaturesController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Advertise/Views/content_banner.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Advisor/Controllers/AdvisorController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Advisor/Views/advisor_dashboard.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Advisor/Views/partials/advisor_insight_modal.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Controllers/BlogController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Controllers/EarningsController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Controllers/HowItWorks.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Controllers/HowItWorksController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Controllers/IRSController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Controllers/InvestingController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Controllers/NewsAndUpdates.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Controllers/PersonalBudgetingController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Controllers/SubscribeController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Controllers/UpdatesController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Views/Earnings/TSLA/10192023.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Views/Earnings/update_earnings_form.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Views/HowItWorks/Daily_Financial_News.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Views/HowItWorks/Determining_Your_Financial_Goals.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Views/HowItWorks/Features_And_Plans.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Views/HowItWorks/Investment_Portfolio_Management.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Views/HowItWorks/Manage_Finances.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Views/HowItWorks/MyMI_Gold.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Views/HowItWorks/Personal_Budgeting.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Views/HowItWorks/Purchase_MyMI_Gold.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Views/HowItWorks/Registering_An_Account.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Views/HowItWorks/index.orig.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Views/HowItWorks/partials/ad_slot.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Views/IRS/IRS_Expanded_Home_Energy_Tax_Credits.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Views/Investing/The_Beginners_Guide_To_Option_Trading.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Views/Investing/The_Fundamentals_Of_Investing.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Views/Investing/Tips_For_Effective_Investment_Portfolio_Management.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Views/NewsAndUpdates/Integrating_With_Plaid.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Views/NewsAndUpdates/The_Roadmap_To_The_Future_Of_Finance.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Views/PersonalBudgeting/Importance_Of_Personal_Financial_Budgeting.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Docs/Controllers/DocsController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Docs/Controllers/OpenApiController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Docs/Views/openapi.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Controllers/BlockchainController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Controllers/DigiByteController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Controllers/ExchangeController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Controllers/GeminiController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Controllers/MetaMaskController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Controllers/SolanaController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Controllers/UserController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Models/ExchangeOrderModel.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Account_Information.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Application_Manager.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Buy.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Buy/user_fields.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Coin_Listing_Asset_Information.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Coin_Listing_Asset_Information/create_fields.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Coin_Listing_Asset_Information/list_fields.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Coin_Listing_Asset_Information/new_fields.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Coin_Listing_Asset_Information_Modal.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Coin_Listing_Request.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Coin_Listing_Request/contact_fields.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Coin_Listing_Request_Complete.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Order_Buy_Manager.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Order_Event_Manager.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Order_Sell_Manager.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Sell/user_fields.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Solana/coinSwap.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Solana/connectWallet.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Solana/create.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Solana/createToken.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Solana/createWallet.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Solana/executeSwap.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Solana/importWallet.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Solana/index/Top-Performing-Tokens.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Solana/swap-working.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Solana/swap.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Solana/testPage.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Solana/verifyWalletOwnership.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/Solana/viewWallet.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/includes/Order_Book.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/includes/Recent_Orders.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/includes/Stock_Chart.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Exchange/Views/includes/application-modal.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Finance/Controllers/FinanceController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/APIController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/AccountRescueController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/AdminController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/AiOpsManagementController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/AssetsController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/AuthFunnelController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/AuthHealthController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/BudgetingController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/BudgetsController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/ChatUsageController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/ContentEngineController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/DevelopmentController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/DiscordController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/DocsController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/DripCampaignController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/EmailController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/EmailOutboxController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/ExchangeController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/FinanceController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/HRController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/HowTosController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/ManagementController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/Marketing/BloggerController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/Marketing/CampaignController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/Marketing/EmailQueueController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/Marketing/EmailTemplateController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/NotificationController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/OperationsController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/OpsController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/OpsInboxController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/PartnersController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/ProjectsController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/SecurityController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/ServicesController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/SignalsController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/SitemapController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/SmtpTestController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/SupportController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/TestController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/TradovateController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/UsersController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/WebDesignController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Models/AlertPendingModel.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/TaxAdmin/Controllers/TaxConfig.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/TaxAdmin/Models/TaxAuditLogModel.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/TaxAdmin/Models/TaxJurisdictionsModel.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/TaxAdmin/Models/TaxLinesModel.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/TaxAdmin/Models/TaxRatesModel.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/TaxAdmin/Models/TaxTemplatesModel.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/TaxAdmin/Views/templates/partials/line_row.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Views/API/BitcoinJS.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Views/API/Sophtron.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Views/API/Sophtron_Widget.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Views/Alerts/add/user_fields.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Views/Alerts/batchEmailAudit.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Views/Alerts/emails/layout.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Views/Alerts/form_fields/trade_alert_fields.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Views/Alerts/modals/addTrade.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Views/Alerts/modals/createTradeAlert.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Views/Alerts/modals/manageTradeAlert.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Views/Alerts/modals/updateExchange.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Views/Alerts/modals/viewTradeChart.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Views/Alerts/resources/action-center.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Views/Alerts/resources/advisorMedia.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Views/Alerts/resources/management-controls.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Views/Alerts/resources/management-tools.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Views/Alerts/resources/market-data.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Views/Alerts/resources/overview-chart.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Views/Alerts/resources/rh-keygen.php
+  - ⚠️ No obvious doc match found (heuristic)
+- … and 920 more
+
+## Documented Items With No Obvious Code Match (best-effort)
+- docs/CRON.md
+  - ❌ No obvious code match found (heuristic)
+- docs/Kimi/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/Kimi/audit-2025-12-11.md
+  - ❌ No obvious code match found (heuristic)
+- docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md
+  - ❌ No obvious code match found (heuristic)
+- docs/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/adr/0001-standards-and-response-contract.md
+  - ❌ No obvious code match found (heuristic)
+- docs/adr/_index.md
+  - ❌ No obvious code match found (heuristic)
+- docs/ai-cost-controls.md
+  - ❌ No obvious code match found (heuristic)
+- docs/ai-ops/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/ai-ops/api-automations.md
+  - ❌ No obvious code match found (heuristic)
+- docs/ai-ops/cost-budget.md
+  - ❌ No obvious code match found (heuristic)
+- docs/ai-ops/cron-jobs.md
+  - ❌ No obvious code match found (heuristic)
+- docs/ai-ops/observability-policy.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops-budgeting.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/runbooks/dreamhost-proxy-ports.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/runbooks/security-hardening.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/selfhosted-stack.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/workflows/n8n-workflows.md
+  - ❌ No obvious code match found (heuristic)
+- docs/alerts/alerts_marketing_pipline.md
+  - ❌ No obvious code match found (heuristic)
+- docs/alerts/thinkorswim_broker_ingestion.md
+  - ❌ No obvious code match found (heuristic)
+- docs/architecture/marketing_module_lifecycle.md
+  - ❌ No obvious code match found (heuristic)
+- docs/auctions/_index.md
+  - ❌ No obvious code match found (heuristic)
+- docs/auctions/auction-schema.md
+  - ❌ No obvious code match found (heuristic)
+- docs/audit/alerts_audit_last_run.md
+  - ❌ No obvious code match found (heuristic)
+- docs/audit/auth_audit_last_run.md
+  - ❌ No obvious code match found (heuristic)
+- docs/auth/auth_smoke.md
+  - ❌ No obvious code match found (heuristic)
+- docs/auth/onboarding_first_login_modal.md
+  - ❌ No obvious code match found (heuristic)
+- docs/auth/register_success_page.md
+  - ❌ No obvious code match found (heuristic)
+- docs/auth/registration_flow_audit.md
+  - ❌ No obvious code match found (heuristic)
+- docs/automation/ai_code_review.md
+  - ❌ No obvious code match found (heuristic)
+- docs/automation/communities/cron_plan.md
+  - ❌ No obvious code match found (heuristic)
+- docs/automation/communities/distribution_matrix.md
+  - ❌ No obvious code match found (heuristic)
+- docs/automation/communities/post_generation_rules.md
+  - ❌ No obvious code match found (heuristic)
+- docs/bitcoin-standardization.md
+  - ❌ No obvious code match found (heuristic)
+- docs/budget/UI-Suggestions.md
+  - ❌ No obvious code match found (heuristic)
+- docs/budget/_index.md
+  - ❌ No obvious code match found (heuristic)
+- docs/budget/budget-controller.md
+  - ❌ No obvious code match found (heuristic)
+- docs/budgeting/_index.md
+  - ❌ No obvious code match found (heuristic)
+- docs/budgeting/architecture.md
+  - ❌ No obvious code match found (heuristic)
+- docs/categorized/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chat-auth-flow.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chat/ARCHITECTURE.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chat/CI4_INTEGRATION.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chat/CI4_SSO_COOKIES.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chat/DEPLOYMENT.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chat/ENV.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chat/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chat/TROUBLESHOOTING.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/decision_log.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/diffs/new_since_last_run.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/extraction_standards_step_1.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/extraction_standards_step_2.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/extraction_standards_step_3.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/mymi_alert_system/standards.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/processed/unresolved.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/prompt_template.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/prompt_templates.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/unified_collaboration.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/unresolved_threads.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/workflows/export_to_csv.md
+  - ❌ No obvious code match found (heuristic)
+- docs/ci/psr4_ci_gate.md
+  - ❌ No obvious code match found (heuristic)
+- docs/ci4/constructor-audit.md
+  - ❌ No obvious code match found (heuristic)
+- docs/ci4/controller_library_usage.md
+  - ❌ No obvious code match found (heuristic)
+- docs/codex/00_master_plan.md
+  - ❌ No obvious code match found (heuristic)
+- docs/codex/01_pr1_foundations.md
+  - ❌ No obvious code match found (heuristic)
+- docs/codex/02_pr2_worker_and_registry.md
+  - ❌ No obvious code match found (heuristic)
+- docs/codex/03_pr3_management_ui.md
+  - ❌ No obvious code match found (heuristic)
+- docs/codex/04_pr4_chat_management_ui.md
+  - ❌ No obvious code match found (heuristic)
+- docs/codex/05_pr5_n8n_docs_automation.md
+  - ❌ No obvious code match found (heuristic)
+- docs/communities/linkedin.md
+  - ❌ No obvious code match found (heuristic)
+- docs/communities/templates_library.md
+  - ❌ No obvious code match found (heuristic)
+- docs/communities/test_plan.md
+  - ❌ No obvious code match found (heuristic)
+- docs/communities/twitch.md
+  - ❌ No obvious code match found (heuristic)
+- docs/communities/x_twitter.md
+  - ❌ No obvious code match found (heuristic)
+- docs/content_engine/api_endpoints.md
+  - ❌ No obvious code match found (heuristic)
+- docs/content_engine/cron_jobs.md
+  - ❌ No obvious code match found (heuristic)
+- docs/content_engine/json_contract.md
+  - ❌ No obvious code match found (heuristic)
+- docs/content_engine/scoring_rules.md
+  - ❌ No obvious code match found (heuristic)
+- docs/content_engine/sql_patch_notes.md
+  - ❌ No obvious code match found (heuristic)
+- docs/content_engine/troubleshooting.md
+  - ❌ No obvious code match found (heuristic)
+- docs/content_engine/ui_workflow.md
+  - ❌ No obvious code match found (heuristic)
+- docs/content_hub_inventory/content_hub_inventory.md
+  - ❌ No obvious code match found (heuristic)
+- docs/cron/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/cron/jobs/auth_funnel_check.md
+  - ❌ No obvious code match found (heuristic)
+- docs/cron/jobs/codex_review.md
+  - ❌ No obvious code match found (heuristic)
+- docs/cron/jobs/deploy_pull_restart.md
+  - ❌ No obvious code match found (heuristic)
+- docs/cron/jobs/health_check.md
+  - ❌ No obvious code match found (heuristic)
+- docs/cron/jobs/log_summarize_and_diff.md
+  - ❌ No obvious code match found (heuristic)
+- docs/cron/jobs/marketing_daily_run.md
+  - ❌ No obvious code match found (heuristic)
+- docs/cron/jobs/ops_analyze_commands.md
+  - ❌ No obvious code match found (heuristic)
+- docs/cron/jobs/ops_fetch_commands.md
+  - ❌ No obvious code match found (heuristic)
+- docs/csp-and-commondata.md
+  - ❌ No obvious code match found (heuristic)
+- docs/dashboard/autoload_health_widget.md
+  - ❌ No obvious code match found (heuristic)
+- docs/dashboards/Investments_index.md
+  - ❌ No obvious code match found (heuristic)
+- docs/dashboards/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/deploy/quality_gates.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/_index.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/_inventory.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/alerts_automation.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/discord_integration_overview.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/discord_schema_v3.sql.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/discord_seed_v3.sql.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/discord_to_ci4_commands.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/earnings_calendar_automation.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/environments.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/events_matrix.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/marketing_news_automation.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/mee6_and_mymi_automation.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/my_midiscord_server_setup_and_alert_routing.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/mysql_discord_schema.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/operations_and_montioring.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/premium_flows_and_upsell.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/python_workers.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/server_setup_and_alert_routing.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/server_setup_and_ci4_integration.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/server_setup_support_category.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/streaming_setup.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord/where_to_share_what.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord_schema.sql.md
+  - ❌ No obvious code match found (heuristic)
+- docs/discord_seed.sql.md
+  - ❌ No obvious code match found (heuristic)
+- docs/email/deliverability.md
+  - ❌ No obvious code match found (heuristic)
+- docs/emergency-playbook.md
+  - ❌ No obvious code match found (heuristic)
+- docs/errors/marketingcontroller_mymimarketing_undefined.md
+  - ❌ No obvious code match found (heuristic)
+- docs/esports_preflight.md
+  - ❌ No obvious code match found (heuristic)
+- docs/exports_schema.md
+  - ❌ No obvious code match found (heuristic)
+- docs/forecasting/01_data_flow.md
+  - ❌ No obvious code match found (heuristic)
+- docs/forecasting/02_forecasting_inputs.md
+  - ❌ No obvious code match found (heuristic)
+- docs/forecasting/03_analysis_modules.md
+  - ❌ No obvious code match found (heuristic)
+- docs/forecasting/04_forecast_model.md
+  - ❌ No obvious code match found (heuristic)
+- docs/forecasting/05_confidence_scoring.md
+  - ❌ No obvious code match found (heuristic)
+- docs/forecasting/06_database_schema.md
+  - ❌ No obvious code match found (heuristic)
+- docs/forecasting/07_integration_points.md
+  - ❌ No obvious code match found (heuristic)
+- docs/forecasting/08_ui_and_dashboard.md
+  - ❌ No obvious code match found (heuristic)
+- docs/forecasting/09_future_extensions.md
+  - ❌ No obvious code match found (heuristic)
+- docs/forecasting/10_dashboard_integration.md
+  - ❌ No obvious code match found (heuristic)
+- docs/forecasting/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/forecasting/advanced_forecasting_overview.md
+  - ❌ No obvious code match found (heuristic)
+- docs/forecasting/confidence_heatmaps.md
+  - ❌ No obvious code match found (heuristic)
+- docs/forecasting/forecast_accuracy_tracking.md
+  - ❌ No obvious code match found (heuristic)
+- docs/forecasting/forecast_detail_ui.md
+  - ❌ No obvious code match found (heuristic)
+- docs/functional_inventory/docs_to_code_map.md
+  - ❌ No obvious code match found (heuristic)
+- docs/functional_inventory/feature_inventory.md
+  - ❌ No obvious code match found (heuristic)
+- docs/funnels/community_funnel.md
+  - ❌ No obvious code match found (heuristic)
+- docs/funnels/discord_to_website_to_memberships.md
+  - ❌ No obvious code match found (heuristic)
+- docs/funnels/platform_to_discord.md
+  - ❌ No obvious code match found (heuristic)
+- docs/gap-audit/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/gap-audit/codex_queue.md
+  - ❌ No obvious code match found (heuristic)
+- docs/gap-audit/gap_report.md
+  - ❌ No obvious code match found (heuristic)
+- docs/gap-audit/next-steps.md
+  - ❌ No obvious code match found (heuristic)
+- docs/gap-audit/unresolved_questions.md
+  - ❌ No obvious code match found (heuristic)
+- docs/gap_tracker/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/gap_tracker/items/GAP-AI-001.md
+  - ❌ No obvious code match found (heuristic)
+- docs/gap_tracker/items/GAP-DOCS-001.md
+  - ❌ No obvious code match found (heuristic)
+- docs/gap_tracker/reports/gap_sync_2026-01-01.md
+  - ❌ No obvious code match found (heuristic)
+- docs/gap_tracker/reports/gap_sync_2026-01-02.md
+  - ❌ No obvious code match found (heuristic)
+- docs/go-live/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/go-live/go_live_checklist.md
+  - ❌ No obvious code match found (heuristic)
+- docs/go-live/operational_usage.md
+  - ❌ No obvious code match found (heuristic)
+- docs/hardening-playbook.md
+  - ❌ No obvious code match found (heuristic)
+- docs/health/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/health/api_inventory.md
+  - ❌ No obvious code match found (heuristic)
+- docs/health/fix-503.md
+  - ❌ No obvious code match found (heuristic)
+- docs/health/health-cache.md
+  - ❌ No obvious code match found (heuristic)
+- docs/health/health-disk.md
+  - ❌ No obvious code match found (heuristic)
+- docs/health/health-services.md
+  - ❌ No obvious code match found (heuristic)
+- docs/health/health_checks_matrix.md
+  - ❌ No obvious code match found (heuristic)
+- docs/health/health_runner_design.md
+  - ❌ No obvious code match found (heuristic)
+- docs/health/health_test_checklist.md
+  - ❌ No obvious code match found (heuristic)
+- docs/health/integrations_inventory.md
+  - ❌ No obvious code match found (heuristic)
+- docs/health/modules/discord_zapier.md
+  - ❌ No obvious code match found (heuristic)
+- docs/health/modules/system_ops.md
+  - ❌ No obvious code match found (heuristic)
+- docs/health/service_inventory.md
+  - ❌ No obvious code match found (heuristic)
+- docs/hygiene/weekly_repo_hygiene.md
+  - ❌ No obvious code match found (heuristic)
+- docs/indicators/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/indicators/mymi-momentum-suite-public.md
+  - ❌ No obvious code match found (heuristic)
+- docs/integrations/technology_investor_integrations.md
+  - ❌ No obvious code match found (heuristic)
+- docs/inventory/docs_gaps.md
+  - ❌ No obvious code match found (heuristic)
+- docs/kimi-k2-integration.md
+  - ❌ No obvious code match found (heuristic)
+- docs/legal/crypto_customer_agreement/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/legal/crypto_customer_agreement/compiled_agreement.md
+  - ❌ No obvious code match found (heuristic)
+- docs/legal/crypto_customer_agreement/sections/00_preamble.md
+  - ❌ No obvious code match found (heuristic)
+- docs/legal/crypto_customer_agreement/sections/01_definitions.md
+  - ❌ No obvious code match found (heuristic)
+- docs/legal/crypto_customer_agreement/sections/02_account_eligibility.md
+  - ❌ No obvious code match found (heuristic)
+- docs/legal/crypto_customer_agreement/sections/03_services_overview.md
+  - ❌ No obvious code match found (heuristic)
+- docs/legal/crypto_customer_agreement/sections/04_orders_pricing_execution.md
+  - ❌ No obvious code match found (heuristic)
+- docs/legal/crypto_customer_agreement/sections/05_fees_taxes.md
+  - ❌ No obvious code match found (heuristic)
+- docs/legal/crypto_customer_agreement/sections/06_custody_title_control.md
+  - ❌ No obvious code match found (heuristic)
+- docs/legal/crypto_customer_agreement/sections/07_wallet_transfers.md
+  - ❌ No obvious code match found (heuristic)
+- docs/legal/crypto_customer_agreement/sections/08_staking.md
+  - ❌ No obvious code match found (heuristic)
+- docs/legal/crypto_customer_agreement/sections/09_risk_disclosures.md
+  - ❌ No obvious code match found (heuristic)
+- docs/legal/crypto_customer_agreement/sections/10_compliance_sanctions_law_enforcement.md
+  - ❌ No obvious code match found (heuristic)
+- docs/legal/crypto_customer_agreement/sections/11_account_security_unauthorized_activity.md
+  - ❌ No obvious code match found (heuristic)
+- docs/legal/crypto_customer_agreement/sections/12_suspension_termination.md
+  - ❌ No obvious code match found (heuristic)
+- docs/legal/crypto_customer_agreement/sections/13_disclaimers_limitation_liability_indemnity.md
+  - ❌ No obvious code match found (heuristic)
+- docs/legal/crypto_customer_agreement/sections/14_dispute_resolution_arbitration.md
+  - ❌ No obvious code match found (heuristic)
+- docs/legal/crypto_customer_agreement/sections/15_communications_esign.md
+  - ❌ No obvious code match found (heuristic)
+- docs/legal/crypto_customer_agreement/sections/16_misc_governing_law_changes.md
+  - ❌ No obvious code match found (heuristic)
+- … and 630 more
