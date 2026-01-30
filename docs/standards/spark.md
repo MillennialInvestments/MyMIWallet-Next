@@ -73,3 +73,23 @@ Issue schema fields:
 - `owner` (`human|codex|aiops`)
 - `status` (`open|queued|done`)
 - `auto_queue` (`true|false`)
+
+# Spark Command Standards (CI4 ≥ 4.6)
+
+## ❌ Forbidden
+- array $config in __construct()
+- Custom constructor signatures
+- Optional constructor params
+- Typed properties in command metadata
+
+## ✅ Required Constructor Signature
+
+All Spark commands MUST use:
+
+```php
+public function __construct(
+    \Psr\Log\LoggerInterface $logger,
+    \CodeIgniter\CLI\Commands $commands
+) {
+    parent::__construct($logger, $commands);
+}
