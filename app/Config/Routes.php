@@ -258,6 +258,25 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('Notes', 'AIController::listNotes');
         $routes->post('LinkSettings', 'AIController::updateLinkSettings');
     });
+    $routes->group('Mdit', ['filter' => 'authcheck'], static function($routes) {
+        $routes->post('kyc/start', 'MditInvestorController::startKyc');
+        $routes->get('kyc/status', 'MditInvestorController::kycStatus');
+        $routes->post('accreditation/attest', 'MditInvestorController::attestAccreditation');
+        $routes->get('portfolio/summary', 'MditInvestorController::portfolioSummary');
+
+        $routes->post('deposits/initiate', 'MditDepositController::initiate');
+        $routes->post('deposits/confirm', 'MditDepositController::confirm');
+        $routes->post('issuance/mint', 'MditIssuanceController::mint', ['filter' => 'permission:mdit.admin']);
+        $routes->post('redemptions/request', 'MditRedemptionController::requestRedemption');
+
+        $routes->group('admin', ['filter' => 'permission:mdit.admin'], static function($routes) {
+            $routes->get('redemptions/pending', 'MditAdminController::pendingRedemptions');
+            $routes->post('redemptions/approve', 'MditAdminController::approveRedemption');
+            $routes->get('deposits/pending', 'MditAdminController::pendingDeposits');
+            $routes->post('nav/compute_today', 'MditAdminController::computeNavToday');
+        });
+    });
+    $routes->post('Mdit/webhooks/onramp', 'MditWebhookController::onramp');
     $routes->get('Chat/me', 'ChatController::me');
     $routes->post('Chat/tool', 'ChatController::tool');
 
