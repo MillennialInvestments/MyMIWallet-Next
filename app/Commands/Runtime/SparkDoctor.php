@@ -7,33 +7,73 @@ use CodeIgniter\CLI\CLI;
 
 class SparkDoctor extends SafeBaseCommand
 {
-    protected $group       = 'Runtime';
-    protected $name        = 'spark:doctor';
+    protected $group       = 'runtime';
+    protected $name        = 'runtime:spark-doctor';
     protected $description = 'Validate Spark command discovery and CI4 compatibility';
-    protected $usage       = 'spark:doctor';
+    protected $usage       = 'runtime:spark-doctor';
 
     public function run(array $params)
     {
         CLI::write('🧠 Spark Doctor running...', 'yellow');
 
-        exec('php tools/spark_scan_commands.php', $output, $code);
+        $script = ROOTPATH . 'tools/spark_scan_commands.php';
 
-        foreach ($output as $line) {
+        if (! is_file($script)) {
+            CLI::error('Spark audit script not found: ' . $script);
+            return EXIT_ERROR;
+        }
+
+        CLI::write('🔍 Running Spark command audit...', 'cyan');
+
+        exec('php ' . escapeshellarg($script), $scanOutput, $scanCode);
+
+
+        foreach ($scanOutput as $line) {
             CLI::write($line);
         }
 
-        if ($code !== 0) {
-            service('discord')->send(
-                '🚨 Spark Doctor FAILED on ' . gethostname()
-            );
+        $cmdCount = 0;
+        exec(PHP_BINARY . ' spark list', $listOutput, $listCode);
 
-            service('email')->send(
-                'support@mymiwallet.com',
-                'Spark Doctor Failure',
-                implode("\n", $output)
-            );
+        if ($listCode === 0) {
+            foreach ($listOutput as $line) {
+                if (preg_match('/^\s+[a-zA-Z].+\s+[a-z0-9:_-]+$/', $line)) {
+                    $cmdCount++;
+                }
+            }
+        }
 
-            CLI::error('Spark Doctor FAILED. Fix Spark commands before deploy.');
+        $invalidFiles = [];
+        foreach ($scanOutput as $line) {
+            if (str_starts_with(trim($line), '- ') && str_contains($line, '/app/Commands/')) {
+                $invalidFiles[] = substr(trim($line), 2);
+            }
+        }
+
+        $status = $scanCode === 0 ? 'ok' : 'fail';
+
+        try {
+            (new \App\Models\Ops\SparkHealthModel())->insert([
+                'hostname'           => gethostname() ?: null,
+                'app_env'            => getenv('CI_ENVIRONMENT') ?: null,
+                'php_version'        => PHP_VERSION,
+                'ci_version'         => defined('CodeIgniter\\CodeIgniter::VERSION')
+                    ? \CodeIgniter\CodeIgniter::VERSION
+                    : null,
+                'status'             => $status,
+                'command_count'      => $cmdCount,
+                'invalid_count'      => count($invalidFiles),
+                'invalid_files_json' => $invalidFiles ? json_encode($invalidFiles) : null,
+                'notes'              => $status === 'ok'
+                    ? 'Spark Doctor passed'
+                    : 'Spark Doctor failed',
+            ]);
+        } catch (\Throwable $e) {
+            CLI::error('DB snapshot failed: ' . $e->getMessage());
+        }
+
+        if ($scanCode !== 0) {
+            CLI::error('Spark Doctor FAILED.');
             return EXIT_ERROR;
         }
 

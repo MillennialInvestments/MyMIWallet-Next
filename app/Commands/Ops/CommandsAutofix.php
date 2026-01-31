@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class CommandsAutofix extends SafeBaseCommand
 {
-    protected bool $defaultDryRun = true;
+    protected $defaultDryRun = true;
     protected $group = 'ops';
     protected $name = 'ops:commands:autofix';
     protected $description = 'Auto-fix Spark commands that define illegal constructors.';

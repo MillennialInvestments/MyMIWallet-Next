@@ -1,0 +1,31 @@
+<?php defined('SYSTEMPATH') || exit('No direct script access allowed'); ?>
+
+CRITICAL - 2026-01-31 13:28:02 --> ErrorException: Type of App\Commands\Ops\CommandsAutofix::$defaultDryRun must not be defined (as in class App\Commands\SafeBaseCommand)
+[Method: CLI, Route: /]
+in APPPATH/Commands/Ops/CommandsAutofix.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-01-31 13:31:55 --> ErrorException: Type of App\Commands\Ops\CommandsAutofix::$defaultDryRun must not be defined (as in class App\Commands\SafeBaseCommand)
+[Method: CLI, Route: /]
+in APPPATH/Commands/Ops/CommandsAutofix.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-01-31 13:32:33 --> ErrorException: Type of App\Commands\Ops\CommandsAutofix::$defaultDryRun must not be defined (as in class App\Commands\SafeBaseCommand)
+[Method: CLI, Route: /]
+in APPPATH/Commands/Ops/CommandsAutofix.php on line 8.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-01-31 13:42:44 --> ErrorException: Type of App\Commands\OpsWork::$aiOpsRunnable must not be defined (as in class App\Commands\SafeBaseCommand)
+[Method: CLI, Route: /]
+in APPPATH/Commands/OpsWork.php on line 10.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-01-31 13:45:24 --> ErrorException: Type of App\Commands\OpsWork::$aiOpsRunnable must not be defined (as in class App\Commands\SafeBaseCommand)
+[Method: CLI, Route: /]
+in APPPATH/Commands/OpsWork.php on line 10.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-01-31 06:00:02 --> TypeError: Cannot assign null to property Config\App::$enableKint of type bool
+[Method: GET, Route: API/Management/Run-CRON-Tasks]
+in SYSTEMPATH/Config/BaseConfig.php on line 82.
+ 1 ROOTPATH/writable/cache/FactoriesCache_config(55): CodeIgniter\Config\BaseConfig::__set_state([...])
+ 2 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include('/home/mymiteam/mymiwallet/site/current/writable/cache/FactoriesCache_config')
+ 3 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 4 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 5 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
