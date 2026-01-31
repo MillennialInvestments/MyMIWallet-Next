@@ -9,7 +9,7 @@ use CodeIgniter\CLI\CLI;
 
 class OpsWork extends SafeBaseCommand
 {
-    protected bool $aiOpsRunnable = true;
+    protected $aiOpsRunnable = true;
     protected $group = 'ops';
     protected $name = 'ops:work';
     protected $description = 'Process AiOps task queue items safely.';

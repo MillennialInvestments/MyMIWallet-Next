@@ -83,6 +83,15 @@ class Summarize extends SafeBaseCommand
             'dry_run'   => $dryRun,
         ]);
 
+        $total = (int) ($result['total'] ?? 0);
+        $new   = (int) ($result['new_total'] ?? 0);
+
+        if ($total === 0 && $new === 0) {
+            CLI::write('✔ Logs are clean. No errors or warnings found.', 'green');
+        } else {
+            CLI::write("⚠ Log summary: total={$total}, new={$new}", 'yellow');
+        }
+
         return EXIT_SUCCESS;
     }
 
