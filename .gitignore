@@ -1,5 +1,7 @@
 /vendor/
 /writable/*
+!/writable/.gitkeep
+!/writable/**/.gitkeep
 /public/writable/
 # Allow checked-in smoke sample
 !/writable/logs/
