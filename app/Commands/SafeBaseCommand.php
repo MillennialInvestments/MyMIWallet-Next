@@ -14,8 +14,8 @@ use App\Commands\Contracts\RequiresApproval;
 
 abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, DryRunCapable, AiOpsRunnable
 {
-    protected bool $aiOpsRunnable = false;
-    protected bool $defaultDryRun = false;
+    protected $aiOpsRunnable = false;
+    protected $defaultDryRun = false;
 
     /**
      * CI4-safe param parser.
@@ -90,7 +90,8 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
         }
 
         CLI::error('This action is destructive. Re-run with --approve.');
-        exit(EXIT_ERROR);
+        return;
+
     }
 
     protected function logIntent(array $params, array $flags, bool $dryRun): void
