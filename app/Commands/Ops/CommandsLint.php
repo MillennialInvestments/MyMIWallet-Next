@@ -8,9 +8,9 @@ use CodeIgniter\CLI\CLI;
 class CommandsLint extends SafeBaseCommand
 {
     protected $group = 'ops';
-    protected $name = 'ops:lint:commands';
+    protected $name = 'ops:commands:lint';
     protected $description = 'Lint Spark commands for runtime safety contracts and documentation coverage.';
-    protected $usage = 'ops:lint:commands [--json]';
+    protected $usage = 'ops:commands:lint [--json]';
     protected $options = [
         '--json' => 'Emit JSON results to stdout',
     ];

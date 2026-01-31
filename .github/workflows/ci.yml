@@ -31,7 +31,15 @@ jobs:
 
       - name: Spark Command Lint
         run: |
-          php spark ops:lint:commands
+          php spark ops:commands:lint
+
+      - name: Spark Filesystem Lint
+        run: |
+          php spark ops:filesystem:lint
+
+      - name: Codex Review Dry Run
+        run: |
+          php spark codex:review --dry-run
 
       - name: Spark Doctor
         run: |

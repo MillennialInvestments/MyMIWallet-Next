@@ -54,7 +54,7 @@
 - auth:audit
 - auth:funnel-check
 - ops:commands:audit
-- ops:lint:commands
+- ops:commands:lint
 - ops:commands:inventory (proposed)
 - config:drift (proposed)
 - db:drift (proposed)

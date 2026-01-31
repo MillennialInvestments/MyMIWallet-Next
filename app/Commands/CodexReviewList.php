@@ -27,6 +27,9 @@ class CodexReviewList extends SafeBaseCommand
         }
 
         $files = glob($dir . '/review-*.md') ?: [];
+        $files = array_values(array_filter($files, static function ($file) {
+            return preg_match('/review-\d{4}-\d{2}-\d{2}\.md$/', $file) === 1;
+        }));
         rsort($files);
 
         if (empty($files)) {
