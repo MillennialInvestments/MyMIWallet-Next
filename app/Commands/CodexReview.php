@@ -20,7 +20,9 @@ class CodexReview extends SafeBaseCommand
         [$args, $flags] = $this->parseParams($params);
         $dryRun = $this->resolveDryRun($flags);
 
-        $outputDir = rtrim(getenv('REVIEW_OUTPUT_DIR') ?: 'docs/codex/reviews', '/');
+        $relativeDir = getenv('REVIEW_OUTPUT_DIR') ?: 'docs/codex/reviews';
+        $outputDir   = rtrim(ROOTPATH . ltrim($relativeDir, '/'), '/');
+
         $lookback  = (int) (getenv('REVIEW_LOOKBACK_COMMITS') ?: 10);
         $today     = date('Y-m-d');
 
