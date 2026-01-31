@@ -19,7 +19,11 @@ class FilesystemLint extends SafeBaseCommand
     {
         [, $flags] = $this->parseParams($params);
 
-        $files = $this->collectCommandFiles(ROOTPATH . 'app/Commands');
+        $roots = $this->collectScanRoots();
+        $files = [];
+        foreach ($roots as $root) {
+            $files = array_merge($files, $this->collectCommandFiles($root));
+        }
         $issues = [];
 
         foreach ($files as $file) {
@@ -29,7 +33,9 @@ class FilesystemLint extends SafeBaseCommand
             }
 
             $anchored = $this->findAnchoredVariables($lines);
-            $issues = array_merge($issues, $this->scanFile($file, $lines, $anchored));
+            $public = $this->findTargetVariables($lines, 'public');
+            $writable = $this->findTargetVariables($lines, 'writable');
+            $issues = array_merge($issues, $this->scanFile($file, $lines, $anchored, $public, $writable));
         }
 
         $payload = [
@@ -46,6 +52,7 @@ class FilesystemLint extends SafeBaseCommand
             foreach ($issues as $issue) {
                 CLI::write(sprintf('%s:%d %s (%s)', $issue['file'], $issue['line'], $issue['call'], $issue['reason']), 'yellow');
                 CLI::write('  ' . $issue['snippet'], 'blue');
+                CLI::write('  Fix: ' . $issue['suggested_fix'], 'white');
             }
         }
 
@@ -56,6 +63,17 @@ class FilesystemLint extends SafeBaseCommand
         return $issues === [] ? EXIT_SUCCESS : EXIT_ERROR;
     }
 
+    private function collectScanRoots(): array
+    {
+        $roots = [
+            ROOTPATH . 'app/Commands',
+            ROOTPATH . 'tools',
+            ROOTPATH . 'aiops',
+        ];
+
+        return array_values(array_filter($roots, 'is_dir'));
+    }
+
     private function collectCommandFiles(string $root): array
     {
         $files = [];
@@ -63,6 +81,10 @@ class FilesystemLint extends SafeBaseCommand
 
         foreach ($iterator as $entry) {
             if ($entry->isDir()) {
+                continue;
+            }
+
+            if ($this->isExcludedPath($entry->getPathname())) {
                 continue;
             }
 
@@ -126,7 +148,47 @@ class FilesystemLint extends SafeBaseCommand
         return $anchored;
     }
 
-    private function scanFile(string $file, array $lines, array $anchored): array
+    private function findTargetVariables(array $lines, string $target): array
+    {
+        $targets = [];
+        $changed = true;
+
+        while ($changed) {
+            $changed = false;
+            foreach ($lines as $line) {
+                if (! preg_match('/\$(\w+)\s*=\s*(.+);/', $line, $matches)) {
+                    continue;
+                }
+
+                $var = $matches[1];
+                $expr = $matches[2];
+
+                if (isset($targets[$var])) {
+                    continue;
+                }
+
+                if ($this->expressionTargets($expr, $target)) {
+                    $targets[$var] = true;
+                    $changed = true;
+                    continue;
+                }
+
+                if (preg_match_all('/\$(\w+)/', $expr, $refs)) {
+                    foreach ($refs[1] as $ref) {
+                        if (isset($targets[$ref])) {
+                            $targets[$var] = true;
+                            $changed = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $targets;
+    }
+
+    private function scanFile(string $file, array $lines, array $anchored, array $public, array $writable): array
     {
         $issues = [];
         $relative = $this->relativePath($file);
@@ -141,17 +203,39 @@ class FilesystemLint extends SafeBaseCommand
                     continue;
                 }
 
-                if ($this->isAnchoredArgument($firstArg, $anchored)) {
-                    continue;
+                $missingRoot = ! $this->isAnchoredArgument($firstArg, $anchored);
+                if ($missingRoot) {
+                    $issues[] = [
+                        'file' => $relative,
+                        'line' => $lineNumber,
+                        'call' => $call['name'],
+                        'reason' => 'Missing ROOTPATH anchor',
+                        'snippet' => trim($line),
+                        'suggested_fix' => $this->suggestRootpathFix($firstArg, $call['name']),
+                    ];
                 }
 
-                $issues[] = [
-                    'file' => $relative,
-                    'line' => $lineNumber,
-                    'call' => $call['name'],
-                    'reason' => 'Missing ROOTPATH anchor',
-                    'snippet' => trim($line),
-                ];
+                if ($this->isTargetArgument($firstArg, $public, 'public')) {
+                    $issues[] = [
+                        'file' => $relative,
+                        'line' => $lineNumber,
+                        'call' => $call['name'],
+                        'reason' => 'Writes to public/',
+                        'snippet' => trim($line),
+                        'suggested_fix' => $this->suggestSafeTargetFix('public'),
+                    ];
+                }
+
+                if ($this->isTargetArgument($firstArg, $writable, 'writable')) {
+                    $issues[] = [
+                        'file' => $relative,
+                        'line' => $lineNumber,
+                        'call' => $call['name'],
+                        'reason' => 'Writes to writable/',
+                        'snippet' => trim($line),
+                        'suggested_fix' => $this->suggestSafeTargetFix('writable'),
+                    ];
+                }
             }
         }
 
@@ -193,6 +277,76 @@ class FilesystemLint extends SafeBaseCommand
 
         if (preg_match('/^\$(\w+)/', $arg, $matches)) {
             return isset($anchored[$matches[1]]);
+        }
+
+        return false;
+    }
+
+    private function isTargetArgument(string $arg, array $targets, string $target): bool
+    {
+        if ($this->expressionTargets($arg, $target)) {
+            return true;
+        }
+
+        if (preg_match('/^\$(\w+)/', $arg, $matches)) {
+            return isset($targets[$matches[1]]);
+        }
+
+        return false;
+    }
+
+    private function expressionTargets(string $expr, string $target): bool
+    {
+        if ($target === 'public') {
+            return preg_match('/\bpublic[\/\\\\]/', $expr) === 1 || str_contains($expr, 'FCPATH');
+        }
+
+        if ($target === 'writable') {
+            return preg_match('/\bwritable[\/\\\\]/', $expr) === 1 || str_contains($expr, 'WRITEPATH');
+        }
+
+        return false;
+    }
+
+    private function suggestRootpathFix(string $arg, string $call): string
+    {
+        $suggested = $this->extractLiteralPath($arg);
+        if ($suggested !== null) {
+            return sprintf('%s(ROOTPATH . %s, ...)', $call, $suggested);
+        }
+
+        return sprintf('%s(ROOTPATH . \'docs/...\', ...)', $call);
+    }
+
+    private function suggestSafeTargetFix(string $target): string
+    {
+        if ($target === 'writable') {
+            return 'Use log_message() for logs or move output to ROOTPATH . \'docs/...\'';
+        }
+
+        return 'Move output to ROOTPATH . \'docs/...\'';
+    }
+
+    private function extractLiteralPath(string $arg): ?string
+    {
+        if (preg_match('/([\'"])([^\'"]+)\\1/', $arg, $matches)) {
+            return $matches[1] . $matches[2] . $matches[1];
+        }
+
+        return null;
+    }
+
+    private function isExcludedPath(string $path): bool
+    {
+        $segments = preg_split('/[\/\\\\]+/', $path);
+        if (! is_array($segments)) {
+            return false;
+        }
+
+        foreach ($segments as $segment) {
+            if (in_array($segment, ['node_modules', 'vendor', '.git', 'storage'], true)) {
+                return true;
+            }
         }
 
         return false;

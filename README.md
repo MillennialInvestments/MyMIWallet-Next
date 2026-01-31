@@ -30,7 +30,7 @@ and any database settings.
 
 ## Spark Runtime Validation & Safety
 
-- **Static validation**: `php spark ops:commands:audit` and `php spark ops:lint:commands` enforce constructor safety, metadata, and docs coverage. See `docs/management/Command_Runtime_Audit.md`.
+- **Static validation**: `php spark ops:commands:audit` and `php spark ops:commands:lint` enforce constructor safety, metadata, and docs coverage. See `docs/management/Command_Runtime_Audit.md`.
 - **Runtime validation**: Spark boot prerequisites (vendor, boot files, .env) are documented in `docs/management/Spark_Bootstrap_Requirements.md`.
 - **Automatic enforcement**: destructive commands require `--approve` and support `--dry-run` via `SafeBaseCommand`.
 

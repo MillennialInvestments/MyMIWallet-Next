@@ -3,7 +3,7 @@
 /**
  * MyMI AI-Ops Worker (Worker-Only Mode)
  * - Generates docs/_aiops/*.md reports
- * - Stores state in writable/aiops/state.json
+ * - Stores state in docs/_aiops/state.json
  *
  * Usage:
  *   php aiops/aiops_worker.php --mode=nightly
@@ -20,12 +20,14 @@ function repoRoot(): string {
 }
 
 function ensureDir(string $dir): void {
+    $dir = ROOTPATH . ltrim(str_replace(ROOTPATH, '', $dir), '/');
     if (!is_dir($dir)) {
         @mkdir($dir, 0775, true);
     }
 }
 
 function writeFile(string $path, string $content): void {
+    $path = ROOTPATH . ltrim(str_replace(ROOTPATH, '', $path), '/');
     ensureDir(dirname($path));
     file_put_contents($path, $content);
 }
@@ -63,6 +65,7 @@ function loadState(string $path): array {
 }
 
 function saveState(string $path, array $state): void {
+    $path = ROOTPATH . ltrim(str_replace(ROOTPATH, '', $path), '/');
     ensureDir(dirname($path));
     file_put_contents($path, json_encode($state, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 }
@@ -106,14 +109,15 @@ function runCmd(string $cmd, int $timeoutSeconds = 60): array {
 /** --------------------------- MAIN --------------------------- */
 
 $root = repoRoot();
+define('ROOTPATH', rtrim($root, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
 $mode = 'nightly';
 foreach ($argv as $arg) {
     if (str_starts_with($arg, '--mode=')) $mode = substr($arg, 7);
 }
 
-$docsDir = $root . '/docs';
+$docsDir = ROOTPATH . 'docs';
 $aiopsDocsDir = $docsDir . '/_aiops';
-$statePath = $root . '/writable/aiops/state.json';
+$statePath = $aiopsDocsDir . '/state.json';
 
 ensureDir($aiopsDocsDir);
 ensureDir(dirname($statePath));

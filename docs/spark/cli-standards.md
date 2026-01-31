@@ -113,3 +113,15 @@ CI should fail if any Spark command uses forbidden APIs. Use the lint script:
 ```bash
 scripts/ci/check_spark_cli.sh
 ```
+
+## Filesystem Safety
+
+- All Spark commands must anchor writes to `ROOTPATH`.
+- Writes to `public/` or `writable/` are forbidden (use `log_message()` for logs).
+- CI runs `php spark ops:filesystem:lint` to enforce these rules across app/Commands, tools, and aiops.
+
+## Codex Review Lifecycle
+
+- `codex:review:list` surfaces available review artifacts under `docs/codex/reviews`.
+- `codex:review:commit` stages/commits only review artifacts, defaulting to `--dry-run`.
+- `codex:review:publish` posts summaries to Discord or GitHub PR comments (CI only).

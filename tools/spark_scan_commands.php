@@ -2,7 +2,14 @@
 <?php
 
 $root = realpath(__DIR__ . '/../');
-$commandRoot = realpath($root . '/app/Commands');
+if ($root === false) {
+    fwrite(STDERR, "Unable to resolve project root.\n");
+    exit(1);
+}
+
+define('ROOTPATH', rtrim($root, '/') . '/');
+
+$commandRoot = realpath(ROOTPATH . 'app/Commands');
 $scanTargets = [
     [
         'label' => 'app/Commands',
@@ -11,18 +18,18 @@ $scanTargets = [
     ],
     [
         'label' => 'scripts',
-        'path' => realpath($root . '/scripts'),
+        'path' => realpath(ROOTPATH . 'scripts'),
         'mode' => 'scripts',
     ],
     [
         'label' => 'tools',
-        'path' => realpath($root . '/tools'),
+        'path' => realpath(ROOTPATH . 'tools'),
         'mode' => 'tools',
     ],
 ];
 
 $now = new DateTimeImmutable('now');
-$reportDir = $root . '/writable/triage';
+$reportDir = ROOTPATH . 'docs/aiops/triage';
 $reportPath = $reportDir . '/spark-command-audit.md';
 $statusPath = $reportDir . '/spark-command-audit.json';
 
@@ -308,6 +315,7 @@ foreach ($scanTargets as $target) {
         }
 
         if (! empty($changes)) {
+            $file = ROOTPATH . ltrim(str_replace(ROOTPATH, '', $file), '/');
             file_put_contents($file, $contents);
         }
 
@@ -417,7 +425,7 @@ $status = [
     'status' => empty($broken) ? 'ok' : 'broken',
     'commands' => $commandCount,
     'last_check' => $now->format('Y-m-d H:i:s'),
-    'report' => 'writable/triage/spark-command-audit.md',
+    'report' => 'docs/aiops/triage/spark-command-audit.md',
 ];
 file_put_contents($statusPath, json_encode($status, JSON_PRETTY_PRINT));
 
