@@ -1,0 +1,31 @@
+name: AIOps PR Factory
+
+on:
+  push:
+    paths:
+      - "aiops/prs/outbox/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  pr-factory:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.AIOPS_GH_APP_ID }}
+          private-key: ${{ secrets.AIOPS_GH_APP_PRIVATE_KEY }}
+
+      - name: Create PRs from outbox bundles
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          echo "AIOps PR factory workflow is ready to process bundles."

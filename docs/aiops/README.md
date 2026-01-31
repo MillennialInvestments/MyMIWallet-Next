@@ -23,3 +23,5 @@ The AI Ops Control Plane provides centralized governance for all AI-driven workf
 - **Dashboard:** `Management/AiOps` renders caps, usage, and recent events with progress indicators.
 - **API:** `GET /API/AiOps/status` returns toggles, current-month caps, usage rollups, recent runs, and events.
 - **Reports:** Gap Sync writes markdown reports under `docs/gap_tracker/reports/` for operational traceability.
+
+Test change for PR factory.
