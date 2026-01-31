@@ -1,28 +1,17 @@
 <?php
 
-/*
- |--------------------------------------------------------------------------
- | ERROR DISPLAY (PRODUCTION)
- |--------------------------------------------------------------------------
+/**
+ * Production Boot
+ * IMPORTANT: Boot files run very early. Do not reference Config\Services here.
  */
+
 error_reporting(E_ALL & ~E_DEPRECATED);
 ini_set('display_errors', '0');
 
-/*
- |--------------------------------------------------------------------------
- | CI DEBUG FLAG
- |--------------------------------------------------------------------------
- */
 defined('CI_DEBUG') || define('CI_DEBUG', false);
+defined('SHOW_DEBUG_BACKTRACE') || define('SHOW_DEBUG_BACKTRACE', false);
 
-/*
- |--------------------------------------------------------------------------
- | CI ENVIRONMENT SAFETY
- |--------------------------------------------------------------------------
- | Boot files execute BEFORE autoloaders and Services exist.
- | DO NOT reference Config\Services here.
- */
-if (is_cli()) {
+if (PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg') {
     $GLOBALS['CI_DEBUG'] = false;
-    $GLOBALS['CI_KINT'] = false;
+    $GLOBALS['CI_KINT']  = false;
 }
