@@ -1,95 +1,82 @@
-# Spark Command Standards
+# Spark Command Standards (CI4 4.6.x)
 
-These rules lock down Spark command behavior to prevent silent command loss and constructor signature mismatches.
+These standards lock Spark behavior for deterministic, auditable operations on PHP 8.2 in DreamHost shared/VPS environments.
 
 ## ❌ Forbidden
 
 - Defining `__construct()` in any Spark command class.
 - Injecting services via constructor arguments.
 - Extending `CodeIgniter\CLI\BaseCommand` directly for new commands.
+- Typed Spark metadata properties (`$group`, `$name`, `$description`, `$usage`, `$options`).
+- Nested `php spark` execution from within any command.
 
 ## ✅ Required
 
 - Extend `App\Commands\SafeBaseCommand` for every new command.
 - Resolve dependencies inside `run()` via `Config\Services` or helpers like `service()`.
 - Register each command explicitly in `app/Config/Console.php`.
-- Run `php spark ops:commands:audit` before merge.
-- Use discovery-safe metadata: untyped `$group`, `$name`, `$description`, `$usage`, `$options` fields only.
-- Avoid typed properties for Spark metadata; typed properties can break discovery.
+- Enforce guardrails using `SafeBaseCommand` + `AIOpsPolicy`.
+- Emit artifacts for every run (`summary.md` + `report.json`).
+- Use standardized flags and exit codes.
 
-## 🔥 Rationale
+## Canonical Spark Command Taxonomy
 
-CodeIgniter 4 instantiates Spark commands internally, and constructor mismatches cause commands to disappear from `spark list` without a clear error. Cache invalidation does not resolve constructor signature violations. Removing constructors from command classes and enforcing a single base class keeps registration deterministic and prevents silent runtime loss.
+| Prefix | Meaning |
+| --- | --- |
+| health:* | Diagnostics only (read-only) |
+| audit:* | Verification (read-only, CI-enforced) |
+| fix:* | Guarded remediation |
+| runtime:* | Runtime / infrastructure |
+| spark:* | Spark layer governance |
+| ops:* | Orchestration & policy |
+| ci:* | CI-only commands |
+| security:* | Security audits |
+| perf:* | Performance diagnostics |
+| db:* | Database health & drift |
+| cache:* | Cache health / purge |
+| marketing:* | Marketing automation |
+| alerts:* | Alerts pipeline |
+| notify:* | External dispatch |
+| aiops:* | AI task queue & quotas |
 
-## 📝 Recent Root Cause & Fix
+**New commands must conform to this taxonomy.** Any legacy proposals with non-conforming prefixes must be renamed before implementation.
 
-`runtime:diagnose-502` was missing from `spark list` because the command metadata and signature drifted from CI4 discovery rules (it did not match the exact SafeBaseCommand signature, and the required Spark metadata/usage strings were not aligned). CI4 only discovers commands that are properly registered in `app/Config/Console.php`, extend the expected base class without constructors/typed properties, and expose the plain (untyped) `$group`, `$name`, `$description`, and `$usage` properties. Keeping these values exact and untyped, plus clearing the Spark command cache, restores command discovery and prevents silent drops in the future.
+## Required Flags
 
-## Runtime Diagnostics Commands
+All commands must accept and honor the following flags:
 
-Runtime diagnostics commands inspect web infrastructure (PHP handlers, sockets, nginx configs, logs) to explain 502/503 conditions without destabilizing shared-host environments.
+- `--emit` (required): output mode (e.g., `docs`, `json`, `both`).
+- `--out` (required): artifact output directory override.
+- `--dry-run` (required for any mutating command): perform no changes.
+- `--approve` (required for any mutating command): explicit approval gate.
 
-**Purpose**
-- Provide safe, read-only checks that quickly pinpoint handler mismatches, stale sockets, and bad fastcgi_pass targets.
-- Offer minimal, guard-railed fix steps when explicitly forced.
+## Artifact Paths
 
-**When to run**
-- After a 502/503 incident or when deploys start returning Bad Gateway.
-- During shared-host migrations or PHP version switches.
+Default output paths are deterministic:
 
-**Shared-host limitations**
-- Commands may not be allowed to restart handlers or access system-level nginx.
-- They only scan user-space configs (`~/nginx/**`) and current logs.
+- **Primary artifacts:** `docs/aiops/artifacts/<command>/<timestamp>/`
+- **Raw artifacts:** `writable/aiops/artifacts/<command>/<timestamp>/`
+- **Required files:** `summary.md`, `report.json`
 
-**Why fixes are intentionally limited**
-- Shared VPS/DreamHost environments prohibit system config edits and service restarts.
-- SafeBaseCommand guardrails enforce `--approve` and `--dry-run` so diagnostics never escalate risk by default.
+`--out` must point inside one of the two approved roots.
 
-## ops:next-steps (AIOps snapshot)
+## Exit Codes
 
-`ops:next-steps` aggregates existing audit commands into a single Issue list and writes:
+| Exit Code | Meaning |
+| --- | --- |
+| 0 | Success (no issues) |
+| 10 | Audit completed with findings (non-fatal) |
+| 20 | Validation failure (bad flags / missing artifact path) |
+| 30 | Guardrail violation (policy denied) |
+| 40 | Execution failed (runtime error) |
+| 50 | Artifact write failure |
 
-- `docs/next/Next-Steps.md` (human-friendly “what to do next”)
-- `docs/next/snapshots/issues-YYYY-MM-DD.json` (machine-readable snapshot)
+## CI Enforcement
 
-Supported emit modes:
+- CI runs **read-only** commands only.
+- CI blocks destructive or mutating commands even with `--approve`.
+- CI validates that all commands are registered in `app/Config/Console.php`.
 
-- `--emit=docs` (default) writes docs + snapshot.
-- `--emit=db` enqueues issues into `bf_aiops_tasks`.
-- `--emit=both` does both.
+## Rationale
 
-Issue schema fields:
-
-- `id` (stable hash)
-- `task_key` (same as `id`)
-- `domain` (`dev|ops|security|ux|marketing`)
-- `severity` (`P0|P1|P2`)
-- `title`
-- `evidence` (file paths/log excerpts/command outputs)
-- `suggested_fix` (short steps)
-- `ai_prompt` (legacy single prompt)
-- `codex_prompt` (copy/paste prompt block)
-- `chatgpt_prompt` (copy/paste prompt block)
-- `owner` (`human|codex|aiops`)
-- `status` (`open|queued|done`)
-- `auto_queue` (`true|false`)
-
-# Spark Command Standards (CI4 ≥ 4.6)
-
-## ❌ Forbidden
-- array $config in __construct()
-- Custom constructor signatures
-- Optional constructor params
-- Typed properties in command metadata
-
-## ✅ Required Constructor Signature
-
-All Spark commands MUST use:
-
-```php
-public function __construct(
-    \Psr\Log\LoggerInterface $logger,
-    \CodeIgniter\CLI\Commands $commands
-) {
-    parent::__construct($logger, $commands);
-}
+CodeIgniter 4 instantiates Spark commands internally; constructors and typed metadata can prevent discovery without clear errors. Enforcing a SafeBaseCommand-only architecture with untyped metadata and explicit registration keeps Spark deterministic and prevents silent command loss.
