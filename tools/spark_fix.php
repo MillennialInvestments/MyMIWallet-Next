@@ -4,8 +4,15 @@
 declare(strict_types=1);
 
 $base = realpath(__DIR__ . '/../');
-$commandsRoot = $base . '/app/Commands';
-$triageDir = $base . '/writable/triage';
+if ($base === false) {
+    fwrite(STDERR, "Unable to resolve project root.\n");
+    exit(1);
+}
+
+define('ROOTPATH', rtrim($base, '/') . '/');
+
+$commandsRoot = ROOTPATH . 'app/Commands';
+$triageDir = ROOTPATH . 'docs/aiops/triage';
 
 if (!is_dir($triageDir)) {
     @mkdir($triageDir, 0775, true);
@@ -19,6 +26,7 @@ $report[] = '';
 
 function writeReport(string $path, array $lines): void
 {
+    $path = ROOTPATH . ltrim(str_replace(ROOTPATH, '', $path), '/');
     file_put_contents($path, implode("\n", $lines) . "\n");
 }
 
@@ -129,6 +137,7 @@ foreach ($rii as $file) {
     $patched = patchFile($path, $contents, $report);
 
     if ($patched !== $contents) {
+        $path = ROOTPATH . ltrim(str_replace(ROOTPATH, '', $path), '/');
         file_put_contents($path, $patched);
     }
 }

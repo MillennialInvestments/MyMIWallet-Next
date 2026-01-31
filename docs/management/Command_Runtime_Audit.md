@@ -60,7 +60,7 @@ This audit validates every Spark command under `app/Commands/**` against runtime
 | `ops:commands:autofix` | OK | — | — |
 | `ops:fetch-commands` | OK | — | — |
 | `ops:filesystem:lint` | OK | — | — |
-| `ops:lint:commands` | OK | — | — |
+| `ops:commands:lint` | OK | — | — |
 | `ops:next-steps` | OK | — | — |
 | `ops:work` | OK | — | — |
 | `revenue:scan` | OK | — | — |
@@ -76,5 +76,5 @@ This audit validates every Spark command under `app/Commands/**` against runtime
 
 ## Notes
 
-- `ops:lint:commands` outputs machine-readable results to `docs/next/bf_aiops_task_runs/commands_lint.json`.
+- `ops:commands:lint` outputs machine-readable results to `docs/next/bf_aiops_task_runs/commands_lint.json`.
 - The lint command fails CI if any command lacks metadata, uses deprecated Spark APIs, or is missing safety flags.

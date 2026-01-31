@@ -2,8 +2,16 @@
 
 declare(strict_types=1);
 
-$baseDir = realpath(__DIR__ . '/../../docs/legal/crypto_customer_agreement');
-if ($baseDir === false) {
+$root = realpath(__DIR__ . '/../../');
+if ($root === false) {
+    fwrite(STDERR, "Unable to resolve project root.\n");
+    exit(1);
+}
+
+define('ROOTPATH', rtrim($root, '/') . '/');
+
+$baseDir = ROOTPATH . 'docs/legal/crypto_customer_agreement';
+if (! is_dir($baseDir)) {
     fwrite(STDERR, "Unable to locate crypto_customer_agreement directory.\n");
     exit(1);
 }
