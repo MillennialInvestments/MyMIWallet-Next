@@ -22,6 +22,13 @@ class CodexReview extends SafeBaseCommand
 
         $relativeDir = getenv('REVIEW_OUTPUT_DIR') ?: 'docs/codex/reviews';
         $outputDir   = rtrim(ROOTPATH . ltrim($relativeDir, '/'), '/');
+        $docsRoot    = rtrim(ROOTPATH . 'docs', '/');
+
+        if (! str_starts_with($outputDir, $docsRoot)) {
+            CLI::error('Refusing to write outside /docs: ' . $outputDir);
+            log_message('error', '[spark:codex:review] Blocked', ['output_dir' => $outputDir]);
+            return EXIT_ERROR;
+        }
 
         $lookback  = (int) (getenv('REVIEW_LOOKBACK_COMMITS') ?: 10);
         $today     = date('Y-m-d');
@@ -39,6 +46,8 @@ class CodexReview extends SafeBaseCommand
 
         $reviewPath = $outputDir . '/review-' . $today . '.md';
         $promptPath = $outputDir . '/review-prompt-' . $today . '.md';
+        $this->guardDocsPath($reviewPath);
+        $this->guardDocsPath($promptPath);
 
         if ($dryRun) {
             CLI::write('Dry-run enabled. Review files will not be written.', 'yellow');
@@ -166,5 +175,13 @@ MD;
     protected function isDestructive(): bool
     {
         return false;
+    }
+
+    private function guardDocsPath(string $file): void
+    {
+        $dir = realpath(dirname($file));
+        if ($dir === false || ! str_starts_with($dir, rtrim(ROOTPATH, '/') . '/docs')) {
+            throw new \RuntimeException('Refusing to write outside /docs');
+        }
     }
 }
