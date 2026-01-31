@@ -48,3 +48,8 @@ defined('SHOW_DEBUG_BACKTRACE') || define('SHOW_DEBUG_BACKTRACE', true);
  | items. It can always be used within your own application too.
  */
 defined('CI_DEBUG') || define('CI_DEBUG', true);
+
+if (is_cli()) {
+    $GLOBALS['CI_DEBUG'] = false;
+    $GLOBALS['CI_KINT'] = false;
+}

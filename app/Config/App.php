@@ -260,4 +260,9 @@ class App extends BaseConfig
      */
     public bool $maintenanceMode = false;
 
+    /** 
+     * Enable Kint Mode
+     */
+    public bool $enableKint = false;
+
 }

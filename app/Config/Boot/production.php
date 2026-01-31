@@ -22,3 +22,7 @@ defined('CI_DEBUG') || define('CI_DEBUG', false);
  | Boot files execute BEFORE autoloaders and Services exist.
  | DO NOT reference Config\Services here.
  */
+if (is_cli()) {
+    $GLOBALS['CI_DEBUG'] = false;
+    $GLOBALS['CI_KINT'] = false;
+}
