@@ -19,10 +19,15 @@ class Console extends BaseConfig
 {
     public array $commands = [
         \App\Commands\AppUpdate::class,
+        \App\Commands\CodexReview::class,
+        \App\Commands\CodexReviewCommit::class,
+        \App\Commands\CodexReviewList::class,
+        \App\Commands\CodexReviewPublish::class,
         \App\Commands\Ops\CommandsAudit::class,
         \App\Commands\Ops\CommandsAutofix::class,
         \App\Commands\Ops\CommandsInventory::class,
         \App\Commands\Ops\CommandsLint::class,
+        \App\Commands\Ops\FilesystemLint::class,
         \App\Commands\Ops\NextSteps::class,
         \App\Commands\Ops\NextStepsSync::class,
         \App\Commands\Ops\SparkReset::class,
