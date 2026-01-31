@@ -7,22 +7,51 @@ use CodeIgniter\Config\BaseConfig;
 /**
  * Spark Console Configuration
  *
- * IMPORTANT RULES:
- * - Auto-discovery is intentionally disabled
+ * RULES:
+ * - Auto-discovery is disabled
  * - Every command must be explicitly registered here
- * - Class names, namespaces, and file paths MUST match exactly
  * - No command may define a constructor
+ * - No typed properties in commands
  *
  * This file is the single source of truth for Spark.
  */
 class Console extends BaseConfig
 {
+    /**
+     * Explicitly registered Spark commands
+     *
+     * @var array<class-string>
+     */
     public array $commands = [
+
+        /*
+        |----------------------------------------------------------------------
+        | Core / App
+        |----------------------------------------------------------------------
+        */
         \App\Commands\AppUpdate::class,
-        \App\Commands\CodexReview::class,
-        \App\Commands\CodexReviewCommit::class,
-        \App\Commands\CodexReviewList::class,
-        \App\Commands\CodexReviewPublish::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Runtime / Recovery
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Runtime\SparkDoctor::class,
+        \App\Commands\Runtime\SparkDoctorRuntime::class,
+        \App\Commands\Runtime\Diagnose502::class,
+        \App\Commands\Runtime\Triage::class,
+        \App\Commands\Runtime\CacheBoot::class,
+
+        \App\Commands\Diagnose503::class,
+        \App\Commands\PurgeFastCGI::class,
+        \App\Commands\RestartSafe::class,
+        \App\Commands\TrafficSpikeGuard::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Ops / AIOps
+        |----------------------------------------------------------------------
+        */
         \App\Commands\Ops\CommandsAudit::class,
         \App\Commands\Ops\CommandsAutofix::class,
         \App\Commands\Ops\CommandsInventory::class,
@@ -32,197 +61,37 @@ class Console extends BaseConfig
         \App\Commands\Ops\NextStepsSync::class,
         \App\Commands\Ops\SparkReset::class,
         \App\Commands\OpsWork::class,
-        \App\Commands\Runtime\SparkDoctor::class,
-        \App\Commands\Runtime\SparkDoctorRuntime::class,
-        \App\Commands\Runtime\Diagnose502::class,
-        \App\Commands\Runtime\Triage::class,
-        \App\Commands\Runtime\CacheBoot::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Config / Drift / Security
+        |----------------------------------------------------------------------
+        */
         \App\Commands\Config\Drift::class,
-        \App\Commands\Diagnose503::class,
-        \App\Commands\PurgeFastCGI::class,
-        \App\Commands\RestartSafe::class,
-        \App\Commands\TrafficSpikeGuard::class,
         \App\Commands\Database\Drift::class,
         \App\Commands\Security\SecretsAudit::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Business / Product Audits
+        |----------------------------------------------------------------------
+        */
         \App\Commands\Marketing\AutomationAudit::class,
         \App\Commands\Growth\RetentionWatch::class,
         \App\Commands\Ux\JourneyAudit::class,
         \App\Commands\Revenue\CostForecast::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Codex / Review System
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\CodexReview::class,
+        // future:
+        // \App\Commands\CodexReviewList::class,
+        // \App\Commands\CodexReviewCommit::class,
+        // \App\Commands\CodexReviewPublish::class,
     ];
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | App / Runtime
-    //     |--------------------------------------------------------------------------
-    //     */
-    //     \App\Commands\AppUpdate::class,
-    //     \App\Commands\RuntimeCheck::class,
-    //     \App\Commands\Runtime\SparkDoctor::class,
-    //     \App\Commands\Runtime\SparkFix::class,
-    //     \App\Commands\SparkReset::class,
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | AI Ops
-    //     |--------------------------------------------------------------------------
-    //     */
-    //     \App\Commands\AiOpsSeed::class,
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | Auth
-    //     |--------------------------------------------------------------------------
-    //     */
-    //     \App\Commands\Auth\Audit::class,
-    //     \App\Commands\Auth\FunnelCheck::class,
-    //     \App\Commands\Auth\Smoke::class,
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | Alerts
-    //     |--------------------------------------------------------------------------
-    //     */
-    //     \App\Commands\AlertsAudit::class,
-    //     \App\Commands\AlertsParseTest::class,
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | Cache / Config
-    //     |--------------------------------------------------------------------------
-    //     */
-    //     \App\Commands\CacheAudit::class,
-    //     \App\Commands\ConfigLint::class,
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | Content / Marketing
-    //     |--------------------------------------------------------------------------
-    //     */
-    //     \App\Commands\ContentIngestSample::class,
-    //     \App\Commands\ContentEngineSmoke::class,
-    //     \App\Commands\NewsAudit::class,
-    //     \App\Commands\RevenueStreamsScan::class,
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | Database / Integrity
-    //     |--------------------------------------------------------------------------
-    //     */
-    //     \App\Commands\Database\ApplyDocs::class,
-    //     \App\Commands\Database\Inventory::class,
-    //     \App\Commands\Database\MigrateDryRun::class,
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | Discord
-    //     |--------------------------------------------------------------------------
-    //     */
-    //     \App\Commands\DiscordList::class,
-    //     \App\Commands\DiscordProcessQueue::class,
-    //     \App\Commands\DiscordTest::class,
-    //     \App\Commands\DiscordTestLiquidity::class,
-    //     \App\Commands\DiscordWireCheck::class,
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | Environment
-    //     |--------------------------------------------------------------------------
-    //     */
-    //     \App\Commands\Env\EnvDoctor::class,
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | Forecasting
-    //     |--------------------------------------------------------------------------
-    //     */
-    //     \App\Commands\ForecastEvaluate::class,
-    //     \App\Commands\ForecastRefresh::class,
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | Gap Tracker
-    //     |--------------------------------------------------------------------------
-    //     */
-    //     \App\Commands\GapTrackerSync::class,
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | Health
-    //     |--------------------------------------------------------------------------
-    //     */
-    //     \App\Commands\Health\Cache::class,
-    //     \App\Commands\Health\Disk::class,
-    //     \App\Commands\Health\GitSafety::class,
-    //     \App\Commands\Health\Services::class,
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | Logs
-    //     |--------------------------------------------------------------------------
-    //     */
-    //     \App\Commands\Logs\Healthcheck::class,
-    //     \App\Commands\Logs\Summarize::class,
-    //     \App\Commands\LogsFullReport::class,
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | Mail
-    //     |--------------------------------------------------------------------------
-    //     */
-    //     \App\Commands\MailSend::class,
-    //     \App\Commands\MailSendTest::class,
-    //     \App\Commands\MailTest::class,
-    //     \App\Commands\MailVerify::class,
-    //     \App\Commands\TestEmail::class,
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | Maintenance / Recovery
-    //     |--------------------------------------------------------------------------
-    //     */
-    //     \App\Commands\Diagnose503::class,
-    //     \App\Commands\Fix503::class,
-    //     \App\Commands\PurgeFastCGI::class,
-    //     \App\Commands\RestartSafe::class,
-    //     \App\Commands\TrafficSpikeGuard::class,
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | Ops / Automation
-    //     |--------------------------------------------------------------------------
-    //     */
-    //     \App\Commands\Ops\CommandsAudit::class,
-    //     \App\Commands\Ops\CommandsAutofix::class,
-    //     \App\Commands\Ops\CommandsLint::class,
-    //     \App\Commands\Ops\NextSteps::class,
-    //     \App\Commands\OpsAnalyzeCommands::class,
-    //     \App\Commands\OpsFetchCommands::class,
-    //     \App\Commands\OpsWork::class,
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | Routes / Security
-    //     |--------------------------------------------------------------------------
-    //     */
-    //     \App\Commands\RoutesAuthAudit::class,
-    //     \App\Commands\SecurityCspAudit::class,
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | Wallets
-    //     |--------------------------------------------------------------------------
-    //     */
-    //     \App\Commands\WalletsWarmSummaryCache::class,
-
-    //     /*
-    //     |--------------------------------------------------------------------------
-    //     | Finance / NAV
-    //     |--------------------------------------------------------------------------
-    //     */
-    //     \App\Commands\MditNavComputeDaily::class,
-    // ];
-    public array $commands = [];
-
 
     /**
      * Show help output when no command is provided
