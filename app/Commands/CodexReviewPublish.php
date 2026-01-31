@@ -20,8 +20,6 @@ class CodexReviewPublish extends SafeBaseCommand
         '--dry-run' => 'Preview payloads without sending',
     ];
 
-    protected $defaultDryRun = true;
-
     public function run(array $params)
     {
         [, $flags] = $this->parseParams($params);
@@ -54,15 +52,18 @@ class CodexReviewPublish extends SafeBaseCommand
         $summary = $this->extractSection($review, 'Summary of changes');
         $changedFiles = $this->extractSection($review, 'Changed files in lookback');
         $docsDrift = $this->extractSection($review, 'Docs drift');
+        $riskAreas = $this->extractSection($review, 'Risk areas');
 
         $summaryLines = $this->limitLines($summary, 5);
         $changedCount = $this->countNonEmptyLines($changedFiles);
+        $riskFlags = $this->limitLines($riskAreas, 5);
 
         $payload = [
             'date' => $date,
             'summary' => $summaryLines,
             'docs_drift' => $docsDrift !== '' ? $docsDrift : 'No docs drift section found.',
             'changed_files_count' => $changedCount,
+            'risk_flags' => $riskFlags,
         ];
 
         if ($dryRun) {
@@ -183,6 +184,11 @@ class CodexReviewPublish extends SafeBaseCommand
 
     private function publishPullRequest(array $payload): bool
     {
+        if (! $this->isCiEnvironment()) {
+            CLI::error('PR comments are only available in CI.');
+            return false;
+        }
+
         $token = env('GITHUB_TOKEN');
         $repo = env('GITHUB_REPOSITORY');
         if (! $token || ! $repo) {
@@ -220,6 +226,11 @@ class CodexReviewPublish extends SafeBaseCommand
 
         CLI::write('PR comment posted to #' . $prNumber, 'green');
         return true;
+    }
+
+    private function isCiEnvironment(): bool
+    {
+        return (bool) (env('CI') ?: env('GITHUB_ACTIONS'));
     }
 
     private function resolvePullRequestNumber(): ?int
@@ -305,6 +316,14 @@ class CodexReviewPublish extends SafeBaseCommand
             $lines[] = $payload['docs_drift'];
         }
 
+        if (! empty($payload['risk_flags'])) {
+            $lines[] = '';
+            $lines[] = '**Risk flags**';
+            foreach ($payload['risk_flags'] as $flag) {
+                $lines[] = '- ' . $flag;
+            }
+        }
+
         return implode("\n", $lines);
     }
 
@@ -327,6 +346,14 @@ class CodexReviewPublish extends SafeBaseCommand
             $lines[] = '';
             $lines[] = '**Docs drift**';
             $lines[] = $payload['docs_drift'];
+        }
+
+        if (! empty($payload['risk_flags'])) {
+            $lines[] = '';
+            $lines[] = '**Risk flags**';
+            foreach ($payload['risk_flags'] as $flag) {
+                $lines[] = '- ' . $flag;
+            }
         }
 
         return implode("\n", $lines);

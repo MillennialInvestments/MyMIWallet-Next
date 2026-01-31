@@ -1,7 +1,15 @@
 #!/usr/bin/env php
 <?php
 
-$root = realpath(__DIR__ . '/../app/Commands');
+$base = realpath(__DIR__ . '/../');
+if ($base === false) {
+    fwrite(STDERR, "Unable to resolve project root.\n");
+    exit(1);
+}
+
+define('ROOTPATH', rtrim($base, '/') . '/');
+
+$root = ROOTPATH . 'app/Commands';
 
 $iterator = new RecursiveIteratorIterator(
     new RecursiveDirectoryIterator($root)
@@ -27,6 +35,7 @@ foreach ($iterator as $file) {
     );
 
     if ($patched !== $contents) {
+        $path = ROOTPATH . ltrim(str_replace(ROOTPATH, '', $path), '/');
         file_put_contents($path, $patched);
         echo "🔧 Patched: $path\n";
     }

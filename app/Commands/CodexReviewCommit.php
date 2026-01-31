@@ -36,13 +36,19 @@ class CodexReviewCommit extends SafeBaseCommand
             return EXIT_ERROR;
         }
 
+        if (! $this->guardCleanWorkingTree($files)) {
+            return EXIT_ERROR;
+        }
+
         foreach ($files as $file) {
             if (! file_exists($file)) {
                 CLI::error('Missing review artifact: ' . $file);
                 return EXIT_ERROR;
             }
 
-            $this->guardDocsPath($file);
+            if (! $this->guardReviewPath($file)) {
+                return EXIT_ERROR;
+            }
         }
 
         $commands = [];
@@ -148,11 +154,93 @@ class CodexReviewCommit extends SafeBaseCommand
         return [$code, implode("\n", $output)];
     }
 
-    private function guardDocsPath(string $file): void
+    private function guardCleanWorkingTree(array $files): bool
     {
-        $dir = realpath(dirname($file));
-        if ($dir === false || ! str_starts_with($dir, rtrim(ROOTPATH, '/') . '/docs')) {
-            throw new \RuntimeException('Refusing to stage outside /docs');
+        [$code, $output] = $this->execGit('git status --porcelain');
+        if ($code !== 0) {
+            CLI::error('Unable to read git status.');
+            CLI::write($output, 'red');
+            return false;
         }
+
+        $allowed = array_map([$this, 'normalizePath'], $files);
+        $lines = array_filter(preg_split('/\r?\n/', $output) ?: []);
+        foreach ($lines as $line) {
+            $path = $this->extractStatusPath($line);
+            if ($path === '') {
+                continue;
+            }
+
+            $normalized = $this->normalizePath($path);
+            if (! $this->isAllowedStatusPath($normalized, $allowed)) {
+                CLI::error('Working tree has unrelated changes: ' . $path);
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private function extractStatusPath(string $line): string
+    {
+        if (strlen($line) < 4) {
+            return '';
+        }
+
+        $path = trim(substr($line, 3));
+        if (str_contains($path, ' -> ')) {
+            $parts = explode(' -> ', $path);
+            $path = end($parts) ?: $path;
+        }
+
+        return $path;
+    }
+
+    private function normalizePath(string $path): string
+    {
+        $normalized = str_replace('\\', '/', $path);
+        $root = rtrim(str_replace('\\', '/', ROOTPATH), '/') . '/';
+        if (str_starts_with($normalized, $root)) {
+            $normalized = substr($normalized, strlen($root));
+        }
+
+        return ltrim($normalized, './');
+    }
+
+    private function isAllowedStatusPath(string $path, array $allowed): bool
+    {
+        foreach ($allowed as $file) {
+            if ($path === $file) {
+                return true;
+            }
+        }
+
+        return str_starts_with($path, 'docs/codex/reviews/');
+    }
+
+    private function guardReviewPath(string $file): bool
+    {
+        $real = realpath($file);
+        if ($real === false) {
+            CLI::error('Unable to resolve review artifact path: ' . $file);
+            return false;
+        }
+
+        $root = rtrim(ROOTPATH, '/');
+        $reviewsRoot = $root . '/docs/codex/reviews';
+        $publicRoot = $root . '/public';
+        $writableRoot = $root . '/writable';
+
+        if (! str_starts_with($real, $reviewsRoot . '/')) {
+            CLI::error('Refusing to stage outside docs/codex/reviews: ' . $real);
+            return false;
+        }
+
+        if (str_starts_with($real, $publicRoot) || str_starts_with($real, $writableRoot)) {
+            CLI::error('Refusing to stage public/ or writable/ content: ' . $real);
+            return false;
+        }
+
+        return true;
     }
 }

@@ -28,3 +28,5 @@ These rules are non-negotiable.
 ## Enforcement
 - AIOps must scan app/Commands/** before PR approval
 - Any violation must generate a patch, not suggestions
+- CI must run `php spark ops:filesystem:lint` to block unsafe file writes (app/Commands, tools, aiops).
+- Codex review lifecycle commands (`codex:review:list`, `codex:review:commit`, `codex:review:publish`) must remain write-safe and only touch docs artifacts.
