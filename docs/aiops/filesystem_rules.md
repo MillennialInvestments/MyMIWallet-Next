@@ -14,3 +14,11 @@ All file writes performed by Spark commands MUST:
 ## Required Pattern
 ```php
 $path = ROOTPATH . 'relative/path';
+```
+
+## Codex Artifact Rules
+- All Codex outputs MUST live under /docs
+- NEVER write to /public
+- NEVER write to /writable
+- All paths MUST be ROOTPATH-anchored
+- Spark commands must refuse unsafe paths

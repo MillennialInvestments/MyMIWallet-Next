@@ -23,6 +23,9 @@ This audit validates every Spark command under `app/Commands/**` against runtime
 | `auth:smoke` | OK | — | — |
 | `cache:audit` | OK | — | — |
 | `codex:review` | OK | — | — |
+| `codex:review:commit` | OK | — | — |
+| `codex:review:list` | OK | — | — |
+| `codex:review:publish` | OK | — | — |
 | `config:lint` | OK | — | — |
 | `content:ingest-sample` | OK | — | — |
 | `contentengine:smoke` | OK | — | — |
@@ -56,6 +59,7 @@ This audit validates every Spark command under `app/Commands/**` against runtime
 | `ops:commands:audit` | OK | — | — |
 | `ops:commands:autofix` | OK | — | — |
 | `ops:fetch-commands` | OK | — | — |
+| `ops:filesystem:lint` | OK | — | — |
 | `ops:lint:commands` | OK | — | — |
 | `ops:next-steps` | OK | — | — |
 | `ops:work` | OK | — | — |

@@ -1,0 +1,158 @@
+<?php
+
+namespace App\Commands;
+
+use CodeIgniter\CLI\CLI;
+
+class CodexReviewCommit extends SafeBaseCommand
+{
+    protected $group       = 'ops';
+    protected $name        = 'codex:review:commit';
+    protected $description = 'Commit Codex review artifacts intentionally (latest or by date).';
+    protected $usage       = 'codex:review:commit --latest|--date=YYYY-MM-DD [--dry-run] [--approve]';
+    protected $options     = [
+        '--latest' => 'Commit the latest review artifacts',
+        '--date=YYYY-MM-DD' => 'Commit review artifacts for a specific date',
+        '--dry-run' => 'Preview git commands without committing',
+        '--approve' => 'Approve destructive changes (required for real commit)',
+    ];
+
+    protected $defaultDryRun = true;
+
+    public function run(array $params)
+    {
+        [, $flags] = $this->parseParams($params);
+        $dryRun = $this->resolveDryRun($flags);
+
+        $date = $this->resolveTargetDate($flags);
+        if ($date === null) {
+            CLI::error('Specify --latest or --date=YYYY-MM-DD to choose a review to commit.');
+            return EXIT_ERROR;
+        }
+
+        $files = $this->resolveReviewFiles($date);
+        if (empty($files)) {
+            CLI::error('No review artifacts found for ' . $date);
+            return EXIT_ERROR;
+        }
+
+        foreach ($files as $file) {
+            if (! file_exists($file)) {
+                CLI::error('Missing review artifact: ' . $file);
+                return EXIT_ERROR;
+            }
+
+            $this->guardDocsPath($file);
+        }
+
+        $commands = [];
+        foreach ($files as $file) {
+            $commands[] = 'git add ' . escapeshellarg($file);
+        }
+
+        $commands[] = 'git commit -m ' . escapeshellarg('docs(codex): add review for ' . $date);
+
+        if ($dryRun) {
+            CLI::write('Dry-run enabled. No git commands executed.', 'yellow');
+            foreach ($commands as $command) {
+                CLI::write($command, 'blue');
+            }
+            return EXIT_SUCCESS;
+        }
+
+        foreach ($commands as $command) {
+            [$code, $output] = $this->execGit($command);
+            if ($code !== 0) {
+                CLI::error('Git command failed: ' . $command);
+                CLI::write($output, 'red');
+                return EXIT_ERROR;
+            }
+        }
+
+        CLI::write('Committed review artifacts for ' . $date, 'green');
+        return EXIT_SUCCESS;
+    }
+
+    protected function isDestructive(): bool
+    {
+        return true;
+    }
+
+    private function resolveTargetDate(array $flags): ?string
+    {
+        $dateFlag = $this->parseFlagValue($flags, 'date');
+        if ($dateFlag !== null && $this->isValidDate($dateFlag)) {
+            return $dateFlag;
+        }
+
+        if (isset($flags['latest'])) {
+            $latest = $this->findLatestDate();
+            if ($latest !== null) {
+                return $latest;
+            }
+        }
+
+        return null;
+    }
+
+    private function resolveReviewFiles(string $date): array
+    {
+        $dir = rtrim(ROOTPATH, '/') . '/docs/codex/reviews';
+        $review = $dir . '/review-' . $date . '.md';
+        $prompt = $dir . '/review-prompt-' . $date . '.md';
+
+        return [$review, $prompt];
+    }
+
+    private function findLatestDate(): ?string
+    {
+        $dir = rtrim(ROOTPATH, '/') . '/docs/codex/reviews';
+        $files = glob($dir . '/review-*.md') ?: [];
+        rsort($files);
+
+        foreach ($files as $file) {
+            if (preg_match('/review-(\d{4}-\d{2}-\d{2})\.md$/', $file, $matches)) {
+                return $matches[1];
+            }
+        }
+
+        return null;
+    }
+
+    private function parseFlagValue(array $flags, string $key): ?string
+    {
+        foreach (array_keys($flags) as $flag) {
+            if (! str_starts_with($flag, $key . '=')) {
+                continue;
+            }
+
+            $value = trim(substr($flag, strlen($key) + 1));
+            if ($value !== '') {
+                return $value;
+            }
+        }
+
+        return null;
+    }
+
+    private function isValidDate(string $date): bool
+    {
+        return preg_match('/^\d{4}-\d{2}-\d{2}$/', $date) === 1;
+    }
+
+    private function execGit(string $command): array
+    {
+        $output = [];
+        $code = 0;
+        @exec($command . ' 2>&1', $output, $code);
+        return [$code, implode("\n", $output)];
+    }
+
+    private function guardDocsPath(string $file): void
+    {
+        $dir = realpath(dirname($file));
+        if ($dir === false || ! str_starts_with($dir, rtrim(ROOTPATH, '/') . '/docs')) {
+            throw new \RuntimeException('Refusing to stage outside /docs');
+        }
+    }
+}
