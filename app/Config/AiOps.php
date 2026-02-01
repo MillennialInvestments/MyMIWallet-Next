@@ -10,6 +10,11 @@ class AiOps extends BaseConfig
 {
     public bool $safe_mode = true;
     public bool $enableScraperAutoFix = false;
+    public bool $enableChatGovernanceIndexing = true;
+    public bool $enableChatGovernanceDbSync = true;
+    public bool $enableChatGovernanceMetrics = true;
+    public bool $enableChatGovernanceWriteFiles = true;
+    public bool $enableChatGovernanceWorker = false;
 
     public function __construct()
     {
