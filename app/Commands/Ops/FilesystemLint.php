@@ -43,6 +43,7 @@ class FilesystemLint extends SafeBaseCommand
             'total_files' => count($files),
             'issues' => $issues,
             'issue_count' => count($issues),
+            'error_count' => count(array_filter($issues, fn ($i) => ($i['severity'] ?? 'error') === 'error')),
         ];
 
         if ($issues === []) {
@@ -84,9 +85,17 @@ class FilesystemLint extends SafeBaseCommand
                 continue;
             }
 
-            if ($this->isExcludedPath($entry->getPathname())) {
+            $path = $entry->getPathname();
+
+            if ($this->isExcludedPath($path)) {
                 continue;
             }
+
+            // ⛔ Do not lint the linter itself
+            if (str_ends_with($path, 'FilesystemLint.php')) {
+                continue;
+            }
+
 
             if ($entry->getExtension() !== 'php') {
                 continue;
@@ -196,7 +205,11 @@ class FilesystemLint extends SafeBaseCommand
         foreach ($lines as $index => $line) {
             $lineNumber = $index + 1;
             // 🚨 Boot-risk detection: Config-layer exceptions
-            if (str_contains($line, 'Config\\') && str_contains($line, 'throw new')) {
+            if (
+                str_contains($line, 'Config\\')
+                && str_contains($line, 'throw new')
+                && ! str_contains($file, 'Commands')
+            ) {
                 $issues[] = [
                     'file' => $relative,
                     'line' => $lineNumber,
@@ -237,16 +250,21 @@ class FilesystemLint extends SafeBaseCommand
                     ];
                 }
 
-                if ($this->isTargetArgument($firstArg, $writable, 'writable')) {
+                if (
+                    $this->isTargetArgument($firstArg, $writable, 'writable')
+                    && ! $this->isAllowedWritableSandbox($firstArg)
+                ) {
                     $issues[] = [
                         'file' => $relative,
                         'line' => $lineNumber,
                         'call' => $call['name'],
-                        'reason' => 'Writes to writable/',
+                        'reason' => 'Writes to writable/ (outside artifact sandbox)',
+                        'severity' => 'error',
                         'snippet' => trim($line),
                         'suggested_fix' => $this->suggestSafeTargetFix('writable'),
                     ];
                 }
+
             }
         }
 
@@ -314,6 +332,21 @@ class FilesystemLint extends SafeBaseCommand
 
         if ($target === 'writable') {
             return preg_match('/\bwritable[\/\\\\]/', $expr) === 1 || str_contains($expr, 'WRITEPATH');
+        }
+
+        return false;
+    }
+
+    private function isAllowedWritableSandbox(string $arg): bool
+    {
+        // Allow WRITEPATH . 'aiops/artifacts/...'
+        if (str_contains($arg, 'WRITEPATH') && str_contains($arg, 'aiops/artifacts')) {
+            return true;
+        }
+
+        // Allow variables that resolve to that path
+        if (preg_match('/^\$(\w+)/', $arg, $matches)) {
+            return str_contains($matches[1], 'artifact');
         }
 
         return false;

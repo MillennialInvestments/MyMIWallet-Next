@@ -55,7 +55,6 @@ class Console extends BaseConfig
         \App\Commands\Ops\CommandsInventory::class,
         \App\Commands\Ops\CommandsLint::class,
         \App\Commands\Ops\FilesystemLint::class,
-        \App\Commands\Ops\ProposePr::class,
         \App\Commands\Ops\NextSteps::class,
         \App\Commands\Ops\NextStepsSync::class,
         \App\Commands\Ops\ProposePr::class,
@@ -93,16 +92,6 @@ class Console extends BaseConfig
         \App\Commands\Revenue\CostForecast::class,
         \App\Commands\Scraper\EmailScraperAudit::class,
 
-        /*
-        |----------------------------------------------------------------------
-        | Codex / Review System
-        |----------------------------------------------------------------------
-        */
-        \App\Commands\CodexReview::class,
-        // future:
-        // \App\Commands\CodexReviewList::class,
-        // \App\Commands\CodexReviewCommit::class,
-        // \App\Commands\CodexReviewPublish::class,
     ];
 
     /**
