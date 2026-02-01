@@ -685,6 +685,20 @@ class Fix503 extends SafeBaseCommand
         $this->logStep('SUMMARY', 'OK', 'Wrote summary: ' . $this->summaryPath);
     }
 
+    private function guardPathForSecrets(string $path): void
+    {
+        $rootedPath = str_starts_with($path, ROOTPATH)
+            ? $path
+            : ROOTPATH . ltrim($path, '/');
+
+        $docsRoot = rtrim(ROOTPATH, '/') . '/docs/';
+        $artifactRoot = rtrim(ROOTPATH, '/') . '/writable/aiops/artifacts/';
+
+        if (! str_starts_with($rootedPath, $docsRoot) && ! str_starts_with($rootedPath, $artifactRoot)) {
+            throw new \RuntimeException('Refusing to write outside artifact sandbox: ' . $rootedPath);
+        }
+    }
+
     private function runCliEnv(CommandRunner $runner, bool $afterFix = false): bool
     {
         $result = $runner->run('php spark env');
