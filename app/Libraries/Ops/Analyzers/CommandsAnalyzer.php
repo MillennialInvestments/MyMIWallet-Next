@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Libraries\Ops\Analyzers;
 
 use App\Commands\Ops\CommandConstructorScanner;
+use App\Commands\Ops\Support\CommandRulesScanner;
 use App\Libraries\Ops\Issue;
 
 class CommandsAnalyzer
@@ -14,7 +15,7 @@ class CommandsAnalyzer
      */
     public function analyze(): array
     {
-        $scanner = new CommandConstructorScanner();
+        $scanner = new CommandRulesScanner();
         $entries = $scanner->scan(ROOTPATH . 'app/Commands');
 
         $illegal = array_values(array_filter($entries, static fn (array $entry): bool => (bool) $entry['illegal']));
