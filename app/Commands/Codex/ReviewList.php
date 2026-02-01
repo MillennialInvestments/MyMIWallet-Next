@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Commands;
+namespace App\Commands\Codex;
 
 use CodeIgniter\CLI\CLI;
 
-class CodexReviewList extends SafeBaseCommand
+class ReviewList extends SafeBaseCommand
 {
-    protected $group       = 'ops';
+    protected $group       = 'codex';
     protected $name        = 'codex:review:list';
     protected $description = 'List available Codex review artifacts stored under docs.';
     protected $usage       = 'codex:review:list [--limit=5] [--latest]';

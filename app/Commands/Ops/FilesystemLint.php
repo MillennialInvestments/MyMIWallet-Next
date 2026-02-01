@@ -195,6 +195,17 @@ class FilesystemLint extends SafeBaseCommand
 
         foreach ($lines as $index => $line) {
             $lineNumber = $index + 1;
+            // 🚨 Boot-risk detection: Config-layer exceptions
+            if (str_contains($line, 'Config\\') && str_contains($line, 'throw new')) {
+                $issues[] = [
+                    'file' => $relative,
+                    'line' => $lineNumber,
+                    'call' => 'throw',
+                    'reason' => 'Config-layer exception detected (boot risk)',
+                    'snippet' => trim($line),
+                    'suggested_fix' => 'Move guard logic into Spark command run()',
+                ];
+            }
 
             $calls = $this->extractCalls($line, ['file_put_contents', 'mkdir']);
             foreach ($calls as $call) {

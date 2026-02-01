@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Commands;
+namespace App\Commands\Codex;
 
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class CodexReview extends SafeBaseCommand
+class Review extends SafeBaseCommand
 {
-    protected $group       = 'ops';
+    protected $group       = 'codex';
     protected $name        = 'codex:review';
     protected $description = 'Generate Codex review artifacts (summary + prompt payload)';
     protected $options     = [
