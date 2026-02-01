@@ -2,6 +2,7 @@
 
 namespace App\Commands\Codex;
 
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
 class ReviewList extends SafeBaseCommand
