@@ -46,11 +46,11 @@ class ApiHealthService
 
         foreach (array_merge($internalResults, $externalResults) as $result) {
             if ($result['status'] === 'fail') {
-                $message = sprintf('%s check failed (%s)', $result['label'], $result['code'] ?? 'no response');
-                if ($result['scope'] === 'external' && ! $strict) {
-                    $warnings[] = $message;
-                } else {
+                $message = $this->formatFailure($result);
+                if ($strict) {
                     $failures[] = $message;
+                } else {
+                    $warnings[] = $message;
                 }
             }
         }
@@ -71,40 +71,69 @@ class ApiHealthService
         $start = microtime(true);
         $scope = str_starts_with($label, 'internal') ? 'internal' : 'external';
         $parts = parse_url($url);
+        $maxAttempts = $scope === 'external' ? 2 : 1;
+        $lastResult = null;
 
         if (($parts['scheme'] ?? '') === 'tcp') {
             return $this->checkSocket($label, $url, $timeout, $scope, $start);
         }
 
-        try {
-            $client = $this->client();
-            $response = $client->request($method, $url, [
-                'timeout' => $timeout,
-                'http_errors' => false,
-            ]);
-            $durationMs = (int) round((microtime(true) - $start) * 1000);
-            $code = $response->getStatusCode();
+        for ($attempt = 1; $attempt <= $maxAttempts; $attempt++) {
+            try {
+                $client = $this->client();
+                $response = $client->request($method, $url, [
+                    'timeout' => $timeout,
+                    'http_errors' => false,
+                ]);
+                $durationMs = (int) round((microtime(true) - $start) * 1000);
+                $code = $response->getStatusCode();
+                $status = $code >= 200 && $code < 400 ? 'pass' : 'fail';
+                $classification = $status === 'fail' ? $this->classifyFailure($code, null) : null;
 
-            return [
-                'label' => $label,
-                'scope' => $scope,
-                'url' => $this->redactUrl($url),
-                'code' => $code,
-                'duration_ms' => $durationMs,
-                'status' => $code >= 200 && $code < 400 ? 'pass' : 'fail',
-            ];
-        } catch (Throwable $e) {
-            $durationMs = (int) round((microtime(true) - $start) * 1000);
-            return [
-                'label' => $label,
-                'scope' => $scope,
-                'url' => $this->redactUrl($url),
-                'code' => null,
-                'duration_ms' => $durationMs,
-                'status' => 'fail',
-                'error' => $e->getMessage(),
-            ];
+                $lastResult = [
+                    'label' => $label,
+                    'scope' => $scope,
+                    'url' => $this->redactUrl($url),
+                    'code' => $code,
+                    'duration_ms' => $durationMs,
+                    'status' => $status,
+                    'attempts' => $attempt,
+                    'failure_classification' => $classification,
+                ];
+
+                if ($status === 'pass') {
+                    return $lastResult;
+                }
+            } catch (Throwable $e) {
+                $durationMs = (int) round((microtime(true) - $start) * 1000);
+                $lastResult = [
+                    'label' => $label,
+                    'scope' => $scope,
+                    'url' => $this->redactUrl($url),
+                    'code' => null,
+                    'duration_ms' => $durationMs,
+                    'status' => 'fail',
+                    'attempts' => $attempt,
+                    'failure_classification' => $this->classifyFailure(null, $e->getMessage()),
+                    'error' => $e->getMessage(),
+                ];
+            }
+
+            if ($attempt < $maxAttempts) {
+                usleep(150000);
+            }
         }
+
+        return $lastResult ?? [
+            'label' => $label,
+            'scope' => $scope,
+            'url' => $this->redactUrl($url),
+            'code' => null,
+            'duration_ms' => (int) round((microtime(true) - $start) * 1000),
+            'status' => 'fail',
+            'attempts' => $maxAttempts,
+            'failure_classification' => 'unknown',
+        ];
     }
 
     /**
@@ -124,14 +153,16 @@ class ApiHealthService
 
         if (is_resource($connection)) {
             fclose($connection);
-            return [
-                'label' => $label,
-                'scope' => $scope,
-                'url' => $this->redactUrl($url),
-                'code' => 200,
-                'duration_ms' => $durationMs,
-                'status' => 'pass',
-            ];
+        return [
+            'label' => $label,
+            'scope' => $scope,
+            'url' => $this->redactUrl($url),
+            'code' => 200,
+            'duration_ms' => $durationMs,
+            'status' => 'pass',
+            'attempts' => 1,
+            'failure_classification' => null,
+        ];
         }
 
         return [
@@ -142,7 +173,48 @@ class ApiHealthService
             'duration_ms' => $durationMs,
             'status' => 'fail',
             'error' => $error ?: 'Socket connection failed',
+            'attempts' => 1,
+            'failure_classification' => 'network',
         ];
+    }
+
+    private function classifyFailure(?int $code, ?string $error): string
+    {
+        if ($error !== null) {
+            return 'network';
+        }
+
+        if ($code === null) {
+            return 'unknown';
+        }
+
+        if (in_array($code, [401, 403], true)) {
+            return 'auth';
+        }
+
+        if ($code === 429) {
+            return 'rate_limit';
+        }
+
+        if ($code === 404) {
+            return 'not_found';
+        }
+
+        if ($code >= 500) {
+            return 'server_error';
+        }
+
+        return 'unexpected_status';
+    }
+
+    private function formatFailure(array $result): string
+    {
+        $code = $result['code'] ?? 'no response';
+        $classification = $result['failure_classification'] ?? 'unknown';
+        $attempts = $result['attempts'] ?? 1;
+        $label = $result['label'] ?? 'unknown';
+
+        return sprintf('%s check failed (%s, %s, attempts=%d)', $label, $code, $classification, $attempts);
     }
 
     private function client(): CURLRequest

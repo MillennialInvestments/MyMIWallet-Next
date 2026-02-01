@@ -14,6 +14,10 @@ class AddOutputTextToOpsRuns extends Migration
             return;
         }
 
+        if ($this->db->fieldExists('output_text', 'bf_ops_job_runs')) {
+            return;
+        }
+
         $fields = [
             'output_text' => [
                 'type' => 'LONGTEXT',

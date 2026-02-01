@@ -7,7 +7,6 @@ namespace App\Commands;
 use App\Services\AiOps\CommandHookService;
 use App\Services\Spark\CommandInventoryService;
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\CLI\Commands;
 
 class SparkFix extends SafeBaseCommand
 {
@@ -270,7 +269,7 @@ class SparkFix extends SafeBaseCommand
             @unlink($file);
         }
 
-        Commands::run('cache:clear');
+        $this->runSparkCommand('cache:clear');
 
         return 'cleared';
     }
