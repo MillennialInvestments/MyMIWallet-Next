@@ -14,7 +14,7 @@ class LogsFullReport extends SafeBaseCommand
         'date' => 'Optional: today|yesterday|YYYY-MM-DD (defaults to today).',
     ];
     protected $options     = [
-        '--save' => 'Write the report to writable/reports/logs',
+        '--save' => 'Write the report to docs/aiops/logs',
         '--fix-hints' => 'Include fix hints in the report',
         '--discord' => 'Send a condensed summary to Discord',
     ];
@@ -54,7 +54,7 @@ class LogsFullReport extends SafeBaseCommand
 
         // write snapshot
         if ($save) {
-            $dir = WRITEPATH . 'reports/logs';
+            $dir = ROOTPATH . 'docs/aiops/logs';
             if (!is_dir($dir)) {
                 @mkdir($dir, 0775, true);
             }

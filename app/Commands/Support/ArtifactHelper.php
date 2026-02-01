@@ -89,18 +89,36 @@ class ArtifactHelper
 
     private static function writeBundle(string $dir, string $summary, string $reportJson): bool
     {
-        if (! self::ensureDir($dir)) {
-            CLI::error('Unable to create artifact directory: ' . $dir);
+        $artifactDir = str_starts_with($dir, ROOTPATH)
+            ? $dir
+            : (str_starts_with($dir, WRITEPATH) ? $dir : '');
+
+        if ($artifactDir === '') {
+            CLI::error('Artifact directory must be rooted at ROOTPATH or WRITEPATH.');
             return false;
         }
 
-        if (file_put_contents($dir . '/summary.md', $summary) === false) {
-            CLI::error('Unable to write summary artifact: ' . $dir . '/summary.md');
+        $artifactDir = rtrim($artifactDir, '/');
+        $docsRoot = rtrim(ROOTPATH, '/') . '/docs/aiops/artifacts';
+        $rawRoot = rtrim(WRITEPATH, '/') . '/aiops/artifacts';
+
+        if (! str_starts_with($artifactDir, $docsRoot) && ! str_starts_with($artifactDir, $rawRoot)) {
+            CLI::error('Artifact directory must be inside docs/aiops/artifacts or writable/aiops/artifacts.');
             return false;
         }
 
-        if (file_put_contents($dir . '/report.json', $reportJson) === false) {
-            CLI::error('Unable to write report artifact: ' . $dir . '/report.json');
+        if (! self::ensureDir($artifactDir)) {
+            CLI::error('Unable to create artifact directory: ' . $artifactDir);
+            return false;
+        }
+
+        if (file_put_contents($artifactDir . '/summary.md', $summary) === false) {
+            CLI::error('Unable to write summary artifact: ' . $artifactDir . '/summary.md');
+            return false;
+        }
+
+        if (file_put_contents($artifactDir . '/report.json', $reportJson) === false) {
+            CLI::error('Unable to write report artifact: ' . $artifactDir . '/report.json');
             return false;
         }
 
@@ -109,11 +127,19 @@ class ArtifactHelper
 
     private static function ensureDir(string $dir): bool
     {
-        if (is_dir($dir)) {
+        $artifactDir = str_starts_with($dir, ROOTPATH)
+            ? $dir
+            : (str_starts_with($dir, WRITEPATH) ? $dir : '');
+
+        if ($artifactDir === '') {
+            return false;
+        }
+
+        if (is_dir($artifactDir)) {
             return true;
         }
 
-        return mkdir($dir, 0755, true);
+        return mkdir($artifactDir, 0755, true);
     }
 
     private static function resolvePath(string $path): string
