@@ -54,12 +54,14 @@ class Console extends BaseConfig
         */
         \App\Commands\Ops\CommandsAudit::class,
         \App\Commands\Ops\CommandsAutofix::class,
+        \App\Commands\Ops\AiopsInit::class,
         \App\Commands\Ops\CommandsInventory::class,
         \App\Commands\Ops\CommandsLint::class,
         \App\Commands\Ops\FilesystemLint::class,
         \App\Commands\Ops\ProposePr::class,
         \App\Commands\Ops\NextSteps::class,
         \App\Commands\Ops\NextStepsSync::class,
+        \App\Commands\Ops\ProposePr::class,
         \App\Commands\Ops\SparkReset::class,
         \App\Commands\OpsWork::class,
 
