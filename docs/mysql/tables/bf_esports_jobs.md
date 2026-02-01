@@ -3,18 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/EsportsModel.php:241, app/Models/EsportsModel.php:248, app/Models/EsportsModel.php:266, app/Models/EsportsModel.php:274, app/Models/EsportsModel.php:294, docs/exports_schema.md:167, docs/functional_inventory/docs_to_code_map.md:50, docs/functional_inventory/docs_to_code_map.md:51
+- Code references: app/Models/EsportsModel.php:241, app/Models/EsportsModel.php:248, app/Models/EsportsModel.php:266, app/Models/EsportsModel.php:274, app/Models/EsportsModel.php:294, docs/exports_schema.md:167, docs/functional_inventory/docs_to_code_map.md:50, docs/functional_inventory/docs_to_code_map.md:51, docs/_aiops/doc-change-log.md:1235
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_esports_jobs` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `md` TEXT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
 - id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
 - PRIMARY (id)

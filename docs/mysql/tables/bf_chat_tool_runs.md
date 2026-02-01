@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2026-01-15-000100_CreateChatToolRuns.php
 - Model:
-- Code references: app/Database/Migrations/2026-01-15-000100_CreateChatToolRuns.php:26, app/Database/Migrations/2026-01-15-000100_CreateChatToolRuns.php:31, app/Models/ChatToolRunModel.php:11, docs/chat/ARCHITECTURE.md:21, docs/chat/CI4_INTEGRATION.md:56, docs/chat/CI4_INTEGRATION.md:61, docs/chat/DEPLOYMENT.md:24, docs/chat/README.md:31, docs/chat/OPS.md:14
+- Code references: app/Database/Migrations/2026-01-15-000100_CreateChatToolRuns.php:26, app/Database/Migrations/2026-01-15-000100_CreateChatToolRuns.php:31, app/Models/ChatToolRunModel.php:11, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:41, docs/aiops/migration_model_audit.md:85, docs/aiops/migration_model_audit.md:224, docs/_aiops/doc-change-log.md:1088, docs/chat/ARCHITECTURE.md:21, docs/chat/CI4_INTEGRATION.md:56, docs/chat/CI4_INTEGRATION.md:61, docs/chat/DEPLOYMENT.md:24, docs/chat/README.md:31, docs/chat/OPS.md:14
 
 ## Create table
 ```sql

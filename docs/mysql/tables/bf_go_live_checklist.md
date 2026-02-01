@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: docs/go-live/operational_usage.md:28
+- Code references: docs/go-live/operational_usage.md:28, docs/_aiops/doc-change-log.md:1313
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_go_live_checklist` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

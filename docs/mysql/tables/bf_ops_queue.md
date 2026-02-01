@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2026-01-15-000100_CreateOpsFoundation.php
 - Model:
-- Code references: app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:36, app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:52, app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:112, app/Libraries/Ops/OpsJobRegistry.php:492, app/Libraries/Ops/OpsJobRegistry.php:502, app/Models/OpsQueueModel.php:12, docs/ops/n8n_responsibilities.md:81, docs/codex/01_pr1_foundations.md:37, docs/codex/01_pr1_foundations.md:86, docs/codex/01_pr1_foundations.md:123, docs/codex/01_pr1_foundations.md:144, docs/codex/02_pr2_worker_and_registry.md:71, docs/health/health_test_checklist.md:644, docs/health/modules/system_ops.md:62, docs/spark/categories/system/ops-work.md:13
+- Code references: app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:36, app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:52, app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:112, app/Libraries/Ops/OpsJobRegistry.php:492, app/Libraries/Ops/OpsJobRegistry.php:502, app/Models/OpsQueueModel.php:12, docs/ops/n8n_responsibilities.md:81, docs/codex/01_pr1_foundations.md:37, docs/codex/01_pr1_foundations.md:86, docs/codex/01_pr1_foundations.md:123, docs/codex/01_pr1_foundations.md:144, docs/codex/02_pr2_worker_and_registry.md:71, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:153, docs/aiops/migration_model_audit.md:147, docs/aiops/migration_model_audit.md:241, docs/_aiops/doc-change-log.md:1607, docs/health/health_test_checklist.md:644, docs/health/modules/system_ops.md:62
 
 ## Create table
 ```sql

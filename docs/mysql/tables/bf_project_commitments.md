@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/ProjectCommitmentsModel.php:7, docs/chatgpt/codex_executive_director/summary.md:41
+- Code references: app/Models/ProjectCommitmentsModel.php:7, docs/chatgpt/codex_executive_director/summary.md:41, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:165, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:262, docs/aiops/migration_model_audit.md:162, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1664
 
 ## Create table
 ```sql

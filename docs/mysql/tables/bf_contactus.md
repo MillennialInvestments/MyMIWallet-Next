@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/AnalyticalModel.php:18, app/Models/AnalyticalModel.php:19, app/Models/AnalyticalModel.php:20, app/Models/AnnouncementsModel.php:20, app/Models/AnnouncementsModel.php:20, app/Models/AnnouncementsModel.php:21, app/Models/AnnouncementsModel.php:21, app/Models/AnnouncementsModel.php:22, app/Models/AnnouncementsModel.php:22, app/Models/APIModel.php:20, app/Models/APIModel.php:20, app/Models/APIModel.php:21, app/Models/APIModel.php:21, app/Models/APIModel.php:22, app/Models/APIModel.php:22, app/Models/DashboardModel.php:29, app/Models/DashboardModel.php:30, app/Models/DashboardModel.php:31, app/Models/DesignModel.php:20, app/Models/DesignModel.php:20, app/Models/DesignModel.php:21, app/Models/DesignModel.php:21, app/Models/DesignModel.php:22, app/Models/DesignModel.php:22, app/Models/AlertsModel.php:54, app/Models/AlertsModel.php:54, app/Models/AlertsModel.php:55, app/Models/AlertsModel.php:55, app/Models/AlertsModel.php:56, app/Models/AlertsModel.php:56
+- Code references: app/Models/AnalyticalModel.php:18, app/Models/AnalyticalModel.php:19, app/Models/AnalyticalModel.php:20, app/Models/AnnouncementsModel.php:20, app/Models/AnnouncementsModel.php:20, app/Models/AnnouncementsModel.php:21, app/Models/AnnouncementsModel.php:21, app/Models/AnnouncementsModel.php:22, app/Models/AnnouncementsModel.php:22, app/Models/APIModel.php:20, app/Models/APIModel.php:20, app/Models/APIModel.php:21, app/Models/APIModel.php:21, app/Models/APIModel.php:22, app/Models/APIModel.php:22, app/Models/DashboardModel.php:29, app/Models/DashboardModel.php:30, app/Models/DashboardModel.php:31, app/Models/DesignModel.php:20, app/Models/DesignModel.php:20, app/Models/DesignModel.php:21, app/Models/DesignModel.php:21, app/Models/DesignModel.php:22, app/Models/DesignModel.php:22, app/Models/AlertsModel.php:54, app/Models/AlertsModel.php:54, app/Models/AlertsModel.php:55, app/Models/AlertsModel.php:55, app/Models/AlertsModel.php:56, app/Models/AlertsModel.php:56, docs/_aiops/doc-change-log.md:1097
 
 ## Create table
 ```sql
@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS `bf_contactus` (
   `phone` TEXT NULL,
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` TEXT NULL,
+  `md` TEXT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
@@ -23,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `bf_contactus` (
 - phone TEXT NULL
 - id INT(11) UNSIGNED NOT NULL
 - name TEXT NULL
+- md TEXT NULL
 
 ## Required indexes
 - PRIMARY (id)

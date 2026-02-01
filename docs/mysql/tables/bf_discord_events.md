@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: docs/discord/server_setup_and_ci4_integration.md:73, docs/discord/_inventory.md:27, docs/discord/python_workers.md:37, docs/functional_inventory/docs_to_code_map.md:26, docs/functional_inventory/docs_to_code_map.md:41, docs/functional_inventory/docs_to_code_map.md:43, docs/functional_inventory/docs_to_code_map.md:51
+- Code references: docs/discord/server_setup_and_ci4_integration.md:73, docs/discord/_inventory.md:27, docs/discord/python_workers.md:37, docs/functional_inventory/docs_to_code_map.md:26, docs/functional_inventory/docs_to_code_map.md:41, docs/functional_inventory/docs_to_code_map.md:43, docs/functional_inventory/docs_to_code_map.md:51, docs/_aiops/doc-change-log.md:1154
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_discord_events` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

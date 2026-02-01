@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/AccountsModel.php:292, app/Models/MyMICoinModel.php:75, app/Models/MyMIGoldModel.php:89, app/Models/MyMIGoldModel.php:187, app/Models/WalletModel.php:443, app/Modules/User/Views/Wallets/Feature_Manager.php:101, app/Modules/User/Views/Wallets/Purchase_Manager.php:88
+- Code references: app/Models/AccountsModel.php:292, app/Models/MyMICoinModel.php:75, app/Models/MyMIGoldModel.php:89, app/Models/MyMIGoldModel.php:187, app/Models/WalletModel.php:443, app/Modules/User/Views/Wallets/Feature_Manager.php:101, app/Modules/User/Views/Wallets/Purchase_Manager.php:88, docs/_aiops/doc-change-log.md:1979
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_users_purchases` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

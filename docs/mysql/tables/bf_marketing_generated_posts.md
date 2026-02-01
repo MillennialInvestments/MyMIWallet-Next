@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/MarketingModel.php:1815, app/Commands/NewsAudit.php:494, app/Commands/NewsAudit.php:495, docs/spark/categories/marketing/news-audit.md:13
+- Code references: app/Models/MarketingModel.php:1815, app/Commands/NewsAudit.php:494, app/Commands/NewsAudit.php:495, docs/_aiops/doc-change-log.md:1490, docs/spark/categories/marketing/news-audit.md:13
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_marketing_generated_posts` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

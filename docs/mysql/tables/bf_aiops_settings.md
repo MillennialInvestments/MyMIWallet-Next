@@ -1,8 +1,9 @@
 # bf_aiops_settings
 
 ## Source
-- Migration: app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php
-- Model: app/Models/AiOpsSettingsModel.php
+- Migration: 2026-03-15-000100_CreateAiOpsTaskPipelineTables.php
+- Model:
+- Code references: app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php:83, app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php:84, app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php:92, app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php:123, app/Models/AiOpsSettingsModel.php:11, app/Commands/OpsWork.php:96, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:29, docs/aiops/migration_model_audit.md:61, docs/_aiops/doc-change-log.md:992
 
 ## Create table
 ```sql
@@ -16,11 +17,13 @@ CREATE TABLE IF NOT EXISTS `bf_aiops_settings` (
 ```
 
 ## Required columns
-- setting_key VARCHAR(64)
-- setting_value VARCHAR(255)
+- setting_key VARCHAR(64) NOT NULL
+- setting_value VARCHAR(255) NOT NULL
+- updated_at DATETIME NULL
+- updated_by BIGINT NULL
 
 ## Required indexes
-- PRIMARY KEY (`setting_key`)
+- PRIMARY (setting_key)
 
 ## Verification
 ```sql
@@ -40,3 +43,4 @@ FROM information_schema.statistics
 WHERE table_schema = DATABASE() AND table_name = 'bf_aiops_settings'
 ORDER BY INDEX_NAME, SEQ_IN_INDEX;
 ```
+

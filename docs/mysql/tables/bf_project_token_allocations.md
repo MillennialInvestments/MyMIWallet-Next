@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/ProjectTokenAllocationsModel.php:7
+- Code references: app/Models/ProjectTokenAllocationsModel.php:7, docs/aiops/migration_model_audit.md:167, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1676
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_project_token_allocations` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

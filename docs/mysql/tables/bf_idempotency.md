@@ -3,17 +3,19 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/IdempotencyModel.php:8, docs/ops/runbooks/marketing-cron-playbook.md:23, docs/ops/runbooks/marketing-cron-playbook.md:30, docs/operations/04-cron-automation.md:15, docs/operations/04-cron-automation.md:15, docs/operations/04-cron-automation.md:16, docs/operations/04-cron-automation.md:24, docs/operations/04-cron-automation.md:36, docs/operations/04-cron-automation.md:50, docs/gap-audit/next-steps.md:67
+- Code references: app/Models/IdempotencyModel.php:8, docs/ops/runbooks/marketing-cron-playbook.md:23, docs/ops/runbooks/marketing-cron-playbook.md:30, docs/operations/04-cron-automation.md:15, docs/operations/04-cron-automation.md:15, docs/operations/04-cron-automation.md:16, docs/operations/04-cron-automation.md:24, docs/operations/04-cron-automation.md:36, docs/operations/04-cron-automation.md:50, docs/gap-audit/next-steps.md:67, docs/aiops/migration_model_audit.md:114, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1325
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_idempotency` (
-  `response_json` TEXT NULL
+  `response_json` TEXT NULL,
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
 - response_json TEXT NULL
+- md TEXT NULL
 
 ## Required indexes
 - _No indexes defined_

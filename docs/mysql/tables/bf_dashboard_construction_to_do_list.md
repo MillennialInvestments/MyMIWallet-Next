@@ -3,18 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/DesignModel.php:118, app/Models/DesignModel.php:126, app/Models/DesignModel.php:134, app/Models/DesignModel.php:142, app/Models/DesignModel.php:150, app/Models/DesignModel.php:158
+- Code references: app/Models/DesignModel.php:118, app/Models/DesignModel.php:126, app/Models/DesignModel.php:134, app/Models/DesignModel.php:142, app/Models/DesignModel.php:150, app/Models/DesignModel.php:158, docs/_aiops/doc-change-log.md:1121
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_dashboard_construction_to_do_list` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `md` TEXT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
 - id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
 - PRIMARY (id)

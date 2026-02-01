@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Database/Migrations/2026-02-20-000001_AddStatusMetaExcerptColumns.php:21, app/Database/Migrations/2026-02-20-000001_AddStatusMetaExcerptColumns.php:63, app/Models/AnalyticalModel.php:468, app/Models/AnalyticalModel.php:475, app/Models/AnalyticalModel.php:483, app/Models/AnalyticalModel.php:490, app/Models/SupportModel.php:10, app/Modules/Management/Views/Support/Requests/Details.php:18, app/Modules/Management/Views/Support/Requests.php:8, app/Modules/Management/Views/Support/Requests.php:17, app/Modules/Management/Views/Support/Reporting.php:10, app/Modules/User/Views/Knowledgebase/Response.php:12, app/Modules/User/Views/Knowledgebase/Response.php:16, app/Modules/User/Views/Support/Communication_Manager.php:38
+- Code references: app/Database/Migrations/2026-02-20-000001_AddStatusMetaExcerptColumns.php:21, app/Database/Migrations/2026-02-20-000001_AddStatusMetaExcerptColumns.php:63, app/Models/AnalyticalModel.php:468, app/Models/AnalyticalModel.php:475, app/Models/AnalyticalModel.php:483, app/Models/AnalyticalModel.php:490, app/Models/SupportModel.php:10, app/Modules/Management/Views/Support/Requests/Details.php:18, app/Modules/Management/Views/Support/Requests.php:8, app/Modules/Management/Views/Support/Requests.php:17, app/Modules/Management/Views/Support/Reporting.php:10, app/Modules/User/Views/Knowledgebase/Response.php:12, app/Modules/User/Views/Knowledgebase/Response.php:16, app/Modules/User/Views/Support/Communication_Manager.php:38, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:196, docs/aiops/migration_model_audit.md:187, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1778
 
 ## Create table
 ```sql

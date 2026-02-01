@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/Fin/PriceEodModel.php:8, app/Services/Fin/PriceService.php:38
+- Code references: app/Models/Fin/PriceEodModel.php:8, app/Services/Fin/PriceService.php:38, docs/aiops/migration_model_audit.md:109, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1295
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_fin_prices_eod` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

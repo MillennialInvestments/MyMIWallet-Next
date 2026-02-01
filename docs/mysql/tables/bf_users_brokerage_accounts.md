@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/User/Views/Investments/index/active_table.php:124, app/Modules/User/Views/Wallets/index/debt_summary/active_table.php:115
+- Code references: app/Modules/User/Views/Investments/index/active_table.php:124, app/Modules/User/Views/Wallets/index/debt_summary/active_table.php:115, docs/_aiops/doc-change-log.md:1901
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_users_brokerage_accounts` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

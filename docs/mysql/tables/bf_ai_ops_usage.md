@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2026-01-01-000001_CreateAiOpsTables.php
 - Model:
-- Code references: app/Database/Migrations/2026-01-01-000001_CreateAiOpsTables.php:45, app/Database/Migrations/2026-01-01-000001_CreateAiOpsTables.php:60, app/Database/Migrations/2026-01-01-000001_CreateAiOpsTables.php:91, app/Libraries/AiOps/AiOpsManager.php:181, app/Libraries/AiOps/AiOpsManager.php:281, app/Libraries/AiOps/AiOpsManager.php:310, app/Libraries/AiOps/AiOpsManager.php:315, app/Libraries/AiOps/AiOpsManager.php:385, docs/ai-ops/README.md:52, docs/ai-ops/observability-policy.md:11, docs/aiops/README.md:9, docs/spark/categories/maintenance/gap-sync.md:16, docs/spark/roadmap.md:14
+- Code references: app/Database/Migrations/2026-01-01-000001_CreateAiOpsTables.php:45, app/Database/Migrations/2026-01-01-000001_CreateAiOpsTables.php:60, app/Database/Migrations/2026-01-01-000001_CreateAiOpsTables.php:91, app/Libraries/AiOps/AiOpsManager.php:181, app/Libraries/AiOps/AiOpsManager.php:281, app/Libraries/AiOps/AiOpsManager.php:310, app/Libraries/AiOps/AiOpsManager.php:315, app/Libraries/AiOps/AiOpsManager.php:385, docs/ai-ops/README.md:52, docs/ai-ops/observability-policy.md:11, docs/aiops/README.md:9, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:26, docs/_aiops/doc-change-log.md:971, docs/spark/categories/maintenance/gap-sync.md:16, docs/spark/roadmap.md:14
 
 ## Create table
 ```sql

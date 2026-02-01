@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/FeatureFlagModel.php:9, docs/exports_schema.md:203, docs/exports_schema.md:204, docs/functional_inventory/docs_to_code_map.md:50, docs/functional_inventory/docs_to_code_map.md:51
+- Code references: app/Models/FeatureFlagModel.php:9, docs/exports_schema.md:203, docs/exports_schema.md:204, docs/functional_inventory/docs_to_code_map.md:50, docs/functional_inventory/docs_to_code_map.md:51, docs/aiops/migration_model_audit.md:106, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1289
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_feature_flags` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

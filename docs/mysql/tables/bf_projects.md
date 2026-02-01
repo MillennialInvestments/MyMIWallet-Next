@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/ProjectsModel.php:7, app/Services/SearchService.php:35, app/Services/SearchService.php:36, app/Services/SearchService.php:87, docs/marketing/07-myprojects-real-estate.md:41, docs/marketing/07-myprojects-real-estate.md:98, docs/operations/05-database.md:21, docs/exports_schema.md:45, docs/OVERVIEW.md:120, docs/functional_inventory/docs_to_code_map.md:8, docs/functional_inventory/docs_to_code_map.md:50, docs/functional_inventory/docs_to_code_map.md:51, docs/functional_inventory/docs_to_code_map.md:62, docs/functional_inventory/docs_to_code_map.md:90
+- Code references: app/Models/ProjectsModel.php:7, app/Services/SearchService.php:35, app/Services/SearchService.php:36, app/Services/SearchService.php:87, docs/marketing/07-myprojects-real-estate.md:41, docs/marketing/07-myprojects-real-estate.md:98, docs/operations/05-database.md:21, docs/exports_schema.md:45, docs/OVERVIEW.md:120, docs/functional_inventory/docs_to_code_map.md:8, docs/functional_inventory/docs_to_code_map.md:50, docs/functional_inventory/docs_to_code_map.md:51, docs/functional_inventory/docs_to_code_map.md:62, docs/functional_inventory/docs_to_code_map.md:90, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:169, docs/aiops/migration_model_audit.md:169, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1685
 
 ## Create table
 ```sql

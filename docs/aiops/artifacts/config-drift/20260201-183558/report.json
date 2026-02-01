@@ -1,0 +1,391 @@
+{
+    "command": "config:drift",
+    "timestamp": "20260201-183558",
+    "dry_run": false,
+    "emit": "both",
+    "config_dir": "/home/mymiteam/mymiwallet/site/current/app/Config",
+    "config_files": [
+        {
+            "file": "APISettings.php",
+            "mtime": 1762048135,
+            "size": 12052
+        },
+        {
+            "file": "AiOps.php",
+            "mtime": 1769959363,
+            "size": 981
+        },
+        {
+            "file": "App.php",
+            "mtime": 1769825748,
+            "size": 10108
+        },
+        {
+            "file": "Auth.php",
+            "mtime": 1768961675,
+            "size": 14508
+        },
+        {
+            "file": "Autoload.php",
+            "mtime": 1769261426,
+            "size": 3844
+        },
+        {
+            "file": "Birdeye.php",
+            "mtime": 1761534589,
+            "size": 224
+        },
+        {
+            "file": "CURLRequest.php",
+            "mtime": 1754141775,
+            "size": 551
+        },
+        {
+            "file": "Cache.php",
+            "mtime": 1769261426,
+            "size": 6316
+        },
+        {
+            "file": "CoinGecko.php",
+            "mtime": 1761534588,
+            "size": 226
+        },
+        {
+            "file": "Common.php",
+            "mtime": 1762711993,
+            "size": 1184
+        },
+        {
+            "file": "Console.php",
+            "mtime": 1769964659,
+            "size": 3439
+        },
+        {
+            "file": "Constants.php",
+            "mtime": 1754141775,
+            "size": 3640
+        },
+        {
+            "file": "ContentEngine.php",
+            "mtime": 1765874334,
+            "size": 5535
+        },
+        {
+            "file": "ContentSecurityPolicy.php",
+            "mtime": 1754141775,
+            "size": 4226
+        },
+        {
+            "file": "Cookie.php",
+            "mtime": 1768748014,
+            "size": 3560
+        },
+        {
+            "file": "Cors.php",
+            "mtime": 1754141775,
+            "size": 3511
+        },
+        {
+            "file": "Database.php",
+            "mtime": 1769261426,
+            "size": 2663
+        },
+        {
+            "file": "DigiByte.php",
+            "mtime": 1761534589,
+            "size": 228
+        },
+        {
+            "file": "Discord.php",
+            "mtime": 1766324524,
+            "size": 11403
+        },
+        {
+            "file": "DiscordHelp.php",
+            "mtime": 1765139123,
+            "size": 5216
+        },
+        {
+            "file": "DocTypes.php",
+            "mtime": 1754141775,
+            "size": 3058
+        },
+        {
+            "file": "DynamicDataConfig.php",
+            "mtime": 1761534590,
+            "size": 869
+        },
+        {
+            "file": "Email.php",
+            "mtime": 1768961675,
+            "size": 1948
+        },
+        {
+            "file": "EmailIntake.php",
+            "mtime": 1761534591,
+            "size": 1460
+        },
+        {
+            "file": "Encryption.php",
+            "mtime": 1754141775,
+            "size": 2844
+        },
+        {
+            "file": "Etherscan.php",
+            "mtime": 1761534590,
+            "size": 225
+        },
+        {
+            "file": "Events.php",
+            "mtime": 1764475344,
+            "size": 2583
+        },
+        {
+            "file": "Exceptions.php",
+            "mtime": 1766194001,
+            "size": 4710
+        },
+        {
+            "file": "Facebook.php",
+            "mtime": 1761534591,
+            "size": 273
+        },
+        {
+            "file": "Feature.php",
+            "mtime": 1754141775,
+            "size": 1024
+        },
+        {
+            "file": "Filters.php",
+            "mtime": 1769341334,
+            "size": 10966
+        },
+        {
+            "file": "ForeignCharacters.php",
+            "mtime": 1754141775,
+            "size": 174
+        },
+        {
+            "file": "Format.php",
+            "mtime": 1754141775,
+            "size": 2205
+        },
+        {
+            "file": "Generators.php",
+            "mtime": 1754141775,
+            "size": 2133
+        },
+        {
+            "file": "Honeypot.php",
+            "mtime": 1754141775,
+            "size": 855
+        },
+        {
+            "file": "HybridAuth.php",
+            "mtime": 1761534592,
+            "size": 997
+        },
+        {
+            "file": "Hybridauth.php",
+            "mtime": 1761534592,
+            "size": 1366
+        },
+        {
+            "file": "Images.php",
+            "mtime": 1754141775,
+            "size": 708
+        },
+        {
+            "file": "Infura.php",
+            "mtime": 1761534592,
+            "size": 225
+        },
+        {
+            "file": "Intake.php",
+            "mtime": 1761534593,
+            "size": 856
+        },
+        {
+            "file": "Jupiter.php",
+            "mtime": 1761534593,
+            "size": 274
+        },
+        {
+            "file": "Kimi.php",
+            "mtime": 1765468046,
+            "size": 815
+        },
+        {
+            "file": "Kint.php",
+            "mtime": 1754141775,
+            "size": 1887
+        },
+        {
+            "file": "Logger.php",
+            "mtime": 1766344544,
+            "size": 6486
+        },
+        {
+            "file": "Migrations.php",
+            "mtime": 1754141775,
+            "size": 1592
+        },
+        {
+            "file": "Mimes.php",
+            "mtime": 1754141775,
+            "size": 15756
+        },
+        {
+            "file": "Modules.php",
+            "mtime": 1754141775,
+            "size": 2296
+        },
+        {
+            "file": "MyMI.php",
+            "mtime": 1768679445,
+            "size": 932
+        },
+        {
+            "file": "MyMIAuction.php",
+            "mtime": 1761534594,
+            "size": 887
+        },
+        {
+            "file": "MyMIForecasting.php",
+            "mtime": 1769307224,
+            "size": 2712
+        },
+        {
+            "file": "NewsEmailServer.php",
+            "mtime": 1761534595,
+            "size": 841
+        },
+        {
+            "file": "Ops.php",
+            "mtime": 1769358933,
+            "size": 948
+        },
+        {
+            "file": "Optimize.php",
+            "mtime": 1769961426,
+            "size": 1187
+        },
+        {
+            "file": "Pager.php",
+            "mtime": 1754141775,
+            "size": 1189
+        },
+        {
+            "file": "Paths.php",
+            "mtime": 1754141775,
+            "size": 2741
+        },
+        {
+            "file": "Predictions.php",
+            "mtime": 1761534595,
+            "size": 554
+        },
+        {
+            "file": "Projects.php",
+            "mtime": 1761534595,
+            "size": 558
+        },
+        {
+            "file": "Promotions.php",
+            "mtime": 1761534596,
+            "size": 519
+        },
+        {
+            "file": "Publisher.php",
+            "mtime": 1754141775,
+            "size": 807
+        },
+        {
+            "file": "QueueConfig.php",
+            "mtime": 1769260387,
+            "size": 837
+        },
+        {
+            "file": "ReferralLinks.php",
+            "mtime": 1762059808,
+            "size": 843
+        },
+        {
+            "file": "Routes.php",
+            "mtime": 1769789800,
+            "size": 149034
+        },
+        {
+            "file": "Routing.php",
+            "mtime": 1754141775,
+            "size": 3680
+        },
+        {
+            "file": "Security.php",
+            "mtime": 1767700827,
+            "size": 2828
+        },
+        {
+            "file": "Services.php",
+            "mtime": 1769341276,
+            "size": 7523
+        },
+        {
+            "file": "Session.php",
+            "mtime": 1768778192,
+            "size": 4912
+        },
+        {
+            "file": "SiteSettings.php",
+            "mtime": 1768961675,
+            "size": 20537
+        },
+        {
+            "file": "SocialMedia.php",
+            "mtime": 1766104769,
+            "size": 869
+        },
+        {
+            "file": "SocialPlatforms.php",
+            "mtime": 1766805263,
+            "size": 4328
+        },
+        {
+            "file": "Solana.php",
+            "mtime": 1761469515,
+            "size": 559
+        },
+        {
+            "file": "Status.php",
+            "mtime": 1769257364,
+            "size": 308
+        },
+        {
+            "file": "Toolbar.php",
+            "mtime": 1769341054,
+            "size": 5143
+        },
+        {
+            "file": "UserAgents.php",
+            "mtime": 1754141775,
+            "size": 9813
+        },
+        {
+            "file": "Validation.php",
+            "mtime": 1761784741,
+            "size": 2698
+        },
+        {
+            "file": "View.php",
+            "mtime": 1754141775,
+            "size": 2112
+        },
+        {
+            "file": "WalletConnect.php",
+            "mtime": 1761534597,
+            "size": 201
+        }
+    ],
+    "env_file_present": true,
+    "env_example_present": false
+}

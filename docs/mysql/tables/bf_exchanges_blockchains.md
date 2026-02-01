@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/ExchangeModel.php:319, app/Modules/Exchange/Views/Application_Manager.php:119, app/Modules/Exchange/Views/Application_Manager.php:153, app/Modules/Exchange/Views/Coin_Listing_Asset_Information/list_fields.php:32
+- Code references: app/Models/ExchangeModel.php:319, app/Modules/Exchange/Views/Application_Manager.php:119, app/Modules/Exchange/Views/Application_Manager.php:153, app/Modules/Exchange/Views/Coin_Listing_Asset_Information/list_fields.php:32, docs/_aiops/doc-change-log.md:1262
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_exchanges_blockchains` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

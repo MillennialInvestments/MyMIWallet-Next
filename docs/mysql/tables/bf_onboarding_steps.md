@@ -3,17 +3,19 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Services/OnboardingService.php:8
+- Code references: app/Services/OnboardingService.php:8, docs/_aiops/doc-change-log.md:1595
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_onboarding_steps` (
-  `code` TEXT NULL
+  `code` TEXT NULL,
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
 - code TEXT NULL
+- md TEXT NULL
 
 ## Required indexes
 - _No indexes defined_

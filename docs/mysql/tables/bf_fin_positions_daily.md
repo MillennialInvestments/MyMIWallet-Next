@@ -3,19 +3,21 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/Fin/PositionDailyModel.php:8, app/Services/Fin/RiskService.php:95, app/Services/Fin/RiskService.php:104, app/Services/Fin/RiskService.php:107
+- Code references: app/Models/Fin/PositionDailyModel.php:8, app/Services/Fin/RiskService.php:95, app/Services/Fin/RiskService.php:104, app/Services/Fin/RiskService.php:107, docs/aiops/migration_model_audit.md:108, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1292
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_fin_positions_daily` (
   `user_id` TEXT NULL,
-  `date` TEXT NULL
+  `date` TEXT NULL,
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
 - user_id TEXT NULL
 - date TEXT NULL
+- md TEXT NULL
 
 ## Required indexes
 - _No indexes defined_

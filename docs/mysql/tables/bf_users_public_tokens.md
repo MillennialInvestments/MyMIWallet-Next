@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/PlaidModel.php:17, app/Models/PlaidModel.php:40, app/Models/PlaidModel.php:74
+- Code references: app/Models/PlaidModel.php:17, app/Models/PlaidModel.php:40, app/Models/PlaidModel.php:74, docs/_aiops/doc-change-log.md:1976
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_users_public_tokens` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/ProjectDistributionsModel.php:7
+- Code references: app/Models/ProjectDistributionsModel.php:7, docs/aiops/migration_model_audit.md:163, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1667
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_project_distributions` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

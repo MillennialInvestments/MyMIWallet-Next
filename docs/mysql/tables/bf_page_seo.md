@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/Management/Views/Web_Design/Page_SEO_Overview.php:20
+- Code references: app/Modules/Management/Views/Web_Design/Page_SEO_Overview.php:20, docs/_aiops/doc-change-log.md:1619
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_page_seo` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

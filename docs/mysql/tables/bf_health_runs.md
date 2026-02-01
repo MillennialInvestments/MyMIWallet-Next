@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: docs/health/health_runner_design.md:47, docs/health/health_runner_design.md:75
+- Code references: docs/aiops/artifacts/db-drift/20260201-181038/summary.md:80, docs/_aiops/doc-change-log.md:1322, docs/health/health_runner_design.md:47, docs/health/health_runner_design.md:75
 
 ## Create table
 ```sql

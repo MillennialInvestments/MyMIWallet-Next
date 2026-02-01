@@ -1,0 +1,51 @@
+# bf_projects_distributions
+
+## Source
+- Migration: _None_
+- Model:
+- Code references: docs/aiops/artifacts/db-drift/20260201-181038/summary.md:173
+
+## Create table
+```sql
+CREATE TABLE IF NOT EXISTS `bf_projects_distributions` (
+  `id` int unsigned NOT NULL DEFAULT NULL AUTO_INCREMENT,
+  `user_id` int unsigned NOT NULL DEFAULT NULL,
+  `project_id` int unsigned NOT NULL DEFAULT NULL,
+  `amount` decimal(15,2) NOT NULL DEFAULT NULL,
+  `status` enum('available','withdrawn','held') NULL DEFAULT 'available',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP DEFAULT_GENERATED,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP DEFAULT_GENERATED ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
+
+## Required columns
+- id int unsigned NOT NULL
+- user_id int unsigned NOT NULL
+- project_id int unsigned NOT NULL
+- amount decimal(15,2) NOT NULL
+- status enum('available','withdrawn','held') NULL
+- created_at timestamp NULL
+- updated_at timestamp NULL
+
+## Required indexes
+- _No indexes defined_
+
+## Verification
+```sql
+SHOW CREATE TABLE `bf_projects_distributions`;
+```
+
+```sql
+SELECT COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE, COLUMN_DEFAULT, EXTRA
+FROM information_schema.columns
+WHERE table_schema = DATABASE() AND table_name = 'bf_projects_distributions'
+ORDER BY ORDINAL_POSITION;
+```
+
+```sql
+SELECT INDEX_NAME, NON_UNIQUE, COLUMN_NAME, SEQ_IN_INDEX
+FROM information_schema.statistics
+WHERE table_schema = DATABASE() AND table_name = 'bf_projects_distributions'
+ORDER BY INDEX_NAME, SEQ_IN_INDEX;
+```
+

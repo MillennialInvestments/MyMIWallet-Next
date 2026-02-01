@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Libraries/MyMILogger.php:13, app/Models/AnalyticalModel.php:260, app/Models/AnalyticalModel.php:274, app/Modules/Management/Views/Alerts/Trades.php:666
+- Code references: app/Libraries/MyMILogger.php:13, app/Models/AnalyticalModel.php:260, app/Models/AnalyticalModel.php:274, app/Modules/Management/Views/Alerts/Trades.php:666, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:22, docs/_aiops/doc-change-log.md:956
 
 ## Create table
 ```sql

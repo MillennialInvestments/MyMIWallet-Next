@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2025-09-09-000040_CreatePredictionsTrades.php
 - Model:
-- Code references: app/Database/Migrations/2025-09-09-000040_CreatePredictionsTrades.php:34, app/Database/Migrations/2025-09-09-000040_CreatePredictionsTrades.php:39, app/Models/Predictions/TradesModel.php:7, app/_legacy/Models/Predictions/SettlementsModel.php:7, docs/predictions/mysql-migrations.md:66, docs/predictions/README.md:45, docs/functional_inventory/docs_to_code_map.md:51, docs/functional_inventory/docs_to_code_map.md:138
+- Code references: app/Database/Migrations/2025-09-09-000040_CreatePredictionsTrades.php:34, app/Database/Migrations/2025-09-09-000040_CreatePredictionsTrades.php:39, app/Models/Predictions/TradesModel.php:7, app/_legacy/Models/Predictions/SettlementsModel.php:7, docs/predictions/mysql-migrations.md:66, docs/predictions/README.md:45, docs/functional_inventory/docs_to_code_map.md:51, docs/functional_inventory/docs_to_code_map.md:138, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:163, docs/aiops/migration_model_audit.md:159, docs/aiops/migration_model_audit.md:249, docs/_aiops/doc-change-log.md:1658
 
 ## Create table
 ```sql

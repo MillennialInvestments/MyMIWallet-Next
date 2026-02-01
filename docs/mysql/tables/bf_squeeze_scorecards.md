@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Libraries/MyMIInvestments.php:704, app/Libraries/MyMIInvestments.php:749, app/Libraries/MyMIInvestments.php:786, app/Libraries/MyMIInvestments.php:789, app/Models/SqueezeModel.php:75, app/Models/SqueezeModel.php:111, app/Models/SqueezeModel.php:178, app/Models/SqueezeModel.php:206, app/Models/SqueezeModel.php:209
+- Code references: app/Libraries/MyMIInvestments.php:704, app/Libraries/MyMIInvestments.php:749, app/Libraries/MyMIInvestments.php:786, app/Libraries/MyMIInvestments.php:789, app/Models/SqueezeModel.php:75, app/Models/SqueezeModel.php:111, app/Models/SqueezeModel.php:178, app/Models/SqueezeModel.php:206, app/Models/SqueezeModel.php:209, docs/_aiops/doc-change-log.md:1760
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_squeeze_scorecards` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

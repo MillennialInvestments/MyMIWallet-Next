@@ -3,17 +3,19 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/EsportsModel.php:41, app/Models/EsportsModel.php:123, app/Models/EsportsModel.php:128, app/Models/EsportsModel.php:133, docs/exports_schema.md:91, docs/functional_inventory/docs_to_code_map.md:50, docs/functional_inventory/docs_to_code_map.md:51
+- Code references: app/Models/EsportsModel.php:41, app/Models/EsportsModel.php:123, app/Models/EsportsModel.php:128, app/Models/EsportsModel.php:133, docs/exports_schema.md:91, docs/functional_inventory/docs_to_code_map.md:50, docs/functional_inventory/docs_to_code_map.md:51, docs/_aiops/doc-change-log.md:1229
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_esports_escrows` (
-  `event_id` TEXT NULL
+  `event_id` TEXT NULL,
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
 - event_id TEXT NULL
+- md TEXT NULL
 
 ## Required indexes
 - _No indexes defined_

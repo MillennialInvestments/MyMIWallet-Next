@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/Management/Views/Web_Design/Test_Page_ToDoList.php:99, app/Modules/Management/Views/Web_Design/Test_Page_ToDoList.php:102, app/Modules/Management/Views/Web_Design/Test_Page_ToDoList.php:150
+- Code references: app/Modules/Management/Views/Web_Design/Test_Page_ToDoList.php:99, app/Modules/Management/Views/Web_Design/Test_Page_ToDoList.php:102, app/Modules/Management/Views/Web_Design/Test_Page_ToDoList.php:150, docs/_aiops/doc-change-log.md:1736
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_services` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

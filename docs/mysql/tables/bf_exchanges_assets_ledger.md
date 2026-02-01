@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/ExchangeModel.php:96, app/Models/ExchangeModel.php:114, app/Models/ExchangeModel.php:133, app/Models/ExchangeModel.php:143, app/Models/ExchangeModel.php:148
+- Code references: app/Models/ExchangeModel.php:96, app/Models/ExchangeModel.php:114, app/Models/ExchangeModel.php:133, app/Models/ExchangeModel.php:143, app/Models/ExchangeModel.php:148, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:71, docs/_aiops/doc-change-log.md:1259
 
 ## Create table
 ```sql

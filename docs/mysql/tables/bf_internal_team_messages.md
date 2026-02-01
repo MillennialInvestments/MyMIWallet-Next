@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/Management/Controllers/MarketingController.php:2385
+- Code references: app/Modules/Management/Controllers/MarketingController.php:2385, docs/_aiops/doc-change-log.md:1343
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_internal_team_messages` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

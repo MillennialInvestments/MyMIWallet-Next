@@ -3,19 +3,21 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php:9, docs/ops/aiops-schema-endpoints-spec.md:38, docs/ops/n8n-capabilities-for-mymiwallet.md:56, docs/ops/n8n-capabilities-for-mymiwallet.md:62, docs/ops/n8n-capabilities-for-mymiwallet.md:63
+- Code references: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php:9, docs/ops/aiops-schema-endpoints-spec.md:38, docs/ops/n8n-capabilities-for-mymiwallet.md:56, docs/ops/n8n-capabilities-for-mymiwallet.md:62, docs/ops/n8n-capabilities-for-mymiwallet.md:63, docs/_aiops/doc-change-log.md:1007
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_aiops_workflows` (
   `enabled` TEXT NULL,
-  `slug` TEXT NULL
+  `slug` TEXT NULL,
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
 - enabled TEXT NULL
 - slug TEXT NULL
+- md TEXT NULL
 
 ## Required indexes
 - _No indexes defined_

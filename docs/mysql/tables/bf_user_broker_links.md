@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Libraries/MyMIUser.php:71, app/Libraries/MyMIUser.php:676, app/Libraries/MyMIUser.php:681, app/Libraries/MyMIUser.php:686
+- Code references: app/Libraries/MyMIUser.php:71, app/Libraries/MyMIUser.php:676, app/Libraries/MyMIUser.php:681, app/Libraries/MyMIUser.php:686, docs/_aiops/doc-change-log.md:1820
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_user_broker_links` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

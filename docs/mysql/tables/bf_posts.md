@@ -3,14 +3,15 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Services/SearchService.php:54, app/Services/SearchService.php:55
+- Code references: app/Services/SearchService.php:54, app/Services/SearchService.php:55, docs/_aiops/doc-change-log.md:1634
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_posts` (
   `status` TEXT NULL,
   `title` TEXT NULL,
-  `created_at` TEXT NULL
+  `created_at` TEXT NULL,
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
@@ -18,6 +19,7 @@ CREATE TABLE IF NOT EXISTS `bf_posts` (
 - status TEXT NULL
 - title TEXT NULL
 - created_at TEXT NULL
+- md TEXT NULL
 
 ## Required indexes
 - _No indexes defined_

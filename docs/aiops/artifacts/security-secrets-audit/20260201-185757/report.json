@@ -1,0 +1,73 @@
+{
+    "command": "security:secrets-audit",
+    "timestamp": "20260201-185757",
+    "dry_run": false,
+    "emit": "both",
+    "findings": [
+        {
+            "file": "/home/mymiteam/mymiwallet/site/current/.env",
+            "key": "app.encryptionKey",
+            "value": "1f************************************************************85"
+        },
+        {
+            "file": "/home/mymiteam/mymiwallet/site/current/.env",
+            "key": "database.default.password",
+            "value": "Da*******************************************rs"
+        },
+        {
+            "file": "/home/mymiteam/mymiwallet/site/current/.env",
+            "key": "email.password",
+            "value": "My******************************rd"
+        },
+        {
+            "file": "/home/mymiteam/mymiwallet/site/current/.env",
+            "key": "DISCORD_BOT_TOKEN",
+            "value": "MT****************************************************************************************************************al"
+        },
+        {
+            "file": "/home/mymiteam/mymiwallet/site/current/.env",
+            "key": "DISCORD_ALERTS_LIQUIDITY_SCANS_WEBHOOK",
+            "value": "ht*********************************************************************************************************************Qh"
+        },
+        {
+            "file": "/home/mymiteam/mymiwallet/site/current/.env",
+            "key": "CRON_SECRET",
+            "value": "38*************************************************ng"
+        },
+        {
+            "file": "/home/mymiteam/mymiwallet/site/current/.env",
+            "key": "N8N_API_KEY",
+            "value": "ey***********************************************************************************************************************************************************************************************************tI"
+        },
+        {
+            "file": "/home/mymiteam/mymiwallet/site/current/.env",
+            "key": "KIMI_API_KEY",
+            "value": ""
+        },
+        {
+            "file": "/home/mymiteam/mymiwallet/site/current/.env",
+            "key": "KIMI_API_BASE",
+            "value": "ht**********************v1"
+        },
+        {
+            "file": "/home/mymiteam/mymiwallet/site/current/.env",
+            "key": "OPENAI_API_KEY",
+            "value": "sk****************************************************************************************************************************************************************IA"
+        },
+        {
+            "file": "/home/mymiteam/mymiwallet/site/current/.env",
+            "key": "SCRAPEMAX_API_KEY",
+            "value": "yo*********re"
+        },
+        {
+            "file": "/home/mymiteam/mymiwallet/site/current/.env",
+            "key": "PSCRAPE_API_KEY",
+            "value": "yo*********re"
+        },
+        {
+            "file": "/home/mymiteam/mymiwallet/site/current/.env",
+            "key": "email.SMTPPass",
+            "value": "My*****4!"
+        }
+    ]
+}

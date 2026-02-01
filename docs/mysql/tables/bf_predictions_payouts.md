@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2025-09-09-000070_CreatePredictionsSettlementsPayouts.php
 - Model:
-- Code references: app/Database/Migrations/2025-09-09-000070_CreatePredictionsSettlementsPayouts.php:50, app/Database/Migrations/2025-09-09-000070_CreatePredictionsSettlementsPayouts.php:55, app/Models/Predictions/PayoutsModel.php:7, docs/predictions/mysql-migrations.md:135, docs/predictions/README.md:49, docs/predictions/README.md:112, docs/functional_inventory/docs_to_code_map.md:51, docs/functional_inventory/docs_to_code_map.md:136, docs/functional_inventory/docs_to_code_map.md:138
+- Code references: app/Database/Migrations/2025-09-09-000070_CreatePredictionsSettlementsPayouts.php:50, app/Database/Migrations/2025-09-09-000070_CreatePredictionsSettlementsPayouts.php:55, app/Models/Predictions/PayoutsModel.php:7, docs/predictions/mysql-migrations.md:135, docs/predictions/README.md:49, docs/predictions/README.md:112, docs/functional_inventory/docs_to_code_map.md:51, docs/functional_inventory/docs_to_code_map.md:136, docs/functional_inventory/docs_to_code_map.md:138, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:160, docs/aiops/migration_model_audit.md:157, docs/aiops/migration_model_audit.md:247, docs/_aiops/doc-change-log.md:1649
 
 ## Create table
 ```sql

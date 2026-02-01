@@ -3,18 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/EsportsModel.php:12, app/Models/EsportsModel.php:25, app/Models/EsportsModel.php:31, app/Models/EsportsModel.php:36, app/Models/EsportsModel.php:51, docs/exports_schema.md:21, docs/exports_schema.md:65, docs/exports_schema.md:84, docs/exports_schema.md:100, docs/exports_schema.md:119, docs/exports_schema.md:136, docs/exports_schema.md:159, docs/exports_schema.md:191, docs/functional_inventory/docs_to_code_map.md:50, docs/functional_inventory/docs_to_code_map.md:51
+- Code references: app/Models/EsportsModel.php:12, app/Models/EsportsModel.php:25, app/Models/EsportsModel.php:31, app/Models/EsportsModel.php:36, app/Models/EsportsModel.php:51, docs/exports_schema.md:21, docs/exports_schema.md:65, docs/exports_schema.md:84, docs/exports_schema.md:100, docs/exports_schema.md:119, docs/exports_schema.md:136, docs/exports_schema.md:159, docs/exports_schema.md:191, docs/functional_inventory/docs_to_code_map.md:50, docs/functional_inventory/docs_to_code_map.md:51, docs/aiops/migration_model_audit.md:103, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1232
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_esports_events` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `md` TEXT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
 - id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
 - PRIMARY (id)

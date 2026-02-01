@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Libraries/DbInventory/InventoryScanner.php:17, app/Libraries/DbInventory/SqlGenerator.php:13, app/Libraries/DbInventory/SqlGenerator.php:329, app/Services/Spark/DbApplyDocsService.php:285, app/Services/Spark/DbApplyDocsService.php:292, app/Services/Spark/DbApplyDocsService.php:314, docs/spark/categories/database/db-apply-docs.md:14
+- Code references: app/Libraries/DbInventory/InventoryScanner.php:17, app/Libraries/DbInventory/SqlGenerator.php:13, app/Libraries/DbInventory/SqlGenerator.php:329, app/Services/Spark/DbApplyDocsService.php:285, app/Services/Spark/DbApplyDocsService.php:292, app/Services/Spark/DbApplyDocsService.php:314, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:154, docs/_aiops/doc-change-log.md:1613, docs/spark/categories/database/db-apply-docs.md:14
 
 ## Create table
 ```sql

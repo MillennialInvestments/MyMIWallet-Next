@@ -1,7 +1,9 @@
 # bf_aiops_registry
 
 ## Source
-- Migration: app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php
+- Migration: 2026-03-15-000100_CreateAiOpsTaskPipelineTables.php
+- Model:
+- Code references: app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php:67, app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php:68, app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php:80, app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php:124, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:28, docs/_aiops/doc-change-log.md:986
 
 ## Create table
 ```sql
@@ -19,13 +21,17 @@ CREATE TABLE IF NOT EXISTS `bf_aiops_registry` (
 ```
 
 ## Required columns
-- task_key VARCHAR(190)
-- handler VARCHAR(190)
-- safe_mode_allowed TINYINT(1)
+- id BIGINT UNSIGNED NOT NULL
+- task_key VARCHAR(190) NOT NULL
+- handler VARCHAR(190) NOT NULL
+- description TEXT NULL
+- safe_mode_allowed TINYINT(1) NOT NULL
+- created_at DATETIME NULL
+- updated_at DATETIME NULL
 
 ## Required indexes
-- PRIMARY KEY (`id`)
-- UNIQUE KEY (`task_key`)
+- PRIMARY (id)
+- task_key (task_key) [UNIQUE]
 
 ## Verification
 ```sql
@@ -45,3 +51,4 @@ FROM information_schema.statistics
 WHERE table_schema = DATABASE() AND table_name = 'bf_aiops_registry'
 ORDER BY INDEX_NAME, SEQ_IN_INDEX;
 ```
+

@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Views/themes/public/layouts/page_views.php:47, app/Views/themes/public/layouts/page_views.php:73
+- Code references: app/Views/themes/public/layouts/page_views.php:47, app/Views/themes/public/layouts/page_views.php:73, docs/_aiops/doc-change-log.md:1508
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_marketing_page_views_per_user` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2025-12-23-000001_CreateCommunityAndTemplateTables.php
 - Model:
-- Code references: app/Database/Migrations/2025-12-23-000001_CreateCommunityAndTemplateTables.php:20, app/Database/Migrations/2025-12-23-000001_CreateCommunityAndTemplateTables.php:135, app/Models/SocialDistributionQueueModel.php:9, docs/automation/communities/cron_plan.md:11, docs/automation/communities/distribution_matrix.md:14, docs/communities/discord.md:56
+- Code references: app/Database/Migrations/2025-12-23-000001_CreateCommunityAndTemplateTables.php:20, app/Database/Migrations/2025-12-23-000001_CreateCommunityAndTemplateTables.php:135, app/Models/SocialDistributionQueueModel.php:9, docs/automation/communities/cron_plan.md:11, docs/automation/communities/distribution_matrix.md:14, docs/communities/discord.md:56, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:190, docs/aiops/migration_model_audit.md:180, docs/aiops/migration_model_audit.md:255, docs/_aiops/doc-change-log.md:1745
 
 ## Create table
 ```sql

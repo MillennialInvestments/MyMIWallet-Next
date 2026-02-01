@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Libraries/MyMIInvestments.php:1657, app/Models/AccountsModel.php:442, app/Models/AccountsModel.php:535, app/Models/AccountsModel.php:542, app/Models/AlertsModel.php:83, app/Models/MyMICoinModel.php:236, app/Models/MyMICoinModel.php:242, app/Models/MyMICoinModel.php:263, app/Models/PublicModel.php:60, app/Models/TrackerModel.php:36, app/Models/TrackerModel.php:43, app/Models/TrackerModel.php:51, app/Models/WalletModel.php:514, app/Models/WalletModel.php:627, app/Models/WalletModel.php:635, app/Models/InvestmentModel.php:89
+- Code references: app/Libraries/MyMIInvestments.php:1657, app/Models/AccountsModel.php:442, app/Models/AccountsModel.php:535, app/Models/AccountsModel.php:542, app/Models/AlertsModel.php:83, app/Models/MyMICoinModel.php:236, app/Models/MyMICoinModel.php:242, app/Models/MyMICoinModel.php:263, app/Models/PublicModel.php:60, app/Models/TrackerModel.php:36, app/Models/TrackerModel.php:43, app/Models/TrackerModel.php:51, app/Models/WalletModel.php:514, app/Models/WalletModel.php:627, app/Models/WalletModel.php:635, app/Models/InvestmentModel.php:89, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:91, docs/_aiops/doc-change-log.md:1400
 
 ## Create table
 ```sql

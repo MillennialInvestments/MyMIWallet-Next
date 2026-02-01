@@ -3,18 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/DesignModel.php:182, app/Models/DesignModel.php:222
+- Code references: app/Models/DesignModel.php:182, app/Models/DesignModel.php:222, docs/_aiops/doc-change-log.md:1133
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_dashboard_upgrades` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `md` TEXT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
 - id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
 - PRIMARY (id)

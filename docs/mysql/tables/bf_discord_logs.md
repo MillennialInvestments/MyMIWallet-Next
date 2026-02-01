@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/DiscordModel.php:348, app/Models/DiscordModel.php:429, app/Commands/DiscordWireCheck.php:90, docs/discord/server_setup_and_alert_routing.md:23, docs/discord/server_setup_and_alert_routing.md:95, docs/discord/server_setup_and_alert_routing.md:189, docs/discord/mysql_discord_schema.md:123, docs/discord_schema.sql.md:84, docs/functional_inventory/docs_to_code_map.md:38, docs/functional_inventory/docs_to_code_map.md:42, docs/functional_inventory/docs_to_code_map.md:47, docs/functional_inventory/docs_to_code_map.md:51, docs/spark/categories/alerts/discord-wire-check.md:13
+- Code references: app/Models/DiscordModel.php:348, app/Models/DiscordModel.php:429, app/Commands/DiscordWireCheck.php:90, docs/discord/server_setup_and_alert_routing.md:23, docs/discord/server_setup_and_alert_routing.md:95, docs/discord/server_setup_and_alert_routing.md:189, docs/discord/mysql_discord_schema.md:123, docs/discord_schema.sql.md:84, docs/functional_inventory/docs_to_code_map.md:38, docs/functional_inventory/docs_to_code_map.md:42, docs/functional_inventory/docs_to_code_map.md:47, docs/functional_inventory/docs_to_code_map.md:51, docs/_aiops/doc-change-log.md:1163, docs/spark/categories/alerts/discord-wire-check.md:13
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_discord_logs` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

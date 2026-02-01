@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/User/Views/Wallets/Link_Account/Brokerage.php:3, app/Modules/User/Views/Wallets/Link_Account (Original)/Brokerage.php:3
+- Code references: app/Modules/User/Views/Wallets/Link_Account/Brokerage.php:3, app/Modules/User/Views/Wallets/Link_Account (Original)/Brokerage.php:3, docs/_aiops/doc-change-log.md:2027
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_users_wallet_brokerages` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql
