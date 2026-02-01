@@ -83,6 +83,7 @@
        'cookieHTTPOnly' => true,
        'cookieSameSite' => 'Lax',
        'maintenanceMode' => false,
+       'enableKint' => false,
     )),
     'Config\\Cache' => 
     \Config\Cache::__set_state(array(
