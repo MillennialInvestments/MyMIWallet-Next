@@ -253,7 +253,7 @@ class RoutesAuthAudit extends SafeBaseCommand
             return ['status' => 'fail', 'message' => 'unauthorized'];
         }
 
-        if ($response->isRedirect()) {
+        if ($this->isRedirectStatus($status)) {
             $location = (string) $response->getHeaderLine('Location');
             $allowRedirect = (bool) ($route['allowRedirect'] ?? false);
 
@@ -269,6 +269,11 @@ class RoutesAuthAudit extends SafeBaseCommand
         }
 
         return ['status' => 'warn', 'message' => sprintf('unexpected status %d', $status)];
+    }
+
+    private function isRedirectStatus(int $status): bool
+    {
+        return in_array($status, [301, 302, 303, 307, 308], true);
     }
 
     protected function isDestructive(): bool

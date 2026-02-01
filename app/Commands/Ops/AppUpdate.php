@@ -11,7 +11,6 @@ use App\Services\Ops\FilesystemHealthService;
 use App\Services\Ops\SnapshotWriter;
 use App\Services\Ops\SparkGovernanceService;
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\CLI\Commands;
 use Config\Services;
 use Throwable;
 
@@ -111,7 +110,7 @@ class AppUpdate extends SafeBaseCommand
                 $phaseWarnings[] = 'Dry-run: cache clear skipped.';
             } else {
                 try {
-                    $result = Commands::run('cache:clear');
+                    $result = $this->runSparkCommand('cache:clear');
                     $details[] = ['command' => 'cache:clear', 'status' => $result === EXIT_SUCCESS ? 'pass' : 'fail'];
                     if ($result !== EXIT_SUCCESS) {
                         $phaseFailures[] = 'cache:clear reported failure.';
