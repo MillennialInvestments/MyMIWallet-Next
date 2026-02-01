@@ -1,0 +1,9 @@
+{
+    "command": "growth:retention-watch",
+    "timestamp": "20260201-183610",
+    "dry_run": false,
+    "emit": "both",
+    "signals": {
+        "notes": "No data sources configured yet. This command emits placeholders until metrics are wired."
+    }
+}

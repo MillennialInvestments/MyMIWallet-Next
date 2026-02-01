@@ -1,0 +1,76 @@
+{
+    "totals": {
+        "total_chats": 0,
+        "complete": 0,
+        "in_progress": 0,
+        "blocked": 0
+    },
+    "steps": {
+        "step_1a": {
+            "complete": 0,
+            "missing": 0,
+            "blocked": 0,
+            "not_required": 0,
+            "failed": 0,
+            "unknown": 0
+        },
+        "step_2a": {
+            "complete": 0,
+            "missing": 0,
+            "blocked": 0,
+            "not_required": 0,
+            "failed": 0,
+            "unknown": 0
+        },
+        "step_2b": {
+            "complete": 0,
+            "missing": 0,
+            "blocked": 0,
+            "not_required": 0,
+            "failed": 0,
+            "unknown": 0
+        },
+        "step_3": {
+            "complete": 0,
+            "missing": 0,
+            "blocked": 0,
+            "not_required": 0,
+            "failed": 0,
+            "unknown": 0
+        },
+        "step_4": {
+            "complete": 0,
+            "missing": 0,
+            "blocked": 0,
+            "not_required": 0,
+            "failed": 0,
+            "unknown": 0
+        },
+        "step_5": {
+            "complete": 0,
+            "missing": 0,
+            "blocked": 0,
+            "not_required": 0,
+            "failed": 0,
+            "unknown": 0
+        },
+        "step_6": {
+            "complete": 0,
+            "missing": 0,
+            "blocked": 0,
+            "not_required": 0,
+            "failed": 0,
+            "unknown": 0
+        },
+        "step_7": {
+            "complete": 0,
+            "missing": 0,
+            "blocked": 0,
+            "not_required": 0,
+            "failed": 0,
+            "unknown": 0
+        }
+    },
+    "blocked_reasons": [],
+    "timestamp": "2026-02-01T18:38:38+00:00"
+}

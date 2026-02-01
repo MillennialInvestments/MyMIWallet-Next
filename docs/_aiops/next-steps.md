@@ -1,6 +1,6 @@
 # AI-Ops: Next Steps (Worker-Only Suggestions)
 > Auto-generated. Do not edit manually.
-> Run: 2026-01-30T13:50:28Z
+> Run: 2026-02-01T18:25:51Z
 
 - [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
     - Reason: Code exists with no obvious doc reference (heuristic)
@@ -32,25 +32,25 @@
 - [DOC ONLY] Add/extend docs mentioning `AiOpsController.php`
     - Reason: Code exists with no obvious doc reference (heuristic)
     - File: app/Modules/APIs/Controllers/AiOpsController.php
-- [DOC ONLY] Review stale doc: `docs/CRON.md`
-    - Reason: Doc unchanged for 82 days
 - [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
-    - Reason: Doc unchanged for 82 days
+    - Reason: Doc unchanged for 85 days
 - [DOC ONLY] Review stale doc: `docs/README.md`
-    - Reason: Doc unchanged for 82 days
+    - Reason: Doc unchanged for 85 days
 - [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
-    - Reason: Doc unchanged for 82 days
+    - Reason: Doc unchanged for 85 days
 - [DOC ONLY] Review stale doc: `docs/adr/_index.md`
-    - Reason: Doc unchanged for 82 days
+    - Reason: Doc unchanged for 85 days
 - [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
-    - Reason: Doc unchanged for 68 days
+    - Reason: Doc unchanged for 70 days
 - [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
-    - Reason: Doc unchanged for 82 days
+    - Reason: Doc unchanged for 85 days
 - [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
-    - Reason: Doc unchanged for 82 days
+    - Reason: Doc unchanged for 85 days
 - [DOC ONLY] Review stale doc: `docs/bitcoin-standardization.md`
-    - Reason: Doc unchanged for 82 days
+    - Reason: Doc unchanged for 85 days
 - [DOC ONLY] Review stale doc: `docs/budget/UI-Suggestions.md`
-    - Reason: Doc unchanged for 82 days
+    - Reason: Doc unchanged for 85 days
+- [DOC ONLY] Review stale doc: `docs/budget/_index.md`
+    - Reason: Doc unchanged for 85 days
 - [LOW RISK] Add/verify headers in docs/_aiops outputs
     - Reason: enforce 'Auto-generated' rule and reduce accidental edits

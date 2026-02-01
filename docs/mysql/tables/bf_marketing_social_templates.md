@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/Management/Documents/Marketing/MarketingOpRunbook.md:3, app/Modules/Management/Documents/Marketing/MarketingOpRunbook.md:7
+- Code references: app/Modules/Management/Documents/Marketing/MarketingOpRunbook.md:3, app/Modules/Management/Documents/Marketing/MarketingOpRunbook.md:7, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:141, docs/_aiops/doc-change-log.md:1538
 
 ## Create table
 ```sql

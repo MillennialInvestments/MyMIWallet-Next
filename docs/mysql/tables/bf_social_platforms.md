@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2025-12-23-000001_CreateCommunityAndTemplateTables.php
 - Model:
-- Code references: app/Database/Migrations/2025-12-23-000001_CreateCommunityAndTemplateTables.php:24, app/Database/Migrations/2025-12-23-000001_CreateCommunityAndTemplateTables.php:44, app/Database/Migrations/2025-12-23-000001_CreateCommunityAndTemplateTables.php:64, app/Database/Migrations/2025-12-23-000001_CreateCommunityAndTemplateTables.php:87, app/Database/Migrations/2025-12-23-000001_CreateCommunityAndTemplateTables.php:114, app/Models/SocialPlatformModel.php:9
+- Code references: app/Database/Migrations/2025-12-23-000001_CreateCommunityAndTemplateTables.php:24, app/Database/Migrations/2025-12-23-000001_CreateCommunityAndTemplateTables.php:44, app/Database/Migrations/2025-12-23-000001_CreateCommunityAndTemplateTables.php:64, app/Database/Migrations/2025-12-23-000001_CreateCommunityAndTemplateTables.php:87, app/Database/Migrations/2025-12-23-000001_CreateCommunityAndTemplateTables.php:114, app/Models/SocialPlatformModel.php:9, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:192, docs/aiops/migration_model_audit.md:182, docs/aiops/migration_model_audit.md:257, docs/_aiops/doc-change-log.md:1751
 
 ## Create table
 ```sql

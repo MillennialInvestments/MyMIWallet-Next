@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: docs/integrations/technology_investor_integrations.md:75, docs/integrations/technology_investor_integrations.md:316
+- Code references: docs/integrations/technology_investor_integrations.md:75, docs/integrations/technology_investor_integrations.md:316, docs/_aiops/doc-change-log.md:1334
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_integrations_events` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

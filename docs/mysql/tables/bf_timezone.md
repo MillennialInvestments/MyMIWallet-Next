@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/User/Views/Budget/Assessment/assessment_content.php:283, app/Modules/User/Views/Investments/Assessment/assessment_content.php:303
+- Code references: app/Modules/User/Views/Budget/Assessment/assessment_content.php:283, app/Modules/User/Views/Investments/Assessment/assessment_content.php:303, docs/_aiops/doc-change-log.md:1802
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_timezone` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

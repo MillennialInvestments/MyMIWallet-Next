@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/BudgetModel.php:671, app/Models/BudgetModel.php:672, app/Models/BudgetModel.php:672, app/Models/BudgetModel.php:674, app/Models/DashboardModel.php:141, app/Models/DashboardModel.php:147, app/Modules/User/Views/Dashboard/Goals/Daily/browser_table.php:84
+- Code references: app/Models/BudgetModel.php:671, app/Models/BudgetModel.php:672, app/Models/BudgetModel.php:672, app/Models/BudgetModel.php:674, app/Models/DashboardModel.php:141, app/Models/DashboardModel.php:147, app/Modules/User/Views/Dashboard/Goals/Daily/browser_table.php:84, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:231, docs/_aiops/doc-change-log.md:1943
 
 ## Create table
 ```sql

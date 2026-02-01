@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2026-02-25-000001_CreateAuthHealthRuns.php
 - Model:
-- Code references: app/Database/Migrations/2026-02-25-000001_CreateAuthHealthRuns.php:33, app/Database/Migrations/2026-02-25-000001_CreateAuthHealthRuns.php:38, app/Models/AuthHealthRunModel.php:11, docs/auth/auth_smoke.md:4, docs/auth/auth_smoke.md:8, docs/auth/auth_smoke.md:49, docs/spark/categories/auth/auth-smoke.md:13
+- Code references: app/Database/Migrations/2026-02-25-000001_CreateAuthHealthRuns.php:33, app/Database/Migrations/2026-02-25-000001_CreateAuthHealthRuns.php:38, app/Models/AuthHealthRunModel.php:11, docs/aiops/migration_model_audit.md:79, docs/aiops/migration_model_audit.md:223, docs/_aiops/doc-change-log.md:1067, docs/auth/auth_smoke.md:4, docs/auth/auth_smoke.md:8, docs/auth/auth_smoke.md:49, docs/spark/categories/auth/auth-smoke.md:13
 
 ## Create table
 ```sql

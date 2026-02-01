@@ -3,17 +3,19 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Libraries/Privacy/DataExportService.php:19
+- Code references: app/Libraries/Privacy/DataExportService.php:19, docs/_aiops/doc-change-log.md:2042
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_wallets` (
-  `user_id` TEXT NULL
+  `user_id` TEXT NULL,
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
 - user_id TEXT NULL
+- md TEXT NULL
 
 ## Required indexes
 - _No indexes defined_

@@ -1,0 +1,793 @@
+{
+    "run": {
+        "timestamp": "2026-02-01 18:36:29",
+        "limit": 25,
+        "tables": [
+            "bf_investment_scraper",
+            "bf_marketing_temp_scraper"
+        ],
+        "schema_path": "/home/mymiteam/mymiwallet/site/current/docs/scrapers/email_expected_schema.yaml"
+    },
+    "summary": {
+        "total_scanned": 25,
+        "trade_count": 0,
+        "news_count": 25,
+        "passed": 0,
+        "failed": 25,
+        "fallbacks_applied": 25
+    },
+    "failure_breakdown": {
+        "PARSE_FAILED": 25,
+        "FALLBACK_APPLIED": 50
+    },
+    "records": [
+        {
+            "id": 7277,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "DOG Faces Market Shock After Vitalik Buterin Sells 2 Trillion Tokens",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7276,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "DOG Faces Market Shock After Vitalik Buterin Sells 2 Trillion Tokens",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7275,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "Claude Ran a Store in Anthropic's Office. It Did Not Go Well. - Business Insider",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7274,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "Claude Ran a Store in Anthropic's Office. It Did Not Go Well. - Business Insider",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7273,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "2 Artificial Intelligence (AI) Stocks (Besides Nvidia) to Buy Hand Over Fist for the Long Term",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7272,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "2 Artificial Intelligence (AI) Stocks (Besides Nvidia) to Buy Hand Over Fist for the Long Term",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7270,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "Oil, stocks react, Trump strikes Iran nuclear sites in Israel conflict, gold, silver, Dow, S&amp;P 500, Nasdaq | June 22, 2025 | Live Updates from Fox Business",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7271,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "Oil, stocks react, Trump strikes Iran nuclear sites in Israel conflict, gold, silver, Dow, S&amp;P 500, Nasdaq | June 22, 2025 | Live Updates from Fox Business",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7268,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "BTC, ETH, XRP News: Bitcoin Price Slips Below $100K, Hinting Oil-Led Risk-Off on Wall Street as Iran Looks to Block The Strait of Hormuz",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7269,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "BTC, ETH, XRP News: Bitcoin Price Slips Below $100K, Hinting Oil-Led Risk-Off on Wall Street as Iran Looks to Block The Strait of Hormuz",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7267,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "Millions of Americans See Credit Scores Plunge - Newsweek",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7266,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "Millions of Americans See Credit Scores Plunge - Newsweek",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7265,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "Current refi mortgage rates report for June 6, 2025 | Fortune",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7264,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "Current refi mortgage rates report for June 6, 2025 | Fortune",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7263,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "Markets News, June 6, 2025: S&amp;P 500 Hits 6,000 Points for First Time Since February as Stocks Surge After Jobs Report; Tesla Rebounds From Sell-Off",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7262,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "Markets News, June 6, 2025: S&amp;P 500 Hits 6,000 Points for First Time Since February as Stocks Surge After Jobs Report; Tesla Rebounds From Sell-Off",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7261,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "Current refi mortgage rates report for June 5, 2025 | Fortune",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7260,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "Current refi mortgage rates report for June 5, 2025 | Fortune",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7259,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "Subscribe to read",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7258,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "Subscribe to read",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7256,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "Trump and Xi Hold Call, China Says - The New York Times",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7257,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "Trump and Xi Hold Call, China Says - The New York Times",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7255,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "Mortgage and refinance interest rates today, June 5, 2025: Lower for the week as bond yields move sharply lower",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7254,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "Mortgage and refinance interest rates today, June 5, 2025: Lower for the week as bond yields move sharply lower",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        },
+        {
+            "id": 7253,
+            "table": "bf_marketing_temp_scraper",
+            "category": "news",
+            "identifier": null,
+            "status": "failed",
+            "failures": [
+                {
+                    "failure_type": "PARSE_FAILED",
+                    "root_cause_guess": "Insufficient keywords derived for news record.",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Adjust parsing logic to extract symbols/keywords from current email formats."
+                },
+                {
+                    "failure_type": "FALLBACK_APPLIED",
+                    "root_cause_guess": "Applied default fallbacks: summary, source",
+                    "affected_table": "bf_marketing_temp_scraper",
+                    "recommended_fix": "Review fallback fields and backfill source data to avoid defaults."
+                }
+            ],
+            "presentation_payload": {
+                "title": "Oragenics, Inc. Announces One-for-Thirty Reverse Stock",
+                "summary": "Summary pending review",
+                "source": "email"
+            },
+            "fallbacks_applied": [
+                "summary",
+                "source"
+            ]
+        }
+    ],
+    "fix_plan": [
+        {
+            "failure_type": "PARSE_FAILED",
+            "count": 25,
+            "suggested_actions": [
+                "Expand symbol/keyword extraction rules for new alert/news formats.",
+                "Add parser guardrails for empty subjects or truncated bodies."
+            ]
+        },
+        {
+            "failure_type": "FALLBACK_APPLIED",
+            "count": 25,
+            "suggested_actions": [
+                "Backfill missing fields upstream to avoid default placeholders.",
+                "Add guardrails to ensure derived fields are populated during ingest."
+            ]
+        }
+    ]
+}

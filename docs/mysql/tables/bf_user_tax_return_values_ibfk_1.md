@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: docs/sql/tax_module_schema.sql:86
+- Code references: docs/sql/tax_module_schema.sql:86, docs/_aiops/doc-change-log.md:1862
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_user_tax_return_values_ibfk_1` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

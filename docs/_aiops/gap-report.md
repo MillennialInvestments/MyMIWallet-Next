@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-01-30T13:50:28Z
+> Run: 2026-02-01T18:25:51Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Models/AIOpsBudgetModel.php
@@ -403,7 +403,7 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Views/Alerts/resources/rh-keygen.php
   - ⚠️ No obvious doc match found (heuristic)
-- … and 920 more
+- … and 919 more
 
 ## Documented Items With No Obvious Code Match (best-effort)
 - docs/CRON.md
@@ -432,15 +432,37 @@
   - ❌ No obvious code match found (heuristic)
 - docs/ai-ops/observability-policy.md
   - ❌ No obvious code match found (heuristic)
+- docs/ai/codex_prompts/spark_rules.md
+  - ❌ No obvious code match found (heuristic)
+- docs/ai/contracts/spark_commands_contract.md
+  - ❌ No obvious code match found (heuristic)
 - docs/aiops-budgeting.md
   - ❌ No obvious code match found (heuristic)
 - docs/aiops/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/api-audit.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/command-inventory.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/control-plane.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/email-scraper-audit.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/filesystem_rules.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/migration_model_audit.md
   - ❌ No obvious code match found (heuristic)
 - docs/aiops/runbooks/dreamhost-proxy-ports.md
   - ❌ No obvious code match found (heuristic)
 - docs/aiops/runbooks/security-hardening.md
   - ❌ No obvious code match found (heuristic)
 - docs/aiops/selfhosted-stack.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/spark_bootstrap_rules.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/spark_command_invariants.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/spark_rules.md
   - ❌ No obvious code match found (heuristic)
 - docs/aiops/workflows/n8n-workflows.md
   - ❌ No obvious code match found (heuristic)
@@ -506,9 +528,37 @@
   - ❌ No obvious code match found (heuristic)
 - docs/chatgpt/README.md
   - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/aiops/MyMI_Codex_Executive/AIOPS_Worker_and_Spark_Integration.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/aiops/chat_governance_indexing.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/archive/MyMI_Codex_Executive/AIOPS_Worker_and_Spark_Integration.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/archive/MyMI_Codex_Executive/Email_Scraper_Audit_Spark_Command_Activation_and_Guardrails.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/archive/MyMI_Codex_Executive/Spark_Automation_Framework_and_Codex_Executive_Plan.md
+  - ❌ No obvious code match found (heuristic)
 - docs/chatgpt/decision_log.md
   - ❌ No obvious code match found (heuristic)
 - docs/chatgpt/diffs/new_since_last_run.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/extraction/Step1_archive_request.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/extraction/Step2a_aiops_tasks.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/extraction/Step2b_aiops_tasks_with_worker.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/extraction/Step3_codex_handoff.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/extraction/Step4_mysql_databases.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/extraction/Step5_human_requirements.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/extraction/Step6_validation_signoff.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/extraction/Step7_rollback_recovery.md
+  - ❌ No obvious code match found (heuristic)
+- docs/chatgpt/extraction/Step8_indexing_metrcs.md
   - ❌ No obvious code match found (heuristic)
 - docs/chatgpt/extraction_standards_step_1.md
   - ❌ No obvious code match found (heuristic)
@@ -547,6 +597,14 @@
 - docs/codex/04_pr4_chat_management_ui.md
   - ❌ No obvious code match found (heuristic)
 - docs/codex/05_pr5_n8n_docs_automation.md
+  - ❌ No obvious code match found (heuristic)
+- docs/codex/reviews/review-2026-01-31.md
+  - ❌ No obvious code match found (heuristic)
+- docs/codex/reviews/review-2026-02-01.md
+  - ❌ No obvious code match found (heuristic)
+- docs/codex/reviews/review-prompt-2026-01-31.md
+  - ❌ No obvious code match found (heuristic)
+- docs/codex/reviews/review-prompt-2026-02-01.md
   - ❌ No obvious code match found (heuristic)
 - docs/communities/linkedin.md
   - ❌ No obvious code match found (heuristic)
@@ -722,6 +780,8 @@
   - ❌ No obvious code match found (heuristic)
 - docs/gap_tracker/reports/gap_sync_2026-01-02.md
   - ❌ No obvious code match found (heuristic)
+- docs/gap_tracker/reports/gap_sync_2026-02-01.md
+  - ❌ No obvious code match found (heuristic)
 - docs/go-live/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/go-live/go_live_checklist.md
@@ -746,64 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/health/health_runner_design.md
   - ❌ No obvious code match found (heuristic)
-- docs/health/health_test_checklist.md
-  - ❌ No obvious code match found (heuristic)
-- docs/health/integrations_inventory.md
-  - ❌ No obvious code match found (heuristic)
-- docs/health/modules/discord_zapier.md
-  - ❌ No obvious code match found (heuristic)
-- docs/health/modules/system_ops.md
-  - ❌ No obvious code match found (heuristic)
-- docs/health/service_inventory.md
-  - ❌ No obvious code match found (heuristic)
-- docs/hygiene/weekly_repo_hygiene.md
-  - ❌ No obvious code match found (heuristic)
-- docs/indicators/README.md
-  - ❌ No obvious code match found (heuristic)
-- docs/indicators/mymi-momentum-suite-public.md
-  - ❌ No obvious code match found (heuristic)
-- docs/integrations/technology_investor_integrations.md
-  - ❌ No obvious code match found (heuristic)
-- docs/inventory/docs_gaps.md
-  - ❌ No obvious code match found (heuristic)
-- docs/kimi-k2-integration.md
-  - ❌ No obvious code match found (heuristic)
-- docs/legal/crypto_customer_agreement/README.md
-  - ❌ No obvious code match found (heuristic)
-- docs/legal/crypto_customer_agreement/compiled_agreement.md
-  - ❌ No obvious code match found (heuristic)
-- docs/legal/crypto_customer_agreement/sections/00_preamble.md
-  - ❌ No obvious code match found (heuristic)
-- docs/legal/crypto_customer_agreement/sections/01_definitions.md
-  - ❌ No obvious code match found (heuristic)
-- docs/legal/crypto_customer_agreement/sections/02_account_eligibility.md
-  - ❌ No obvious code match found (heuristic)
-- docs/legal/crypto_customer_agreement/sections/03_services_overview.md
-  - ❌ No obvious code match found (heuristic)
-- docs/legal/crypto_customer_agreement/sections/04_orders_pricing_execution.md
-  - ❌ No obvious code match found (heuristic)
-- docs/legal/crypto_customer_agreement/sections/05_fees_taxes.md
-  - ❌ No obvious code match found (heuristic)
-- docs/legal/crypto_customer_agreement/sections/06_custody_title_control.md
-  - ❌ No obvious code match found (heuristic)
-- docs/legal/crypto_customer_agreement/sections/07_wallet_transfers.md
-  - ❌ No obvious code match found (heuristic)
-- docs/legal/crypto_customer_agreement/sections/08_staking.md
-  - ❌ No obvious code match found (heuristic)
-- docs/legal/crypto_customer_agreement/sections/09_risk_disclosures.md
-  - ❌ No obvious code match found (heuristic)
-- docs/legal/crypto_customer_agreement/sections/10_compliance_sanctions_law_enforcement.md
-  - ❌ No obvious code match found (heuristic)
-- docs/legal/crypto_customer_agreement/sections/11_account_security_unauthorized_activity.md
-  - ❌ No obvious code match found (heuristic)
-- docs/legal/crypto_customer_agreement/sections/12_suspension_termination.md
-  - ❌ No obvious code match found (heuristic)
-- docs/legal/crypto_customer_agreement/sections/13_disclaimers_limitation_liability_indemnity.md
-  - ❌ No obvious code match found (heuristic)
-- docs/legal/crypto_customer_agreement/sections/14_dispute_resolution_arbitration.md
-  - ❌ No obvious code match found (heuristic)
-- docs/legal/crypto_customer_agreement/sections/15_communications_esign.md
-  - ❌ No obvious code match found (heuristic)
-- docs/legal/crypto_customer_agreement/sections/16_misc_governing_law_changes.md
-  - ❌ No obvious code match found (heuristic)
-- … and 630 more
+- … and 673 more

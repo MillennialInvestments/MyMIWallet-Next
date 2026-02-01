@@ -1,0 +1,9 @@
+{
+    "command": "marketing:automation-audit",
+    "timestamp": "20260201-185227",
+    "dry_run": false,
+    "emit": "both",
+    "cron_doc_exists": true,
+    "cron_entries": 10,
+    "spark_entries": 2
+}

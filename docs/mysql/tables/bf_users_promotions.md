@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/DashboardModel.php:63
+- Code references: app/Models/DashboardModel.php:63, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:240, docs/_aiops/doc-change-log.md:1973
 
 ## Create table
 ```sql

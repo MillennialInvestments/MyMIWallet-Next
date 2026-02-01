@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/AnalyticalModel.php:192, app/Modules/User/Controllers/WalletsController.php:1555, app/Modules/User/Controllers/WalletsController.php:1644, app/Modules/User/Controllers/WalletsController.php:2004, app/Modules/User/Controllers/WalletsController.php:2020
+- Code references: app/Models/AnalyticalModel.php:192, app/Modules/User/Controllers/WalletsController.php:1555, app/Modules/User/Controllers/WalletsController.php:1644, app/Modules/User/Controllers/WalletsController.php:2004, app/Modules/User/Controllers/WalletsController.php:2020, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:248, docs/_aiops/doc-change-log.md:1997
 
 ## Create table
 ```sql

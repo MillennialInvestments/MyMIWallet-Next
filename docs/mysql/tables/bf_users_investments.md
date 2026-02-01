@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/User/Views/Investments/Account_Manager.php:130, app/Modules/User/Views/Investments/Account_Manager.php:131, app/Modules/User/Views/Investments/Account_Manager.php:141, app/Modules/User/Views/Investments/Account_Manager.php:143
+- Code references: app/Modules/User/Views/Investments/Account_Manager.php:130, app/Modules/User/Views/Investments/Account_Manager.php:131, app/Modules/User/Views/Investments/Account_Manager.php:141, app/Modules/User/Views/Investments/Account_Manager.php:143, docs/_aiops/doc-change-log.md:1949
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_users_investments` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

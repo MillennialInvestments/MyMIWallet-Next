@@ -3,17 +3,19 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/SecurityModel.php:30, app/Models/SecurityModel.php:40, app/Models/SecurityModel.php:45
+- Code references: app/Models/SecurityModel.php:30, app/Models/SecurityModel.php:40, app/Models/SecurityModel.php:45, docs/_aiops/doc-change-log.md:1730
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_security_log` (
-  `user_id` TEXT NULL
+  `user_id` TEXT NULL,
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
 - user_id TEXT NULL
+- md TEXT NULL
 
 ## Required indexes
 - _No indexes defined_

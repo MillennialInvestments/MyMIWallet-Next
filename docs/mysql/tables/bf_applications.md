@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/AccountsModel.php:10, app/Models/AnalyticalModel.php:7, app/Models/AnnouncementsModel.php:10, app/Models/APIModel.php:10, app/Models/DesignModel.php:10, app/Models/PlaidModel.php:8, app/Models/PublicModel.php:8, app/Models/SubscribeModel.php:8, app/Models/TrackerModel.php:8
+- Code references: app/Models/AccountsModel.php:10, app/Models/AnalyticalModel.php:7, app/Models/AnnouncementsModel.php:10, app/Models/APIModel.php:10, app/Models/DesignModel.php:10, app/Models/PlaidModel.php:8, app/Models/PublicModel.php:8, app/Models/SubscribeModel.php:8, app/Models/TrackerModel.php:8, docs/aiops/migration_model_audit.md:58, docs/aiops/migration_model_audit.md:59, docs/aiops/migration_model_audit.md:67, docs/aiops/migration_model_audit.md:68, docs/aiops/migration_model_audit.md:93, docs/aiops/migration_model_audit.md:152, docs/aiops/migration_model_audit.md:170, docs/aiops/migration_model_audit.md:186, docs/aiops/migration_model_audit.md:189, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1022
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_applications` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

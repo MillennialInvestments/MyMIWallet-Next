@@ -3,17 +3,19 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Libraries/Backups/BackupService.php:59, app/Libraries/Backups/BackupService.php:93, app/Libraries/Backups/BackupService.php:107, app/Modules/Admin/Controllers/BackupsController.php:13
+- Code references: app/Libraries/Backups/BackupService.php:59, app/Libraries/Backups/BackupService.php:93, app/Libraries/Backups/BackupService.php:107, app/Modules/Admin/Controllers/BackupsController.php:13, docs/_aiops/doc-change-log.md:1073
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_backup_manifests` (
-  `created_at` TEXT NULL
+  `created_at` TEXT NULL,
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
 - created_at TEXT NULL
+- md TEXT NULL
 
 ## Required indexes
 - _No indexes defined_

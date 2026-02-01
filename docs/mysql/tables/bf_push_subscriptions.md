@@ -3,17 +3,19 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/PushSubscriptionModel.php:8, app/Modules/Admin/Controllers/PrivacyController.php:54, app/Modules/Admin/Controllers/PrivacyController.php:73
+- Code references: app/Models/PushSubscriptionModel.php:8, app/Modules/Admin/Controllers/PrivacyController.php:54, app/Modules/Admin/Controllers/PrivacyController.php:73, docs/aiops/migration_model_audit.md:171, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1694
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_push_subscriptions` (
-  `user_id` TEXT NULL
+  `user_id` TEXT NULL,
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
 - user_id TEXT NULL
+- md TEXT NULL
 
 ## Required indexes
 - _No indexes defined_

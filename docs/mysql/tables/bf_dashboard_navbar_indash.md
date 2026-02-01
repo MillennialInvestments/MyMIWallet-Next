@@ -3,18 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/DesignModel.php:94, app/Models/DesignModel.php:102, app/Models/DesignModel.php:110, app/Modules/Management/Views/Web_Design/index.php:12, app/Modules/Management/Views/Web_Design/index.php:17
+- Code references: app/Models/DesignModel.php:94, app/Models/DesignModel.php:102, app/Models/DesignModel.php:110, app/Modules/Management/Views/Web_Design/index.php:12, app/Modules/Management/Views/Web_Design/index.php:17, docs/_aiops/doc-change-log.md:1127
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_dashboard_navbar_indash` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `md` TEXT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
 - id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
 - PRIMARY (id)

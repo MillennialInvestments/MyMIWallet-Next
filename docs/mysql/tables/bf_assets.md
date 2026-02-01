@@ -3,19 +3,21 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Services/SearchService.php:44, app/Services/SearchService.php:45, docs/operations/05-database.md:22, docs/operations/05-database.md:22, docs/operations/05-database.md:22, docs/operations/05-database.md:31, docs/OVERVIEW.md:120, docs/functional_inventory/docs_to_code_map.md:8, docs/functional_inventory/docs_to_code_map.md:51, docs/functional_inventory/docs_to_code_map.md:90
+- Code references: app/Services/SearchService.php:44, app/Services/SearchService.php:45, docs/operations/05-database.md:22, docs/operations/05-database.md:22, docs/operations/05-database.md:22, docs/operations/05-database.md:31, docs/OVERVIEW.md:120, docs/functional_inventory/docs_to_code_map.md:8, docs/functional_inventory/docs_to_code_map.md:51, docs/functional_inventory/docs_to_code_map.md:90, docs/_aiops/doc-change-log.md:1028
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_assets` (
   `name` TEXT NULL,
-  `created_at` TEXT NULL
+  `created_at` TEXT NULL,
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
 - name TEXT NULL
 - created_at TEXT NULL
+- md TEXT NULL
 
 ## Required indexes
 - _No indexes defined_

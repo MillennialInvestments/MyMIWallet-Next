@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/CircuitBreakerModel.php:8, app/Modules/Status/Controllers/HealthController.php:43
+- Code references: app/Models/CircuitBreakerModel.php:8, app/Modules/Status/Controllers/HealthController.php:43, docs/aiops/migration_model_audit.md:87, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1091
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_circuit_breakers` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

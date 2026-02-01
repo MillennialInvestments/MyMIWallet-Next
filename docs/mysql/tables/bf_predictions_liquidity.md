@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2025-09-09-000060_CreatePredictionsLiquidity.php
 - Model:
-- Code references: app/Database/Migrations/2025-09-09-000060_CreatePredictionsLiquidity.php:31, app/Database/Migrations/2025-09-09-000060_CreatePredictionsLiquidity.php:36, app/Models/Predictions/LiquidityModel.php:7, docs/predictions/mysql-migrations.md:103, docs/predictions/README.md:47, docs/functional_inventory/docs_to_code_map.md:51, docs/functional_inventory/docs_to_code_map.md:138
+- Code references: app/Database/Migrations/2025-09-09-000060_CreatePredictionsLiquidity.php:31, app/Database/Migrations/2025-09-09-000060_CreatePredictionsLiquidity.php:36, app/Models/Predictions/LiquidityModel.php:7, docs/predictions/mysql-migrations.md:103, docs/predictions/README.md:47, docs/functional_inventory/docs_to_code_map.md:51, docs/functional_inventory/docs_to_code_map.md:138, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:156, docs/aiops/migration_model_audit.md:153, docs/aiops/migration_model_audit.md:243, docs/_aiops/doc-change-log.md:1637
 
 ## Create table
 ```sql

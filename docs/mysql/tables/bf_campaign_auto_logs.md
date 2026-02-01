@@ -3,19 +3,21 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/Management/Controllers/EmailController.php:56, app/Modules/Management/Controllers/EmailController.php:57, app/Modules/Management/Controllers/EmailController.php:58, app/Modules/Management/Controllers/EmailController.php:59
+- Code references: app/Modules/Management/Controllers/EmailController.php:56, app/Modules/Management/Controllers/EmailController.php:57, app/Modules/Management/Controllers/EmailController.php:58, app/Modules/Management/Controllers/EmailController.php:59, docs/_aiops/doc-change-log.md:1076
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_campaign_auto_logs` (
   `campaign_id` TEXT NULL,
-  `created_at` TEXT NULL
+  `created_at` TEXT NULL,
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
 - campaign_id TEXT NULL
 - created_at TEXT NULL
+- md TEXT NULL
 
 ## Required indexes
 - _No indexes defined_

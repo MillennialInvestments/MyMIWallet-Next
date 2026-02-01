@@ -1,0 +1,11 @@
+{
+    "command": "ux:journey-audit",
+    "timestamp": "20260201-184200",
+    "dry_run": false,
+    "emit": "both",
+    "checks": {
+        "public_index": true,
+        "routes_file": true,
+        "views_dir": true
+    }
+}

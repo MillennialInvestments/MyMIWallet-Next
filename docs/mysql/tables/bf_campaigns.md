@@ -3,13 +3,14 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/Management/Controllers/EmailController.php:57, app/Modules/Management/Controllers/EmailController.php:58, app/Modules/Management/Controllers/EmailController.php:58
+- Code references: app/Modules/Management/Controllers/EmailController.php:57, app/Modules/Management/Controllers/EmailController.php:58, app/Modules/Management/Controllers/EmailController.php:58, docs/_aiops/doc-change-log.md:1079
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_campaigns` (
   `name` TEXT NULL,
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `md` TEXT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
@@ -17,6 +18,7 @@ CREATE TABLE IF NOT EXISTS `bf_campaigns` (
 ## Required columns
 - name TEXT NULL
 - id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
 - PRIMARY (id)

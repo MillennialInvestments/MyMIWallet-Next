@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/ScriptStudio/Database/Seeds/ScriptSeeder.php:51, app/Modules/ScriptStudio/Models/ScriptModel.php:8
+- Code references: app/Modules/ScriptStudio/Database/Seeds/ScriptSeeder.php:51, app/Modules/ScriptStudio/Models/ScriptModel.php:8, docs/_aiops/doc-change-log.md:1718
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_script_studio` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

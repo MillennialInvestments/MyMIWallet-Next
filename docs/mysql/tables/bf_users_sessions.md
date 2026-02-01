@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/SecurityModel.php:89, docs/ops/auth/03-database.md:8, docs/ops/auth/03-database.md:19, docs/functional_inventory/docs_to_code_map.md:51, docs/functional_inventory/docs_to_code_map.md:107
+- Code references: app/Models/SecurityModel.php:89, docs/ops/auth/03-database.md:8, docs/ops/auth/03-database.md:19, docs/functional_inventory/docs_to_code_map.md:51, docs/functional_inventory/docs_to_code_map.md:107, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:250, docs/_aiops/doc-change-log.md:2003
 
 ## Create table
 ```sql

@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Libraries/MyMIInvestments.php:1579, app/Libraries/MyMIInvestments.php:1587, app/Libraries/MyMIInvestments.php:1593, app/Libraries/MyMIInvestments.php:1601, app/Libraries/MyMIInvestments.php:1608
+- Code references: app/Libraries/MyMIInvestments.php:1579, app/Libraries/MyMIInvestments.php:1587, app/Libraries/MyMIInvestments.php:1593, app/Libraries/MyMIInvestments.php:1601, app/Libraries/MyMIInvestments.php:1608, docs/_aiops/doc-change-log.md:1385
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_investment_goals` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

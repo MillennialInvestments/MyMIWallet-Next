@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/UserPermissionOverrideModel.php:8, docs/ops/auth/03-database.md:9, docs/ops/auth/03-database.md:23, docs/functional_inventory/docs_to_code_map.md:51, docs/functional_inventory/docs_to_code_map.md:107
+- Code references: app/Models/UserPermissionOverrideModel.php:8, docs/ops/auth/03-database.md:9, docs/ops/auth/03-database.md:23, docs/functional_inventory/docs_to_code_map.md:51, docs/functional_inventory/docs_to_code_map.md:107, docs/aiops/migration_model_audit.md:192, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1835
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_user_permission_overrides` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

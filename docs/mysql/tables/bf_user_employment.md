@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2026-02-01-000100_CreateUserOnboardingTables.php
 - Model:
-- Code references: app/Database/Migrations/2026-02-01-000100_CreateUserOnboardingTables.php:101, app/Database/Migrations/2026-02-01-000100_CreateUserOnboardingTables.php:145, app/Database/Migrations/2026-02-01-000100_CreateUserOnboardingTables.php:151, app/Database/Migrations/2026-02-01-000100_CreateUserOnboardingTables.php:152, app/Modules/User/Controllers/OnboardingWalkthroughController.php:73, app/Modules/User/Controllers/OnboardingWalkthroughController.php:82, app/Services/OnboardingProgressService.php:236, app/Services/OnboardingProgressService.php:240, docs/testing/auth_onboarding_test_plan.md:23
+- Code references: app/Database/Migrations/2026-02-01-000100_CreateUserOnboardingTables.php:101, app/Database/Migrations/2026-02-01-000100_CreateUserOnboardingTables.php:145, app/Database/Migrations/2026-02-01-000100_CreateUserOnboardingTables.php:151, app/Database/Migrations/2026-02-01-000100_CreateUserOnboardingTables.php:152, app/Modules/User/Controllers/OnboardingWalkthroughController.php:73, app/Modules/User/Controllers/OnboardingWalkthroughController.php:82, app/Services/OnboardingProgressService.php:236, app/Services/OnboardingProgressService.php:240, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:204, docs/_aiops/doc-change-log.md:1826, docs/testing/auth_onboarding_test_plan.md:23
 
 ## Create table
 ```sql

@@ -1,8 +1,9 @@
 # bf_aiops_task_runs
 
 ## Source
-- Migration: app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php
-- Model: app/Models/AiOpsTaskRunModel.php
+- Migration: 2026-03-15-000100_CreateAiOpsTaskPipelineTables.php
+- Model:
+- Code references: app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php:47, app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php:48, app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php:64, app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php:125, app/Models/AiOpsTaskRunModel.php:11, app/Commands/Ops/CommandsLint.php:173, docs/codex/reviews/review-2026-01-31.md:132, docs/codex/reviews/review-prompt-2026-01-31.md:131, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:30, docs/aiops/migration_model_audit.md:63, docs/aiops/migration_model_audit.md:220, docs/_aiops/doc-change-log.md:995, docs/_aiops/doc-change-log.md:2057, docs/spark/categories/system/ops-work.md:17, docs/next/Next-Steps.md:13, docs/management/Command_Runtime_Audit.md:79
 
 ## Create table
 ```sql
@@ -13,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `bf_aiops_task_runs` (
   `stdout` LONGTEXT NULL,
   `stderr` LONGTEXT NULL,
   `exit_code` INT NULL,
-  `result_json` JSON NULL,
+  `result_json` LONGTEXT NULL,
   `created_at` DATETIME NULL,
   `updated_at` DATETIME NULL,
   PRIMARY KEY (`id`),
@@ -23,21 +24,22 @@ CREATE TABLE IF NOT EXISTS `bf_aiops_task_runs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
-> If your MySQL version does not support `JSON` (or you are on MariaDB), use `LONGTEXT` for `result_json` and validate payloads with `aiops_normalize_json()`.
-
 ## Required columns
-- task_id BIGINT
-- status VARCHAR(32)
-- stdout LONGTEXT
-- stderr LONGTEXT
-- exit_code INT
-- result_json JSON or LONGTEXT
+- id BIGINT UNSIGNED NOT NULL
+- task_id BIGINT UNSIGNED NOT NULL
+- status VARCHAR(32) NOT NULL
+- stdout LONGTEXT NULL
+- stderr LONGTEXT NULL
+- exit_code INT NULL
+- result_json LONGTEXT NULL
+- created_at DATETIME NULL
+- updated_at DATETIME NULL
 
 ## Required indexes
-- PRIMARY KEY (`id`)
-- KEY `task_id` (`task_id`)
-- KEY `status` (`status`)
-- KEY `created_at` (`created_at`)
+- PRIMARY (id)
+- task_id (task_id)
+- status (status)
+- created_at (created_at)
 
 ## Verification
 ```sql
@@ -57,3 +59,4 @@ FROM information_schema.statistics
 WHERE table_schema = DATABASE() AND table_name = 'bf_aiops_task_runs'
 ORDER BY INDEX_NAME, SEQ_IN_INDEX;
 ```
+

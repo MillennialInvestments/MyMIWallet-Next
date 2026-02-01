@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/SecurityModel.php:161, app/Models/SecurityModel.php:166
+- Code references: app/Models/SecurityModel.php:161, app/Models/SecurityModel.php:166, docs/_aiops/doc-change-log.md:1622
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_password_history` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

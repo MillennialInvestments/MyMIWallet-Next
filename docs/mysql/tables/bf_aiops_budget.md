@@ -3,17 +3,19 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/AIOps/Models/AIOpsBudgetModel.php:9, docs/ops/aiops-schema-endpoints-spec.md:25, docs/ops/aiops-schema-endpoints-spec.md:139, docs/ops/n8n-capabilities-for-mymiwallet.md:57, docs/ops/n8n-capabilities-for-mymiwallet.md:60, docs/ops/n8n-capabilities-for-mymiwallet.md:61
+- Code references: app/Modules/AIOps/Models/AIOpsBudgetModel.php:9, docs/ops/aiops-schema-endpoints-spec.md:25, docs/ops/aiops-schema-endpoints-spec.md:139, docs/ops/n8n-capabilities-for-mymiwallet.md:57, docs/ops/n8n-capabilities-for-mymiwallet.md:60, docs/ops/n8n-capabilities-for-mymiwallet.md:61, docs/_aiops/doc-change-log.md:977
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_aiops_budget` (
-  `used_usd` TEXT NULL
+  `used_usd` TEXT NULL,
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
 - used_usd TEXT NULL
+- md TEXT NULL
 
 ## Required indexes
 - _No indexes defined_

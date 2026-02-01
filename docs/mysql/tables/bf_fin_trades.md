@@ -3,17 +3,19 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/Fin/TradeModel.php:8, app/Modules/Admin/Controllers/PrivacyController.php:53, app/Modules/Admin/Controllers/PrivacyController.php:74
+- Code references: app/Models/Fin/TradeModel.php:8, app/Modules/Admin/Controllers/PrivacyController.php:53, app/Modules/Admin/Controllers/PrivacyController.php:74, docs/aiops/migration_model_audit.md:112, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1304
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_fin_trades` (
-  `user_id` TEXT NULL
+  `user_id` TEXT NULL,
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
 - user_id TEXT NULL
+- md TEXT NULL
 
 ## Required indexes
 - _No indexes defined_

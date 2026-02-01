@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/Management/Views/Web_Design/Forms/quantity_fields.php:2, app/Modules/User/Views/Referral_Program/Apply.php:11, app/Modules/User/Views/Referral_Program/New_Affiliate_Information.php:11
+- Code references: app/Modules/Management/Views/Web_Design/Forms/quantity_fields.php:2, app/Modules/User/Views/Referral_Program/Apply.php:11, app/Modules/User/Views/Referral_Program/New_Affiliate_Information.php:11, docs/_aiops/doc-change-log.md:1697
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_quantities` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

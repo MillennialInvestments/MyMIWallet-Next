@@ -3,19 +3,21 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/WalletModel.php:887, app/Models/WalletModel.php:888
+- Code references: app/Models/WalletModel.php:887, app/Models/WalletModel.php:888, docs/_aiops/doc-change-log.md:2039
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_wallet_providers` (
   `enabled` TEXT NULL,
-  `sort_order` TEXT NULL
+  `sort_order` TEXT NULL,
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
 - enabled TEXT NULL
 - sort_order TEXT NULL
+- md TEXT NULL
 
 ## Required indexes
 - _No indexes defined_

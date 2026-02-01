@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/InvestmentModel.php:1273
+- Code references: app/Models/InvestmentModel.php:1273, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:245, docs/_aiops/doc-change-log.md:1991
 
 ## Create table
 ```sql

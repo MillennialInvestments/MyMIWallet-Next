@@ -228,6 +228,16 @@
         ),
       ),
     ),
+    'Language/en/CLI.php' => 
+    array (
+      'php' => 
+      array (
+        0 => 
+        array (
+          0 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Language/en/CLI.php',
+        ),
+      ),
+    ),
     'Helpers/uri_guard_helper' => 
     array (
       'php' => 
@@ -604,8 +614,79 @@
       158 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/SampleURIGenerator.php',
     ),
   ),
+  'listNamespaceFiles' => 
+  array (
+    'App' => 
+    array (
+      '/Database/Migrations/' => 
+      array (
+        0 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2017-11-20-223112_create_auth_tables.php',
+        1 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2025-01-01-000100_CreateTaxModuleTables.php',
+        2 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2025-09-09-000010_CreatePredictionsMarkets.php',
+        3 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2025-09-09-000020_CreatePredictionsOptions.php',
+        4 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2025-09-09-000030_CreatePredictionsOrders.php',
+        5 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2025-09-09-000040_CreatePredictionsTrades.php',
+        6 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2025-09-09-000050_CreatePredictionsPositions.php',
+        7 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2025-09-09-000060_CreatePredictionsLiquidity.php',
+        8 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2025-09-09-000070_CreatePredictionsSettlementsPayouts.php',
+        9 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2025-09-10-000020_AddReferralFieldsToUsers.php',
+        10 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2025-12-23-000001_CreateCommunityAndTemplateTables.php',
+        11 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-01-01-000001_CreateAiOpsTables.php',
+        12 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-01-15-000100_AddChatAndAiOpsUsageTables.php',
+        13 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-01-15-000100_CreateChatToolRuns.php',
+        14 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php',
+        15 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-01-17-000001_CreateInvestmentSignalsTables.php',
+        16 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-01-21-000110_AddOutputTextToOpsRuns.php',
+        17 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-02-01-000100_CreateUserOnboardingTables.php',
+        18 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-02-15-000200_AddBrokerExecutionFields.php',
+        19 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-02-15-000200_CreateUserSetupPreferences.php',
+        20 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-02-20-000001_AddStatusMetaExcerptColumns.php',
+        21 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-02-25-000001_CreateAuthHealthRuns.php',
+        22 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-03-01-000100_CreateUserEvents.php',
+        23 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-03-05-000100_CreateEmailOutbox.php',
+        24 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-03-10-000100_CreateInvestmentForecastingTables.php',
+        25 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-03-10-000200_CreateInvestmentForecastAccuracyTable.php',
+        26 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-03-12-000100_CreateInvestmentForecastAccuracy.php',
+        27 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php',
+        28 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-04-01-000100_CreateMditPhase1Tables.php',
+        29 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-04-01-000110_CreateMditAuthRoles.php',
+        30 => '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-04-15-000100_CreateChatGovernanceTables.php',
+      ),
+    ),
+  ),
   'getClassname' => 
   array (
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2017-11-20-223112_create_auth_tables.php' => 'App\\Database\\Migrations\\CreateAuthTables',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2025-01-01-000100_CreateTaxModuleTables.php' => 'App\\Database\\Migrations\\CreateTaxModuleTables',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2025-09-09-000010_CreatePredictionsMarkets.php' => 'App\\Database\\Migrations\\CreatePredictionsMarkets',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2025-09-09-000020_CreatePredictionsOptions.php' => 'App\\Database\\Migrations\\CreatePredictionsOptions',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2025-09-09-000030_CreatePredictionsOrders.php' => 'App\\Database\\Migrations\\CreatePredictionsOrders',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2025-09-09-000040_CreatePredictionsTrades.php' => 'App\\Database\\Migrations\\CreatePredictionsTrades',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2025-09-09-000050_CreatePredictionsPositions.php' => 'App\\Database\\Migrations\\CreatePredictionsPositions',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2025-09-09-000060_CreatePredictionsLiquidity.php' => 'App\\Database\\Migrations\\CreatePredictionsLiquidity',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2025-09-09-000070_CreatePredictionsSettlementsPayouts.php' => 'App\\Database\\Migrations\\CreatePredictionsSettlementsPayouts',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2025-09-10-000020_AddReferralFieldsToUsers.php' => 'App\\Database\\Migrations\\AddReferralFieldsToUsers',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2025-12-23-000001_CreateCommunityAndTemplateTables.php' => 'App\\Database\\Migrations\\CreateCommunityAndTemplateTables',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-01-01-000001_CreateAiOpsTables.php' => 'App\\Database\\Migrations\\CreateAiOpsTables',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-01-15-000100_AddChatAndAiOpsUsageTables.php' => 'App\\Database\\Migrations\\AddChatAndAiOpsUsageTables',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-01-15-000100_CreateChatToolRuns.php' => 'App\\Database\\Migrations\\CreateChatToolRuns',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php' => 'App\\Database\\Migrations\\CreateOpsFoundation',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-01-17-000001_CreateInvestmentSignalsTables.php' => 'App\\Database\\Migrations\\CreateInvestmentSignalsTables',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-01-21-000110_AddOutputTextToOpsRuns.php' => 'App\\Database\\Migrations\\AddOutputTextToOpsRuns',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-02-01-000100_CreateUserOnboardingTables.php' => 'App\\Database\\Migrations\\CreateUserOnboardingTables',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-02-15-000200_AddBrokerExecutionFields.php' => 'App\\Database\\Migrations\\AddBrokerExecutionFields',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-02-15-000200_CreateUserSetupPreferences.php' => 'App\\Database\\Migrations\\CreateUserSetupPreferences',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-02-20-000001_AddStatusMetaExcerptColumns.php' => 'App\\Database\\Migrations\\AddStatusMetaExcerptColumns',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-02-25-000001_CreateAuthHealthRuns.php' => 'App\\Database\\Migrations\\CreateAuthHealthRuns',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-03-01-000100_CreateUserEvents.php' => 'App\\Database\\Migrations\\CreateUserEvents',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-03-05-000100_CreateEmailOutbox.php' => 'App\\Database\\Migrations\\CreateEmailOutbox',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-03-10-000100_CreateInvestmentForecastingTables.php' => 'App\\Database\\Migrations\\CreateInvestmentForecastingTables',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-03-10-000200_CreateInvestmentForecastAccuracyTable.php' => 'App\\Database\\Migrations\\CreateInvestmentForecastAccuracyTable',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-03-12-000100_CreateInvestmentForecastAccuracy.php' => 'App\\Database\\Migrations\\CreateInvestmentForecastAccuracy',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php' => 'App\\Database\\Migrations\\CreateAiOpsTaskPipelineTables',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-04-01-000100_CreateMditPhase1Tables.php' => 'App\\Database\\Migrations\\CreateMditPhase1Tables',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-04-01-000110_CreateMditAuthRoles.php' => 'App\\Database\\Migrations\\CreateMditAuthRoles',
+    '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-04-15-000100_CreateChatGovernanceTables.php' => 'App\\Database\\Migrations\\CreateChatGovernanceTables',
     '/home/mymiteam/mymiwallet/site/current/app/Config/Filters.php' => 'Config\\Filters',
     '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Config/Filters.php' => 'CodeIgniter\\Config\\Filters',
   ),

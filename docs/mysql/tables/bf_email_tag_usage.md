@@ -3,21 +3,20 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/DripCampaignModel.php:72, app/Models/DripCampaignModel.php:120
+- Code references: app/Models/DripCampaignModel.php:72, app/Models/DripCampaignModel.php:120, docs/_aiops/doc-change-log.md:1208
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_email_tag_usage` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `md` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
-- PRIMARY (id)
+- _No indexes defined_
 
 ## Verification
 ```sql

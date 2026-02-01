@@ -1,0 +1,11 @@
+{
+    "command": "runtime:cache-boot",
+    "timestamp": "20260201-185706",
+    "dry_run": true,
+    "emit": "both",
+    "cache_dir": "/home/mymiteam/mymiwallet/site/current/writable/cache",
+    "cache_exists": true,
+    "cache_writable": true,
+    "warm_marker_written": false,
+    "actions": []
+}

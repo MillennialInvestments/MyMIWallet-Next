@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2026-03-10-000100_CreateInvestmentForecastingTables.php
 - Model:
-- Code references: app/Database/Migrations/2026-03-10-000100_CreateInvestmentForecastingTables.php:56, app/Database/Migrations/2026-03-10-000100_CreateInvestmentForecastingTables.php:72, app/Database/Migrations/2026-03-10-000100_CreateInvestmentForecastingTables.php:108, app/Database/Migrations/2026-03-10-000100_CreateInvestmentForecastingTables.php:109, app/Services/Forecasting/MyMIForecaster.php:155, app/Services/Forecasting/MyMIForecaster.php:171, app/Services/Forecasting/MyMIForecaster.php:191, app/Services/Forecasting/MyMIForecaster.php:201, app/Services/Forecasting/MyMIForecaster.php:209, docs/forecasting/06_database_schema.md:38, docs/forecasting/07_integration_points.md:29, docs/spark/categories/forecasting/forecasts-refresh.md:13
+- Code references: app/Database/Migrations/2026-03-10-000100_CreateInvestmentForecastingTables.php:56, app/Database/Migrations/2026-03-10-000100_CreateInvestmentForecastingTables.php:72, app/Database/Migrations/2026-03-10-000100_CreateInvestmentForecastingTables.php:108, app/Database/Migrations/2026-03-10-000100_CreateInvestmentForecastingTables.php:109, app/Services/Forecasting/MyMIForecaster.php:155, app/Services/Forecasting/MyMIForecaster.php:171, app/Services/Forecasting/MyMIForecaster.php:191, app/Services/Forecasting/MyMIForecaster.php:201, app/Services/Forecasting/MyMIForecaster.php:209, docs/_aiops/doc-change-log.md:1379, docs/forecasting/06_database_schema.md:38, docs/forecasting/07_integration_points.md:29, docs/spark/categories/forecasting/forecasts-refresh.md:13
 
 ## Create table
 ```sql

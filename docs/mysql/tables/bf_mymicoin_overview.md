@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/MyMICoinModel.php:8, app/Models/InvestmentModel.php:172
+- Code references: app/Models/MyMICoinModel.php:8, app/Models/InvestmentModel.php:172, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:147, docs/aiops/migration_model_audit.md:141, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1586
 
 ## Create table
 ```sql

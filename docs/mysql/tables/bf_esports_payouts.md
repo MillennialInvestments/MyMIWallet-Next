@@ -3,13 +3,14 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/EsportsModel.php:178, app/Models/EsportsModel.php:184, app/Models/EsportsModel.php:193, app/Models/EsportsModel.php:202, app/Models/EsportsModel.php:215, app/Models/EsportsModel.php:225, docs/exports_schema.md:107, docs/functional_inventory/docs_to_code_map.md:50, docs/functional_inventory/docs_to_code_map.md:51
+- Code references: app/Models/EsportsModel.php:178, app/Models/EsportsModel.php:184, app/Models/EsportsModel.php:193, app/Models/EsportsModel.php:202, app/Models/EsportsModel.php:215, app/Models/EsportsModel.php:225, docs/exports_schema.md:107, docs/functional_inventory/docs_to_code_map.md:50, docs/functional_inventory/docs_to_code_map.md:51, docs/_aiops/doc-change-log.md:1238
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_esports_payouts` (
   `event_id` TEXT NULL,
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `md` TEXT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
@@ -17,6 +18,7 @@ CREATE TABLE IF NOT EXISTS `bf_esports_payouts` (
 ## Required columns
 - event_id TEXT NULL
 - id INT(11) UNSIGNED NOT NULL
+- md TEXT NULL
 
 ## Required indexes
 - PRIMARY (id)
