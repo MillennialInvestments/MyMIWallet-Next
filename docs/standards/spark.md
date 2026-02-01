@@ -19,6 +19,14 @@ These standards lock Spark behavior for deterministic, auditable operations on P
 - Emit artifacts for every run (`summary.md` + `report.json`).
 - Use standardized flags and exit codes.
 
+## Ops Update Governance (Mandatory)
+
+- `ops:app:update` is the **only approved** post-deploy update command.
+- `spark optimize` is forbidden outside CI.
+- Composer is forbidden inside ops commands.
+- Dev dependencies must remain present at runtime.
+- `ops:commands:audit` must pass before update orchestration continues.
+
 ## Canonical Spark Command Taxonomy
 
 | Prefix | Meaning |
