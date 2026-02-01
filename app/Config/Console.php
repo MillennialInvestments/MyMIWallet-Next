@@ -26,13 +26,6 @@ class Console extends BaseConfig
 
         /*
         |----------------------------------------------------------------------
-        | Core / App
-        |----------------------------------------------------------------------
-        */
-        \App\Commands\AppUpdate::class,
-
-        /*
-        |----------------------------------------------------------------------
         | Runtime / Recovery
         |----------------------------------------------------------------------
         */
@@ -53,6 +46,7 @@ class Console extends BaseConfig
         | Ops / AIOps
         |----------------------------------------------------------------------
         */
+        \App\Commands\Ops\AppUpdate::class,
         \App\Commands\AiOps\ChatGovernanceIndex::class,
         \App\Commands\AiOps\Run::class,
         \App\Commands\Ops\CommandsAudit::class,
