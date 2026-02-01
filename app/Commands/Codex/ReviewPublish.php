@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Commands;
+namespace App\Commands\Codex;
 
 use App\Libraries\MyMIDiscord;
 use CodeIgniter\CLI\CLI;
 
-class CodexReviewPublish extends SafeBaseCommand
+class ReviewPublish extends SafeBaseCommand
 {
-    protected $group       = 'ops';
+    protected $group       = 'codex';
     protected $name        = 'codex:review:publish';
     protected $description = 'Publish Codex review summaries to Discord or GitHub PR comments.';
     protected $usage       = 'codex:review:publish --latest|--date=YYYY-MM-DD [--discord] [--pr] [--all] [--dry-run]';

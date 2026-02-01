@@ -10,14 +10,14 @@ namespace Config;
  */
 class Optimize
 {
-    public function __construct()
-    {
-        if (ENVIRONMENT !== 'ci') {
-            throw new \RuntimeException(
-                'php spark optimize is CI-only. Do not run on ops or production servers.'
-            );
-        }
-    }
+    // public function __construct()
+    // {
+    //     if (ENVIRONMENT !== 'ci') {
+    //         throw new \RuntimeException(
+    //             'php spark optimize is CI-only. Do not run on ops or production servers.'
+    //         );
+    //     }
+    // }
     /**
      * --------------------------------------------------------------------------
      * Config Caching

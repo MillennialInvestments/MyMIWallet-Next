@@ -38,6 +38,7 @@ class Console extends BaseConfig
         */
         \App\Commands\Runtime\SparkDoctor::class,
         \App\Commands\Runtime\SparkDoctorRuntime::class,
+        \App\Commands\Runtime\SparkOptimize::class,
         \App\Commands\Runtime\Diagnose502::class,
         \App\Commands\Runtime\Triage::class,
         \App\Commands\Runtime\CacheBoot::class,
@@ -66,6 +67,16 @@ class Console extends BaseConfig
         \App\Commands\Ops\ProposePr::class,
         \App\Commands\Ops\SparkReset::class,
         \App\Commands\OpsWork::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Codex / Review
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Codex\Review::class,
+        \App\Commands\Codex\ReviewList::class,
+        \App\Commands\Codex\ReviewCommit::class,
+        \App\Commands\Codex\ReviewPublish::class,
 
         /*
         |----------------------------------------------------------------------

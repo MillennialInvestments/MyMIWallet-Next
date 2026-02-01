@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Commands;
+namespace App\Commands\Codex;
 
 use CodeIgniter\CLI\CLI;
 
-class CodexReviewCommit extends SafeBaseCommand
+class ReviewCommit extends SafeBaseCommand
 {
-    protected $group       = 'ops';
+    protected $group       = 'codex';
     protected $name        = 'codex:review:commit';
     protected $description = 'Commit Codex review artifacts intentionally (latest or by date).';
     protected $usage       = 'codex:review:commit --latest|--date=YYYY-MM-DD [--dry-run] [--approve]';
