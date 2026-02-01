@@ -77,6 +77,7 @@ class Console extends BaseConfig
         | Business / Product Audits
         |----------------------------------------------------------------------
         */
+        \App\Commands\Audit\NodeAudit::class,
         \App\Commands\Marketing\AutomationAudit::class,
         \App\Commands\Growth\RetentionWatch::class,
         \App\Commands\Ux\JourneyAudit::class,
