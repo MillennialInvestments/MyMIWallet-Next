@@ -138,6 +138,13 @@ class DashboardController extends UserController
             $this->data['opsHealth'] = null;
         }
 
+        try {
+            $this->data['emailAuditHealth'] = $this->loadEmailScraperAuditHealth();
+        } catch (\Throwable $e) {
+            log_message('warning', 'DashboardController emailAuditHealth unavailable: {msg}', ['msg' => $e->getMessage()]);
+            $this->data['emailAuditHealth'] = null;
+        }
+
         if ($this->session->get('onboarding_show_modal')) {
             $this->data['onboardingShowModal'] = true;
             $this->session->remove('onboarding_show_modal');
@@ -1581,6 +1588,61 @@ class DashboardController extends UserController
         // Last chance: session
         $sess = session('solana_public_key');
         return is_string($sess) ? $svc->normalizeAddress($sess) : null;
+    }
+
+    private function loadEmailScraperAuditHealth(): array
+    {
+        $dir = WRITEPATH . 'triage';
+        $files = glob($dir . DIRECTORY_SEPARATOR . 'email-scraper-audit-*.json');
+        if (! $files) {
+            return [
+                'status' => 'unknown',
+                'message' => 'No audit reports found.',
+                'summary' => [],
+                'generated_at' => null,
+            ];
+        }
+
+        rsort($files);
+        $latest = $files[0];
+        $payload = json_decode((string) file_get_contents($latest), true);
+        if (! is_array($payload)) {
+            return [
+                'status' => 'unknown',
+                'message' => 'Latest audit report unreadable.',
+                'summary' => [],
+                'generated_at' => null,
+            ];
+        }
+
+        $runAt = $payload['run']['timestamp'] ?? null;
+        $runTimestamp = $runAt ? strtotime((string) $runAt) : null;
+        $isFresh = $runTimestamp !== null && $runTimestamp >= strtotime('-24 hours');
+
+        $summary = $payload['summary'] ?? [];
+        $failures = (int) ($summary['failed'] ?? 0);
+        $fallbacks = (int) ($summary['fallbacks_applied'] ?? 0);
+
+        $status = 'healthy';
+        $message = 'Pipeline Healthy';
+        if (! $isFresh) {
+            $status = 'stale';
+            $message = 'Audit stale';
+        } elseif ($failures > 0) {
+            $status = 'attention';
+            $message = 'Attention Needed';
+        } elseif ($fallbacks > 0) {
+            $status = 'recovered';
+            $message = 'Recovered with defaults';
+        }
+
+        return [
+            'status' => $status,
+            'message' => $message,
+            'summary' => $summary,
+            'generated_at' => $runAt,
+            'report_path' => $latest,
+        ];
     }
 
 }

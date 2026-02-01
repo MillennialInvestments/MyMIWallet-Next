@@ -1,0 +1,77 @@
+{
+  "global": {
+    "max_content_length": 50000,
+    "min_content_length": 40,
+    "sanitize_html": true,
+    "encoding": "utf-8",
+    "default_fallbacks": {
+      "title": "(Untitled Alert)",
+      "summary": "Summary pending review",
+      "source": "email"
+    }
+  },
+  "trade": {
+    "required_fields": [
+      "subject",
+      "body",
+      "received_at"
+    ],
+    "derived_fields": {
+      "symbol": {
+        "required": true,
+        "fallback": "UNKNOWN"
+      },
+      "action": {
+        "required": false,
+        "allowed": ["BUY", "SELL", "OPEN", "CLOSE"]
+      }
+    },
+    "validation_rules": {
+      "body_contains_any": ["BUY", "SELL", "CALL", "PUT"]
+    },
+    "presentation_requirements": {
+      "dashboard_required": [
+        "symbol",
+        "received_at",
+        "category"
+      ]
+    }
+  },
+  "news": {
+    "required_fields": [
+      "subject",
+      "body",
+      "received_at"
+    ],
+    "derived_fields": {
+      "title": {
+        "required": true,
+        "fallback": "Market Update"
+      },
+      "keywords": {
+        "required": false,
+        "min_count": 1
+      }
+    },
+    "validation_rules": {
+      "min_sentence_count": 2
+    },
+    "presentation_requirements": {
+      "dashboard_required": [
+        "title",
+        "summary",
+        "source"
+      ]
+    }
+  },
+  "failure_types": [
+    "CATEGORY_MISSING",
+    "PARSE_FAILED",
+    "SCHEMA_INVALID",
+    "UNSAFE_CONTENT",
+    "DB_INSERT_FAILED",
+    "UI_BREAK_RISK",
+    "DUPLICATE_DETECTED",
+    "FALLBACK_APPLIED"
+  ]
+}
