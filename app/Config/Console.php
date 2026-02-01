@@ -26,13 +26,6 @@ class Console extends BaseConfig
 
         /*
         |----------------------------------------------------------------------
-        | Core / App
-        |----------------------------------------------------------------------
-        */
-        \App\Commands\AppUpdate::class,
-
-        /*
-        |----------------------------------------------------------------------
         | Runtime / Recovery
         |----------------------------------------------------------------------
         */
@@ -52,6 +45,7 @@ class Console extends BaseConfig
         | Ops / AIOps
         |----------------------------------------------------------------------
         */
+        \App\Commands\Ops\AppUpdate::class,
         \App\Commands\Ops\CommandsAudit::class,
         \App\Commands\Ops\CommandsAutofix::class,
         \App\Commands\Ops\AiopsInit::class,

@@ -55,7 +55,7 @@ This map inventories the end-to-end Spark management commands needed to operate 
 | AI Ops | ops:analyze-commands | Analyze ops inbox with AI. | Hourly | Medium | Approved Auto |
 | AI Ops | ops:work | Execute AiOps task queue safely. | Hourly | Medium | Fully Autonomous |
 | AI Ops | aiops:seed | Seed AiOps caps defaults. | On demand | Medium | Manual |
-| Infrastructure | app:update | Apply safe app update actions. | On demand | Medium | Assisted |
+| Infrastructure | ops:app:update | Apply safe app update actions (canonical ops command). | On demand | Medium | Assisted |
 | Runtime (Proposed) | runtime:triage | **Proposed**: Consolidate 502/503 + envdoctor triage into a single report that writes docs/next and a writable/triage snapshot. | On incident | High | Assisted |
 | Runtime (Proposed) | runtime:cache-boot | **Proposed**: Verify cache bootstrap, warm critical caches, validate writable permissions. | On deploy or 503 | Medium | Assisted |
 | Security (Proposed) | security:secrets-audit | **Proposed**: Validate env, config, and docs for leaked secrets or missing rotations. | Weekly | Medium | Assisted |
