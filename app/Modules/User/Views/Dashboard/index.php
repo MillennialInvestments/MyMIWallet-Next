@@ -101,6 +101,16 @@ $opsScore          = $opsHealth['score'] ?? null;
 $opsStatus         = $opsHealth['status'] ?? 'unknown';
 $opsGeneratedAt    = $opsHealth['generated_at'] ?? null;
 $opsFindings       = is_array($opsHealth['top_findings'] ?? null) ? $opsHealth['top_findings'] : [];
+$emailAuditHealth  = is_array($emailAuditHealth ?? null) ? $emailAuditHealth : [];
+$emailAuditSummary = is_array($emailAuditHealth['summary'] ?? null) ? $emailAuditHealth['summary'] : [];
+$emailAuditStatus  = $emailAuditHealth['status'] ?? 'unknown';
+$emailAuditMessage = $emailAuditHealth['message'] ?? 'Audit unavailable';
+$emailAuditGeneratedAt = $emailAuditHealth['generated_at'] ?? null;
+$emailAuditTotal   = (int) ($emailAuditSummary['total_scanned'] ?? 0);
+$emailAuditTrade   = (int) ($emailAuditSummary['trade_count'] ?? 0);
+$emailAuditNews    = (int) ($emailAuditSummary['news_count'] ?? 0);
+$emailAuditFailures = (int) ($emailAuditSummary['failed'] ?? 0);
+$emailAuditFallbacks = (int) ($emailAuditSummary['fallbacks_applied'] ?? 0);
 $squeezeHighRiskCount = (int) ($squeezeHighRiskCount ?? 0);
 $squeezeState = 'success';
 $squeezeStateLabel = 'Calm';
@@ -376,6 +386,51 @@ $showSetupBanner   = ! empty($setupStatus)
                                 <li class="small text-soft">• No warnings detected.</li>
                             <?php endif; ?>
                         </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="card card-bordered card-full h-100" data-email-pipeline-health>
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-2">
+                        <div class="card-title">
+                            <h6 class="subtitle">📨 Email Pipeline Health</h6>
+                        </div>
+                        <div class="card-tools">
+                            <?php
+                            $emailBadge = 'success';
+                            if ($emailAuditStatus === 'attention') {
+                                $emailBadge = 'danger';
+                            } elseif ($emailAuditStatus === 'recovered') {
+                                $emailBadge = 'warning';
+                            } elseif ($emailAuditStatus === 'stale') {
+                                $emailBadge = 'secondary';
+                            }
+                            ?>
+                            <span class="badge bg-<?= esc($emailBadge); ?>"><?= esc($emailAuditMessage); ?></span>
+                        </div>
+                    </div>
+                    <div class="card-amount">
+                        <span class="amount"><?= esc((string) $emailAuditTotal); ?></span>
+                        <span class="change text-soft">Emails scanned (24h)</span>
+                    </div>
+                    <div class="small text-soft mt-2">
+                        Trade: <?= esc((string) $emailAuditTrade); ?> · News: <?= esc((string) $emailAuditNews); ?>
+                    </div>
+                    <div class="mt-2">
+                        <div class="small text-muted">Failures / Fallbacks</div>
+                        <div class="d-flex gap-3 small text-soft">
+                            <span class="<?= $emailAuditFailures > 0 ? 'text-danger' : 'text-success'; ?>">
+                                <?= esc((string) $emailAuditFailures); ?> failures
+                            </span>
+                            <span class="<?= $emailAuditFallbacks > 0 ? 'text-warning' : 'text-success'; ?>">
+                                <?= esc((string) $emailAuditFallbacks); ?> fallbacks
+                            </span>
+                        </div>
+                    </div>
+                    <div class="small text-soft mt-2">
+                        Last run: <?= esc(miw_relative_time($emailAuditGeneratedAt)); ?>
                     </div>
                 </div>
             </div>
