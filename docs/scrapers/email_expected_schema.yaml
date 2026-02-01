@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "scrapers": {
+    "trade": {
+      "required_fields": [
+        "email_subject",
+        "email_body",
+        "email_date",
+        "summary",
+        "email_sender",
+        "status"
+      ],
+      "optional_fields": [
+        "category",
+        "tag",
+        "class",
+        "segment",
+        "symbols",
+        "source",
+        "account_type",
+        "email_identifier",
+        "source_email"
+      ],
+      "category_rules": {
+        "table": "bf_investment_scraper",
+        "type_contains": ["Trade"],
+        "email_type": ["trade", "trade_alert"]
+      },
+      "minimum_content_length": 40,
+      "required_metadata": [
+        "email_identifier",
+        "symbols",
+        "source_email",
+        "email_date"
+      ],
+      "safety_rules": {
+        "html_stripped": true,
+        "max_body_length": 60000,
+        "disallow_tags": ["script", "iframe", "style"]
+      },
+      "presentation_requirements": [
+        "summary",
+        "email_subject",
+        "email_date",
+        "status"
+      ]
+    },
+    "news": {
+      "required_fields": [
+        "title",
+        "content",
+        "email_date",
+        "email_subject",
+        "email_sender",
+        "status"
+      ],
+      "optional_fields": [
+        "summary",
+        "keywords",
+        "url",
+        "email_identifier",
+        "scraped_at",
+        "source"
+      ],
+      "category_rules": {
+        "table": "bf_marketing_temp_scraper",
+        "type_contains": ["Email", "Newsletter", "News"],
+        "source": ["email", "newsletter"]
+      },
+      "minimum_content_length": 120,
+      "required_metadata": [
+        "email_identifier",
+        "source",
+        "scraped_at"
+      ],
+      "safety_rules": {
+        "html_stripped": true,
+        "max_body_length": 60000,
+        "disallow_tags": ["script", "iframe", "style"]
+      },
+      "presentation_requirements": [
+        "title",
+        "summary",
+        "created_on",
+        "status"
+      ]
+    }
+  },
+  "failure_types": [
+    "CATEGORY_MISSING",
+    "PARSE_FAILED",
+    "SCHEMA_INVALID",
+    "UNSAFE_CONTENT",
+    "DB_INSERT_FAILED",
+    "UI_BREAK_RISK",
+    "DUPLICATE_DETECTED"
+  ]
+}
