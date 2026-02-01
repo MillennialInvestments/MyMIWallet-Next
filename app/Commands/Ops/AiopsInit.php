@@ -17,19 +17,23 @@ class AiopsInit extends SafeBaseCommand
 
     public function run(array $params)
     {
-        $options = $this->request->getOptions();
+        [, $flags] = $this->parseParams($params);
 
-        $approve = !empty($options['approve']);
-        $dryRun  = !empty($options['dry-run']);
+        $approve = !empty($flags['approve']);
+        $dryRun  = !empty($flags['dry-run']);
 
 
         // 1) Hard validations
-        $this->assertFileExists('.github/workflows/aiops-pr-factory.yml', 'PR factory workflow missing');
+        $this->assertFileExists(ROOTPATH . '.github/workflows/aiops-pr-factory.yml', 'PR factory workflow missing');
         $this->assertEnvSecret('AIOPS_GH_APP_ID');
         $this->assertEnvSecret('AIOPS_GH_APP_PRIVATE_KEY');
 
         // 2) Create a tiny bootstrap patch (docs only)
-        $doc = 'docs/aiops/README.md';
+        $doc = ROOTPATH . 'docs/aiops/README.md';
+        $docDir = dirname($doc);
+        if (! is_dir($docDir)) {
+            mkdir($docDir, 0775, true);
+        }
         if (!file_exists($doc)) {
             if (!$dryRun) {
                 file_put_contents($doc, "# AIOps\n\n");
@@ -41,9 +45,13 @@ class AiopsInit extends SafeBaseCommand
             file_put_contents($doc, $marker, FILE_APPEND);
         }
 
-        $patchPath = sys_get_temp_dir() . '/aiops-init.patch';
+        $patchDir = ROOTPATH . 'docs/aiops/artifacts/aiops-init';
+        if (! is_dir($patchDir)) {
+            mkdir($patchDir, 0775, true);
+        }
+        $patchPath = $patchDir . '/aiops-init.patch';
         if (!$dryRun) {
-            exec("git diff > {$patchPath}");
+            exec('git diff > ' . escapeshellarg($patchPath));
         }
 
         // 3) Delegate to the real PR proposer

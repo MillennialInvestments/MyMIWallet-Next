@@ -82,7 +82,7 @@ class ApiAudit extends SafeBaseCommand
         CLI::newLine();
         CLI::table($rows, ['id', 'method', 'route', 'status', 'code', 'ms', 'failure']);
 
-        $triageDir = WRITEPATH . 'triage';
+        $triageDir = ROOTPATH . 'docs/aiops/api-audit';
         if (! is_dir($triageDir)) {
             mkdir($triageDir, 0755, true);
         }
