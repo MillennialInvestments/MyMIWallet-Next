@@ -47,6 +47,7 @@ class CommandsAutofix extends SafeBaseCommand
             CLI::write('Dry-run mode enabled. Use --approve to apply fixes.', 'yellow');
         }
 
+        $artifactDir = ROOTPATH . 'docs/aiops/commands-autofix/' . date('Ymd-His');
         foreach ($violations as $entry) {
             $relative = $this->relativePath($entry['file']);
             CLI::write("Fixing {$entry['class']} ({$relative})");
@@ -55,7 +56,7 @@ class CommandsAutofix extends SafeBaseCommand
                 continue;
             }
 
-            $this->applyFix($entry['file'], $entry['class']);
+            $this->applyFix($entry['file'], $entry['class'], $artifactDir);
         }
 
         if ($dryRun) {
@@ -71,7 +72,7 @@ class CommandsAutofix extends SafeBaseCommand
         return true;
     }
 
-    private function applyFix(string $path, string $className): void
+    private function applyFix(string $path, string $className, string $artifactDir): void
     {
         $code = file_get_contents($path);
         if ($code === false) {
@@ -79,7 +80,14 @@ class CommandsAutofix extends SafeBaseCommand
             return;
         }
 
-        $backup = $path . '.bak';
+        $relative = $this->relativePath($path);
+        $artifactRoot = rtrim($artifactDir, '/');
+        $targetDir = $artifactRoot . '/' . ltrim(dirname($relative), '/');
+        if (! is_dir($targetDir)) {
+            mkdir($targetDir, 0775, true);
+        }
+
+        $backup = $targetDir . '/' . basename($path) . '.bak';
         if (! file_exists($backup)) {
             file_put_contents($backup, $code);
         }
@@ -93,8 +101,9 @@ class CommandsAutofix extends SafeBaseCommand
             return;
         }
 
-        file_put_contents($path, $updated);
-        CLI::write("Updated {$className} (backup at {$backup}).", 'green');
+        $fixedPath = $targetDir . '/' . basename($path);
+        file_put_contents($fixedPath, $updated);
+        CLI::write("Wrote fixed copy for {$className} (backup at {$backup}).", 'green');
     }
 
     private function removeConstructor(string $code): string

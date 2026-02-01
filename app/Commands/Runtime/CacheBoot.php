@@ -41,7 +41,7 @@ class CacheBoot extends SafeBaseCommand
             $writeRaw = true;
         }
 
-        $cacheDir = WRITEPATH . 'cache';
+        $cacheDir = ROOTPATH . 'docs/aiops/runtime/cache-boot/cache';
         $actions = [];
 
         $cacheExists = is_dir($cacheDir);
