@@ -44,3 +44,38 @@ jobs:
       - name: Spark Doctor
         run: |
           php spark spark:doctor
+
+  aiops-guardrails:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: PHP Setup
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+
+      - name: Install
+        run: composer install --no-interaction --no-progress
+
+      - name: Spark Writable Bootstrap
+        run: |
+          mkdir -p writable/cache/FactoriesCache writable/logs
+          chmod -R 777 writable
+
+      - name: Copilot Validation
+        run: |
+          php spark aiops:copilot:validate --json > copilot-validation.json
+
+      - name: Spark Doctor
+        run: |
+          php spark spark:doctor --json > doctor.json
+
+      - name: Upload AIOps Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: aiops-artifacts
+          path: |
+            copilot-validation.json
+            doctor.json
