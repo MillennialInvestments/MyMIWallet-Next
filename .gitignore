@@ -16,6 +16,15 @@
 writable/triage/server-snapshots/env-copy.txt
 /public/uploads/
 /node_modules/
+**/node_modules/
+**/__pycache__/
+*.pyc
+*.node
+*.o
+*.a
+*.so
+*.dll
+*.dylib
 /**/*.orig.php
 *.orig.php
 *.copy.php
