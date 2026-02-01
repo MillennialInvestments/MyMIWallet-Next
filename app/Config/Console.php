@@ -52,10 +52,11 @@ class Console extends BaseConfig
         | Ops / AIOps
         |----------------------------------------------------------------------
         */
+        \App\Commands\AiOps\ChatGovernanceIndex::class,
+        \App\Commands\AiOps\Run::class,
         \App\Commands\Ops\CommandsAudit::class,
         \App\Commands\Ops\CommandsAutofix::class,
         \App\Commands\Ops\AiopsInit::class,
-        \App\Commands\AiOps\ChatGovernanceIndex::class,
         \App\Commands\Ops\CommandsInventory::class,
         \App\Commands\Ops\CommandsLint::class,
         \App\Commands\Ops\FilesystemLint::class,
