@@ -9,6 +9,10 @@ jobs:
   health:
     runs-on: ubuntu-latest
 
+    env:
+      ENVIRONMENT: ci
+      CI: true
+
     steps:
       - uses: actions/checkout@v4
 
@@ -16,13 +20,14 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.2
+          coverage: none
 
-      - name: Install
-        run: composer install --no-interaction --no-progress
+      - name: Install Dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
 
       - name: Spark Writable Bootstrap
         run: |
-          mkdir -p writable/cache/FactoriesCache writable/logs
+          mkdir -p writable/cache/FactoriesCache writable/logs writable/session
           chmod -R 777 writable
 
       - name: Spark Diagnostics
@@ -31,5 +36,28 @@ jobs:
           php spark spark:diagnose-503
           php spark logs:full-report today
 
+      - name: Filesystem Safety Lint (PR Gate)
+        run: php spark ops:filesystem:lint
+
+      - name: CI-Safe Optimize
+        run: php spark optimize:safe
+
       - name: 502 Diagnose Smoke Test
         run: php spark runtime:diagnose-502 --self-test
+      - name: Commands Lint (PR Gate)
+        run: php spark ops:commands:lint
+      - name: AIops Init (Dry Run)
+        run: php spark ops:aiops:init --dry-run
+      - name: AIops Init (Approve)
+        run: php spark ops:aiops:init --approve
+      - name: Email Scraper Audit
+        run: php spark scraper:email-scraper-audit
+      - name: Codex Review List
+        run: php spark codex:review:list
+      - name: Codex Review Commit
+        run: php spark codex:review:commit
+      - name: Codex Review Publish
+        run: php spark codex:review:publish
+      - name: CI Health Check Complete
+        run: echo "CI Health Check Completed Successfully"  
+        

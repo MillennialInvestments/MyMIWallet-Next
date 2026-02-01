@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Commands\Runtime;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class SparkOptimize extends BaseCommand
+class SparkOptimize extends SafeBaseCommand
 {
     protected $group       = 'runtime';
     protected $name        = 'optimize:safe';
@@ -16,31 +16,39 @@ class SparkOptimize extends BaseCommand
 
     public function run(array $params)
     {
-        // 🔒 HARD GUARD — but ONLY at execution time
-        if (ENVIRONMENT !== 'ci') {
-            CLI::error('spark optimize is CI-only. Aborting.');
+        if (! $this->isCiRuntime()) {
+            CLI::error('optimize:safe is CI-only.');
             return EXIT_ERROR;
         }
 
         CLI::write('Running CI-safe optimization...', 'yellow');
 
-        // Clear caches first (safe)
-        $this->exec('php spark cache:clear');
+        // Clear caches first
+        $this->runCommand('php spark cache:clear');
 
-        // Run framework optimize
-        $this->exec('php spark optimize');
+        // Run optimize ONCE
+        $exitCode = $this->runCommand('php spark optimize');
+
+        if ($exitCode !== 0) {
+            CLI::error('Optimization failed.');
+            return EXIT_ERROR;
+        }
 
         CLI::write('Optimization complete.', 'green');
-
         return EXIT_SUCCESS;
     }
 
-    /**
-     * Execute a shell command safely and stream output.
-     */
-    protected function exec(string $command): void
+    private function isCiRuntime(): bool
+    {
+        return getenv('CI') === 'true'
+            || getenv('GITHUB_ACTIONS') === 'true'
+            || (defined('ENVIRONMENT') && ENVIRONMENT === 'ci');
+    }
+
+    protected function runCommand(string $command): int
     {
         CLI::write("→ {$command}", 'dark_gray');
-        passthru($command);
+        passthru($command, $code);
+        return (int) $code;
     }
 }
