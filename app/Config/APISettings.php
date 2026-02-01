@@ -1,5 +1,5 @@
 <?php
-namespace App\Config;
+namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
 
@@ -410,6 +410,5 @@ class APISettings extends BaseConfig
 
 
 }
-
 
 

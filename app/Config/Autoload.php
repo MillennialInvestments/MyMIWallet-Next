@@ -86,7 +86,9 @@ class Autoload extends AutoloadConfig
      *
      * @var list<string>
      */
-    public $files = [];
+    public $files = [
+        APPPATH . 'Support/legacy_psr4_shims.php',
+    ];
 
     /**
      * -------------------------------------------------------------------

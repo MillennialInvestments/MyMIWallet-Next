@@ -10,7 +10,7 @@ class DbApplyDocsService
     {
         $dbGroup = (string) ($options['db-group'] ?? 'default');
 
-        $outputDir = WRITEPATH . 'db_inventory';
+        $outputDir = WRITEPATH . 'aiops/artifacts/db-apply-docs';
         if (! is_dir($outputDir)) {
             mkdir($outputDir, 0775, true);
         }
@@ -81,7 +81,9 @@ class DbApplyDocsService
         $port = (int) ($groupConfig['port'] ?? $groupConfig->port ?? 3306);
 
         $mysqli = new \mysqli();
-        $mysqli->options(MYSQLI_OPT_PROTOCOL, MYSQLI_PROTOCOL_TCP);
+        if (defined('MYSQLI_OPT_PROTOCOL') && defined('MYSQLI_PROTOCOL_TCP')) {
+            $mysqli->options(MYSQLI_OPT_PROTOCOL, MYSQLI_PROTOCOL_TCP);
+        }
         $mysqli->real_connect($hostname, $username, $password, $database, $port);
 
         if ($mysqli->connect_errno) {

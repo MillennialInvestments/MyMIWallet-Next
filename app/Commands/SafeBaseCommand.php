@@ -118,8 +118,29 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
 
     protected function option(string $key, $default = false)
     {
+        if ($this->request === null) {
+            return $default;
+        }
+
         $options = $this->request->getOptions();
         return $options[$key] ?? $default;
+    }
+
+    protected function runSparkCommand(string $command): int
+    {
+        if (function_exists('service')) {
+            $runner = service('commands');
+            if (is_object($runner) && method_exists($runner, 'run')) {
+                return (int) $runner->run($command);
+            }
+        }
+
+        if (function_exists('command')) {
+            return (int) command($command);
+        }
+
+        CLI::error('Spark command runner unavailable for: ' . $command);
+        return EXIT_ERROR;
     }
 
 }
