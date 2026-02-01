@@ -74,6 +74,11 @@ class ProposePr extends SafeBaseCommand
             'allowlist'       => $allowlist,
         ];
 
+        $guardrails = $this->validatePatchGuardrails($patch);
+        if (!$guardrails['ok']) {
+            return $this->failWith(11, 'Guardrail violation: ' . $guardrails['error']);
+        }
+
         $validation = $this->validatePatchAllowlist($patch, $allowlist);
         if (!$validation['ok']) {
             return $this->failWith(10, 'Guardrail violation: ' . $validation['error']);
@@ -176,18 +181,7 @@ class ProposePr extends SafeBaseCommand
             return ['ok' => false, 'error' => 'Patch is empty or unreadable', 'paths' => []];
         }
 
-        $paths = [];
-        foreach (preg_split('/\R/', $content) as $line) {
-            // Unified diff markers: +++ b/path or --- a/path
-            if (strpos($line, '+++ b/') === 0) {
-                $path = trim(substr($line, 6));
-                if ($path !== '/dev/null') {
-                    $paths[] = $path;
-                }
-            }
-        }
-
-        $paths = array_values(array_unique($paths));
+        $paths = $this->extractPatchPaths($content);
 
         if (empty($paths)) {
             return ['ok' => false, 'error' => 'No file paths detected in patch (missing +++ b/ lines)', 'paths' => []];
@@ -215,6 +209,58 @@ class ProposePr extends SafeBaseCommand
         }
 
         return ['ok' => true, 'error' => '', 'paths' => $paths];
+    }
+
+    private function validatePatchGuardrails(string $patchFile): array
+    {
+        $content = file_get_contents($patchFile);
+        if ($content === false || trim($content) === '') {
+            return ['ok' => false, 'error' => 'Patch is empty or unreadable', 'paths' => []];
+        }
+
+        if (preg_match('/^GIT binary patch/m', $content) === 1) {
+            return ['ok' => false, 'error' => 'Patch contains binary data (GIT binary patch).', 'paths' => []];
+        }
+
+        $paths = $this->extractPatchPaths($content);
+        if (empty($paths)) {
+            return ['ok' => false, 'error' => 'No file paths detected in patch (missing +++ b/ lines)', 'paths' => []];
+        }
+
+        $maxFiles = 250;
+        if (count($paths) > $maxFiles) {
+            return ['ok' => false, 'error' => "Patch touches too many files (" . count($paths) . " > {$maxFiles}).", 'paths' => $paths];
+        }
+
+        foreach ($paths as $path) {
+            if (preg_match('#(^|/)node_modules(/|$)#', $path) === 1) {
+                return ['ok' => false, 'error' => "Patch includes node_modules path: {$path}", 'paths' => $paths];
+            }
+            if (preg_match('/\\.(node|o|a|so|dll|dylib)$/i', $path) === 1) {
+                return ['ok' => false, 'error' => "Patch includes native build artifact: {$path}", 'paths' => $paths];
+            }
+            if (preg_match('#(^|/)__pycache__(/|$)#', $path) === 1 || preg_match('/\\.pyc$/i', $path) === 1) {
+                return ['ok' => false, 'error' => "Patch includes Python cache artifact: {$path}", 'paths' => $paths];
+            }
+        }
+
+        return ['ok' => true, 'error' => '', 'paths' => $paths];
+    }
+
+    private function extractPatchPaths(string $content): array
+    {
+        $paths = [];
+        foreach (preg_split('/\R/', $content) as $line) {
+            // Unified diff markers: +++ b/path or --- a/path
+            if (strpos($line, '+++ b/') === 0) {
+                $path = trim(substr($line, 6));
+                if ($path !== '/dev/null') {
+                    $paths[] = $path;
+                }
+            }
+        }
+
+        return array_values(array_unique($paths));
     }
 
     private function renderPrMd(string $title, string $body, array $manifest, array $paths): string
