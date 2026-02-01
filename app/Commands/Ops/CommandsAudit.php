@@ -3,6 +3,7 @@
 namespace App\Commands\Ops;
 
 use App\Commands\SafeBaseCommand;
+use App\Commands\Ops\Support\CommandRulesScanner;
 use CodeIgniter\CLI\CLI;
 
 class CommandsAudit extends SafeBaseCommand
@@ -15,34 +16,24 @@ class CommandsAudit extends SafeBaseCommand
     public function run(array $params)
     {
         $this->parseParams($params);
-        $scanner = new CommandConstructorScanner();
-        $entries = $scanner->scan(ROOTPATH . 'app/Commands');
+        $scanner = new CommandRulesScanner();
+        $violations = $scanner->scan(ROOTPATH . 'app/Commands');
 
-        if ($entries === []) {
-            CLI::write('No Spark command classes found.', 'yellow');
+        if ($violations === []) {
+            CLI::write('✅ All Spark command rules passed.', 'green');
             return EXIT_SUCCESS;
         }
 
         $rows = [];
-        $hasIllegal = false;
-
-        foreach ($entries as $entry) {
-            $file = $this->relativePath($entry['file']);
-            $status = $entry['illegal'] ? '❌ ILLEGAL CONSTRUCTOR' : 'OK';
-
-            if ($entry['illegal']) {
-                $file .= ':' . $entry['constructorLine'];
-                $hasIllegal = true;
-            }
-
+        foreach ($violations as $entry) {
             $rows[] = [
                 $entry['class'],
-                $file,
-                $status,
+                $this->relativePath($entry['file']),
+                implode(', ', $entry['violations']),
             ];
         }
 
-        $this->renderTable(['Command', 'File', 'Status'], $rows);
+        $this->renderTable(['Command', 'File', 'Violations'], $rows);
 
         if (! $hasIllegal) {
             CLI::write('All Spark commands are constructor-safe.', 'green');

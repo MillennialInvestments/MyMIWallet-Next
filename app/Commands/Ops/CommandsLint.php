@@ -3,6 +3,7 @@
 namespace App\Commands\Ops;
 
 use App\Commands\SafeBaseCommand;
+use App\Commands\Ops\Support\CommandRulesScanner;
 use CodeIgniter\CLI\CLI;
 
 class CommandsLint extends SafeBaseCommand
@@ -19,7 +20,7 @@ class CommandsLint extends SafeBaseCommand
     {
         [, $flags] = $this->parseParams($params);
 
-        $scanner = new CommandConstructorScanner();
+        $scanner = new CommandRulesScanner();
         $entries = $scanner->scan(ROOTPATH . 'app/Commands');
 
         $docCommands = $this->loadDocumentedCommands();

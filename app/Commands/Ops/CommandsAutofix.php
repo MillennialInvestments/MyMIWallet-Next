@@ -3,6 +3,7 @@
 namespace App\Commands\Ops;
 
 use App\Commands\SafeBaseCommand;
+use App\Commands\Ops\Support\CommandRulesScanner;
 use CodeIgniter\CLI\CLI;
 
 class CommandsAutofix extends SafeBaseCommand
@@ -27,7 +28,7 @@ class CommandsAutofix extends SafeBaseCommand
             $dryRun = true;
         }
 
-        $scanner = new CommandConstructorScanner();
+        $scanner = new CommandRulesScanner();
         $entries = $scanner->scan(ROOTPATH . 'app/Commands');
 
         $violations = array_values(array_filter(

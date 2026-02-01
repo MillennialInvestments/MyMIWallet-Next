@@ -115,4 +115,11 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
     {
         return false;
     }
+
+    protected function option(string $key, $default = false)
+    {
+        $options = $this->request->getOptions();
+        return $options[$key] ?? $default;
+    }
+
 }

@@ -17,8 +17,11 @@ class AiopsInit extends SafeBaseCommand
 
     public function run(array $params)
     {
-        $approve = (bool) ($this->getOption('approve') ?? false);
-        $dryRun  = (bool) ($this->getOption('dry-run') ?? false);
+        $options = $this->request->getOptions();
+
+        $approve = !empty($options['approve']);
+        $dryRun  = !empty($options['dry-run']);
+
 
         // 1) Hard validations
         $this->assertFileExists('.github/workflows/aiops-pr-factory.yml', 'PR factory workflow missing');
