@@ -1,88 +1,66 @@
 {
-  "version": 1,
-  "scrapers": {
-    "trade": {
-      "required_fields": [
-        "email_subject",
-        "email_body",
-        "email_date",
-        "summary",
-        "email_sender",
-        "status"
-      ],
-      "optional_fields": [
-        "category",
-        "tag",
-        "class",
-        "segment",
-        "symbols",
-        "source",
-        "account_type",
-        "email_identifier",
-        "source_email"
-      ],
-      "category_rules": {
-        "table": "bf_investment_scraper",
-        "type_contains": ["Trade"],
-        "email_type": ["trade", "trade_alert"]
+  "global": {
+    "max_content_length": 50000,
+    "min_content_length": 40,
+    "sanitize_html": true,
+    "encoding": "utf-8",
+    "default_fallbacks": {
+      "title": "(Untitled Alert)",
+      "summary": "Summary pending review",
+      "source": "email"
+    }
+  },
+  "trade": {
+    "required_fields": [
+      "subject",
+      "body",
+      "received_at"
+    ],
+    "derived_fields": {
+      "symbol": {
+        "required": true,
+        "fallback": "UNKNOWN"
       },
-      "minimum_content_length": 40,
-      "required_metadata": [
-        "email_identifier",
-        "symbols",
-        "source_email",
-        "email_date"
-      ],
-      "safety_rules": {
-        "html_stripped": true,
-        "max_body_length": 60000,
-        "disallow_tags": ["script", "iframe", "style"]
-      },
-      "presentation_requirements": [
-        "summary",
-        "email_subject",
-        "email_date",
-        "status"
-      ]
+      "action": {
+        "required": false,
+        "allowed": ["BUY", "SELL", "OPEN", "CLOSE"]
+      }
     },
-    "news": {
-      "required_fields": [
+    "validation_rules": {
+      "body_contains_any": ["BUY", "SELL", "CALL", "PUT"]
+    },
+    "presentation_requirements": {
+      "dashboard_required": [
+        "symbol",
+        "received_at",
+        "category"
+      ]
+    }
+  },
+  "news": {
+    "required_fields": [
+      "subject",
+      "body",
+      "received_at"
+    ],
+    "derived_fields": {
+      "title": {
+        "required": true,
+        "fallback": "Market Update"
+      },
+      "keywords": {
+        "required": false,
+        "min_count": 1
+      }
+    },
+    "validation_rules": {
+      "min_sentence_count": 2
+    },
+    "presentation_requirements": {
+      "dashboard_required": [
         "title",
-        "content",
-        "email_date",
-        "email_subject",
-        "email_sender",
-        "status"
-      ],
-      "optional_fields": [
         "summary",
-        "keywords",
-        "url",
-        "email_identifier",
-        "scraped_at",
         "source"
-      ],
-      "category_rules": {
-        "table": "bf_marketing_temp_scraper",
-        "type_contains": ["Email", "Newsletter", "News"],
-        "source": ["email", "newsletter"]
-      },
-      "minimum_content_length": 120,
-      "required_metadata": [
-        "email_identifier",
-        "source",
-        "scraped_at"
-      ],
-      "safety_rules": {
-        "html_stripped": true,
-        "max_body_length": 60000,
-        "disallow_tags": ["script", "iframe", "style"]
-      },
-      "presentation_requirements": [
-        "title",
-        "summary",
-        "created_on",
-        "status"
       ]
     }
   },
@@ -93,6 +71,7 @@
     "UNSAFE_CONTENT",
     "DB_INSERT_FAILED",
     "UI_BREAK_RISK",
-    "DUPLICATE_DETECTED"
+    "DUPLICATE_DETECTED",
+    "FALLBACK_APPLIED"
   ]
 }

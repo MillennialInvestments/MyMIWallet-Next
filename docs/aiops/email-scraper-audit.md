@@ -32,12 +32,11 @@ php spark scraper:audit-emails --limit=50
 
 ## Expected Schema
 The schema file defines per-category requirements and guardrails:
-- Required vs optional fields
-- Category rules (table + type hints)
-- Minimum content length
-- Required metadata (symbols, identifiers)
-- Safety rules for HTML sanitization
+- Required fields and derived fields (symbol/title/keywords)
+- Global safety constraints (length caps, encoding, HTML sanitization)
+- Validation rules (trade keyword checks, news sentence count)
 - Presentation requirements expected by UI dashboards
+- Default fallbacks applied to prevent blank cards in dashboards
 
 See `docs/scrapers/email_expected_schema.yaml` for the canonical configuration.
 
@@ -50,11 +49,13 @@ The audit classifies failures using these types:
 - `DB_INSERT_FAILED` — missing downstream insert into final tables.
 - `UI_BREAK_RISK` — required UI fields are missing.
 - `DUPLICATE_DETECTED` — identifier collision detected.
+- `FALLBACK_APPLIED` — defaults filled missing fields (non-fatal, still reported).
 
 ## Why This Protects the Platform
 - **Trade alerts**: ensures symbols, category, and identifiers are intact so alerts can enrich and distribute correctly.
 - **News feeds**: validates summaries, keywords, and titles to avoid blank rows and broken modals.
 - **Dashboards**: confirms presentation-safe fields are populated before UI rendering.
+- **Fallbacks**: auto-fills missing labels/titles so dashboards stay resilient while still logging gaps.
 
 ## Reporting
 Each failed record includes:
@@ -64,6 +65,13 @@ Each failed record includes:
 - `recommended_fix`
 
 The report also includes a generated `fix_plan` created by `ScraperOpsService` to guide safe patches.
+
+## Dashboard Visibility
+The Executive Dashboard includes an **Email Pipeline Health** block that reads the latest audit report from `writable/triage/` and summarizes:
+- Emails scanned (last 24h run)
+- Trade vs news counts
+- Failures (red) and fallbacks applied (yellow)
+- Status indicator: ✅ Pipeline Healthy, ⚠️ Recovered with defaults, or ❌ Attention Needed
 
 ## Future Integration
 This audit is designed to integrate with:

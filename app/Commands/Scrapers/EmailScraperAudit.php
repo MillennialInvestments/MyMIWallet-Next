@@ -26,6 +26,7 @@ class EmailScraperAudit extends SafeBaseCommand
     private const NEWS_FINAL_TABLE = 'bf_marketing_scraper';
 
     private const STATUS_VISIBLE = ['processed', 'approved', 'published', 'live'];
+    private const FALLBACK_FAILURE = 'FALLBACK_APPLIED';
 
     public function run(array $params)
     {
@@ -70,6 +71,7 @@ class EmailScraperAudit extends SafeBaseCommand
                 'news_count' => 0,
                 'passed' => 0,
                 'failed' => 0,
+                'fallbacks_applied' => 0,
             ];
 
             $failureBreakdown = [];
@@ -83,7 +85,7 @@ class EmailScraperAudit extends SafeBaseCommand
                     $summary['news_count']++;
                 }
 
-                $schemaSpec = $schema['scrapers'][$category] ?? [];
+                $schemaSpec = $schema[$category] ?? [];
                 $context = [
                     'schema' => $schema,
                     'final_trade_map' => $finalTradeMap,
@@ -94,7 +96,7 @@ class EmailScraperAudit extends SafeBaseCommand
                 $audit = $this->auditRecord($record, $category, $schemaSpec, $context);
                 $reportRecords[] = $audit;
 
-                if ($audit['status'] === 'passed') {
+                if ($audit['status'] === 'passed' || $audit['status'] === 'passed_with_fallbacks') {
                     $summary['passed']++;
                 } else {
                     $summary['failed']++;
@@ -102,6 +104,11 @@ class EmailScraperAudit extends SafeBaseCommand
                         $type = $failure['failure_type'] ?? 'UNKNOWN';
                         $failureBreakdown[$type] = ($failureBreakdown[$type] ?? 0) + 1;
                     }
+                }
+
+                if (! empty($audit['fallbacks_applied'])) {
+                    $summary['fallbacks_applied'] = ($summary['fallbacks_applied'] ?? 0) + 1;
+                    $failureBreakdown[self::FALLBACK_FAILURE] = ($failureBreakdown[self::FALLBACK_FAILURE] ?? 0) + 1;
                 }
             }
 
@@ -128,6 +135,7 @@ class EmailScraperAudit extends SafeBaseCommand
             CLI::write(sprintf('News emails: %d', $summary['news_count']));
             CLI::write(sprintf('Passed: %d', $summary['passed']));
             CLI::write(sprintf('Failed: %d', $summary['failed']));
+            CLI::write(sprintf('Fallbacks applied: %d', (int) ($summary['fallbacks_applied'] ?? 0)));
             CLI::newLine();
 
             CLI::write('Failure breakdown:', 'yellow');
@@ -286,10 +294,17 @@ class EmailScraperAudit extends SafeBaseCommand
         $table = $record['__audit_table'] ?? 'unknown';
         $identifier = $this->buildIdentifier($record);
         $failures = [];
+        $fallbacksApplied = [];
+        $schemaGlobal = $context['schema']['global'] ?? [];
 
         if (empty($schemaSpec)) {
             $failures[] = $this->buildFailure('SCHEMA_INVALID', 'Schema definition missing for category.', $table);
         }
+
+        $record = $this->normalizeRecord($record);
+        $record = $this->applyFallbacks($record, $schemaGlobal, $schemaSpec);
+        $fallbacksApplied = $record['_fallbacks_applied'] ?? [];
+        $record = $this->applyDerivedFields($record, $schemaSpec);
 
         $categoryRules = $schemaSpec['category_rules'] ?? [];
         if (! empty($categoryRules)) {
@@ -321,7 +336,7 @@ class EmailScraperAudit extends SafeBaseCommand
 
         $missingFields = [];
         foreach ($schemaSpec['required_fields'] ?? [] as $field) {
-            if (! $this->hasValue($record, $field)) {
+            if ($this->resolveRequiredFieldValue($record, $field) === null) {
                 $missingFields[] = $field;
             }
         }
@@ -330,9 +345,13 @@ class EmailScraperAudit extends SafeBaseCommand
         }
 
         $content = $this->resolveContent($record);
-        $minLength = (int) ($schemaSpec['minimum_content_length'] ?? 0);
+        $minLength = (int) ($schemaSpec['minimum_content_length'] ?? ($schemaGlobal['min_content_length'] ?? 0));
+        $maxLength = (int) ($schemaSpec['maximum_content_length'] ?? ($schemaGlobal['max_content_length'] ?? 0));
         if ($minLength > 0 && mb_strlen($content) < $minLength) {
             $failures[] = $this->buildFailure('SCHEMA_INVALID', 'Content below minimum length.', $table);
+        }
+        if ($maxLength > 0 && mb_strlen($content) > $maxLength) {
+            $failures[] = $this->buildFailure('SCHEMA_INVALID', 'Content exceeds maximum length.', $table);
         }
 
         $metadataIssues = [];
@@ -346,16 +365,30 @@ class EmailScraperAudit extends SafeBaseCommand
             $failures[] = $this->buildFailure($failureType, 'Missing metadata: ' . implode(', ', $metadataIssues), $table);
         }
 
-        if ($content !== '' && $this->isUnsafeContent($content, $schemaSpec['safety_rules']['disallow_tags'] ?? [])) {
+        $sanitizeHtml = $schemaSpec['sanitize_html'] ?? ($schemaGlobal['sanitize_html'] ?? false);
+        if ($sanitizeHtml && $content !== '' && $this->isUnsafeContent($content, $schemaSpec['safety_rules']['disallow_tags'] ?? [])) {
             $failures[] = $this->buildFailure('UNSAFE_CONTENT', 'Unsafe HTML or script content detected.', $table);
+        }
+
+        $validationFailure = $this->applyValidationRules($record, $schemaSpec);
+        if ($validationFailure !== null) {
+            $failures[] = $validationFailure;
+        }
+
+        $derivedFailure = $this->validateDerivedFields($record, $schemaSpec);
+        if ($derivedFailure !== null) {
+            $failures[] = $derivedFailure;
         }
 
         $status = strtolower(trim((string) ($record['status'] ?? '')));
         $requiresPresentation = $status === '' || in_array($status, self::STATUS_VISIBLE, true);
         if ($requiresPresentation) {
             $presentationMissing = [];
-            foreach ($schemaSpec['presentation_requirements'] ?? [] as $field) {
-                if (! $this->hasValue($record, $field)) {
+            $presentationRequirements = $schemaSpec['presentation_requirements']['dashboard_required']
+                ?? $schemaSpec['presentation_requirements']
+                ?? [];
+            foreach ($presentationRequirements as $field) {
+                if (! $this->hasValue($record, $field) && $this->resolveRequiredFieldValue($record, $field) === null) {
                     $presentationMissing[] = $field;
                 }
             }
@@ -376,16 +409,28 @@ class EmailScraperAudit extends SafeBaseCommand
             $failures[] = $dbInsertFailure;
         }
 
-        $presentationPayload = $this->buildPresentationPayload($record, $schemaSpec['presentation_requirements'] ?? []);
+        $presentationPayload = $this->buildPresentationPayload(
+            $record,
+            $schemaSpec['presentation_requirements']['dashboard_required'] ?? $schemaSpec['presentation_requirements'] ?? []
+        );
+
+        $status = $failures === [] ? 'passed' : 'failed';
+        if (! empty($fallbacksApplied)) {
+            $failures[] = $this->buildFailure(self::FALLBACK_FAILURE, 'Applied default fallbacks: ' . implode(', ', $fallbacksApplied), $table);
+            if ($status === 'passed') {
+                $status = 'passed_with_fallbacks';
+            }
+        }
 
         return [
             'id' => $record['id'] ?? null,
             'table' => $table,
             'category' => $category,
             'identifier' => $identifier,
-            'status' => $failures === [] ? 'passed' : 'failed',
+            'status' => $status,
             'failures' => $failures,
             'presentation_payload' => $presentationPayload,
+            'fallbacks_applied' => $fallbacksApplied,
         ];
     }
 
@@ -482,7 +527,7 @@ class EmailScraperAudit extends SafeBaseCommand
 
     private function resolveContent(array $record): string
     {
-        foreach (['content', 'email_body', 'summary'] as $field) {
+        foreach (['body', 'content', 'email_body', 'summary'] as $field) {
             $value = (string) ($record[$field] ?? '');
             if ($value !== '') {
                 return $value;
@@ -508,6 +553,222 @@ class EmailScraperAudit extends SafeBaseCommand
         }
 
         return $value !== null && $value !== '';
+    }
+
+    private function normalizeRecord(array $record): array
+    {
+        $subject = $this->resolveRequiredFieldValue($record, 'subject');
+        if ($subject !== null && empty($record['subject'])) {
+            $record['subject'] = $subject;
+        }
+
+        $body = $this->resolveRequiredFieldValue($record, 'body');
+        if ($body !== null && empty($record['body'])) {
+            $record['body'] = $body;
+        }
+
+        $receivedAt = $this->resolveRequiredFieldValue($record, 'received_at');
+        if ($receivedAt !== null && empty($record['received_at'])) {
+            $record['received_at'] = $receivedAt;
+        }
+
+        return $record;
+    }
+
+    private function resolveRequiredFieldValue(array $record, string $field): ?string
+    {
+        $aliases = [
+            'subject' => ['subject', 'email_subject', 'title'],
+            'body' => ['body', 'email_body', 'content', 'summary'],
+            'received_at' => ['received_at', 'email_date', 'created_on', 'created_at', 'scraped_at', 'modified_on', 'modified_at'],
+            'title' => ['title', 'email_subject'],
+            'summary' => ['summary', 'content'],
+            'source' => ['source', 'email_sender', 'source_email'],
+            'category' => ['category', 'type'],
+        ];
+
+        $candidates = $aliases[$field] ?? [$field];
+        foreach ($candidates as $candidate) {
+            if (array_key_exists($candidate, $record)) {
+                $value = $record[$candidate];
+                if (is_string($value) && trim($value) === '') {
+                    continue;
+                }
+                if ($value !== null && $value !== '') {
+                    return is_string($value) ? trim($value) : (string) $value;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private function applyFallbacks(array $record, array $schemaGlobal, array $schemaSpec): array
+    {
+        $record['_fallbacks_applied'] = $record['_fallbacks_applied'] ?? [];
+        $fallbacks = array_merge(
+            $schemaGlobal['default_fallbacks'] ?? [],
+            $schemaSpec['default_fallbacks'] ?? []
+        );
+
+        foreach ($fallbacks as $key => $fallback) {
+            if (! isset($record[$key]) || trim((string) $record[$key]) === '') {
+                $record[$key] = $fallback;
+                $record['_fallbacks_applied'][] = $key;
+            }
+        }
+
+        return $record;
+    }
+
+    private function applyDerivedFields(array $record, array $schemaSpec): array
+    {
+        $derived = $schemaSpec['derived_fields'] ?? [];
+
+        if (isset($derived['symbol'])) {
+            $symbol = trim((string) ($record['symbol'] ?? ''));
+            if ($symbol === '') {
+                $symbolsRaw = (string) ($record['symbols'] ?? '');
+                $symbolList = array_filter(array_map('trim', explode(',', $symbolsRaw)));
+                if (! empty($symbolList)) {
+                    $symbol = strtoupper($symbolList[0]);
+                }
+            }
+
+            if ($symbol === '' && isset($derived['symbol']['fallback'])) {
+                $symbol = (string) $derived['symbol']['fallback'];
+                $record['_fallbacks_applied'][] = 'symbol';
+            }
+
+            if ($symbol !== '') {
+                $record['symbol'] = $symbol;
+            }
+        }
+
+        if (isset($derived['action'])) {
+            $action = strtoupper(trim((string) ($record['action'] ?? '')));
+            if ($action === '') {
+                $content = strtoupper($this->resolveContent($record));
+                foreach ($derived['action']['allowed'] ?? [] as $allowed) {
+                    if ($allowed !== '' && str_contains($content, $allowed)) {
+                        $action = $allowed;
+                        break;
+                    }
+                }
+            }
+            if ($action !== '') {
+                $record['action'] = $action;
+            }
+        }
+
+        if (isset($derived['title'])) {
+            $title = trim((string) ($record['title'] ?? ''));
+            if ($title === '') {
+                $subject = $this->resolveRequiredFieldValue($record, 'subject');
+                if ($subject !== null) {
+                    $title = $subject;
+                }
+            }
+            if ($title === '' && isset($derived['title']['fallback'])) {
+                $title = (string) $derived['title']['fallback'];
+                $record['_fallbacks_applied'][] = 'title';
+            }
+            if ($title !== '') {
+                $record['title'] = $title;
+            }
+        }
+
+        if (isset($derived['keywords'])) {
+            $keywords = $record['keywords'] ?? null;
+            if (is_string($keywords)) {
+                $record['keywords_list'] = $this->parseKeywords($keywords);
+            } elseif (is_array($keywords)) {
+                $record['keywords_list'] = $keywords;
+            }
+        }
+
+        return $record;
+    }
+
+    private function validateDerivedFields(array $record, array $schemaSpec): ?array
+    {
+        $derived = $schemaSpec['derived_fields'] ?? [];
+
+        if (isset($derived['symbol']) && ($derived['symbol']['required'] ?? false)) {
+            if (! $this->hasValue($record, 'symbol')) {
+                return $this->buildFailure('SCHEMA_INVALID', 'Derived symbol missing after fallback.', $record['__audit_table'] ?? 'unknown');
+            }
+        }
+
+        if (isset($derived['title']) && ($derived['title']['required'] ?? false)) {
+            if (! $this->hasValue($record, 'title')) {
+                return $this->buildFailure('SCHEMA_INVALID', 'Derived title missing after fallback.', $record['__audit_table'] ?? 'unknown');
+            }
+        }
+
+        if (isset($derived['keywords'])) {
+            $minCount = (int) ($derived['keywords']['min_count'] ?? 0);
+            if ($minCount > 0) {
+                $keywords = $record['keywords_list'] ?? [];
+                if (count($keywords) < $minCount) {
+                    return $this->buildFailure('PARSE_FAILED', 'Insufficient keywords derived for news record.', $record['__audit_table'] ?? 'unknown');
+                }
+            }
+        }
+
+        if (isset($derived['action']['allowed']) && $this->hasValue($record, 'action')) {
+            $allowed = array_map('strtoupper', $derived['action']['allowed']);
+            $action = strtoupper((string) ($record['action'] ?? ''));
+            if ($action !== '' && ! in_array($action, $allowed, true)) {
+                return $this->buildFailure('SCHEMA_INVALID', 'Derived action not in allowed list.', $record['__audit_table'] ?? 'unknown');
+            }
+        }
+
+        return null;
+    }
+
+    private function applyValidationRules(array $record, array $schemaSpec): ?array
+    {
+        $rules = $schemaSpec['validation_rules'] ?? [];
+        if (isset($rules['body_contains_any'])) {
+            $content = strtoupper($this->resolveContent($record));
+            $matches = false;
+            foreach ($rules['body_contains_any'] as $needle) {
+                if ($needle !== '' && str_contains($content, strtoupper($needle))) {
+                    $matches = true;
+                    break;
+                }
+            }
+            if (! $matches) {
+                return $this->buildFailure('PARSE_FAILED', 'Body does not include required trade keywords.', $record['__audit_table'] ?? 'unknown');
+            }
+        }
+
+        if (isset($rules['min_sentence_count'])) {
+            $content = $this->resolveContent($record);
+            $sentences = preg_split('/[.!?]+/', $content, -1, PREG_SPLIT_NO_EMPTY);
+            $count = is_array($sentences) ? count($sentences) : 0;
+            if ($count < (int) $rules['min_sentence_count']) {
+                return $this->buildFailure('SCHEMA_INVALID', 'News content lacks minimum sentence count.', $record['__audit_table'] ?? 'unknown');
+            }
+        }
+
+        return null;
+    }
+
+    private function parseKeywords(string $keywordsRaw): array
+    {
+        $trimmed = trim($keywordsRaw);
+        if ($trimmed === '') {
+            return [];
+        }
+
+        $decoded = json_decode($trimmed, true);
+        if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+            return array_values(array_filter(array_map('trim', $decoded)));
+        }
+
+        return array_values(array_filter(array_map('trim', explode(',', $trimmed))));
     }
 
     private function containsAny(string $value, array $needles): bool
@@ -587,6 +848,7 @@ class EmailScraperAudit extends SafeBaseCommand
             'DB_INSERT_FAILED' => 'Inspect downstream inserts into final tables and log DB errors.',
             'UI_BREAK_RISK' => 'Add defaults for missing UI fields before rendering.',
             'DUPLICATE_DETECTED' => 'Strengthen dedupe keys and enforce idempotent inserts.',
+            self::FALLBACK_FAILURE => 'Review fallback fields and backfill source data to avoid defaults.',
             default => 'Review audit output and adjust scraper pipeline.',
         };
     }

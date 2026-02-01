@@ -60,6 +60,10 @@ class ScraperOpsService
                 'Strengthen email_identifier/message_hash de-duplication in temp tables.',
                 'Add unique constraints or idempotency keys for scraper inserts.',
             ],
+            'FALLBACK_APPLIED' => [
+                'Backfill missing fields upstream to avoid default placeholders.',
+                'Add guardrails to ensure derived fields are populated during ingest.',
+            ],
             default => [
                 'Review audit output for root cause and add targeted guardrails.',
             ],
