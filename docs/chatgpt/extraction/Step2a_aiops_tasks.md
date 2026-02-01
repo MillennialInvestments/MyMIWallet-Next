@@ -1,88 +1,100 @@
- * Step 1a — Chat Archive Creation
+<?php
+/**
+ * Step 2a — AIOps Verification & Planning
  *
- * This document defines the standard process for archiving a completed
- * ChatGPT conversation into the repository.
+ * This document defines the standard AIOps process that runs
+ * AFTER a chat has been archived using Step 1a.
  *
- * This step is documentation-only and must occur BEFORE any AIOps
- * or Codex follow-up work.
- *
- * ---------------------------------------------------------------------
- * Trigger Phrase (User Input)
- * ---------------------------------------------------------------------
- *
- * ARCHIVE THIS CHAT
+ * Step 2a is strictly verification and planning only.
+ * NO execution, NO workers, and NO automation may occur in this step.
  *
  * ---------------------------------------------------------------------
- * Archive Instructions (Standard)
+ * Trigger Condition
  * ---------------------------------------------------------------------
  *
- * When the trigger phrase is received, create a markdown archive
- * for the completed conversation using the rules below.
+ * Step 2a is triggered AFTER:
+ * - A chat archive markdown file has been created
+ * - The archive represents a completed discussion
+ *
+ * Step 2a MUST NOT run unless Step 1a has completed.
  *
  * ---------------------------------------------------------------------
- * Storage Rules
+ * AIOps Follow-Up Task (Input Contract)
  * ---------------------------------------------------------------------
  *
- * Base directory:
- *   /docs/chatgpt/chats/
+ * AIOPS FOLLOW-UP TASK
  *
- * Subdirectory:
- *   - Use the ChatGPT Project name (slugged)
- *   - If no project applies, use:
- *     /docs/chatgpt/chats/default/
+ * Based on the archived chat you just created:
+ *
+ * 1. Verify that all required files exist and are referenced correctly
+ * 2. Verify Spark commands are discoverable and executable
+ * 3. Identify any missing:
+ *    - guards
+ *    - validation
+ *    - logging
+ *    - config flags
+ * 4. Identify any database tables that:
+ *    - must exist
+ *    - are assumed but not verified
+ *    - require schema hardening
+ *
+ * Produce:
+ * - A checklist of verification steps
+ * - A list of recommended automated or semi-automated fixes
+ * - NO code changes
+ *
+ * This output will be used as an AIOps execution plan.
  *
  * ---------------------------------------------------------------------
- * Filename Rules (FILE TITLE ONLY)
+ * Allowed Actions (Step 2a)
  * ---------------------------------------------------------------------
  *
- * Format:
- *   YYYY-MM-DD--Title_With_Underscores.md
- *
- * Rules:
- *   - Preserve Title Case
- *   - Replace spaces with _
- *   - Replace & with and
- *   - Do NOT include "Chat_Summary" in the filename
- *   - These rules apply ONLY to the filename,
- *     not to the markdown content inside the file
+ * - File existence verification
+ * - Path and namespace validation
+ * - Spark command discovery checks
+ * - Configuration and feature-flag inspection
+ * - Database table and schema inspection (read-only)
+ * - Identification of risks, gaps, or missing safeguards
+ * - Identification of potential automation opportunities
  *
  * ---------------------------------------------------------------------
- * Required Archive Content
+ * Forbidden Actions (Step 2a)
  * ---------------------------------------------------------------------
  *
- * The archive MUST include:
+ * - Creating workers
+ * - Creating CRON jobs
+ * - Writing or modifying code
+ * - Running database migrations
+ * - Writing to the database
+ * - Executing background processes
+ * - Enabling automation of any kind
  *
- * - What the chat was about
- * - Scope (in-scope vs out-of-scope)
- * - Key decisions made
- * - Work completed
- *   - Files created or modified
- *   - Functionality added or changed
- * - Database impact
- *   - Tables required, verified, or assumed
- *   - Whether migrations are needed
- * - Commands or automation involved
- *   - Spark commands
- *   - CRON jobs
- *   - AIOps references
- * - Validation status
- * - Open items and next steps
- * - Follow-up automation intent (AIOps / Codex)
+ * ---------------------------------------------------------------------
+ * Required Output
+ * ---------------------------------------------------------------------
+ *
+ * Step 2a MUST produce:
+ *
+ * - A verification checklist
+ * - A prioritized list of recommendations
+ * - Clear status indicating:
+ *   - SAFE TO PROCEED
+ *   - or BLOCKED (with reasons)
  *
  * ---------------------------------------------------------------------
  * Enforcement Rules
  * ---------------------------------------------------------------------
  *
+ * - Planning only
  * - Documentation only
- * - NO code changes
+ * - NO execution
  * - NO workers
  * - NO automation
- * - NO infrastructure changes
  *
  * ---------------------------------------------------------------------
  * Outcome
  * ---------------------------------------------------------------------
  *
- * This step produces the authoritative historical record
- * that all future AIOps and Codex actions must reference.
+ * Step 2a produces the authoritative AIOps planning artifact
+ * that governs whether Step 2b (execution) may be requested.
  */
