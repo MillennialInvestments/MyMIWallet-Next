@@ -84,6 +84,7 @@ class Console extends BaseConfig
         \App\Commands\Growth\RetentionWatch::class,
         \App\Commands\Ux\JourneyAudit::class,
         \App\Commands\Revenue\CostForecast::class,
+        \App\Commands\Scraper\EmailScraperAudit::class,
 
         /*
         |----------------------------------------------------------------------

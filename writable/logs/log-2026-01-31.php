@@ -353,3 +353,84 @@ in SYSTEMPATH/Config/BaseConfig.php on line 82.
  4 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
  5 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
  6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-01-31 21:00:03 --> TypeError: Cannot assign null to property Config\App::$enableKint of type bool
+[Method: GET, Route: API/Management/Run-CRON-Tasks]
+in SYSTEMPATH/Config/BaseConfig.php on line 82.
+ 1 ROOTPATH/writable/cache/FactoriesCache_config(55): CodeIgniter\Config\BaseConfig::__set_state([...])
+ 2 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include('/home/mymiteam/mymiwallet/site/current/writable/cache/FactoriesCache_config')
+ 3 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 4 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 5 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-01-31 21:15:03 --> TypeError: Cannot assign null to property Config\App::$enableKint of type bool
+[Method: GET, Route: API/Alerts/fetchEmailAlerts]
+in SYSTEMPATH/Config/BaseConfig.php on line 82.
+ 1 ROOTPATH/writable/cache/FactoriesCache_config(55): CodeIgniter\Config\BaseConfig::__set_state([...])
+ 2 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include('/home/mymiteam/mymiwallet/site/current/writable/cache/FactoriesCache_config')
+ 3 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 4 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 5 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-01-31 22:00:03 --> TypeError: Cannot assign null to property Config\App::$enableKint of type bool
+[Method: GET, Route: API/Management/Run-CRON-Tasks]
+in SYSTEMPATH/Config/BaseConfig.php on line 82.
+ 1 ROOTPATH/writable/cache/FactoriesCache_config(55): CodeIgniter\Config\BaseConfig::__set_state([...])
+ 2 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include('/home/mymiteam/mymiwallet/site/current/writable/cache/FactoriesCache_config')
+ 3 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 4 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 5 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-01-31 22:15:02 --> TypeError: Cannot assign null to property Config\App::$enableKint of type bool
+[Method: GET, Route: API/Alerts/fetchEmailAlerts]
+in SYSTEMPATH/Config/BaseConfig.php on line 82.
+ 1 ROOTPATH/writable/cache/FactoriesCache_config(55): CodeIgniter\Config\BaseConfig::__set_state([...])
+ 2 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include('/home/mymiteam/mymiwallet/site/current/writable/cache/FactoriesCache_config')
+ 3 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 4 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 5 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-01-31 23:00:02 --> TypeError: Cannot assign null to property Config\App::$enableKint of type bool
+[Method: GET, Route: API/Management/Run-CRON-Tasks]
+in SYSTEMPATH/Config/BaseConfig.php on line 82.
+ 1 ROOTPATH/writable/cache/FactoriesCache_config(55): CodeIgniter\Config\BaseConfig::__set_state([...])
+ 2 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include('/home/mymiteam/mymiwallet/site/current/writable/cache/FactoriesCache_config')
+ 3 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 4 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 5 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-01-31 23:04:48 --> TypeError: Cannot assign null to property Config\App::$enableKint of type bool
+[Method: GET, Route: Privacy-Policy]
+in SYSTEMPATH/Config/BaseConfig.php on line 82.
+ 1 ROOTPATH/writable/cache/FactoriesCache_config(55): CodeIgniter\Config\BaseConfig::__set_state([...])
+ 2 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include('/home/mymiteam/mymiwallet/site/current/writable/cache/FactoriesCache_config')
+ 3 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 4 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 5 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-01-31 23:15:02 --> TypeError: Cannot assign null to property Config\App::$enableKint of type bool
+[Method: GET, Route: API/Alerts/fetchEmailAlerts]
+in SYSTEMPATH/Config/BaseConfig.php on line 82.
+ 1 ROOTPATH/writable/cache/FactoriesCache_config(55): CodeIgniter\Config\BaseConfig::__set_state([...])
+ 2 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include('/home/mymiteam/mymiwallet/site/current/writable/cache/FactoriesCache_config')
+ 3 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 4 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 5 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-01-31 23:33:25 --> TypeError: Cannot assign null to property Config\App::$enableKint of type bool
+[Method: GET, Route: Budget/Financial-Advisors]
+in SYSTEMPATH/Config/BaseConfig.php on line 82.
+ 1 ROOTPATH/writable/cache/FactoriesCache_config(55): CodeIgniter\Config\BaseConfig::__set_state([...])
+ 2 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include('/home/mymiteam/mymiwallet/site/current/writable/cache/FactoriesCache_config')
+ 3 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 4 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 5 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-01-31 23:45:26 --> TypeError: Cannot assign null to property Config\App::$enableKint of type bool
+[Method: GET, Route: Terms-Of-Service]
+in SYSTEMPATH/Config/BaseConfig.php on line 82.
+ 1 ROOTPATH/writable/cache/FactoriesCache_config(55): CodeIgniter\Config\BaseConfig::__set_state([...])
+ 2 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include('/home/mymiteam/mymiwallet/site/current/writable/cache/FactoriesCache_config')
+ 3 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 4 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 5 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
