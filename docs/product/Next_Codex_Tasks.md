@@ -73,3 +73,25 @@
 - Add automation that retries broker email ingestion or modifies cron schedules (requires Ops approval + evidence from ingestion reports).【F:docs/alerts/thinkorswim_broker_ingestion.md†L1-L63】
 - Introduce Projects onboarding workflows or UI changes (requires Product + Compliance approval; gather UX walkthrough drafts first).【F:docs/marketing/07-myprojects-real-estate.md†L1-L83】
 
+
+## 🤖 AIOps Enablement Follow-Ups
+
+### Remaining Gaps
+- Wire `aiops:command-index` output into dashboards or scheduled jobs to keep the CSV/JSON index fresh.
+- Expand copilot validation to cover any additional governance rules once defined in `.github/copilot-instructions.md`.
+- Add alert routing for Slack or SMS once notification configs are defined.
+
+### Commands Not Yet Automated
+- `ops:commands:autofix` (requires manual approval and output review).
+- `ops:filesystem:lint` (run in CI but no auto-fix path yet).
+- `audit:psr4` (informational today, could be promoted into Spark Doctor if desired).
+
+### Safe vs Unsafe Candidates
+- **Safe/Read-only:** `aiops:copilot:validate`, `spark:doctor`, `aiops:command-index`, `audit:psr4`.
+- **Requires approval:** `spark:fix`, `ops:commands:autofix`, `ops:aiops:init`.
+- **Potentially destructive:** any command that mutates filesystem, cache, or DB without dry-run support.
+
+### Suggested Next Spark Commands
+- `aiops:command-drift` — compare current command index to previous snapshots.
+- `aiops:command-alerts` — send notifications when new destructive commands appear.
+- `aiops:cache:snapshot` — capture cache/storage health in a single report.
