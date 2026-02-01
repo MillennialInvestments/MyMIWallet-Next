@@ -220,24 +220,36 @@ class Fix503 extends SafeBaseCommand
 
     private function initializeLog(): void
     {
-        $directory = WRITEPATH . 'triage/503';
-        if (! is_dir($directory)) {
-            mkdir($directory, 0775, true);
+        $logDir = ROOTPATH . 'docs/aiops/fix-503/logs';
+        $summaryDir = ROOTPATH . 'docs/aiops/fix-503/reports';
+
+        if (! is_dir($logDir)) {
+            mkdir($logDir, 0775, true);
+        }
+
+        if (! is_dir($summaryDir)) {
+            mkdir($summaryDir, 0775, true);
         }
 
         $this->reportTimestamp = date('Y-m-d-His');
-        $this->logPath = sprintf('%s/503-%s.log', rtrim($directory, '/'), $this->reportTimestamp);
-        $this->summaryPath = sprintf('%s/503-%s.summary.md', rtrim($directory, '/'), $this->reportTimestamp);
+        $this->logPath = sprintf('%s/503-%s.log', rtrim($logDir, '/'), $this->reportTimestamp);
+        $this->summaryPath = sprintf('%s/503-%s.summary.md', rtrim($summaryDir, '/'), $this->reportTimestamp);
         $this->guardPathForSecrets($this->logPath);
         $this->guardPathForSecrets($this->summaryPath);
-        file_put_contents($this->logPath, '');
+        $rootedLogPath = str_starts_with($this->logPath, ROOTPATH)
+            ? $this->logPath
+            : ROOTPATH . ltrim($this->logPath, '/');
+        file_put_contents($rootedLogPath, '');
     }
 
     private function logStep(string $step, string $status, string $detail): void
     {
         $detail = TriageSanitizer::sanitizeText($detail);
         $line = sprintf('[%s] [%s] [%s] %s', date('H:i:s'), $step, $status, $detail);
-        file_put_contents($this->logPath, $line . PHP_EOL, FILE_APPEND);
+        $rootedLogPath = str_starts_with($this->logPath, ROOTPATH)
+            ? $this->logPath
+            : ROOTPATH . ltrim($this->logPath, '/');
+        file_put_contents($rootedLogPath, $line . PHP_EOL, FILE_APPEND);
     }
 
     private function logOutput(string $step, array $lines): void
@@ -369,7 +381,7 @@ class Fix503 extends SafeBaseCommand
         ));
 
         if ($mismatch && $detectedSock) {
-            $snippetPath = WRITEPATH . 'triage/503/nginx-fastcgi-fix-' . date('Y-m-d-His') . '.conf';
+            $snippetPath = ROOTPATH . 'docs/aiops/fix-503/snippets/nginx-fastcgi-fix-' . date('Y-m-d-His') . '.conf';
             $this->writeNginxFastCgiFixSnippet($snippetPath, $detectedSock);
             $this->logStep('NGINX-FIX-GEN', 'OK', 'Wrote suggested config: ' . $snippetPath);
         }
@@ -396,11 +408,15 @@ class Fix503 extends SafeBaseCommand
 
     CONF;
 
-        $this->guardPathForSecrets($path);
-        if (! is_dir(dirname($path))) {
-            mkdir(dirname($path), 0775, true);
+        $rootedPath = str_starts_with($path, ROOTPATH)
+            ? $path
+            : ROOTPATH . ltrim($path, '/');
+        $this->guardPathForSecrets($rootedPath);
+        $rootedDir = dirname($rootedPath);
+        if (! is_dir($rootedDir)) {
+            mkdir($rootedDir, 0775, true);
         }
-        file_put_contents($path, $content);
+        file_put_contents($rootedPath, $content);
     }
 
     private function runHostingModeDetection(CommandRunner $runner): array
@@ -530,7 +546,7 @@ class Fix503 extends SafeBaseCommand
             }
         }
 
-        $snapshotPath = WRITEPATH . 'triage/503/env-summary-' . $this->reportTimestamp . '.txt';
+        $snapshotPath = ROOTPATH . 'docs/aiops/fix-503/env-snapshots/env-summary-' . $this->reportTimestamp . '.txt';
         $this->guardPathForSecrets($snapshotPath);
 
         $output = [];
@@ -538,7 +554,14 @@ class Fix503 extends SafeBaseCommand
             $output[] = $key . '=' . $value;
         }
 
-        file_put_contents($snapshotPath, implode(PHP_EOL, $output) . PHP_EOL);
+        $rootedSnapshotPath = str_starts_with($snapshotPath, ROOTPATH)
+            ? $snapshotPath
+            : ROOTPATH . ltrim($snapshotPath, '/');
+        $rootedSnapshotDir = dirname($rootedSnapshotPath);
+        if (! is_dir($rootedSnapshotDir)) {
+            mkdir($rootedSnapshotDir, 0775, true);
+        }
+        file_put_contents($rootedSnapshotPath, implode(PHP_EOL, $output) . PHP_EOL);
         $this->logStep('ENV-SNAPSHOT', 'OK', 'Wrote sanitized env snapshot: ' . $snapshotPath);
 
         return $snapshotPath;
@@ -655,7 +678,10 @@ class Fix503 extends SafeBaseCommand
         $lines[] = '```';
 
         $content = implode(PHP_EOL, TriageSanitizer::sanitizeLines($lines));
-        file_put_contents($this->summaryPath, $content . PHP_EOL);
+        $rootedSummaryPath = str_starts_with($this->summaryPath, ROOTPATH)
+            ? $this->summaryPath
+            : ROOTPATH . ltrim($this->summaryPath, '/');
+        file_put_contents($rootedSummaryPath, $content . PHP_EOL);
         $this->logStep('SUMMARY', 'OK', 'Wrote summary: ' . $this->summaryPath);
     }
 

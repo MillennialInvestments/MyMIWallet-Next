@@ -3,6 +3,7 @@
 namespace App\Commands\Ops;
 
 use App\Commands\SafeBaseCommand;
+use App\Commands\Support\GitHubIssueHelper;
 use CodeIgniter\CLI\CLI;
 
 class FilesystemLint extends SafeBaseCommand
@@ -43,7 +44,8 @@ class FilesystemLint extends SafeBaseCommand
             'total_files' => count($files),
             'issues' => $issues,
             'issue_count' => count($issues),
-            'error_count' => count(array_filter($issues, fn ($i) => ($i['severity'] ?? 'error') === 'error')),
+            'error_count' => count(array_filter($issues, fn ($i) => ($i['severity'] ?? 'warning') === 'error')),
+            'severity_summary' => $this->buildSeveritySummary($issues),
         ];
 
         if ($issues === []) {
@@ -51,7 +53,14 @@ class FilesystemLint extends SafeBaseCommand
         } else {
             CLI::write('Filesystem lint: FAIL', 'red');
             foreach ($issues as $issue) {
-                CLI::write(sprintf('%s:%d %s (%s)', $issue['file'], $issue['line'], $issue['call'], $issue['reason']), 'yellow');
+                CLI::write(sprintf(
+                    '%s:%d %s (%s) [%s]',
+                    $issue['file'],
+                    $issue['line'],
+                    $issue['call'],
+                    $issue['reason'],
+                    strtoupper($issue['severity'] ?? 'warning')
+                ), 'yellow');
                 CLI::write('  ' . $issue['snippet'], 'blue');
                 CLI::write('  Fix: ' . $issue['suggested_fix'], 'white');
             }
@@ -61,7 +70,12 @@ class FilesystemLint extends SafeBaseCommand
             CLI::write(json_encode($payload, JSON_PRETTY_PRINT));
         }
 
-        return $issues === [] ? EXIT_SUCCESS : EXIT_ERROR;
+        if ($payload['error_count'] > 0 && $this->isCiEnvironment()) {
+            $issuePayloads = $this->buildGithubIssuePayloads($issues);
+            GitHubIssueHelper::publishIssues($issuePayloads, WRITEPATH . 'aiops/artifacts/github-issues');
+        }
+
+        return $payload['error_count'] > 0 ? EXIT_ERROR : EXIT_SUCCESS;
     }
 
     private function collectScanRoots(): array
@@ -215,6 +229,7 @@ class FilesystemLint extends SafeBaseCommand
                     'line' => $lineNumber,
                     'call' => 'throw',
                     'reason' => 'Config-layer exception detected (boot risk)',
+                    'severity' => 'error',
                     'snippet' => trim($line),
                     'suggested_fix' => 'Move guard logic into Spark command run()',
                 ];
@@ -234,6 +249,7 @@ class FilesystemLint extends SafeBaseCommand
                         'line' => $lineNumber,
                         'call' => $call['name'],
                         'reason' => 'Missing ROOTPATH anchor',
+                        'severity' => 'warning',
                         'snippet' => trim($line),
                         'suggested_fix' => $this->suggestRootpathFix($firstArg, $call['name']),
                     ];
@@ -245,6 +261,7 @@ class FilesystemLint extends SafeBaseCommand
                         'line' => $lineNumber,
                         'call' => $call['name'],
                         'reason' => 'Writes to public/',
+                        'severity' => 'error',
                         'snippet' => trim($line),
                         'suggested_fix' => $this->suggestSafeTargetFix('public'),
                     ];
@@ -269,6 +286,67 @@ class FilesystemLint extends SafeBaseCommand
         }
 
         return $issues;
+    }
+
+    private function buildSeveritySummary(array $issues): array
+    {
+        $summary = ['error' => 0, 'warning' => 0];
+        foreach ($issues as $issue) {
+            $severity = $issue['severity'] ?? 'warning';
+            if (! isset($summary[$severity])) {
+                $summary[$severity] = 0;
+            }
+            $summary[$severity]++;
+        }
+
+        return $summary;
+    }
+
+    private function buildGithubIssuePayloads(array $issues): array
+    {
+        $grouped = [];
+        foreach ($issues as $issue) {
+            $file = $issue['file'] ?? 'unknown';
+            $grouped[$file][] = $issue;
+        }
+
+        $payloads = [];
+        foreach ($grouped as $file => $fileIssues) {
+            $commandName = pathinfo($file, PATHINFO_FILENAME);
+            $bodyLines = [
+                '## Filesystem violations detected',
+                '',
+                '**File:** `' . $file . '`',
+                '',
+                '### Violations',
+            ];
+
+            foreach ($fileIssues as $item) {
+                $bodyLines[] = sprintf(
+                    '- Line %d (%s): %s',
+                    $item['line'] ?? 0,
+                    $item['severity'] ?? 'warning',
+                    $item['reason'] ?? 'Unknown'
+                );
+                if (! empty($item['suggested_fix'])) {
+                    $bodyLines[] = '  - Suggested fix: ' . $item['suggested_fix'];
+                }
+            }
+
+            $payloads[] = [
+                'title' => "[Spark Governance] {$commandName} has filesystem violations",
+                'body' => implode(PHP_EOL, $bodyLines),
+                'file' => $file,
+            ];
+        }
+
+        return $payloads;
+    }
+
+    private function isCiEnvironment(): bool
+    {
+        $value = getenv('GITHUB_ACTIONS');
+        return $value !== false && $value !== '';
     }
 
     private function extractCalls(string $line, array $names): array

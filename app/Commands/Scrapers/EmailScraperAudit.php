@@ -806,7 +806,7 @@ class EmailScraperAudit extends SafeBaseCommand
 
     private function writeReport(array $report): string
     {
-        $dir = WRITEPATH . 'triage';
+        $dir = ROOTPATH . 'docs/aiops/scrapers';
         if (! is_dir($dir)) {
             if (! mkdir($dir, 0775, true) && ! is_dir($dir)) {
                 throw new RuntimeException('Unable to create report directory: ' . $dir);

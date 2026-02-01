@@ -3,6 +3,7 @@
 namespace App\Commands\Ops;
 
 use App\Commands\SafeBaseCommand;
+use App\Commands\Support\ArtifactHelper;
 
 class ProposePr extends SafeBaseCommand
 {
@@ -25,16 +26,17 @@ class ProposePr extends SafeBaseCommand
 
     public function run(array $params)
     {
-        $emit    = (string) ($this->getOption('emit') ?? 'table');
-        $out     = (string) ($this->getOption('out') ?? '');
-        $dryRun  = (bool) ($this->getOption('dry-run') ?? false);
-        $approve = (bool) ($this->getOption('approve') ?? false);
+        [, $flags] = $this->parseParams($params);
+        $emit = (string) (ArtifactHelper::parseOptionValue($params, 'emit') ?: 'table');
+        $out = (string) (ArtifactHelper::parseOptionValue($params, 'out') ?? '');
+        $dryRun = isset($flags['dry-run']);
+        $approve = isset($flags['approve']);
 
-        $slug  = trim((string) ($this->getOption('slug') ?? ''));
-        $title = trim((string) ($this->getOption('title') ?? ''));
-        $body  = trim((string) ($this->getOption('body') ?? ''));
-        $patch = trim((string) ($this->getOption('patch') ?? ''));
-        $risk  = strtolower(trim((string) ($this->getOption('risk') ?? 'low')));
+        $slug = trim((string) (ArtifactHelper::parseOptionValue($params, 'slug') ?? ''));
+        $title = trim((string) (ArtifactHelper::parseOptionValue($params, 'title') ?? ''));
+        $body = trim((string) (ArtifactHelper::parseOptionValue($params, 'body') ?? ''));
+        $patch = trim((string) (ArtifactHelper::parseOptionValue($params, 'patch') ?? ''));
+        $risk = strtolower(trim((string) (ArtifactHelper::parseOptionValue($params, 'risk') ?? 'low')));
 
         if ($slug === '' || $title === '' || $body === '' || $patch === '') {
             return $this->failUsage('Missing required options: --slug, --title, --body, --patch');
@@ -165,8 +167,9 @@ class ProposePr extends SafeBaseCommand
     private function buildBundle(string $slug): array
     {
         $date = date('Y-m-d');
-        $writableDir = WRITEPATH . 'aiops/prs/' . $date . '/' . $slug;
-        $outboxDir = ROOTPATH . 'aiops/prs/outbox/' . $date . '/' . $slug;
+        $baseDir = ROOTPATH . 'docs/aiops/prs';
+        $writableDir = $baseDir . '/staging/' . $date . '/' . $slug;
+        $outboxDir = $baseDir . '/outbox/' . $date . '/' . $slug;
 
         return [
             'writable_dir' => $writableDir,
@@ -306,18 +309,29 @@ MD;
 
     private function ensureDir(string $dir): void
     {
-        if (!is_dir($dir)) {
-            mkdir($dir, 0775, true);
+        $rootedDir = str_starts_with($dir, ROOTPATH)
+            ? $dir
+            : ROOTPATH . ltrim($dir, '/');
+
+        if (!is_dir($rootedDir)) {
+            mkdir($rootedDir, 0775, true);
         }
     }
 
     private function safeWriteFile(string $path, string $content): void
     {
-        $dir = dirname($path);
+        $rootedPath = str_starts_with($path, ROOTPATH)
+            ? $path
+            : ROOTPATH . ltrim($path, '/');
+        $docsRoot = rtrim(ROOTPATH, '/') . '/docs/';
+        if (! str_starts_with($rootedPath, $docsRoot)) {
+            throw new \RuntimeException("Refusing to write outside docs/: {$rootedPath}");
+        }
+        $dir = dirname($rootedPath);
         $this->ensureDir($dir);
 
-        if (file_put_contents($path, $content) === false) {
-            throw new \RuntimeException("Failed to write file: {$path}");
+        if (file_put_contents($rootedPath, $content) === false) {
+            throw new \RuntimeException("Failed to write file: {$rootedPath}");
         }
     }
 

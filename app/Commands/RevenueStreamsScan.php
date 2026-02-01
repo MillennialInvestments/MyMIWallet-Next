@@ -45,7 +45,7 @@ class RevenueStreamsScan extends SafeBaseCommand
         [$args, $flags] = $this->parseParams($params);
         $dryRun = $this->resolveDryRun($flags);
 
-        $docsDir = WRITEPATH ? rtrim(realpath('docs/revenue_streams') ?: 'docs/revenue_streams', '/') : 'docs/revenue_streams';
+        $docsDir = ROOTPATH . 'docs/aiops/revenue-streams';
         if (! is_dir($docsDir) && ! mkdir($docsDir, 0775, true) && ! is_dir($docsDir)) {
             CLI::error('Unable to create docs directory: ' . $docsDir);
             log_message('error', '[spark:revenue:scan] Failed', ['reason' => 'Unable to create docs directory']);
@@ -68,8 +68,11 @@ class RevenueStreamsScan extends SafeBaseCommand
                 CLI::write("Dry-run: would generate {$path}", 'yellow');
                 continue;
             }
-            file_put_contents($path, $content);
-            CLI::write("Generated: {$path}");
+            $rootedPath = str_starts_with($path, ROOTPATH)
+                ? $path
+                : ROOTPATH . ltrim($path, '/');
+            file_put_contents($rootedPath, $content);
+            CLI::write("Generated: {$rootedPath}");
         }
 
         CLI::write('Scan complete. Streams found: ' . count($records));
