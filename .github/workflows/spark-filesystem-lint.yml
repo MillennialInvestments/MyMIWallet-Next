@@ -29,5 +29,15 @@ jobs:
           echo "CI_ENVIRONMENT=ci" >> .env
           echo "APP_ENV=ci" >> .env
 
-      - name: Run filesystem lint
-        run: php spark ops:filesystem:lint
+      - name: Run filesystem lint (JSON)
+        continue-on-error: true
+        run: |
+          mkdir -p writable/aiops/artifacts/review-publish
+          php spark ops:filesystem:lint --json > writable/aiops/artifacts/review-publish/filesystem.json
+
+      - name: Publish review summary
+        run: php spark codex:review:publish
+
+      - name: Gate on blocking errors
+        run: |
+          php -r '$data=json_decode(file_get_contents("writable/aiops/artifacts/review-publish/latest.json"),true); if (!is_array($data)) { fwrite(STDERR,"Missing review publish output\n"); exit(1);} if (!empty($data["blocking_errors"])) { fwrite(STDERR,"Blocking errors detected\n"); exit(1);}'
