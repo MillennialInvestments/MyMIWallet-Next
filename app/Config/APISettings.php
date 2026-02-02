@@ -13,7 +13,7 @@ class APISettings extends BaseConfig
 
     public string $alpacaApiUrl = "https://broker-api.sandbox.alpaca.markets/";
 
-    public string $alpacaApiKey = "CK8UROMXOVTWG6OYK0UN";
+    public string $alpacaApiKey = '';
 
     public string $alpacaApiSecret = "vBY4CqLpigoJb1BOhh1nghNMm690aBpwaYZEmats";
 
@@ -27,7 +27,7 @@ class APISettings extends BaseConfig
 
     // Alpha Vantage settings
 
-    public string $alphaVantageApiKey = "QR3496M31T2L2LM0"; // Premium Key
+    public string $alphaVantageApiKey = ''; // Premium Key
 
     // public string $alphaVantageApiKey = "NPVSPL7MQJUYU9MH"; // Premium Key
 
@@ -76,6 +76,12 @@ class APISettings extends BaseConfig
     public string $alphaVantageFxIntraday = "https://www.alphavantage.co/query?function=FX_INTRADAY&from_symbol={from_currency}&to_symbol={to_currency}&interval={interval}&apikey={api_key}";
 
     // ... and so on for other Alpha Vantage settings
+
+    public function __construct()
+    {
+        $this->alpacaApiKey = getenv('ALPACA_API_KEY') ?: '';
+        $this->alphaVantageApiKey = getenv('ALPHAVANTAGE_API_KEY') ?: '';
+    }
 
 
 
@@ -410,5 +416,4 @@ class APISettings extends BaseConfig
 
 
 }
-
 
