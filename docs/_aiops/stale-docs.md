@@ -1,6 +1,6 @@
 # AI-Ops: Stale Docs
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-01T18:25:51Z
+> Run: 2026-02-01T23:48:59Z
 
 - docs/OVERVIEW.md
   - Doc last updated: 2025-11-08 (85 days ago)
@@ -11,7 +11,7 @@
 - docs/adr/_index.md
   - Doc last updated: 2025-11-08 (85 days ago)
 - docs/alerts/alerts_marketing_pipline.md
-  - Doc last updated: 2025-11-22 (70 days ago)
+  - Doc last updated: 2025-11-22 (71 days ago)
 - docs/auctions/_index.md
   - Doc last updated: 2025-11-08 (85 days ago)
 - docs/auctions/auction-schema.md
@@ -109,7 +109,7 @@
 - docs/nginx/nginx.md
   - Doc last updated: 2025-11-08 (85 days ago)
 - docs/notes/2025-11-23-alerts-preview-lazy-refresh-and-advisor-errors.md
-  - Doc last updated: 2025-11-23 (69 days ago)
+  - Doc last updated: 2025-11-23 (70 days ago)
 - docs/notes/2025-12-01-feature-corrections.md
   - Doc last updated: 2025-12-01 (62 days ago)
 - docs/operations/01-foundation.md
