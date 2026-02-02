@@ -302,7 +302,14 @@ class EmailScraperAudit extends SafeBaseCommand
         }
 
         $record = $this->normalizeRecord($record);
-        $record = $this->applyFallbacks($record, $schemaGlobal, $schemaSpec);
+        $fallbackSchema = $schemaGlobal;
+        if (! empty($schemaSpec['default_fallbacks'])) {
+            $fallbackSchema['default_fallbacks'] = array_merge(
+                $schemaGlobal['default_fallbacks'] ?? [],
+                $schemaSpec['default_fallbacks']
+            );
+        }
+        $record = $this->applyFallbacks($record, $fallbackSchema);
         $fallbacksApplied = $record['_fallbacks_applied'] ?? [];
         $record = $this->applyDerivedFields($record, $schemaSpec);
 
@@ -336,7 +343,7 @@ class EmailScraperAudit extends SafeBaseCommand
 
         $missingFields = [];
         foreach ($schemaSpec['required_fields'] ?? [] as $field) {
-            if ($this->resolveRequiredFieldValue($record, $field) === null) {
+            if ($this->resolveRequiredFieldValue($record, $field) === null && ! in_array($field, $fallbacksApplied, true)) {
                 $missingFields[] = $field;
             }
         }
@@ -603,13 +610,10 @@ class EmailScraperAudit extends SafeBaseCommand
         return null;
     }
 
-    private function applyFallbacks(array $record, array $schemaGlobal, array $schemaSpec): array
+    private function applyFallbacks(array $record, array $schema): array
     {
         $record['_fallbacks_applied'] = $record['_fallbacks_applied'] ?? [];
-        $fallbacks = array_merge(
-            $schemaGlobal['default_fallbacks'] ?? [],
-            $schemaSpec['default_fallbacks'] ?? []
-        );
+        $fallbacks = $schema['default_fallbacks'] ?? [];
 
         foreach ($fallbacks as $key => $fallback) {
             if (! isset($record[$key]) || trim((string) $record[$key]) === '') {
