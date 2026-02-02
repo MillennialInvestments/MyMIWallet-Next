@@ -3,6 +3,7 @@
 namespace App\Commands;
 
 use App\Helpers\TriageSanitizer;
+use App\Commands\Support\ArtifactHelper;
 use App\Services\Triage\CommandRunner;
 use App\Services\Triage\HostingModeDetector;
 use App\Services\Ops\EnvDoctorService;
@@ -13,6 +14,7 @@ class Fix503 extends SafeBaseCommand
 {
     private Ops $ops;
     private float $confidence = 0.0;
+    private string $artifactDir;
 
     protected $group = 'ops';
     protected $name = 'fix:503';
@@ -35,6 +37,14 @@ class Fix503 extends SafeBaseCommand
         [$args, $flags] = $this->parseParams($params);
         $dryRun = $this->resolveDryRun($flags);
 
+        $resolved = ArtifactHelper::resolveArtifactDirs($this->name, null);
+        if (isset($resolved['error'])) {
+            CLI::error($resolved['error']);
+            return EXIT_ERROR;
+        }
+
+        $this->artifactDir = $resolved['dir'];
+        $this->reportTimestamp = $resolved['timestamp'];
         $this->initializeLog();
         $this->ops = config(Ops::class);
 
@@ -163,7 +173,7 @@ class Fix503 extends SafeBaseCommand
 
         $appLogTail = $this->readAppLogTail(50);
 
-        $this->writeSummary([
+        $reportData = [
             'root_cause' => $rootCause,
             'risk_level' => $riskLevel,
             'hosting_mode' => $hostingStatus['hosting_mode'] ?? 'UNKNOWN',
@@ -186,7 +196,22 @@ class Fix503 extends SafeBaseCommand
             'recommendations' => $recommendations,
             'env_snapshot_path' => $envSnapshot,
             'app_log_tail' => $appLogTail,
-        ]);
+        ];
+
+        $summary = $this->buildSummary($reportData);
+        $report = array_merge([
+            'command' => $this->name,
+            'timestamp' => $this->reportTimestamp,
+            'artifact_dir' => $this->artifactDir,
+            'log_path' => $this->logPath,
+            'summary_path' => $this->summaryPath,
+        ], $reportData);
+
+        if (! ArtifactHelper::writeArtifacts($this->artifactDir, $summary, $report)) {
+            return EXIT_ERROR;
+        }
+
+        $this->logStep('SUMMARY', 'OK', 'Wrote summary: ' . $this->summaryPath);
 
         $this->printReport($rootCause, $actionsTaken, $actionsNotTaken, $riskLevel, $recommendations);
 
@@ -220,36 +245,19 @@ class Fix503 extends SafeBaseCommand
 
     private function initializeLog(): void
     {
-        $logDir = ROOTPATH . 'docs/aiops/fix-503/logs';
-        $summaryDir = ROOTPATH . 'docs/aiops/fix-503/reports';
+        ArtifactHelper::ensureArtifactDir($this->artifactDir);
 
-        if (! is_dir($logDir)) {
-            mkdir($logDir, 0775, true);
-        }
+        $this->logPath = rtrim($this->artifactDir, '/') . '/fix-503.log';
+        $this->summaryPath = rtrim($this->artifactDir, '/') . '/summary.md';
 
-        if (! is_dir($summaryDir)) {
-            mkdir($summaryDir, 0775, true);
-        }
-
-        $this->reportTimestamp = date('Y-m-d-His');
-        $this->logPath = sprintf('%s/503-%s.log', rtrim($logDir, '/'), $this->reportTimestamp);
-        $this->summaryPath = sprintf('%s/503-%s.summary.md', rtrim($summaryDir, '/'), $this->reportTimestamp);
-        $this->guardPathForSecrets($this->logPath);
-        $this->guardPathForSecrets($this->summaryPath);
-        $rootedLogPath = str_starts_with($this->logPath, ROOTPATH)
-            ? $this->logPath
-            : ROOTPATH . ltrim($this->logPath, '/');
-        file_put_contents($rootedLogPath, '');
+        ArtifactHelper::safeWrite($this->logPath, '');
     }
 
     private function logStep(string $step, string $status, string $detail): void
     {
         $detail = TriageSanitizer::sanitizeText($detail);
         $line = sprintf('[%s] [%s] [%s] %s', date('H:i:s'), $step, $status, $detail);
-        $rootedLogPath = str_starts_with($this->logPath, ROOTPATH)
-            ? $this->logPath
-            : ROOTPATH . ltrim($this->logPath, '/');
-        file_put_contents($rootedLogPath, $line . PHP_EOL, FILE_APPEND);
+        ArtifactHelper::safeAppend($this->logPath, $line . PHP_EOL);
     }
 
     private function logOutput(string $step, array $lines): void
@@ -381,7 +389,7 @@ class Fix503 extends SafeBaseCommand
         ));
 
         if ($mismatch && $detectedSock) {
-            $snippetPath = ROOTPATH . 'docs/aiops/fix-503/snippets/nginx-fastcgi-fix-' . date('Y-m-d-His') . '.conf';
+            $snippetPath = rtrim($this->artifactDir, '/') . '/snippets/nginx-fastcgi-fix.conf';
             $this->writeNginxFastCgiFixSnippet($snippetPath, $detectedSock);
             $this->logStep('NGINX-FIX-GEN', 'OK', 'Wrote suggested config: ' . $snippetPath);
         }
@@ -408,15 +416,7 @@ class Fix503 extends SafeBaseCommand
 
     CONF;
 
-        $rootedPath = str_starts_with($path, ROOTPATH)
-            ? $path
-            : ROOTPATH . ltrim($path, '/');
-        $this->guardPathForSecrets($rootedPath);
-        $rootedDir = dirname($rootedPath);
-        if (! is_dir($rootedDir)) {
-            mkdir($rootedDir, 0775, true);
-        }
-        file_put_contents($rootedPath, $content);
+        ArtifactHelper::safeWrite($path, $content);
     }
 
     private function runHostingModeDetection(CommandRunner $runner): array
@@ -546,22 +546,14 @@ class Fix503 extends SafeBaseCommand
             }
         }
 
-        $snapshotPath = ROOTPATH . 'docs/aiops/fix-503/env-snapshots/env-summary-' . $this->reportTimestamp . '.txt';
-        $this->guardPathForSecrets($snapshotPath);
+        $snapshotPath = rtrim($this->artifactDir, '/') . '/env-summary.txt';
 
         $output = [];
         foreach ($values as $key => $value) {
             $output[] = $key . '=' . $value;
         }
 
-        $rootedSnapshotPath = str_starts_with($snapshotPath, ROOTPATH)
-            ? $snapshotPath
-            : ROOTPATH . ltrim($snapshotPath, '/');
-        $rootedSnapshotDir = dirname($rootedSnapshotPath);
-        if (! is_dir($rootedSnapshotDir)) {
-            mkdir($rootedSnapshotDir, 0775, true);
-        }
-        file_put_contents($rootedSnapshotPath, implode(PHP_EOL, $output) . PHP_EOL);
+        ArtifactHelper::safeWrite($snapshotPath, implode(PHP_EOL, $output) . PHP_EOL);
         $this->logStep('ENV-SNAPSHOT', 'OK', 'Wrote sanitized env snapshot: ' . $snapshotPath);
 
         return $snapshotPath;
@@ -594,10 +586,8 @@ class Fix503 extends SafeBaseCommand
         return TriageSanitizer::sanitizeLines($tail);
     }
 
-    private function writeSummary(array $data): void
+    private function buildSummary(array $data): string
     {
-        $this->guardPathForSecrets($this->summaryPath);
-
         $lines = [
             '# 503 Forensic Report',
             '',
@@ -678,13 +668,10 @@ class Fix503 extends SafeBaseCommand
         $lines[] = '```';
 
         $content = implode(PHP_EOL, TriageSanitizer::sanitizeLines($lines));
-        $rootedSummaryPath = str_starts_with($this->summaryPath, ROOTPATH)
-            ? $this->summaryPath
-            : ROOTPATH . ltrim($this->summaryPath, '/');
-        file_put_contents($rootedSummaryPath, $content . PHP_EOL);
-        $this->logStep('SUMMARY', 'OK', 'Wrote summary: ' . $this->summaryPath);
-    }
 
+        return $content . PHP_EOL;
+    }
+  
     private function guardPathForSecrets(string $path): void
     {
         $path = trim($path);

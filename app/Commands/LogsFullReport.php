@@ -2,6 +2,7 @@
 
 namespace App\Commands;
 
+use App\Commands\Support\ArtifactHelper;
 use CodeIgniter\CLI\CLI;
 
 class LogsFullReport extends SafeBaseCommand
@@ -54,14 +55,25 @@ class LogsFullReport extends SafeBaseCommand
 
         // write snapshot
         if ($save) {
-            $dir = ROOTPATH . 'docs/aiops/logs';
-            if (!is_dir($dir)) {
-                @mkdir($dir, 0775, true);
+            $resolved = ArtifactHelper::resolveArtifactDirs($this->name, null);
+            if (isset($resolved['error'])) {
+                CLI::error($resolved['error']);
+                return EXIT_ERROR;
             }
-            $out = $dir . '/full-log-report-' . $date . '.md';
-            file_put_contents($out, $md);
+
+            $report = [
+                'command' => $this->name,
+                'timestamp' => $resolved['timestamp'],
+                'date' => $date,
+                'fix_hints' => $fixHints,
+                'grouped' => $grouped,
+            ];
+
+            if (! ArtifactHelper::writeArtifacts($resolved['dir'], $md, $report)) {
+                return EXIT_ERROR;
+            }
             CLI::newLine();
-            CLI::write("Saved: {$out}", 'green');
+            CLI::write('Saved: ' . $resolved['dir'], 'green');
         }
 
         // optional discord blast
