@@ -23,6 +23,10 @@ class AiopsInit extends SafeBaseCommand
         $approve = !empty($flags['approve']);
         $dryRun  = !empty($flags['dry-run']);
 
+        $resolved = ArtifactHelper::resolveArtifactDirs($this->name, null);
+        if (isset($resolved['error'])) {
+            throw new \RuntimeException($resolved['error']);
+        }
 
         // 1) Hard validations
         $this->assertFileExists(ROOTPATH . '.github/workflows/aiops-pr-factory.yml', 'PR factory workflow missing');
@@ -30,29 +34,44 @@ class AiopsInit extends SafeBaseCommand
         $this->assertEnvSecret('AIOPS_GH_APP_PRIVATE_KEY');
 
         // 2) Create a tiny bootstrap patch (docs only)
-        $doc = ROOTPATH . 'docs/aiops/README.md';
-        $docDir = dirname($doc);
-        if (! is_dir($docDir)) {
-            mkdir($docDir, 0775, true);
-        }
-        if (!file_exists($doc)) {
-            if (!$dryRun) {
-                ArtifactHelper::safeWrite($doc, "# AIOps\n\n");
-            }
+        $artifactDir = $resolved['dir'];
+        $doc = $artifactDir . '/aiops-init.md';
+        if (! file_exists($doc) && ! $dryRun) {
+            ArtifactHelper::safeWrite($doc, "# AIOps\n\n");
         }
 
         $marker = "AIOps initialized at " . date('c') . "\n";
-        if (!$dryRun) {
+        if (! $dryRun) {
             ArtifactHelper::safeAppend($doc, $marker);
         }
 
-        $patchDir = ROOTPATH . 'docs/aiops/artifacts/aiops-init';
-        if (! is_dir($patchDir)) {
-            mkdir($patchDir, 0775, true);
+        $patchPath = $artifactDir . '/aiops-init.patch';
+        if (! $dryRun) {
+            $output = [];
+            $code = 0;
+            exec('git diff', $output, $code);
+            $patchContents = implode(PHP_EOL, $output) . PHP_EOL;
+            ArtifactHelper::safeWrite($patchPath, $patchContents);
         }
-        $patchPath = $patchDir . '/aiops-init.patch';
-        if (!$dryRun) {
-            exec('git diff > ' . escapeshellarg($patchPath));
+
+        $summaryLines = [
+            '# AIOps Init',
+            '',
+            '- Timestamp: ' . $resolved['timestamp'],
+            '- Dry run: ' . ($dryRun ? 'yes' : 'no'),
+            '- Patch path: ' . $patchPath,
+        ];
+        $summary = implode(PHP_EOL, $summaryLines) . PHP_EOL;
+        $report = [
+            'command' => $this->name,
+            'timestamp' => $resolved['timestamp'],
+            'dry_run' => $dryRun,
+            'patch_path' => $patchPath,
+            'artifact_dir' => $artifactDir,
+        ];
+
+        if (! $dryRun) {
+            ArtifactHelper::writeArtifacts($artifactDir, $summary, $report);
         }
 
         // 3) Delegate to the real PR proposer

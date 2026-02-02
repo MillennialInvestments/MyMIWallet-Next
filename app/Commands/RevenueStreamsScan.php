@@ -3,6 +3,7 @@
 namespace App\Commands;
 
 use App\Commands\SafeBaseCommand;
+use App\Commands\Support\ArtifactHelper;
 use CodeIgniter\CLI\CLI;
 
 class RevenueStreamsScan extends SafeBaseCommand
@@ -45,10 +46,10 @@ class RevenueStreamsScan extends SafeBaseCommand
         [$args, $flags] = $this->parseParams($params);
         $dryRun = $this->resolveDryRun($flags);
 
-        $docsDir = ROOTPATH . 'docs/aiops/revenue-streams';
-        if (! is_dir($docsDir) && ! mkdir($docsDir, 0775, true) && ! is_dir($docsDir)) {
-            CLI::error('Unable to create docs directory: ' . $docsDir);
-            log_message('error', '[spark:revenue:scan] Failed', ['reason' => 'Unable to create docs directory']);
+        $resolved = ArtifactHelper::resolveArtifactDirs($this->name, null);
+        if (isset($resolved['error'])) {
+            CLI::error($resolved['error']);
+            log_message('error', '[spark:revenue:scan] Failed', ['reason' => $resolved['error']]);
             return EXIT_ERROR;
         }
 
@@ -56,23 +57,49 @@ class RevenueStreamsScan extends SafeBaseCommand
         $grouped = $this->groupRecords($records);
 
         $filesWritten = [
-            $docsDir . '/README.md'                       => $this->renderReadme($grouped, $records),
-            $docsDir . '/revenue_streams_full.md'         => $this->renderFull($records),
-            $docsDir . '/revenue_streams_by_module.md'    => $this->renderByModule($grouped['byModule']),
-            $docsDir . '/revenue_streams_by_user_type.md' => $this->renderByUserType($grouped['byUserType']),
-            $docsDir . '/revenue_streams_by_pricing_tier.md' => $this->renderByPricing($grouped['byPricing']),
+            'README.md' => $this->renderReadme($grouped, $records),
+            'revenue_streams_full.md' => $this->renderFull($records),
+            'revenue_streams_by_module.md' => $this->renderByModule($grouped['byModule']),
+            'revenue_streams_by_user_type.md' => $this->renderByUserType($grouped['byUserType']),
+            'revenue_streams_by_pricing_tier.md' => $this->renderByPricing($grouped['byPricing']),
+        ];
+
+        $summaryLines = [
+            '# Revenue Streams Scan',
+            '',
+            '- Timestamp: ' . $resolved['timestamp'],
+            '- Dry run: ' . ($dryRun ? 'yes' : 'no'),
+            '- Streams found: ' . count($records),
+            '',
+            '## Artifacts',
+        ];
+
+        foreach (array_keys($filesWritten) as $filename) {
+            $summaryLines[] = '- ' . $filename;
+        }
+
+        $summary = implode(PHP_EOL, $summaryLines) . PHP_EOL;
+        $report = [
+            'command' => $this->name,
+            'timestamp' => $resolved['timestamp'],
+            'dry_run' => $dryRun,
+            'streams_found' => count($records),
+            'artifact_dir' => $resolved['dir'],
+            'artifacts' => array_keys($filesWritten),
         ];
 
         foreach ($filesWritten as $path => $content) {
             if ($dryRun) {
-                CLI::write("Dry-run: would generate {$path}", 'yellow');
+                CLI::write('Dry-run: would generate ' . $resolved['dir'] . '/' . $path, 'yellow');
                 continue;
             }
-            $rootedPath = str_starts_with($path, ROOTPATH)
-                ? $path
-                : ROOTPATH . ltrim($path, '/');
-            file_put_contents($rootedPath, $content);
-            CLI::write("Generated: {$rootedPath}");
+        }
+
+        if (! $dryRun) {
+            if (! ArtifactHelper::writeArtifacts($resolved['dir'], $summary, $report, $filesWritten)) {
+                return EXIT_ERROR;
+            }
+            CLI::write('Generated: ' . $resolved['dir']);
         }
 
         CLI::write('Scan complete. Streams found: ' . count($records));
