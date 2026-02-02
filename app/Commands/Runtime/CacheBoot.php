@@ -11,10 +11,10 @@ class CacheBoot extends SafeBaseCommand
     protected $group       = 'runtime';
     protected $name        = 'runtime:cache-boot';
     protected $description = 'Validate cache boot health and warm critical cache keys.';
-    protected $usage       = 'runtime:cache-boot [--emit=docs|raw|both] [--out=path] [--dry-run] [--approve]';
+    protected $usage       = 'runtime:cache-boot [--emit=docs] [--out=path] [--dry-run] [--approve]';
     protected $options     = [
-        '--emit' => 'Output mode: docs, raw, or both (default: both).',
-        '--out' => 'Override artifact directory (must be inside docs/aiops/artifacts or writable/aiops/artifacts).',
+        '--emit' => 'Output mode: docs (default: docs).',
+        '--out' => 'Override artifact directory (must be inside docs/aiops/artifacts).',
         '--dry-run' => 'Preview actions without changing cache state.',
         '--approve' => 'Allow cache mutations (required).',
     ];
@@ -25,7 +25,7 @@ class CacheBoot extends SafeBaseCommand
     {
         [$args, $flags] = $this->parseParams($params);
         $dryRun = $this->resolveDryRun($flags);
-        $emit = ArtifactHelper::parseOptionValue($params, 'emit') ?: 'both';
+        $emit = ArtifactHelper::parseOptionValue($params, 'emit') ?: 'docs';
         $outOverride = ArtifactHelper::parseOptionValue($params, 'out');
 
         $resolved = ArtifactHelper::resolveArtifactDirs($this->name, $outOverride);
@@ -34,14 +34,7 @@ class CacheBoot extends SafeBaseCommand
             return EXIT_ERROR;
         }
 
-        $writeDocs = in_array($emit, ['docs', 'both'], true);
-        $writeRaw = in_array($emit, ['raw', 'both'], true);
-        if (! $writeDocs && ! $writeRaw) {
-            $writeDocs = true;
-            $writeRaw = true;
-        }
-
-        $cacheDir = ROOTPATH . 'docs/aiops/runtime/cache-boot/cache';
+        $cacheDir = rtrim($resolved['dir'], '/') . '/cache';
         $actions = [];
 
         $cacheExists = is_dir($cacheDir);
@@ -50,7 +43,9 @@ class CacheBoot extends SafeBaseCommand
         if (! $cacheExists) {
             $actions[] = 'create_cache_dir';
             if (! $dryRun) {
-                mkdir($cacheDir, 0755, true);
+                ArtifactHelper::ensureArtifactDir($cacheDir);
+                $cacheExists = is_dir($cacheDir);
+                $cacheWritable = $cacheExists && is_writable($cacheDir);
             }
         }
 
@@ -63,7 +58,7 @@ class CacheBoot extends SafeBaseCommand
         $warmed = false;
 
         if (! $dryRun && $cacheExists && $cacheWritable) {
-            $warmed = file_put_contents($warmFile, $warmPayload) !== false;
+            $warmed = ArtifactHelper::safeWrite($warmFile, $warmPayload);
             if ($warmed) {
                 $actions[] = 'warm_cache_marker';
             }
@@ -104,13 +99,12 @@ class CacheBoot extends SafeBaseCommand
 
         $summary = implode(PHP_EOL, $summaryLines) . PHP_EOL;
 
-        if (! ArtifactHelper::writeArtifacts($resolved['docsDir'], $resolved['rawDir'], $summary, $report, $writeDocs, $writeRaw)) {
+        if (! ArtifactHelper::writeArtifacts($resolved['dir'], $summary, $report)) {
             return EXIT_ERROR;
         }
 
         CLI::write('Cache boot artifacts written.', 'green');
-        CLI::write('Docs: ' . $resolved['docsDir']);
-        CLI::write('Raw: ' . $resolved['rawDir']);
+        CLI::write('Artifacts: ' . $resolved['dir']);
 
         return EXIT_SUCCESS;
     }
