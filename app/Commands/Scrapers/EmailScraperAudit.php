@@ -3,6 +3,7 @@
 namespace App\Commands\Scrapers;
 
 use App\Commands\SafeBaseCommand;
+use App\Commands\Support\ArtifactHelper;
 use App\Services\ScraperOpsService;
 use CodeIgniter\CLI\CLI;
 use Config\Database;
@@ -34,6 +35,12 @@ class EmailScraperAudit extends SafeBaseCommand
 
         [$args, $flags] = $this->parseParams($params);
         $limit = $this->resolveLimit($params, $args, $flags);
+
+        $resolved = ArtifactHelper::resolveArtifactDirs($this->name, null);
+        if (isset($resolved['error'])) {
+            CLI::error($resolved['error']);
+            return EXIT_ERROR;
+        }
 
         $schemaPath = ROOTPATH . 'docs/scrapers/email_expected_schema.yaml';
         if (! is_file($schemaPath)) {
@@ -127,7 +134,34 @@ class EmailScraperAudit extends SafeBaseCommand
             $service = new ScraperOpsService();
             $report['fix_plan'] = $service->generateScraperFixPlan($report);
 
-            $reportPath = $this->writeReport($report);
+            $summaryLines = [
+                '# Email Scraper Audit',
+                '',
+                '- Timestamp: ' . $resolved['timestamp'],
+                '- Total scanned: ' . ($summary['total_scanned'] ?? 0),
+                '- Trade emails: ' . ($summary['trade_count'] ?? 0),
+                '- News emails: ' . ($summary['news_count'] ?? 0),
+                '- Passed: ' . ($summary['passed'] ?? 0),
+                '- Failed: ' . ($summary['failed'] ?? 0),
+                '- Fallbacks applied: ' . (int) ($summary['fallbacks_applied'] ?? 0),
+                '',
+                '## Failure Breakdown',
+            ];
+
+            if (empty($failureBreakdown)) {
+                $summaryLines[] = '- None';
+            } else {
+                foreach ($failureBreakdown as $type => $count) {
+                    $summaryLines[] = sprintf('- %s: %d', $type, $count);
+                }
+            }
+
+            $summaryMarkdown = implode(PHP_EOL, $summaryLines) . PHP_EOL;
+            $report['artifact_dir'] = $resolved['dir'];
+
+            if (! ArtifactHelper::writeArtifacts($resolved['dir'], $summaryMarkdown, $report)) {
+                return EXIT_ERROR;
+            }
 
             CLI::write('Email Scraper Audit Summary', 'yellow');
             CLI::write(sprintf('Total scanned: %d', $summary['total_scanned']));
@@ -148,7 +182,7 @@ class EmailScraperAudit extends SafeBaseCommand
             }
 
             CLI::newLine();
-            CLI::write('Report written to: ' . $reportPath, 'green');
+            CLI::write('Report written to: ' . $resolved['dir'], 'green');
 
             return 0;
         } catch (RuntimeException $e) {
@@ -806,30 +840,6 @@ class EmailScraperAudit extends SafeBaseCommand
         }
 
         return false;
-    }
-
-    private function writeReport(array $report): string
-    {
-        $dir = ROOTPATH . 'docs/aiops/scrapers';
-        if (! is_dir($dir)) {
-            if (! mkdir($dir, 0775, true) && ! is_dir($dir)) {
-                throw new RuntimeException('Unable to create report directory: ' . $dir);
-            }
-        }
-
-        $filename = sprintf('email-scraper-audit-%s.json', date('Y-m-d_His'));
-        $path = $dir . DIRECTORY_SEPARATOR . $filename;
-
-        $json = json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-        if ($json === false) {
-            throw new RuntimeException('Failed to encode report JSON.');
-        }
-
-        if (file_put_contents($path, $json) === false) {
-            throw new RuntimeException('Failed to write report: ' . $path);
-        }
-
-        return $path;
     }
 
     private function buildFailure(string $type, string $rootCause, string $table): array

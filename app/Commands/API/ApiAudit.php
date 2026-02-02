@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Commands\API;
 
 use App\Commands\SafeBaseCommand;
+use App\Commands\Support\ArtifactHelper;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\FeatureResponse;
@@ -24,6 +25,12 @@ class ApiAudit extends SafeBaseCommand
     {
         $this->parseParams($params);
         log_message('info', '[spark:api:audit] Started', ['params' => $params]);
+
+        $resolved = ArtifactHelper::resolveArtifactDirs($this->name, null);
+        if (isset($resolved['error'])) {
+            CLI::error($resolved['error']);
+            return EXIT_ERROR;
+        }
 
         $schematicPath = ROOTPATH . 'docs/api/schematic.yaml';
         if (! is_file($schematicPath)) {
@@ -45,6 +52,7 @@ class ApiAudit extends SafeBaseCommand
         $requester = new ApiAuditRequester();
         $report = [
             'generated_at' => date('c'),
+            'timestamp' => $resolved['timestamp'],
             'summary' => [
                 'total' => count($entries),
                 'skipped' => 0,
@@ -74,29 +82,50 @@ class ApiAudit extends SafeBaseCommand
                 $audit['route'] ?? 'n/a',
                 $audit['status'],
                 $audit['status_code'] ?? 'n/a',
-                $audit['response_time_ms'] ?? 'n/a',
-                $audit['failure_classification'] ?? '-',
-            ];
-        }
+            $audit['response_time_ms'] ?? 'n/a',
+            $audit['failure_classification'] ?? '-',
+        ];
+    }
 
-        CLI::newLine();
-        CLI::table($rows, ['id', 'method', 'route', 'status', 'code', 'ms', 'failure']);
+    CLI::newLine();
+    CLI::table($rows, ['id', 'method', 'route', 'status', 'code', 'ms', 'failure']);
 
-        $triageDir = ROOTPATH . 'docs/aiops/api-audit';
-        if (! is_dir($triageDir)) {
-            mkdir($triageDir, 0755, true);
-        }
+    $summaryLines = [
+        '# API Audit Report',
+        '',
+        '- Timestamp: ' . $resolved['timestamp'],
+        '- Total endpoints: ' . $report['summary']['total'],
+        '- Passed: ' . $report['summary']['passed'],
+        '- Failed: ' . $report['summary']['failed'],
+        '- Skipped: ' . $report['summary']['skipped'],
+        '',
+        '## Endpoints',
+    ];
 
-        $reportPath = sprintf('%s/api-audit-%s.json', rtrim($triageDir, '/'), date('Y-m-d_His'));
-        file_put_contents($reportPath, json_encode($report, JSON_PRETTY_PRINT));
+    foreach ($report['endpoints'] as $endpoint) {
+        $summaryLines[] = sprintf(
+            '- %s %s: %s (%s)',
+            $endpoint['http_method'],
+            $endpoint['route'] ?? 'n/a',
+            $endpoint['status'],
+            $endpoint['status_code'] ?? 'n/a'
+        );
+    }
 
-        CLI::newLine();
-        CLI::write('Report saved to ' . $reportPath, 'green');
+    $summary = implode(PHP_EOL, $summaryLines) . PHP_EOL;
+    $report['artifact_dir'] = $resolved['dir'];
 
-        log_message('info', '[spark:api:audit] Completed', [
-            'summary' => $report['summary'],
-            'report_path' => $reportPath,
-        ]);
+    if (! ArtifactHelper::writeArtifacts($resolved['dir'], $summary, $report)) {
+        return EXIT_ERROR;
+    }
+
+    CLI::newLine();
+    CLI::write('Report saved to ' . $resolved['dir'], 'green');
+
+    log_message('info', '[spark:api:audit] Completed', [
+        'summary' => $report['summary'],
+        'report_path' => $resolved['dir'],
+    ]);
 
         return EXIT_SUCCESS;
     }

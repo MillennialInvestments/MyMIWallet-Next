@@ -11,10 +11,10 @@ class Triage extends SafeBaseCommand
     protected $group       = 'runtime';
     protected $name        = 'runtime:triage';
     protected $description = 'Consolidate runtime diagnostics into a single report.';
-    protected $usage       = 'runtime:triage [--emit=docs|raw|both] [--out=path] [--dry-run] [--approve]';
+    protected $usage       = 'runtime:triage [--emit=docs] [--out=path] [--dry-run] [--approve]';
     protected $options     = [
-        '--emit' => 'Output mode: docs, raw, or both (default: both).',
-        '--out' => 'Override artifact directory (must be inside docs/aiops/artifacts or writable/aiops/artifacts).',
+        '--emit' => 'Output mode: docs (default: docs).',
+        '--out' => 'Override artifact directory (must be inside docs/aiops/artifacts).',
         '--dry-run' => 'Generate a report without mutating state.',
         '--approve' => 'Acknowledge execution (required for mutating commands).',
     ];
@@ -23,20 +23,13 @@ class Triage extends SafeBaseCommand
     {
         [$args, $flags] = $this->parseParams($params);
         $dryRun = $this->resolveDryRun($flags);
-        $emit = ArtifactHelper::parseOptionValue($params, 'emit') ?: 'both';
+        $emit = ArtifactHelper::parseOptionValue($params, 'emit') ?: 'docs';
         $outOverride = ArtifactHelper::parseOptionValue($params, 'out');
 
         $resolved = ArtifactHelper::resolveArtifactDirs($this->name, $outOverride);
         if (isset($resolved['error'])) {
             CLI::error($resolved['error']);
             return EXIT_ERROR;
-        }
-
-        $writeDocs = in_array($emit, ['docs', 'both'], true);
-        $writeRaw = in_array($emit, ['raw', 'both'], true);
-        if (! $writeDocs && ! $writeRaw) {
-            $writeDocs = true;
-            $writeRaw = true;
         }
 
         $checks = [
@@ -75,13 +68,12 @@ class Triage extends SafeBaseCommand
 
         $summary = implode(PHP_EOL, $summaryLines) . PHP_EOL;
 
-        if (! ArtifactHelper::writeArtifacts($resolved['docsDir'], $resolved['rawDir'], $summary, $report, $writeDocs, $writeRaw)) {
+        if (! ArtifactHelper::writeArtifacts($resolved['dir'], $summary, $report)) {
             return EXIT_ERROR;
         }
 
         CLI::write('Runtime triage artifacts written.', 'green');
-        CLI::write('Docs: ' . $resolved['docsDir']);
-        CLI::write('Raw: ' . $resolved['rawDir']);
+        CLI::write('Artifacts: ' . $resolved['dir']);
 
         return EXIT_SUCCESS;
     }

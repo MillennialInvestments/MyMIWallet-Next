@@ -4,6 +4,7 @@ namespace App\Commands\Ops;
 
 use App\Commands\SafeBaseCommand;
 use App\Commands\Ops\Support\CommandRulesScanner;
+use App\Commands\Support\ArtifactHelper;
 use CodeIgniter\CLI\CLI;
 
 class CommandsAutofix extends SafeBaseCommand
@@ -28,6 +29,12 @@ class CommandsAutofix extends SafeBaseCommand
             $dryRun = true;
         }
 
+        $resolved = ArtifactHelper::resolveArtifactDirs($this->name, null);
+        if (isset($resolved['error'])) {
+            CLI::error($resolved['error']);
+            return EXIT_ERROR;
+        }
+
         $scanner = new CommandRulesScanner();
         $entries = $scanner->scan(ROOTPATH . 'app/Commands');
 
@@ -47,7 +54,7 @@ class CommandsAutofix extends SafeBaseCommand
             CLI::write('Dry-run mode enabled. Use --approve to apply fixes.', 'yellow');
         }
 
-        $artifactDir = ROOTPATH . 'docs/aiops/commands-autofix/' . date('Ymd-His');
+        $artifactDir = $resolved['dir'];
         foreach ($violations as $entry) {
             $relative = $this->relativePath($entry['file']);
             CLI::write("Fixing {$entry['class']} ({$relative})");
@@ -83,13 +90,11 @@ class CommandsAutofix extends SafeBaseCommand
         $relative = $this->relativePath($path);
         $artifactRoot = rtrim($artifactDir, '/');
         $targetDir = $artifactRoot . '/' . ltrim(dirname($relative), '/');
-        if (! is_dir($targetDir)) {
-            mkdir($targetDir, 0775, true);
-        }
+        ArtifactHelper::ensureArtifactDir($targetDir);
 
         $backup = $targetDir . '/' . basename($path) . '.bak';
         if (! file_exists($backup)) {
-            file_put_contents($backup, $code);
+            ArtifactHelper::safeWrite($backup, $code);
         }
 
         $updated = $this->removeConstructor($code);
@@ -102,7 +107,7 @@ class CommandsAutofix extends SafeBaseCommand
         }
 
         $fixedPath = $targetDir . '/' . basename($path);
-        file_put_contents($fixedPath, $updated);
+        ArtifactHelper::safeWrite($fixedPath, $updated);
         CLI::write("Wrote fixed copy for {$className} (backup at {$backup}).", 'green');
     }
 
