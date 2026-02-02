@@ -28,23 +28,58 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
         $flags = [];
 
         foreach ($params as $param) {
+            // Spark/Console delegation can introduce nulls or non-strings.
+            if ($param === null) {
+                continue;
+            }
+
+            if (is_bool($param)) {
+                // treat as arg (rare)
+                $args[] = $param ? '1' : '0';
+                continue;
+            }
+
+            if (is_int($param) || is_float($param)) {
+                $param = (string) $param;
+            }
+
+            if (!is_string($param)) {
+                // ignore objects/arrays defensively
+                continue;
+            }
+
+            $param = trim($param);
+            if ($param === '') {
+                continue;
+            }
+
             if (str_starts_with($param, '--')) {
-                $flags[ltrim($param, '-')] = true;
+                // Support both: --flag and --key=value
+                $key = ltrim($param, '-');
+                if (strpos($key, '=') !== false) {
+                    [$k] = explode('=', $key, 2);
+                    $flags[$k] = true;
+                } else {
+                    $flags[$key] = true;
+                }
             } else {
                 $args[] = $param;
             }
         }
 
-        if ($this->defaultDryRun && ! isset($flags['approve']) && ! isset($flags['dry-run'])) {
+        if ($this->defaultDryRun && !isset($flags['approve']) && !isset($flags['dry-run'])) {
             $flags['dry-run'] = true;
         }
 
         $dryRun = $this->resolveDryRun($flags);
+
+        // These should never throw just because params had nulls.
         $this->logIntent($params, $flags, $dryRun);
         $this->guardDestructive($flags, $dryRun);
 
         return [$args, $flags];
     }
+
 
     protected function resolveDryRun(array $flags): bool
     {

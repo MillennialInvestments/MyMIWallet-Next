@@ -4003,7 +4003,11 @@
         "docs/ops/spark_known_issues.md": {
             "hash": "2972acdac8291a9fb18f8f07185fcf42096e0827127d5a13178c7c9b1dc79524",
             "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260202-022437/summary.md": {
+            "hash": "b6405fdae5371cef443b7079d738479244cd2750f1aff5a9f5b8ac3377e5577a",
+            "mtime": "2026-02-02"
         }
     },
-    "last_run": "2026-02-01T23:48:59Z"
+    "last_run": "2026-02-02T13:49:31Z"
 }
