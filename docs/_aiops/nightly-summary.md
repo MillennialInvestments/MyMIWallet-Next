@@ -1,9 +1,9 @@
 # AI-Ops: Nightly Summary
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-02T02:28:47Z
+> Run: 2026-02-02T13:49:31Z
 
 ## Docs
-- Changed docs: 1
+- Changed docs: 0
 - Total docs scanned: 1002
 
 ## Gaps (heuristic)

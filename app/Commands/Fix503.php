@@ -687,10 +687,26 @@ class Fix503 extends SafeBaseCommand
 
     private function guardPathForSecrets(string $path): void
     {
-        $real = realpath(dirname($path));
-        if ($real === false || ! str_starts_with($real, ROOTPATH . 'docs/aiops')) {
+        $path = trim($path);
+
+        if ($path === '') {
+            throw new \RuntimeException('Refusing to write: empty path');
+        }
+
+        // Normalize to an absolute rooted path.
+        $rootedPath = str_starts_with($path, ROOTPATH)
+            ? $path
+            : ROOTPATH . ltrim($path, '/');
+
+        // Enforce: must be inside ROOTPATH/docs/aiops/
+        $allowedRoot = rtrim(ROOTPATH, '/') . '/docs/aiops/';
+        $normalized  = str_replace('\\', '/', $rootedPath);
+
+        if (! str_starts_with($normalized, $allowedRoot)) {
             throw new \RuntimeException('Refusing to write outside docs/aiops');
         }
+
+        // Note: do NOT use realpath() here because target directories may not exist yet.
     }
 
     private function runCliEnv(CommandRunner $runner, bool $afterFix = false): bool

@@ -5,7 +5,6 @@ namespace App\Commands\AiOps;
 use App\Commands\SafeBaseCommand;
 use App\Commands\Support\ArtifactHelper;
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\CLI\Command;
 
 class Run extends SafeBaseCommand
 {
@@ -33,7 +32,7 @@ class Run extends SafeBaseCommand
 
         if (!is_file($worker)) {
             CLI::error("AI-Ops worker not found: {$worker}");
-            return Command::FAILURE;
+            return EXIT_ERROR;
         }
 
         CLI::write("Worker: {$worker}");
@@ -59,7 +58,7 @@ class Run extends SafeBaseCommand
 
             CLI::newLine();
             CLI::write('[DRY RUN] No files were modified.', 'yellow');
-            return Command::SUCCESS;
+            return EXIT_SUCCESS;
         }
 
         $cmd = escapeshellcmd(PHP_BINARY) . ' '
@@ -75,7 +74,7 @@ class Run extends SafeBaseCommand
 
         if ($exitCode !== 0) {
             CLI::error("AI-Ops worker exited with code {$exitCode}");
-            return Command::FAILURE;
+            return EXIT_ERROR;
         }
 
         CLI::write('AI-Ops worker completed successfully.', 'green');
@@ -91,6 +90,6 @@ class Run extends SafeBaseCommand
             CLI::write('No nightly-summary.md found yet.', 'yellow');
         }
 
-        return Command::SUCCESS;
+        return EXIT_SUCCESS;
     }
 }
