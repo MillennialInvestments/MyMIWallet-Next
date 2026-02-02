@@ -49,11 +49,6 @@ class CommandsInventory extends SafeBaseCommand
         }
 
         $files = [];
-        if (! class_exists(\RecursiveDirectoryIterator::class)) {
-            CLI::error('RecursiveDirectoryIterator unavailable; cannot scan command files.');
-            return EXIT_ERROR;
-        }
-
         $iterator = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator(APPPATH . 'Commands')
         );
