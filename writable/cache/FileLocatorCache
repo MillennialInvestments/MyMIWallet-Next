@@ -279,6 +279,57 @@
         ),
       ),
     ),
+    'Config/Factory' => 
+    array (
+      'php' => 
+      array (
+        1 => 
+        array (
+          0 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Config/Factory.php',
+        ),
+      ),
+    ),
+    'Helpers/cookie_helper' => 
+    array (
+      'php' => 
+      array (
+        1 => 
+        array (
+          0 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Helpers/cookie_helper.php',
+        ),
+      ),
+    ),
+    'Language/en/Auth.php' => 
+    array (
+      'php' => 
+      array (
+        0 => 
+        array (
+          0 => '/home/mymiteam/mymiwallet/site/current/vendor/myth/auth/src/Language/en/Auth.php',
+          1 => '/home/mymiteam/mymiwallet/site/current/app/Language/en/Auth.php',
+        ),
+      ),
+    ),
+    'Helpers/env_helper' => 
+    array (
+      'php' => 
+      array (
+        1 => 
+        array (
+          0 => '/home/mymiteam/mymiwallet/site/current/app/Helpers/env_helper.php',
+        ),
+      ),
+    ),
+    'Language/en/Errors.php' => 
+    array (
+      'php' => 
+      array (
+        0 => 
+        array (
+          0 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Language/en/Errors.php',
+        ),
+      ),
+    ),
   ),
   'findQualifiedNameFromPath' => 
   array (
@@ -448,6 +499,7 @@
     '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/SampleURIGenerator.php' => 'CodeIgniter\\Commands\\Utilities\\Routes\\SampleURIGenerator',
     '/home/mymiteam/mymiwallet/site/current/vendor/tatter/alerts/src/Config/Alerts.php' => 'Tatter\\Alerts\\Config\\Alerts',
     '/home/mymiteam/mymiwallet/site/current/vendor/tatter/audits/src/Config/Audits.php' => 'Tatter\\Audits\\Config\\Audits',
+    '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Config/Factory.php' => 'CodeIgniter\\Config\\Factory',
   ),
   'listFiles' => 
   array (
@@ -689,5 +741,57 @@
     '/home/mymiteam/mymiwallet/site/current/app/Database/Migrations/2026-04-15-000100_CreateChatGovernanceTables.php' => 'App\\Database\\Migrations\\CreateChatGovernanceTables',
     '/home/mymiteam/mymiwallet/site/current/app/Config/Filters.php' => 'Config\\Filters',
     '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Config/Filters.php' => 'CodeIgniter\\Config\\Filters',
+  ),
+  'locateFile' => 
+  array (
+    'App\\Views\\Auth\\login.php' => 
+    array (
+      'Views' => 
+      array (
+        'php' => '/home/mymiteam/mymiwallet/site/current/app/Views/Auth/login.php',
+      ),
+    ),
+    'App\\Views\\Auth\\_message_block.php' => 
+    array (
+      'Views' => 
+      array (
+        'php' => '/home/mymiteam/mymiwallet/site/current/app/Views/Auth/_message_block.php',
+      ),
+    ),
+    'App\\Views\\partials\\auth_flash.php' => 
+    array (
+      'Views' => 
+      array (
+        'php' => '/home/mymiteam/mymiwallet/site/current/app/Views/partials/auth_flash.php',
+      ),
+    ),
+    'App\\Views\\Auth\\layout.php' => 
+    array (
+      'Views' => 
+      array (
+        'php' => '/home/mymiteam/mymiwallet/site/current/app/Views/Auth/layout.php',
+      ),
+    ),
+    'App\\Views\\themes\\public\\layouts\\header_min.php' => 
+    array (
+      'Views' => 
+      array (
+        'php' => '/home/mymiteam/mymiwallet/site/current/app/Views/themes/public/layouts/header_min.php',
+      ),
+    ),
+    'App\\Views\\themes\\public\\layouts\\_sitenav.php' => 
+    array (
+      'Views' => 
+      array (
+        'php' => '/home/mymiteam/mymiwallet/site/current/app/Views/themes/public/layouts/_sitenav.php',
+      ),
+    ),
+    'App\\Views\\themes\\public\\layouts\\footer.php' => 
+    array (
+      'Views' => 
+      array (
+        'php' => '/home/mymiteam/mymiwallet/site/current/app/Views/themes/public/layouts/footer.php',
+      ),
+    ),
   ),
 );

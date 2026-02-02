@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-01T18:25:51Z
+> Run: 2026-02-01T23:48:59Z
 
 - docs/CRON.md
   - Last updated: 2026-01-30
@@ -57,18 +57,36 @@
   - Last updated: 2026-01-04
   - Change type: unchanged
 - docs/aiops/README.md
-  - Last updated: 2026-01-31
-  - Change type: unchanged
+  - Last updated: 2026-02-01
+  - Change type: modified
 - docs/aiops/api-audit.md
   - Last updated: 2026-02-01
   - Change type: unchanged
 - docs/aiops/artifacts/config-drift/20260201-180724/summary.md
   - Last updated: 2026-02-01
+  - Change type: unchanged
+- docs/aiops/artifacts/config-drift/20260201-183558/summary.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/aiops/artifacts/config-drift/20260201-184056/summary.md
+  - Last updated: 2026-02-01
   - Change type: new
 - docs/aiops/artifacts/db-drift/20260201-181038/summary.md
   - Last updated: 2026-02-01
+  - Change type: unchanged
+- docs/aiops/artifacts/db-drift/20260201-184402/summary.md
+  - Last updated: 2026-02-01
   - Change type: new
 - docs/aiops/artifacts/growth-retention-watch/20260201-180732/summary.md
+  - Last updated: 2026-02-01
+  - Change type: unchanged
+- docs/aiops/artifacts/growth-retention-watch/20260201-183610/summary.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/aiops/artifacts/growth-retention-watch/20260201-184102/summary.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/aiops/artifacts/marketing-automation-audit/20260201-185227/summary.md
   - Last updated: 2026-02-01
   - Change type: new
 - docs/aiops/artifacts/ops-spark-reset/20260201-143924/summary.md
@@ -83,10 +101,37 @@
 - docs/aiops/artifacts/ops-spark-reset/20260201-180030/summary.md
   - Last updated: 2026-02-01
   - Change type: unchanged
+- docs/aiops/artifacts/ops-spark-reset/20260201-185612/summary.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/aiops/artifacts/ops-spark-reset/20260201-234406/summary.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/aiops/artifacts/revenue-cost-forecast/20260201-180746/summary.md
+  - Last updated: 2026-02-01
+  - Change type: unchanged
+- docs/aiops/artifacts/revenue-cost-forecast/20260201-183620/summary.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/aiops/artifacts/revenue-cost-forecast/20260201-184109/summary.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/aiops/artifacts/runtime-cache-boot/20260201-185706/summary.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/aiops/artifacts/runtime-triage/20260201-185742/summary.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/aiops/artifacts/security-secrets-audit/20260201-185757/summary.md
   - Last updated: 2026-02-01
   - Change type: new
 - docs/aiops/artifacts/ux-journey-audit/20260201-180810/summary.md
+  - Last updated: 2026-02-01
+  - Change type: unchanged
+- docs/aiops/artifacts/ux-journey-audit/20260201-183649/summary.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/aiops/artifacts/ux-journey-audit/20260201-184200/summary.md
   - Last updated: 2026-02-01
   - Change type: new
 - docs/aiops/command-inventory.md
@@ -144,11 +189,14 @@
   - Last updated: 2025-11-08
   - Change type: unchanged
 - docs/audit/alerts_audit_last_run.md
-  - Last updated: 2026-01-21
-  - Change type: unchanged
+  - Last updated: 2026-02-01
+  - Change type: modified
 - docs/audit/auth_audit_last_run.md
   - Last updated: 2026-02-01
   - Change type: unchanged
+- docs/audit/news_audit_last_run.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/auth/auth_smoke.md
   - Last updated: 2026-01-21
   - Change type: unchanged
@@ -338,18 +386,21 @@
 - docs/codex/05_pr5_n8n_docs_automation.md
   - Last updated: 2026-01-04
   - Change type: unchanged
+- docs/codex/reviews/Spark-Analysis-2026-02-01.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/codex/reviews/review-2026-01-31.md
   - Last updated: 2026-01-31
   - Change type: unchanged
 - docs/codex/reviews/review-2026-02-01.md
   - Last updated: 2026-02-01
-  - Change type: new
+  - Change type: unchanged
 - docs/codex/reviews/review-prompt-2026-01-31.md
   - Last updated: 2026-01-31
   - Change type: unchanged
 - docs/codex/reviews/review-prompt-2026-02-01.md
   - Last updated: 2026-02-01
-  - Change type: new
+  - Change type: unchanged
 - docs/communities/discord.md
   - Last updated: 2025-12-27
   - Change type: unchanged
@@ -652,7 +703,7 @@
   - Change type: unchanged
 - docs/gap_tracker/reports/gap_sync_2026-02-01.md
   - Last updated: 2026-02-01
-  - Change type: new
+  - Change type: modified
 - docs/go-live/README.md
   - Last updated: 2025-12-27
   - Change type: unchanged
@@ -816,8 +867,8 @@
   - Last updated: 2026-01-29
   - Change type: unchanged
 - docs/management/Command_Runtime_Audit.md
-  - Last updated: 2026-01-31
-  - Change type: unchanged
+  - Last updated: 2026-02-01
+  - Change type: modified
 - docs/management/Management_Command_Map.md
   - Last updated: 2026-02-01
   - Change type: unchanged
@@ -946,7 +997,7 @@
   - Change type: unchanged
 - docs/mysql/adjustments/adjustment_log_2026-02-01.md
   - Last updated: 2026-02-01
-  - Change type: new
+  - Change type: modified
 - docs/mysql/squeeze_scorecard.md
   - Last updated: 2026-01-23
   - Change type: unchanged
@@ -1064,12 +1115,30 @@
 - docs/mysql/tables/bf_audit_trail.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_auth_groups_users.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_auth_health_runs.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_auth_identities.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/mysql/tables/bf_auth_logins.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/mysql/tables/bf_auth_permissions_users.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_auth_registration_attempts.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_auth_remember_tokens.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/mysql/tables/bf_auth_token_logins.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_backup_manifests.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1081,19 +1150,25 @@
   - Change type: modified
 - docs/mysql/tables/bf_chat_archives.md
   - Last updated: 2026-02-01
-  - Change type: new
+  - Change type: modified
 - docs/mysql/tables/bf_chat_steps.md
   - Last updated: 2026-02-01
-  - Change type: new
+  - Change type: modified
 - docs/mysql/tables/bf_chat_tool_runs.md
   - Last updated: 2026-02-01
   - Change type: modified
 - docs/mysql/tables/bf_circuit_breakers.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_coin_redistribution_items.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_company_logos.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_compliance_audits.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_contactus.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1184,6 +1259,12 @@
 - docs/mysql/tables/bf_discord_user_achievements.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_email_bounces.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/mysql/tables/bf_email_campaigns.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_email_distribution_lists.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1211,6 +1292,9 @@
 - docs/mysql/tables/bf_email_user_drip_progress.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_emails_campaigns.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_employees.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1277,6 +1361,9 @@
 - docs/mysql/tables/bf_exchanges_orders.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_exchanges_transactions.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_external_sites.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1307,6 +1394,9 @@
 - docs/mysql/tables/bf_financial_goals.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_ftp_file_data.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_gdpr_requests.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1454,24 +1544,48 @@
 - docs/mysql/tables/bf_market_news.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_marketing_ab_tests.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/mysql/tables/bf_marketing_ab_variants.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_marketing_analysis.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_marketing_audience_selection.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/mysql/tables/bf_marketing_best_times.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_marketing_blog_posts.md
   - Last updated: 2026-02-01
   - Change type: modified
 - docs/mysql/tables/bf_marketing_buffer.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_marketing_buffer_posts.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_marketing_calendar.md
   - Last updated: 2026-02-01
   - Change type: modified
 - docs/mysql/tables/bf_marketing_campaigns.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_marketing_compliance_rules.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_marketing_content_enrichment_cache.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_marketing_content_fingerprints.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/mysql/tables/bf_marketing_content_versions.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_marketing_email_bounces.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1484,6 +1598,12 @@
 - docs/mysql/tables/bf_marketing_email_templates.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_marketing_engagements.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/mysql/tables/bf_marketing_events.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_marketing_generated_content.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1493,6 +1613,12 @@
 - docs/mysql/tables/bf_marketing_ideas.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_marketing_job_runs.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/mysql/tables/bf_marketing_media_assets.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_marketing_news_content.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1508,6 +1634,9 @@
 - docs/mysql/tables/bf_marketing_page_views_per_user.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_marketing_pages_missing.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_marketing_platform_rules.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1520,12 +1649,18 @@
 - docs/mysql/tables/bf_marketing_posts.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_marketing_promotions.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_marketing_raw_emails.md
   - Last updated: 2026-02-01
   - Change type: modified
 - docs/mysql/tables/bf_marketing_schedule.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_marketing_schedule_content.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_marketing_scraper.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1535,6 +1670,9 @@
 - docs/mysql/tables/bf_marketing_search_engine_usage.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_marketing_search_enrichment_log.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_marketing_social_templates.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1552,31 +1690,34 @@
   - Change type: modified
 - docs/mysql/tables/bf_mdit_deposits.md
   - Last updated: 2026-02-01
-  - Change type: new
+  - Change type: modified
 - docs/mysql/tables/bf_mdit_disclosures_acceptance.md
   - Last updated: 2026-02-01
-  - Change type: new
+  - Change type: modified
 - docs/mysql/tables/bf_mdit_investor_profiles.md
   - Last updated: 2026-02-01
-  - Change type: new
+  - Change type: modified
 - docs/mysql/tables/bf_mdit_nav_snapshots.md
   - Last updated: 2026-02-01
-  - Change type: new
+  - Change type: modified
 - docs/mysql/tables/bf_mdit_redemptions.md
   - Last updated: 2026-02-01
-  - Change type: new
+  - Change type: modified
 - docs/mysql/tables/bf_mdit_token_ledger.md
   - Last updated: 2026-02-01
-  - Change type: new
+  - Change type: modified
 - docs/mysql/tables/bf_mdit_wallets.md
   - Last updated: 2026-02-01
-  - Change type: new
+  - Change type: modified
 - docs/mysql/tables/bf_mdit_webhook_events.md
   - Last updated: 2026-02-01
-  - Change type: new
+  - Change type: modified
 - docs/mysql/tables/bf_messaging.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_migrations.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_mymi_news.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1589,6 +1730,9 @@
 - docs/mysql/tables/bf_mymigold_overview.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_notification_outbox.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_onboarding_progress.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1615,7 +1759,7 @@
   - Change type: modified
 - docs/mysql/tables/bf_ops_spark_health.md
   - Last updated: 2026-02-01
-  - Change type: new
+  - Change type: modified
 - docs/mysql/tables/bf_page_seo.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1661,6 +1805,9 @@
 - docs/mysql/tables/bf_privacy_requests.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_project_comments.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_project_commitments.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1673,6 +1820,9 @@
 - docs/mysql/tables/bf_project_scheduling.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_project_task_registry.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_project_token_allocations.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1685,12 +1835,48 @@
 - docs/mysql/tables/bf_projects.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_projects_auctions.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/mysql/tables/bf_projects_coin_redistributions.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/mysql/tables/bf_projects_commitments.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/mysql/tables/bf_projects_distributions.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_projects_inbox.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_projects_insurance_reserve.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/mysql/tables/bf_projects_investments.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/mysql/tables/bf_projects_providers.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/mysql/tables/bf_projects_real_estate.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/mysql/tables/bf_projects_revenue.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_projects_revenue_distributions.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_projects_revenue_distributions_items.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/mysql/tables/bf_projects_revenue_events.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/mysql/tables/bf_projects_token_allocations.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_push_subscriptions.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1706,6 +1892,9 @@
 - docs/mysql/tables/bf_referrals.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_retirement_goals.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_role_user.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1721,6 +1910,9 @@
 - docs/mysql/tables/bf_search_logs.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_sec_filings.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_security.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1736,6 +1928,9 @@
 - docs/mysql/tables/bf_services.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_settings.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_site_settings_overrides.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1766,6 +1961,9 @@
 - docs/mysql/tables/bf_squeeze_zoomout.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_strategy_progress.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_suggestions.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1814,6 +2012,9 @@
 - docs/mysql/tables/bf_trade_alert_enrichment.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_trade_plans.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_user_2fa.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1823,6 +2024,9 @@
 - docs/mysql/tables/bf_user_consent.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_user_discord_rewards.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_user_employment.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1874,18 +2078,30 @@
 - docs/mysql/tables/bf_user_tokens.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_user_trading_accounts.md
+  - Last updated: 2026-02-01
+  - Change type: new
+- docs/mysql/tables/bf_user_trading_profile.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_user_wallets.md
   - Last updated: 2026-02-01
   - Change type: modified
 - docs/mysql/tables/bf_users.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_users_2fa.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_users_account_ledger.md
   - Last updated: 2026-02-01
   - Change type: modified
 - docs/mysql/tables/bf_users_accounting_accounts.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_users_alerts.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_users_anonymous.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1907,6 +2123,9 @@
 - docs/mysql/tables/bf_users_budgeting_forecast.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_users_budgeting_goals.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_users_certified_advisors.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1961,6 +2180,9 @@
 - docs/mysql/tables/bf_users_notification_subscriptions.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_users_onboarding.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_users_post_likes.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -1988,12 +2210,18 @@
 - docs/mysql/tables/bf_users_referrals.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_users_retirement.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_users_retirement_goals.md
   - Last updated: 2026-02-01
   - Change type: modified
 - docs/mysql/tables/bf_users_retirement_plans.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_users_retirement_progress_logs.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_users_services.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -2018,6 +2246,9 @@
 - docs/mysql/tables/bf_users_trades_configs.md
   - Last updated: 2026-02-01
   - Change type: modified
+- docs/mysql/tables/bf_users_trades_logs.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/mysql/tables/bf_users_trading_accounts.md
   - Last updated: 2026-02-01
   - Change type: modified
@@ -2258,6 +2489,9 @@
 - docs/ops/fix503.md
   - Last updated: 2026-01-25
   - Change type: unchanged
+- docs/ops/legacy_psr4_exceptions.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/ops/log-fixes/2026-01-01.md
   - Last updated: 2026-01-01
   - Change type: unchanged
@@ -2330,6 +2564,9 @@
 - docs/ops/sidebar_toggle_changelog.md
   - Last updated: 2026-01-02
   - Change type: unchanged
+- docs/ops/spark_known_issues.md
+  - Last updated: 2026-02-01
+  - Change type: new
 - docs/ops/unexpected-token-lt-audit.md
   - Last updated: 2025-11-08
   - Change type: unchanged
@@ -2391,8 +2628,8 @@
   - Last updated: 2025-11-08
   - Change type: unchanged
 - docs/product/Next_Codex_Tasks.md
-  - Last updated: 2026-01-29
-  - Change type: unchanged
+  - Last updated: 2026-02-01
+  - Change type: modified
 - docs/repo-review.md
   - Last updated: 2025-11-08
   - Change type: unchanged

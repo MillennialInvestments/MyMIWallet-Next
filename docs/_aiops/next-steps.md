@@ -1,6 +1,6 @@
 # AI-Ops: Next Steps (Worker-Only Suggestions)
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-01T18:25:51Z
+> Run: 2026-02-01T23:48:59Z
 
 - [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
     - Reason: Code exists with no obvious doc reference (heuristic)
@@ -41,7 +41,7 @@
 - [DOC ONLY] Review stale doc: `docs/adr/_index.md`
     - Reason: Doc unchanged for 85 days
 - [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
-    - Reason: Doc unchanged for 70 days
+    - Reason: Doc unchanged for 71 days
 - [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
     - Reason: Doc unchanged for 85 days
 - [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`

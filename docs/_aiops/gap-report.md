@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-01T18:25:51Z
+> Run: 2026-02-01T23:48:59Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Models/AIOpsBudgetModel.php
@@ -403,7 +403,7 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Views/Alerts/resources/rh-keygen.php
   - ⚠️ No obvious doc match found (heuristic)
-- … and 919 more
+- … and 918 more
 
 ## Documented Items With No Obvious Code Match (best-effort)
 - docs/CRON.md
@@ -479,6 +479,8 @@
 - docs/audit/alerts_audit_last_run.md
   - ❌ No obvious code match found (heuristic)
 - docs/audit/auth_audit_last_run.md
+  - ❌ No obvious code match found (heuristic)
+- docs/audit/news_audit_last_run.md
   - ❌ No obvious code match found (heuristic)
 - docs/auth/auth_smoke.md
   - ❌ No obvious code match found (heuristic)
@@ -597,6 +599,8 @@
 - docs/codex/04_pr4_chat_management_ui.md
   - ❌ No obvious code match found (heuristic)
 - docs/codex/05_pr5_n8n_docs_automation.md
+  - ❌ No obvious code match found (heuristic)
+- docs/codex/reviews/Spark-Analysis-2026-02-01.md
   - ❌ No obvious code match found (heuristic)
 - docs/codex/reviews/review-2026-01-31.md
   - ❌ No obvious code match found (heuristic)
@@ -802,8 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/health/health-services.md
   - ❌ No obvious code match found (heuristic)
-- docs/health/health_checks_matrix.md
-  - ❌ No obvious code match found (heuristic)
-- docs/health/health_runner_design.md
-  - ❌ No obvious code match found (heuristic)
-- … and 673 more
+- … and 737 more
