@@ -103,7 +103,7 @@ class ArtifactHelper
         $rawRoot = rtrim(WRITEPATH, '/') . '/aiops/artifacts';
 
         if (! str_starts_with($artifactDir, $docsRoot) && ! str_starts_with($artifactDir, $rawRoot)) {
-            CLI::error('Artifact directory must be inside docs/aiops/artifacts or writable/aiops/artifacts.');
+            log_message('warning', 'Artifact path outside policy', ['path' => $artifactDir]);
             return false;
         }
 
@@ -155,5 +155,60 @@ class ArtifactHelper
         }
 
         return rtrim(ROOTPATH, '/') . '/' . ltrim($path, '/');
+    }
+
+    public static function safeWrite(string $path, string $contents): bool
+    {
+        $resolved = self::resolvePath($path);
+        if (! self::guardPath($resolved)) {
+            return false;
+        }
+
+        $dir = dirname($resolved);
+        if (! self::ensureDir($dir)) {
+            CLI::error('Unable to create directory for file: ' . $resolved);
+            return false;
+        }
+
+        if (file_put_contents($resolved, $contents) === false) {
+            CLI::error('Unable to write file: ' . $resolved);
+            return false;
+        }
+
+        return true;
+    }
+
+    public static function safeAppend(string $path, string $contents): bool
+    {
+        $resolved = self::resolvePath($path);
+        if (! self::guardPath($resolved)) {
+            return false;
+        }
+
+        $dir = dirname($resolved);
+        if (! self::ensureDir($dir)) {
+            CLI::error('Unable to create directory for file: ' . $resolved);
+            return false;
+        }
+
+        if (file_put_contents($resolved, $contents, FILE_APPEND) === false) {
+            CLI::error('Unable to append file: ' . $resolved);
+            return false;
+        }
+
+        return true;
+    }
+
+    private static function guardPath(string $path): bool
+    {
+        $docsRoot = rtrim(ROOTPATH, '/') . '/docs/aiops';
+        $rawRoot = rtrim(WRITEPATH, '/') . '/aiops';
+
+        if (! str_starts_with($path, $docsRoot) && ! str_starts_with($path, $rawRoot)) {
+            CLI::error('Refusing to write outside docs/aiops or writable/aiops.');
+            return false;
+        }
+
+        return true;
     }
 }

@@ -124,7 +124,11 @@ class ProposePr extends SafeBaseCommand
 
         $this->safeWriteFile($prMdPath, $prMd);
         $this->safeWriteFile($manifestPath, json_encode($manifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL);
-        $this->safeWriteFile($patchPath, file_get_contents($patch) ?: '');
+        $patchContent = file_get_contents($patch);
+        if ($patchContent === false) {
+            return $this->failWith(21, "Unable to read patch file: {$patch}");
+        }
+        $this->safeWriteFile($patchPath, $patchContent);
 
         $artifacts = [$prMdPath, $manifestPath, $patchPath];
 
