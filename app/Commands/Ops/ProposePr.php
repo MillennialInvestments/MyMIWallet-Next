@@ -4,6 +4,7 @@ namespace App\Commands\Ops;
 
 use App\Commands\SafeBaseCommand;
 use App\Commands\Support\ArtifactHelper;
+use App\Libraries\Ops\PrOutboxWriter;
 
 class ProposePr extends SafeBaseCommand
 {
@@ -134,6 +135,7 @@ class ProposePr extends SafeBaseCommand
 
         // Export step is mutating tracked repo state => require --approve
         if (!$approve) {
+            $this->writePrOutboxBundle($title, $body, $risk, $validation['paths'], $patchContent);
             return $this->emitResult([
                 'status' => 'success',
                 'exit_code' => 1,
@@ -150,6 +152,7 @@ class ProposePr extends SafeBaseCommand
 
         // Export to tracked outbox
         $this->copyBundle($writableDir, $outboxDir);
+        $this->writePrOutboxBundle($title, $body, $risk, $validation['paths'], $patchContent);
 
         return $this->emitResult([
             'status' => 'success',
@@ -252,6 +255,24 @@ class ProposePr extends SafeBaseCommand
         }
 
         return ['ok' => true, 'error' => '', 'paths' => $paths];
+    }
+
+    /**
+     * @param array<int, string> $paths
+     */
+    private function writePrOutboxBundle(string $title, string $body, string $risk, array $paths, string $patchContent): void
+    {
+        $writer = new PrOutboxWriter();
+        $writer->write([
+            'date' => date('Y-m-d'),
+            'title' => $title,
+            'source' => $this->name,
+            'why' => 'Generated via ops:propose-pr.',
+            'summary' => $body,
+            'files' => $paths,
+            'risk' => $risk,
+            'patch' => $patchContent,
+        ]);
     }
 
     private function extractPatchPaths(string $content): array
