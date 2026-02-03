@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-02T13:49:31Z
+> Run: 2026-02-03T02:00:01Z
 
 - docs/CRON.md
   - Last updated: 2026-01-30
@@ -56,6 +56,9 @@
 - docs/aiops-budgeting.md
   - Last updated: 2026-01-04
   - Change type: unchanged
+- docs/aiops/ARTIFACT_SANDBOX.md
+  - Last updated: 2026-02-02
+  - Change type: new
 - docs/aiops/README.md
   - Last updated: 2026-02-01
   - Change type: unchanged
@@ -161,6 +164,9 @@
 - docs/aiops/runbooks/security-hardening.md
   - Last updated: 2026-01-01
   - Change type: unchanged
+- docs/aiops/scraper/_index.md
+  - Last updated: 2026-02-03
+  - Change type: new
 - docs/aiops/selfhosted-stack.md
   - Last updated: 2026-01-02
   - Change type: unchanged
