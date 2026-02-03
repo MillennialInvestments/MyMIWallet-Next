@@ -4,7 +4,7 @@ namespace App\Libraries;
 use App\Config\{APIs, Auth, SiteSettings, SocialMedia};
 use App\Libraries\AlertChannels\{DiscordChannel, EmailChannel, ZapierChannel};
 use App\Libraries\AlertSources\{ManualEntrySource, MarketAuxNewsSource, ThinkOrSwimEmailSource};
-use App\Models\{AlertsModel, TrackerModel, UserModel};
+use App\Models\{AlertsModel, ScannerTaxonomyModel, TrackerModel, UserModel};
 use App\Libraries\MyMINews;
 use App\Modules\APIs\Models\InvestmentsNewsModel;
 use App\Modules\APIs\Models\InvestmentsTickersModel;
@@ -12,6 +12,7 @@ use CodeIgniter\Database\BaseConnection;
 use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
 use App\Libraries\{BaseLoader, KimiClient, MyMIAlphaVantage, MyMIDiscord, MyMIInvestments, ScannerRouter};
+use App\Services\ScannerTaxonomyService;
 use App\Libraries\AlertJobQueue;
 // use App\Libraries\{MyMICoin, MyMIGold, MyMIWallet};
 
@@ -429,6 +430,28 @@ class MyMIAlerts
         return $result;
     }
 
+    private function rememberScannerTaxonomy(string $scannerName, string $subject, string $body): void
+    {
+        $scannerName = trim($scannerName);
+        if ($scannerName === '') {
+            return;
+        }
+
+        try {
+            $service = new ScannerTaxonomyService();
+            $taxonomy = $service->build($scannerName, $subject, $body);
+            $model = new ScannerTaxonomyModel();
+            $model->rememberScanner([
+                'scanner_name_raw' => $taxonomy['scanner_name_raw'],
+                'scanner_key' => $taxonomy['scanner_key'],
+                'scanner_family' => $taxonomy['scanner_family'],
+                'default_timeframe' => $taxonomy['timeframe'],
+            ]);
+        } catch (\Throwable $e) {
+            log_message('warning', 'Scanner taxonomy insert skipped: {msg}', ['msg' => $e->getMessage()]);
+        }
+    }
+
     private function normalizeScannerName(?string $name): ?string
     {
         if ($name === null || $name === '') {
@@ -780,6 +803,7 @@ class MyMIAlerts
         }
 
         $scanDetails = $this->parseScannerEnvelope($subject . ' ' . $body);
+        $this->rememberScannerTaxonomy($scanDetails['name'] ?? $subject, $subject, $body);
         $category    = $this->determineCategory($subject, $scanDetails['name']);
         $classification = $this->classifyScannerAlert($category);
 
