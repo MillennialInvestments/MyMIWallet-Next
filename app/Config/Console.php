@@ -55,8 +55,10 @@ class Console extends BaseConfig
         \App\Commands\Ops\CommandsInventory::class,
         \App\Commands\Ops\CommandsLint::class,
         \App\Commands\Ops\FilesystemLint::class,
+        \App\Commands\Ops\AlertsIngest::class,
         \App\Commands\Ops\NextSteps::class,
         \App\Commands\Ops\NextStepsSync::class,
+        \App\Commands\Ops\NextStepsSyncManual::class,
         \App\Commands\Ops\ProposePr::class,
         \App\Commands\Ops\SparkReset::class,
         \App\Commands\OpsWork::class,
@@ -69,6 +71,7 @@ class Console extends BaseConfig
         \App\Commands\Codex\Review::class,
         \App\Commands\Codex\ReviewList::class,
         \App\Commands\Codex\ReviewCommit::class,
+        \App\Commands\Codex\ReviewPrOutbox::class,
         \App\Commands\Codex\ReviewPublish::class,
 
         /*

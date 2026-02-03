@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Libraries\Brokers\ThinkorSwimParser;
 use App\Libraries\MyMIDiscord;
+use App\Services\ScannerTaxonomyService;
 use CodeIgniter\Model;
 use Config\APIs;
 
@@ -2212,7 +2213,10 @@ class AlertsModel extends Model
 
             $this->triggerForecasting((int) $existing['id'], $ticker);
 
-            return array_merge($existing, $update);
+            return array_merge($existing, $update, [
+                'status' => 'updated',
+                'id' => $existing['id'],
+            ]);
         }
 
         $insert = [
@@ -2233,6 +2237,7 @@ class AlertsModel extends Model
 
         $this->triggerForecasting((int) $insert['id'], $ticker);
 
+        $insert['status'] = 'inserted';
         return $insert;
     }
 
@@ -2321,6 +2326,8 @@ class AlertsModel extends Model
             'inserted' => 0,
             'duplicates' => 0,
             'parse_failures' => 0,
+            'alerts_created' => 0,
+            'alerts_updated' => 0,
             'started_at' => date('Y-m-d H:i:s'),
         ];
 
@@ -2369,6 +2376,7 @@ class AlertsModel extends Model
         $subject = (string) ($record['email_subject'] ?? '');
         $body    = (string) ($record['email_body'] ?? '');
         $text    = trim($subject . ' ' . $body);
+        $scannerMeta = $this->buildScannerMeta($record, $subject, $body);
 
         if ($report === null) {
             $report = [];
@@ -2412,6 +2420,7 @@ class AlertsModel extends Model
             $upserted = $this->upsertExecutionAlert($alertData);
             if ($upserted['status'] === 'inserted') {
                 $report['inserted'] = ($report['inserted'] ?? 0) + 1;
+                $report['alerts_created'] = ($report['alerts_created'] ?? 0) + 1;
                 $alertId = $upserted['id'] ?? null;
                 $this->recordAlertHistory([
                     'ticker'           => $symbol,
@@ -2426,6 +2435,9 @@ class AlertsModel extends Model
 
                 if ($alertId !== null) {
                     $this->queueExecutionDiscordAlert(array_merge($alertData, ['id' => $alertId]));
+                    if ($scannerMeta !== null) {
+                        $this->recordScannerMeta($alertId, $scannerMeta);
+                    }
                 }
             } elseif ($upserted['status'] === 'duplicate') {
                 $report['duplicates'] = ($report['duplicates'] ?? 0) + 1;
@@ -2463,6 +2475,11 @@ class AlertsModel extends Model
             ];
 
             $upserted = $this->upsertOpenedTradeAlert($alertData);
+            if (($upserted['status'] ?? '') === 'inserted') {
+                $report['alerts_created'] = ($report['alerts_created'] ?? 0) + 1;
+            } elseif (($upserted['status'] ?? '') === 'updated') {
+                $report['alerts_updated'] = ($report['alerts_updated'] ?? 0) + 1;
+            }
 
             $historyPayload = [
                 'ticker'           => $symbol,
@@ -2474,6 +2491,9 @@ class AlertsModel extends Model
             ];
 
             $this->recordAlertHistory($historyPayload);
+            if (! empty($upserted['id']) && $scannerMeta !== null) {
+                $this->recordScannerMeta((int) $upserted['id'], $scannerMeta);
+            }
         }
 
         $report['processed'] = ($report['processed'] ?? 0) + 1;
@@ -2498,6 +2518,46 @@ class AlertsModel extends Model
         return array_values(array_filter($symbols, static function (string $symbol) use ($stoplist): bool {
             return $symbol !== '' && !in_array($symbol, $stoplist, true);
         }));
+    }
+
+    private function buildScannerMeta(array $record, string $subject, string $body): ?array
+    {
+        $rawName = trim((string) ($record['email_subject'] ?? ''));
+        $rawName = preg_replace('/^alert\s*[:\-]\s*/i', '', $rawName);
+        $rawName = $rawName !== '' ? $rawName : trim((string) ($record['category'] ?? ''));
+
+        if ($rawName === '') {
+            return null;
+        }
+
+        $service = new ScannerTaxonomyService();
+        $meta = $service->build($rawName, $subject, $body);
+
+        $taxonomy = new ScannerTaxonomyModel();
+        $taxonomy->rememberScanner([
+            'scanner_name_raw' => $meta['scanner_name_raw'],
+            'scanner_key' => $meta['scanner_key'],
+            'scanner_family' => $meta['scanner_family'],
+            'default_timeframe' => $meta['timeframe'],
+        ]);
+
+        return $meta;
+    }
+
+    private function recordScannerMeta(int $alertId, array $meta): void
+    {
+        helper('json_validation');
+
+        $model = new TradeAlertScannerMetaModel();
+        $model->insert([
+            'alert_id' => $alertId,
+            'scanner_key' => $meta['scanner_key'] ?? 'scanner_unknown',
+            'scanner_family' => $meta['scanner_family'] ?? null,
+            'timeframe' => $meta['timeframe'] ?? null,
+            'signal' => $meta['signal'] ?? null,
+            'tags_json' => aiops_normalize_json($meta['tags'] ?? []),
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
     }
 
     private function parseBrokerExecutionPayload(string $subject, string $body, ?array &$report = null): ?array

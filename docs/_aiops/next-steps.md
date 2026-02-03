@@ -54,3 +54,9 @@
     - Reason: Doc unchanged for 86 days
 - [LOW RISK] Add/verify headers in docs/_aiops outputs
     - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## MANUAL_TODOS
+<!-- AIOPS_MANUAL_TODOS_START -->
+- [ ] Example: Review scraper pacing for 15m cycle
+- [ ] Example: Add LinkedIn post template variants
+<!-- AIOPS_MANUAL_TODOS_END -->

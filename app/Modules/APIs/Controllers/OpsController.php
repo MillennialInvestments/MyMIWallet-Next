@@ -7,6 +7,7 @@ namespace App\Modules\APIs\Controllers;
 use App\Controllers\BaseController;
 use App\Libraries\Ops\OpsReportWriter;
 use App\Libraries\Ops\OpsJobRegistry;
+use App\Models\AiOpsIngestRunModel;
 use App\Models\OpsJobsModel;
 use App\Models\OpsQueueModel;
 use App\Models\OpsRunsModel;
@@ -175,6 +176,35 @@ class OpsController extends BaseController
             'path'     => str_replace(ROOTPATH, '', $latestFile),
             'modified' => date('c', (int) $latestMtime),
             'content'  => file_get_contents($latestFile),
+        ]);
+    }
+
+    public function ingestMetrics(): ResponseInterface
+    {
+        if (($auth = $this->authorizeRequest()) !== true) {
+            return $auth;
+        }
+
+        $limit = (int) ($this->request->getGet('limit') ?? 50);
+        $offset = (int) ($this->request->getGet('offset') ?? 0);
+        if ($limit <= 0 || $limit > 50) {
+            $limit = 50;
+        }
+        if ($offset < 0) {
+            $offset = 0;
+        }
+
+        $model = new AiOpsIngestRunModel();
+        if (! $model->db->tableExists('bf_aiops_ingest_runs')) {
+            return $this->respondError('Ingest metrics table not found', Response::HTTP_NOT_FOUND);
+        }
+
+        $runs = $model->orderBy('id', 'DESC')->findAll($limit, $offset);
+
+        return $this->respond([
+            'limit' => $limit,
+            'offset' => $offset,
+            'runs' => $runs,
         ]);
     }
 
