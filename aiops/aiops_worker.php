@@ -32,6 +32,17 @@ function writeFile(string $path, string $content): void {
     file_put_contents($path, $content);
 }
 
+function extractManualTodosBlock(string $content): ?string {
+    $start = '<!-- AIOPS_MANUAL_TODOS_START -->';
+    $end = '<!-- AIOPS_MANUAL_TODOS_END -->';
+    $pattern = '/## MANUAL_TODOS\s*' . preg_quote($start, '/') . '.*?' . preg_quote($end, '/') . '/s';
+    if (preg_match($pattern, $content, $matches)) {
+        return trim($matches[0]) . "\n";
+    }
+
+    return null;
+}
+
 function listFiles(string $baseDir, string $pattern = '/\.md$/i'): array {
     $out = [];
     $it = new RecursiveIteratorIterator(
@@ -257,6 +268,21 @@ writeFile($aiopsDocsDir . '/stale-docs.md', $stale);
 // 4) Next steps (SAFE MODE)
 $next = "# AI-Ops: Next Steps (Worker-Only Suggestions)\n> Auto-generated. Do not edit manually.\n> Run: {$runStarted}\n\n";
 $nextItems = [];
+$manualBlock = null;
+$manualPath = $aiopsDocsDir . '/next-steps.md';
+if (is_file($manualPath)) {
+    $existing = file_get_contents($manualPath);
+    if (is_string($existing)) {
+        $manualBlock = extractManualTodosBlock($existing);
+    }
+}
+if ($manualBlock === null) {
+    $manualBlock = "## MANUAL_TODOS\n"
+        . "<!-- AIOPS_MANUAL_TODOS_START -->\n"
+        . "- [ ] Example: Review scraper pacing for 15m cycle\n"
+        . "- [ ] Example: Add LinkedIn post template variants\n"
+        . "<!-- AIOPS_MANUAL_TODOS_END -->\n";
+}
 
 // Suggest documenting top undocumented code files
 foreach (array_slice($undocumented, 0, 10) as $u) {
@@ -270,6 +296,7 @@ foreach (array_slice($staleEntries, 0, 10) as $e) {
 $nextItems[] = "[LOW RISK] Add/verify headers in docs/_aiops outputs\n  - Reason: enforce 'Auto-generated' rule and reduce accidental edits";
 
 foreach ($nextItems as $item) $next .= "- " . str_replace("\n", "\n  ", $item) . "\n";
+$next .= "\n" . $manualBlock . "\n";
 writeFile($aiopsDocsDir . '/next-steps.md', $next);
 
 // 5) Spark results (whitelist)

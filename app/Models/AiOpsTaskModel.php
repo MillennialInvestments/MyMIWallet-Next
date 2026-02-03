@@ -102,6 +102,53 @@ class AiOpsTaskModel extends Model
         return $this->find($candidate['id']);
     }
 
+    /**
+     * @param callable(array<string, mixed>): bool $filter
+     */
+    public function claimNextTaskFiltered(string $assignedTo, int $lockMinutes, callable $filter): ?array
+    {
+        $lockMinutes = $lockMinutes > 0 ? $lockMinutes : 15;
+        $now = date('Y-m-d H:i:s');
+        $lockedUntil = date('Y-m-d H:i:s', time() + ($lockMinutes * 60));
+
+        $candidates = $this->builder()
+            ->whereIn('status', ['open', 'queued'])
+            ->groupStart()
+            ->where('locked_at', null)
+            ->orWhere('locked_at <', $now)
+            ->groupEnd()
+            ->orderBy('created_at', 'ASC')
+            ->get(50)
+            ->getResultArray();
+
+        foreach ($candidates as $candidate) {
+            if (! $filter($candidate)) {
+                continue;
+            }
+
+            $this->builder()
+                ->where('id', $candidate['id'])
+                ->whereIn('status', ['open', 'queued'])
+                ->groupStart()
+                ->where('locked_at', null)
+                ->orWhere('locked_at <', $now)
+                ->groupEnd()
+                ->update([
+                    'status' => 'running',
+                    'locked_at' => $lockedUntil,
+                    'locked_by' => $assignedTo,
+                ]);
+
+            if ($this->db->affectedRows() === 0) {
+                continue;
+            }
+
+            return $this->find($candidate['id']);
+        }
+
+        return null;
+    }
+
     public function markRunning(int $taskId, string $assignedTo, int $lockMinutes): bool
     {
         $lockMinutes = $lockMinutes > 0 ? $lockMinutes : 15;

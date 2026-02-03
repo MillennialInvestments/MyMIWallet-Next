@@ -223,6 +223,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->post('Ops/dispatch', 'OpsController::dispatch');
     $routes->post('Ops/ingestReport', 'OpsController::ingestReport');
     $routes->get('Ops/reports/latest', 'OpsController::latestReport');
+    $routes->get('Ops/ingest-metrics', 'OpsController::ingestMetrics');
     $routes->get('Ops/OPcacheReset', 'OpsController::opcacheReset'); // /API/Ops/OPcacheReset
     $routes->group('AiOps', static function($routes) {
         $routes->get('status', 'AiOpsController::status');
