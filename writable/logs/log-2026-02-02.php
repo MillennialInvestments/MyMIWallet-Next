@@ -492,3 +492,12 @@ in SYSTEMPATH/CodeIgniter.php on line 983.
  3 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
  4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
  5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-02 13:58:50 --> Error: Call to a member function loggedIn() on null
+[Method: GET, Route: Blog]
+in APPPATH/Modules/Blog/Controllers/BlogController.php on line 97.
+ 1 SYSTEMPATH/CodeIgniter.php(933): App\Modules\Blog\Controllers\BlogController->index()
+ 2 SYSTEMPATH/CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Modules\Blog\Controllers\BlogController))
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
