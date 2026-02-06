@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2026-03-10-000100_CreateInvestmentForecastingTables.php
 - Model:
-- Code references: app/Database/Migrations/2026-03-10-000100_CreateInvestmentForecastingTables.php:35, app/Database/Migrations/2026-03-10-000100_CreateInvestmentForecastingTables.php:53, app/Database/Migrations/2026-03-10-000100_CreateInvestmentForecastingTables.php:105, app/Database/Migrations/2026-03-10-000100_CreateInvestmentForecastingTables.php:106, app/Models/InvestmentForecastHistoryModel.php:9, docs/aiops/migration_model_audit.md:118, docs/aiops/migration_model_audit.md:228, docs/_aiops/doc-change-log.md:1376, docs/forecasting/06_database_schema.md:22, docs/forecasting/06_database_schema.md:64, docs/forecasting/advanced_forecasting_overview.md:10, docs/spark/categories/forecasting/forecasts-refresh.md:13
+- Code references: app/Database/Migrations/2026-03-10-000100_CreateInvestmentForecastingTables.php:35, app/Database/Migrations/2026-03-10-000100_CreateInvestmentForecastingTables.php:53, app/Database/Migrations/2026-03-10-000100_CreateInvestmentForecastingTables.php:105, app/Database/Migrations/2026-03-10-000100_CreateInvestmentForecastingTables.php:106, app/Models/InvestmentForecastHistoryModel.php:9, docs/codex/reviews/Spark-Analysis-2026-02-01.md:354, docs/codex/reviews/Spark-Analysis-2026-02-01.md:359, docs/codex/reviews/Spark-Analysis-2026-02-01.md:364, docs/codex/reviews/Spark-Analysis-2026-02-01.md:592, docs/aiops/migration_model_audit.md:118, docs/aiops/migration_model_audit.md:228, docs/_aiops/doc-change-log.md:1481, docs/forecasting/06_database_schema.md:22, docs/forecasting/06_database_schema.md:64, docs/forecasting/advanced_forecasting_overview.md:10, docs/spark/categories/forecasting/forecasts-refresh.md:13
 
 ## Create table
 ```sql

@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/Management/Controllers/EmailController.php:57, app/Modules/Management/Controllers/EmailController.php:58, app/Modules/Management/Controllers/EmailController.php:58, docs/_aiops/doc-change-log.md:1079
+- Code references: app/Modules/Management/Controllers/EmailController.php:57, app/Modules/Management/Controllers/EmailController.php:58, app/Modules/Management/Controllers/EmailController.php:58, docs/_aiops/doc-change-log.md:1163
 
 ## Create table
 ```sql

@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2026-04-01-000100_CreateMditPhase1Tables.php
 - Model:
-- Code references: app/Database/Migrations/2026-04-01-000100_CreateMditPhase1Tables.php:94, app/Database/Migrations/2026-04-01-000100_CreateMditPhase1Tables.php:112, app/Database/Migrations/2026-04-01-000100_CreateMditPhase1Tables.php:173, app/Models/MDIT/MditRedemptionModel.php:10, docs/aiops/migration_model_audit.md:128, docs/aiops/migration_model_audit.md:235, docs/_aiops/doc-change-log.md:1565
+- Code references: app/Database/Migrations/2026-04-01-000100_CreateMditPhase1Tables.php:94, app/Database/Migrations/2026-04-01-000100_CreateMditPhase1Tables.php:112, app/Database/Migrations/2026-04-01-000100_CreateMditPhase1Tables.php:173, app/Models/MDIT/MditRedemptionModel.php:10, docs/codex/reviews/Spark-Analysis-2026-02-01.md:596, docs/aiops/migration_model_audit.md:128, docs/aiops/migration_model_audit.md:235, docs/_aiops/doc-change-log.md:1718
 
 ## Create table
 ```sql

@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-03T02:00:01Z
+> Run: 2026-02-06T12:00:01Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Models/AIOpsBudgetModel.php
@@ -444,6 +444,16 @@
   - ❌ No obvious code match found (heuristic)
 - docs/aiops/api-audit.md
   - ❌ No obvious code match found (heuristic)
+- docs/aiops/artifacts/revenue-scan/20260205-025010/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_by_module.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_by_pricing_tier.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_by_user_type.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_full.md
+  - ❌ No obvious code match found (heuristic)
 - docs/aiops/command-inventory.md
   - ❌ No obvious code match found (heuristic)
 - docs/aiops/control-plane.md
@@ -459,6 +469,10 @@
 - docs/aiops/runbooks/security-hardening.md
   - ❌ No obvious code match found (heuristic)
 - docs/aiops/scraper/_index.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/scrapers/_index.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/scrapers/alerts-email-scan.md
   - ❌ No obvious code match found (heuristic)
 - docs/aiops/selfhosted-stack.md
   - ❌ No obvious code match found (heuristic)
@@ -610,9 +624,13 @@
   - ❌ No obvious code match found (heuristic)
 - docs/codex/reviews/review-2026-02-01.md
   - ❌ No obvious code match found (heuristic)
+- docs/codex/reviews/review-2026-02-05.md
+  - ❌ No obvious code match found (heuristic)
 - docs/codex/reviews/review-prompt-2026-01-31.md
   - ❌ No obvious code match found (heuristic)
 - docs/codex/reviews/review-prompt-2026-02-01.md
+  - ❌ No obvious code match found (heuristic)
+- docs/codex/reviews/review-prompt-2026-02-05.md
   - ❌ No obvious code match found (heuristic)
 - docs/communities/linkedin.md
   - ❌ No obvious code match found (heuristic)
@@ -788,22 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/gap_tracker/reports/gap_sync_2026-01-02.md
   - ❌ No obvious code match found (heuristic)
-- docs/gap_tracker/reports/gap_sync_2026-02-01.md
-  - ❌ No obvious code match found (heuristic)
-- docs/go-live/README.md
-  - ❌ No obvious code match found (heuristic)
-- docs/go-live/go_live_checklist.md
-  - ❌ No obvious code match found (heuristic)
-- docs/go-live/operational_usage.md
-  - ❌ No obvious code match found (heuristic)
-- docs/hardening-playbook.md
-  - ❌ No obvious code match found (heuristic)
-- docs/health/README.md
-  - ❌ No obvious code match found (heuristic)
-- docs/health/api_inventory.md
-  - ❌ No obvious code match found (heuristic)
-- docs/health/fix-503.md
-  - ❌ No obvious code match found (heuristic)
-- docs/health/health-cache.md
-  - ❌ No obvious code match found (heuristic)
-- … and 739 more
+- … and 753 more

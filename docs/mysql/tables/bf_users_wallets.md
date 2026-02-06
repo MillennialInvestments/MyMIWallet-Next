@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/APIs/Controllers/ChatController.php:142, app/Modules/APIs/Controllers/ChatController.php:143, app/Modules/APIs/Controllers/ChatController.php:151, app/Modules/Management/Views/Web_Design/Content_Creator/FLinks/Flinks_API.php:135, docs/wallets/wallets_workflow.md:8, docs/functional_inventory/docs_to_code_map.md:51, docs/functional_inventory/docs_to_code_map.md:165, docs/_aiops/doc-change-log.md:2033
+- Code references: app/Modules/APIs/Controllers/ChatController.php:142, app/Modules/APIs/Controllers/ChatController.php:143, app/Modules/APIs/Controllers/ChatController.php:151, app/Modules/Management/Views/Web_Design/Content_Creator/FLinks/Flinks_API.php:135, docs/wallets/wallets_workflow.md:8, docs/functional_inventory/docs_to_code_map.md:51, docs/functional_inventory/docs_to_code_map.md:165, docs/_aiops/doc-change-log.md:2279
 
 ## Create table
 ```sql

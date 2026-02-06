@@ -169,8 +169,8 @@
             "mtime": "2025-11-08"
         },
         "docs/audit/alerts_audit_last_run.md": {
-            "hash": "9e5597170504d7ab9ccd094b0ab8783d7c708fcbfb5e0dc6c0b502b66f846a02",
-            "mtime": "2026-02-01"
+            "hash": "8b082d14bfb7e728619642a21b88d5418f9fd875623c18b87d601ef4c3d97d52",
+            "mtime": "2026-02-05"
         },
         "docs/audit/auth_audit_last_run.md": {
             "hash": "65d17df1b64bb03bb5c84b92b525ce1ec9b083d42e3bc99857c557bb1369648e",
@@ -1214,7 +1214,7 @@
         },
         "docs/mysql/README.md": {
             "hash": "eeec1d64da2d0a506734fe3018a9e506df884ae66192c209f9363c7908e54337",
-            "mtime": "2026-02-01"
+            "mtime": "2026-02-05"
         },
         "docs/mysql/adjustments/adjustment_log_2026-01-21.md": {
             "hash": "d9a31d0be11486f45fc2ac1cbca8383e827b67f7b6c13078aee134b93fa9b8c3",
@@ -1229,1424 +1229,1424 @@
             "mtime": "2026-01-23"
         },
         "docs/mysql/tables/_index.md": {
-            "hash": "f8bc4c05d0c9d79ab033ab571053038887c7e441495e603350441944ee3022b1",
-            "mtime": "2026-02-01"
+            "hash": "45d6bf41a3da7e2c30919f7d4b9ff6bbbf547a97c72019403d6c2d0537bd66f5",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_act_logger.md": {
-            "hash": "6ec9f1ffe12d27a7b34a9824bf7229e9c9b8fa7932eaff156c532578cacab49b",
-            "mtime": "2026-02-01"
+            "hash": "b12d42216dd79897233b8ba656fe8a25f4618d8e6e4c2cf9bc16f8941e7c6f5e",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_action_login.md": {
-            "hash": "177c5c28cf35c659336ebd7142d264c6507cfe2ab747adde5eafc5bf40bba079",
-            "mtime": "2026-02-01"
+            "hash": "feb325a193bfb6287cc669d2ace1adba2189db9e863b4ee745827d67f600b60e",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_ai_ops_caps.md": {
-            "hash": "34d496a720fb114c5afaeac0eaf1e8542e1b42a569f3956555a7dd931ad6e29b",
-            "mtime": "2026-02-01"
+            "hash": "64e8da27807a64fb9712991470d6ce3ca5e5f4aa75000f9e8db513209a833ae1",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_ai_ops_events.md": {
-            "hash": "6552ff8c17a96b56eed37f162f44b2091f31e4cfeab169ab89ffd70ec4a2f14a",
-            "mtime": "2026-02-01"
+            "hash": "ce8b8ff164d9849de7a512a6dedb23c9924541ecd9a03ad398e2731c04225474",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_ai_ops_runs.md": {
-            "hash": "0657a3b890ef0c55fd1906ecc1ba3924be13c12a16d66e473ef6389ea0bb2849",
-            "mtime": "2026-02-01"
+            "hash": "cf6b0fb1fedc2987696b9f326f991c3fd50bd764e9e8851c8bb792c30b1156b9",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_ai_ops_usage.md": {
-            "hash": "8e15374d6e1a8c42779df5b397fda3f061e2834f31c51707181b478f9171fadf",
-            "mtime": "2026-02-01"
+            "hash": "e613a76617c3aac820809d7fb94126c630109e3351c5c51049a521fd320ad096",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_ai_usage.md": {
-            "hash": "64708fded4ec0950b0bad39125c2f7666cec67e2ffc980ba328623586b5d21a2",
-            "mtime": "2026-02-01"
+            "hash": "a300669cbde1092ee8c30ffba36e52029675b59de40e3407dcbc04e1e3e77889",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_aiops_budget.md": {
-            "hash": "94e1b2fe1dcfa87c22c85889c77a76f2a7cd7e34857bf3888ccf86173308f34f",
-            "mtime": "2026-02-01"
+            "hash": "8e34abbfe8034177b97d1d63013f236ae82d0b6d8ad324866de4dfe1b5375418",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_aiops_cache.md": {
-            "hash": "a0e12da6d6923f6680f431f5babf493b548a4f71b04f8ef9ae5dfe4315ceef57",
-            "mtime": "2026-02-01"
+            "hash": "416e85713d7ad6cf8080acef4a581a130e4bd7087ccd1cbd2aa6832c98019890",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_aiops_dedupe.md": {
-            "hash": "f38fcf843d9aed7558820d71eb559097fe97d18db0f343e4522dfb4a8550e6a5",
-            "mtime": "2026-02-01"
+            "hash": "8a515bf71fd0700081cb4c7b5d974f4738ce973633289e9bcc51869ecd617cc9",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_aiops_registry.md": {
-            "hash": "a07fbe09a6e0a31d996f83a87dfc97552ffeff5d2eacfbcd3f1c0a396d9bc083",
-            "mtime": "2026-02-01"
+            "hash": "74d91ce8cbded06e94cc5a30ab5cf9a4b815f372fb49fd99393677c1f7aaafeb",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_aiops_runs.md": {
-            "hash": "3c4287ee6634b5ffaf164b9e066ffdc6d3ed3d242dcf02e4bd7e858b58c8c09a",
-            "mtime": "2026-02-01"
+            "hash": "b641549d2aafd95e8eb4449abb2cc0ae49b184fcc5472433dd79c28c2d963038",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_aiops_settings.md": {
-            "hash": "8e5f14a0de030558112c0947e7bb5c6beda4217ed815deb2c3f0e1c146adeb3f",
-            "mtime": "2026-02-01"
+            "hash": "56542ae825d947682a7b61bab67844d6457a69d1d5eab01ab327b27a72e29d4b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_aiops_task_runs.md": {
-            "hash": "f24fe723c8c6545ebedeedce7aaf3309101e9cf7e8f970c0da45c5e4a8147be6",
-            "mtime": "2026-02-01"
+            "hash": "d5bf97e6054eecc2bff89d5b2d97f2f1bc31b7de38aa6dc3d527abebabbe48ee",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_aiops_tasks.md": {
-            "hash": "e32929dd31659441bcfbcebca0c027ec050f22b8417357f3ee4e940ff16cb796",
-            "mtime": "2026-02-01"
+            "hash": "5629a814a9c692930ada909cbe25f48405d09d43e9614d87f9d4a73cb32e9837",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_aiops_usage.md": {
-            "hash": "f1bd16ab0241aab434cc5cc4fcbe723e8208c56288ef67a1a692b930d87ba921",
-            "mtime": "2026-02-01"
+            "hash": "93668fbeeeafd1ca9159f9ac57c6ace04f42cf85bf05cabbf80a63774ace230c",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_aiops_workflow_usage.md": {
-            "hash": "5dbe1fade4537310fe72d3d3d14ed2255826c2297bad3d0dd0f30fd2c885e4aa",
-            "mtime": "2026-02-01"
+            "hash": "01d00ee3bdbd17b3b9b51a843e9e58708fa901b49b9921ea283073a09496ee41",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_aiops_workflows.md": {
-            "hash": "e8398ca98fe0f0f454e88b842beb95efbc864c5693483ae2e3099f17c51ecf8f",
-            "mtime": "2026-02-01"
+            "hash": "3b19e50f8e293878bc1d3e892b22ebed50184529f4177d6bc7c79cd0bb2b75c1",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_announcements.md": {
-            "hash": "aefc5ce364dea7396e06677fd1aed79b1e8e158c3218c8766b30099b1dd451f2",
-            "mtime": "2026-02-01"
+            "hash": "f6f3a52a6be5f802b116c95d6b041273205568d887087634f47380cf852c8366",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_api_requests.md": {
-            "hash": "2e69c18eca6949192df7e516cd85c8a697a3deee51dde16ff975aa35c14ed9c3",
-            "mtime": "2026-02-01"
+            "hash": "bb9799e20740cb96ba2a52cbdb8bfcf31f3b85c88bbeda50daf32787d042b769",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_api_responses.md": {
-            "hash": "39b3ed18a41ba944f5e332a97516d6b677720e7bdf3147b20661069b4cab3e67",
-            "mtime": "2026-02-01"
+            "hash": "a3ea9cfc921762a0d75165b87c8608978b032f544fcfd17b698025c152b57cd9",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_api_tokens.md": {
-            "hash": "dc78674637d224dd2eed02ca89574db3a540487a1d23e0b95d2de798239d8069",
-            "mtime": "2026-02-01"
+            "hash": "1838e1eabe5e71be0b4945c9cee42ae2036ca92963e5753609ccb7589846b6da",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_applications.md": {
-            "hash": "97f58125b79cc603df06739685681ce53fd1878d84d7bd0c7b4fb8da14bbcba3",
-            "mtime": "2026-02-01"
+            "hash": "44c31e9b90c949bd54a2a6b103863eaa22582e17f8fac460ef4b56460947a547",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_asset_management.md": {
-            "hash": "76b805df6ff035e4034db0041942d0e953be787caf9992a8c73d63402aa52778",
-            "mtime": "2026-02-01"
+            "hash": "59721072da52797e4834cad5a3e15b79c5168737cbd38d10d04e90ae7a1c676c",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_assets.md": {
-            "hash": "141bc75e186c928c6e2c4eed1a97a2d49226771adba4b099d9393fec8218467f",
-            "mtime": "2026-02-01"
+            "hash": "17d3559c93ebd71fb27d6a848697d905e1830afe3b400dbf12014d7cc42b769f",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_auction_activity.md": {
-            "hash": "5f89fd757c43a34ffa7ed75ee4f99c0d64f1a334b5c2e932da3fc32ac445370c",
-            "mtime": "2026-02-01"
+            "hash": "6b148cfc28ce35a69a1da00f77c44a2565fb85bea4da97fc44335a281765d2d3",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_auction_balances.md": {
-            "hash": "1d009cbc2417000ceb378c9b053aee552d0ec0f5572490979fdce2c0b6c4cfd3",
-            "mtime": "2026-02-01"
+            "hash": "8156d8d1adead3f0ba5cc9c3035d47ccb1b267384b0995ad889807d9bc4483b2",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_auction_bids.md": {
-            "hash": "852d6fdf832f847b130746b394d5b49d0adf3aecee9ca2402396ea6e2f951b11",
-            "mtime": "2026-02-01"
+            "hash": "ebd6866b6924d61101a8d9c991cf51778005ce1ef8ca5888ee9d1407822177b9",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_auction_items.md": {
-            "hash": "d5b50482a53e440a6353eedb58fe192e26392bfdaa1177495144bd32599e508d",
-            "mtime": "2026-02-01"
+            "hash": "fad1aaa1f85e92241157a8a16ae96b8c8b59245407ab479e54566fb771b19bdb",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_auction_lots.md": {
-            "hash": "ec470341aae4a11a5744d369284750ecc9183f29bfcd496943b7e8fcf1007114",
-            "mtime": "2026-02-01"
+            "hash": "15ef499d2be930002d346e853156207072f6476d43f2464bbcebf202336842fe",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_auction_payments.md": {
-            "hash": "43487433586b06303b3267ed4a5f6e590a34133447026ebc85217d545e1ce033",
-            "mtime": "2026-02-01"
+            "hash": "74df523374f9fee5564e3fb9d4fd3195050584a1d334a0e2ac7ca766b1cd21a3",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_auction_settlements.md": {
-            "hash": "d01454645f480904019793851e57db43e89e9308388fde507d277824dc97aedf",
-            "mtime": "2026-02-01"
+            "hash": "90990037de36cc5422e5fcbded5080bc8192fc2f82cf092ee6db08d8f3ec18f2",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_auction_watchlist.md": {
-            "hash": "83090d2d7eb3fb5769e9b11db60fb0f0528bbc66bf5ea461fb3b4515a1c13124",
-            "mtime": "2026-02-01"
+            "hash": "0b4cdb76d339315d2c41219f64e1f5c38116e58b8614354400c483a1400fab78",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_auctions.md": {
-            "hash": "9c0c1bf16e18989b2af38e6845fba6d87d77f3ecba03a3fdfff9a2e81ab4184a",
-            "mtime": "2026-02-01"
+            "hash": "0889c6a7bc71e11d31b28e6e3bf8c604352370774e731b94e12fc69d134cedea",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_audience.md": {
-            "hash": "b7473406e6d029fde0a4ac0530829ecf37afbfa7b75b116f15066ca5d5e3847b",
-            "mtime": "2026-02-01"
+            "hash": "0cf631f4b3128a50e95ba478921837f50c505b9a9809f50f6599818853b06c64",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_audit_logs.md": {
-            "hash": "dcb487cb9efa8c1e3efa3ca5706ebc0b469ee7bb2507fb73558bc754652a42b5",
-            "mtime": "2026-02-01"
+            "hash": "777f283b19f824b12f17afce356abf9975ae66990c807f2ab3507ddf4935f875",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_audit_trail.md": {
-            "hash": "b59fe19abe495db323df5674b897380ec9c2e717ee205ae3b8bb99aad0fcdf2d",
-            "mtime": "2026-02-01"
+            "hash": "5954748c305df222a660e0c0444f2f1f03348733594b02c3921f0a163a4027bd",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_auth_health_runs.md": {
-            "hash": "9b75884c46ab7c9aadfb2786efb5f7ef4a0f52729a188e170c41921c1d1c4a50",
-            "mtime": "2026-02-01"
+            "hash": "df8e14bdc40a2262a9921f0fbc17a12a5067f5860599d6fb150097b88a77d812",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_auth_registration_attempts.md": {
-            "hash": "588e5ea0e616725e69d00c5dedd51279ced8ff9b496a66f68589f3e373be13ce",
-            "mtime": "2026-02-01"
+            "hash": "fdb90ff2fe42b4da298d6402c8bf1ecbcc456e85f580b933a30f10ce1fa141d9",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_backup_manifests.md": {
-            "hash": "652c61ed4e153801bb03a16d5b78fc3054eca8a1f7f152b6c6be29e29c675e4f",
-            "mtime": "2026-02-01"
+            "hash": "2bf33deaae76c3e2662c9f2ff4bf559ff0ec2759922b7f872d14df84a80c3122",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_campaign_auto_logs.md": {
-            "hash": "9c7ce260aa690daa555b4aed1055274d09fe61d206abc9e0b8fc92d1d614874d",
-            "mtime": "2026-02-01"
+            "hash": "94fc81d2ff0bdaed71c8ad5c914d7274fef611b053ffc0f12e4d35ff03af5217",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_campaigns.md": {
-            "hash": "efd52c3c9a2018a53e9c39317de4c714619ef46cfcced20fa0e14e6ad40d6ada",
-            "mtime": "2026-02-01"
+            "hash": "05727b96359c70828043376dfa68e5c0951a005d5e25d30d0e833c876253336f",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_chat_tool_runs.md": {
-            "hash": "5486134e6487fe3517865e302add19e21366340223f3441c673965f6dc58cc42",
-            "mtime": "2026-02-01"
+            "hash": "65d07089e91ef11c781f57ece6170493df47db83e1b33a1166081ac6f218ad0c",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_circuit_breakers.md": {
-            "hash": "1a5d7710b207d3ce32306f9889358d9ccedbf09bd1fb229449a8480ef9119cdd",
-            "mtime": "2026-02-01"
+            "hash": "28ddc1a93ebf2212c92fe22b23eef50045f38b420a890c4b9e5692a7b4f3b8cd",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_company_logos.md": {
-            "hash": "d3949ced493ddf97adc0870ac2805c7e32eec5834b8a329bd1e351df248be794",
-            "mtime": "2026-02-01"
+            "hash": "405b1f626fea17a3e363be8985441fd278a7321e72614df07a8cd07bc9d903a1",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_contactus.md": {
-            "hash": "0d135afad5b2f9e1e32bef0dcb6d2a5056e0d595b5907c342d1f0439919f08b5",
-            "mtime": "2026-02-01"
+            "hash": "2362df76394eb98393a4788de36a9bf08def60316108f4600ce534763abe0c99",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_content_enrichment_cache.md": {
-            "hash": "b40d408d92cf564b7721a7189f5b406f412d573aa449d1944db90cecc21d839e",
-            "mtime": "2026-02-01"
+            "hash": "d7c3517e592404a42ccec44e4edb341f557e8ac822803782c3b58b1c3e6042d0",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_content_ideas.md": {
-            "hash": "ddeeb8b78534e320d357cc24b635d466b06041ac5ead5b293aeee4ee2cff4d7f",
-            "mtime": "2026-02-01"
+            "hash": "8c9807405813df8c7d9a149a441deb457697ddfb5ade62b0f29eb01bf8dad9cb",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_content_posts.md": {
-            "hash": "dee1acb5db5154ede60d74a53bd08e29c8a57bea3a73933aa4d4adbb00b77101",
-            "mtime": "2026-02-01"
+            "hash": "f0441d7b849bdfd365fba9bfc1eabd89c1d22f3428c1dbd89f70bfa971b759dc",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_content_scanner_ingest.md": {
-            "hash": "3de7f0f0db4bc9d2ec2298b541bc47dd9e994506d534c14bda841d2d74e1d87e",
-            "mtime": "2026-02-01"
+            "hash": "47b0354bed25e6889012e803ab0f368909a78c56e4a500cc1932182ef20c9f7a",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_content_scanner_rows.md": {
-            "hash": "b6de0cd09887d7ef87ddc8aef3e953e4b5d788781aa669833b5653d32e100228",
-            "mtime": "2026-02-01"
+            "hash": "3274d04e133d50ddd1a66d3c6d44bc349ebdf6b2fcdb85fa0099d15bc09c106e",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_contractors.md": {
-            "hash": "5bb246ba1798f631123c055482c9cc246363e484517118ee79d01b3f40f4c24f",
-            "mtime": "2026-02-01"
+            "hash": "0c8faa4782dbd1b701f17281b9c7cb0a421a1cea26fdc6347886ab919dded378",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_csrf_tokens.md": {
-            "hash": "740602c8563bbf75bb833c27edd08552948a93b2815f7105e81a02bf4d4a447d",
-            "mtime": "2026-02-01"
+            "hash": "fe129d245a92bdd478cf68d185894845e7f4371416997189c10b3229b9dd58ea",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_dashboard_construction_to_do_list.md": {
-            "hash": "656f26d34c283ff94aa623baffc474b94344473556e8786876c769857a79c7e6",
-            "mtime": "2026-02-01"
+            "hash": "d47692415b1f439d95fb82bf4d4f90a00edaba56a137b01e83b6b5d6212ec370",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_dashboard_navbar.md": {
-            "hash": "56dbe60e7ac429f1e7d0f8452ed5b88437c6f9f4e3f6a04c887f0a9e41fd5d2d",
-            "mtime": "2026-02-01"
+            "hash": "c51e6a749515031e23224a485d39594d6eda25d09352d4832239b2e32ff41a87",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_dashboard_navbar_indash.md": {
-            "hash": "0ca8d88bd9ca6f7db252089cfb02320c4eec12c8f575e0a4b9e2c1ac0ff3ad98",
-            "mtime": "2026-02-01"
+            "hash": "e46155a68d8605893e89fbbcc16c4c44d82550bed71d3a0c1960afd60233f0c5",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_dashboard_upgrade.md": {
-            "hash": "f169f6836100e001c2d0f9b46048e702e99da5e49d8b2289b7a49c11637586a1",
-            "mtime": "2026-02-01"
+            "hash": "e3ec749c8ab093704c767803d6e40b727ca1dc0312474962b576b36b9894330e",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_dashboard_upgrades.md": {
-            "hash": "ba76f7f8fad4640231b52d8758aeef60a938491b0ee5095ca838650e592844c8",
-            "mtime": "2026-02-01"
+            "hash": "809027124d6d5f057d1650f329eb4bddc57d5c15b98ed271743401621ed23fed",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_dashboards.md": {
-            "hash": "0e7452742b0c21f9cb861384bfe8d7152679b5e5325b1b344eb972e5add34af8",
-            "mtime": "2026-02-01"
+            "hash": "56498a36f9d2703fcdac36ce1958f3aeededfcde7a667bb124aad4c5d84b2cad",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_discord_achievements.md": {
-            "hash": "4976e8cc27f49caa909070149680a78f925f034f2e196b154f0ecaa26d11a358",
-            "mtime": "2026-02-01"
+            "hash": "c5bf98992d0ddee306401a7f07edaa785af4187baf4d24c7a56a94b594b381f6",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_discord_ai_messages.md": {
-            "hash": "63889f0c2996a42c9bf5e3b051670be7548dccb71694850b6852cdac62ba70b9",
-            "mtime": "2026-02-01"
+            "hash": "02d6de6b0c1bb7c876a8a2e8feb52c0eff745ae3468f2debc6071a3863021182",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_discord_ai_notes.md": {
-            "hash": "cd279cea159d5816e3c305ce558643172673712ffa80efb401f7df4f1ae9c3fb",
-            "mtime": "2026-02-01"
+            "hash": "c2891af7088a7f07457f7f635d400bb5a249cac8bc534a51775df75587a6482c",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_discord_ai_sessions.md": {
-            "hash": "0f3168d6f1ad4ebc57a72e4bc4ff56f1e0dd55ebd341342a3129f0bb383150db",
-            "mtime": "2026-02-01"
+            "hash": "31971a4c0f6d4a252cbcfec85b8fc9808d255114f0026c4b5831c263e86318a1",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_discord_channels.md": {
-            "hash": "95b0759c3a196d7dd9fa91c796b8a13584e7eaf06e168067aa16ffb0dc7db32f",
-            "mtime": "2026-02-01"
+            "hash": "6d5d3051dfe2205559caa3c20b94a17e216f74fd4c322dd9cfaa6ab14e3b711e",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_discord_events.md": {
-            "hash": "21dfc84bbde4ce97048da71f75540a346a718852c813c3576c8638c51479c188",
-            "mtime": "2026-02-01"
+            "hash": "1f6fda2f94c67bd07c9ba4b2da147a886bb490ce3ef7fc6fcf0a138681b2605b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_discord_events_log.md": {
-            "hash": "a6104d35ec45ebbccddbac03439d24437fa0bbd75af30dbf7e9aa388ecd21064",
-            "mtime": "2026-02-01"
+            "hash": "f2e5f96bbf7f5c1ac59f51c588731a44b06e570b007914c667d91db334df5f32",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_discord_links.md": {
-            "hash": "fe2eb2795ed1ab9bf6284afb89232bb98192b608c1683fd0b860080619639a78",
-            "mtime": "2026-02-01"
+            "hash": "6d5ee14777a38d89588b0fd05c76aa652959a7851317393c369de490eaa2e58e",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_discord_logs.md": {
-            "hash": "0a8e604fbdcedd46bb47d9b5989cd8fc0e1725b3a49b41bc757fac5ac753cef3",
-            "mtime": "2026-02-01"
+            "hash": "ca3debe0c5f3e562a915221fc4214d15a6a7f6d39fae68e7e27b04edc0ff3ce3",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_discord_message_history.md": {
-            "hash": "17225f883f41d3b8021fb3797765d472af55d4f1e49104965afa8ef36149da30",
-            "mtime": "2026-02-01"
+            "hash": "7928cacd9e61ad76fdb8ff6d92ec25bb28e5aacdef46041aa71cd4fd40d633d3",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_discord_policies.md": {
-            "hash": "3e6b88019224f8919bb369281fd4a085e8e08c1a358cae893c481aa0edc488b8",
-            "mtime": "2026-02-01"
+            "hash": "de1340bd866bb2e25708ea739b0ff39907a7cc92f46c5b05fd77661262997960",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_discord_queue.md": {
-            "hash": "bf35d4746ecd61a90f23dcfcdf7342624aa78c16cd8036815cebb9b6181e3d57",
-            "mtime": "2026-02-01"
+            "hash": "629f19ec25c9b1b1a831672c8254e665b3cdccdca68d3bd532639602de5c3030",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_discord_rate_limits.md": {
-            "hash": "ebe1656589696be2dadf2b64c90abf7d9ef8e01de50ec4a90d7975e730dcd62e",
-            "mtime": "2026-02-01"
+            "hash": "9f580613bf7ab3e5eb4e7fba7af1e7d40d94200eed2df1f926f30178f49a1d1b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_discord_subscriptions.md": {
-            "hash": "ce28cc7d547c525a5ccd320f42a8cb899343c9de0c857bafa5f8f8e5cb4ea2d3",
-            "mtime": "2026-02-01"
+            "hash": "d2b901c26084a35eb71d1607f507e5bcfba3b662ab5e71712df00ba2e40e3a44",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_discord_templates.md": {
-            "hash": "59fbf1acf62484a6e1711fc7cb755f6855bd204cfe337997cf76a131570a2bba",
-            "mtime": "2026-02-01"
+            "hash": "bb978d13ec13de8bb37fbe3f81ca4aa92e1b866ca54e6e3b98eaea4211bcb129",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_discord_user_achievements.md": {
-            "hash": "54dbadd0371e4db201e5f47448c7f863e77b674cef60d7dc17d2c7f02e06a03c",
-            "mtime": "2026-02-01"
+            "hash": "455e26f4725959136a79f483183eb541c1caee8b9d5f74d9dde2f578dc9d9a35",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_email_distribution_lists.md": {
-            "hash": "8751737fa7b603a762018f991b7481a0a2b19b5c2dd2491fcd5d69fe76b9e091",
-            "mtime": "2026-02-01"
+            "hash": "b918100f9ad0d57307126b5d65c54a9ed9b737aca5be9354d30254674969047b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_email_drip_campaign_steps.md": {
-            "hash": "d28b9651ae1d06dcdfe4ca788f8e951836dbb39593eb1191182de46c1b17a2d5",
-            "mtime": "2026-02-01"
+            "hash": "cb032ac0d107ebf857448f3b643a37ecb8c8a2a518737b3f46cbb1955bb497d5",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_email_drip_campaigns.md": {
-            "hash": "7a061ff654e4e1ace9c3629adf9f58aad7caa2d493ec7eb6e6a980caa953bf56",
-            "mtime": "2026-02-01"
+            "hash": "b40404757230a4bf1ac090fc6c272422cd86e6fb7e2289e4f530961af2fc70ac",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_email_drip_email_tracking.md": {
-            "hash": "17abbddb89a466f25ee3b42293b73df3c952b4c8d8cf37c94678c312a39643b4",
-            "mtime": "2026-02-01"
+            "hash": "c15fd5dd38b5a7c858858f6cd8dd5a82d429d6ebd1fc0810f90f4bffa7dc66fa",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_email_list_members.md": {
-            "hash": "7d3da86b51f94f4c546cbe267f250bec8fe3a90f2a25e5e782689440a6f133fd",
-            "mtime": "2026-02-01"
+            "hash": "c3824eda62c64b618f1ab4a8ed72cb077d9ee8f077444fdf6c38894479f382e5",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_email_open_tracking.md": {
-            "hash": "db61c0b59abccd02300c8534ecf169eb14d119e5b296487ba072a29a5e495062",
-            "mtime": "2026-02-01"
+            "hash": "83e8c75d2d5fd6ce5ea6755a949c3daccb44a85e1d237cb9ae0070b6d01bc924",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_email_outbox.md": {
-            "hash": "359d79e91dfa5d20ad9268df22217f45f0eb08883490d6c0aa050090f36c17e1",
-            "mtime": "2026-02-01"
+            "hash": "94d00cdd86dc5db497c25b1322daf157727a132004ffc6af6f1d9d1ecb6803ab",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_email_tag_usage.md": {
-            "hash": "3b9a0a4b58cdcd6323ee7cb88d7ac1a08ab888a0ae926741c34acc172d7a1c8a",
-            "mtime": "2026-02-01"
+            "hash": "15e8cfdd14ed62f474533d90821c7ad1b96ddbeffbf4c229022e815253d67bdb",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_email_user_drip_progress.md": {
-            "hash": "3a1110610f60d6de5051d4c8a1835fd6600ae5432a571cfd0634042d5187abdd",
-            "mtime": "2026-02-01"
+            "hash": "0e656b9038afc85b528b9030d44c9b3497a523095b0518f68b06b8a656c3b286",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_employees.md": {
-            "hash": "0a7cc1125d3e8897015466cec313454e9524562487ea661aba92ac6aa00c8d9b",
-            "mtime": "2026-02-01"
+            "hash": "82b094847ccd4653f6aa778292016663e8aa68512ef190c46742d0484b280811",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_error_logs.md": {
-            "hash": "c9ed95697911a33cd9738d9202bb774be5b127cff3f6edd41ff7db615d866111",
-            "mtime": "2026-02-01"
+            "hash": "2554718dcf3d6a482ebe40dd711366c09737d6ac6d65a7a1ba70e8e4a1b384de",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_esports_creators.md": {
-            "hash": "8e82896d511d2a6db0258d977c752f39f6aec10f8ce35eda8905b2ba37025631",
-            "mtime": "2026-02-01"
+            "hash": "83ab23d78e391eb237395ee85bedb27ab6618e2334fc44b5879f920698115263",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_esports_disputes.md": {
-            "hash": "efe07c1ce6c0de3ba766aa194d504683b86b9e13cdeb2a6aca1d7fc826a90b56",
-            "mtime": "2026-02-01"
+            "hash": "1d200d284bcf4d303fa5183947574f24a821450a14dffa187510488fc7f80135",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_esports_entries.md": {
-            "hash": "55da543838f889c2a276c67913067c243e3db7e50f91df8f0beec3eca5c58a1f",
-            "mtime": "2026-02-01"
+            "hash": "72823e1afa522b835dae81d646beb8b34bd45ed772f2ddc13da4a59286743424",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_esports_escrows.md": {
-            "hash": "2e0fb5b9e489ace1c114b9652c60358ac40f93827711f2776df87afc5710c495",
-            "mtime": "2026-02-01"
+            "hash": "a469fc7e80858e7b3b1b4dc22a2140412f77af6225a8773fcdc5c0b8513b35da",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_esports_events.md": {
-            "hash": "25859007ff5781184c8c708059321510165d356bdb549a084beef651f187cc40",
-            "mtime": "2026-02-01"
+            "hash": "43a06f9c99eed8338fa7d977191c50adb3a8de98bc07d7d8c19336a711f25061",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_esports_jobs.md": {
-            "hash": "88aaa860e916906f807524258649089306cc4d0c70248237b86f66512696f930",
-            "mtime": "2026-02-01"
+            "hash": "a3a63e187b855774f8e96b0c2421ac4936f1e882049d13202fffe3effd083eec",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_esports_payouts.md": {
-            "hash": "15de86f25c0ca2340f11adda21f7bc56ce8916f84a3d79d3c02f2bfcf516d4be",
-            "mtime": "2026-02-01"
+            "hash": "8ffc95b0507c043f384bace59ce3b811f1fdd3eebc57faa02b2d162722315a4b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_esports_pools.md": {
-            "hash": "72b8b08c38a66e4f4ce431dbdf1aa1012d21b9f717e254fdcb5794fe312dbaea",
-            "mtime": "2026-02-01"
+            "hash": "4bd5dcdd9585deb72e1c588a9a33d20997358aeb21ec7af6eef028430e5057ec",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_esports_sponsorships.md": {
-            "hash": "9eaab8787b74cb3ec2be83b3513c335ac8d6e15adf6710943c43e15d34730a02",
-            "mtime": "2026-02-01"
+            "hash": "ff189b31d0621aa42abcf44a617e247ea67a2fc9cd822c0b206fca640b1f3618",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_esports_webhooks.md": {
-            "hash": "812e63abf6410bd93dba4ca0c33d4d7ed87b6279a629eeba21ae21e82b2c4262",
-            "mtime": "2026-02-01"
+            "hash": "990d66afccfd4219704ad88027cc527de3636ed4f67d38cad922d14bfa481d63",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_exchange_auctions.md": {
-            "hash": "3e6f2b32aa446171f383b9e2ce18337c4dcaf346adbbe7306381db0a7ee31087",
-            "mtime": "2026-02-01"
+            "hash": "1c99e3992f3ee81b50cd6b1b10353979f2fac69e627371d2b4bdb75a0857a8dd",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_exchanges.md": {
-            "hash": "6d97727ae5ed0d6a81f16663c598a14c9e5544f8208eb5ba7a6da617447bcadd",
-            "mtime": "2026-02-01"
+            "hash": "c4f81d047a39b581ccc53ac40c86b68c3d6312069f1c1c43e04c5bfc2c235c81",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_exchanges_assets.md": {
-            "hash": "c49cbed485c66a3dc0f90ae19c8f696edbbdaca78e9f9c53550805b17de78ae5",
-            "mtime": "2026-02-01"
+            "hash": "e502354c60ea8cd0eda55c37d3ca2ff2d9df54c20e1e288e2625415d9cc0a57e",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_exchanges_assets_ledger.md": {
-            "hash": "855ff0273ece8ab173d0e837f961a3d3ae40ac2bd5b5ed1b17ebcfa3e186df18",
-            "mtime": "2026-02-01"
+            "hash": "bd66237204f10bae53c03f20b2337fe5ee179f19c6b8d8c6a0b6f71f2dd890d6",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_exchanges_blockchains.md": {
-            "hash": "d209cf00a7cc896437b74a4b10b05cb2c762f6b5443d07839d98134850da3e70",
-            "mtime": "2026-02-01"
+            "hash": "d2eacda3beb36552cd2a1b4ae7d232d0f9e2416faacccd70974625b0c286f5fd",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_exchanges_coin_addresses.md": {
-            "hash": "22f671aa4a1dbacb62628b8bfabe3a0aa08cd838158dbb9dbcb02d850cb1504a",
-            "mtime": "2026-02-01"
+            "hash": "e8171de0e6301f5a7282477c3452eca25bbb83ba90497056f8a1d6c0fcc0bdd3",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_exchanges_coin_listing.md": {
-            "hash": "fae9d225ca45dec93c2bc109f95b7975c84ef480acda01ed4622d7901e74f427",
-            "mtime": "2026-02-01"
+            "hash": "5a9c86b4e12997d164e54bee3ee2c66e434f469f6a0822d034a6122efda0c113",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_exchanges_listing_request.md": {
-            "hash": "6ab51aafcb4ea357f990d0d308b73281cbc30fd1beba9d5f05ad93741eebd2cc",
-            "mtime": "2026-02-01"
+            "hash": "ae3d9f8fdaf21bf5fee329cc364f5eceec674afc5eb939c6f130167e15b9a959",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_exchanges_order.md": {
-            "hash": "4d27f32436e0509a65df8eb57c772fcba4c4b90c701878850d1755e8ab308f41",
-            "mtime": "2026-02-01"
+            "hash": "f25cd3e9935acf4c54d6540a17b0339efcf9c833910737ae94c2c9d62328ae73",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_exchanges_orders.md": {
-            "hash": "b0456c449e03ccbc2f7bc3f817aaa18aae44b97dc0b642fc7c2c956d611417db",
-            "mtime": "2026-02-01"
+            "hash": "ca34f141ac17098c82d994b56fe96ccf0cf48f9d6d7b368d734a179fe0835af3",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_external_sites.md": {
-            "hash": "8247d6cdbe1b39f74493e217c6cee10ff83a2664ae3227f2e8aeb7a8a02725b5",
-            "mtime": "2026-02-01"
+            "hash": "ea4a08caea76840d53881f0f9d5d7d106e528bcb49af77ba16bcde3f71fd2c37",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_failed_jobs.md": {
-            "hash": "2f1453268db71eae3478a3fd46578e1f7da792d8efb3869c41328d4223e6ec7c",
-            "mtime": "2026-02-01"
+            "hash": "58e16ffbbc191f9100f4df504abbcd634f994d642f95ad936a5814870fd9a779",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_feature_flag_overrides.md": {
-            "hash": "ca8a12a4010004a0174906be4d25df51db0978a7d16edf45bbcc49a663b74515",
-            "mtime": "2026-02-01"
+            "hash": "831da98d5918f34131f0869a249682ec6eae317e3ffa45560434dabc548e8fce",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_feature_flags.md": {
-            "hash": "5c7e94e913ae4372254c3ac31b60789d3012296438b3656b1ecd095bd76abe71",
-            "mtime": "2026-02-01"
+            "hash": "d5325e1ced2501df0eb05f7e41554d4f022ac4ef33923affa666c3e9ad86bb16",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_fin_positions_daily.md": {
-            "hash": "27e9bda8f4e68ac0ca5f30a291f0a567e79848ea81a9a9265a305cac5cc7d073",
-            "mtime": "2026-02-01"
+            "hash": "aaeefb275e021f5ea0112dda13750b2e06639c8ca63c05e68d03634150f6193f",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_fin_prices_eod.md": {
-            "hash": "38b0c48b2fb7265e3fd08400c7acc7988a6483b991b7a743ac778028a3a644a0",
-            "mtime": "2026-02-01"
+            "hash": "361307b4e59a2220d7ff86991381973e089b4584f1e3da558af2d5ac45f9fc35",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_fin_risk_breaches.md": {
-            "hash": "0e70b8f4ea8106a249de099297b89e84229281f86114dcb28aa8e17bffa0f5ef",
-            "mtime": "2026-02-01"
+            "hash": "5cd476ca23af848e28e2a9245a39443b632fd5653af910fb127931cbd723b66f",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_fin_risk_budgets.md": {
-            "hash": "5017075de36cb621e19336b9fbc2a073f63306470e5ce212bc83a49c7bbbc38b",
-            "mtime": "2026-02-01"
+            "hash": "236a5c8562eb778a922156099da4b3a3a3630fa3d35a01f4eba55ff67ef36c37",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_fin_trades.md": {
-            "hash": "29e2582f02ccbcc26eb715ee4a25e4367b10f2b04ba7e6e4295fad4a7f759676",
-            "mtime": "2026-02-01"
+            "hash": "7de2a1ef131fcd14cc226c0328dbfbd442bd3e19006d0a3680a74086fd39f8ad",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_financial_goals.md": {
-            "hash": "39994c8937126c0e593c85b8487e32b4e93c8c9500687f04b41868a0dcc9d63f",
-            "mtime": "2026-02-01"
+            "hash": "2bc368a41fe68e925612f5b19286e26f2a9a55fca4a30b7fbefb78a46b224bfb",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_gdpr_requests.md": {
-            "hash": "97da0b7022c11cce16f3c1bdf262d1fb541b4d2c3a4846e501fb7dc0fd8acb4a",
-            "mtime": "2026-02-01"
+            "hash": "743e94eb0ba761b3cbe8b87d4ddac4d1dc010e894d52bf7662c5162eff0748bd",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_go_live_checklist.md": {
-            "hash": "cd0ff242e08bcc0d7686cf7ce55dabc7625b4421406e41d2eb7bf295fb94107f",
-            "mtime": "2026-02-01"
+            "hash": "efd72aadfc458e245610ca87254908edd112424783b1011f1fa0b6e936d03a64",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_health_registry.md": {
-            "hash": "0572df4d5042f49a31c8274f0cefb7f07e5a69752aa98d375b7951f551c9e8e9",
-            "mtime": "2026-02-01"
+            "hash": "28e46c35d28cb2a5bd8df0ddac584e1100953a6faa2d4d3bda1e90a1d274869f",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_health_run_results.md": {
-            "hash": "5c0d980ba5db1297425a8dc94f2e9d768b8e728d09760b1352a9901e713189dd",
-            "mtime": "2026-02-01"
+            "hash": "401601080d3ff72e22a4ad0ebc4adeb5288a819b553af9f30e828198eb2f453b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_health_runs.md": {
-            "hash": "f530d271b4c067db7ebd9d1af2c5e530724266e5fc1b3bf1fed61977b4a0b22b",
-            "mtime": "2026-02-01"
+            "hash": "023f33367ea3131bec0aa548d991fa8ddf8692adb8c32d151576534c34c18f37",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_idempotency.md": {
-            "hash": "4eabd553c18c9fe68d9bd8fd70a79aa7d38be1a9ab9f4f9543a5b077f4c7eb65",
-            "mtime": "2026-02-01"
+            "hash": "e320710f47f0076941c5844d6c2395401765c7ccbc57418b25d07250cad371d3",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_inbound_webhooks.md": {
-            "hash": "ed8073e758ddaa311e855d333f8e605338b0beff722c8970690966e3bd884892",
-            "mtime": "2026-02-01"
+            "hash": "bfa7569a6215c26bcca1b15e971d5eba86e647ce96b01266e861b90d62e0e894",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_integrations_accounts.md": {
-            "hash": "a320811bb21eca77a27fc6fcac9eb6e909daf9447eebdb39410ad271af1e8484",
-            "mtime": "2026-02-01"
+            "hash": "95c576c3646bf52540c7ce7ee7c1d326b683ff7dce58b15f831015513a7ac3b9",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_integrations_events.md": {
-            "hash": "e0c6a87039b1c531fb84ab8bbd96787cc867e05c3f9402143caf03cd4f425910",
-            "mtime": "2026-02-01"
+            "hash": "8f1b83647840da571356b1cb0bc77a8ceca8f76700d0c8e7f8ca4592dc577f3a",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_integrations_sync_jobs.md": {
-            "hash": "5dfed1ac5a4a1da76ff02f79135a38bad3ec8df9c4b96ca6539c2e032a8e794d",
-            "mtime": "2026-02-01"
+            "hash": "71f6ece7d6998cad824ea2b000e9ad94c7e5370150ddebd945ec4232a87b3600",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_integrations_webhooks.md": {
-            "hash": "13cbcede2999fde3dd96a4bbbcbddb1e48b624827ea5b0c5a9303099380dd42b",
-            "mtime": "2026-02-01"
+            "hash": "b9218030dc97b69c360962a95619e6f61510c05aa3f65994f2e7a187a1736c36",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_internal_team_messages.md": {
-            "hash": "300069eab80fd40323b1cb821656a82f4bcf544b20a358974db156490ee883fa",
-            "mtime": "2026-02-01"
+            "hash": "7a508f21c92f7cd9530f16d8680a75f96f12a59e6c0b7cafb31ee76291b115fe",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_advisor_log.md": {
-            "hash": "ec4b57f87cf7110b6c5df96b63a0513c94e70c356b8735d7cd012007d111a344",
-            "mtime": "2026-02-01"
+            "hash": "3a4f8802d9a87f04f2a487a438398f6b976a716d7f2b6e10bef1a996b15dbb25",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_alert_enrichment.md": {
-            "hash": "a1998b3a17390b9b225672afd78273e4311f4a09239355761c5a7aefb93560b8",
-            "mtime": "2026-02-01"
+            "hash": "d419d125a2516849809b80583c3594ff04546b0270764139150d1ec78b905b43",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_alert_history.md": {
-            "hash": "ac660d94bd1e3fc4861e0aa7bb87027ce73da32c82515471584b0e21ca9869d5",
-            "mtime": "2026-02-01"
+            "hash": "77d26b200d993e07c724ae875fc4346bbb928ec656d15f0c2ce4e5a36265fbd7",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_alert_jobs.md": {
-            "hash": "29215a40054535b411c4005aa6f87a69bec6cef6784335a12134224a92982fb4",
-            "mtime": "2026-02-01"
+            "hash": "125a5a65a1eb8d9a2c2b017845d4e682537398a411134ccda2ef91e168d34615",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_alerts.md": {
-            "hash": "c335ccfda328022a11d628025ee1f92fd1b2a94d62945c8a6871b0a1e0d55764",
-            "mtime": "2026-02-01"
+            "hash": "feed75454ba1e3408b0685c8957d48e0f62150e82199ec60096b91a2e81480cd",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_calendar.md": {
-            "hash": "0b2395363172821990663a798d24b9475c05c1ce8a1e0f31c6f4ef5a79d9b41c",
-            "mtime": "2026-02-01"
+            "hash": "f5961b37be05f57c4f92fb1c8a8f808be730ae2abecad8ea1e0e948081047812",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_chart_analysis.md": {
-            "hash": "9fc2602cc7f4936f49f539a9e78421f8006aa4ff5e79495f5a54ea611021310b",
-            "mtime": "2026-02-01"
+            "hash": "cddb0f9b863590556d6fdce6004ee56925d68843572fc4516f44032d5a910ff1",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_economic_data.md": {
-            "hash": "11a5835cf2d516360cfad8ed819170aea1ea12a69e916601b47f0fd30e2c9a05",
-            "mtime": "2026-02-01"
+            "hash": "ac402cba0ee4d3b08c2d6649a621e1c426adf2877b786d461c3b6e1bf517d405",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_filings.md": {
-            "hash": "cf37820ec2213c7b31b12f1137be27255eb571e9d89c2768e2e7c68c294d90d0",
-            "mtime": "2026-02-01"
+            "hash": "1ed9452bcc8e2b3b17ef48d64a3aa0fad1117e1da84065d4183dc864d86e7813",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_forecast_accuracy.md": {
-            "hash": "4f646bae97b9bb7c3147833e78344eea4d6418c085c2d68f24aa306a6e639719",
-            "mtime": "2026-02-01"
+            "hash": "28faf6a77a6e5f92a8abf667af13b3710a86d94f28d297a416b50a14795b9705",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_forecast_history.md": {
-            "hash": "848653b036846ef21968964eab56810779183fce518fe628975adabaec541638",
-            "mtime": "2026-02-01"
+            "hash": "6a73c2985287fe4ab09745a3665c6396b5847e4dc6b2aab2703e3a4afdd9229b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_forecast_jobs.md": {
-            "hash": "b89edab19d00d701cfa3ca6bf22a31a6d47338ae55b3cfc3815ca1f79de82ca1",
-            "mtime": "2026-02-01"
+            "hash": "5d5c880b26b9f8aab38f851b5cf21c0bb07961554cee9b9a9ec36a7fc22bdbea",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_fundamentals.md": {
-            "hash": "dd3e57147125e9911dd7719c97d1dd9859db09a0d7c74d68f2e939bcf2ddcb73",
-            "mtime": "2026-02-01"
+            "hash": "a39aeb0b079a3a725a05cd166ead9f58ef0a4ff2d8eb71de3af9d6d4cad478c3",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_goals.md": {
-            "hash": "71592ed2ffaee41afb60cf0965c318d707e7abb31121386ef39f4cb7caab5867",
-            "mtime": "2026-02-01"
+            "hash": "51db8e1b9faf6673b54f2bc58d0ad3d65e71129aefda66c3ae69929327252ffd",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_price_forecasts.md": {
-            "hash": "a2e61ab227d274f2287b69c629a85cf39eb5f53ea965250c6216c75b55979e34",
-            "mtime": "2026-02-01"
+            "hash": "a4a02ed54974eb784c8f0570249d1469d3402b7a71b5f608fbeaabab4abc74d4",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_scraper.md": {
-            "hash": "c8fcb22addff70f898ecd6a41fedbadc641fc87d6a95e15db0683335f3ed7855",
-            "mtime": "2026-02-01"
+            "hash": "13517ffdcc6327a6b294e7dfb378c3c5787f3611b7afbf137dce387c626b807c",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_signal_files.md": {
-            "hash": "ac042b1e18abfbead91886346da43c75d8378d7b8bdfa89d442932de97a396bd",
-            "mtime": "2026-02-01"
+            "hash": "9a88ad50ad652418462cc37fcf0e7d75a23702a6e6cd3d4f6ec10779290de476",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_signals.md": {
-            "hash": "7a8e677cb3de0c15e499c469974882a9db39c31166583d72ea4567e18946556b",
-            "mtime": "2026-02-01"
+            "hash": "38751e1a12f83b87300272d6b48bd9754d83a7769668190bd2c44ba7d670e295",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_stock_listing.md": {
-            "hash": "93a25bd921444a19adb48beec3cc498a938d85fd688bd112324dfee5bdfa77c2",
-            "mtime": "2026-02-01"
+            "hash": "ca7ef1716ef0046e564cac2c1f36388fff93607f49c70579bd60fb03f6ba410e",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_strategies.md": {
-            "hash": "5e207ba10fadb1c5875bbaee8953937bec8a539e843579987dada4676bbc21eb",
-            "mtime": "2026-02-01"
+            "hash": "3e92f37b505d41bb69c6a152071db4f1062bd295aefc9cce02e7091ae84d73c5",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_technical_snapshots.md": {
-            "hash": "72b12269e529427f1ab52c517295a5bdf2d87d9ad0cbf320053c5a59df8de42c",
-            "mtime": "2026-02-01"
+            "hash": "22b808076db1002ae55a32eaf768db9c268f0f98b22814015238e6494a1fa383",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_tickers.md": {
-            "hash": "48e6910bfe6879161a882996cbf20190538cab70dc98a055a8c2b954879567cc",
-            "mtime": "2026-02-01"
+            "hash": "1b0403908b0a61bd04716c9c22b6fb5658a22e6c238af3be5c05a1e8ae8a868c",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_tickers_nw.md": {
-            "hash": "3cf31e404aa74634c10cdf0b30f36a2e13d63625d9a00ed7e0d1e922f6c73b6d",
-            "mtime": "2026-02-01"
+            "hash": "45c87845fbbe8b4aa51756af122ce14833813a8f124a9b6a06c51576818f18eb",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_trade_alert_changes.md": {
-            "hash": "b5b9cc5a84d6b2632fffcadc94f3e42e97425990d874ef1ac83a5bacfd8bd31d",
-            "mtime": "2026-02-01"
+            "hash": "6ab03c26937f2a0421274ebf6b4c4818f145941a61553a2478cab833505fe54c",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_trade_alert_enrichment.md": {
-            "hash": "671c35c62c5bedae9f51e155babe45061a2d0b67aa54c18a5038a3d0c8a0e42f",
-            "mtime": "2026-02-01"
+            "hash": "1e76ff0c0ebcc90f5caf48b1de09dd77d7a5414727880194214ddc4b71a35432",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_trade_alerts.md": {
-            "hash": "1559829af988b71fa4d9762371872f4f0ab537b228b760d3586ca6fd921c8a1c",
-            "mtime": "2026-02-01"
+            "hash": "4951f604cbe53fa422c0c018a2f10947c630cc106ef14f025f53016494d6fa29",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investment_trades.md": {
-            "hash": "a1802365b63bc0b80dc917f5930fc6cea077b6235898c15ae39bd1bd43e8a6e7",
-            "mtime": "2026-02-01"
+            "hash": "ff083b47b64d52c189d86b5f636cdc131ded778422b14b38322934f68be1b3d4",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investments_news.md": {
-            "hash": "512d90eda129d4057fbacc860e66afe123a4084619ddd531cd514501eba043fc",
-            "mtime": "2026-02-01"
+            "hash": "00f1a751d3b1f4ad638c1fdba4bd4f845b68cdc0074344ee016c1baf0b5d8b7d",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_investments_overview.md": {
-            "hash": "64857a15bfcf6b0bf8c2d506f43f12aa9a317538d9ebb0306859add448487660",
-            "mtime": "2026-02-01"
+            "hash": "fb85cabccf31b63cbcbb2ab9c94fb70e196d9ffce38c55f8b2bc5d041b9acc44",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_jobs.md": {
-            "hash": "39931d7266401c1fb5e83494de27a80f4dcf21b98a4658c0e0a5a86fb8bc0d12",
-            "mtime": "2026-02-01"
+            "hash": "280a1f4464edda7dc155826ebf81e2c09b8e34ca698c25afcf193fd0eb347856",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_leads.md": {
-            "hash": "050f5761c30f20847fb2d81df8cd3ca3dc2392a0f0a41d62f1f74d7ddafb87a8",
-            "mtime": "2026-02-01"
+            "hash": "d18a0c4d8b2bc560e6eedabe3ec576700bbf459c7cf28bc1d172ba55d39e688a",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_legal_holds.md": {
-            "hash": "063f2afa7e4f3289c30e18db55a6a7d5101939e29794c46ba64b3560cc77c472",
-            "mtime": "2026-02-01"
+            "hash": "568eb2a377d29978195ef6c0a072f7cdb756c815979c6782758b56fef2d24ed0",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_mail_queue.md": {
-            "hash": "47d4103d001a533bccd82a6d64facf9fe4f224077a0ea5ff049899c0f3e9ec51",
-            "mtime": "2026-02-01"
+            "hash": "d3b5396f7bf6f4e1c1947fddf2fe3528342c96fec6b11ce33d1214aba3adc0ad",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_management_alerts.md": {
-            "hash": "ab6ae7bc7177b9c7ef5e8a2d63a0ebc6727b1e54017dfa3b3653c19b2a3a8aa1",
-            "mtime": "2026-02-01"
+            "hash": "0aa05d36d7959eb55b81020d04c734aa988e785d7b0cb47f27eec18ac2ea36ac",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_management_positions.md": {
-            "hash": "a12f63e633c08abdadd43b45d1ff0ba3cc204d78eca2922d908835236f516582",
-            "mtime": "2026-02-01"
+            "hash": "4af095bd8f4fb3e6e0da163d1f6c4ac645437bfa4f96087b4e935a20907f867d",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_management_tasks.md": {
-            "hash": "f16dc56d5027a6c18c12ba5ecf2f418d9bb92d8f1aca3267a129e136c308e3c5",
-            "mtime": "2026-02-01"
+            "hash": "76d2f265f87b152a292791370ebaa17a45eb6af96ead81cda68d9dcb66293179",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_market_news.md": {
-            "hash": "241d4f0c9f7a0ac89ceea858d29e4bf8ba923e1a553ff35c1964a59348e0eb3b",
-            "mtime": "2026-02-01"
+            "hash": "0c0df84bbb8f76b460aa4c7d81f272d4220420057d1285485ad71a4a6b0b007c",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_analysis.md": {
-            "hash": "a02c019964b66d33291efd07d33ce647bc2673129c89ebba0ab8f242627ff7a4",
-            "mtime": "2026-02-01"
+            "hash": "acc731b70570de7b06aa32bac14ac88ba291d3a9a083d150a6b1e02190dedb76",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_blog_posts.md": {
-            "hash": "fa49aeb99f052971beef6d3e9194d7898fb2c48b0eb8807356dee43f82f530a8",
-            "mtime": "2026-02-01"
+            "hash": "e5721682e8da5fc07bcc11fbdc1d75ba73607e85daea791031b4ef7fc17e2d00",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_buffer.md": {
-            "hash": "7f7f83b25108a62b5bbce9b7e5395bea0c0fdacdf830ebd37e7ea3e10391a633",
-            "mtime": "2026-02-01"
+            "hash": "9d565747bf29f6e1917d53f8c0538f709256e7bbae04a75f07703000879bd8b8",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_calendar.md": {
-            "hash": "9ccedbe37cf8ed27d89738b6679fdf2145243a45be4a563539d67e1d3183fb94",
-            "mtime": "2026-02-01"
+            "hash": "b356f4f548eb93d1be2c9bc21b76508c5857324fe3883762bf0c85ddedd3b2ba",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_campaigns.md": {
-            "hash": "f21c64b2558fac33504cad4211603d516202837259a3cf42c7ef7485726cfad7",
-            "mtime": "2026-02-01"
+            "hash": "7d580600c6118af70f81925efdc701b7bb5e57ec5b210f508f0b9bc074b9ec17",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_content_enrichment_cache.md": {
-            "hash": "2297c3699ef4ea5f78e133148f09c15e26f2931cbf74af2900434e197013c239",
-            "mtime": "2026-02-01"
+            "hash": "71524fed6051c88e87630c1bb9b50c6c57f77ac8a7472f45639005b6a7e92bb0",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_email_bounces.md": {
-            "hash": "c89b91988ab4c06a8d16aec42094fa07db66e01271a794a5502598406370140e",
-            "mtime": "2026-02-01"
+            "hash": "8026e643c5c108816f88cc35704d4d78e51d70e80559087451463e1b284f313a",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_email_open_tracking.md": {
-            "hash": "e8bdef4a005dd29a734546e99b5e66ea2b3b2d9b74cef86c4307a44a30387f68",
-            "mtime": "2026-02-01"
+            "hash": "a5c89626f2bf4e720eee82548c5229d1295d0fa1c631aa340367e98b81998d86",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_email_queue.md": {
-            "hash": "0454305eff52b287eafbce846706ece6c54494ba44440366cef440c7464d39a6",
-            "mtime": "2026-02-01"
+            "hash": "883f5f0b3c947fb79fac9ac87da0719b3dc515784db62bc4c169f90341d44bb3",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_email_templates.md": {
-            "hash": "4d317151843a23c0061c33338f6026458d91417721e5f6565e90bd7bade405f7",
-            "mtime": "2026-02-01"
+            "hash": "15a0f5826d73df71090cd514f9f0fd580c191ea527e8a5e99aaf4236860c41d6",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_generated_content.md": {
-            "hash": "302516b1857b5ebb55a5fc4089f5c41f293eba188e0254886ee683268da669a7",
-            "mtime": "2026-02-01"
+            "hash": "f39fb22f199779d97d31b6bdb33d15100ff5142e7c9ee4159d2a606ad16395c4",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_generated_posts.md": {
-            "hash": "41a8916d7372a42daebe6d30c9dd896ac6a8ede33618d02cf729202239eb6f38",
-            "mtime": "2026-02-01"
+            "hash": "e89274522591c090187e72fca64517d140e8940bdba2d5216842d06aa0aad1f5",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_ideas.md": {
-            "hash": "3ff193b1bf295a0901bd1cf59df199e400ef6344a47436f68ab09a688b0c3ed1",
-            "mtime": "2026-02-01"
+            "hash": "fafba9f90d9c1b56bc579451e4c6a47866367f128e3a1dbf1138482e83cce68b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_news_content.md": {
-            "hash": "e058c6df6fc2ed517ab8fcaffa4eb89afaa8cb07b70320e5c680c5f4a9b917a9",
-            "mtime": "2026-02-01"
+            "hash": "603f23c1b1688cdf4928d2ce9a600e6b931e5ab726cfd0fddee9d29aa612b6fa",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_newsletters.md": {
-            "hash": "7e1495173c8f817a9b332c948a2d18828225e94e0ccf2869e806342216d74b8d",
-            "mtime": "2026-02-01"
+            "hash": "af29ac14847a4f5e683cc6b622952dae541891959637e7a2f078841489517e34",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_page_seo.md": {
-            "hash": "94bd7ded91bfd4ad0887e33a83f99afd463fdaaaeb11cc807c2f8ebe32347477",
-            "mtime": "2026-02-01"
+            "hash": "4f4931cfdf715a2f3fc057ee4ce8ac9d41bb4abc081673cf91b85767ee2c2001",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_page_views.md": {
-            "hash": "012c7b53db3a6583b2f98ae7bc5602fc1130362500eae812338b603ebd1a20e9",
-            "mtime": "2026-02-01"
+            "hash": "9c66aec4be5341ac49c519814d5d059798fd2c9ed53f0205dcdb379bad0dff12",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_page_views_per_user.md": {
-            "hash": "3b4d26bb0b0350287d1710886949b5b79133b0402cafd336772ec317b2358806",
-            "mtime": "2026-02-01"
+            "hash": "76838d63b04ad7271742763efb9f3da277e8b13ed9e5c8bfe2cb793f3177f72c",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_platform_rules.md": {
-            "hash": "c689bd9b16e3dfd409779a5f94e70cd9935f69eff804faa2568b0bae7be223e7",
-            "mtime": "2026-02-01"
+            "hash": "ac8e45c697037d0ed63ecd49c7b03cde6c6b8c3ba9b7d28fc571f55f3d5c061c",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_platforms.md": {
-            "hash": "d7cfaaff9b6dcf7cf65eced67fac9f138c5051f3fe1a83b5f61d7d43a4a3c8aa",
-            "mtime": "2026-02-01"
+            "hash": "dbb03cbe1d0ba9319f21adab7c28e2a9377609e321eb64020c2bb8a135ca30a4",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_post_queue.md": {
-            "hash": "53a34ec2af78a5f4c406d1b633ae047a0a8ae24910386a4a49c47c8f43e69a17",
-            "mtime": "2026-02-01"
+            "hash": "e9beb28cb6de024de67c0f8085b914f10db1881ab1679f40d27f3e3280c09d56",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_posts.md": {
-            "hash": "596e91811c1216178b54cc7eed250586958dea3fb61dd044f368ac8901d6c0f9",
-            "mtime": "2026-02-01"
+            "hash": "c02480fba26a2588aeffffa7822ee7d9a13b854f2a52b5402c6c0ec1bb4848b3",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_raw_emails.md": {
-            "hash": "7dfddddb29c5c4957b0c46c755222ea2acf7f567ab5d70de95df4fb2495a66ab",
-            "mtime": "2026-02-01"
+            "hash": "92bb9ec3f9326366b16bb7952e84bd299f25c32470e069f6d909ac8a0eb3a396",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_schedule.md": {
-            "hash": "0b5d42af8ff596e4ac76398054945ce533bf4589e79fdc07c5cb591fdf88c351",
-            "mtime": "2026-02-01"
+            "hash": "f8c9beea6f51cd2614794f568f52ecf512c7fccdb8117bebee6605800992f858",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_scraper.md": {
-            "hash": "9bfbe2122963f244c091c21eddef5116e72b3d7a09462f5a3779d4004e0186a9",
-            "mtime": "2026-02-01"
+            "hash": "505ef70e4a3a8cb704436ac94b7070623a2da62cc769d3f79eaec579b051100f",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_search_api_log.md": {
-            "hash": "227ae6a9ad5d5786d0ad5a88c2b9929c1a3482fb23911236915ad15ae373ce13",
-            "mtime": "2026-02-01"
+            "hash": "ea9984173506850ce0bcae650c77d7dbf98bfc97be9e72879186ddfa9f00598b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_search_engine_usage.md": {
-            "hash": "1f99aaab5ad0d3e2047f248dc1993a447d363f2598ab37f84ca670bc9ff5bdf0",
-            "mtime": "2026-02-01"
+            "hash": "d7fd1e3220a8ec46a90461a51fdc9d9a46db6b92070f09edc17ab7b6ea2c16fa",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_social_templates.md": {
-            "hash": "19840e85401ecfa31aeca52f26ebfef226f99ae997cece05e7a6ea8c16d28947",
-            "mtime": "2026-02-01"
+            "hash": "ae021f9c32b5579416a7e008c3424f3687703ea959159b9d99c2fb1befbcc4a2",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_suggestions.md": {
-            "hash": "00e491a0524d2682f82f3b9e4fd6c5046afd3bc95c97a842a757789a460a8ba0",
-            "mtime": "2026-02-01"
+            "hash": "f488be6aa5dcbca33f1a7a2b5c61186a1ced08c7e52e06d8803def0f966ab51e",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_taxonomy.md": {
-            "hash": "fdad3f6fb1c51d97e73f67d13884d7fba722b30d7c8f35fb56a98c66e277a90d",
-            "mtime": "2026-02-01"
+            "hash": "6526a361704b73638430a2112fea0e486a551df88305d1f57cbb6ed688a4a789",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_temp_scraper.md": {
-            "hash": "a834cd76ccb36dbd78c65da6d6be1d67575f016381a11659eb77364c9aafafa1",
-            "mtime": "2026-02-01"
+            "hash": "8fb4e3f9cdafab6e99eae899a6fc8cf3c03f6c67d34b5b9bcba2b6b2e7361bba",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_visuals.md": {
-            "hash": "a7667e1938ee381a7d592bef4150776817bfb50afb7ccb17a916ae5d3ca1b71d",
-            "mtime": "2026-02-01"
+            "hash": "66ac8f887a960f705f36c5a70f6fd9f296a9baa68b5c210bbf5236201f9920b9",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_messaging.md": {
-            "hash": "ce6e5fb6eb6e39093409aa36c53f1d1681c633604143d3f26604f922de0fd42d",
-            "mtime": "2026-02-01"
+            "hash": "eac07486d1310fa46aca2e15301d7ed0dc7ad40a900ca8b0bdb3526a439d3620",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_mymi_news.md": {
-            "hash": "e70457d16efff12d5884d8d66843b6c9b773e536fb88569cc8565f752e373afd",
-            "mtime": "2026-02-01"
+            "hash": "b7a51aff81b6033f730e19be76e70ad878563d1d43e0b3f3af9e189451205f8d",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_mymi_research.md": {
-            "hash": "9131aa3852ccbd5e60eeb094b708b17db6ff77144f1c91bd71555650288d2e71",
-            "mtime": "2026-02-01"
+            "hash": "651dc7c5512b4b8b69bb50a12cab48ce00772f1d7e04bac86645587ca6f01e0b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_mymicoin_overview.md": {
-            "hash": "6536980bf5a69f152154c25dd5416ca84a399e474df96f99a17daed5a0770b41",
-            "mtime": "2026-02-01"
+            "hash": "8cc139065676cba68e965ef73138a2b50910f057036c428f59e535c1b38ea508",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_mymigold_overview.md": {
-            "hash": "da8da9841915f00cc2ebbfb2132f2cde8601124bcb188c64ffa81316df7da4b4",
-            "mtime": "2026-02-01"
+            "hash": "49db01c93fe0928148fe75d97c7a5885a5e67826aa192443b0c80656cc7393a0",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_onboarding_progress.md": {
-            "hash": "5fa0d63275e51ceee47f7b5e5ebd1f982ce7a5009807b297ca8147a09439cd40",
-            "mtime": "2026-02-01"
+            "hash": "35763c114e246ce3df59f6ac2322ab0cc8e9763777138223dce0b02092f29263",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_onboarding_steps.md": {
-            "hash": "5e85274f143c2ae4405f8f63d67f23668546e7c1f88430abb7066e237125213d",
-            "mtime": "2026-02-01"
+            "hash": "873f659fbaefd6c60043c3be78fc540cf8e4253b7a5721a31430d504890a09b6",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_ops_command_inbox.md": {
-            "hash": "3b16bf3e24366ef79fa3cd46e8647ba2b594bc5646a562b46be45e3b1ec3f0e1",
-            "mtime": "2026-02-01"
+            "hash": "3068f5948c0207163b728c7cf62b82f731ac6219cf93f6d8d0d8be0019e7efda",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_ops_job_runs.md": {
-            "hash": "374cd793f3b1bba79c3cb89a6fa9fec0298ef86747ca255438352be2f4471eeb",
-            "mtime": "2026-02-01"
+            "hash": "4633ff961b8e04d3a4e41998c75629fff18485fcf749453f8dcbc1821b8ce866",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_ops_jobs.md": {
-            "hash": "cded6eb67d08eea5b6dcb2dbb9a7123f70eed595f60cc71f14d16c126702f061",
-            "mtime": "2026-02-01"
+            "hash": "f1bcc4774f9cfe9c0c052d1d052238d81738f8b9436dfa552bde02a4870d56f8",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_ops_queue.md": {
-            "hash": "712babf285f297ea58c05fcf0eb520dd2f365cdf95a4fdadc90ecdc0a483484f",
-            "mtime": "2026-02-01"
+            "hash": "1ef9ab89f56eec8df24bc22e9149d78be9c3aaef6541448fd29c41ae3136ae15",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_ops_runs.md": {
-            "hash": "273b7fe88312d1a37a7cb35bd4a5faae597d69bf3981210649bd4339d0bf8669",
-            "mtime": "2026-02-01"
+            "hash": "07c163219a70dbd1faa0d8b11235ea456ee6415c8938d8ffaf16d64807bc8e4f",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_ops_schema_audit.md": {
-            "hash": "d9865b2f57c0aea1b81d28337551ff8a9d21be56bee8c86bf1549ce7db614f69",
-            "mtime": "2026-02-01"
+            "hash": "f8c827108c7816f2c93e6f90f9477402e571d29d03975f436c352b8ea363ec66",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_page_seo.md": {
-            "hash": "b39a9103c0bd1a69eedcf49434ec194f0750d30cb399ab252ced377c46435647",
-            "mtime": "2026-02-01"
+            "hash": "ed706e3becb15c4c37f2b84e0ce158690ef1f309f29b1f0398f13825dce2d14e",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_password_history.md": {
-            "hash": "a4109ee584cfa3e9e336321a3e51705bbb6ccdbd8486bcb9f421203e553d50f7",
-            "mtime": "2026-02-01"
+            "hash": "83d5028a8973cd3f2ebe911f2cf5a97000b0e9697b2fe4408870f152aba31479",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_password_reset_attempts.md": {
-            "hash": "9afa7df4ea8366be4a8906147c9b39228cd639b166afcd293a85d1b42b48d032",
-            "mtime": "2026-02-01"
+            "hash": "f4d527783e0c000ed50596a082d29f79a291828fde4c159ec53862d47e76532d",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_permission_role.md": {
-            "hash": "d17765f2593f1593478ba37265772acb8ca1dcb443ce75743d405a730b131b58",
-            "mtime": "2026-02-01"
+            "hash": "a353833b276291668885ce6019dec1e6f5486ddc2a5851c99c36d4a4fbcb8c5c",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_permissions.md": {
-            "hash": "d0cba78a5e340971128f1f5631438f758aa8acecc646e0518b04a08510eefa16",
-            "mtime": "2026-02-01"
+            "hash": "4525498a784438927cf6d0325bdcaa6acda3217a3625d772d61776f19a0554f2",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_posts.md": {
-            "hash": "ba0bec0ddf542f39029a01dff3ea2585e77621947384884d444d58c09a7bc803",
-            "mtime": "2026-02-01"
+            "hash": "2f3ce1ead3eb1341d635265d082754855f674f216f6bc01ef4a49bf867912af9",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_predictions_liquidity.md": {
-            "hash": "c55917e370e488722ff9648298ece1576772944c63561907069f1eea0686cfb5",
-            "mtime": "2026-02-01"
+            "hash": "001bb27d4b1f7dd3ddd179829cbe0f6b0ae20e916156620149b224a733c8b248",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_predictions_markets.md": {
-            "hash": "6ed4fb3b1bca754357262f514c81049446d8fa1bec0ad602f0beb5253e94afed",
-            "mtime": "2026-02-01"
+            "hash": "ed0da6847adb38e49c82b8d4de557df6cb13d2fd4ae90e8677a362ef996fc5e9",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_predictions_options.md": {
-            "hash": "d266730db938acd14610fee317fe021761486888340fe19bef53afd3163dda11",
-            "mtime": "2026-02-01"
+            "hash": "bbaaad76b9cac85852ffd645d30d3d0b4cc3ab1e01c9035d7c3147d3d920b668",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_predictions_orders.md": {
-            "hash": "3af33c8bba3d2b50ad78ff65a50be1d0694713930136b6b0de0965f2c1718f1f",
-            "mtime": "2026-02-01"
+            "hash": "32887fa4245d92de2ac03a51c7556fbd7b1ea72e50ae9ed0720184e569459164",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_predictions_payouts.md": {
-            "hash": "111848b8985f4805cb79c6f229ccc4a6a07188d0df3be7958620a3f054712a92",
-            "mtime": "2026-02-01"
+            "hash": "f4864782f5609fa232c97696f753d71f1b83c5df0178e21449329c19e9fa8f0f",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_predictions_positions.md": {
-            "hash": "99ee33068917820ab244d7a5fcfc8f0404c54d64aab3cf140f9dfa9f3779c1da",
-            "mtime": "2026-02-01"
+            "hash": "f54c62510428922484ff6e225a04692db9dd464bbde544f870bc321f09ca871f",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_predictions_settlements.md": {
-            "hash": "65bd8e3b5d98d7dba08ec46b9ac973802fd66e6fc84564af4841bf845b94a339",
-            "mtime": "2026-02-01"
+            "hash": "089a820e02cf27fb3712d03c170aa8e64f76cb891759358d47cc87592c31197a",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_predictions_trades.md": {
-            "hash": "3fe436cdcea68688877f2ff5f878442d5baaf89bb3c3dbb8a56cdd52a0cc7f1c",
-            "mtime": "2026-02-01"
+            "hash": "771c4d8c97e1b2504b3ec154e89c2f8d8a82659ea466279c555bb16692d4a518",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_privacy_requests.md": {
-            "hash": "572e64a2e10497871e9c87f0dd0e275f4a619e416c3adfc4110d0f2a968f3257",
-            "mtime": "2026-02-01"
+            "hash": "fd2e2859a2be00a7a6d120ca074e996cb254cf81f50a193a6728a7590ae59e38",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_project_commitments.md": {
-            "hash": "058053924f6a7ef1277a52bac48e36a9f066a23226d51f29dba224d8cb4d42b4",
-            "mtime": "2026-02-01"
+            "hash": "d958e659a738bee084b5dbd454e656c5f97dc879deb830b730d83122a3343e18",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_project_distributions.md": {
-            "hash": "31660b236d740e05200336ccfda58ee6ef4d2a8e37b025057c64cba9507cb981",
-            "mtime": "2026-02-01"
+            "hash": "bc63b9d47d9549071ea49242046e157ccb893502ee238c93fe5d9cafba1c1214",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_project_payouts.md": {
-            "hash": "3357bb76f18e9d0b697912019a57bee50a2fd3932c3df0f89af378d13912752f",
-            "mtime": "2026-02-01"
+            "hash": "44d7192eec3defd0cbaeb494291cafe33e372df7d5c882fb6f5178b654f684d9",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_project_scheduling.md": {
-            "hash": "2fa18f70c89198a098f5bba2796d41f45abef4d8404dd7059b65601d197b7569",
-            "mtime": "2026-02-01"
+            "hash": "d7ae7102a019c8b7e4c29a95a78e0f3dcd529729d78e0d8c655eaceafe828500",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_project_token_allocations.md": {
-            "hash": "2217f5c45988868e1436b271da0f155af2f81940f8d45f0516617f0ca448d4cf",
-            "mtime": "2026-02-01"
+            "hash": "aab3ca1f02085748c66b31a732780ddd541a065d0b1c86fd0720ac30d6b78c30",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_project_tokens.md": {
-            "hash": "403f51fa92ae45849edc5a51da2ead7f66835be6e8701075d193dead31cf438d",
-            "mtime": "2026-02-01"
+            "hash": "d0ede6ee1469e40de833b649f93092696c7b1e813a109caf3b4b9fd9c8a1e81b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_project_withdrawals.md": {
-            "hash": "194f0f659292dc5791fd1ef83f7249ce255b403fc023f7895f95875ee3a3281b",
-            "mtime": "2026-02-01"
+            "hash": "8bb14d188635d1dc3c9359eed7e462c41a814de65ddc33630a8801092dcb473e",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_projects.md": {
-            "hash": "0d192fbe5bd99dcfb4c8ea26f0c43bd4ef3a1631ac90dad5885af8e59995e413",
-            "mtime": "2026-02-01"
+            "hash": "9c16f01f5a837dcda57e2726acf23e9719161eee491bf593289f0a5a78640098",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_projects_inbox.md": {
-            "hash": "63d54c747765d16853a7d4456e40824678dbe8d777d68d83cbbc0678782c5c1a",
-            "mtime": "2026-02-01"
+            "hash": "03291a3b8ca08d6e83c48c93b2eafd06c55fc0a3c36f74378dadf273acf4e3f7",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_projects_revenue_distributions.md": {
-            "hash": "e914dff77570e585fdf0fe2851a3fdbc63fc3d2ec08350c835008dbff3e32c36",
-            "mtime": "2026-02-01"
+            "hash": "85a4b46ae6d5f904e6d61cbd60158bd001056046f9d5b2291b4e57ff463b88ed",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_push_subscriptions.md": {
-            "hash": "90b5d14c06e3e4e488e26d0a4be26a0ce2353be3f8b08df2bfcbaf236dee7fe2",
-            "mtime": "2026-02-01"
+            "hash": "c749b2037f4efed289375cd5e7402ed96ac382ba4ec40bb10ca26e5afcf948b0",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_quantities.md": {
-            "hash": "fa701e19aae862c4fbed1f2e0c5c3e0026eef59db079a1bcb567d97e5bfca01a",
-            "mtime": "2026-02-01"
+            "hash": "8f3a8e2228c64eeaebebd959747f13a1599ae7045a09f81e5b1c569a80a28d4c",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_questions.md": {
-            "hash": "8b7f87a46301210b2360f263246aefc7f055d010f341f427f8e0a80de8432ca3",
-            "mtime": "2026-02-01"
+            "hash": "37cb6b68da25d62817fdb3183234926ef97c0f9228e7378d4d88ff20c3c9e538",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_redirect_links.md": {
-            "hash": "17e803211e56f5fb225996a9a71d27717451d33153448b25d5b3ad0382a15376",
-            "mtime": "2026-02-01"
+            "hash": "47480ea3acd2156e880888988b320497fb54f76800a195668145e12f2a2bc8fd",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_referrals.md": {
-            "hash": "41042d21cf16f8977b4561c924662df0635425cf4f85e8c8d4bbd9cf9b5d96eb",
-            "mtime": "2026-02-01"
+            "hash": "5d5a84041622e6b951c3a8fd0a8b6e2ad7bd895e1bcc9bc490d097733783fa34",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_role_user.md": {
-            "hash": "0f313183217d6c9a93a0eecfbad215174cc3e95c048470a3999b1718db69e218",
-            "mtime": "2026-02-01"
+            "hash": "fbee379cdee4e64b97a24ca7326863a4a6afb3083e86c5119f980ef94b0ce80b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_roles.md": {
-            "hash": "7dcf57af6ab52a89d45b2bbb4edae689d7866a586374817f2412d74cc3bafdfb",
-            "mtime": "2026-02-01"
+            "hash": "87b13878483b97b64cc0e6191418896ad5520579840373e53d80e18088d7df79",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_runtime_config.md": {
-            "hash": "532739fc4faaf705bea1b486476c461486951c5fb266b4b8e7dcb9cf4fc237ea",
-            "mtime": "2026-02-01"
+            "hash": "2c15cc9bfa209c7dbc09234f60ae18b76c0b53dd0311c2cc791574e1c42fbc7e",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_script_studio.md": {
-            "hash": "0da4c8b591122e88b6733cceca1e6bb91667c73b6b6d5f499c84fb1318c14c09",
-            "mtime": "2026-02-01"
+            "hash": "ffd33ba571e91599b43e26d203afc2a4f341b6f2be0145d130d4f8b977266490",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_search_logs.md": {
-            "hash": "63b058cd1c0b2051c882f0d7ddd70e72d984cd54371b08d7af2d965cf22be770",
-            "mtime": "2026-02-01"
+            "hash": "9951897f76324a334c3510c283631b25ea98ba9c8c718a7d2a876c0f7b768dac",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_security.md": {
-            "hash": "cc3ea21b334228b7018a19dd4c82339118927e17f580139d1f5be65e5f9c7a81",
-            "mtime": "2026-02-01"
+            "hash": "9b2474af3ddd30113f66835d653b495a9a4163e6afd3585b3a69059441ac959b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_security_events.md": {
-            "hash": "f095467e98bef833e2e78d9a866b032d1f06b9ad4ccc4c11d412714ae18ba1b5",
-            "mtime": "2026-02-01"
+            "hash": "f32abeb63ecf931c728d414950052e939c91162b6235f32d7f98e084904a9b81",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_security_log.md": {
-            "hash": "675e11d82d7e3e7d30ed5f4b1621906411f4e7009dd2037abfc80377634ccd8d",
-            "mtime": "2026-02-01"
+            "hash": "e14f1486658bc5b618dbbfcc8cc5c25e7fe8897a42ef7ab8e7e984ce0f3b9cb7",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_security_settings.md": {
-            "hash": "6c235b27e5a65af37b18e3b9f7ff876c4b5f0afbd124beebe2b874152cc6e940",
-            "mtime": "2026-02-01"
+            "hash": "b925dba22b9e580e3674d9d8aaac7944e3d4bdd20d3cb83f0df50a2b5551bf35",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_services.md": {
-            "hash": "10a0480bc82290623fd281d89fb205d991054d5cf899172953fab02dcdbbc7d6",
-            "mtime": "2026-02-01"
+            "hash": "233bd9c7a5ee5e23b9a0a6d96ef3e5f10188b886efd4387d12c819f12335370b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_site_settings_overrides.md": {
-            "hash": "8a9a2d377fe1dd304549ce0dea7ce55116d2503eaf396cc767cbcda0f16525a5",
-            "mtime": "2026-02-01"
+            "hash": "7bc9fc9b8b7b7151cd79edb3542fed82a35723664935d3d50248c3ce30479213",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_social_communities.md": {
-            "hash": "7953834d0e83f88eb24d142e1451031f45f1130de702df6a2a3acfcb983a890c",
-            "mtime": "2026-02-01"
+            "hash": "5474b36ec59159825c514395b5dd6cd80f3f57a57f0b0c804103b7885ccb56ae",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_social_distribution_queue.md": {
-            "hash": "fe95a7c6a86f2472cf675e2b096a61f0932e5517381eabb3246a38080cc6b3e0",
-            "mtime": "2026-02-01"
+            "hash": "c616b971186b8b8b426095c6daee10e85ec390e1b658f6b6a999d1b2bb66798e",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_social_generated_posts.md": {
-            "hash": "23a3a57d04789a9a651c7d3afafefdd77ec6b9f3f466d955f709b8f35b130867",
-            "mtime": "2026-02-01"
+            "hash": "53a04149cbee8cf6f9c4fcfedbfb5a9765e23284d5c04fb6fceb82406b5484e3",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_social_platforms.md": {
-            "hash": "c5143c77c80a447d1b1f3fac04fa46a2ab1729f748f1242d5031468febbb6e7b",
-            "mtime": "2026-02-01"
+            "hash": "1a09cfe69cfc943acdf86a96f45b268843f46653b2fd9288327037f9ea6dfd35",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_social_post_templates.md": {
-            "hash": "e88b452b55d1b2d4fd46eaf33b45a37f5d549cfc6dc1b932ef7e82bb768e5d98",
-            "mtime": "2026-02-01"
+            "hash": "5cccc6405d4ddf2f34bf849de6af2991238cee72e1ad58788dd2d9d04b5f1c81",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_squeeze_fade_setups.md": {
-            "hash": "00036eb3800d92d1d588761ab39f3fa2dc3af500cd24cd61ee942ba0a813c4d4",
-            "mtime": "2026-02-01"
+            "hash": "36f9ebc37b06cad209bf65ff836504b68e28f7a92415080e8d5d9e874b4b76ac",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_squeeze_scorecards.md": {
-            "hash": "1490fc109e92944778f8f1d10f924e687c593e59416b0301635547768de412a5",
-            "mtime": "2026-02-01"
+            "hash": "27c01d9120a13e5acdeba7a1b94955d956a9e331721f05a9a297e06b094c7b47",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_squeeze_universe.md": {
-            "hash": "721a104c45ac516930492c7f3c1f6f4c55dd09b6a2fd5d57e18a9c85c2544866",
-            "mtime": "2026-02-01"
+            "hash": "f3e4145fff96c3eb3961f347da9935b544737db3c4dfeea677cb1e17f3bdb377",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_squeeze_zoomout.md": {
-            "hash": "d2924e4890b324156af991f2b6167c33af245c65552c84bf64d659e8ba8d6fc9",
-            "mtime": "2026-02-01"
+            "hash": "1245406d25398d7ddb64af861c073001f1c4f40d7381f4112fd783a07587ea00",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_suggestions.md": {
-            "hash": "6a97cb04ef956aae5c8194468716bd21ca2d7205c197a6bdce72ffae71cf655e",
-            "mtime": "2026-02-01"
+            "hash": "cd8371772bbf93005351070f9833055533ecfc28ed99617f694281ce5c3d16f7",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_support_feedback.md": {
-            "hash": "49ba3b5c462e044fe710bbf17a60a9bf2d8485f1efd1dd10f66fe5af2602683f",
-            "mtime": "2026-02-01"
+            "hash": "c93f537a42f5005556c62cb077b9b83f6a295d16f51fccbb77870fb33058bde2",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_support_kb_articles.md": {
-            "hash": "0a57dd177d4d6899ce76d7d921f64dfc8cb939776cbd1a7774382161df901e1c",
-            "mtime": "2026-02-01"
+            "hash": "76e30b55bcda315d15422683288d1cae59f659774cec3f4cf736614e5dbe3e0a",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_support_requests.md": {
-            "hash": "b12dafbb478a2d3a5c3b85bb604bae0f5992957ab085cb0bd824455558a4aaf6",
-            "mtime": "2026-02-01"
+            "hash": "739b25ffddf4b737846c7985f0b1e2c081a109ef4b1f10cbfaf6ee20445e61e5",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_tax_audit_log.md": {
-            "hash": "e82dda5019c018e9309f4b47c6a7bbf41a95f8a5012c83bc1819db5f102bf346",
-            "mtime": "2026-02-01"
+            "hash": "11894e1c8fa3d25225adede315beefc49515f6db83877ea8309358d166eb4c88",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_tax_jurisdictions.md": {
-            "hash": "721e05119167ff4cffbc2c51e1f447492db6a6eb963ee17b1e6cef2c126bd7aa",
-            "mtime": "2026-02-01"
+            "hash": "4f90c79e0c696417fc59c2c8b6191b76c735de0664fab362b8e59c5829b79773",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_tax_rates.md": {
-            "hash": "aaf5d89fbc2bac434845c75659ddc399bafb7570c51f2b12897997f27ab8d2e0",
-            "mtime": "2026-02-01"
+            "hash": "bff34032c2e731e2926b61ffc209d2c4288d5f2a31a6d9ffeb4d38a1fca9f5ab",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_tax_rates_ibfk_1.md": {
-            "hash": "ffc15af91c798d6255064877aec17c147a34ba452920afc943c40473963a22ab",
-            "mtime": "2026-02-01"
+            "hash": "9115d8e9f6c7e8a025bb7d25eeef285cc4824cded05184f1eaa6e422ca2c7d1c",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_tax_return_lines.md": {
-            "hash": "ae1775b862bcd361451644b0dd323733af54512726b6325fc243b81dfec056f5",
-            "mtime": "2026-02-01"
+            "hash": "9f78f84a6e949d63e547392f561ceb76163e8a04be52b88edc9f564ba66f241b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_tax_return_lines_ibfk_1.md": {
-            "hash": "55ac778961896defeb9cbb0444b28de7e78d5fb8925c8b9e04bd9a7083b4ccec",
-            "mtime": "2026-02-01"
+            "hash": "3ca955fde6221a0710a57399c5d25d2828ed0fa42fd4cb9495ed9496dd826013",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_tax_return_templates.md": {
-            "hash": "30f4262adddec45e2ce5b84429aa2d4327f552d53bdd6f25c53435dfd1d33fdd",
-            "mtime": "2026-02-01"
+            "hash": "636e38d5748e2c9ffc27af84f2422a670c8bacf6c3f4d97e713d955fbf95e773",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_timezone.md": {
-            "hash": "887a3539bb43ee13ca2c77de3747afd1ecec3ea2a39b3d291779e83568340fbd",
-            "mtime": "2026-02-01"
+            "hash": "73736031bd5f1e0b5fe0085299ef2951e86acc5ff0096dcafe79863ab5e648b1",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_token_holders.md": {
-            "hash": "e66a22922939819637eeffc76b6b202a82ecdec2158de117c974ba6a53731e48",
-            "mtime": "2026-02-01"
+            "hash": "a65166a4f73683b625eba82652af53062103c36cf463a470aaafe1da40e30c63",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_token_transfers.md": {
-            "hash": "7f1e2c66be196b935dec83c9df011159bdf6e31c776e36c808950f70e63e79f5",
-            "mtime": "2026-02-01"
+            "hash": "a43cb6e47738296b603155eb2bee55cdf26f53161babcef9dfb280bb539ba77c",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_tokens.md": {
-            "hash": "efd4c32ce6d53b6ea2580fa3c3434ebc87557634a2847da94dc5f58cbb1f21c9",
-            "mtime": "2026-02-01"
+            "hash": "807fc4bea44ed0d96bc100351efcbd84dab2dbb9158a780f4b08bd688c6cc1fd",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_trade_alert_enrichment.md": {
-            "hash": "7554a21225cd1648406471d5fc5c8ab550495473a443cf8c4d95644d8d6033a1",
-            "mtime": "2026-02-01"
+            "hash": "9d71c721345f3503aec0e8793adaf1f7e86ac62ada7b9eb65fd96bdfa1469560",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_2fa.md": {
-            "hash": "22e3a79a78c8378b9653977985ae0837b09a9518ab45db96b6cd796d4db1db25",
-            "mtime": "2026-02-01"
+            "hash": "9dc7ed9847ca83d822bbde16ebf6bb33a0fa075594057f02e14e10e164818f01",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_broker_links.md": {
-            "hash": "622d165bea87fff02cc3157253397c344388e8cef673dccc4fa4ff63e59e95c4",
-            "mtime": "2026-02-01"
+            "hash": "a6b42060a099ae6b762ff47464a82bf0815e511f4ebba0b9943ae308b74a80a7",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_consent.md": {
-            "hash": "b8e4081b2b8f2907d26e9b27cc86fba1ab87541a01020357bb0cc9da78d8fa2c",
-            "mtime": "2026-02-01"
+            "hash": "ad5e684db6c55aeedffe6f5ea234e7493e920088f55814a80e7d4285882a8d4b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_employment.md": {
-            "hash": "568203e70eb87b0a997f1e976f16c018023801e2feebddbad708cf2fbd468f99",
-            "mtime": "2026-02-01"
+            "hash": "e583b5eb2b63234c2d4b41b15b3546d6db326b17f2f517d2d072a982000a13b3",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_events.md": {
-            "hash": "dde78a038cb9844a06c224cdb43c876a03ed896e0af2d957330da00f37bee22d",
-            "mtime": "2026-02-01"
+            "hash": "aa4b40b342cb0a46e3369fa4c6c5bf041c8604cc73833012b36bff29ed121511",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_onboarding.md": {
-            "hash": "c55174e17ccb53788e6f6c377e6e82e3561b6ca73f89061ec445b57cd9e41ada",
-            "mtime": "2026-02-01"
+            "hash": "7a804bdac7336618e75512228dfe2effa7c6607b86e81f7d480dcd46216dcb3e",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_permission_overrides.md": {
-            "hash": "97ed14c72b486b53b4bb5dcb3595a6ca2aff996d0b75174cb8b657eda3cfdd5c",
-            "mtime": "2026-02-01"
+            "hash": "07933f596d8537d8c672680883b858bded79d1a34f8e93b50ef6f0d48411d434",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_profiles.md": {
-            "hash": "9d2bc01ecc36677e964abf7072877662fbfa3f7fcb16c0255ed64f4b99af78ae",
-            "mtime": "2026-02-01"
+            "hash": "47a782bd4a26efb5d718587bad785e517f5cc75984785eb97844799b3adff171",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_roles.md": {
-            "hash": "41d5cb3d259922e1f172a38acafeb5a1956528e2f6a87d451f08e0b61894026d",
-            "mtime": "2026-02-01"
+            "hash": "1e31cfa343d781e1574549571ef85de1c1d445f1fde35c15efe835d1c2317f7b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_sessions.md": {
-            "hash": "a73a9b30ef89d28a57dce7cc87d3b689d7057edbd7f4dde6073ccd7dc5dc6d12",
-            "mtime": "2026-02-01"
+            "hash": "5319bc7f49d64bcaf954b5a19ad1a3244ad0f54b780aa540ca351478b7ad103b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_setup_preferences.md": {
-            "hash": "a10bf11a21f4dc97a715cd61d57bedc7895bbd3ac9c863a6e4c72693cf91613a",
-            "mtime": "2026-02-01"
+            "hash": "4f22639e0ed9eb9289ae3fd1c189174bad50617880757d251c69becb90b0db89",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_tax_return_jurisdictions.md": {
-            "hash": "7509f3ddde0a2195ec76f5cf3e78fb962e901de8aea08986e7ff25dfd4d2c29b",
-            "mtime": "2026-02-01"
+            "hash": "353564179c92704ab1c96bf1fa08e15867b94a7e6ca45631835d0f6f487d6271",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_tax_return_jurisdictions_ibfk_1.md": {
-            "hash": "95298799f0555575fb4aa2e977d774273913079cc8c728a8f4cbc9bb86f8481b",
-            "mtime": "2026-02-01"
+            "hash": "442dc0d109d99d4f5e796a9dd9265cc2d7a88e19c17240923810e4af65c3b7f6",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_tax_return_jurisdictions_ibfk_2.md": {
-            "hash": "82bcc5e10a1ed2e9acc4bc308a5dc9af32a0dead77bd285f94a891ceba4d5d6d",
-            "mtime": "2026-02-01"
+            "hash": "06668ca2b35f0e647b23347ef7b3b19b8ec81b1886819199f4406931953539de",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_tax_return_values.md": {
-            "hash": "dbde768a73458ad53668c68e9241952ddc8f788ad08c0f4afbb15fb4bea0136f",
-            "mtime": "2026-02-01"
+            "hash": "6485abe7c48951a79c3e14b6adb16a0784ddd5bb998d511b60f08e4c23d157e9",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_tax_return_values_ibfk_1.md": {
-            "hash": "664cd7e7736591b70c77609b9b54559cd61313f00373aa45daf50bd4a05973d8",
-            "mtime": "2026-02-01"
+            "hash": "e214be5b43faebae0efb042bd5ad8aa88978709773a11c62e81964b33d7ed05c",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_tax_return_values_ibfk_2.md": {
-            "hash": "f2bcdd4dde28acc787abe4ee48522b163a716e8b0778f9d762035b4b429b51df",
-            "mtime": "2026-02-01"
+            "hash": "73fdc23cef1189de01350dbbf88cfac138471f7c4103a5fecaf65689f0737ea7",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_tax_returns.md": {
-            "hash": "58b7f68ab02fbe1e7e162e05c7258da3c4a4b4163b96331f18ab2af8295457b1",
-            "mtime": "2026-02-01"
+            "hash": "9bcb927ec056574b94b9412ac579e71c47c2f98a14d202b03fe95ad1a6c08331",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_tax_returns_ibfk_1.md": {
-            "hash": "9dd30f09d7e648a619bd63099877990a715ca043a99ab35d6d27df67cbb234af",
-            "mtime": "2026-02-01"
+            "hash": "c49bd1cf3e35b463874abb0ace50dc0c396660a813897f1f6b7b220ddc6da4f4",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_tokens.md": {
-            "hash": "80d3c203322ab5ab2a519f201b475a8a9a7c1fab4c1322edbdc2ea7816f8cbfc",
-            "mtime": "2026-02-01"
+            "hash": "457728ca8d737142edc654ea69322389c5c7c50b0770246b5ac528fa6bde2bae",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_wallets.md": {
-            "hash": "561603b375d603519b785a38a02b4d9fd1f847736e2dff08090624ead77b90c7",
-            "mtime": "2026-02-01"
+            "hash": "2f4d8eb5ac2c15c9fddbec42a7d4b89dce6b45f0308bf195fd30d4d5ca7826b4",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users.md": {
-            "hash": "bb1d9d477f6654c5439df97ed9397e0de6924e13817f09b59b78d29af72cb035",
-            "mtime": "2026-02-01"
+            "hash": "fb3d1e87fdffcf3a9c4dc0d4674c4d2be2edbc29edf95fea44c0f75220072a0c",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_account_ledger.md": {
-            "hash": "e32a18dce9f7806106bdd78381dab73de78715f558f2be2854f20b8ab5b53472",
-            "mtime": "2026-02-01"
+            "hash": "686093b31c5386d104fcf7147dc466b526ca4a23b269e7e752ba34c8d5499a7d",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_accounting_accounts.md": {
-            "hash": "72399b1e98e407d08f4918a9c7b0914cc6a0af2d3b4d7faee1d7b5b50bcd1774",
-            "mtime": "2026-02-01"
+            "hash": "6fc264284fd511ef96c73cb1b25f3615733c0e308878cedbc68a9e525047ea2f",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_anonymous.md": {
-            "hash": "3542a9e397ba4540d0728c0942254c276df9bdf5f4867f0e1502ec792b8c8235",
-            "mtime": "2026-02-01"
+            "hash": "e61451920a983f9f2bd4931a990221df55d3aa2528cb59bb4f00b35f99a48e84",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_audit_log.md": {
-            "hash": "af62ad65f2015b2bcf1da7d754e0fe567b36efc5f3cfb3520290a281972f9a36",
-            "mtime": "2026-02-01"
+            "hash": "811ee201d6259546e7a503696f251a277c8ab8fec0e7ccdfcb3d1491891236e7",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_bank_accounts.md": {
-            "hash": "efa2b069c51decd07d55bb0ad9f97183f82d16d380447537f808620e37a2a076",
-            "mtime": "2026-02-01"
+            "hash": "1894adcacc7bc490e1a00a0e25a79b7e1b998d0d09f6a143ea82a7b54b593d5e",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_bank_transactions.md": {
-            "hash": "7e4ac24371fa8af75760a8f715c11229977206c4c4f5a9f83a3f1a5d05c4d4c4",
-            "mtime": "2026-02-01"
+            "hash": "5daea317c65c976f58d3dc24672e86ba3c6ba749023b2860de0658fb4987c0db",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_brokerage_accounts.md": {
-            "hash": "b43c82a5be26d05dfee894d030d5dbd160faee1c7559d9866a2b22d76284eb37",
-            "mtime": "2026-02-01"
+            "hash": "f2176d2aeb60340895d89c7888e2bc03e5843ee9b61ded8aa573255688c8025a",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_budgeting.md": {
-            "hash": "a0eb5d18a1a173cbbb2feb2ebb10c0d4d73816c7d73b8ebc7871b2e1cebb937c",
-            "mtime": "2026-02-01"
+            "hash": "54a8fb00cd67dc25ef22218b382e7a89a81de73f40f3f65bad6e91db55119fd3",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_budgeting_forecast.md": {
-            "hash": "893b028abb1564d35552b10a4b4d1752e7254e5577f9d2f4cf4fc85624a8aa12",
-            "mtime": "2026-02-01"
+            "hash": "16a99436e8788b2ac9bbcd13e8a52a17b892545040a5bed0e4e5a90908ce6041",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_certified_advisors.md": {
-            "hash": "e9bdfa50967960a08b6c606faf89002bade6b60e0e5eefc389ccc32de91fcec0",
-            "mtime": "2026-02-01"
+            "hash": "3b15e20e59330e9144477a38449a2a793202d49f8e5c2a7677238ce4983c577b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_coin_purchases.md": {
-            "hash": "df359ef2d2ec1440f8b526feb70cdba246d22c19c4dddc54b4e57ff3c8138345",
-            "mtime": "2026-02-01"
+            "hash": "cdee5ac0c1a1732644fc983d04209b1f09071129a927967b6a2f6d4a795acb13",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_comments.md": {
-            "hash": "438ecddb0815851cc3d87f65d90d47df21ee20fca64ed4ea2aa7bec29dea4c5d",
-            "mtime": "2026-02-01"
+            "hash": "0c4c44bf450eef0af81bf82418cd09ddcc99f25d18a3e85df3700355a4b99e09",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_credit_accounts.md": {
-            "hash": "1be33953fb743551eb41e3692c0bfd9b41504be14c5df942e00a8c620ba5cb86",
-            "mtime": "2026-02-01"
+            "hash": "cc44b4fa476ba1ac082b2bc619b4f07471269a91df91d9447358eab42fe29179",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_crypto_accounts.md": {
-            "hash": "cedf9b43cc0ee30483cedd56e10e6a2d40c09d80936fac8ee33a751634baf4cb",
-            "mtime": "2026-02-01"
+            "hash": "fee025289ce38a673cfb1ce15628f3c23ade03e4e14eabe8191bfeb6a9d72b22",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_debt_accounts.md": {
-            "hash": "82e2374519300f68b8fb30be58211ae53899adeff2cd1bda089d27fd3591152f",
-            "mtime": "2026-02-01"
+            "hash": "96d4ae278207b7deb77ef759ef0c955e2ac95fbc4cc51020261de2c327d3677b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_discord_links.md": {
-            "hash": "0052b0793498aa4d13be042357e6da5db4905a12d720a32847309666e2c3c77e",
-            "mtime": "2026-02-01"
+            "hash": "e8e9e4fa45d2b36b03c1808eceacc0f69b77410a897b587b7ae3a341727c0ed6",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_ecommerce_accounts.md": {
-            "hash": "5e7e979a06a0e6b470b2f63aea3df491bbe9f83003217e1999597fe1b9febbb9",
-            "mtime": "2026-02-01"
+            "hash": "42a46dfe89c839552ff023fefc5f531078410336cdb562fff3a9965289ca5669",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_email_subscriptions.md": {
-            "hash": "dd86625f40c919ae52da738b5b8071af31856ee13ae78c3819bd3f2832ede658",
-            "mtime": "2026-02-01"
+            "hash": "cb4d68327e5c9b9d47124e4dd84576846d5b1dc162e1edb465a002876fccb053",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_financial_institutions.md": {
-            "hash": "6e1f444b2b093069bb73b67c0cadfd87e95641504007b51876887583f13975a5",
-            "mtime": "2026-02-01"
+            "hash": "a8e040eb8289f75462e647e62fd473eda0bc1eb3a77ead204af804ba9084f71e",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_goal_checklist.md": {
-            "hash": "627bb21f2583d00e284cc7db2c985487e09c3356e96c2130044fd8ebe10b5b8e",
-            "mtime": "2026-02-01"
+            "hash": "8806fa4cecc409513339c3722c2e2122334f103b82b31e2a0a116bc52ae436dc",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_goal_completions.md": {
-            "hash": "f836255e271c40ed1462be3455bbdc7f6749cb3bb87887c1aa9d83aa59320b85",
-            "mtime": "2026-02-01"
+            "hash": "ea11ea07dac21b988f9e0fe0788a71c0f4b8c5daa02cabfafac3d4cb810ffb87",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_invest_accounts.md": {
-            "hash": "cb9a7823a296543511a370110b4554142b772dc7b0dec8191299f9d1f4f5bbd0",
-            "mtime": "2026-02-01"
+            "hash": "8f7e9caceeb70974042d823abe95efd9e53877bcdbb6689cd72d40a1d7c3f450",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_investments.md": {
-            "hash": "5a26369af42196bdc1af13a5728dd98f3d911bd56f20d886a02f7681559367ee",
-            "mtime": "2026-02-01"
+            "hash": "19db701e42050d02cba6011a28b17c761f8103897622c8c2202b74df60d37003",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_link_clicks.md": {
-            "hash": "358f3e5ab0a6f1d4426fb929fdeddf2f2ab6db0535108661ffc4624a4896c9c0",
-            "mtime": "2026-02-01"
+            "hash": "17705bbaefbd6fd2ce347ce55ec740f166d211ddb8718c2a64ac1cb48569c34c",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_loan_accounts.md": {
-            "hash": "7d289648d41c5bbb2354ca604b609c420c243e78477fbef657115afe99c85b14",
-            "mtime": "2026-02-01"
+            "hash": "24ea94a57217a6e577e4f1e7d6b657fb4ca4c726fc159b661717d82c83d406d6",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_memberships.md": {
-            "hash": "01bf50dfb4fae20711873eea43cba88b1fef11d0ceee9f8504e595e182a9ab30",
-            "mtime": "2026-02-01"
+            "hash": "cbc5e1897386f24b59046ad9e646cc3418f27274d55218138aab696da20763de",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_notification_subscriptions.md": {
-            "hash": "b5629ad802ad82c772da380b901ff8f0714305dda5b42a87696aec1eb1387d80",
-            "mtime": "2026-02-01"
+            "hash": "9f8bac21bc1603860cce59cbeda0745a26582aba6b2355a7566f58c2e009bf44",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_post_likes.md": {
-            "hash": "4554d28447e779ad3588039e16adf6f9c8d227509e9b566cfc57a9bcc71b0f24",
-            "mtime": "2026-02-01"
+            "hash": "94b397dc0c20409df567eff59562b1e1153026e6020ed440c7129f0678dc17fc",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_posts.md": {
-            "hash": "ff731e39c82f9bfa8b4bd1bc39854fe8d7d90c6499f59075e82c65b40bb9f537",
-            "mtime": "2026-02-01"
+            "hash": "baa8c3a51d8f4968d0a0715277b7aba3f356e9eb077c8ba355ce071b5187acea",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_promotional_messages.md": {
-            "hash": "79ba1d7579ddd78e3e89c995a447ce287fdcc4dd823b3044859334d7aacb2216",
-            "mtime": "2026-02-01"
+            "hash": "ee7c8b875f47d5204d53429b94384f4cf449306959c77a156122c0d4058c0652",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_promotions.md": {
-            "hash": "d723501e853594d0affd985d525b43aff871c3248c16947499161cc8c61faaa7",
-            "mtime": "2026-02-01"
+            "hash": "c9abfae5010c70be60cb4b2a68b900343c7db18fac80457148b42bd61367749f",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_public_tokens.md": {
-            "hash": "fd430fa3a064a55f7b6462de4244fb7baa2cdecff40949db31606f31aca2122c",
-            "mtime": "2026-02-01"
+            "hash": "00be3cb7c7c40c5536e8cc74d913a70d0d994940618cd42b31e976948572cc6f",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_purchases.md": {
-            "hash": "b655851ad983cb287d2009d480cd197e28a6209947e3fdf1a213afdbf1f7a1b1",
-            "mtime": "2026-02-01"
+            "hash": "c57c82282389e9bf2de360d1b378f4a237046f25414881e1f3ec82adb601b617",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_rate_limits.md": {
-            "hash": "e6ee90da32cbfbd6e54f93a693ba60e6498d0ae605b03a4287dcb784db3bd514",
-            "mtime": "2026-02-01"
+            "hash": "c05724f1540dba5e05f23abef9dfc4bd536cda611595ad6aa25cb710e2d96f5c",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_referral_program.md": {
-            "hash": "8500f5c2c645d5261f796e731df76226e90973c6dcf7fc785348761743d9d93d",
-            "mtime": "2026-02-01"
+            "hash": "a3739d2c28e53f8d426629c721f9897ae86c86cabd04e7185613dc5406bc0ad1",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_referrals.md": {
-            "hash": "1493809dc5f971516cb535488d55fd5ca6d4eeac92235903d1a5cf8d154ca839",
-            "mtime": "2026-02-01"
+            "hash": "d36d181d32f758963bda7cb396d6039445e6456221444643053d50c5379d0d80",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_retirement_goals.md": {
-            "hash": "36d1f57c72a71f3669d54f611fc763f5f89aa4f3e6f4bdc0465886b4b8c18f02",
-            "mtime": "2026-02-01"
+            "hash": "9d6cd2666ebb6e70a186a74a94e2ea40334ff2f48df1518c219a7b6b82ad20a4",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_retirement_plans.md": {
-            "hash": "12d18e5fdd8d81a7d329181a012ab9d6149ada968dc019fefbd836400fc5e509",
-            "mtime": "2026-02-01"
+            "hash": "2ceac6772499ce0819ee6d0d1813814b809cf95f1dee81637efdfcc7cdd09e78",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_services.md": {
-            "hash": "2275bd1ea7558a7e7f93214b1693c9998ac47294dad8b79583908b7a491d3376",
-            "mtime": "2026-02-01"
+            "hash": "9159d84cdc76cd6aeb0e26bc776a8119a4f35cc474f71f6e58a78b51ed5d9e8b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_services_purchases.md": {
-            "hash": "da94a4050735508c9eec19f1b0f24f6f0877121a3ba5b226f0beb845fb3f4ac1",
-            "mtime": "2026-02-01"
+            "hash": "493d819fa965ece105dffcb2908d2539966439d4b3583f6989f9d2e86a4ed47e",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_sessions.md": {
-            "hash": "669debdd29c9c7df8a22d2aab8f8798b7bfa00bd5fe96413321609108e3887aa",
-            "mtime": "2026-02-01"
+            "hash": "61879314df6c3c63273cadda5f17f0d30a9412ca36570580dcf57e57b8988b74",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_stock_research.md": {
-            "hash": "abea5a8af338bf9d5d7089476d627969efb6127268815baa714d2182b6778f76",
-            "mtime": "2026-02-01"
+            "hash": "3862ad2431ca416621efb019aff66ab18213c32715326b2eb79a0a193d2773e0",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_subscribers.md": {
-            "hash": "2ac2b214ecb06c9e8d3ea50341b720570f749cb082883d9bc4cc426f7dc072c0",
-            "mtime": "2026-02-01"
+            "hash": "4d4ecda833c9d99367d31eaca46270cbd941ba4baac43086cf0cf8ea3cd329c7",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_subscriptions.md": {
-            "hash": "610d696e808ecb9615cbfc155b1ba399e3e51dcf7773f31c1ada5fba9ff92147",
-            "mtime": "2026-02-01"
+            "hash": "1d195986e7c748f39fe032373f92d29c3d9b857b032d2d10b5ca4b523484f153",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_trades.md": {
-            "hash": "d1ef3ecfcf2c0395c41437e2f874437106132ee6df670a0fda74ad86886fdcc9",
-            "mtime": "2026-02-01"
+            "hash": "18cb2c7c3862e2a4f71f55c1997f72bc7c6d47d51384e4d33e6d0c59f83ae4ae",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_trades_configs.md": {
-            "hash": "98e76f990ff5265094ab08edd7bbc47033541db1864681c2a68c38cd1b4af2d6",
-            "mtime": "2026-02-01"
+            "hash": "d5d377f9a5e4d1b7f47a1092814efc840c4e9b3b37ec0ac530ac4336bfb5325b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_trading_accounts.md": {
-            "hash": "2483f33b308bab7dc3dafd9f0d30364b203f146a57bf3eb8c33757bb7ab92df4",
-            "mtime": "2026-02-01"
+            "hash": "9340f7ac0caef59c5782d437c9a60ccb4dbeda7188fb291931bdd461242da23d",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_wallet.md": {
-            "hash": "146b7cef850e344001cc673a21825ed92f5761462bf603019edeec207b72b8fd",
-            "mtime": "2026-02-01"
+            "hash": "47bfa94e8fde7805bc637c417b30e8ae7c149b59ea544b9d1f8d3d84459ca415",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_wallet_brokerages.md": {
-            "hash": "fea7a30f9a175372fd58b23ae0ef504fe8f770ad3037ad4c8e1289ae6f9fd287",
-            "mtime": "2026-02-01"
+            "hash": "38594b5fc148522605c76dc6d9db14db3cb3b2eb313f81e0552f9f63f3f4684b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_wallet_transactions.md": {
-            "hash": "0d0a908e3cb193bf521908aeaa23f2d685d1fbc0b2a78de70d23f4b54f1d5d69",
-            "mtime": "2026-02-01"
+            "hash": "5ed827e6e46741dec4690f4911a896e69dc8661490d02fc1d517516029a34881",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_wallets.md": {
-            "hash": "080a4dd8ca8fa4ba46205e4a694e9a6d9cc9165808e8c2eacfd629d2b8c04125",
-            "mtime": "2026-02-01"
+            "hash": "d808f377979ca8f356bff6569f2d16f11e27842daa803c77ad119adb7c1e976c",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_watchlist.md": {
-            "hash": "1f3564cd15ecf7455ce24e36d9fa0fcd87ecda583de2db3bc328cdd961a0d645",
-            "mtime": "2026-02-01"
+            "hash": "daf15429edd3dce65b76e57ec131f64b4be28796607c3a9f0294f5e8baf6cd9b",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_wallet_providers.md": {
-            "hash": "e4945f95ec1774f66148bca321b17a58d6e6675f7b5af9eb6f13fc61349bef1e",
-            "mtime": "2026-02-01"
+            "hash": "44c031ab615bce8394b889de4ce9ed884ca0e4cded9d8e8960e1e4451e2a4008",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_wallets.md": {
-            "hash": "554bb9606ac51939dc117938774cd7d78b2e1c6310c063590fd29c72ceb76aa5",
-            "mtime": "2026-02-01"
+            "hash": "86b32914598b7f1d6a00d49c57d770907ee455ce12c8c214fb00850f4c9839a5",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_webhook_outbox.md": {
-            "hash": "8249e8d430b30aa20b56bbc8b6b4b7b88100aa3a532a0cf55289bc95258b9b92",
-            "mtime": "2026-02-01"
+            "hash": "d9d80ea862c3ee32d6bf8c3f776adafe9caa636bf386340404bbde9920de3c42",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_weekly_stream_watchlist.md": {
-            "hash": "c77f1ee5a01767cab591a6c063d1e3d2b50fd70a327f95d39cad0c5c0990bd95",
-            "mtime": "2026-02-01"
+            "hash": "08432daeab2592add3881a1a3b3e8a71ee97deba95fd8c3cfddf26e8211adee8",
+            "mtime": "2026-02-05"
         },
         "docs/n8n/README.md": {
             "hash": "d2f27ac8169b57874163fe488667ee8faa1a9945d6a4823394eba9260026e35f",
@@ -3645,48 +3645,48 @@
             "mtime": "2026-02-01"
         },
         "docs/mysql/tables/bf_chat_archives.md": {
-            "hash": "a2bc44a4e68e0d855d870e354744070346dd1ac27192b0f9e0413b01b2a8f255",
-            "mtime": "2026-02-01"
+            "hash": "e510b267352e00b00ed3a8b8c0e8deb28226993f6abb1eb8848801af82881414",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_chat_steps.md": {
-            "hash": "05a0f65f77626b0b21bd652b20bf1a50e42e9a7708cb663f8f0888a7e5b0eea7",
-            "mtime": "2026-02-01"
+            "hash": "db11b0111ab21039ce2bf8c62b48eef4bf06b701ed56018bc7113c12e6a2ce22",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_mdit_deposits.md": {
-            "hash": "142dab6831dbf55345dac97df7c08fcc2834771bb0afa9c6cd85cc9b94fdb0ba",
-            "mtime": "2026-02-01"
+            "hash": "d82a208673b3cf9164448378d4ca4aa5065cb434bbbe2b9dbcbeab3c22defba2",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_mdit_disclosures_acceptance.md": {
-            "hash": "a50d4d8536466399dd5a92d28d7fdfb949cac735f88f5b9b1dc2de7032841c44",
-            "mtime": "2026-02-01"
+            "hash": "fff7d3f4fca9b4bb0e27c9e7defb3b78f07c2038186a31dd9a25ac9da50acad3",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_mdit_investor_profiles.md": {
-            "hash": "697628f552aa1b003fbe375b507911b643eb04e5b554187b64a2197bceedaded",
-            "mtime": "2026-02-01"
+            "hash": "cfb813ae3760d1e1670935626268ab1e73eaa8c87494dfab4eea4a78b4fd7661",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_mdit_nav_snapshots.md": {
-            "hash": "166a23c6897d949d933023d21aa2d71a3744ce6fbc0d8c42590da2ff85cd12bf",
-            "mtime": "2026-02-01"
+            "hash": "2014af9d5c744ebde89fe444a127445bce963cdaa050665930d2ba24dcf88901",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_mdit_redemptions.md": {
-            "hash": "79aa31bbe3109c3f1502bf06302bee8b1781f344d70776a9a596de1952809af4",
-            "mtime": "2026-02-01"
+            "hash": "c3e4b2a6925e82054f69e437888b160f7420dc13f80bd73aa4416df8ccf0bcd3",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_mdit_token_ledger.md": {
-            "hash": "6edbf65aa98f2b70216ecdf9e1f0e9978ac157634149ee87baf45bfec611f372",
-            "mtime": "2026-02-01"
+            "hash": "196a6a228d2d09711fdab86de5e45caf751fa27dccd9f456cd9a35178e51bfb9",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_mdit_wallets.md": {
-            "hash": "b9146c4c28f529d59a3aa070dc2eb65614e04396e919db49b803cc3b5fc12481",
-            "mtime": "2026-02-01"
+            "hash": "9df247ecb6920bc3ead96ca1c06882e25a6a4f81b0938e2dbe2fdb028a4b5bcc",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_mdit_webhook_events.md": {
-            "hash": "4dd40c262ba44587b35f5bbf16330f45966d5f805cea46c35f8597c6c11e31dd",
-            "mtime": "2026-02-01"
+            "hash": "4d8dadeff4d4eedfbb056d3a02413225c656a7f6e7d9325393dee1b5da5553da",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_ops_spark_health.md": {
-            "hash": "328633c5a5b7a1e049371e2920bd4d96e83ff78c9b6e0785793280e71dad817c",
-            "mtime": "2026-02-01"
+            "hash": "d03020510f3a64f22c9227e7ba52be56d024390d02dd231114e561dcb8a2ee85",
+            "mtime": "2026-02-05"
         },
         "docs/aiops/artifacts/config-drift/20260201-183558/summary.md": {
             "hash": "be6331c9027bf67e04260e1fdcd940ff079643e0e8398158c5ab1eb1e81e073a",
@@ -3749,252 +3749,252 @@
             "mtime": "2026-02-01"
         },
         "docs/audit/news_audit_last_run.md": {
-            "hash": "9ba23638e09a81ec10e6c2983cff0c7007b8dd3e449d678affe95a52655bb06d",
-            "mtime": "2026-02-01"
+            "hash": "90319b579c4c4126c31016403612ae7b85839f9a06fb189f382ebb6dc840bbed",
+            "mtime": "2026-02-05"
         },
         "docs/codex/reviews/Spark-Analysis-2026-02-01.md": {
             "hash": "b465720e1cae325d5675463c292af961bfa6fa5cfec1c641858f4533efe95fee",
             "mtime": "2026-02-01"
         },
         "docs/mysql/tables/bf_auth_groups_users.md": {
-            "hash": "eda649228e76fbb2107cb6538c302b0038bda22ad484e46e4b5b4b962832b0ae",
-            "mtime": "2026-02-01"
+            "hash": "1bcdea77fdbfd37eb799a98a840d86e30f9dd0cf3e0c7d268c633e923ec171dd",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_auth_identities.md": {
-            "hash": "ba2287e4eed1b534c97902999636a1c34e3207b6ea36d9430bafa770f90d299e",
-            "mtime": "2026-02-01"
+            "hash": "b2116806b9f2eb55f2e6fa8511496083af0d3a0743b4a4582e5d3f2b44583a00",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_auth_logins.md": {
-            "hash": "ca32bbc30f35fddb7d1709cfa44f62aa1ae967ec9b9be196db8fcc6789ac3f7e",
-            "mtime": "2026-02-01"
+            "hash": "e69db22a6cfacb74d7235ccb96a80e2307e6df26750458db45e1be590a40b351",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_auth_permissions_users.md": {
-            "hash": "198124398c7fd4378570da0ed56f6edd6df7af1605398a2d6b287f7a7dc19fb8",
-            "mtime": "2026-02-01"
+            "hash": "af123cb417207d925744b5c57f24092e40900a721b63083bbba63141b48bb4d4",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_auth_remember_tokens.md": {
-            "hash": "cfbe712dd2e95e33580c4bfb28c5a97a8c751e6a78773ae277350d24652bfd53",
-            "mtime": "2026-02-01"
+            "hash": "b2fc3f95ff22a9083228956f259507d1b976572b9c55f35a5c2e3430af5f3e46",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_auth_token_logins.md": {
-            "hash": "bfff01d9886f0b53fe7374fa56e0dcc049f89fd30ad9556352bb7c1855d922b3",
-            "mtime": "2026-02-01"
+            "hash": "67f905ffbd1d53cb11efe55ed0c9dba160f0009e5317f7c076c80ff4afd7b524",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_coin_redistribution_items.md": {
-            "hash": "274df71953e595065bb84a20bad61881bf7b6a2ac48d395f43c32511fab43a72",
-            "mtime": "2026-02-01"
+            "hash": "eae264cd7ee00edb087d6f6976c8100426d1120f069a80c0efc0ec69c1c22bd4",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_compliance_audits.md": {
-            "hash": "b743f6e2a0fdb025da64e8c2c3446d43156a7732776fc6ce7309558d581c80f4",
-            "mtime": "2026-02-01"
+            "hash": "127cecdc449eaae38b529dfacbedfce38ac7463cd5ef8ddd5cb7697a4bc7b139",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_email_bounces.md": {
-            "hash": "3ead7f5bf8a0d4ab8b683011b48ccbf135954b5df05500ec81783b922e3ad7b2",
-            "mtime": "2026-02-01"
+            "hash": "ef504fd3694ae992e3cfc47888a6f15194aecfd087fb36e1ae096fc032a2b5af",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_email_campaigns.md": {
-            "hash": "1875fafdb702ae036e6f61e60c9fa29a4990e5159b3c25ad9c47e4214ea4cdd8",
-            "mtime": "2026-02-01"
+            "hash": "7f4fa5e7a0295d55844e387fb3a7850f4b9ef4b7d79b321b9aeb3b97b250fc03",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_emails_campaigns.md": {
-            "hash": "cc1a31f9ae5195d74283b7306c2a1274c84ed7d1afe97973f1b3ddc74897627c",
-            "mtime": "2026-02-01"
+            "hash": "6751589dbb9029c4113d9afbc7bedd41a9d6286c681b3eb3d6ac50862cd01ae2",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_exchanges_transactions.md": {
-            "hash": "8f82798dfcfb4ce1750c53b131c13467542fc7194424bb247fc315d5f16ffd69",
-            "mtime": "2026-02-01"
+            "hash": "5a5f90e1688ad2715fbd439eca2a6af711e2520c2a2e00c39ac94a3a95a204a1",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_ftp_file_data.md": {
-            "hash": "f1b7b0624b4822449cebea09ea26d050c3a64fdec098e0ca8129238efa639a9c",
-            "mtime": "2026-02-01"
+            "hash": "ca3adb9608a4381880477aaf39e9f6446326a314b0526a896b336bd968b2ae1a",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_ab_tests.md": {
-            "hash": "d3b5737f5954afef49bd8599e168790458254228e07be62e1ab8aed9ec45051f",
-            "mtime": "2026-02-01"
+            "hash": "f57e9df0e4911c8694450df74e294725b75497497392ea3298676d35baebe7d8",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_ab_variants.md": {
-            "hash": "815a9915911c5ca683e5ed4bfb62eeb8235797cefb9ff82bf70726b27c07dc81",
-            "mtime": "2026-02-01"
+            "hash": "3e2685ddaa7be8add843844907533cfc3b5130915df8d6ec753d1d84f3a01774",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_audience_selection.md": {
-            "hash": "a6180aa75700552aea7f264baf991c36bb363e2bd0d9c96975e20564fb0ea7e8",
-            "mtime": "2026-02-01"
+            "hash": "16d5b4fc5336b45fff710a7250cc9163382b796b96ae18a17849b0ad0a02015e",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_best_times.md": {
-            "hash": "1c2ca9197c30360677b8575a039cd8e3b59ce880dfdaab9bd53ce93ed9db1050",
-            "mtime": "2026-02-01"
+            "hash": "8edecf14770ed53989e5fda2e735032cb16ba0e4e012be77fbaa4df1a7f95ff4",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_buffer_posts.md": {
-            "hash": "7baea4ed042e71dd12d3e6dd86763626df63b753610c0aa7cc8e194b60b07a42",
-            "mtime": "2026-02-01"
+            "hash": "d5ca6a93cdb87446bbb0432b808d79c384f542a2f39ded2bec670e80e9d736e9",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_compliance_rules.md": {
-            "hash": "a62e4422d24faa8c2e9ebd7edd8579b6c27ea7ecd7764d3b24c52b7e5cf159b4",
-            "mtime": "2026-02-01"
+            "hash": "ec7661e16a23147065fa2e44460b267143b92ffbe2f712a0cdfdb41833043db9",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_content_fingerprints.md": {
-            "hash": "e91aaa3d6694183d111ae7351e0536b42e87cb76bfce6e98f29d7da66ced8841",
-            "mtime": "2026-02-01"
+            "hash": "23fca94f466d4f4ce86d2866a2e1de6e6460b266bafa5b4192d60f32d7b46606",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_content_versions.md": {
-            "hash": "deb5a7c6967cfc1ac9d9b7d27561791425fc5fe2fdb8fa579be124d4fb209249",
-            "mtime": "2026-02-01"
+            "hash": "b536a068c62aba1b68cdfbbaea8722da7545fd0e2739429793d29cb96eaf88cc",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_engagements.md": {
-            "hash": "3ace106683ac6e2f42fe059a2937dbeed17228a47ad0a028cc40655dea832a53",
-            "mtime": "2026-02-01"
+            "hash": "b5e45a4146061227405d5681dff0d35b82b2d3872bd48669c7ec70666daedcc0",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_events.md": {
-            "hash": "849d3de1a304387a47af74406c2368be978896b027e3d14bf89f71318ccfc9e3",
-            "mtime": "2026-02-01"
+            "hash": "6d09f270cc265dd5e662d0608bcbbe125a826f36010a9fb6bc5fafff3e3631ee",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_job_runs.md": {
-            "hash": "edb9ec5d068e5c8dc2405a902c382ee394c90bba2d23dd65aa1b90c7213d8fd9",
-            "mtime": "2026-02-01"
+            "hash": "f1193312fa29e7ed249452405bc53f3ab9083c88855b949cd82a97e710522b52",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_media_assets.md": {
-            "hash": "fff0502e66093e3432753f4235aa04acad3d53e266f0ba2538c0e2e5e6f24c3a",
-            "mtime": "2026-02-01"
+            "hash": "4c5ae160a08f7f57cdad7624cf9d39bde4c4f03b6e6648326d839e8f3b8c1b6a",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_pages_missing.md": {
-            "hash": "bf375f507f8cacba832f5326b4b754d25cdbf863b9c24d7b0c2ee54f2d487e52",
-            "mtime": "2026-02-01"
+            "hash": "17c3d8533f9c2dabde5bd830350ddb78879b60d06d1fa558fce84e351157de2e",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_promotions.md": {
-            "hash": "428a1e2a9a42ae326ea98605ac41c8ffe0e9925daf7535638c535c6fc5f348d7",
-            "mtime": "2026-02-01"
+            "hash": "800117ff3d81e86221087c34afae29cd7be7a0799e5e0bdb28ce009f3d0ab39f",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_schedule_content.md": {
-            "hash": "61f38a13a455fb0440047b198c241a400c763acd55b25de7ecd00a77f43bb156",
-            "mtime": "2026-02-01"
+            "hash": "6649905f501e36c1c4e292f1dbe9f44361e998410e0103af3ce024850e8dbb53",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_marketing_search_enrichment_log.md": {
-            "hash": "213893f063ff2b03ebf7f9f55bbeed8186b453c37c986d861a98f93ab942a4cc",
-            "mtime": "2026-02-01"
+            "hash": "9230556073fbc1ea1427d0605acdbf4b4a092097fa62553fcd4676f1faeb9924",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_migrations.md": {
-            "hash": "7f0ab4a619e850f40b1d9e389328b707c9ce27a143c966888185f803d07d9657",
-            "mtime": "2026-02-01"
+            "hash": "ae933f91824cf0d1fe387850f98da136de4e731bcbc43385ff202e837d851cb2",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_notification_outbox.md": {
-            "hash": "77ee88d7a90525b7149cc9d8d7b17d50be43cd73817b0e8d2b2e60c4ba4e90d6",
-            "mtime": "2026-02-01"
+            "hash": "e2507ac0ab3bdfe05c46578d7fcce1a6a3c20f07f20da2af9c1214453c43f1e9",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_project_comments.md": {
-            "hash": "522c955d1a66ea2debb7db7b0b81529e4041838141550dfcf20a8688d59fb0c8",
-            "mtime": "2026-02-01"
+            "hash": "d1d325649bea879c886796d1a8a7198d4eab17531534d165e107bc8c4f28d591",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_project_task_registry.md": {
-            "hash": "3b13c8a4d3a1c9452f6e755680085e0516a1431633629e68dffc4f31d8dcba11",
-            "mtime": "2026-02-01"
+            "hash": "4b4f9637e12abd76451555fffbf423a58cf2fcefe1b3c800a4939d13c3d5232a",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_projects_auctions.md": {
-            "hash": "d26cf3de2b6f66807aa87cfd99c7f77a1168c8c563932e8fbc81a09f50d57255",
-            "mtime": "2026-02-01"
+            "hash": "d5923adcdac7b6bf7c337b71f46a3de74eed3f9b5ed0b78d45b7aba8104860be",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_projects_coin_redistributions.md": {
-            "hash": "3e191b108306efed0b16b7fcfd4f2ba4c20283b2fbf70732325e89ae1dad64c6",
-            "mtime": "2026-02-01"
+            "hash": "95296bd2370d1243c6b767211fc382a94f696dd6cefff1d72c47584ac2e8c6d5",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_projects_commitments.md": {
-            "hash": "ab2536f04b58c62a795cdfe5c239b40a9b92780fe30bf72104714e950f4f41ce",
-            "mtime": "2026-02-01"
+            "hash": "07970d626491cf55285fc8455e32b4082da3e015eea706343dd13c10e76aecfb",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_projects_distributions.md": {
-            "hash": "1de91aef4e1afb19cce6acd914d0bd9ea419e6df989fdfcd74ab5ed4877b5b66",
-            "mtime": "2026-02-01"
+            "hash": "84d82687c320ed65c622901b28328a987d7bab736f07509a0633b3533ed1cc0e",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_projects_insurance_reserve.md": {
-            "hash": "95446cd20a8e1c210bdb74c35dc06b009d8f21adef4e26b714d1ad43e9167461",
-            "mtime": "2026-02-01"
+            "hash": "c2151c11e3107b1d6c73113cc00396da792a7511e324df8668ee4492dd14ea47",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_projects_investments.md": {
-            "hash": "adc4df6bd44e9232e2bcaa135eef0000eb0547166d87b10b00384313e7120653",
-            "mtime": "2026-02-01"
+            "hash": "ac6d3276048fcad6bd3b4d25f3bc51d39a44a418d28486f116e048bba02cc5c9",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_projects_providers.md": {
-            "hash": "17396f23b68cd72d6bcc03f1fb78248a9423500157d4a2ac1550f4e72aa18bfa",
-            "mtime": "2026-02-01"
+            "hash": "5df004c96538f2b0f62c151536b821aa03653b5f294a65517419cb62555f23fd",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_projects_real_estate.md": {
-            "hash": "f6bd9fa7b2e0c54541e06408fa4af20c7249ce02842b170771fb8968066dbd4f",
-            "mtime": "2026-02-01"
+            "hash": "231965a575d7ad114af12f3447650ede6957fced2083063a824edd224af04b17",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_projects_revenue.md": {
-            "hash": "b888f5d69431a3fa82815ace95885c5c0b0a7b1efeec61cae177f3a6c0d7d3de",
-            "mtime": "2026-02-01"
+            "hash": "7fcbe4030095d041803f60097fcdc4d3e06f709bbf624e4b44a43134a1a3ffb5",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_projects_revenue_distributions_items.md": {
-            "hash": "83fb1c24e7ced3a013a475a2517261ae58bc0cecae84054a24037c8fe1d35278",
-            "mtime": "2026-02-01"
+            "hash": "1e59894c848b7f4c69c190ac49d06d56460fb077f4a066ed01ec27363f0227d5",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_projects_revenue_events.md": {
-            "hash": "ac93b3e3f2998683355761891c481368fe091e80b14ca9d1bebed90cc9c18474",
-            "mtime": "2026-02-01"
+            "hash": "3b893301ee50e2966dc1339e0e7bef2b7581130c0744f83600d0fd4755b2c87e",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_projects_token_allocations.md": {
-            "hash": "963ba9750600958e5a5bc9eb7cd0d5d441829800f71d430d3070e3d895f13d34",
-            "mtime": "2026-02-01"
+            "hash": "ce09341474418efd9115ab9a3b636bd0545d665356530f055a6422a11bb89725",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_retirement_goals.md": {
-            "hash": "b549c3cd38301d8787713561aa2ff21a644f061645786162346d80dc4d24cad0",
-            "mtime": "2026-02-01"
+            "hash": "484491f92fe945743b0fe718e1e2f09f25810cb3dee297d07d64835041417ade",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_sec_filings.md": {
-            "hash": "44d41293cf6dca91557b23258874c045a92a51904229b599e59a19ab1bec6e1a",
-            "mtime": "2026-02-01"
+            "hash": "c9fce1d00d39f468428a931713e400020ad37eb3029cf79968bbe3a594856973",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_settings.md": {
-            "hash": "745e4951dfb05dac97d8592197ad9c0446c04af607e0edc79c4850f6a6fcff93",
-            "mtime": "2026-02-01"
+            "hash": "dd272ee88da051d3e05729f74f1f1827b42bff530494718cbbabf19b1cc19f70",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_strategy_progress.md": {
-            "hash": "e502010a416f40e15b2ac005a2a5aec035e34eb8d99e93d4aafb2423271e2b88",
-            "mtime": "2026-02-01"
+            "hash": "adbbc6e71d0150c79f5600c1a6569ead69abd11a06f3f65173ac38b3d8ef8d79",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_trade_plans.md": {
-            "hash": "5ac0315aaa02f2c90493f0bb7980e63f35112b43f7453256d2bc49ee194961bb",
-            "mtime": "2026-02-01"
+            "hash": "7e86a8e9478155e4921a535dd88d332a81c3b61f8a328538722502a3829750d0",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_discord_rewards.md": {
-            "hash": "be13aade423b48ac350192089c8da9c9a611128b386238eef1a00195926b080b",
-            "mtime": "2026-02-01"
+            "hash": "f75e937b5fe0f1cd8eb529531ff1d50483dff9464a0d82378b17fc714c0a7000",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_trading_accounts.md": {
-            "hash": "f4b36fb3692b0c222b286bf89b88e1d73186fa36eac594afbe690d48a57a32cb",
-            "mtime": "2026-02-01"
+            "hash": "91ded58601597afe61392286cef9a5ec1048c700ecea1fe319a387d41f34211a",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_user_trading_profile.md": {
-            "hash": "cb3420ba6dc0edaf56a38091b8fe166f1e8bc7779ffa9d07d4f3af37d95416bb",
-            "mtime": "2026-02-01"
+            "hash": "1994936e8f83738d97bb97e6270d97bb0dcdf2a1154f6b1d7eb28c97209a3a6f",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_2fa.md": {
-            "hash": "37fe35c2a6ec20c1870378ce23d6a719f8558f03218293115422fcaa3ba210ae",
-            "mtime": "2026-02-01"
+            "hash": "ca4acf437f75a9d1b4daa96e2ded6d9f16bd6f9f6f8158044d7e0a0aa590494e",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_alerts.md": {
-            "hash": "76e4d10007c1f835e9b18d377713a1589d367ebaded6b7e148e123d3e3e15200",
-            "mtime": "2026-02-01"
+            "hash": "ac878d789e8b525b61ba119c5683a8a2daa61bad27a862a290a6f709abd46f5c",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_budgeting_goals.md": {
-            "hash": "82879d3e14290a6fdc1557229cfe29acaa41e6ede505c6dfaf0f3b1bb554188d",
-            "mtime": "2026-02-01"
+            "hash": "ca2a323326aff960d081400569a81a9a3c498a63d438183638c18943a015daf2",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_onboarding.md": {
-            "hash": "d0f8cf34fa383fe1ccff8107df4f91151f58f1d49d82cf5c84eb2382d4c156f9",
-            "mtime": "2026-02-01"
+            "hash": "dad28f807294e35834f9ac02df15f80a465b22c94995b69576444b1dda9c5a85",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_retirement.md": {
-            "hash": "f95bd31250bab01f56eabb1882d6d00b93a667c52295da97042f5d9ca61ac8e3",
-            "mtime": "2026-02-01"
+            "hash": "f42d52ed562f2b1471b353f534b7491e320f1f2e5b7baa7872ebcea2cd7c9388",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_retirement_progress_logs.md": {
-            "hash": "7c5759f4d60af5e964ca4eff3a27681a607ef333a01ce465bdd53d3239498448",
-            "mtime": "2026-02-01"
+            "hash": "1a55fdcb97d6797a7b0aedb4d09bef608ccb05f2eb1b2587bbb43f2b14945aec",
+            "mtime": "2026-02-05"
         },
         "docs/mysql/tables/bf_users_trades_logs.md": {
-            "hash": "0a5f1b1cde47126a5f4c40d3acf2f14dde44675eb79de6b0c6a068c03615aff9",
-            "mtime": "2026-02-01"
+            "hash": "5a93a8365e975bf94eaa871bf7fdc05a0732c2b424a2fdb7cf4148cf80ef1b3e",
+            "mtime": "2026-02-05"
         },
         "docs/ops/legacy_psr4_exceptions.md": {
             "hash": "8338e48109e7e847b405c1b691930a4b7b226001163a1cf35045f50f263fe820",
@@ -4015,7 +4015,95 @@
         "docs/aiops/scraper/_index.md": {
             "hash": "261a54f5ebe57b781283277c0754ab57079fdb5d0c7eff3d826716a918b326bb",
             "mtime": "2026-02-03"
+        },
+        "docs/aiops/scrapers/_index.md": {
+            "hash": "6b03df66b86b47015004655b1a76eecb8bf35bc6d475148fea89fd157e2cb61c",
+            "mtime": "2026-02-03"
+        },
+        "docs/aiops/scrapers/alerts-email-scan.md": {
+            "hash": "7ce3032349279c28b5a967b97e65dc5b82310b078a5bfdda4a467599678eb60a",
+            "mtime": "2026-02-03"
+        },
+        "docs/aiops/artifacts/db-drift/20260205-024725/summary.md": {
+            "hash": "6a3c7c76d53e6125c70cf65c02488980adaa5a6e9d4f81ac8bec33b43e7be310",
+            "mtime": "2026-02-05"
+        },
+        "docs/aiops/artifacts/growth-retention-watch/20260205-024348/summary.md": {
+            "hash": "3d2e24fdec085e03e926c00456261749686d96f15e61c5062d771371b3469d0e",
+            "mtime": "2026-02-05"
+        },
+        "docs/aiops/artifacts/growth-retention-watch/20260205-024413/summary.md": {
+            "hash": "22ac9568c54b9a2df6883e60a6baf8394d99d610a91ec6812d50d9b7d42c4976",
+            "mtime": "2026-02-05"
+        },
+        "docs/aiops/artifacts/marketing-automation-audit/20260205-024948/summary.md": {
+            "hash": "6982f307eaab0cf5aff4d37e95cadd3769a4fe49019d351f35293be2faefc4d0",
+            "mtime": "2026-02-05"
+        },
+        "docs/aiops/artifacts/revenue-cost-forecast/20260205-024422/summary.md": {
+            "hash": "99e64feb23279b239465a4dba3daf71f6a37a3b01b0c02bcd528f9458f16480d",
+            "mtime": "2026-02-05"
+        },
+        "docs/aiops/artifacts/revenue-scan/20260205-025010/README.md": {
+            "hash": "3cef2f3fd93022ed27fae357b543c9ffc27262cfe7db6cbfefbd8f8d5bceae5f",
+            "mtime": "2026-02-05"
+        },
+        "docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_by_module.md": {
+            "hash": "084c76ac08e96dcc320c7f536f2e87582aaba1d5c8dad79b0df598c5025eb6ab",
+            "mtime": "2026-02-05"
+        },
+        "docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_by_pricing_tier.md": {
+            "hash": "81ca1cb65b717a20ae0840205dbaf8a32fbb21fd381928f4a5b62f598352253c",
+            "mtime": "2026-02-05"
+        },
+        "docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_by_user_type.md": {
+            "hash": "7c16404c775e740178b603669ca43654932403c099223986d63bc1aecad724cd",
+            "mtime": "2026-02-05"
+        },
+        "docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_full.md": {
+            "hash": "0b40dee67c6a298c50017914ce822a187fd6f18f62f6989173ca1fe624a80f2e",
+            "mtime": "2026-02-05"
+        },
+        "docs/aiops/artifacts/revenue-scan/20260205-025010/summary.md": {
+            "hash": "c904f71897416447f8320efcb17e0e2ccec0e809ab5cde543cbb69f74bac49e8",
+            "mtime": "2026-02-05"
+        },
+        "docs/aiops/artifacts/scraper-audit-emails/20260205-024438/summary.md": {
+            "hash": "f311916f8dcdbf0c9a1e8908c7e66ce7d710659dc1d64e7548ca9820f6f35612",
+            "mtime": "2026-02-05"
+        },
+        "docs/aiops/artifacts/ux-journey-audit/20260205-024451/summary.md": {
+            "hash": "19cbbe79074c3a8c0a93258ccebbe255fce3c3f44ec3699212d7712dfc7e596a",
+            "mtime": "2026-02-05"
+        },
+        "docs/codex/reviews/review-2026-02-05.md": {
+            "hash": "21dfe1f9e1e8fc6dc0ca4c676b1f86648c21a5aa913d732bbd2903123f8d07f2",
+            "mtime": "2026-02-05"
+        },
+        "docs/codex/reviews/review-prompt-2026-02-05.md": {
+            "hash": "0936f8334b34d5b11dd77fe588ef77385389defd801af772ab417363f996af3c",
+            "mtime": "2026-02-05"
+        },
+        "docs/gap_tracker/reports/gap_sync_2026-02-05.md": {
+            "hash": "3df74f9c007e9bffc9d0418cf766efeb5194eaa752b668ce9696a28c9d77bd62",
+            "mtime": "2026-02-05"
+        },
+        "docs/mysql/adjustments/adjustment_log_2026-02-05.md": {
+            "hash": "e8421dfc4bcc3b7be933720c5093c8d16d735a8f8f000993db5b3feb2f4e68dc",
+            "mtime": "2026-02-05"
+        },
+        "docs/mysql/tables/bf_aiops_email_processed.md": {
+            "hash": "6a719d263fdf414da14e3545024b01dbeaacdfca1e242bd39c93a185177369cd",
+            "mtime": "2026-02-05"
+        },
+        "docs/mysql/tables/bf_investment_scanner_lineage.md": {
+            "hash": "b6f9c1feabe2c35d2c4e74b481ceeb505e0f356596cb7c2fb65968fbc8ecd096",
+            "mtime": "2026-02-05"
+        },
+        "docs/mysql/tables/bf_investment_ticker_daily_counts.md": {
+            "hash": "e6eec9de02bb61cf84584fbc93eeb186fcc215b8c6b684ba293966bfff25cf64",
+            "mtime": "2026-02-05"
         }
     },
-    "last_run": "2026-02-03T02:00:01Z"
+    "last_run": "2026-02-06T12:00:01Z"
 }

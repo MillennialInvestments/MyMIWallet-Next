@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2026-01-15-000100_CreateOpsFoundation.php
 - Model:
-- Code references: app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:89, app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:104, app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:109, app/Database/Migrations/2026-02-20-000001_AddStatusMetaExcerptColumns.php:24, app/Database/Migrations/2026-02-20-000001_AddStatusMetaExcerptColumns.php:64, app/Libraries/DbInventory/InventoryScanner.php:14, app/Libraries/DbInventory/SqlGenerator.php:10, app/Models/AiUsageModel.php:11, docs/ops/n8n_responsibilities.md:83, docs/codex/01_pr1_foundations.md:57, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:27, docs/aiops/migration_model_audit.md:64, docs/aiops/migration_model_audit.md:221, docs/_aiops/doc-change-log.md:974
+- Code references: app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:89, app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:104, app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:109, app/Database/Migrations/2026-02-20-000001_AddStatusMetaExcerptColumns.php:24, app/Database/Migrations/2026-02-20-000001_AddStatusMetaExcerptColumns.php:64, app/Libraries/DbInventory/InventoryScanner.php:14, app/Libraries/DbInventory/SqlGenerator.php:10, app/Models/AiUsageModel.php:11, docs/ops/n8n_responsibilities.md:83, docs/codex/01_pr1_foundations.md:57, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:27, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:27, docs/aiops/migration_model_audit.md:64, docs/aiops/migration_model_audit.md:221, docs/_aiops/doc-change-log.md:1040
 
 ## Create table
 ```sql

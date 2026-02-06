@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/AdvisorModel.php:8, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:223, docs/aiops/migration_model_audit.md:60, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1910
+- Code references: app/Models/AdvisorModel.php:8, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:223, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:223, docs/aiops/migration_model_audit.md:60, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:2144
 
 ## Create table
 ```sql

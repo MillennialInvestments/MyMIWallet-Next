@@ -1,0 +1,42 @@
+{
+    "generated_at": "2026-02-05T02:40:34+00:00",
+    "summary": {
+        "missing_sections": 6,
+        "command_violations": 1,
+        "total_commands": 92
+    },
+    "sections": {
+        "path": "/home/mymiteam/mymiwallet/site/current/.github/copilot-instructions.md",
+        "required": [
+            "Overview",
+            "Architecture",
+            "Developer Workflows",
+            "Project-Specific Conventions",
+            "Integration Points",
+            "Communication Patterns"
+        ],
+        "missing": [
+            "Overview",
+            "Architecture",
+            "Developer Workflows",
+            "Project-Specific Conventions",
+            "Integration Points",
+            "Communication Patterns"
+        ],
+        "status": "missing-file"
+    },
+    "commands": {
+        "total": 92,
+        "violations": [
+            {
+                "command": "App\\Commands\\SafeBaseCommand",
+                "class": "App\\Commands\\SafeBaseCommand",
+                "file": "app/Commands/SafeBaseCommand.php",
+                "issues": [
+                    "Does not extend SafeBaseCommand.",
+                    "Missing $name, $group, or $description."
+                ]
+            }
+        ]
+    }
+}

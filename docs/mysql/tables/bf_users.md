@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/AlertsModel.php:1577, app/Models/AlertsModel.php:1578, app/Models/UserModel.php:212, app/Models/UserModel.php:213, app/Modules/Management/Controllers/UsersController.php:255, docs/discord/discord_to_ci4_commands.md:51, docs/discord/discord_to_ci4_commands.md:137, docs/discord/_inventory.md:29, docs/operations/05-database.md:13, docs/exports_schema.md:16, docs/exports_schema.md:67, docs/exports_schema.md:121, docs/exports_schema.md:138, docs/functional_inventory/docs_to_code_map.md:26, docs/functional_inventory/docs_to_code_map.md:31, docs/functional_inventory/docs_to_code_map.md:50, docs/functional_inventory/docs_to_code_map.md:51, docs/functional_inventory/docs_to_code_map.md:90, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:213, docs/_aiops/doc-change-log.md:1880
+- Code references: app/Models/AlertsModel.php:1577, app/Models/AlertsModel.php:1578, app/Models/UserModel.php:212, app/Models/UserModel.php:213, app/Modules/Management/Controllers/UsersController.php:255, docs/discord/discord_to_ci4_commands.md:51, docs/discord/discord_to_ci4_commands.md:137, docs/discord/_inventory.md:29, docs/operations/05-database.md:13, docs/exports_schema.md:16, docs/exports_schema.md:67, docs/exports_schema.md:121, docs/exports_schema.md:138, docs/functional_inventory/docs_to_code_map.md:26, docs/functional_inventory/docs_to_code_map.md:31, docs/functional_inventory/docs_to_code_map.md:50, docs/functional_inventory/docs_to_code_map.md:51, docs/functional_inventory/docs_to_code_map.md:90, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:213, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:213, docs/_aiops/doc-change-log.md:2105
 
 ## Create table
 ```sql

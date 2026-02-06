@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/ScriptStudio/Database/Seeds/ScriptSeeder.php:51, app/Modules/ScriptStudio/Models/ScriptModel.php:8, docs/_aiops/doc-change-log.md:1718
+- Code references: app/Modules/ScriptStudio/Database/Seeds/ScriptSeeder.php:51, app/Modules/ScriptStudio/Models/ScriptModel.php:8, docs/_aiops/doc-change-log.md:1922
 
 ## Create table
 ```sql

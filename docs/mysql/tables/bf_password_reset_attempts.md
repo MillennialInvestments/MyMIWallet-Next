@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: docs/_aiops/doc-change-log.md:1625, docs/health/health_test_checklist.md:73, docs/health/modules/auth.md:70
+- Code references: docs/_aiops/doc-change-log.md:1784, docs/health/health_test_checklist.md:73, docs/health/modules/auth.md:70
 
 ## Create table
 ```sql

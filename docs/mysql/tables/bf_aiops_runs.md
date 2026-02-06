@@ -1,22 +1,57 @@
 # bf_aiops_runs
 
 ## Source
-- Migration: _None_
+- Migration: 2026-03-20-000100_CreateAiOpsEmailScanTables.php
 - Model:
-- Code references: docs/ops/n8n-capabilities-for-mymiwallet.md:52, docs/_aiops/doc-change-log.md:989
+- Code references: app/Database/Migrations/2026-03-20-000100_CreateAiOpsEmailScanTables.php:21, app/Database/Migrations/2026-03-20-000100_CreateAiOpsEmailScanTables.php:43, app/Database/Migrations/2026-03-20-000100_CreateAiOpsEmailScanTables.php:108, app/Models/AiOpsRunModel.php:11, docs/ops/n8n-capabilities-for-mymiwallet.md:52, docs/aiops/scrapers/alerts-email-scan.md:16, docs/aiops/scrapers/alerts-email-scan.md:56, docs/_aiops/doc-change-log.md:1055
 
 ## Create table
 ```sql
 CREATE TABLE IF NOT EXISTS `bf_aiops_runs` (
-  `md` TEXT NULL
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `run_key` VARCHAR(64) NOT NULL,
+  `mailbox` VARCHAR(190) NOT NULL,
+  `source_email` VARCHAR(255) NULL,
+  `status` VARCHAR(32) NOT NULL DEFAULT 'running',
+  `started_at` DATETIME NULL,
+  `finished_at` DATETIME NULL,
+  `duration_seconds` INT NULL,
+  `scanned_count` INT NOT NULL DEFAULT 0,
+  `processed_count` INT NOT NULL DEFAULT 0,
+  `duplicate_count` INT NOT NULL DEFAULT 0,
+  `ticker_count` INT NOT NULL DEFAULT 0,
+  `meta_json` LONGTEXT NULL,
+  `created_at` DATETIME NULL,
+  `updated_at` DATETIME NULL,
+  PRIMARY KEY (`id`),
+  KEY `run_key` (`run_key`),
+  KEY `status` (`status`),
+  KEY `started_at` (`started_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
 ## Required columns
-- md TEXT NULL
+- id BIGINT UNSIGNED NOT NULL
+- run_key VARCHAR(64) NOT NULL
+- mailbox VARCHAR(190) NOT NULL
+- source_email VARCHAR(255) NULL
+- status VARCHAR(32) NOT NULL
+- started_at DATETIME NULL
+- finished_at DATETIME NULL
+- duration_seconds INT NULL
+- scanned_count INT NOT NULL
+- processed_count INT NOT NULL
+- duplicate_count INT NOT NULL
+- ticker_count INT NOT NULL
+- meta_json LONGTEXT NULL
+- created_at DATETIME NULL
+- updated_at DATETIME NULL
 
 ## Required indexes
-- _No indexes defined_
+- PRIMARY (id)
+- run_key (run_key)
+- status (status)
+- started_at (started_at)
 
 ## Verification
 ```sql

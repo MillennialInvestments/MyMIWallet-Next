@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: docs/aiops/artifacts/db-drift/20260201-181038/summary.md:107
+- Code references: docs/aiops/artifacts/db-drift/20260201-181038/summary.md:107, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:107, docs/_aiops/doc-change-log.md:1571
 
 ## Create table
 ```sql

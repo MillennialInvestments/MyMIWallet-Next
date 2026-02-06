@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2026-01-15-000100_CreateOpsFoundation.php
 - Model:
-- Code references: app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:19, app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:34, app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:113, app/Database/Seeds/OpsJobsSeeder.php:93, app/Models/OpsJobsModel.php:11, docs/codex/01_pr1_foundations.md:14, docs/codex/01_pr1_foundations.md:26, docs/codex/01_pr1_foundations.md:67, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:152, docs/aiops/migration_model_audit.md:146, docs/aiops/migration_model_audit.md:240, docs/_aiops/doc-change-log.md:1604, docs/health/health_test_checklist.md:644, docs/health/modules/system_ops.md:62
+- Code references: app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:19, app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:34, app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:113, app/Database/Seeds/OpsJobsSeeder.php:93, app/Models/OpsJobsModel.php:11, docs/codex/01_pr1_foundations.md:14, docs/codex/01_pr1_foundations.md:26, docs/codex/01_pr1_foundations.md:67, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:152, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:152, docs/aiops/migration_model_audit.md:146, docs/aiops/migration_model_audit.md:240, docs/_aiops/doc-change-log.md:1763, docs/health/health_test_checklist.md:644, docs/health/modules/system_ops.md:62
 
 ## Create table
 ```sql

@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/AIOps/Models/AIOpsCacheModel.php:9, docs/ops/aiops-schema-endpoints-spec.md:50, docs/_aiops/doc-change-log.md:980
+- Code references: app/Modules/AIOps/Models/AIOpsCacheModel.php:9, docs/ops/aiops-schema-endpoints-spec.md:50, docs/_aiops/doc-change-log.md:1046
 
 ## Create table
 ```sql
