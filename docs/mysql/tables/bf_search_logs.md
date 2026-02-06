@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/Search/Controllers/SearchController.php:33, docs/_aiops/doc-change-log.md:1721
+- Code references: app/Modules/Search/Controllers/SearchController.php:33, docs/_aiops/doc-change-log.md:1925
 
 ## Create table
 ```sql

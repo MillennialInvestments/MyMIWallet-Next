@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/DripCampaignModel.php:72, app/Models/DripCampaignModel.php:120, docs/_aiops/doc-change-log.md:1208
+- Code references: app/Models/DripCampaignModel.php:72, app/Models/DripCampaignModel.php:120, docs/_aiops/doc-change-log.md:1304
 
 ## Create table
 ```sql

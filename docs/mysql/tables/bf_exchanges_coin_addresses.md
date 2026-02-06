@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Libraries/MyMIBitcoin.php:65, app/Libraries/MyMIDigibyte.php:32, app/Libraries/MyMIDigibyte.php:58, app/Models/SolanaModel.php:55, app/Models/SolanaModel.php:106, app/Models/SolanaModel.php:146, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:72, docs/_aiops/doc-change-log.md:1265
+- Code references: app/Libraries/MyMIBitcoin.php:65, app/Libraries/MyMIDigibyte.php:32, app/Libraries/MyMIDigibyte.php:58, app/Models/SolanaModel.php:55, app/Models/SolanaModel.php:106, app/Models/SolanaModel.php:146, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:72, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:72, docs/_aiops/doc-change-log.md:1364
 
 ## Create table
 ```sql

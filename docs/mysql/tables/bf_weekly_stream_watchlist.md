@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/WeeklyStreamWatchlistModel.php:9, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:259, docs/aiops/migration_model_audit.md:197, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:2048
+- Code references: app/Models/WeeklyStreamWatchlistModel.php:9, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:259, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:259, docs/aiops/migration_model_audit.md:197, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:2294
 
 ## Create table
 ```sql

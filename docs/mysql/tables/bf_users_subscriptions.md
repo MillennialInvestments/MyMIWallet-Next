@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/AlertsModel.php:1578, app/Models/AlertsModel.php:1578, app/Models/AlertsModel.php:1579, app/Models/SubscribeModel.php:42, app/Models/UserModel.php:213, app/Models/UserModel.php:213, app/Models/UserModel.php:214, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:252, docs/_aiops/doc-change-log.md:2012
+- Code references: app/Models/AlertsModel.php:1578, app/Models/AlertsModel.php:1578, app/Models/AlertsModel.php:1579, app/Models/SubscribeModel.php:42, app/Models/UserModel.php:213, app/Models/UserModel.php:213, app/Models/UserModel.php:214, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:252, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:252, docs/_aiops/doc-change-log.md:2255
 
 ## Create table
 ```sql

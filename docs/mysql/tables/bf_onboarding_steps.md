@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Services/OnboardingService.php:8, docs/_aiops/doc-change-log.md:1595
+- Code references: app/Services/OnboardingService.php:8, docs/_aiops/doc-change-log.md:1754
 
 ## Create table
 ```sql

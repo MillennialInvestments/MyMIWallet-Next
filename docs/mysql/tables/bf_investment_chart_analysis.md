@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/AlertsModel.php:78, docs/_aiops/doc-change-log.md:1364
+- Code references: app/Models/AlertsModel.php:78, docs/_aiops/doc-change-log.md:1469
 
 ## Create table
 ```sql

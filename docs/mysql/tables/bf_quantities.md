@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/Management/Views/Web_Design/Forms/quantity_fields.php:2, app/Modules/User/Views/Referral_Program/Apply.php:11, app/Modules/User/Views/Referral_Program/New_Affiliate_Information.php:11, docs/_aiops/doc-change-log.md:1697
+- Code references: app/Modules/Management/Views/Web_Design/Forms/quantity_fields.php:2, app/Modules/User/Views/Referral_Program/Apply.php:11, app/Modules/User/Views/Referral_Program/New_Affiliate_Information.php:11, docs/_aiops/doc-change-log.md:1898
 
 ## Create table
 ```sql

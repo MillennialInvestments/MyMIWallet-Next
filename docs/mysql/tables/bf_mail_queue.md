@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/MailQueueModel.php:10, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:101, docs/aiops/migration_model_audit.md:132, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1442, docs/health/health_test_checklist.md:570, docs/spark/categories/alerts/mail-send-test.md:14, docs/spark/categories/alerts/mail-send.md:13
+- Code references: app/Models/MailQueueModel.php:10, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:101, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:101, docs/aiops/migration_model_audit.md:132, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1547, docs/health/health_test_checklist.md:570, docs/spark/categories/alerts/mail-send-test.md:14, docs/spark/categories/alerts/mail-send.md:13
 
 ## Create table
 ```sql

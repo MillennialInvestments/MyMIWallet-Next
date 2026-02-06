@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/MyMICoinModel.php:91, app/Models/MyMIGoldModel.php:96, docs/_aiops/doc-change-log.md:1430
+- Code references: app/Models/MyMICoinModel.php:91, app/Models/MyMIGoldModel.php:96, docs/_aiops/doc-change-log.md:1535
 
 ## Create table
 ```sql

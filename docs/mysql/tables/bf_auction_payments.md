@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/AuctionPaymentModel.php:7, docs/auctions/auction-schema.md:82, docs/functional_inventory/docs_to_code_map.md:14, docs/functional_inventory/docs_to_code_map.md:51, docs/aiops/migration_model_audit.md:76, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1046
+- Code references: app/Models/AuctionPaymentModel.php:7, docs/auctions/auction-schema.md:82, docs/functional_inventory/docs_to_code_map.md:14, docs/functional_inventory/docs_to_code_map.md:51, docs/aiops/migration_model_audit.md:76, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1112
 
 ## Create table
 ```sql

@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2025-01-01-000100_CreateTaxModuleTables.php
 - Model:
-- Code references: app/Database/Migrations/2025-01-01-000100_CreateTaxModuleTables.php:74, app/Database/Migrations/2025-01-01-000100_CreateTaxModuleTables.php:107, app/Database/Migrations/2025-01-01-000100_CreateTaxModuleTables.php:146, app/Modules/Management/TaxAdmin/Models/TaxLinesModel.php:11, app/Modules/Management/TaxAdmin/Models/TaxTemplatesModel.php:24, app/Modules/User/Tax/Models/TaxTemplateModel.php:24, app/Modules/User/Tax/Models/TaxTemplateModel.php:33, docs/sql/tax_module_schema.sql:41, docs/sql/tax_module_schema.sql:87, docs/sql/tax_seed_bossier_parish.sql:9, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:200, docs/_aiops/doc-change-log.md:1793
+- Code references: app/Database/Migrations/2025-01-01-000100_CreateTaxModuleTables.php:74, app/Database/Migrations/2025-01-01-000100_CreateTaxModuleTables.php:107, app/Database/Migrations/2025-01-01-000100_CreateTaxModuleTables.php:146, app/Modules/Management/TaxAdmin/Models/TaxLinesModel.php:11, app/Modules/Management/TaxAdmin/Models/TaxTemplatesModel.php:24, app/Modules/User/Tax/Models/TaxTemplateModel.php:24, app/Modules/User/Tax/Models/TaxTemplateModel.php:33, docs/sql/tax_module_schema.sql:41, docs/sql/tax_module_schema.sql:87, docs/sql/tax_seed_bossier_parish.sql:9, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:200, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:200, docs/_aiops/doc-change-log.md:2006
 
 ## Create table
 ```sql

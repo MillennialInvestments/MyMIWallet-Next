@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/DiscordAiSessionModel.php:9, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:51, docs/aiops/migration_model_audit.md:97, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1148
+- Code references: app/Models/DiscordAiSessionModel.php:9, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:51, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:51, docs/aiops/migration_model_audit.md:97, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1238
 
 ## Create table
 ```sql

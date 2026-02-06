@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: docs/integrations/technology_investor_integrations.md:116, docs/_aiops/doc-change-log.md:1436
+- Code references: docs/integrations/technology_investor_integrations.md:116, docs/_aiops/doc-change-log.md:1541
 
 ## Create table
 ```sql

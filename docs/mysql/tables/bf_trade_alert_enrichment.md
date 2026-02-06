@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/MarketingModel.php:1650, docs/_aiops/doc-change-log.md:1814
+- Code references: app/Models/MarketingModel.php:1650, docs/_aiops/doc-change-log.md:2027
 
 ## Create table
 ```sql

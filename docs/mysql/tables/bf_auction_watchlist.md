@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: docs/auctions/auction-schema.md:98, docs/functional_inventory/docs_to_code_map.md:14, docs/functional_inventory/docs_to_code_map.md:51, docs/_aiops/doc-change-log.md:1052
+- Code references: docs/auctions/auction-schema.md:98, docs/functional_inventory/docs_to_code_map.md:14, docs/functional_inventory/docs_to_code_map.md:51, docs/_aiops/doc-change-log.md:1118
 
 ## Create table
 ```sql

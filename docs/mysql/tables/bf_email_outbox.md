@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2026-03-05-000100_CreateEmailOutbox.php
 - Model:
-- Code references: app/Database/Migrations/2026-03-05-000100_CreateEmailOutbox.php:73, app/Database/Migrations/2026-03-05-000100_CreateEmailOutbox.php:78, app/Libraries/DbInventory/InventoryScanner.php:13, app/Libraries/DbInventory/SqlGenerator.php:9, app/Models/EmailOutboxModel.php:11, docs/aiops/migration_model_audit.md:102, docs/aiops/migration_model_audit.md:226, docs/_aiops/doc-change-log.md:1205, docs/spark/categories/alerts/mail-send-test.md:14
+- Code references: app/Database/Migrations/2026-03-05-000100_CreateEmailOutbox.php:73, app/Database/Migrations/2026-03-05-000100_CreateEmailOutbox.php:78, app/Libraries/DbInventory/InventoryScanner.php:13, app/Libraries/DbInventory/SqlGenerator.php:9, app/Models/EmailOutboxModel.php:11, docs/codex/reviews/Spark-Analysis-2026-02-01.md:591, docs/codex/reviews/Spark-Analysis-2026-02-01.md:1129, docs/codex/reviews/Spark-Analysis-2026-02-01.md:1134, docs/codex/reviews/Spark-Analysis-2026-02-01.md:1139, docs/codex/reviews/Spark-Analysis-2026-02-01.md:1152, docs/codex/reviews/Spark-Analysis-2026-02-01.md:1157, docs/codex/reviews/Spark-Analysis-2026-02-01.md:1162, docs/aiops/migration_model_audit.md:102, docs/aiops/migration_model_audit.md:226, docs/_aiops/doc-change-log.md:1301, docs/spark/categories/alerts/mail-send-test.md:14
 
 ## Create table
 ```sql

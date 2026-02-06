@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Services/TokenService.php:170, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:168, docs/_aiops/doc-change-log.md:1679
+- Code references: app/Services/TokenService.php:170, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:168, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:168, docs/_aiops/doc-change-log.md:1844
 
 ## Create table
 ```sql

@@ -1,0 +1,10 @@
+{
+    "command": "revenue:cost-forecast",
+    "timestamp": "20260205-024422",
+    "dry_run": false,
+    "emit": "docs",
+    "forecast": {
+        "notes": "Cost inputs not wired yet. Provide API usage + infra spend to enable forecasting.",
+        "estimated_monthly_cost": null
+    }
+}

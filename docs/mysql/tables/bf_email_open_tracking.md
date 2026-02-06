@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/Marketing/EmailOpenTrackingModel.php:10, docs/aiops/migration_model_audit.md:135, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1202
+- Code references: app/Models/Marketing/EmailOpenTrackingModel.php:10, docs/aiops/migration_model_audit.md:135, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1298
 
 ## Create table
 ```sql

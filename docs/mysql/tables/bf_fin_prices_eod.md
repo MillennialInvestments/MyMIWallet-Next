@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/Fin/PriceEodModel.php:8, app/Services/Fin/PriceService.php:38, docs/aiops/migration_model_audit.md:109, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1295
+- Code references: app/Models/Fin/PriceEodModel.php:8, app/Services/Fin/PriceService.php:38, docs/aiops/migration_model_audit.md:109, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1397
 
 ## Create table
 ```sql

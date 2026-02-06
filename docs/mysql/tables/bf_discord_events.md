@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: docs/discord/server_setup_and_ci4_integration.md:73, docs/discord/_inventory.md:27, docs/discord/python_workers.md:37, docs/functional_inventory/docs_to_code_map.md:26, docs/functional_inventory/docs_to_code_map.md:41, docs/functional_inventory/docs_to_code_map.md:43, docs/functional_inventory/docs_to_code_map.md:51, docs/_aiops/doc-change-log.md:1154
+- Code references: docs/discord/server_setup_and_ci4_integration.md:73, docs/discord/_inventory.md:27, docs/discord/python_workers.md:37, docs/functional_inventory/docs_to_code_map.md:26, docs/functional_inventory/docs_to_code_map.md:41, docs/functional_inventory/docs_to_code_map.md:43, docs/functional_inventory/docs_to_code_map.md:51, docs/_aiops/doc-change-log.md:1244
 
 ## Create table
 ```sql

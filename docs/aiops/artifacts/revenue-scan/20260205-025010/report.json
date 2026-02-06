@@ -1,0 +1,14 @@
+{
+    "command": "revenue:scan",
+    "timestamp": "20260205-025010",
+    "dry_run": false,
+    "streams_found": 0,
+    "artifact_dir": "/home/mymiteam/mymiwallet/site/current/docs/aiops/artifacts/revenue-scan/20260205-025010",
+    "artifacts": [
+        "README.md",
+        "revenue_streams_full.md",
+        "revenue_streams_by_module.md",
+        "revenue_streams_by_user_type.md",
+        "revenue_streams_by_pricing_tier.md"
+    ]
+}

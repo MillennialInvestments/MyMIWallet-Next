@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/CircuitBreakerModel.php:8, app/Modules/Status/Controllers/HealthController.php:43, docs/aiops/migration_model_audit.md:87, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1091
+- Code references: app/Models/CircuitBreakerModel.php:8, app/Modules/Status/Controllers/HealthController.php:43, docs/aiops/migration_model_audit.md:87, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1175
 
 ## Create table
 ```sql

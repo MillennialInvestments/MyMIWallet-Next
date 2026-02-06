@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/User/Views/Investments/index/active_table.php:124, app/Modules/User/Views/Wallets/index/debt_summary/active_table.php:115, docs/_aiops/doc-change-log.md:1901
+- Code references: app/Modules/User/Views/Investments/index/active_table.php:124, app/Modules/User/Views/Wallets/index/debt_summary/active_table.php:115, docs/_aiops/doc-change-log.md:2132
 
 ## Create table
 ```sql
