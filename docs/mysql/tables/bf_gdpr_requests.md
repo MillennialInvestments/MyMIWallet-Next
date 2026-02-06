@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/Admin/Controllers/PrivacyController.php:13, app/Modules/Admin/Controllers/PrivacyController.php:28, docs/_aiops/doc-change-log.md:1310
+- Code references: app/Modules/Admin/Controllers/PrivacyController.php:13, app/Modules/Admin/Controllers/PrivacyController.php:28, docs/_aiops/doc-change-log.md:1415
 
 ## Create table
 ```sql

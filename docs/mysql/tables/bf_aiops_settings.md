@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2026-03-15-000100_CreateAiOpsTaskPipelineTables.php
 - Model:
-- Code references: app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php:83, app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php:84, app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php:92, app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php:123, app/Models/AiOpsSettingsModel.php:11, app/Commands/OpsWork.php:96, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:29, docs/aiops/migration_model_audit.md:61, docs/_aiops/doc-change-log.md:992
+- Code references: app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php:83, app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php:84, app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php:92, app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php:123, app/Models/AiOpsSettingsModel.php:11, app/Commands/OpsWork.php:96, docs/codex/reviews/Spark-Analysis-2026-02-01.md:595, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:29, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:29, docs/aiops/migration_model_audit.md:61, docs/_aiops/doc-change-log.md:1058
 
 ## Create table
 ```sql

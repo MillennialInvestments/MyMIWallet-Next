@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/APIs/Controllers/ChatController.php:154, app/Modules/APIs/Controllers/ChatController.php:155, app/Modules/APIs/Controllers/ChatController.php:175, app/Modules/APIs/Controllers/ChatController.php:176, app/Modules/APIs/Controllers/ChatController.php:190, docs/functional_inventory/docs_to_code_map.md:51, docs/functional_inventory/docs_to_code_map.md:84, docs/notes/2025-12-01-feature-corrections.md:40, docs/_aiops/doc-change-log.md:1424
+- Code references: app/Modules/APIs/Controllers/ChatController.php:154, app/Modules/APIs/Controllers/ChatController.php:155, app/Modules/APIs/Controllers/ChatController.php:175, app/Modules/APIs/Controllers/ChatController.php:176, app/Modules/APIs/Controllers/ChatController.php:190, docs/functional_inventory/docs_to_code_map.md:51, docs/functional_inventory/docs_to_code_map.md:84, docs/notes/2025-12-01-feature-corrections.md:40, docs/_aiops/doc-change-log.md:1529
 
 ## Create table
 ```sql

@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/ContentScannerIngestModel.php:11, docs/content_engine/security.md:9, docs/content_engine/sql_patch_notes.md:6, docs/content_engine/troubleshooting.md:15, docs/content_engine/troubleshooting.md:21, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:47, docs/aiops/migration_model_audit.md:90, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1109, docs/spark/categories/marketing/content-ingest-sample.md:13, docs/spark/categories/marketing/contentengine-smoke.md:13
+- Code references: app/Models/ContentScannerIngestModel.php:11, docs/content_engine/security.md:9, docs/content_engine/sql_patch_notes.md:6, docs/content_engine/troubleshooting.md:15, docs/content_engine/troubleshooting.md:21, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:47, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:47, docs/aiops/migration_model_audit.md:90, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1199, docs/spark/categories/marketing/content-ingest-sample.md:13, docs/spark/categories/marketing/contentengine-smoke.md:13
 
 ## Create table
 ```sql

@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/ExchangeModel.php:231, app/Models/ExchangeModel.php:276, app/Models/MyMIGoldModel.php:8, app/Models/MyMIGoldModel.php:43, app/Models/MyMIGoldModel.php:82, app/Modules/User/Views/Wallets/Feature_Manager.php:128, app/Modules/User/Views/Wallets/Purchase_Coins_Transaction.php:72, app/Modules/User/Views/Wallets/Purchase_Coins_Transaction.php:100, app/Modules/User/Views/Wallets/Purchase_Manager.php:114, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:148, docs/aiops/migration_model_audit.md:142, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1589
+- Code references: app/Models/ExchangeModel.php:231, app/Models/ExchangeModel.php:276, app/Models/MyMIGoldModel.php:8, app/Models/MyMIGoldModel.php:43, app/Models/MyMIGoldModel.php:82, app/Modules/User/Views/Wallets/Feature_Manager.php:128, app/Modules/User/Views/Wallets/Purchase_Coins_Transaction.php:72, app/Modules/User/Views/Wallets/Purchase_Coins_Transaction.php:100, app/Modules/User/Views/Wallets/Purchase_Manager.php:114, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:148, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:148, docs/aiops/migration_model_audit.md:142, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1745
 
 ## Create table
 ```sql

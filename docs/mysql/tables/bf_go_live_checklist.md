@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: docs/go-live/operational_usage.md:28, docs/_aiops/doc-change-log.md:1313
+- Code references: docs/go-live/operational_usage.md:28, docs/_aiops/doc-change-log.md:1418
 
 ## Create table
 ```sql

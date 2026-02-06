@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Commands/NewsAudit.php:492, app/Commands/NewsAudit.php:493, docs/_aiops/doc-change-log.md:1520, docs/spark/categories/marketing/news-audit.md:13
+- Code references: app/Commands/NewsAudit.php:492, app/Commands/NewsAudit.php:493, docs/_aiops/doc-change-log.md:1664, docs/spark/categories/marketing/news-audit.md:13
 
 ## Create table
 ```sql

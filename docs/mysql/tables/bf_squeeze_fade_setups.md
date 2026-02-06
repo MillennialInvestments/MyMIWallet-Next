@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/SqueezeModel.php:91, app/Models/SqueezeModel.php:157, docs/_aiops/doc-change-log.md:1757
+- Code references: app/Models/SqueezeModel.php:91, app/Models/SqueezeModel.php:157, docs/_aiops/doc-change-log.md:1967
 
 ## Create table
 ```sql

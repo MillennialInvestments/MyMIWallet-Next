@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/MarketingModel.php:915, app/Models/MarketingModel.php:1218, app/Models/MarketingModel.php:2132, app/Models/MarketingModel.php:2273, app/Models/MarketingModel.php:2392, app/Models/MarketingNewsletterModel.php:9, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:128, docs/aiops/migration_model_audit.md:139, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1499
+- Code references: app/Models/MarketingModel.php:915, app/Models/MarketingModel.php:1218, app/Models/MarketingModel.php:2132, app/Models/MarketingModel.php:2273, app/Models/MarketingModel.php:2392, app/Models/MarketingNewsletterModel.php:9, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:128, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:128, docs/aiops/migration_model_audit.md:139, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1640
 
 ## Create table
 ```sql

@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/EsportsModel.php:40, app/Models/EsportsModel.php:55, app/Models/EsportsModel.php:107, app/Models/EsportsModel.php:113, app/Models/EsportsModel.php:118, app/Models/EsportsModel.php:305, app/Models/EsportsModel.php:316, docs/exports_schema.md:53, docs/functional_inventory/docs_to_code_map.md:50, docs/functional_inventory/docs_to_code_map.md:51, docs/_aiops/doc-change-log.md:1226
+- Code references: app/Models/EsportsModel.php:40, app/Models/EsportsModel.php:55, app/Models/EsportsModel.php:107, app/Models/EsportsModel.php:113, app/Models/EsportsModel.php:118, app/Models/EsportsModel.php:305, app/Models/EsportsModel.php:316, docs/exports_schema.md:53, docs/functional_inventory/docs_to_code_map.md:50, docs/functional_inventory/docs_to_code_map.md:51, docs/_aiops/doc-change-log.md:1325
 
 ## Create table
 ```sql

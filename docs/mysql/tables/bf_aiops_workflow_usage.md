@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2026-01-15-000100_AddChatAndAiOpsUsageTables.php
 - Model:
-- Code references: app/Database/Migrations/2026-01-15-000100_AddChatAndAiOpsUsageTables.php:26, app/Database/Migrations/2026-01-15-000100_AddChatAndAiOpsUsageTables.php:36, app/Database/Migrations/2026-01-15-000100_AddChatAndAiOpsUsageTables.php:57, app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php:9, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:32, docs/_aiops/doc-change-log.md:1004, docs/ai-cost-controls.md:10, docs/ai-cost-controls.md:31, docs/ai-cost-controls.md:42, docs/aiops-budgeting.md:12, docs/aiops-budgeting.md:27, docs/emergency-playbook.md:18
+- Code references: app/Database/Migrations/2026-01-15-000100_AddChatAndAiOpsUsageTables.php:26, app/Database/Migrations/2026-01-15-000100_AddChatAndAiOpsUsageTables.php:36, app/Database/Migrations/2026-01-15-000100_AddChatAndAiOpsUsageTables.php:57, app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php:9, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:32, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:32, docs/_aiops/doc-change-log.md:1070, docs/ai-cost-controls.md:10, docs/ai-cost-controls.md:31, docs/ai-cost-controls.md:42, docs/aiops-budgeting.md:12, docs/aiops-budgeting.md:27, docs/emergency-playbook.md:18
 
 ## Create table
 ```sql

@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/PushSubscriptionModel.php:8, app/Modules/Admin/Controllers/PrivacyController.php:54, app/Modules/Admin/Controllers/PrivacyController.php:73, docs/aiops/migration_model_audit.md:171, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1694
+- Code references: app/Models/PushSubscriptionModel.php:8, app/Modules/Admin/Controllers/PrivacyController.php:54, app/Modules/Admin/Controllers/PrivacyController.php:73, docs/aiops/migration_model_audit.md:171, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1895
 
 ## Create table
 ```sql

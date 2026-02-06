@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/APIs/Controllers/DiscordController.php:264, app/Modules/APIs/Controllers/DiscordController.php:280, docs/_aiops/doc-change-log.md:1184
+- Code references: app/Modules/APIs/Controllers/DiscordController.php:264, app/Modules/APIs/Controllers/DiscordController.php:280, docs/_aiops/doc-change-log.md:1274
 
 ## Create table
 ```sql

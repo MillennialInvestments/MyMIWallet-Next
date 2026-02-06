@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2026-02-15-000200_CreateUserSetupPreferences.php
 - Model:
-- Code references: app/Database/Migrations/2026-02-15-000200_CreateUserSetupPreferences.php:11, app/Database/Migrations/2026-02-15-000200_CreateUserSetupPreferences.php:52, app/Database/Migrations/2026-02-15-000200_CreateUserSetupPreferences.php:58, app/Database/Migrations/2026-02-15-000200_CreateUserSetupPreferences.php:59, app/Services/SetupStatusService.php:74, app/Services/SetupStatusService.php:78, app/Services/SetupStatusService.php:97, app/Services/SetupStatusService.php:108, docs/_aiops/doc-change-log.md:1847
+- Code references: app/Database/Migrations/2026-02-15-000200_CreateUserSetupPreferences.php:11, app/Database/Migrations/2026-02-15-000200_CreateUserSetupPreferences.php:52, app/Database/Migrations/2026-02-15-000200_CreateUserSetupPreferences.php:58, app/Database/Migrations/2026-02-15-000200_CreateUserSetupPreferences.php:59, app/Services/SetupStatusService.php:74, app/Services/SetupStatusService.php:78, app/Services/SetupStatusService.php:97, app/Services/SetupStatusService.php:108, docs/codex/reviews/Spark-Analysis-2026-02-01.md:587, docs/_aiops/doc-change-log.md:2066
 
 ## Create table
 ```sql

@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/ProjectInboxModel.php:7, docs/aiops/migration_model_audit.md:164, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1688
+- Code references: app/Models/ProjectInboxModel.php:7, docs/aiops/migration_model_audit.md:164, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1865
 
 ## Create table
 ```sql

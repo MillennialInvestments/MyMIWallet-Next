@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/ReferralModel.php:10, app/Modules/User/Views/Referral_Program/Application_Manager.php:26, app/Modules/User/Views/Referral_Program/New_Affiliate_Information/Setup_Procedure.php:8, app/Modules/User/Views/Referral_Program/New_Affiliate_Information/user_fields.php:23, app/Modules/User/Views/Referral_Program/New_Affiliate_Procedure.php:8, app/Modules/User/Views/Referral_Program/Users.php:14, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:242, docs/aiops/migration_model_audit.md:172, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1985
+- Code references: app/Models/ReferralModel.php:10, app/Modules/User/Views/Referral_Program/Application_Manager.php:26, app/Modules/User/Views/Referral_Program/New_Affiliate_Information/Setup_Procedure.php:8, app/Modules/User/Views/Referral_Program/New_Affiliate_Information/user_fields.php:23, app/Modules/User/Views/Referral_Program/New_Affiliate_Procedure.php:8, app/Modules/User/Views/Referral_Program/Users.php:14, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:242, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:242, docs/aiops/migration_model_audit.md:172, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:2222
 
 ## Create table
 ```sql
