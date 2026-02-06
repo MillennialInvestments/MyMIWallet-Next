@@ -6,6 +6,9 @@ on:
   schedule:
     - cron: '0 6 * * 1'
 
+env:
+  CI_ENVIRONMENT: production
+
 jobs:
   psr4:
     runs-on: ubuntu-latest

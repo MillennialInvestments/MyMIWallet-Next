@@ -14,3 +14,6 @@ vendor/**
 node_modules/**
 nginx/**
 nginx/src/**
+
+# Environment-specific config variants
+app/Config/Database.testing.php

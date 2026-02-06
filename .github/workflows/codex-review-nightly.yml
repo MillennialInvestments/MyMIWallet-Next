@@ -5,6 +5,9 @@ on:
     - cron: "0 2 * * *"
   workflow_dispatch:
 
+env:
+  CI_ENVIRONMENT: production
+
 jobs:
   codex_review:
     runs-on: ubuntu-latest
