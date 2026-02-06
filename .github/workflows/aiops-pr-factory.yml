@@ -10,6 +10,9 @@ permissions:
   contents: write
   pull-requests: write
 
+env:
+  CI_ENVIRONMENT: production
+
 jobs:
   pr-factory:
     runs-on: ubuntu-latest

@@ -13,6 +13,9 @@ on:
       - 'app/Config/Filters.php'
       - 'app/Config/App.php'
 
+env:
+  CI_ENVIRONMENT: production
+
 jobs:
   config_lint:
     runs-on: ubuntu-latest

@@ -5,6 +5,9 @@ on:
     branches: [main]
   pull_request:
 
+env:
+  CI_ENVIRONMENT: production
+
 jobs:
   health:
     runs-on: ubuntu-latest
