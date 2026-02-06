@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/ExchangeModel.php:319, app/Modules/Exchange/Views/Application_Manager.php:119, app/Modules/Exchange/Views/Application_Manager.php:153, app/Modules/Exchange/Views/Coin_Listing_Asset_Information/list_fields.php:32, docs/_aiops/doc-change-log.md:1262
+- Code references: app/Models/ExchangeModel.php:319, app/Modules/Exchange/Views/Application_Manager.php:119, app/Modules/Exchange/Views/Application_Manager.php:153, app/Modules/Exchange/Views/Coin_Listing_Asset_Information/list_fields.php:32, docs/_aiops/doc-change-log.md:1361
 
 ## Create table
 ```sql

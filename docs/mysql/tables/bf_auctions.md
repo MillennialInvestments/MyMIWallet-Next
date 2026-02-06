@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/AssetsModel.php:177, app/Models/AssetsModel.php:183, app/Models/AssetsModel.php:203, docs/_aiops/doc-change-log.md:1055
+- Code references: app/Models/AssetsModel.php:177, app/Models/AssetsModel.php:183, app/Models/AssetsModel.php:203, docs/_aiops/doc-change-log.md:1121
 
 ## Create table
 ```sql

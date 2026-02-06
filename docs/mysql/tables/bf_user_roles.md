@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/SecurityModel.php:188, app/Models/SecurityModel.php:193, app/Models/SecurityModel.php:201, docs/_aiops/doc-change-log.md:1841
+- Code references: app/Models/SecurityModel.php:188, app/Models/SecurityModel.php:193, app/Models/SecurityModel.php:201, docs/_aiops/doc-change-log.md:2060
 
 ## Create table
 ```sql

@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Libraries/MyMIInvestments.php:1649, docs/_aiops/doc-change-log.md:1583
+- Code references: app/Libraries/MyMIInvestments.php:1649, docs/_aiops/doc-change-log.md:1739
 
 ## Create table
 ```sql

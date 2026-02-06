@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2026-01-15-000100_CreateOpsFoundation.php
 - Model:
-- Code references: app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:77, app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:87, app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:110, app/Models/RuntimeConfigModel.php:11, docs/ops/n8n_responsibilities.md:80, docs/codex/01_pr1_foundations.md:49, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:185, docs/aiops/migration_model_audit.md:175, docs/aiops/migration_model_audit.md:251, docs/_aiops/doc-change-log.md:1715
+- Code references: app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:77, app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:87, app/Database/Migrations/2026-01-15-000100_CreateOpsFoundation.php:110, app/Models/RuntimeConfigModel.php:11, docs/ops/n8n_responsibilities.md:80, docs/codex/01_pr1_foundations.md:49, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:185, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:185, docs/aiops/migration_model_audit.md:175, docs/aiops/migration_model_audit.md:251, docs/_aiops/doc-change-log.md:1919
 
 ## Create table
 ```sql

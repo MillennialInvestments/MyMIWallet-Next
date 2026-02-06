@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: docs/sql/tax_module_schema.sql:26, docs/_aiops/doc-change-log.md:1790
+- Code references: docs/sql/tax_module_schema.sql:26, docs/_aiops/doc-change-log.md:2003
 
 ## Create table
 ```sql

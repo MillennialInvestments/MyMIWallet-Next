@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/DripCampaignModel.php:37, app/Models/DripCampaignModel.php:41, app/Models/DripCampaignModel.php:54, app/Models/DripCampaignModel.php:114, app/Models/DripCampaignModel.php:126, app/Models/DripCampaignModel.php:137, app/Models/DripCampaignModel.php:147, app/Models/DripCampaignModel.php:161, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:64, docs/_aiops/doc-change-log.md:1196
+- Code references: app/Models/DripCampaignModel.php:37, app/Models/DripCampaignModel.php:41, app/Models/DripCampaignModel.php:54, app/Models/DripCampaignModel.php:114, app/Models/DripCampaignModel.php:126, app/Models/DripCampaignModel.php:137, app/Models/DripCampaignModel.php:147, app/Models/DripCampaignModel.php:161, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:64, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:64, docs/_aiops/doc-change-log.md:1292
 
 ## Create table
 ```sql

@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2025-09-09-000050_CreatePredictionsPositions.php
 - Model:
-- Code references: app/Database/Migrations/2025-09-09-000050_CreatePredictionsPositions.php:33, app/Database/Migrations/2025-09-09-000050_CreatePredictionsPositions.php:38, app/Database/Migrations/2025-09-09-000070_CreatePredictionsSettlementsPayouts.php:49, app/Models/Predictions/PositionsModel.php:7, docs/predictions/mysql-migrations.md:84, docs/predictions/README.md:46, docs/functional_inventory/docs_to_code_map.md:51, docs/functional_inventory/docs_to_code_map.md:138, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:161, docs/aiops/migration_model_audit.md:158, docs/aiops/migration_model_audit.md:248, docs/_aiops/doc-change-log.md:1652
+- Code references: app/Database/Migrations/2025-09-09-000050_CreatePredictionsPositions.php:33, app/Database/Migrations/2025-09-09-000050_CreatePredictionsPositions.php:38, app/Database/Migrations/2025-09-09-000070_CreatePredictionsSettlementsPayouts.php:49, app/Models/Predictions/PositionsModel.php:7, docs/predictions/mysql-migrations.md:84, docs/predictions/README.md:46, docs/functional_inventory/docs_to_code_map.md:51, docs/functional_inventory/docs_to_code_map.md:138, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:161, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:161, docs/aiops/migration_model_audit.md:158, docs/aiops/migration_model_audit.md:248, docs/_aiops/doc-change-log.md:1811
 
 ## Create table
 ```sql

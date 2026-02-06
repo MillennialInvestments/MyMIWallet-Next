@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2026-04-15-000100_CreateChatGovernanceTables.php
 - Model:
-- Code references: app/Database/Migrations/2026-04-15-000100_CreateChatGovernanceTables.php:40, app/Database/Migrations/2026-04-15-000100_CreateChatGovernanceTables.php:54, app/Database/Migrations/2026-04-15-000100_CreateChatGovernanceTables.php:60, app/Database/Migrations/2026-04-15-000100_CreateChatGovernanceTables.php:61, app/Models/ChatStepModel.php:11, docs/chatgpt/aiops/chat_governance_indexing.md:18, docs/chatgpt/aiops/chat_governance_indexing.md:46, docs/_aiops/doc-change-log.md:1085
+- Code references: app/Database/Migrations/2026-04-15-000100_CreateChatGovernanceTables.php:40, app/Database/Migrations/2026-04-15-000100_CreateChatGovernanceTables.php:54, app/Database/Migrations/2026-04-15-000100_CreateChatGovernanceTables.php:60, app/Database/Migrations/2026-04-15-000100_CreateChatGovernanceTables.php:61, app/Models/ChatStepModel.php:11, docs/chatgpt/aiops/chat_governance_indexing.md:18, docs/chatgpt/aiops/chat_governance_indexing.md:46, docs/codex/reviews/Spark-Analysis-2026-02-01.md:598, docs/_aiops/doc-change-log.md:1169
 
 ## Create table
 ```sql

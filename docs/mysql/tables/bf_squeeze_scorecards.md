@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Libraries/MyMIInvestments.php:704, app/Libraries/MyMIInvestments.php:749, app/Libraries/MyMIInvestments.php:786, app/Libraries/MyMIInvestments.php:789, app/Models/SqueezeModel.php:75, app/Models/SqueezeModel.php:111, app/Models/SqueezeModel.php:178, app/Models/SqueezeModel.php:206, app/Models/SqueezeModel.php:209, docs/_aiops/doc-change-log.md:1760
+- Code references: app/Libraries/MyMIInvestments.php:704, app/Libraries/MyMIInvestments.php:749, app/Libraries/MyMIInvestments.php:786, app/Libraries/MyMIInvestments.php:789, app/Models/SqueezeModel.php:75, app/Models/SqueezeModel.php:111, app/Models/SqueezeModel.php:178, app/Models/SqueezeModel.php:206, app/Models/SqueezeModel.php:209, docs/_aiops/doc-change-log.md:1970
 
 ## Create table
 ```sql

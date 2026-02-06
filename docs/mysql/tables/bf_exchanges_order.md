@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/SolanaModel.php:544, docs/_aiops/doc-change-log.md:1274
+- Code references: app/Models/SolanaModel.php:544, docs/_aiops/doc-change-log.md:1373
 
 ## Create table
 ```sql

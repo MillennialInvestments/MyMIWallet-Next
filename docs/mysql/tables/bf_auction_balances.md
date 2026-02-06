@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/AuctionBalanceModel.php:8, app/Models/AuctionBalanceModel.php:51, app/Models/AuctionBalanceModel.php:66, app/Models/AuctionBalanceModel.php:94, app/Models/AuctionBalanceModel.php:109, app/Models/AuctionBalanceModel.php:137, app/Models/AuctionBalanceModel.php:166, app/Models/AuctionBalanceModel.php:194, app/Models/AuctionBalanceModel.php:202, docs/auctions/auction-schema.md:72, docs/functional_inventory/docs_to_code_map.md:14, docs/functional_inventory/docs_to_code_map.md:51, docs/aiops/migration_model_audit.md:71, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1034
+- Code references: app/Models/AuctionBalanceModel.php:8, app/Models/AuctionBalanceModel.php:51, app/Models/AuctionBalanceModel.php:66, app/Models/AuctionBalanceModel.php:94, app/Models/AuctionBalanceModel.php:109, app/Models/AuctionBalanceModel.php:137, app/Models/AuctionBalanceModel.php:166, app/Models/AuctionBalanceModel.php:194, app/Models/AuctionBalanceModel.php:202, docs/auctions/auction-schema.md:72, docs/functional_inventory/docs_to_code_map.md:14, docs/functional_inventory/docs_to_code_map.md:51, docs/aiops/migration_model_audit.md:71, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1100
 
 ## Create table
 ```sql

@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/AuthRegistrationAttemptModel.php:9, docs/security/auth_registration_audit.md:22, docs/security/auth_registration_audit.md:25, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:37, docs/aiops/migration_model_audit.md:80, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1070
+- Code references: app/Models/AuthRegistrationAttemptModel.php:9, docs/security/auth_registration_audit.md:22, docs/security/auth_registration_audit.md:25, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:37, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:37, docs/aiops/migration_model_audit.md:80, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1148
 
 ## Create table
 ```sql

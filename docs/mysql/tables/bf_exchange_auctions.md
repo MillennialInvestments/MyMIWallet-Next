@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/AuctionModel.php:10, docs/aiops/migration_model_audit.md:75, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1250
+- Code references: app/Models/AuctionModel.php:10, docs/aiops/migration_model_audit.md:75, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1349
 
 ## Create table
 ```sql

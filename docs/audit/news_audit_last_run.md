@@ -1,8 +1,8 @@
 # News Audit - Last Run
 
-Run timestamp: 2026-02-01 18:48:49
-Duration (ms): 296
-Memory peak: 16.00 MB
+Run timestamp: 2026-02-05 02:49:07
+Duration (ms): 263
+Memory peak: 18.00 MB
 
 ## Executive Summary
 Audit status: FAIL (0% valid pipeline).

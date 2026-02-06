@@ -3,7 +3,7 @@
 ## Source
 - Migration: 2026-01-17-000001_CreateInvestmentSignalsTables.php
 - Model:
-- Code references: app/Database/Migrations/2026-01-17-000001_CreateInvestmentSignalsTables.php:32, app/Database/Migrations/2026-01-17-000001_CreateInvestmentSignalsTables.php:63, app/Models/SignalFilesModel.php:9, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:89, docs/aiops/migration_model_audit.md:177, docs/aiops/migration_model_audit.md:252, docs/_aiops/doc-change-log.md:1394
+- Code references: app/Database/Migrations/2026-01-17-000001_CreateInvestmentSignalsTables.php:32, app/Database/Migrations/2026-01-17-000001_CreateInvestmentSignalsTables.php:63, app/Models/SignalFilesModel.php:9, docs/aiops/artifacts/db-drift/20260201-181038/summary.md:89, docs/aiops/artifacts/db-drift/20260201-184402/summary.md:89, docs/aiops/migration_model_audit.md:177, docs/aiops/migration_model_audit.md:252, docs/_aiops/doc-change-log.md:1499
 
 ## Create table
 ```sql

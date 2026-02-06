@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Libraries/FMVService.php:50, app/Models/AuctionLotModel.php:78, app/Models/AuctionSettlementModel.php:7, app/Models/AuctionSettlementModel.php:32, app/Models/AuctionSettlementModel.php:106, app/Models/AuctionSettlementModel.php:132, app/Models/AuctionSettlementModel.php:159, app/Models/AuctionSettlementModel.php:181, docs/auctions/auction-schema.md:53, docs/functional_inventory/docs_to_code_map.md:14, docs/functional_inventory/docs_to_code_map.md:51, docs/aiops/migration_model_audit.md:77, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1049
+- Code references: app/Libraries/FMVService.php:50, app/Models/AuctionLotModel.php:78, app/Models/AuctionSettlementModel.php:7, app/Models/AuctionSettlementModel.php:32, app/Models/AuctionSettlementModel.php:106, app/Models/AuctionSettlementModel.php:132, app/Models/AuctionSettlementModel.php:159, app/Models/AuctionSettlementModel.php:181, docs/auctions/auction-schema.md:53, docs/functional_inventory/docs_to_code_map.md:14, docs/functional_inventory/docs_to_code_map.md:51, docs/aiops/migration_model_audit.md:77, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1115
 
 ## Create table
 ```sql

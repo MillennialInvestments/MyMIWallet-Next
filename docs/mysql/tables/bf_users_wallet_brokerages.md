@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Modules/User/Views/Wallets/Link_Account/Brokerage.php:3, app/Modules/User/Views/Wallets/Link_Account (Original)/Brokerage.php:3, docs/_aiops/doc-change-log.md:2027
+- Code references: app/Modules/User/Views/Wallets/Link_Account/Brokerage.php:3, app/Modules/User/Views/Wallets/Link_Account (Original)/Brokerage.php:3, docs/_aiops/doc-change-log.md:2273
 
 ## Create table
 ```sql

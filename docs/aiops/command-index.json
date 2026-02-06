@@ -1,0 +1,938 @@
+{
+    "generated_at": "2026-02-05T02:40:12+00:00",
+    "summary": {
+        "total": 92,
+        "issues": 1,
+        "classifications": {
+            "safe": 50,
+            "read-only": 28,
+            "requires-approval": 14,
+            "destructive": 0
+        }
+    },
+    "commands": [
+        {
+            "command": "api:audit",
+            "class": "App\\Commands\\API\\ApiAudit",
+            "group": "aiops",
+            "description": "Audit API endpoints defined in docs/api/schematic.yaml and capture runtime health.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:chat-governance-index",
+            "class": "App\\Commands\\AiOps\\ChatGovernanceIndex",
+            "group": "aiops",
+            "description": "Index ChatGPT governance steps from archived chats and sync CSV/DB outputs.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:command-index",
+            "class": "App\\Commands\\AiOps\\CommandIndex",
+            "group": "AI-Ops",
+            "description": "Scan and classify Spark commands for AIOps governance.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:copilot:validate",
+            "class": "App\\Commands\\AiOps\\CopilotValidate",
+            "group": "AI-Ops",
+            "description": "Validate copilot instructions and Spark command safety rules.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:email-scan",
+            "class": "App\\Commands\\AiOps\\EmailScan",
+            "group": "aiops",
+            "description": "Scan alerts mailbox for new emails and record AIOps counts.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "aiops:run",
+            "class": "App\\Commands\\AiOps\\Run",
+            "group": "AI-Ops",
+            "description": "Manually run the AI-Ops worker and generate docs/_aiops reports",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "aiops:seed",
+            "class": "App\\Commands\\AiOpsSeed",
+            "group": "AiOps",
+            "description": "Seed default AI Ops caps and pricing configuration.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "alerts:audit",
+            "class": "App\\Commands\\AlertsAudit",
+            "group": "maintenance",
+            "description": "Audit recent scraped alert emails against generated trade alerts.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "alerts:parse-test",
+            "class": "App\\Commands\\AlertsParseTest",
+            "group": "alerts",
+            "description": "Parse a broker email sample and output normalized execution data.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "app:update",
+            "class": "App\\Commands\\AppUpdate",
+            "group": "app",
+            "description": "Deprecated. Use ops:app:update instead.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "audit:node",
+            "class": "App\\Commands\\Audit\\NodeAudit",
+            "group": "audit",
+            "description": "Detect tracked node_modules and native build artifacts (read-only).",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "audit:psr4",
+            "class": "App\\Commands\\AuditPsr4",
+            "group": "maintenance",
+            "description": "Audit PSR-4 compliance for the app namespace.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "auth:audit",
+            "class": "App\\Commands\\Auth\\Audit",
+            "group": "auth",
+            "description": "Audit Myth:Auth authentication and account lifecycle flows end-to-end, including registration, login, and reset flows.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "auth:funnel-check",
+            "class": "App\\Commands\\Auth\\FunnelCheck",
+            "group": "auth",
+            "description": "Check auth funnel sanity using recent user events and emit alerts on drop-offs.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "auth:smoke",
+            "class": "App\\Commands\\Auth\\Smoke",
+            "group": "auth",
+            "description": "Run a safe authentication smoke test and record health results for ops visibility.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "cache:audit",
+            "class": "App\\Commands\\CacheAudit",
+            "group": "cache",
+            "description": "Scan the repo for unsafe cache key usage.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "codex:review",
+            "class": "App\\Commands\\Codex\\Review",
+            "group": "codex",
+            "description": "Generate Codex review artifacts (summary + prompt payload)",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "codex:review:commit",
+            "class": "App\\Commands\\Codex\\ReviewCommit",
+            "group": "codex",
+            "description": "Commit Codex review artifacts intentionally (latest or by date).",
+            "classification": "requires-approval",
+            "requires_approval": true,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "codex:review:list",
+            "class": "App\\Commands\\Codex\\ReviewList",
+            "group": "codex",
+            "description": "List available Codex review artifacts stored under docs.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "codex:review:publish",
+            "class": "App\\Commands\\Codex\\ReviewPublish",
+            "group": "codex",
+            "description": "Aggregate governance lint results and publish review artifacts.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "config:drift",
+            "class": "App\\Commands\\Config\\Drift",
+            "group": "audit",
+            "description": "Compare deployed config and environment to repo baselines.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "config:lint",
+            "class": "App\\Commands\\ConfigLint",
+            "group": "config",
+            "description": "Lint Config/Services.php overrides against CI4 service signatures.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "contentengine:smoke",
+            "class": "App\\Commands\\ContentEngineSmoke",
+            "group": "content",
+            "description": "End-to-end smoke test for the Content Engine ingest \u2192 scoring \u2192 drafts pipeline.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "content:ingest-sample",
+            "class": "App\\Commands\\ContentIngestSample",
+            "group": "content",
+            "description": "Load sample Daily Top Gainers JSON, ingest, score, and print the top 5 ideas.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "db:apply-docs",
+            "class": "App\\Commands\\Database\\ApplyDocs",
+            "group": "database",
+            "description": "Compile SQL from docs/mysql and apply statements with audit logging.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "db:drift",
+            "class": "App\\Commands\\Database\\Drift",
+            "group": "db",
+            "description": "Compare live schema to expected inventory.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "db:inventory",
+            "class": "App\\Commands\\Database\\Inventory",
+            "group": "database",
+            "description": "Scan code and migrations to inventory MyMI Wallet tables and generate integrity docs/SQL adjustments.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "migrate:dry-run",
+            "class": "App\\Commands\\Database\\MigrateDryRun",
+            "group": "database",
+            "description": "List pending migrations without executing them.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "spark:diagnose-503",
+            "class": "App\\Commands\\Diagnose503",
+            "group": "maintenance",
+            "description": "Diagnose common 503 causes (cache, maintenance filter, upstream, writable).",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "discord:list",
+            "class": "App\\Commands\\DiscordList",
+            "group": "Discord",
+            "description": "List configured Discord channels/webhooks/IDs from config and database.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "discord:process-queue",
+            "class": "App\\Commands\\DiscordProcessQueue",
+            "group": "Discord",
+            "description": "Process queued Discord messages respecting quiet hours and pacing.",
+            "classification": "requires-approval",
+            "requires_approval": true,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "discord:test",
+            "class": "App\\Commands\\DiscordTest",
+            "group": "Discord",
+            "description": "Send a test payload through the Discord queue pipeline.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "discord:test-liquidity",
+            "class": "App\\Commands\\DiscordTestLiquidity",
+            "group": "Discord",
+            "description": "Send a test Liquidity Scan alert to alerts.liquidity channel",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "discord:wire-check",
+            "class": "App\\Commands\\DiscordWireCheck",
+            "group": "Discord",
+            "description": "Validate Discord env vars, tables, and queue health for MyMIDiscord.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "env:doctor",
+            "class": "App\\Commands\\Env\\EnvDoctor",
+            "group": "env",
+            "description": "Environment diagnostics and snapshot.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "fix:503",
+            "class": "App\\Commands\\Fix503",
+            "group": "ops",
+            "description": "Diagnose and attempt safe auto-fixes for 503 errors.",
+            "classification": "requires-approval",
+            "requires_approval": true,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "forecasts:evaluate",
+            "class": "App\\Commands\\ForecastEvaluate",
+            "group": "Forecasts",
+            "description": "Evaluate forecasts for accuracy windows.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "forecasts:refresh",
+            "class": "App\\Commands\\ForecastRefresh",
+            "group": "Forecasts",
+            "description": "Refresh forecasts for open alerts.",
+            "classification": "requires-approval",
+            "requires_approval": true,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "gap:sync",
+            "class": "App\\Commands\\GapTrackerSync",
+            "group": "GapTracker",
+            "description": "Enrich gap tracker CSV and produce a report.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "growth:retention-watch",
+            "class": "App\\Commands\\Growth\\RetentionWatch",
+            "group": "audit",
+            "description": "Detect retention anomalies from engagement signals.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "health:cache",
+            "class": "App\\Commands\\Health\\Cache",
+            "group": "health",
+            "description": "Check CI4 writable cache directories for access.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "health:disk",
+            "class": "App\\Commands\\Health\\Disk",
+            "group": "health",
+            "description": "Check disk and inode usage for the host.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "health:git-safety",
+            "class": "App\\Commands\\Health\\GitSafety",
+            "group": "health",
+            "description": "Check git ignore rules for env/writable and tracked secrets.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "health:services",
+            "class": "App\\Commands\\Health\\Services",
+            "group": "health",
+            "description": "Detect web server + PHP handler status without systemctl.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "logs:healthcheck",
+            "class": "App\\Commands\\Logs\\Healthcheck",
+            "group": "logs",
+            "description": "Emit test logs and verify file + DB log sinks are functioning.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "logs:summarize",
+            "class": "App\\Commands\\Logs\\Summarize",
+            "group": "logs",
+            "description": "Summarize CI4 logs for a given date, including new entries since the last run.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "logs:full-report",
+            "class": "App\\Commands\\LogsFullReport",
+            "group": "maintenance",
+            "description": "Summarize CI4 + Apache + PHP logs for a given date.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "mail:send",
+            "class": "App\\Commands\\MailSend",
+            "group": "Mail",
+            "description": "Process and send queued mail jobs.",
+            "classification": "requires-approval",
+            "requires_approval": true,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "mail:send-test",
+            "class": "App\\Commands\\MailSendTest",
+            "group": "maintenance",
+            "description": "Send a test email using branded templates.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "mail:test",
+            "class": "App\\Commands\\MailTest",
+            "group": "maintenance",
+            "description": "Send a DreamHost SMTP test email and output transport diagnostics.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "mail:verify",
+            "class": "App\\Commands\\MailVerify",
+            "group": "maintenance",
+            "description": "Verify SMTP settings by sending a diagnostic email.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "marketing:automation-audit",
+            "class": "App\\Commands\\Marketing\\AutomationAudit",
+            "group": "marketing",
+            "description": "Verify marketing automations, cron hooks, and API usage expectations.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "mdit:nav:compute_daily",
+            "class": "App\\Commands\\MditNavComputeDaily",
+            "group": "mdit",
+            "description": "Compute and snapshot the daily MDIT NAV.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "news:audit",
+            "class": "App\\Commands\\NewsAudit",
+            "group": "maintenance",
+            "description": "Audit recent marketing news ingestion, summarization, and post generation.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "ops:aiops:init",
+            "class": "App\\Commands\\Ops\\AiopsInit",
+            "group": "ops",
+            "description": "Initialize and validate the AIOps PR factory (one-time or rare use).",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "ops:app:update",
+            "class": "App\\Commands\\Ops\\AppUpdate",
+            "group": "ops",
+            "description": "Safely update and validate the CI4 application.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "ops:commands:audit",
+            "class": "App\\Commands\\Ops\\CommandsAudit",
+            "group": "ops",
+            "description": "Audit Spark commands for illegal constructors.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "ops:commands:autofix",
+            "class": "App\\Commands\\Ops\\CommandsAutofix",
+            "group": "ops",
+            "description": "Auto-fix Spark commands that define illegal constructors.",
+            "classification": "requires-approval",
+            "requires_approval": true,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "ops:commands:inventory",
+            "class": "App\\Commands\\Ops\\CommandsInventory",
+            "group": "ops",
+            "description": "Generate Spark command inventory from Console.php and command files.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "ops:commands:lint",
+            "class": "App\\Commands\\Ops\\CommandsLint",
+            "group": "ops",
+            "description": "Lint Spark commands for runtime safety contracts and documentation coverage.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "ops:filesystem:lint",
+            "class": "App\\Commands\\Ops\\FilesystemLint",
+            "group": "ops",
+            "description": "Lint Spark commands for unsafe filesystem writes (missing ROOTPATH anchoring).",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "ops:next-steps",
+            "class": "App\\Commands\\Ops\\NextSteps",
+            "group": "ops",
+            "description": "Generate next-steps issues from audit commands and write docs/snapshots.",
+            "classification": "requires-approval",
+            "requires_approval": true,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "ops:next-steps:sync",
+            "class": "App\\Commands\\Ops\\NextStepsSync",
+            "group": "ops",
+            "description": "Diff latest snapshots and queue net-new issues.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "ops:propose-pr",
+            "class": "App\\Commands\\Ops\\ProposePr",
+            "group": "ops",
+            "description": "Generate and validate a PR artifact bundle, then export to tracked outbox for GitHub automation.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "ops:spark-reset",
+            "class": "App\\Commands\\Ops\\SparkReset",
+            "group": "ops",
+            "description": "Reset Spark-related caches and metadata (guarded).",
+            "classification": "requires-approval",
+            "requires_approval": true,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "ops:analyze-commands",
+            "class": "App\\Commands\\OpsAnalyzeCommands",
+            "group": "ops",
+            "description": "Analyze parsed ops inbox items and generate AI plans",
+            "classification": "requires-approval",
+            "requires_approval": true,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "ops:fetch-commands",
+            "class": "App\\Commands\\OpsFetchCommands",
+            "group": "ops",
+            "description": "Fetch unread ops commands from IMAP and store them in bf_ops_command_inbox",
+            "classification": "requires-approval",
+            "requires_approval": true,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "ops:work",
+            "class": "App\\Commands\\OpsWork",
+            "group": "ops",
+            "description": "Process AiOps task queue items safely.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "spark:purge-fastcgi",
+            "class": "App\\Commands\\PurgeFastCGI",
+            "group": "maintenance",
+            "description": "Detect and neutralize legacy FastCGI/php-pm socket references safely.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "spark:restart-safe",
+            "class": "App\\Commands\\RestartSafe",
+            "group": "maintenance",
+            "description": "Flush caches/sessions safely and guide a no-sudo restart flow on DreamHost.",
+            "classification": "requires-approval",
+            "requires_approval": true,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "revenue:cost-forecast",
+            "class": "App\\Commands\\Revenue\\CostForecast",
+            "group": "audit",
+            "description": "Forecast infra and API costs and detect overruns.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "revenue:scan",
+            "class": "App\\Commands\\RevenueStreamsScan",
+            "group": "marketing",
+            "description": "Scan the repository for monetizable features and generate revenue stream docs.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "routes:auth-audit",
+            "class": "App\\Commands\\RoutesAuthAudit",
+            "group": "maintenance",
+            "description": "Audit public routes for unauthenticated access regressions.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "runtime:cache-boot",
+            "class": "App\\Commands\\Runtime\\CacheBoot",
+            "group": "runtime",
+            "description": "Validate cache boot health and warm critical cache keys.",
+            "classification": "requires-approval",
+            "requires_approval": true,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "runtime:diagnose-502",
+            "class": "App\\Commands\\Runtime\\Diagnose502",
+            "group": "runtime",
+            "description": "Diagnose and optionally remediate 502/503 gateway errors",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "runtime:spark-doctor",
+            "class": "App\\Commands\\Runtime\\SparkDoctor",
+            "group": "runtime",
+            "description": "Validate Spark command discovery and CI4 compatibility",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "runtime:spark-doctor",
+            "class": "App\\Commands\\Runtime\\SparkDoctorRuntime",
+            "group": "runtime",
+            "description": "Validate Spark command discovery and CI4 compatibility (runtime scope).",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "spark:fix",
+            "class": "App\\Commands\\Runtime\\SparkFix",
+            "group": "Runtime",
+            "description": "Auto-heal Spark command standards and generate a fix report",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "optimize:safe",
+            "class": "App\\Commands\\Runtime\\SparkOptimize",
+            "group": "runtime",
+            "description": "Run CI4 optimize safely (CI-only)",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "runtime:triage",
+            "class": "App\\Commands\\Runtime\\Triage",
+            "group": "runtime",
+            "description": "Consolidate runtime diagnostics into a single report.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "runtime:check",
+            "class": "App\\Commands\\RuntimeCheck",
+            "group": "app",
+            "description": "Validate runtime invariants (nginx, php, permissions, etc.).",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "App\\Commands\\SafeBaseCommand",
+            "class": "App\\Commands\\SafeBaseCommand",
+            "group": null,
+            "description": null,
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": [
+                "Does not extend SafeBaseCommand.",
+                "Missing $name, $group, or $description."
+            ]
+        },
+        {
+            "command": "scraper:audit-emails",
+            "class": "App\\Commands\\Scrapers\\EmailScraperAudit",
+            "group": "audit",
+            "description": "Audit recent trade and news emails against the expected scraper schema.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "security:secrets-audit",
+            "class": "App\\Commands\\Security\\SecretsAudit",
+            "group": "security",
+            "description": "Detect sensitive secrets in configs, logs, or docs.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "security:csp:audit",
+            "class": "App\\Commands\\SecurityCspAudit",
+            "group": "security",
+            "description": "Scan view templates for CSP-unsafe inline scripts, styles, and handlers.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "spark:doctor",
+            "class": "App\\Commands\\SparkDoctor",
+            "group": "maintenance",
+            "description": "System health inspector for Spark commands.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "spark:fix",
+            "class": "App\\Commands\\SparkFix",
+            "group": "maintenance",
+            "description": "Safely repair Spark command and cache issues.",
+            "classification": "requires-approval",
+            "requires_approval": true,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "ops:spark-reset",
+            "class": "App\\Commands\\SparkReset",
+            "group": "ops",
+            "description": "Purge Spark command cache and rebuild autoloads safely.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "email:test",
+            "class": "App\\Commands\\TestEmail",
+            "group": "maintenance",
+            "description": "Send a test email using the current SMTP configuration.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "spark:traffic-spike-guard",
+            "class": "App\\Commands\\TrafficSpikeGuard",
+            "group": "maintenance",
+            "description": "Detect traffic/error spikes that commonly lead to 503 and alert Discord.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "ux:journey-audit",
+            "class": "App\\Commands\\Ux\\JourneyAudit",
+            "group": "audit",
+            "description": "Validate critical user journeys (signup to dashboard flow checks).",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "wallets:warm-summary-cache",
+            "class": "App\\Commands\\WalletsWarmSummaryCache",
+            "group": "wallets",
+            "description": "Pre-warm the /API/Wallets/summary cache for active users.",
+            "classification": "requires-approval",
+            "requires_approval": true,
+            "supports_dry_run": true,
+            "issues": []
+        }
+    ]
+}

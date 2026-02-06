@@ -3,7 +3,7 @@
 ## Source
 - Migration: _None_
 - Model:
-- Code references: app/Models/TokenModel.php:10, docs/aiops/migration_model_audit.md:188, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:1811
+- Code references: app/Models/TokenModel.php:10, docs/aiops/migration_model_audit.md:188, docs/aiops/migration_model_audit.md:202, docs/_aiops/doc-change-log.md:2024
 
 ## Create table
 ```sql
