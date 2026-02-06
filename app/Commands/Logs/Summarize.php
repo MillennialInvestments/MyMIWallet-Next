@@ -4,6 +4,7 @@ namespace App\Commands\Logs;
 
 use App\Services\Spark\LogSummarizeService;
 use App\Commands\SafeBaseCommand;
+use App\Commands\Support\ArtifactHelper;
 use CodeIgniter\CLI\CLI;
 
 class Summarize extends SafeBaseCommand
@@ -11,7 +12,9 @@ class Summarize extends SafeBaseCommand
     protected $group       = 'logs';
     protected $name        = 'logs:summarize';
     protected $description = 'Summarize CI4 logs for a given date, including new entries since the last run.';
-    protected $usage       = 'logs:summarize [date|yesterday] [--dry-run]';
+    protected $usage       = 'logs:summarize [date|yesterday] [--dry-run] [--pr=1]';
+
+    protected $defaultDryRun = true;
 
     protected $arguments = [
         'date' => 'Optional: "yesterday" or YYYY-MM-DD (defaults to today).',
@@ -19,6 +22,7 @@ class Summarize extends SafeBaseCommand
 
     protected $options = [
         '--dry-run' => 'Preview actions without writing data',
+        '--pr'      => 'Enable PR bundle generation (requires --dry-run=0)',
     ];
 
     public function run(array $params)
@@ -37,12 +41,20 @@ class Summarize extends SafeBaseCommand
         // Dry-run handling (correct)
         // -----------------------------
         $dryRun = $this->resolveDryRun($flags);
+        $dryRun = $this->normalizeDryRunOption($params, $dryRun);
+        $createPr = $this->resolvePrFlag($params, $flags);
+
+        if ($createPr && $dryRun) {
+            CLI::error('PR generation requires --dry-run=0');
+            return EXIT_ERROR;
+        }
 
         // -----------------------------
         // Execute service
         // -----------------------------
         $service = new LogSummarizeService();
-        $result  = $service->summarizeForDate($targetDate, $dryRun);
+        $rangeEnd = $this->resolveRangeEnd($args[0] ?? null);
+        $result  = $service->summarizeForDate($targetDate, $dryRun, $createPr, $rangeEnd);
 
         if (! ($result['ok'] ?? false)) {
             $message = $result['message'] ?? 'Unable to summarize logs.';
@@ -64,32 +76,28 @@ class Summarize extends SafeBaseCommand
         // Output
         // -----------------------------
         if ($dryRun) {
-            CLI::write("Dry-run: would write summary to {$result['out_file']}", 'yellow');
-            CLI::write("Dry-run: would update state to {$result['state_file']}", 'yellow');
+            CLI::write('Dry-run: would write summary artifacts', 'yellow');
         } else {
-            CLI::write("Summary generated for {$targetDate}: {$result['out_file']}", 'green');
-            if (! empty($result['max_ts'])) {
-                CLI::write('Last processed timestamp updated to: ' . $result['max_ts'], 'yellow');
-            }
+            CLI::write("Summary generated for {$targetDate}: {$result['summary_path']}", 'green');
         }
 
-        CLI::write('total_entries=' . ($result['total'] ?? 0));
-        CLI::write('new_entries=' . ($result['new_total'] ?? 0));
+        CLI::write('total_entries=' . ($result['total_entries'] ?? 0));
+        CLI::write('deduped_entries=' . ($result['deduped'] ?? 0));
 
         log_message('info', '[spark:logs:summarize] Completed', [
             'date'      => $targetDate,
-            'total'     => $result['total'] ?? 0,
-            'new_total' => $result['new_total'] ?? 0,
+            'total'     => $result['total_entries'] ?? 0,
+            'new_total' => $result['deduped'] ?? 0,
             'dry_run'   => $dryRun,
         ]);
 
-        $total = (int) ($result['total'] ?? 0);
-        $new   = (int) ($result['new_total'] ?? 0);
+        $total = (int) ($result['total_entries'] ?? 0);
+        $new   = (int) ($result['deduped'] ?? 0);
 
         if ($total === 0 && $new === 0) {
             CLI::write('✔ Logs are clean. No errors or warnings found.', 'green');
         } else {
-            CLI::write("⚠ Log summary: total={$total}, new={$new}", 'yellow');
+            CLI::write("⚠ Log summary: total={$total}, deduped={$new}", 'yellow');
         }
 
         return EXIT_SUCCESS;
@@ -118,5 +126,48 @@ class Summarize extends SafeBaseCommand
         }
 
         return date('Y-m-d');
+    }
+
+    private function resolvePrFlag(array $params, array $flags): bool
+    {
+        $value = ArtifactHelper::parseOptionValue($params, 'pr');
+        if ($value !== null) {
+            return in_array(strtolower($value), ['1', 'true', 'yes'], true);
+        }
+
+        return isset($flags['pr']);
+    }
+
+    private function normalizeDryRunOption(array $params, bool $current): bool
+    {
+        $value = ArtifactHelper::parseOptionValue($params, 'dry-run');
+        if ($value === null) {
+            return $current;
+        }
+
+        $normalized = strtolower(trim($value));
+        if (in_array($normalized, ['0', 'false', 'no'], true)) {
+            return false;
+        }
+
+        if (in_array($normalized, ['1', 'true', 'yes'], true)) {
+            return true;
+        }
+
+        return $current;
+    }
+
+    private function resolveRangeEnd(?string $arg): ?\DateTimeImmutable
+    {
+        if ($arg === null || $arg === 'yesterday') {
+            return null;
+        }
+
+        if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $arg)) {
+            $timezone = new \DateTimeZone(config('App')->appTimezone ?? 'UTC');
+            return new \DateTimeImmutable($arg . ' 23:59:59', $timezone);
+        }
+
+        return null;
     }
 }
