@@ -28,6 +28,8 @@ $colorClass = match ($colorState ?? 'gray') {
                         <?= csrf_field() ?>
                         <button class="btn btn-primary" type="submit">Run Env Doctor Now</button>
                     </form>
+                    <button class="btn btn-outline-primary mt-2" id="aiops-manual-run-btn" type="button">Re-evaluate Priorities</button>
+                    <p class="small text-soft mt-2 mb-0" id="aiops-manual-run-status">Manual AIOPS run is idle.</p>
                 </div>
             </div>
         </div>
@@ -55,3 +57,40 @@ $colorClass = match ($colorState ?? 'gray') {
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const button = document.getElementById('aiops-manual-run-btn');
+    const status = document.getElementById('aiops-manual-run-status');
+    if (!button || !status) return;
+
+    button.addEventListener('click', async function () {
+        button.disabled = true;
+        status.textContent = 'Queueing manual AIOPS run...';
+
+        try {
+            const formData = new URLSearchParams();
+            formData.append('<?= esc(csrf_token()) ?>', '<?= esc(csrf_hash()) ?>');
+
+            const response = await fetch('<?= esc(site_url('api/aiops/manual-run')) ?>', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: formData.toString(),
+            });
+            const payload = await response.json();
+            if (!response.ok) {
+                throw new Error(payload.message || 'Request failed');
+            }
+
+            status.innerHTML = `Run queued: <code>${payload.run_id}</code><br>Log: <code>${payload.log_path}</code>`;
+        } catch (error) {
+            status.textContent = `Unable to queue run: ${error.message}`;
+        } finally {
+            button.disabled = false;
+        }
+    });
+});
+</script>
