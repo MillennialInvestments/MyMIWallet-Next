@@ -1,6 +1,6 @@
 # AI-Ops: Next Steps (Worker-Only Suggestions)
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-06T12:00:01Z
+> Run: 2026-02-07T02:00:01Z
 
 - [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
     - Reason: Code exists with no obvious doc reference (heuristic)
@@ -33,25 +33,25 @@
     - Reason: Code exists with no obvious doc reference (heuristic)
     - File: app/Modules/APIs/Controllers/AiOpsController.php
 - [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
-    - Reason: Doc unchanged for 89 days
+    - Reason: Doc unchanged for 90 days
 - [DOC ONLY] Review stale doc: `docs/README.md`
-    - Reason: Doc unchanged for 89 days
+    - Reason: Doc unchanged for 90 days
 - [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
-    - Reason: Doc unchanged for 89 days
+    - Reason: Doc unchanged for 90 days
 - [DOC ONLY] Review stale doc: `docs/adr/_index.md`
-    - Reason: Doc unchanged for 89 days
+    - Reason: Doc unchanged for 90 days
 - [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
-    - Reason: Doc unchanged for 75 days
+    - Reason: Doc unchanged for 76 days
 - [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
-    - Reason: Doc unchanged for 89 days
+    - Reason: Doc unchanged for 90 days
 - [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
-    - Reason: Doc unchanged for 89 days
+    - Reason: Doc unchanged for 90 days
 - [DOC ONLY] Review stale doc: `docs/bitcoin-standardization.md`
-    - Reason: Doc unchanged for 89 days
+    - Reason: Doc unchanged for 90 days
 - [DOC ONLY] Review stale doc: `docs/budget/UI-Suggestions.md`
-    - Reason: Doc unchanged for 89 days
+    - Reason: Doc unchanged for 90 days
 - [DOC ONLY] Review stale doc: `docs/budget/_index.md`
-    - Reason: Doc unchanged for 89 days
+    - Reason: Doc unchanged for 90 days
 - [LOW RISK] Add/verify headers in docs/_aiops outputs
     - Reason: enforce 'Auto-generated' rule and reduce accidental edits
 
@@ -60,3 +60,4 @@
 - [ ] Example: Review scraper pacing for 15m cycle
 - [ ] Example: Add LinkedIn post template variants
 <!-- AIOPS_MANUAL_TODOS_END -->
+
