@@ -69,3 +69,10 @@ AI-Ops MAY NOT:
 2) Pick 1–3 items from next-steps.md
 3) Implement via human + ChatGPT (Codex optional)
 4) Re-run AI-Ops
+
+
+## Manual Priority Runner
+- Spark command: `php spark aiops:manual-run --limit-tasks=1 --limit-errors=3 --create-pr=1 --notify=1`
+- GitHub Actions workflow: `.github/workflows/aiops-manual-run.yml` (schedule + manual dispatch).
+- Admin trigger endpoint: `POST /api/aiops/manual-run` (permission: `admin.access`) used by the admin UI button **Re-evaluate Priorities**.
+- Kill switch: set `AIOPS_PAUSED=true` to safely short-circuit runs with status + notification.
