@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-07T18:00:02Z
+> Run: 2026-02-07T22:00:02Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Models/AIOpsBudgetModel.php
@@ -806,4 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/gap-audit/gap_report.md
   - ❌ No obvious code match found (heuristic)
-- … and 760 more
+- … and 761 more

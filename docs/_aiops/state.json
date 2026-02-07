@@ -3133,8 +3133,8 @@
             "mtime": "2025-11-08"
         },
         "docs/resolutions/_index.md": {
-            "hash": "9b1b2f34971cf730cf09292df70aae1dd24ca830e278d3c7dc8cb25424b7a7b0",
-            "mtime": "2025-11-08"
+            "hash": "528337f2cce91aefec627aef66784ce3ec3d656efe795c39d55bc5170250ad98",
+            "mtime": "2026-02-07"
         },
         "docs/revenue_streams/README.md": {
             "hash": "0cc25ff2c5432d8f55e234159c08a4d2d0d288dca0ebdf32d2e8a6fd01de5ee3",
@@ -4155,7 +4155,15 @@
         "docs/aiops/artifacts/ops-spark-reset/20260207-153004/summary.md": {
             "hash": "2ba18809a9e59ae5b1f384ecf63dd97766250d1468960ce182cd52ea319f2f3c",
             "mtime": "2026-02-07"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260207-212657/summary.md": {
+            "hash": "66de801b6dcaa6044412308c74f3469d5c9985f16f0da597ee767b76598b0f0e",
+            "mtime": "2026-02-07"
+        },
+        "docs/resolutions/2026-02-07-db-port-type-fix.md": {
+            "hash": "45b177eef975a5671c924511f2c4a0c1fa190235274c711c95d59bfcb62060a7",
+            "mtime": "2026-02-07"
         }
     },
-    "last_run": "2026-02-07T18:00:02Z"
+    "last_run": "2026-02-07T22:00:02Z"
 }

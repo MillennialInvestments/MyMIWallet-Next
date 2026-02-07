@@ -75,13 +75,21 @@ class EventTracker
     private function resolveReferralCode(int $userId, $session): ?string
     {
         $sessionCode = trim((string) ($session->get('referral_code') ?? ''));
+
         if ($userId <= 0) {
             return $sessionCode !== '' ? $sessionCode : null;
         }
 
         $user = model(UserModel::class)->find($userId);
-        $userCode = $user['referral_code'] ?? $user->referral_code ?? null;
-        $userCode = is_string($userCode) ? trim($userCode) : null;
+
+        if (! $user) {
+            return $sessionCode !== '' ? $sessionCode : null;
+        }
+
+        // Myth\Auth user is an Entity, not an array
+        $userCode = is_string($user->referral_code ?? null)
+            ? trim($user->referral_code)
+            : null;
 
         if ($userCode !== '') {
             return $userCode;

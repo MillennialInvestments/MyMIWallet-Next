@@ -1,6 +1,6 @@
 # AI-Ops: Stale Docs
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-07T18:00:02Z
+> Run: 2026-02-07T22:00:02Z
 
 - docs/OVERVIEW.md
   - Doc last updated: 2025-11-08 (91 days ago)
@@ -11,7 +11,7 @@
 - docs/adr/_index.md
   - Doc last updated: 2025-11-08 (91 days ago)
 - docs/alerts/alerts_marketing_pipline.md
-  - Doc last updated: 2025-11-22 (76 days ago)
+  - Doc last updated: 2025-11-22 (77 days ago)
 - docs/auctions/_index.md
   - Doc last updated: 2025-11-08 (91 days ago)
 - docs/auctions/auction-schema.md
@@ -35,7 +35,7 @@
 - docs/csp-and-commondata.md
   - Doc last updated: 2025-11-08 (91 days ago)
 - docs/discord/README.md
-  - Doc last updated: 2025-12-07 (61 days ago)
+  - Doc last updated: 2025-12-07 (62 days ago)
 - docs/discord/_index.md
   - Doc last updated: 2025-12-05 (63 days ago)
 - docs/discord/_inventory.md
@@ -71,13 +71,13 @@
 - docs/discord/server_setup_and_alert_routing.md
   - Doc last updated: 2025-12-05 (64 days ago)
 - docs/discord/server_setup_and_ci4_integration.md
-  - Doc last updated: 2025-12-07 (61 days ago)
+  - Doc last updated: 2025-12-07 (62 days ago)
 - docs/discord/server_setup_support_category.md
-  - Doc last updated: 2025-12-07 (61 days ago)
+  - Doc last updated: 2025-12-07 (62 days ago)
 - docs/discord/streaming_setup.md
-  - Doc last updated: 2025-12-07 (61 days ago)
+  - Doc last updated: 2025-12-07 (62 days ago)
 - docs/discord/where_to_share_what.md
-  - Doc last updated: 2025-12-07 (61 days ago)
+  - Doc last updated: 2025-12-07 (62 days ago)
 - docs/discord_schema.sql.md
   - Doc last updated: 2025-11-08 (91 days ago)
 - docs/discord_seed.sql.md
@@ -139,7 +139,7 @@
 - docs/nginx/nginx.md
   - Doc last updated: 2025-11-08 (91 days ago)
 - docs/notes/2025-11-23-alerts-preview-lazy-refresh-and-advisor-errors.md
-  - Doc last updated: 2025-11-23 (75 days ago)
+  - Doc last updated: 2025-11-23 (76 days ago)
 - docs/notes/2025-12-01-feature-corrections.md
   - Doc last updated: 2025-12-01 (68 days ago)
 - docs/operations/01-foundation.md
@@ -239,8 +239,6 @@
 - docs/resolutions/2025-10-09-docs-alignment-kickoff.md
   - Doc last updated: 2025-11-08 (91 days ago)
 - docs/resolutions/PR-128-resolution.md
-  - Doc last updated: 2025-11-08 (91 days ago)
-- docs/resolutions/_index.md
   - Doc last updated: 2025-11-08 (91 days ago)
 - docs/search/_index.md
   - Doc last updated: 2025-11-08 (91 days ago)

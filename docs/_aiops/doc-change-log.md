@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-07T18:00:02Z
+> Run: 2026-02-07T22:00:02Z
 
 - docs/CRON.md
   - Last updated: 2026-01-30
@@ -143,6 +143,9 @@
 - docs/aiops/artifacts/ops-spark-reset/20260207-153004/summary.md
   - Last updated: 2026-02-07
   - Change type: unchanged
+- docs/aiops/artifacts/ops-spark-reset/20260207-212657/summary.md
+  - Last updated: 2026-02-07
+  - Change type: new
 - docs/aiops/artifacts/revenue-cost-forecast/20260201-180746/summary.md
   - Last updated: 2026-02-01
   - Change type: unchanged
@@ -2759,12 +2762,15 @@
 - docs/resolutions/2025-10-09-docs-alignment-kickoff.md
   - Last updated: 2025-11-08
   - Change type: unchanged
+- docs/resolutions/2026-02-07-db-port-type-fix.md
+  - Last updated: 2026-02-07
+  - Change type: new
 - docs/resolutions/PR-128-resolution.md
   - Last updated: 2025-11-08
   - Change type: unchanged
 - docs/resolutions/_index.md
-  - Last updated: 2025-11-08
-  - Change type: unchanged
+  - Last updated: 2026-02-07
+  - Change type: modified
 - docs/revenue_streams/README.md
   - Last updated: 2025-12-27
   - Change type: unchanged
