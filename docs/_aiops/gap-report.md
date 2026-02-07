@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-06T12:00:01Z
+> Run: 2026-02-07T02:00:01Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Models/AIOpsBudgetModel.php
@@ -403,7 +403,7 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Views/Alerts/resources/rh-keygen.php
   - ⚠️ No obvious doc match found (heuristic)
-- … and 918 more
+- … and 919 more
 
 ## Documented Items With No Obvious Code Match (best-effort)
 - docs/CRON.md
@@ -453,6 +453,18 @@
 - docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_by_user_type.md
   - ❌ No obvious code match found (heuristic)
 - docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_full.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/automation/_index.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/automation/alerts_playbook.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/automation/marketing_playbook.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/automation/news_playbook.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/automation/social_distribution_playbook.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/automation/watchlist_paths.md
   - ❌ No obvious code match found (heuristic)
 - docs/aiops/command-inventory.md
   - ❌ No obvious code match found (heuristic)
@@ -794,16 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/gap-audit/next-steps.md
   - ❌ No obvious code match found (heuristic)
-- docs/gap-audit/unresolved_questions.md
-  - ❌ No obvious code match found (heuristic)
-- docs/gap_tracker/README.md
-  - ❌ No obvious code match found (heuristic)
-- docs/gap_tracker/items/GAP-AI-001.md
-  - ❌ No obvious code match found (heuristic)
-- docs/gap_tracker/items/GAP-DOCS-001.md
-  - ❌ No obvious code match found (heuristic)
-- docs/gap_tracker/reports/gap_sync_2026-01-01.md
-  - ❌ No obvious code match found (heuristic)
-- docs/gap_tracker/reports/gap_sync_2026-01-02.md
-  - ❌ No obvious code match found (heuristic)
-- … and 753 more
+- … and 759 more
