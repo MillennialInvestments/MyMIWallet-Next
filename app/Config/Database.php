@@ -64,6 +64,13 @@ class Database extends Config
     {
         parent::__construct();
 
+        // env() values are strings; normalize MySQLi port to strict ?int.
+        $port = (int) env('database.default.port', 3306);
+
+        if ($port <= 0) {
+            $port = 3306;
+        }
+
         $this->default = [
             'DSN'      => '',
             'hostname' => env('database.default.hostname', '127.0.0.1'),
@@ -81,7 +88,7 @@ class Database extends Config
             'compress' => false,
             'strictOn' => false,
             'failover' => [],
-            'port'     => env('database.default.port', 3306),
+            'port'     => $port,
         ];
     }
 
