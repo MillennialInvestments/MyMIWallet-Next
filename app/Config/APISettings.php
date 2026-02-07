@@ -77,19 +77,11 @@ class APISettings extends BaseConfig
 
     // ... and so on for other Alpha Vantage settings
 
-    public function __construct()
-    {
-        $this->alpacaApiKey = getenv('ALPACA_API_KEY') ?: '';
-        $this->alphaVantageApiKey = getenv('ALPHAVANTAGE_API_KEY') ?: '';
-    }
-
-
-
     // ApplePay - using Composer: stripe/stripe-php, can use braintree/braintree // !! FIX THIS 
 
     public string $appleStripeAPI = ''; 
-
-
+    public string $appleBraintreeMerchantID = ''; 
+    public string $appleBraintreePublicKey = '';
 
     // BrandFetch - Logo / Image Fetching
 
@@ -399,7 +391,6 @@ class APISettings extends BaseConfig
 
     }
 
-
     public function __construct()
     {
         parent::__construct();
@@ -408,6 +399,8 @@ class APISettings extends BaseConfig
         );
     
         // Load from .env
+        $this->alpacaApiKey = getenv('ALPACA_API_KEY') ?: '';
+        $this->alphaVantageApiKey = getenv('ALPHAVANTAGE_API_KEY') ?: '';
 
         $this->elevenLabsAPIKey = getenv('ELEVENLABS_API_KEY') ?: '';
 
