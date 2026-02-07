@@ -30,35 +30,7 @@ class Database extends Config
      * Default database connection (STATIC ONLY).
      * Dynamic env values are injected in __construct().
      */
-    public array $default = [
-        'DSN'          => '',
-        'hostname'     => '',
-        'username'     => '',
-        'password'     => '',
-        'database'     => '',
-        'DBDriver'     => 'MySQLi',
-
-        // Performance / behavior
-        'cacheOn'      => true,
-        'cacheDir'     => WRITEPATH . 'database_cache/',
-        'DBPrefix'     => '',
-        'pConnect'     => false,
-        'DBDebug'      => true,
-
-        // Charset / collation
-        'charset'      => 'utf8mb4',
-        'DBCollat'     => 'utf8mb4_unicode_ci',
-
-        // Safety / compatibility
-        'swapPre'      => '',
-        'encrypt'      => false,
-        'compress'     => false,
-        'strictOn'     => true,
-        'failover'     => [],
-        'port'         => 0,
-        'numberNative' => true,
-        'timeout'      => 20,
-    ];
+    public array $default = [];
 
     /**
      * Test database connection.
@@ -92,33 +64,25 @@ class Database extends Config
     {
         parent::__construct();
 
-        // Inject env values (runtime-safe)
-        $this->default['hostname'] = env('database.default.hostname', 'localhost');
-        $this->default['username'] = env('database.default.username', '');
-        $this->default['password'] = env('database.default.password', '');
-        $this->default['database'] = env('database.default.database', '');
-        $this->default['port']     = (int) env('database.default.port', 3306);
-
-        // HARD GUARD: never allow protocol-based DB hosts
-        if (str_contains($this->default['hostname'], '://')) {
-            throw new \RuntimeException(
-                'Invalid DB hostname detected (protocol not allowed): ' . $this->default['hostname']
-            );
-        }
-
-        // Force test DB when appropriate
-        if (ENVIRONMENT === 'testing') {
-            $this->defaultGroup = 'tests';
-        }
-
-        $this->default['hostname'] = (string) env('database.default.hostname', 'mysql.mymiwallet.com');
-        $this->default['username'] = (string) env('database.default.username', 'mymiteam');
-        $this->default['password'] = (string) env('database.default.password', 'Dawg@073120.dawg');
-        $this->default['database'] = (string) env('database.default.database', 'mymiwallet');
-        $this->default['port']     = (int) env('database.default.port', 3306);
-
-        if (str_contains($this->default['hostname'], '://')) {
-            throw new \RuntimeException('Invalid DB hostname (protocol not allowed)');
-        }
+        $this->default = [
+            'DSN'      => '',
+            'hostname' => env('database.default.hostname', 'localhost'),
+            'username' => env('database.default.username', 'root'),
+            'password' => env('database.default.password', ''),
+            'database' => env('database.default.database', ''),
+            'DBDriver' => env('database.default.DBDriver', 'MySQLi'),
+            'DBPrefix' => '',
+            'pConnect' => false,
+            'DBDebug'  => ENVIRONMENT !== 'production',
+            'charset'  => 'utf8mb4',
+            'DBCollat' => 'utf8mb4_general_ci',
+            'swapPre'  => '',
+            'encrypt'  => false,
+            'compress' => false,
+            'strictOn' => false,
+            'failover' => [],
+            'port'     => env('database.default.port', 3306),
+        ];
     }
+
 }
