@@ -11,6 +11,7 @@ class Healthcheck extends SafeBaseCommand
     protected $group       = 'app';
     protected $name        = 'app:healthcheck';
     protected $description = 'Compatibility healthcheck command aligned to AI-Ops spark checks.';
+    protected $usage       = 'php spark app:healthcheck';
 
     protected $arguments = [];
     protected $options = [
