@@ -43,6 +43,33 @@ function extractManualTodosBlock(string $content): ?string {
     return null;
 }
 
+function stripManualTodosBlock(string $content): string {
+    $start = '<!-- AIOPS_MANUAL_TODOS_START -->';
+    $end = '<!-- AIOPS_MANUAL_TODOS_END -->';
+    $pattern = '/\n?## MANUAL_TODOS\s*' . preg_quote($start, '/') . '.*?' . preg_quote($end, '/') . '\n?/s';
+
+    return (string) preg_replace($pattern, "\n", $content);
+}
+
+function shouldIgnoreAiopsCodePath(string $path): bool {
+    $normalized = str_replace('\\', '/', strtolower($path));
+    $ignoreParts = [
+        '/app/modules/legacy/',
+        '/app/modules/archive/',
+        '/app/modules/experimental/',
+        '/app/controllers/legacy/',
+        '/app/libraries/legacy/',
+    ];
+
+    foreach ($ignoreParts as $part) {
+        if (str_contains($normalized, $part)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 function listFiles(string $baseDir, string $pattern = '/\.md$/i'): array {
     $out = [];
     $it = new RecursiveIteratorIterator(
@@ -187,6 +214,7 @@ foreach ($codeTargets as $dir) {
         $codeFiles = array_merge($codeFiles, listFiles($dir, '/\.(php)$/i'));
     }
 }
+$codeFiles = array_values(array_filter($codeFiles, fn($p) => !shouldIgnoreAiopsCodePath($p)));
 $codeFilesRel = array_map(fn($p) => relPath($p, $root), $codeFiles);
 
 $gap = "# AI-Ops: Gap Report\n> Auto-generated. Do not edit manually.\n> Run: {$runStarted}\n\n";
@@ -266,14 +294,16 @@ if (!$staleEntries) {
 writeFile($aiopsDocsDir . '/stale-docs.md', $stale);
 
 // 4) Next steps (SAFE MODE)
-$next = "# AI-Ops: Next Steps (Worker-Only Suggestions)\n> Auto-generated. Do not edit manually.\n> Run: {$runStarted}\n\n";
+$next = '';
 $nextItems = [];
 $manualBlock = null;
+$existingWithoutManual = '';
 $manualPath = $aiopsDocsDir . '/next-steps.md';
 if (is_file($manualPath)) {
     $existing = file_get_contents($manualPath);
     if (is_string($existing)) {
         $manualBlock = extractManualTodosBlock($existing);
+        $existingWithoutManual = trim(stripManualTodosBlock($existing));
     }
 }
 if ($manualBlock === null) {
@@ -295,6 +325,13 @@ foreach (array_slice($staleEntries, 0, 10) as $e) {
 // Cap + include safe refactor suggestion placeholder
 $nextItems[] = "[LOW RISK] Add/verify headers in docs/_aiops outputs\n  - Reason: enforce 'Auto-generated' rule and reduce accidental edits";
 
+if ($existingWithoutManual !== '') {
+    $next .= $existingWithoutManual . "\n\n";
+} else {
+    $next .= "# AI-Ops: Next Steps (Worker-Only Suggestions)\n> Auto-generated. Do not edit manually.\n\n";
+}
+
+$next .= "## Run: {$runStarted}\n\n";
 foreach ($nextItems as $item) $next .= "- " . str_replace("\n", "\n  ", $item) . "\n";
 $next .= "\n" . $manualBlock . "\n";
 writeFile($aiopsDocsDir . '/next-steps.md', $next);
