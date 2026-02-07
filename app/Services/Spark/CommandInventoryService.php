@@ -32,6 +32,10 @@ class CommandInventoryService
                 continue;
             }
 
+            if (($classInfo['is_abstract'] ?? false) === true) {
+                continue;
+            }
+
             $metadata = $this->extractMetadata($contents);
             $psr4 = $this->evaluatePsr4($file, $classInfo);
 
@@ -113,12 +117,13 @@ class CommandInventoryService
             $namespace = trim($namespaceMatch[1]);
         }
 
-        if (! preg_match('/class\s+([A-Za-z0-9_]+)\s+extends\s+([A-Za-z0-9_\\\\]+)/', $contents, $classMatch)) {
+        if (! preg_match('/(?:(abstract)\s+)?class\s+([A-Za-z0-9_]+)\s+extends\s+([A-Za-z0-9_\\\\]+)/', $contents, $classMatch)) {
             return null;
         }
 
-        $className = $classMatch[1];
-        $extends = $classMatch[2];
+        $isAbstract = isset($classMatch[1]) && trim((string) $classMatch[1]) === 'abstract';
+        $className = $classMatch[2];
+        $extends = $classMatch[3];
         $fqcn = $namespace !== '' ? $namespace . '\\' . $className : $className;
 
         $isCommand = str_contains($extends, 'BaseCommand');
@@ -130,6 +135,7 @@ class CommandInventoryService
             'namespace' => $namespace,
             'extends' => $extends,
             'is_command' => $isCommand,
+            'is_abstract' => $isAbstract,
             'uses_safe_base' => $usesSafeBase,
         ];
     }

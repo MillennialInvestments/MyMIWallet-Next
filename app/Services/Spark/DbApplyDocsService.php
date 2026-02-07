@@ -39,11 +39,11 @@ class DbApplyDocsService
 
         $compiledPath = $outputDir . '/compiled_adjustments.sql';
         if (! file_exists($compiledPath)) {
-            $this->logLine($logHandle, 'Compiled SQL not found.');
+            $this->logLine($logHandle, 'Compiled SQL not found at expected path: ' . $compiledPath);
             fclose($logHandle);
             return [
                 'ok' => false,
-                'message' => 'Compiled SQL not found.',
+                'message' => 'Compiled SQL not found. Run scripts/extract_sql_from_md.sh and verify writable/aiops/artifacts/db-apply-docs/compiled_adjustments.sql exists.',
                 'log_path' => $logPath,
             ];
         }

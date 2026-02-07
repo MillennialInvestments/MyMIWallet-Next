@@ -19,10 +19,10 @@ class CreateMditPhase1Tables extends Migration
                 'updated_on'           => ['type' => 'DATETIME', 'null' => true],
             ]);
             $this->forge->addKey('id', true);
-            $this->forge->addUniqueKey('user_id');
-            $this->forge->addKey('created_on');
-            $this->forge->addKey('kyc_status');
-            $this->forge->addKey('accreditation_status');
+            $this->forge->addUniqueKey('user_id', 'uq_mdit_investor_profiles_user_id');
+            $this->forge->addKey('created_on', false, false, 'idx_mdit_investor_profiles_created_on');
+            $this->forge->addKey('kyc_status', false, false, 'idx_mdit_investor_profiles_kyc_status');
+            $this->forge->addKey('accreditation_status', false, false, 'idx_mdit_investor_profiles_accreditation_status');
             $this->forge->createTable('bf_mdit_investor_profiles', true);
         }
 
@@ -37,10 +37,10 @@ class CreateMditPhase1Tables extends Migration
                 'created_on'     => ['type' => 'DATETIME', 'null' => true],
             ]);
             $this->forge->addKey('id', true);
-            $this->forge->addUniqueKey('wallet_address');
-            $this->forge->addKey('user_id');
-            $this->forge->addKey('status');
-            $this->forge->addKey('created_on');
+            $this->forge->addUniqueKey('wallet_address', 'uq_mdit_wallets_wallet_address');
+            $this->forge->addKey('user_id', false, false, 'idx_mdit_wallets_user_id');
+            $this->forge->addKey('status', false, false, 'idx_mdit_wallets_status');
+            $this->forge->addKey('created_on', false, false, 'idx_mdit_wallets_created_on');
             $this->forge->createTable('bf_mdit_wallets', true);
         }
 
@@ -61,11 +61,11 @@ class CreateMditPhase1Tables extends Migration
                 'updated_on'       => ['type' => 'DATETIME', 'null' => true],
             ]);
             $this->forge->addKey('id', true);
-            $this->forge->addKey('user_id');
-            $this->forge->addKey('status');
-            $this->forge->addKey('created_on');
-            $this->forge->addUniqueKey('tx_hash');
-            $this->forge->addUniqueKey('idempotency_key');
+            $this->forge->addKey('user_id', false, false, 'idx_mdit_deposits_user_id');
+            $this->forge->addKey('status', false, false, 'idx_mdit_deposits_status');
+            $this->forge->addKey('created_on', false, false, 'idx_mdit_deposits_created_on');
+            $this->forge->addUniqueKey('tx_hash', 'uq_mdit_deposits_tx_hash');
+            $this->forge->addUniqueKey('idempotency_key', 'uq_mdit_deposits_idempotency_key');
             $this->forge->createTable('bf_mdit_deposits', true);
         }
 
@@ -84,10 +84,10 @@ class CreateMditPhase1Tables extends Migration
                 'status'               => ['type' => 'VARCHAR', 'constraint' => 32, 'default' => 'MINTED'],
             ]);
             $this->forge->addKey('id', true);
-            $this->forge->addKey('user_id');
-            $this->forge->addKey('status');
-            $this->forge->addKey('source_deposit_id');
-            $this->forge->addKey('source_redemption_id');
+            $this->forge->addKey('user_id', false, false, 'idx_mdit_ledger_user_id');
+            $this->forge->addKey('status', false, false, 'idx_mdit_ledger_status');
+            $this->forge->addKey('source_deposit_id', false, false, 'idx_mdit_ledger_source_deposit_id');
+            $this->forge->addKey('source_redemption_id', false, false, 'idx_mdit_ledger_source_redemption_id');
             $this->forge->createTable('bf_mdit_token_ledger', true);
         }
 
@@ -106,9 +106,9 @@ class CreateMditPhase1Tables extends Migration
                 'notes'         => ['type' => 'VARCHAR', 'constraint' => 512, 'null' => true],
             ]);
             $this->forge->addKey('id', true);
-            $this->forge->addKey('user_id');
-            $this->forge->addKey('status');
-            $this->forge->addKey('requested_on');
+            $this->forge->addKey('user_id', false, false, 'idx_mdit_redemptions_user_id');
+            $this->forge->addKey('status', false, false, 'idx_mdit_redemptions_status');
+            $this->forge->addKey('requested_on', false, false, 'idx_mdit_redemptions_requested_on');
             $this->forge->createTable('bf_mdit_redemptions', true);
         }
 
@@ -124,8 +124,8 @@ class CreateMditPhase1Tables extends Migration
                 'created_on'     => ['type' => 'DATETIME', 'null' => true],
             ]);
             $this->forge->addKey('id', true);
-            $this->forge->addUniqueKey('as_of_date');
-            $this->forge->addKey('created_on');
+            $this->forge->addUniqueKey('as_of_date', 'uq_mdit_nav_snapshots_as_of_date');
+            $this->forge->addKey('created_on', false, false, 'idx_mdit_nav_snapshots_created_on');
             $this->forge->createTable('bf_mdit_nav_snapshots', true);
         }
 
@@ -139,8 +139,8 @@ class CreateMditPhase1Tables extends Migration
                 'user_agent'        => ['type' => 'VARCHAR', 'constraint' => 255, 'null' => true],
             ]);
             $this->forge->addKey('id', true);
-            $this->forge->addKey('user_id');
-            $this->forge->addKey('accepted_on');
+            $this->forge->addKey('user_id', false, false, 'idx_mdit_disclosures_user_id');
+            $this->forge->addKey('accepted_on', false, false, 'idx_mdit_disclosures_accepted_on');
             $this->forge->createTable('bf_mdit_disclosures_acceptance', true);
         }
 
@@ -158,9 +158,9 @@ class CreateMditPhase1Tables extends Migration
                 'error_message'=> ['type' => 'VARCHAR', 'constraint' => 512, 'null' => true],
             ]);
             $this->forge->addKey('id', true);
-            $this->forge->addUniqueKey(['provider', 'event_id']);
-            $this->forge->addKey('status');
-            $this->forge->addKey('received_on');
+            $this->forge->addUniqueKey(['provider', 'event_id'], 'uq_mdit_webhook_events_provider_event_id');
+            $this->forge->addKey('status', false, false, 'idx_mdit_webhook_events_status');
+            $this->forge->addKey('received_on', false, false, 'idx_mdit_webhook_events_received_on');
             $this->forge->createTable('bf_mdit_webhook_events', true);
         }
     }

@@ -13,6 +13,7 @@ class MyMIForecaster
     private AlertsModel $alertsModel;
     private CacheInterface $cache;
     private \Config\MyMIForecasting $config;
+    private ?array $alertsColumns = null;
 
     public function __construct(
         MarketDataProviderInterface $provider,
@@ -54,11 +55,17 @@ class MyMIForecaster
 
     public function refreshForecastsForOpenAlerts(int $limit = 50): array
     {
-        $alerts = $this->alertsModel
-            ->where('status', 'Opened')
-            ->orderBy('forecast_updated_at', 'ASC')
-            ->limit($limit)
-            ->findAll();
+        $alertsQuery = $this->alertsModel->where('status', 'Opened');
+
+        if ($this->hasAlertsColumn('forecast_updated_at')) {
+            $alertsQuery->orderBy('forecast_updated_at', 'ASC');
+        } elseif ($this->hasAlertsColumn('updated_at')) {
+            $alertsQuery->orderBy('updated_at', 'ASC');
+        } else {
+            $alertsQuery->orderBy('id', 'ASC');
+        }
+
+        $alerts = $alertsQuery->limit($limit)->findAll();
 
         $summary = [
             'processed' => [],
@@ -83,6 +90,21 @@ class MyMIForecaster
         }
 
         return $summary;
+    }
+
+    private function hasAlertsColumn(string $column): bool
+    {
+        if ($this->alertsColumns === null) {
+            $this->alertsColumns = [];
+            try {
+                $fields = \Config\Database::connect()->getFieldNames('bf_investment_trade_alerts');
+                $this->alertsColumns = array_map('strtolower', $fields);
+            } catch (\Throwable $e) {
+                $this->alertsColumns = [];
+            }
+        }
+
+        return in_array(strtolower($column), $this->alertsColumns, true);
     }
 
     public function getLatestForecast(string $ticker, string $timeframe = '5m'): ?array
