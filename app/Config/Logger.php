@@ -102,7 +102,7 @@ class Logger extends BaseConfig
             DatabaseLoggerHandler::class => [
                 'handles'            => ['emergency', 'alert', 'critical', 'error', 'warning'],
                 'fallbackPath'       => $this->logPath,
-                'notificationEmail'  => env('LOGGER_ALERT_EMAIL', 'support@mymiwallet.com'),
+                'notificationEmail'  => 'support@mymiwallet.com',
             ],
 
             /*
@@ -145,6 +145,13 @@ class Logger extends BaseConfig
                 'path' => $this->logPath,
             ],
         ];
+
+
+        $this->handlers[DatabaseLoggerHandler::class]['notificationEmail'] = (string) env(
+            'LOGGER_ALERT_EMAIL',
+            $this->handlers[DatabaseLoggerHandler::class]['notificationEmail']
+        );
+
     }
 
     protected function ensureLogPath(): string
