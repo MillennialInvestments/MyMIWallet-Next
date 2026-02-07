@@ -2,9 +2,9 @@
 
 namespace Config;
 
+use App\Libraries\DevHotReload;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
-use CodeIgniter\HotReloader\HotReloader;
 use CodeIgniter\HTTP\IncomingRequest;
 use Config\Services;
 
@@ -34,8 +34,8 @@ Events::on('pre_system', static function (): void {
             ob_end_flush();
         }
 
-        // ✅ Safe now: runtime only
-        ob_start(static fn ($buffer) => $buffer);
+        // Runtime output buffering callback delegated to named method.
+        ob_start([DevHotReload::class, 'passThroughBuffer']);
     }
 
     helper('uri_guard');
@@ -60,15 +60,13 @@ Events::on('pre_system', static function (): void {
     if (CI_DEBUG && ! is_cli()) {
         Events::on(
             'DBQuery',
-            'CodeIgniter\Debug\Toolbar\Collectors\Database::collect'
+            'CodeIgniter\\Debug\\Toolbar\\Collectors\\Database::collect'
         );
 
         service('toolbar')->respond();
 
         if (ENVIRONMENT === 'development') {
-            service('routes')->get('__hot-reload', static function (): void {
-                (new HotReloader())->run();
-            });
+            DevHotReload::register();
         }
     }
 });
