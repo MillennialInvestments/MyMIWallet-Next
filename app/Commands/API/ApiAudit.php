@@ -45,7 +45,7 @@ class ApiAudit extends SafeBaseCommand
         }
 
         if (! class_exists(FeatureTestTrait::class)) {
-            CLI::error('FeatureTestTrait is unavailable; cannot run internal requests.');
+            CLI::error('FeatureTestTrait is unavailable; cannot run internal requests. Ensure `codeigniter4/framework` test classes are installed and autoloadable, then rerun `php spark api:audit`.');
             return EXIT_ERROR;
         }
 
