@@ -218,6 +218,77 @@
         ),
       ),
     ),
+    'Language/en/CLI.php' => 
+    array (
+      'php' => 
+      array (
+        0 => 
+        array (
+          0 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Language/en/CLI.php',
+        ),
+      ),
+    ),
+    'Helpers/uri_guard_helper' => 
+    array (
+      'php' => 
+      array (
+        1 => 
+        array (
+          0 => '/home/mymiteam/mymiwallet/site/current/app/Helpers/uri_guard_helper.php',
+        ),
+      ),
+    ),
+    'Config/Filters.php' => 
+    array (
+      'php' => 
+      array (
+        1 => 
+        array (
+          0 => '/home/mymiteam/mymiwallet/site/current/app/Config/Filters.php',
+          1 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Config/Filters.php',
+        ),
+      ),
+    ),
+    'Config/Factory' => 
+    array (
+      'php' => 
+      array (
+        1 => 
+        array (
+          0 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Config/Factory.php',
+        ),
+      ),
+    ),
+    'Config/SiteSettings' => 
+    array (
+      'php' => 
+      array (
+        1 => 
+        array (
+          0 => '/home/mymiteam/mymiwallet/site/current/app/Config/SiteSettings.php',
+        ),
+      ),
+    ),
+    'Language/en/Errors.php' => 
+    array (
+      'php' => 
+      array (
+        0 => 
+        array (
+          0 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Language/en/Errors.php',
+        ),
+      ),
+    ),
+    'Helpers/cookie_helper' => 
+    array (
+      'php' => 
+      array (
+        1 => 
+        array (
+          0 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Helpers/cookie_helper.php',
+        ),
+      ),
+    ),
   ),
   'findQualifiedNameFromPath' => 
   array (
@@ -398,6 +469,8 @@
     '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/FilterCollector.php' => 'CodeIgniter\\Commands\\Utilities\\Routes\\FilterCollector',
     '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/FilterFinder.php' => 'CodeIgniter\\Commands\\Utilities\\Routes\\FilterFinder',
     '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/SampleURIGenerator.php' => 'CodeIgniter\\Commands\\Utilities\\Routes\\SampleURIGenerator',
+    '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Config/Factory.php' => 'CodeIgniter\\Config\\Factory',
+    '/home/mymiteam/mymiwallet/site/current/app/Config/SiteSettings.php' => 'App\\Config\\SiteSettings',
   ),
   'listFiles' => 
   array (
@@ -576,5 +649,10 @@
       170 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/FilterFinder.php',
       171 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/SampleURIGenerator.php',
     ),
+  ),
+  'getClassname' => 
+  array (
+    '/home/mymiteam/mymiwallet/site/current/app/Config/Filters.php' => 'Config\\Filters',
+    '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Config/Filters.php' => 'CodeIgniter\\Config\\Filters',
   ),
 );
