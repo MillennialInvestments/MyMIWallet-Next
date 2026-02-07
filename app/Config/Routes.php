@@ -105,6 +105,7 @@ $routes->group('', ['namespace' => 'App\Controllers'], static function($routes) 
     $routes->get('status', 'Health::status', ['filter' => 'responsecache:60']);    // plain "OK"
     $routes->get('api/health', 'Api\\HealthController::index'); // convenient alias
     $routes->get('api/admin/chat-usage', 'Api\\AdminChatUsageController::index', ['filter' => 'permission:admin.access']);
+    $routes->post('api/aiops/manual-run', 'Api\\AiOpsManualRunController::run', ['filter' => 'permission:admin.access']);
     $routes->get('ops/health', 'OpsHealth::index');
 
     // Ops (protected by X-OPCACHE-RESET header)
