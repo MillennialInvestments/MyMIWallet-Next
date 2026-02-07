@@ -770,12 +770,17 @@ class EmailScraperAudit extends SafeBaseCommand
         $rules = $schemaSpec['validation_rules'] ?? [];
         if (isset($rules['body_contains_any'])) {
             $content = strtoupper($this->resolveContent($record));
+            $subject = strtoupper((string) ($record['subject'] ?? ''));
+            $combined = trim($subject . ' ' . $content);
             $matches = false;
             foreach ($rules['body_contains_any'] as $needle) {
-                if ($needle !== '' && str_contains($content, strtoupper($needle))) {
+                if ($needle !== '' && str_contains($combined, strtoupper($needle))) {
                     $matches = true;
                     break;
                 }
+            }
+            if (! $matches && preg_match('/\b[A-Z]{1,5}\b/', $combined) === 1) {
+                $matches = true;
             }
             if (! $matches) {
                 return $this->buildFailure('PARSE_FAILED', 'Body does not include required trade keywords.', $record['__audit_table'] ?? 'unknown');
