@@ -32,7 +32,7 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'localhost',
+        'hostname'     => '',
         'username'     => '',
         'password'     => '',
         'database'     => '',
@@ -55,7 +55,7 @@ class Database extends Config
         'compress'     => false,
         'strictOn'     => true,
         'failover'     => [],
-        'port'         => 3306,
+        'port'         => 0,
         'numberNative' => true,
         'timeout'      => 20,
     ];
@@ -109,6 +109,16 @@ class Database extends Config
         // Force test DB when appropriate
         if (ENVIRONMENT === 'testing') {
             $this->defaultGroup = 'tests';
+        }
+
+        $this->default['hostname'] = (string) env('database.default.hostname', 'mysql.mymiwallet.com');
+        $this->default['username'] = (string) env('database.default.username', 'mymiteam');
+        $this->default['password'] = (string) env('database.default.password', 'Dawg@073120.dawg');
+        $this->default['database'] = (string) env('database.default.database', 'mymiwallet');
+        $this->default['port']     = (int) env('database.default.port', 3306);
+
+        if (str_contains($this->default['hostname'], '://')) {
+            throw new \RuntimeException('Invalid DB hostname (protocol not allowed)');
         }
     }
 }
