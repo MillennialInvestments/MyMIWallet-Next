@@ -1,22 +1,40 @@
 {
-  "tasks": [
-    {
-      "id": "001-critical-runtime",
-      "file": "/docs/_aiops/manual/priorities/001-critical-runtime.md",
-      "status": "pending",
-      "last_updated": "2026-02-07T21:45:00Z"
-    },
-    {
-      "id": "002-auth-context",
-      "file": "/docs/_aiops/manual/priorities/002-auth-context.md",
-      "status": "pending",
-      "last_updated": "2026-02-07T21:45:00Z"
-    },
-    {
-      "id": "003-routing-and-404s",
-      "file": "/docs/_aiops/manual/priorities/003-routing-and-404s.md",
-      "status": "pending",
-      "last_updated": "2026-02-07T21:45:00Z"
-    }
-  ]
+    "tasks": [
+        {
+            "id": "001-critical-runtime",
+            "file": "/docs/_aiops/manual/priorities/001-critical-runtime.md",
+            "status": "pending",
+            "last_updated": "2026-02-07T21:45:00Z",
+            "checksum": "6f916e46fa43e9238328b6ecd8e59930bce674fdf898d66bd247fec88b882f29",
+            "last_changed_commit": "62a79a6da0df20bc3ade17041a3106d82b4c454e",
+            "linked_pr": null
+        },
+        {
+            "id": "002-auth-context",
+            "file": "/docs/_aiops/manual/priorities/002-auth-context.md",
+            "status": "blocked",
+            "last_updated": "2026-02-07T21:45:00Z",
+            "blocked_reason": "Constraints must include Small PRs guidance"
+        },
+        {
+            "id": "003-routing-and-404s",
+            "file": "/docs/_aiops/manual/priorities/003-routing-and-404s.md",
+            "status": "done",
+            "last_updated": "2026-02-07T21:45:00Z",
+            "checksum": "8ec4f1d7f1ee1d0f7fc28184ed3d3980bd6823d8b56367d08166765fc2cd445e",
+            "last_changed_commit": "62a79a6da0df20bc3ade17041a3106d82b4c454e",
+            "linked_pr": null,
+            "done_at": "2026-02-07T23:10:58+00:00"
+        },
+        {
+            "id": "2026-02-07-LogSummarize",
+            "file": "/docs/_aiops/manual/priorities/2026-02-07-LogSummarize.md",
+            "status": "blocked",
+            "checksum": "6905e9ba8315970a6fb5bdae73928f68701cd35fc113932f82580cc583971f56",
+            "last_updated": "2026-02-07T23:10:58+00:00",
+            "linked_pr": null,
+            "pr_status": null,
+            "blocked_reason": "Missing heading: # Priority:"
+        }
+    ]
 }
