@@ -57,7 +57,7 @@ class ManagementController extends UserController
         }
 
         // Check for user ID
-        $this->cuID                                 = function_exists('getCuID') ? getCuID() : ($this->auth->id() ?? $this->session->get('user_id'));
+        $this->cuID                                 = function_exists('getCuID') ? $this->getCuID() : ($this->auth->id() ?? $this->session->get('user_id'));
         log_message('debug', 'HowTosController L47 - $this->cuID: ' . (print_r($this->cuID, true)));
         if (empty($this->cuID)) {
             log_message('error', 'Failed to retrieve user ID.');
@@ -91,7 +91,7 @@ class ManagementController extends UserController
     {
         $this->data = parent::commonData();
         $this->data = $this->data ?? [];
-        $cuID = getCuID();  // Get current user ID once
+        $cuID = $this->getCuID();  // Get current user ID once
         $this->cuID = $cuID;  // Ensure $this->cuID is set for use elsewhere
         $userData = $this->getMyMIUser()->getUserInformation($cuID);  // ✅ Correct method call
      
