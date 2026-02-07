@@ -372,6 +372,10 @@
 - [LOW RISK] Add/verify headers in docs/_aiops outputs
     - Reason: enforce 'Auto-generated' rule and reduce accidental edits
 
+## Nightly Log Insights (2026-02-04)
+- [AUTO] AIOps nightly log summarization pipeline now writes daily summaries, JSON, CSV, and PR bundles (when enabled) for the last 24 hours of logs.
+- [AUTO] Ensure the CST-aware CRON entry is installed to keep log summaries and PR bundles current.
+
 ## MANUAL_TODOS
 <!-- AIOPS_MANUAL_TODOS_START -->
 - [ ] Example: Review scraper pacing for 15m cycle
