@@ -3,10 +3,15 @@
 namespace Config;
 
 use CodeIgniter\Database\Config;
-use function is_ci;
 
 /**
  * Database Configuration
+ *
+ * IMPORTANT RULES (DO NOT BREAK):
+ * - NO env() calls in property declarations
+ * - ALL dynamic values injected in constructor
+ * - NO protocols (https://) in DB hostname
+ * - Config must be PHP-constant safe
  */
 class Database extends Config
 {
@@ -17,13 +22,13 @@ class Database extends Config
     public string $filesPath = APPPATH . 'Database' . DIRECTORY_SEPARATOR;
 
     /**
-     * Lets you choose which connection group to
-     * use if no other is specified.
+     * Default connection group.
      */
     public string $defaultGroup = 'default';
 
     /**
-     * The default database connection.
+     * Default database connection (STATIC ONLY).
+     * Dynamic env values are injected in __construct().
      */
     public array $default = [
         'DSN'          => '',
@@ -32,16 +37,22 @@ class Database extends Config
         'password'     => '',
         'database'     => '',
         'DBDriver'     => 'MySQLi',
-        'cacheOn'      => true,  // Enables query caching
+
+        // Performance / behavior
+        'cacheOn'      => true,
         'cacheDir'     => WRITEPATH . 'database_cache/',
         'DBPrefix'     => '',
         'pConnect'     => false,
         'DBDebug'      => true,
+
+        // Charset / collation
         'charset'      => 'utf8mb4',
         'DBCollat'     => 'utf8mb4_unicode_ci',
+
+        // Safety / compatibility
         'swapPre'      => '',
-        'encrypt'      => true,
-        'compress'     => true,
+        'encrypt'      => false,
+        'compress'     => false,
         'strictOn'     => true,
         'failover'     => [],
         'port'         => 0,
@@ -50,8 +61,7 @@ class Database extends Config
     ];
 
     /**
-     * This database connection is used when
-     * running PHPUnit database tests.
+     * Test database connection.
      */
     public array $tests = [
         'DSN'         => 'sqlite::memory:',
@@ -75,21 +85,28 @@ class Database extends Config
         'busyTimeout' => 1000,
     ];
 
+    /**
+     * Inject env-based configuration safely.
+     */
     public function __construct()
     {
         parent::__construct();
 
-        if (! function_exists('is_ci')) {
-            require APPPATH . 'Helpers/ci_guard_helper.php';
+        // Inject env values (runtime-safe)
+        $this->default['hostname'] = env('database.default.hostname', 'localhost');
+        $this->default['username'] = env('database.default.username', '');
+        $this->default['password'] = env('database.default.password', '');
+        $this->default['database'] = env('database.default.database', '');
+        $this->default['port']     = (int) env('database.default.port', 3306);
+
+        // HARD GUARD: never allow protocol-based DB hosts
+        if (str_contains($this->default['hostname'], '://')) {
+            throw new \RuntimeException(
+                'Invalid DB hostname detected (protocol not allowed): ' . $this->default['hostname']
+            );
         }
 
-        if (is_ci()) {
-            $this->defaultGroup = 'tests';
-        }
-
-        // Ensure that we always set the database group to 'tests' if
-        // we are currently running an automated test suite, so that
-        // we don't overwrite live data on accident.
+        // Force test DB when appropriate
         if (ENVIRONMENT === 'testing') {
             $this->defaultGroup = 'tests';
         }
