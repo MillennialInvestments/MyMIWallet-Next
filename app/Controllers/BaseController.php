@@ -12,7 +12,7 @@ use Throwable;
 use Psr\Log\LoggerInterface;
 
 
-use App\Libraries\{CrudCacheInvalidator, MyMIAdvisor, MyMIAlphaVantage, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIInvestments, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets};
+use App\Libraries\{CrudCacheInvalidator, MyMIAdvisor, MyMIAlphaVantage, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIInvestments, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets, SiteSettingsRuntime};
 use App\Services\{AccountService, BudgetService, DashboardService, GoalTrackingService, MarketingService, SolanaService, UserService, WalletService};
 use App\Models\WalletModel; // <-- add this
 
@@ -109,8 +109,13 @@ abstract class BaseController extends Controller
         $this->session      = Services::session();
         $this->auth         = service('authentication');
         $this->siteSettings = config('SiteSettings');
+
+        // ✅ Apply runtime overrides AFTER boot (helpers + cache are live)
+        SiteSettingsRuntime::apply($this->siteSettings);
+
         $this->socialMedia  = config('SocialMedia');
         $this->debug        = (int)($this->siteSettings->debug ?? 0);
+
         $this->cuID         = $this->resolveCurrentUserId();
         $this->telemetryEnabled = (bool) env('app.debugTelemetry', false);
 
