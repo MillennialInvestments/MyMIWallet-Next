@@ -54,8 +54,12 @@ class DatabaseLoggerHandler extends BaseHandler implements HandlerInterface
             return false;
         }
 
+        if (is_cli()) {
+            return true;
+        }
+
         if (! $this->acquireLock()) {
-            return false;
+            return true;
         }
 
         try {
@@ -67,7 +71,7 @@ class DatabaseLoggerHandler extends BaseHandler implements HandlerInterface
         } catch (Throwable $e) {
             $this->writeFallback($level, $message, $context, $e);
 
-            return false;
+            return true;
         } finally {
             $this->releaseLock();
         }

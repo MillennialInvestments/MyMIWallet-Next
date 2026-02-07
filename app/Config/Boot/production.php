@@ -10,6 +10,10 @@ ini_set('display_errors', '0');
 
 defined('CI_DEBUG') || define('CI_DEBUG', false);
 defined('SHOW_DEBUG_BACKTRACE') || define('SHOW_DEBUG_BACKTRACE', false);
+defined('CI_KINT') || define('CI_KINT', false);
+
+$_ENV['CI_KINT']    = false;
+$_SERVER['CI_KINT'] = false;
 
 if (PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg') {
     $GLOBALS['CI_DEBUG'] = false;

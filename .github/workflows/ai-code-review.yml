@@ -7,6 +7,9 @@ on:
   schedule:
     - cron: "0 5 * * *"
 
+env:
+  CI_ENVIRONMENT: production
+
 jobs:
   ai_review:
     runs-on: ubuntu-latest
