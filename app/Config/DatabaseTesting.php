@@ -4,7 +4,7 @@ namespace Config;
 
 use CodeIgniter\Database\Config;
 
-class Database extends Config
+class DatabaseTesting extends Config
 {
     public string $defaultGroup = 'testing';
 

@@ -758,3 +758,179 @@ in SYSTEMPATH/Database/BaseConnection.php on line 465.
 10 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
 11 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
 12 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 06:42:15 --> Error: Call to undefined method Closure::__set_state()
+[Method: POST, Route: login]
+in ROOTPATH/writable/cache/FactoriesCache_config on line 1025.
+ 1 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include()
+ 2 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 3 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 4 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 06:42:32 --> Error: Call to undefined method Closure::__set_state()
+[Method: GET, Route: API/Alerts/getLatestPrices]
+in ROOTPATH/writable/cache/FactoriesCache_config on line 1025.
+ 1 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include()
+ 2 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 3 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 4 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 06:42:33 --> Error: Call to undefined method Closure::__set_state()
+[Method: GET, Route: API/Alerts/getLatestPrices]
+in ROOTPATH/writable/cache/FactoriesCache_config on line 1025.
+ 1 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include()
+ 2 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 3 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 4 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 06:42:48 --> Error: Call to undefined method Closure::__set_state()
+[Method: GET, Route: How-It-Works/marketing]
+in ROOTPATH/writable/cache/FactoriesCache_config on line 1025.
+ 1 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include()
+ 2 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 3 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 4 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 06:43:32 --> Error: Call to undefined method Closure::__set_state()
+[Method: GET, Route: API/Alerts/getLatestPrices]
+in ROOTPATH/writable/cache/FactoriesCache_config on line 1025.
+ 1 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include()
+ 2 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 3 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 4 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 06:43:34 --> Error: Call to undefined method Closure::__set_state()
+[Method: GET, Route: API/Alerts/getLatestPrices]
+in ROOTPATH/writable/cache/FactoriesCache_config on line 1025.
+ 1 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include()
+ 2 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 3 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 4 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 06:44:32 --> Error: Call to undefined method Closure::__set_state()
+[Method: GET, Route: API/Alerts/getLatestPrices]
+in ROOTPATH/writable/cache/FactoriesCache_config on line 1025.
+ 1 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include()
+ 2 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 3 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 4 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 06:44:34 --> Error: Call to undefined method Closure::__set_state()
+[Method: GET, Route: API/Alerts/getLatestPrices]
+in ROOTPATH/writable/cache/FactoriesCache_config on line 1025.
+ 1 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include()
+ 2 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 3 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 4 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 06:44:49 --> Error: Call to undefined method Closure::__set_state()
+[Method: GET, Route: How-It-Works/earnings]
+in ROOTPATH/writable/cache/FactoriesCache_config on line 1025.
+ 1 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include()
+ 2 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 3 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 4 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 06:45:33 --> Error: Call to undefined method Closure::__set_state()
+[Method: GET, Route: API/Alerts/getLatestPrices]
+in ROOTPATH/writable/cache/FactoriesCache_config on line 1025.
+ 1 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include()
+ 2 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 3 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 4 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 06:45:34 --> Error: Call to undefined method Closure::__set_state()
+[Method: GET, Route: API/Alerts/getLatestPrices]
+in ROOTPATH/writable/cache/FactoriesCache_config on line 1025.
+ 1 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include()
+ 2 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 3 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 4 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 06:46:33 --> Error: Call to undefined method Closure::__set_state()
+[Method: GET, Route: API/Alerts/getLatestPrices]
+in ROOTPATH/writable/cache/FactoriesCache_config on line 1025.
+ 1 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include()
+ 2 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 3 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 4 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 06:46:34 --> Error: Call to undefined method Closure::__set_state()
+[Method: GET, Route: API/Alerts/getLatestPrices]
+in ROOTPATH/writable/cache/FactoriesCache_config on line 1025.
+ 1 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include()
+ 2 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 3 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 4 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 06:46:51 --> Error: Call to undefined method Closure::__set_state()
+[Method: GET, Route: How-It-Works/investments]
+in ROOTPATH/writable/cache/FactoriesCache_config on line 1025.
+ 1 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include()
+ 2 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 3 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 4 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 06:47:30 --> Error: Call to undefined method Closure::__set_state()
+[Method: POST, Route: login]
+in ROOTPATH/writable/cache/FactoriesCache_config on line 1025.
+ 1 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include()
+ 2 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 3 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 4 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 06:47:32 --> Error: Call to undefined method Closure::__set_state()
+[Method: GET, Route: API/Alerts/getLatestPrices]
+in ROOTPATH/writable/cache/FactoriesCache_config on line 1025.
+ 1 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include()
+ 2 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 3 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 4 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 06:47:33 --> Error: Call to undefined method Closure::__set_state()
+[Method: GET, Route: API/Alerts/getLatestPrices]
+in ROOTPATH/writable/cache/FactoriesCache_config on line 1025.
+ 1 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include()
+ 2 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 3 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 4 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 06:48:32 --> Error: Call to undefined method Closure::__set_state()
+[Method: GET, Route: API/Alerts/getLatestPrices]
+in ROOTPATH/writable/cache/FactoriesCache_config on line 1025.
+ 1 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include()
+ 2 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 3 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 4 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 06:48:33 --> Error: Call to undefined method Closure::__set_state()
+[Method: GET, Route: API/Alerts/getLatestPrices]
+in ROOTPATH/writable/cache/FactoriesCache_config on line 1025.
+ 1 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include()
+ 2 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 3 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 4 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 06:48:52 --> Error: Call to undefined method Closure::__set_state()
+[Method: GET, Route: How-It-Works/account-settings]
+in ROOTPATH/writable/cache/FactoriesCache_config on line 1025.
+ 1 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include()
+ 2 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 3 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 4 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 06:49:32 --> Error: Call to undefined method Closure::__set_state()
+[Method: GET, Route: API/Alerts/getLatestPrices]
+in ROOTPATH/writable/cache/FactoriesCache_config on line 1025.
+ 1 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include()
+ 2 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 3 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 4 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 06:49:33 --> Error: Call to undefined method Closure::__set_state()
+[Method: GET, Route: API/Alerts/getLatestPrices]
+in ROOTPATH/writable/cache/FactoriesCache_config on line 1025.
+ 1 SYSTEMPATH/Cache/FactoriesCache/FileVarExportHandler.php(38): include()
+ 2 SYSTEMPATH/Cache/FactoriesCache.php(48): CodeIgniter\Cache\FactoriesCache\FileVarExportHandler->get('FactoriesCache_config')
+ 3 SYSTEMPATH/Boot.php(337): CodeIgniter\Cache\FactoriesCache->load('config')
+ 4 SYSTEMPATH/Boot.php(62): CodeIgniter\Boot::loadConfigCache()
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
