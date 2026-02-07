@@ -201,7 +201,7 @@ class APISettings extends BaseConfig
 
     public string $iexcloudDashboard = "https://iexcloud.io/console/home";
 
-    public string $iexcloudApiKey = "sk_45f116b47e2148aaa8aba6969c6edc35" ?? '';
+    public string $iexcloudApiKey = "";
 
     public string $iexcloudApiDocs = "https://iexcloud.io/documentation/getting-started/production-ready-core-data.html";
 
@@ -404,7 +404,8 @@ class APISettings extends BaseConfig
 
         $this->elevenLabsAPIKey = getenv('ELEVENLABS_API_KEY') ?: '';
 
-        $this->elevenLabsVoiceId = '21m00Tcm4TlvDq8ikWAM'; 
+        $this->elevenLabsVoiceId = '21m00Tcm4TlvDq8ikWAM';
+        $this->iexcloudApiKey = (string) env('iexcloud.apiKey', $this->iexcloudApiKey);
     }
 
 
