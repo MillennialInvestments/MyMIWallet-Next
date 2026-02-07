@@ -13,7 +13,7 @@ use CodeIgniter\Config\BaseConfig;
 class Debug extends BaseConfig
 {
     /**
-     * Disable Kint in CLI, CI, and production.
+     * Disable Kint by default.
      */
     public bool $enableKint = false;
 
@@ -26,66 +26,65 @@ class Debug extends BaseConfig
      * Safety: never load dev-only helpers implicitly.
      */
     public array $toolbarCollectors = [];
-  
+
     /**
-     * --------------------------------------------------------------------
      * Debug Toolbar
-     * --------------------------------------------------------------------
      */
     public bool $toolbar = false;
 
     /**
-     * --------------------------------------------------------------------
      * Debug Collectors
-     * --------------------------------------------------------------------
-     * Empty by default to avoid overhead in CLI and Codex.
      */
     public array $collectors = [];
 
     /**
-     * --------------------------------------------------------------------
      * Kint (var dumping)
-     * --------------------------------------------------------------------
-     * Explicitly controlled to prevent CLI / Codex crashes.
      */
     public bool $kintEnabled = false;
 
     /**
-     * --------------------------------------------------------------------
      * Error Views
-     * --------------------------------------------------------------------
      */
     public string $errorViewPath = APPPATH . 'Views/errors';
 
     /**
-     * --------------------------------------------------------------------
      * Log Severity
-     * --------------------------------------------------------------------
-     * Leave permissive; logging is already guarded elsewhere.
      */
     public int $logSeverity = E_ALL;
 
     /**
-     * --------------------------------------------------------------------
      * Constructor
-     * --------------------------------------------------------------------
-     * Apply Codex-only hard disables.
      */
     public function __construct()
     {
         parent::__construct();
 
-        // 🔒 Codex environment hardening
-        if (getenv('APP_ENV') === 'codex') {
+        // Codex environment hard-disable
+        if (env('APP_ENV') === 'codex') {
             $this->toolbar     = false;
             $this->collectors  = [];
             $this->kintEnabled = false;
+            $this->enableKint  = false;
         }
 
-        // 🔒 CLI safety (Spark, cron, AIOps)
+        // CLI safety (Spark, cron, AIOps)
         if (is_cli()) {
             $this->toolbar     = false;
             $this->kintEnabled = false;
+            $this->enableKint  = false;
         }
+
+        // Optional env overrides (safe)
+        $this->toolbar = filter_var(
+            env('debug.toolbar', $this->toolbar),
+            FILTER_VALIDATE_BOOLEAN
+        );
+
+        $this->enableKint = filter_var(
+            env('debug.enableKint', $this->enableKint),
+            FILTER_VALIDATE_BOOLEAN
+        );
+
+        $this->kintEnabled = $this->enableKint;
     }
 }
