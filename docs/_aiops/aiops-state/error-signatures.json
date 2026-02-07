@@ -1,25 +1,68 @@
 {
-  "signatures": [
-    {
-      "signature": "App\\Config\\SocialPlatforms|duplicate-class-declaration",
-      "first_seen": "2026-02-07T21:40:12Z",
-      "last_seen": "2026-02-07T21:40:12Z",
-      "status": "open",
-      "priority_id": "001-critical-runtime"
-    },
-    {
-      "signature": "global|getCuID|undefined-function",
-      "first_seen": "2026-02-07T21:41:01Z",
-      "last_seen": "2026-02-07T21:41:01Z",
-      "status": "open",
-      "priority_id": "001-critical-runtime"
-    },
-    {
-      "signature": "WalletService|getUserWallets|null-call",
-      "first_seen": "2026-02-07T21:41:38Z",
-      "last_seen": "2026-02-07T21:41:38Z",
-      "status": "open",
-      "priority_id": "001-critical-runtime"
-    }
-  ]
+    "signatures": [
+        {
+            "signature": "App\\Config\\SocialPlatforms|duplicate-class-declaration",
+            "first_seen": "2026-02-07T21:40:12Z",
+            "last_seen": "2026-02-07T21:40:12Z",
+            "status": "resolved",
+            "priority_id": "001-critical-runtime",
+            "resolved_at": "2026-02-07T23:10:56+00:00"
+        },
+        {
+            "signature": "global|getCuID|undefined-function",
+            "first_seen": "2026-02-07T21:41:01Z",
+            "last_seen": "2026-02-07T21:41:01Z",
+            "status": "resolved",
+            "priority_id": "001-critical-runtime",
+            "resolved_at": "2026-02-07T23:10:56+00:00"
+        },
+        {
+            "signature": "WalletService|getUserWallets|null-call",
+            "first_seen": "2026-02-07T21:41:38Z",
+            "last_seen": "2026-02-07T21:41:38Z",
+            "status": "resolved",
+            "priority_id": "001-critical-runtime",
+            "resolved_at": "2026-02-07T23:10:56+00:00"
+        },
+        {
+            "signature": "sig:28c3f270aed5a390",
+            "message": "Cannot declare class App\\Config\\SocialPlatforms, because the name is already in use",
+            "first_seen": "2026-02-07T23:10:56+00:00",
+            "last_seen": "2026-02-07T23:10:56+00:00",
+            "status": "open",
+            "resolved_at": null
+        },
+        {
+            "signature": "sig:e5c8549b9c526077",
+            "message": "Call to undefined function getCuID()",
+            "first_seen": "2026-02-07T23:10:56+00:00",
+            "last_seen": "2026-02-07T23:10:56+00:00",
+            "status": "open",
+            "resolved_at": null
+        },
+        {
+            "signature": "sig:744c020ccfb3c5b2",
+            "message": "Call to a member function getUserWallets() on null",
+            "first_seen": "2026-02-07T23:10:56+00:00",
+            "last_seen": "2026-02-07T23:10:56+00:00",
+            "status": "open",
+            "resolved_at": null
+        },
+        {
+            "signature": "sig:fe7794d99418e306",
+            "message": "Call to undefined method Alerts::loadLatestSignals()",
+            "first_seen": "2026-02-07T23:10:56+00:00",
+            "last_seen": "2026-02-07T23:10:56+00:00",
+            "status": "open",
+            "resolved_at": null
+        },
+        {
+            "signature": "sig:4d572ada85e11bbc",
+            "message": "PageNotFoundException: Route not found: GET /wallet/overview",
+            "first_seen": "2026-02-07T23:10:56+00:00",
+            "last_seen": "2026-02-07T23:10:56+00:00",
+            "status": "open",
+            "resolved_at": null
+        }
+    ]
 }

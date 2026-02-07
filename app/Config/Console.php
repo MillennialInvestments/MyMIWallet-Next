@@ -54,6 +54,8 @@ class Console extends BaseConfig
         |----------------------------------------------------------------------
         */
         \App\Commands\AiOps\ChatGovernanceIndex::class,
+        \App\Commands\AiOps\AutoRun::class,
+        \App\Commands\AiOps\ManualRun::class,
         \App\Commands\AiOps\Run::class,
         \App\Commands\Ops\AiopsInit::class,
         \App\Commands\Ops\AppUpdate::class,

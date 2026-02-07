@@ -183,27 +183,6 @@
         ),
       ),
     ),
-    'Config/Events.php' => 
-    array (
-      'php' => 
-      array (
-        1 => 
-        array (
-          0 => '/home/mymiteam/mymiwallet/site/current/app/Config/Events.php',
-          1 => '/home/mymiteam/mymiwallet/site/current/vendor/tatter/audits/src/Config/Events.php',
-        ),
-      ),
-    ),
-    'Helpers/uri_guard_helper' => 
-    array (
-      'php' => 
-      array (
-        1 => 
-        array (
-          0 => '/home/mymiteam/mymiwallet/site/current/app/Helpers/uri_guard_helper.php',
-        ),
-      ),
-    ),
     'Helpers/array_helper' => 
     array (
       'php' => 
@@ -211,17 +190,6 @@
         1 => 
         array (
           0 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Helpers/array_helper.php',
-        ),
-      ),
-    ),
-    'Config/Filters.php' => 
-    array (
-      'php' => 
-      array (
-        1 => 
-        array (
-          0 => '/home/mymiteam/mymiwallet/site/current/app/Config/Filters.php',
-          1 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Config/Filters.php',
         ),
       ),
     ),
@@ -239,155 +207,6 @@
         ),
       ),
     ),
-    'Config/Factory' => 
-    array (
-      'php' => 
-      array (
-        1 => 
-        array (
-          0 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Config/Factory.php',
-        ),
-      ),
-    ),
-    'Language/en/Auth.php' => 
-    array (
-      'php' => 
-      array (
-        0 => 
-        array (
-          0 => '/home/mymiteam/mymiwallet/site/current/vendor/myth/auth/src/Language/en/Auth.php',
-          1 => '/home/mymiteam/mymiwallet/site/current/app/Language/en/Auth.php',
-        ),
-      ),
-    ),
-    'Config/Alerts' => 
-    array (
-      'php' => 
-      array (
-        1 => 
-        array (
-          0 => '/home/mymiteam/mymiwallet/site/current/vendor/tatter/alerts/src/Config/Alerts.php',
-        ),
-      ),
-    ),
-    'Config/Audits' => 
-    array (
-      'php' => 
-      array (
-        1 => 
-        array (
-          0 => '/home/mymiteam/mymiwallet/site/current/vendor/tatter/audits/src/Config/Audits.php',
-        ),
-      ),
-    ),
-    'Config/SiteSettings' => 
-    array (
-      'php' => 
-      array (
-        1 => 
-        array (
-          0 => '/home/mymiteam/mymiwallet/site/current/app/Config/SiteSettings.php',
-        ),
-      ),
-    ),
-    'Helpers/budget_helper' => 
-    array (
-      'php' => 
-      array (
-        1 => 
-        array (
-          0 => '/home/mymiteam/mymiwallet/site/current/app/Helpers/budget_helper.php',
-        ),
-      ),
-    ),
-    'Config/Exchanges' => 
-    array (
-      'php' => 
-      array (
-        1 => 
-        array (
-        ),
-      ),
-    ),
-    'Language/en/Time.php' => 
-    array (
-      'php' => 
-      array (
-        0 => 
-        array (
-          0 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Language/en/Time.php',
-        ),
-      ),
-    ),
-    'Helpers/env_helper' => 
-    array (
-      'php' => 
-      array (
-        1 => 
-        array (
-          0 => '/home/mymiteam/mymiwallet/site/current/app/Helpers/env_helper.php',
-        ),
-      ),
-    ),
-    'Helpers/security_helper' => 
-    array (
-      'php' => 
-      array (
-        1 => 
-        array (
-          0 => '/home/mymiteam/mymiwallet/site/current/app/Helpers/security_helper.php',
-          1 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Helpers/security_helper.php',
-        ),
-      ),
-    ),
-    'Helpers/url_guard_helper' => 
-    array (
-      'php' => 
-      array (
-        1 => 
-        array (
-        ),
-      ),
-    ),
-    'Language/en/HTTP.php' => 
-    array (
-      'php' => 
-      array (
-        0 => 
-        array (
-          0 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Language/en/HTTP.php',
-        ),
-      ),
-    ),
-    'Language/en/Email.php' => 
-    array (
-      'php' => 
-      array (
-        0 => 
-        array (
-          0 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Language/en/Email.php',
-        ),
-      ),
-    ),
-    'Language/en/Errors.php' => 
-    array (
-      'php' => 
-      array (
-        0 => 
-        array (
-          0 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Language/en/Errors.php',
-        ),
-      ),
-    ),
-    'Helpers/directory_helper' => 
-    array (
-      'php' => 
-      array (
-        1 => 
-        array (
-        ),
-      ),
-    ),
     'Language/en/CLI.php' => 
     array (
       'php' => 
@@ -398,13 +217,14 @@
         ),
       ),
     ),
-    'Helpers/cookie_helper' => 
+    'Config/Events.php' => 
     array (
       'php' => 
       array (
         1 => 
         array (
-          0 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Helpers/cookie_helper.php',
+          0 => '/home/mymiteam/mymiwallet/site/current/app/Config/Events.php',
+          1 => '/home/mymiteam/mymiwallet/site/current/vendor/tatter/audits/src/Config/Events.php',
         ),
       ),
     ),
@@ -416,15 +236,13 @@
     '/home/mymiteam/mymiwallet/site/current/vendor/tatter/audits/src/Config/Services.php' => 'Tatter\\Audits\\Config\\Services',
     '/home/mymiteam/mymiwallet/site/current/vendor/myth/auth/src/Config/Registrar.php' => 'Myth\\Auth\\Config\\Registrar',
     '/home/mymiteam/mymiwallet/site/current/vendor/tatter/alerts/src/Config/Registrar.php' => 'Tatter\\Alerts\\Config\\Registrar',
-    '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Config/Factory.php' => 'CodeIgniter\\Config\\Factory',
-    '/home/mymiteam/mymiwallet/site/current/vendor/tatter/alerts/src/Config/Alerts.php' => 'Tatter\\Alerts\\Config\\Alerts',
-    '/home/mymiteam/mymiwallet/site/current/vendor/tatter/audits/src/Config/Audits.php' => 'Tatter\\Audits\\Config\\Audits',
-    '/home/mymiteam/mymiwallet/site/current/app/Config/SiteSettings.php' => 'App\\Config\\SiteSettings',
     '/home/mymiteam/mymiwallet/site/current/app/Commands/API/ApiAudit.php' => 'App\\Commands\\API\\ApiAudit',
+    '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/AutoRun.php' => 'App\\Commands\\AiOps\\AutoRun',
     '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/ChatGovernanceIndex.php' => 'App\\Commands\\AiOps\\ChatGovernanceIndex',
     '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/CommandIndex.php' => 'App\\Commands\\AiOps\\CommandIndex',
     '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/CopilotValidate.php' => 'App\\Commands\\AiOps\\CopilotValidate',
     '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/EmailScan.php' => 'App\\Commands\\AiOps\\EmailScan',
+    '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/ManualRun.php' => 'App\\Commands\\AiOps\\ManualRun',
     '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/Run.php' => 'App\\Commands\\AiOps\\Run',
     '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/ScanCells.php' => 'App\\Commands\\AiOps\\ScanCells',
     '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOpsSeed.php' => 'App\\Commands\\AiOpsSeed',
@@ -593,554 +411,184 @@
     '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/FilterFinder.php' => 'CodeIgniter\\Commands\\Utilities\\Routes\\FilterFinder',
     '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/SampleURIGenerator.php' => 'CodeIgniter\\Commands\\Utilities\\Routes\\SampleURIGenerator',
   ),
-  'getClassname' => 
-  array (
-    '/home/mymiteam/mymiwallet/site/current/app/Config/Filters.php' => 'Config\\Filters',
-    '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Config/Filters.php' => 'CodeIgniter\\Config\\Filters',
-  ),
-  'locateFile' => 
-  array (
-    'Config\\APIs' => 
-    array (
-      'Config' => 
-      array (
-        'php' => false,
-      ),
-    ),
-    'UserModule\\Views\\Dashboard\\index' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Dashboard/index.php',
-      ),
-    ),
-    'UserModule\\Views\\Dashboard\\index.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Dashboard/index.php',
-      ),
-    ),
-    'themes/dashboard/layouts/_sitenav' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Views/themes/dashboard/layouts/_sitenav.php',
-      ),
-    ),
-    'themes/dashboard/layouts/sidebar' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Views/themes/dashboard/layouts/sidebar.php',
-      ),
-    ),
-    'themes/dashboard/layouts/footer' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Views/themes/dashboard/layouts/footer.php',
-      ),
-    ),
-    'ManagementModule\\Views\\Marketing\\index\\modals.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/Management/Views/Marketing/index/modals.php',
-      ),
-    ),
-    'UserModule\\Views\\Dashboard\\modals\\onboarding.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Dashboard/modals/onboarding.php',
-      ),
-    ),
-    'UserModule\\Views\\Calculator\\form.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Calculator/form.php',
-      ),
-    ),
-    'themesModule\\Views\\dashboard\\layouts\\index' => 
-    array (
-      'Views' => 
-      array (
-        'php' => false,
-      ),
-    ),
-    'themesModule/Views/dashboard/layouts/index' => 
-    array (
-      'Views' => 
-      array (
-        'php' => false,
-      ),
-    ),
-    'themes/dashboard/layouts/index' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Views/themes/dashboard/layouts/index.php',
-      ),
-    ),
-    'App\\Views\\Auth\\_message_block.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Views/Auth/_message_block.php',
-      ),
-    ),
-    'App\\Views\\partials\\auth_flash.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Views/partials/auth_flash.php',
-      ),
-    ),
-    'UserModule\\Views\\Dashboard\\index\\transaction-modal.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Dashboard/index/transaction-modal.php',
-      ),
-    ),
-    'UserModule\\Views\\Dashboard\\index\\modal-loading-page.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Dashboard/index/modal-loading-page.php',
-      ),
-    ),
-    'App\\Views\\Auth\\register_form.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Views/Auth/register_form.php',
-      ),
-    ),
-    'themesModule\\Views\\public\\layouts\\index' => 
-    array (
-      'Views' => 
-      array (
-        'php' => false,
-      ),
-    ),
-    'themesModule/Views/public/layouts/index' => 
-    array (
-      'Views' => 
-      array (
-        'php' => false,
-      ),
-    ),
-    'themes/public/layouts/index' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Views/themes/public/layouts/index.php',
-      ),
-    ),
-    'App\\Modules\\Exchange\\Views\\Solana\\index' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/Exchange/Views/Solana/index.php',
-      ),
-    ),
-    'App\\Modules\\Exchange\\Views\\Solana\\index.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/Exchange/Views/Solana/index.php',
-      ),
-    ),
-    'ExchangeModule\\Views\\Solana\\index\\Top-Performing-Tokens.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/Exchange/Views/Solana/index/Top-Performing-Tokens.php',
-      ),
-    ),
-    'App\\Modules\\User\\Views\\Investments\\index' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Investments/index.php',
-      ),
-    ),
-    'App\\Modules\\User\\Views\\Investments\\index.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Investments/index.php',
-      ),
-    ),
-    'UserModule\\Views\\Investments\\index\\Action_Center.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Investments/index/Action_Center.php',
-      ),
-    ),
-    'UserModule\\Views\\Investments\\index\\Month_to_Month.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Investments/index/Month_to_Month.php',
-      ),
-    ),
-    'UserModule\\Views\\Investments\\index\\Investment_Calendar.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Investments/index/Investment_Calendar.php',
-      ),
-    ),
-    'UserModule\\Views\\Investments\\index\\Insights.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Investments/index/Insights.php',
-      ),
-    ),
-    'App\\Modules\\User\\Views\\Projects\\index.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Projects/index.php',
-      ),
-    ),
-    'UserModule\\Views\\Referral_Program\\index' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Referral_Program/index.php',
-      ),
-    ),
-    'UserModule\\Views\\Referral_Program\\index.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Referral_Program/index.php',
-      ),
-    ),
-    'UserModule\\Views\\Referral_Program\\My_Referrals\\control_center.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Referral_Program/My_Referrals/control_center.php',
-      ),
-    ),
-    'UserModule\\Views\\Referral_Program\\My_Referrals\\Referrals.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Referral_Program/My_Referrals/Referrals.php',
-      ),
-    ),
-    'SupportModule\\Views\\Support\\index' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/Support/Views/Support/index.php',
-      ),
-    ),
-    'SupportModule\\Views\\Support\\index.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/Support/Views/Support/index.php',
-      ),
-    ),
-    'SupportModule\\Views\\Support\\partials\\kb_results.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/Support/Views/Support/partials/kb_results.php',
-      ),
-    ),
-    'App\\Modules\\User\\Views\\Support\\partials\\ticket_row.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Support/partials/ticket_row.php',
-      ),
-    ),
-    'App\\Modules\\User\\Views\\Support\\partials\\ticket_offcanvas.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Support/partials/ticket_offcanvas.php',
-      ),
-    ),
-    'App\\Modules\\Management\\Views\\docs\\index.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/Management/Views/docs/index.php',
-      ),
-    ),
-    'App\\Views\\Auth\\login.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Views/Auth/login.php',
-      ),
-    ),
-    'App\\Views\\Auth\\layout.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Views/Auth/layout.php',
-      ),
-    ),
-    'App\\Views\\themes\\public\\layouts\\header_min.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Views/themes/public/layouts/header_min.php',
-      ),
-    ),
-    'App\\Views\\themes\\public\\layouts\\_sitenav.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Views/themes/public/layouts/_sitenav.php',
-      ),
-    ),
-    'App\\Views\\themes\\public\\layouts\\footer.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Views/themes/public/layouts/footer.php',
-      ),
-    ),
-    'App\\Modules\\User\\Views\\Alerts\\index' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Alerts/index.php',
-      ),
-    ),
-    'App\\Modules\\User\\Views\\Alerts\\index.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Alerts/index.php',
-      ),
-    ),
-    'App\\Modules\\User\\Views\\Budget\\index' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Budget/index.php',
-      ),
-    ),
-    'App\\Modules\\User\\Views\\Budget\\index.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Budget/index.php',
-      ),
-    ),
-    'UserModule\\Views\\Budget\\index\\control_center.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Budget/index/control_center.php',
-      ),
-    ),
-    'UserModule\\Views\\Budget\\index\\overview_chart.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Budget/index/overview_chart.php',
-      ),
-    ),
-    'UserModule\\Budget\\index\\browser_table.php' => 
-    array (
-      'Views' => 
-      array (
-        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/User/Views/Budget/index/browser_table.php',
-      ),
-    ),
-  ),
   'listFiles' => 
   array (
     'Commands/' => 
     array (
       0 => '/home/mymiteam/mymiwallet/site/current/app/Commands/API/ApiAudit.php',
-      1 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/ChatGovernanceIndex.php',
-      2 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/CommandIndex.php',
-      3 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/CopilotValidate.php',
-      4 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/EmailScan.php',
-      5 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/Run.php',
-      6 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/ScanCells.php',
-      7 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOpsSeed.php',
-      8 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AlertsAudit.php',
-      9 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AlertsParseTest.php',
-      10 => '/home/mymiteam/mymiwallet/site/current/app/Commands/App/Healthcheck.php',
-      11 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AppUpdate.php',
-      12 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Audit/NodeAudit.php',
-      13 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AuditPsr4.php',
-      14 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Auth/Audit.php',
-      15 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Auth/FunnelCheck.php',
-      16 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Auth/Smoke.php',
-      17 => '/home/mymiteam/mymiwallet/site/current/app/Commands/CacheAudit.php',
-      18 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Codex/Review.php',
-      19 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Codex/ReviewCommit.php',
-      20 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Codex/ReviewList.php',
-      21 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Codex/ReviewPrOutbox.php',
-      22 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Codex/ReviewPublish.php',
-      23 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Config/Drift.php',
-      24 => '/home/mymiteam/mymiwallet/site/current/app/Commands/ConfigLint.php',
-      25 => '/home/mymiteam/mymiwallet/site/current/app/Commands/ContentEngineSmoke.php',
-      26 => '/home/mymiteam/mymiwallet/site/current/app/Commands/ContentIngestSample.php',
-      27 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Contracts/AiOpsRunnable.php',
-      28 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Contracts/DryRunCapable.php',
-      29 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Contracts/RequiresApproval.php',
-      30 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Database/ApplyDocs.php',
-      31 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Database/Drift.php',
-      32 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Database/Inventory.php',
-      33 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Database/MigrateDryRun.php',
-      34 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Diagnose502.php',
-      35 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Diagnose503.php',
-      36 => '/home/mymiteam/mymiwallet/site/current/app/Commands/DiscordList.php',
-      37 => '/home/mymiteam/mymiwallet/site/current/app/Commands/DiscordProcessQueue.php',
-      38 => '/home/mymiteam/mymiwallet/site/current/app/Commands/DiscordTest.php',
-      39 => '/home/mymiteam/mymiwallet/site/current/app/Commands/DiscordTestLiquidity.php',
-      40 => '/home/mymiteam/mymiwallet/site/current/app/Commands/DiscordWireCheck.php',
-      41 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Env/EnvDoctor.php',
-      42 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Fix503.php',
-      43 => '/home/mymiteam/mymiwallet/site/current/app/Commands/ForecastEvaluate.php',
-      44 => '/home/mymiteam/mymiwallet/site/current/app/Commands/ForecastRefresh.php',
-      45 => '/home/mymiteam/mymiwallet/site/current/app/Commands/GapTrackerSync.php',
-      46 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Growth/RetentionWatch.php',
-      47 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Health/Cache.php',
-      48 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Health/Disk.php',
-      49 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Health/GitSafety.php',
-      50 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Health/Services.php',
-      51 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Logs/Healthcheck.php',
-      52 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Logs/Summarize.php',
-      53 => '/home/mymiteam/mymiwallet/site/current/app/Commands/LogsFullReport.php',
-      54 => '/home/mymiteam/mymiwallet/site/current/app/Commands/MailSend.php',
-      55 => '/home/mymiteam/mymiwallet/site/current/app/Commands/MailSendTest.php',
-      56 => '/home/mymiteam/mymiwallet/site/current/app/Commands/MailTest.php',
-      57 => '/home/mymiteam/mymiwallet/site/current/app/Commands/MailVerify.php',
-      58 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Marketing/AutomationAudit.php',
-      59 => '/home/mymiteam/mymiwallet/site/current/app/Commands/MditNavComputeDaily.php',
-      60 => '/home/mymiteam/mymiwallet/site/current/app/Commands/NewsAudit.php',
-      61 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/AiopsInit.php',
-      62 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/AlertsIngest.php',
-      63 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/AppUpdate.php',
-      64 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/CommandConstructorScanner.php',
-      65 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/CommandsAudit.php',
-      66 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/CommandsAutofix.php',
-      67 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/CommandsInventory.php',
-      68 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/CommandsLint.php',
-      69 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/ConfigLint.php',
-      70 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/ConfigReset.php',
-      71 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/FilesystemLint.php',
-      72 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/NextSteps.php',
-      73 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/NextStepsSync.php',
-      74 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/NextStepsSyncManual.php',
-      75 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/ProposePr.php',
-      76 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/SparkReset.php',
-      77 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/Support/CommandRulesScanner.php',
-      78 => '/home/mymiteam/mymiwallet/site/current/app/Commands/OpsAnalyzeCommands.php',
-      79 => '/home/mymiteam/mymiwallet/site/current/app/Commands/OpsFetchCommands.php',
-      80 => '/home/mymiteam/mymiwallet/site/current/app/Commands/OpsWork.php',
-      81 => '/home/mymiteam/mymiwallet/site/current/app/Commands/PurgeFastCGI.php',
-      82 => '/home/mymiteam/mymiwallet/site/current/app/Commands/RestartSafe.php',
-      83 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Revenue/CostForecast.php',
-      84 => '/home/mymiteam/mymiwallet/site/current/app/Commands/RevenueStreamsScan.php',
-      85 => '/home/mymiteam/mymiwallet/site/current/app/Commands/RoutesAuthAudit.php',
-      86 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Runtime/CacheBoot.php',
-      87 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Runtime/Diagnose502.php',
-      88 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Runtime/SparkDoctor.php',
-      89 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Runtime/SparkDoctorRuntime.php',
-      90 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Runtime/SparkFix.php',
-      91 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Runtime/SparkOptimize.php',
-      92 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Runtime/Triage.php',
-      93 => '/home/mymiteam/mymiwallet/site/current/app/Commands/RuntimeCheck.php',
-      94 => '/home/mymiteam/mymiwallet/site/current/app/Commands/SafeBaseCommand.php',
-      95 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Scrapers/EmailScraperAudit.php',
-      96 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Security/SecretsAudit.php',
-      97 => '/home/mymiteam/mymiwallet/site/current/app/Commands/SecurityCspAudit.php',
-      98 => '/home/mymiteam/mymiwallet/site/current/app/Commands/SparkDoctor.php',
-      99 => '/home/mymiteam/mymiwallet/site/current/app/Commands/SparkFix.php',
-      100 => '/home/mymiteam/mymiwallet/site/current/app/Commands/SparkReset.php',
-      101 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Support/ArtifactHelper.php',
-      102 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Support/GitHubIssueHelper.php',
-      103 => '/home/mymiteam/mymiwallet/site/current/app/Commands/TestEmail.php',
-      104 => '/home/mymiteam/mymiwallet/site/current/app/Commands/TrafficSpikeGuard.php',
-      105 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ux/JourneyAudit.php',
-      106 => '/home/mymiteam/mymiwallet/site/current/app/Commands/WalletsWarmSummaryCache.php',
-      107 => '/home/mymiteam/mymiwallet/site/current/vendor/myth/auth/src/Commands/ActivateUser.php',
-      108 => '/home/mymiteam/mymiwallet/site/current/vendor/myth/auth/src/Commands/CreateGroup.php',
-      109 => '/home/mymiteam/mymiwallet/site/current/vendor/myth/auth/src/Commands/CreateUser.php',
-      110 => '/home/mymiteam/mymiwallet/site/current/vendor/myth/auth/src/Commands/HashPassword.php',
-      111 => '/home/mymiteam/mymiwallet/site/current/vendor/myth/auth/src/Commands/ListGroups.php',
-      112 => '/home/mymiteam/mymiwallet/site/current/vendor/myth/auth/src/Commands/ListUsers.php',
-      113 => '/home/mymiteam/mymiwallet/site/current/vendor/myth/auth/src/Commands/Publish.php',
-      114 => '/home/mymiteam/mymiwallet/site/current/vendor/myth/auth/src/Commands/SetPassword.php',
-      115 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Cache/ClearCache.php',
-      116 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Cache/InfoCache.php',
-      117 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Database/CreateDatabase.php',
-      118 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Database/Migrate.php',
-      119 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Database/MigrateRefresh.php',
-      120 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Database/MigrateRollback.php',
-      121 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Database/MigrateStatus.php',
-      122 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Database/Seed.php',
-      123 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Database/ShowTableInfo.php',
-      124 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Encryption/GenerateKey.php',
-      125 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/CellGenerator.php',
-      126 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/CommandGenerator.php',
-      127 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/ConfigGenerator.php',
-      128 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/ControllerGenerator.php',
-      129 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/EntityGenerator.php',
-      130 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/FilterGenerator.php',
-      131 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/MigrationGenerator.php',
-      132 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/ModelGenerator.php',
-      133 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/ScaffoldGenerator.php',
-      134 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/SeederGenerator.php',
-      135 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/TestGenerator.php',
-      136 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/ValidationGenerator.php',
-      137 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/cell.tpl.php',
-      138 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/cell_view.tpl.php',
-      139 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/command.tpl.php',
-      140 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/config.tpl.php',
-      141 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/controller.tpl.php',
-      142 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/entity.tpl.php',
-      143 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/filter.tpl.php',
-      144 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/migration.tpl.php',
-      145 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/model.tpl.php',
-      146 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/seeder.tpl.php',
-      147 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/test.tpl.php',
-      148 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/validation.tpl.php',
-      149 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Help.php',
-      150 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Housekeeping/ClearDebugbar.php',
-      151 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Housekeeping/ClearLogs.php',
-      152 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/ListCommands.php',
-      153 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Server/Serve.php',
-      154 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Translation/LocalizationFinder.php',
-      155 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Translation/LocalizationSync.php',
-      156 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/ConfigCheck.php',
-      157 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Environment.php',
-      158 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/FilterCheck.php',
-      159 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Namespaces.php',
-      160 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Optimize.php',
-      161 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/PhpIniCheck.php',
-      162 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Publish.php',
-      163 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes.php',
-      164 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/AutoRouteCollector.php',
-      165 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/AutoRouterImproved/AutoRouteCollector.php',
-      166 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/AutoRouterImproved/ControllerMethodReader.php',
-      167 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/ControllerFinder.php',
-      168 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/ControllerMethodReader.php',
-      169 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/FilterCollector.php',
-      170 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/FilterFinder.php',
-      171 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/SampleURIGenerator.php',
+      1 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/AutoRun.php',
+      2 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/ChatGovernanceIndex.php',
+      3 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/CommandIndex.php',
+      4 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/CopilotValidate.php',
+      5 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/EmailScan.php',
+      6 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/ManualRun.php',
+      7 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/Run.php',
+      8 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/ScanCells.php',
+      9 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AiOpsSeed.php',
+      10 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AlertsAudit.php',
+      11 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AlertsParseTest.php',
+      12 => '/home/mymiteam/mymiwallet/site/current/app/Commands/App/Healthcheck.php',
+      13 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AppUpdate.php',
+      14 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Audit/NodeAudit.php',
+      15 => '/home/mymiteam/mymiwallet/site/current/app/Commands/AuditPsr4.php',
+      16 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Auth/Audit.php',
+      17 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Auth/FunnelCheck.php',
+      18 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Auth/Smoke.php',
+      19 => '/home/mymiteam/mymiwallet/site/current/app/Commands/CacheAudit.php',
+      20 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Codex/Review.php',
+      21 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Codex/ReviewCommit.php',
+      22 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Codex/ReviewList.php',
+      23 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Codex/ReviewPrOutbox.php',
+      24 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Codex/ReviewPublish.php',
+      25 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Config/Drift.php',
+      26 => '/home/mymiteam/mymiwallet/site/current/app/Commands/ConfigLint.php',
+      27 => '/home/mymiteam/mymiwallet/site/current/app/Commands/ContentEngineSmoke.php',
+      28 => '/home/mymiteam/mymiwallet/site/current/app/Commands/ContentIngestSample.php',
+      29 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Contracts/AiOpsRunnable.php',
+      30 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Contracts/DryRunCapable.php',
+      31 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Contracts/RequiresApproval.php',
+      32 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Database/ApplyDocs.php',
+      33 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Database/Drift.php',
+      34 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Database/Inventory.php',
+      35 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Database/MigrateDryRun.php',
+      36 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Diagnose502.php',
+      37 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Diagnose503.php',
+      38 => '/home/mymiteam/mymiwallet/site/current/app/Commands/DiscordList.php',
+      39 => '/home/mymiteam/mymiwallet/site/current/app/Commands/DiscordProcessQueue.php',
+      40 => '/home/mymiteam/mymiwallet/site/current/app/Commands/DiscordTest.php',
+      41 => '/home/mymiteam/mymiwallet/site/current/app/Commands/DiscordTestLiquidity.php',
+      42 => '/home/mymiteam/mymiwallet/site/current/app/Commands/DiscordWireCheck.php',
+      43 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Env/EnvDoctor.php',
+      44 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Fix503.php',
+      45 => '/home/mymiteam/mymiwallet/site/current/app/Commands/ForecastEvaluate.php',
+      46 => '/home/mymiteam/mymiwallet/site/current/app/Commands/ForecastRefresh.php',
+      47 => '/home/mymiteam/mymiwallet/site/current/app/Commands/GapTrackerSync.php',
+      48 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Growth/RetentionWatch.php',
+      49 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Health/Cache.php',
+      50 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Health/Disk.php',
+      51 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Health/GitSafety.php',
+      52 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Health/Services.php',
+      53 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Logs/Healthcheck.php',
+      54 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Logs/Summarize.php',
+      55 => '/home/mymiteam/mymiwallet/site/current/app/Commands/LogsFullReport.php',
+      56 => '/home/mymiteam/mymiwallet/site/current/app/Commands/MailSend.php',
+      57 => '/home/mymiteam/mymiwallet/site/current/app/Commands/MailSendTest.php',
+      58 => '/home/mymiteam/mymiwallet/site/current/app/Commands/MailTest.php',
+      59 => '/home/mymiteam/mymiwallet/site/current/app/Commands/MailVerify.php',
+      60 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Marketing/AutomationAudit.php',
+      61 => '/home/mymiteam/mymiwallet/site/current/app/Commands/MditNavComputeDaily.php',
+      62 => '/home/mymiteam/mymiwallet/site/current/app/Commands/NewsAudit.php',
+      63 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/AiopsInit.php',
+      64 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/AlertsIngest.php',
+      65 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/AppUpdate.php',
+      66 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/CommandConstructorScanner.php',
+      67 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/CommandsAudit.php',
+      68 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/CommandsAutofix.php',
+      69 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/CommandsInventory.php',
+      70 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/CommandsLint.php',
+      71 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/ConfigLint.php',
+      72 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/ConfigReset.php',
+      73 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/FilesystemLint.php',
+      74 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/NextSteps.php',
+      75 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/NextStepsSync.php',
+      76 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/NextStepsSyncManual.php',
+      77 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/ProposePr.php',
+      78 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/SparkReset.php',
+      79 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/Support/CommandRulesScanner.php',
+      80 => '/home/mymiteam/mymiwallet/site/current/app/Commands/OpsAnalyzeCommands.php',
+      81 => '/home/mymiteam/mymiwallet/site/current/app/Commands/OpsFetchCommands.php',
+      82 => '/home/mymiteam/mymiwallet/site/current/app/Commands/OpsWork.php',
+      83 => '/home/mymiteam/mymiwallet/site/current/app/Commands/PurgeFastCGI.php',
+      84 => '/home/mymiteam/mymiwallet/site/current/app/Commands/RestartSafe.php',
+      85 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Revenue/CostForecast.php',
+      86 => '/home/mymiteam/mymiwallet/site/current/app/Commands/RevenueStreamsScan.php',
+      87 => '/home/mymiteam/mymiwallet/site/current/app/Commands/RoutesAuthAudit.php',
+      88 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Runtime/CacheBoot.php',
+      89 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Runtime/Diagnose502.php',
+      90 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Runtime/SparkDoctor.php',
+      91 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Runtime/SparkDoctorRuntime.php',
+      92 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Runtime/SparkFix.php',
+      93 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Runtime/SparkOptimize.php',
+      94 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Runtime/Triage.php',
+      95 => '/home/mymiteam/mymiwallet/site/current/app/Commands/RuntimeCheck.php',
+      96 => '/home/mymiteam/mymiwallet/site/current/app/Commands/SafeBaseCommand.php',
+      97 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Scrapers/EmailScraperAudit.php',
+      98 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Security/SecretsAudit.php',
+      99 => '/home/mymiteam/mymiwallet/site/current/app/Commands/SecurityCspAudit.php',
+      100 => '/home/mymiteam/mymiwallet/site/current/app/Commands/SparkDoctor.php',
+      101 => '/home/mymiteam/mymiwallet/site/current/app/Commands/SparkFix.php',
+      102 => '/home/mymiteam/mymiwallet/site/current/app/Commands/SparkReset.php',
+      103 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Support/ArtifactHelper.php',
+      104 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Support/GitHubIssueHelper.php',
+      105 => '/home/mymiteam/mymiwallet/site/current/app/Commands/TestEmail.php',
+      106 => '/home/mymiteam/mymiwallet/site/current/app/Commands/TrafficSpikeGuard.php',
+      107 => '/home/mymiteam/mymiwallet/site/current/app/Commands/Ux/JourneyAudit.php',
+      108 => '/home/mymiteam/mymiwallet/site/current/app/Commands/WalletsWarmSummaryCache.php',
+      109 => '/home/mymiteam/mymiwallet/site/current/vendor/myth/auth/src/Commands/ActivateUser.php',
+      110 => '/home/mymiteam/mymiwallet/site/current/vendor/myth/auth/src/Commands/CreateGroup.php',
+      111 => '/home/mymiteam/mymiwallet/site/current/vendor/myth/auth/src/Commands/CreateUser.php',
+      112 => '/home/mymiteam/mymiwallet/site/current/vendor/myth/auth/src/Commands/HashPassword.php',
+      113 => '/home/mymiteam/mymiwallet/site/current/vendor/myth/auth/src/Commands/ListGroups.php',
+      114 => '/home/mymiteam/mymiwallet/site/current/vendor/myth/auth/src/Commands/ListUsers.php',
+      115 => '/home/mymiteam/mymiwallet/site/current/vendor/myth/auth/src/Commands/Publish.php',
+      116 => '/home/mymiteam/mymiwallet/site/current/vendor/myth/auth/src/Commands/SetPassword.php',
+      117 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Cache/ClearCache.php',
+      118 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Cache/InfoCache.php',
+      119 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Database/CreateDatabase.php',
+      120 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Database/Migrate.php',
+      121 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Database/MigrateRefresh.php',
+      122 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Database/MigrateRollback.php',
+      123 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Database/MigrateStatus.php',
+      124 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Database/Seed.php',
+      125 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Database/ShowTableInfo.php',
+      126 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Encryption/GenerateKey.php',
+      127 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/CellGenerator.php',
+      128 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/CommandGenerator.php',
+      129 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/ConfigGenerator.php',
+      130 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/ControllerGenerator.php',
+      131 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/EntityGenerator.php',
+      132 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/FilterGenerator.php',
+      133 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/MigrationGenerator.php',
+      134 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/ModelGenerator.php',
+      135 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/ScaffoldGenerator.php',
+      136 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/SeederGenerator.php',
+      137 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/TestGenerator.php',
+      138 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/ValidationGenerator.php',
+      139 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/cell.tpl.php',
+      140 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/cell_view.tpl.php',
+      141 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/command.tpl.php',
+      142 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/config.tpl.php',
+      143 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/controller.tpl.php',
+      144 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/entity.tpl.php',
+      145 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/filter.tpl.php',
+      146 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/migration.tpl.php',
+      147 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/model.tpl.php',
+      148 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/seeder.tpl.php',
+      149 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/test.tpl.php',
+      150 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Generators/Views/validation.tpl.php',
+      151 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Help.php',
+      152 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Housekeeping/ClearDebugbar.php',
+      153 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Housekeeping/ClearLogs.php',
+      154 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/ListCommands.php',
+      155 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Server/Serve.php',
+      156 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Translation/LocalizationFinder.php',
+      157 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Translation/LocalizationSync.php',
+      158 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/ConfigCheck.php',
+      159 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Environment.php',
+      160 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/FilterCheck.php',
+      161 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Namespaces.php',
+      162 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Optimize.php',
+      163 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/PhpIniCheck.php',
+      164 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Publish.php',
+      165 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes.php',
+      166 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/AutoRouteCollector.php',
+      167 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/AutoRouterImproved/AutoRouteCollector.php',
+      168 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/AutoRouterImproved/ControllerMethodReader.php',
+      169 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/ControllerFinder.php',
+      170 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/ControllerMethodReader.php',
+      171 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/FilterCollector.php',
+      172 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/FilterFinder.php',
+      173 => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Utilities/Routes/SampleURIGenerator.php',
     ),
   ),
 );
