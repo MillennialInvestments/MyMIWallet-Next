@@ -1,6 +1,6 @@
 # AI-Ops: Stale Docs
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-07T02:00:01Z
+> Run: 2026-02-07T12:00:01Z
 
 - docs/OVERVIEW.md
   - Doc last updated: 2025-11-08 (90 days ago)
@@ -31,7 +31,7 @@
 - docs/categorized/README.md
   - Doc last updated: 2025-11-30 (68 days ago)
 - docs/content_hub_inventory/content_hub_inventory.md
-  - Doc last updated: 2025-11-17 (81 days ago)
+  - Doc last updated: 2025-11-17 (82 days ago)
 - docs/csp-and-commondata.md
   - Doc last updated: 2025-11-08 (90 days ago)
 - docs/discord/README.md
@@ -43,7 +43,7 @@
 - docs/discord/alerts_automation.md
   - Doc last updated: 2025-11-27 (71 days ago)
 - docs/discord/discord_integration_overview.md
-  - Doc last updated: 2025-11-25 (73 days ago)
+  - Doc last updated: 2025-11-25 (74 days ago)
 - docs/discord/discord_schema_v3.sql.md
   - Doc last updated: 2025-11-08 (90 days ago)
 - docs/discord/discord_seed_v3.sql.md
@@ -51,7 +51,7 @@
 - docs/discord/discord_to_ci4_commands.md
   - Doc last updated: 2025-11-26 (72 days ago)
 - docs/discord/earnings_calendar_automation.md
-  - Doc last updated: 2025-11-26 (72 days ago)
+  - Doc last updated: 2025-11-26 (73 days ago)
 - docs/discord/environments.md
   - Doc last updated: 2025-12-05 (63 days ago)
 - docs/discord/events_matrix.md
@@ -63,7 +63,7 @@
 - docs/discord/mysql_discord_schema.md
   - Doc last updated: 2025-12-05 (63 days ago)
 - docs/discord/operations_and_montioring.md
-  - Doc last updated: 2025-11-26 (72 days ago)
+  - Doc last updated: 2025-11-26 (73 days ago)
 - docs/discord/premium_flows_and_upsell.md
   - Doc last updated: 2025-12-05 (63 days ago)
 - docs/discord/python_workers.md
@@ -87,7 +87,7 @@
 - docs/exports_schema.md
   - Doc last updated: 2025-11-08 (90 days ago)
 - docs/functional_inventory/feature_inventory.md
-  - Doc last updated: 2025-11-24 (74 days ago)
+  - Doc last updated: 2025-11-24 (75 days ago)
 - docs/logs/_index.md
   - Doc last updated: 2025-11-08 (90 days ago)
 - docs/logs/log-2025-10-06.md
@@ -225,7 +225,7 @@
 - docs/ops/unexpected-token-lt-audit.md
   - Doc last updated: 2025-11-08 (90 days ago)
 - docs/page_seo/page_seo_inventory.md
-  - Doc last updated: 2025-11-28 (70 days ago)
+  - Doc last updated: 2025-11-28 (71 days ago)
 - docs/php-errors-playbook.md
   - Doc last updated: 2025-11-08 (90 days ago)
 - docs/predictions/_index.md
@@ -249,7 +249,7 @@
 - docs/security/_index.md
   - Doc last updated: 2025-11-08 (90 days ago)
 - docs/syndication_inventory/syndication_inventory.md
-  - Doc last updated: 2025-11-17 (81 days ago)
+  - Doc last updated: 2025-11-17 (82 days ago)
 - docs/tasks/_index.md
   - Doc last updated: 2025-11-08 (90 days ago)
 - docs/user-guides/ci4/01_Overview.md
