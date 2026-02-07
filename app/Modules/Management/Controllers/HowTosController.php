@@ -63,7 +63,7 @@ class HowTosController extends UserController
         $this->walletService = new WalletService($this->logger, $this->walletModel);
 
         // Initialize UserService and pass required dependencies
-        $this->cuID = getCuID();  // Assuming getCuID() is a helper or service
+        $this->cuID = $this->getCuID();  // Assuming $this->getCuID() is a helper or service
 $this->userService = new UserService($this->siteSettings, $this->cuID, Services::request());
 
     }

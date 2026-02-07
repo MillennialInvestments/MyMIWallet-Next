@@ -2,14 +2,27 @@
 
 namespace App\Controllers;
 
+use App\Controllers\Traits\HasUserContext;
+use CodeIgniter\HTTP\RequestInterface;
+use Psr\Log\LoggerInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class UserController extends BaseController
 {
+    use HasUserContext;
+
     protected array $data = [];
     protected bool $stringAsHtml = false;
-    protected ?int $cuID = null;
     // protected bool $cuIdResolutionLogged = false;
+
+    public function initController(
+        RequestInterface $request,
+        ResponseInterface $response,
+        LoggerInterface $logger
+    ) {
+        parent::initController($request, $response, $logger);
+        $this->initUserContext();
+    }
 
     /**
      * Normalize arbitrary render data inputs into a consistent array shape.

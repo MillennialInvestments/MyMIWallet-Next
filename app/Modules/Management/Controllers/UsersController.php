@@ -93,7 +93,7 @@ class UsersController extends UserController
     {
         $this->data = parent::commonData();
         $this->data = $this->data ?? [];
-        $cuID = getCuID();  // Get current user ID once
+        $cuID = $this->getCuID();  // Get current user ID once
         $this->cuID = $cuID;  // Ensure $this->cuID is set for use elsewhere
         $userData = $this->getMyMIUser()->getUserInformation($cuID);  // ✅ Correct method call
      
