@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-07T14:00:01Z
+> Run: 2026-02-07T18:00:02Z
 
 - docs/CRON.md
   - Last updated: 2026-01-30
@@ -127,7 +127,22 @@
   - Change type: unchanged
 - docs/aiops/artifacts/ops-spark-reset/20260207-135815/summary.md
   - Last updated: 2026-02-07
-  - Change type: new
+  - Change type: unchanged
+- docs/aiops/artifacts/ops-spark-reset/20260207-140038/summary.md
+  - Last updated: 2026-02-07
+  - Change type: unchanged
+- docs/aiops/artifacts/ops-spark-reset/20260207-140215/summary.md
+  - Last updated: 2026-02-07
+  - Change type: unchanged
+- docs/aiops/artifacts/ops-spark-reset/20260207-151413/summary.md
+  - Last updated: 2026-02-07
+  - Change type: unchanged
+- docs/aiops/artifacts/ops-spark-reset/20260207-152502/summary.md
+  - Last updated: 2026-02-07
+  - Change type: unchanged
+- docs/aiops/artifacts/ops-spark-reset/20260207-153004/summary.md
+  - Last updated: 2026-02-07
+  - Change type: unchanged
 - docs/aiops/artifacts/revenue-cost-forecast/20260201-180746/summary.md
   - Last updated: 2026-02-01
   - Change type: unchanged
@@ -259,7 +274,7 @@
   - Change type: unchanged
 - docs/architecture/psr4-remediation.md
   - Last updated: 2026-02-07
-  - Change type: new
+  - Change type: unchanged
 - docs/auctions/_index.md
   - Last updated: 2025-11-08
   - Change type: unchanged

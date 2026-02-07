@@ -1,0 +1,978 @@
+<?php return array (
+  'options' => 
+  array (
+    'component' => 'config',
+    'path' => 'Config',
+    'instanceOf' => NULL,
+    'getShared' => true,
+    'preferApp' => true,
+  ),
+  'aliases' => 
+  array (
+    'Config\\Exceptions' => 'Config\\Exceptions',
+    'Config\\App' => 'Config\\App',
+    'Config\\Cache' => 'Config\\Cache',
+    'Config\\UserAgents' => 'Config\\UserAgents',
+    'Config\\ContentSecurityPolicy' => 'Config\\ContentSecurityPolicy',
+    'Config\\Cookie' => 'Config\\Cookie',
+    'Config\\Session' => 'Config\\Session',
+    'Config\\Logger' => 'Config\\Logger',
+    'Config\\Filters' => 'Config\\Filters',
+    'CodeIgniter\\Config\\Filters' => 'CodeIgniter\\Config\\Filters',
+    'Config\\Routing' => 'Config\\Routing',
+    'Myth\\Auth\\Config\\Auth' => 'Myth\\Auth\\Config\\Auth',
+    'Config\\Feature' => 'Config\\Feature',
+    'Config\\Toolbar' => 'Config\\Toolbar',
+    'Alerts' => 'Tatter\\Alerts\\Config\\Alerts',
+    'Tatter\\Alerts\\Config\\Alerts' => 'Tatter\\Alerts\\Config\\Alerts',
+    'Audits' => 'Tatter\\Audits\\Config\\Audits',
+    'Tatter\\Audits\\Config\\Audits' => 'Tatter\\Audits\\Config\\Audits',
+    'Config\\Security' => 'Config\\Security',
+    'Factory' => 'CodeIgniter\\Config\\Factory',
+    'CodeIgniter\\Config\\Factory' => 'CodeIgniter\\Config\\Factory',
+    'Config\\Database' => 'Config\\Database',
+    'Auth' => 'Config\\Auth',
+    'Config\\Auth' => 'Config\\Auth',
+  ),
+  'instances' => 
+  array (
+    'Config\\Exceptions' => 
+    \Config\Exceptions::__set_state(array(
+       'log' => true,
+       'ignoreCodes' => 
+      array (
+      ),
+       'errorViewPath' => '/home/mymiteam/mymiwallet/site/current/app/Views/errors',
+       'sensitiveDataInTrace' => 
+      array (
+      ),
+       'logDeprecations' => true,
+       'deprecationLogLevel' => 'warning',
+    )),
+    'Config\\App' => 
+    \Config\App::__set_state(array(
+       'baseURL' => 'https://www.mymiwallet.com/',
+       'allowedHostnames' => 
+      array (
+      ),
+       'indexPage' => 'index.php',
+       'uriProtocol' => 'REQUEST_URI',
+       'permittedURIChars' => 'a-z 0-9~%.:_\\-\\(\\)',
+       'defaultLocale' => 'en',
+       'negotiateLocale' => false,
+       'supportedLocales' => 
+      array (
+        0 => 'en',
+      ),
+       'appTimezone' => 'UTC',
+       'charset' => 'UTF-8',
+       'cacheConfig' => false,
+       'optimizeAutoloader' => false,
+       'forceGlobalSecureRequests' => true,
+       'proxyIPs' => 
+      array (
+      ),
+       'CSPEnabled' => false,
+       'cookiePrefix' => '',
+       'cookieDomain' => '.mymiwallet.com',
+       'cookiePath' => '/',
+       'cookieSecure' => true,
+       'cookieHTTPOnly' => true,
+       'cookieSameSite' => 'Lax',
+       'debugHUD' => false,
+       'maintenanceMode' => false,
+       'enableKint' => false,
+    )),
+    'Config\\Cache' => 
+    \Config\Cache::__set_state(array(
+       'handler' => 'file',
+       'backupHandler' => 'dummy',
+       'prefix' => '',
+       'ttl' => 60,
+       'reservedCharacters' => '{}()/\\@:',
+       'file' => 
+      array (
+        'storePath' => '/home/mymiteam/mymiwallet/site/current/writable/cache/',
+        'mode' => 416,
+      ),
+       'memcached' => 
+      array (
+        'host' => '127.0.0.1',
+        'port' => 11211,
+        'weight' => 1,
+        'raw' => false,
+      ),
+       'redis' => 
+      array (
+        'host' => '127.0.0.1',
+        'password' => NULL,
+        'port' => 6379,
+        'timeout' => 0,
+        'database' => 0,
+      ),
+       'validHandlers' => 
+      array (
+        'dummy' => 'CodeIgniter\\Cache\\Handlers\\DummyHandler',
+        'file' => 'CodeIgniter\\Cache\\Handlers\\FileHandler',
+        'memcached' => 'CodeIgniter\\Cache\\Handlers\\MemcachedHandler',
+        'predis' => 'CodeIgniter\\Cache\\Handlers\\PredisHandler',
+        'redis' => 'CodeIgniter\\Cache\\Handlers\\RedisHandler',
+        'wincache' => 'CodeIgniter\\Cache\\Handlers\\WincacheHandler',
+      ),
+       'cacheQueryString' => false,
+    )),
+    'Config\\UserAgents' => 
+    \Config\UserAgents::__set_state(array(
+       'platforms' => 
+      array (
+        'windows nt 10.0' => 'Windows 10',
+        'windows nt 6.3' => 'Windows 8.1',
+        'windows nt 6.2' => 'Windows 8',
+        'windows nt 6.1' => 'Windows 7',
+        'windows nt 6.0' => 'Windows Vista',
+        'windows nt 5.2' => 'Windows 2003',
+        'windows nt 5.1' => 'Windows XP',
+        'windows nt 5.0' => 'Windows 2000',
+        'windows nt 4.0' => 'Windows NT 4.0',
+        'winnt4.0' => 'Windows NT 4.0',
+        'winnt 4.0' => 'Windows NT',
+        'winnt' => 'Windows NT',
+        'windows 98' => 'Windows 98',
+        'win98' => 'Windows 98',
+        'windows 95' => 'Windows 95',
+        'win95' => 'Windows 95',
+        'windows phone' => 'Windows Phone',
+        'windows' => 'Unknown Windows OS',
+        'android' => 'Android',
+        'blackberry' => 'BlackBerry',
+        'iphone' => 'iOS',
+        'ipad' => 'iOS',
+        'ipod' => 'iOS',
+        'os x' => 'Mac OS X',
+        'ppc mac' => 'Power PC Mac',
+        'freebsd' => 'FreeBSD',
+        'ppc' => 'Macintosh',
+        'linux' => 'Linux',
+        'debian' => 'Debian',
+        'sunos' => 'Sun Solaris',
+        'beos' => 'BeOS',
+        'apachebench' => 'ApacheBench',
+        'aix' => 'AIX',
+        'irix' => 'Irix',
+        'osf' => 'DEC OSF',
+        'hp-ux' => 'HP-UX',
+        'netbsd' => 'NetBSD',
+        'bsdi' => 'BSDi',
+        'openbsd' => 'OpenBSD',
+        'gnu' => 'GNU/Linux',
+        'unix' => 'Unknown Unix OS',
+        'symbian' => 'Symbian OS',
+      ),
+       'browsers' => 
+      array (
+        'OPR' => 'Opera',
+        'Flock' => 'Flock',
+        'Edge' => 'Spartan',
+        'Edg' => 'Edge',
+        'Chrome' => 'Chrome',
+        'Opera.*?Version' => 'Opera',
+        'Opera' => 'Opera',
+        'MSIE' => 'Internet Explorer',
+        'Internet Explorer' => 'Internet Explorer',
+        'Trident.* rv' => 'Internet Explorer',
+        'Shiira' => 'Shiira',
+        'Firefox' => 'Firefox',
+        'Chimera' => 'Chimera',
+        'Phoenix' => 'Phoenix',
+        'Firebird' => 'Firebird',
+        'Camino' => 'Camino',
+        'Netscape' => 'Netscape',
+        'OmniWeb' => 'OmniWeb',
+        'Safari' => 'Safari',
+        'Mozilla' => 'Mozilla',
+        'Konqueror' => 'Konqueror',
+        'icab' => 'iCab',
+        'Lynx' => 'Lynx',
+        'Links' => 'Links',
+        'hotjava' => 'HotJava',
+        'amaya' => 'Amaya',
+        'IBrowse' => 'IBrowse',
+        'Maxthon' => 'Maxthon',
+        'Ubuntu' => 'Ubuntu Web Browser',
+        'Vivaldi' => 'Vivaldi',
+      ),
+       'mobiles' => 
+      array (
+        'mobileexplorer' => 'Mobile Explorer',
+        'palmsource' => 'Palm',
+        'palmscape' => 'Palmscape',
+        'motorola' => 'Motorola',
+        'nokia' => 'Nokia',
+        'palm' => 'Palm',
+        'iphone' => 'Apple iPhone',
+        'ipad' => 'iPad',
+        'ipod' => 'Apple iPod Touch',
+        'sony' => 'Sony Ericsson',
+        'ericsson' => 'Sony Ericsson',
+        'blackberry' => 'BlackBerry',
+        'cocoon' => 'O2 Cocoon',
+        'blazer' => 'Treo',
+        'lg' => 'LG',
+        'amoi' => 'Amoi',
+        'xda' => 'XDA',
+        'mda' => 'MDA',
+        'vario' => 'Vario',
+        'htc' => 'HTC',
+        'samsung' => 'Samsung',
+        'sharp' => 'Sharp',
+        'sie-' => 'Siemens',
+        'alcatel' => 'Alcatel',
+        'benq' => 'BenQ',
+        'ipaq' => 'HP iPaq',
+        'mot-' => 'Motorola',
+        'playstation portable' => 'PlayStation Portable',
+        'playstation 3' => 'PlayStation 3',
+        'playstation vita' => 'PlayStation Vita',
+        'hiptop' => 'Danger Hiptop',
+        'nec-' => 'NEC',
+        'panasonic' => 'Panasonic',
+        'philips' => 'Philips',
+        'sagem' => 'Sagem',
+        'sanyo' => 'Sanyo',
+        'spv' => 'SPV',
+        'zte' => 'ZTE',
+        'sendo' => 'Sendo',
+        'nintendo dsi' => 'Nintendo DSi',
+        'nintendo ds' => 'Nintendo DS',
+        'nintendo 3ds' => 'Nintendo 3DS',
+        'wii' => 'Nintendo Wii',
+        'open web' => 'Open Web',
+        'openweb' => 'OpenWeb',
+        'android' => 'Android',
+        'symbian' => 'Symbian',
+        'SymbianOS' => 'SymbianOS',
+        'elaine' => 'Palm',
+        'series60' => 'Symbian S60',
+        'windows ce' => 'Windows CE',
+        'obigo' => 'Obigo',
+        'netfront' => 'Netfront Browser',
+        'openwave' => 'Openwave Browser',
+        'mobilexplorer' => 'Mobile Explorer',
+        'operamini' => 'Opera Mini',
+        'opera mini' => 'Opera Mini',
+        'opera mobi' => 'Opera Mobile',
+        'fennec' => 'Firefox Mobile',
+        'digital paths' => 'Digital Paths',
+        'avantgo' => 'AvantGo',
+        'xiino' => 'Xiino',
+        'novarra' => 'Novarra Transcoder',
+        'vodafone' => 'Vodafone',
+        'docomo' => 'NTT DoCoMo',
+        'o2' => 'O2',
+        'mobile' => 'Generic Mobile',
+        'wireless' => 'Generic Mobile',
+        'j2me' => 'Generic Mobile',
+        'midp' => 'Generic Mobile',
+        'cldc' => 'Generic Mobile',
+        'up.link' => 'Generic Mobile',
+        'up.browser' => 'Generic Mobile',
+        'smartphone' => 'Generic Mobile',
+        'cellphone' => 'Generic Mobile',
+      ),
+       'robots' => 
+      array (
+        'googlebot' => 'Googlebot',
+        'msnbot' => 'MSNBot',
+        'baiduspider' => 'Baiduspider',
+        'bingbot' => 'Bing',
+        'slurp' => 'Inktomi Slurp',
+        'yahoo' => 'Yahoo',
+        'ask jeeves' => 'Ask Jeeves',
+        'fastcrawler' => 'FastCrawler',
+        'infoseek' => 'InfoSeek Robot 1.0',
+        'lycos' => 'Lycos',
+        'yandex' => 'YandexBot',
+        'mediapartners-google' => 'MediaPartners Google',
+        'CRAZYWEBCRAWLER' => 'Crazy Webcrawler',
+        'adsbot-google' => 'AdsBot Google',
+        'feedfetcher-google' => 'Feedfetcher Google',
+        'curious george' => 'Curious George',
+        'ia_archiver' => 'Alexa Crawler',
+        'MJ12bot' => 'Majestic-12',
+        'Uptimebot' => 'Uptimebot',
+      ),
+    )),
+    'Config\\ContentSecurityPolicy' => 
+    \Config\ContentSecurityPolicy::__set_state(array(
+       'reportOnly' => false,
+       'reportURI' => NULL,
+       'upgradeInsecureRequests' => false,
+       'defaultSrc' => NULL,
+       'scriptSrc' => 'self',
+       'styleSrc' => 'self',
+       'imageSrc' => 'self',
+       'baseURI' => NULL,
+       'childSrc' => 'self',
+       'connectSrc' => 'self',
+       'fontSrc' => NULL,
+       'formAction' => 'self',
+       'frameAncestors' => NULL,
+       'frameSrc' => NULL,
+       'mediaSrc' => NULL,
+       'objectSrc' => 'self',
+       'manifestSrc' => NULL,
+       'pluginTypes' => NULL,
+       'sandbox' => NULL,
+       'styleNonceTag' => '{csp-style-nonce}',
+       'scriptNonceTag' => '{csp-script-nonce}',
+       'autoNonce' => true,
+    )),
+    'Config\\Cookie' => 
+    \Config\Cookie::__set_state(array(
+       'prefix' => '',
+       'expires' => 0,
+       'path' => '/',
+       'domain' => '.mymiwallet.com',
+       'secure' => true,
+       'httponly' => true,
+       'samesite' => 'Lax',
+       'raw' => false,
+    )),
+    'Config\\Session' => 
+    \Config\Session::__set_state(array(
+       'driver' => 'CodeIgniter\\Session\\Handlers\\FileHandler',
+       'cookieName' => 'ci_session',
+       'cookieSecure' => true,
+       'expiration' => 7200,
+       'savePath' => '/home/mymiteam/mymiwallet/site/current/writable/session',
+       'matchIP' => false,
+       'timeToUpdate' => 300,
+       'regenerateDestroy' => false,
+       'DBGroup' => NULL,
+       'lockRetryInterval' => 100000,
+       'lockMaxRetries' => 300,
+    )),
+    'Config\\Logger' => 
+    \Config\Logger::__set_state(array(
+       'threshold' => 3,
+       'dateFormat' => 'Y-m-d H:i:s',
+       'handlers' => 
+      array (
+        'App\\Log\\Handlers\\DatabaseLoggerHandler' => 
+        array (
+          'handles' => 
+          array (
+            0 => 'emergency',
+            1 => 'alert',
+            2 => 'critical',
+            3 => 'error',
+            4 => 'warning',
+          ),
+          'fallbackPath' => '/home/mymiteam/mymiwallet/site/current/writable/logs/',
+          'notificationEmail' => 'support@mymiwallet.com',
+        ),
+        'CodeIgniter\\Log\\Handlers\\FileHandler' => 
+        array (
+          'handles' => 
+          array (
+            0 => 'critical',
+            1 => 'alert',
+            2 => 'emergency',
+            3 => 'debug',
+            4 => 'error',
+            5 => 'info',
+            6 => 'notice',
+            7 => 'warning',
+          ),
+          'fileExtension' => 'php',
+          'filePermissions' => 420,
+          'path' => '/home/mymiteam/mymiwallet/site/current/writable/logs/',
+        ),
+      ),
+       'logPath' => '/home/mymiteam/mymiwallet/site/current/writable/logs/',
+    )),
+    'Config\\Filters' => 
+    \Config\Filters::__set_state(array(
+       'aliases' => 
+      array (
+        'responsecache' => 'CodeIgniter\\Filters\\ResponseCache',
+        'sessionTracker' => 'App\\Filters\\SessionTrackerFilter',
+        'sessionRevoked' => 'App\\Filters\\SessionRevokedFilter',
+        'permission' => 'App\\Filters\\PermissionFilter',
+        'apiToken' => 'App\\Filters\\ApiTokenAuthFilter',
+        'feature' => 'App\\Filters\\FeatureFlagFilter',
+        'ratelimit' => 'App\\Filters\\RateLimitFilter',
+        'captcha' => 'App\\Filters\\CaptchaFilter',
+        'emailVerified' => 'App\\Filters\\EmailVerifiedFilter',
+        'idempotency' => 'App\\Filters\\IdempotencyFilter',
+        'observability' => 'App\\Filters\\ObservabilityFilter',
+        'jsonException' => 'App\\Filters\\JsonExceptionFilter',
+        'maintenance' => 'App\\Filters\\MaintenanceFilter',
+        'login' => 'App\\Filters\\LoginFilter',
+        'authcheck' => 'App\\Filters\\AuthCheckFilter',
+        'csrf' => 'App\\Filters\\CsrfDebugFilter',
+        'auth' => 'App\\Filters\\AuthFilter',
+        'cronKey' => 'App\\Filters\\CronKeyFilter',
+        'noStore' => 'App\\Filters\\NoStoreFilter',
+        'cspoff' => 'App\\Filters\\CspOff',
+        'toolbar' => 'CodeIgniter\\Filters\\DebugToolbar',
+        'honeypot' => 'CodeIgniter\\Filters\\Honeypot',
+        'invalidchars' => 'CodeIgniter\\Filters\\InvalidChars',
+        'except' => 'App\\Filters\\ExceptFilter',
+        'alerts' => 'Tatter\\Alerts\\Filters\\AlertsFilter',
+      ),
+       'globals' => 
+      array (
+        'before' => 
+        array (
+          0 => 'maintenance',
+          1 => 'observability',
+          2 => 'ratelimit',
+          3 => 'sessionRevoked',
+          'csrf' => 
+          array (
+            'except' => 
+            array (
+              0 => 'API/*',
+              1 => 'api/*',
+              2 => 'debugbar*',
+              3 => '_debugbar*',
+            ),
+          ),
+          'authcheck' => 
+          array (
+            'except' => 
+            array (
+              0 => 'login',
+              1 => 'register',
+              2 => 'register/success',
+              3 => 'forgot',
+              4 => 'reset',
+              5 => 'forgot-password',
+              6 => 'reset-password',
+              7 => 'activate',
+              8 => 'activate/*',
+              9 => 'health',
+              10 => 'healthz',
+              11 => 'system/healthz',
+              12 => 'system/diag',
+              13 => 'status',
+              14 => 'landing',
+              15 => 'landing/*',
+              16 => 'api/health',
+              17 => 'API/Health',
+              18 => 'API/health',
+              19 => 'Auth/forgot-password',
+              20 => 'Auth/reset-password',
+              21 => 'activate-account',
+              22 => 'activate-account/*',
+              23 => 'resend-activation',
+              24 => 'resend-activate-account',
+              25 => 'Auth/activate-account',
+              26 => 'Auth/activate-account/*',
+              27 => 'auth/provider/*',
+              28 => 'auth/provider/*/callback',
+              29 => 'Auth/provider/*',
+              30 => 'Auth/provider/*/callback',
+              31 => '/Apex/*',
+              32 => '/API/*',
+              33 => '/API/Management/*',
+              34 => '/APIs/*',
+              35 => 'About-Us',
+              36 => 'Blog',
+              37 => '/Blog/*',
+              38 => 'Corporate-Earnings',
+              39 => '/Corporate-Earnings/*',
+              40 => 'Economic-Calendar',
+              41 => '/Economic-Calendar/*',
+              42 => 'Getting-Started',
+              43 => '/Getting-Started/*',
+              44 => '/How-It-Works',
+              45 => '/How-It-Works/*',
+              46 => 'pricing',
+              47 => '/Memberships',
+              48 => '/Memberships/*',
+              49 => '/Preview/*',
+              50 => '/Privacy-Policy',
+              51 => '/Terms-Of-Service',
+              52 => 'Blog',
+              53 => 'Blog/*',
+              54 => 'blog',
+              55 => 'blog/*',
+              56 => 'News',
+              57 => 'News/*',
+              58 => 'news',
+              59 => 'news/*',
+              60 => 'Support',
+              61 => 'Support/*',
+              62 => 'help/account',
+              63 => 'help/account/*',
+              64 => '/help/account',
+              65 => '/help/account/*',
+              66 => '/TBI',
+              67 => '/TBI/*',
+              68 => '/Tim',
+              69 => '/Tim/*',
+              70 => '/Discord',
+              71 => '/Discord/*',
+              72 => '/Facebook',
+              73 => '/Facebook/*',
+              74 => '/ITT',
+              75 => '/ITT/*',
+              76 => '/Monetized-Creators',
+              77 => '/Monetized-Creators/*',
+              78 => '/Alicia',
+              79 => '/Alicia/*',
+              80 => '/AnneAlicia',
+              81 => '/AnneAlicia/*',
+              82 => '/Deon',
+              83 => '/Deon/*',
+              84 => '/Dubose',
+              85 => '/Dubose/*',
+              86 => '/Jasmine',
+              87 => '/Jasmine/*',
+              88 => '/Jailin',
+              89 => '/Jailin/*',
+              90 => '/Jeremy',
+              91 => '/Jeremy/*',
+              92 => '/Kristie',
+              93 => '/Kristie/*',
+              94 => '/Ken',
+              95 => '/Ken/*',
+              96 => '/Manee',
+              97 => '/Manee/*',
+              98 => '/MattCardon',
+              99 => '/MattCardon/*',
+              100 => '/MattHill',
+              101 => '/MattHill/*',
+              102 => '/Michael',
+              103 => '/Michael/*',
+              104 => '/LinkedIn',
+              105 => '/LinkedIn/*',
+              106 => '/Support',
+              107 => '/Support/*',
+              108 => '/Twitter',
+              109 => '/Twitter/*',
+              110 => '/X',
+              111 => '/X/*',
+              112 => '/YouTube',
+              113 => '/YouTube/*',
+              114 => '/',
+              115 => 'debugbar*',
+              116 => '_debugbar*',
+            ),
+          ),
+        ),
+        'after' => 
+        array (
+          0 => 'cspoff',
+          1 => 'sessionTracker',
+          2 => 'observability',
+          3 => 'jsonException',
+        ),
+      ),
+       'methods' => 
+      array (
+      ),
+       'filters' => 
+      array (
+        'cronKey' => 
+        array (
+          'before' => 
+          array (
+            0 => 'API/Alerts/fetchEmailAlerts',
+            1 => 'API/Alerts/distributeAlerts',
+            2 => 'API/Alerts/sendDiscordAlerts',
+            3 => 'API/Alerts/processBrokerEmails',
+            4 => 'API/Alerts/processAllEmails',
+            5 => 'API/Alerts/fetchEmailsOnly',
+            6 => 'API/Alerts/sendDiscordAlertsBySymbol',
+            7 => 'API/Alerts/sendDiscordAlertsBySymbol/*',
+          ),
+        ),
+        'csrf' => 
+        array (
+          'before' => 
+          array (
+            0 => 'login',
+            1 => 'logout',
+            2 => 'register',
+            3 => 'register/*',
+            4 => 'forgot',
+            5 => 'forgot-password',
+            6 => 'reset-password',
+            7 => 'activate',
+            8 => 'activate-account',
+            9 => 'activate-account/*',
+            10 => 'resend-activation',
+            11 => 'resend-activate-account',
+            12 => 'Auth/*',
+            13 => 'get2FAQRCode',
+            14 => 'verify2FACode',
+          ),
+          'except' => 
+          array (
+            0 => 'API/*',
+            1 => 'api/*',
+            2 => 'debugbar*',
+            3 => '_debugbar*',
+          ),
+        ),
+      ),
+    )),
+    'CodeIgniter\\Config\\Filters' => 
+    \CodeIgniter\Config\Filters::__set_state(array(
+       'aliases' => 
+      array (
+        'csrf' => 'CodeIgniter\\Filters\\CSRF',
+        'toolbar' => 'CodeIgniter\\Filters\\DebugToolbar',
+        'honeypot' => 'CodeIgniter\\Filters\\Honeypot',
+        'invalidchars' => 'CodeIgniter\\Filters\\InvalidChars',
+        'secureheaders' => 'CodeIgniter\\Filters\\SecureHeaders',
+        'cors' => 'CodeIgniter\\Filters\\Cors',
+        'forcehttps' => 'CodeIgniter\\Filters\\ForceHTTPS',
+        'pagecache' => 'CodeIgniter\\Filters\\PageCache',
+        'performance' => 'CodeIgniter\\Filters\\PerformanceMetrics',
+        'alerts' => 'Tatter\\Alerts\\Filters\\AlertsFilter',
+      ),
+       'required' => 
+      array (
+        'before' => 
+        array (
+          0 => 'forcehttps',
+          1 => 'pagecache',
+        ),
+        'after' => 
+        array (
+          0 => 'pagecache',
+          1 => 'performance',
+          2 => 'toolbar',
+        ),
+      ),
+       'globals' => 
+      array (
+        'before' => 
+        array (
+        ),
+        'after' => 
+        array (
+        ),
+      ),
+       'methods' => 
+      array (
+      ),
+       'filters' => 
+      array (
+      ),
+    )),
+    'Config\\Routing' => 
+    \Config\Routing::__set_state(array(
+       'routeFiles' => 
+      array (
+        0 => '/home/mymiteam/mymiwallet/site/current/app/Config/Routes.php',
+      ),
+       'defaultNamespace' => 'App\\Controllers',
+       'defaultController' => 'Home',
+       'defaultMethod' => 'index',
+       'translateURIDashes' => false,
+       'override404' => NULL,
+       'autoRoute' => false,
+       'prioritize' => false,
+       'multipleSegmentsOneParam' => false,
+       'moduleRoutes' => 
+      array (
+      ),
+       'translateUriToCamelCase' => true,
+    )),
+    'Myth\\Auth\\Config\\Auth' => 
+    \Myth\Auth\Config\Auth::__set_state(array(
+       'defaultUserGroup' => NULL,
+       'landingRoute' => '/',
+       'reservedRoutes' => 
+      array (
+        'login' => 'login',
+        'logout' => 'logout',
+        'register' => 'register',
+        'activate-account' => 'activate-account',
+        'resend-activate-account' => 'resend-activate-account',
+        'forgot' => 'forgot',
+        'reset-password' => 'reset-password',
+      ),
+       'authenticationLibs' => 
+      array (
+        'local' => 'Myth\\Auth\\Authentication\\LocalAuthenticator',
+      ),
+       'views' => 
+      array (
+        'login' => 'Myth\\Auth\\Views\\login',
+        'register' => 'Myth\\Auth\\Views\\register',
+        'forgot' => 'Myth\\Auth\\Views\\forgot',
+        'reset' => 'Myth\\Auth\\Views\\reset',
+        'emailForgot' => 'Myth\\Auth\\Views\\emails\\forgot',
+        'emailActivation' => 'Myth\\Auth\\Views\\emails\\activation',
+      ),
+       'viewLayout' => 'Myth\\Auth\\Views\\layout',
+       'validFields' => 
+      array (
+        0 => 'email',
+        1 => 'username',
+      ),
+       'personalFields' => 
+      array (
+      ),
+       'maxSimilarity' => 50,
+       'allowRegistration' => true,
+       'requireActivation' => 'Myth\\Auth\\Authentication\\Activators\\EmailActivator',
+       'activeResetter' => 'Myth\\Auth\\Authentication\\Resetters\\EmailResetter',
+       'allowRemembering' => false,
+       'rememberLength' => 2592000,
+       'silent' => false,
+       'hashAlgorithm' => '2y',
+       'hashMemoryCost' => 2048,
+       'hashTimeCost' => 4,
+       'hashThreads' => 4,
+       'hashCost' => 10,
+       'minimumPasswordLength' => 8,
+       'passwordValidators' => 
+      array (
+        0 => 'Myth\\Auth\\Authentication\\Passwords\\CompositionValidator',
+        1 => 'Myth\\Auth\\Authentication\\Passwords\\NothingPersonalValidator',
+        2 => 'Myth\\Auth\\Authentication\\Passwords\\DictionaryValidator',
+      ),
+       'userActivators' => 
+      array (
+        'Myth\\Auth\\Authentication\\Activators\\EmailActivator' => 
+        array (
+          'fromEmail' => NULL,
+          'fromName' => NULL,
+        ),
+      ),
+       'userResetters' => 
+      array (
+        'Myth\\Auth\\Authentication\\Resetters\\EmailResetter' => 
+        array (
+          'fromEmail' => NULL,
+          'fromName' => NULL,
+        ),
+      ),
+       'resetTime' => 3600,
+    )),
+    'Config\\Feature' => 
+    \Config\Feature::__set_state(array(
+       'autoRoutesImproved' => true,
+       'oldFilterOrder' => false,
+       'limitZeroAsAll' => true,
+       'strictLocaleNegotiation' => false,
+    )),
+    'Config\\Toolbar' => 
+    \Config\Toolbar::__set_state(array(
+       'enabled' => false,
+       'collectors' => 
+      array (
+        0 => 'CodeIgniter\\Debug\\Toolbar\\Collectors\\Timers',
+        1 => 'CodeIgniter\\Debug\\Toolbar\\Collectors\\Database',
+        2 => 'CodeIgniter\\Debug\\Toolbar\\Collectors\\Logs',
+        3 => 'CodeIgniter\\Debug\\Toolbar\\Collectors\\Views',
+        4 => 'CodeIgniter\\Debug\\Toolbar\\Collectors\\Files',
+        5 => 'CodeIgniter\\Debug\\Toolbar\\Collectors\\Routes',
+        6 => 'CodeIgniter\\Debug\\Toolbar\\Collectors\\Events',
+        7 => 'Tatter\\Alerts\\Collectors\\Alerts',
+      ),
+       'collectVarData' => true,
+       'maxHistory' => 20,
+       'viewsPath' => '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Debug/Toolbar/Views/',
+       'maxQueries' => 100,
+       'watchedDirectories' => 
+      array (
+        0 => 'app',
+      ),
+       'watchedExtensions' => 
+      array (
+        0 => 'php',
+        1 => 'css',
+        2 => 'js',
+        3 => 'html',
+        4 => 'svg',
+        5 => 'json',
+        6 => 'env',
+      ),
+    )),
+    'Tatter\\Alerts\\Config\\Alerts' => 
+    \Tatter\Alerts\Config\Alerts::__set_state(array(
+       'template' => 'Tatter\\Alerts\\Views\\Bootstrap5',
+       'classes' => 
+      array (
+        'primary' => 'primary',
+        'secondary' => 'secondary',
+        'success' => 'success',
+        'danger' => 'danger',
+        'warning' => 'warning',
+        'info' => 'info',
+        'message' => 'primary',
+        'notice' => 'secondary',
+        'error' => 'danger',
+        'critical' => 'danger',
+        'emergency' => 'danger',
+        'alert' => 'warning',
+        'debug' => 'info',
+        'messages' => 'primary',
+        'errors' => 'danger',
+      ),
+    )),
+    'Tatter\\Audits\\Config\\Audits' => 
+    \Tatter\Audits\Config\Audits::__set_state(array(
+       'sessionUserId' => 'logged_in',
+       'silent' => true,
+    )),
+    'Config\\Security' => 
+    \Config\Security::__set_state(array(
+       'csrfProtection' => 'cookie',
+       'tokenRandomize' => false,
+       'tokenName' => 'csrf_test_name',
+       'headerName' => 'X-CSRF-TOKEN',
+       'cookieName' => 'csrf_cookie_name',
+       'expires' => 7200,
+       'regenerate' => false,
+       'redirect' => true,
+    )),
+    'CodeIgniter\\Config\\Factory' => 
+    \CodeIgniter\Config\Factory::__set_state(array(
+       'models' => 
+      array (
+        'preferApp' => true,
+      ),
+    )),
+    'Config\\Database' => 
+    \Config\Database::__set_state(array(
+       'filesPath' => '/home/mymiteam/mymiwallet/site/current/app/Database/',
+       'defaultGroup' => 'default',
+       'default' => 
+      array (
+        'DSN' => '',
+        'hostname' => 'mysql.mymiwallet.com',
+        'username' => 'mymiteam',
+        'password' => 'Dawg@073120.dawg',
+        'database' => 'mymiwallet',
+        'DBDriver' => 'MySQLi',
+        'DBPrefix' => '',
+        'pConnect' => false,
+        'DBDebug' => false,
+        'charset' => 'utf8mb4',
+        'DBCollat' => 'utf8mb4_general_ci',
+        'swapPre' => '',
+        'encrypt' => false,
+        'compress' => false,
+        'strictOn' => false,
+        'failover' => 
+        array (
+        ),
+        'port' => '3306',
+      ),
+       'tests' => 
+      array (
+        'DSN' => 'sqlite::memory:',
+        'hostname' => '',
+        'username' => '',
+        'password' => '',
+        'database' => ':memory:',
+        'DBDriver' => 'SQLite3',
+        'DBPrefix' => 'bf_',
+        'pConnect' => false,
+        'DBDebug' => true,
+        'charset' => 'utf8',
+        'DBCollat' => 'utf8_general_ci',
+        'swapPre' => '',
+        'encrypt' => false,
+        'compress' => false,
+        'strictOn' => false,
+        'failover' => 
+        array (
+        ),
+        'port' => 0,
+        'foreignKeys' => true,
+        'busyTimeout' => 1000,
+      ),
+    )),
+    'Config\\Auth' => 
+    \Config\Auth::__set_state(array(
+       'defaultUserGroup' => NULL,
+       'landingRoute' => '/Dashboard',
+       'reservedRoutes' => 
+      array (
+        'login' => 'login',
+        'logout' => 'logout',
+        'register' => 'register',
+        'activate-account' => 'activate-account',
+        'resend-activate-account' => 'resend-activate-account',
+        'forgot' => 'forgot',
+        'reset-password' => 'reset-password',
+      ),
+       'authenticationLibs' => 
+      array (
+        'local' => 'Myth\\Auth\\Authentication\\LocalAuthenticator',
+      ),
+       'views' => 
+      array (
+        'login' => 'App\\Views\\Auth\\login',
+        'register' => 'App\\Views\\Auth\\register',
+        'forgot' => 'App\\Views\\Auth\\forgot',
+        'reset' => 'App\\Views\\Auth\\reset',
+        'emailForgot' => 'App\\Views\\Auth\\emails\\forgot',
+        'emailActivation' => 'App\\Views\\Auth\\emails\\activation',
+      ),
+       'viewLayout' => 'App\\Views\\Auth\\layout',
+       'validFields' => 
+      array (
+        0 => 'email',
+        1 => 'username',
+      ),
+       'personalFields' => 
+      array (
+      ),
+       'maxSimilarity' => 50,
+       'allowRegistration' => true,
+       'requireActivation' => 'App\\Authentication\\Activators\\EmailActivator',
+       'activeResetter' => 'App\\Authentication\\Resetters\\EmailResetter',
+       'allowRemembering' => true,
+       'rememberLength' => 2592000,
+       'silent' => false,
+       'hashAlgorithm' => '2y',
+       'hashMemoryCost' => 2048,
+       'hashTimeCost' => 4,
+       'hashThreads' => 4,
+       'hashCost' => 10,
+       'minimumPasswordLength' => 8,
+       'passwordValidators' => 
+      array (
+        0 => 'Myth\\Auth\\Authentication\\Passwords\\CompositionValidator',
+        1 => 'Myth\\Auth\\Authentication\\Passwords\\NothingPersonalValidator',
+        2 => 'Myth\\Auth\\Authentication\\Passwords\\DictionaryValidator',
+      ),
+       'userActivators' => 
+      array (
+        'App\\Authentication\\Activators\\EmailActivator' => 
+        array (
+          'fromEmail' => NULL,
+          'fromName' => NULL,
+        ),
+      ),
+       'userResetters' => 
+      array (
+        'App\\Authentication\\Resetters\\EmailResetter' => 
+        array (
+          'fromEmail' => NULL,
+          'fromName' => NULL,
+        ),
+      ),
+       'resetTime' => 3600,
+       'redirect' => '/Dashboard',
+       'redirectBack' => true,
+       'redirects' => 
+      array (
+        'register' => '/register/success',
+        'login' => '/Dashboard',
+        'logout' => '/',
+      ),
+    )),
+  ),
+);
