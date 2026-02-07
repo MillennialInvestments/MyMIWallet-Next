@@ -1,0 +1,14 @@
+{
+  "discord": {
+    "enabled": true,
+    "webhook": "DISCORD_WEBHOOK_URL",
+    "channel": "#aiops"
+  },
+  "github": {
+    "enabled": true
+  },
+  "chatgpt": {
+    "enabled": true,
+    "summary_only": true
+  }
+}
