@@ -180,8 +180,10 @@ class App extends BaseConfig
             $this->baseURL = rtrim($baseURL, '/') . '/';
         }
 
-        $this->indexPage = env('app.indexPage', '');
+        $this->indexPage = (string) env('app.indexPage', '');
         $this->debugHUD = filter_var(env('app.debugHUD', $this->debugHUD), FILTER_VALIDATE_BOOLEAN);
+        $this->forceGlobalSecureRequests = filter_var(env('app.forceGlobalSecureRequests', $this->forceGlobalSecureRequests), FILTER_VALIDATE_BOOLEAN);
+        $this->CSPEnabled = filter_var(env('app.CSPEnabled', $this->CSPEnabled), FILTER_VALIDATE_BOOLEAN);
 
         if (is_ci()) {
             $this->cacheConfig = false;

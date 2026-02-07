@@ -12,37 +12,42 @@ final class Hybridauth extends BaseConfig
      *
      * @var array<string, array<string, mixed>>
      */
-    public array $providers = [];
+    public array $providers = [
+        'Google' => [
+            'enabled' => true,
+            'keys'    => [
+                'id'     => '',
+                'secret' => '',
+            ],
+            'scope'   => 'email profile',
+        ],
+        'GitHub' => [
+            'enabled' => true,
+            'keys'    => [
+                'id'     => '',
+                'secret' => '',
+            ],
+            'scope'   => 'user:email',
+        ],
+        'LinkedIn' => [
+            'enabled' => false,
+            'keys'    => [
+                'id'     => '',
+                'secret' => '',
+            ],
+            'scope'   => 'r_liteprofile r_emailaddress',
+        ],
+    ];
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->providers = [
-            'Google' => [
-                'enabled' => true,
-                'keys'    => [
-                    'id'     => env('hybridauth.google.client_id'),
-                    'secret' => env('hybridauth.google.client_secret'),
-                ],
-                'scope'   => 'email profile',
-            ],
-            'GitHub' => [
-                'enabled' => true,
-                'keys'    => [
-                    'id'     => env('hybridauth.github.client_id'),
-                    'secret' => env('hybridauth.github.client_secret'),
-                ],
-                'scope'   => 'user:email',
-            ],
-            'LinkedIn' => [
-                'enabled' => false,
-                'keys'    => [
-                    'id'     => env('hybridauth.linkedin.client_id'),
-                    'secret' => env('hybridauth.linkedin.client_secret'),
-                ],
-                'scope'   => 'r_liteprofile r_emailaddress',
-            ],
-        ];
+        $this->providers['Google']['keys']['id'] = (string) env('hybridauth.google.client_id', '');
+        $this->providers['Google']['keys']['secret'] = (string) env('hybridauth.google.client_secret', '');
+        $this->providers['GitHub']['keys']['id'] = (string) env('hybridauth.github.client_id', '');
+        $this->providers['GitHub']['keys']['secret'] = (string) env('hybridauth.github.client_secret', '');
+        $this->providers['LinkedIn']['keys']['id'] = (string) env('hybridauth.linkedin.client_id', '');
+        $this->providers['LinkedIn']['keys']['secret'] = (string) env('hybridauth.linkedin.client_secret', '');
     }
 }
