@@ -1,0 +1,25 @@
+{
+  "signatures": [
+    {
+      "signature": "App\\Config\\SocialPlatforms|duplicate-class-declaration",
+      "first_seen": "2026-02-07T21:40:12Z",
+      "last_seen": "2026-02-07T21:40:12Z",
+      "status": "open",
+      "priority_id": "001-critical-runtime"
+    },
+    {
+      "signature": "global|getCuID|undefined-function",
+      "first_seen": "2026-02-07T21:41:01Z",
+      "last_seen": "2026-02-07T21:41:01Z",
+      "status": "open",
+      "priority_id": "001-critical-runtime"
+    },
+    {
+      "signature": "WalletService|getUserWallets|null-call",
+      "first_seen": "2026-02-07T21:41:38Z",
+      "last_seen": "2026-02-07T21:41:38Z",
+      "status": "open",
+      "priority_id": "001-critical-runtime"
+    }
+  ]
+}
