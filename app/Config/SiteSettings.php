@@ -191,28 +191,28 @@ if (!class_exists(\App\Config\SiteSettings::class, false)) {
                 $this->enableKimiK2 = filter_var($envFlag, FILTER_VALIDATE_BOOL);
             }
 
-            // Load cached AI Ops toggles if present
-            $cachedToggles = [
-                'aiOpsEnabled',
-                'aiOpsAllowOverride',
-                'aiSelfHostedEnabled',
-                'aiChatgptPlusEnabled',
-                'aiCodexEnabled',
-                'aiGithubReviewEnabled',
-                'aiGapTrackerSyncEnabled',
-                'aiAutoMarketingDraftsEnabled',
-                'aiAutoAlertsDigestEnabled',
-                'aiDocsAlignmentEnabled',
-                'aiops_enabled',
-                'aiops_llm_enabled',
-            ];
-            foreach ($cachedToggles as $toggleKey) {
-                $cacheKey = \sanitizeCacheKey('aiops_' . $toggleKey);
-                $cached = cache($cacheKey);
-                if ($cached !== null) {
-                    $this->$toggleKey = $cached;
-                }
-            }
+            // // Load cached AI Ops toggles if present
+            // $cachedToggles = [
+            //     'aiOpsEnabled',
+            //     'aiOpsAllowOverride',
+            //     'aiSelfHostedEnabled',
+            //     'aiChatgptPlusEnabled',
+            //     'aiCodexEnabled',
+            //     'aiGithubReviewEnabled',
+            //     'aiGapTrackerSyncEnabled',
+            //     'aiAutoMarketingDraftsEnabled',
+            //     'aiAutoAlertsDigestEnabled',
+            //     'aiDocsAlignmentEnabled',
+            //     'aiops_enabled',
+            //     'aiops_llm_enabled',
+            // ];
+            // foreach ($cachedToggles as $toggleKey) {
+            //     $cacheKey = \sanitizeCacheKey('aiops_' . $toggleKey);
+            //     $cached = cache($cacheKey);
+            //     if ($cached !== null) {
+            //         $this->$toggleKey = $cached;
+            //     }
+            // }
 
             // Apply DB overrides when available
             if (class_exists(SiteSettingsOverride::class)) {
