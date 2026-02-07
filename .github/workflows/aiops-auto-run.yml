@@ -1,0 +1,35 @@
+name: AIOPS Auto Run
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/30 * * * *'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Execute AIOPS auto run
+        env:
+          AIOPS_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AIOPS_DISCORD_WEBHOOK: ${{ secrets.AIOPS_DISCORD_WEBHOOK }}
+        run: php spark aiops:auto-run --limit-tasks=1 --limit-errors=3 --create-pr=1 --notify=1

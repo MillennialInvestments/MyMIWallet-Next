@@ -76,3 +76,14 @@ AI-Ops MAY NOT:
 - GitHub Actions workflow: `.github/workflows/aiops-manual-run.yml` (schedule + manual dispatch).
 - Admin trigger endpoint: `POST /api/aiops/manual-run` (permission: `admin.access`) used by the admin UI button **Re-evaluate Priorities**.
 - Kill switch: set `AIOPS_PAUSED=true` to safely short-circuit runs with status + notification.
+
+## Hybrid Manual + Auto Runner
+- Spark command: `php spark aiops:auto-run --limit-tasks=1 --limit-errors=3 --auto-threshold=CRITICAL --create-pr=1 --notify=1`
+- Governance order is strict:
+  1. kill switch check (`AIOPS_PAUSED=true`),
+  2. manual priorities scan + delegation to `aiops:manual-run` when pending/in-progress work exists,
+  3. log-driven auto mode only when manual queue is clear.
+- Auto mode reads newest summaries from `writable/logs/summary-*.log` (fallback: `docs/_aiops/error-input/`) and writes generated manual-priority tasks to `docs/_aiops/manual/priorities/auto-*.md`.
+- Auto tasks are first-class manual priorities with full state tracking in `task-index.json`, `error-signatures.json`, and `pr-history.json`.
+- De-duplication rules prevent repeated fixes for the same signature set and prevent overlapping open PR intents.
+
