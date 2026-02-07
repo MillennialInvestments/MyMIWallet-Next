@@ -2,6 +2,12 @@
 
 use Config\Console;
 use Config\Services;
+use Dotenv\Dotenv;
+
+
+if (is_file(ROOTPATH . '.env')) {
+    Dotenv::createImmutable(ROOTPATH)->safeLoad();
+}
 
 /*
 |--------------------------------------------------------------------------

@@ -6,10 +6,9 @@ namespace App\Commands\API;
 
 use App\Commands\SafeBaseCommand;
 use App\Commands\Support\ArtifactHelper;
+use Config\App;
+use Config\Services;
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\FeatureResponse;
-use CodeIgniter\Test\FeatureTestTrait;
 use RuntimeException;
 
 class ApiAudit extends SafeBaseCommand
@@ -41,11 +40,6 @@ class ApiAudit extends SafeBaseCommand
         $entries = $this->loadSchematic($schematicPath);
         if ($entries === []) {
             CLI::error('No endpoints found in schematic.yaml');
-            return EXIT_ERROR;
-        }
-
-        if (! class_exists(FeatureTestTrait::class)) {
-            CLI::error('FeatureTestTrait is unavailable; cannot run internal requests. Ensure `codeigniter4/framework` test classes are installed and autoloadable, then rerun `php spark api:audit`.');
             return EXIT_ERROR;
         }
 
@@ -328,12 +322,51 @@ class ApiAudit extends SafeBaseCommand
     }
 }
 
-class ApiAuditRequester extends CIUnitTestCase
+class ApiAuditRequester
 {
-    use FeatureTestTrait;
-
-    public function get(string $uri, array $params = []): FeatureResponse
+    /**
+     * @return ApiAuditHttpResponse
+     */
+    public function get(string $uri, array $params = []): ApiAuditHttpResponse
     {
-        return $this->call('get', $uri, $params);
+        /** @var App $app */
+        $app = config('App');
+        $baseUri = rtrim((string) ($app->baseURL ?? ''), '/');
+
+        if ($baseUri === '') {
+            throw new RuntimeException('App.baseURL is not configured; unable to audit API routes over HTTP.');
+        }
+
+        $requestUrl = $baseUri . '/' . ltrim($uri, '/');
+        if ($params !== []) {
+            $requestUrl .= '?' . http_build_query($params);
+        }
+
+        $client = Services::curlrequest([
+            'http_errors' => false,
+            'timeout' => 15,
+            'verify' => false,
+        ]);
+
+        $response = $client->request('GET', $requestUrl);
+
+        return new ApiAuditHttpResponse($response->getStatusCode(), (string) $response->getBody());
+    }
+}
+
+class ApiAuditHttpResponse
+{
+    public function __construct(private readonly int $statusCode, private readonly string $body)
+    {
+    }
+
+    public function getStatusCode(): int
+    {
+        return $this->statusCode;
+    }
+
+    public function getBody(): string
+    {
+        return $this->body;
     }
 }
