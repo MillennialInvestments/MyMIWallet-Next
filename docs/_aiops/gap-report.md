@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-07T12:00:01Z
+> Run: 2026-02-07T14:00:01Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Models/AIOpsBudgetModel.php
@@ -502,6 +502,8 @@
   - ❌ No obvious code match found (heuristic)
 - docs/architecture/marketing_module_lifecycle.md
   - ❌ No obvious code match found (heuristic)
+- docs/architecture/psr4-remediation.md
+  - ❌ No obvious code match found (heuristic)
 - docs/auctions/_index.md
   - ❌ No obvious code match found (heuristic)
 - docs/auctions/auction-schema.md
@@ -804,6 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/gap-audit/gap_report.md
   - ❌ No obvious code match found (heuristic)
-- docs/gap-audit/next-steps.md
-  - ❌ No obvious code match found (heuristic)
-- … and 759 more
+- … and 760 more

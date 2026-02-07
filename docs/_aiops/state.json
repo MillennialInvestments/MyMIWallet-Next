@@ -4127,7 +4127,15 @@
         "docs/aiops/automation/watchlist_paths.md": {
             "hash": "9b59768992cc5de94c5d36c65c705acc031009461f3ffe755a1e1483f712c327",
             "mtime": "2026-02-06"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260207-135815/summary.md": {
+            "hash": "2a3c3b30136b25c9636b3dc60cf6880e28cae20af8b59c95c9ef10c2c3b0a78e",
+            "mtime": "2026-02-07"
+        },
+        "docs/architecture/psr4-remediation.md": {
+            "hash": "fdb30d89a33e37635f624511307309823722d60fe6b1de281a7797d838c46e15",
+            "mtime": "2026-02-07"
         }
     },
-    "last_run": "2026-02-07T12:00:01Z"
+    "last_run": "2026-02-07T14:00:01Z"
 }
