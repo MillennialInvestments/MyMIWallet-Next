@@ -1,0 +1,22 @@
+{
+  "tasks": [
+    {
+      "id": "001-critical-runtime",
+      "file": "/docs/_aiops/manual/priorities/001-critical-runtime.md",
+      "status": "pending",
+      "last_updated": "2026-02-07T21:45:00Z"
+    },
+    {
+      "id": "002-auth-context",
+      "file": "/docs/_aiops/manual/priorities/002-auth-context.md",
+      "status": "pending",
+      "last_updated": "2026-02-07T21:45:00Z"
+    },
+    {
+      "id": "003-routing-and-404s",
+      "file": "/docs/_aiops/manual/priorities/003-routing-and-404s.md",
+      "status": "pending",
+      "last_updated": "2026-02-07T21:45:00Z"
+    }
+  ]
+}
