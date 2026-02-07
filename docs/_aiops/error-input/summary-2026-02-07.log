@@ -1,0 +1,5 @@
+[2026-02-07 21:40:12] CRITICAL - Cannot declare class App\Config\SocialPlatforms, because the name is already in use
+[2026-02-07 21:41:01] CRITICAL - Call to undefined function getCuID()
+[2026-02-07 21:41:38] ERROR - Call to a member function getUserWallets() on null
+[2026-02-07 21:42:06] ERROR - Call to undefined method Alerts::loadLatestSignals()
+[2026-02-07 21:42:57] WARNING - PageNotFoundException: Route not found: GET /wallet/overview
