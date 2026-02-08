@@ -23,3 +23,11 @@
 - `/tmp/aiops-discovery/bridge8500.txt`
 - `/tmp/aiops-discovery/exec.txt`
 - `/tmp/aiops-discovery/orchestration.txt`
+
+
+## 2026-02-08 Blocking runtime repairs
+- Fixed Spark CLI null-request crashes by replacing command option reads with CLI-safe helpers in `SubsCommandTrait` (`optBool`, `optInt`, `optString`) and using those helpers across AiOps/Chat/Ops commands.
+- Updated `aiops/bin/n8n-start-safe.sh` to classify port-8500 owner by command line (`n8n` vs `bridge-8500.js` vs unknown) and make launch decisions accordingly.
+- Added canonical n8n secret loading via `aiops/.env.aiops` and enforced invariants for `N8N_ENCRYPTION_KEY` and `N8N_USER_MANAGEMENT_JWT_SECRET`.
+- Updated `aiops/start-aiops.sh` and `aiops/start-n8n.sh` to always source `.env.aiops` before startup.
+- Extended `App\Services\SubSystemManager` with `isPortOccupied()` / `portOwner()` to expose owner-aware diagnostics for port checks.
