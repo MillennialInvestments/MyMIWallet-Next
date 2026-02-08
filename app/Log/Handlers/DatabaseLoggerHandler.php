@@ -26,6 +26,11 @@ class DatabaseLoggerHandler extends BaseHandler implements HandlerInterface
     private bool $emailSent = false;
 
     /**
+     * Whether warning-level events should trigger email notifications.
+     */
+    private bool $emailWarningLevel = false;
+
+    /**
      * Local fallback file when DB inserts fail.
      */
     private string $fallbackFile;
@@ -44,6 +49,7 @@ class DatabaseLoggerHandler extends BaseHandler implements HandlerInterface
         $fallbackPath        = $config['fallbackPath'] ?? (WRITEPATH . 'logs/');
         $this->fallbackFile  = rtrim($fallbackPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'db_logger_fallback.log';
         $this->notificationEmail = $config['notificationEmail'] ?? null;
+        $this->emailWarningLevel = (bool) ($config['emailWarningLevel'] ?? false);
 
         $this->ensureFallbackPath();
     }
@@ -54,9 +60,6 @@ class DatabaseLoggerHandler extends BaseHandler implements HandlerInterface
             return false;
         }
 
-        if (is_cli()) {
-            return true;
-        }
 
         if (! $this->acquireLock()) {
             return true;
@@ -144,7 +147,13 @@ class DatabaseLoggerHandler extends BaseHandler implements HandlerInterface
             return;
         }
 
-        if (! in_array($record['level'], ['emergency', 'alert', 'critical', 'error', 'warning'], true)) {
+        $notifiableLevels = ['emergency', 'alert', 'critical', 'error'];
+
+        if ($this->emailWarningLevel) {
+            $notifiableLevels[] = 'warning';
+        }
+
+        if (! in_array($record['level'], $notifiableLevels, true)) {
             return;
         }
 

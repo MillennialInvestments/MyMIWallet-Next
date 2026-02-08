@@ -19,7 +19,7 @@ class Healthcheck extends SafeBaseCommand
 
     public function run(array $params)
     {
-        log_message('info', '[spark:logs:healthcheck] Started', ['params' => $params]);
+        log_message('info', '[AIOPS][SPARK][GOVERNANCE][spark:logs:healthcheck] Started', ['params' => $params]);
         CLI::write('Starting logs:healthcheck', 'yellow');
 
         [$args, $flags] = $this->parseParams($params);
@@ -49,7 +49,7 @@ class Healthcheck extends SafeBaseCommand
         $overall = $result['overall'];
         CLI::write('overall=' . ($overall ? 'PASS' : 'FAIL'));
 
-        log_message('info', '[spark:logs:healthcheck] Completed', [
+        log_message('info', '[AIOPS][SPARK][GOVERNANCE][spark:logs:healthcheck] Completed', [
             'overall'    => $overall ? 'PASS' : 'FAIL',
             'file_ok'    => $result['file_log_ok'],
             'db_ok'      => $result['db_log_ok'],
