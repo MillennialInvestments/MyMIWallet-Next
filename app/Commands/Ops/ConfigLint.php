@@ -28,7 +28,7 @@ class ConfigLint extends SafeBaseCommand
             $contents = file_get_contents($file->getPathname());
 
             // ❌ env() in property declarations
-            if (preg_match('/public\s+(array|string|int|bool)\s+\$\w+\s*=\s*\[.*?env\s*\(/s', $contents)) {
+            if (preg_match('/(public|protected|private)\s+[^;\n=]+\s*=\s*[^;\n]*\benv\s*\(/', $contents)) {
                 $errors[] = [
                     'file' => $file->getPathname(),
                     'rule' => 'env() used in property initializer',

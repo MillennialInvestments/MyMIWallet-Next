@@ -33,7 +33,7 @@ class SparkGovernanceService
         if (function_exists('service')) {
             $runner = service('commands');
             if (is_object($runner) && method_exists($runner, 'run')) {
-                return (int) $runner->run($command);
+                return (int) $runner->run($command, []);
             }
         }
 
