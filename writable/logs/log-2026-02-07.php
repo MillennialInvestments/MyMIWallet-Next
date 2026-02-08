@@ -700,3 +700,344 @@ in APPPATH/Modules/Management/Controllers/WalletsController.php on line 92.
  4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
  5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
  6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:14:30 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: API/Investments/GetUserWatchlist/2]
+in SYSTEMPATH/CodeIgniter.php on line 983.
+ 1 SYSTEMPATH/CodeIgniter.php(983): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(360): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:14:32 --> ErrorException: Cannot declare class App\Config\SocialPlatforms, because the name is already in use
+[Method: GET, Route: Wallets]
+in APPPATH/Config/SocialPlatforms.php on line 7.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-02-07 23:14:46 --> Error: Call to a member function getUserWallets() on null
+[Method: GET, Route: Management/Admin]
+in APPPATH/Modules/Management/Controllers/AdminController.php on line 72.
+ 1 SYSTEMPATH/CodeIgniter.php(904): App\Modules\Management\Controllers\AdminController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+ 2 SYSTEMPATH/CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:14:51 --> Error: Call to undefined method App\Modules\Management\Controllers\AlertsController::getMyMIAlerts()
+[Method: GET, Route: Management/Alerts]
+in APPPATH/Modules/Management/Controllers/AlertsController.php on line 155.
+ 1 APPPATH/Modules/Management/Controllers/AlertsController.php(294): App\Modules\Management\Controllers\AlertsController->commonData()
+ 2 SYSTEMPATH/CodeIgniter.php(933): App\Modules\Management\Controllers\AlertsController->index()
+ 3 SYSTEMPATH/CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Modules\Management\Controllers\AlertsController))
+ 4 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:14:52 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API]
+in SYSTEMPATH/CodeIgniter.php on line 983.
+ 1 SYSTEMPATH/CodeIgniter.php(983): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(360): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:14:53 --> Error: Call to a member function getUserWallets() on null
+[Method: GET, Route: Management/Assets]
+in APPPATH/Modules/Management/Controllers/AssetsController.php on line 72.
+ 1 SYSTEMPATH/CodeIgniter.php(904): App\Modules\Management\Controllers\AssetsController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+ 2 SYSTEMPATH/CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:14:54 --> Error: Call to a member function getUserWallets() on null
+[Method: GET, Route: Management/Budgeting]
+in APPPATH/Modules/Management/Controllers/BudgetingController.php on line 72.
+ 1 SYSTEMPATH/CodeIgniter.php(904): App\Modules\Management\Controllers\BudgetingController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+ 2 SYSTEMPATH/CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:14:56 --> Error: Call to a member function getUserWallets() on null
+[Method: GET, Route: Management/Budgets]
+in APPPATH/Modules/Management/Controllers/BudgetsController.php on line 75.
+ 1 SYSTEMPATH/CodeIgniter.php(904): App\Modules\Management\Controllers\BudgetsController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+ 2 SYSTEMPATH/CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:14:58 --> Error: Call to a member function close() on null
+[Method: GET, Route: Management/Exchange]
+in APPPATH/Modules/Management/Controllers/ExchangeController.php on line 257.
+ 1 SYSTEMPATH/CodeIgniter.php(498): App\Modules\Management\Controllers\ExchangeController->__destruct()
+ 2 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 3 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:14:58 --> [Caused by] Error: Call to a member function getUserWallets() on null
+in APPPATH/Modules/Management/Controllers/ExchangeController.php on line 101.
+ 1 SYSTEMPATH/CodeIgniter.php(904): App\Modules\Management\Controllers\ExchangeController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+ 2 SYSTEMPATH/CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:15:11 --> Error: Call to a member function getAlertInfo() on null
+[Method: GET, Route: Management/Partners]
+in APPPATH/Modules/Management/Controllers/PartnersController.php on line 98.
+ 1 APPPATH/Modules/Management/Controllers/PartnersController.php(109): App\Modules\Management\Controllers\PartnersController->commonData()
+ 2 SYSTEMPATH/CodeIgniter.php(933): App\Modules\Management\Controllers\PartnersController->index()
+ 3 SYSTEMPATH/CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Modules\Management\Controllers\PartnersController))
+ 4 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:15:15 --> Error: Call to undefined function App\Modules\Management\Controllers\getCuID()
+[Method: GET, Route: Management/Projects]
+in APPPATH/Modules/Management/Controllers/ProjectsController.php on line 76.
+ 1 SYSTEMPATH/CodeIgniter.php(904): App\Modules\Management\Controllers\ProjectsController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+ 2 SYSTEMPATH/CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:15:18 --> Error: Call to a member function getUserWallets() on null
+[Method: GET, Route: Management/Security]
+in APPPATH/Modules/Management/Controllers/SecurityController.php on line 72.
+ 1 SYSTEMPATH/CodeIgniter.php(904): App\Modules\Management\Controllers\SecurityController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+ 2 SYSTEMPATH/CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:15:20 --> Error: Call to a member function getUserWallets() on null
+[Method: GET, Route: Management/Services]
+in APPPATH/Modules/Management/Controllers/ServicesController.php on line 72.
+ 1 SYSTEMPATH/CodeIgniter.php(904): App\Modules\Management\Controllers\ServicesController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+ 2 SYSTEMPATH/CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:15:22 --> Error: Call to undefined function App\Modules\Management\Controllers\getCuID()
+[Method: GET, Route: Management/Users]
+in APPPATH/Modules/Management/Controllers/UsersController.php on line 96.
+ 1 APPPATH/Modules/Management/Controllers/UsersController.php(139): App\Modules\Management\Controllers\UsersController->commonData()
+ 2 SYSTEMPATH/CodeIgniter.php(933): App\Modules\Management\Controllers\UsersController->index()
+ 3 SYSTEMPATH/CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Modules\Management\Controllers\UsersController))
+ 4 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:15:25 --> Error: Call to a member function getUserWallets() on null
+[Method: GET, Route: Management/Wallets]
+in APPPATH/Modules/Management/Controllers/WalletsController.php on line 92.
+ 1 SYSTEMPATH/CodeIgniter.php(904): App\Modules\Management\Controllers\WalletsController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+ 2 SYSTEMPATH/CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:41:46 --> Error: Call to a member function getUserWallets() on null
+[Method: GET, Route: Management/Admin]
+in APPPATH/Modules/Management/Controllers/AdminController.php on line 72.
+ 1 SYSTEMPATH/CodeIgniter.php(904): App\Modules\Management\Controllers\AdminController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+ 2 SYSTEMPATH/CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:41:54 --> Error: Call to undefined method App\Modules\Management\Controllers\AlertsController::getMyMIAlerts()
+[Method: GET, Route: Management/Alerts]
+in APPPATH/Modules/Management/Controllers/AlertsController.php on line 155.
+ 1 APPPATH/Modules/Management/Controllers/AlertsController.php(294): App\Modules\Management\Controllers\AlertsController->commonData()
+ 2 SYSTEMPATH/CodeIgniter.php(933): App\Modules\Management\Controllers\AlertsController->index()
+ 3 SYSTEMPATH/CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Modules\Management\Controllers\AlertsController))
+ 4 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:42:02 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API]
+in SYSTEMPATH/CodeIgniter.php on line 983.
+ 1 SYSTEMPATH/CodeIgniter.php(983): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(360): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:42:05 --> Error: Call to a member function getUserWallets() on null
+[Method: GET, Route: Management/Assets]
+in APPPATH/Modules/Management/Controllers/AssetsController.php on line 72.
+ 1 SYSTEMPATH/CodeIgniter.php(904): App\Modules\Management\Controllers\AssetsController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+ 2 SYSTEMPATH/CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:42:07 --> Error: Call to a member function getUserWallets() on null
+[Method: GET, Route: Management/Budgeting]
+in APPPATH/Modules/Management/Controllers/BudgetingController.php on line 72.
+ 1 SYSTEMPATH/CodeIgniter.php(904): App\Modules\Management\Controllers\BudgetingController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+ 2 SYSTEMPATH/CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:42:09 --> Error: Call to a member function getUserWallets() on null
+[Method: GET, Route: Management/Budgets]
+in APPPATH/Modules/Management/Controllers/BudgetsController.php on line 75.
+ 1 SYSTEMPATH/CodeIgniter.php(904): App\Modules\Management\Controllers\BudgetsController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+ 2 SYSTEMPATH/CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:42:11 --> Error: Call to a member function close() on null
+[Method: GET, Route: Management/Exchange]
+in APPPATH/Modules/Management/Controllers/ExchangeController.php on line 257.
+ 1 SYSTEMPATH/CodeIgniter.php(498): App\Modules\Management\Controllers\ExchangeController->__destruct()
+ 2 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 3 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:42:11 --> [Caused by] Error: Call to a member function getUserWallets() on null
+in APPPATH/Modules/Management/Controllers/ExchangeController.php on line 101.
+ 1 SYSTEMPATH/CodeIgniter.php(904): App\Modules\Management\Controllers\ExchangeController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+ 2 SYSTEMPATH/CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:55:22 --> Error: Call to a member function getUserWallets() on null
+[Method: GET, Route: Management/Admin]
+in APPPATH/Modules/Management/Controllers/AdminController.php on line 72.
+ 1 SYSTEMPATH/CodeIgniter.php(904): App\Modules\Management\Controllers\AdminController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+ 2 SYSTEMPATH/CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:55:28 --> Error: Call to undefined method App\Modules\Management\Controllers\AlertsController::getMyMIAlerts()
+[Method: GET, Route: Management/Alerts]
+in APPPATH/Modules/Management/Controllers/AlertsController.php on line 155.
+ 1 APPPATH/Modules/Management/Controllers/AlertsController.php(294): App\Modules\Management\Controllers\AlertsController->commonData()
+ 2 SYSTEMPATH/CodeIgniter.php(933): App\Modules\Management\Controllers\AlertsController->index()
+ 3 SYSTEMPATH/CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Modules\Management\Controllers\AlertsController))
+ 4 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:55:30 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API]
+in SYSTEMPATH/CodeIgniter.php on line 983.
+ 1 SYSTEMPATH/CodeIgniter.php(983): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(360): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:55:32 --> Error: Call to a member function getUserWallets() on null
+[Method: GET, Route: Management/Assets]
+in APPPATH/Modules/Management/Controllers/AssetsController.php on line 72.
+ 1 SYSTEMPATH/CodeIgniter.php(904): App\Modules\Management\Controllers\AssetsController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+ 2 SYSTEMPATH/CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:55:34 --> Error: Call to a member function getUserWallets() on null
+[Method: GET, Route: Management/Budgeting]
+in APPPATH/Modules/Management/Controllers/BudgetingController.php on line 72.
+ 1 SYSTEMPATH/CodeIgniter.php(904): App\Modules\Management\Controllers\BudgetingController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+ 2 SYSTEMPATH/CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:55:36 --> Error: Call to a member function getUserWallets() on null
+[Method: GET, Route: Management/Budgets]
+in APPPATH/Modules/Management/Controllers/BudgetsController.php on line 75.
+ 1 SYSTEMPATH/CodeIgniter.php(904): App\Modules\Management\Controllers\BudgetsController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+ 2 SYSTEMPATH/CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:55:38 --> Error: Call to a member function close() on null
+[Method: GET, Route: Management/Exchange]
+in APPPATH/Modules/Management/Controllers/ExchangeController.php on line 257.
+ 1 SYSTEMPATH/CodeIgniter.php(498): App\Modules\Management\Controllers\ExchangeController->__destruct()
+ 2 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 3 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:55:38 --> [Caused by] Error: Call to a member function getUserWallets() on null
+in APPPATH/Modules/Management/Controllers/ExchangeController.php on line 101.
+ 1 SYSTEMPATH/CodeIgniter.php(904): App\Modules\Management\Controllers\ExchangeController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+ 2 SYSTEMPATH/CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:55:53 --> Error: Call to a member function getAlertInfo() on null
+[Method: GET, Route: Management/Partners]
+in APPPATH/Modules/Management/Controllers/PartnersController.php on line 98.
+ 1 APPPATH/Modules/Management/Controllers/PartnersController.php(109): App\Modules\Management\Controllers\PartnersController->commonData()
+ 2 SYSTEMPATH/CodeIgniter.php(933): App\Modules\Management\Controllers\PartnersController->index()
+ 3 SYSTEMPATH/CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Modules\Management\Controllers\PartnersController))
+ 4 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:56:00 --> Error: Call to a member function getUserWallets() on null
+[Method: GET, Route: Management/Security]
+in APPPATH/Modules/Management/Controllers/SecurityController.php on line 72.
+ 1 SYSTEMPATH/CodeIgniter.php(904): App\Modules\Management\Controllers\SecurityController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+ 2 SYSTEMPATH/CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:56:08 --> Error: Call to a member function getUserWallets() on null
+[Method: GET, Route: Management/Services]
+in APPPATH/Modules/Management/Controllers/ServicesController.php on line 72.
+ 1 SYSTEMPATH/CodeIgniter.php(904): App\Modules\Management\Controllers\ServicesController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+ 2 SYSTEMPATH/CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:56:12 --> Error: Call to a member function getUserSolana() on null
+[Method: GET, Route: Management/Users]
+in APPPATH/Modules/Management/Controllers/UsersController.php on line 130.
+ 1 APPPATH/Modules/Management/Controllers/UsersController.php(139): App\Modules\Management\Controllers\UsersController->commonData()
+ 2 SYSTEMPATH/CodeIgniter.php(933): App\Modules\Management\Controllers\UsersController->index()
+ 3 SYSTEMPATH/CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Modules\Management\Controllers\UsersController))
+ 4 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:56:14 --> Error: Call to a member function getUserWallets() on null
+[Method: GET, Route: Management/Wallets]
+in APPPATH/Modules/Management/Controllers/WalletsController.php on line 92.
+ 1 SYSTEMPATH/CodeIgniter.php(904): App\Modules\Management\Controllers\WalletsController->initController(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), Object(CodeIgniter\Log\Logger))
+ 2 SYSTEMPATH/CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 3 SYSTEMPATH/CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:56:26 --> ErrorException: Type of App\Modules\User\Controllers\InvestmentsController::$walletService must be ?App\Services\WalletService (as in class App\Controllers\UserController)
+[Method: GET, Route: Investments]
+in APPPATH/Modules/User/Controllers/InvestmentsController.php on line 19.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-02-07 23:56:27 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: API/Investments/GetUserWatchlist/2]
+in SYSTEMPATH/CodeIgniter.php on line 983.
+ 1 SYSTEMPATH/CodeIgniter.php(983): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(360): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-07 23:56:42 --> ErrorException: Type of App\Modules\User\Controllers\WalletsController::$walletService must be ?App\Services\WalletService (as in class App\Controllers\UserController)
+[Method: GET, Route: Wallets]
+in APPPATH/Modules/User/Controllers/WalletsController.php on line 17.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
