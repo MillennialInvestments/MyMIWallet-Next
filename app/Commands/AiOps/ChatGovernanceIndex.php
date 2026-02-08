@@ -9,8 +9,8 @@ use CodeIgniter\CLI\CLI;
 
 class ChatGovernanceIndex extends SafeBaseCommand
 {
-    protected $group       = 'aiops';
-    protected $name        = 'aiops:chat-governance-index';
+    protected $group       = 'AI-Ops';
+    protected $name        = 'aiops:chat-gov-index';
     protected $description = 'Index ChatGPT governance steps from archived chats and sync CSV/DB outputs.';
     protected $usage       = 'aiops:chat-governance-index [--write-files=1|0] [--db-sync=1|0] [--metrics=1|0] [--path=path] [--limit=number]';
     protected $options     = [

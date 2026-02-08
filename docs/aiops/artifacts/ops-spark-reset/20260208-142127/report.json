@@ -1,0 +1,9 @@
+{
+    "command": "ops:spark-reset",
+    "timestamp": "20260208-142127",
+    "dry_run": true,
+    "emit": "docs",
+    "cache_dir": "/home/mymiteam/mymiwallet/site/current/writable/cache",
+    "targets": [],
+    "deleted": []
+}

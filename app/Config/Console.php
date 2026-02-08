@@ -67,6 +67,7 @@ class Console extends BaseConfig
         \App\Commands\AiOps\Repair::class,
         \App\Commands\AiOps\Run::class,
         \App\Commands\AiOps\ScanCells::class,
+        \App\Commands\AiOps\Seed::class,
         \App\Commands\AiOps\SelfHeal::class,
         \App\Commands\AiOps\Status::class,
         \App\Commands\AiOps\Watch::class,

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Commands;
+namespace App\Commands\AiOps;
 
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
 
-class AiOpsSeed extends SafeBaseCommand
+class Seed extends SafeBaseCommand
 {
-    protected $group       = 'AiOps';
+    protected $group       = 'AI-Ops';
     protected $name        = 'aiops:seed';
     protected $description = 'Seed default AI Ops caps and pricing configuration.';
     protected $usage       = 'php spark aiops:seed';

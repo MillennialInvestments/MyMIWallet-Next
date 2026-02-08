@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Commands\Ops;
+namespace App\Commands\AiOps;
 
 use App\Commands\SafeBaseCommand;
 use App\Commands\Support\ArtifactHelper;
 
-class AiopsInit extends SafeBaseCommand
+class Init extends SafeBaseCommand
 {
-    protected $group = 'ops';
-    protected $name = 'ops:aiops:init';
+    protected $group = 'AI-Ops';
+    protected $name = 'aiops:init';
     protected $description = 'Initialize and validate the AIOps PR factory (one-time or rare use).';
 
     protected $options = [
