@@ -3,6 +3,7 @@
 use App\Libraries\{BaseLoader, MyMISolana, MyMIRaydium, MyMIDexScreener};
 use App\Services\{UserService}; 
 use CodeIgniter\Database\ConnectionInterface;
+use Config\Services;
 
 class BlockchainService {
     protected $solana;
@@ -16,7 +17,7 @@ class BlockchainService {
         $this->solana = new MyMISolana();
         $this->raydium = new MyMIRaydium();
         $this->dexScreener = new MyMIDexScreener($db);
-        $this->cuID = getCuID();  // Assuming getCuID() is a helper or service
+        $this->cuID = function_exists('getCuID') ? (getCuID() ?? null) : (service('authentication')->id() ?? service('session')->get('user_id'));
 $this->userService = new UserService($this->siteSettings, $this->cuID, Services::request());
 
         $this->userData = $this->getuserService()->commonData();

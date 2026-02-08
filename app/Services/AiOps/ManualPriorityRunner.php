@@ -42,7 +42,7 @@ class ManualPriorityRunner
             if ($task['blocked']) {
                 $indexRef['status'] = 'blocked';
                 $indexRef['blocked_reason'] = $task['blocked_reason'];
-                $taskResults[] = ['task' => $task['id'], 'status' => 'blocked'];
+                $taskResults[] = ['task' => $task['id'], 'status' => 'blocked', 'reason' => $task['blocked_reason']];
                 continue;
             }
 
@@ -99,6 +99,16 @@ class ManualPriorityRunner
                 $indexRef['linked_pr'] = $prResult['url'] ?? null;
                 $indexRef['pr_status'] = 'open';
                 $indexRef['status'] = 'in_progress';
+            } else {
+                $indexRef['linked_pr'] = null;
+                $indexRef['pr_status'] = 'failed';
+                $indexRef['status'] = 'pending';
+                log_message('error', 'AIOPS PR creation failed; task reset to pending', [
+                    'task' => $task['id'],
+                    'branch' => $prResult['branch'] ?? null,
+                    'signatures' => $slice,
+                ]);
+                $taskResults[count($taskResults) - 1]['status'] = 'pr-failed-reset-pending';
             }
         }
 
@@ -108,6 +118,12 @@ class ManualPriorityRunner
             $this->atomicWriteJson($this->statePath('task-index.json'), $state['task']);
             $this->atomicWriteJson($this->statePath('pr-history.json'), $state['pr']);
             $this->atomicWriteJson($this->statePath('error-signatures.json'), $state['error']);
+            $this->atomicWriteJson($this->statePath('run-meta.json'), [
+                'last_run_at' => gmdate('c'),
+                'latest_log' => $latestLog['path'] ?? null,
+                'evaluated_signatures' => array_values(array_keys($activeSignatures)),
+                'blocked_tasks' => array_values(array_filter($taskResults, static fn(array $row): bool => ($row['status'] ?? '') === 'blocked')),
+            ]);
         }
 
         return [
@@ -208,9 +224,24 @@ class ManualPriorityRunner
     /** @return array{path:?string,content:string} */
     private function latestErrorLog(): array
     {
-        $dir = ROOTPATH . rtrim($this->config->errorInputPath, '/');
-        $files = glob($dir . '/*') ?: [];
-        usort($files, static fn($a, $b) => filemtime($b) <=> filemtime($a));
+        $patterns = [
+            ROOTPATH . 'writable/logs/summary-*.log',
+            ROOTPATH . rtrim($this->config->errorInputPath, '/') . '/summary-*.log',
+            ROOTPATH . rtrim($this->config->errorInputPath, '/') . '/*',
+        ];
+
+        $files = [];
+        foreach ($patterns as $pattern) {
+            $matches = glob($pattern) ?: [];
+            foreach ($matches as $match) {
+                $files[] = $match;
+            }
+            if ($files !== []) {
+                break;
+            }
+        }
+
+        usort($files, static fn(string $a, string $b): int => filemtime($b) <=> filemtime($a));
         $file = $files[0] ?? null;
 
         return ['path' => $file ? str_replace(ROOTPATH, '', $file) : null, 'content' => $file ? (string) file_get_contents($file) : ''];
