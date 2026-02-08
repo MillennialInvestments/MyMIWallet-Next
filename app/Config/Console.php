@@ -93,6 +93,53 @@ class Console extends BaseConfig
         \App\Commands\Ops\SparkReset::class,
         \App\Commands\OpsWork::class,
 
+
+        /*
+        |----------------------------------------------------------------------
+        | Ops / Health & Diagnostics (DreamHost-safe)
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Ops\Health\Healthcheck::class,
+        \App\Commands\Ops\Server\NginxStatus::class,
+        \App\Commands\Ops\PHP\FpmHealth::class,
+        \App\Commands\Ops\Diagnostics\FilesystemScan::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Ops / Logs Intelligence
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Ops\Logs\Scan::class,
+        \App\Commands\Ops\Logs\Watch::class,
+        \App\Commands\Logs\Summarize::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Ops / Email Operations
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Ops\Email\Healthcheck::class,
+        \App\Commands\Ops\Email\QueueScan::class,
+        \App\Commands\Ops\Email\Test::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Ops / DreamHost Control Plane
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Ops\DreamHost\EmailList::class,
+        \App\Commands\Ops\DreamHost\EmailAudit::class,
+        \App\Commands\Ops\DreamHost\DnsVerify::class,
+        \App\Commands\Ops\DreamHost\Limits::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Ops / Self-Heal + Reporting
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Ops\SelfHeal::class,
+        \App\Commands\Ops\Report::class,
+
         /*
         |----------------------------------------------------------------------
         | Chat
@@ -105,7 +152,7 @@ class Console extends BaseConfig
         \App\Commands\Chat\Start::class,
         \App\Commands\Chat\Stop::class,
         \App\Commands\Chat\Status::class,
-        \App\Commands\Chat\Unlock::class,
+        \App\Commands\Chat\Unblock::class,
         /*
         |----------------------------------------------------------------------
         | Codex / Review
@@ -140,7 +187,7 @@ class Console extends BaseConfig
         \App\Commands\Growth\RetentionWatch::class,
         \App\Commands\Ux\JourneyAudit::class,
         \App\Commands\Revenue\CostForecast::class,
-        \App\Commands\Scraper\EmailScraperAudit::class,
+        \App\Commands\Scrapers\EmailScraperAudit::class,
 
     ];
 

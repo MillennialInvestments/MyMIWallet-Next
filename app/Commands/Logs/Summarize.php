@@ -11,13 +11,14 @@ class Summarize extends SafeBaseCommand
     protected $group       = 'logs';
     protected $name        = 'logs:summarize';
     protected $description = 'Summarize CI4 logs for a given date, including new entries since the last run.';
-    protected $usage       = 'logs:summarize [date|yesterday] [--dry-run]';
+    protected $usage       = 'logs:summarize [date|yesterday] [--json] [--dry-run]';
 
     protected $arguments = [
         'date' => 'Optional: "yesterday" or YYYY-MM-DD (defaults to today).',
     ];
 
     protected $options = [
+        '--json' => 'Emit JSON output for AIOps runners',
         '--dry-run' => 'Preview actions without writing data',
     ];
 
@@ -37,6 +38,8 @@ class Summarize extends SafeBaseCommand
         // Dry-run handling (correct)
         // -----------------------------
         $dryRun = $this->resolveDryRun($flags);
+
+        $json = isset($flags['json']);
 
         // -----------------------------
         // Execute service
@@ -63,21 +66,32 @@ class Summarize extends SafeBaseCommand
         // -----------------------------
         // Output
         // -----------------------------
-        if ($dryRun) {
-            CLI::write("Dry-run: would write summary to {$result['out_file']}", 'yellow');
-            CLI::write("Dry-run: would update state to {$result['state_file']}", 'yellow');
-            CLI::write("Dry-run: would sync summary to {$result['repo_file']}", 'yellow');
-        } else {
-            CLI::write("Summary generated for {$targetDate}: {$result['out_file']}", 'green');
-            CLI::write('Repo summary: ' . ($result['repo_file'] ?? 'n/a'), 'green');
-            CLI::write('Repo sync changed=' . (($result['repo_changed'] ?? false) ? 'yes' : 'no'));
-            if (! empty($result['max_ts'])) {
-                CLI::write('Last processed timestamp updated to: ' . $result['max_ts'], 'yellow');
-            }
-        }
+        $payload = [
+            'command' => $this->name,
+            'date' => $targetDate,
+            'dry_run' => $dryRun,
+            'result' => $result,
+        ];
 
-        CLI::write('total_entries=' . ($result['total'] ?? 0));
-        CLI::write('new_entries=' . ($result['new_total'] ?? 0));
+        if ($json) {
+            CLI::write((string) json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        } else {
+            if ($dryRun) {
+                CLI::write("Dry-run: would write summary to {$result['out_file']}", 'yellow');
+                CLI::write("Dry-run: would update state to {$result['state_file']}", 'yellow');
+                CLI::write("Dry-run: would sync summary to {$result['repo_file']}", 'yellow');
+            } else {
+                CLI::write("Summary generated for {$targetDate}: {$result['out_file']}", 'green');
+                CLI::write('Repo summary: ' . ($result['repo_file'] ?? 'n/a'), 'green');
+                CLI::write('Repo sync changed=' . (($result['repo_changed'] ?? false) ? 'yes' : 'no'));
+                if (! empty($result['max_ts'])) {
+                    CLI::write('Last processed timestamp updated to: ' . $result['max_ts'], 'yellow');
+                }
+            }
+
+            CLI::write('total_entries=' . ($result['total'] ?? 0));
+            CLI::write('new_entries=' . ($result['new_total'] ?? 0));
+        }
 
         log_message('info', '[spark:logs:summarize] Completed', [
             'date'      => $targetDate,
