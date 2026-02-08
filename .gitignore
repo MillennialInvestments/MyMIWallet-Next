@@ -56,3 +56,12 @@ application/modules/investments/controllers/API_Squeeze.php
 application/helpers/squeeze_helper.php
 application/libraries/MyMISqueeze.php
 application/modules/investments/controllers/API_Squeeze.php
+
+# AIOps/chat runtime state
+/aiops/runtime/*
+!/aiops/runtime/.gitkeep
+/chat/runtime/*
+!/chat/runtime/.gitkeep
+/aiops/runtime/*.pid
+/aiops/runtime/*.lock
+/chat/runtime/*.pid
