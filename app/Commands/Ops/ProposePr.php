@@ -143,6 +143,7 @@ class ProposePr extends SafeBaseCommand
                 'artifacts' => $artifacts,
                 'meta' => [
                     'message' => 'Bundle staged in writable. Re-run with --approve to export to tracked outbox for PR automation.',
+                    'pr_hint' => 'If GitHub reports "Pull request already exists for this branch", push new commits to the same branch to update that PR or create a new branch for a separate PR.',
                     'writable_dir' => $writableDir,
                     'outbox_dir' => $outboxDir,
                     'validated_paths' => $validation['paths'],
@@ -165,6 +166,7 @@ class ProposePr extends SafeBaseCommand
             ],
             'meta' => [
                 'message' => 'Exported PR bundle to tracked outbox. Commit/push to trigger GitHub Action PR creation.',
+                'pr_hint' => 'If GitHub reports "Pull request already exists for this branch", push additional commits to update existing PR or use a new branch name.',
                 'outbox_dir' => $outboxDir,
                 'validated_paths' => $validation['paths'],
             ],
