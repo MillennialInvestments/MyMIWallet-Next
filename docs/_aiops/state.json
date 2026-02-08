@@ -4267,7 +4267,11 @@
         "docs/standards/doc-coverage.md": {
             "hash": "16ba88bbf22646711fb27bc271e31a461e6b9251a04b50d6a4c11ef9b804a990",
             "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-201007/summary.md": {
+            "hash": "242848d347d2fd18e7c581a93ee4baff8797090ba50d6ac7e5cba4c0e7ddbe18",
+            "mtime": "2026-02-08"
         }
     },
-    "last_run": "2026-02-08T20:00:01Z"
+    "last_run": "2026-02-08T22:00:01Z"
 }

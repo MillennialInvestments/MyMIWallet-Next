@@ -1,6 +1,6 @@
 # AI-Ops: Stale Docs
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-08T20:00:01Z
+> Run: 2026-02-08T22:00:01Z
 
 - docs/OVERVIEW.md
   - Doc last updated: 2025-11-08 (92 days ago)
@@ -11,7 +11,7 @@
 - docs/adr/_index.md
   - Doc last updated: 2025-11-08 (92 days ago)
 - docs/alerts/alerts_marketing_pipline.md
-  - Doc last updated: 2025-11-22 (77 days ago)
+  - Doc last updated: 2025-11-22 (78 days ago)
 - docs/auctions/_index.md
   - Doc last updated: 2025-11-08 (92 days ago)
 - docs/auctions/auction-schema.md
@@ -35,7 +35,7 @@
 - docs/csp-and-commondata.md
   - Doc last updated: 2025-11-08 (92 days ago)
 - docs/discord/README.md
-  - Doc last updated: 2025-12-07 (62 days ago)
+  - Doc last updated: 2025-12-07 (63 days ago)
 - docs/discord/_index.md
   - Doc last updated: 2025-12-05 (64 days ago)
 - docs/discord/_inventory.md
@@ -73,13 +73,13 @@
 - docs/discord/server_setup_and_alert_routing.md
   - Doc last updated: 2025-12-05 (65 days ago)
 - docs/discord/server_setup_and_ci4_integration.md
-  - Doc last updated: 2025-12-07 (62 days ago)
+  - Doc last updated: 2025-12-07 (63 days ago)
 - docs/discord/server_setup_support_category.md
-  - Doc last updated: 2025-12-07 (62 days ago)
+  - Doc last updated: 2025-12-07 (63 days ago)
 - docs/discord/streaming_setup.md
-  - Doc last updated: 2025-12-07 (62 days ago)
+  - Doc last updated: 2025-12-07 (63 days ago)
 - docs/discord/where_to_share_what.md
-  - Doc last updated: 2025-12-07 (62 days ago)
+  - Doc last updated: 2025-12-07 (63 days ago)
 - docs/discord_schema.sql.md
   - Doc last updated: 2025-11-08 (92 days ago)
 - docs/discord_seed.sql.md

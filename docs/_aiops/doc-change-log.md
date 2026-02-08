@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-08T20:00:01Z
+> Run: 2026-02-08T22:00:01Z
 
 - docs/CRON.md
   - Last updated: 2026-01-30
@@ -85,7 +85,7 @@
   - Change type: unchanged
 - docs/aiops/artifacts/fix-503/20260208-195751/summary.md
   - Last updated: 2026-02-08
-  - Change type: new
+  - Change type: unchanged
 - docs/aiops/artifacts/growth-retention-watch/20260201-180732/summary.md
   - Last updated: 2026-02-01
   - Change type: unchanged
@@ -191,6 +191,9 @@
 - docs/aiops/artifacts/ops-spark-reset/20260208-165510/summary.md
   - Last updated: 2026-02-08
   - Change type: unchanged
+- docs/aiops/artifacts/ops-spark-reset/20260208-201007/summary.md
+  - Last updated: 2026-02-08
+  - Change type: new
 - docs/aiops/artifacts/revenue-cost-forecast/20260201-180746/summary.md
   - Last updated: 2026-02-01
   - Change type: unchanged
@@ -226,13 +229,13 @@
   - Change type: unchanged
 - docs/aiops/artifacts/runtime-cache-boot/20260208-195646/summary.md
   - Last updated: 2026-02-08
-  - Change type: new
+  - Change type: unchanged
 - docs/aiops/artifacts/runtime-triage/20260201-185742/summary.md
   - Last updated: 2026-02-01
   - Change type: unchanged
 - docs/aiops/artifacts/runtime-triage/20260208-195714/summary.md
   - Last updated: 2026-02-08
-  - Change type: new
+  - Change type: unchanged
 - docs/aiops/artifacts/scraper-audit-emails/20260205-024438/summary.md
   - Last updated: 2026-02-06
   - Change type: unchanged
@@ -241,7 +244,7 @@
   - Change type: unchanged
 - docs/aiops/artifacts/security-secrets-audit/20260208-195737/summary.md
   - Last updated: 2026-02-08
-  - Change type: new
+  - Change type: unchanged
 - docs/aiops/artifacts/ux-journey-audit/20260201-180810/summary.md
   - Last updated: 2026-02-01
   - Change type: unchanged
@@ -325,7 +328,7 @@
   - Change type: unchanged
 - docs/aiops/triage/spark-command-audit.md
   - Last updated: 2026-02-08
-  - Change type: new
+  - Change type: unchanged
 - docs/aiops/workflows/n8n-workflows.md
   - Last updated: 2026-01-01
   - Change type: unchanged
@@ -559,7 +562,7 @@
   - Change type: unchanged
 - docs/codex/reviews/review-2026-02-08.md
   - Last updated: 2026-02-08
-  - Change type: new
+  - Change type: unchanged
 - docs/codex/reviews/review-prompt-2026-01-31.md
   - Last updated: 2026-01-31
   - Change type: unchanged
@@ -571,7 +574,7 @@
   - Change type: unchanged
 - docs/codex/reviews/review-prompt-2026-02-08.md
   - Last updated: 2026-02-08
-  - Change type: new
+  - Change type: unchanged
 - docs/communities/discord.md
   - Last updated: 2025-12-27
   - Change type: unchanged
@@ -3052,7 +3055,7 @@
   - Change type: unchanged
 - docs/standards/doc-coverage.md
   - Last updated: 2026-02-08
-  - Change type: new
+  - Change type: unchanged
 - docs/standards/psr4_autoloading.md
   - Last updated: 2026-01-25
   - Change type: unchanged
