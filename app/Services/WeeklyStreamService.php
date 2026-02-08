@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\AlertsModel;
 use App\Models\WeeklyStreamWatchlistModel;
 use CodeIgniter\Database\BaseConnection;
-use Config\Services as ConfigServices;
+use Config\Database;
 use DateTime;
 
 class WeeklyStreamService
@@ -18,7 +18,11 @@ class WeeklyStreamService
     {
         $this->alertsModel    = model(AlertsModel::class);
         $this->watchlistModel = model(WeeklyStreamWatchlistModel::class);
-        $this->db             = ConfigServices::database();
+        $this->db             = Database::connect();
+
+        if (! $this->db instanceof BaseConnection) {
+            $this->db = db_connect();
+        }
     }
 
     public function generateWeeklyWatchlistSnapshot(?string $weekStartDate = null): array
