@@ -50,13 +50,32 @@ class Console extends BaseConfig
 
         /*
         |----------------------------------------------------------------------
-        | Ops / AIOps
+        | AIOps
         |----------------------------------------------------------------------
         */
-        \App\Commands\AiOps\ChatGovernanceIndex::class,
+        \App\Commands\AiOps\Audit::class,
         \App\Commands\AiOps\AutoRun::class,
+        \App\Commands\AiOps\ChatGovernanceIndex::class,
+        \App\Commands\AiOps\CommandIndex::class,
+        \App\Commands\AiOps\CopilotValidate::class,
+        \App\Commands\AiOps\EmailScan::class,
         \App\Commands\AiOps\ManualRun::class,
+        \App\Commands\AiOps\N8nLogs::class,
+        \App\Commands\AiOps\N8nRestart::class,
+        \App\Commands\AiOps\N8nStart::class,
+        \App\Commands\AiOps\N8nStop::class,
+        \App\Commands\AiOps\Repair::class,
         \App\Commands\AiOps\Run::class,
+        \App\Commands\AiOps\ScanCells::class,
+        \App\Commands\AiOps\SelfHeal::class,
+        \App\Commands\AiOps\Status::class,
+        \App\Commands\AiOps\Watch::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Ops
+        |----------------------------------------------------------------------
+        */
         \App\Commands\Ops\AiopsInit::class,
         \App\Commands\Ops\AppUpdate::class,
         \App\Commands\Ops\ConfigLint::class,
@@ -74,6 +93,19 @@ class Console extends BaseConfig
         \App\Commands\Ops\SparkReset::class,
         \App\Commands\OpsWork::class,
 
+        /*
+        |----------------------------------------------------------------------
+        | Chat
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Chat\Audit::class,
+        \App\Commands\Chat\Logs::class,
+        \App\Commands\Chat\Repair::class,
+        \App\Commands\Chat\Restart::class,
+        \App\Commands\Chat\Start::class,
+        \App\Commands\Chat\Stop::class,
+        \App\Commands\Chat\Status::class,
+        \App\Commands\Chat\Unlock::class,
         /*
         |----------------------------------------------------------------------
         | Codex / Review
