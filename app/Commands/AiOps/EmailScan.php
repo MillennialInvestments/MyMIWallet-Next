@@ -12,7 +12,7 @@ use Config\Database;
 
 class EmailScan extends SafeBaseCommand
 {
-    protected $group = 'aiops';
+    protected $group = 'AI-Ops';
     protected $name = 'aiops:email-scan';
     protected $description = 'Scan alerts mailbox for new emails and record AIOps counts.';
     protected $usage = 'aiops:email-scan [--mailbox=INBOX] [--from=alerts@mymiwallet.com] [--since=YYYY-MM-DD] [--lookback-days=2] [--limit=250] [--dry-run]';

@@ -11,7 +11,7 @@ use CodeIgniter\CLI\CLI;
 
 class AutoRun extends SafeBaseCommand
 {
-    protected $group = 'aiops';
+    protected $group = 'AI-Ops';
     protected $name = 'aiops:auto-run';
     protected $description = 'Run AIOPS using manual priorities first, falling back to log-driven auto priorities.';
     protected $usage = 'aiops:auto-run [--dry-run=1|0] [--limit-tasks=1] [--limit-errors=3] [--auto-threshold=CRITICAL|ERROR] [--write-auto-tasks=1|0] [--create-pr=1|0] [--notify=1|0]';

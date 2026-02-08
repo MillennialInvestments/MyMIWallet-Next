@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-08T12:00:02Z
+> Run: 2026-02-08T14:00:01Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Models/AIOpsBudgetModel.php
@@ -476,9 +476,13 @@
   - ❌ No obvious code match found (heuristic)
 - docs/aiops/migration_model_audit.md
   - ❌ No obvious code match found (heuristic)
+- docs/aiops/repair-report.md
+  - ❌ No obvious code match found (heuristic)
 - docs/aiops/runbooks/dreamhost-proxy-ports.md
   - ❌ No obvious code match found (heuristic)
 - docs/aiops/runbooks/security-hardening.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/runtime-architecture.md
   - ❌ No obvious code match found (heuristic)
 - docs/aiops/scraper/_index.md
   - ❌ No obvious code match found (heuristic)
@@ -802,8 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/gap-audit/README.md
   - ❌ No obvious code match found (heuristic)
-- docs/gap-audit/codex_queue.md
-  - ❌ No obvious code match found (heuristic)
-- docs/gap-audit/gap_report.md
-  - ❌ No obvious code match found (heuristic)
-- … and 761 more
+- … and 764 more

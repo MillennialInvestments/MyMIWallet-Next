@@ -12,7 +12,7 @@ use CodeIgniter\CLI\CLI;
 class ScanCells extends SafeBaseCommand
 {
     protected $aiOpsRunnable = true;
-    protected $group = 'AiOps';
+    protected $group = 'AI-Ops';
     protected $name = 'aiops:scan:cells';
     protected $description = 'Stateful scanner for repeated UI blocks and Cell candidates.';
     protected $usage = 'php spark aiops:scan:cells [--dry-run=1] [--sleep=900] [--batch=5] [--max-prs=1] [--write-pr=0] [--once=0] [--reset=0]';

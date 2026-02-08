@@ -13,7 +13,7 @@ use RuntimeException;
 
 class ApiAudit extends SafeBaseCommand
 {
-    protected $group = 'aiops';
+    protected $group = 'AI-Ops';
     protected $name = 'api:audit';
     protected $description = 'Audit API endpoints defined in docs/api/schematic.yaml and capture runtime health.';
 

@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-08T12:00:02Z
+> Run: 2026-02-08T14:00:01Z
 
 - docs/CRON.md
   - Last updated: 2026-01-30
@@ -152,6 +152,18 @@
 - docs/aiops/artifacts/ops-spark-reset/20260208-033458/summary.md
   - Last updated: 2026-02-08
   - Change type: unchanged
+- docs/aiops/artifacts/ops-spark-reset/20260208-131051/summary.md
+  - Last updated: 2026-02-08
+  - Change type: new
+- docs/aiops/artifacts/ops-spark-reset/20260208-132515/summary.md
+  - Last updated: 2026-02-08
+  - Change type: new
+- docs/aiops/artifacts/ops-spark-reset/20260208-134346/summary.md
+  - Last updated: 2026-02-08
+  - Change type: new
+- docs/aiops/artifacts/ops-spark-reset/20260208-135706/summary.md
+  - Last updated: 2026-02-08
+  - Change type: new
 - docs/aiops/artifacts/revenue-cost-forecast/20260201-180746/summary.md
   - Last updated: 2026-02-01
   - Change type: unchanged
@@ -239,6 +251,9 @@
 - docs/aiops/migration_model_audit.md
   - Last updated: 2026-02-01
   - Change type: unchanged
+- docs/aiops/repair-report.md
+  - Last updated: 2026-02-08
+  - Change type: new
 - docs/aiops/runbooks/dreamhost-proxy-ports.md
   - Last updated: 2026-01-02
   - Change type: unchanged
@@ -248,6 +263,9 @@
 - docs/aiops/runbooks/security-hardening.md
   - Last updated: 2026-01-01
   - Change type: unchanged
+- docs/aiops/runtime-architecture.md
+  - Last updated: 2026-02-08
+  - Change type: new
 - docs/aiops/scraper/_index.md
   - Last updated: 2026-02-03
   - Change type: unchanged
@@ -2690,6 +2708,9 @@
 - docs/ops/spark_known_issues.md
   - Last updated: 2026-02-01
   - Change type: unchanged
+- docs/ops/subsystems.md
+  - Last updated: 2026-02-08
+  - Change type: new
 - docs/ops/unexpected-token-lt-audit.md
   - Last updated: 2025-11-08
   - Change type: unchanged

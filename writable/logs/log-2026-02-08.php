@@ -630,3 +630,48 @@ in SYSTEMPATH/CLI/CLI.php on line 454.
  5 SYSTEMPATH/Boot.php(442): CodeIgniter\CLI\Console->run()
  6 SYSTEMPATH/Boot.php(166): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
  7 ROOTPATH/spark(87): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+CRITICAL - 2026-02-08 13:59:22 --> TypeError: trim(): Argument #1 ($string) must be of type string, null given
+[Method: GET, Route: How-It-Works/MyMI-Gold]
+in SYSTEMPATH/View/View.php on line 206.
+ 1 SYSTEMPATH/View/View.php(206): trim(null, '/')
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render('App\\Modules\\Blog\\Views\\HowItWorks\\MyMI_Gold', [], true)
+ 3 APPPATH/Controllers/BaseController.php(552): view('App\\Modules\\Blog\\Views\\HowItWorks\\MyMI_Gold', [...])
+ 4 APPPATH/Controllers/UserController.php(120): App\Controllers\BaseController->tryView('App\\Modules\\Blog\\Views\\HowItWorks\\MyMI_Gold', [...])
+ 5 APPPATH/Modules/Blog/Controllers/HowItWorksController.php(458): App\Controllers\UserController->renderTheme('App\\Modules\\Blog\\Views\\HowItWorks\\MyMI_Gold', [...])
+ 6 APPPATH/Modules/Blog/Controllers/HowItWorksController.php(163): App\Modules\Blog\Controllers\HowItWorksController->respondWithRendered('App\\Modules\\Blog\\Views\\HowItWorks\\MyMI_Gold', [...])
+ 7 SYSTEMPATH/CodeIgniter.php(951): App\Modules\Blog\Controllers\HowItWorksController->show('MyMI-Gold')
+ 8 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Modules\Blog\Controllers\HowItWorksController))
+ 9 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-08 13:59:29 --> TypeError: trim(): Argument #1 ($string) must be of type string, null given
+[Method: GET, Route: How-It-Works/MyMI-Gold]
+in SYSTEMPATH/View/View.php on line 206.
+ 1 SYSTEMPATH/View/View.php(206): trim(null, '/')
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render('App\\Modules\\Blog\\Views\\HowItWorks\\MyMI_Gold', [], true)
+ 3 APPPATH/Controllers/BaseController.php(552): view('App\\Modules\\Blog\\Views\\HowItWorks\\MyMI_Gold', [...])
+ 4 APPPATH/Controllers/UserController.php(120): App\Controllers\BaseController->tryView('App\\Modules\\Blog\\Views\\HowItWorks\\MyMI_Gold', [...])
+ 5 APPPATH/Modules/Blog/Controllers/HowItWorksController.php(458): App\Controllers\UserController->renderTheme('App\\Modules\\Blog\\Views\\HowItWorks\\MyMI_Gold', [...])
+ 6 APPPATH/Modules/Blog/Controllers/HowItWorksController.php(163): App\Modules\Blog\Controllers\HowItWorksController->respondWithRendered('App\\Modules\\Blog\\Views\\HowItWorks\\MyMI_Gold', [...])
+ 7 SYSTEMPATH/CodeIgniter.php(951): App\Modules\Blog\Controllers\HowItWorksController->show('MyMI-Gold')
+ 8 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Modules\Blog\Controllers\HowItWorksController))
+ 9 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-08 13:59:36 --> TypeError: trim(): Argument #1 ($string) must be of type string, null given
+[Method: GET, Route: How-It-Works/MyMI-Gold]
+in SYSTEMPATH/View/View.php on line 206.
+ 1 SYSTEMPATH/View/View.php(206): trim(null, '/')
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render('App\\Modules\\Blog\\Views\\HowItWorks\\MyMI_Gold', [], true)
+ 3 APPPATH/Controllers/BaseController.php(552): view('App\\Modules\\Blog\\Views\\HowItWorks\\MyMI_Gold', [...])
+ 4 APPPATH/Controllers/UserController.php(120): App\Controllers\BaseController->tryView('App\\Modules\\Blog\\Views\\HowItWorks\\MyMI_Gold', [...])
+ 5 APPPATH/Modules/Blog/Controllers/HowItWorksController.php(458): App\Controllers\UserController->renderTheme('App\\Modules\\Blog\\Views\\HowItWorks\\MyMI_Gold', [...])
+ 6 APPPATH/Modules/Blog/Controllers/HowItWorksController.php(163): App\Modules\Blog\Controllers\HowItWorksController->respondWithRendered('App\\Modules\\Blog\\Views\\HowItWorks\\MyMI_Gold', [...])
+ 7 SYSTEMPATH/CodeIgniter.php(951): App\Modules\Blog\Controllers\HowItWorksController->show('MyMI-Gold')
+ 8 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Modules\Blog\Controllers\HowItWorksController))
+ 9 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
