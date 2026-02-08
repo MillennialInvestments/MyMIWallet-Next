@@ -32,7 +32,7 @@ class WalletsController extends UserController
     protected $marketingService;
     protected ?SolanaService $solanaService = null;
     protected $transactionService;
-    protected $walletService;
+    protected ?WalletService $walletService = null;
     protected $mymigoldModel;
     protected $walletModel;
 

@@ -36,7 +36,7 @@ class ExchangeController extends UserController
     protected $goalTrackingService;
     protected $solanaService;
     protected $userService;
-    protected $walletService;
+    protected ?WalletService $walletService = null;
     protected $MyMIDashboard;
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
