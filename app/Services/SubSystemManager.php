@@ -19,6 +19,7 @@ class SubSystemManager
                 'start' => ROOTPATH . 'aiops/bin/n8n-start-safe.sh',
                 'stop' => ROOTPATH . 'aiops/bin/n8n-stop-safe.sh',
                 'log' => ROOTPATH . 'aiops/runtime/n8n.log',
+                'bridge_port' => (int) (getenv('BRIDGE_PORT') ?: 8500),
             ],
             'chat.app' => [
                 'root' => ROOTPATH . 'chat',
@@ -47,6 +48,8 @@ class SubSystemManager
         $running = $pid ? $this->isPidAlive($pid) : false;
         $port = $cfg['port'];
         $portListening = $this->isPortListening($port);
+        $bridgePort = (int) ($cfg['bridge_port'] ?? 0);
+        $bridgeOwner = $bridgePort > 0 ? $this->portOwner($bridgePort) : ['owner' => 'none', 'pid' => null, 'args' => null];
         $status = [
             'service' => $service,
             'pid' => $pid,
@@ -54,6 +57,8 @@ class SubSystemManager
             'running' => $running,
             'port' => $port,
             'port_listening' => $portListening,
+            'bridge_port' => $bridgePort > 0 ? $bridgePort : null,
+            'bridge_port_owner' => $bridgeOwner,
             'runtime_dir' => $cfg['runtime'],
             'log_file' => $cfg['log'],
             'status' => ($running || $portListening) ? 'running' : 'stopped',
@@ -166,6 +171,49 @@ class SubSystemManager
         return trim((string) $out) === '0';
     }
 
+
+    public function isPortOccupied(int $port): array
+    {
+        return $this->portOwner($port);
+    }
+
+    public function portOwner(int $port): array
+    {
+        $port = (int) $port;
+        if ($port <= 0) {
+            return ['owner' => 'invalid', 'pid' => null, 'args' => null, 'port' => $port];
+        }
+
+        $cmd = "lsof -nP -iTCP:" . $port . " -sTCP:LISTEN -Fp 2>/dev/null";
+        $raw = trim((string) shell_exec($cmd));
+        if ($raw === '') {
+            return ['owner' => 'none', 'pid' => null, 'args' => null, 'port' => $port];
+        }
+
+        $pid = null;
+        foreach (preg_split('/\R/', $raw) ?: [] as $line) {
+            if (str_starts_with($line, 'p')) {
+                $pid = (int) substr($line, 1);
+                break;
+            }
+        }
+
+        if ($pid === null || $pid <= 1) {
+            return ['owner' => 'unknown', 'pid' => null, 'args' => null, 'port' => $port];
+        }
+
+        $args = trim((string) shell_exec('ps -p ' . $pid . ' -o args= 2>/dev/null'));
+        $owner = 'unknown';
+        if ($args !== '') {
+            if (preg_match('/bridge-8500\.js/i', $args)) {
+                $owner = 'bridge';
+            } elseif (preg_match('/(?:^|\/)n8n(?:\.js)?(?:\s|$)|\bn8n\b/i', $args)) {
+                $owner = 'n8n';
+            }
+        }
+
+        return ['owner' => $owner, 'pid' => $pid, 'args' => $args ?: null, 'port' => $port];
+    }
     public function isPortListening(int $port): bool
     {
         $fp = @fsockopen('127.0.0.1', $port, $errno, $errstr, 0.4);

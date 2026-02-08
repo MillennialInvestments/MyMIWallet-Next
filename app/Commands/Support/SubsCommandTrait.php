@@ -18,7 +18,37 @@ trait SubsCommandTrait
 
     protected function optBool(string $key): bool
     {
-        return in_array((string) ($this->request->getOption($key) ?? '0'), ['1', 'true', 'yes'], true);
+        $val = CLI::getOption($key);
+
+        if ($val === null && property_exists($this, 'params') && is_array($this->params)) {
+            $val = $this->params[$key] ?? $this->params['--' . $key] ?? null;
+        }
+
+        return in_array(
+            strtolower((string) ($val ?? '0')),
+            ['1', 'true', 'yes', 'on'],
+            true
+        );
+    }
+
+    protected function optString(string $key, ?string $default = null): ?string
+    {
+        $val = CLI::getOption($key);
+        if ($val === null || $val === false) {
+            return $default;
+        }
+
+        return trim((string) $val);
+    }
+
+    protected function optInt(string $key, int $default = 0): int
+    {
+        $val = $this->optString($key);
+        if ($val === null || $val === '') {
+            return $default;
+        }
+
+        return (int) $val;
     }
 
     protected function emit(array $payload, bool $json): void

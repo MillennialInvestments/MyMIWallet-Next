@@ -15,6 +15,59 @@ log() {
   printf '{"ts":"%s","component":"n8n-launcher","level":"%s","message":"%s"}\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$1" "$2"
 }
 
+ensure_env_file() {
+  local env_file="$BASE_DIR/.env.aiops"
+
+  if [ ! -f "$env_file" ]; then
+    local key jwt
+    key="$(python - <<'PY'
+import secrets
+print(secrets.token_hex(32))
+PY
+)"
+    jwt="$(python - <<'PY'
+import secrets
+print(secrets.token_hex(32))
+PY
+)"
+    cat > "$env_file" <<ENV
+N8N_ENCRYPTION_KEY=$key
+N8N_USER_MANAGEMENT_JWT_SECRET=$jwt
+ENV
+    chmod 600 "$env_file"
+    log info "created canonical n8n env file at .env.aiops"
+  fi
+
+  set -a
+  source "$env_file"
+  set +a
+
+  if [ -z "${N8N_ENCRYPTION_KEY:-}" ] || [ -z "${N8N_USER_MANAGEMENT_JWT_SECRET:-}" ]; then
+    log error "missing required n8n secrets in .env.aiops"
+    exit 1
+  fi
+}
+
+port_owner() {
+  local port="$1"
+  local out pid args
+  out="$(lsof -nP -iTCP:"$port" -sTCP:LISTEN -Fp 2>/dev/null || true)"
+  pid="$(printf '%s\n' "$out" | sed -n 's/^p//p' | head -n1)"
+  if [ -z "$pid" ]; then
+    echo "none"
+    return 0
+  fi
+
+  args="$(ps -p "$pid" -o args= 2>/dev/null || true)"
+  if printf '%s' "$args" | grep -Eiq 'n8n([^a-zA-Z0-9]|$)|/n8n\.js'; then
+    echo "n8n:$pid"
+  elif printf '%s' "$args" | grep -Eiq 'bridge-8500\.js'; then
+    echo "bridge:$pid"
+  else
+    echo "unknown:$pid"
+  fi
+}
+
 is_port_listening() {
   local port="$1"
   if command -v ss >/dev/null 2>&1; then
@@ -56,12 +109,26 @@ if ! mkdir "$LOCK_DIR" 2>/dev/null; then
 fi
 trap 'rmdir "$LOCK_DIR" 2>/dev/null || true' EXIT
 
+ensure_env_file
 cleanup_stale_pid
 
-if is_port_listening "$BRIDGE_PORT"; then
-  log warn "refusing to start n8n while bridge port $BRIDGE_PORT is occupied"
-  exit 0
-fi
+owner="$(port_owner "$BRIDGE_PORT")"
+case "$owner" in
+  n8n:*)
+    pid="${owner#n8n:}"
+    echo "$pid" > "$PID_FILE"
+    log info "n8n already running on bridge port $BRIDGE_PORT pid=$pid"
+    exit 0
+    ;;
+  bridge:*)
+    log warn "refusing to start n8n while bridge owns port $BRIDGE_PORT (pid=${owner#bridge:})"
+    exit 0
+    ;;
+  unknown:*)
+    log warn "degraded: unknown process owns bridge port $BRIDGE_PORT (pid=${owner#unknown:}); skipping n8n start"
+    exit 0
+    ;;
+esac
 
 if is_port_listening "$N8N_PORT"; then
   log warn "refusing to start n8n because port $N8N_PORT is already in use"
@@ -85,5 +152,4 @@ if ! kill -0 "$PID" 2>/dev/null; then
 fi
 
 log info "started n8n pid=$PID"
-
 printf '{"status":"running","pid":%s,"port":%s,"updated":"%s"}\n' "$(cat "$PID_FILE")" "$N8N_PORT" "$(date -Iseconds)" > "$RUNTIME_DIR/n8n.status.json"
