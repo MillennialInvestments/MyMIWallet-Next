@@ -11,7 +11,6 @@ use App\Services\Ops\FilesystemHealthService;
 use App\Services\Ops\SnapshotWriter;
 use App\Services\Ops\SparkGovernanceService;
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\CLI\Command;
 use Config\Services;
 use Throwable;
 
@@ -111,9 +110,9 @@ class AppUpdate extends SafeBaseCommand
                 $phaseWarnings[] = 'Dry-run: cache clear skipped.';
             } else {
                 try {
-                    $result = $this->call('cache:clear');
-                    $details[] = ['command' => 'cache:clear', 'status' => $result === Command::SUCCESS ? 'pass' : 'fail'];
-                    if ($result !== Command::SUCCESS) {
+                    $result = (int) command('cache:clear');
+                    $details[] = ['command' => 'cache:clear', 'status' => $result === EXIT_SUCCESS ? 'pass' : 'fail'];
+                    if ($result !== EXIT_SUCCESS) {
                         $phaseFailures[] = 'cache:clear reported failure.';
                     }
                 } catch (Throwable $e) {
@@ -253,7 +252,7 @@ class AppUpdate extends SafeBaseCommand
             $snapshotWriter = new SnapshotWriter();
             $phaseResults[] = $this->runPhase('Phase 8: AIOps Snapshot', function () use ($snapshotWriter, $dryRun, &$aiopsWarnings, $phaseResults) {
                 $timestamp = date('Ymd-His');
-                $path = WRITEPATH . 'aiops/snapshots/app-update-' . $timestamp . '.json';
+                $path = ROOTPATH . 'docs/aiops/snapshots/app-update-' . $timestamp . '.json';
                 $summary = $this->summarizePhases($phaseResults);
 
                 $payload = [
