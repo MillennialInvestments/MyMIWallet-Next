@@ -675,3 +675,119 @@ in SYSTEMPATH/View/View.php on line 206.
 10 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
 11 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
 12 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-08 14:52:18 --> TypeError: trim(): Argument #1 ($string) must be of type string, null given
+[Method: GET, Route: login]
+in SYSTEMPATH/View/View.php on line 206.
+ 1 SYSTEMPATH/View/View.php(206): trim(null, '/')
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render('App\\Views\\Auth\\login', [], true)
+ 3 APPPATH/Controllers/AuthController.php(1382): view('App\\Views\\Auth\\login', [...])
+ 4 APPPATH/Controllers/AuthController.php(73): App\Controllers\AuthController->_render('App\\Views\\Auth\\login', [...])
+ 5 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AuthController->login()
+ 6 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 7 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-08 14:52:23 --> TypeError: trim(): Argument #1 ($string) must be of type string, null given
+[Method: GET, Route: login]
+in SYSTEMPATH/View/View.php on line 206.
+ 1 SYSTEMPATH/View/View.php(206): trim(null, '/')
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render('App\\Views\\Auth\\login', [], true)
+ 3 APPPATH/Controllers/AuthController.php(1382): view('App\\Views\\Auth\\login', [...])
+ 4 APPPATH/Controllers/AuthController.php(73): App\Controllers\AuthController->_render('App\\Views\\Auth\\login', [...])
+ 5 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AuthController->login()
+ 6 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 7 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-08 14:52:30 --> TypeError: trim(): Argument #1 ($string) must be of type string, null given
+[Method: GET, Route: /]
+in SYSTEMPATH/View/View.php on line 206.
+ 1 SYSTEMPATH/View/View.php(206): trim(null, '/')
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render('App\\Views\\Auth\\register_form', [], true)
+ 3 APPPATH/Views/themes/public/home.php(169): view('App\\Views\\Auth\\register_form')
+ 4 SYSTEMPATH/View/View.php(238): include('/home/mymiteam/mymiwallet/site/current/app/Views/themes/public/home.php')
+ 5 SYSTEMPATH/View/View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render('themes/public/home', [], true)
+ 7 APPPATH/Controllers/BaseController.php(524): view('themes/public/home', [...])
+ 8 APPPATH/Controllers/Home.php(158): App\Controllers\BaseController->renderTheme('themes/public/home', [...])
+ 9 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\Home->index()
+10 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+11 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-08 14:52:36 --> TypeError: trim(): Argument #1 ($string) must be of type string, null given
+[Method: GET, Route: /]
+in SYSTEMPATH/View/View.php on line 206.
+ 1 SYSTEMPATH/View/View.php(206): trim(null, '/')
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render('App\\Views\\Auth\\register_form', [], true)
+ 3 APPPATH/Views/themes/public/home.php(169): view('App\\Views\\Auth\\register_form')
+ 4 SYSTEMPATH/View/View.php(238): include('/home/mymiteam/mymiwallet/site/current/app/Views/themes/public/home.php')
+ 5 SYSTEMPATH/View/View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render('themes/public/home', [], true)
+ 7 APPPATH/Controllers/BaseController.php(524): view('themes/public/home', [...])
+ 8 APPPATH/Controllers/Home.php(158): App\Controllers\BaseController->renderTheme('themes/public/home', [...])
+ 9 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\Home->index()
+10 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+11 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-08 15:04:20 --> TypeError: trim(): Argument #1 ($string) must be of type string, null given
+[Method: GET, Route: /]
+in SYSTEMPATH/View/View.php on line 206.
+ 1 SYSTEMPATH/View/View.php(206): trim(null, '/')
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render('App\\Views\\Auth\\register_form', [], true)
+ 3 APPPATH/Views/themes/public/home.php(169): view('App\\Views\\Auth\\register_form')
+ 4 SYSTEMPATH/View/View.php(238): include('/home/mymiteam/mymiwallet/site/current/app/Views/themes/public/home.php')
+ 5 SYSTEMPATH/View/View.php(241): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render('themes/public/home', [], true)
+ 7 APPPATH/Controllers/BaseController.php(524): view('themes/public/home', [...])
+ 8 APPPATH/Controllers/Home.php(158): App\Controllers\BaseController->renderTheme('themes/public/home', [...])
+ 9 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\Home->index()
+10 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+11 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-08 15:04:21 --> TypeError: trim(): Argument #1 ($string) must be of type string, null given
+[Method: GET, Route: login]
+in SYSTEMPATH/View/View.php on line 206.
+ 1 SYSTEMPATH/View/View.php(206): trim(null, '/')
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render('App\\Views\\Auth\\login', [], true)
+ 3 APPPATH/Controllers/AuthController.php(1382): view('App\\Views\\Auth\\login', [...])
+ 4 APPPATH/Controllers/AuthController.php(73): App\Controllers\AuthController->_render('App\\Views\\Auth\\login', [...])
+ 5 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AuthController->login()
+ 6 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 7 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-08 15:04:25 --> TypeError: trim(): Argument #1 ($string) must be of type string, null given
+[Method: GET, Route: login]
+in SYSTEMPATH/View/View.php on line 206.
+ 1 SYSTEMPATH/View/View.php(206): trim(null, '/')
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render('App\\Views\\Auth\\login', [], true)
+ 3 APPPATH/Controllers/AuthController.php(1382): view('App\\Views\\Auth\\login', [...])
+ 4 APPPATH/Controllers/AuthController.php(73): App\Controllers\AuthController->_render('App\\Views\\Auth\\login', [...])
+ 5 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AuthController->login()
+ 6 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 7 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-08 15:04:28 --> TypeError: trim(): Argument #1 ($string) must be of type string, null given
+[Method: GET, Route: login]
+in SYSTEMPATH/View/View.php on line 206.
+ 1 SYSTEMPATH/View/View.php(206): trim(null, '/')
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render('App\\Views\\Auth\\login', [], true)
+ 3 APPPATH/Controllers/AuthController.php(1382): view('App\\Views\\Auth\\login', [...])
+ 4 APPPATH/Controllers/AuthController.php(73): App\Controllers\AuthController->_render('App\\Views\\Auth\\login', [...])
+ 5 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AuthController->login()
+ 6 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 7 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

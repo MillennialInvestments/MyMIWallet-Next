@@ -1,2 +1,3 @@
 {"ts":"2026-02-08T13:14:27.197Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
 {"ts":"2026-02-08T14:05:01.696Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
+{"ts":"2026-02-08T15:05:01.393Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}

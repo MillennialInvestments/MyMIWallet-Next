@@ -4,7 +4,7 @@
    Grouped by (LEVEL + message)
 ===============================================
 
-Last processed up to: 2026-02-08 11:35:31
+Last processed up to: 2026-02-08 13:59:36
 
 ---------------------------
 LEVEL: CRITICAL
@@ -61,7 +61,7 @@ CRITICAL --> ErrorException: Allowed memory size of 805306368 bytes exhausted (t
 [2 occurrence(s)]
 CRITICAL --> Error: Call to a member function getAssets() on null
 
-[10 occurrence(s)]
+[18 occurrence(s)]
 CRITICAL --> TypeError: trim(): Argument #1 ($string) must be of type string, null given
 
 [6 occurrence(s)]
@@ -73,24 +73,15 @@ CRITICAL --> TypeError: CodeIgniter\CLI\CLI::write(): Argument #1 ($text) must b
 
 ===============================================
    HERE'S THE NEW STUFF
-   (Entries logged AFTER 2026-02-08 11:35:31)
+   (Entries logged AFTER 2026-02-08 13:59:36)
 ===============================================
 
 ---------------------------
 LEVEL: CRITICAL (NEW)
 ---------------------------
 
-[10 NEW occurrence(s)]
+[8 NEW occurrence(s)]
 CRITICAL --> TypeError: trim(): Argument #1 ($string) must be of type string, null given
-
-[2 NEW occurrence(s)]
-CRITICAL --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
-
-[6 NEW occurrence(s)]
-CRITICAL --> Error: Call to a member function getOption() on null
-
-[2 NEW occurrence(s)]
-CRITICAL --> TypeError: CodeIgniter\CLI\CLI::write(): Argument #1 ($text) must be of type string, array given, called in /home/mymiteam/mymiwallet/site/current/app/Commands/Support/SubsCommandTrait.php on line 60
 
 
 ---- CONFIG LINT ----
