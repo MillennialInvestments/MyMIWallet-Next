@@ -1,0 +1,91 @@
+[17:48:03] [INIT] [OK] Log created at /home/mymiteam/mymiwallet/site/current/writable/triage/503/503-2026-01-25-174803.log
+[17:48:03] [INIT] [INFO] dry_run=false
+[17:48:03] [ENVDOCTOR] [OK] status=warning score=60 json=/home/mymiteam/mymiwallet/site/current/writable/triage/envdoctor/envdoctor-2026-01-25-174803.json md=/home/mymiteam/mymiwallet/site/current/writable/triage/envdoctor/envdoctor-2026-01-25-174803.md
+[17:48:03] [WEB-REACHABILITY] [OK] curl -I https://www.mymiwallet.com status=503 server=Apache
+[17:48:03] [WEB-REACHABILITY] [INFO]   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+[17:48:03] [WEB-REACHABILITY] [INFO]                                  Dload  Upload   Total   Spent    Left  Speed
+[17:48:03] [WEB-REACHABILITY] [INFO]   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+[17:48:03] [WEB-REACHABILITY] [INFO] HTTP/2 503
+[17:48:03] [WEB-REACHABILITY] [INFO] content-type: text/html; charset=iso-8859-1
+[17:48:03] [WEB-REACHABILITY] [INFO] date: Sun, 25 Jan 2026 17:48:03 GMT
+[17:48:03] [WEB-REACHABILITY] [INFO] server: Apache
+[17:48:03] [WEB-REACHABILITY] [INFO] 
+[17:48:03] [DISK] [OK] disk_max=9% inode_max=9%
+[17:48:03] [DISK] [INFO] Filesystem      Size  Used Avail Use% Mounted on
+[17:48:03] [DISK] [INFO] overlay          25G  1.7G   24G   7% /
+[17:48:03] [DISK] [INFO] tmpfs            15G  196K   15G   1% /run
+[17:48:03] [DISK] [INFO] /dev/md10        10G  4.0K   10G   1% /tmp
+[17:48:03] [DISK] [INFO] tmpfs            64M     0   64M   0% /dev
+[17:48:03] [DISK] [INFO] tmpfs            15G     0   15G   0% /run/lock
+[17:48:03] [DISK] [INFO] tmpfs            26G   20M   26G   1% /run/secrets
+[17:48:03] [DISK] [INFO] /dev/nvme0n1p1  459G   39G  402G   9% /var/container_share
+[17:48:03] [DISK] [INFO] shm              63M     0   63M   0% /dev/shm
+[17:48:03] [INODE] [INFO] Filesystem        Inodes    IUsed     IFree IUse% Mounted on
+[17:48:03] [INODE] [INFO] overlay        468779520 40039537 428739983    9% /
+[17:48:03] [INODE] [INFO] tmpfs           32995412      194  32995218    1% /run
+[17:48:03] [INODE] [INFO] /dev/md10         655360       22    655338    1% /tmp
+[17:48:03] [INODE] [INFO] tmpfs           32995412       18  32995394    1% /dev
+[17:48:03] [INODE] [INFO] tmpfs           32995412        3  32995409    1% /run/lock
+[17:48:03] [INODE] [INFO] tmpfs           32995412     6636  32988776    1% /run/secrets
+[17:48:03] [INODE] [INFO] /dev/nvme0n1p1  30352688   124332  30228356    1% /var/container_share
+[17:48:03] [INODE] [INFO] shm             32995412        1  32995411    1% /dev/shm
+[17:48:03] [PHP-BACKEND] [OK] platform=dreamhost proc=true sock=true sock_path=/home/mymiteam/.php.sock
+[17:48:03] [PHP-BACKEND] [INFO] root        216  0.0  0.1   9508  4616 ?        S    08:53   0:00 sudo -H -u mymiteam env -i PATH=/home/mymiteam/bin:/bin:/usr/bin HOME=/home/mymiteam PHP_FCGI_CHILDREN=2 PHPRC=/etc/php82/php.ini nohup /usr/local/dh/cgi-system/php82.cgi -b /home/mymiteam/.php.sock
+[17:48:03] [PHP-BACKEND] [INFO] mymiteam    223  0.0  0.9 181764 37908 ?        Ss   08:53   0:00 /usr/local/dh/cgi-system/php82.cgi -b /home/mymiteam/.php.sock
+[17:48:03] [PHP-BACKEND] [INFO] mymiteam    236  0.0  0.2 181764  8740 ?        S    08:53   0:00 /usr/local/dh/cgi-system/php82.cgi -b /home/mymiteam/.php.sock
+[17:48:03] [PHP-BACKEND] [INFO] mymiteam    237  0.0  0.2 181764  8732 ?        S    08:53   0:00 /usr/local/dh/cgi-system/php82.cgi -b /home/mymiteam/.php.sock
+[17:48:03] [PHP-BACKEND] [INFO] root        241  0.0  0.1   9508  4608 ?        S    08:53   0:00 sudo -H -u tbi_user env -i PATH=/bin:/usr/bin HOME=/home/tbi_user PHP_FCGI_CHILDREN=2 PHPRC=/etc/php82/php.ini nohup /usr/local/dh/cgi-system/php82.cgi -b /home/tbi_user/.php.sock
+[17:48:03] [PHP-BACKEND] [INFO] tbi_user    244  0.0  0.9 181756 37920 ?        Ss   08:53   0:00 /usr/local/dh/cgi-system/php82.cgi -b /home/tbi_user/.php.sock
+[17:48:03] [PHP-BACKEND] [INFO] tbi_user    250  0.0  0.2 181756  8692 ?        S    08:53   0:00 /usr/local/dh/cgi-system/php82.cgi -b /home/tbi_user/.php.sock
+[17:48:03] [PHP-BACKEND] [INFO] tbi_user    251  0.0  0.2 181756  8692 ?        S    08:53   0:00 /usr/local/dh/cgi-system/php82.cgi -b /home/tbi_user/.php.sock
+[17:48:03] [PHP-BACKEND] [INFO] root        275  0.0  0.1   9508  4608 ?        S    08:53   0:00 sudo -H -u timoteo2392 env -i PATH=/home/timoteo2392/bin:/bin:/usr/bin HOME=/home/timoteo2392 PHP_FCGI_CHILDREN=2 PHPRC=/etc/php82/php.ini nohup /usr/local/dh/cgi-system/php82.cgi -b /home/timoteo2392/.php.sock
+[17:48:03] [PHP-BACKEND] [INFO] timoteo+    281  0.0  0.9 181764 38424 ?        Ss   08:53   0:00 /usr/local/dh/cgi-system/php82.cgi -b /home/timoteo2392/.php.sock
+[17:48:03] [PHP-BACKEND] [INFO] timoteo+    310  0.0  0.2 181764  8608 ?        S    08:53   0:00 /usr/local/dh/cgi-system/php82.cgi -b /home/timoteo2392/.php.sock
+[17:48:03] [PHP-BACKEND] [INFO] timoteo+    312  0.0  0.2 181764  8608 ?        S    08:53   0:00 /usr/local/dh/cgi-system/php82.cgi -b /home/timoteo2392/.php.sock
+[17:48:03] [PHP-BACKEND] [INFO] mymiteam  17402  0.0  0.0   3604  1536 pts/0    S+   09:48   0:00 grep -E php82\.cgi|php-cgi|supervisord
+[17:48:03] [PHP-SOCKET] [FAIL] platform=dreamhost detected=/home/mymiteam/.php.sock expected=/home/mymiteam/.local/phpcgi/run/php-cgi-82.sock
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/defaults/default.conf:26:        fastcgi_pass unix:/dh/cgi-system/php74.cgi;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/defaults/default.conf.save:26:        fastcgi_pass unix:/dh/cgi-system/php74.cgi;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/mymiwallet.com.off/mymiwallet-com.new.config:17:        fastcgi_pass unix:/dh/cgi-system/php74.cgi;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/mymiwallet.com.off/mymiwallet-com.new.config:49:        fastcgi_pass unix:/dh/cgi-system/php74.cgi;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/mymiwallet.com.off/mymiwallet.com.07032024.conf:17:        fastcgi_pass unix:/dh/cgi-system/php74.cgi;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/mymiwallet.com.off/mymmiwallet.com-backup.conf:17:        fastcgi_pass unix:/dh/cgi-system/php74.cgi;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet.conf.bak:48:        fastcgi_pass 127.0.0.1:9000; # Ensure PHP-FPM is running
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet062025.conf:19:        fastcgi_pass unix:/run/php/php8.1-fpm.sock; # Correct the extra space
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet-working.conf:37:        fastcgi_pass unix:/home/mymiteam/.php.sock;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/myiwallet-working-now.conf:29:        fastcgi_pass unix:/home/mymiteam/.php.sock;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet.working.09142025.con:65:        fastcgi_pass   unix:/home/mymiteam/.php.sock;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet.conf.bak.1757860128:65:        fastcgi_pass   unix:/home/mymiteam/.php.sock;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet.09192025.conf:49:        # fastcgi_pass unix:/home/mymiteam/.php/php-fpm.sock;   # (recommended when available)
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet.09192025.conf:50:        fastcgi_pass 127.0.0.1:9071;                            # (only if you run your own php-fpm)
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet.conf.bak.1758360672:32:        fastcgi_pass unix:/home/mymiteam/.local/phpcgi/run/php-cgi-82.sock;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet.conf.bak.1758360672:45:        fastcgi_pass unix:/home/mymiteam/.local/phpcgi/run/php-cgi-82.sock;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet-07082025.conf.bak:42:        fastcgi_pass unix:/home/mymiteam/.php.sock;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet-07082025.conf:42:        fastcgi_pass unix:/home/mymiteam/.php.sock;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet.09132025.conf.bak:34:        fastcgi_pass unix:/home/mymiteam/.php.sock;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet.09132025.conf:34:        fastcgi_pass unix:/home/mymiteam/.php.sock;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet.working.09142025.conf.bak:37:        fastcgi_pass   unix:/home/mymiteam/.php.sock;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet.working.09142025.conf:37:        fastcgi_pass   unix:/home/mymiteam/.php.sock;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet-09302025.conf:32:        fastcgi_pass unix:/home/mymiteam/.local/phpcgi/run/php-cgi-82.sock;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet-09302025.conf:45:        fastcgi_pass unix:/home/mymiteam/.local/phpcgi/run/php-cgi-82.sock;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet.conf.bak.1759319816:66:        fastcgi_pass unix:127.0.0.1:9071;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet.conf.bak.1759319816:84:        fastcgi_pass unix:127.0.0.1:9071;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet.conf.bak.1759319816:99:        fastcgi_pass   unix:/home/mymiteam/.local/phpcgi/run/php-cgi-82.sock;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet-10012025.conf:66:        fastcgi_pass 127.0.0.1:9071;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet-10012025.conf:84:        fastcgi_pass 127.0.0.1:9071;
+[17:48:03] [PHP-SOCKET] [INFO] /home/mymiteam/nginx/sites-available/mymiwallet-10012025.conf:99:        fastcgi_pass 127.0.0.1:9071;
+[17:48:03] [NGINX-FIX-GEN] [OK] Wrote suggested config: /home/mymiteam/mymiwallet/site/current/writable/triage/503/nginx-fastcgi-fix-2026-01-25-174803.conf
+[17:48:03] [CI4-CLI] [FAIL] php spark app:config
+[17:48:03] [CI4-CLI] [INFO] Could not open input file: spark
+[17:48:03] [CACHE-RESET] [OK] rm -rf /home/mymiteam/mymiwallet/site/current/writable/cache/*
+[17:48:03] [CACHE-RESET] [OK] rm -rf /home/mymiteam/mymiwallet/site/current/writable/debugbar/*
+[17:48:03] [CACHE-RESET] [OK] rm -rf /home/mymiteam/mymiwallet/site/current/writable/session/*
+[17:48:03] [CI4-CLI] [FAIL] php spark app:config (post-fix)
+[17:48:03] [CI4-CLI] [INFO] Could not open input file: spark
+[17:48:03] [AUTOLOAD] [WARN] composer dump-autoload -o
+[17:48:03] [AUTOLOAD] [INFO] sh: line 1: composer: command not found
+[17:48:03] [PERMISSIONS] [FAIL] ls -ld writable
+[17:48:03] [PERMISSIONS] [INFO] ls: cannot access 'writable': No such file or directory
+[17:48:03] [PERMISSIONS] [FAIL] chmod -R 775 writable
+[17:48:03] [PERMISSIONS] [INFO] chmod: cannot access 'writable': No such file or directory
+[17:48:03] [PHP-FPM-LOG] [WARN] /var/log/php8.2-fpm.log not found
