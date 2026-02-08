@@ -1119,5 +1119,19 @@
         'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/Management/Views/Projects/index/pending_projects.php',
       ),
     ),
+    'SupportModule\\Views\\Support\\account_help' => 
+    array (
+      'Views' => 
+      array (
+        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/Support/Views/Support/account_help.php',
+      ),
+    ),
+    'SupportModule\\Views\\Support\\account_help.php' => 
+    array (
+      'Views' => 
+      array (
+        'php' => '/home/mymiteam/mymiwallet/site/current/app/Modules/Support/Views/Support/account_help.php',
+      ),
+    ),
   ),
 );

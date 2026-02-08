@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-07T22:00:02Z
+> Run: 2026-02-08T00:00:01Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Models/AIOpsBudgetModel.php
@@ -403,7 +403,7 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Views/Alerts/resources/rh-keygen.php
   - ⚠️ No obvious doc match found (heuristic)
-- … and 922 more
+- … and 924 more
 
 ## Documented Items With No Obvious Code Match (best-effort)
 - docs/CRON.md
