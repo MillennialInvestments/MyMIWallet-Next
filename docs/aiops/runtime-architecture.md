@@ -38,3 +38,21 @@ These are ignored in git and recreated at startup.
 - Stale PID files: removed automatically.
 - Bridge process receives SIGTERM/SIGINT: graceful close, forced exit timeout at 2s.
 - Chat stop script removes stale PID and exits cleanly.
+
+
+## Canonical n8n environment invariants
+- Canonical env file: `aiops/.env.aiops`.
+- `N8N_ENCRYPTION_KEY` and `N8N_USER_MANAGEMENT_JWT_SECRET` are loaded from `.env.aiops` by:
+  - `aiops/start-aiops.sh`
+  - `aiops/start-n8n.sh`
+  - `aiops/bin/n8n-start-safe.sh`
+- If `.env.aiops` is missing, `n8n-start-safe.sh` generates it once with secure random values and persists it.
+- Launchers never rotate these keys at runtime; they are reused on every restart.
+
+## Port 8500 ownership detection
+- Port ownership is determined from process command line (`ps -p <pid> -o args=`), not process name alone.
+- Owner handling:
+  - `n8n` owns 8500: treat as already running and exit cleanly.
+  - `bridge` owns 8500: block n8n launch.
+  - unknown process owns 8500: mark degraded/skip launch without killing the process.
+- Same owner classification is available in `SubSystemManager::isPortOccupied()` for Spark/API status payloads.
