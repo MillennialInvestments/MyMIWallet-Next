@@ -38,7 +38,7 @@ class BudgetController extends UserController
     protected $marketingService;
     protected $solanaService;
     protected $userService;
-    protected $walletService;
+    protected ?WalletService $walletService = null;
     protected $budgetModel;
     protected SafeCache $safeCache;
     protected int $apiCacheTtl = 60;

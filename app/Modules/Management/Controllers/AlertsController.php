@@ -102,6 +102,11 @@ class AlertsController extends UserController
         $this->reporting                            = $this->getMyMIAnalytics()->reporting($this->cuID);
     }
 
+    protected function getMyMIAlerts(): MyMIAlerts
+    {
+        return parent::getMyMIAlerts();
+    }
+
     public function commonData(): array {  
         $this->data = parent::commonData();
         // Fetch general site settings
