@@ -21,7 +21,7 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const PORT = process.env.PORT || 8300;
+const PORT = Number(process.env.PORT || 8300);
 const HOST = process.env.BIND_HOST || '0.0.0.0';
 const APP_BASE_URL = process.env.APP_BASE_URL || '';
 const CHAT_BASE_PATH = process.env.CHAT_BASE_PATH || '';
@@ -49,7 +49,8 @@ const COST_PER_1K = {
 
 const CONFIG_PATH = path.join(__dirname, 'config.runtime.json');
 const USAGE_PATH = path.join(__dirname, 'usage.json');
-const LOG_PATH = path.join(__dirname, 'logs', 'chat.log');
+const LOG_PATH = path.join(__dirname, '..', 'writable', 'logs', 'chat', 'chat.log');
+const ERROR_LOG_PATH = path.join(__dirname, '..', 'writable', 'logs', 'chat', 'chat-errors.log');
 const TEN_SECONDS = 10 * 1000;
 const DEFAULT_PROVIDER = 'openai';
 const DEFAULT_MODEL = 'gpt-4o-mini';
@@ -161,6 +162,19 @@ app.get(['/api/me', withBasePath('/api/me')], async (req, res) => {
   }
 });
 
+app.get(['/api/ops/visibility', withBasePath('/api/ops/visibility')], async (_req, res) => {
+  const payload = {
+    checkedAt: new Date().toISOString(),
+    chatStatus: await readStatusJson(path.join(__dirname, 'runtime', 'chat.status.json')),
+    chatPort: PORT,
+    toolHealth: await probeHttpHealth(buildAbsoluteUrl('/health')),
+    lastError: await readLastLine(ERROR_LOG_PATH),
+    logFreshness: await computeLogFreshness(LOG_PATH)
+  };
+
+  return res.json(payload);
+});
+
 app.post(['/api/chat', withBasePath('/api/chat')], async (req, res) => {
   const config = await loadRuntimeConfig();
   if (!config.enabled) {
@@ -172,6 +186,7 @@ app.post(['/api/chat', withBasePath('/api/chat')], async (req, res) => {
   const isToolRequest = !hasMessages && (req.body?.tool || req.body?.mode);
 
   if (isToolRequest) {
+    const startedAt = Date.now();
     const payload = {
       mode: (req.body.mode || 'user').toLowerCase(),
       tool: req.body.tool,
@@ -185,11 +200,20 @@ app.post(['/api/chat', withBasePath('/api/chat')], async (req, res) => {
 
     try {
       const response = await ci4Fetch(req, CI4_TOOL_ENDPOINT, payload);
+      await appendLog(`[tool-bridge] ok tool=${payload.tool} latency_ms=${Date.now() - startedAt} payload_bytes=${Buffer.byteLength(JSON.stringify(payload))}`);
       return res.json(response);
     } catch (err) {
-      await appendLog(`CI4 tool proxy failed (${payload.tool}): ${err.message}`);
+      await appendErrorLog(`CI4 tool proxy failed (${payload.tool}): ${err.message}`);
       const status = Number.isFinite(err?.status) ? err.status : 502;
-      return res.status(status).json({ error: 'Tool call failed' });
+      return res.status(status).json({
+        error: 'Tool call failed',
+        detail: err.message,
+        code: 'TOOL_BRIDGE_FAILURE',
+        status,
+        tool: payload.tool,
+        latency_ms: Date.now() - startedAt,
+        payload_bytes: Buffer.byteLength(JSON.stringify(payload))
+      });
     }
   }
 
@@ -596,6 +620,63 @@ async function appendLog(message) {
   await fs.promises.appendFile(LOG_PATH, line);
 }
 
+async function appendErrorLog(message) {
+  await fs.promises.mkdir(path.dirname(ERROR_LOG_PATH), { recursive: true });
+  const line = `[${new Date().toISOString()}] ${message}\n`;
+  await fs.promises.appendFile(ERROR_LOG_PATH, line);
+}
+
+async function readStatusJson(filePath) {
+  try {
+    const raw = await fs.promises.readFile(filePath, 'utf8');
+    return JSON.parse(raw);
+  } catch {
+    return { status: 'unknown', reason: 'status file missing' };
+  }
+}
+
+async function readLastLine(filePath) {
+  try {
+    const raw = await fs.promises.readFile(filePath, 'utf8');
+    const lines = raw.split(/\r?\n/).filter(Boolean);
+    return lines.length > 0 ? lines[lines.length - 1] : null;
+  } catch {
+    return null;
+  }
+}
+
+async function computeLogFreshness(filePath) {
+  try {
+    const stats = await fs.promises.stat(filePath);
+    const ageSeconds = Math.max(0, Math.floor((Date.now() - stats.mtimeMs) / 1000));
+    return { ageSeconds, updatedAt: new Date(stats.mtimeMs).toISOString() };
+  } catch {
+    return { ageSeconds: null, updatedAt: null };
+  }
+}
+
+async function probeHttpHealth(url) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 3000);
+  try {
+    const response = await fetch(url, { method: 'GET', signal: controller.signal });
+    return {
+      ok: response.ok,
+      status: response.status,
+      endpoint: url
+    };
+  } catch (err) {
+    return {
+      ok: false,
+      status: null,
+      endpoint: url,
+      error: err.message
+    };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 function normalizeBasePath(pathname = '') {
   const trimmed = (pathname || '').trim();
   if (!trimmed) return '';
@@ -664,6 +745,11 @@ function buildAbsoluteUrl(endpoint) {
   } catch (err) {
     throw new Error(`Invalid CI4 endpoint: ${endpoint}`);
   }
+}
+
+if (PORT === 8500) {
+  await appendErrorLog('FATAL: PORT=8500 is blocked for chat runtime; expected PORT=8300 from chat/.env');
+  process.exit(64);
 }
 
 app.listen(PORT, HOST, () => {

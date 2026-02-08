@@ -10,6 +10,8 @@ class SubSystemManager
 
     public function __construct()
     {
+        $chatPort = $this->resolveChatPort();
+
         $this->map = [
             'aiops.n8n' => [
                 'root' => ROOTPATH . 'aiops',
@@ -25,10 +27,11 @@ class SubSystemManager
                 'root' => ROOTPATH . 'chat',
                 'runtime' => ROOTPATH . 'chat/runtime',
                 'service' => 'chat',
-                'port' => (int) (getenv('CHAT_PORT') ?: getenv('PORT') ?: 8300),
+                'port' => $chatPort,
                 'start' => ROOTPATH . 'chat/bin/chat-start-safe.sh',
                 'stop' => ROOTPATH . 'chat/bin/chat-stop-safe.sh',
-                'log' => ROOTPATH . 'chat/runtime/chat.log',
+                'log' => ROOTPATH . 'writable/logs/chat/chat.log',
+                'error_log' => ROOTPATH . 'writable/logs/chat/chat-errors.log',
             ],
         ];
     }
@@ -38,6 +41,8 @@ class SubSystemManager
         foreach ($this->map as $cfg) {
             @mkdir($cfg['runtime'], 0775, true);
         }
+
+        @mkdir(ROOTPATH . 'writable/logs/chat', 0775, true);
     }
 
     public function status(string $service): array
@@ -46,10 +51,23 @@ class SubSystemManager
         $pidFile = $this->pidFile($cfg);
         $pid = is_file($pidFile) ? (int) trim((string) file_get_contents($pidFile)) : null;
         $running = $pid ? $this->isPidAlive($pid) : false;
-        $port = $cfg['port'];
+        $port = (int) $cfg['port'];
         $portListening = $this->isPortListening($port);
+
         $bridgePort = (int) ($cfg['bridge_port'] ?? 0);
         $bridgeOwner = $bridgePort > 0 ? $this->portOwner($bridgePort) : ['owner' => 'none', 'pid' => null, 'args' => null];
+
+        $issues = [];
+        if ($pid !== null && ! $running) {
+            $issues[] = 'pid_file_present_but_process_dead';
+        }
+        if ($running && ! $portListening) {
+            $issues[] = 'process_alive_but_port_not_listening';
+        }
+        if (! $running && $portListening) {
+            $issues[] = 'port_listening_without_pid';
+        }
+
         $status = [
             'service' => $service,
             'pid' => $pid,
@@ -57,11 +75,14 @@ class SubSystemManager
             'running' => $running,
             'port' => $port,
             'port_listening' => $portListening,
+            'healthy' => $running && $portListening,
+            'issues' => $issues,
             'bridge_port' => $bridgePort > 0 ? $bridgePort : null,
             'bridge_port_owner' => $bridgeOwner,
             'runtime_dir' => $cfg['runtime'],
             'log_file' => $cfg['log'],
-            'status' => ($running || $portListening) ? 'running' : 'stopped',
+            'error_log_file' => $cfg['error_log'] ?? null,
+            'status' => empty($issues) ? (($running && $portListening) ? 'running' : 'stopped') : 'degraded',
             'checked_at' => date('c'),
         ];
 
@@ -84,18 +105,92 @@ class SubSystemManager
     {
         $first = $this->stop($service, $dryRun);
         $second = $this->start($service, $dryRun);
+
         return ['action' => 'restart', 'stop' => $first, 'start' => $second, 'ok' => (bool) ($second['ok'] ?? false)];
     }
 
-    public function tailLogs(string $service, int $lines = 200): array
+    public function tailLogs(string $service, int $lines = 200, bool $json = false, ?string $since = null): array
     {
         $cfg = $this->cfg($service);
-        $file = $cfg['log'];
-        if (!is_file($file)) {
-            return ['ok' => false, 'message' => 'Log file missing', 'log_file' => $file, 'lines' => []];
+        $files = array_values(array_filter([$cfg['log'] ?? null, $cfg['error_log'] ?? null], static fn($p) => is_string($p) && $p !== ''));
+
+        $bundle = [];
+        foreach ($files as $file) {
+            if (! is_file($file)) {
+                $bundle[] = ['file' => $file, 'missing' => true, 'lines' => []];
+                continue;
+            }
+
+            $content = file($file, FILE_IGNORE_NEW_LINES) ?: [];
+            if ($since !== null && $since !== '') {
+                $content = $this->filterBySince($content, $since);
+            }
+
+            $bundle[] = [
+                'file' => $file,
+                'missing' => false,
+                'lines' => array_slice($content, -1 * max(1, $lines)),
+            ];
         }
-        $content = file($file, FILE_IGNORE_NEW_LINES) ?: [];
-        return ['ok' => true, 'log_file' => $file, 'lines' => array_slice($content, -1 * max(1, $lines))];
+
+        $flatLines = [];
+        foreach ($bundle as $entry) {
+            foreach ($entry['lines'] as $line) {
+                $flatLines[] = '[' . basename($entry['file']) . '] ' . $line;
+            }
+        }
+
+        return [
+            'ok' => !empty($flatLines) || !empty($bundle),
+            'service' => $service,
+            'since' => $since,
+            'log_files' => $files,
+            'sources' => $bundle,
+            'lines' => $json ? [] : $flatLines,
+        ];
+    }
+
+    private function filterBySince(array $lines, string $since): array
+    {
+        $seconds = $this->parseSinceToSeconds($since);
+        if ($seconds <= 0) {
+            return $lines;
+        }
+
+        $threshold = time() - $seconds;
+        return array_values(array_filter($lines, static function (string $line) use ($threshold): bool {
+            if (preg_match('/\[(\d{4}-\d{2}-\d{2}T[^\]]+)\]/', $line, $m) !== 1) {
+                return true;
+            }
+
+            $ts = strtotime($m[1]);
+            if ($ts === false) {
+                return true;
+            }
+
+            return $ts >= $threshold;
+        }));
+    }
+
+    private function parseSinceToSeconds(string $since): int
+    {
+        $clean = trim(strtolower($since));
+        if ($clean === '') {
+            return 0;
+        }
+
+        if (preg_match('/^(\d+)\s*([smhd])$/', $clean, $m) !== 1) {
+            return 0;
+        }
+
+        $value = (int) $m[1];
+        return match ($m[2]) {
+            's' => $value,
+            'm' => $value * 60,
+            'h' => $value * 3600,
+            'd' => $value * 86400,
+            default => 0,
+        };
     }
 
     private function executeAction(string $service, string $action, bool $dryRun): array
@@ -151,8 +246,34 @@ class SubSystemManager
         return $this->map[$service];
     }
 
-    private function pidFile(array $cfg): string { return $cfg['runtime'] . '/' . $cfg['service'] . '.pid'; }
-    private function lockFile(array $cfg): string { return $cfg['runtime'] . '/' . $cfg['service'] . '.lock'; }
+    private function resolveChatPort(): int
+    {
+        $envPath = ROOTPATH . 'chat/.env';
+        if (is_file($envPath)) {
+            $lines = file($envPath, FILE_IGNORE_NEW_LINES) ?: [];
+            foreach ($lines as $line) {
+                $line = trim($line);
+                if ($line === '' || str_starts_with($line, '#')) {
+                    continue;
+                }
+                if (preg_match('/^PORT\s*=\s*(\d+)/', $line, $m) === 1) {
+                    return (int) $m[1];
+                }
+            }
+        }
+
+        return 8300;
+    }
+
+    private function pidFile(array $cfg): string
+    {
+        return $cfg['runtime'] . '/' . $cfg['service'] . '.pid';
+    }
+
+    private function lockFile(array $cfg): string
+    {
+        return $cfg['runtime'] . '/' . $cfg['service'] . '.lock';
+    }
 
     private function writeStatus(array $cfg, array $status): void
     {
@@ -166,11 +287,14 @@ class SubSystemManager
 
     private function isPidAlive(int $pid): bool
     {
-        if ($pid <= 1) return false;
+        if ($pid <= 1) {
+            return false;
+        }
+
         $out = shell_exec('kill -0 ' . (int) $pid . ' >/dev/null 2>&1; echo $?');
+
         return trim((string) $out) === '0';
     }
-
 
     public function isPortOccupied(int $port): array
     {
@@ -184,7 +308,7 @@ class SubSystemManager
             return ['owner' => 'invalid', 'pid' => null, 'args' => null, 'port' => $port];
         }
 
-        $cmd = "lsof -nP -iTCP:" . $port . " -sTCP:LISTEN -Fp 2>/dev/null";
+        $cmd = 'lsof -nP -iTCP:' . $port . ' -sTCP:LISTEN -Fp 2>/dev/null';
         $raw = trim((string) shell_exec($cmd));
         if ($raw === '') {
             return ['owner' => 'none', 'pid' => null, 'args' => null, 'port' => $port];
@@ -209,11 +333,14 @@ class SubSystemManager
                 $owner = 'bridge';
             } elseif (preg_match('/(?:^|\/)n8n(?:\.js)?(?:\s|$)|\bn8n\b/i', $args)) {
                 $owner = 'n8n';
+            } elseif (preg_match('/chat\/server\.js|node\s+server\.js/i', $args)) {
+                $owner = 'chat';
             }
         }
 
         return ['owner' => $owner, 'pid' => $pid, 'args' => $args ?: null, 'port' => $port];
     }
+
     public function isPortListening(int $port): bool
     {
         $fp = @fsockopen('127.0.0.1', $port, $errno, $errstr, 0.4);
