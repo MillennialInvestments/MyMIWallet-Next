@@ -557,3 +557,76 @@ in SYSTEMPATH/CodeIgniter.php on line 1001.
  3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
  4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
  5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-08 13:27:45 --> Error: Call to a member function getOption() on null
+[Method: CLI, Route: aiops:audit]
+in APPPATH/Commands/Support/SubsCommandTrait.php on line 21.
+ 1 APPPATH/Commands/AiOps/Audit.php(4): App\Commands\AiOps\Audit->optBool('json')
+ 2 SYSTEMPATH/CLI/Commands.php(74): App\Commands\AiOps\Audit->run([])
+ 3 SYSTEMPATH/CLI/Console.php(47): CodeIgniter\CLI\Commands->run('aiops:audit', [])
+ 4 SYSTEMPATH/Boot.php(442): CodeIgniter\CLI\Console->run()
+ 5 SYSTEMPATH/Boot.php(166): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+ 6 ROOTPATH/spark(87): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+CRITICAL - 2026-02-08 13:27:53 --> Error: Call to a member function getOption() on null
+[Method: CLI, Route: aiops:n8n:logs]
+in APPPATH/Commands/AiOps/N8nLogs.php on line 3.
+ 1 SYSTEMPATH/CLI/Commands.php(74): App\Commands\AiOps\N8nLogs->run([])
+ 2 SYSTEMPATH/CLI/Console.php(47): CodeIgniter\CLI\Commands->run('aiops:n8n:logs', [])
+ 3 SYSTEMPATH/Boot.php(442): CodeIgniter\CLI\Console->run()
+ 4 SYSTEMPATH/Boot.php(166): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+ 5 ROOTPATH/spark(87): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+CRITICAL - 2026-02-08 13:28:06 --> Error: Call to a member function getOption() on null
+[Method: CLI, Route: aiops:n8n:restart]
+in APPPATH/Commands/Support/SubsCommandTrait.php on line 21.
+ 1 APPPATH/Commands/AiOps/N8nRestart.php(3): App\Commands\AiOps\N8nRestart->optBool('dry-run')
+ 2 SYSTEMPATH/CLI/Commands.php(74): App\Commands\AiOps\N8nRestart->run([])
+ 3 SYSTEMPATH/CLI/Console.php(47): CodeIgniter\CLI\Commands->run('aiops:n8n:restart', [])
+ 4 SYSTEMPATH/Boot.php(442): CodeIgniter\CLI\Console->run()
+ 5 SYSTEMPATH/Boot.php(166): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+ 6 ROOTPATH/spark(87): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+CRITICAL - 2026-02-08 13:28:11 --> Error: Call to a member function getOption() on null
+[Method: CLI, Route: aiops:n8n:start]
+in APPPATH/Commands/Support/SubsCommandTrait.php on line 21.
+ 1 APPPATH/Commands/AiOps/N8nStart.php(3): App\Commands\AiOps\N8nStart->optBool('dry-run')
+ 2 SYSTEMPATH/CLI/Commands.php(74): App\Commands\AiOps\N8nStart->run([])
+ 3 SYSTEMPATH/CLI/Console.php(47): CodeIgniter\CLI\Commands->run('aiops:n8n:start', [])
+ 4 SYSTEMPATH/Boot.php(442): CodeIgniter\CLI\Console->run()
+ 5 SYSTEMPATH/Boot.php(166): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+ 6 ROOTPATH/spark(87): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+CRITICAL - 2026-02-08 13:28:28 --> Error: Call to a member function getOption() on null
+[Method: CLI, Route: aiops:repair]
+in APPPATH/Commands/Support/SubsCommandTrait.php on line 21.
+ 1 APPPATH/Commands/AiOps/Repair.php(4): App\Commands\AiOps\Repair->optBool('json')
+ 2 SYSTEMPATH/CLI/Commands.php(74): App\Commands\AiOps\Repair->run([])
+ 3 SYSTEMPATH/CLI/Console.php(47): CodeIgniter\CLI\Commands->run('aiops:repair', [])
+ 4 SYSTEMPATH/Boot.php(442): CodeIgniter\CLI\Console->run()
+ 5 SYSTEMPATH/Boot.php(166): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+ 6 ROOTPATH/spark(87): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+CRITICAL - 2026-02-08 13:36:00 --> Error: Call to a member function getOption() on null
+[Method: CLI, Route: chat:audit]
+in APPPATH/Commands/Support/SubsCommandTrait.php on line 21.
+ 1 APPPATH/Commands/Chat/Audit.php(3): App\Commands\Chat\Audit->optBool('json')
+ 2 SYSTEMPATH/CLI/Commands.php(74): App\Commands\Chat\Audit->run([])
+ 3 SYSTEMPATH/CLI/Console.php(47): CodeIgniter\CLI\Commands->run('chat:audit', [])
+ 4 SYSTEMPATH/Boot.php(442): CodeIgniter\CLI\Console->run()
+ 5 SYSTEMPATH/Boot.php(166): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+ 6 ROOTPATH/spark(87): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+CRITICAL - 2026-02-08 13:42:09 --> TypeError: CodeIgniter\CLI\CLI::write(): Argument #1 ($text) must be of type string, array given, called in /home/mymiteam/mymiwallet/site/current/app/Commands/Support/SubsCommandTrait.php on line 60
+[Method: CLI, Route: chat:stop]
+in SYSTEMPATH/CLI/CLI.php on line 454.
+ 1 APPPATH/Commands/Support/SubsCommandTrait.php(60): CodeIgniter\CLI\CLI::write([...])
+ 2 APPPATH/Commands/Chat/Stop.php(3): App\Commands\Chat\Stop->emit([...], false)
+ 3 SYSTEMPATH/CLI/Commands.php(74): App\Commands\Chat\Stop->run([])
+ 4 SYSTEMPATH/CLI/Console.php(47): CodeIgniter\CLI\Commands->run('chat:stop', [])
+ 5 SYSTEMPATH/Boot.php(442): CodeIgniter\CLI\Console->run()
+ 6 SYSTEMPATH/Boot.php(166): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+ 7 ROOTPATH/spark(87): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+CRITICAL - 2026-02-08 13:42:15 --> TypeError: CodeIgniter\CLI\CLI::write(): Argument #1 ($text) must be of type string, array given, called in /home/mymiteam/mymiwallet/site/current/app/Commands/Support/SubsCommandTrait.php on line 60
+[Method: CLI, Route: chat:start]
+in SYSTEMPATH/CLI/CLI.php on line 454.
+ 1 APPPATH/Commands/Support/SubsCommandTrait.php(60): CodeIgniter\CLI\CLI::write([...])
+ 2 APPPATH/Commands/Chat/Start.php(3): App\Commands\Chat\Start->emit([...], false)
+ 3 SYSTEMPATH/CLI/Commands.php(74): App\Commands\Chat\Start->run([])
+ 4 SYSTEMPATH/CLI/Console.php(47): CodeIgniter\CLI\Commands->run('chat:start', [])
+ 5 SYSTEMPATH/Boot.php(442): CodeIgniter\CLI\Console->run()
+ 6 SYSTEMPATH/Boot.php(166): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+ 7 ROOTPATH/spark(87): CodeIgniter\Boot::bootSpark(Object(Config\Paths))

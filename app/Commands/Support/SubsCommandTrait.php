@@ -54,11 +54,29 @@ trait SubsCommandTrait
     protected function emit(array $payload, bool $json): void
     {
         if ($json) {
-            CLI::write(json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+            CLI::write(
+                json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
+            );
             return;
         }
-        CLI::write(($payload['message'] ?? $payload['status'] ?? 'ok'));
-        CLI::write(json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+
+        // Prefer a readable message if it exists AND is scalar
+        $headline = null;
+
+        if (isset($payload['message']) && is_scalar($payload['message'])) {
+            $headline = (string) $payload['message'];
+        } elseif (isset($payload['status']) && is_scalar($payload['status'])) {
+            $headline = (string) $payload['status'];
+        } else {
+            $headline = 'ok';
+        }
+
+        CLI::write($headline);
+
+        // Always dump full payload as formatted JSON for visibility
+        CLI::write(
+            json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
+        );
     }
 
     protected function writeDoc(string $subdir, string $name, $body): string
