@@ -159,6 +159,35 @@ main {
   gap: 10px;
 }
 
+.ops-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 10px;
+}
+
+.ops-tile {
+  background: #0b1222;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.ops-k {
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.ops-v {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.ops-v-long {
+  font-size: 12px;
+  word-break: break-word;
+}
+
 .action-group button {
   padding: 10px 14px;
 }

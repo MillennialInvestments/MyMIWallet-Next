@@ -20,6 +20,11 @@ const portfolioBtn = document.getElementById('portfolio-btn');
 const tradeAlertsBtn = document.getElementById('trade-alerts-btn');
 const marketBtn = document.getElementById('market-question-btn');
 const marketTickerInput = document.getElementById('market-ticker');
+const tileChatStatus = document.getElementById('tile-chat-status');
+const tileChatPort = document.getElementById('tile-chat-port');
+const tileToolHealth = document.getElementById('tile-tool-health');
+const tileLastError = document.getElementById('tile-last-error');
+const tileLogFreshness = document.getElementById('tile-log-freshness');
 
 const conversation = [];
 const MODE = window.location.pathname.startsWith('/m') ? 'management' : 'user';
@@ -207,6 +212,29 @@ async function sendToolRequest(tool, context = {}, message = '') {
   }
 }
 
+function setTile(el, value) {
+  if (!el) return;
+  el.textContent = value;
+}
+
+async function refreshOpsVisibility() {
+  try {
+    const res = await fetch('/api/ops/visibility');
+    if (!res.ok) throw new Error(`visibility ${res.status}`);
+    const payload = await res.json();
+    setTile(tileChatStatus, payload?.chatStatus?.status || 'unknown');
+    setTile(tileChatPort, String(payload?.chatPort || '--'));
+    const tool = payload?.toolHealth;
+    setTile(tileToolHealth, tool?.ok ? `ok (${tool.status})` : `down (${tool?.status ?? 'n/a'})`);
+    setTile(tileLastError, payload?.lastError || 'none');
+    const age = payload?.logFreshness?.ageSeconds;
+    setTile(tileLogFreshness, Number.isFinite(age) ? `${age}s ago` : 'unknown');
+  } catch (err) {
+    setTile(tileChatStatus, 'unavailable');
+    setTile(tileToolHealth, 'unavailable');
+  }
+}
+
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   if (accessDenied) {
@@ -238,4 +266,6 @@ marketBtn?.addEventListener('click', () => {
 addMessage('assistant', 'Welcome to MyMI Chat. Start by typing your question or choose a quick action.');
 setModeBadge();
 toggleActions();
+refreshOpsVisibility();
+setInterval(refreshOpsVisibility, 30000);
 fetchProfile();
