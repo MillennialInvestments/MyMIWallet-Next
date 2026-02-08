@@ -10,11 +10,11 @@ use CodeIgniter\Log\Handlers\HandlerInterface;
 class Logger extends BaseConfig
 {
     /**
-     * Error Logging Threshold
+     * Error Logging Threshold.
      *
-     * @var int|list<int>
+     * @var list<string>
      */
-    public $threshold = 4;
+    public $threshold = [];
 
     /**
      * Date Format for Logs
@@ -41,7 +41,7 @@ class Logger extends BaseConfig
         parent::__construct();
 
         $this->logPath   = $this->ensureLogPath();
-        $this->threshold = $this->determineThreshold();
+        $this->threshold = $this->resolveThreshold();
 
         $this->handlers = [
             /*
@@ -50,9 +50,10 @@ class Logger extends BaseConfig
              * --------------------------------------------------------------------
              */
             DatabaseLoggerHandler::class => [
-                'handles'           => ['emergency', 'alert', 'critical', 'error', 'warning'],
+                'handles'           => ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug'],
                 'fallbackPath'      => $this->logPath,
                 'notificationEmail' => 'support@mymiwallet.com',
+                'emailWarningLevel' => (bool) env('LOGGER_EMAIL_WARNING', false),
             ],
 
             /*
@@ -99,17 +100,22 @@ class Logger extends BaseConfig
     }
 
     /**
-     * Determine logging threshold safely.
+     * Resolve threshold list from environment or safe defaults.
+     *
+     * @return list<string>
      */
-    protected function determineThreshold(): int
+    protected function resolveThreshold(): array
     {
-        $envThreshold = env('logger.threshold');
+        $configured = env('LOG_THRESHOLD');
 
-        if ($envThreshold !== null && $envThreshold !== '') {
-            return max(3, (int) $envThreshold);
+        if (is_string($configured) && trim($configured) !== '') {
+            $levels = array_values(array_filter(array_map(static fn (string $level): string => strtolower(trim($level)), explode(',', $configured))));
+
+            if ($levels !== []) {
+                return $levels;
+            }
         }
 
-        // Production quieter, non-prod verbose
-        return (ENVIRONMENT === 'production') ? 3 : 8;
+        return ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug'];
     }
 }

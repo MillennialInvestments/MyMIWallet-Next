@@ -150,6 +150,11 @@ abstract class BaseController extends Controller
         $this->data['cuID']        = $this->cuID;
         $this->data['uri']         = $this->request->getUri();
         $this->data['userAgent']   = $this->request->getUserAgent();
+
+        if (CI_DEBUG && ENVIRONMENT !== 'production') {
+            Services::toolbar();
+            log_message('debug', '[AIOPS][GOVERNANCE] Toolbar service initialized from BaseController.');
+        }
     }
 
     protected function getCuID(): ?int

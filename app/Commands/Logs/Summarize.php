@@ -25,7 +25,7 @@ class Summarize extends SafeBaseCommand
     public function run(array $params)
     {
         CLI::write('Starting logs:summarize', 'yellow');
-        log_message('info', '[spark:logs:summarize] Started', ['params' => $params]);
+        log_message('info', '[AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Started', ['params' => $params]);
 
         // -----------------------------
         // Parse args + flags (CI4-safe)
@@ -52,7 +52,7 @@ class Summarize extends SafeBaseCommand
             }
 
             CLI::error($message);
-            log_message('error', '[spark:logs:summarize] Failed', [
+            log_message('error', '[AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Failed', [
                 'date'    => $targetDate,
                 'dryRun'  => $dryRun,
                 'message' => $message,
@@ -85,7 +85,7 @@ class Summarize extends SafeBaseCommand
             CLI::write('new_entries=' . $payload['new_entries']);
         }
 
-        log_message('info', '[spark:logs:summarize] Completed', [
+        log_message('info', '[AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Completed', [
             'date'      => $targetDate,
             'total'     => $result['total'] ?? 0,
             'new_total' => $result['new_total'] ?? 0,
