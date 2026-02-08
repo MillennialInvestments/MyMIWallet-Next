@@ -65,3 +65,8 @@ application/modules/investments/controllers/API_Squeeze.php
 /aiops/runtime/*.pid
 /aiops/runtime/*.lock
 /chat/runtime/*.pid
+/aiops/runtime/*.log
+/aiops/runtime/*.status.json
+/chat/runtime/*.lock
+/chat/runtime/*.log
+/chat/runtime/*.status.json

@@ -48,6 +48,16 @@ jobs:
         run: |
           php spark spark:doctor
 
+      - name: Subsystem Audit (non-strict)
+        run: |
+          php spark ops:subs:audit --json=1 --strict=0 > subs-audit.json
+
+      - name: Upload Subsystem Audit Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: subs-audit
+          path: subs-audit.json
+
   aiops-guardrails:
     runs-on: ubuntu-latest
 

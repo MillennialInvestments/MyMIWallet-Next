@@ -40,3 +40,5 @@ done
 kill -KILL "$PID" 2>/dev/null || true
 rm -f "$PID_FILE"
 log warn "force killed n8n pid=$PID"
+
+printf '{"status":"stopped","updated":"%s"}\n' "$(date -Iseconds)" > "$RUNTIME_DIR/n8n.status.json"

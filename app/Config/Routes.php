@@ -245,6 +245,8 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->get('cronFetchAndGenerateNews', 'ManagementController::cronFetchAndGenerateNews');
     $routes->post('Management/backfillMarketingEmails', 'ManagementController::backfillMarketingEmails');
     $routes->get('Management/getAutoloadHealth', 'ManagementController::getAutoloadHealth', ['filter' => 'permission:admin.access']);
+    $routes->get('Management/subsystems/status', 'ManagementController::subsystemsStatus', ['filter' => 'permission:admin.access']);
+    $routes->post('Management/subsystems/action', 'ManagementController::subsystemsAction', ['filter' => 'permission:admin.access']);
 
     // Public Discord help/onboarding endpoints
     $routes->post('Discord/completeOnboardingStep', 'DiscordController::completeOnboardingStep');
