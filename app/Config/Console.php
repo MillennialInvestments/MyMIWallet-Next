@@ -92,6 +92,10 @@ class Console extends BaseConfig
         */
         \App\Commands\Config\Drift::class,
         \App\Commands\Database\Drift::class,
+
+        /* Security */
+        \App\Commands\Security\GenerateKey::class,
+        \App\Commands\Security\GenerateCI4Key::class,
         \App\Commands\Security\SecretsAudit::class,
 
         /*
