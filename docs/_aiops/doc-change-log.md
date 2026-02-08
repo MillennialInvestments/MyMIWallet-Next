@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-08T14:00:01Z
+> Run: 2026-02-08T18:00:01Z
 
 - docs/CRON.md
   - Last updated: 2026-01-30
@@ -154,14 +154,38 @@
   - Change type: unchanged
 - docs/aiops/artifacts/ops-spark-reset/20260208-131051/summary.md
   - Last updated: 2026-02-08
-  - Change type: new
+  - Change type: unchanged
 - docs/aiops/artifacts/ops-spark-reset/20260208-132515/summary.md
   - Last updated: 2026-02-08
-  - Change type: new
+  - Change type: unchanged
 - docs/aiops/artifacts/ops-spark-reset/20260208-134346/summary.md
   - Last updated: 2026-02-08
-  - Change type: new
+  - Change type: unchanged
 - docs/aiops/artifacts/ops-spark-reset/20260208-135706/summary.md
+  - Last updated: 2026-02-08
+  - Change type: unchanged
+- docs/aiops/artifacts/ops-spark-reset/20260208-141537/summary.md
+  - Last updated: 2026-02-08
+  - Change type: unchanged
+- docs/aiops/artifacts/ops-spark-reset/20260208-141808/summary.md
+  - Last updated: 2026-02-08
+  - Change type: unchanged
+- docs/aiops/artifacts/ops-spark-reset/20260208-142038/summary.md
+  - Last updated: 2026-02-08
+  - Change type: unchanged
+- docs/aiops/artifacts/ops-spark-reset/20260208-142127/summary.md
+  - Last updated: 2026-02-08
+  - Change type: unchanged
+- docs/aiops/artifacts/ops-spark-reset/20260208-142148/summary.md
+  - Last updated: 2026-02-08
+  - Change type: unchanged
+- docs/aiops/artifacts/ops-spark-reset/20260208-143848/summary.md
+  - Last updated: 2026-02-08
+  - Change type: unchanged
+- docs/aiops/artifacts/ops-spark-reset/20260208-154553/summary.md
+  - Last updated: 2026-02-08
+  - Change type: unchanged
+- docs/aiops/artifacts/ops-spark-reset/20260208-165510/summary.md
   - Last updated: 2026-02-08
   - Change type: new
 - docs/aiops/artifacts/revenue-cost-forecast/20260201-180746/summary.md
@@ -253,7 +277,7 @@
   - Change type: unchanged
 - docs/aiops/repair-report.md
   - Last updated: 2026-02-08
-  - Change type: new
+  - Change type: unchanged
 - docs/aiops/runbooks/dreamhost-proxy-ports.md
   - Last updated: 2026-01-02
   - Change type: unchanged
@@ -265,7 +289,7 @@
   - Change type: unchanged
 - docs/aiops/runtime-architecture.md
   - Last updated: 2026-02-08
-  - Change type: new
+  - Change type: unchanged
 - docs/aiops/scraper/_index.md
   - Last updated: 2026-02-03
   - Change type: unchanged
@@ -2710,7 +2734,7 @@
   - Change type: unchanged
 - docs/ops/subsystems.md
   - Last updated: 2026-02-08
-  - Change type: new
+  - Change type: unchanged
 - docs/ops/unexpected-token-lt-audit.md
   - Last updated: 2025-11-08
   - Change type: unchanged

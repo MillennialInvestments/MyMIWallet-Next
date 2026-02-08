@@ -4199,7 +4199,39 @@
         "docs/ops/subsystems.md": {
             "hash": "579f69ec1953a0524a8112dd8d4bd99247c52d70daf9ef488e0b6933e32cbca0",
             "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-141537/summary.md": {
+            "hash": "5561c8d1237fe2dc8cac485221d69b4b10aa88fcd26039b3c6e249061857906c",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-141808/summary.md": {
+            "hash": "d4b9041a35f55da127ec372b9e7141a451f475f06256b23eab09c7815cb56702",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-142038/summary.md": {
+            "hash": "381dfa405f5a2110d4d325e842cfaa35c5cc20284d5dda36ad9208edb925e814",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-142127/summary.md": {
+            "hash": "13016ebf21da77c3a9bc10ce2306ea2134e24368bace865a62ce73f81c2e8054",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-142148/summary.md": {
+            "hash": "ab5908c35db481795060f147949773bcd210be2318e28a3546836cd9a01fc492",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-143848/summary.md": {
+            "hash": "6ffa0951b2fab756ce8af3dd1886e6fbc54fd3bc26c93045411f64f17a8f6437",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-154553/summary.md": {
+            "hash": "a8d00be195ce5cc8f20348e7521b0a9f367ccd9edadc9182c7757e3c4002f21f",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-165510/summary.md": {
+            "hash": "0f67138b515b8543c5dfb8825ad4503cc788380fe292b36e200ede4792687a87",
+            "mtime": "2026-02-08"
         }
     },
-    "last_run": "2026-02-08T14:00:01Z"
+    "last_run": "2026-02-08T18:00:01Z"
 }
