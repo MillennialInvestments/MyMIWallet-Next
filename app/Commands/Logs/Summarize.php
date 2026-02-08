@@ -11,7 +11,7 @@ class Summarize extends SafeBaseCommand
     protected $group       = 'logs';
     protected $name        = 'logs:summarize';
     protected $description = 'Summarize CI4 logs for a given date, including new entries since the last run.';
-    protected $usage       = 'logs:summarize [date|yesterday] [--dry-run]';
+    protected $usage       = 'logs:summarize [date|yesterday] [--dry-run] [--json]';
 
     protected $arguments = [
         'date' => 'Optional: "yesterday" or YYYY-MM-DD (defaults to today).',
@@ -19,6 +19,7 @@ class Summarize extends SafeBaseCommand
 
     protected $options = [
         '--dry-run' => 'Preview actions without writing data',
+        '--json' => 'Output compact JSON payload for automation',
     ];
 
     public function run(array $params)
@@ -76,8 +77,13 @@ class Summarize extends SafeBaseCommand
             }
         }
 
-        CLI::write('total_entries=' . ($result['total'] ?? 0));
-        CLI::write('new_entries=' . ($result['new_total'] ?? 0));
+        $payload = ['total_entries' => (int) ($result['total'] ?? 0), 'new_entries' => (int) ($result['new_total'] ?? 0)];
+        if (isset($flags['json'])) {
+            CLI::write(json_encode($payload, JSON_UNESCAPED_SLASHES));
+        } else {
+            CLI::write('total_entries=' . $payload['total_entries']);
+            CLI::write('new_entries=' . $payload['new_entries']);
+        }
 
         log_message('info', '[spark:logs:summarize] Completed', [
             'date'      => $targetDate,

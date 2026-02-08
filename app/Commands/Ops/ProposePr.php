@@ -23,6 +23,7 @@ class ProposePr extends SafeBaseCommand
         '--out'     => 'Optional. Write a summary artifact to a file path.',
         '--dry-run' => 'Optional. Do not write files; show what would be done.',
         '--approve' => 'Optional. Required to export to tracked outbox (mutating operation).',
+        '--artifact' => 'Optional. Write a lightweight aiops artifact json file',
     ];
 
     public function run(array $params)
@@ -38,6 +39,7 @@ class ProposePr extends SafeBaseCommand
         $body = trim((string) (ArtifactHelper::parseOptionValue($params, 'body') ?? ''));
         $patch = trim((string) (ArtifactHelper::parseOptionValue($params, 'patch') ?? ''));
         $risk = strtolower(trim((string) (ArtifactHelper::parseOptionValue($params, 'risk') ?? 'low')));
+        $artifactPath = trim((string) (ArtifactHelper::parseOptionValue($params, 'artifact') ?? ''));
 
         if ($slug === '' || $title === '' || $body === '' || $patch === '') {
             return $this->failUsage('Missing required options: --slug, --title, --body, --patch');
@@ -110,6 +112,17 @@ class ProposePr extends SafeBaseCommand
                     'validated_paths' => $validation['paths'],
                 ],
             ], $emit, $out);
+        }
+
+
+        if ($artifactPath !== '') {
+            $artifactService = new \App\Services\Ops\AiOpsArtifactService();
+            $artifactService->writeJson($artifactPath, [
+                'slug' => $slug,
+                'title' => $title,
+                'risk' => $risk,
+                'created_at' => date('c'),
+            ]);
         }
 
         // Ensure dirs
