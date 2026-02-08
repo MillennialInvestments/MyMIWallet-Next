@@ -145,6 +145,13 @@ class Console extends BaseConfig
         \App\Commands\Revenue\CostForecast::class,
         \App\Commands\Scraper\EmailScraperAudit::class,
 
+
+        /*
+        |----------------------------------------------------------------------
+        | GitHub
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\GitHub\SearchRepo::class,
     ];
 
     /**
