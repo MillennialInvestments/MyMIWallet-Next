@@ -128,7 +128,7 @@ class MyMIGold
         $coin                                       = 'MyMIG';
         $getCoinInfo                                = $this->MyMIGoldModel->getCoinInfo($coin);
         $coinInfo                                   = $getCoinInfo; 
-        $getUserCoinTotal                           = $this->MyMIGoldModel->getUserCoinTotal(getCuID()); // Adjusted to use getRowArray
+        $getUserCoinTotal                           = $this->MyMIGoldModel->getUserCoinTotal($this->resolveCuId()); // Adjusted to use getRowArray
         // $MyMIGoldData                               = [];
         if (empty($coinInfo)) {
             // Handle empty case
@@ -170,7 +170,7 @@ class MyMIGold
 
     public function getUserCoinTotal($cuID = null)
     {
-        $cuID = $cuID ?? getCuID() ?? session()->get('user_id');
+        $cuID = $cuID ?? $this->resolveCuId();
         if (empty($cuID)) {
             log_message('error', 'MyMIGold::getUserCoinTotal() called with null cuID. Skipping processing.');
             return [
@@ -222,7 +222,7 @@ class MyMIGold
 
     public function getUserLastOrder($cuID)
     {
-        $userLastOrder                              = $this->MyMIGoldModel->getLastOrderInfo(getCuID())->getRowArray(); // Adjusted to use getRowArray
+        $userLastOrder                              = $this->MyMIGoldModel->getLastOrderInfo($cuID ?? $this->resolveCuId())->getRowArray(); // Adjusted to use getRowArray
         if (empty($userLastOrder)) {
             $lastOrder                              = array();
             return $lastOrder;
@@ -341,5 +341,19 @@ class MyMIGold
         $builder->set('myMIGold_balance', "myMIGold_balance + $myMIGoldAmount", FALSE);
         $builder->update();
     }
+
+    private function resolveCuId(): ?int
+    {
+        if (function_exists('getCuID')) {
+            $id = getCuID();
+            if (is_numeric($id)) {
+                return (int) $id;
+            }
+        }
+
+        $id = service('authentication')->id() ?? service('session')->get('user_id');
+        return is_numeric($id) ? (int) $id : null;
+    }
+
 }
 ?>

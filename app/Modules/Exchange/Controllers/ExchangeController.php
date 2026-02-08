@@ -63,7 +63,7 @@ class ExchangeController extends UserController
         $this->logger = service('logger');
 
         // Initialize UserService, WalletService and pass required dependencies
-        $this->cuID = getCuID();  // Assuming getCuID() is a helper or service
+        $this->cuID = $this->getCuID();
         $this->userService = new UserService($this->siteSettings, $this->cuID, Services::request());
 
         $this->walletService = new \App\Services\WalletService($this->logger, $this->walletModel);

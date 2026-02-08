@@ -3,11 +3,12 @@
         {
             "id": "001-critical-runtime",
             "file": "/docs/_aiops/manual/priorities/001-critical-runtime.md",
-            "status": "pending",
+            "status": "done",
             "last_updated": "2026-02-07T21:45:00Z",
             "checksum": "6f916e46fa43e9238328b6ecd8e59930bce674fdf898d66bd247fec88b882f29",
             "last_changed_commit": "62a79a6da0df20bc3ade17041a3106d82b4c454e",
-            "linked_pr": null
+            "linked_pr": null,
+            "done_at": "2026-02-08T00:15:31+00:00"
         },
         {
             "id": "002-auth-context",

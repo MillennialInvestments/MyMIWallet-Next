@@ -32,12 +32,20 @@ class LogSummarizeService
 
         $summaryPayload = $this->buildSummary($logFile, $date, $stateFile);
 
+        $repoSummary = [
+            'repo_file' => ROOTPATH . 'docs/_aiops/error-input/summary-' . $date . '.log',
+            'copied' => false,
+            'changed' => false,
+        ];
+
         if (! $dryRun) {
             file_put_contents($outFile, implode(PHP_EOL, $summaryPayload['lines']));
 
             if ($summaryPayload['max_ts'] !== null) {
                 file_put_contents($stateFile, $summaryPayload['max_ts']);
             }
+
+            $repoSummary = $this->mirrorSummaryToRepo($outFile, $date);
         }
 
         return [
@@ -53,6 +61,32 @@ class LogSummarizeService
             'has_new'   => $summaryPayload['has_new'],
             'total'     => $summaryPayload['total'],
             'new_total' => $summaryPayload['new_total'],
+            'repo_file' => str_replace(ROOTPATH, '', $repoSummary['repo_file']),
+            'repo_copied' => $repoSummary['copied'],
+            'repo_changed' => $repoSummary['changed'],
+        ];
+    }
+
+
+    /** @return array{repo_file:string,copied:bool,changed:bool} */
+    private function mirrorSummaryToRepo(string $sourceFile, string $date): array
+    {
+        $repoFile = ROOTPATH . 'docs/_aiops/error-input/summary-' . $date . '.log';
+        $source = (string) file_get_contents($sourceFile);
+        $existing = is_file($repoFile) ? (string) file_get_contents($repoFile) : null;
+
+        $changed = $existing === null || hash('sha256', $existing) !== hash('sha256', $source);
+        if ($changed) {
+            if (! is_dir(dirname($repoFile))) {
+                mkdir(dirname($repoFile), 0775, true);
+            }
+            file_put_contents($repoFile, $source);
+        }
+
+        return [
+            'repo_file' => $repoFile,
+            'copied' => $changed,
+            'changed' => $changed,
         ];
     }
 
