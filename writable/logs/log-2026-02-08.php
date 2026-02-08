@@ -437,3 +437,123 @@ in SYSTEMPATH/CodeIgniter.php on line 983.
  3 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
  4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
  5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-08 13:07:53 --> TypeError: trim(): Argument #1 ($string) must be of type string, null given
+[Method: GET, Route: forgot]
+in SYSTEMPATH/View/View.php on line 206.
+ 1 SYSTEMPATH/View/View.php(206): trim(null, '/')
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render('App\\Views\\Auth\\forgot', [], true)
+ 3 VENDORPATH/myth/auth/src/Controllers/AuthController.php(412): view('App\\Views\\Auth\\forgot', [...])
+ 4 VENDORPATH/myth/auth/src/Controllers/AuthController.php(212): Myth\Auth\Controllers\AuthController->_render('App\\Views\\Auth\\forgot', [...])
+ 5 SYSTEMPATH/CodeIgniter.php(951): Myth\Auth\Controllers\AuthController->forgotPassword()
+ 6 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(Myth\Auth\Controllers\AuthController))
+ 7 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-08 13:08:44 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: How-It-Works/alerts]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-08 13:09:42 --> TypeError: trim(): Argument #1 ($string) must be of type string, null given
+[Method: GET, Route: How-It-Works]
+in SYSTEMPATH/View/View.php on line 206.
+ 1 SYSTEMPATH/View/View.php(206): trim(null, '/')
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render('App\\Modules\\Blog\\Views\\HowItWorks\\index', [], true)
+ 3 APPPATH/Controllers/BaseController.php(552): view('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 4 APPPATH/Controllers/UserController.php(108): App\Controllers\BaseController->tryView('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 5 APPPATH/Modules/Blog/Controllers/HowItWorksController.php(458): App\Controllers\UserController->renderTheme('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 6 APPPATH/Modules/Blog/Controllers/HowItWorksController.php(146): App\Modules\Blog\Controllers\HowItWorksController->respondWithRendered('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 7 APPPATH/Modules/Blog/Controllers/HowItWorksController.php(116): App\Modules\Blog\Controllers\HowItWorksController->show('overview')
+ 8 SYSTEMPATH/CodeIgniter.php(951): App\Modules\Blog\Controllers\HowItWorksController->index()
+ 9 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Modules\Blog\Controllers\HowItWorksController))
+10 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-08 13:10:19 --> TypeError: trim(): Argument #1 ($string) must be of type string, null given
+[Method: GET, Route: How-It-Works/overview]
+in SYSTEMPATH/View/View.php on line 206.
+ 1 SYSTEMPATH/View/View.php(206): trim(null, '/')
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render('App\\Modules\\Blog\\Views\\HowItWorks\\index', [], true)
+ 3 APPPATH/Controllers/BaseController.php(552): view('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 4 APPPATH/Controllers/UserController.php(108): App\Controllers\BaseController->tryView('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 5 APPPATH/Modules/Blog/Controllers/HowItWorksController.php(458): App\Controllers\UserController->renderTheme('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 6 APPPATH/Modules/Blog/Controllers/HowItWorksController.php(146): App\Modules\Blog\Controllers\HowItWorksController->respondWithRendered('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 7 SYSTEMPATH/CodeIgniter.php(951): App\Modules\Blog\Controllers\HowItWorksController->show('overview')
+ 8 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Modules\Blog\Controllers\HowItWorksController))
+ 9 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-08 13:10:49 --> TypeError: trim(): Argument #1 ($string) must be of type string, null given
+[Method: GET, Route: How-It-Works/marketing]
+in SYSTEMPATH/View/View.php on line 206.
+ 1 SYSTEMPATH/View/View.php(206): trim(null, '/')
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render('App\\Modules\\Blog\\Views\\HowItWorks\\index', [], true)
+ 3 APPPATH/Controllers/BaseController.php(552): view('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 4 APPPATH/Controllers/UserController.php(108): App\Controllers\BaseController->tryView('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 5 APPPATH/Modules/Blog/Controllers/HowItWorksController.php(458): App\Controllers\UserController->renderTheme('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 6 APPPATH/Modules/Blog/Controllers/HowItWorksController.php(146): App\Modules\Blog\Controllers\HowItWorksController->respondWithRendered('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 7 SYSTEMPATH/CodeIgniter.php(951): App\Modules\Blog\Controllers\HowItWorksController->show('marketing')
+ 8 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Modules\Blog\Controllers\HowItWorksController))
+ 9 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-08 13:12:50 --> TypeError: trim(): Argument #1 ($string) must be of type string, null given
+[Method: GET, Route: How-It-Works/account-settings]
+in SYSTEMPATH/View/View.php on line 206.
+ 1 SYSTEMPATH/View/View.php(206): trim(null, '/')
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render('App\\Modules\\Blog\\Views\\HowItWorks\\index', [], true)
+ 3 APPPATH/Controllers/BaseController.php(552): view('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 4 APPPATH/Controllers/UserController.php(108): App\Controllers\BaseController->tryView('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 5 APPPATH/Modules/Blog/Controllers/HowItWorksController.php(458): App\Controllers\UserController->renderTheme('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 6 APPPATH/Modules/Blog/Controllers/HowItWorksController.php(146): App\Modules\Blog\Controllers\HowItWorksController->respondWithRendered('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 7 SYSTEMPATH/CodeIgniter.php(951): App\Modules\Blog\Controllers\HowItWorksController->show('account-settings')
+ 8 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Modules\Blog\Controllers\HowItWorksController))
+ 9 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-08 13:14:08 --> TypeError: trim(): Argument #1 ($string) must be of type string, null given
+[Method: GET, Route: How-It-Works/earnings]
+in SYSTEMPATH/View/View.php on line 206.
+ 1 SYSTEMPATH/View/View.php(206): trim(null, '/')
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render('App\\Modules\\Blog\\Views\\HowItWorks\\index', [], true)
+ 3 APPPATH/Controllers/BaseController.php(552): view('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 4 APPPATH/Controllers/UserController.php(108): App\Controllers\BaseController->tryView('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 5 APPPATH/Modules/Blog/Controllers/HowItWorksController.php(458): App\Controllers\UserController->renderTheme('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 6 APPPATH/Modules/Blog/Controllers/HowItWorksController.php(146): App\Modules\Blog\Controllers\HowItWorksController->respondWithRendered('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 7 SYSTEMPATH/CodeIgniter.php(951): App\Modules\Blog\Controllers\HowItWorksController->show('earnings')
+ 8 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Modules\Blog\Controllers\HowItWorksController))
+ 9 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-08 13:14:24 --> TypeError: trim(): Argument #1 ($string) must be of type string, null given
+[Method: GET, Route: How-It-Works/investments]
+in SYSTEMPATH/View/View.php on line 206.
+ 1 SYSTEMPATH/View/View.php(206): trim(null, '/')
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render('App\\Modules\\Blog\\Views\\HowItWorks\\index', [], true)
+ 3 APPPATH/Controllers/BaseController.php(552): view('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 4 APPPATH/Controllers/UserController.php(108): App\Controllers\BaseController->tryView('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 5 APPPATH/Modules/Blog/Controllers/HowItWorksController.php(458): App\Controllers\UserController->renderTheme('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 6 APPPATH/Modules/Blog/Controllers/HowItWorksController.php(146): App\Modules\Blog\Controllers\HowItWorksController->respondWithRendered('App\\Modules\\Blog\\Views\\HowItWorks\\index', [...])
+ 7 SYSTEMPATH/CodeIgniter.php(951): App\Modules\Blog\Controllers\HowItWorksController->show('investments')
+ 8 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Modules\Blog\Controllers\HowItWorksController))
+ 9 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-08 13:16:24 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Legal/Terms-And-Conditions]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
