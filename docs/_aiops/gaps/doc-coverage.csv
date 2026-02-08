@@ -1,0 +1,9 @@
+module,file_path,file_type,suggested_doc_path,priority,confidence_score
+APIs,app/Modules/APIs/Controllers/HealthController.php,Controller,docs/controllers/APIs/HealthController.md,high,0.97
+APIs,app/Modules/APIs/Controllers/OpsController.php,Controller,docs/controllers/APIs/OpsController.md,high,0.97
+APIs,app/Modules/APIs/Controllers/Webhooks/TradingViewController.php,Controller,docs/controllers/APIs/TradingViewController.md,high,0.96
+AIOps,app/Modules/AIOps/Services/AIOpsGuardrailService.php,Service,docs/services/AIOpsGuardrailService.md,high,0.98
+AIOps,app/Modules/AIOps/Models/AIOpsUsageModel.php,Model,docs/models/AIOps/AIOpsUsageModel.md,high,0.98
+AIOps,app/Modules/AIOps/Models/AIOpsDedupeModel.php,Model,docs/models/AIOps/AIOpsDedupeModel.md,high,0.98
+Notifications,app/Modules/Notifications/Controllers/PushController.php,Controller,docs/modules/Notifications/README.md,medium,0.93
+Predictions,app/Modules/Predictions/Controllers/API/PredictionsApiController.php,Controller,docs/controllers/Predictions/PredictionsApiController.md,high,0.94
