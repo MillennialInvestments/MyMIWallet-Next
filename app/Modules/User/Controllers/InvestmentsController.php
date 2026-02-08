@@ -32,7 +32,7 @@ class InvestmentsController extends UserController
     protected $investmentService;
     protected $solanaService;
     protected $userService;
-    protected $walletService;
+    protected ?WalletService $walletService = null;
     
     // Models
     protected $accountsModel;

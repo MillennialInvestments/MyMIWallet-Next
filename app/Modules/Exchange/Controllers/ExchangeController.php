@@ -7,7 +7,7 @@ use Config\Services;
 use App\Controllers\UserController;
 use App\Libraries\{MyMIAnalytics, MyMIBudget, MyMIDashboard, MyMIReferrals, MyMIUser, MyMIWallets};
 use App\Models\{AnalyticalModel, APIModel, AnnouncementsModel, ExchangeModel, MarketingModel, MyMIGoldModel, TrackerModel, WalletModel};
-use App\Services\{BudgetService, DashboardService, ExchangeService, GoalTrackingService, SolanaService, UserService};
+use App\Services\{BudgetService, DashboardService, ExchangeService, GoalTrackingService, SolanaService, UserService, WalletService};
 use DateTime;
 use CodeIgniter\API\ResponseTrait;
 use Psr\Log\LoggerInterface;
@@ -36,7 +36,7 @@ class ExchangeController extends UserController
     protected $goalTrackingService;
     protected $solanaService;
     protected $userService;
-    protected $walletService;
+    protected ?WalletService $walletService = null;
     protected $MyMIDashboard;
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
