@@ -12,7 +12,7 @@ use Throwable;
 use Psr\Log\LoggerInterface;
 
 
-use App\Libraries\{CrudCacheInvalidator, MyMIAdvisor, MyMIAlerts, MyMIAlphaVantage, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIInvestments, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets, SiteSettingsRuntime};
+use App\Libraries\{CrudCacheInvalidator, MyMIAdvisor, MyMIAlerts, MyMIAlphaVantage, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIInvestments, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets, SiteSettingsRuntime};
 use App\Services\{AccountService, BudgetService, DashboardService, GoalTrackingService, MarketingService, SolanaService, UserService, WalletService};
 use App\Models\WalletModel; // <-- add this
 
@@ -61,6 +61,7 @@ abstract class BaseController extends Controller
     private ?MyMIBudget $myMIBudget = null;
     private ?MyMICoin $myMICoin = null;
     private ?MyMIDashboard $myMIDashboard = null;
+    private ?MyMIExchange $myMIExchange = null;
     private ?MyMIInvestments $myMIInvestments = null;
     private ?MyMIProjects $myMIProjects = null;
     private ?MyMISolana $myMISolana = null;
@@ -141,6 +142,8 @@ abstract class BaseController extends Controller
             'cspNonce' => $this->cspNonce,
         ], 'raw');
 
+        $this->hydrateLegacyLibraryProperties();
+
         // Common page data
         $this->data['debug']       = $this->debug;
         $this->data['siteSettings']= $this->siteSettings;
@@ -152,6 +155,30 @@ abstract class BaseController extends Controller
     protected function getCuID(): ?int
     {
         return $this->resolveCurrentUserId();
+    }
+
+
+    protected function hydrateLegacyLibraryProperties(): void
+    {
+        $legacyHydration = [
+            'MyMIAlerts'   => fn() => $this->getMyMIAlerts(),
+            'MyMIExchange' => fn() => $this->getMyMIExchange(),
+            'MyMISolana'   => fn() => $this->getMyMISolana(),
+            'MyMIWallet'   => fn() => $this->getMyMIWallet(),
+            'MyMIWallets'  => fn() => $this->getMyMIWallets(),
+        ];
+
+        foreach ($legacyHydration as $property => $resolver) {
+            if (! property_exists($this, $property)) {
+                continue;
+            }
+
+            if ($this->$property !== null) {
+                continue;
+            }
+
+            $this->$property = $resolver();
+        }
     }
 
     protected function crudCacheInvalidator(): CrudCacheInvalidator
@@ -881,6 +908,10 @@ abstract class BaseController extends Controller
     protected function getMyMIDashboard(): MyMIDashboard
     {
         return $this->myMIDashboard ??= new MyMIDashboard();
+    }
+    protected function getMyMIExchange(): MyMIExchange
+    {
+        return $this->myMIExchange ??= new MyMIExchange();
     }
     protected function getMyMIProjects(): MyMIProjects
     {
