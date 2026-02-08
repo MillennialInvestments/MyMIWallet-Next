@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace App\Commands\Chat;
 
 use App\Commands\SafeBaseCommand;
-use App\Commands\Support\SubsCommandTrait;
 use CodeIgniter\CLI\CLI;
 
 class Unlock extends SafeBaseCommand
 {
-    use SubsCommandTrait;
-
     protected $group = 'chat';
     protected $name = 'chat:unlock';
     protected $description = 'Safely clear stale chat runtime lock and pid files.';
@@ -24,14 +21,14 @@ class Unlock extends SafeBaseCommand
 
     public function run(array $params)
     {
-        $this->parseParams($params);
+        [, $flags] = $this->parseParams($params);
 
         $runtime = ROOTPATH . 'chat/runtime';
         $pidFile = $runtime . '/chat.pid';
         $lockFile = $runtime . '/chat.lock';
 
-        $force = $this->optBool('force');
-        $json = $this->optBool('json');
+        $force = $this->optBool($flags, 'force');
+        $json = $this->optBool($flags, 'json');
 
         $result = [
             'ok' => true,
@@ -60,7 +57,7 @@ class Unlock extends SafeBaseCommand
                 }
             }
 
-            if (!$result['pid_alive'] || $force) {
+            if (! $result['pid_alive'] || $force) {
                 @unlink($pidFile);
                 $result['removed'][] = 'chat.pid';
             }
@@ -77,11 +74,7 @@ class Unlock extends SafeBaseCommand
             'force' => $force,
         ]);
 
-        if ($json) {
-            CLI::write(json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-        } else {
-            $this->emit($result, false);
-        }
+        CLI::write(json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 
         return $result['ok'] ? EXIT_SUCCESS : EXIT_ERROR;
     }

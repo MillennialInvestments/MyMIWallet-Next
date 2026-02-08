@@ -1,7 +1,21 @@
-# n8n Ops Workflow Imports
+# n8n Internal Orchestration Templates
 
-1. Open **n8n → Import from File** and select any JSON from `docs/n8n/workflows/`.
-2. After import, set `baseUrl` (defaults to `https://mymiwallet.com`) and `sharedSecret` to match your `/API/Ops` HMAC secret.
-3. Enable the workflow and adjust the Cron/Webhook trigger schedules as needed.
-4. Each workflow dispatches a job, polls `/API/Ops/status` with `queue_id`, and posts markdown to `/API/Ops/ingestReport`.
-5. Manual webhook workflow listens on `POST /webhook/ops-run-now` and accepts `job_key`, optional `payload`, `baseUrl`, or `sharedSecret` overrides.
+## Import
+1. Open n8n UI.
+2. Go to **Workflows** → **Import from File**.
+3. Select any JSON in `docs/n8n/templates/`.
+4. Set credentials/environment variables, then activate.
+
+## Required environment variables
+- `MYMI_BASE_URL` (e.g. `https://www.mymiwallet.com`)
+- `INTERNAL_API_TOKEN`
+- `DISCORD_WEBHOOK_URL`
+- `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`, `SMTP_TO`
+
+## Endpoint map
+- `GET /API/Ops/healthcheck`
+- `GET /API/AIOps/snapshot`
+- `POST /API/AIOps/watch`
+- `GET /API/Logs/summary`
+- `POST /API/ContentEngine/run`
+- `GET /API/Chat/health`

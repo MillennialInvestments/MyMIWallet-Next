@@ -27,9 +27,10 @@ class AutoRun extends SafeBaseCommand
 
     public function run(array $params)
     {
+        [, $flags] = $this->parseParams($params);
         $config = config('AiOps');
         $notifier = new ManualRunNotifier($config);
-        $notify = $this->toBool($this->option('notify', '1'));
+        $notify = $this->optBool($flags, 'notify', true);
 
         if ($config->paused) {
             CLI::write('[AIOPS AUTO] auto-run paused by kill switch (aiops.paused/AIOPS_PAUSED).', 'yellow');
@@ -46,12 +47,12 @@ class AutoRun extends SafeBaseCommand
 
         $runner = new AutoRunCoordinator($config);
         $result = $runner->run([
-            'dryRun' => $this->toBool($this->option('dry-run', '0')),
-            'limitTasks' => (int) $this->option('limit-tasks', (string) $config->defaultTaskLimit),
-            'limitErrors' => (int) $this->option('limit-errors', (string) $config->defaultErrorLimit),
-            'autoThreshold' => (string) $this->option('auto-threshold', 'CRITICAL'),
-            'writeAutoTasks' => $this->toBool($this->option('write-auto-tasks', '1')),
-            'createPr' => $this->toBool($this->option('create-pr', '1')),
+            'dryRun' => $this->optBool($flags, 'dry-run', false),
+            'limitTasks' => $this->optInt($flags, 'limit-tasks', (int) $config->defaultTaskLimit),
+            'limitErrors' => $this->optInt($flags, 'limit-errors', (int) $config->defaultErrorLimit),
+            'autoThreshold' => $this->optString($flags, 'auto-threshold', 'CRITICAL'),
+            'writeAutoTasks' => $this->optBool($flags, 'write-auto-tasks', true),
+            'createPr' => $this->optBool($flags, 'create-pr', true),
             'notify' => $notify,
         ]);
 
@@ -83,17 +84,5 @@ class AutoRun extends SafeBaseCommand
         CLI::write(json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 
         return EXIT_SUCCESS;
-    }
-
-    private function toBool(string|int|bool|null $value): bool
-    {
-        if (is_bool($value)) {
-            return $value;
-        }
-        if (is_int($value)) {
-            return $value === 1;
-        }
-
-        return in_array(strtolower((string) $value), ['1', 'true', 'yes', 'on'], true);
     }
 }

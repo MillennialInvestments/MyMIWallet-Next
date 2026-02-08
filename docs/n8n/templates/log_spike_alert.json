@@ -1,0 +1,118 @@
+{
+  "name": "Log Spike Alert",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "*/15 * * * *"
+            }
+          ]
+        }
+      },
+      "id": "cron",
+      "name": "Cron",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{$env.MYMI_BASE_URL}}/API/Logs/summary",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Internal-Token",
+              "value": "={{$env.INTERNAL_API_TOKEN}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "http",
+      "name": "Internal API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        520,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "webhookUri": "={{$env.DISCORD_WEBHOOK_URL}}",
+        "content": "Workflow: Log Spike Alert\nEndpoint: /API/Logs/summary\nStatus: {{$json.status || \"ok\"}}"
+      },
+      "id": "discord",
+      "name": "Discord",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        780,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{$env.SMTP_FROM}}",
+        "toEmail": "={{$env.SMTP_TO}}",
+        "subject": "[MyMI] Log Spike Alert",
+        "emailType": "text",
+        "message": "Endpoint /API/Logs/summary completed.\nResponse: {{$json | jsonStringify}}",
+        "options": {}
+      },
+      "id": "smtp",
+      "name": "SMTP",
+      "type": "n8n-nodes-base.smtp",
+      "typeVersion": 1,
+      "position": [
+        780,
+        330
+      ]
+    }
+  ],
+  "connections": {
+    "Cron": {
+      "main": [
+        [
+          {
+            "node": "Internal API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Internal API": {
+      "main": [
+        [
+          {
+            "node": "Discord",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "SMTP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {},
+  "active": false,
+  "pinData": {},
+  "versionId": "1",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

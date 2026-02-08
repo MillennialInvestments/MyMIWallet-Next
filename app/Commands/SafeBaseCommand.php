@@ -6,7 +6,6 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\CLI\Commands;
 use Psr\Log\LoggerInterface;
 use App\Commands\Contracts\AiOpsRunnable;
 use App\Commands\Contracts\DryRunCapable;
@@ -16,6 +15,7 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
 {
     protected $aiOpsRunnable = false;
     protected $defaultDryRun = false;
+    protected array $parsedFlags = [];
 
     /**
      * CI4-safe param parser.
@@ -57,8 +57,8 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
                 // Support both: --flag and --key=value
                 $key = ltrim($param, '-');
                 if (strpos($key, '=') !== false) {
-                    [$k] = explode('=', $key, 2);
-                    $flags[$k] = true;
+                    [$k, $v] = explode('=', $key, 2);
+                    $flags[$k] = $v;
                 } else {
                     $flags[$key] = true;
                 }
@@ -66,6 +66,8 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
                 $args[] = $param;
             }
         }
+
+        $this->parsedFlags = $flags;
 
         if ($this->defaultDryRun && !isset($flags['approve']) && !isset($flags['dry-run'])) {
             $flags['dry-run'] = true;
@@ -153,12 +155,50 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
 
     protected function option(string $key, $default = false)
     {
-        if ($this->request === null) {
+        if ($this->request !== null) {
+            $options = $this->request->getOptions();
+            if (array_key_exists($key, $options)) {
+                return $options[$key];
+            }
+        }
+
+        if (array_key_exists($key, $this->parsedFlags)) {
+            return $this->parsedFlags[$key] === true ? '1' : $this->parsedFlags[$key];
+        }
+
+        return $default;
+    }
+
+    protected function optBool(array $flags, string $key, bool $default = false): bool
+    {
+        if (! array_key_exists($key, $flags)) {
             return $default;
         }
 
-        $options = $this->request->getOptions();
-        return $options[$key] ?? $default;
+        $value = $flags[$key];
+        if ($value === true) {
+            return true;
+        }
+
+        return in_array(strtolower((string) $value), ['1', 'true', 'yes', 'on'], true);
+    }
+
+    protected function optInt(array $flags, string $key, int $default = 0): int
+    {
+        if (! array_key_exists($key, $flags)) {
+            return $default;
+        }
+
+        return (int) $flags[$key];
+    }
+
+    protected function optString(array $flags, string $key, string $default = ''): string
+    {
+        if (! array_key_exists($key, $flags)) {
+            return $default;
+        }
+
+        return trim((string) $flags[$key]);
     }
 
     protected function runSparkCommand(string $command): int
