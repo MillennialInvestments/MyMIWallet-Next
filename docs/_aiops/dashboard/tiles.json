@@ -1,0 +1,4 @@
+[
+  {"id":"ops-health","title":"Ops Health","command":"ops:healthcheck"},
+  {"id":"logs-scan","title":"Logs Scan","command":"logs:scan"}
+]
