@@ -3,7 +3,7 @@
 ## Start/stop
 ```bash
 cd ~/mymiwallet/site/current/chat
-./start-chat.sh   # starts with nvm + nohup, writes chat.pid
+./start-chat.sh   # starts with nvm + nohup, writes runtime/chat.pid
 ./stop-chat.sh    # stops the PID and removes chat.pid
 ```
 
