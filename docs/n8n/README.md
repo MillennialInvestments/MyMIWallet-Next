@@ -8,7 +8,7 @@
 
 ## Required environment variables
 - `MYMI_BASE_URL` (e.g. `https://www.mymiwallet.com`)
-- `INTERNAL_API_TOKEN`
+- `MYMI_INTERNAL_TOKEN` (same value as `INTERNAL_API_TOKEN` in the app `.env`)
 - `DISCORD_WEBHOOK_URL`
 - `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`, `SMTP_TO`
 

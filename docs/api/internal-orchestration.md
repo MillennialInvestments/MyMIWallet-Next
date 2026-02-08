@@ -32,5 +32,5 @@ Provide either:
 ## n8n call example
 Use HTTP Request node:
 - URL: `{{$env.MYMI_BASE_URL}}/API/Ops/healthcheck`
-- Header: `X-Internal-Token: {{$env.INTERNAL_API_TOKEN}}`
+- Header: `X-Internal-Token: {{$env.MYMI_INTERNAL_TOKEN}}`
 - Method: `GET`
