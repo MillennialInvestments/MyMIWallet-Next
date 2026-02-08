@@ -4,7 +4,7 @@
    Grouped by (LEVEL + message)
 ===============================================
 
-Last processed up to: <none> (first run for this date)
+Last processed up to: 2026-02-08 03:17:50
 
 ---------------------------
 LEVEL: CRITICAL
@@ -16,7 +16,7 @@ CRITICAL --> ErrorException: Type of App\Modules\User\Controllers\BudgetControll
 [1 occurrence(s)]
 CRITICAL --> ErrorException: Type of App\Modules\User\Controllers\InvestmentsController::$walletService must be ?App\Services\WalletService (as in class App\Controllers\UserController)
 
-[4 occurrence(s)]
+[11 occurrence(s)]
 CRITICAL --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
 
 [1 occurrence(s)]
@@ -25,13 +25,13 @@ CRITICAL --> ErrorException: Type of App\Modules\User\Controllers\ReferralContro
 [1 occurrence(s)]
 CRITICAL --> ErrorException: Type of App\Modules\User\Controllers\WalletsController::$walletService must be ?App\Services\WalletService (as in class App\Controllers\UserController)
 
-[1 occurrence(s)]
+[3 occurrence(s)]
 CRITICAL --> ErrorException: Type of App\Modules\Exchange\Controllers\ExchangeController::$walletService must be ?App\Services\WalletService (as in class App\Controllers\UserController)
 
 [1 occurrence(s)]
 CRITICAL --> ErrorException: Type of App\Modules\Management\Controllers\ManagementController::$walletService must be ?App\Services\WalletService (as in class App\Controllers\UserController)
 
-[7 occurrence(s)]
+[19 occurrence(s)]
 CRITICAL --> Error: Call to a member function getUserWallets() on null
 
 [1 occurrence(s)]
@@ -46,14 +46,34 @@ CRITICAL --> [Caused by] Error: Call to a member function getUserWallets() on nu
 [1 occurrence(s)]
 CRITICAL --> Error: Call to a member function getAlertInfo() on null
 
-[1 occurrence(s)]
+[2 occurrence(s)]
 CRITICAL --> Error: Call to a member function getUserSolana() on null
+
+[4 occurrence(s)]
+CRITICAL --> ErrorException: Cannot declare class App\Config\SocialPlatforms, because the name is already in use
+
+[2 occurrence(s)]
+CRITICAL --> Error: Call to a member function getFirstRow() on bool
+
+[4 occurrence(s)]
+CRITICAL --> ErrorException: Allowed memory size of 805306368 bytes exhausted (tried to allocate 12288 bytes)
+
+[2 occurrence(s)]
+CRITICAL --> Error: Call to a member function getAssets() on null
 
 
 ===============================================
    HERE'S THE NEW STUFF
-   (No previous timestamp recorded – nothing treated as new)
+   (Entries logged AFTER 2026-02-08 03:17:50)
 ===============================================
+
+---------------------------
+LEVEL: CRITICAL (NEW)
+---------------------------
+
+[1 NEW occurrence(s)]
+CRITICAL --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+
 
 ---- CONFIG LINT ----
 ✅ Services::cache
