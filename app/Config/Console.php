@@ -106,6 +106,8 @@ class Console extends BaseConfig
         \App\Commands\Chat\Stop::class,
         \App\Commands\Chat\Status::class,
         \App\Commands\Chat\Unlock::class,
+        \App\Commands\Logs\Summarize::class,
+        \App\Commands\Logs\SummarizeAll::class,
         /*
         |----------------------------------------------------------------------
         | Codex / Review

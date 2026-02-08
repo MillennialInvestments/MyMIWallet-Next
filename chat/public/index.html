@@ -56,6 +56,22 @@
       </div>
     </section>
 
+    <section class="actions" aria-label="Operations visibility">
+      <div class="actions-header">
+        <div>
+          <div class="actions-title">Operations Visibility</div>
+          <div class="actions-subtitle">Live runtime indicators across chat and tool bridge.</div>
+        </div>
+      </div>
+      <div class="ops-grid" id="ops-grid">
+        <div class="ops-tile"><div class="ops-k">Chat status</div><div class="ops-v" id="tile-chat-status">--</div></div>
+        <div class="ops-tile"><div class="ops-k">Chat port</div><div class="ops-v" id="tile-chat-port">--</div></div>
+        <div class="ops-tile"><div class="ops-k">Tool health</div><div class="ops-v" id="tile-tool-health">--</div></div>
+        <div class="ops-tile"><div class="ops-k">Last error</div><div class="ops-v ops-v-long" id="tile-last-error">--</div></div>
+        <div class="ops-tile"><div class="ops-k">Log freshness</div><div class="ops-v" id="tile-log-freshness">--</div></div>
+      </div>
+    </section>
+
     <section class="transcript" id="transcript" aria-live="polite"></section>
     <form id="chat-form">
       <label class="sr-only" for="message">Your message</label>
