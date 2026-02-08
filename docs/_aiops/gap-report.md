@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-08T19:34:52Z
+> Run: 2026-02-08T20:00:01Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Models/AIOpsBudgetModel.php
@@ -498,6 +498,8 @@
   - ❌ No obvious code match found (heuristic)
 - docs/aiops/spark_rules.md
   - ❌ No obvious code match found (heuristic)
+- docs/aiops/triage/spark-command-audit.md
+  - ❌ No obvious code match found (heuristic)
 - docs/aiops/workflows/n8n-workflows.md
   - ❌ No obvious code match found (heuristic)
 - docs/alerts/alerts_marketing_pipline.md
@@ -644,11 +646,15 @@
   - ❌ No obvious code match found (heuristic)
 - docs/codex/reviews/review-2026-02-05.md
   - ❌ No obvious code match found (heuristic)
+- docs/codex/reviews/review-2026-02-08.md
+  - ❌ No obvious code match found (heuristic)
 - docs/codex/reviews/review-prompt-2026-01-31.md
   - ❌ No obvious code match found (heuristic)
 - docs/codex/reviews/review-prompt-2026-02-01.md
   - ❌ No obvious code match found (heuristic)
 - docs/codex/reviews/review-prompt-2026-02-05.md
+  - ❌ No obvious code match found (heuristic)
+- docs/codex/reviews/review-prompt-2026-02-08.md
   - ❌ No obvious code match found (heuristic)
 - docs/communities/linkedin.md
   - ❌ No obvious code match found (heuristic)
@@ -800,10 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/funnels/community_funnel.md
   - ❌ No obvious code match found (heuristic)
-- docs/funnels/discord_to_website_to_memberships.md
-  - ❌ No obvious code match found (heuristic)
-- docs/funnels/platform_to_discord.md
-  - ❌ No obvious code match found (heuristic)
-- docs/gap-audit/README.md
-  - ❌ No obvious code match found (heuristic)
-- … and 765 more
+- … and 769 more

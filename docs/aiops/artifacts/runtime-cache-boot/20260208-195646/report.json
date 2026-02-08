@@ -1,0 +1,13 @@
+{
+    "command": "runtime:cache-boot",
+    "timestamp": "20260208-195646",
+    "dry_run": true,
+    "emit": "docs",
+    "cache_dir": "/home/mymiteam/mymiwallet/site/current/docs/aiops/artifacts/runtime-cache-boot/20260208-195646/cache",
+    "cache_exists": false,
+    "cache_writable": false,
+    "warm_marker_written": false,
+    "actions": [
+        "create_cache_dir"
+    ]
+}

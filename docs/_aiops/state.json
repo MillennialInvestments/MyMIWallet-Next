@@ -4235,7 +4235,39 @@
         "docs/gap_tracker/reports/gap_sync_2026-02-08.md": {
             "hash": "ab20d417e0e58e00fe2a59cbe5d5824649e5af78df110f0513fafc2c338d5c12",
             "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/fix-503/20260208-195751/summary.md": {
+            "hash": "3e77749ebf6cc25942a254f12c47cf376ecbefd415cbffdd907553b0705ea534",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/runtime-cache-boot/20260208-195646/summary.md": {
+            "hash": "1c469fc7c7feaddb169dea98d63f4625fe515f859ba2a79474d3bb10d9da29c6",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/runtime-triage/20260208-195714/summary.md": {
+            "hash": "4d9d48780f24d6cba91a14f7422486ade7b7b2883471219fcf42068edd0f20ac",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/security-secrets-audit/20260208-195737/summary.md": {
+            "hash": "8d99fa9737925b72780f71aeb8751fb9a0061d5c7c11a008897c56cf1b46233d",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/triage/spark-command-audit.md": {
+            "hash": "b83d9cbc9332c8b2166b1069d74e99193c21bfc598e7b557b0448f3bbd626f3f",
+            "mtime": "2026-02-08"
+        },
+        "docs/codex/reviews/review-2026-02-08.md": {
+            "hash": "0567d7f770df5ea0d095f7b265d5ba58928a76a6fb119ea5b0c9c047aa7df5ea",
+            "mtime": "2026-02-08"
+        },
+        "docs/codex/reviews/review-prompt-2026-02-08.md": {
+            "hash": "df7f524992492b317991041084a885447cb2d8b9856ba8d7f652229852b17009",
+            "mtime": "2026-02-08"
+        },
+        "docs/standards/doc-coverage.md": {
+            "hash": "16ba88bbf22646711fb27bc271e31a461e6b9251a04b50d6a4c11ef9b804a990",
+            "mtime": "2026-02-08"
         }
     },
-    "last_run": "2026-02-08T19:34:52Z"
+    "last_run": "2026-02-08T20:00:01Z"
 }

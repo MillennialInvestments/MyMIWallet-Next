@@ -1,0 +1,27 @@
+{
+    "status": "ok",
+    "issues": [],
+    "checked_at": "2026-02-08T20:01:26+00:00",
+    "n8n": {
+        "service": "aiops.n8n",
+        "pid": null,
+        "pid_file": "/home/mymiteam/mymiwallet/site/current/aiops/runtime/n8n.pid",
+        "running": false,
+        "port": 5678,
+        "port_listening": false,
+        "healthy": false,
+        "issues": [],
+        "bridge_port": 8500,
+        "bridge_port_owner": {
+            "owner": "n8n",
+            "pid": 4350,
+            "args": "node /home/mymiteam/mymiwallet/site/current/aiops/node_modules/.bin/n8n start",
+            "port": 8500
+        },
+        "runtime_dir": "/home/mymiteam/mymiwallet/site/current/aiops/runtime",
+        "log_file": "/home/mymiteam/mymiwallet/site/current/aiops/runtime/n8n.log",
+        "error_log_file": null,
+        "status": "stopped",
+        "checked_at": "2026-02-08T20:01:26+00:00"
+    }
+}

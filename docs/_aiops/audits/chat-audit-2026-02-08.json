@@ -3,11 +3,13 @@
     "issues": [],
     "chat": {
         "service": "chat.app",
-        "pid": 688595,
+        "pid": 694035,
         "pid_file": "/home/mymiteam/mymiwallet/site/current/chat/runtime/chat.pid",
-        "running": false,
+        "running": true,
         "port": 8300,
-        "port_listening": false,
+        "port_listening": true,
+        "healthy": true,
+        "issues": [],
         "bridge_port": null,
         "bridge_port_owner": {
             "owner": "none",
@@ -15,8 +17,9 @@
             "args": null
         },
         "runtime_dir": "/home/mymiteam/mymiwallet/site/current/chat/runtime",
-        "log_file": "/home/mymiteam/mymiwallet/site/current/chat/runtime/chat.log",
-        "status": "stopped",
-        "checked_at": "2026-02-08T13:41:04+00:00"
+        "log_file": "/home/mymiteam/mymiwallet/site/current/writable/logs/chat/chat.log",
+        "error_log_file": "/home/mymiteam/mymiwallet/site/current/writable/logs/chat/chat-errors.log",
+        "status": "running",
+        "checked_at": "2026-02-08T20:01:14+00:00"
     }
 }

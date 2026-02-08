@@ -1,0 +1,150 @@
+# Codex Review Prompt - 2026-02-08
+
+## Inputs
+- Git status:
+```
+ M ../docs/next/bf_aiops_task_runs/commands_lint.json
+ M ../writable/cache/FileLocatorCache
+ D ../writable/cache/ratelimit_bot_62d55303b8b7a112be923a58ac625ac8049d8889
+ D ../writable/cache/ratelimit_bot_8bc572c2d5062b31a5bc6602ab6eed7d8e40b37d
+ D ../writable/cache/ratelimit_bot_ae9a9b19aab4b3d2664007b5f61b9fa0a1d40912
+ D ../writable/cache/ratelimit_bot_bd3ea80d553374f2363261d6302e39802f316d4d
+ D ../writable/cache/seo_97b58cd31da6c388ee957b3898eff148
+ D ../writable/cache/seo_b99834bc19bbad24580b3adfa04fb947
+?? ../docs/aiops/artifacts/fix-503/
+?? ../docs/aiops/artifacts/runtime-cache-boot/20260208-195646/
+?? ../docs/aiops/artifacts/runtime-triage/20260208-195714/
+?? ../docs/aiops/artifacts/security-secrets-audit/20260208-195737/
+?? ../docs/aiops/triage/
+?? ../writable/triage/envdoctor/envdoctor-2026-02-08-195751.json
+?? ../writable/triage/envdoctor/envdoctor-2026-02-08-195751.md
+```
+- Recent commits:
+```
+610065614 02/08/2026 - aiops, docs, writable logs update - TBJ (7 minutes ago)
+7ab306cab 02/08/2026 - aiops, docs, writable updates - TBJ (75 minutes ago)
+9e66a9ea9 Merge pull request #256 from MillennialInvestments/codex/implement-aiops-documentation-and-logging-fixes (76 minutes ago)
+a0e8ba4dd Restore full-spectrum logging and document AIOps implementation map (76 minutes ago)
+bc2fcb609 Merge pull request #255 from MillennialInvestments/codex/create-fresh-branch-for-new-pr (4 hours ago)
+9c3c1e9fd Add AIOps operations command suite and docs (4 hours ago)
+3900a5bb0 02/08/2026 - AIOps Logs, Docs updates/logs, writable updates - TBJ (5 hours ago)
+9dc0c19a4 02/08/2026 - GitHub SearchRepo Command - TBJ (5 hours ago)
+a5609972d 02/08/2026 - .gitignore updates to not watch .env - TBJ (5 hours ago)
+e5c30bbaf 02/08/2026 - writable logs - TBJ (5 hours ago)
+```
+- Changed files:
+```
+.env.example
+.gitignore
+aiops/bridge.pid
+aiops/logs/bridge.log
+app/Commands/AiOps/ChatGovernanceIndex.php
+app/Commands/AiOps/Init.php
+app/Commands/AiOps/Seed.php
+app/Commands/GitHub/SearchRepo.php
+app/Commands/Logs/Healthcheck.php
+app/Commands/Logs/Summarize.php
+app/Commands/Ops/BaseOpsCommand.php
+app/Commands/Ops/Diagnostics/FilesystemScan.php
+app/Commands/Ops/DreamHost/DnsVerify.php
+app/Commands/Ops/DreamHost/EmailAudit.php
+app/Commands/Ops/DreamHost/EmailList.php
+app/Commands/Ops/DreamHost/Limits.php
+app/Commands/Ops/Email/Healthcheck.php
+app/Commands/Ops/Email/QueueScan.php
+app/Commands/Ops/Email/Test.php
+app/Commands/Ops/Health/Healthcheck.php
+app/Commands/Ops/Logs/Scan.php
+app/Commands/Ops/Logs/Watch.php
+app/Commands/Ops/PHP/FpmHealth.php
+app/Commands/Ops/ProposePr.php
+app/Commands/Ops/Report.php
+app/Commands/Ops/SelfHeal.php
+app/Commands/Ops/Server/NginxStatus.php
+app/Config/Console.php
+app/Config/Logger.php
+app/Config/Toolbar.php
+app/Controllers/BaseController.php
+app/Log/Handlers/DatabaseLoggerHandler.php
+app/Services/Ops/AiOpsArtifactService.php
+app/Services/Ops/DreamHostService.php
+app/Services/Ops/EmailOpsService.php
+app/Services/Ops/LogOpsService.php
+app/Services/Ops/VpsHealthService.php
+chat/.env
+docs/_aiops/IMPLEMENTATION.md
+docs/_aiops/aiops-state/run-meta.json
+docs/_aiops/audits/doc-implementation-map-2026-02-08.md
+docs/_aiops/ci-summary.md
+docs/_aiops/commands/README.md
+docs/_aiops/commands/dreamhost-dns-verify.md
+docs/_aiops/commands/dreamhost-email-audit.md
+docs/_aiops/commands/dreamhost-email-list.md
+docs/_aiops/commands/dreamhost-limits.md
+docs/_aiops/commands/email-healthcheck.md
+docs/_aiops/commands/email-queue-scan.md
+docs/_aiops/commands/email-test.md
+docs/_aiops/commands/logs-scan.md
+docs/_aiops/commands/logs-summarize.md
+docs/_aiops/commands/logs-watch.md
+docs/_aiops/commands/ops-filesystem-scan.md
+docs/_aiops/commands/ops-healthcheck.md
+docs/_aiops/commands/ops-nginx-status.md
+docs/_aiops/commands/ops-php-fpm-health.md
+docs/_aiops/commands/ops-report.md
+docs/_aiops/commands/ops-self-heal.md
+docs/_aiops/dashboard/tiles.json
+docs/_aiops/doc-change-log.md
+docs/_aiops/error-input/summary-2026-02-08.log
+docs/_aiops/gap-report.md
+docs/_aiops/logs/subsystem-aiops.md
+docs/_aiops/logs/subsystem-chat.md
+docs/_aiops/logs/subsystem-codeigniter-app.md
+docs/_aiops/logs/subsystem-codeigniter-cli.md
+docs/_aiops/logs/subsystem-n8n.md
+docs/_aiops/logs/subsystem-node-bridges.md
+docs/_aiops/logs/subsystem-workers-cron.md
+docs/_aiops/logs/summary-2026-02-08.md
+docs/_aiops/manual/doc-coverage-scan.md
+docs/_aiops/next-steps.md
+docs/_aiops/nightly-summary.md
+docs/_aiops/spark-results.md
+docs/_aiops/stale-docs.md
+docs/_aiops/state.json
+docs/aiops/artifacts/ops-spark-reset/20260208-141537/report.json
+docs/aiops/artifacts/ops-spark-reset/20260208-141537/summary.md
+docs/aiops/artifacts/ops-spark-reset/20260208-141808/report.json
+docs/aiops/artifacts/ops-spark-reset/20260208-141808/summary.md
+docs/aiops/artifacts/ops-spark-reset/20260208-142038/report.json
+docs/aiops/artifacts/ops-spark-reset/20260208-142038/summary.md
+docs/aiops/artifacts/ops-spark-reset/20260208-142127/report.json
+docs/aiops/artifacts/ops-spark-reset/20260208-142127/summary.md
+docs/aiops/artifacts/ops-spark-reset/20260208-142148/report.json
+docs/aiops/artifacts/ops-spark-reset/20260208-142148/summary.md
+docs/aiops/artifacts/ops-spark-reset/20260208-143848/report.json
+docs/aiops/artifacts/ops-spark-reset/20260208-143848/summary.md
+docs/aiops/artifacts/ops-spark-reset/20260208-154553/report.json
+docs/aiops/artifacts/ops-spark-reset/20260208-154553/summary.md
+docs/aiops/artifacts/ops-spark-reset/20260208-165510/report.json
+docs/aiops/artifacts/ops-spark-reset/20260208-165510/summary.md
+docs/gap_tracker/reports/gap_sync_2026-02-08.md
+docs/standards/doc-coverage.md
+writable/cache/FileLocatorCache
+writable/cache/ratelimit_bot_46aa53f19667b80abcc9d7c3bef6c9bfb15caee9
+writable/cache/ratelimit_bot_62d55303b8b7a112be923a58ac625ac8049d8889
+writable/cache/ratelimit_bot_8bc572c2d5062b31a5bc6602ab6eed7d8e40b37d
+writable/cache/ratelimit_bot_ae9a9b19aab4b3d2664007b5f61b9fa0a1d40912
+writable/cache/ratelimit_bot_bd3ea80d553374f2363261d6302e39802f316d4d
+writable/cache/seo_97b58cd31da6c388ee957b3898eff148
+writable/cache/seo_b99834bc19bbad24580b3adfa04fb947
+writable/logs/aiops_daily.log
+writable/logs/aiops_worker.log
+writable/logs/log-2026-02-08.php
+writable/logs/summary-2026-02-08.log
+writable/logs/summary-2026-02-08.state
+```
+- Docs drift:
+Missing docs: docs/cron/index.csv, docs/chatgpt/prompt_templates.md, docs/ops/control_plane_assumptions.md
+
+## Ask
+Generate a concise risk-aware review, flag missing docs or auth gaps, and propose next steps.
