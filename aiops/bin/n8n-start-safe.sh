@@ -3,9 +3,9 @@ set -euo pipefail
 
 BASE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 RUNTIME_DIR="$BASE_DIR/runtime"
-LOG_DIR="$BASE_DIR/logs"
+LOG_DIR="$BASE_DIR/runtime"
 PID_FILE="$RUNTIME_DIR/n8n.pid"
-LOCK_DIR="$RUNTIME_DIR/n8n.start.lock"
+LOCK_DIR="$RUNTIME_DIR/n8n.lock"
 N8N_PORT="${N8N_PORT:-5678}"
 BRIDGE_PORT="${BRIDGE_PORT:-8500}"
 
@@ -85,3 +85,5 @@ if ! kill -0 "$PID" 2>/dev/null; then
 fi
 
 log info "started n8n pid=$PID"
+
+printf '{"status":"running","pid":%s,"port":%s,"updated":"%s"}\n' "$(cat "$PID_FILE")" "$N8N_PORT" "$(date -Iseconds)" > "$RUNTIME_DIR/n8n.status.json"

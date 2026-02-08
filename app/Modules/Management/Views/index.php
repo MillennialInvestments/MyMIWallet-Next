@@ -97,6 +97,32 @@ $autoloadStatusLabel = $autoloadViolations === 0
                 </div>
             </div>
         </div>
+        
+        <div class="card card-bordered mb-3" id="subsystemHealthTile">
+            <div class="card-inner">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-1">Subsystem Health</h5>
+                        <div class="small text-soft">AIOps + Chat control plane</div>
+                    </div>
+                    <span class="badge bg-secondary" id="subs-health-overall">Unknown</span>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6 small">AIOps n8n: <span id="subs-aiops-status">-</span> (port 5678: <span id="subs-aiops-port">-</span>, bridge 8500: <span id="subs-bridge-port">-</span>)</div>
+                    <div class="col-md-6 small">Chat: <span id="subs-chat-status">-</span> (port <span id="subs-chat-port-num">-</span>: <span id="subs-chat-port">-</span>)</div>
+                </div>
+                <div class="btn-group mt-3" role="group">
+                    <button class="btn btn-sm btn-outline-primary" data-subs-action="refresh">Refresh Status</button>
+                    <button class="btn btn-sm btn-outline-info" data-subs-action="audit">Run Audit</button>
+                    <button class="btn btn-sm btn-outline-warning" data-subs-action="repair">Run Repair</button>
+                    <button class="btn btn-sm btn-outline-secondary" data-subs-action="self-heal">Self Heal</button>
+                    <button class="btn btn-sm btn-outline-danger" data-subs-action="restart-aiops">Restart AIOps</button>
+                    <button class="btn btn-sm btn-outline-danger" data-subs-action="restart-chat">Restart Chat</button>
+                </div>
+                <pre class="mt-2 mb-0 p-2 bg-light border" style="max-height:180px;overflow:auto;" id="subs-health-output">Ready.</pre>
+            </div>
+        </div>
+
         <div class="card card-bordered mb-3">
             <div class="card-inner">
                 <div class="d-flex justify-content-between flex-wrap align-items-center">
@@ -637,3 +663,38 @@ $autoloadStatusLabel = $autoloadViolations === 0
     //     // );
     // });
 </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const statusUrl = '<?= site_url('API/Management/subsystems/status'); ?>';
+                const actionUrl = '<?= site_url('API/Management/subsystems/action'); ?>';
+                const output = document.getElementById('subs-health-output');
+                const setText = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
+                const refresh = () => fetch(statusUrl, { credentials: 'same-origin' }).then(r => r.json()).then(d => {
+                    setText('subs-aiops-status', d.aiops?.status || '-');
+                    setText('subs-aiops-port', d.aiops?.port_listening ? 'open' : 'closed');
+                    setText('subs-bridge-port', d.bridge_8500 ? 'open' : 'closed');
+                    setText('subs-chat-status', d.chat?.status || '-');
+                    setText('subs-chat-port-num', d.chat?.port || '-');
+                    setText('subs-chat-port', d.chat?.port_listening ? 'open' : 'closed');
+                    setText('subs-health-overall', (d.aiops?.status === 'running' || d.chat?.status === 'running') ? 'Running' : 'Stopped');
+                    if (output) output.textContent = JSON.stringify(d, null, 2);
+                }).catch(e => { if (output) output.textContent = 'Status fetch failed: ' + e; });
+
+                const runAction = (subsystem, action) => fetch(actionUrl, {
+                    method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ subsystem, action })
+                }).then(r => r.json()).then(d => { if (output) output.textContent = JSON.stringify(d, null, 2); refresh(); });
+
+                document.querySelectorAll('[data-subs-action]').forEach(btn => btn.addEventListener('click', function () {
+                    const a = this.getAttribute('data-subs-action');
+                    if (a === 'refresh') return refresh();
+                    if (a === 'audit') return runAction('aiops', 'audit');
+                    if (a === 'repair') return runAction('aiops', 'repair');
+                    if (a === 'self-heal') return runAction('aiops', 'self-heal');
+                    if (a === 'restart-aiops') return runAction('aiops', 'restart');
+                    if (a === 'restart-chat') return runAction('chat', 'restart');
+                }));
+                refresh();
+            });
+        </script>

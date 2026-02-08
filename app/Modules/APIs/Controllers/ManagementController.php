@@ -7,6 +7,7 @@ use App\Libraries\{MyMIAlerts, MyMIMarketing, MyMIDiscord, KimiSuggestions};
 use App\Models\{AlertsModel, ExchangeModel, IdempotencyModel, MarketingModel, MarketingNewsletterModel, ReferralModel, SupportModel, UserModel, WeeklyStreamWatchlistModel};
 use App\Services\{AlphaVantagePipelineService, AuthSmokeService, MarketingService, WeeklyStreamService};
 use App\Support\Http;
+use App\Services\SubSystemManager;
 use CodeIgniter\Log\Handlers\FileHandler;
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait; // Import the ResponseTrait
@@ -129,6 +130,71 @@ class ManagementController extends \App\Controllers\BaseController
         return $this->response->setJSON([
             'status' => 'ok',
             'data'   => $health,
+        ]);
+    }
+
+
+
+    public function subsystemsStatus(): ResponseInterface
+    {
+        $authGuard = $this->guardAdmin();
+        if ($authGuard) {
+            return $authGuard;
+        }
+
+        $manager = new SubSystemManager();
+        $manager->ensureRuntimeDirs();
+
+        return $this->response->setJSON([
+            'status' => 'ok',
+            'aiops' => $manager->status('aiops.n8n'),
+            'chat' => $manager->status('chat.app'),
+            'bridge_8500' => $manager->isPortListening(8500),
+            'checked_at' => date('c'),
+        ]);
+    }
+
+    public function subsystemsAction(): ResponseInterface
+    {
+        $authGuard = $this->guardAdmin();
+        if ($authGuard) {
+            return $authGuard;
+        }
+
+        $payload = $this->request->getJSON(true) ?: $this->request->getPost();
+        $subsystem = (string) ($payload['subsystem'] ?? '');
+        $action = (string) ($payload['action'] ?? '');
+
+        $allow = [
+            'aiops' => ['start' => 'aiops:n8n:start', 'stop' => 'aiops:n8n:stop', 'restart' => 'aiops:n8n:restart', 'audit' => 'aiops:audit', 'repair' => 'aiops:repair', 'self-heal' => 'aiops:self-heal --attempts=1'],
+            'chat' => ['start' => 'chat:start', 'stop' => 'chat:stop', 'restart' => 'chat:restart', 'audit' => 'chat:audit', 'repair' => 'chat:repair', 'self-heal' => 'ops:subs:repair'],
+        ];
+
+        if (!isset($allow[$subsystem][$action])) {
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => 'Invalid subsystem/action']);
+        }
+
+        $command = 'php spark ' . $allow[$subsystem][$action] . ' --json=1';
+        $spec = [1 => ['pipe', 'w'], 2 => ['pipe', 'w']];
+        $proc = proc_open($command, $spec, $pipes, ROOTPATH);
+        if (!is_resource($proc)) {
+            return $this->response->setStatusCode(500)->setJSON(['status' => 'error', 'message' => 'Unable to execute command']);
+        }
+
+        $stdout = stream_get_contents($pipes[1]) ?: '';
+        $stderr = stream_get_contents($pipes[2]) ?: '';
+        fclose($pipes[1]);
+        fclose($pipes[2]);
+        $code = proc_close($proc);
+
+        return $this->response->setJSON([
+            'status' => $code === 0 ? 'ok' : 'error',
+            'subsystem' => $subsystem,
+            'action' => $action,
+            'command' => $command,
+            'exit_code' => $code,
+            'stdout' => trim($stdout),
+            'stderr' => trim($stderr),
         ]);
     }
 

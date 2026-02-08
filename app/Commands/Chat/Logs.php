@@ -1,0 +1,3 @@
+<?php
+namespace App\Commands\Chat; use App\Commands\SafeBaseCommand; use App\Commands\Support\SubsCommandTrait; use CodeIgniter\CLI\CLI;
+class Logs extends SafeBaseCommand { use SubsCommandTrait; protected $group='Chat'; protected $name='chat:logs'; protected $description='Chat logs'; protected $options=['--lines'=>'Lines','--json'=>'JSON']; public function run(array $params){$this->parseParams($params);$r=$this->mgr()->tailLogs('chat.app',(int)($this->request->getOption('lines')??200)); if($this->optBool('json')){$this->emit($r,true);} else {foreach($r['lines']??[] as $line){CLI::write($line);}} return ($r['ok']??false)?EXIT_SUCCESS:EXIT_ERROR;}}
