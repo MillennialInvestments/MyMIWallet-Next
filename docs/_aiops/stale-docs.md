@@ -1,6 +1,6 @@
 # AI-Ops: Stale Docs
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-07T22:00:02Z
+> Run: 2026-02-08T00:00:01Z
 
 - docs/OVERVIEW.md
   - Doc last updated: 2025-11-08 (91 days ago)
@@ -37,9 +37,9 @@
 - docs/discord/README.md
   - Doc last updated: 2025-12-07 (62 days ago)
 - docs/discord/_index.md
-  - Doc last updated: 2025-12-05 (63 days ago)
+  - Doc last updated: 2025-12-05 (64 days ago)
 - docs/discord/_inventory.md
-  - Doc last updated: 2025-12-05 (63 days ago)
+  - Doc last updated: 2025-12-05 (64 days ago)
 - docs/discord/alerts_automation.md
   - Doc last updated: 2025-11-27 (72 days ago)
 - docs/discord/discord_integration_overview.md
@@ -53,21 +53,21 @@
 - docs/discord/earnings_calendar_automation.md
   - Doc last updated: 2025-11-26 (73 days ago)
 - docs/discord/environments.md
-  - Doc last updated: 2025-12-05 (63 days ago)
+  - Doc last updated: 2025-12-05 (64 days ago)
 - docs/discord/events_matrix.md
-  - Doc last updated: 2025-12-05 (63 days ago)
+  - Doc last updated: 2025-12-05 (64 days ago)
 - docs/discord/mee6_and_mymi_automation.md
-  - Doc last updated: 2025-12-05 (63 days ago)
+  - Doc last updated: 2025-12-05 (64 days ago)
 - docs/discord/my_midiscord_server_setup_and_alert_routing.md
-  - Doc last updated: 2025-12-05 (63 days ago)
+  - Doc last updated: 2025-12-05 (64 days ago)
 - docs/discord/mysql_discord_schema.md
-  - Doc last updated: 2025-12-05 (63 days ago)
+  - Doc last updated: 2025-12-05 (64 days ago)
 - docs/discord/operations_and_montioring.md
   - Doc last updated: 2025-11-26 (73 days ago)
 - docs/discord/premium_flows_and_upsell.md
-  - Doc last updated: 2025-12-05 (63 days ago)
+  - Doc last updated: 2025-12-05 (64 days ago)
 - docs/discord/python_workers.md
-  - Doc last updated: 2025-12-05 (63 days ago)
+  - Doc last updated: 2025-12-05 (64 days ago)
 - docs/discord/server_setup_and_alert_routing.md
   - Doc last updated: 2025-12-05 (64 days ago)
 - docs/discord/server_setup_and_ci4_integration.md

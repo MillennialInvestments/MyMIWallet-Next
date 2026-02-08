@@ -4163,7 +4163,11 @@
         "docs/resolutions/2026-02-07-db-port-type-fix.md": {
             "hash": "45b177eef975a5671c924511f2c4a0c1fa190235274c711c95d59bfcb62060a7",
             "mtime": "2026-02-07"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260207-231039/summary.md": {
+            "hash": "a70701b10b6aed94d043371194087c68146e0ea1b9e46bcebd9839de39ec97f0",
+            "mtime": "2026-02-07"
         }
     },
-    "last_run": "2026-02-07T22:00:02Z"
+    "last_run": "2026-02-08T00:00:01Z"
 }
