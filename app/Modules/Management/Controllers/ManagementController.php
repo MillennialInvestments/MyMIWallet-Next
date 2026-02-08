@@ -31,7 +31,7 @@ class ManagementController extends UserController
     protected $marketingService;
     protected $solanaService;
     protected $userService;
-    protected $walletService;
+    protected ?WalletService $walletService = null;
     protected $budgetModel;
     protected $MyMIDashboard;
     protected AiCostControls $aiCostControls;
@@ -52,12 +52,11 @@ class ManagementController extends UserController
         $this->newsletterModel = new MarketingNewsletterModel();
         $this->aiCostControls = new AiCostControls();
 
-        if (!function_exists('getCuID')) {
-            helper('cuID');
-        }
-
         // Check for user ID
-        $this->cuID                                 = function_exists('getCuID') ? $this->getCuID() : ($this->auth->id() ?? $this->session->get('user_id'));
+        $this->cuID = $this->getCuID();
+        if ($this->cuID === null) {
+            $this->cuID = $this->auth->id() ?? $this->session->get('user_id');
+        }
         log_message('debug', 'HowTosController L47 - $this->cuID: ' . (print_r($this->cuID, true)));
         if (empty($this->cuID)) {
             log_message('error', 'Failed to retrieve user ID.');

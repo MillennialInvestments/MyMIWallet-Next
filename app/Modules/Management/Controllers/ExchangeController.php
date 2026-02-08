@@ -98,7 +98,7 @@ class ExchangeController extends UserController
         $this->userAssessment = $this->getMyMIUser()->getUserFinancialAssessment($this->cuID);
         $this->userBudget = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID);
         $this->userDashboard = $this->getMyMIDashboard()->dashboardInfo($this->cuID);
-        $this->userWallets = $this->MyMIWallets->getUserWallets($this->cuID);
+        $this->userWallets = $this->getMyMIWallets()->getUserWallets($this->cuID);
         // $this->webSocketClient = new WebSocketClient('https://solana-api.projectserum.com', 443); // Change host and port as necessary  
         $this->webSocketClient = new WebSocketClient('www.mymiwallet.com', 443, 'API/Solana/updatePrices');
     }
@@ -190,7 +190,9 @@ class ExchangeController extends UserController
             $marketData = json_decode($response, true);
             log_message('debug', 'ExchangeController - $marketData array: ' . print_r($marketData, true));
             $this->solanaModel->updateMarketData($marketData);
+            if ($this->webSocketClient) {
             $this->webSocketClient->close();
+        }
             return $this->response->setJSON(['status' => 'success']);
         } catch (\Exception $e) {
             log_message('error', 'Failed to fetch real-time data: ' . $e->getMessage());
@@ -254,7 +256,9 @@ class ExchangeController extends UserController
 
     public function __destruct()
     {
-        $this->webSocketClient->close();
+        if ($this->webSocketClient) {
+            $this->webSocketClient->close();
+        }
     }
 
     private function saveData($type = 'insert', $id = 0)

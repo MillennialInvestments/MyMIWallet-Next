@@ -12,7 +12,7 @@ use Throwable;
 use Psr\Log\LoggerInterface;
 
 
-use App\Libraries\{CrudCacheInvalidator, MyMIAdvisor, MyMIAlphaVantage, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIInvestments, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets, SiteSettingsRuntime};
+use App\Libraries\{CrudCacheInvalidator, MyMIAdvisor, MyMIAlerts, MyMIAlphaVantage, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIInvestments, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets, SiteSettingsRuntime};
 use App\Services\{AccountService, BudgetService, DashboardService, GoalTrackingService, MarketingService, SolanaService, UserService, WalletService};
 use App\Models\WalletModel; // <-- add this
 
@@ -55,6 +55,7 @@ abstract class BaseController extends Controller
     protected $nonceAttributes;
 
     private ?MyMIAdvisor $myMIAdvisor = null;
+    private ?MyMIAlerts $myMIAlerts = null;
     private ?MyMIAlphaVantage $MyMIAlphaVantage = null;
     private ?MyMIAnalytics $myMIAnalytics = null;
     private ?MyMIBudget $myMIBudget = null;
@@ -902,6 +903,11 @@ abstract class BaseController extends Controller
         return $this->myMIWallets ??= new MyMIWallets();
     }
 
+    protected function getMyMIAlerts(): MyMIAlerts
+    {
+        return $this->myMIAlerts ??= new MyMIAlerts();
+    }
+
     protected function getAccountService(): AccountService
     {
         return $this->accountService ??= new AccountService();
@@ -989,6 +995,16 @@ abstract class BaseController extends Controller
             return $this->$name;
         }
 
+        if ($name === 'walletService') {
+            $this->walletService = $this->getWalletService();
+            return $this->walletService;
+        }
+
+        if ($name === 'MyMIAlerts') {
+            $this->myMIAlerts = $this->getMyMIAlerts();
+            return $this->myMIAlerts;
+        }
+
         $getter = 'get' . $name;
         if (method_exists($this, $getter)) {
             $this->$name = $this->$getter();
@@ -996,6 +1012,7 @@ abstract class BaseController extends Controller
         }
 
         static $map = [
+            'MyMIAlerts'      => 'myMIAlerts',
             'MyMIUser'        => 'myMIUser',
             'MyMIWallet'      => 'myMIWallet',
             'MyMIWallets'     => 'myMIWallets',

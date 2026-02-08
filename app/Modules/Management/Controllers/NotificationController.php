@@ -68,7 +68,7 @@ class NotificationController extends UserController
         $this->userAccount                          = $this->getMyMIUser()->getUserInformation($this->cuID); 
         $this->userBudget                           = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID); 
         $this->userDashboard                        = $this->getMyMIDashboard()->dashboardInfo($this->cuID); 
-        $this->alertsInfo                           = $this->MyMIAlerts->getAlertInfo();
+        $this->alertsInfo                           = $this->getMyMIAlerts()->getAlertInfo();
         $this->reporting                            = $this->getMyMIAnalytics()->reporting($this->cuID);
     }
 
@@ -132,7 +132,7 @@ class NotificationController extends UserController
     public function index()
     {
         $this->data['pageTitle'] = 'MyMI Alerts | Management | MyMI Wallet';
-        $this->data['pendingTradeAlerts'] = $this->MyMIAlerts->getPendingTradeAlerts();
+        $this->data['pendingTradeAlerts'] = $this->getMyMIAlerts()->getPendingTradeAlerts();
         $this->commonData();
         
         // Update trade alerts with current market prices when this page is visited
