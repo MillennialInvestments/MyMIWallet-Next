@@ -7,7 +7,7 @@ use Config\Services;
 use App\Controllers\UserController;
 use App\Libraries\{MyMIAnalytics, MyMIBudget, MyMIDashboard, MyMIReferrals, MyMIUser, MyMIWallets};
 use App\Models\{AnalyticalModel, APIModel, AnnouncementsModel, ExchangeModel, MarketingModel, MyMIGoldModel, TrackerModel, WalletModel};
-use App\Services\{BudgetService, DashboardService, ExchangeService, GoalTrackingService, SolanaService, UserService};
+use App\Services\{BudgetService, DashboardService, ExchangeService, GoalTrackingService, SolanaService, UserService, WalletService};
 use DateTime;
 use CodeIgniter\API\ResponseTrait;
 use Psr\Log\LoggerInterface;
