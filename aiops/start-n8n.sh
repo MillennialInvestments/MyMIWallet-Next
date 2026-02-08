@@ -5,10 +5,9 @@ cd "$(dirname "$0")"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
-if [ -f .env ]; then
-  set -a
-  source ./.env
-  set +a
-fi
+set -a
+[ -f .env.aiops ] && source ./.env.aiops
+[ -f .env ] && source ./.env
+set +a
 
 ./bin/n8n-start-safe.sh

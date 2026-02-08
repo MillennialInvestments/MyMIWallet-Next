@@ -16,6 +16,7 @@ if [ -z "${NODE_BIN}" ]; then
 fi
 
 set -a
+[ -f .env.aiops ] && source ./.env.aiops
 [ -f .env ] && source ./.env
 set +a
 
