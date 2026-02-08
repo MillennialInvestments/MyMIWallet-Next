@@ -1,6 +1,6 @@
 # AI-Ops: Stale Docs
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-08T00:00:01Z
+> Run: 2026-02-08T12:00:02Z
 
 - docs/OVERVIEW.md
   - Doc last updated: 2025-11-08 (91 days ago)
@@ -31,7 +31,7 @@
 - docs/categorized/README.md
   - Doc last updated: 2025-11-30 (69 days ago)
 - docs/content_hub_inventory/content_hub_inventory.md
-  - Doc last updated: 2025-11-17 (82 days ago)
+  - Doc last updated: 2025-11-17 (83 days ago)
 - docs/csp-and-commondata.md
   - Doc last updated: 2025-11-08 (91 days ago)
 - docs/discord/README.md
@@ -43,7 +43,7 @@
 - docs/discord/alerts_automation.md
   - Doc last updated: 2025-11-27 (72 days ago)
 - docs/discord/discord_integration_overview.md
-  - Doc last updated: 2025-11-25 (74 days ago)
+  - Doc last updated: 2025-11-25 (75 days ago)
 - docs/discord/discord_schema_v3.sql.md
   - Doc last updated: 2025-11-08 (91 days ago)
 - docs/discord/discord_seed_v3.sql.md
@@ -51,7 +51,7 @@
 - docs/discord/discord_to_ci4_commands.md
   - Doc last updated: 2025-11-26 (73 days ago)
 - docs/discord/earnings_calendar_automation.md
-  - Doc last updated: 2025-11-26 (73 days ago)
+  - Doc last updated: 2025-11-26 (74 days ago)
 - docs/discord/environments.md
   - Doc last updated: 2025-12-05 (64 days ago)
 - docs/discord/events_matrix.md
@@ -63,13 +63,13 @@
 - docs/discord/mysql_discord_schema.md
   - Doc last updated: 2025-12-05 (64 days ago)
 - docs/discord/operations_and_montioring.md
-  - Doc last updated: 2025-11-26 (73 days ago)
+  - Doc last updated: 2025-11-26 (74 days ago)
 - docs/discord/premium_flows_and_upsell.md
   - Doc last updated: 2025-12-05 (64 days ago)
 - docs/discord/python_workers.md
   - Doc last updated: 2025-12-05 (64 days ago)
 - docs/discord/server_setup_and_alert_routing.md
-  - Doc last updated: 2025-12-05 (64 days ago)
+  - Doc last updated: 2025-12-05 (65 days ago)
 - docs/discord/server_setup_and_ci4_integration.md
   - Doc last updated: 2025-12-07 (62 days ago)
 - docs/discord/server_setup_support_category.md
@@ -86,8 +86,10 @@
   - Doc last updated: 2025-11-08 (91 days ago)
 - docs/exports_schema.md
   - Doc last updated: 2025-11-08 (91 days ago)
+- docs/functional_inventory/docs_to_code_map.md
+  - Doc last updated: 2025-12-10 (60 days ago)
 - docs/functional_inventory/feature_inventory.md
-  - Doc last updated: 2025-11-24 (75 days ago)
+  - Doc last updated: 2025-11-24 (76 days ago)
 - docs/logs/_index.md
   - Doc last updated: 2025-11-08 (91 days ago)
 - docs/logs/log-2025-10-06.md
@@ -212,12 +214,20 @@
   - Doc last updated: 2025-11-08 (91 days ago)
 - docs/ops/backfill_emails.md
   - Doc last updated: 2025-12-08 (61 days ago)
+- docs/ops/docs_alignment_report_2025-12-09.md
+  - Doc last updated: 2025-12-10 (60 days ago)
+- docs/ops/docs_index.md
+  - Doc last updated: 2025-12-10 (60 days ago)
+- docs/ops/reviews/_index.md
+  - Doc last updated: 2025-12-10 (60 days ago)
 - docs/ops/runbooks/alphavantage-rotation-playbook.md
   - Doc last updated: 2025-11-08 (91 days ago)
 - docs/ops/runbooks/database-log-review.md
   - Doc last updated: 2025-11-08 (91 days ago)
 - docs/ops/runbooks/env-baseline-keys.md
   - Doc last updated: 2025-11-08 (91 days ago)
+- docs/ops/runbooks/logger-repair.md
+  - Doc last updated: 2025-12-10 (60 days ago)
 - docs/ops/runbooks/routes-audit-playbook.md
   - Doc last updated: 2025-11-08 (91 days ago)
 - docs/ops/runbooks/ui-error-uat.md
@@ -225,7 +235,7 @@
 - docs/ops/unexpected-token-lt-audit.md
   - Doc last updated: 2025-11-08 (91 days ago)
 - docs/page_seo/page_seo_inventory.md
-  - Doc last updated: 2025-11-28 (71 days ago)
+  - Doc last updated: 2025-11-28 (72 days ago)
 - docs/php-errors-playbook.md
   - Doc last updated: 2025-11-08 (91 days ago)
 - docs/predictions/_index.md
@@ -247,7 +257,7 @@
 - docs/security/_index.md
   - Doc last updated: 2025-11-08 (91 days ago)
 - docs/syndication_inventory/syndication_inventory.md
-  - Doc last updated: 2025-11-17 (82 days ago)
+  - Doc last updated: 2025-11-17 (83 days ago)
 - docs/tasks/_index.md
   - Doc last updated: 2025-11-08 (91 days ago)
 - docs/user-guides/ci4/01_Overview.md

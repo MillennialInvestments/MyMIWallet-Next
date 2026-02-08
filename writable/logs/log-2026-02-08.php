@@ -421,3 +421,19 @@ in APPPATH/Modules/Management/Controllers/WalletsController.php on line 92.
  4 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
  5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
  6 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-02-08 03:17:47 --> ErrorException: Cannot declare class App\Config\SocialPlatforms, because the name is already in use
+[Method: GET, Route: Wallets]
+in APPPATH/Config/SocialPlatforms.php on line 7.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-02-08 03:17:50 --> ErrorException: Cannot declare class App\Config\SocialPlatforms, because the name is already in use
+[Method: GET, Route: Wallets]
+in APPPATH/Config/SocialPlatforms.php on line 7.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2026-02-08 11:35:31 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Premium-Features/Due-Diligence-Database]
+in SYSTEMPATH/CodeIgniter.php on line 983.
+ 1 SYSTEMPATH/CodeIgniter.php(983): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(360): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
