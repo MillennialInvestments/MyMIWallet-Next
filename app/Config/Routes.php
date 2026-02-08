@@ -2124,4 +2124,23 @@ $routes->group('Admin/Tax', ['namespace' => 'App\\Modules\\Management\\TaxAdmin\
     $routes->match(['GET', 'POST'], 'Rates/create', 'TaxConfig::createRate');
     $routes->match(['GET', 'POST'], 'Rates/edit/(:num)', 'TaxConfig::editRate/$1');
 });
+
+$routes->group('API', ['filter' => 'internalToken'], static function($routes) {
+    $routes->get('Ops/healthcheck', 'App\Modules\Ops\Controllers\OpsController::healthcheck');
+    $routes->post('Ops/app/update', 'App\Modules\Ops\Controllers\OpsController::appUpdate');
+    $routes->get('Ops/commands', 'App\Modules\Ops\Controllers\OpsController::commands');
+
+    $routes->get('AIOps/snapshot', 'App\Modules\AIOps\Controllers\AIOpsController::snapshot');
+    $routes->get('AIOps/gaps/docs', 'App\Modules\AIOps\Controllers\AIOpsController::docsGaps');
+    $routes->post('AIOps/watch', 'App\Modules\AIOps\Controllers\AIOpsController::watch');
+
+    $routes->get('Logs/summary', 'App\Modules\Logs\Controllers\LogsController::summary');
+
+    $routes->post('ContentEngine/run', 'App\Modules\ContentEngine\Controllers\ContentEngineController::run');
+    $routes->get('ContentEngine/drafts/(:segment)', 'App\Modules\ContentEngine\Controllers\ContentEngineController::draft/$1');
+
+    $routes->get('Chat/health', 'App\Modules\Chat\Controllers\ChatController::health');
+    $routes->get('Chat/usage', 'App\Modules\Chat\Controllers\ChatController::usage');
+});
+
 ?>

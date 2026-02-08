@@ -26,6 +26,7 @@ class Filters extends BaseConfig
         'permission'     => \App\Filters\PermissionFilter::class,
         // PATCH: API token authentication filter
         'apiToken'       => \App\Filters\ApiTokenAuthFilter::class,
+        'internalToken' => \App\Filters\InternalTokenFilter::class,
         // PATCH: feature flag route filter
         'feature'        => \App\Filters\FeatureFlagFilter::class,
         // PATCH: anti-abuse filters

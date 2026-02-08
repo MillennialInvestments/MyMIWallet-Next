@@ -100,6 +100,9 @@ This audit validates every Spark command under `app/Commands/**` against runtime
 | `ux:journey-audit` | OK | — | — |
 | `wallets:warm-summary-cache` | OK | — | — |
 
+| `aiops:manual-run` | OK | Migrated to `parseParams()` + `optBool/optInt/optString`; no deprecated CLI option APIs. | — |
+| `aiops:auto-run` | OK | Migrated to `parseParams()` + `optBool/optInt/optString`; no deprecated CLI option APIs. | — |
+| `chat:unlock` | OK | Command documented and validated; uses `parseParams()` + safe helpers. | — |
 ## Notes
 
 - `ops:commands:lint` outputs machine-readable results to `docs/next/bf_aiops_task_runs/commands_lint.json`.
