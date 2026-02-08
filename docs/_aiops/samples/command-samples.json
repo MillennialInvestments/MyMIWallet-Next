@@ -1,0 +1,18 @@
+{
+  "ops:healthcheck": {"command": "ops:healthcheck", "timestamp": "2026-02-08T00:00:00Z", "summary": {"php_version": "8.2.x", "ci_environment": "production"}, "exit_code": 0},
+  "ops:nginx:status": {"command": "ops:nginx:status", "summary": {"ports": {"80": true, "443": true}}, "exit_code": 0},
+  "ops:php:fpm:health": {"command": "ops:php:fpm:health", "summary": {"opcache_enabled": true}, "exit_code": 0},
+  "ops:filesystem:scan": {"command": "ops:filesystem:scan", "summary": {"writable_paths": {"writable": true}}, "exit_code": 0},
+  "logs:scan": {"command": "logs:scan", "summary": {"files": ["writable/logs/log-2026-02-08.log"]}, "exit_code": 0},
+  "logs:summarize": {"command": "logs:summarize", "summary": {"severity": {"error": 3, "warning": 5, "notice": 1, "other": 12}}, "exit_code": 0},
+  "logs:watch": {"command": "logs:watch", "summary": {"cycles": 1, "interval": 60}, "exit_code": 0},
+  "email:healthcheck": {"command": "email:healthcheck", "summary": {"smtp_connectivity": true}, "exit_code": 0},
+  "email:queue:scan": {"command": "email:queue:scan", "summary": {"ci_mail_failures": []}, "exit_code": 0},
+  "email:test": {"command": "email:test", "summary": {"tls_mode": "tls"}, "exit_code": 0},
+  "dreamhost:email:list": {"command": "dreamhost:email:list", "summary": {"ok": true}, "exit_code": 0},
+  "dreamhost:email:audit": {"command": "dreamhost:email:audit", "summary": {"checks": {"over_quota": "pending"}}, "exit_code": 0},
+  "dreamhost:dns:verify": {"command": "dreamhost:dns:verify", "summary": {"checks": {"spf": "pending-parse"}}, "exit_code": 0},
+  "dreamhost:limits": {"command": "dreamhost:limits", "summary": {"api_key_configured": true}, "exit_code": 0},
+  "ops:self-heal": {"command": "ops:self-heal", "summary": {"clear_cache": "planned"}, "exit_code": 0},
+  "ops:report": {"command": "ops:report", "summary": {"health_score": 88}, "exit_code": 0}
+}

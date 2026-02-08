@@ -1,0 +1,8 @@
+{
+  "tiles": [
+    {"id": "health", "title": "VPS Health", "source": "docs/_aiops/commands/ops-healthcheck/report-YYYY-MM-DD.json"},
+    {"id": "logs", "title": "Log Trends", "source": "docs/_aiops/logs/report-YYYY-MM-DD.json"},
+    {"id": "email", "title": "Email Health", "source": "docs/_aiops/email/healthcheck/report-YYYY-MM-DD.json"},
+    {"id": "overall", "title": "Ops Summary", "source": "docs/_aiops/reports/report-YYYY-MM-DD.json"}
+  ]
+}
