@@ -30,7 +30,7 @@ class ReferralController extends UserController {
     protected $solanaService = null;
     protected $userService;
     protected $userData;
-    protected $walletService;
+    protected ?WalletService $walletService = null;
     protected $budgetModel;
     protected $userModel;
     protected $walletModel;

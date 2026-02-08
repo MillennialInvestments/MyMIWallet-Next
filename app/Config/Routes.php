@@ -1494,6 +1494,12 @@ $routes->group('Announcements', ['namespace' => 'App\Modules\Blog\Controllers'],
     // Define other routes for 'blog' module
 });
 
+
+// Legacy route compatibility aliases for logged errors
+$routes->get('Assets', 'App\Modules\Management\Controllers\AssetsController::index', ['filter' => 'login']);
+$routes->get('Marketplace', 'App\Modules\ScriptStudio\Controllers\ScriptStudioController::marketplace');
+$routes->get('API/Investments/GetUserWatchlist/(:segment)', 'App\Modules\User\Controllers\InvestmentsController::getUserWatchlist/$1', ['filter' => 'login']);
+
 // Script Studio Module
 $routes->group('ScriptStudio', ['namespace' => 'App\\Modules\\ScriptStudio\\Controllers'], function($routes) {
     $routes->get('/', 'ScriptStudioController::index');
