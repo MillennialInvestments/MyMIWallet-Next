@@ -22,6 +22,7 @@ class AutoRunCoordinator
         $manual = $this->scanManualActionableTasks($state['task']);
 
         if ($manual['has_actionable']) {
+            $log = $this->latestSummaryLog();
             $runner = new ManualPriorityRunner($this->config);
             $manualResult = $runner->run([
                 'dryRun' => (bool) ($options['dryRun'] ?? false),
@@ -32,8 +33,17 @@ class AutoRunCoordinator
                 'notify' => (bool) ($options['notify'] ?? true),
             ]);
 
+            $this->atomicWriteJson($this->statePath('run-meta.json'), [
+                'last_run_at' => gmdate('c'),
+                'mode' => 'manual-delegated',
+                'latest_log' => $manualResult['latest_log'] ?? $log['path'],
+                'manual_tasks' => $manual['tasks'],
+                'results' => $manualResult['results'] ?? [],
+            ]);
+
             return [
                 'mode' => 'manual-delegated',
+                'latest_log' => $manualResult['latest_log'] ?? $log['path'],
                 'manual_actionable_count' => count($manual['tasks']),
                 'manual_tasks' => $manual['tasks'],
                 'manual_result' => $manualResult,
@@ -64,6 +74,14 @@ class AutoRunCoordinator
         $selected = array_slice($candidate, 0, $limitErrors);
 
         if ($selected === []) {
+            $this->atomicWriteJson($this->statePath('run-meta.json'), [
+                'last_run_at' => gmdate('c'),
+                'mode' => 'auto',
+                'latest_log' => $log['path'],
+                'status' => 'no-actionable-errors',
+                'evaluated_signatures' => array_values(array_map(static fn(array $r): string => (string) $r['signature'], $errors)),
+            ]);
+
             return [
                 'mode' => 'auto',
                 'latest_log' => $log['path'],
@@ -78,6 +96,15 @@ class AutoRunCoordinator
         $intentHash = hash('sha256', implode('|', $selectedSignatures));
 
         if ($this->autoTaskAlreadyTracked($state['task'], $state['pr'], $intentHash)) {
+            $this->atomicWriteJson($this->statePath('run-meta.json'), [
+                'last_run_at' => gmdate('c'),
+                'mode' => 'auto',
+                'latest_log' => $log['path'],
+                'status' => 'duplicate-intent-skipped',
+                'intent_hash' => $intentHash,
+                'evaluated_signatures' => array_values(array_map(static fn(array $r): string => (string) $r['signature'], $selected)),
+            ]);
+
             return [
                 'mode' => 'auto',
                 'latest_log' => $log['path'],
@@ -114,6 +141,16 @@ class AutoRunCoordinator
             'writeState' => true,
             'createPr' => (bool) ($options['createPr'] ?? true),
             'notify' => (bool) ($options['notify'] ?? true),
+        ]);
+
+        $this->atomicWriteJson($this->statePath('run-meta.json'), [
+            'last_run_at' => gmdate('c'),
+            'mode' => 'auto',
+            'latest_log' => $log['path'],
+            'status' => 'auto-priority-created',
+            'intent_hash' => $intentHash,
+            'selected_signatures' => $selectedSignatures,
+            'manual_result' => $manualResult,
         ]);
 
         return [

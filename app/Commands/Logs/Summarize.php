@@ -66,8 +66,11 @@ class Summarize extends SafeBaseCommand
         if ($dryRun) {
             CLI::write("Dry-run: would write summary to {$result['out_file']}", 'yellow');
             CLI::write("Dry-run: would update state to {$result['state_file']}", 'yellow');
+            CLI::write("Dry-run: would sync summary to {$result['repo_file']}", 'yellow');
         } else {
             CLI::write("Summary generated for {$targetDate}: {$result['out_file']}", 'green');
+            CLI::write('Repo summary: ' . ($result['repo_file'] ?? 'n/a'), 'green');
+            CLI::write('Repo sync changed=' . (($result['repo_changed'] ?? false) ? 'yes' : 'no'));
             if (! empty($result['max_ts'])) {
                 CLI::write('Last processed timestamp updated to: ' . $result['max_ts'], 'yellow');
             }
@@ -81,6 +84,8 @@ class Summarize extends SafeBaseCommand
             'total'     => $result['total'] ?? 0,
             'new_total' => $result['new_total'] ?? 0,
             'dry_run'   => $dryRun,
+            'repo_file' => $result['repo_file'] ?? null,
+            'repo_changed' => $result['repo_changed'] ?? false,
         ]);
 
         $total = (int) ($result['total'] ?? 0);
