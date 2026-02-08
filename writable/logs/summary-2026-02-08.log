@@ -4,7 +4,7 @@
    Grouped by (LEVEL + message)
 ===============================================
 
-Last processed up to: 2026-02-08 16:54:26
+Last processed up to: 2026-02-08 17:33:15
 
 ---------------------------
 LEVEL: CRITICAL
@@ -73,16 +73,10 @@ CRITICAL --> TypeError: CodeIgniter\CLI\CLI::write(): Argument #1 ($text) must b
 
 ===============================================
    HERE'S THE NEW STUFF
-   (Entries logged AFTER 2026-02-08 16:54:26)
+   (Entries logged AFTER 2026-02-08 17:33:15)
 ===============================================
 
----------------------------
-LEVEL: CRITICAL (NEW)
----------------------------
-
-[3 NEW occurrence(s)]
-CRITICAL --> TypeError: trim(): Argument #1 ($string) must be of type string, null given
-
+No NEW log entries found after 2026-02-08 17:33:15.
 
 ---- CONFIG LINT ----
 ✅ Services::cache

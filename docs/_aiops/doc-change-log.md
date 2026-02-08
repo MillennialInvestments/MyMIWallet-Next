@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-08T18:00:01Z
+> Run: 2026-02-08T19:34:52Z
 
 - docs/CRON.md
   - Last updated: 2026-01-30
@@ -187,7 +187,7 @@
   - Change type: unchanged
 - docs/aiops/artifacts/ops-spark-reset/20260208-165510/summary.md
   - Last updated: 2026-02-08
-  - Change type: new
+  - Change type: unchanged
 - docs/aiops/artifacts/revenue-cost-forecast/20260201-180746/summary.md
   - Last updated: 2026-02-01
   - Change type: unchanged
@@ -857,6 +857,9 @@
 - docs/gap_tracker/reports/gap_sync_2026-02-05.md
   - Last updated: 2026-02-06
   - Change type: unchanged
+- docs/gap_tracker/reports/gap_sync_2026-02-08.md
+  - Last updated: 2026-02-08
+  - Change type: new
 - docs/go-live/README.md
   - Last updated: 2025-12-27
   - Change type: unchanged

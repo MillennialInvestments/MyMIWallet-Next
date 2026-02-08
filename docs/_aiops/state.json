@@ -4231,7 +4231,11 @@
         "docs/aiops/artifacts/ops-spark-reset/20260208-165510/summary.md": {
             "hash": "0f67138b515b8543c5dfb8825ad4503cc788380fe292b36e200ede4792687a87",
             "mtime": "2026-02-08"
+        },
+        "docs/gap_tracker/reports/gap_sync_2026-02-08.md": {
+            "hash": "ab20d417e0e58e00fe2a59cbe5d5824649e5af78df110f0513fafc2c338d5c12",
+            "mtime": "2026-02-08"
         }
     },
-    "last_run": "2026-02-08T18:00:01Z"
+    "last_run": "2026-02-08T19:34:52Z"
 }
