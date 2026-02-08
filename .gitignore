@@ -33,6 +33,7 @@ app/_backup_autoload_skip/
 app/FiltersO/
 .env
 .env.*
+chat/.env*
 !chat/.env.staging.example
 !chat/.env.production.example
 # *.log
