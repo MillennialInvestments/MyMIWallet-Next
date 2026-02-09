@@ -68,14 +68,19 @@ class AIController extends BaseController
 
     public function listNotes()
     {
-        if (!$this->cuID) {
+        if (! $this->cuID) {
             return $this->failUnauthorized('Authentication required.');
         }
 
-        $discordId = $this->request->getGet('discord_user_id') ?? null;
-        $notes     = $this->assistant->getNotesForUser($this->cuID, $discordId);
+        try {
+            $discordId = $this->request->getGet('discord_user_id') ?? null;
+            $notes     = $this->assistant->getNotesForUser($this->cuID, $discordId);
 
-        return $this->respond(['notes' => $notes]);
+            return $this->respond(['notes' => is_array($notes) ? $notes : []]);
+        } catch (\Throwable $e) {
+            log_message('error', 'AIController::listNotes failed: {msg}', ['msg' => $e->getMessage()]);
+            return $this->failServerError('Internal processing error');
+        }
     }
 
     public function updateLinkSettings()

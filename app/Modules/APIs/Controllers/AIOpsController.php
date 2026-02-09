@@ -7,6 +7,7 @@ use App\Libraries\SiteSettingsOverride;
 use App\Modules\AIOps\Services\AIOpsGuardrailService;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
+use Throwable;
 
 class AIOpsController extends BaseController
 {
@@ -24,17 +25,44 @@ class AIOpsController extends BaseController
 
     public function health(): ResponseInterface
     {
-        $settings = $this->settingsOverride->apply(config('SiteSettings'));
-        $budget   = $this->guardrail->tablesAvailable() ? $this->guardrail->getTodayBudgetSummary() : null;
+        if (! is_cli()) {
+            try {
+                $tokenService = service('internalToken');
+            } catch (Throwable $e) {
+                log_message('error', '[API] internalToken service unavailable for {route}: {message}', [
+                    'route' => current_url(),
+                    'message' => $e->getMessage(),
+                ]);
 
-        return $this->respond([
-            'aiops_enabled'          => $settings->aiops_enabled,
-            'aiops_llm_enabled'      => $settings->aiops_llm_enabled,
-            'aiops_daily_cap_usd'    => $settings->aiops_daily_cap_usd,
-            'aiops_hard_stop_percent'=> $settings->aiops_hard_stop_percent,
-            'budget'                 => $budget,
-            'tables_available'       => $this->guardrail->tablesAvailable(),
-        ]);
+                return $this->failServerError('Internal processing error');
+            }
+
+            if (! $tokenService || ! method_exists($tokenService, 'allowed') || ! $tokenService->allowed()) {
+                log_message('warning', '[API] Internal endpoint blocked: {route}', ['route' => current_url()]);
+                return $this->failForbidden('Internal endpoint');
+            }
+        }
+
+        try {
+            $settings = $this->settingsOverride->apply(config('SiteSettings'));
+            $budget   = $this->guardrail->tablesAvailable() ? $this->guardrail->getTodayBudgetSummary() : null;
+
+            return $this->respond([
+                'aiops_enabled'          => $settings->aiops_enabled,
+                'aiops_llm_enabled'      => $settings->aiops_llm_enabled,
+                'aiops_daily_cap_usd'    => $settings->aiops_daily_cap_usd,
+                'aiops_hard_stop_percent'=> $settings->aiops_hard_stop_percent,
+                'budget'                 => $budget,
+                'tables_available'       => $this->guardrail->tablesAvailable(),
+            ]);
+        } catch (Throwable $e) {
+            log_message('error', '[API] {route} failed: {message}', [
+                'route' => current_url(),
+                'message' => $e->getMessage(),
+            ]);
+
+            return $this->failServerError('Internal processing error');
+        }
     }
 
     public function policyCheck(): ResponseInterface
