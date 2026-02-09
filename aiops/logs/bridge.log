@@ -22,3 +22,10 @@
 {"ts":"2026-02-09T10:05:01.627Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
 {"ts":"2026-02-09T11:05:02.430Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
 {"ts":"2026-02-09T12:05:01.395Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
+{"ts":"2026-02-09T13:05:02.146Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
+{"ts":"2026-02-09T14:05:01.815Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
+{"ts":"2026-02-09T15:05:01.654Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
+{"ts":"2026-02-09T16:05:02.136Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
+{"ts":"2026-02-09T17:05:02.423Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
+{"ts":"2026-02-09T18:05:02.026Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
+{"ts":"2026-02-09T19:05:01.535Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}

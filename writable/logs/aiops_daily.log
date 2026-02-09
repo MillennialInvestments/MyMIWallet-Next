@@ -3118,3 +3118,123 @@ Nightly Summary Preview:
 - Spark results: `docs/_aiops/spark-results.md`
 - CI summary: `docs/_aiops/ci-summary.md`
 
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-09 14:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-09T14:00:01Z
+
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-09T14:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1084
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1130
+- Docs with no code match candidates: 975
+
+## Stale Docs
+- Docs older than 60 days: 145
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-09 16:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-09T16:00:01Z
+
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-09T16:00:01Z
+
+## Docs
+- Changed docs: 2
+- Total docs scanned: 1086
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1130
+- Docs with no code match candidates: 977
+
+## Stale Docs
+- Docs older than 60 days: 145
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-09 18:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-09T18:00:01Z
+
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-09T18:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1087
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1130
+- Docs with no code match candidates: 977
+
+## Stale Docs
+- Docs older than 60 days: 145
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+

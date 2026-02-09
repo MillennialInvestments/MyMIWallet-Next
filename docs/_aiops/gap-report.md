@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-09T12:00:02Z
+> Run: 2026-02-09T18:00:01Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -444,6 +444,10 @@
   - ❌ No obvious code match found (heuristic)
 - docs/aiops/api-audit.md
   - ❌ No obvious code match found (heuristic)
+- docs/aiops/artifacts/api-audit/20260209-112136/fix-report.md
+  - ❌ No obvious code match found (heuristic)
+- docs/aiops/artifacts/api-audit/20260209-112136/next-steps.md
+  - ❌ No obvious code match found (heuristic)
 - docs/aiops/artifacts/revenue-scan/20260205-025010/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_by_module.md
@@ -802,8 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/forecasting/forecast_detail_ui.md
   - ❌ No obvious code match found (heuristic)
-- docs/functional_inventory/docs_to_code_map.md
-  - ❌ No obvious code match found (heuristic)
-- docs/functional_inventory/feature_inventory.md
-  - ❌ No obvious code match found (heuristic)
-- … and 775 more
+- … and 777 more

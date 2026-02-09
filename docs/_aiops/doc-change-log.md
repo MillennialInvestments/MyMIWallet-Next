@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-09T12:00:02Z
+> Run: 2026-02-09T18:00:01Z
 
 - docs/CRON.md
   - Last updated: 2026-01-30
@@ -65,9 +65,15 @@
 - docs/aiops/api-audit.md
   - Last updated: 2026-02-01
   - Change type: unchanged
+- docs/aiops/artifacts/api-audit/20260209-112136/fix-report.md
+  - Last updated: 2026-02-09
+  - Change type: unchanged
+- docs/aiops/artifacts/api-audit/20260209-112136/next-steps.md
+  - Last updated: 2026-02-09
+  - Change type: unchanged
 - docs/aiops/artifacts/api-audit/20260209-112136/summary.md
   - Last updated: 2026-02-09
-  - Change type: new
+  - Change type: unchanged
 - docs/aiops/artifacts/config-drift/20260201-180724/summary.md
   - Last updated: 2026-02-01
   - Change type: unchanged
@@ -201,6 +207,9 @@
   - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/aiops/artifacts/ops-spark-reset/20260209-110400/summary.md
+  - Last updated: 2026-02-09
+  - Change type: unchanged
+- docs/aiops/artifacts/ops-spark-reset/20260209-160123/summary.md
   - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/aiops/artifacts/revenue-cost-forecast/20260201-180746/summary.md
@@ -349,7 +358,7 @@
   - Change type: unchanged
 - docs/api/internal-orchestration.md
   - Last updated: 2026-02-09
-  - Change type: modified
+  - Change type: unchanged
 - docs/architecture/marketing_module_lifecycle.md
   - Last updated: 2026-01-21
   - Change type: unchanged
