@@ -3,7 +3,10 @@
 namespace App\Controllers;
 
 use App\Services\AuthAuditService;
+use App\Services\Auth\AuthLogger;
 use App\Services\OnboardingProgressService;
+use App\Models\UserIpHistoryModel;
+use App\Modules\Support\Services\SupportTicketService;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\Session\Session;
@@ -15,6 +18,9 @@ use Throwable;
 class AuthController extends Controller
 {
     protected $auth;
+    protected AuthLogger $authLogger;
+    protected UserIpHistoryModel $ipHistoryModel;
+    protected SupportTicketService $supportTicketService;
 
     /**
      * @var AuthConfig
@@ -35,6 +41,9 @@ class AuthController extends Controller
 
         $this->config = config('Auth');
         $this->auth   = service('authentication');
+        $this->authLogger = new AuthLogger();
+        $this->ipHistoryModel = model(UserIpHistoryModel::class);
+        $this->supportTicketService = new SupportTicketService();
     }
 
     //--------------------------------------------------------------------
@@ -113,11 +122,11 @@ class AuthController extends Controller
         $login    = $this->request->getPost('login');
         $password = $this->request->getPost('password');
         $remember = (bool) $this->request->getPost('remember');
+        $ip = $this->request->getIPAddress();
+        $ua = (string) $this->request->getUserAgent();
 
-        log_message('info', '[AUTH] Login attempt', [
-            'login' => $login,
-            'ip'    => $this->request->getIPAddress(),
-        ]);
+        $this->authLogger->logLoginAttempt((string) $login, $ip, $ua);
+        $this->ipHistoryModel->record(null, filter_var($login, FILTER_VALIDATE_EMAIL) ? (string) $login : null, $ip, $ua);
 
         log_message(
             'debug',
@@ -148,8 +157,36 @@ class AuthController extends Controller
             sprintf('Auth credentials normalised for attempt using key "%s"', $type)
         );
 
+        try {
+            $attempt = $this->auth->attempt($credentials, $remember);
+        } catch (Throwable $e) {
+            $context = [
+                'email_entered' => filter_var($login, FILTER_VALIDATE_EMAIL) ? (string) $login : null,
+                'user_id' => null,
+                'ip_address' => $ip,
+                'user_agent' => $ua,
+                'error_message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace_id' => bin2hex(random_bytes(6)),
+            ];
+
+            $ticketId = $this->supportTicketService->createAuthLoginErrorTicket($context);
+            if (! empty($context['email_entered'])) {
+                $this->supportTicketService->notifyUser($ticketId, $context['email_entered'], $context);
+            }
+            $this->supportTicketService->notifySupport($ticketId, $context);
+            $this->supportTicketService->notifyDiscord($ticketId, $context);
+            $this->authLogger->logAuthException($e, ['login' => (string) $login, 'ip' => $ip]);
+
+            $this->session->setFlashdata('auth_ticket_id', $ticketId);
+            $this->setAuthMessage('danger', 'We hit a system error while signing you in. Ticket #' . $ticketId . ' was created. Support has been notified.');
+
+            return redirect()->back()->withInput();
+        }
+
         // 🔴 AUTH ATTEMPT
-        if (! $this->auth->attempt($credentials, $remember)) {
+        if (! $attempt) {
             // LocalAuthenticator exposes `error()` (single last error message)
             $errorMsg = $this->auth->error() ?? lang('Auth.badAttempt');
             $inactiveMessage = lang('Auth.notActivated');
@@ -178,6 +215,7 @@ class AuthController extends Controller
                     'reason' => 'invalid_credentials',
                 ]);
                 $this->setAuthMessage('danger', 'Login failed. Please check your email and password.');
+                $this->authLogger->logLoginFailure('invalid_credentials', ['login' => (string) $login, 'ip' => $ip, 'user_agent' => $ua]);
                 log_message('warning', '[AUTH] Login failed', [
                     'login' => $login,
                     'error' => $errorMsg,
@@ -230,6 +268,7 @@ class AuthController extends Controller
         }
 
         if ($userId !== null && $userId > 0) {
+            $this->ipHistoryModel->record((int) $userId, $this->auth->user()->email ?? null, $ip, $ua);
             $this->session->regenerate(true);
             $this->clearUserCacheKeys((int) $userId);
             service('eventTracker')->track('auth.login_success', [], (int) $userId);
@@ -459,6 +498,7 @@ class AuthController extends Controller
     // }
     public function attemptRegister()
     {
+        $this->ipHistoryModel->record(null, (string) $this->request->getPost('email'), $this->request->getIPAddress(), (string) $this->request->getUserAgent());
         /** @var AuthAuditService $auditService */
         $auditService = service('authAuditService');
         $request      = $this->request;
@@ -848,6 +888,7 @@ class AuthController extends Controller
         $users = model(UserModel::class);
 
         $email = (string) $this->request->getPost('email');
+        $this->ipHistoryModel->record(null, $email, $this->request->getIPAddress(), (string) $this->request->getUserAgent());
         log_message('info', '[AUTH] Password reset requested', [
             'email' => $email,
             'ip'    => $this->request->getIPAddress(),
@@ -937,9 +978,20 @@ class AuthController extends Controller
 
         if (! $this->validate($rules)) {
             $errors = $this->validator->getErrors();
+            log_message('error', '[AUTH] Reset validation failed', [
+                'errors' => $errors,
+                'fields_present' => array_keys(array_filter([
+                    'token' => $this->request->getPost('token'),
+                    'email' => $this->request->getPost('email'),
+                    'password' => $this->request->getPost('password') ? '__present__' : null,
+                    'pass_confirm' => $this->request->getPost('pass_confirm') ? '__present__' : null,
+                ])),
+            ]);
             $this->setAuthMessage('danger', $this->formatValidationErrors($errors));
             return redirect()->back()->withInput()->with('errors', $errors);
         }
+
+        $this->ipHistoryModel->record(null, (string) $this->request->getPost('email'), $this->request->getIPAddress(), (string) $this->request->getUserAgent());
 
         $user = $users->where('email', $this->request->getPost('email'))
             ->where('reset_hash', $this->request->getPost('token'))

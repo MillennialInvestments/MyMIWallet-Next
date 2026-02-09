@@ -1529,6 +1529,7 @@ $routes->group('How-It-Works', ['namespace' => 'App\\Modules\\Blog\\Controllers'
 
 // Customer Support:
 $routes->group('Support', ['namespace' => 'App\Modules\Support\Controllers'], function($routes) {
+    $routes->get('ticket/(:num)', 'SupportTicketController::show/$1');
     $routes->get('/', 'SupportController::index');
     $routes->get('Account', 'AccountSupportController::index');
     $routes->post('resendActivation', 'AccountSupportController::resendActivation');
@@ -2144,3 +2145,5 @@ $routes->group('API', ['filter' => 'internalToken'], static function($routes) {
 });
 
 ?>
+
+$routes->get('Support', 'App\\Modules\\Support\\Controllers\\SupportTicketController::index');

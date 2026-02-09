@@ -271,9 +271,11 @@ class MailService
         $appUrl = rtrim((string) (getenv('APP_URL') ?: site_url()), '/');
         $logoUrl = $appUrl . '/assets/images/MyMI-Wallet-Logo-Black.png';
 
-        $content = view("emails/{$template}", $payload);
+        helper('email');
 
-        return view('emails/layout', [
+        $content = render_email_view("emails/{$template}", $payload);
+
+        return render_email_view('emails/layout', [
             'title' => $title,
             'content' => $content,
             'logoUrl' => $logoUrl,
@@ -289,7 +291,11 @@ class MailService
             return null;
         }
 
-        return view("emails/{$template}", $payload);
+        helper('email');
+
+        $rendered = render_email_view("emails/{$template}", $payload);
+
+        return $rendered === '' ? null : $rendered;
     }
 
     private function resolveRecipientName($user): string

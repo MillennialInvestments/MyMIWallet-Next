@@ -938,7 +938,7 @@ class AuthAuditRunner
         }
 
         try {
-            $seeder = Services::seeder();
+            $seeder = \Config\Database::seeder();
             $seeder->call(\App\Database\Seeds\AuthAuditUserSeeder::class);
         } catch (Throwable $e) {
             $this->addResult('Audit: Seed user', 'warning', 'Seeder failed to run.', [
