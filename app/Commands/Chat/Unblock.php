@@ -7,7 +7,7 @@ namespace App\Commands\Chat;
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class Unlock extends SafeBaseCommand
+class Unblock extends SafeBaseCommand
 {
     protected $group = 'chat';
     protected $name = 'chat:unlock';

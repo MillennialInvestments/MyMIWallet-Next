@@ -4,6 +4,7 @@ namespace App\Commands\AiOps;
 
 use App\Commands\SafeBaseCommand;
 use App\Commands\Support\ArtifactHelper;
+use CodeIgniter\CLI\CLI;
 
 class Init extends SafeBaseCommand
 {
@@ -30,8 +31,9 @@ class Init extends SafeBaseCommand
 
         // 1) Hard validations
         $this->assertFileExists(ROOTPATH . '.github/workflows/aiops-pr-factory.yml', 'PR factory workflow missing');
-        $this->assertEnvSecret('AIOPS_GH_APP_ID');
-        $this->assertEnvSecret('AIOPS_GH_APP_PRIVATE_KEY');
+        if (! $this->assertEnvSecret('AIOPS_GH_APP_ID') || ! $this->assertEnvSecret('AIOPS_GH_APP_PRIVATE_KEY')) {
+            return EXIT_ERROR;
+        }
 
         // 2) Create a tiny bootstrap patch (docs only)
         $artifactDir = $resolved['dir'];
@@ -75,7 +77,7 @@ class Init extends SafeBaseCommand
         }
 
         // 3) Delegate to the real PR proposer
-        $this->write("Delegating to ops:propose-pr...\n");
+        CLI::write('Delegating to ops:propose-pr...');
         $args = array_values(array_filter([
             '--slug=aiops-init',
             '--title=aiops: initialize PR factory',
@@ -95,10 +97,15 @@ class Init extends SafeBaseCommand
         }
     }
 
-    private function assertEnvSecret(string $key)
+    private function assertEnvSecret(string $key): bool
     {
-        // We just verify it's configured in GitHub;
-        // locally this is a placeholder check
-        $this->write("Verified secret reference: {$key}\n");
+        $value = trim((string) getenv($key));
+        if ($value === '') {
+            CLI::error("Missing required environment value: {$key}");
+            return false;
+        }
+
+        CLI::write("Verified environment value: {$key}");
+        return true;
     }
 }

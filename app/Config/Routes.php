@@ -2128,28 +2128,28 @@ $routes->group('Admin/Tax', ['namespace' => 'App\\Modules\\Management\\TaxAdmin\
     $routes->match(['GET', 'POST'], 'Rates/edit/(:num)', 'TaxConfig::editRate/$1');
 });
 
-$routes->group('API', ['filter' => 'internalToken'], static function($routes) {
-    $routes->get('Ops/healthcheck', 'App\Modules\Ops\Controllers\OpsController::healthcheck');
-    $routes->post('Ops/app/update', 'App\Modules\Ops\Controllers\OpsController::appUpdate');
-    $routes->get('Ops/commands', 'App\Modules\Ops\Controllers\OpsController::commands');
+$routes->group('API/Ops', ['filter' => 'internalToken'], static function ($routes) {
+    $routes->get('healthcheck', 'App\Modules\Ops\Controllers\OpsController::healthcheck');
+    $routes->post('app/update', 'App\Modules\Ops\Controllers\OpsController::appUpdate');
+    $routes->get('commands', 'App\Modules\Ops\Controllers\OpsController::commands');
 
-    $routes->post('Ops/public-pages/import', 'App\Modules\APIs\Controllers\OpsPublicPagesController::import');
-    $routes->post('Ops/public-pages/run', 'App\Modules\APIs\Controllers\OpsPublicPagesController::run');
-    $routes->get('Ops/public-pages/report', 'App\Modules\APIs\Controllers\OpsPublicPagesController::report');
+    $routes->post('public-pages/import', 'App\Modules\APIs\Controllers\OpsPublicPagesController::import');
+    $routes->post('public-pages/run', 'App\Modules\APIs\Controllers\OpsPublicPagesController::run');
+    $routes->get('public-pages/report', 'App\Modules\APIs\Controllers\OpsPublicPagesController::report');
+});
 
-    $routes->get('AIOps/snapshot', 'App\Modules\AIOps\Controllers\AIOpsController::snapshot');
-    $routes->get('AIOps/gaps/docs', 'App\Modules\AIOps\Controllers\AIOpsController::docsGaps');
-    $routes->post('AIOps/watch', 'App\Modules\AIOps\Controllers\AIOpsController::watch');
+$routes->group('API/AiOps', ['filter' => 'internalToken'], static function ($routes) {
+    $routes->get('snapshot', 'App\Modules\AIOps\Controllers\AIOpsController::snapshot');
+    $routes->get('gaps/docs', 'App\Modules\AIOps\Controllers\AIOpsController::docsGaps');
+    $routes->post('watch', 'App\Modules\AIOps\Controllers\AIOpsController::watch');
+});
 
+$routes->group('API', ['filter' => 'internalToken'], static function ($routes) {
     $routes->get('Logs/summary', 'App\Modules\Logs\Controllers\LogsController::summary');
-
     $routes->post('ContentEngine/run', 'App\Modules\ContentEngine\Controllers\ContentEngineController::run');
     $routes->get('ContentEngine/drafts/(:segment)', 'App\Modules\ContentEngine\Controllers\ContentEngineController::draft/$1');
-
     $routes->get('Chat/health', 'App\Modules\Chat\Controllers\ChatController::health');
     $routes->get('Chat/usage', 'App\Modules\Chat\Controllers\ChatController::usage');
 });
-
-?>
 
 $routes->get('Support', 'App\\Modules\\Support\\Controllers\\SupportTicketController::index');

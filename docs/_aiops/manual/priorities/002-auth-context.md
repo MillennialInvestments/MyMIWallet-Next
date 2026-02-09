@@ -20,3 +20,8 @@ Ensure auth/context helpers resolve consistently across modules and controllers.
 
 ## Notes (Human)
 This priority protects cross-module reliability for dashboard, alerts, and wallet features.
+
+
+## Small PRs
+- PR 1: Add guard checks where auth context can be null before downstream calls.
+- PR 2: Normalize shared helper usage across modules without changing auth provider behavior.

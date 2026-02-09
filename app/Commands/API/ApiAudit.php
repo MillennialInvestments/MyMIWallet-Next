@@ -350,14 +350,22 @@ class ApiAuditRequester
 
         $response = $client->request('GET', $requestUrl);
 
-        return new ApiAuditHttpResponse($response->getStatusCode(), (string) $response->getBody());
+        return ApiAuditHttpResponse::fromValues($response->getStatusCode(), (string) $response->getBody());
     }
 }
 
 class ApiAuditHttpResponse
 {
-    public function __construct(private readonly int $statusCode, private readonly string $body)
+    private int $statusCode = 0;
+    private string $body = '';
+
+    public static function fromValues(int $statusCode, string $body): self
     {
+        $instance = new self();
+        $instance->statusCode = $statusCode;
+        $instance->body = $body;
+
+        return $instance;
     }
 
     public function getStatusCode(): int

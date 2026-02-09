@@ -2,10 +2,10 @@
 
 namespace App\Commands\Security;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class GenerateKey extends BaseCommand
+class GenerateKey extends SafeBaseCommand
 {
     protected $group       = 'security';
     protected $name        = 'keys:generate';
