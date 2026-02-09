@@ -13,6 +13,13 @@
 
 					<?= view('App\Views\Auth\_message_block') ?>
 
+					<?php if (session()->getFlashdata('auth_ticket_id')): ?>
+						<div class="alert alert-warning" role="alert">
+							We hit a system error while signing you in. Ticket #<?= esc((string) session()->getFlashdata('auth_ticket_id')) ?> was created and support was notified.
+							If this keeps happening, contact support@mymiwallet.com.
+						</div>
+					<?php endif; ?>
+
 					 <form action="<?= site_url('login'); ?>" method="post">
 						<?= csrf_field() ?>
 						<input type="hidden" name="redirect_url" value="<?= session('redirect_url') ?>">

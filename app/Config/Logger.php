@@ -106,6 +106,21 @@ class Logger extends BaseConfig
      */
     protected function resolveThreshold(): array
     {
+        $numeric = env('logger.threshold');
+        if (is_numeric($numeric)) {
+            $map = [
+                1 => ['emergency'],
+                2 => ['emergency', 'alert', 'critical'],
+                3 => ['emergency', 'alert', 'critical', 'error'],
+                4 => ['emergency', 'alert', 'critical', 'error', 'warning'],
+                5 => ['emergency', 'alert', 'critical', 'error', 'warning', 'notice'],
+                6 => ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info'],
+                7 => ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug'],
+            ];
+
+            return $map[(int) $numeric] ?? $map[7];
+        }
+
         $configured = env('LOG_THRESHOLD');
 
         if (is_string($configured) && trim($configured) !== '') {

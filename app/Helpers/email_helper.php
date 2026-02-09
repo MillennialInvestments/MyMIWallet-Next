@@ -1,45 +1,12 @@
 <?php
-use CodeIgniter\Email\Email;
 
-if (!function_exists('sendITTReferralEmail')) {
-    function sendITTReferralEmail(array $data)
+if (! function_exists('render_email_view')) {
+    function render_email_view(?string $view, array $data = []): string
     {
-        $email = \Config\Services::email();
-        $email->setTo($data['to']);
-        $email->setSubject('🎟️ Your ITT Referral Code for Investor\'s Talk Access');
-    
-        $htmlMessage = "
-            <h2>You're In!</h2>
-            <p>Thank you for registering with <strong>MyMI Wallet</strong> to access the Investor's Talk community.</p>
-            <p><strong>Your Personal Referral Code:</strong><br><code>{$data['code']}</code></p>
-            <p>🔐 Use this code in the Facebook Group approval form when answering <strong>Question 3</strong>.</p>
-            <hr>
-            <p>This step ensures you're a real person and keeps our group spam-free.</p>
-            <p>If you need assistance, email <a href='mailto:support@mymiwallet.com'>support@mymiwallet.com</a>.</p>
-            <br>
-            <p>Thanks,<br><strong>MyMI Wallet Team</strong></p>
-        ";
-
-        $result = service('mailService')->send(
-            $data['to'],
-            '🎟️ Your ITT Referral Code for Investor\'s Talk Access',
-            $htmlMessage,
-            [
-                'module' => 'auth',
-                'queue'  => true,
-            ]
-        );
-
-        $success = $result['ok'] ?? false;
-
-        // 🧠 DETAILED LOGGING
-        log_message('info', '[ITT EMAIL ATTEMPT] to: ' . $data['to'] . ' | Referral Code: ' . $data['code']);
-    
-        if (!$success) {
-            log_message('error', '[ITT EMAIL ERROR] Failed to send email to ' . $data['to'] . ' | ' . ($result['error'] ?? 'unknown'));
-        } else {
-            log_message('info', '[ITT EMAIL SUCCESS] Sent to ' . $data['to']);
+        if (! is_string($view) || trim($view) === '') {
+            return '';
         }
+
+        return (string) view($view, $data);
     }
-    
 }
