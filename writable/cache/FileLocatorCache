@@ -259,6 +259,16 @@
         ),
       ),
     ),
+    'Config/Audits' => 
+    array (
+      'php' => 
+      array (
+        1 => 
+        array (
+          0 => '/home/mymiteam/mymiwallet/site/current/vendor/tatter/audits/src/Config/Audits.php',
+        ),
+      ),
+    ),
   ),
   'findQualifiedNameFromPath' => 
   array (
@@ -497,6 +507,7 @@
     '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Worker/WorkerInstall.php' => 'CodeIgniter\\Commands\\Worker\\WorkerInstall',
     '/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Commands/Worker/WorkerUninstall.php' => 'CodeIgniter\\Commands\\Worker\\WorkerUninstall',
     '/home/mymiteam/mymiwallet/site/current/vendor/tatter/alerts/src/Config/Alerts.php' => 'Tatter\\Alerts\\Config\\Alerts',
+    '/home/mymiteam/mymiwallet/site/current/vendor/tatter/audits/src/Config/Audits.php' => 'Tatter\\Audits\\Config\\Audits',
   ),
   'listFiles' => 
   array (

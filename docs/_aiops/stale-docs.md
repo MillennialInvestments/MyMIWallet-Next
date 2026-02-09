@@ -1,6 +1,6 @@
 # AI-Ops: Stale Docs
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-09T18:00:01Z
+> Run: 2026-02-09T20:00:02Z
 
 - docs/OVERVIEW.md
   - Doc last updated: 2025-11-08 (93 days ago)
@@ -143,7 +143,7 @@
 - docs/nginx/nginx.md
   - Doc last updated: 2025-11-08 (93 days ago)
 - docs/notes/2025-11-23-alerts-preview-lazy-refresh-and-advisor-errors.md
-  - Doc last updated: 2025-11-23 (77 days ago)
+  - Doc last updated: 2025-11-23 (78 days ago)
 - docs/notes/2025-12-01-feature-corrections.md
   - Doc last updated: 2025-12-01 (70 days ago)
 - docs/operations/01-foundation.md

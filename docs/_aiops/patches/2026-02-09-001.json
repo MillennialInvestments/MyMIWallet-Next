@@ -1,0 +1,13 @@
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-09T20:00:04+00:00"
+}
