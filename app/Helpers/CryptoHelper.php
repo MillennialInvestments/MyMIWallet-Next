@@ -23,6 +23,10 @@ if (! function_exists('crypto_constant_time_compare')) {
 }
 
 if (! function_exists('crypto_hash_password')) {
+    /**
+     * Non-auth hashing helper for ephemeral secrets (API keys, email verify tokens, backup codes).
+     * Never use this for users.password_hash; Myth/Auth user auth must use PASSWORD_DEFAULT via User entity mutator.
+     */
     function crypto_hash_password(string $password, array $options = []): string
     {
         $defaults = [

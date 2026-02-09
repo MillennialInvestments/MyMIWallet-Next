@@ -105,13 +105,16 @@ class Auth extends \Myth\Auth\Config\Auth
      *
      * @var array
      */
-    public $views = [
-        'login'           => 'App\Views\Auth\login',
-        'register'        => 'App\Views\Auth\register',
-        'forgot'          => 'App\Views\Auth\forgot',
-        'reset'           => 'App\Views\Auth\reset',
-        'emailForgot'     => 'App\Views\Auth\emails\forgot',
-        'emailActivation' => 'App\Views\Auth\emails\activation',
+    public array $views = [
+        'login'            => 'Auth/login',
+        'register'         => 'Auth/register',
+        'forgot'           => 'Auth/forgot',
+        'reset'            => 'Auth/reset',
+        'email_activation' => 'emails/auth/activation',
+        'email_reset'      => 'emails/auth/reset',
+        // Backwards-compatibility keys used by Myth/Auth internals/customizations.
+        'emailForgot'      => 'emails/auth/reset',
+        'emailActivation'  => 'emails/auth/activation',
     ];
 
     /**

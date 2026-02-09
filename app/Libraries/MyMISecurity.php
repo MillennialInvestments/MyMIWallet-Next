@@ -247,6 +247,10 @@ class MyMISecurity
         $this->response->setHeader('X-XSS-Protection', '1; mode=block');
     }
 
+    /**
+     * Non-auth secret hashing only (e.g. security question answers).
+     * Do not use for users.password_hash; user auth hashing is centralized in App\Entities\User::setPassword().
+     */
     public function hashPassword($password)
     {
         return crypto_hash_password($password);

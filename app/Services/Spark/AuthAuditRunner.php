@@ -102,6 +102,11 @@ class AuthAuditRunner
             }
 
             if (! password_verify($plaintext, $passwordHash)) {
+                log_message('error', '[AUTH AUDIT] Password verify failed', [
+                    'hash_prefix' => substr($passwordHash, 0, 4),
+                    'hash_length' => strlen($passwordHash),
+                ]);
+
                 return $this->resultFailure('Stored password hash does not verify.');
             }
 
@@ -939,12 +944,21 @@ class AuthAuditRunner
 
         try {
             $seeder = \Config\Database::seeder();
-            $seeder->call(\App\Database\Seeds\AuthAuditUserSeeder::class);
+            $seeder->call('UserSeeder');
         } catch (Throwable $e) {
-            $this->addResult('Audit: Seed user', 'warning', 'Seeder failed to run.', [
+            log_message('warning', '[AUTH AUDIT] UserSeeder failed; falling back to AuthAuditUserSeeder', [
                 'message' => $e->getMessage(),
             ]);
-            return null;
+
+            try {
+                $seeder = \Config\Database::seeder();
+                $seeder->call(\App\Database\Seeds\AuthAuditUserSeeder::class);
+            } catch (Throwable $inner) {
+                $this->addResult('Audit: Seed user', 'warning', 'Seeder failed to run.', [
+                    'message' => $inner->getMessage(),
+                ]);
+                return null;
+            }
         }
 
         $users = model(MythUserModel::class);
