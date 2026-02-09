@@ -14,7 +14,7 @@ class ChatUsageController extends UserController
 
     protected AiCostControls $costControls;
     protected array $data = [];
-    protected array $helpers = ['form', 'security', 'url'];
+    protected $helpers = ['form', 'security', 'url'];
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
