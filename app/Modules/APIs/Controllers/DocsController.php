@@ -5,6 +5,7 @@ namespace App\Modules\APIs\Controllers;
 use App\Controllers\BaseController;
 use App\Libraries\DocsIndex;
 use CodeIgniter\HTTP\ResponseInterface;
+use Throwable;
 
 class DocsController extends BaseController
 {
@@ -18,14 +19,25 @@ class DocsController extends BaseController
 
     public function index(): ResponseInterface
     {
-        $docs = $this->index->scan();
-        return $this->response->setJSON(['status' => 'success', 'data' => $docs]);
+        try {
+            $docs = $this->index->scan();
+            return $this->response->setJSON(['status' => 'success', 'data' => is_array($docs) ? $docs : []]);
+        } catch (Throwable $e) {
+            log_message('error', '[API] docs index failed: {message}', ['message' => $e->getMessage()]);
+            return $this->response->setJSON(['status' => 'success', 'data' => []]);
+        }
     }
 
     public function view(): ResponseInterface
     {
-        $path = $this->request->getGet('path');
-        $content = $path ? $this->index->getContents($path) : '';
-        return $this->response->setJSON(['status' => 'success', 'data' => ['path' => $path, 'content' => $content]]);
+        $path = (string) ($this->request->getGet('path') ?? '');
+
+        try {
+            $content = $path !== '' ? (string) $this->index->getContents($path) : '';
+            return $this->response->setJSON(['status' => 'success', 'data' => ['path' => $path, 'content' => $content]]);
+        } catch (Throwable $e) {
+            log_message('error', '[API] docs view failed: {message}', ['message' => $e->getMessage()]);
+            return $this->response->setJSON(['status' => 'success', 'data' => ['path' => $path, 'content' => '']]);
+        }
     }
 }

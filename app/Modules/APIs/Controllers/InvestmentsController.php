@@ -96,10 +96,26 @@ class InvestmentsController extends UserController
 
     public function index()
     {
-        // Override default data or add new data
-        $this->data['pageTitle'] = 'MyMI Wallet | The Future of Finance | Budgeting & Investments';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $this->renderTheme('themes/public/home', $this->data);
+        try {
+            $userId = $this->resolveCurrentUserId();
+            if (! $userId) {
+                return $this->failUnauthorized('User not authenticated.');
+            }
+
+            $portfolio = $this->MyMIInvestments ? $this->MyMIInvestments->getUserPortfolio($userId) : [];
+
+            return $this->respond([
+                'status' => 'success',
+                'data' => [
+                    'user_id' => $userId,
+                    'portfolio' => is_array($portfolio) ? $portfolio : [],
+                    'as_of' => date('c'),
+                ],
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'InvestmentsController::index failed: {msg}', ['msg' => $e->getMessage()]);
+            return $this->failServerError('Internal processing error');
+        }
     }
 
     public function getSymbolsByTradeType($tradeType)
@@ -136,7 +152,7 @@ class InvestmentsController extends UserController
     public function fetchActiveTrades()
     {
         try {
-            $cuID = $this->getCurrentUserId();
+            $cuID = $this->resolveCurrentUserId();
             if (!$cuID) {
                 return $this->failUnauthorized("User not authenticated.");
             }

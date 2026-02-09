@@ -7,6 +7,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use App\Models\UserModel;
+use Throwable;
 
 #[\AllowDynamicProperties]
 class UserController extends BaseController
@@ -26,9 +27,62 @@ class UserController extends BaseController
 
         // These assignments are SAFE because properties come from BaseLoader.
         // If BaseLoader already initializes them, these lines are harmless.
-        $this->MyMIExchange  = service('MyMIExchange');
-        $this->MyMIMarketing = service('MyMIMarketing');
-        $this->MyMIUser      = $this->getMyMIUser();
+        try {
+            $this->MyMIExchange  = service('MyMIExchange');
+        } catch (Throwable $e) {
+            log_message('error', '[API] MyMIExchange service unavailable: {message}', ['message' => $e->getMessage()]);
+            $this->MyMIExchange = null;
+        }
+
+        try {
+            $this->MyMIMarketing = service('MyMIMarketing');
+        } catch (Throwable $e) {
+            log_message('error', '[API] MyMIMarketing service unavailable: {message}', ['message' => $e->getMessage()]);
+            $this->MyMIMarketing = null;
+        }
+
+        try {
+            $this->MyMIUser = $this->getMyMIUser();
+        } catch (Throwable $e) {
+            log_message('error', '[API] MyMIUser dependency unavailable: {message}', ['message' => $e->getMessage()]);
+            $this->MyMIUser = null;
+        }
+    }
+
+    protected function requireAuthenticatedUser(): ?ResponseInterface
+    {
+        if ($this->getCuID()) {
+            return null;
+        }
+
+        log_message('warning', '[API] Unauthorized request blocked for route: {route}', ['route' => current_url()]);
+
+        return $this->failUnauthorized('Unauthorized');
+    }
+
+    protected function requireInternalAccess(): ?ResponseInterface
+    {
+        if (is_cli()) {
+            return null;
+        }
+
+        try {
+            $tokenService = service('internalToken');
+        } catch (Throwable $e) {
+            log_message('error', '[API] Internal token service unavailable for route {route}: {message}', [
+                'route'   => current_url(),
+                'message' => $e->getMessage(),
+            ]);
+
+            return $this->failServerError('Internal processing error');
+        }
+
+        if (! $tokenService || ! method_exists($tokenService, 'allowed') || ! $tokenService->allowed()) {
+            log_message('warning', '[API] Internal endpoint blocked: {route}', ['route' => current_url()]);
+            return $this->failForbidden('Internal endpoint');
+        }
+
+        return null;
     }
 
     public function health()
@@ -159,4 +213,3 @@ class UserController extends BaseController
         return $this->respond($data);
     }
 }
-

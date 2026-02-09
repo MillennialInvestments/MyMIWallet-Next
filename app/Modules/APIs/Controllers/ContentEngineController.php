@@ -95,22 +95,31 @@ class ContentEngineController extends BaseController
             return $guard;
         }
 
-        $ingestId = (int) $this->request->getGet('ingest_id');
-        $tier = $this->request->getGet('tier');
-        $limit = (int) ($this->request->getGet('limit') ?? 10);
+        try {
+            $ingestId = (int) $this->request->getGet('ingest_id');
+            if ($ingestId <= 0) {
+                return $this->respond([]);
+            }
 
-        $builder = $this->ideaModel->where('ingest_id', $ingestId)->orderBy('score_total', 'DESC');
-        if ($tier) {
-            $builder->where('tier', $tier);
+            $tier = $this->request->getGet('tier');
+            $limit = max(1, min(50, (int) ($this->request->getGet('limit') ?? 10)));
+
+            $builder = $this->ideaModel->where('ingest_id', $ingestId)->orderBy('score_total', 'DESC');
+            if ($tier) {
+                $builder->where('tier', $tier);
+            }
+
+            $ideas = $builder->findAll($limit);
+            foreach ($ideas as &$idea) {
+                $idea['reasons'] = json_decode($idea['reasons_json'] ?? '[]', true);
+                $idea['recommended_platforms'] = json_decode($idea['recommended_platforms_json'] ?? '[]', true);
+            }
+
+            return $this->respond($ideas);
+        } catch (\Throwable $e) {
+            log_message('error', 'ContentEngine topIdeas failed: {msg}', ['msg' => $e->getMessage()]);
+            return $this->failServerError('Internal processing error');
         }
-
-        $ideas = $builder->findAll($limit);
-        foreach ($ideas as &$idea) {
-            $idea['reasons'] = json_decode($idea['reasons_json'] ?? '[]', true);
-            $idea['recommended_platforms'] = json_decode($idea['recommended_platforms_json'] ?? '[]', true);
-        }
-
-        return $this->respond($ideas);
     }
 
     public function posts(?int $ideaId = null)
@@ -119,14 +128,22 @@ class ContentEngineController extends BaseController
             return $guard;
         }
 
-        $ideaId = $ideaId ?? (int) $this->request->getGet('idea_id');
+        try {
+            $ideaId = $ideaId ?? (int) $this->request->getGet('idea_id');
+            if ($ideaId <= 0) {
+                return $this->respond([]);
+            }
 
-        $posts = $this->postModel->where('idea_id', $ideaId)->findAll();
-        foreach ($posts as &$post) {
-            $post['payload'] = json_decode($post['payload_json'] ?? '{}', true);
+            $posts = $this->postModel->where('idea_id', $ideaId)->findAll();
+            foreach ($posts as &$post) {
+                $post['payload'] = json_decode($post['payload_json'] ?? '{}', true);
+            }
+
+            return $this->respond($posts);
+        } catch (\Throwable $e) {
+            log_message('error', 'ContentEngine posts failed: {msg}', ['msg' => $e->getMessage()]);
+            return $this->failServerError('Internal processing error');
         }
-
-        return $this->respond($posts);
     }
 
     public function approvePost(int $postId)

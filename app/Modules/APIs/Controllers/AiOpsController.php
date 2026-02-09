@@ -5,6 +5,7 @@ use App\Libraries\AiOps\AiOpsManager;
 use App\Libraries\SiteSettingsOverride;
 use CodeIgniter\API\ResponseTrait;
 use Config\Services;
+use Throwable;
 
 class AiOpsController extends BaseController
 {
@@ -18,39 +19,83 @@ class AiOpsController extends BaseController
         $this->manager = new AiOpsManager();
     }
 
+    protected function guardInternalOrAuthorized(): ?\CodeIgniter\HTTP\ResponseInterface
+    {
+        if (is_cli()) {
+            return null;
+        }
+
+        $userId = function_exists('auth') ? auth()->id() : null;
+        if ($userId !== null) {
+            return null;
+        }
+
+        try {
+            $tokenService = service('internalToken');
+        } catch (Throwable $e) {
+            log_message('error', '[API] internalToken service unavailable for {route}: {message}', [
+                'route' => current_url(),
+                'message' => $e->getMessage(),
+            ]);
+
+            return $this->failServerError('Internal processing error');
+        }
+
+        if ($tokenService && method_exists($tokenService, 'allowed') && $tokenService->allowed()) {
+            return null;
+        }
+
+        log_message('warning', '[API] Internal endpoint blocked: {route}', ['route' => current_url()]);
+
+        return $this->failForbidden('Internal endpoint');
+    }
+
     public function status()
     {
-        $monthKey  = $this->request->getGet('month') ?? $this->manager->getMonthKey();
-        $summary   = $this->manager->getUsageSummary($monthKey);
-        $settings  = (new SiteSettingsOverride())->apply(config('SiteSettings'));
-        $db        = db_connect();
-        $caps      = $db->tableExists('bf_ai_ops_caps') ? $db->table('bf_ai_ops_caps')->get()->getResultArray() : [];
-        $runs      = $this->manager->getRecentRuns(20);
-        $events    = $this->manager->getRecentEvents(50);
+        if ($guard = $this->guardInternalOrAuthorized()) {
+            return $guard;
+        }
 
-        return $this->respond([
-            'month'    => $monthKey,
-            'settings' => [
-                'aiOpsEnabled'             => $settings->aiOpsEnabled,
-                'aiOpsAllowOverride'       => $settings->aiOpsAllowOverride,
-                'aiSelfHostedEnabled'      => $settings->aiSelfHostedEnabled,
-                'aiChatgptPlusEnabled'     => $settings->aiChatgptPlusEnabled,
-                'aiCodexEnabled'           => $settings->aiCodexEnabled,
-                'aiGithubReviewEnabled'    => $settings->aiGithubReviewEnabled,
-                'aiGapTrackerSyncEnabled'  => $settings->aiGapTrackerSyncEnabled,
-                'aiAutoMarketingDraftsEnabled' => $settings->aiAutoMarketingDraftsEnabled,
-                'aiAutoAlertsDigestEnabled'=> $settings->aiAutoAlertsDigestEnabled,
-                'aiDocsAlignmentEnabled'   => $settings->aiDocsAlignmentEnabled,
-                'aiOpsAlertThresholdPct'   => $settings->aiOpsAlertThresholdPct,
-                'aiOpsAlertEmail'          => $settings->aiOpsAlertEmail,
-                'aiOpsMaxRunsPerHour'      => $settings->aiOpsMaxRunsPerHour,
-                'aiOpsMaxRuntimeSeconds'   => $settings->aiOpsMaxRuntimeSeconds,
-            ],
-            'caps'     => $caps,
-            'usage'    => $summary,
-            'runs'     => $runs,
-            'events'   => $events,
-        ]);
+        try {
+            $monthKey  = $this->request->getGet('month') ?? $this->manager->getMonthKey();
+            $summary   = $this->manager->getUsageSummary($monthKey);
+            $settings  = (new SiteSettingsOverride())->apply(config('SiteSettings'));
+            $db        = db_connect();
+            $caps      = $db->tableExists('bf_ai_ops_caps') ? $db->table('bf_ai_ops_caps')->get()->getResultArray() : [];
+            $runs      = $this->manager->getRecentRuns(20);
+            $events    = $this->manager->getRecentEvents(50);
+
+            return $this->respond([
+                'month'    => $monthKey,
+                'settings' => [
+                    'aiOpsEnabled'             => $settings->aiOpsEnabled,
+                    'aiOpsAllowOverride'       => $settings->aiOpsAllowOverride,
+                    'aiSelfHostedEnabled'      => $settings->aiSelfHostedEnabled,
+                    'aiChatgptPlusEnabled'     => $settings->aiChatgptPlusEnabled,
+                    'aiCodexEnabled'           => $settings->aiCodexEnabled,
+                    'aiGithubReviewEnabled'    => $settings->aiGithubReviewEnabled,
+                    'aiGapTrackerSyncEnabled'  => $settings->aiGapTrackerSyncEnabled,
+                    'aiAutoMarketingDraftsEnabled' => $settings->aiAutoMarketingDraftsEnabled,
+                    'aiAutoAlertsDigestEnabled'=> $settings->aiAutoAlertsDigestEnabled,
+                    'aiDocsAlignmentEnabled'   => $settings->aiDocsAlignmentEnabled,
+                    'aiOpsAlertThresholdPct'   => $settings->aiOpsAlertThresholdPct,
+                    'aiOpsAlertEmail'          => $settings->aiOpsAlertEmail,
+                    'aiOpsMaxRunsPerHour'      => $settings->aiOpsMaxRunsPerHour,
+                    'aiOpsMaxRuntimeSeconds'   => $settings->aiOpsMaxRuntimeSeconds,
+                ],
+                'caps'     => $caps,
+                'usage'    => $summary,
+                'runs'     => $runs,
+                'events'   => $events,
+            ]);
+        } catch (Throwable $e) {
+            log_message('error', '[API] {route} failed: {message}', [
+                'route'   => current_url(),
+                'message' => $e->getMessage(),
+            ]);
+
+            return $this->failServerError('Internal processing error');
+        }
     }
 
     public function toggle()
