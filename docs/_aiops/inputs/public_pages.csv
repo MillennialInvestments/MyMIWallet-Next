@@ -1,0 +1,4 @@
+page_id,slug,title,module,type,topic_keywords,source_mode,db_query_key,google_query,refresh_days,status,notes
+learn_budgeting_101,budgeting-101,Budgeting 101,Public,howto,budget|income|forecast,both,pp_budgeting_101,"budgeting 101 how to start finance",14,active,Core pillar
+glossary_arima,arima,ARIMA (Glossary),Public,glossary,arima|forecasting|time series,google,,"ARIMA definition finance",60,active,Short glossary
+review_moomoo,moomoo-review,Moomoo Review,Public,review,broker review|fees|platform,google,,"moomoo review pros cons",30,active,Include disclaimers

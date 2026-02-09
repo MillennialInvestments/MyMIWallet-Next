@@ -76,6 +76,8 @@ $routes->get('/Getting-Started/(:segment)', 'Home::gettingStarted');
 $routes->get('/Getting-Started', 'Home::gettingStarted');
 $routes->get('/Memberships', 'Home::memberships');
 $routes->get('/Memberships/(:segment)', 'Home::memberships');
+
+$routes->get('Learn/(:segment)', 'App\Modules\Public\Controllers\PublicPagesController::show/$1');
 // Public preview routes
 $routes->group('', ['namespace' => 'App\Modules\User\Controllers'], static function ($routes) {
     // Symbol preview (canonical)
@@ -2130,6 +2132,10 @@ $routes->group('API', ['filter' => 'internalToken'], static function($routes) {
     $routes->get('Ops/healthcheck', 'App\Modules\Ops\Controllers\OpsController::healthcheck');
     $routes->post('Ops/app/update', 'App\Modules\Ops\Controllers\OpsController::appUpdate');
     $routes->get('Ops/commands', 'App\Modules\Ops\Controllers\OpsController::commands');
+
+    $routes->post('Ops/public-pages/import', 'App\Modules\APIs\Controllers\OpsPublicPagesController::import');
+    $routes->post('Ops/public-pages/run', 'App\Modules\APIs\Controllers\OpsPublicPagesController::run');
+    $routes->get('Ops/public-pages/report', 'App\Modules\APIs\Controllers\OpsPublicPagesController::report');
 
     $routes->get('AIOps/snapshot', 'App\Modules\AIOps\Controllers\AIOpsController::snapshot');
     $routes->get('AIOps/gaps/docs', 'App\Modules\AIOps\Controllers\AIOpsController::docsGaps');

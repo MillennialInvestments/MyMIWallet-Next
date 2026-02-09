@@ -45,4 +45,11 @@ $routes->group('Management/EmailOutbox', ['namespace' => 'App\\Modules\\Manageme
 $routes->group('Management', ['namespace' => 'App\\Modules\\Management\\Controllers', 'filter' => 'permission:admin.access'], static function($routes) {
     $routes->get('AuthFunnel', 'AuthFunnelController::authFunnel');
     $routes->get('Referrals', 'AuthFunnelController::referrals');
+
+    $routes->get('PublicPages', 'PublicPagesController::index');
+    $routes->post('PublicPages/ajaxGenerateNow/(:segment)', 'PublicPagesController::ajaxGenerateNow/$1');
+    $routes->get('PublicPages/ajaxLoadDraft/(:num)', 'PublicPagesController::ajaxLoadDraft/$1');
+    $routes->post('PublicPages/ajaxSaveDraft/(:num)', 'PublicPagesController::ajaxSaveDraft/$1');
+    $routes->post('PublicPages/ajaxApproveDraft/(:num)', 'PublicPagesController::ajaxApproveDraft/$1');
+    $routes->post('PublicPages/ajaxRejectDraft/(:num)', 'PublicPagesController::ajaxRejectDraft/$1');
 });
