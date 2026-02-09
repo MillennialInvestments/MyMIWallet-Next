@@ -14,7 +14,7 @@ class Logger extends BaseConfig
      *
      * @var list<string>
      */
-    public $threshold = [];
+    public int|string|array $threshold = [4];
 
     /**
      * Date Format for Logs

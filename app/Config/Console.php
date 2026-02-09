@@ -77,6 +77,7 @@ class Console extends BaseConfig
         | Ops
         |----------------------------------------------------------------------
         */
+        \App\Commands\LogsTest::class,
         \App\Commands\Ops\AiopsInit::class,
         \App\Commands\Ops\AppUpdate::class,
         \App\Commands\Ops\ConfigLint::class,
