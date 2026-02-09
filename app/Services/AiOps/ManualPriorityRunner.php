@@ -385,6 +385,7 @@ class ManualPriorityRunner
         foreach ($signatures as $sig) {
             $body .= "  - `{$sig}`\n";
         }
+        $body .= "\n## Governance\n- Checklist: `docs/_aiops/pr-checklist.md`\n";
         $body .= "\n## Verification\n- php spark aiops:manual-run --dry-run=1 --create-pr=0 --notify=0\n";
         file_put_contents($draftPath, $body);
 
@@ -411,7 +412,7 @@ class ManualPriorityRunner
                 'title' => $title,
                 'head' => $branch,
                 'base' => $base,
-                'body' => "Linked manual task: `{$task['file_rel']}`\n\nSignatures:\n- " . implode("\n- ", $signatures) . "\n\nVerification:\n- php spark aiops:manual-run --dry-run=1 --create-pr=0 --notify=0",
+                'body' => "Linked manual task: `{$task['file_rel']}`\n\nSignatures:\n- " . implode("\n- ", $signatures) . "\n\nChecklist: docs/_aiops/pr-checklist.md\n\nVerification:\n- php spark aiops:manual-run --dry-run=1 --create-pr=0 --notify=0",
             ], JSON_UNESCAPED_SLASHES);
 
             $resp = $this->curlJson("https://api.github.com/repos/{$repo}/pulls", $token, (string) $payload);

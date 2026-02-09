@@ -1,0 +1,36 @@
+name: AIOPS PR Governance Gate
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  aiops-governance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enforce AIOPS-only PR rules
+        env:
+          BRANCH: ${{ github.head_ref }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          set -euo pipefail
+
+          if [[ ! "$BRANCH" =~ ^aiops/patch/ ]]; then
+            echo "Branch must match aiops/patch/*"
+            exit 1
+          fi
+
+          if [[ "$PR_BODY" != *"Patch job"* ]]; then
+            echo "PR body must reference Patch job ID"
+            exit 1
+          fi
+
+          if [[ "$PR_BODY" != *"docs/_aiops/patches/"*".diff"* ]]; then
+            echo "PR body must reference docs/_aiops/patches/*.diff"
+            exit 1
+          fi
+
+          if [[ "$PR_BODY" != *"docs/_aiops/pr-checklist.md"* ]]; then
+            echo "PR body must include PR checklist reference"
+            exit 1
+          fi
