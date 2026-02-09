@@ -73,6 +73,11 @@ class PublicPagesPipelineService
 
     public function buildDraft(array $page, array $sources): array
     {
+        $isHybrid = strtolower((string) ($page['type'] ?? '')) === 'hybrid';
+        if ($isHybrid) {
+            return $this->buildHybridDraft($page, $sources);
+        }
+
         $usable = array_values(array_filter($sources, static function (array $source): bool {
             return str_word_count((string) ($source['content_clean'] ?? '')) >= 300;
         }));
@@ -97,6 +102,74 @@ class PublicPagesPipelineService
             'draft_keywords' => implode(', ', array_slice($keywords, 0, 12)),
             'word_count' => $combinedWords,
             'usable_sources' => count($usable),
+            'news_items' => [],
+        ];
+    }
+
+    private function buildHybridDraft(array $page, array $sources): array
+    {
+        $evergreen = [];
+        $newsItems = [];
+
+        foreach ($sources as $source) {
+            $clean = trim((string) ($source['content_clean'] ?? ''));
+            if ($clean === '') {
+                continue;
+            }
+
+            if (str_word_count($clean) < 100) {
+                continue;
+            }
+
+            if ((string) ($source['source_type'] ?? '') === 'db') {
+                $evergreen[] = $clean;
+                continue;
+            }
+
+            $newsItems[] = [
+                'title' => (string) ($source['title'] ?? 'Update'),
+                'content' => $clean,
+                'source_ref' => (string) ($source['source_ref'] ?? ''),
+                'created_at' => (string) ($source['created_at'] ?? date('Y-m-d H:i:s')),
+            ];
+        }
+
+        $newsItems = array_slice($newsItems, 0, 5);
+        $evergreenText = trim(implode("\n\n", $evergreen));
+        $newsText = trim(implode("\n\n", array_map(static fn(array $item): string => $item['title'] . "\n" . $item['content'], $newsItems)));
+        $fullText = trim($evergreenText . "\n\n" . $newsText);
+
+        $summaryData = $this->marketing->summarizeContent($fullText);
+        $summaryText = is_array($summaryData) ? (string) ($summaryData['summary'] ?? '') : (string) $summaryData;
+        $keywords = $this->marketingModel->extractKeywords($fullText);
+
+        $html = '<article class="public-page hybrid-page">'
+            . '<h1>' . esc($page['title']) . '</h1>'
+            . '<section><h1>Evergreen Core Content</h1><p>' . nl2br(esc($evergreenText !== '' ? $evergreenText : $summaryText)) . '</p></section>'
+            . '<hr>'
+            . '<section><h2>Latest News &amp; Updates</h2>';
+
+        foreach ($newsItems as $item) {
+            $html .= '<article class="hybrid-news-item">'
+                . '<h3>' . esc($item['title']) . '</h3>'
+                . '<p>' . nl2br(esc($item['content'])) . '</p>'
+                . '</article>';
+        }
+
+        if ($newsItems === []) {
+            $html .= '<p>No current updates available.</p>';
+        }
+
+        $html .= '</section></article>';
+
+        return [
+            'draft_title' => $page['title'],
+            'draft_html' => $html,
+            'draft_summary' => $summaryText,
+            'draft_keywords' => implode(', ', array_slice($keywords, 0, 12)),
+            'word_count' => str_word_count($fullText),
+            'usable_sources' => count($evergreen) + count($newsItems),
+            'news_items' => $newsItems,
         ];
     }
 }
