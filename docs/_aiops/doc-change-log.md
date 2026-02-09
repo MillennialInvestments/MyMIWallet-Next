@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-09T10:00:01Z
+> Run: 2026-02-09T12:00:02Z
 
 - docs/CRON.md
   - Last updated: 2026-01-30
@@ -65,6 +65,9 @@
 - docs/aiops/api-audit.md
   - Last updated: 2026-02-01
   - Change type: unchanged
+- docs/aiops/artifacts/api-audit/20260209-112136/summary.md
+  - Last updated: 2026-02-09
+  - Change type: new
 - docs/aiops/artifacts/config-drift/20260201-180724/summary.md
   - Last updated: 2026-02-01
   - Change type: unchanged
@@ -84,7 +87,7 @@
   - Last updated: 2026-02-06
   - Change type: unchanged
 - docs/aiops/artifacts/fix-503/20260208-195751/summary.md
-  - Last updated: 2026-02-08
+  - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/aiops/artifacts/growth-retention-watch/20260201-180732/summary.md
   - Last updated: 2026-02-01
@@ -192,9 +195,12 @@
   - Last updated: 2026-02-08
   - Change type: unchanged
 - docs/aiops/artifacts/ops-spark-reset/20260208-201007/summary.md
-  - Last updated: 2026-02-08
+  - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/aiops/artifacts/ops-spark-reset/20260209-005441/summary.md
+  - Last updated: 2026-02-09
+  - Change type: unchanged
+- docs/aiops/artifacts/ops-spark-reset/20260209-110400/summary.md
   - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/aiops/artifacts/revenue-cost-forecast/20260201-180746/summary.md
@@ -231,13 +237,13 @@
   - Last updated: 2026-02-01
   - Change type: unchanged
 - docs/aiops/artifacts/runtime-cache-boot/20260208-195646/summary.md
-  - Last updated: 2026-02-08
+  - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/aiops/artifacts/runtime-triage/20260201-185742/summary.md
   - Last updated: 2026-02-01
   - Change type: unchanged
 - docs/aiops/artifacts/runtime-triage/20260208-195714/summary.md
-  - Last updated: 2026-02-08
+  - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/aiops/artifacts/scraper-audit-emails/20260205-024438/summary.md
   - Last updated: 2026-02-06
@@ -246,7 +252,7 @@
   - Last updated: 2026-02-01
   - Change type: unchanged
 - docs/aiops/artifacts/security-secrets-audit/20260208-195737/summary.md
-  - Last updated: 2026-02-08
+  - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/aiops/artifacts/ux-journey-audit/20260201-180810/summary.md
   - Last updated: 2026-02-01
@@ -330,7 +336,7 @@
   - Last updated: 2026-01-31
   - Change type: unchanged
 - docs/aiops/triage/spark-command-audit.md
-  - Last updated: 2026-02-08
+  - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/aiops/workflows/n8n-workflows.md
   - Last updated: 2026-01-01
@@ -341,6 +347,9 @@
 - docs/alerts/thinkorswim_broker_ingestion.md
   - Last updated: 2026-01-17
   - Change type: unchanged
+- docs/api/internal-orchestration.md
+  - Last updated: 2026-02-09
+  - Change type: modified
 - docs/architecture/marketing_module_lifecycle.md
   - Last updated: 2026-01-21
   - Change type: unchanged
@@ -357,7 +366,7 @@
   - Last updated: 2026-02-06
   - Change type: unchanged
 - docs/audit/auth_audit_last_run.md
-  - Last updated: 2026-02-01
+  - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/audit/news_audit_last_run.md
   - Last updated: 2026-02-06
@@ -564,7 +573,7 @@
   - Last updated: 2026-02-06
   - Change type: unchanged
 - docs/codex/reviews/review-2026-02-08.md
-  - Last updated: 2026-02-08
+  - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/codex/reviews/review-prompt-2026-01-31.md
   - Last updated: 2026-01-31
@@ -576,7 +585,7 @@
   - Last updated: 2026-02-06
   - Change type: unchanged
 - docs/codex/reviews/review-prompt-2026-02-08.md
-  - Last updated: 2026-02-08
+  - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/communities/discord.md
   - Last updated: 2025-12-27
@@ -637,6 +646,18 @@
   - Change type: unchanged
 - docs/content_hub_inventory/content_hub_inventory.md
   - Last updated: 2025-11-17
+  - Change type: unchanged
+- docs/controllers/APIs/HealthController.md
+  - Last updated: 2026-02-09
+  - Change type: unchanged
+- docs/controllers/APIs/OpsController.md
+  - Last updated: 2026-02-09
+  - Change type: unchanged
+- docs/controllers/APIs/TradingViewController.md
+  - Last updated: 2026-02-09
+  - Change type: unchanged
+- docs/controllers/Predictions/PredictionsApiController.md
+  - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/cron/README.md
   - Last updated: 2025-12-21
@@ -1050,7 +1071,7 @@
   - Last updated: 2026-01-29
   - Change type: unchanged
 - docs/management/Command_Runtime_Audit.md
-  - Last updated: 2026-02-01
+  - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/management/Management_Command_Map.md
   - Last updated: 2026-02-01
@@ -1168,6 +1189,24 @@
   - Change type: unchanged
 - docs/mobile/replit/patches/mobile_endpoints.php.md
   - Last updated: 2026-01-04
+  - Change type: unchanged
+- docs/models/AIOps/AIOpsDedupeModel.md
+  - Last updated: 2026-02-09
+  - Change type: unchanged
+- docs/models/AIOps/AIOpsUsageModel.md
+  - Last updated: 2026-02-09
+  - Change type: unchanged
+- docs/modules/AIOps/README.md
+  - Last updated: 2026-02-09
+  - Change type: unchanged
+- docs/modules/APIs/README.md
+  - Last updated: 2026-02-09
+  - Change type: unchanged
+- docs/modules/Notifications/README.md
+  - Last updated: 2026-02-09
+  - Change type: unchanged
+- docs/modules/Predictions/README.md
+  - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/mysql/README.md
   - Last updated: 2026-02-05
@@ -2475,7 +2514,7 @@
   - Last updated: 2026-02-06
   - Change type: unchanged
 - docs/n8n/README.md
-  - Last updated: 2026-01-04
+  - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/next/Next-Steps.md
   - Last updated: 2026-01-29
@@ -2671,6 +2710,9 @@
   - Change type: unchanged
 - docs/ops/docs_index.md
   - Last updated: 2025-12-10
+  - Change type: unchanged
+- docs/ops/env-vars.md
+  - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/ops/envdoctor.md
   - Last updated: 2026-01-25
@@ -2917,6 +2959,9 @@
   - Change type: unchanged
 - docs/server/migration-playbook.md
   - Last updated: 2026-01-25
+  - Change type: unchanged
+- docs/services/AIOpsGuardrailService.md
+  - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/spark/COMMAND_AUDIT.md
   - Last updated: 2026-01-26

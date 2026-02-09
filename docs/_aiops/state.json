@@ -173,8 +173,8 @@
             "mtime": "2026-02-06"
         },
         "docs/audit/auth_audit_last_run.md": {
-            "hash": "65d17df1b64bb03bb5c84b92b525ce1ec9b083d42e3bc99857c557bb1369648e",
-            "mtime": "2026-02-01"
+            "hash": "37f5f86335d3480975d284a7accc6d5ea40bcea142684b0de13a79085287e42f",
+            "mtime": "2026-02-09"
         },
         "docs/auth/auth_smoke.md": {
             "hash": "68cd0c5cf04a0a12b7b9baaedbf4ec15652ccac8c04ce084d2b5e699831aaa29",
@@ -1053,8 +1053,8 @@
             "mtime": "2026-01-29"
         },
         "docs/management/Command_Runtime_Audit.md": {
-            "hash": "569fc52e8ca914c49749b9b970a7baaab261cdcb3eb699bada3af1ecba3eea52",
-            "mtime": "2026-02-01"
+            "hash": "6c801ea126637e38988a47705eb325de958dd61bb9d48f040bedaddf4500445f",
+            "mtime": "2026-02-09"
         },
         "docs/management/Management_Command_Map.md": {
             "hash": "ca3cb1c1ffa1e86b2720d21b0bab16ed99ed0038e663131fbf74353ae8b376f1",
@@ -2649,8 +2649,8 @@
             "mtime": "2026-02-06"
         },
         "docs/n8n/README.md": {
-            "hash": "d2f27ac8169b57874163fe488667ee8faa1a9945d6a4823394eba9260026e35f",
-            "mtime": "2026-01-04"
+            "hash": "c92a16b22cfd4ebe5d97d31f71449a8240e12a9f7a48559286caf88f6f3b8059",
+            "mtime": "2026-02-09"
         },
         "docs/next/Next-Steps.md": {
             "hash": "d584ada0c892aa9fb6c3ffb74067bc3be948769e363d0ab204f040c8afd12dc8",
@@ -4238,31 +4238,31 @@
         },
         "docs/aiops/artifacts/fix-503/20260208-195751/summary.md": {
             "hash": "3e77749ebf6cc25942a254f12c47cf376ecbefd415cbffdd907553b0705ea534",
-            "mtime": "2026-02-08"
+            "mtime": "2026-02-09"
         },
         "docs/aiops/artifacts/runtime-cache-boot/20260208-195646/summary.md": {
             "hash": "1c469fc7c7feaddb169dea98d63f4625fe515f859ba2a79474d3bb10d9da29c6",
-            "mtime": "2026-02-08"
+            "mtime": "2026-02-09"
         },
         "docs/aiops/artifacts/runtime-triage/20260208-195714/summary.md": {
             "hash": "4d9d48780f24d6cba91a14f7422486ade7b7b2883471219fcf42068edd0f20ac",
-            "mtime": "2026-02-08"
+            "mtime": "2026-02-09"
         },
         "docs/aiops/artifacts/security-secrets-audit/20260208-195737/summary.md": {
             "hash": "8d99fa9737925b72780f71aeb8751fb9a0061d5c7c11a008897c56cf1b46233d",
-            "mtime": "2026-02-08"
+            "mtime": "2026-02-09"
         },
         "docs/aiops/triage/spark-command-audit.md": {
             "hash": "b83d9cbc9332c8b2166b1069d74e99193c21bfc598e7b557b0448f3bbd626f3f",
-            "mtime": "2026-02-08"
+            "mtime": "2026-02-09"
         },
         "docs/codex/reviews/review-2026-02-08.md": {
             "hash": "0567d7f770df5ea0d095f7b265d5ba58928a76a6fb119ea5b0c9c047aa7df5ea",
-            "mtime": "2026-02-08"
+            "mtime": "2026-02-09"
         },
         "docs/codex/reviews/review-prompt-2026-02-08.md": {
             "hash": "df7f524992492b317991041084a885447cb2d8b9856ba8d7f652229852b17009",
-            "mtime": "2026-02-08"
+            "mtime": "2026-02-09"
         },
         "docs/standards/doc-coverage.md": {
             "hash": "16ba88bbf22646711fb27bc271e31a461e6b9251a04b50d6a4c11ef9b804a990",
@@ -4270,12 +4270,72 @@
         },
         "docs/aiops/artifacts/ops-spark-reset/20260208-201007/summary.md": {
             "hash": "242848d347d2fd18e7c581a93ee4baff8797090ba50d6ac7e5cba4c0e7ddbe18",
-            "mtime": "2026-02-08"
+            "mtime": "2026-02-09"
         },
         "docs/aiops/artifacts/ops-spark-reset/20260209-005441/summary.md": {
             "hash": "92022637bd66628820b23791d5dd113c2246721c6874df6b7054dc5179216bd9",
             "mtime": "2026-02-09"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260209-110400/summary.md": {
+            "hash": "0dfe32976456ebcc043d1491f58fba6345e4af8187991256577f101844102e7e",
+            "mtime": "2026-02-09"
+        },
+        "docs/api/internal-orchestration.md": {
+            "hash": "0840947e0d1f2e6afec77e2aaaf576c31cbd67a2c54f5fddd5022273bc4933df",
+            "mtime": "2026-02-09"
+        },
+        "docs/controllers/APIs/HealthController.md": {
+            "hash": "15a50ff7cd9d2e8da38bd9b7969bb6aa3e718676880d1b44741fbc830bbf397f",
+            "mtime": "2026-02-09"
+        },
+        "docs/controllers/APIs/OpsController.md": {
+            "hash": "3b3849f2a151c29de35a518c7e99cf9260e563620dda9fde8f259c968c96233c",
+            "mtime": "2026-02-09"
+        },
+        "docs/controllers/APIs/TradingViewController.md": {
+            "hash": "683d6de5a8b52372e8fe427adaededdf3d650f6b5b121a66b76631283048323b",
+            "mtime": "2026-02-09"
+        },
+        "docs/controllers/Predictions/PredictionsApiController.md": {
+            "hash": "645fa07517b40d9959dade73386f08739e37f7ede815d6a31dc4c72f906d0fd4",
+            "mtime": "2026-02-09"
+        },
+        "docs/models/AIOps/AIOpsDedupeModel.md": {
+            "hash": "2779fee1d6139ddc8fbe8eb15e56d4c5fb2d531a67084db88d0f2efc7e0eb0ca",
+            "mtime": "2026-02-09"
+        },
+        "docs/models/AIOps/AIOpsUsageModel.md": {
+            "hash": "85f434ccd88159da0c574e3ee193b75718ba072c154732087252d87b1ca7d99a",
+            "mtime": "2026-02-09"
+        },
+        "docs/modules/AIOps/README.md": {
+            "hash": "aabf398092c8b7d3617b32f0fe240955ef92d4cfb12cde3c658fdefb9275d370",
+            "mtime": "2026-02-09"
+        },
+        "docs/modules/APIs/README.md": {
+            "hash": "1c96cf98eeab213a1a4f75f5900d8379909930b67020466d6a697628a12ec3b1",
+            "mtime": "2026-02-09"
+        },
+        "docs/modules/Notifications/README.md": {
+            "hash": "6cea9deedb9cf869f9418ebd8eeec170d290af5c3ef5a5d2997cea577fd74287",
+            "mtime": "2026-02-09"
+        },
+        "docs/modules/Predictions/README.md": {
+            "hash": "deccdb3c556a3065a1ed4f27b28123eaaf1326e3d7f33790eef4746ad733347f",
+            "mtime": "2026-02-09"
+        },
+        "docs/ops/env-vars.md": {
+            "hash": "99263eda521c6e9468daaa177fa2decf8291d04f3777f3711ac72988f1f93b56",
+            "mtime": "2026-02-09"
+        },
+        "docs/services/AIOpsGuardrailService.md": {
+            "hash": "8c185a9da860f58cce2d05711f4eb45fb762107619479b7ec252db6a5d5f896c",
+            "mtime": "2026-02-09"
+        },
+        "docs/aiops/artifacts/api-audit/20260209-112136/summary.md": {
+            "hash": "166085e81cea98aeba42a8173333618d8a170a0aed50998388288de28512539d",
+            "mtime": "2026-02-09"
         }
     },
-    "last_run": "2026-02-09T10:00:01Z"
+    "last_run": "2026-02-09T12:00:02Z"
 }

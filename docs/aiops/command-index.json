@@ -1,30 +1,52 @@
 {
-    "generated_at": "2026-02-05T02:40:12+00:00",
+    "generated_at": "2026-02-09T11:15:03+00:00",
     "summary": {
-        "total": 92,
-        "issues": 1,
+        "total": 130,
+        "issues": 6,
         "classifications": {
-            "safe": 50,
-            "read-only": 28,
+            "safe": 62,
+            "read-only": 52,
             "requires-approval": 14,
-            "destructive": 0
+            "destructive": 2
         }
     },
     "commands": [
         {
             "command": "api:audit",
             "class": "App\\Commands\\API\\ApiAudit",
-            "group": "aiops",
+            "group": "AI-Ops",
             "description": "Audit API endpoints defined in docs/api/schematic.yaml and capture runtime health.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": [
+                "Constructor detected"
+            ]
+        },
+        {
+            "command": "aiops:audit",
+            "class": "App\\Commands\\AiOps\\Audit",
+            "group": "AI-Ops",
+            "description": "Audit aiops runtime, orchestration routes, and n8n/docs readiness",
             "classification": "read-only",
             "requires_approval": false,
             "supports_dry_run": false,
             "issues": []
         },
         {
-            "command": "aiops:chat-governance-index",
+            "command": "aiops:auto-run",
+            "class": "App\\Commands\\AiOps\\AutoRun",
+            "group": "AI-Ops",
+            "description": "Run AIOPS using manual priorities first, falling back to log-driven auto priorities.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "aiops:chat-gov-index",
             "class": "App\\Commands\\AiOps\\ChatGovernanceIndex",
-            "group": "aiops",
+            "group": "AI-Ops",
             "description": "Index ChatGPT governance steps from archived chats and sync CSV/DB outputs.",
             "classification": "read-only",
             "requires_approval": false,
@@ -54,8 +76,108 @@
         {
             "command": "aiops:email-scan",
             "class": "App\\Commands\\AiOps\\EmailScan",
-            "group": "aiops",
+            "group": "AI-Ops",
             "description": "Scan alerts mailbox for new emails and record AIOps counts.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "aiops:init",
+            "class": "App\\Commands\\AiOps\\Init",
+            "group": "AI-Ops",
+            "description": "Initialize and validate the AIOps PR factory (one-time or rare use).",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "aiops:manual-run",
+            "class": "App\\Commands\\AiOps\\ManualRun",
+            "group": "AI-Ops",
+            "description": "Run manual-priority AIOPS correlation, state refresh, and PR creation.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "aiops:n8n:logs",
+            "class": "App\\Commands\\AiOps\\N8nLogs",
+            "group": "AI-Ops",
+            "description": "Tail n8n logs",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:n8n:restart",
+            "class": "App\\Commands\\AiOps\\N8nRestart",
+            "group": "AI-Ops",
+            "description": "Restart n8n",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "aiops:n8n:start",
+            "class": "App\\Commands\\AiOps\\N8nStart",
+            "group": "AI-Ops",
+            "description": "Start n8n",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "aiops:n8n:stop",
+            "class": "App\\Commands\\AiOps\\N8nStop",
+            "group": "AI-Ops",
+            "description": "Stop n8n",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "aiops:public-pages:import",
+            "class": "App\\Commands\\AiOps\\PublicPagesImport",
+            "group": "AI-Ops",
+            "description": "Import docs/_aiops/inputs/public_pages.csv into bf_public_pages_catalog.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:public-pages:report",
+            "class": "App\\Commands\\AiOps\\PublicPagesReport",
+            "group": "AI-Ops",
+            "description": "Generate report artifacts for a public pages run.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:public-pages:run",
+            "class": "App\\Commands\\AiOps\\PublicPagesRun",
+            "group": "AI-Ops",
+            "description": "Run public pages source collection and draft generation.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:repair",
+            "class": "App\\Commands\\AiOps\\Repair",
+            "group": "AI-Ops",
+            "description": "Apply safe aiops repairs",
             "classification": "safe",
             "requires_approval": false,
             "supports_dry_run": true,
@@ -72,13 +194,53 @@
             "issues": []
         },
         {
+            "command": "aiops:scan:cells",
+            "class": "App\\Commands\\AiOps\\ScanCells",
+            "group": "AI-Ops",
+            "description": "Stateful scanner for repeated UI blocks and Cell candidates.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
             "command": "aiops:seed",
-            "class": "App\\Commands\\AiOpsSeed",
-            "group": "AiOps",
+            "class": "App\\Commands\\AiOps\\Seed",
+            "group": "AI-Ops",
             "description": "Seed default AI Ops caps and pricing configuration.",
             "classification": "safe",
             "requires_approval": false,
             "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "aiops:self-heal",
+            "class": "App\\Commands\\AiOps\\SelfHeal",
+            "group": "AI-Ops",
+            "description": "Run one-pass self-heal",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:status",
+            "class": "App\\Commands\\AiOps\\Status",
+            "group": "AI-Ops",
+            "description": "AIOps runtime status",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:watch",
+            "class": "App\\Commands\\AiOps\\Watch",
+            "group": "AI-Ops",
+            "description": "Continuous aiops audit watcher",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
             "issues": []
         },
         {
@@ -96,6 +258,16 @@
             "class": "App\\Commands\\AlertsParseTest",
             "group": "alerts",
             "description": "Parse a broker email sample and output normalized execution data.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "app:healthcheck",
+            "class": "App\\Commands\\App\\Healthcheck",
+            "group": "app",
+            "description": "Compatibility healthcheck command aligned to AI-Ops spark checks.",
             "classification": "safe",
             "requires_approval": false,
             "supports_dry_run": true,
@@ -162,6 +334,16 @@
             "issues": []
         },
         {
+            "command": "auth:smoke-test",
+            "class": "App\\Commands\\Auth\\SmokeTest",
+            "group": "auth",
+            "description": "Deterministic Myth/Auth smoke test for login/session/reset flow.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
             "command": "cache:audit",
             "class": "App\\Commands\\CacheAudit",
             "group": "cache",
@@ -170,6 +352,89 @@
             "requires_approval": false,
             "supports_dry_run": true,
             "issues": []
+        },
+        {
+            "command": "chat:audit",
+            "class": "App\\Commands\\Chat\\Audit",
+            "group": "Chat",
+            "description": "Chat audit",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "chat:logs",
+            "class": "App\\Commands\\Chat\\Logs",
+            "group": "Chat",
+            "description": "Tail persisted chat logs from writable/logs/chat.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "chat:repair",
+            "class": "App\\Commands\\Chat\\Repair",
+            "group": "Chat",
+            "description": "Chat repairs",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "chat:restart",
+            "class": "App\\Commands\\Chat\\Restart",
+            "group": "Chat",
+            "description": "Restart chat",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "chat:start",
+            "class": "App\\Commands\\Chat\\Start",
+            "group": "Chat",
+            "description": "Start chat",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "chat:status",
+            "class": "App\\Commands\\Chat\\Status",
+            "group": "Chat",
+            "description": "Chat status with PID and listening-port verification.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "chat:stop",
+            "class": "App\\Commands\\Chat\\Stop",
+            "group": "Chat",
+            "description": "Stop chat",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "chat:unlock",
+            "class": "App\\Commands\\Chat\\Unlock",
+            "group": "chat",
+            "description": "Safely clear stale chat runtime lock and pid files.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": [
+                "PSR-4 mismatch.",
+                "PSR-4 filename mismatch"
+            ]
         },
         {
             "command": "codex:review",
@@ -199,6 +464,16 @@
             "classification": "read-only",
             "requires_approval": false,
             "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "codex:review:pr-outbox",
+            "class": "App\\Commands\\Codex\\ReviewPrOutbox",
+            "group": "codex",
+            "description": "Review the latest PR outbox bundle and publish CODEX_REVIEW.md.",
+            "classification": "safe",
+            "requires_approval": false,
+            "supports_dry_run": true,
             "issues": []
         },
         {
@@ -402,6 +677,18 @@
             "issues": []
         },
         {
+            "command": "github:search",
+            "class": "App\\Commands\\GitHub\\SearchRepo",
+            "group": "GitHub",
+            "description": "Search the local git repository for a given string or pattern.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": [
+                "Does not extend SafeBaseCommand."
+            ]
+        },
+        {
             "command": "growth:retention-watch",
             "class": "App\\Commands\\Growth\\RetentionWatch",
             "group": "audit",
@@ -472,6 +759,16 @@
             "issues": []
         },
         {
+            "command": "logs:summarize-all",
+            "class": "App\\Commands\\Logs\\SummarizeAll",
+            "group": "logs",
+            "description": "Summarize logs for all known subsystems from writable/logs/** and emit docs/_aiops/logs markdown reports.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
             "command": "logs:full-report",
             "class": "App\\Commands\\LogsFullReport",
             "group": "maintenance",
@@ -480,6 +777,18 @@
             "requires_approval": false,
             "supports_dry_run": false,
             "issues": []
+        },
+        {
+            "command": "logs:test",
+            "class": "App\\Commands\\LogsTest",
+            "group": "Ops",
+            "description": "Writes test log entries to verify file/db logging.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": [
+                "Does not extend SafeBaseCommand."
+            ]
         },
         {
             "command": "mail:send",
@@ -552,12 +861,12 @@
             "issues": []
         },
         {
-            "command": "ops:aiops:init",
-            "class": "App\\Commands\\Ops\\AiopsInit",
+            "command": "ops:alerts:ingest",
+            "class": "App\\Commands\\Ops\\AlertsIngest",
             "group": "ops",
-            "description": "Initialize and validate the AIOps PR factory (one-time or rare use).",
-            "classification": "safe",
-            "requires_approval": false,
+            "description": "Ingest ThinkorSwim alert emails and upsert trade alerts.",
+            "classification": "destructive",
+            "requires_approval": true,
             "supports_dry_run": true,
             "issues": []
         },
@@ -612,6 +921,26 @@
             "issues": []
         },
         {
+            "command": "ops:config:lint",
+            "class": "App\\Commands\\Ops\\ConfigLint",
+            "group": "ops",
+            "description": "Lint Config files for illegal patterns (env(), dynamic expressions, protocols).",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "ops:config:reset",
+            "class": "App\\Commands\\Ops\\ConfigReset",
+            "group": "ops",
+            "description": "Clear config-related caches after config changes.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
             "command": "ops:filesystem:lint",
             "class": "App\\Commands\\Ops\\FilesystemLint",
             "group": "ops",
@@ -642,6 +971,16 @@
             "issues": []
         },
         {
+            "command": "ops:next-steps:sync-manual",
+            "class": "App\\Commands\\Ops\\NextStepsSyncManual",
+            "group": "ops",
+            "description": "Sync manual TODOs from docs/_aiops/next-steps.md into the database.",
+            "classification": "destructive",
+            "requires_approval": true,
+            "supports_dry_run": true,
+            "issues": []
+        },
+        {
             "command": "ops:propose-pr",
             "class": "App\\Commands\\Ops\\ProposePr",
             "group": "ops",
@@ -659,6 +998,46 @@
             "classification": "requires-approval",
             "requires_approval": true,
             "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "ops:subs:audit",
+            "class": "App\\Commands\\Ops\\SubsAudit",
+            "group": "Ops",
+            "description": "Run subsystem audits",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "ops:subs:doctor",
+            "class": "App\\Commands\\Ops\\SubsDoctor",
+            "group": "Ops",
+            "description": "Friendly subsystem triage",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "ops:subs:repair",
+            "class": "App\\Commands\\Ops\\SubsRepair",
+            "group": "Ops",
+            "description": "Run subsystem repairs",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "ops:subs:status",
+            "class": "App\\Commands\\Ops\\SubsStatus",
+            "group": "Ops",
+            "description": "Combined subsystem status",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
             "issues": []
         },
         {
@@ -822,19 +1201,6 @@
             "issues": []
         },
         {
-            "command": "App\\Commands\\SafeBaseCommand",
-            "class": "App\\Commands\\SafeBaseCommand",
-            "group": null,
-            "description": null,
-            "classification": "safe",
-            "requires_approval": false,
-            "supports_dry_run": true,
-            "issues": [
-                "Does not extend SafeBaseCommand.",
-                "Missing $name, $group, or $description."
-            ]
-        },
-        {
             "command": "scraper:audit-emails",
             "class": "App\\Commands\\Scrapers\\EmailScraperAudit",
             "group": "audit",
@@ -843,6 +1209,30 @@
             "requires_approval": false,
             "supports_dry_run": false,
             "issues": []
+        },
+        {
+            "command": "keys:generate-ci4",
+            "class": "App\\Commands\\Security\\GenerateCI4Key",
+            "group": "security",
+            "description": "Generate and rotate CodeIgniter 4 encryption.key",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": [
+                "Does not extend SafeBaseCommand."
+            ]
+        },
+        {
+            "command": "keys:generate",
+            "class": "App\\Commands\\Security\\GenerateKey",
+            "group": "security",
+            "description": "Generate a cryptographically secure encryption key.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": [
+                "Does not extend SafeBaseCommand."
+            ]
         },
         {
             "command": "security:secrets-audit",

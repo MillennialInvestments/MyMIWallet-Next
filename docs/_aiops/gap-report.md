@@ -1,21 +1,17 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-09T10:00:01Z
+> Run: 2026-02-09T12:00:02Z
 
 ## Undocumented Code (best-effort)
+- app/Modules/AIOps/Controllers/AIOpsController.php
+  - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/AIOps/Models/AIOpsBudgetModel.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/AIOps/Models/AIOpsCacheModel.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/AIOps/Models/AIOpsDedupeModel.php
-  - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/AIOps/Models/AIOpsUsageModel.php
-  - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
-  - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/AIOps/Services/AIOpsGuardrailService.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/APIs/Controllers/AIController.php
   - ⚠️ No obvious doc match found (heuristic)
@@ -47,8 +43,6 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/APIs/Controllers/EsportsController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/HealthController.php
-  - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/APIs/Controllers/KeysController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/APIs/Controllers/ManagementController.php
@@ -67,7 +61,7 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/APIs/Controllers/MditWebhookController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/OpsController.php
+- app/Modules/APIs/Controllers/OpsPublicPagesController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/APIs/Controllers/PredictionsController.php
   - ⚠️ No obvious doc match found (heuristic)
@@ -86,8 +80,6 @@
 - app/Modules/APIs/Controllers/UserController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/APIs/Controllers/Webhooks/EmailBounceController.php
-  - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/Webhooks/TradingViewController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/APIs/Controllers/Webhooks/ZapierController.php
   - ⚠️ No obvious doc match found (heuristic)
@@ -174,6 +166,10 @@
 - app/Modules/Blog/Views/NewsAndUpdates/The_Roadmap_To_The_Future_Of_Finance.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Blog/Views/PersonalBudgeting/Importance_Of_Personal_Financial_Budgeting.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Chat/Controllers/ChatController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/ContentEngine/Controllers/ContentEngineController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Docs/Controllers/DocsController.php
   - ⚠️ No obvious doc match found (heuristic)
@@ -265,7 +261,7 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Finance/Controllers/FinanceController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/APIController.php
+- app/Modules/Logs/Controllers/LogsController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Controllers/AccountRescueController.php
   - ⚠️ No obvious doc match found (heuristic)
@@ -321,13 +317,13 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Controllers/OperationsController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/OpsController.php
-  - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Controllers/OpsInboxController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Controllers/PartnersController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Controllers/ProjectsController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/PublicPagesController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Controllers/SecurityController.php
   - ⚠️ No obvious doc match found (heuristic)
@@ -403,7 +399,11 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Views/Alerts/resources/rh-keygen.php
   - ⚠️ No obvious doc match found (heuristic)
-- … and 924 more
+- app/Modules/Management/Views/Alerts/resources/sendDiscordAlert.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Views/Alerts/resources/statistical-overview.php
+  - ⚠️ No obvious doc match found (heuristic)
+- … and 930 more
 
 ## Documented Items With No Obvious Code Match (best-effort)
 - docs/CRON.md
@@ -505,6 +505,8 @@
 - docs/alerts/alerts_marketing_pipline.md
   - ❌ No obvious code match found (heuristic)
 - docs/alerts/thinkorswim_broker_ingestion.md
+  - ❌ No obvious code match found (heuristic)
+- docs/api/internal-orchestration.md
   - ❌ No obvious code match found (heuristic)
 - docs/architecture/marketing_module_lifecycle.md
   - ❌ No obvious code match found (heuristic)
@@ -804,6 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/functional_inventory/feature_inventory.md
   - ❌ No obvious code match found (heuristic)
-- docs/funnels/community_funnel.md
-  - ❌ No obvious code match found (heuristic)
-- … and 769 more
+- … and 775 more

@@ -1,6 +1,6 @@
 # AI-Ops: Stale Docs
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-09T10:00:01Z
+> Run: 2026-02-09T12:00:02Z
 
 - docs/OVERVIEW.md
   - Doc last updated: 2025-11-08 (92 days ago)
@@ -43,7 +43,7 @@
 - docs/discord/alerts_automation.md
   - Doc last updated: 2025-11-27 (73 days ago)
 - docs/discord/discord_integration_overview.md
-  - Doc last updated: 2025-11-25 (75 days ago)
+  - Doc last updated: 2025-11-25 (76 days ago)
 - docs/discord/discord_schema_v3.sql.md
   - Doc last updated: 2025-11-08 (92 days ago)
 - docs/discord/discord_seed_v3.sql.md

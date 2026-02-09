@@ -1,9 +1,9 @@
 {
-    "generated_at": "2026-02-05T02:40:34+00:00",
+    "generated_at": "2026-02-09T11:15:14+00:00",
     "summary": {
-        "missing_sections": 6,
-        "command_violations": 1,
-        "total_commands": 92
+        "missing_sections": 0,
+        "command_violations": 6,
+        "total_commands": 130
     },
     "sections": {
         "path": "/home/mymiteam/mymiwallet/site/current/.github/copilot-instructions.md",
@@ -15,26 +15,59 @@
             "Integration Points",
             "Communication Patterns"
         ],
-        "missing": [
-            "Overview",
-            "Architecture",
-            "Developer Workflows",
-            "Project-Specific Conventions",
-            "Integration Points",
-            "Communication Patterns"
-        ],
-        "status": "missing-file"
+        "missing": [],
+        "status": "ok"
     },
     "commands": {
-        "total": 92,
+        "total": 130,
         "violations": [
             {
-                "command": "App\\Commands\\SafeBaseCommand",
-                "class": "App\\Commands\\SafeBaseCommand",
-                "file": "app/Commands/SafeBaseCommand.php",
+                "command": "api:audit",
+                "class": "App\\Commands\\API\\ApiAudit",
+                "file": "app/Commands/API/ApiAudit.php",
                 "issues": [
-                    "Does not extend SafeBaseCommand.",
-                    "Missing $name, $group, or $description."
+                    "Constructor detected"
+                ]
+            },
+            {
+                "command": "chat:unlock",
+                "class": "App\\Commands\\Chat\\Unlock",
+                "file": "app/Commands/Chat/Unblock.php",
+                "issues": [
+                    "PSR-4 mismatch (expected App\\Commands\\Chat\\Unblock).",
+                    "PSR-4 filename mismatch"
+                ]
+            },
+            {
+                "command": "github:search",
+                "class": "App\\Commands\\GitHub\\SearchRepo",
+                "file": "app/Commands/GitHub/SearchRepo.php",
+                "issues": [
+                    "Does not extend SafeBaseCommand."
+                ]
+            },
+            {
+                "command": "logs:test",
+                "class": "App\\Commands\\LogsTest",
+                "file": "app/Commands/LogsTest.php",
+                "issues": [
+                    "Does not extend SafeBaseCommand."
+                ]
+            },
+            {
+                "command": "keys:generate-ci4",
+                "class": "App\\Commands\\Security\\GenerateCI4Key",
+                "file": "app/Commands/Security/GenerateCI4Key.php",
+                "issues": [
+                    "Does not extend SafeBaseCommand."
+                ]
+            },
+            {
+                "command": "keys:generate",
+                "class": "App\\Commands\\Security\\GenerateKey",
+                "file": "app/Commands/Security/GenerateKey.php",
+                "issues": [
+                    "Does not extend SafeBaseCommand."
                 ]
             }
         ]
