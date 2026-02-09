@@ -4,7 +4,6 @@ namespace App\Entities;
 
 use CodeIgniter\Entity\Entity;
 use Exception;
-use Myth\Auth\Password;
 use RuntimeException;
 
 class User extends \Myth\Auth\Entities\User
@@ -56,9 +55,12 @@ class User extends \Myth\Auth\Entities\User
      *
      * @see https://paragonie.com/blog/2015/04/secure-authentication-php-with-long-term-persistence
      */
-    public function setPassword(string $password)
+    public function setPassword(string $password): self
     {
-        $this->attributes['password_hash'] = Password::hash($password);
+        // Auth user passwords must remain Myth/Auth-compatible.
+        // Do not route login/registration passwords through custom crypto helpers.
+        $this->attributes['password_hash'] = password_hash($password, PASSWORD_DEFAULT);
+        unset($this->attributes['password']); // never persist plaintext
 
         /*
             Set these vars to null in case a reset password was asked.
@@ -72,6 +74,8 @@ class User extends \Myth\Auth\Entities\User
         $this->attributes['reset_hash']    = null;
         $this->attributes['reset_at']      = null;
         $this->attributes['reset_expires'] = null;
+
+        return $this;
     }
 
     /**
