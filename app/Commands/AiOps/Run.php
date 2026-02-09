@@ -4,6 +4,7 @@ namespace App\Commands\AiOps;
 
 use App\Commands\SafeBaseCommand;
 use App\Commands\Support\ArtifactHelper;
+use App\Services\AiOps\OllamaPatchRunner;
 use CodeIgniter\CLI\CLI;
 
 class Run extends SafeBaseCommand
@@ -16,6 +17,8 @@ class Run extends SafeBaseCommand
     protected $options = [
         '--mode' => 'Run mode (manual|nightly). Default: manual',
         '--dry-run' => 'Validate paths and configuration without executing the worker',
+        '--job-file' => 'Optional patch job file under docs/_aiops/patch_jobs/',
+        '--force' => 'Regenerate patch output even when docs/_aiops/patches/{job_id}.diff exists',
     ];
 
     public function run(array $params)
@@ -23,6 +26,8 @@ class Run extends SafeBaseCommand
         [, $flags] = $this->parseParams($params);
         $mode = (string) (ArtifactHelper::parseOptionValue($params, 'mode') ?? 'manual');
         $dryRun = isset($flags['dry-run']);
+        $force = isset($flags['force']);
+        $jobFile = ArtifactHelper::parseOptionValue($params, 'job-file');
 
         $root = realpath(APPPATH . '..');
         $worker = $root . '/aiops/aiops_worker.php';
@@ -77,6 +82,18 @@ class Run extends SafeBaseCommand
             return EXIT_ERROR;
         }
 
+        $resolvedJob = $this->resolvePatchJobFile(is_string($jobFile) ? $jobFile : null);
+        if ($resolvedJob !== null) {
+            $runner = new OllamaPatchRunner();
+            $patchResult = $runner->run($resolvedJob, $force);
+            CLI::newLine();
+            CLI::write('[AIOPS OLLAMA] Patch runner result:', 'yellow');
+            CLI::write(json_encode($patchResult, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        } else {
+            CLI::newLine();
+            CLI::write('[AIOPS OLLAMA] No patch job found in docs/_aiops/patch_jobs; skipped.', 'yellow');
+        }
+
         CLI::write('AI-Ops worker completed successfully.', 'green');
         CLI::write('Outputs written to: docs/_aiops/', 'green');
 
@@ -91,5 +108,21 @@ class Run extends SafeBaseCommand
         }
 
         return EXIT_SUCCESS;
+    }
+
+    private function resolvePatchJobFile(?string $requested): ?string
+    {
+        if ($requested !== null && trim($requested) !== '') {
+            return ltrim(trim($requested), '/');
+        }
+
+        $pattern = ROOTPATH . 'docs/_aiops/patch_jobs/*.md';
+        $files = glob($pattern) ?: [];
+        if ($files === []) {
+            return null;
+        }
+
+        usort($files, static fn(string $a, string $b): int => filemtime($b) <=> filemtime($a));
+        return ltrim(str_replace(ROOTPATH, '', $files[0]), '/');
     }
 }
