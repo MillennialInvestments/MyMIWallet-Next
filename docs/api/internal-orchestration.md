@@ -12,17 +12,16 @@ All endpoints return:
 ```
 
 ## Auth
-Provide either:
+Provide header:
 - `X-Internal-Token: <INTERNAL_API_TOKEN>`
-- `Authorization: Bearer <INTERNAL_API_TOKEN>`
 
 ## Endpoints
 - `GET /API/Ops/healthcheck`
 - `POST /API/Ops/app/update?dry_run=1&approve=0`
 - `GET /API/Ops/commands`
-- `GET /API/AIOps/snapshot`
-- `GET /API/AIOps/gaps/docs`
-- `POST /API/AIOps/watch`
+- `GET /API/AiOps/snapshot`
+- `GET /API/AiOps/gaps/docs`
+- `POST /API/AiOps/watch`
 - `GET /API/Logs/summary`
 - `POST /API/ContentEngine/run`
 - `GET /API/ContentEngine/drafts/{id}` (501 until implemented)

@@ -23,12 +23,6 @@ class InternalTokenFilter implements FilterInterface
         }
 
         $provided = trim((string) $request->getHeaderLine('X-Internal-Token'));
-        if ($provided === '') {
-            $auth = trim((string) $request->getHeaderLine('Authorization'));
-            if (preg_match('/^Bearer\s+(.+)$/i', $auth, $matches) === 1) {
-                $provided = trim($matches[1]);
-            }
-        }
 
         if ($expected === '' || $provided === '' || ! hash_equals($expected, $provided)) {
             return service('response')
@@ -38,7 +32,7 @@ class InternalTokenFilter implements FilterInterface
                     'data' => null,
                     'error' => [
                         'code' => 'forbidden',
-                        'message' => 'Invalid internal API token.',
+                        'message' => 'Invalid or missing X-Internal-Token.',
                     ],
                     'meta' => [
                         'ts' => date('c'),

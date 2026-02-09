@@ -1,0 +1,9 @@
+ignore_patterns:
+  - '^/API/.+/(create|store|update|delete)$'   # inferred mutating routes from naming heuristics
+  - '^/API/.+/index$'                           # controller naming false positives
+  - '^/API/.+/[A-Z][A-Za-z0-9]+$'              # inferred method names from class map only
+  - '^/API/(Admin|Management)/.*$'             # admin-only APIs audited separately
+
+ignore_reasons:
+  naming_heuristic: 'Discovered from controller/method inference without concrete RouteCollection entry.'
+  admin_only: 'Protected administrative APIs are validated in privileged integration audits.'

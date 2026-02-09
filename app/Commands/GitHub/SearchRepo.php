@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Commands\GitHub;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class SearchRepo extends BaseCommand
+class SearchRepo extends SafeBaseCommand
 {
     protected $group       = 'GitHub';
     protected $name        = 'github:search';

@@ -2,10 +2,10 @@
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class LogsTest extends BaseCommand
+class LogsTest extends SafeBaseCommand
 {
     protected $group       = 'Ops';
     protected $name        = 'logs:test';
