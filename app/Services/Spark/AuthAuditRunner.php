@@ -1207,7 +1207,16 @@ class AuthAuditRunner
 
     private function insertAuditLog($db, array $summary): void
     {
-        if (! $db->tableExists('bf_error_logs')) {
+        if (! $db) {
+            return;
+        }
+
+        try {
+            if (! $db->tableExists('bf_error_logs')) {
+                return;
+            }
+        } catch (Throwable $e) {
+            log_message('warning', 'auth:audit skipped bf_error_logs check: {error}', ['error' => $e->getMessage()]);
             return;
         }
 

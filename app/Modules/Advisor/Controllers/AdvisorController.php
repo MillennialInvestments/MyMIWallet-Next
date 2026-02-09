@@ -14,7 +14,6 @@ class AdvisorController extends BaseController
     private KimiClient $kimi;
     private MyMIBudget $budget;
     private MyMIInvestments $investments;
-    private MyMIAlerts $alerts;
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {

@@ -169,8 +169,17 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
         return $default;
     }
 
-    protected function optBool(array $flags, string $key, bool $default = false): bool
+    protected function optBool(array|string $flags, ?string $key = null, bool $default = false): bool
     {
+        if (is_string($flags)) {
+            $key = $flags;
+            $flags = $this->parsedFlags;
+        }
+
+        if ($key === null) {
+            return $default;
+        }
+
         if (! array_key_exists($key, $flags)) {
             return $default;
         }
@@ -183,8 +192,17 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
         return in_array(strtolower((string) $value), ['1', 'true', 'yes', 'on'], true);
     }
 
-    protected function optInt(array $flags, string $key, int $default = 0): int
+    protected function optInt(array|string $flags, ?string $key = null, int $default = 0): int
     {
+        if (is_string($flags)) {
+            $key = $flags;
+            $flags = $this->parsedFlags;
+        }
+
+        if ($key === null) {
+            return $default;
+        }
+
         if (! array_key_exists($key, $flags)) {
             return $default;
         }
@@ -192,8 +210,17 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
         return (int) $flags[$key];
     }
 
-    protected function optString(array $flags, string $key, string $default = ''): string
+    protected function optString(array|string $flags, ?string $key = null, string $default = ''): string
     {
+        if (is_string($flags)) {
+            $key = $flags;
+            $flags = $this->parsedFlags;
+        }
+
+        if ($key === null) {
+            return $default;
+        }
+
         if (! array_key_exists($key, $flags)) {
             return $default;
         }

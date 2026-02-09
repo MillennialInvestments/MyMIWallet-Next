@@ -48,7 +48,6 @@ class Autoload extends AutoloadConfig
         'ScriptStudioModule' => APPPATH . 'Modules/ScriptStudio',
         'SupportModule' => APPPATH . 'Modules/Support',
         'UserModule' => APPPATH . 'Modules/User',
-        'Myth\\Auth' => APPPATH . 'ThirdParty/myth-auth/src',
         'Maatwebsite\\Excel\\' => APPPATH . 'ThirdParty/maatwebsite/excel',
     ];
 
