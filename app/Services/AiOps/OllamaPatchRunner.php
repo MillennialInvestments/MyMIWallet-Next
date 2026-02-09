@@ -139,6 +139,15 @@ class OllamaPatchRunner
             file_put_contents($patchDir . '/' . $job->jobId . '.diff', rtrim($diff) . PHP_EOL);
         }
 
+        if ($validation->status === 'failed_invalid_diff') {
+            $debugDir = ROOTPATH . 'docs/_aiops/debug';
+            if (! is_dir($debugDir)) {
+                mkdir($debugDir, 0775, true);
+            }
+
+            file_put_contents($debugDir . '/' . $job->jobId . '.last-response.txt', $diff . PHP_EOL);
+        }
+
         $json = [
             'job_id' => $job->jobId,
             'job_file' => $job->jobFile,

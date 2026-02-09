@@ -1,0 +1,18 @@
+flowchart TD
+    A[Patch job discovery<br/>docs/_aiops/patch_jobs/*.md] --> B[Backlog scan aiops:backlog]
+    B --> C[Load per-job metadata<br/>{jobId}.meta.json]
+    C --> D{Job locked?}
+    D -- Yes and no --force --> E[Skip<br/>locked (manual review)]
+    D -- No or --force --> F[Run OllamaPatchRunner]
+    F --> G{Diff validation}
+    G -- success --> H[Write diff/json outputs]
+    H --> I[Commit + PR metadata check/stub]
+    G -- failed_invalid_diff --> J[Persist raw response<br/>docs/_aiops/debug/{jobId}.last-response.txt]
+    J --> K{jobId == README?}
+    K -- Yes --> L[Set manual_docs_review + lock<br/>write README.pr.json]
+    K -- No --> M{attempts >= 2?}
+    M -- Yes --> N[Lock job<br/>manual review required]
+    M -- No --> O[Eligible for future retry]
+    N --> P[Manual unlock path]
+    L --> P
+    P --> Q[aiops:unlock {jobId}<br/>locked=false, attempts=0]
