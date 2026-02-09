@@ -88,10 +88,10 @@ class AutoRun extends SafeBaseCommand
         $resolvedJob = $this->resolvePatchJobFile($jobFile !== '' ? $jobFile : null);
         if ($resolvedJob !== null) {
             $runner = new OllamaPatchRunner();
-            $patchResult = $runner->run($resolvedJob, $force);
+            $patchResult = $runner->run($resolvedJob, ['force' => $force]);
             CLI::write('[AIOPS OLLAMA] patch runner result', 'yellow');
-            CLI::write(json_encode($patchResult, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-            $result['ollama_patch'] = $patchResult;
+            CLI::write(json_encode($patchResult->toArray(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+            $result['ollama_patch'] = $patchResult->toArray();
         } else {
             CLI::write('[AIOPS OLLAMA] No patch job found in docs/_aiops/patch_jobs; skipped.', 'yellow');
         }

@@ -85,10 +85,10 @@ class Run extends SafeBaseCommand
         $resolvedJob = $this->resolvePatchJobFile(is_string($jobFile) ? $jobFile : null);
         if ($resolvedJob !== null) {
             $runner = new OllamaPatchRunner();
-            $patchResult = $runner->run($resolvedJob, $force);
+            $patchResult = $runner->run($resolvedJob, ['force' => $force]);
             CLI::newLine();
             CLI::write('[AIOPS OLLAMA] Patch runner result:', 'yellow');
-            CLI::write(json_encode($patchResult, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+            CLI::write(json_encode($patchResult->toArray(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
         } else {
             CLI::newLine();
             CLI::write('[AIOPS OLLAMA] No patch job found in docs/_aiops/patch_jobs; skipped.', 'yellow');
