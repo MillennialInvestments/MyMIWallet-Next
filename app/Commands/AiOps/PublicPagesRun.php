@@ -91,6 +91,7 @@ class PublicPagesRun extends SafeBaseCommand
                 'draft_summary' => $draft['draft_summary'],
                 'draft_keywords' => $draft['draft_keywords'],
                 'status' => $status,
+                'editor_notes' => json_encode(['news_items' => $draft['news_items'] ?? []]),
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
@@ -121,6 +122,56 @@ class PublicPagesRun extends SafeBaseCommand
             return EXIT_ERROR;
         }
 
+        $violations = $this->governanceViolations($db);
+        if ($violations !== []) {
+            $dir = ROOTPATH . 'docs/_aiops/public-pages';
+            if (! is_dir($dir)) {
+                mkdir($dir, 0775, true);
+            }
+            $body = "# Public Pages Violations
+
+";
+            foreach ($violations as $violation) {
+                $body .= '- ' . $violation . "
+";
+                CLI::error($violation);
+            }
+            file_put_contents($dir . '/violations.md', $body);
+            CLI::error('Governance checks failed. PR creation should be blocked.');
+            return EXIT_ERROR;
+        }
+
         return EXIT_SUCCESS;
+    }
+
+    private function governanceViolations($db): array
+    {
+        $violations = [];
+
+        $published = $db->query('SELECT p.schema_json,c.slug,c.type,p.published_meta_json FROM bf_public_pages_published p JOIN bf_public_pages_catalog c ON c.id=p.page_id')->getResultArray();
+        foreach ($published as $row) {
+            $type = strtolower((string) ($row['type'] ?? ''));
+            if (in_array($type, ['review', 'glossary'], true) && trim((string) ($row['schema_json'] ?? '')) === '') {
+                $violations[] = "Published page {$row['slug']} ({$type}) missing schema_json.";
+            }
+            if ($type === 'hybrid') {
+                $meta = json_decode((string) ($row['published_meta_json'] ?? ''), true);
+                if (! is_array($meta) || ! isset($meta['news_items']) || ! is_array($meta['news_items']) || $meta['news_items'] === []) {
+                    $violations[] = "Hybrid page {$row['slug']} missing news block in published_meta_json.";
+                }
+            }
+        }
+
+        $dupes = $db->query('SELECT slug FROM bf_public_pages_catalog GROUP BY slug HAVING COUNT(*) > 1')->getResultArray();
+        foreach ($dupes as $dupe) {
+            $violations[] = 'Duplicate slug detected in catalog: ' . $dupe['slug'];
+        }
+
+        $routes = file_get_contents(APPPATH . 'Config/Routes.php') ?: '';
+        if (strpos($routes, "\$routes->group('API/Ops', ['filter' => 'internalToken']") === false) {
+            $violations[] = 'Public route missing internalToken on Ops endpoints.';
+        }
+
+        return $violations;
     }
 }
