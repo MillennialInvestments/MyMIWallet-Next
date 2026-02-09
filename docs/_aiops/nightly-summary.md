@@ -1,10 +1,10 @@
 # AI-Ops: Nightly Summary
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-08T22:00:01Z
+> Run: 2026-02-09T10:00:01Z
 
 ## Docs
-- Changed docs: 1
-- Total docs scanned: 1068
+- Changed docs: 0
+- Total docs scanned: 1069
 
 ## Gaps (heuristic)
 - Undocumented code candidates: 1124
