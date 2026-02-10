@@ -50,13 +50,12 @@ class ReviewPublish extends SafeBaseCommand
             return EXIT_SUCCESS;
         }
 
-        $artifactDir = WRITEPATH . 'aiops/artifacts/review-publish';
-        $this->ensureDir($artifactDir);
-        $artifactPath = rtrim($artifactDir, '/') . '/latest.json';
-        file_put_contents($artifactPath, json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL);
+        $dir = ROOTPATH . 'docs/_codex/reviews';
+        @mkdir($dir, 0775, true);
+        $artifactPath = $dir . '/review-publish.json';
+        file_put_contents($artifactPath, json_encode($payload, JSON_PRETTY_PRINT) . PHP_EOL);
 
-        $dashboardPath = ROOTPATH . 'docs/aiops/remediation_dashboard.md';
-        $this->ensureDir(dirname($dashboardPath));
+        $dashboardPath = $dir . '/CODEX_REVIEW.md';
         file_put_contents($dashboardPath, $this->renderDashboard($filesystem, $commands, $timestamp));
 
         CLI::write('Review publish artifacts written.', 'green');
@@ -69,7 +68,7 @@ class ReviewPublish extends SafeBaseCommand
     private function loadFilesystemLint(): array
     {
         $paths = [
-            WRITEPATH . 'aiops/artifacts/review-publish/filesystem.json',
+            ROOTPATH . 'docs/_codex/reviews/filesystem.json',
             ROOTPATH . 'filesystem.json',
         ];
 

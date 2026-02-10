@@ -1,472 +1,236 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Commands\Ops;
 
 use App\Commands\SafeBaseCommand;
-use App\Commands\Support\GitHubIssueHelper;
 use CodeIgniter\CLI\CLI;
+use Config\FilesystemGovernance;
 
 class FilesystemLint extends SafeBaseCommand
 {
-    protected $group       = 'ops';
-    protected $name        = 'ops:filesystem:lint';
-    protected $description = 'Lint Spark commands for unsafe filesystem writes (missing ROOTPATH anchoring).';
-    protected $usage       = 'ops:filesystem:lint [--json]';
-    protected $options     = [
-        '--json' => 'Emit JSON results to stdout',
+    protected $group = 'ops';
+    protected $name = 'ops:filesystem:lint';
+    protected $description = 'Lint and optionally auto-fix filesystem governance violations.';
+    protected $usage = 'ops:filesystem:lint [--fix] [--report] [--json]';
+    protected $options = [
+        '--fix' => 'Automatically apply safe fixes',
+        '--report' => 'Write fix plan to docs/_ops/filesystem-lint.md',
+        '--json' => 'JSON output',
     ];
+
+    private FilesystemGovernance $governance;
 
     public function run(array $params)
     {
-        [, $flags] = $this->parseParams($params);
+        $this->parseParams($params);
+        $this->governance = config('FilesystemGovernance');
 
-        $roots = $this->collectScanRoots();
-        $files = [];
-        foreach ($roots as $root) {
-            $files = array_merge($files, $this->collectCommandFiles($root));
-        }
+        $fixMode = $this->optBool('fix');
+        $json = $this->optBool('json');
+
+        $files = $this->collectCommandFiles(ROOTPATH . 'app/Commands');
         $issues = [];
 
         foreach ($files as $file) {
-            $lines = $this->readLines($file);
-            if ($lines === []) {
+            $issues = array_merge($issues, $this->scanFile($file));
+        }
+
+        $fixPlan = [];
+        $fixesApplied = 0;
+        $manualRequired = 0;
+
+        foreach ($issues as $issue) {
+            $fixPlan[] = $this->describeFix($issue);
+
+            if (! $this->canAutoFix($issue)) {
+                $manualRequired++;
                 continue;
             }
 
-            $anchored = $this->findAnchoredVariables($lines);
-            $public = $this->findTargetVariables($lines, 'public');
-            $writable = $this->findTargetVariables($lines, 'writable');
-            $issues = array_merge($issues, $this->scanFile($file, $lines, $anchored, $public, $writable));
+            if ($fixMode && $this->applyFix($issue)) {
+                $fixesApplied++;
+            }
         }
 
+        $severitySummary = $this->buildSeveritySummary($issues);
+        $confidenceSummary = $this->buildConfidenceSummary($issues);
+
         $payload = [
-            'generated_at' => date('c'),
+            'generated_at' => gmdate('c'),
             'total_files' => count($files),
             'issues' => $issues,
             'issue_count' => count($issues),
-            'error_count' => count(array_filter($issues, fn ($i) => ($i['severity'] ?? 'warning') === 'error')),
-            'severity_summary' => $this->buildSeveritySummary($issues),
+            'error_count' => (int) ($severitySummary['error'] ?? 0),
+            'severity_summary' => $severitySummary,
+            'fixes_applied' => $fixesApplied,
+            'manual_required' => $manualRequired,
+            'confidence_summary' => $confidenceSummary,
+            'fix_plan' => $fixPlan,
         ];
+
+        $this->writeUnifiedReports($payload);
 
         if ($issues === []) {
             CLI::write('Filesystem lint: OK', 'green');
         } else {
             CLI::write('Filesystem lint: FAIL', 'red');
             foreach ($issues as $issue) {
-                CLI::write(sprintf(
-                    '%s:%d %s (%s) [%s]',
-                    $issue['file'],
-                    $issue['line'],
-                    $issue['call'],
-                    $issue['reason'],
-                    strtoupper($issue['severity'] ?? 'warning')
-                ), 'yellow');
-                CLI::write('  ' . $issue['snippet'], 'blue');
-                CLI::write('  Fix: ' . $issue['suggested_fix'], 'white');
+                CLI::write(sprintf('%s:%d %s [%s]', $issue['file'], $issue['line'], $issue['reason'], strtoupper($issue['severity'])), 'yellow');
             }
         }
 
-        if (isset($flags['json'])) {
-            CLI::write(json_encode($payload, JSON_PRETTY_PRINT));
+        if ($json) {
+            CLI::write(json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
         }
 
-        if ($payload['error_count'] > 0 && $this->isCiEnvironment()) {
-            $issuePayloads = $this->buildGithubIssuePayloads($issues);
-            GitHubIssueHelper::publishIssues($issuePayloads, WRITEPATH . 'aiops/artifacts/github-issues');
-        }
-
-        return $payload['error_count'] > 0 ? EXIT_ERROR : EXIT_SUCCESS;
-    }
-
-    private function collectScanRoots(): array
-    {
-        $roots = [
-            ROOTPATH . 'app/Commands',
-            ROOTPATH . 'tools',
-            ROOTPATH . 'aiops',
-        ];
-
-        return array_values(array_filter($roots, 'is_dir'));
+        return ($payload['error_count'] > 0) ? EXIT_ERROR : EXIT_SUCCESS;
     }
 
     private function collectCommandFiles(string $root): array
     {
-        $files = [];
-        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($root));
+        if (! is_dir($root)) {
+            return [];
+        }
 
-        foreach ($iterator as $entry) {
-            if ($entry->isDir()) {
+        $files = [];
+        $it = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($root));
+        foreach ($it as $entry) {
+            if ($entry->isDir() || $entry->getExtension() !== 'php') {
                 continue;
             }
 
             $path = $entry->getPathname();
-
-            if ($this->isExcludedPath($path)) {
-                continue;
-            }
-
-            // ⛔ Do not lint the linter itself
             if (str_ends_with($path, 'FilesystemLint.php')) {
                 continue;
             }
 
-
-            if ($entry->getExtension() !== 'php') {
-                continue;
-            }
-
-            $files[] = $entry->getPathname();
+            $files[] = $path;
         }
 
         return $files;
     }
 
-    private function readLines(string $file): array
+    private function scanFile(string $file): array
     {
-        $contents = @file($file, FILE_IGNORE_NEW_LINES);
-        if ($contents === false) {
+        $lines = @file($file, FILE_IGNORE_NEW_LINES);
+        if (! is_array($lines)) {
             return [];
         }
 
-        return $contents;
-    }
-
-    private function findAnchoredVariables(array $lines): array
-    {
-        $anchored = [];
-        $changed = true;
-
-        while ($changed) {
-            $changed = false;
-            foreach ($lines as $line) {
-                if (! preg_match('/\$(\w+)\s*=\s*(.+);/', $line, $matches)) {
-                    continue;
-                }
-
-                $var = $matches[1];
-                $expr = $matches[2];
-
-                if (isset($anchored[$var])) {
-                    continue;
-                }
-
-                if (str_contains($expr, 'ROOTPATH')) {
-                    $anchored[$var] = true;
-                    $changed = true;
-                    continue;
-                }
-
-                if (preg_match_all('/\$(\w+)/', $expr, $refs)) {
-                    foreach ($refs[1] as $ref) {
-                        if (isset($anchored[$ref])) {
-                            $anchored[$var] = true;
-                            $changed = true;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        return $anchored;
-    }
-
-    private function findTargetVariables(array $lines, string $target): array
-    {
-        $targets = [];
-        $changed = true;
-
-        while ($changed) {
-            $changed = false;
-            foreach ($lines as $line) {
-                if (! preg_match('/\$(\w+)\s*=\s*(.+);/', $line, $matches)) {
-                    continue;
-                }
-
-                $var = $matches[1];
-                $expr = $matches[2];
-
-                if (isset($targets[$var])) {
-                    continue;
-                }
-
-                if ($this->expressionTargets($expr, $target)) {
-                    $targets[$var] = true;
-                    $changed = true;
-                    continue;
-                }
-
-                if (preg_match_all('/\$(\w+)/', $expr, $refs)) {
-                    foreach ($refs[1] as $ref) {
-                        if (isset($targets[$ref])) {
-                            $targets[$var] = true;
-                            $changed = true;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        return $targets;
-    }
-
-    private function scanFile(string $file, array $lines, array $anchored, array $public, array $writable): array
-    {
         $issues = [];
         $relative = $this->relativePath($file);
+        $subsystem = $this->resolveSubsystem($relative);
 
         foreach ($lines as $index => $line) {
             $lineNumber = $index + 1;
-            // 🚨 Boot-risk detection: Config-layer exceptions
-            if (
-                str_contains($line, 'Config\\')
-                && str_contains($line, 'throw new')
-                && ! str_contains($file, 'Commands')
-            ) {
-                $issues[] = [
-                    'file' => $relative,
-                    'line' => $lineNumber,
-                    'call' => 'throw',
-                    'reason' => 'Config-layer exception detected (boot risk)',
-                    'severity' => 'error',
-                    'snippet' => trim($line),
-                    'suggested_fix' => 'Move guard logic into Spark command run()',
-                ];
+            if (! preg_match('/(@?)(file_put_contents|mkdir)\s*\((.+)\)\s*;?/', $line, $match)) {
+                continue;
             }
 
-            $calls = $this->extractCalls($line, ['file_put_contents', 'mkdir']);
-            foreach ($calls as $call) {
-                $firstArg = $this->extractFirstArgument($call['args']);
-                if ($firstArg === '') {
-                    continue;
-                }
-
-                $missingRoot = ! $this->isAnchoredArgument($firstArg, $anchored);
-                if ($missingRoot) {
-                    $issues[] = [
-                        'file' => $relative,
-                        'line' => $lineNumber,
-                        'call' => $call['name'],
-                        'reason' => 'Missing ROOTPATH anchor',
-                        'severity' => 'warning',
-                        'snippet' => trim($line),
-                        'suggested_fix' => $this->suggestRootpathFix($firstArg, $call['name']),
-                    ];
-                }
-
-                if ($this->isTargetArgument($firstArg, $public, 'public')) {
-                    $issues[] = [
-                        'file' => $relative,
-                        'line' => $lineNumber,
-                        'call' => $call['name'],
-                        'reason' => 'Writes to public/',
-                        'severity' => 'error',
-                        'snippet' => trim($line),
-                        'suggested_fix' => $this->suggestSafeTargetFix('public'),
-                    ];
-                }
-
-                if (
-                    $this->isTargetArgument($firstArg, $writable, 'writable')
-                    && ! $this->isAllowedWritableSandbox($firstArg)
-                ) {
-                    $issues[] = [
-                        'file' => $relative,
-                        'line' => $lineNumber,
-                        'call' => $call['name'],
-                        'reason' => 'Writes to writable/ (outside artifact sandbox)',
-                        'severity' => 'error',
-                        'snippet' => trim($line),
-                        'suggested_fix' => $this->suggestSafeTargetFix('writable'),
-                    ];
-                }
-
+            $args = $match[3];
+            $firstArg = $this->extractFirstArgument($args);
+            if ($firstArg === '') {
+                continue;
             }
+
+            $resolved = $this->resolveTargetPath($firstArg, $subsystem);
+            $reason = null;
+            $severity = 'warning';
+
+            if ($this->looksWritableArtifact($firstArg)) {
+                $reason = 'Artifact written to writable/';
+                $severity = 'error';
+            } elseif (! str_contains($firstArg, 'ROOTPATH')) {
+                $reason = 'Missing ROOTPATH anchor';
+            }
+
+            if (! $this->pathAllowed($subsystem, $resolved)) {
+                $reason = 'Path not allowlisted';
+                $severity = 'error';
+            }
+
+            if ($reason === null) {
+                continue;
+            }
+
+            $replacement = $this->buildReplacementLine($line, $match[2], $firstArg, $resolved);
+
+            $issues[] = [
+                'file' => $relative,
+                'line' => $lineNumber,
+                'call' => $match[2],
+                'reason' => $reason,
+                'severity' => $severity,
+                'snippet' => trim($line),
+                'resolved_path' => $resolved,
+                'subsystem' => $subsystem,
+                'suggested_fix' => $replacement,
+                'confidence' => $severity === 'error' ? 0.95 : 0.80,
+                'replacement_line' => $replacement,
+            ];
         }
 
         return $issues;
     }
 
-    private function buildSeveritySummary(array $issues): array
-    {
-        $summary = ['error' => 0, 'warning' => 0];
-        foreach ($issues as $issue) {
-            $severity = $issue['severity'] ?? 'warning';
-            if (! isset($summary[$severity])) {
-                $summary[$severity] = 0;
-            }
-            $summary[$severity]++;
-        }
-
-        return $summary;
-    }
-
-    private function buildGithubIssuePayloads(array $issues): array
-    {
-        $grouped = [];
-        foreach ($issues as $issue) {
-            $file = $issue['file'] ?? 'unknown';
-            $grouped[$file][] = $issue;
-        }
-
-        $payloads = [];
-        foreach ($grouped as $file => $fileIssues) {
-            $commandName = pathinfo($file, PATHINFO_FILENAME);
-            $bodyLines = [
-                '## Filesystem violations detected',
-                '',
-                '**File:** `' . $file . '`',
-                '',
-                '### Violations',
-            ];
-
-            foreach ($fileIssues as $item) {
-                $bodyLines[] = sprintf(
-                    '- Line %d (%s): %s',
-                    $item['line'] ?? 0,
-                    $item['severity'] ?? 'warning',
-                    $item['reason'] ?? 'Unknown'
-                );
-                if (! empty($item['suggested_fix'])) {
-                    $bodyLines[] = '  - Suggested fix: ' . $item['suggested_fix'];
-                }
-            }
-
-            $payloads[] = [
-                'title' => "[Spark Governance] {$commandName} has filesystem violations",
-                'body' => implode(PHP_EOL, $bodyLines),
-                'file' => $file,
-            ];
-        }
-
-        return $payloads;
-    }
-
-    private function isCiEnvironment(): bool
-    {
-        $value = getenv('GITHUB_ACTIONS');
-        return $value !== false && $value !== '';
-    }
-
-    private function extractCalls(string $line, array $names): array
-    {
-        $calls = [];
-        foreach ($names as $name) {
-            if (! preg_match('/@?' . preg_quote($name, '/') . '\s*\((.*)\)/', $line, $matches)) {
-                continue;
-            }
-
-            $calls[] = [
-                'name' => $name,
-                'args' => $matches[1],
-            ];
-        }
-
-        return $calls;
-    }
-
     private function extractFirstArgument(string $args): string
     {
-        $parts = preg_split('/,(?![^\(]*\))/m', $args);
-        if (! isset($parts[0])) {
-            return '';
-        }
-
-        return trim($parts[0]);
+        $parts = preg_split('/,(?![^()]*\))/', $args);
+        return isset($parts[0]) ? trim($parts[0]) : '';
     }
 
-    private function isAnchoredArgument(string $arg, array $anchored): bool
+    private function resolveSubsystem(string $relativePath): string
     {
-        if (str_contains($arg, 'ROOTPATH')) {
-            return true;
+        if (str_contains($relativePath, '/AiOps/') || str_contains($relativePath, '/AIops/')) {
+            return 'aiops';
+        }
+        if (str_contains($relativePath, '/Codex/')) {
+            return 'codex';
+        }
+        if (str_contains($relativePath, '/Support/')) {
+            return 'support';
+        }
+        if (str_contains($relativePath, 'GapTracker')) {
+            return 'gap_tracker';
         }
 
-        if (preg_match('/^\$(\w+)/', $arg, $matches)) {
-            return isset($anchored[$matches[1]]);
-        }
-
-        return false;
+        return 'ops';
     }
 
-    private function isTargetArgument(string $arg, array $targets, string $target): bool
+    private function resolveTargetPath(string $arg, string $subsystem): string
     {
-        if ($this->expressionTargets($arg, $target)) {
-            return true;
+        $pathBySubsystem = [
+            'ops' => 'docs/_ops/autofix.json',
+            'aiops' => 'docs/_aiops/autofix.json',
+            'codex' => 'docs/_codex/autofix.json',
+            'support' => 'docs/_support/autofix.json',
+            'gap_tracker' => 'docs/_gap-tracker/autofix.json',
+        ];
+
+        if (str_contains($arg, 'WRITEPATH') && str_contains($arg, 'ci/')) {
+            return 'ci/ci_bootstrap.json';
         }
 
-        if (preg_match('/^\$(\w+)/', $arg, $matches)) {
-            return isset($targets[$matches[1]]);
+        if (preg_match('/[\'\"]([^\'\"]+)[\'\"]/', $arg, $m) === 1) {
+            $literal = ltrim($m[1], '/');
+            if (str_starts_with($literal, 'docs/') || str_starts_with($literal, 'ci/')) {
+                return $literal;
+            }
+            if (str_starts_with($literal, 'writable/')) {
+                return (str_contains($literal, 'ci/')) ? 'ci/' . basename($literal) : ($pathBySubsystem[$subsystem] ?? 'docs/_ops/autofix.json');
+            }
         }
 
-        return false;
+        return $pathBySubsystem[$subsystem] ?? 'docs/_ops/autofix.json';
     }
 
-    private function expressionTargets(string $expr, string $target): bool
+    private function pathAllowed(string $subsystem, string $relativePath): bool
     {
-        if ($target === 'public') {
-            return preg_match('/\bpublic[\/\\\\]/', $expr) === 1 || str_contains($expr, 'FCPATH');
-        }
-
-        if ($target === 'writable') {
-            return preg_match('/\bwritable[\/\\\\]/', $expr) === 1 || str_contains($expr, 'WRITEPATH');
-        }
-
-        return false;
-    }
-
-    private function isAllowedWritableSandbox(string $arg): bool
-    {
-        // Allow WRITEPATH . 'aiops/artifacts/...'
-        if (str_contains($arg, 'WRITEPATH') && str_contains($arg, 'aiops/artifacts')) {
-            return true;
-        }
-
-        // Allow variables that resolve to that path
-        if (preg_match('/^\$(\w+)/', $arg, $matches)) {
-            return str_contains($matches[1], 'artifact');
-        }
-
-        return false;
-    }
-
-    private function suggestRootpathFix(string $arg, string $call): string
-    {
-        $suggested = $this->extractLiteralPath($arg);
-        if ($suggested !== null) {
-            return sprintf('%s(ROOTPATH . %s, ...)', $call, $suggested);
-        }
-
-        return sprintf('%s(ROOTPATH . \'docs/...\', ...)', $call);
-    }
-
-    private function suggestSafeTargetFix(string $target): string
-    {
-        if ($target === 'writable') {
-            return 'Use log_message() for logs or move output to ROOTPATH . \'docs/...\'';
-        }
-
-        return 'Move output to ROOTPATH . \'docs/...\'';
-    }
-
-    private function extractLiteralPath(string $arg): ?string
-    {
-        if (preg_match('/([\'"])([^\'"]+)\\1/', $arg, $matches)) {
-            return $matches[1] . $matches[2] . $matches[1];
-        }
-
-        return null;
-    }
-
-    private function isExcludedPath(string $path): bool
-    {
-        $segments = preg_split('/[\/\\\\]+/', $path);
-        if (! is_array($segments)) {
-            return false;
-        }
-
-        foreach ($segments as $segment) {
-            if (in_array($segment, ['node_modules', 'vendor', '.git', 'storage'], true)) {
+        $allow = $this->governance->allowlists[$subsystem] ?? $this->governance->allowlists['default'];
+        foreach ($allow as $prefix) {
+            if (str_starts_with($relativePath, $prefix)) {
                 return true;
             }
         }
@@ -474,14 +238,234 @@ class FilesystemLint extends SafeBaseCommand
         return false;
     }
 
-    private function relativePath(string $path): string
+    private function looksWritableArtifact(string $arg): bool
     {
-        $root = rtrim(ROOTPATH, DIRECTORY_SEPARATOR);
-        if (str_starts_with($path, $root)) {
-            $trimmed = substr($path, strlen($root));
-            return ltrim($trimmed, DIRECTORY_SEPARATOR);
+        if (! str_contains($arg, 'WRITEPATH') && ! str_contains($arg, 'writable/')) {
+            return false;
         }
 
-        return $path;
+        return ! str_contains($arg, 'logs');
+    }
+
+    private function buildReplacementLine(string $line, string $call, string $firstArg, string $resolvedPath): string
+    {
+        $expression = "ROOTPATH . '" . $resolvedPath . "'";
+
+        if ($call === 'mkdir') {
+            return preg_replace('/mkdir\s*\((.+)\)/', 'mkdir(' . $expression . ', 0775, true)', trim($line)) ?? ('mkdir(' . $expression . ', 0775, true);');
+        }
+
+        return str_replace($firstArg, $expression, trim($line));
+    }
+
+    private function canAutoFix(array $issue): bool
+    {
+        if (($issue['confidence'] ?? 0.0) < 0.75) {
+            return false;
+        }
+
+        if (($issue['reason'] ?? '') === 'Path not allowlisted') {
+            return false;
+        }
+
+        return ($issue['replacement_line'] ?? '') !== '';
+    }
+
+    private function applyFix(array $issue): bool
+    {
+        $file = ROOTPATH . ($issue['file'] ?? '');
+        if (! is_file($file)) {
+            return false;
+        }
+
+        $lines = @file($file, FILE_IGNORE_NEW_LINES);
+        if (! is_array($lines)) {
+            return false;
+        }
+
+        $lineNo = (int) ($issue['line'] ?? 0);
+        if ($lineNo < 1 || ! isset($lines[$lineNo - 1])) {
+            return false;
+        }
+
+        $oldLine = $lines[$lineNo - 1];
+        preg_match('/^\s*/', $oldLine, $m);
+        $indent = $m[0] ?? '';
+        $newLine = $indent . rtrim((string) $issue['replacement_line'], ';') . ';';
+
+        if ($newLine === $oldLine) {
+            return false;
+        }
+
+        $lines[$lineNo - 1] = $newLine;
+        $content = implode(PHP_EOL, $lines) . PHP_EOL;
+
+        return file_put_contents($file, $content) !== false;
+    }
+
+    private function writeUnifiedReports(array $payload): void
+    {
+        $opsDir = ROOTPATH . 'docs/_ops';
+        @mkdir($opsDir, 0775, true);
+
+        $jsonPath = $opsDir . '/filesystem-lint.json';
+        file_put_contents($jsonPath, json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL);
+
+        file_put_contents($opsDir . '/filesystem-lint.md', $this->renderLintMarkdown($payload));
+        file_put_contents($opsDir . '/filesystem-lint-summary.md', $this->renderSummaryMarkdown($payload));
+
+        $trendPayload = $this->appendTrend($payload);
+        file_put_contents($opsDir . '/filesystem-trend.md', $this->renderTrendMarkdown($trendPayload));
+    }
+
+    private function appendTrend(array $payload): array
+    {
+        $trendDir = ROOTPATH . 'docs/_ops/trends';
+        @mkdir($trendDir, 0775, true);
+
+        $trendFile = $trendDir . '/filesystem-violations.json';
+        $history = [];
+        if (is_file($trendFile)) {
+            $decoded = json_decode((string) file_get_contents($trendFile), true);
+            if (is_array($decoded)) {
+                $history = $decoded;
+            }
+        }
+
+        $history[] = [
+            'timestamp' => gmdate('c'),
+            'total' => (int) ($payload['issue_count'] ?? 0),
+            'errors' => (int) ($payload['severity_summary']['error'] ?? 0),
+            'warnings' => (int) ($payload['severity_summary']['warning'] ?? 0),
+            'auto_fixed' => (int) ($payload['fixes_applied'] ?? 0),
+            'manual_required' => (int) ($payload['manual_required'] ?? 0),
+        ];
+
+        file_put_contents($trendFile, json_encode($history, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL);
+
+        return array_slice($history, -7);
+    }
+
+    private function renderLintMarkdown(array $payload): string
+    {
+        $lines = [
+            '# Filesystem Lint Report',
+            '',
+            '- Generated: ' . ($payload['generated_at'] ?? ''),
+            '- Total violations: ' . (string) ($payload['issue_count'] ?? 0),
+            '- Errors: ' . (string) ($payload['severity_summary']['error'] ?? 0),
+            '- Warnings: ' . (string) ($payload['severity_summary']['warning'] ?? 0),
+            '',
+        ];
+
+        foreach (($payload['fix_plan'] ?? []) as $entry) {
+            $lines[] = '## ' . $entry['file'] . ':' . $entry['line'];
+            $lines[] = 'Issue: ' . $entry['issue'];
+            $lines[] = 'Fix:';
+            $lines[] = 'Replace:';
+            $lines[] = $entry['replace'];
+            $lines[] = '';
+            $lines[] = 'With:';
+            $lines[] = $entry['with'];
+            $lines[] = '';
+            if (! empty($entry['allowed'])) {
+                $lines[] = 'Allowed:';
+                foreach ((array) $entry['allowed'] as $allowed) {
+                    $lines[] = '- ' . $allowed;
+                }
+                $lines[] = '';
+            }
+        }
+
+        return implode(PHP_EOL, $lines) . PHP_EOL;
+    }
+
+    private function renderSummaryMarkdown(array $payload): string
+    {
+        return implode(PHP_EOL, [
+            '# Filesystem Governance Summary',
+            '',
+            '- Total violations: ' . (string) ($payload['issue_count'] ?? 0),
+            '- Errors: ' . (string) ($payload['severity_summary']['error'] ?? 0),
+            '- Warnings: ' . (string) ($payload['severity_summary']['warning'] ?? 0),
+            '- Auto-fixed: ' . (string) ($payload['fixes_applied'] ?? 0),
+            '- Manual required: ' . (string) ($payload['manual_required'] ?? 0),
+            '',
+            'Status: ' . (((int) ($payload['severity_summary']['error'] ?? 0) > 0) ? '❌ Unhealthy' : (((int) ($payload['severity_summary']['warning'] ?? 0) > 0) ? '⚠️ Warning' : '✅ Healthy')),
+            '',
+        ]) . PHP_EOL;
+    }
+
+    private function renderTrendMarkdown(array $recent): string
+    {
+        $lines = ['## Filesystem Governance Trend', ''];
+        $count = count($recent);
+        if ($count < 2) {
+            $lines[] = '- Not enough history yet.';
+            return implode(PHP_EOL, $lines) . PHP_EOL;
+        }
+
+        $first = $recent[0];
+        $last = $recent[$count - 1];
+
+        $deltaTotal = (int) $last['total'] - (int) $first['total'];
+        $deltaErrors = (int) $last['errors'] - (int) $first['errors'];
+        $pct = ((int) $first['total'] > 0) ? round((($deltaTotal / (int) $first['total']) * 100), 2) : 0;
+        $autoFixRate = ((int) $last['total'] > 0) ? round((((int) $last['auto_fixed'] / (int) $last['total']) * 100), 2) : 0;
+
+        $lines[] = sprintf('- Total violations: %d → %d (%s%.2f%%)', $first['total'], $last['total'], $pct <= 0 ? '↓' : '↑', abs($pct));
+        $lines[] = sprintf('- Errors: %d → %d (%s%d)', $first['errors'], $last['errors'], $deltaErrors <= 0 ? '↓' : '↑', abs($deltaErrors));
+        $lines[] = sprintf('- Auto-fix rate: %.2f%%', $autoFixRate);
+        $lines[] = '';
+        $lines[] = 'Status: ' . (($deltaTotal < 0 || $deltaErrors < 0) ? '✅ Improving' : (($deltaTotal > 0 || $deltaErrors > 0) ? '❌ Regressing' : '➖ Stable'));
+
+        return implode(PHP_EOL, $lines) . PHP_EOL;
+    }
+
+    private function buildSeveritySummary(array $issues): array
+    {
+        $summary = ['error' => 0, 'warning' => 0];
+        foreach ($issues as $issue) {
+            $severity = $issue['severity'] ?? 'warning';
+            $summary[$severity] = (int) ($summary[$severity] ?? 0) + 1;
+        }
+
+        return $summary;
+    }
+
+    private function buildConfidenceSummary(array $issues): array
+    {
+        $out = ['high' => 0, 'medium' => 0, 'low' => 0];
+        foreach ($issues as $issue) {
+            $c = (float) ($issue['confidence'] ?? 0);
+            if ($c >= 0.90) {
+                $out['high']++;
+            } elseif ($c >= 0.75) {
+                $out['medium']++;
+            } else {
+                $out['low']++;
+            }
+        }
+
+        return $out;
+    }
+
+    private function describeFix(array $violation): array
+    {
+        $subsystem = (string) ($violation['subsystem'] ?? 'default');
+        return [
+            'file' => (string) ($violation['file'] ?? 'unknown'),
+            'line' => (int) ($violation['line'] ?? 0),
+            'issue' => (string) ($violation['reason'] ?? 'Unknown violation'),
+            'replace' => (string) ($violation['snippet'] ?? ''),
+            'with' => (string) ($violation['suggested_fix'] ?? ''),
+            'allowed' => $this->governance->allowlists[$subsystem] ?? $this->governance->allowlists['default'],
+        ];
+    }
+
+    private function relativePath(string $path): string
+    {
+        $root = rtrim(ROOTPATH, '/\\') . DIRECTORY_SEPARATOR;
+        return str_starts_with($path, $root) ? ltrim(substr($path, strlen($root)), '/\\') : $path;
     }
 }

@@ -358,15 +358,10 @@ MD;
 
     private function safeWriteFile(string $path, string $content): void
     {
-        $rootedPath = str_starts_with($path, ROOTPATH)
-            ? $path
-            : ROOTPATH . ltrim($path, '/');
-        $docsRoot = rtrim(ROOTPATH, '/') . '/docs/';
-        if (! str_starts_with($rootedPath, $docsRoot)) {
-            throw new \RuntimeException("Refusing to write outside docs/: {$rootedPath}");
-        }
-        $dir = dirname($rootedPath);
-        $this->ensureDir($dir);
+        $filename = basename($path);
+        $rootedDir  = ROOTPATH . 'docs/_ops/proposed-prs';
+        $rootedPath = $rootedDir . '/' . $filename;
+        @mkdir($rootedDir, 0775, true);
 
         if (file_put_contents($rootedPath, $content) === false) {
             throw new \RuntimeException("Failed to write file: {$rootedPath}");

@@ -13,7 +13,7 @@ class CommandsAudit extends SafeBaseCommand
     protected $description = 'Audit Spark commands for illegal constructors.';
     protected $usage = 'ops:commands:audit';
     protected $options = [
-        '--json' => 'Emit JSON output and write writable/ci/ops-commands-audit.json',
+        '--json' => 'Emit JSON output and write docs/_ops/commands-audit/ops-commands-audit.json',
     ];
 
     public function run(array $params)
@@ -30,11 +30,12 @@ class CommandsAudit extends SafeBaseCommand
         ];
 
         if ($this->isCiRuntime() || $json) {
-            $targetDir = WRITEPATH . 'ci';
-            if (! is_dir($targetDir)) {
-                @mkdir($targetDir, 0775, true);
-            }
-            @file_put_contents($targetDir . '/ops-commands-audit.json', json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+            $targetDir = ROOTPATH . 'docs/_ops/commands-audit';
+            @mkdir($targetDir, 0775, true);
+            file_put_contents(
+                $targetDir . '/ops-commands-audit.json',
+                json_encode($payload, JSON_PRETTY_PRINT)
+            );
         }
 
         if ($violations === []) {

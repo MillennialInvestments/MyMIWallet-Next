@@ -40,6 +40,7 @@ $routes->get('Learn/(:segment)', 'PublicPagesController::view/$1');
 $routes->get('Maintenance', 'MaintenanceController::index');
 
 $routes->get('API/Ops/health-score', 'OpsHealth::score');
+$routes->get('API/Ops/filesystem-status', 'Api\OpsFilesystemStatusController::index', ['filter' => 'permission:admin.access']);
 $routes->group('admin/ops', ['filter' => 'permission:admin.access'], static function ($routes) {
     $routes->get('health', 'OpsHealth::index');
     $routes->post('health/run', 'OpsHealth::run');

@@ -300,8 +300,9 @@ class NextSteps extends SafeBaseCommand
             'issues' => array_values($issues),
         ];
 
-        $path = $dir . DIRECTORY_SEPARATOR . sprintf('issues-%s.json', $dateString);
-        file_put_contents($path, json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        $path = ROOTPATH . 'docs/_ops/next-steps.json';
+        @mkdir(dirname($path), 0775, true);
+        file_put_contents($path, json_encode($payload, JSON_PRETTY_PRINT));
     }
 
     /**

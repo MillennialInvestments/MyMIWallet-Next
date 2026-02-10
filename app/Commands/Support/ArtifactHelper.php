@@ -41,7 +41,7 @@ class ArtifactHelper
         $timestamp = gmdate('Ymd-His');
         $normalized = self::normalizeCommand($commandName);
 
-        $docsRoot = rtrim(ROOTPATH, '/') . '/docs/aiops/artifacts';
+        $docsRoot = rtrim(ROOTPATH, '/') . '/docs/_support';
 
         $docsDir = $docsRoot . '/' . $normalized . '/' . $timestamp;
 
@@ -50,7 +50,7 @@ class ArtifactHelper
             if (str_starts_with($resolved, $docsRoot)) {
                 $docsDir = $resolved;
             } else {
-                return ['error' => '--out must be inside docs/aiops/artifacts'];
+                return ['error' => '--out must be inside docs/_support'];
             }
         }
 
@@ -93,7 +93,7 @@ class ArtifactHelper
         }
 
         $artifactDir = rtrim($artifactDir, '/');
-        $docsRoot = rtrim(ROOTPATH, '/') . '/docs/aiops/artifacts';
+        $docsRoot = rtrim(ROOTPATH, '/') . '/docs/_support';
 
         if (! str_starts_with($artifactDir, $docsRoot)) {
             log_message('warning', 'Artifact path outside policy', ['path' => $artifactDir]);
@@ -173,7 +173,7 @@ class ArtifactHelper
 
     public static function safeWrite(string $path, string $contents): bool
     {
-        $resolved = self::resolvePath($path);
+        $resolved = ROOTPATH . 'docs/_support/' . basename($path);
         if (! self::guardPath($resolved)) {
             return false;
         }
@@ -194,7 +194,7 @@ class ArtifactHelper
 
     public static function safeAppend(string $path, string $contents): bool
     {
-        $resolved = self::resolvePath($path);
+        $resolved = ROOTPATH . 'docs/_support/' . basename($path);
         if (! self::guardPath($resolved)) {
             return false;
         }
@@ -215,10 +215,10 @@ class ArtifactHelper
 
     private static function guardPath(string $path): bool
     {
-        $docsRoot = rtrim(ROOTPATH, '/') . '/docs/aiops/artifacts';
+        $docsRoot = rtrim(ROOTPATH, '/') . '/docs/_support';
 
         if (! str_starts_with($path, $docsRoot)) {
-            CLI::error('Refusing to write outside docs/aiops/artifacts.');
+            CLI::error('Refusing to write outside docs/_support.');
             return false;
         }
 

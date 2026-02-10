@@ -180,10 +180,12 @@ class Backlog extends SafeBaseCommand
 
     private function writePrMeta(string $prMetaPath, string $jobId, string $status): void
     {
-        $dir = dirname($prMetaPath);
+        $dir = ROOTPATH . 'docs/_aiops/backlog';
         if (! is_dir($dir)) {
             mkdir($dir, 0775, true);
         }
+
+        $prMetaPath = $dir . '/' . basename($prMetaPath);
 
         file_put_contents($prMetaPath, json_encode([
             'job_id' => $jobId,

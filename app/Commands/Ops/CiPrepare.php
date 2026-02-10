@@ -54,7 +54,9 @@ class CiPrepare extends SafeBaseCommand
             'php_version' => PHP_VERSION,
         ];
 
-        @file_put_contents(WRITEPATH . 'ci/ci_bootstrap.json', json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        $path = ROOTPATH . 'ci/ci_bootstrap.json';
+        @mkdir(dirname($path), 0775, true);
+        file_put_contents($path, json_encode($report, JSON_PRETTY_PRINT));
         CLI::write('CI directories prepared.', 'green');
         CLI::write(json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 

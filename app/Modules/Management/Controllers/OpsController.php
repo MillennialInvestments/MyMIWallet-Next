@@ -101,6 +101,43 @@ class OpsController extends UserController
             'queue_counts' => $counts,
             'jobs'         => $jobs,
             'recent_runs'  => $this->runs->recentRuns(25),
+            'filesystem_governance' => $this->filesystemGovernanceStatus(),
+        ];
+    }
+
+    private function filesystemGovernanceStatus(): array
+    {
+        $lintPath = ROOTPATH . 'docs/_ops/filesystem-lint.json';
+        $trendPath = ROOTPATH . 'docs/_ops/filesystem-trend.md';
+
+        $lint = [];
+        if (is_file($lintPath)) {
+            $decoded = json_decode((string) file_get_contents($lintPath), true);
+            if (is_array($decoded)) {
+                $lint = $decoded;
+            }
+        }
+
+        $errors = (int) ($lint['severity_summary']['error'] ?? 0);
+        $warnings = (int) ($lint['severity_summary']['warning'] ?? 0);
+        $status = $errors > 0 ? 'unhealthy' : ($warnings > 0 ? 'warning' : 'healthy');
+
+        $trend = 'stable';
+        if (is_file($trendPath)) {
+            $trendBody = (string) file_get_contents($trendPath);
+            if (str_contains($trendBody, '✅ Improving')) {
+                $trend = 'improving';
+            } elseif (str_contains($trendBody, '❌ Regressing')) {
+                $trend = 'regressing';
+            }
+        }
+
+        return [
+            'status' => $status,
+            'errors' => $errors,
+            'warnings' => $warnings,
+            'trend' => $trend,
+            'last_run' => (string) ($lint['generated_at'] ?? ''),
         ];
     }
 
