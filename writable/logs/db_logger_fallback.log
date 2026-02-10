@@ -12447,3 +12447,7 @@ in SYSTEMPATH/Database/BaseConnection.php on line 465.
 10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
 11 FCPATH/index.php(68): CodeIgniter\Boot::bootWeb(Object(Config\Paths)) error=Unable to connect to the database.
 Main connection [MySQLi]: mysqli::real_connect(): Argument #5 ($port) must be of type ?int, string given
+[2026-02-10T04:00:03+00:00][HEALTHCHECK] LOG_HEALTHCHECK fallback probe marker=89f4b3f045ae
+[2026-02-10T06:00:03+00:00][HEALTHCHECK] LOG_HEALTHCHECK fallback probe marker=fd8a7853385c
+[2026-02-10T08:00:04+00:00][HEALTHCHECK] LOG_HEALTHCHECK fallback probe marker=740cca607b24
+[2026-02-10T10:00:03+00:00][HEALTHCHECK] LOG_HEALTHCHECK fallback probe marker=bc0d6fe1cde4

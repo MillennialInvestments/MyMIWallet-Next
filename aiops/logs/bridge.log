@@ -35,3 +35,12 @@
 {"ts":"2026-02-09T23:05:01.549Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
 {"ts":"2026-02-10T00:05:02.160Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
 {"ts":"2026-02-10T01:05:02.179Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
+{"ts":"2026-02-10T02:05:01.571Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
+{"ts":"2026-02-10T03:05:02.519Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
+{"ts":"2026-02-10T04:05:01.950Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
+{"ts":"2026-02-10T05:05:01.375Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
+{"ts":"2026-02-10T06:05:02.235Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
+{"ts":"2026-02-10T07:05:01.951Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
+{"ts":"2026-02-10T08:05:01.632Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
+{"ts":"2026-02-10T09:05:01.414Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
+{"ts":"2026-02-10T10:05:01.807Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}

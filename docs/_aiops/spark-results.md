@@ -1,6 +1,6 @@
 # AI-Ops: Spark Results
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-10T02:00:01Z
+> Run: 2026-02-10T10:00:01Z
 
 ## Command 1
 - Cmd: `/usr/local/php82/bin/php spark logs:summarize`
@@ -8,15 +8,16 @@
 - Output:
 
 ```
-CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-10 02:00:03 UTC+00:00
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-10 10:00:02 UTC+00:00
 
 Starting logs:summarize
-```
-
-- Errors:
-
-```
-No log file found. Checked: /home/mymiteam/mymiwallet/site/current/writable/logs/log-2026-02-10.php, /home/mymiteam/mymiwallet/site/current/writable/logs/log-2026-02-10.log
+Summary generated for 2026-02-10: /home/mymiteam/mymiwallet/site/current/writable/logs/summary-2026-02-10.log
+Repo summary: docs/_aiops/error-input/summary-2026-02-10.log
+Repo sync changed=yes
+Last processed timestamp updated to: 2026-02-10 08:00:04
+total_entries=3
+new_entries=1
+⚠ Log summary: total=3, new=1
 ```
 
 ## Command 2
@@ -25,7 +26,7 @@ No log file found. Checked: /home/mymiteam/mymiwallet/site/current/writable/logs
 - Output:
 
 ```
-CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-10 02:00:03 UTC+00:00
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-10 10:00:02 UTC+00:00
 ```
 
 - Errors:
@@ -40,21 +41,17 @@ Command "routes:list" not found.
 - Output:
 
 ```
-CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-10 02:00:03 UTC+00:00
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-10 10:00:03 UTC+00:00
 
 Starting app:healthcheck
 
 App healthcheck summary
 ----------------------------------------
-marker: b7c793f344fd
+marker: bc0d6fe1cde4
 file_log_path: /home/mymiteam/mymiwallet/site/current/writable/logs/log-2026-02-10.php
-file_log_ok=false
-overall=FAIL
-```
-
-- Errors:
-
-```
-db_log_ok=false (db not available: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '%b7c793f344fd%' at line 4)
+file_log_ok=true
+db_log_ok=false
+db_rows=0
+overall=PASS
 ```
 
