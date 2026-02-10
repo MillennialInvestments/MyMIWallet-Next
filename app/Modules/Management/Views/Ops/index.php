@@ -52,6 +52,20 @@
             </div>
         </div>
 
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-header"><strong>Filesystem Governance</strong></div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3"><small class="text-muted">Status</small><div id="fs-gov-status" class="fw-bold">-</div></div>
+                    <div class="col-md-2"><small class="text-muted">Errors</small><div id="fs-gov-errors" class="fw-bold">0</div></div>
+                    <div class="col-md-2"><small class="text-muted">Warnings</small><div id="fs-gov-warnings" class="fw-bold">0</div></div>
+                    <div class="col-md-2"><small class="text-muted">Trend</small><div id="fs-gov-trend" class="fw-bold">→</div></div>
+                    <div class="col-md-3"><small class="text-muted">Last Run</small><div id="fs-gov-last-run" class="fw-bold">-</div></div>
+                </div>
+            </div>
+        </div>
+
         <div class="card shadow-sm mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div>
@@ -148,6 +162,25 @@
         });
     }
 
+
+    function renderFilesystemGovernance(data) {
+        const statusMap = {
+            healthy: '✅ Healthy',
+            warning: '⚠️ Warning',
+            unhealthy: '❌ Unhealthy'
+        };
+        const trendMap = {
+            improving: '↑ Improving',
+            regressing: '↓ Regressing',
+            stable: '→ Stable'
+        };
+        document.getElementById('fs-gov-status').textContent = statusMap[data.status] || data.status || '-';
+        document.getElementById('fs-gov-errors').textContent = data.errors ?? 0;
+        document.getElementById('fs-gov-warnings').textContent = data.warnings ?? 0;
+        document.getElementById('fs-gov-trend').textContent = trendMap[data.trend] || '→ Stable';
+        document.getElementById('fs-gov-last-run').textContent = data.last_run || '-';
+    }
+
     function renderRuns(runs) {
         runsTableBody.innerHTML = '';
         runs.forEach(run => {
@@ -168,6 +201,7 @@
         setCounts(data.queue_counts || {});
         renderJobs(data.jobs || []);
         renderRuns(data.recent_runs || []);
+        renderFilesystemGovernance(data.filesystem_governance || {});
     }
 
     function fetchStatus() {
@@ -179,6 +213,12 @@
             .then(res => res.json())
             .then(updateUI)
             .catch(() => {});
+
+        fetch('<?php echo site_url('API/Ops/filesystem-status'); ?>', {headers})
+            .then(res => res.json())
+            .then(renderFilesystemGovernance)
+            .catch(() => {});
+
     }
 
     function dispatchJob(jobKey) {

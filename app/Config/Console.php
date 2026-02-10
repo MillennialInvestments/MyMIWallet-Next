@@ -87,6 +87,7 @@ class Console extends BaseConfig
         \App\Commands\Ops\CommandsInventory::class,
         \App\Commands\Ops\CommandsLint::class,
         \App\Commands\Ops\FilesystemLint::class,
+        \App\Commands\Ops\FilesystemFix::class,
         \App\Commands\Ops\AlertsIngest::class,
         \App\Commands\Ops\NextSteps::class,
         \App\Commands\Ops\NextStepsSync::class,

@@ -54,9 +54,9 @@ class Audit extends SafeBaseCommand
         $jsonPath = $this->writeDoc('audits', 'aiops-audit-' . date('Y-m-d') . '.json', $report);
         $report['report'] = $jsonPath;
 
-        $mdRelPath = 'docs/_aiops/audits/orchestration-audit-' . date('Y-m-d') . '.md';
-        $mdAbsPath = ROOTPATH . $mdRelPath;
-        @mkdir(dirname($mdAbsPath), 0775, true);
+        $dir = ROOTPATH . 'docs/_aiops/audit';
+        @mkdir($dir, 0775, true);
+        $mdAbsPath = $dir . '/orchestration-audit-' . date('Y-m-d') . '.md';
         file_put_contents($mdAbsPath, $this->buildOrchestrationMarkdown($orchestration));
         $report['orchestration']['markdown_report'] = $mdAbsPath;
 

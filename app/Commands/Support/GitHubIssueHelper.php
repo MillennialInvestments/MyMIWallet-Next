@@ -68,23 +68,15 @@ class GitHubIssueHelper
      */
     private static function writeIssueArtifacts(array $issues, string $fallbackDir): void
     {
-        $rootedDir = str_starts_with($fallbackDir, WRITEPATH)
-            ? $fallbackDir
-            : WRITEPATH . ltrim($fallbackDir, '/');
-
-        if (! str_contains($rootedDir, 'aiops/artifacts/github-issues')) {
-            CLI::error('Fallback issue directory must be inside WRITEPATH/aiops/artifacts/github-issues.');
-            return;
-        }
-
-        if (! is_dir($rootedDir)) {
-            mkdir($rootedDir, 0775, true);
-        }
+        $path = ROOTPATH . 'docs/_support/' . basename($fallbackDir);
+        $rootedDir = dirname($path);
+        @mkdir(dirname($path), 0775, true);
 
         $timestamp = gmdate('Ymd-His');
         foreach ($issues as $index => $issue) {
             $safeName = preg_replace('/[^a-z0-9\-_.]+/i', '-', $issue['file'] ?? 'unknown');
-            $path = sprintf('%s/issue-%s-%02d-%s.json', rtrim($rootedDir, '/'), $timestamp, $index + 1, $safeName);
+            $path = ROOTPATH . 'docs/_support/' . basename(sprintf('issue-%s-%02d-%s.json', $timestamp, $index + 1, $safeName));
+            @mkdir(dirname($path), 0775, true);
             $payload = json_encode([
                 'title' => $issue['title'],
                 'body' => $issue['body'],

@@ -160,6 +160,9 @@ class SparkFix extends SafeBaseCommand
             return false;
         }
 
+        $path = ROOTPATH . 'docs/_ops/spark-fix/' . basename($path);
+        @mkdir(dirname($path), 0775, true);
+
         return file_put_contents($path, $updated) !== false;
     }
 
@@ -251,7 +254,8 @@ class SparkFix extends SafeBaseCommand
                 continue;
             }
 
-            $ok = @mkdir($path, 0775, true);
+            $path = ROOTPATH . 'docs/_ops/spark-fix/' . basename($path);
+            $ok = @mkdir(dirname($path), 0775, true);
             $actions[] = [
                 'type' => 'filesystem',
                 'path' => $this->relativePath($path),

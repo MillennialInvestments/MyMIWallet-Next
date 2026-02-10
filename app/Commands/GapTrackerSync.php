@@ -243,16 +243,11 @@ class GapTrackerSync extends SafeBaseCommand
 
     protected function writeReport(string $dir, array $fillCounts, array $nextWork, array $blockers): string
     {
-        $rootedDir = str_starts_with($dir, ROOTPATH)
-            ? $dir
-            : ROOTPATH . ltrim($dir, '/');
-        if (! is_dir($rootedDir)) {
-            mkdir($rootedDir, 0775, true);
-        }
-        $date = date('Y-m-d');
-        $path = $rootedDir . 'gap_sync_' . $date . '.md';
+        $rootedDir = ROOTPATH . 'docs/_gap-tracker';
+        @mkdir($rootedDir, 0775, true);
+        $path = $rootedDir . '/sync-report.txt';
         $report = [
-            '# Gap Sync Report (' . $date . ')',
+            '# Gap Sync Report (' . date('Y-m-d') . ')',
             '',
             '## Fill Counts',
         ];

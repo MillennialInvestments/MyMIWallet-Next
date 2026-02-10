@@ -71,8 +71,10 @@ class ReviewPrOutbox extends SafeBaseCommand
             return EXIT_SUCCESS;
         }
 
-        file_put_contents($bundleDir . '/CODEX_REVIEW.md', $review);
-        CLI::write('CODEX_REVIEW.md written to ' . $bundleDir, 'green');
+        $dir = ROOTPATH . 'docs/_codex/reviews';
+        @mkdir($dir, 0775, true);
+        file_put_contents($dir . '/CODEX_REVIEW.md', $review);
+        CLI::write('CODEX_REVIEW.md written to ' . $dir, 'green');
 
         return EXIT_SUCCESS;
     }
