@@ -26,10 +26,12 @@ class Console extends BaseConfig
 
         /*
         |----------------------------------------------------------------------
-        | App / Healthcheck
+        | App / Runtime
         |----------------------------------------------------------------------
         */
         \App\Commands\App\Healthcheck::class,
+        \App\Commands\AppUpdate::class,
+        \App\Commands\RuntimeCheck::class,
 
         /*
         |----------------------------------------------------------------------
@@ -38,38 +40,46 @@ class Console extends BaseConfig
         */
         \App\Commands\Runtime\SparkDoctor::class,
         \App\Commands\Runtime\SparkDoctorRuntime::class,
+        \App\Commands\Runtime\SparkFix::class,
         \App\Commands\Runtime\SparkOptimize::class,
-        \App\Commands\Runtime\Diagnose502::class,
         \App\Commands\Runtime\Triage::class,
         \App\Commands\Runtime\CacheBoot::class,
 
         \App\Commands\Diagnose503::class,
+        \App\Commands\Fix503::class,
         \App\Commands\PurgeFastCGI::class,
         \App\Commands\RestartSafe::class,
         \App\Commands\TrafficSpikeGuard::class,
 
         /*
         |----------------------------------------------------------------------
-        | AIOps
+        | AI-Ops
         |----------------------------------------------------------------------
         */
         \App\Commands\AiOps\Audit::class,
         \App\Commands\AiOps\AutoRun::class,
+        \App\Commands\AiOps\Backlog::class,
         \App\Commands\AiOps\ChatGovernanceIndex::class,
         \App\Commands\AiOps\CommandIndex::class,
         \App\Commands\AiOps\CopilotValidate::class,
         \App\Commands\AiOps\EmailScan::class,
+        \App\Commands\AiOps\Init::class,
         \App\Commands\AiOps\ManualRun::class,
         \App\Commands\AiOps\N8nLogs::class,
         \App\Commands\AiOps\N8nRestart::class,
         \App\Commands\AiOps\N8nStart::class,
         \App\Commands\AiOps\N8nStop::class,
+        \App\Commands\AiOps\PublicPagesAudit::class,
+        \App\Commands\AiOps\PublicPagesImport::class,
+        \App\Commands\AiOps\PublicPagesReport::class,
+        \App\Commands\AiOps\PublicPagesRun::class,
         \App\Commands\AiOps\Repair::class,
         \App\Commands\AiOps\Run::class,
         \App\Commands\AiOps\ScanCells::class,
         \App\Commands\AiOps\Seed::class,
         \App\Commands\AiOps\SelfHeal::class,
         \App\Commands\AiOps\Status::class,
+        \App\Commands\AiOps\Unlock::class,
         \App\Commands\AiOps\Watch::class,
 
         /*
@@ -77,38 +87,29 @@ class Console extends BaseConfig
         | Ops
         |----------------------------------------------------------------------
         */
-        \App\Commands\LogsTest::class,
-        \App\Commands\Ops\AiopsInit::class,
         \App\Commands\Ops\AppUpdate::class,
-        \App\Commands\Ops\ConfigLint::class,
-        \App\Commands\Ops\ConfigReset::class,
+        \App\Commands\Ops\AlertsIngest::class,
+        \App\Commands\Ops\CiPrepare::class,
         \App\Commands\Ops\CommandsAudit::class,
         \App\Commands\Ops\CommandsAutofix::class,
         \App\Commands\Ops\CommandsInventory::class,
         \App\Commands\Ops\CommandsLint::class,
-        \App\Commands\Ops\FilesystemLint::class,
+        \App\Commands\Ops\ConfigLint::class,
+        \App\Commands\Ops\ConfigReset::class,
         \App\Commands\Ops\FilesystemFix::class,
-        \App\Commands\Ops\AlertsIngest::class,
+        \App\Commands\Ops\FilesystemLint::class,
         \App\Commands\Ops\NextSteps::class,
         \App\Commands\Ops\NextStepsSync::class,
         \App\Commands\Ops\NextStepsSyncManual::class,
         \App\Commands\Ops\ProposePr::class,
-        \App\Commands\Ops\Diagnostics\FilesystemScan::class,
-        \App\Commands\Ops\DreamHost\DnsVerify::class,
-        \App\Commands\Ops\DreamHost\EmailAudit::class,
-        \App\Commands\Ops\DreamHost\EmailList::class,
-        \App\Commands\Ops\DreamHost\Limits::class,
-        \App\Commands\Ops\Email\Healthcheck::class,
-        \App\Commands\Ops\Email\QueueScan::class,
-        \App\Commands\Ops\Email\Test::class,
-        \App\Commands\Ops\Health\Healthcheck::class,
-        \App\Commands\Ops\Logs\Scan::class,
-        \App\Commands\Ops\Logs\Watch::class,
-        \App\Commands\Ops\PHP\FpmHealth::class,
-        \App\Commands\Ops\Report::class,
-        \App\Commands\Ops\SelfHeal::class,
-        \App\Commands\Ops\Server\NginxStatus::class,
         \App\Commands\Ops\SparkReset::class,
+        \App\Commands\Ops\SubsAudit::class,
+        \App\Commands\Ops\SubsDoctor::class,
+        \App\Commands\Ops\SubsRepair::class,
+        \App\Commands\Ops\SubsStatus::class,
+
+        \App\Commands\OpsAnalyzeCommands::class,
+        \App\Commands\OpsFetchCommands::class,
         \App\Commands\OpsWork::class,
 
         /*
@@ -123,14 +124,98 @@ class Console extends BaseConfig
         \App\Commands\Chat\Start::class,
         \App\Commands\Chat\Stop::class,
         \App\Commands\Chat\Status::class,
-        \App\Commands\Chat\Unlock::class,
-        \App\Commands\Logs\Summarize::class,
-        \App\Commands\Logs\SummarizeAll::class,
+        \App\Commands\Chat\Unblock::class,
+
         /*
         |----------------------------------------------------------------------
-        | Codex / Review
+        | Logs
         |----------------------------------------------------------------------
         */
+        \App\Commands\Logs\Healthcheck::class,
+        \App\Commands\Logs\Summarize::class,
+        \App\Commands\Logs\SummarizeAll::class,
+        \App\Commands\LogsFullReport::class,
+        \App\Commands\LogsTest::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Auth
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Auth\Audit::class,
+        \App\Commands\Auth\FlowSmoke::class,
+        \App\Commands\Auth\FunnelCheck::class,
+        \App\Commands\Auth\Smoke::class,
+        \App\Commands\Auth\SmokeTest::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Database
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Database\ApplyDocs::class,
+        \App\Commands\Database\Drift::class,
+        \App\Commands\Database\Inventory::class,
+        \App\Commands\Database\MigrateDryRun::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Content / Marketing
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\ContentIngestSample::class,
+        \App\Commands\ContentEngineSmoke::class,
+        \App\Commands\Marketing\AutomationAudit::class,
+        \App\Commands\NewsAudit::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Business / Product Audits
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Audit\NodeAudit::class,
+        \App\Commands\GapTrackerSync::class,
+        \App\Commands\Growth\RetentionWatch::class,
+        \App\Commands\Revenue\CostForecast::class,
+        \App\Commands\RevenueStreamsScan::class,
+        \App\Commands\Ux\JourneyAudit::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Discord
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\DiscordList::class,
+        \App\Commands\DiscordProcessQueue::class,
+        \App\Commands\DiscordTest::class,
+        \App\Commands\DiscordTestLiquidity::class,
+        \App\Commands\DiscordWireCheck::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Security
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Security\GenerateKey::class,
+        \App\Commands\Security\GenerateCI4Key::class,
+        \App\Commands\Security\SecretsAudit::class,
+        \App\Commands\SecurityCspAudit::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Scrapers / Alerts
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\AlertsAudit::class,
+        \App\Commands\AlertsParseTest::class,
+        \App\Commands\Scrapers\EmailScraperAudit::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | GitHub / Codex
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\GitHub\SearchRepo::class,
         \App\Commands\Codex\Review::class,
         \App\Commands\Codex\ReviewList::class,
         \App\Commands\Codex\ReviewCommit::class,
@@ -139,36 +224,13 @@ class Console extends BaseConfig
 
         /*
         |----------------------------------------------------------------------
-        | Config / Drift / Security
+        | Wallets / Forecasts / MDIT
         |----------------------------------------------------------------------
         */
-        \App\Commands\Config\Drift::class,
-        \App\Commands\Database\Drift::class,
-
-        /* Security */
-        \App\Commands\Security\GenerateKey::class,
-        \App\Commands\Security\GenerateCI4Key::class,
-        \App\Commands\Security\SecretsAudit::class,
-
-        /*
-        |----------------------------------------------------------------------
-        | Business / Product Audits
-        |----------------------------------------------------------------------
-        */
-        \App\Commands\Audit\NodeAudit::class,
-        \App\Commands\Marketing\AutomationAudit::class,
-        \App\Commands\Growth\RetentionWatch::class,
-        \App\Commands\Ux\JourneyAudit::class,
-        \App\Commands\Revenue\CostForecast::class,
-        \App\Commands\Scraper\EmailScraperAudit::class,
-
-
-        /*
-        |----------------------------------------------------------------------
-        | GitHub
-        |----------------------------------------------------------------------
-        */
-        \App\Commands\GitHub\SearchRepo::class,
+        \App\Commands\ForecastEvaluate::class,
+        \App\Commands\ForecastRefresh::class,
+        \App\Commands\MditNavComputeDaily::class,
+        \App\Commands\WalletsWarmSummaryCache::class,
     ];
 
     /**
