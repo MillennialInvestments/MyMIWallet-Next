@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="tests/_support/bootstrap.php" colors="true" cacheDirectory="writable/cache/phpunit">
+    <testsuites>
+        <testsuite name="unit">
+            <directory suffix="Test.php">tests/unit</directory>
+            <directory suffix="Test.php">tests/feature</directory>
+        </testsuite>
+        <testsuite name="auth-smoke">
+            <directory suffix="Test.php">tests/app/Auth</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <server name="CI_ENVIRONMENT" value="testing"/>
+        <server name="ENVIRONMENT" value="testing"/>
+    </php>
+</phpunit>

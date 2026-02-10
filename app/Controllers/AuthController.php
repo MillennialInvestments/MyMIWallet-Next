@@ -57,11 +57,6 @@ class AuthController extends Controller
      */
     public function login()
     {
-        $response = service('response');
-        $response->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
-                ->setHeader('Pragma', 'no-cache')
-                ->setHeader('Expires', '0');
-
         // No need to show a login form if the user
         // is already logged in.
         if ($this->auth->check()) {
@@ -101,11 +96,6 @@ class AuthController extends Controller
     public function attemptLogin()
     {
         helper('auth');
-        $response = service('response');
-        $response->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
-                ->setHeader('Pragma', 'no-cache')
-                ->setHeader('Expires', '0');
-
         log_message('info', 'AuthController L93: Auth:attemptLogin started.');
 
         service('eventTracker')->track('auth.login_attempt', [
@@ -346,10 +336,6 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        $response = service('response');
-        $response->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
-                ->setHeader('Pragma', 'no-cache')
-                ->setHeader('Expires', '0');
         $userId = (int) ($this->session->get('user_id') ?? $this->auth->id() ?? 0);
         if ($userId > 0) {
             $this->clearUserCacheKeys($userId);
@@ -1306,8 +1292,8 @@ class AuthController extends Controller
             $redirectURL = $this->dashboardUrl();
         }
 
-        // Absolute final guard
-        if (str_contains($redirectURL, '/login')) {
+        // Absolute final guard against loop targets
+        if ($this->isRootDestination($redirectURL) || $this->isLoginDestination($redirectURL) || $this->isLogoutDestination($redirectURL)) {
             $redirectURL = $this->dashboardUrl();
         }
 

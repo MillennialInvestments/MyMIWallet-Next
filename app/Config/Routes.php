@@ -118,7 +118,7 @@ $routes->group('', ['namespace' => 'App\Controllers'], static function($routes) 
 
 // --- Auth Routes ---
 // $routes->group('', ['namespace' => 'Myth\Auth\Controllers'], static function ($routes) {
-$routes->group('', ['namespace' => 'App\Controllers'], static function ($routes) {
+$routes->group('', ['namespace' => 'App\Controllers', 'filter' => 'no-cache'], static function ($routes) {
     $routes->get('login', 'AuthController::login', ['as' => 'login']);
     $routes->post('login', 'AuthController::attemptLogin', ['as' => 'auth/attemptLogin']);
     $routes->post('auth/resend-activation', 'AuthController::resendActivationCode', ['as' => 'auth/resend-activation']);

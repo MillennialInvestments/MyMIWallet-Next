@@ -56,6 +56,24 @@ jobs:
         run: |
           php spark ops:subs:audit --json=1 --strict=0 > subs-audit.json
 
+
+      - name: PHPUnit (unit)
+        run: phpunit --testsuite unit
+
+      - name: PHPUnit (auth smoke)
+        run: phpunit --testsuite auth-smoke
+
+      - name: Auth Flow Smoke Command
+        run: php spark auth:flow-smoke
+
+      - name: PHPCS (if available)
+        run: |
+          if [ -x vendor/bin/phpcs ]; then
+            vendor/bin/phpcs app tests --standard=PSR12
+          else
+            echo "vendor/bin/phpcs not installed; skipping"
+          fi
+
       - name: Upload Subsystem Audit Artifact
         if: always()
         uses: actions/upload-artifact@v4

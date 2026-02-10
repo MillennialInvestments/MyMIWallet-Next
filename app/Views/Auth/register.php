@@ -39,6 +39,13 @@ $subViewData                = [
 <?= $this->extend($config->viewLayout) ?>
 <?= $this->section('main') ?>
 
+<?php if (session()->has('auth_message')) : ?>
+    <?php $msg = session('auth_message'); ?>
+    <div class="alert alert-<?= esc($msg['type']) ?>">
+        <?= esc($msg['text']) ?>
+    </div>
+<?php endif; ?>
+
 <div class="mt-5">
     <div class="row bg-white rounded shadow-sm p-3 mt-5">
         <?php if ($registerFormat === 'Split-Form') : ?>
