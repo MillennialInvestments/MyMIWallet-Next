@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-10T10:00:01Z
+> Run: 2026-02-10T12:00:01Z
 
 - docs/CRON.md
   - Last updated: 2026-01-30
@@ -242,6 +242,12 @@
 - docs/aiops/artifacts/ops-spark-reset/20260210-015513/summary.md
   - Last updated: 2026-02-10
   - Change type: unchanged
+- docs/aiops/artifacts/ops-spark-reset/20260210-112114/summary.md
+  - Last updated: 2026-02-10
+  - Change type: new
+- docs/aiops/artifacts/ops-spark-reset/20260210-112241/summary.md
+  - Last updated: 2026-02-10
+  - Change type: new
 - docs/aiops/artifacts/revenue-cost-forecast/20260201-180746/summary.md
   - Last updated: 2026-02-01
   - Change type: unchanged
@@ -755,6 +761,9 @@
 - docs/dashboards/dashboard_template.md
   - Last updated: 2026-01-25
   - Change type: unchanged
+- docs/debug-validation-checklist.md
+  - Last updated: 2026-02-10
+  - Change type: new
 - docs/deploy/quality_gates.md
   - Last updated: 2026-01-21
   - Change type: unchanged

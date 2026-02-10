@@ -4391,7 +4391,19 @@
         "docs/dev/logging.md": {
             "hash": "63718bec40f0b7fe3fb3728399dc40e273740b6124a358074e21f8fb4669d48d",
             "mtime": "2026-02-10"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260210-112114/summary.md": {
+            "hash": "d1cb7487316c6682ae48a14e45bfc1f299db47d5c8943df827a2f44a74a2308b",
+            "mtime": "2026-02-10"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260210-112241/summary.md": {
+            "hash": "2e9af2e94d7f181d0057e338a68942265bff40ff7f6c2a90f0b232f69bd0fae4",
+            "mtime": "2026-02-10"
+        },
+        "docs/debug-validation-checklist.md": {
+            "hash": "4ec24a0ef603292dba7beee370c738f7e188df6324f4f4057e2c9e2c23190710",
+            "mtime": "2026-02-10"
         }
     },
-    "last_run": "2026-02-10T10:00:01Z"
+    "last_run": "2026-02-10T12:00:01Z"
 }

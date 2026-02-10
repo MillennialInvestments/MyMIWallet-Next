@@ -100,6 +100,15 @@ class App extends BaseConfig
     public function __construct()
     {
         parent::__construct();
+        // -------------------------------------------------
+        // Environment-based defaults
+        // -------------------------------------------------
+        if (defined('CI_ENVIRONMENT') && CI_ENVIRONMENT === 'development') {
+            $this->debugHUD        = true;
+            $this->enableKint      = true;
+            $this->maintenanceMode = false;
+        }
+
 
         // CI guard helper (safe include)
         if (! function_exists('is_ci')) {

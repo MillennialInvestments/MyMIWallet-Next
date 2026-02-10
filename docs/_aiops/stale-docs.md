@@ -1,6 +1,6 @@
 # AI-Ops: Stale Docs
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-10T10:00:01Z
+> Run: 2026-02-10T12:00:01Z
 
 - docs/Kimi/README.md
   - Doc last updated: 2025-12-11 (60 days ago)
@@ -49,7 +49,7 @@
 - docs/discord/alerts_automation.md
   - Doc last updated: 2025-11-27 (74 days ago)
 - docs/discord/discord_integration_overview.md
-  - Doc last updated: 2025-11-25 (76 days ago)
+  - Doc last updated: 2025-11-25 (77 days ago)
 - docs/discord/discord_schema_v3.sql.md
   - Doc last updated: 2025-11-08 (93 days ago)
 - docs/discord/discord_seed_v3.sql.md
