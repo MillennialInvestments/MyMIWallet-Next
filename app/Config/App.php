@@ -87,6 +87,7 @@ class App extends BaseConfig
     public bool $debugHUD        = false;
     public bool $maintenanceMode = false;
     public bool $enableKint      = false;
+    public string $appOverridesFolder = '';
 
     /**
      * Constructor

@@ -1,6 +1,6 @@
 # AI-Ops: Stale Docs
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-10T00:00:01Z
+> Run: 2026-02-10T02:00:01Z
 
 - docs/Kimi/README.md
   - Doc last updated: 2025-12-11 (60 days ago)
@@ -66,8 +66,6 @@
   - Doc last updated: 2025-12-10 (61 days ago)
 - docs/discord/mee6_and_mymi_automation.md
   - Doc last updated: 2025-12-05 (66 days ago)
-- docs/discord/my_midiscord_server_setup_and_alert_routing.md
-  - Doc last updated: 2025-12-05 (66 days ago)
 - docs/discord/mysql_discord_schema.md
   - Doc last updated: 2025-12-05 (66 days ago)
 - docs/discord/operations_and_montioring.md
@@ -77,7 +75,7 @@
 - docs/discord/python_workers.md
   - Doc last updated: 2025-12-05 (66 days ago)
 - docs/discord/server_setup_and_alert_routing.md
-  - Doc last updated: 2025-12-05 (66 days ago)
+  - Doc last updated: 2025-12-05 (67 days ago)
 - docs/discord/server_setup_and_ci4_integration.md
   - Doc last updated: 2025-12-07 (64 days ago)
 - docs/discord/server_setup_support_category.md
@@ -98,8 +96,6 @@
   - Doc last updated: 2025-12-10 (61 days ago)
 - docs/functional_inventory/feature_inventory.md
   - Doc last updated: 2025-11-24 (77 days ago)
-- docs/kimi-k2-integration.md
-  - Doc last updated: 2025-12-11 (60 days ago)
 - docs/logs/_index.md
   - Doc last updated: 2025-11-08 (93 days ago)
 - docs/logs/log-2025-10-06.md

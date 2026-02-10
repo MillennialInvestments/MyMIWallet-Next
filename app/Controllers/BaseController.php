@@ -539,7 +539,11 @@ abstract class BaseController extends Controller
 
         // 3) Render the layout that expects `$content`
         $layout = "themes/{$theme}/layouts/index";
+        $config = config('App');
 
+        if ($config->appOverridesFolder === null) {
+            $config->appOverridesFolder = '';
+        }
         return $this->tryView($layout, $payload, [
             "themes/{$theme}/layouts/default",
             "themes/{$theme}/index",

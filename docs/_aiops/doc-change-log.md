@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-10T00:00:01Z
+> Run: 2026-02-10T02:00:01Z
 
 - docs/CRON.md
   - Last updated: 2026-01-30
@@ -225,13 +225,22 @@
   - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/aiops/artifacts/ops-spark-reset/20260209-211618/summary.md
-  - Last updated: 2026-02-09
+  - Last updated: 2026-02-10
   - Change type: unchanged
 - docs/aiops/artifacts/ops-spark-reset/20260209-221128/summary.md
-  - Last updated: 2026-02-09
-  - Change type: new
+  - Last updated: 2026-02-10
+  - Change type: unchanged
 - docs/aiops/artifacts/ops-spark-reset/20260209-222751/summary.md
-  - Last updated: 2026-02-09
+  - Last updated: 2026-02-10
+  - Change type: unchanged
+- docs/aiops/artifacts/ops-spark-reset/20260210-002222/summary.md
+  - Last updated: 2026-02-10
+  - Change type: new
+- docs/aiops/artifacts/ops-spark-reset/20260210-015456/summary.md
+  - Last updated: 2026-02-10
+  - Change type: new
+- docs/aiops/artifacts/ops-spark-reset/20260210-015513/summary.md
+  - Last updated: 2026-02-10
   - Change type: new
 - docs/aiops/artifacts/revenue-cost-forecast/20260201-180746/summary.md
   - Last updated: 2026-02-01
@@ -749,6 +758,9 @@
 - docs/deploy/quality_gates.md
   - Last updated: 2026-01-21
   - Change type: unchanged
+- docs/dev/logging.md
+  - Last updated: 2026-02-10
+  - Change type: new
 - docs/discord/README.md
   - Last updated: 2025-12-07
   - Change type: unchanged
@@ -789,8 +801,8 @@
   - Last updated: 2025-12-05
   - Change type: unchanged
 - docs/discord/my_midiscord_server_setup_and_alert_routing.md
-  - Last updated: 2025-12-05
-  - Change type: unchanged
+  - Last updated: 2026-02-10
+  - Change type: modified
 - docs/discord/mysql_discord_schema.md
   - Last updated: 2025-12-05
   - Change type: unchanged
@@ -957,8 +969,8 @@
   - Last updated: 2026-01-17
   - Change type: unchanged
 - docs/health/fix-503.md
-  - Last updated: 2026-01-25
-  - Change type: unchanged
+  - Last updated: 2026-02-10
+  - Change type: modified
 - docs/health/health-cache.md
   - Last updated: 2026-01-25
   - Change type: unchanged
@@ -1023,8 +1035,8 @@
   - Last updated: 2026-01-04
   - Change type: unchanged
 - docs/kimi-k2-integration.md
-  - Last updated: 2025-12-11
-  - Change type: unchanged
+  - Last updated: 2026-02-10
+  - Change type: modified
 - docs/legal/crypto_customer_agreement/README.md
   - Last updated: 2025-12-27
   - Change type: unchanged
@@ -2754,8 +2766,8 @@
   - Last updated: 2026-01-01
   - Change type: unchanged
 - docs/ops/fix503.md
-  - Last updated: 2026-01-25
-  - Change type: unchanged
+  - Last updated: 2026-02-10
+  - Change type: modified
 - docs/ops/legacy_psr4_exceptions.md
   - Last updated: 2026-02-01
   - Change type: unchanged
