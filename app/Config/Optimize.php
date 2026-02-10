@@ -23,6 +23,9 @@ class Optimize
      * Config Caching
      * --------------------------------------------------------------------------
      *
+     * Keep disabled unless App config values are null-safe for cache hydration,
+     * especially App::$appOverridesFolder which must remain a string.
+     *
      * @see https://codeigniter.com/user_guide/concepts/factories.html#config-caching
      */
     public bool $cacheConfig = false;

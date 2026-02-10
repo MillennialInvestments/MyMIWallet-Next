@@ -87,6 +87,11 @@ class App extends BaseConfig
     public bool $debugHUD        = false;
     public bool $maintenanceMode = false;
     public bool $enableKint      = false;
+
+    /**
+     * Subfolder name used for App-level view/config overrides.
+     * Must always be a string for CI4 view path resolution under PHP 8.1+.
+     */
     public string $appOverridesFolder = '';
 
     /**
@@ -109,6 +114,12 @@ class App extends BaseConfig
 
         // Index page
         $this->indexPage = (string) env('app.indexPage', $this->indexPage);
+
+        // Keep as string to avoid trim(null) fatals in CI4 view resolution.
+        $appOverridesFolder = env('app.appOverridesFolder', $this->appOverridesFolder);
+        $this->appOverridesFolder = is_string($appOverridesFolder)
+            ? trim($appOverridesFolder, "/\\")
+            : '';
 
         // Feature flags
         $this->debugHUD = filter_var(

@@ -502,11 +502,26 @@ abstract class BaseController extends Controller
         return $this->data;
     }
 
+
+    protected function normalizeAppOverridesFolder(): void
+    {
+        $config = config('App');
+
+        if (! isset($config->appOverridesFolder) || ! is_string($config->appOverridesFolder)) {
+            $config->appOverridesFolder = '';
+            return;
+        }
+
+        $config->appOverridesFolder = trim($config->appOverridesFolder, "/\\");
+    }
+
     protected function renderTheme(string $view, ResponseInterface|array $data = []): ResponseInterface|string
     {
         if ($data instanceof ResponseInterface) {
             return $data; // just hand it back
         }
+        $this->normalizeAppOverridesFolder();
+
         // Pick theme (public/dashboard) just like before
         $theme = $data['layout'] ?? $this->theme ?? 'public';
 
@@ -539,11 +554,6 @@ abstract class BaseController extends Controller
 
         // 3) Render the layout that expects `$content`
         $layout = "themes/{$theme}/layouts/index";
-        $config = config('App');
-
-        if ($config->appOverridesFolder === null) {
-            $config->appOverridesFolder = '';
-        }
         return $this->tryView($layout, $payload, [
             "themes/{$theme}/layouts/default",
             "themes/{$theme}/index",
@@ -557,6 +567,8 @@ abstract class BaseController extends Controller
             log_message('error', 'renderTheme could not locate view: {view}', ['view' => $view]);
             throw PageNotFoundException::forPageNotFound($view);
         }
+
+        $this->normalizeAppOverridesFolder();
 
         return view($resolved, $data);
     }
