@@ -30,7 +30,7 @@ When enabled, AI endpoints register, Advisor routes load, and UI buttons appear 
 - Health check (disabled state):
   - Visit `/API/AI/Chat` or any Advisor route while `AI_ENABLE_KIMI_K2=false` to receive `{ "status": "disabled" }`.
 - Live chat smoke test:
-  - Run `php spark tinker` and execute `service('kimiClient')->simple('ping', 'hello world');`.
+  - Run `php spark logs:test` to validate CI runtime logging, then use a dedicated CI4 endpoint (or an existing controller action) to execute `service('kimiClient')->simple('ping', 'hello world');` inside a full CI runtime.
 - Advisor flows:
   - POST `/Advisor/generateInsight` with `user_id` to receive a markdown insight.
   - POST `/Advisor/generateStoryboard` to get a Coffee & Stocks storyboard.
