@@ -1,0 +1,24 @@
+{
+    "file_path": "app/Modules/User/Views/Budget/Account_Overview/active_table.php",
+    "block_count": 2,
+    "blocks": [
+        {
+            "hash": "9bb171f78194cca263cc9319ec1c55858e715b91f7264af4f4fa2facf3f51dba",
+            "length": 372,
+            "snippet": "<div class=\"card card-bordered h-100\"> <div class=\"card-inner\"> <div class=\"nk-order-ovwg\"> <div class=\"row g-4 align-end\"> <div class=\"col-12 pr-3\"> <div class=\"card-title-group align-start mb-3\"> <d",
+            "contains_php": true,
+            "raw": "<div class=\"card card-bordered h-100\">\n    <div class=\"card-inner\">\n        <div class=\"nk-order-ovwg\">\n            <div class=\"row g-4 align-end\">\n                <div class=\"col-12 pr-3\">\n                    <div class=\"card-title-group align-start mb-3\">\n                        <div class=\"card-title\">\n                            <h6 class=\"title\">Monthly <?php echo $accountType; ?> Overview</h6>\n                            <p>Last 12 Months of Total Monthly Spend &amp; Total Transaction Fees.</p>\n                        </div>"
+        },
+        {
+            "hash": "85fc11957083cad548bf3752d8c7c5fe77936c2ea013898ef5e82f66f4a23f54",
+            "length": 461,
+            "snippet": "<div class=\"card-tools mt-n1 me-n1\"> <div class=\"dropdown\"> <a href=\"#\" class=\"dropdown-toggle btn btn-icon btn-trigger full-width\" data-bs-toggle=\"dropdown\"><em class=\"icon ni ni-more-h\"></em></a> <d",
+            "contains_php": false,
+            "raw": "<div class=\"card-tools mt-n1 me-n1\">\n                            <div class=\"dropdown\">\n                                <a href=\"#\" class=\"dropdown-toggle btn btn-icon btn-trigger full-width\" data-bs-toggle=\"dropdown\"><em class=\"icon ni ni-more-h\"></em></a>\n                                <div class=\"dropdown-menu dropdown-menu-sm dropdown-menu-end\">\n                                    <ul class=\"link-list-opt no-bdr\">\n                                        <li><a href=\"#\" class=\"active\"><span>15 Days</span></a></li>\n                                        <li><a href=\"#\"><span>30 Days</span></a></li>\n                                        <li><a href=\"#\"><span>3 Months</span></a></li>\n                                    </ul>\n                                </div>"
+        }
+    ],
+    "file_hash": "628f393f4e298997a5a19281f8d96113091ed3448820e7dff5c4ba80ef67a51e",
+    "queue_id": 540,
+    "candidate": false,
+    "candidate_blocks": []
+}

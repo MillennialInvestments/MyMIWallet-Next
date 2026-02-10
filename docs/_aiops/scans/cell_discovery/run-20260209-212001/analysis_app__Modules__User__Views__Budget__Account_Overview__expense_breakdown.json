@@ -1,0 +1,32 @@
+{
+    "file_path": "app/Modules/User/Views/Budget/Account_Overview/expense_breakdown.php",
+    "block_count": 2,
+    "blocks": [
+        {
+            "hash": "ff00fb21251389d9cc797b6cd04a056946800669b356b0e1aadfdec4c48d1a07",
+            "length": 227,
+            "snippet": "<div class=\"card card-bordered h-100\"> <div class=\"card-inner h-100 stretch flex-column\"> <div class=\"card-title-group\"> <div class=\"card-title card-title-sm\"> <h6 class=\"title\"><?php echo $accountTyp",
+            "contains_php": true,
+            "raw": "<div class=\"card card-bordered h-100\">\n    <div class=\"card-inner h-100 stretch flex-column\">\n        <div class=\"card-title-group\">\n            <div class=\"card-title card-title-sm\">\n                <h6 class=\"title\"><?php echo $accountType; ?> Breakdown</h6>\n            </div>"
+        },
+        {
+            "hash": "1db9a0368baa001c8ae86a5301cec5da7e3c355566f91b9470172fa92b4c0c60",
+            "length": 426,
+            "snippet": "<div class=\"card-tools\"> <div class=\"dropdown\"> <a href=\"#\" class=\"dropdown-toggle dropdown-indicator btn btn-sm btn-outline-light btn-white\" data-bs-toggle=\"dropdown\">30 Days</a> <div class=\"dropdown",
+            "contains_php": false,
+            "raw": "<div class=\"card-tools\">\n                <div class=\"dropdown\">\n                    <a href=\"#\" class=\"dropdown-toggle dropdown-indicator btn btn-sm btn-outline-light btn-white\" data-bs-toggle=\"dropdown\">30 Days</a>\n                    <div class=\"dropdown-menu dropdown-menu-end dropdown-menu-xs\">\n                        <ul class=\"link-list-opt no-bdr\">\n                            <li><a href=\"#\"><span>7 Days</span></a></li>\n                            <li><a href=\"#\"><span>15 Days</span></a></li>\n                            <li><a href=\"#\"><span>30 Days</span></a></li>\n                        </ul>\n                    </div>"
+        }
+    ],
+    "file_hash": "c08452442a9e0717b5f45febe7c27c2b8f99c30bf3090e58a6d9c2447a23ba36",
+    "queue_id": 541,
+    "candidate": true,
+    "candidate_blocks": [
+        {
+            "hash": "1db9a0368baa001c8ae86a5301cec5da7e3c355566f91b9470172fa92b4c0c60",
+            "length": 426,
+            "snippet": "<div class=\"card-tools\"> <div class=\"dropdown\"> <a href=\"#\" class=\"dropdown-toggle dropdown-indicator btn btn-sm btn-outline-light btn-white\" data-bs-toggle=\"dropdown\">30 Days</a> <div class=\"dropdown",
+            "contains_php": false,
+            "raw": "<div class=\"card-tools\">\n                <div class=\"dropdown\">\n                    <a href=\"#\" class=\"dropdown-toggle dropdown-indicator btn btn-sm btn-outline-light btn-white\" data-bs-toggle=\"dropdown\">30 Days</a>\n                    <div class=\"dropdown-menu dropdown-menu-end dropdown-menu-xs\">\n                        <ul class=\"link-list-opt no-bdr\">\n                            <li><a href=\"#\"><span>7 Days</span></a></li>\n                            <li><a href=\"#\"><span>15 Days</span></a></li>\n                            <li><a href=\"#\"><span>30 Days</span></a></li>\n                        </ul>\n                    </div>"
+        }
+    ]
+}

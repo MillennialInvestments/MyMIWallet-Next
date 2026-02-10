@@ -1,0 +1,32 @@
+{
+    "file_path": "app/Modules/User/Views/Budget/Account_Overview/history_overview.php",
+    "block_count": 2,
+    "blocks": [
+        {
+            "hash": "3083fbf9f54ace1127b5707dda83390bdf46697a50d9d1d5a9c62f28a6b121cb",
+            "length": 189,
+            "snippet": "<div class=\"card card-bordered h-100\"> <div class=\"card-inner mb-n2\"> <div class=\"card-title-group\"> <div class=\"card-title card-title-sm\"> <h6 class=\"title\">Last 5 Transactions</h6> </div>",
+            "contains_php": false,
+            "raw": "<div class=\"card card-bordered h-100\">\n    <div class=\"card-inner mb-n2\">\n        <div class=\"card-title-group\">\n            <div class=\"card-title card-title-sm\">\n                <h6 class=\"title\">Last 5 Transactions</h6>\n            </div>"
+        },
+        {
+            "hash": "1db9a0368baa001c8ae86a5301cec5da7e3c355566f91b9470172fa92b4c0c60",
+            "length": 426,
+            "snippet": "<div class=\"card-tools\"> <div class=\"dropdown\"> <a href=\"#\" class=\"dropdown-toggle dropdown-indicator btn btn-sm btn-outline-light btn-white\" data-bs-toggle=\"dropdown\">30 Days</a> <div class=\"dropdown",
+            "contains_php": false,
+            "raw": "<div class=\"card-tools\">\n                <div class=\"dropdown\">\n                    <a href=\"#\" class=\"dropdown-toggle dropdown-indicator btn btn-sm btn-outline-light btn-white\" data-bs-toggle=\"dropdown\">30 Days</a>\n                    <div class=\"dropdown-menu dropdown-menu-end dropdown-menu-xs\">\n                        <ul class=\"link-list-opt no-bdr\">\n                            <li><a href=\"#\"><span>7 Days</span></a></li>\n                            <li><a href=\"#\"><span>15 Days</span></a></li>\n                            <li><a href=\"#\"><span>30 Days</span></a></li>\n                        </ul>\n                    </div>"
+        }
+    ],
+    "file_hash": "4fb4c37e3cf3129ab90ec5e21b7af87b8d0b0d65a36fad58afa2b6af210a4d94",
+    "queue_id": 542,
+    "candidate": true,
+    "candidate_blocks": [
+        {
+            "hash": "1db9a0368baa001c8ae86a5301cec5da7e3c355566f91b9470172fa92b4c0c60",
+            "length": 426,
+            "snippet": "<div class=\"card-tools\"> <div class=\"dropdown\"> <a href=\"#\" class=\"dropdown-toggle dropdown-indicator btn btn-sm btn-outline-light btn-white\" data-bs-toggle=\"dropdown\">30 Days</a> <div class=\"dropdown",
+            "contains_php": false,
+            "raw": "<div class=\"card-tools\">\n                <div class=\"dropdown\">\n                    <a href=\"#\" class=\"dropdown-toggle dropdown-indicator btn btn-sm btn-outline-light btn-white\" data-bs-toggle=\"dropdown\">30 Days</a>\n                    <div class=\"dropdown-menu dropdown-menu-end dropdown-menu-xs\">\n                        <ul class=\"link-list-opt no-bdr\">\n                            <li><a href=\"#\"><span>7 Days</span></a></li>\n                            <li><a href=\"#\"><span>15 Days</span></a></li>\n                            <li><a href=\"#\"><span>30 Days</span></a></li>\n                        </ul>\n                    </div>"
+        }
+    ]
+}

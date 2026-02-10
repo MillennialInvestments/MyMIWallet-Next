@@ -36,6 +36,8 @@ $routes->get('/', 'Home::index');
 
 // Simple health check that should return 200 without auth
 $routes->get('healthz', 'System\HealthController::healthz', ['as' => 'healthz']);
+$routes->get('Learn/(:segment)', 'PublicPagesController::view/$1');
+
 $routes->get('API/Ops/health-score', 'OpsHealth::score');
 $routes->group('admin/ops', ['filter' => 'permission:admin.access'], static function ($routes) {
     $routes->get('health', 'OpsHealth::index');

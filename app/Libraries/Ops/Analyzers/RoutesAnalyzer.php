@@ -236,7 +236,9 @@ class RoutesAnalyzer
             return ['status' => 'fail', 'message' => 'unauthorized'];
         }
 
-        if ($response->isRedirect()) {
+        $status = $response->getStatusCode();
+        if ($status >= 300 && $status < 400) {
+
             $location = (string) $response->getHeaderLine('Location');
             $allowRedirect = (bool) ($route['allowRedirect'] ?? false);
 

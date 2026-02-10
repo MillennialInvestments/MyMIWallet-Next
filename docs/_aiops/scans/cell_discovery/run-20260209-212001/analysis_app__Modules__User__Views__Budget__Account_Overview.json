@@ -1,0 +1,24 @@
+{
+    "file_path": "app/Modules/User/Views/Budget/Account_Overview.php",
+    "block_count": 2,
+    "blocks": [
+        {
+            "hash": "0d279f6622827c63cfb5153762fb00ea17dfcb5225bdd7b1816b865b8098d6eb",
+            "length": 163,
+            "snippet": "<div class=\"nk-block\"> <div class=\"row\"> <div class=\"col-lg-4\"> <?php echo view('UserModule\\Views\\Budget\\Account_Overview\\action_center', $viewFileData); ?> </div>",
+            "contains_php": true,
+            "raw": "<div class=\"nk-block\">\n    <div class=\"row\">\n        <div class=\"col-lg-4\">\n            <?php echo view('UserModule\\Views\\Budget\\Account_Overview\\action_center', $viewFileData); ?>\n        </div>"
+        },
+        {
+            "hash": "e63ed3f42bd2ff87513257768338992bdd7f7ef338d3b7f7b390870897a86d0c",
+            "length": 175,
+            "snippet": "<div class=\"nk-block\"> <div class=\"row\"> <div class=\"col-lg-4 col-sm-6\"> <?php echo view('UserModule\\Views\\Budget\\Account_Overview\\source_breakdown', $viewFileData); ?> </div>",
+            "contains_php": true,
+            "raw": "<div class=\"nk-block\">\n    <div class=\"row\">\n        <div class=\"col-lg-4 col-sm-6\">\n            <?php echo view('UserModule\\Views\\Budget\\Account_Overview\\source_breakdown', $viewFileData); ?>\n        </div>"
+        }
+    ],
+    "file_hash": "1e278aee613a3781638c0a63bffc8bff2d741141410ccfa1b05fbd2958d9ff44",
+    "queue_id": 538,
+    "candidate": false,
+    "candidate_blocks": []
+}

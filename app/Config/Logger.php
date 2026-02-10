@@ -21,7 +21,16 @@ class Logger extends BaseConfig
      *
      * @var list<string>
      */
-    public int|string|array $threshold = self::ALL_LEVELS;
+    public int|string|array $threshold = [
+        'emergency',
+        'alert',
+        'critical',
+        'error',
+        'warning',
+        'notice',
+        'info',
+        'debug',
+    ];
 
     /**
      * Date Format for Logs
@@ -70,19 +79,20 @@ class Logger extends BaseConfig
              */
             FileHandler::class => [
                 'handles' => [
-                    'critical',
-                    'alert',
                     'emergency',
-                    'debug',
+                    'alert',
+                    'critical',
                     'error',
-                    'info',
-                    'notice',
                     'warning',
+                    'notice',
+                    'info',
+                    'debug',
                 ],
-                'fileExtension'   => 'php',
-                'filePermissions' => 0644,
                 'path'            => $this->logPath,
+                'fileExtension'   => 'php',
+                'filePermissions' => 0664,
             ],
+
         ];
 
         // Optional env override for alert email
@@ -90,6 +100,20 @@ class Logger extends BaseConfig
             'LOGGER_ALERT_EMAIL',
             $this->handlers[DatabaseLoggerHandler::class]['notificationEmail']
         );
+
+        if ($this->threshold === [] || $this->threshold === [9]) {
+            $this->threshold = [
+                'emergency',
+                'alert',
+                'critical',
+                'error',
+                'warning',
+                'notice',
+                'info',
+                'debug',
+            ];
+        }
+
     }
 
     /**

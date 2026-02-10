@@ -1,7 +1,13 @@
 # AI-Ops: Stale Docs
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-09T20:00:02Z
+> Run: 2026-02-10T00:00:01Z
 
+- docs/Kimi/README.md
+  - Doc last updated: 2025-12-11 (60 days ago)
+- docs/Kimi/audit-2025-12-11.md
+  - Doc last updated: 2025-12-11 (60 days ago)
+- docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md
+  - Doc last updated: 2025-12-11 (60 days ago)
 - docs/OVERVIEW.md
   - Doc last updated: 2025-11-08 (93 days ago)
 - docs/README.md
@@ -11,7 +17,7 @@
 - docs/adr/_index.md
   - Doc last updated: 2025-11-08 (93 days ago)
 - docs/alerts/alerts_marketing_pipline.md
-  - Doc last updated: 2025-11-22 (78 days ago)
+  - Doc last updated: 2025-11-22 (79 days ago)
 - docs/auctions/_index.md
   - Doc last updated: 2025-11-08 (93 days ago)
 - docs/auctions/auction-schema.md
@@ -35,11 +41,11 @@
 - docs/csp-and-commondata.md
   - Doc last updated: 2025-11-08 (93 days ago)
 - docs/discord/README.md
-  - Doc last updated: 2025-12-07 (63 days ago)
+  - Doc last updated: 2025-12-07 (64 days ago)
 - docs/discord/_index.md
-  - Doc last updated: 2025-12-05 (65 days ago)
+  - Doc last updated: 2025-12-05 (66 days ago)
 - docs/discord/_inventory.md
-  - Doc last updated: 2025-12-05 (65 days ago)
+  - Doc last updated: 2025-12-05 (66 days ago)
 - docs/discord/alerts_automation.md
   - Doc last updated: 2025-11-27 (74 days ago)
 - docs/discord/discord_integration_overview.md
@@ -53,33 +59,33 @@
 - docs/discord/earnings_calendar_automation.md
   - Doc last updated: 2025-11-26 (75 days ago)
 - docs/discord/environments.md
-  - Doc last updated: 2025-12-05 (65 days ago)
+  - Doc last updated: 2025-12-05 (66 days ago)
 - docs/discord/events_matrix.md
-  - Doc last updated: 2025-12-05 (65 days ago)
+  - Doc last updated: 2025-12-05 (66 days ago)
 - docs/discord/marketing_news_automation.md
   - Doc last updated: 2025-12-10 (61 days ago)
 - docs/discord/mee6_and_mymi_automation.md
-  - Doc last updated: 2025-12-05 (65 days ago)
+  - Doc last updated: 2025-12-05 (66 days ago)
 - docs/discord/my_midiscord_server_setup_and_alert_routing.md
-  - Doc last updated: 2025-12-05 (65 days ago)
+  - Doc last updated: 2025-12-05 (66 days ago)
 - docs/discord/mysql_discord_schema.md
-  - Doc last updated: 2025-12-05 (65 days ago)
+  - Doc last updated: 2025-12-05 (66 days ago)
 - docs/discord/operations_and_montioring.md
   - Doc last updated: 2025-11-26 (75 days ago)
 - docs/discord/premium_flows_and_upsell.md
-  - Doc last updated: 2025-12-05 (65 days ago)
+  - Doc last updated: 2025-12-05 (66 days ago)
 - docs/discord/python_workers.md
-  - Doc last updated: 2025-12-05 (65 days ago)
+  - Doc last updated: 2025-12-05 (66 days ago)
 - docs/discord/server_setup_and_alert_routing.md
   - Doc last updated: 2025-12-05 (66 days ago)
 - docs/discord/server_setup_and_ci4_integration.md
-  - Doc last updated: 2025-12-07 (63 days ago)
+  - Doc last updated: 2025-12-07 (64 days ago)
 - docs/discord/server_setup_support_category.md
-  - Doc last updated: 2025-12-07 (63 days ago)
+  - Doc last updated: 2025-12-07 (64 days ago)
 - docs/discord/streaming_setup.md
-  - Doc last updated: 2025-12-07 (63 days ago)
+  - Doc last updated: 2025-12-07 (64 days ago)
 - docs/discord/where_to_share_what.md
-  - Doc last updated: 2025-12-07 (63 days ago)
+  - Doc last updated: 2025-12-07 (64 days ago)
 - docs/discord_schema.sql.md
   - Doc last updated: 2025-11-08 (93 days ago)
 - docs/discord_seed.sql.md
@@ -92,6 +98,8 @@
   - Doc last updated: 2025-12-10 (61 days ago)
 - docs/functional_inventory/feature_inventory.md
   - Doc last updated: 2025-11-24 (77 days ago)
+- docs/kimi-k2-integration.md
+  - Doc last updated: 2025-12-11 (60 days ago)
 - docs/logs/_index.md
   - Doc last updated: 2025-11-08 (93 days ago)
 - docs/logs/log-2025-10-06.md

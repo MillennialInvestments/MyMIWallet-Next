@@ -31,3 +31,7 @@
 {"ts":"2026-02-09T19:05:01.535Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
 {"ts":"2026-02-09T20:05:01.565Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
 {"ts":"2026-02-09T21:05:02.164Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
+{"ts":"2026-02-09T22:05:02.372Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
+{"ts":"2026-02-09T23:05:01.549Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
+{"ts":"2026-02-10T00:05:02.160Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
+{"ts":"2026-02-10T01:05:02.179Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}

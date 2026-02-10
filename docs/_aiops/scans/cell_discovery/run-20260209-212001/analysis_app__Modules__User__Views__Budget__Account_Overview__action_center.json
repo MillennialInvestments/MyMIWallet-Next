@@ -1,0 +1,52 @@
+{
+    "file_path": "app/Modules/User/Views/Budget/Account_Overview/action_center.php",
+    "block_count": 6,
+    "blocks": [
+        {
+            "hash": "d12726180d67e68973a624134caeec5b9c5afe3da607656161659a0859a244d1",
+            "length": 236,
+            "snippet": "<div class=\"card card-bordered h-100\"> <div class=\"card-inner-group\"> <div class=\"card-inner card-inner-md\"> <div class=\"card-title-group\"> <div class=\"card-title\"> <h6 class=\"title\"><?php echo $accou",
+            "contains_php": true,
+            "raw": "<div class=\"card card-bordered h-100\">\n    <div class=\"card-inner-group\">\n        <div class=\"card-inner card-inner-md\">\n            <div class=\"card-title-group\">\n                <div class=\"card-title\">\n                    <h6 class=\"title\"><?php echo $accountType; ?> Action Center</h6>\n                </div>"
+        },
+        {
+            "hash": "54da9590b0039b6196a5eb109ffd8dbd495f6cf5a78acf6a7c9e3fe7bc2f5199",
+            "length": 465,
+            "snippet": "<div class=\"card-tools me-n1\"> <div class=\"dropdown\"> <a href=\"#\" class=\"dropdown-toggle btn btn-icon btn-trigger full-width\" data-bs-toggle=\"dropdown\"><em class=\"icon ni ni-more-h\"></em></a> <div cla",
+            "contains_php": false,
+            "raw": "<div class=\"card-tools me-n1\">\n                    <div class=\"dropdown\">\n                        <a href=\"#\" class=\"dropdown-toggle btn btn-icon btn-trigger full-width\" data-bs-toggle=\"dropdown\"><em class=\"icon ni ni-more-h\"></em></a>\n                        <div class=\"dropdown-menu dropdown-menu-end\">\n                            <ul class=\"link-list-opt no-bdr\">\n                                <li><a href=\"#\"><em class=\"icon ni ni-setting\"></em><span>Action Settings</span></a></li>\n                                <li><a href=\"#\"><em class=\"icon ni ni-notify\"></em><span>Push Notification</span></a></li>\n                            </ul>\n                        </div>"
+        },
+        {
+            "hash": "7b12ab2529e4ff9ab4ef3d9c41ff919b0971aed94a9d58cd0d5c5c44156b2877",
+            "length": 184,
+            "snippet": "<div class=\"card-inner\"> <div class=\"nk-wg-action\"> <div class=\"nk-wg-action-content\"> <em class=\"icon ni ni-cc-alt-fill\"></em> <div class=\"title\">Add <?php echo $accountType; ?></div>",
+            "contains_php": true,
+            "raw": "<div class=\"card-inner\">\n            <div class=\"nk-wg-action\">\n                <div class=\"nk-wg-action-content\">\n                    <em class=\"icon ni ni-cc-alt-fill\"></em>\n                    <div class=\"title\">Add <?php echo $accountType; ?></div>"
+        },
+        {
+            "hash": "98b23ca066869b36fb5fdcc784763ee81845a9177728f0061e0f0121a6f431f9",
+            "length": 170,
+            "snippet": "<div class=\"card-inner\"> <div class=\"nk-wg-action\"> <div class=\"nk-wg-action-content\"> <em class=\"icon ni ni-help-fill\"></em> <div class=\"title\">View Account Ledger</div>",
+            "contains_php": false,
+            "raw": "<div class=\"card-inner\">\n            <div class=\"nk-wg-action\">\n                <div class=\"nk-wg-action-content\">\n                    <em class=\"icon ni ni-help-fill\"></em>\n                    <div class=\"title\">View Account Ledger</div>"
+        },
+        {
+            "hash": "4be2efe5dbb28528d44a4d631d6bf57d06dddf66fe34ef74a1fb01d08b17c1ce",
+            "length": 189,
+            "snippet": "<div class=\"card-inner\"> <div class=\"nk-wg-action\"> <div class=\"nk-wg-action-content\"> <em class=\"icon ni ni-wallet-fill\"></em> <div class=\"title\"><?php echo $accountType; ?> Settings</div>",
+            "contains_php": true,
+            "raw": "<div class=\"card-inner\">\n            <div class=\"nk-wg-action\">\n                <div class=\"nk-wg-action-content\">\n                    <em class=\"icon ni ni-wallet-fill\"></em>\n                    <div class=\"title\"><?php echo $accountType; ?> Settings</div>"
+        },
+        {
+            "hash": "70ab7ab2ee4b7cea8337d70947ca74dc0a30e65e2b3a05fba67cecf7807e4df2",
+            "length": 166,
+            "snippet": "<div class=\"card-inner\"> <div class=\"nk-wg-action\"> <div class=\"nk-wg-action-content\"> <em class=\"icon ni ni-wallet-fill\"></em> <div class=\"title\">Need Support?</div>",
+            "contains_php": false,
+            "raw": "<div class=\"card-inner\">\n            <div class=\"nk-wg-action\">\n                <div class=\"nk-wg-action-content\">\n                    <em class=\"icon ni ni-wallet-fill\"></em>\n                    <div class=\"title\">Need Support?</div>"
+        }
+    ],
+    "file_hash": "209f43c3952861f198e04c7a67d689e3604c800bd4401a31aff7dc9ae8b4df12",
+    "queue_id": 539,
+    "candidate": false,
+    "candidate_blocks": []
+}

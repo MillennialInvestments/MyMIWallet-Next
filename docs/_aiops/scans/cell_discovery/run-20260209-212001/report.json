@@ -1,0 +1,18 @@
+{
+    "files_scanned": 5,
+    "candidates_found": 2,
+    "duplicates_map": {
+        "1db9a0368baa001c8ae86a5301cec5da7e3c355566f91b9470172fa92b4c0c60": {
+            "count": 2,
+            "files": [
+                "app/Modules/User/Views/Budget/Account_Overview/expense_breakdown.php",
+                "app/Modules/User/Views/Budget/Account_Overview/history_overview.php"
+            ],
+            "snippet": "<div class=\"card-tools\"> <div class=\"dropdown\"> <a href=\"#\" class=\"dropdown-toggle dropdown-indicator btn btn-sm btn-outline-light btn-white\" data-bs-toggle=\"dropdown\">30 Days</a> <div class=\"dropdown"
+        }
+    },
+    "queue_stats": {
+        "pending": 1241,
+        "completed": 10
+    }
+}
