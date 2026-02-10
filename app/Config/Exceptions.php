@@ -27,6 +27,11 @@ class Exceptions extends BaseConfig
     public bool $log = true;
 
     /**
+     * Should detailed errors be shown to the client in development.
+     */
+    public bool $displayErrors = true;
+
+    /**
      * --------------------------------------------------------------------------
      * DO NOT LOG STATUS CODES
      * --------------------------------------------------------------------------

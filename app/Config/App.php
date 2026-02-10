@@ -143,7 +143,7 @@ class App extends BaseConfig
         );
 
         $this->enableKint = filter_var(
-            env('app.enableKint', $this->enableKint),
+            env('app.enableKint', true),
             FILTER_VALIDATE_BOOLEAN
         );
 
