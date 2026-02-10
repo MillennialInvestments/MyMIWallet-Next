@@ -44,6 +44,7 @@ class Filters extends BaseConfig
         'auth'          => \App\Filters\AuthFilter::class,  
         'cronKey'       => \App\Filters\CronKeyFilter::class,   
         'noStore'       => \App\Filters\NoStoreFilter::class,
+        'no-cache'      => \App\Filters\NoCacheFilter::class,
         // 'csp'           => \App\Filters\CspFilter::class,
         
         'cspoff'        => \App\Filters\CspOff::class,
@@ -266,6 +267,38 @@ class Filters extends BaseConfig
      * 'isLoggedIn' => ['before' => ['account/*', 'profiles/*']]
      */
     public array $filters = [
+
+        'login' => [
+            'before' => [
+                'Dashboard',
+                'Dashboard/*',
+                'Account',
+                'Account/*',
+                'Budget',
+                'Budget/*',
+                'Investments',
+                'Investments/*',
+                'Wallets',
+                'Wallets/*',
+            ],
+        ],
+
+        'no-cache' => [
+            'after' => [
+                'login',
+                'logout',
+                'auth/*',
+                'Auth/*',
+                'forgot',
+                'forgot-password',
+                'reset-password',
+                'activate',
+                'activate-account',
+                'activate-account/*',
+                'resend-activation',
+                'resend-activate-account',
+            ],
+        ],
         'cronKey' => [
             'before' => [
                 'API/Alerts/fetchEmailAlerts',
