@@ -45,6 +45,24 @@ class Healthcheck extends SafeBaseCommand
         CLI::write('fallback_log_ok=' . ($result['fallback_log_ok'] ? 'true' : 'false'));
         CLI::write('fallback_path=' . $result['fallback_path']);
 
+        $debugMode = filter_var((string) env('LOGS_HEALTHCHECK_DEBUG', false), FILTER_VALIDATE_BOOLEAN);
+        if ($debugMode) {
+            CLI::newLine();
+            CLI::write('debug_mode=true', 'yellow');
+            $dbDebug = $result['debug']['db'] ?? [];
+            CLI::write('db_table=' . ($dbDebug['table'] ?? 'n/a'));
+            CLI::write('db_message_column=' . ($dbDebug['message_column'] ?? 'n/a'));
+            if (isset($dbDebug['compiled_select'])) {
+                CLI::write('db_compiled_select=' . $dbDebug['compiled_select']);
+            }
+            CLI::write('expected_log_path=' . ($result['debug']['expected_log_path'] ?? $result['log_path']));
+            CLI::write('log_tail_last_10_lines:');
+            $tailLines = $result['debug']['log_tail'] ?? [];
+            foreach ($tailLines as $line) {
+                CLI::write('  ' . $line);
+            }
+        }
+
         if ($result['dry_run']) {
             CLI::write('dry_run=true (no log records written)');
         }
