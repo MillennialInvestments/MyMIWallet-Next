@@ -235,6 +235,7 @@ class Filters extends BaseConfig
         ],
         'after' => [
             // 'csp' => ['except' => ['API/*', 'assets/*']],
+            'toolbar', // force inclusion of debug toolbar
             'cspoff',
             'sessionTracker',
             'observability',

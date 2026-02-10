@@ -3,6 +3,13 @@
 use CodeIgniter\Boot;
 use Config\Paths;
 
+// Force development environment if .env requests it
+if (getenv('CI_ENVIRONMENT') === 'development') {
+    $_SERVER['CI_ENVIRONMENT'] = 'development';
+    defined('ENVIRONMENT') || define('ENVIRONMENT', 'development');
+    defined('CI_DEBUG')    || define('CI_DEBUG', true);
+}
+
 /*
  *---------------------------------------------------------------
  * CHECK PHP VERSION
