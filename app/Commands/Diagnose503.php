@@ -18,6 +18,29 @@ class Diagnose503 extends SafeBaseCommand
     {
         [, $flags] = $this->parseParams($params);
         $discord = isset($flags['discord']);
+        $ciMode = $this->isCiRuntime();
+
+        if ($ciMode) {
+            CLI::write('CI mode: running report-only 503 diagnostics.', 'yellow');
+            $this->ciSummary([
+                'command' => $this->name,
+                'ci_mode' => true,
+                'would_check' => [
+                    'nginx/php-fpm upstream health',
+                    'writable/cache permissions',
+                    'maintenance mode flags',
+                    'recent application and web server error logs',
+                ],
+                'php_version' => PHP_VERSION,
+                'modules_count' => count(get_loaded_extensions()),
+                'writable' => [
+                    'writepath' => is_writable(WRITEPATH),
+                    'cache_dir_exists' => is_dir(WRITEPATH . 'cache'),
+                    'logs_dir_exists' => is_dir(WRITEPATH . 'logs'),
+                ],
+            ]);
+            return EXIT_SUCCESS;
+        }
 
         $results = [];
 
@@ -66,6 +89,8 @@ class Diagnose503 extends SafeBaseCommand
             $this->sendDiscord($msg);
             CLI::write('Discord alert sent (if configured).', 'green');
         }
+
+        return EXIT_SUCCESS;
     }
 
     private function sendDiscord(string $message): void

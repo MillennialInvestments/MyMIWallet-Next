@@ -245,4 +245,18 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
         return EXIT_ERROR;
     }
 
+    protected function isCiRuntime(): bool
+    {
+        $ci = strtolower((string) (getenv('CI') ?: ''));
+        $environment = strtolower((string) (getenv('ENVIRONMENT') ?: ''));
+        $ciEnvironment = strtolower((string) (getenv('CI_ENVIRONMENT') ?: ''));
+
+        return $ci === 'true' || $environment === 'ci' || $ciEnvironment === 'ci';
+    }
+
+    protected function ciSummary(array $summary): void
+    {
+        CLI::write(json_encode($summary, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+    }
+
 }

@@ -33,6 +33,7 @@ app/_backup_autoload_skip/
 app/FiltersO/
 .env
 .env.*
+!env/.env.ci.example
 chat/.env*
 !chat/.env.staging.example
 !chat/.env.production.example

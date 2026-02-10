@@ -18,6 +18,24 @@ class PurgeFastCGI extends SafeBaseCommand
     {
         [, $flags] = $this->parseParams($params);
         $apply = isset($flags['approve']);
+        $ciMode = $this->isCiRuntime();
+
+        if ($ciMode) {
+            CLI::write('CI mode: report-only diagnostics for FastCGI purge.', 'yellow');
+            $this->ciSummary([
+                'command' => $this->name,
+                'ci_mode' => true,
+                'would_check' => ['~/nginx', '~/mymiwallet', 'fastcgi_pass/php-pm/controller.sock references'],
+                'php_version' => PHP_VERSION,
+                'loaded_extensions' => get_loaded_extensions(),
+                'writable' => [
+                    'writepath' => is_writable(WRITEPATH),
+                    'cache' => is_writable(WRITEPATH . 'cache'),
+                    'logs' => is_writable(WRITEPATH . 'logs'),
+                ],
+            ]);
+            return EXIT_SUCCESS;
+        }
 
         if (isset($flags['apply'])) {
             CLI::error('Use --approve instead of --apply.');
@@ -74,7 +92,7 @@ class PurgeFastCGI extends SafeBaseCommand
 
         if (!$hits) {
             CLI::write('No FastCGI/php-pm references found.', 'green');
-            return;
+            return EXIT_SUCCESS;
         }
 
         foreach ($hits as $h) {
@@ -84,6 +102,8 @@ class PurgeFastCGI extends SafeBaseCommand
         CLI::newLine();
         CLI::write($apply ? 'Disabled hit files (*.disabled).' : 'Re-run with --approve to disable.', 'yellow');
         CLI::write('After disabling, restart stack via DreamHost panel (no sudo).', 'yellow');
+
+        return EXIT_SUCCESS;
     }
 
     protected function isDestructive(): bool

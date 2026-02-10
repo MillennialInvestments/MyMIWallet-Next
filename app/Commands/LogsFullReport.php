@@ -23,6 +23,19 @@ class LogsFullReport extends SafeBaseCommand
     public function run(array $params)
     {
         [$args, $flags] = $this->parseParams($params);
+        if ($this->isCiRuntime()) {
+            CLI::write('CI mode: report-only logs summary.', 'yellow');
+            $this->ciSummary([
+                'command' => $this->name,
+                'ci_mode' => true,
+                'requested_params' => $params,
+                'would_check' => ['writable/logs', '~/logs/*error*.log', '~/nginx/logs/*error*.log'],
+                'writable_logs_exists' => is_dir(WRITEPATH . 'logs'),
+                'php_version' => PHP_VERSION,
+            ]);
+            return EXIT_SUCCESS;
+        }
+
         $arg = $args[0] ?? 'today';
         $date = $this->resolveDate($arg);
 
@@ -83,6 +96,8 @@ class LogsFullReport extends SafeBaseCommand
             CLI::newLine();
             CLI::write("Discord: sent (if webhook configured).", 'green');
         }
+
+        return EXIT_SUCCESS;
     }
 
     private function resolveDate(string $arg): string

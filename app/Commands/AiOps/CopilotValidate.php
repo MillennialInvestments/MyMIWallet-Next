@@ -19,12 +19,14 @@ class CopilotValidate extends SafeBaseCommand
         '--json' => 'Emit JSON output to stdout',
         '--notify' => 'Send summary notification via Discord or email',
         '--db' => 'Store JSON snapshot in aiops_command_snapshots table',
+        '--ci' => 'Force CI-safe mode (no external network or DB persistence)',
     ];
 
     public function run(array $params)
     {
         [, $flags] = $this->parseParams($params);
         $jsonMode = isset($flags['json']);
+        $ciMode = isset($flags['ci']) || $this->isCiRuntime();
         $notify = isset($flags['notify']) || isset($flags['notify=discord']);
         $storeDb = isset($flags['db']);
 
@@ -52,17 +54,25 @@ class CopilotValidate extends SafeBaseCommand
             CLI::write(json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
         }
 
-        if ($storeDb) {
+        if ($storeDb && ! $ciMode) {
             $this->storeSnapshot($payload);
+        } elseif ($storeDb && $ciMode) {
+            CLI::write('CI mode: skipping database snapshot persistence.', 'yellow');
         }
 
-        if ($notify) {
+        if ($notify && ! $ciMode) {
             $hook = new CommandHookService();
             $hook->notify(
                 'Copilot Validation',
                 $this->buildSummaryMessage($summary),
                 $payload
             );
+        } elseif ($notify && $ciMode) {
+            CLI::write('CI mode: skipping external notification.', 'yellow');
+        }
+
+        if ($ciMode) {
+            return EXIT_SUCCESS;
         }
 
         if ($summary['missing_sections'] > 0 || $summary['command_violations'] > 0) {

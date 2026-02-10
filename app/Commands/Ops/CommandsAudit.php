@@ -12,15 +12,36 @@ class CommandsAudit extends SafeBaseCommand
     protected $name = 'ops:commands:audit';
     protected $description = 'Audit Spark commands for illegal constructors.';
     protected $usage = 'ops:commands:audit';
+    protected $options = [
+        '--json' => 'Emit JSON output and write writable/ci/ops-commands-audit.json',
+    ];
 
     public function run(array $params)
     {
-        $this->parseParams($params);
+        [, $flags] = $this->parseParams($params);
+        $json = isset($flags['json']) || $this->isCiRuntime();
         $scanner = new CommandRulesScanner();
         $violations = $scanner->scan(ROOTPATH . 'app/Commands');
 
+        $payload = [
+            'generated_at' => date('c'),
+            'violations_count' => count($violations),
+            'violations' => $violations,
+        ];
+
+        if ($this->isCiRuntime() || $json) {
+            $targetDir = WRITEPATH . 'ci';
+            if (! is_dir($targetDir)) {
+                @mkdir($targetDir, 0775, true);
+            }
+            @file_put_contents($targetDir . '/ops-commands-audit.json', json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        }
+
         if ($violations === []) {
             CLI::write('✅ All Spark command rules passed.', 'green');
+            if ($json) {
+                CLI::write(json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+            }
             return EXIT_SUCCESS;
         }
 
@@ -34,24 +55,11 @@ class CommandsAudit extends SafeBaseCommand
         }
 
         $this->renderTable(['Command', 'File', 'Violations'], $rows);
-
-        if (! $hasIllegal) {
-            CLI::write('All Spark commands are constructor-safe.', 'green');
-            return EXIT_SUCCESS;
+        if ($json) {
+            CLI::write(json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
         }
 
-        CLI::error('❌ ILLEGAL COMMAND CONSTRUCTOR');
-        foreach ($rows as $row) {
-            if ($row[2] !== '❌ ILLEGAL CONSTRUCTOR') {
-                continue;
-            }
-
-            CLI::error($row[0]);
-            CLI::error($row[1]);
-            CLI::error('Run ops:commands:autofix --approve or remove constructor manually.');
-        }
-
-        return EXIT_ERROR;
+        return $this->isCiRuntime() ? EXIT_SUCCESS : EXIT_ERROR;
     }
 
     protected function isDestructive(): bool

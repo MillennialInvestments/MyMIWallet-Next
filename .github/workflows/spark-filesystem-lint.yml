@@ -7,7 +7,10 @@ on:
     branches: [ main ]
 
 env:
-  CI_ENVIRONMENT: production
+  CI_ENVIRONMENT: testing
+  ENVIRONMENT: testing
+  CI: true
+  MYMI_DISABLE_EXTERNAL: 1
 
 jobs:
   filesystem-lint:
@@ -28,9 +31,10 @@ jobs:
         run: composer install --no-interaction --prefer-dist
 
       - name: Prepare CI environment
-        run: |
-          echo "CI_ENVIRONMENT=ci" >> .env
-          echo "APP_ENV=ci" >> .env
+        run: cp env/.env.ci.example .env
+
+      - name: Prepare CI writable/artifacts
+        run: php spark ops:ci:prepare
 
       - name: Run filesystem lint (JSON)
         continue-on-error: true
@@ -40,6 +44,17 @@ jobs:
 
       - name: Publish review summary
         run: php spark codex:review:publish
+
+      - name: Upload filesystem lint artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: spark-filesystem-lint-artifacts
+          path: |
+            writable/aiops/artifacts/review-publish/*
+            writable/logs/*
+            writable/ci/*
+            docs/_aiops/*
 
       - name: Gate on blocking errors
         run: |

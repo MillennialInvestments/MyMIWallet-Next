@@ -14,7 +14,10 @@ on:
       - 'app/Config/App.php'
 
 env:
-  CI_ENVIRONMENT: production
+  CI_ENVIRONMENT: testing
+  ENVIRONMENT: testing
+  CI: true
+  MYMI_DISABLE_EXTERNAL: 1
 
 jobs:
   config_lint:
@@ -32,10 +35,20 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --no-progress --prefer-dist
 
-      - name: Spark Writable Bootstrap
-        run: |
-          mkdir -p writable/cache/FactoriesCache writable/logs
-          chmod -R 777 writable
+      - name: Bootstrap CI .env
+        run: cp env/.env.ci.example .env
+
+      - name: Prepare CI writable/artifacts
+        run: php spark ops:ci:prepare
 
       - name: Run config lint
         run: php spark config:lint
+
+      - name: Upload config guard artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-config-guard-artifacts
+          path: |
+            writable/logs/*
+            writable/ci/*
