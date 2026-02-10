@@ -35,7 +35,7 @@ $discord->dispatch('scanner.liquidity', [
 ## How to verify everything is working
 1. **Env check:** run `php spark discord:wire-check` and confirm all required env vars resolve and core tables exist.
 2. **Channel listing:** run `php spark discord:list` to verify channel keys have either a webhook or channel ID plus pacing settings.
-3. **Queue a test alert:** from a tinker shell or controller, call:
+3. **Queue a test alert:** from a controller, Spark command, or queued worker running inside CI4 runtime, call:
    ```php
    $discord = new \App\Libraries\MyMIDiscord();
    $discord->enqueuePlain('alerts.liquidity', 'Test liquidity alert at ' . date('H:i:s'));

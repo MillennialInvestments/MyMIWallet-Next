@@ -42,6 +42,9 @@ class Healthcheck extends SafeBaseCommand
             CLI::error('db_log_ok=false (db not available: ' . $result['db_error'] . ')');
         }
 
+        CLI::write('fallback_log_ok=' . ($result['fallback_log_ok'] ? 'true' : 'false'));
+        CLI::write('fallback_path=' . $result['fallback_path']);
+
         if ($result['dry_run']) {
             CLI::write('dry_run=true (no log records written)');
         }
@@ -54,6 +57,7 @@ class Healthcheck extends SafeBaseCommand
             'file_ok'    => $result['file_log_ok'],
             'db_ok'      => $result['db_log_ok'],
             'db_rows'    => $result['db_rows'],
+            'fallback_ok' => $result['fallback_log_ok'],
             'dry_run'    => $result['dry_run'],
         ]);
 

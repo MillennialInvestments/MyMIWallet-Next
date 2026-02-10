@@ -10,11 +10,18 @@ use CodeIgniter\Log\Handlers\HandlerInterface;
 class Logger extends BaseConfig
 {
     /**
+     * Supported log levels in ascending verbosity.
+     *
+     * @var list<string>
+     */
+    private const ALL_LEVELS = ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug'];
+
+    /**
      * Error Logging Threshold.
      *
      * @var list<string>
      */
-    public int|string|array $threshold = [4];
+    public int|string|array $threshold = self::ALL_LEVELS;
 
     /**
      * Date Format for Logs
@@ -106,6 +113,10 @@ class Logger extends BaseConfig
      */
     protected function resolveThreshold(): array
     {
+        if ($this->isForceDebugEnabled()) {
+            return self::ALL_LEVELS;
+        }
+
         $numeric = env('logger.threshold');
         if (is_numeric($numeric)) {
             $map = [
@@ -118,19 +129,25 @@ class Logger extends BaseConfig
                 7 => ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug'],
             ];
 
-            return $map[(int) $numeric] ?? $map[7];
+            return $map[(int) $numeric] ?? self::ALL_LEVELS;
         }
 
         $configured = env('LOG_THRESHOLD');
 
         if (is_string($configured) && trim($configured) !== '') {
             $levels = array_values(array_filter(array_map(static fn (string $level): string => strtolower(trim($level)), explode(',', $configured))));
+            $levels = array_values(array_intersect($levels, self::ALL_LEVELS));
 
             if ($levels !== []) {
                 return $levels;
             }
         }
 
-        return ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug'];
+        return self::ALL_LEVELS;
+    }
+
+    private function isForceDebugEnabled(): bool
+    {
+        return filter_var(env('AIOPS_FORCE_DEBUG', false), FILTER_VALIDATE_BOOLEAN);
     }
 }

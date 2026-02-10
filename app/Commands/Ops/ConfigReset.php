@@ -15,16 +15,21 @@ class ConfigReset extends SafeBaseCommand
     {
         $paths = [
             WRITEPATH . 'cache/FactoriesCache_*',
+            WRITEPATH . 'cache/Commands.php',
+            WRITEPATH . 'cache/config-*',
             WRITEPATH . 'cache/*.php',
         ];
 
+        $deleted = 0;
         foreach ($paths as $pattern) {
             foreach (glob($pattern) ?: [] as $file) {
-                @unlink($file);
+                if (is_file($file) && @unlink($file)) {
+                    $deleted++;
+                }
             }
         }
 
-        CLI::write('Config caches cleared successfully.', 'green');
+        CLI::write('Config caches cleared successfully. files_deleted=' . $deleted, 'green');
 
         return EXIT_SUCCESS;
     }

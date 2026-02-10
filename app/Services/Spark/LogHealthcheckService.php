@@ -35,10 +35,13 @@ class LogHealthcheckService
             : (is_file($logPath) && $afterSz > $beforeSz);
 
         $dbStatus = $this->checkDatabase($marker, $dryRun);
+        $fallbackStatus = $this->checkFallback($marker, $dryRun);
+
+        $dbOrFallbackOk = $dbStatus['ok'] || $fallbackStatus['ok'];
 
         $overall = $dryRun
             ? ($fileLogOk && $dbStatus['checked'])
-            : ($fileLogOk && $dbStatus['ok']);
+            : ($fileLogOk && $dbOrFallbackOk);
 
         return [
             'marker'       => $marker,
@@ -48,6 +51,9 @@ class LogHealthcheckService
             'db_log_ok'    => $dbStatus['ok'],
             'db_rows'      => $dbStatus['rows'],
             'db_error'     => $dbStatus['error'],
+            'fallback_checked' => $fallbackStatus['checked'],
+            'fallback_log_ok' => $fallbackStatus['ok'],
+            'fallback_path' => $fallbackStatus['path'],
             'dry_run'      => $dryRun,
             'log_written'  => $logWritten,
             'overall'      => $overall,
@@ -107,6 +113,35 @@ class LogHealthcheckService
         }
     }
 
+
+    private function checkFallback(string $marker, bool $dryRun): array
+    {
+        $path = WRITEPATH . 'logs/db_logger_fallback.log';
+
+        if ($dryRun) {
+            return [
+                'ok' => is_dir(dirname($path)),
+                'checked' => true,
+                'path' => $path,
+            ];
+        }
+
+        if (! is_file($path)) {
+            return [
+                'ok' => false,
+                'checked' => true,
+                'path' => $path,
+            ];
+        }
+
+        $content = @file_get_contents($path);
+
+        return [
+            'ok' => is_string($content) && str_contains($content, $marker),
+            'checked' => true,
+            'path' => $path,
+        ];
+    }
     private function resolveLogPath(): string
     {
         $loggerConfig = config('Logger');
