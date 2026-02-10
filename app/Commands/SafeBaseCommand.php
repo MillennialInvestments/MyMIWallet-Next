@@ -6,21 +6,46 @@ namespace App\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use Psr\Log\LoggerInterface;
 use App\Commands\Contracts\AiOpsRunnable;
 use App\Commands\Contracts\DryRunCapable;
 use App\Commands\Contracts\RequiresApproval;
 
-abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, DryRunCapable, AiOpsRunnable
+/**
+ * SafeBaseCommand
+ *
+ * CI4-SAFE RULES (DO NOT VIOLATE):
+ * - NO constructor
+ * - NO typed properties
+ * - NO service access during class load
+ */
+abstract class SafeBaseCommand extends BaseCommand implements
+    RequiresApproval,
+    DryRunCapable,
+    AiOpsRunnable
 {
+    /**
+     * Whether this command can be executed by AIOps automation.
+     * Must remain untyped for CI4 Spark discovery.
+     */
     protected $aiOpsRunnable = false;
-    protected $defaultDryRun = false;
-    protected array $parsedFlags = [];
 
     /**
-     * CI4-safe param parser.
+     * Whether dry-run is implicitly enabled unless --approve is passed.
+     * Must remain untyped.
+     */
+    protected $defaultDryRun = false;
+
+    /**
+     * Parsed CLI flags.
+     * Must remain untyped.
+     */
+    protected $parsedFlags = [];
+
+    /**
+     * CI4-safe parameter parser.
      *
-     * @return array{0: array<int, string>, 1: array<string, bool>}
+     * @param array $params
+     * @return array{0: array<int, string>, 1: array<string, mixed>}
      */
     protected function parseParams(array $params): array
     {
@@ -28,13 +53,12 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
         $flags = [];
 
         foreach ($params as $param) {
-            // Spark/Console delegation can introduce nulls or non-strings.
+            // Spark delegation can introduce nulls
             if ($param === null) {
                 continue;
             }
 
             if (is_bool($param)) {
-                // treat as arg (rare)
                 $args[] = $param ? '1' : '0';
                 continue;
             }
@@ -43,8 +67,7 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
                 $param = (string) $param;
             }
 
-            if (!is_string($param)) {
-                // ignore objects/arrays defensively
+            if (! is_string($param)) {
                 continue;
             }
 
@@ -54,8 +77,9 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
             }
 
             if (str_starts_with($param, '--')) {
-                // Support both: --flag and --key=value
                 $key = ltrim($param, '-');
+
+                // --key=value support
                 if (strpos($key, '=') !== false) {
                     [$k, $v] = explode('=', $key, 2);
                     $flags[$k] = $v;
@@ -69,19 +93,22 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
 
         $this->parsedFlags = $flags;
 
-        if ($this->defaultDryRun && !isset($flags['approve']) && !isset($flags['dry-run'])) {
+        // Implicit dry-run enforcement
+        if (
+            $this->defaultDryRun
+            && ! isset($flags['approve'])
+            && ! isset($flags['dry-run'])
+        ) {
             $flags['dry-run'] = true;
         }
 
         $dryRun = $this->resolveDryRun($flags);
 
-        // These should never throw just because params had nulls.
         $this->logIntent($params, $flags, $dryRun);
         $this->guardDestructive($flags, $dryRun);
 
         return [$args, $flags];
     }
-
 
     protected function resolveDryRun(array $flags): bool
     {
@@ -90,11 +117,9 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
 
     public function supportsDryRun(): bool
     {
-        if (! isset($this->options) || ! is_array($this->options)) {
-            return false;
-        }
-
-        return array_key_exists('--dry-run', $this->options);
+        return isset($this->options)
+            && is_array($this->options)
+            && array_key_exists('--dry-run', $this->options);
     }
 
     public function requiresApproval(): bool
@@ -104,13 +129,11 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
 
     public function isAiOpsRunnable(): bool
     {
-        return $this->aiOpsRunnable;
+        return (bool) $this->aiOpsRunnable;
     }
 
     /**
-     * Guard destructive commands.
-     *
-     * @return int|null EXIT_ERROR when blocked, null when allowed
+     * Guard destructive commands unless --approve is provided.
      */
     protected function guardDestructive(array $flags, bool $dryRun): void
     {
@@ -118,31 +141,32 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
             return;
         }
 
-        if ($dryRun) {
-            return;
-        }
-
-        if (isset($flags['approve'])) {
+        if ($dryRun || isset($flags['approve'])) {
             return;
         }
 
         CLI::error('This action is destructive. Re-run with --approve.');
-        return;
-
     }
 
+    /**
+     * Structured intent logging for observability & AIOps.
+     */
     protected function logIntent(array $params, array $flags, bool $dryRun): void
     {
-        log_message('info', sprintf('[spark:%s] Intent', $this->name ?? 'unknown'), [
-            'command' => $this->name ?? null,
-            'group' => $this->group ?? null,
-            'params' => $params,
-            'flags' => $flags,
-            'dry_run' => $dryRun,
-            'requires_approval' => $this->requiresApproval(),
-            'supports_dry_run' => $this->supportsDryRun(),
-            'ai_ops_runnable' => $this->isAiOpsRunnable(),
-        ]);
+        log_message(
+            'info',
+            sprintf('[spark:%s] Intent', $this->name ?? 'unknown'),
+            [
+                'command'            => $this->name ?? null,
+                'group'              => $this->group ?? null,
+                'params'             => $params,
+                'flags'              => $flags,
+                'dry_run'            => $dryRun,
+                'requires_approval'  => $this->requiresApproval(),
+                'supports_dry_run'   => $this->supportsDryRun(),
+                'ai_ops_runnable'    => $this->isAiOpsRunnable(),
+            ]
+        );
     }
 
     /**
@@ -153,6 +177,9 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
         return false;
     }
 
+    /**
+     * Option helpers
+     */
     protected function option(string $key, $default = false)
     {
         if ($this->request !== null) {
@@ -163,7 +190,9 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
         }
 
         if (array_key_exists($key, $this->parsedFlags)) {
-            return $this->parsedFlags[$key] === true ? '1' : $this->parsedFlags[$key];
+            return $this->parsedFlags[$key] === true
+                ? '1'
+                : $this->parsedFlags[$key];
         }
 
         return $default;
@@ -172,38 +201,35 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
     protected function optBool(array|string $flags, ?string $key = null, bool $default = false): bool
     {
         if (is_string($flags)) {
-            $key = $flags;
+            $key   = $flags;
             $flags = $this->parsedFlags;
         }
 
-        if ($key === null) {
-            return $default;
-        }
-
-        if (! array_key_exists($key, $flags)) {
+        if ($key === null || ! array_key_exists($key, $flags)) {
             return $default;
         }
 
         $value = $flags[$key];
+
         if ($value === true) {
             return true;
         }
 
-        return in_array(strtolower((string) $value), ['1', 'true', 'yes', 'on'], true);
+        return in_array(
+            strtolower((string) $value),
+            ['1', 'true', 'yes', 'on'],
+            true
+        );
     }
 
     protected function optInt(array|string $flags, ?string $key = null, int $default = 0): int
     {
         if (is_string($flags)) {
-            $key = $flags;
+            $key   = $flags;
             $flags = $this->parsedFlags;
         }
 
-        if ($key === null) {
-            return $default;
-        }
-
-        if (! array_key_exists($key, $flags)) {
+        if ($key === null || ! array_key_exists($key, $flags)) {
             return $default;
         }
 
@@ -213,21 +239,20 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
     protected function optString(array|string $flags, ?string $key = null, string $default = ''): string
     {
         if (is_string($flags)) {
-            $key = $flags;
+            $key   = $flags;
             $flags = $this->parsedFlags;
         }
 
-        if ($key === null) {
-            return $default;
-        }
-
-        if (! array_key_exists($key, $flags)) {
+        if ($key === null || ! array_key_exists($key, $flags)) {
             return $default;
         }
 
         return trim((string) $flags[$key]);
     }
 
+    /**
+     * Safe Spark runner wrapper.
+     */
     protected function runSparkCommand(string $command): int
     {
         if (function_exists('service')) {
@@ -244,19 +269,4 @@ abstract class SafeBaseCommand extends BaseCommand implements RequiresApproval, 
         CLI::error('Spark command runner unavailable for: ' . $command);
         return EXIT_ERROR;
     }
-
-    protected function isCiRuntime(): bool
-    {
-        $ci = strtolower((string) (getenv('CI') ?: ''));
-        $environment = strtolower((string) (getenv('ENVIRONMENT') ?: ''));
-        $ciEnvironment = strtolower((string) (getenv('CI_ENVIRONMENT') ?: ''));
-
-        return $ci === 'true' || $environment === 'ci' || $ciEnvironment === 'ci';
-    }
-
-    protected function ciSummary(array $summary): void
-    {
-        CLI::write(json_encode($summary, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-    }
-
 }

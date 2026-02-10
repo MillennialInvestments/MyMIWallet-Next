@@ -57,6 +57,11 @@ class AuthController extends Controller
      */
     public function login()
     {
+        $response = service('response');
+        $response->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+                ->setHeader('Pragma', 'no-cache')
+                ->setHeader('Expires', '0');
+
         // No need to show a login form if the user
         // is already logged in.
         if ($this->auth->check()) {
@@ -73,8 +78,15 @@ class AuthController extends Controller
 
         $this->rememberRedirectUrl($request->getGet('redirect_url'));
 
-        if (! $this->session->has('redirect_url')) {
-            $this->rememberRedirectUrl(previous_url());
+        $previous = previous_url();
+
+        if (
+            ! $this->session->has('redirect_url')
+            && $previous
+            && ! str_contains($previous, '/login')
+            && ! str_contains($previous, '/logout')
+        ) {
+            $this->rememberRedirectUrl($previous);
         }
 
         service('eventTracker')->track('auth.login_view');
@@ -89,6 +101,12 @@ class AuthController extends Controller
     public function attemptLogin()
     {
         helper('auth');
+        $response = service('response');
+        $response->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+                ->setHeader('Pragma', 'no-cache')
+                ->setHeader('Expires', '0');
+
+        log_message('info', 'AuthController L93: Auth:attemptLogin started.');
 
         service('eventTracker')->track('auth.login_attempt', [
             'login_type' => $this->config->validFields === ['email'] ? 'email' : 'username',
@@ -98,6 +116,8 @@ class AuthController extends Controller
             'login'    => 'required',
             'password' => 'required',
         ];
+
+        log_message('info', 'AuthController L104: Auth:attemptLogin rules: ' . json_encode($rules));
 
         if ($this->config->validFields === ['email']) {
             $rules['login'] .= '|valid_email';
@@ -124,6 +144,8 @@ class AuthController extends Controller
         $remember = (bool) $this->request->getPost('remember');
         $ip = $this->request->getIPAddress();
         $ua = (string) $this->request->getUserAgent();
+
+        log_message('info', 'AuthController L132: Auth:attemptLogin Login Variables: login: ' . $rules['login'] . ', remember: ' . ($remember ? 'true' : 'false') . ', ip: ' . $ip . ', ua: ' . $ua);
 
         $this->authLogger->logLoginAttempt((string) $login, $ip, $ua);
         $this->ipHistoryModel->record(null, filter_var($login, FILTER_VALIDATE_EMAIL) ? (string) $login : null, $ip, $ua);
@@ -269,7 +291,6 @@ class AuthController extends Controller
 
         if ($userId !== null && $userId > 0) {
             $this->ipHistoryModel->record((int) $userId, $this->auth->user()->email ?? null, $ip, $ua);
-            $this->session->regenerate(true);
             $this->clearUserCacheKeys((int) $userId);
             service('eventTracker')->track('auth.login_success', [], (int) $userId);
             log_message('info', '[AUTH] Login success', [
@@ -307,13 +328,15 @@ class AuthController extends Controller
                 ->withCookies();
         }
 
-        // Final redirect with success message
-        return $this->redirectAfterLogin()
-            ->withCookies()
-            ->with('auth_message', [
-                'type' => 'success',
-                'text' => lang('Auth.loginSuccess'),
-            ]);
+        $this->setAuthMessage(
+            'success',
+            lang('Auth.loginSuccess')
+        );
+
+        $this->session->regenerate(true);
+
+        return $this->redirectAfterLogin()->withCookies();
+
     }
 
 
@@ -323,6 +346,10 @@ class AuthController extends Controller
      */
     public function logout()
     {
+        $response = service('response');
+        $response->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+                ->setHeader('Pragma', 'no-cache')
+                ->setHeader('Expires', '0');
         $userId = (int) ($this->session->get('user_id') ?? $this->auth->id() ?? 0);
         if ($userId > 0) {
             $this->clearUserCacheKeys($userId);
@@ -1279,12 +1306,18 @@ class AuthController extends Controller
             $redirectURL = $this->dashboardUrl();
         }
 
+        // Absolute final guard
+        if (str_contains($redirectURL, '/login')) {
+            $redirectURL = $this->dashboardUrl();
+        }
+
         $this->session->remove('redirect_url');
 
         log_message('debug', 'Auth redirect destination: ' . $redirectURL);
 
         return $redirectURL;
     }
+
 
     private function rememberRedirectUrl(?string $url): void
     {
