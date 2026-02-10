@@ -86,6 +86,8 @@ class App extends BaseConfig
      */
     public bool $debugHUD        = false;
     public bool $maintenanceMode = false;
+    public string $maintenanceMessage = 'We are performing scheduled maintenance.';
+    public string $maintenanceETA = '';
     public bool $enableKint      = false;
 
     /**
@@ -141,6 +143,9 @@ class App extends BaseConfig
             env('app.maintenanceMode', $this->maintenanceMode),
             FILTER_VALIDATE_BOOLEAN
         );
+
+        $this->maintenanceMessage = (string) env('app.maintenanceMessage', $this->maintenanceMessage);
+        $this->maintenanceETA = (string) env('app.maintenanceETA', $this->maintenanceETA);
 
         $this->enableKint = filter_var(
             env('app.enableKint', true),

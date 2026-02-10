@@ -37,7 +37,7 @@ class Filters extends BaseConfig
         // PATCH: observability filters
         'observability' => \App\Filters\ObservabilityFilter::class,
         'jsonException' => \App\Filters\JsonExceptionFilter::class,
-        'maintenance'   => \App\Filters\MaintenanceFilter::class,
+        'maintenance'   => \App\Filters\MaintenanceModeFilter::class,
         'login'         => \App\Filters\LoginFilter::class,
         'authcheck'     => \App\Filters\AuthCheckFilter::class,
         'csrf'          => \App\Filters\CsrfDebugFilter::class,
@@ -65,7 +65,18 @@ class Filters extends BaseConfig
      */
     public array $globals = [
         'before' => [
-            'maintenance',
+            'maintenance' => [
+                'except' => [
+                    'Maintenance',
+                    'Support',
+                    'Support/*',
+                    'API/*',
+                    'api/*',
+                    'Management/*',
+                    'Ops/*',
+                    'chat/*',
+                ],
+            ],
             // PATCH: request observability
             'observability',
             'ratelimit',
