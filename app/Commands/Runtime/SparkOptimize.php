@@ -38,9 +38,9 @@ class SparkOptimize extends SafeBaseCommand
         return EXIT_SUCCESS;
     }
 
-    private function isCiRuntime(): bool
+    protected function isCiRuntime(): bool
     {
-        return getenv('CI') === 'true'
+        return parent::isCiRuntime()
             || getenv('GITHUB_ACTIONS') === 'true'
             || (defined('ENVIRONMENT') && ENVIRONMENT === 'ci');
     }

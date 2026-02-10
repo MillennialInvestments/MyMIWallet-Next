@@ -6,15 +6,14 @@ on:
   pull_request:
 
 env:
-  CI_ENVIRONMENT: production
+  CI_ENVIRONMENT: testing
+  ENVIRONMENT: testing
+  CI: true
+  MYMI_DISABLE_EXTERNAL: 1
 
 jobs:
   health:
     runs-on: ubuntu-latest
-
-    env:
-      ENVIRONMENT: ci
-      CI: true
 
     steps:
       - uses: actions/checkout@v4
@@ -28,10 +27,11 @@ jobs:
       - name: Install Dependencies
         run: composer install --no-interaction --no-progress --prefer-dist
 
-      - name: Spark Writable Bootstrap
-        run: |
-          mkdir -p writable/cache/FactoriesCache writable/logs writable/session
-          chmod -R 777 writable
+      - name: Bootstrap CI .env
+        run: cp env/.env.ci.example .env
+
+      - name: Prepare CI writable/artifacts
+        run: php spark ops:ci:prepare
 
       - name: Spark Diagnostics
         run: |
@@ -63,4 +63,14 @@ jobs:
         run: php spark codex:review:publish
       - name: CI Health Check Complete
         run: echo "CI Health Check Completed Successfully"  
+
+      - name: Upload CI health artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-health-artifacts
+          path: |
+            writable/logs/*
+            writable/ci/*
+            docs/_aiops/*
         

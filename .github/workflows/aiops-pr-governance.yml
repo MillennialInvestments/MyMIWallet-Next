@@ -8,7 +8,26 @@ jobs:
   aiops-governance:
     runs-on: ubuntu-latest
     steps:
+      - name: Determine if AIOPS-only rules apply
+        id: gate
+        env:
+          BRANCH: ${{ github.head_ref }}
+          ACTOR: ${{ github.actor }}
+          LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
+        run: |
+          set -euo pipefail
+          if [[ "$BRANCH" == aiops/patch/* ]] || [[ "$LABELS" == *"aiops"* ]] || [[ "$ACTOR" == "aiops-bot" ]]; then
+            echo "apply_rules=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "apply_rules=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Skip non-AIOPS PRs
+        if: steps.gate.outputs.apply_rules != 'true'
+        run: echo "Skipping AIOPS-only enforcement for non-AIOPS PR"
+
       - name: Enforce AIOPS-only PR rules
+        if: steps.gate.outputs.apply_rules == 'true'
         env:
           BRANCH: ${{ github.head_ref }}
           PR_BODY: ${{ github.event.pull_request.body }}

@@ -6,7 +6,10 @@ on:
   pull_request:
 
 env:
-  CI_ENVIRONMENT: production
+  CI_ENVIRONMENT: testing
+  ENVIRONMENT: testing
+  CI: true
+  MYMI_DISABLE_EXTERNAL: 1
 
 jobs:
   build:
@@ -23,14 +26,15 @@ jobs:
       - name: Install
         run: composer install --no-interaction --no-progress
 
-      - name: Spark Writable Bootstrap
-        run: |
-          mkdir -p writable/cache/FactoriesCache writable/logs
-          chmod -R 777 writable
+      - name: Bootstrap CI .env
+        run: cp env/.env.ci.example .env
+
+      - name: Prepare CI writable/artifacts
+        run: php spark ops:ci:prepare
 
       - name: Spark Command Contract Check
         run: |
-          php spark ops:commands:audit
+          php spark ops:commands:audit --json
 
       - name: Spark Command Lint
         run: |
@@ -53,10 +57,15 @@ jobs:
           php spark ops:subs:audit --json=1 --strict=0 > subs-audit.json
 
       - name: Upload Subsystem Audit Artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: subs-audit
-          path: subs-audit.json
+          path: |
+            subs-audit.json
+            writable/logs/*
+            writable/ci/*
+            docs/_aiops/*
 
   aiops-guardrails:
     runs-on: ubuntu-latest
@@ -72,10 +81,11 @@ jobs:
       - name: Install
         run: composer install --no-interaction --no-progress
 
-      - name: Spark Writable Bootstrap
-        run: |
-          mkdir -p writable/cache/FactoriesCache writable/logs
-          chmod -R 777 writable
+      - name: Bootstrap CI .env
+        run: cp env/.env.ci.example .env
+
+      - name: Prepare CI writable/artifacts
+        run: php spark ops:ci:prepare
 
       - name: Copilot Validation
         run: |
@@ -86,9 +96,13 @@ jobs:
           php spark spark:doctor --json > doctor.json
 
       - name: Upload AIOps Artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: aiops-artifacts
           path: |
             copilot-validation.json
             doctor.json
+            writable/logs/*
+            writable/ci/*
+            docs/_aiops/*

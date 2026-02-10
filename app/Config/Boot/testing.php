@@ -10,6 +10,7 @@ ini_set('display_errors', '1');
 
 defined('CI_DEBUG') || define('CI_DEBUG', false);
 defined('SHOW_DEBUG_BACKTRACE') || define('SHOW_DEBUG_BACKTRACE', false);
+defined('SUPPORTPATH') || define('SUPPORTPATH', ROOTPATH . 'tests/_support/');
 
 $GLOBALS['CI_DEBUG'] = false;
 $GLOBALS['CI_KINT']  = false;

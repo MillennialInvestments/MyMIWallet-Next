@@ -65,6 +65,18 @@ define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR)
 // Ensure the current directory is pointing to the front controller's directory
 chdir(FCPATH);
 
+$ciFlag = strtolower((string) getenv('CI')) === 'true';
+$environmentRaw = strtolower((string) (getenv('ENVIRONMENT') ?: ''));
+$ciEnvironmentRaw = strtolower((string) (getenv('CI_ENVIRONMENT') ?: ''));
+
+if ($ciFlag && ($environmentRaw === 'ci' || $ciEnvironmentRaw === 'ci')) {
+    fwrite(STDOUT, "[warn] CI runtime detected with ENVIRONMENT=ci; falling back to testing for Spark bootstrap.\n");
+    putenv('ENVIRONMENT=testing');
+    putenv('CI_ENVIRONMENT=testing');
+    $_SERVER['ENVIRONMENT'] = 'testing';
+    $_SERVER['CI_ENVIRONMENT'] = 'testing';
+}
+
 /*
  *---------------------------------------------------------------
  * BOOTSTRAP THE APPLICATION

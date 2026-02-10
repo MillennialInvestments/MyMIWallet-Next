@@ -10,6 +10,20 @@ namespace Config;
  */
 class Optimize
 {
+    public function __construct()
+    {
+        $ci = strtolower((string) (getenv('CI') ?: '')) === 'true';
+        $env = strtolower((string) (getenv('ENVIRONMENT') ?: ''));
+        $ciEnvironment = strtolower((string) (getenv('CI_ENVIRONMENT') ?: ''));
+
+        if ($ci || $env === 'ci' || $ciEnvironment === 'ci' || $ciEnvironment === 'testing') {
+            $this->cacheConfig = false;
+            $this->configCacheEnabled = false;
+            $this->locatorCacheEnabled = false;
+            $this->optimizeAutoloader = false;
+        }
+    }
+
     // public function __construct()
     // {
     //     if (ENVIRONMENT !== 'ci') {
