@@ -1,0 +1,18 @@
+{
+    "dry_run": true,
+    "write_pr": false,
+    "recommendations": [
+        {
+            "file_path": "app/Modules/User/Views/Budget/Add-New.php",
+            "suggested_cell": "Shared26f4a029Cell",
+            "insertion": "<?= view_cell('App\\Cells\\Shared26f4a029Cell::render') ?>",
+            "block_count": 1
+        },
+        {
+            "file_path": "app/Modules/User/Views/Budget/Add.php",
+            "suggested_cell": "SharedEbd77005Cell",
+            "insertion": "<?= view_cell('App\\Cells\\SharedEbd77005Cell::render') ?>",
+            "block_count": 1
+        }
+    ]
+}

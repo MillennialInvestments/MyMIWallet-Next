@@ -293,4 +293,13 @@ class CopilotValidate extends SafeBaseCommand
         $path = $directory . '/copilot-validation.json';
         file_put_contents($path, json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
+
+    // Call to undefined method CopilotValidate::isCiRuntime()
+    // Root Cause
+    // Method expected but not implemented or trait not imported.
+    protected function isCiRuntime(): bool
+    {
+        return defined('CI_ENVIRONMENT');
+    }
+
 }

@@ -1,0 +1,24 @@
+{
+    "file_path": "app/Modules/User/Views/Budget/Account_Overview/income_breakdown.php",
+    "block_count": 2,
+    "blocks": [
+        {
+            "hash": "7cd8d40dbeb5bf11f0cc29e922d756b65857996d36a770aec25838bedc400476",
+            "length": 206,
+            "snippet": "<div class=\"card card-bordered h-100\"> <div class=\"card-inner h-100 stretch flex-column\"> <div class=\"card-title-group\"> <div class=\"card-title card-title-sm\"> <h6 class=\"title\">Income Breakdown</h6> ",
+            "contains_php": false,
+            "raw": "<div class=\"card card-bordered h-100\">\n    <div class=\"card-inner h-100 stretch flex-column\">\n        <div class=\"card-title-group\">\n            <div class=\"card-title card-title-sm\">\n                <h6 class=\"title\">Income Breakdown</h6>\n            </div>"
+        },
+        {
+            "hash": "1db9a0368baa001c8ae86a5301cec5da7e3c355566f91b9470172fa92b4c0c60",
+            "length": 426,
+            "snippet": "<div class=\"card-tools\"> <div class=\"dropdown\"> <a href=\"#\" class=\"dropdown-toggle dropdown-indicator btn btn-sm btn-outline-light btn-white\" data-bs-toggle=\"dropdown\">30 Days</a> <div class=\"dropdown",
+            "contains_php": false,
+            "raw": "<div class=\"card-tools\">\n                <div class=\"dropdown\">\n                    <a href=\"#\" class=\"dropdown-toggle dropdown-indicator btn btn-sm btn-outline-light btn-white\" data-bs-toggle=\"dropdown\">30 Days</a>\n                    <div class=\"dropdown-menu dropdown-menu-end dropdown-menu-xs\">\n                        <ul class=\"link-list-opt no-bdr\">\n                            <li><a href=\"#\"><span>7 Days</span></a></li>\n                            <li><a href=\"#\"><span>15 Days</span></a></li>\n                            <li><a href=\"#\"><span>30 Days</span></a></li>\n                        </ul>\n                    </div>"
+        }
+    ],
+    "file_hash": "366e5dfafb79f8fc898c75b9cbe5eaa0c4047b07f28978b51ffc503889129e3f",
+    "queue_id": 543,
+    "candidate": false,
+    "candidate_blocks": []
+}

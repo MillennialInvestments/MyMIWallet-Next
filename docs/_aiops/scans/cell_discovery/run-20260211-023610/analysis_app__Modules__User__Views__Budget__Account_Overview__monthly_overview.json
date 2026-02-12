@@ -1,0 +1,24 @@
+{
+    "file_path": "app/Modules/User/Views/Budget/Account_Overview/monthly_overview.php",
+    "block_count": 2,
+    "blocks": [
+        {
+            "hash": "17f72260e80d61a4618c0ce3d17dfc79fae3ed4b1ba7592f83b2f022c9e9e969",
+            "length": 265,
+            "snippet": "<div class=\"card card-bordered h-100\"> <div class=\"card-inner\"> <div class=\"card-title-group align-start mb-3\"> <div class=\"card-title\"> <h6 class=\"title\">Month-to-Month Overview</h6> <p>Last 12 Month",
+            "contains_php": false,
+            "raw": "<div class=\"card card-bordered h-100\">\n    <div class=\"card-inner\">\n        <div class=\"card-title-group align-start mb-3\">\n            <div class=\"card-title\">\n                <h6 class=\"title\">Month-to-Month Overview</h6>\n                <p>Last 12 Months of Total Monthly Spend &amp; Total Transaction Fees.</p>\n            </div>"
+        },
+        {
+            "hash": "873263bf7e3b845657d15428a9c6dbf11ae8c86e6e877e589ed84d18297eee3c",
+            "length": 1197,
+            "snippet": "<div class=\"card-tools mt-n1 me-n1\"> <div class=\"dropdown\"> <a href=\"#\" class=\"dropdown-toggle btn btn-trigger full-width\" data-bs-toggle=\"dropdown\"> Chart Settings </a> <div class=\"dropdown-menu drop",
+            "contains_php": false,
+            "raw": "<div class=\"card-tools mt-n1 me-n1\">\n                <div class=\"dropdown\">\n                    <a href=\"#\" class=\"dropdown-toggle btn btn-trigger full-width\" data-bs-toggle=\"dropdown\">\n                        Chart Settings\n                    </a>\n                    <div class=\"dropdown-menu dropdown-menu-md dropdown-menu-end p-3\">\n                        <ul class=\"link-list-opt no-bdr\">\n                            <li class=\"p-1\">\n                                <h7>Start Date?</h7>\n                                <input type=\"date\" id=\"start-date\" class=\"form-control\">\n                            </li>\n                            <li class=\"divider\"></li>\n                            <li class=\"p-1\">\n                                <h7>Historical Timeline?</h7>\n                                <ul class=\"link-list-opt no-bdr\" id=\"chart-lower-options\">\n                                    <li data-value=\"-12\" class=\"option active\">Past 12 Months</li>\n                                    <li data-value=\"-6\" class=\"option\">Past 6 Months</li>\n                                    <li data-value=\"-3\" class=\"option\">Past 3 Months</li>\n                                    <li data-value=\"-1\" class=\"option\">Past 1 Month</li>\n                                    <li data-value=\"0\" class=\"option\">Only Forward</li>\n                                </ul>\n                            </li>\n                            <li class=\"divider\"></li>\n                            <li class=\"p-1\">\n                                <h7>Forward-Looking?</h7>\n                                <ul class=\"link-list-opt no-bdr\" id=\"chart-upper-options\">\n                                    <li data-value=\"12\" class=\"option active\">12 Months</li>\n                                    <li data-value=\"6\" class=\"option\">6 Months</li>\n                                    <li data-value=\"3\" class=\"option\">3 Months</li>\n                                    <li data-value=\"1\" class=\"option\">1 Month</li>\n                                    <li data-value=\"0\" class=\"option\">Only Backward</li>\n                                </ul>\n                            </li>\n                        </ul>\n                    </div>"
+        }
+    ],
+    "file_hash": "766d1db751e23e82966b52335b719b64408e422dcb6076b5b885216cec2e17cb",
+    "queue_id": 544,
+    "candidate": false,
+    "candidate_blocks": []
+}

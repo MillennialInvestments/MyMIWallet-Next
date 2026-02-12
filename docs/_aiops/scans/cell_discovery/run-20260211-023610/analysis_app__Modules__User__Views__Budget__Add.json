@@ -1,0 +1,60 @@
+{
+    "file_path": "app/Modules/User/Views/Budget/Add.php",
+    "block_count": 6,
+    "blocks": [
+        {
+            "hash": "c0c73bf63e4f3aa794e3fef16e53d8cdada8ff8868ee304b595562667dc4d4d5",
+            "length": 256,
+            "snippet": "<div class=\"nk-block\"> <div class=\"nk-block-head nk-block-head-sm\"> <div class=\"nk-block-between\"> <div class=\"nk-block-head-content\"> <h4 class=\"nk-block-title\">Account Information</h4> <p class=\"sub",
+            "contains_php": false,
+            "raw": "<div class=\"nk-block\">\n            <div class=\"nk-block-head nk-block-head-sm\">\n                <div class=\"nk-block-between\">\n                    <div class=\"nk-block-head-content\">\n                        <h4 class=\"nk-block-title\">Account Information</h4>\n                        <p class=\"sub-text\">Please fill out the information below!</p>\n                    </div>"
+        },
+        {
+            "hash": "e15867bec99983780546cef56928bee613ad2fa970420ff7ef91821f0ad78908",
+            "length": 267,
+            "snippet": "<div class=\"nk-block\"> <div class=\"card guidance px-2 pb-4 mt-4\"> <div class=\"guidance-head\"> <div class=\"guidance-title\"> <h4 class=\"card-title title\">Budgeting Tips & Examples</h4> <p class=\"sub-tex",
+            "contains_php": false,
+            "raw": "<div class=\"nk-block\">\n        <div class=\"card guidance px-2 pb-4 mt-4\">\n            <div class=\"guidance-head\">\n                <div class=\"guidance-title\">\n                    <h4 class=\"card-title title\">Budgeting Tips & Examples</h4>\n                    <p class=\"sub-text\">Make the most of your budget records with these tips.</p>\n                </div>"
+        },
+        {
+            "hash": "590071b1f8f9746a1e9404979c849b2a538eee0275250a1c593906b57206b614",
+            "length": 289,
+            "snippet": "<div class=\"nk-block\"> <div class=\"nk-block-head nk-block-head-sm\"> <div class=\"nk-block-between\"> <div class=\"nk-block-head-content\"> <h3 class=\"nk-block-title page-title\"><?= $addModalTitle; ?></h3>",
+            "contains_php": true,
+            "raw": "<div class=\"nk-block\">    \n    <div class=\"nk-block-head nk-block-head-sm\">\n        <div class=\"nk-block-between\">\n            <div class=\"nk-block-head-content\">\n                <h3 class=\"nk-block-title page-title\"><?= $addModalTitle; ?></h3>\n                <div class=\"nk-block-des text-soft\">\n                    <p>Add Your <?= $accountType; ?> Account</p>\n                </div>"
+        },
+        {
+            "hash": "e5ff5d6317ff5b6b0a9058edd1b2d139739c39e77f775b0ce3c5f07db50cfec6",
+            "length": 687,
+            "snippet": "<div class=\"nk-block-head-content\"> <div class=\"toggle-wrap nk-block-tools-toggle\"> <a href=\"#\" class=\"btn btn-icon btn-trigger toggle-expand me-n1\" data-bs-target=\"pageMenu\"><em class=\"icon ni ni-mor",
+            "contains_php": true,
+            "raw": "<div class=\"nk-block-head-content\">\n                <div class=\"toggle-wrap nk-block-tools-toggle\">\n                    <a href=\"#\" class=\"btn btn-icon btn-trigger toggle-expand me-n1\" data-bs-target=\"pageMenu\"><em class=\"icon ni ni-more-v\"></em></a>\n                    <div class=\"toggle-expand-content\" data-content=\"pageMenu\">\n                        <ul class=\"nk-block-tools g-3\">\n                            <li><a href=\"<?php echo $accountTypeAltURl; ?>\" class=\"btn btn-white btn-dim btn-outline-primary\"><em class=\"icon ni ni-swap\"></em><span><?php echo $accountTypeAltText; ?></span></a></li>\n                            <li><a href=\"<?php echo $userAgent->getReferrer(); ?>\" class=\"btn btn-danger btn-dim btn-outline-primary text-white\"><em class=\"icon ni ni-cross\"></em><span>Cancel</span></a></li>\n                        </ul>\n                    </div>"
+        },
+        {
+            "hash": "0b7dfb45c1c08c511528f075b62eabbcf7b7d73244979bf60ca92f3a06f6ded6",
+            "length": 306,
+            "snippet": "<div class=\"nk-block nk-block-lg\"> <div class=\"card pricing px-2 pb-4\"> <!-- <div class=\"card card-bordered pricing px-2 pb-4\"> --> <div class=\"pricing-head\"> <div class=\"pricing-title\"> <h4 class=\"ca",
+            "contains_php": false,
+            "raw": "<div class=\"nk-block nk-block-lg\">   \n                    <div class=\"card pricing px-2 pb-4\">\n                    <!-- <div class=\"card card-bordered pricing px-2 pb-4\"> -->\n                        <div class=\"pricing-head\">\n                            <div class=\"pricing-title\">\n                                <h4 class=\"card-title title\">Account Information</h4>\n                                <p class=\"sub-text\">Please fill out information below!</p>\n                            </div>"
+        },
+        {
+            "hash": "b98c87709633bec87cb83821b3769d1a0ace86b3c0f2b99a19baafab9f2ef6ef",
+            "length": 279,
+            "snippet": "<div class=\"nk-block nk-block-lg\"> <div class=\"card guidance px-2 pb-4 mt-4\"> <div class=\"guidance-head\"> <div class=\"guidance-title\"> <h4 class=\"card-title title\">Budgeting Tips & Examples</h4> <p cl",
+            "contains_php": false,
+            "raw": "<div class=\"nk-block nk-block-lg\">   \n                    <div class=\"card guidance px-2 pb-4 mt-4\">\n                        <div class=\"guidance-head\">\n                            <div class=\"guidance-title\">\n                                <h4 class=\"card-title title\">Budgeting Tips & Examples</h4>\n                                <p class=\"sub-text\">Make the most of your budget records with these tips.</p>\n                            </div>"
+        }
+    ],
+    "file_hash": "c67c718ecb914510d6c3ffbf4abc303540c2b6b71e2cdf04654d1a3435247adb",
+    "queue_id": 547,
+    "candidate": true,
+    "candidate_blocks": [
+        {
+            "hash": "590071b1f8f9746a1e9404979c849b2a538eee0275250a1c593906b57206b614",
+            "length": 289,
+            "snippet": "<div class=\"nk-block\"> <div class=\"nk-block-head nk-block-head-sm\"> <div class=\"nk-block-between\"> <div class=\"nk-block-head-content\"> <h3 class=\"nk-block-title page-title\"><?= $addModalTitle; ?></h3>",
+            "contains_php": true,
+            "raw": "<div class=\"nk-block\">    \n    <div class=\"nk-block-head nk-block-head-sm\">\n        <div class=\"nk-block-between\">\n            <div class=\"nk-block-head-content\">\n                <h3 class=\"nk-block-title page-title\"><?= $addModalTitle; ?></h3>\n                <div class=\"nk-block-des text-soft\">\n                    <p>Add Your <?= $accountType; ?> Account</p>\n                </div>"
+        }
+    ]
+}

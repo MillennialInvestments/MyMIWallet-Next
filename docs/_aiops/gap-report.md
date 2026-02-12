@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-10T12:00:01Z
+> Run: 2026-02-12T02:00:01Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -403,7 +403,7 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Views/Alerts/resources/statistical-overview.php
   - ⚠️ No obvious doc match found (heuristic)
-- … and 929 more
+- … and 931 more
 
 ## Documented Items With No Obvious Code Match (best-effort)
 - docs/CRON.md
@@ -415,6 +415,12 @@
 - docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md
   - ❌ No obvious code match found (heuristic)
 - docs/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_ops/filesystem-lint-summary.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_ops/filesystem-lint.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_ops/filesystem-trend.md
   - ❌ No obvious code match found (heuristic)
 - docs/adr/0001-standards-and-response-contract.md
   - ❌ No obvious code match found (heuristic)
@@ -525,6 +531,8 @@
 - docs/audit/auth_audit_last_run.md
   - ❌ No obvious code match found (heuristic)
 - docs/audit/news_audit_last_run.md
+  - ❌ No obvious code match found (heuristic)
+- docs/auth-flow.md
   - ❌ No obvious code match found (heuristic)
 - docs/auth/auth_smoke.md
   - ❌ No obvious code match found (heuristic)
@@ -720,6 +728,8 @@
   - ❌ No obvious code match found (heuristic)
 - docs/dev/logging.md
   - ❌ No obvious code match found (heuristic)
+- docs/dev/maintenance-mode.md
+  - ❌ No obvious code match found (heuristic)
 - docs/discord/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/discord/_index.md
@@ -796,14 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/forecasting/08_ui_and_dashboard.md
   - ❌ No obvious code match found (heuristic)
-- docs/forecasting/09_future_extensions.md
-  - ❌ No obvious code match found (heuristic)
-- docs/forecasting/10_dashboard_integration.md
-  - ❌ No obvious code match found (heuristic)
-- docs/forecasting/README.md
-  - ❌ No obvious code match found (heuristic)
-- docs/forecasting/advanced_forecasting_overview.md
-  - ❌ No obvious code match found (heuristic)
-- docs/forecasting/confidence_heatmaps.md
-  - ❌ No obvious code match found (heuristic)
-- … and 779 more
+- … and 785 more

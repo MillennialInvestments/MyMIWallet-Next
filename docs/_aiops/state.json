@@ -4403,7 +4403,67 @@
         "docs/debug-validation-checklist.md": {
             "hash": "4ec24a0ef603292dba7beee370c738f7e188df6324f4f4057e2c9e2c23190710",
             "mtime": "2026-02-10"
+        },
+        "docs/_ops/filesystem-lint-summary.md": {
+            "hash": "157e3555bafd13b0cd9a5b233b105f8edb9099378fcea4fb8741daa240b2fcc4",
+            "mtime": "2026-02-10"
+        },
+        "docs/_ops/filesystem-lint.md": {
+            "hash": "0edb874600d2e673e46dcf27f9b4648479e98e2bca5ddd623f396426fc8e0d47",
+            "mtime": "2026-02-10"
+        },
+        "docs/_ops/filesystem-trend.md": {
+            "hash": "9bcc06aaf508ce4686520b5884511d97e997da07eb0d1bb833e8b28e0cd394b9",
+            "mtime": "2026-02-10"
+        },
+        "docs/_support/ops-spark-reset/20260210-130402/summary.md": {
+            "hash": "aa3074cdca68c11900e3d512f57f6fead5133af91d2cceffa922260bbba1165d",
+            "mtime": "2026-02-10"
+        },
+        "docs/_support/ops-spark-reset/20260210-133819/summary.md": {
+            "hash": "5dc1a048c0fd47e23e63b629bf429304259c5193d65aab958cad1c8ea679186a",
+            "mtime": "2026-02-10"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260210-130237/summary.md": {
+            "hash": "317ffcfe2e3036b00cf665183cdd24ffa4c7a97a9131d787f20712b9e9029020",
+            "mtime": "2026-02-10"
+        },
+        "docs/auth-flow.md": {
+            "hash": "aee0dae3fc3d38f4fc269fab5c02601eeffcbe1f1c784cd065cd39138c1a3a99",
+            "mtime": "2026-02-10"
+        },
+        "docs/dev/maintenance-mode.md": {
+            "hash": "5b9749b4585ce332f674c4745f8d403fdacc645a78d0a5e428162dec6a8a1222",
+            "mtime": "2026-02-10"
+        },
+        "docs/testing/auth-tests.md": {
+            "hash": "954236e4f752a4a60e1ba254a875e3cb88dee83c52a831a619dfdea60d1b0e30",
+            "mtime": "2026-02-10"
+        },
+        "docs/_support/api-audit/20260211-023725/summary.md": {
+            "hash": "cf8a2672c6234a4d398dfa6d885ea6452beaea6cae2b21468efe6f4bf1edef53",
+            "mtime": "2026-02-11"
+        },
+        "docs/_support/ops-spark-reset/20260212-005323/summary.md": {
+            "hash": "2e014e98950b2ba3251245a3e18b13f41c5743773532409f3123610dbaf67bf5",
+            "mtime": "2026-02-12"
+        },
+        "docs/_support/ops-spark-reset/20260212-010136/summary.md": {
+            "hash": "bbd6a3e9fdb0a59915dfe147820ba5bb181005e626b5bd05b2f161db64e07ed1",
+            "mtime": "2026-02-12"
+        },
+        "docs/_support/ops-spark-reset/20260212-010223/summary.md": {
+            "hash": "784da3a6426bd28e18cf2df12424cc66f1c23559db205ce76ece821af670dfae",
+            "mtime": "2026-02-12"
+        },
+        "docs/_support/ops-spark-reset/20260212-010317/summary.md": {
+            "hash": "97dabbdd90ce4e19f5ed0052ca920877cd6540232f364ed4f89e60ab14832180",
+            "mtime": "2026-02-12"
+        },
+        "docs/_support/ops-spark-reset/20260212-010628/summary.md": {
+            "hash": "9a114e303e73ddfd0cd3b3f0d7b2981aa31025b3e4188d08266493f326f05528",
+            "mtime": "2026-02-12"
         }
     },
-    "last_run": "2026-02-10T12:00:01Z"
+    "last_run": "2026-02-12T02:00:01Z"
 }

@@ -1,11 +1,11 @@
 {
-    "generated_at": "2026-02-09T11:15:03+00:00",
+    "generated_at": "2026-02-11T02:32:29+00:00",
     "summary": {
-        "total": 130,
-        "issues": 6,
+        "total": 136,
+        "issues": 0,
         "classifications": {
-            "safe": 62,
-            "read-only": 52,
+            "safe": 63,
+            "read-only": 57,
             "requires-approval": 14,
             "destructive": 2
         }
@@ -19,9 +19,7 @@
             "classification": "read-only",
             "requires_approval": false,
             "supports_dry_run": false,
-            "issues": [
-                "Constructor detected"
-            ]
+            "issues": []
         },
         {
             "command": "aiops:audit",
@@ -41,6 +39,16 @@
             "classification": "safe",
             "requires_approval": false,
             "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "aiops:backlog",
+            "class": "App\\Commands\\AiOps\\Backlog",
+            "group": "AI-Ops",
+            "description": "Reconcile outstanding AIOPS patch workflow jobs.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
             "issues": []
         },
         {
@@ -144,6 +152,16 @@
             "issues": []
         },
         {
+            "command": "aiops:public-pages:audit",
+            "class": "App\\Commands\\AiOps\\PublicPagesAudit",
+            "group": "AI-Ops",
+            "description": "Audit public pages schema coverage, freshness, and governance conditions.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
             "command": "aiops:public-pages:import",
             "class": "App\\Commands\\AiOps\\PublicPagesImport",
             "group": "AI-Ops",
@@ -234,6 +252,16 @@
             "issues": []
         },
         {
+            "command": "aiops:unlock",
+            "class": "App\\Commands\\AiOps\\Unlock",
+            "group": "AI-Ops",
+            "description": "Manually unlock an AIOPS patch job and reset retries.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
             "command": "aiops:watch",
             "class": "App\\Commands\\AiOps\\Watch",
             "group": "AI-Ops",
@@ -311,6 +339,16 @@
             "classification": "safe",
             "requires_approval": false,
             "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "auth:flow-smoke",
+            "class": "App\\Commands\\Auth\\FlowSmoke",
+            "group": "auth",
+            "description": "Smoke test for auth redirect safety and login route no-cache headers.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
             "issues": []
         },
         {
@@ -425,16 +463,13 @@
         },
         {
             "command": "chat:unlock",
-            "class": "App\\Commands\\Chat\\Unlock",
+            "class": "App\\Commands\\Chat\\Unblock",
             "group": "chat",
             "description": "Safely clear stale chat runtime lock and pid files.",
             "classification": "read-only",
             "requires_approval": false,
             "supports_dry_run": false,
-            "issues": [
-                "PSR-4 mismatch.",
-                "PSR-4 filename mismatch"
-            ]
+            "issues": []
         },
         {
             "command": "codex:review",
@@ -684,9 +719,7 @@
             "classification": "read-only",
             "requires_approval": false,
             "supports_dry_run": false,
-            "issues": [
-                "Does not extend SafeBaseCommand."
-            ]
+            "issues": []
         },
         {
             "command": "growth:retention-watch",
@@ -781,14 +814,12 @@
         {
             "command": "logs:test",
             "class": "App\\Commands\\LogsTest",
-            "group": "Ops",
-            "description": "Writes test log entries to verify file/db logging.",
-            "classification": "read-only",
+            "group": "logs",
+            "description": "Canonical logging test command (writes debug/info/error and validates file + DB sinks).",
+            "classification": "safe",
             "requires_approval": false,
-            "supports_dry_run": false,
-            "issues": [
-                "Does not extend SafeBaseCommand."
-            ]
+            "supports_dry_run": true,
+            "issues": []
         },
         {
             "command": "mail:send",
@@ -881,6 +912,16 @@
             "issues": []
         },
         {
+            "command": "ops:ci:prepare",
+            "class": "App\\Commands\\Ops\\CiPrepare",
+            "group": "ops",
+            "description": "Prepare deterministic writable/artifact directories for CI runs.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
             "command": "ops:commands:audit",
             "class": "App\\Commands\\Ops\\CommandsAudit",
             "group": "ops",
@@ -941,10 +982,20 @@
             "issues": []
         },
         {
+            "command": "ops:filesystem:fix",
+            "class": "App\\Commands\\Ops\\FilesystemFix",
+            "group": "ops",
+            "description": "Auto-fix filesystem governance violations",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
             "command": "ops:filesystem:lint",
             "class": "App\\Commands\\Ops\\FilesystemLint",
             "group": "ops",
-            "description": "Lint Spark commands for unsafe filesystem writes (missing ROOTPATH anchoring).",
+            "description": "Lint and optionally auto-fix filesystem governance violations.",
             "classification": "read-only",
             "requires_approval": false,
             "supports_dry_run": false,
@@ -1218,9 +1269,7 @@
             "classification": "read-only",
             "requires_approval": false,
             "supports_dry_run": false,
-            "issues": [
-                "Does not extend SafeBaseCommand."
-            ]
+            "issues": []
         },
         {
             "command": "keys:generate",
@@ -1230,9 +1279,7 @@
             "classification": "read-only",
             "requires_approval": false,
             "supports_dry_run": false,
-            "issues": [
-                "Does not extend SafeBaseCommand."
-            ]
+            "issues": []
         },
         {
             "command": "security:secrets-audit",

@@ -1,0 +1,1682 @@
+{
+    "generated_at": "2026-02-10T13:58:57+00:00",
+    "total_files": 161,
+    "issues": [
+        {
+            "file": "app/Commands/AiOps/CommandIndex.php",
+            "line": 139,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "@mkdir($directory, 0775, true);",
+            "resolved_path": "docs/_aiops/autofix.json",
+            "subsystem": "aiops",
+            "suggested_fix": "@mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "@mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/AiOps/CommandIndex.php",
+            "line": 143,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($jsonPath, json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));",
+            "resolved_path": "docs/_aiops/autofix.json",
+            "subsystem": "aiops",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));"
+        },
+        {
+            "file": "app/Commands/AiOps/ScanCells.php",
+            "line": 76,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "mkdir($runDir, 0775, true);",
+            "resolved_path": "docs/_aiops/autofix.json",
+            "subsystem": "aiops",
+            "suggested_fix": "mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/AiOps/PublicPagesAudit.php",
+            "line": 64,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "mkdir($dir, 0775, true);",
+            "resolved_path": "docs/_aiops/autofix.json",
+            "subsystem": "aiops",
+            "suggested_fix": "mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/AiOps/PublicPagesAudit.php",
+            "line": 94,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($reportPath, $report);",
+            "resolved_path": "docs/_aiops/autofix.json",
+            "subsystem": "aiops",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', $report);",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', $report);"
+        },
+        {
+            "file": "app/Commands/AiOps/PublicPagesAudit.php",
+            "line": 97,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($violationPath, \"# Public Pages Violations\\n\\n- None\\n\");",
+            "resolved_path": "docs/_aiops/autofix.json",
+            "subsystem": "aiops",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', \"# Public Pages Violations\\n\\n- None\\n\");",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', \"# Public Pages Violations\\n\\n- None\\n\");"
+        },
+        {
+            "file": "app/Commands/AiOps/PublicPagesAudit.php",
+            "line": 107,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($violationPath, $body);",
+            "resolved_path": "docs/_aiops/autofix.json",
+            "subsystem": "aiops",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', $body);",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', $body);"
+        },
+        {
+            "file": "app/Commands/AiOps/PublicPagesReport.php",
+            "line": 41,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "mkdir($dir, 0775, true);",
+            "resolved_path": "docs/_aiops/autofix.json",
+            "subsystem": "aiops",
+            "suggested_fix": "mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/AiOps/PublicPagesReport.php",
+            "line": 44,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($dir . '/run_summary.json', (string) ($run['summary_json'] ?: '{}'));",
+            "resolved_path": "docs/_aiops/autofix.json",
+            "subsystem": "aiops",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', (string) ($run['summary_json'] ?: '{}'));",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', (string) ($run['summary_json'] ?: '{}'));"
+        },
+        {
+            "file": "app/Commands/AiOps/PublicPagesReport.php",
+            "line": 73,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($dir . '/publish_suggestions.md', $md);",
+            "resolved_path": "docs/_aiops/autofix.json",
+            "subsystem": "aiops",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', $md);",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', $md);"
+        },
+        {
+            "file": "app/Commands/AiOps/PublicPagesRun.php",
+            "line": 129,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "mkdir($dir, 0775, true);",
+            "resolved_path": "docs/_aiops/autofix.json",
+            "subsystem": "aiops",
+            "suggested_fix": "mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/AiOps/PublicPagesRun.php",
+            "line": 139,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($dir . '/violations.md', $body);",
+            "resolved_path": "docs/_aiops/autofix.json",
+            "subsystem": "aiops",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', $body);",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', $body);"
+        },
+        {
+            "file": "app/Commands/AiOps/Unlock.php",
+            "line": 39,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "mkdir($unlockDir, 0775, true);",
+            "resolved_path": "docs/_aiops/autofix.json",
+            "subsystem": "aiops",
+            "suggested_fix": "mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/AiOps/CopilotValidate.php",
+            "line": 290,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "@mkdir($directory, 0775, true);",
+            "resolved_path": "docs/_aiops/autofix.json",
+            "subsystem": "aiops",
+            "suggested_fix": "@mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "@mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/AiOps/CopilotValidate.php",
+            "line": 294,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($path, json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));",
+            "resolved_path": "docs/_aiops/autofix.json",
+            "subsystem": "aiops",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));"
+        },
+        {
+            "file": "app/Commands/AiOps/Audit.php",
+            "line": 58,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "@mkdir($dir, 0775, true);",
+            "resolved_path": "docs/_aiops/autofix.json",
+            "subsystem": "aiops",
+            "suggested_fix": "@mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "@mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/AiOps/Audit.php",
+            "line": 60,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($mdAbsPath, $this->buildOrchestrationMarkdown($orchestration));",
+            "resolved_path": "docs/_aiops/autofix.json",
+            "subsystem": "aiops",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', $this->buildOrchestrationMarkdown($orchestration));",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', $this->buildOrchestrationMarkdown($orchestration));"
+        },
+        {
+            "file": "app/Commands/AiOps/Backlog.php",
+            "line": 134,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($reportPath, $report);",
+            "resolved_path": "docs/_aiops/autofix.json",
+            "subsystem": "aiops",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', $report);",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', $report);"
+        },
+        {
+            "file": "app/Commands/AiOps/Backlog.php",
+            "line": 185,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "mkdir($dir, 0775, true);",
+            "resolved_path": "docs/_aiops/autofix.json",
+            "subsystem": "aiops",
+            "suggested_fix": "mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/AiOps/SelfHeal.php",
+            "line": 3,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "class SelfHeal extends SafeBaseCommand { use SubsCommandTrait; protected $group = 'AI-Ops'; protected $name='aiops:self-heal'; protected $description='Run one-pass self-heal'; protected $options=['--attempts'=>'max 3','--json'=>'JSON']; public function run(array $params){$this->parseParams($params);$json=$this->optBool('json');$attempts=max(1,min(3,$this->optInt('attempts', 1)));$lock = ROOTPATH . 'aiops/runtime/selfheal.lock'; if(is_file($lock) && (time()-filemtime($lock))<600){$out=['status'=>'locked','message'=>'self-heal already running'];$this->emit($out,$json);return EXIT_SUCCESS;} file_put_contents($lock,(string)getmypid()); try {$runs=[]; for($i=1;$i<=$attempts;$i++){ $audit=command('aiops:audit --json=1'); $repair=command('aiops:repair --json=1'); $status=command('aiops:status --json=1'); $runs[]=['cycle'=>$i,'audit'=>$audit,'repair'=>$repair,'status'=>$status]; } $md=\"# Self Heal \".date('c').\"\\n\\nAttempts: {$attempts}\\n\"; $path=$this->writeDoc('nightly','self-heal-'.date('Y-m-d--Hi').'.md',$md); $out=['status'=>'ok','attempts'=>$attempts,'report'=>$path]; } finally {@unlink($lock);} $this->emit($out,$json); return EXIT_SUCCESS; }}",
+            "resolved_path": "docs/_aiops/autofix.json",
+            "subsystem": "aiops",
+            "suggested_fix": "class SelfHeal extends SafeBaseCommand { use SubsCommandTrait; protected $group = 'AI-Ops'; protected $name='aiops:self-heal'; protected $description='Run one-pass self-heal'; protected $options=['--attempts'=>'max 3','--json'=>'JSON']; public function run(array $params){$this->parseParams($params);$json=$this->optBool('json');$attempts=max(1,min(3,$this->optInt('attempts', 1)));ROOTPATH . 'docs/_aiops/autofix.json' = ROOTPATH . 'aiops/runtime/selfheal.lock'; if(is_file(ROOTPATH . 'docs/_aiops/autofix.json') && (time()-filemtime(ROOTPATH . 'docs/_aiops/autofix.json'))<600){$out=['status'=>'locked','message'=>'self-heal already running'];$this->emit($out,$json);return EXIT_SUCCESS;} file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json',(string)getmypid()); try {$runs=[]; for($i=1;$i<=$attempts;$i++){ $audit=command('aiops:audit --json=1'); $repair=command('aiops:repair --json=1'); $status=command('aiops:status --json=1'); $runs[]=['cycle'=>$i,'audit'=>$audit,'repair'=>$repair,'status'=>$status]; } $md=\"# Self Heal \".date('c').\"\\n\\nAttempts: {$attempts}\\n\"; $path=$this->writeDoc('nightly','self-heal-'.date('Y-m-d--Hi').'.md',$md); $out=['status'=>'ok','attempts'=>$attempts,'report'=>$path]; } finally {@unlink(ROOTPATH . 'docs/_aiops/autofix.json');} $this->emit($out,$json); return EXIT_SUCCESS; }}",
+            "confidence": 0.8,
+            "replacement_line": "class SelfHeal extends SafeBaseCommand { use SubsCommandTrait; protected $group = 'AI-Ops'; protected $name='aiops:self-heal'; protected $description='Run one-pass self-heal'; protected $options=['--attempts'=>'max 3','--json'=>'JSON']; public function run(array $params){$this->parseParams($params);$json=$this->optBool('json');$attempts=max(1,min(3,$this->optInt('attempts', 1)));ROOTPATH . 'docs/_aiops/autofix.json' = ROOTPATH . 'aiops/runtime/selfheal.lock'; if(is_file(ROOTPATH . 'docs/_aiops/autofix.json') && (time()-filemtime(ROOTPATH . 'docs/_aiops/autofix.json'))<600){$out=['status'=>'locked','message'=>'self-heal already running'];$this->emit($out,$json);return EXIT_SUCCESS;} file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json',(string)getmypid()); try {$runs=[]; for($i=1;$i<=$attempts;$i++){ $audit=command('aiops:audit --json=1'); $repair=command('aiops:repair --json=1'); $status=command('aiops:status --json=1'); $runs[]=['cycle'=>$i,'audit'=>$audit,'repair'=>$repair,'status'=>$status]; } $md=\"# Self Heal \".date('c').\"\\n\\nAttempts: {$attempts}\\n\"; $path=$this->writeDoc('nightly','self-heal-'.date('Y-m-d--Hi').'.md',$md); $out=['status'=>'ok','attempts'=>$attempts,'report'=>$path]; } finally {@unlink(ROOTPATH . 'docs/_aiops/autofix.json');} $this->emit($out,$json); return EXIT_SUCCESS; }}"
+        },
+        {
+            "file": "app/Commands/Ops/CommandsLint.php",
+            "line": 175,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "@mkdir($directory, 0775, true);",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/Ops/CommandsLint.php",
+            "line": 179,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($path, json_encode($payload, JSON_PRETTY_PRINT));",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', json_encode($payload, JSON_PRETTY_PRINT));",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', json_encode($payload, JSON_PRETTY_PRINT));"
+        },
+        {
+            "file": "app/Commands/Ops/CiPrepare.php",
+            "line": 31,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "@mkdir($path, 0775, true);",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/Ops/CiPrepare.php",
+            "line": 58,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "@mkdir(dirname($path), 0775, true);",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/Ops/CiPrepare.php",
+            "line": 59,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($path, json_encode($report, JSON_PRETTY_PRINT));",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', json_encode($report, JSON_PRETTY_PRINT));",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', json_encode($report, JSON_PRETTY_PRINT));"
+        },
+        {
+            "file": "app/Commands/Ops/CommandsAudit.php",
+            "line": 34,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "@mkdir($targetDir, 0775, true);",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/Ops/FilesystemFix.php",
+            "line": 68,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "@mkdir(dirname($patchPath), 0775, true);",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/Ops/FilesystemFix.php",
+            "line": 70,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($patchPath, $diff);",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', $diff);",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', $diff);"
+        },
+        {
+            "file": "app/Commands/Ops/NextSteps.php",
+            "line": 281,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "mkdir($dir, 0775, true);",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/Ops/NextSteps.php",
+            "line": 283,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($target, $markdown);",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', $markdown);",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', $markdown);"
+        },
+        {
+            "file": "app/Commands/Ops/NextSteps.php",
+            "line": 293,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "mkdir($dir, 0775, true);",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/Ops/NextSteps.php",
+            "line": 304,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "@mkdir(dirname($path), 0775, true);",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/Ops/NextSteps.php",
+            "line": 305,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($path, json_encode($payload, JSON_PRETTY_PRINT));",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', json_encode($payload, JSON_PRETTY_PRINT));",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', json_encode($payload, JSON_PRETTY_PRINT));"
+        },
+        {
+            "file": "app/Commands/Ops/ProposePr.php",
+            "line": 355,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "mkdir($rootedDir, 0775, true);",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/Ops/ProposePr.php",
+            "line": 364,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "@mkdir($rootedDir, 0775, true);",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/Ops/ProposePr.php",
+            "line": 366,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "if (file_put_contents($rootedPath, $content) === false) {",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "if (file_put_contents(ROOTPATH . 'docs/_ops/autofix.json') {",
+            "confidence": 0.8,
+            "replacement_line": "if (file_put_contents(ROOTPATH . 'docs/_ops/autofix.json') {"
+        },
+        {
+            "file": "app/Commands/Support/SubsCommandTrait.php",
+            "line": 49,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "@mkdir($dir, 0775, true);",
+            "resolved_path": "docs/_support/autofix.json",
+            "subsystem": "support",
+            "suggested_fix": "@mkdir(ROOTPATH . 'docs/_support/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "@mkdir(ROOTPATH . 'docs/_support/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/Support/SubsCommandTrait.php",
+            "line": 53,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($path, $content . \"\\n\");",
+            "resolved_path": "docs/_support/autofix.json",
+            "subsystem": "support",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_support/autofix.json', $content . \"\\n\");",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_support/autofix.json', $content . \"\\n\");"
+        },
+        {
+            "file": "app/Commands/Support/ArtifactHelper.php",
+            "line": 108,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "if (file_put_contents($artifactDir . '/summary.md', $summary) === false) {",
+            "resolved_path": "docs/_support/autofix.json",
+            "subsystem": "support",
+            "suggested_fix": "if (file_put_contents(ROOTPATH . 'docs/_support/autofix.json') {",
+            "confidence": 0.8,
+            "replacement_line": "if (file_put_contents(ROOTPATH . 'docs/_support/autofix.json') {"
+        },
+        {
+            "file": "app/Commands/Support/ArtifactHelper.php",
+            "line": 113,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "if (file_put_contents($artifactDir . '/report.json', $reportJson) === false) {",
+            "resolved_path": "docs/_support/autofix.json",
+            "subsystem": "support",
+            "suggested_fix": "if (file_put_contents(ROOTPATH . 'docs/_support/autofix.json') {",
+            "confidence": 0.8,
+            "replacement_line": "if (file_put_contents(ROOTPATH . 'docs/_support/autofix.json') {"
+        },
+        {
+            "file": "app/Commands/Support/ArtifactHelper.php",
+            "line": 120,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "if (file_put_contents($artifactDir . '/meta.json', $metaJson) === false) {",
+            "resolved_path": "docs/_support/autofix.json",
+            "subsystem": "support",
+            "suggested_fix": "if (file_put_contents(ROOTPATH . 'docs/_support/autofix.json') {",
+            "confidence": 0.8,
+            "replacement_line": "if (file_put_contents(ROOTPATH . 'docs/_support/autofix.json') {"
+        },
+        {
+            "file": "app/Commands/Support/ArtifactHelper.php",
+            "line": 139,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "if (file_put_contents($target, $body . PHP_EOL) === false) {",
+            "resolved_path": "docs/_support/autofix.json",
+            "subsystem": "support",
+            "suggested_fix": "if (file_put_contents(ROOTPATH . 'docs/_support/autofix.json') {",
+            "confidence": 0.8,
+            "replacement_line": "if (file_put_contents(ROOTPATH . 'docs/_support/autofix.json') {"
+        },
+        {
+            "file": "app/Commands/Support/ArtifactHelper.php",
+            "line": 156,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "return mkdir($artifactDir, 0755, true);",
+            "resolved_path": "docs/_support/autofix.json",
+            "subsystem": "support",
+            "suggested_fix": "return mkdir(ROOTPATH . 'docs/_support/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "return mkdir(ROOTPATH . 'docs/_support/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/Support/ArtifactHelper.php",
+            "line": 187,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "if (file_put_contents($resolved, $contents) === false) {",
+            "resolved_path": "docs/_support/autofix.json",
+            "subsystem": "support",
+            "suggested_fix": "if (file_put_contents(ROOTPATH . 'docs/_support/autofix.json') {",
+            "confidence": 0.8,
+            "replacement_line": "if (file_put_contents(ROOTPATH . 'docs/_support/autofix.json') {"
+        },
+        {
+            "file": "app/Commands/Support/ArtifactHelper.php",
+            "line": 208,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "if (file_put_contents($resolved, $contents, FILE_APPEND) === false) {",
+            "resolved_path": "docs/_support/autofix.json",
+            "subsystem": "support",
+            "suggested_fix": "if (file_put_contents(ROOTPATH . 'docs/_support/autofix.json') {",
+            "confidence": 0.8,
+            "replacement_line": "if (file_put_contents(ROOTPATH . 'docs/_support/autofix.json') {"
+        },
+        {
+            "file": "app/Commands/Support/GitHubIssueHelper.php",
+            "line": 73,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "@mkdir(dirname($path), 0775, true);",
+            "resolved_path": "docs/_support/autofix.json",
+            "subsystem": "support",
+            "suggested_fix": "@mkdir(ROOTPATH . 'docs/_support/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "@mkdir(ROOTPATH . 'docs/_support/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/Support/GitHubIssueHelper.php",
+            "line": 79,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "@mkdir(dirname($path), 0775, true);",
+            "resolved_path": "docs/_support/autofix.json",
+            "subsystem": "support",
+            "suggested_fix": "@mkdir(ROOTPATH . 'docs/_support/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "@mkdir(ROOTPATH . 'docs/_support/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/Support/GitHubIssueHelper.php",
+            "line": 90,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($path, $payload . PHP_EOL);",
+            "resolved_path": "docs/_support/autofix.json",
+            "subsystem": "support",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_support/autofix.json', $payload . PHP_EOL);",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_support/autofix.json', $payload . PHP_EOL);"
+        },
+        {
+            "file": "app/Commands/NewsAudit.php",
+            "line": 659,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "mkdir($docPath, 0775, true);",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/NewsAudit.php",
+            "line": 719,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($docPath . DIRECTORY_SEPARATOR . 'news_audit_last_run.md', implode(PHP_EOL, $lines));",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', implode(PHP_EOL, $lines));",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', implode(PHP_EOL, $lines));"
+        },
+        {
+            "file": "app/Commands/Logs/SummarizeAll.php",
+            "line": 27,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "@mkdir($outDir, 0775, true);",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/Logs/SummarizeAll.php",
+            "line": 50,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($file, $this->renderSubsystemMarkdown($summary));",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', $this->renderSubsystemMarkdown($summary));",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', $this->renderSubsystemMarkdown($summary));"
+        },
+        {
+            "file": "app/Commands/AlertsAudit.php",
+            "line": 492,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "mkdir($docPath, 0775, true);",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/AlertsAudit.php",
+            "line": 561,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($docPath . DIRECTORY_SEPARATOR . 'alerts_audit_last_run.md', implode(PHP_EOL, $lines));",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', implode(PHP_EOL, $lines));",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', implode(PHP_EOL, $lines));"
+        },
+        {
+            "file": "app/Commands/SparkFix.php",
+            "line": 164,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "@mkdir(dirname($path), 0775, true);",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/SparkFix.php",
+            "line": 166,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "return file_put_contents($path, $updated) !== false;",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "return file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', $updated) !== false;",
+            "confidence": 0.8,
+            "replacement_line": "return file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', $updated) !== false;"
+        },
+        {
+            "file": "app/Commands/SparkFix.php",
+            "line": 258,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "$ok = @mkdir(dirname($path), 0775, true);",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "$ok = @mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "$ok = @mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/Security/GenerateCI4Key.php",
+            "line": 48,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($env, $contents);",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', $contents);",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', $contents);"
+        },
+        {
+            "file": "app/Commands/Codex/Review.php",
+            "line": 36,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "if (! is_dir($outputDir) && ! mkdir($outputDir, 0775, true) && ! is_dir($outputDir)) {",
+            "resolved_path": "docs/_codex/autofix.json",
+            "subsystem": "codex",
+            "suggested_fix": "if (! is_dir($outputDir) && ! mkdir(ROOTPATH . 'docs/_codex/autofix.json', 0775, true) {",
+            "confidence": 0.8,
+            "replacement_line": "if (! is_dir($outputDir) && ! mkdir(ROOTPATH . 'docs/_codex/autofix.json', 0775, true) {"
+        },
+        {
+            "file": "app/Commands/Codex/Review.php",
+            "line": 55,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($reviewPath, $this->renderReview($today, $status, $recentCommits, $changedFiles, $docsDrift));",
+            "resolved_path": "docs/_codex/autofix.json",
+            "subsystem": "codex",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_codex/autofix.json', $this->renderReview($today, $status, $recentCommits, $changedFiles, $docsDrift));",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_codex/autofix.json', $this->renderReview($today, $status, $recentCommits, $changedFiles, $docsDrift));"
+        },
+        {
+            "file": "app/Commands/Codex/Review.php",
+            "line": 56,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($promptPath, $this->renderPromptPayload($today, $status, $recentCommits, $changedFiles, $docsDrift));",
+            "resolved_path": "docs/_codex/autofix.json",
+            "subsystem": "codex",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_codex/autofix.json', $this->renderPromptPayload($today, $status, $recentCommits, $changedFiles, $docsDrift));",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_codex/autofix.json', $this->renderPromptPayload($today, $status, $recentCommits, $changedFiles, $docsDrift));"
+        },
+        {
+            "file": "app/Commands/Codex/ReviewPrOutbox.php",
+            "line": 75,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "@mkdir($dir, 0775, true);",
+            "resolved_path": "docs/_codex/autofix.json",
+            "subsystem": "codex",
+            "suggested_fix": "@mkdir(ROOTPATH . 'docs/_codex/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "@mkdir(ROOTPATH . 'docs/_codex/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/Codex/ReviewPrOutbox.php",
+            "line": 76,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($dir . '/CODEX_REVIEW.md', $review);",
+            "resolved_path": "docs/_codex/autofix.json",
+            "subsystem": "codex",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_codex/autofix.json', $review);",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_codex/autofix.json', $review);"
+        },
+        {
+            "file": "app/Commands/Codex/ReviewPublish.php",
+            "line": 54,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "@mkdir($dir, 0775, true);",
+            "resolved_path": "docs/_codex/autofix.json",
+            "subsystem": "codex",
+            "suggested_fix": "@mkdir(ROOTPATH . 'docs/_codex/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "@mkdir(ROOTPATH . 'docs/_codex/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/Codex/ReviewPublish.php",
+            "line": 56,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($artifactPath, json_encode($payload, JSON_PRETTY_PRINT) . PHP_EOL);",
+            "resolved_path": "docs/_codex/autofix.json",
+            "subsystem": "codex",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_codex/autofix.json', json_encode($payload, JSON_PRETTY_PRINT) . PHP_EOL);",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_codex/autofix.json', json_encode($payload, JSON_PRETTY_PRINT) . PHP_EOL);"
+        },
+        {
+            "file": "app/Commands/Codex/ReviewPublish.php",
+            "line": 59,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($dashboardPath, $this->renderDashboard($filesystem, $commands, $timestamp));",
+            "resolved_path": "docs/_codex/autofix.json",
+            "subsystem": "codex",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_codex/autofix.json', $this->renderDashboard($filesystem, $commands, $timestamp));",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_codex/autofix.json', $this->renderDashboard($filesystem, $commands, $timestamp));"
+        },
+        {
+            "file": "app/Commands/Codex/ReviewPublish.php",
+            "line": 189,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "mkdir($dir, 0775, true);",
+            "resolved_path": "docs/_codex/autofix.json",
+            "subsystem": "codex",
+            "suggested_fix": "mkdir(ROOTPATH . 'docs/_codex/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "mkdir(ROOTPATH . 'docs/_codex/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/SparkDoctor.php",
+            "line": 294,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "@mkdir($directory, 0775, true);",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/SparkDoctor.php",
+            "line": 298,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($path, json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));",
+            "resolved_path": "docs/_ops/autofix.json",
+            "subsystem": "ops",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));"
+        },
+        {
+            "file": "app/Commands/GapTrackerSync.php",
+            "line": 247,
+            "call": "mkdir",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "@mkdir($rootedDir, 0775, true);",
+            "resolved_path": "docs/_gap-tracker/autofix.json",
+            "subsystem": "gap_tracker",
+            "suggested_fix": "@mkdir(ROOTPATH . 'docs/_gap-tracker/autofix.json', 0775, true);",
+            "confidence": 0.8,
+            "replacement_line": "@mkdir(ROOTPATH . 'docs/_gap-tracker/autofix.json', 0775, true);"
+        },
+        {
+            "file": "app/Commands/GapTrackerSync.php",
+            "line": 278,
+            "call": "file_put_contents",
+            "reason": "Missing ROOTPATH anchor",
+            "severity": "warning",
+            "snippet": "file_put_contents($path, implode(PHP_EOL, $report));",
+            "resolved_path": "docs/_gap-tracker/autofix.json",
+            "subsystem": "gap_tracker",
+            "suggested_fix": "file_put_contents(ROOTPATH . 'docs/_gap-tracker/autofix.json', implode(PHP_EOL, $report));",
+            "confidence": 0.8,
+            "replacement_line": "file_put_contents(ROOTPATH . 'docs/_gap-tracker/autofix.json', implode(PHP_EOL, $report));"
+        }
+    ],
+    "issue_count": 71,
+    "error_count": 0,
+    "severity_summary": {
+        "error": 0,
+        "warning": 71
+    },
+    "fixes_applied": 0,
+    "manual_required": 0,
+    "confidence_summary": {
+        "high": 0,
+        "medium": 71,
+        "low": 0
+    },
+    "fix_plan": [
+        {
+            "file": "app/Commands/AiOps/CommandIndex.php",
+            "line": 139,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "@mkdir($directory, 0775, true);",
+            "with": "@mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_aiops/"
+            ]
+        },
+        {
+            "file": "app/Commands/AiOps/CommandIndex.php",
+            "line": 143,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($jsonPath, json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));",
+            "with": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));",
+            "allowed": [
+                "docs/_aiops/"
+            ]
+        },
+        {
+            "file": "app/Commands/AiOps/ScanCells.php",
+            "line": 76,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "mkdir($runDir, 0775, true);",
+            "with": "mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_aiops/"
+            ]
+        },
+        {
+            "file": "app/Commands/AiOps/PublicPagesAudit.php",
+            "line": 64,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "mkdir($dir, 0775, true);",
+            "with": "mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_aiops/"
+            ]
+        },
+        {
+            "file": "app/Commands/AiOps/PublicPagesAudit.php",
+            "line": 94,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($reportPath, $report);",
+            "with": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', $report);",
+            "allowed": [
+                "docs/_aiops/"
+            ]
+        },
+        {
+            "file": "app/Commands/AiOps/PublicPagesAudit.php",
+            "line": 97,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($violationPath, \"# Public Pages Violations\\n\\n- None\\n\");",
+            "with": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', \"# Public Pages Violations\\n\\n- None\\n\");",
+            "allowed": [
+                "docs/_aiops/"
+            ]
+        },
+        {
+            "file": "app/Commands/AiOps/PublicPagesAudit.php",
+            "line": 107,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($violationPath, $body);",
+            "with": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', $body);",
+            "allowed": [
+                "docs/_aiops/"
+            ]
+        },
+        {
+            "file": "app/Commands/AiOps/PublicPagesReport.php",
+            "line": 41,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "mkdir($dir, 0775, true);",
+            "with": "mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_aiops/"
+            ]
+        },
+        {
+            "file": "app/Commands/AiOps/PublicPagesReport.php",
+            "line": 44,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($dir . '/run_summary.json', (string) ($run['summary_json'] ?: '{}'));",
+            "with": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', (string) ($run['summary_json'] ?: '{}'));",
+            "allowed": [
+                "docs/_aiops/"
+            ]
+        },
+        {
+            "file": "app/Commands/AiOps/PublicPagesReport.php",
+            "line": 73,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($dir . '/publish_suggestions.md', $md);",
+            "with": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', $md);",
+            "allowed": [
+                "docs/_aiops/"
+            ]
+        },
+        {
+            "file": "app/Commands/AiOps/PublicPagesRun.php",
+            "line": 129,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "mkdir($dir, 0775, true);",
+            "with": "mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_aiops/"
+            ]
+        },
+        {
+            "file": "app/Commands/AiOps/PublicPagesRun.php",
+            "line": 139,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($dir . '/violations.md', $body);",
+            "with": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', $body);",
+            "allowed": [
+                "docs/_aiops/"
+            ]
+        },
+        {
+            "file": "app/Commands/AiOps/Unlock.php",
+            "line": 39,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "mkdir($unlockDir, 0775, true);",
+            "with": "mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_aiops/"
+            ]
+        },
+        {
+            "file": "app/Commands/AiOps/CopilotValidate.php",
+            "line": 290,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "@mkdir($directory, 0775, true);",
+            "with": "@mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_aiops/"
+            ]
+        },
+        {
+            "file": "app/Commands/AiOps/CopilotValidate.php",
+            "line": 294,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($path, json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));",
+            "with": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));",
+            "allowed": [
+                "docs/_aiops/"
+            ]
+        },
+        {
+            "file": "app/Commands/AiOps/Audit.php",
+            "line": 58,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "@mkdir($dir, 0775, true);",
+            "with": "@mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_aiops/"
+            ]
+        },
+        {
+            "file": "app/Commands/AiOps/Audit.php",
+            "line": 60,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($mdAbsPath, $this->buildOrchestrationMarkdown($orchestration));",
+            "with": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', $this->buildOrchestrationMarkdown($orchestration));",
+            "allowed": [
+                "docs/_aiops/"
+            ]
+        },
+        {
+            "file": "app/Commands/AiOps/Backlog.php",
+            "line": 134,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($reportPath, $report);",
+            "with": "file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json', $report);",
+            "allowed": [
+                "docs/_aiops/"
+            ]
+        },
+        {
+            "file": "app/Commands/AiOps/Backlog.php",
+            "line": 185,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "mkdir($dir, 0775, true);",
+            "with": "mkdir(ROOTPATH . 'docs/_aiops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_aiops/"
+            ]
+        },
+        {
+            "file": "app/Commands/AiOps/SelfHeal.php",
+            "line": 3,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "class SelfHeal extends SafeBaseCommand { use SubsCommandTrait; protected $group = 'AI-Ops'; protected $name='aiops:self-heal'; protected $description='Run one-pass self-heal'; protected $options=['--attempts'=>'max 3','--json'=>'JSON']; public function run(array $params){$this->parseParams($params);$json=$this->optBool('json');$attempts=max(1,min(3,$this->optInt('attempts', 1)));$lock = ROOTPATH . 'aiops/runtime/selfheal.lock'; if(is_file($lock) && (time()-filemtime($lock))<600){$out=['status'=>'locked','message'=>'self-heal already running'];$this->emit($out,$json);return EXIT_SUCCESS;} file_put_contents($lock,(string)getmypid()); try {$runs=[]; for($i=1;$i<=$attempts;$i++){ $audit=command('aiops:audit --json=1'); $repair=command('aiops:repair --json=1'); $status=command('aiops:status --json=1'); $runs[]=['cycle'=>$i,'audit'=>$audit,'repair'=>$repair,'status'=>$status]; } $md=\"# Self Heal \".date('c').\"\\n\\nAttempts: {$attempts}\\n\"; $path=$this->writeDoc('nightly','self-heal-'.date('Y-m-d--Hi').'.md',$md); $out=['status'=>'ok','attempts'=>$attempts,'report'=>$path]; } finally {@unlink($lock);} $this->emit($out,$json); return EXIT_SUCCESS; }}",
+            "with": "class SelfHeal extends SafeBaseCommand { use SubsCommandTrait; protected $group = 'AI-Ops'; protected $name='aiops:self-heal'; protected $description='Run one-pass self-heal'; protected $options=['--attempts'=>'max 3','--json'=>'JSON']; public function run(array $params){$this->parseParams($params);$json=$this->optBool('json');$attempts=max(1,min(3,$this->optInt('attempts', 1)));ROOTPATH . 'docs/_aiops/autofix.json' = ROOTPATH . 'aiops/runtime/selfheal.lock'; if(is_file(ROOTPATH . 'docs/_aiops/autofix.json') && (time()-filemtime(ROOTPATH . 'docs/_aiops/autofix.json'))<600){$out=['status'=>'locked','message'=>'self-heal already running'];$this->emit($out,$json);return EXIT_SUCCESS;} file_put_contents(ROOTPATH . 'docs/_aiops/autofix.json',(string)getmypid()); try {$runs=[]; for($i=1;$i<=$attempts;$i++){ $audit=command('aiops:audit --json=1'); $repair=command('aiops:repair --json=1'); $status=command('aiops:status --json=1'); $runs[]=['cycle'=>$i,'audit'=>$audit,'repair'=>$repair,'status'=>$status]; } $md=\"# Self Heal \".date('c').\"\\n\\nAttempts: {$attempts}\\n\"; $path=$this->writeDoc('nightly','self-heal-'.date('Y-m-d--Hi').'.md',$md); $out=['status'=>'ok','attempts'=>$attempts,'report'=>$path]; } finally {@unlink(ROOTPATH . 'docs/_aiops/autofix.json');} $this->emit($out,$json); return EXIT_SUCCESS; }}",
+            "allowed": [
+                "docs/_aiops/"
+            ]
+        },
+        {
+            "file": "app/Commands/Ops/CommandsLint.php",
+            "line": 175,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "@mkdir($directory, 0775, true);",
+            "with": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/Ops/CommandsLint.php",
+            "line": 179,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($path, json_encode($payload, JSON_PRETTY_PRINT));",
+            "with": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', json_encode($payload, JSON_PRETTY_PRINT));",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/Ops/CiPrepare.php",
+            "line": 31,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "@mkdir($path, 0775, true);",
+            "with": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/Ops/CiPrepare.php",
+            "line": 58,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "@mkdir(dirname($path), 0775, true);",
+            "with": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/Ops/CiPrepare.php",
+            "line": 59,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($path, json_encode($report, JSON_PRETTY_PRINT));",
+            "with": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', json_encode($report, JSON_PRETTY_PRINT));",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/Ops/CommandsAudit.php",
+            "line": 34,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "@mkdir($targetDir, 0775, true);",
+            "with": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/Ops/FilesystemFix.php",
+            "line": 68,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "@mkdir(dirname($patchPath), 0775, true);",
+            "with": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/Ops/FilesystemFix.php",
+            "line": 70,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($patchPath, $diff);",
+            "with": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', $diff);",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/Ops/NextSteps.php",
+            "line": 281,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "mkdir($dir, 0775, true);",
+            "with": "mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/Ops/NextSteps.php",
+            "line": 283,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($target, $markdown);",
+            "with": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', $markdown);",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/Ops/NextSteps.php",
+            "line": 293,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "mkdir($dir, 0775, true);",
+            "with": "mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/Ops/NextSteps.php",
+            "line": 304,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "@mkdir(dirname($path), 0775, true);",
+            "with": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/Ops/NextSteps.php",
+            "line": 305,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($path, json_encode($payload, JSON_PRETTY_PRINT));",
+            "with": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', json_encode($payload, JSON_PRETTY_PRINT));",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/Ops/ProposePr.php",
+            "line": 355,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "mkdir($rootedDir, 0775, true);",
+            "with": "mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/Ops/ProposePr.php",
+            "line": 364,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "@mkdir($rootedDir, 0775, true);",
+            "with": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/Ops/ProposePr.php",
+            "line": 366,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "if (file_put_contents($rootedPath, $content) === false) {",
+            "with": "if (file_put_contents(ROOTPATH . 'docs/_ops/autofix.json') {",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/Support/SubsCommandTrait.php",
+            "line": 49,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "@mkdir($dir, 0775, true);",
+            "with": "@mkdir(ROOTPATH . 'docs/_support/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_support/"
+            ]
+        },
+        {
+            "file": "app/Commands/Support/SubsCommandTrait.php",
+            "line": 53,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($path, $content . \"\\n\");",
+            "with": "file_put_contents(ROOTPATH . 'docs/_support/autofix.json', $content . \"\\n\");",
+            "allowed": [
+                "docs/_support/"
+            ]
+        },
+        {
+            "file": "app/Commands/Support/ArtifactHelper.php",
+            "line": 108,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "if (file_put_contents($artifactDir . '/summary.md', $summary) === false) {",
+            "with": "if (file_put_contents(ROOTPATH . 'docs/_support/autofix.json') {",
+            "allowed": [
+                "docs/_support/"
+            ]
+        },
+        {
+            "file": "app/Commands/Support/ArtifactHelper.php",
+            "line": 113,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "if (file_put_contents($artifactDir . '/report.json', $reportJson) === false) {",
+            "with": "if (file_put_contents(ROOTPATH . 'docs/_support/autofix.json') {",
+            "allowed": [
+                "docs/_support/"
+            ]
+        },
+        {
+            "file": "app/Commands/Support/ArtifactHelper.php",
+            "line": 120,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "if (file_put_contents($artifactDir . '/meta.json', $metaJson) === false) {",
+            "with": "if (file_put_contents(ROOTPATH . 'docs/_support/autofix.json') {",
+            "allowed": [
+                "docs/_support/"
+            ]
+        },
+        {
+            "file": "app/Commands/Support/ArtifactHelper.php",
+            "line": 139,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "if (file_put_contents($target, $body . PHP_EOL) === false) {",
+            "with": "if (file_put_contents(ROOTPATH . 'docs/_support/autofix.json') {",
+            "allowed": [
+                "docs/_support/"
+            ]
+        },
+        {
+            "file": "app/Commands/Support/ArtifactHelper.php",
+            "line": 156,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "return mkdir($artifactDir, 0755, true);",
+            "with": "return mkdir(ROOTPATH . 'docs/_support/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_support/"
+            ]
+        },
+        {
+            "file": "app/Commands/Support/ArtifactHelper.php",
+            "line": 187,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "if (file_put_contents($resolved, $contents) === false) {",
+            "with": "if (file_put_contents(ROOTPATH . 'docs/_support/autofix.json') {",
+            "allowed": [
+                "docs/_support/"
+            ]
+        },
+        {
+            "file": "app/Commands/Support/ArtifactHelper.php",
+            "line": 208,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "if (file_put_contents($resolved, $contents, FILE_APPEND) === false) {",
+            "with": "if (file_put_contents(ROOTPATH . 'docs/_support/autofix.json') {",
+            "allowed": [
+                "docs/_support/"
+            ]
+        },
+        {
+            "file": "app/Commands/Support/GitHubIssueHelper.php",
+            "line": 73,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "@mkdir(dirname($path), 0775, true);",
+            "with": "@mkdir(ROOTPATH . 'docs/_support/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_support/"
+            ]
+        },
+        {
+            "file": "app/Commands/Support/GitHubIssueHelper.php",
+            "line": 79,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "@mkdir(dirname($path), 0775, true);",
+            "with": "@mkdir(ROOTPATH . 'docs/_support/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_support/"
+            ]
+        },
+        {
+            "file": "app/Commands/Support/GitHubIssueHelper.php",
+            "line": 90,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($path, $payload . PHP_EOL);",
+            "with": "file_put_contents(ROOTPATH . 'docs/_support/autofix.json', $payload . PHP_EOL);",
+            "allowed": [
+                "docs/_support/"
+            ]
+        },
+        {
+            "file": "app/Commands/NewsAudit.php",
+            "line": 659,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "mkdir($docPath, 0775, true);",
+            "with": "mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/NewsAudit.php",
+            "line": 719,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($docPath . DIRECTORY_SEPARATOR . 'news_audit_last_run.md', implode(PHP_EOL, $lines));",
+            "with": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', implode(PHP_EOL, $lines));",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/Logs/SummarizeAll.php",
+            "line": 27,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "@mkdir($outDir, 0775, true);",
+            "with": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/Logs/SummarizeAll.php",
+            "line": 50,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($file, $this->renderSubsystemMarkdown($summary));",
+            "with": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', $this->renderSubsystemMarkdown($summary));",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/AlertsAudit.php",
+            "line": 492,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "mkdir($docPath, 0775, true);",
+            "with": "mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/AlertsAudit.php",
+            "line": 561,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($docPath . DIRECTORY_SEPARATOR . 'alerts_audit_last_run.md', implode(PHP_EOL, $lines));",
+            "with": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', implode(PHP_EOL, $lines));",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/SparkFix.php",
+            "line": 164,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "@mkdir(dirname($path), 0775, true);",
+            "with": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/SparkFix.php",
+            "line": 166,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "return file_put_contents($path, $updated) !== false;",
+            "with": "return file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', $updated) !== false;",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/SparkFix.php",
+            "line": 258,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "$ok = @mkdir(dirname($path), 0775, true);",
+            "with": "$ok = @mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/Security/GenerateCI4Key.php",
+            "line": 48,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($env, $contents);",
+            "with": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', $contents);",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/Codex/Review.php",
+            "line": 36,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "if (! is_dir($outputDir) && ! mkdir($outputDir, 0775, true) && ! is_dir($outputDir)) {",
+            "with": "if (! is_dir($outputDir) && ! mkdir(ROOTPATH . 'docs/_codex/autofix.json', 0775, true) {",
+            "allowed": [
+                "docs/_codex/"
+            ]
+        },
+        {
+            "file": "app/Commands/Codex/Review.php",
+            "line": 55,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($reviewPath, $this->renderReview($today, $status, $recentCommits, $changedFiles, $docsDrift));",
+            "with": "file_put_contents(ROOTPATH . 'docs/_codex/autofix.json', $this->renderReview($today, $status, $recentCommits, $changedFiles, $docsDrift));",
+            "allowed": [
+                "docs/_codex/"
+            ]
+        },
+        {
+            "file": "app/Commands/Codex/Review.php",
+            "line": 56,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($promptPath, $this->renderPromptPayload($today, $status, $recentCommits, $changedFiles, $docsDrift));",
+            "with": "file_put_contents(ROOTPATH . 'docs/_codex/autofix.json', $this->renderPromptPayload($today, $status, $recentCommits, $changedFiles, $docsDrift));",
+            "allowed": [
+                "docs/_codex/"
+            ]
+        },
+        {
+            "file": "app/Commands/Codex/ReviewPrOutbox.php",
+            "line": 75,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "@mkdir($dir, 0775, true);",
+            "with": "@mkdir(ROOTPATH . 'docs/_codex/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_codex/"
+            ]
+        },
+        {
+            "file": "app/Commands/Codex/ReviewPrOutbox.php",
+            "line": 76,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($dir . '/CODEX_REVIEW.md', $review);",
+            "with": "file_put_contents(ROOTPATH . 'docs/_codex/autofix.json', $review);",
+            "allowed": [
+                "docs/_codex/"
+            ]
+        },
+        {
+            "file": "app/Commands/Codex/ReviewPublish.php",
+            "line": 54,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "@mkdir($dir, 0775, true);",
+            "with": "@mkdir(ROOTPATH . 'docs/_codex/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_codex/"
+            ]
+        },
+        {
+            "file": "app/Commands/Codex/ReviewPublish.php",
+            "line": 56,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($artifactPath, json_encode($payload, JSON_PRETTY_PRINT) . PHP_EOL);",
+            "with": "file_put_contents(ROOTPATH . 'docs/_codex/autofix.json', json_encode($payload, JSON_PRETTY_PRINT) . PHP_EOL);",
+            "allowed": [
+                "docs/_codex/"
+            ]
+        },
+        {
+            "file": "app/Commands/Codex/ReviewPublish.php",
+            "line": 59,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($dashboardPath, $this->renderDashboard($filesystem, $commands, $timestamp));",
+            "with": "file_put_contents(ROOTPATH . 'docs/_codex/autofix.json', $this->renderDashboard($filesystem, $commands, $timestamp));",
+            "allowed": [
+                "docs/_codex/"
+            ]
+        },
+        {
+            "file": "app/Commands/Codex/ReviewPublish.php",
+            "line": 189,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "mkdir($dir, 0775, true);",
+            "with": "mkdir(ROOTPATH . 'docs/_codex/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_codex/"
+            ]
+        },
+        {
+            "file": "app/Commands/SparkDoctor.php",
+            "line": 294,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "@mkdir($directory, 0775, true);",
+            "with": "@mkdir(ROOTPATH . 'docs/_ops/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/SparkDoctor.php",
+            "line": 298,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($path, json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));",
+            "with": "file_put_contents(ROOTPATH . 'docs/_ops/autofix.json', json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));",
+            "allowed": [
+                "docs/_ops/",
+                "ci/"
+            ]
+        },
+        {
+            "file": "app/Commands/GapTrackerSync.php",
+            "line": 247,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "@mkdir($rootedDir, 0775, true);",
+            "with": "@mkdir(ROOTPATH . 'docs/_gap-tracker/autofix.json', 0775, true);",
+            "allowed": [
+                "docs/_gap-tracker/"
+            ]
+        },
+        {
+            "file": "app/Commands/GapTrackerSync.php",
+            "line": 278,
+            "issue": "Missing ROOTPATH anchor",
+            "replace": "file_put_contents($path, implode(PHP_EOL, $report));",
+            "with": "file_put_contents(ROOTPATH . 'docs/_gap-tracker/autofix.json', implode(PHP_EOL, $report));",
+            "allowed": [
+                "docs/_gap-tracker/"
+            ]
+        }
+    ]
+}

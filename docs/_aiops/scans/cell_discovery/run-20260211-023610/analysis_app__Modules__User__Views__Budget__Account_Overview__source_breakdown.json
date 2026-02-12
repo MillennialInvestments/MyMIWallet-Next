@@ -1,0 +1,24 @@
+{
+    "file_path": "app/Modules/User/Views/Budget/Account_Overview/source_breakdown.php",
+    "block_count": 2,
+    "blocks": [
+        {
+            "hash": "90f4e93ecbcf59bde5040585acc18b205dc63d687188482e76090fae805ad2df",
+            "length": 227,
+            "snippet": "<div class=\"h-100 card card-bordered\"> <div class=\"h-100 card-inner flex-column stretch\"> <div class=\"card-title-group\"> <div class=\"card-title card-title-sm\"> <h6 class=\"title\"><?php echo $accountTyp",
+            "contains_php": true,
+            "raw": "<div class=\"h-100 card card-bordered\">\n    <div class=\"h-100 card-inner flex-column stretch\">\n        <div class=\"card-title-group\">\n            <div class=\"card-title card-title-sm\">\n                <h6 class=\"title\"><?php echo $accountType; ?> Breakdown</h6>\n            </div>"
+        },
+        {
+            "hash": "4fb6ded710512a3adc6fea56c362714cdfd806be9a35ff0f9a32ae29b9a84af5",
+            "length": 426,
+            "snippet": "<div class=\"card-tools\"> <div class=\"dropdown\"> <a href=\"#\" class=\"btn btn-outline-light btn-sm btn-white dropdown-indicator dropdown-toggle\" data-bs-toggle=\"dropdown\">30 Days</a> <div class=\"dropdown",
+            "contains_php": false,
+            "raw": "<div class=\"card-tools\">\n                <div class=\"dropdown\">\n                    <a href=\"#\" class=\"btn btn-outline-light btn-sm btn-white dropdown-indicator dropdown-toggle\" data-bs-toggle=\"dropdown\">30 Days</a>\n                    <div class=\"dropdown-menu dropdown-menu-end dropdown-menu-xs\">\n                        <ul class=\"link-list-opt no-bdr\">\n                            <li><a href=\"#\"><span>7 Days</span></a></li>\n                            <li><a href=\"#\"><span>15 Days</span></a></li>\n                            <li><a href=\"#\"><span>30 Days</span></a></li>\n                        </ul>\n                    </div>"
+        }
+    ],
+    "file_hash": "f6e9d1c31c6f8821f637cee818363dc47d3e7103af9a5c7a09f21e1b392bde37",
+    "queue_id": 545,
+    "candidate": false,
+    "candidate_blocks": []
+}

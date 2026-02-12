@@ -56,9 +56,12 @@ class Console extends BaseConfig
         | AI-Ops
         |----------------------------------------------------------------------
         */
+        \App\Commands\AiOps\AlertsCheck::class,
+        \App\Commands\AiOps\AlertsWorker::class,
         \App\Commands\AiOps\Audit::class,
         \App\Commands\AiOps\AutoRun::class,
         \App\Commands\AiOps\Backlog::class,
+        \App\Commands\AiOps\BuildCommand::class,
         \App\Commands\AiOps\ChatGovernanceIndex::class,
         \App\Commands\AiOps\CommandIndex::class,
         \App\Commands\AiOps\CopilotValidate::class,

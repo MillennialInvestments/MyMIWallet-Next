@@ -84,7 +84,7 @@ class App extends BaseConfig
     /**
      * Debug / Maintenance
      */
-    public bool $debugHUD        = false;
+    public bool $debugHUD        = true;
     public bool $maintenanceMode = false;
     public string $maintenanceMessage = 'We are performing scheduled maintenance.';
     public string $maintenanceETA = '';

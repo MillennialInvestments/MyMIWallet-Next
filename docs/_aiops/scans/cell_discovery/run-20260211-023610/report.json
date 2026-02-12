@@ -1,0 +1,18 @@
+{
+    "files_scanned": 5,
+    "candidates_found": 2,
+    "duplicates_map": {
+        "590071b1f8f9746a1e9404979c849b2a538eee0275250a1c593906b57206b614": {
+            "count": 2,
+            "files": [
+                "app/Modules/User/Views/Budget/Add-New.php",
+                "app/Modules/User/Views/Budget/Add.php"
+            ],
+            "snippet": "<div class=\"nk-block\"> <div class=\"nk-block-head nk-block-head-sm\"> <div class=\"nk-block-between\"> <div class=\"nk-block-head-content\"> <h3 class=\"nk-block-title page-title\"><?= $addModalTitle; ?></h3>"
+        }
+    },
+    "queue_stats": {
+        "pending": 1237,
+        "completed": 15
+    }
+}
