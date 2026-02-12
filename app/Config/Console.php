@@ -57,6 +57,8 @@ class Console extends BaseConfig
         |----------------------------------------------------------------------
         */
         \App\Commands\AiOps\AlertsCheck::class,
+        \App\Commands\AiOps\AlertsClean::class,
+        \App\Commands\AiOps\AlertsHealth::class,
         \App\Commands\AiOps\AlertsWorker::class,
         \App\Commands\AiOps\Audit::class,
         \App\Commands\AiOps\AutoRun::class,

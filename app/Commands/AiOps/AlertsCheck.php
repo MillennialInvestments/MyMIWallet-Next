@@ -5,6 +5,7 @@ namespace App\Commands\AiOps;
 use App\Commands\SafeBaseCommand;
 use App\Services\EmailScraperService;
 use App\Services\EmailQueueService;
+use CodeIgniter\CLI\CLI;
 
 class AlertsCheck extends SafeBaseCommand
 {
