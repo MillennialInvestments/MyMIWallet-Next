@@ -2157,3 +2157,8 @@ $routes->group('API', ['filter' => 'internalToken'], static function ($routes) {
 });
 
 $routes->get('Support', 'App\\Modules\\Support\\Controllers\\SupportTicketController::index');
+
+// Economic dashboard widget + cron endpoints
+$routes->get('Dashboard/Economy/Widget', 'App\Modules\User\Controllers\EconomyController::dashboardWidget', ['filter' => 'login']);
+$routes->get('API/Investments/Economy/latest', 'App\Modules\User\Controllers\EconomyController::latest', ['filter' => 'login']);
+$routes->match(['GET', 'POST'], 'investments/economy/update_all', 'App\Modules\User\Controllers\EconomyController::updateAll');
