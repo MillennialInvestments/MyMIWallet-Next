@@ -13,6 +13,7 @@ use App\Models\{InvestmentModel, PageSEOModel, ReferralModel, SubscribeModel, Us
 use App\Services\{InvestmentService};
 use CodeIgniter\API\ResponseTrait;
 use App\Modules\APIs\Models\InvestmentsNewsModel;
+use App\Libraries\StockFundamentalsService;
 
 #[\AllowDynamicProperties]
 class InvestmentsController extends UserController
@@ -36,6 +37,7 @@ class InvestmentsController extends UserController
     protected $investmentService;
     protected InvestmentsNewsModel $newsModel;
     protected AlertsModel $alertsModel;
+    protected StockFundamentalsService $stockFundamentalsService;
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
         parent::initController($request, $response, $logger);
@@ -56,6 +58,7 @@ class InvestmentsController extends UserController
         $this->investmentService            = new InvestmentService();
         $this->newsModel                    = new InvestmentsNewsModel();
         $this->alertsModel                  = new AlertsModel();
+        $this->stockFundamentalsService     = new StockFundamentalsService();
     }
 
     public function commonData(): array {
@@ -259,6 +262,22 @@ class InvestmentsController extends UserController
         $payload = $this->buildForecastDetailsPayload($ticker, $latestForecasts, $history);
 
         return $this->respond($payload);
+    }
+
+    public function fundamentals(string $symbol)
+    {
+        $symbol = strtoupper(trim($symbol));
+        if ($symbol === '') {
+            return $this->failValidationError('Symbol is required.');
+        }
+
+        try {
+            $result = $this->stockFundamentalsService->analyze($symbol);
+            return $this->respond($result);
+        } catch (\Throwable $e) {
+            log_message('error', 'InvestmentsController::fundamentals failed: {msg}', ['msg' => $e->getMessage()]);
+            return $this->failServerError('Failed to analyze fundamentals.');
+        }
     }
 
     public function getConfidenceHeatmap()
