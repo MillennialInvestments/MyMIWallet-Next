@@ -11,7 +11,11 @@ class EmailTemplateController extends \App\Controllers\BaseController
     public function index()
     {
         $model = new EmailTemplateModel();
-        $data['templates'] = $model->findAll();
+        $limit = max(1, min(100, (int) ($this->request->getGet('limit') ?? 50)));
+        $data['templates'] = $model
+            ->select('id,title,subject,created_at,updated_at')
+            ->orderBy('id', 'DESC')
+            ->findAll($limit);
         $data['title'] = 'Email Templates';
         $data['description'] = 'Manage your email templates here.';
 

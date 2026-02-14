@@ -4,7 +4,7 @@ use Config\Services;
 
 $request = Services::request();
 $subViewData = [
-    'siteSettings'      => $siteSettings ?? new App\Config\SiteSettings,
+    'siteSettings'      => $siteSettings ?? config('SiteSettings'),
     'pageTitle'         => $pageTitle ?? 'MyMI Wallet | Login',
     'uri'               => $uri ?? $request->getUri(),
     // Tell header to suppress trackers & inline styles for CSP

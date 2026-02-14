@@ -18,7 +18,21 @@ class PublicPagesController extends UserController
         }
 
         $db = Database::connect();
-        $data['pages'] = $db->table('bf_public_pages_catalog')->orderBy('updated_at', 'DESC')->get()->getResultArray();
+        $limit = max(1, min(100, (int) ($this->request->getGet('limit') ?? 50)));
+        $offset = max(0, (int) ($this->request->getGet('offset') ?? 0));
+
+        try {
+            $data['pages'] = $db->table('bf_public_pages_catalog')
+                ->select('id,page_id,slug,title,status,next_run_at,updated_at')
+                ->orderBy('updated_at', 'DESC')
+                ->limit($limit, $offset)
+                ->get()
+                ->getResultArray();
+        } catch (\Throwable $e) {
+            log_message('error', 'PublicPagesController::index query failed: ' . $e->getMessage());
+            $data['pages'] = [];
+        }
+
         $data['pageTitle'] = 'Public Pages Management';
         return $this->renderTheme('App\Modules\Management\Views\PublicPages\index', $data);
     }
