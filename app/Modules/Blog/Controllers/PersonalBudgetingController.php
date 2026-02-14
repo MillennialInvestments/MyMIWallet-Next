@@ -155,7 +155,7 @@ class PersonalBudgetingController extends UserController
     }  
 
     private function getSiteSettings() {
-        $settings = new SiteSettings();
+        $settings = config('SiteSettings');
         return [
             'siteOperations' => $settings->siteOperations,
             'educateOperations' => $settings->educateOperations,

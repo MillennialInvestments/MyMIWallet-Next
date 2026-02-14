@@ -4,7 +4,6 @@ namespace App\Libraries;
 
 use CodeIgniter\Session\Session;
 use Config\Services;
-use App\Config\{SiteSettings};
 use App\Libraries\{BaseLoader};
 use App\Models\{ReferralModel};
 use App\Services\ReferralService;
@@ -34,7 +33,7 @@ class MyMIReferrals
         $this->referralService = new ReferralService();
         
         // Assuming SiteSettings is a configuration file for global settings
-        $this->siteSettings   = new SiteSettings();
+        $this->siteSettings   = config('SiteSettings');
     }
 
     /**

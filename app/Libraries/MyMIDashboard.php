@@ -463,7 +463,7 @@ class MyMIDashboard
                 ->where('status', 'Active')
                 ->where('closed', 'false')
                 ->select('category, trade_type, position_type, symbol, shares, current_price, entry_price')
-                ->findAll();
+                ->findAll(500);
         } catch (\Throwable $e) {
             log_message('error', 'MyMIDashboard::calculateInvestmentAllocation failed: {msg}', ['msg' => $e->getMessage()]);
             $rows = [];
