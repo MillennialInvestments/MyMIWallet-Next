@@ -5,10 +5,8 @@ namespace App\Config;
 use CodeIgniter\Config\BaseConfig;
 use App\Libraries\SiteSettingsOverride;
 
-if (!class_exists(\App\Config\SiteSettings::class, false)) {
-    // The class does not exist, so we can define it safely.
-    class SiteSettings extends BaseConfig
-    {
+class SiteSettings extends BaseConfig
+{
         public int $stage                       = 5;
         public $beta                            = 0;
         public $debug                           = 0;
@@ -84,9 +82,9 @@ if (!class_exists(\App\Config\SiteSettings::class, false)) {
         public string $facebookGroup            = 'https://www.facebook.com/InvestorsTalk';
         public string $twitterPage              = 'www.x.com/MyMIWallet';
         public string $linkedinPage             = 'https://www.linkedin.com/company/mymiwallet/';
-        public string $bootstrapTheme;
+        public string $bootstrapTheme          = "";
         public string $managementActionItems    = 'col-xxl-2 col-lg-4 pb-4';
-        public string $baseURL;
+        public string $baseURL                 = "";
 
         public string $betaCardNumber           = '5110928623096011';
         public string $betaExpiryDate           = '11/2029';
@@ -410,8 +408,4 @@ if (!class_exists(\App\Config\SiteSettings::class, false)) {
             $this->bettingOperations = 0;
             // Add any other operations that need to be reset
         }
-    }
-} else {
-    // The class already exists, handle accordingly (e.g., log a warning).
-    error_log('Warning: The class App\Config\SiteSettings already exists. Duplicate definition avoided.');
 }
