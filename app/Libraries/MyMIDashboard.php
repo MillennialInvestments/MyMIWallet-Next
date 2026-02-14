@@ -7,7 +7,8 @@ use App\Models\{AlertsModel, BudgetModel, DashboardModel, ExchangeModel, Investm
 use App\Services\BudgetService;
 use CodeIgniter\Session\Session;
 use Config\Services;
-use Config\{APIs, SiteSettings, SocialMedia};
+use App\Config\SiteSettings;
+use Config\{APIs, SocialMedia};
 
 #[\AllowDynamicProperties]
 class MyMIDashboard

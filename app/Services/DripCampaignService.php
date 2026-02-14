@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\DripCampaignModel;
 use App\Models\EmailModel;
-use Config\SiteSettings;
+use App\Config\SiteSettings;
 
 class DripCampaignService
 {

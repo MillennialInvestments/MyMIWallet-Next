@@ -3,11 +3,17 @@
 namespace App\Libraries;
 
 use App\Config\SiteSettings;
+use App\Libraries\SiteSettingsOverride;
 
 class SiteSettingsRuntime
 {
+    /**
+     * Apply post-bootstrap overrides for site settings.
+     */
     public static function apply(SiteSettings $config): void
     {
+        (new SiteSettingsOverride())->apply($config);
+
         $cachedToggles = [
             'aiOpsEnabled',
             'aiOpsAllowOverride',

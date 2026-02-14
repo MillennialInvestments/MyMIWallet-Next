@@ -279,7 +279,10 @@ class BudgetService
             'intervals' => $data['intervals'] ?? null,
         ]));
 
-        return (int) $this->budgetModel->insertAccount($data);
+        $insertId = (int) $this->budgetModel->insertAccount($data);
+        $this->invalidateExecutiveSummaryCache();
+
+        return $insertId;
     }
 
     public function update(int $accountId, array $data): bool
@@ -293,7 +296,22 @@ class BudgetService
             'intervals' => $data['intervals'] ?? null,
         ]));
 
-        return $this->budgetModel->updateAccount($accountId, $data);
+        $updated = $this->budgetModel->updateAccount($accountId, $data);
+        if ($updated) {
+            $this->invalidateExecutiveSummaryCache();
+        }
+
+        return $updated;
+    }
+
+
+    private function invalidateExecutiveSummaryCache(): void
+    {
+        if ($this->cuID === null || $this->cuID <= 0) {
+            return;
+        }
+
+        service('dashboardService')->invalidateExecutiveDashboardSummary((int) $this->cuID);
     }
 
     private function normalizeRecurringScheduleValue(?string $scheduleValue, array $allowedSchedules): ?string
