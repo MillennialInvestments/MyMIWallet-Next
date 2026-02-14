@@ -697,16 +697,22 @@ class ManagementController extends \App\Controllers\BaseController
     {
         log_message('debug', '📥 ajaxGetActiveUsers() called.');
         $request = service('request');
-        $post = $request->getPost();
-        log_message('debug', '📦 Incoming POST: ' . print_r($post, true));
-    
-        $start = $post['start'] ?? 0;
-        $length = $post['length'] ?? 10;
+        $post = (array) $request->getPost();
+        log_message('debug', '📦 Incoming POST keys: ' . implode(',', array_keys($post)));
+        log_message('debug', '📦 Incoming POST value sizes: ' . json_encode(array_map(static fn ($value): int => strlen((string) (is_scalar($value) ? $value : json_encode($value))), $post)));
+
+        $start = max(0, (int) ($post['start'] ?? 0));
+        $length = max(1, min(100, (int) ($post['length'] ?? 10)));
         $search = $post['search']['value'] ?? '';
-    
-        $records = $this->userModel->getUsersByStatus(1, $search);
-        $totalRecords = count($records);
-        $records = array_slice($records, $start, $length);
+
+        try {
+            $records = $this->userModel->getUsersByStatus(1, $search);
+            $totalRecords = count($records);
+            $records = array_slice($records, $start, $length);
+        } catch (\Throwable $e) {
+            log_message('error', '❌ ajaxGetActiveUsers query failed: ' . $e->getMessage());
+            return Http::jsonError('Unable to load active users.', 500);
+        }
     
         $data = [];
         foreach ($records as $user) {
@@ -740,16 +746,22 @@ class ManagementController extends \App\Controllers\BaseController
     {
         log_message('debug', '📥 ajaxGetInactiveUsers() called.');
         $request = service('request');
-        $post = $request->getPost();
-        log_message('debug', '📦 Incoming POST: ' . print_r($post, true));
-    
-        $start = $post['start'] ?? 0;
-        $length = $post['length'] ?? 10;
+        $post = (array) $request->getPost();
+        log_message('debug', '📦 Incoming POST keys: ' . implode(',', array_keys($post)));
+        log_message('debug', '📦 Incoming POST value sizes: ' . json_encode(array_map(static fn ($value): int => strlen((string) (is_scalar($value) ? $value : json_encode($value))), $post)));
+
+        $start = max(0, (int) ($post['start'] ?? 0));
+        $length = max(1, min(100, (int) ($post['length'] ?? 10)));
         $search = $post['search']['value'] ?? '';
-    
-        $records = $this->userModel->getUsersByStatus(0, $search);
-        $totalRecords = count($records);
-        $records = array_slice($records, $start, $length);
+
+        try {
+            $records = $this->userModel->getUsersByStatus(0, $search);
+            $totalRecords = count($records);
+            $records = array_slice($records, $start, $length);
+        } catch (\Throwable $e) {
+            log_message('error', '❌ ajaxGetInactiveUsers query failed: ' . $e->getMessage());
+            return Http::jsonError('Unable to load inactive users.', 500);
+        }
     
         $data = [];
         foreach ($records as $user) {
@@ -992,9 +1004,14 @@ class ManagementController extends \App\Controllers\BaseController
     {
         try {
             log_message('info', '📥 Starting email scrape to bf_marketing_temp_scraper...');
-            $this->getMyMIMarketing()->fetchAndStoreEmails('news'); // This stores in bf_marketing_temp_scraper
-            log_message('info', '📬 Number of emails fetched: ' . count($emails));
-            return Http::jsonSuccess(['status' => 'success', 'message' => 'Emails stored successfully.']);
+            $emails = $this->getMyMIMarketing()->fetchAndStoreEmails('news'); // This stores in bf_marketing_temp_scraper
+            $emailCount = is_countable($emails) ? count($emails) : 0;
+            log_message('info', '📬 Number of emails fetched: ' . $emailCount);
+            return Http::jsonSuccess([
+                'status' => 'success',
+                'message' => 'Emails stored successfully.',
+                'count' => $emailCount,
+            ]);
         } catch (\Throwable $e) {
             log_message('error', '❌ fetchEmailsToTempScraper error: ' . $e->getMessage());
             return Http::jsonError($e->getMessage(), 500);
@@ -1760,6 +1777,8 @@ class ManagementController extends \App\Controllers\BaseController
     {
         $queue = $this->marketingModel->getQueuedEmails(25); // Limit batch size
         $mailService = service('mailService');
+        $successCount = 0;
+        $failCount = 0;
     
         foreach ($queue as $email) {
             try {
@@ -1775,14 +1794,17 @@ class ManagementController extends \App\Controllers\BaseController
 
                 if ($result['ok'] ?? false) {
                     $this->marketingModel->markEmailAsSent($email['id']);
+                    $successCount++;
                 } else {
                     $error = $result['error'] ?? 'unknown error';
                     $this->marketingModel->incrementRetry($email['id']);
                     log_message('error', "[EmailQueue] ❌ Failed to queue: {$error}");
+                    $failCount++;
                 }
             } catch (\Throwable $e) {
                 $this->marketingModel->incrementRetry($email['id']);
                 log_message('error', "❌ Email ID {$email['id']} failed: ".$e->getMessage());
+                $failCount++;
             }
         }
     

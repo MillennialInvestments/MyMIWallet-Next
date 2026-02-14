@@ -12,7 +12,10 @@ class EmailQueueController extends \App\Controllers\BaseController
     public function create()
     {
         $templateModel = new EmailTemplateModel();
-        $data['templates'] = $templateModel->findAll();
+        $data['templates'] = $templateModel
+            ->select('id,title,subject,updated_at')
+            ->orderBy('id', 'DESC')
+            ->findAll(100);
         $data['title'] = 'Add Email to Queue';
         $data['description'] = 'Queue a new email for sending.';
 
@@ -43,7 +46,11 @@ class EmailQueueController extends \App\Controllers\BaseController
     public function index()
     {
         $model = new EmailQueueModel();
-        $data['emails'] = $model->findAll();
+        $limit = max(1, min(100, (int) ($this->request->getGet('limit') ?? 50)));
+        $data['emails'] = $model
+            ->select('id,email,subject,status,created_at,updated_at')
+            ->orderBy('id', 'DESC')
+            ->findAll($limit);
         $data['title'] = 'Email Queue';
         $data['description'] = 'View and manage your email queue.';
 
@@ -53,7 +60,10 @@ class EmailQueueController extends \App\Controllers\BaseController
     public function processQueue()
     {
         $model = new EmailQueueModel();
-        $emails = $model->where('status', 'pending')->findAll();
+        $emails = $model
+            ->select('id,email,subject,content,status')
+            ->where('status', 'pending')
+            ->findAll(50);
 
         $email = \Config\Services::email();
 
