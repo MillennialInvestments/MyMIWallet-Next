@@ -50,6 +50,11 @@ class MyMIDashboard
 
         $this->budgetModel = new BudgetModel();
         $this->dashboardModel = new DashboardModel();
+        $this->solanaModel = new SolanaModel();
+        $this->exchangeModel = new ExchangeModel();
+        $this->investorModel = new InvestorModel();
+        $this->userModel = new UserModel();
+
         $this->MyMICoinModel = new MyMICoinModel();
         $this->trackerModel = new TrackerModel();
         // $this->userModel = new UserModel();
@@ -58,27 +63,34 @@ class MyMIDashboard
         $this->MyMIGold = new MyMIGold();
     }
 
-    public function dashboardInfo($cuID) {
+    public function dashboardInfo($cuID)
+    {
         if ($cuID === 0) {
             return [
-                'getFeatures' => [],
-                'promotionalBanners' => [],
-                'progressGoalData' => [],
+                'getFeatures'=>[],
+                'promotionalBanners'=>[],
+                'progressGoalData'=>[],
             ];
         }
 
-        $getFeatures = $this->getFeatures(); 
-        $promotionalBanners = $this->dashboardModel->getPromotionalBanners();
-        $progressGoalData = $this->processGoalData($cuID);
+        $cacheKey = "dashboard_info_{$cuID}";
+        $cache = cache();
+
+        if ($cached = $cache->get($cacheKey)) {
+            return $cached;
+        }
 
         $dashboardInfo = [
-            'getFeatures' => $getFeatures,
-            'promotionalBanners' => $promotionalBanners,
-            'progressGoalData' => $progressGoalData,
+            'getFeatures'        => $this->getFeatures(),
+            'promotionalBanners' => $this->dashboardModel->getPromotionalBanners(),
+            'progressGoalData'   => $this->processGoalData($cuID),
         ];
+
+        $cache->save($cacheKey, $dashboardInfo, 60);
 
         return $dashboardInfo;
     }
+
 
     public function getAllTokensByBlock($exchange) {
         if ($exchange === 'Solana') {
@@ -202,14 +214,26 @@ class MyMIDashboard
             return $this->emptyExecutiveSummary();
         }
 
-        $budgetService = new BudgetService($userId);
-        $budgetOverview = $this->safeArray($budgetService->getUserBudget($userId));
-        $budgetLibrary  = new MyMIBudget();
-        $budgetInsights = $this->safeArray($budgetLibrary->allUserBudgetInfo($userId));
+        $cacheKey = "exec_dashboard_summary_{$userId}";
+        $cache = cache();
+
+        if ($cached = $cache->get($cacheKey)) {
+            return $cached;
+        }
+
+        // -------------------------
+        // HEAVY OPERATIONS BEGIN
+        // -------------------------
+
+        $budgetService   = new BudgetService($userId);
+        $budgetOverview  = $this->safeArray($budgetService->getUserBudget($userId));
+
+        $budgetLibrary   = new MyMIBudget();
+        $budgetInsights  = $this->safeArray($budgetLibrary->allUserBudgetInfo($userId));
 
         $portfolioSummary = $this->getInvestmentsSummary($userId);
 
-        return [
+        $summary = [
             'assets'    => $this->getAssetsSummary($userId, $budgetService, $budgetOverview, $budgetInsights),
             'budget'    => $this->getBudgetSummary($budgetOverview, $budgetInsights),
             'portfolio' => $portfolioSummary,
@@ -217,7 +241,15 @@ class MyMIDashboard
             'alerts'    => $this->getAlertsSummary($userId),
             'news'      => $this->getNewsSummary($userId, $portfolioSummary['symbols'] ?? []),
         ];
+
+        // -------------------------
+        // CACHE FOR 120 SECONDS
+        // -------------------------
+        $cache->save($cacheKey, $summary, 120);
+
+        return $summary;
     }
+
 
     protected function getAssetsSummary(int $userId, BudgetService $budgetService, array $budgetOverview, array $budgetInsights): array
     {

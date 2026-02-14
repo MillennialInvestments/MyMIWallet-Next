@@ -677,7 +677,7 @@ $this->userService = new UserService($this->siteSettings, $this->cuID, Services:
 
     public function createLinkToken()
     {
-        $plaidModel = new \App\Models\PlaidModel();
+        $plaidModel = model(\App\Models\PlaidModel::class);
         $client_id = config('Plaid')->client_id; // Assuming Plaid settings are stored in a separate config file
         $secret = config('Plaid')->secret;
 
@@ -688,7 +688,7 @@ $this->userService = new UserService($this->siteSettings, $this->cuID, Services:
     public function exchangeToken()
     {
         $publicToken = $this->request->getPost('public_token');
-        $plaidModel = new \App\Models\PlaidModel();
+        $plaidModel = model(\App\Models\PlaidModel::class);
 
         $exchangeData = $plaidModel->exchangePublicToken($publicToken);
         return $this->response->setJSON($exchangeData);

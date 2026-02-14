@@ -34,7 +34,7 @@ foreach ($accountDetails as $account) {
 }
 
 $i = 1;
-$endDate = new DateTime('12/31/' . date('Y'));
+$endDate = (clone $startDate)->modify('+12 months');
 $startDate = DateTime::createFromFormat('m/d/Y', $accountDesDate);
 $interval = $startDate->diff($endDate);
 $monthsLeft = (($interval->format('%y') * 12) + $interval->format('%m'));

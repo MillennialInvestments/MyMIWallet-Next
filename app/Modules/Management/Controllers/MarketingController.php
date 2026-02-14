@@ -1428,7 +1428,7 @@ class MarketingController extends UserController
         $reporting['totalKeywordsTracked'] = count($reporting['topKeywords']);
     
         $this->data['reporting'] = $reporting;
-        $this->data['siteSettings'] = new \App\Config\SiteSettings();
+        $this->data['siteSettings'] = config('SiteSettings');
     
         return $this->renderTheme('ManagementModule\Views\Marketing\Keywords\keywords', $this->data);
     }

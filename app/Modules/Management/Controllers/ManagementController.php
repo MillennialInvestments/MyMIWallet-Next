@@ -50,7 +50,13 @@ class ManagementController extends UserController
         $this->weeklyStreamService = new WeeklyStreamService();
         $this->weeklyWatchlistModel = new WeeklyStreamWatchlistModel();
         $this->newsletterModel = new MarketingNewsletterModel();
+        $this->budgetModel   = model(BudgetModel::class);
+        $this->accountsModel = model(AccountsModel::class);
+        $this->marketingModel = model(MarketingNewsletterModel::class);
+
         $this->aiCostControls = new AiCostControls();
+        
+        $this->dashboardService = new \App\Services\DashboardAggregatorService($this->cuID);
 
         // Check for user ID
         $this->cuID = $this->getCuID();
@@ -59,12 +65,13 @@ class ManagementController extends UserController
         }
         log_message('debug', 'HowTosController L47 - $this->cuID: ' . (print_r($this->cuID, true)));
         if (empty($this->cuID)) {
-            log_message('error', 'Failed to retrieve user ID.');
-            return redirect()->to('/login')->with('redirect_url', current_url())->send();
+            // log_message('error', 'Failed to retrieve user ID.');
+            // return redirect()->to('/login')->with('redirect_url', current_url())->send();
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
         
         // $this->accountService = new AccountService();
-        $this->budgetService = new BudgetService((int) $this->cuID);
+        // $this->budgetService = new BudgetService((int) $this->cuID);
         // $this->dashboardService = new DashboardService();
         // $this->goalTrackingService = new GoalTrackingService();
         // $this->marketingService  = new MarketingService();
@@ -88,81 +95,115 @@ class ManagementController extends UserController
 
     public function commonData(): array
     {
-        $this->data = parent::commonData();
-        $this->data = $this->data ?? [];
-        $cuID = $this->getCuID();  // Get current user ID once
-        $this->cuID = $cuID;  // Ensure $this->cuID is set for use elsewhere
-        $userData = $this->getMyMIUser()->getUserInformation($cuID);  // ✅ Correct method call
-     
-        // Dashboard Info
-        $dashboardInfo = $this->getMyMIDashboard()->dashboardInfo($this->cuID);
-        $this->data['completedGoals'] = $dashboardInfo['progressGoalData']['completions'];
-        // log_message('debug', 'DashboardController L104 - $pendingGoals - $dashboardInfo[progressGoalData][goals]: ' . (print_r($dashboardInfo['progressGoalData']['goals'], true)));
-        $this->data['pendingGoals'] = $dashboardInfo['progressGoalData']['goals'];
-        $this->data['promotionalBanners'] = $dashboardInfo['promotionalBanners'];
-    
-        // Merge the user data with BudgetController data
+        $this->data = parent::commonData() ?? [];
+
+        $this->cuID = $this->getCuID();
+        if (!$this->cuID) {
+            return $this->data;
+        }
+
+        $this->data = array_merge([
+            'reporting'      => [],
+            'streamPrep'     => [],
+            'chatUsage'      => [],
+            'discordHealth'  => [],
+            'authHealth'     => [],
+            'autoloadHealth' => [],
+            'contentEngine'  => [],
+        ], $this->data);
+
+        // ---- LOAD SERVICES ONCE ----
+        $dashboard = $this->getMyMIDashboard();
+        $budget    = $this->getMyMIBudget();
+        $analytics = $this->getMyMIAnalytics();
+        $wallets   = $this->getMyMIWallets();
+        $solana = service('MyMISolana');
+
+        // ---- SINGLE DATA CALLS ----
+        $userData       = $this->getMyMIUser()->getUserInformation($this->cuID);
+        $dashboardInfo  = $dashboard->dashboardInfo($this->cuID);
+        $budgetInfo     = $budget->allUserBudgetInfo($this->cuID);
+        $solanaData     = $solana->getUserSolana($this->cuID);
+
+        // ---- MAP ONCE ----
         $this->data = array_merge($this->data, $userData);
-    
-        $this->data['siteSettings'] = $this->siteSettings;
-        $this->data['debug'] = $this->siteSettings->debug;
-        $this->data['uri'] = $this->request->getUri();
-        $this->data['userAgent'] = $this->request->getUserAgent();
-        $this->data['date'] = $this->siteSettings->date;
-        $this->data['time'] = $this->siteSettings->time;
-        $this->data['cuID'] = $this->cuID;
 
-        // Additional dynamic data from the service
-        $this->data['getFeatures'] = $this->getMyMIDashboard()->dashboardInfo($this->cuID)['getFeatures'];
-        $this->data['totalAccountBalance'] = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['totalAccountBalance'];
-        $this->data['totalAccountBalanceFMT'] = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['totalAccountBalanceFMT'];
-        $this->data['completedGoals'] = $this->getMyMIDashboard()->dashboardInfo($this->cuID)['progressGoalData']['completions'];
-        $this->data['pendingGoals'] = $this->getMyMIDashboard()->dashboardInfo($this->cuID)['progressGoalData']['goals'];
-        $this->data['promotionalBanners'] = $this->getMyMIDashboard()->dashboardInfo($this->cuID)['promotionalBanners'];
-        $this->data['userBudget'] = $this->getMyMIBudget()->getUserBudget($this->cuID);
-        $this->data['userWallets'] = $this->getMyMIWallets()->getUserWallets($this->cuID);  
-        $this->data['reporting'] = $this->getMyMIAnalytics()->reporting($this->cuID);
+        $this->data['siteSettings']  = $this->siteSettings;
+        $this->data['debug']         = $this->siteSettings->debug;
+        $this->data['uri']           = $this->request->getUri();
+        $this->data['userAgent']     = $this->request->getUserAgent();
+        $this->data['date']          = $this->siteSettings->date;
+        $this->data['time']          = $this->siteSettings->time;
+        $this->data['cuID']          = $this->cuID;
 
-        // Fetch Solana data
-        $this->data['cuSolanaDW'] = $this->getMyMIDashboard()->getCryptoAccount($this->cuID, 'Solana')['accountInfo'];
-        $this->data['solanaNetworkStatus'] = $this->MyMISolana->getUserSolana($this->cuID)['solanaNetworkStatus'];
-        $this->data['cuSolanaTotal'] = $this->MyMISolana->getUserSolana($this->cuID)['cuSolanaTotal'] ?? 0;
-        $this->data['cuSolanaValue'] = $this->MyMISolana->getUserSolana($this->cuID)['cuSolanaValue'] ?? 0;
+        // ---- DASHBOARD DATA ----
+        $this->data['getFeatures']        = $dashboardInfo['getFeatures'] ?? [];
+        $this->data['completedGoals']     = $dashboardInfo['progressGoalData']['completions'] ?? 0;
+        $this->data['pendingGoals']       = $dashboardInfo['progressGoalData']['goals'] ?? 0;
+        $this->data['promotionalBanners'] = $dashboardInfo['promotionalBanners'] ?? [];
+
+        // ---- BUDGET DATA ----
+        $this->data['totalAccountBalance']     = $budgetInfo['totalAccountBalance'] ?? 0;
+        $this->data['totalAccountBalanceFMT']  = $budgetInfo['totalAccountBalanceFMT'] ?? 0;
+        $this->data['userBudget']              = $budget->getUserBudget($this->cuID);
+        $this->data['userWallets']             = $wallets->getUserWallets($this->cuID);
+
+        // ---- ANALYTICS ----
+        $this->data['reporting'] = $analytics->reporting($this->cuID);
+
+        // ---- SOLANA ----
+        $this->data['cuSolanaDW']        = $dashboard->getCryptoAccount($this->cuID, 'Solana')['accountInfo'] ?? [];
+        $this->data['solanaNetworkStatus'] = $solanaData['solanaNetworkStatus'] ?? null;
+        $this->data['cuSolanaTotal']       = $solanaData['cuSolanaTotal'] ?? 0;
+        $this->data['cuSolanaValue']       = $solanaData['cuSolanaValue'] ?? 0;
+
         return $this->data;
-}
+    }
 
     public function index()
     {
-        log_message('info', 'ManagementController L117 - Starting Page Load');
-        $this->data['pageTitle']                    = 'MyMI Management | MyMI Wallet | The Future of Finance';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $authHealthModel = new AuthHealthRunModel();
-        $latestAuthHealth = $authHealthModel->getLatestRun();
-        $weekStart = $this->weeklyStreamService->getDefaultWeekStart()->format('Y-m-d');
-        $latestWeek = $this->weeklyWatchlistModel
-            ->select('week_start_date')
-            ->orderBy('week_start_date', 'DESC')
-            ->first();
-        $symbolCount = $this->weeklyWatchlistModel
-            ->where('week_start_date', $weekStart)
-            ->countAllResults();
-        $newsletter = $this->newsletterModel
-            ->where('week_start_date', $weekStart)
-            ->first();
+        $this->commonData();
 
-        $this->data['streamPrep'] = [
-            'week_start_date'    => $weekStart,
-            'last_prepared'      => $latestWeek['week_start_date'] ?? null,
-            'symbol_count'       => $symbolCount,
-            'newsletter_status'  => $newsletter['status'] ?? 'not generated',
-        ];
-        $this->data['authHealth'] = $this->buildAuthHealthWidget($latestAuthHealth);
-        $this->data['contentEngine'] = $this->buildContentEngineSummary();
-        $this->data['chatUsage'] = $this->aiCostControls->getChatUsageSummary();
-        $this->data['chatConfig'] = $this->aiCostControls->chatRuntimeConfig();
-        $this->data['autoloadHealth'] = Services::autoloadHealthService()->getStatus();
-        return $this->renderTheme('App\Modules\Management\Views\index', $this->data);
+        $this->data['managementOverview'] = $this->dashboardService->getManagementOverview();
+
+        return $this->renderTheme(
+            'App\Modules\Management\Views\index',
+            $this->data
+        );
     }
+
+    // public function index()
+    // {
+    //     log_message('info', 'ManagementController L117 - Starting Page Load');
+    //     $this->data['pageTitle']                    = 'MyMI Management | MyMI Wallet | The Future of Finance';
+    //     $this->commonData(); // Ensure this is correctly populating $this->data
+    //     $authHealthModel = new AuthHealthRunModel();
+    //     $latestAuthHealth = $authHealthModel->getLatestRun();
+    //     $weekStart = $this->weeklyStreamService->getDefaultWeekStart()->format('Y-m-d');
+    //     $latestWeek = $this->weeklyWatchlistModel
+    //         ->select('week_start_date')
+    //         ->orderBy('week_start_date', 'DESC')
+    //         ->first();
+    //     $symbolCount = $this->weeklyWatchlistModel
+    //         ->where('week_start_date', $weekStart)
+    //         ->countAllResults();
+    //     $newsletter = $this->newsletterModel
+    //         ->where('week_start_date', $weekStart)
+    //         ->first();
+
+    //     $this->data['streamPrep'] = [
+    //         'week_start_date'    => $weekStart,
+    //         'last_prepared'      => $latestWeek['week_start_date'] ?? null,
+    //         'symbol_count'       => $symbolCount,
+    //         'newsletter_status'  => $newsletter['status'] ?? 'not generated',
+    //     ];
+    //     $this->data['authHealth'] = $this->buildAuthHealthWidget($latestAuthHealth);
+    //     $this->data['contentEngine'] = $this->buildContentEngineSummary();
+    //     $this->data['chatUsage'] = $this->aiCostControls->getChatUsageSummary();
+    //     $this->data['chatConfig'] = $this->aiCostControls->chatRuntimeConfig();
+    //     $this->data['autoloadHealth'] = Services::autoloadHealthService()->getStatus();
+    //     return $this->renderTheme('App\Modules\Management\Views\index', $this->data);
+    // }
 
     // public function add()
     public function add($type = null)
@@ -772,7 +813,7 @@ class ManagementController extends UserController
 
     public function createLinkToken()
     {
-        $plaidModel = new \App\Models\PlaidModel();
+        $plaidModel = model(\App\Models\PlaidModel::class);
         $client_id = config('Plaid')->client_id; // Assuming Plaid settings are stored in a separate config file
         $secret = config('Plaid')->secret;
 
@@ -783,7 +824,7 @@ class ManagementController extends UserController
     public function exchangeToken()
     {
         $publicToken = $this->request->getPost('public_token');
-        $plaidModel = new \App\Models\PlaidModel();
+        $plaidModel = model(\App\Models\PlaidModel::class);
 
         $exchangeData = $plaidModel->exchangePublicToken($publicToken);
         return $this->response->setJSON($exchangeData);
@@ -807,10 +848,10 @@ class ManagementController extends UserController
         log_message('debug', 'HowTosController - checkUserAuthentication - $this->cuID: ' . (print_r($this->cuID, true)));
     
         if (empty($this->cuID)) {
-            log_message('error', 'Failed to retrieve user ID.');
-            // Perform the redirect and stop further execution
-            redirect()->to('/login')->with('redirect_url', current_url())->send();
-            exit; // Ensure the script stops running after the redirect
+            // log_message('error', 'Failed to retrieve user ID.');
+            // // Perform the redirect and stop further execution
+            // redirect()->to('/login')->with('redirect_url', current_url())->send();
+            // exit; // Ensure the script stops running after the redirect
         }
     }
     // Implement other methods as in CI3, adapting to CI4's syntax and best practices

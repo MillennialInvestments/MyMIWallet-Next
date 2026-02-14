@@ -11,6 +11,14 @@ class SiteSettingsOverride
     {
         $this->db = $db ?? db_connect();
     }
+    
+    public function get(): SiteSettings
+    {
+        $settings = config('SiteSettings');
+
+        $override = new SiteSettingsOverride();
+        return $override->apply($settings);
+    }
 
     public function apply(SiteSettings $settings): SiteSettings
     {
