@@ -567,9 +567,15 @@ class ManagementController extends \App\Controllers\BaseController
                 'updated_at'      => date('Y-m-d H:i:s'),
             ];
 
-            $existing = $this->newsletterModel
-                ->where('week_start_date', $weekStart)
-                ->first();
+            $existing = null;
+
+            try {
+                $existing = $this->newsletterModel
+                    ->where('week_start_date', $weekStart)
+                    ->first();
+            } catch (\Throwable $e) {
+                log_message('error', 'Newsletter lookup failed: ' . $e->getMessage());
+            }
 
             if ($existing) {
                 $this->newsletterModel->update($existing['id'], $payload);
@@ -618,9 +624,15 @@ class ManagementController extends \App\Controllers\BaseController
         $weekStart = $this->request->getGet('week_start_date')
             ?: $this->weeklyStreamService->getDefaultWeekStart()->format('Y-m-d');
 
-        $existing = $this->newsletterModel
-            ->where('week_start_date', $weekStart)
-            ->first();
+        $existing = null;
+
+        try {
+            $existing = $this->newsletterModel
+                ->where('week_start_date', $weekStart)
+                ->first();
+        } catch (\Throwable $e) {
+            log_message('error', 'Newsletter lookup failed: ' . $e->getMessage());
+        }
 
         if (! $existing) {
             $existing = $this->MyMIMarketing->buildWeeklyWatchlistNewsletter($weekStart);
@@ -653,9 +665,15 @@ class ManagementController extends \App\Controllers\BaseController
             'updated_at'      => date('Y-m-d H:i:s'),
         ];
 
-        $existing = $this->newsletterModel
-            ->where('week_start_date', $weekStart)
-            ->first();
+        $existing = null;
+
+        try {
+            $existing = $this->newsletterModel
+                ->where('week_start_date', $weekStart)
+                ->first();
+        } catch (\Throwable $e) {
+            log_message('error', 'Newsletter lookup failed: ' . $e->getMessage());
+        }
 
         if ($existing) {
             $this->newsletterModel->update($existing['id'], $payload);
