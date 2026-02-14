@@ -676,7 +676,7 @@ class DashboardController extends UserController
         // $this->data        = array_merge(($this->data ?? []), $userData);
 
         try {
-            $summary = $this->getMyMIDashboard()->getExecutiveDashboardSummary($activeUserId);
+            $summary = $this->getDashboardService()->getExecutiveDashboardSummary($activeUserId);
             $this->data = array_merge($this->data ?? [], $summary);
         } catch (\Throwable $e) {
             log_message('error', 'DashboardController::index failed to load executive summary: {msg}', [

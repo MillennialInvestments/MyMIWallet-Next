@@ -3,7 +3,6 @@
 namespace App\Config;
 
 use CodeIgniter\Config\BaseConfig;
-use App\Libraries\SiteSettingsOverride;
 
 class SiteSettings extends BaseConfig
 {
@@ -212,15 +211,7 @@ class SiteSettings extends BaseConfig
             //     }
             // }
 
-            // Apply DB overrides when available
-            if (class_exists(SiteSettingsOverride::class)) {
-                $override = new SiteSettingsOverride();
-                $override->apply($this);
-            }
-
-            // Load the App config
-            $appConfig                          = config('App'); // Properly fetching the App configuration
-            $this->baseURL                      = $appConfig->baseURL; // Correctly using the fetched config
+            $this->baseURL                      = (string) env('app.baseURL', '/');
             $colorScheme                        = 'blue'; // Define or fetch your color scheme here
             $this->bootstrapTheme               = $this->baseURL . 'assets/css/style.' . $colorScheme . '.css';
             

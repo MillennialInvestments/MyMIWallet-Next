@@ -976,7 +976,7 @@ abstract class BaseController extends Controller
     }
     protected function getDashboardService(): DashboardService
     {
-        return $this->dashboardService ??= new DashboardService();
+        return $this->dashboardService ??= service('dashboardService');
     }
     protected function getGoalTrackingService(): GoalTrackingService
     {

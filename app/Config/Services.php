@@ -4,6 +4,7 @@ namespace Config;
 
 use App\Libraries\{CrudCacheInvalidator, KimiClient, MyMIAnalytics, MyMIInvestments, SafeCache};
 use App\Services\AuthAuditService;
+use App\Services\DashboardService;
 use App\Services\AutoloadHealthService;
 use App\Services\EventTracker;
 use App\Services\OnboardingProgressService;
@@ -141,6 +142,18 @@ class Services extends BaseService
         }
 
         return new OnboardingProgressService();
+    }
+
+
+    public static function dashboardService(bool $getShared = true): DashboardService
+    {
+        if ($getShared) {
+            /** @var DashboardService $service */
+            $service = static::getSharedInstance('dashboardService');
+            return $service;
+        }
+
+        return new DashboardService();
     }
 
     public static function setupStatusService(bool $getShared = true): SetupStatusService

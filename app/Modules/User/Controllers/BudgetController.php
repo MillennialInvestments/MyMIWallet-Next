@@ -266,7 +266,7 @@ class BudgetController extends UserController
 
         if ($activeUserId !== null) {
             try {
-                $executiveSummary = $this->getMyMIDashboard()->getExecutiveDashboardSummary((int) $activeUserId);
+                $executiveSummary = $this->getDashboardService()->getExecutiveDashboardSummary((int) $activeUserId);
                 $this->data = array_merge($this->data ?? [], $executiveSummary);
             } catch (\Throwable $e) {
                 log_message('error', 'BudgetController::index failed to build executive summary: {msg}', ['msg' => $e->getMessage()]);

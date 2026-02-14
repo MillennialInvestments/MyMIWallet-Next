@@ -72,3 +72,10 @@ Additionally, make sure that the following extensions are enabled in your PHP:
 - json (enabled by default - don't turn it off)
 - [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
 - [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+
+## MyMI Wallet Architecture Notes (Config + Dashboard Caching)
+
+- `App\Config\SiteSettings` is bootstrap-safe and does not perform DB override loading in its constructor.
+- Runtime overrides are applied after boot using `App\Libraries\SiteSettingsRuntime`.
+- Executive dashboard aggregation is centralized in `App\Services\DashboardService` with user-scoped cache keys and a 120-second TTL.
+- Budget mutations invalidate dashboard summary cache through `DashboardService::invalidateExecutiveDashboardSummary()` to prevent stale data.
