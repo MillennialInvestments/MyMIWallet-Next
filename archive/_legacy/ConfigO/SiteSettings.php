@@ -4,7 +4,7 @@ namespace App\Config;
 
 use CodeIgniter\Config\BaseConfig;
 
-class SiteSettings extends BaseConfig
+class SiteSettingsOld extends BaseConfig
 {
     public int $stage                       = 5;
     public $beta                            = 0;

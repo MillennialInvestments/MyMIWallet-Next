@@ -71,3 +71,5 @@
 {"ts":"2026-02-11T11:05:01.922Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
 {"ts":"2026-02-11T12:05:02.085Z","component":"aiops-bridge","level":"error","message":"uncaught exception","error":"listen EADDRINUSE: address already in use 127.0.0.1:8500"}
 {"ts":"2026-02-11T13:05:02.578Z","component":"aiops-bridge","level":"info","message":"bridge started","host":"127.0.0.1","port":8500}
+{"ts":"2026-02-14T14:53:36.991Z","component":"aiops-bridge","level":"info","message":"bridge shutting down","signal":"SIGTERM"}
+{"ts":"2026-02-14T15:05:02.159Z","component":"aiops-bridge","level":"info","message":"bridge started","host":"127.0.0.1","port":8500}

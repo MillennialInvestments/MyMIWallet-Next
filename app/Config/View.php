@@ -59,4 +59,16 @@ class View extends BaseView
      * @var list<class-string<ViewDecoratorInterface>>
      */
     public array $decorators = [];
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        // HARD COERCE: prevent trim(null) fatals in system/View/View.php
+        if (! is_string($this->appOverridesFolder)) {
+            $this->appOverridesFolder = 'overrides';
+        }
+
+        $this->appOverridesFolder = trim($this->appOverridesFolder, "/\\");
+    }
 }

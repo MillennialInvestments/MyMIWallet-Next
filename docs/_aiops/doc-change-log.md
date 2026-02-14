@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-12T02:00:01Z
+> Run: 2026-02-14T14:00:02Z
 
 - docs/CRON.md
   - Last updated: 2026-01-30
@@ -40,19 +40,28 @@
   - Change type: unchanged
 - docs/_support/ops-spark-reset/20260212-005323/summary.md
   - Last updated: 2026-02-12
-  - Change type: new
+  - Change type: unchanged
 - docs/_support/ops-spark-reset/20260212-010136/summary.md
   - Last updated: 2026-02-12
-  - Change type: new
+  - Change type: unchanged
 - docs/_support/ops-spark-reset/20260212-010223/summary.md
   - Last updated: 2026-02-12
-  - Change type: new
+  - Change type: unchanged
 - docs/_support/ops-spark-reset/20260212-010317/summary.md
   - Last updated: 2026-02-12
-  - Change type: new
+  - Change type: unchanged
 - docs/_support/ops-spark-reset/20260212-010628/summary.md
   - Last updated: 2026-02-12
-  - Change type: new
+  - Change type: unchanged
+- docs/_support/ops-spark-reset/20260212-023503/summary.md
+  - Last updated: 2026-02-12
+  - Change type: unchanged
+- docs/_support/ops-spark-reset/20260213-050023/summary.md
+  - Last updated: 2026-02-13
+  - Change type: unchanged
+- docs/_support/ops-spark-reset/20260213-050826/summary.md
+  - Last updated: 2026-02-13
+  - Change type: unchanged
 - docs/adr/0001-standards-and-response-contract.md
   - Last updated: 2025-11-08
   - Change type: unchanged
