@@ -5,7 +5,7 @@ use App\Libraries\{BaseLoader, MyMIFinnhub};
 use App\Modules\APIs\Models\MarketingNewsContentModel;
 use CodeIgniter\HTTP\CURLRequest;
 use Config\Services;
-use App\Config\APISettings;
+use Config\APISettings;
 
 #[\AllowDynamicProperties]
 class MyMINews {
@@ -82,7 +82,7 @@ class MyMINews {
      
     public function fetchTopMarketAuxNews($limit = 10)
     {
-        $apiKey = getenv('MARKETAUX_API_KEY'); // Make sure this is set in App\Config\APIs
+        $apiKey = getenv('MARKETAUX_API_KEY'); // Make sure this is set in Config\APIs
         $url = "https://api.marketaux.com/v1/news/all?countries=us&limit={$limit}&api_token={$apiKey}";
     
         $client = \Config\Services::curlrequest();

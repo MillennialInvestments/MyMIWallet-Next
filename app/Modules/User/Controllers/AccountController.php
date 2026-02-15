@@ -2,7 +2,7 @@
 // app/Modules/User/Controllers/AccountController.php
 namespace App\Modules\User\Controllers;
 
-use App\Config\{APIs, SiteSettings};
+use Config\{APIs, SiteSettings};
 use App\Controllers\UserController;
 use App\Services\{AccountService, UserService};
 use App\Models\BudgetModel;

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Modules\Blog\Controllers;
-use App\Config\{SiteSettings, SocialMedia}; 
+use Config\{SiteSettings, SocialMedia}; 
 use App\Controllers\UserController; 
 use App\Libraries\{BaseLoader, MyMIAnalytics, MyMIUser};
 use App\Models\{PageSEOModel, SubscribeModel, UserModel};

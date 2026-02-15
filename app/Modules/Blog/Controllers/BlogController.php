@@ -3,7 +3,7 @@
 // app/Modules/User/Controllers/DashboardController.php
 namespace App\Modules\Blog\Controllers;
 
-use App\Config\{Auth, SiteSettings, SocialMedia}; 
+use Config\{Auth, SiteSettings, SocialMedia}; 
 use CodeIgniter\API\ResponseTrait; // Import the ResponseTrait
 use App\Controllers\BaseController;
 use Config\Services;

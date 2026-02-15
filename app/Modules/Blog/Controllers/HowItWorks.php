@@ -3,7 +3,7 @@
 namespace App\Modules\Blog\Controllers;
 
 use Config\Services; 
-use App\Config\{SiteSettings, SocialMedia}; 
+use Config\{SiteSettings, SocialMedia}; 
 use App\Models\{MyMIGoldModel, PageSEOModel, SubscribeModel, UserModel};
 use App\Libraries\MyMIAnalytics;
 use CodeIgniter\API\ResponseTrait;

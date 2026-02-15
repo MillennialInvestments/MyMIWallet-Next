@@ -4,7 +4,7 @@ namespace App\Modules\Management\Controllers;
 use App\Controllers\BaseController;
 use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
-use App\Config\{APIs, Auth, SiteSettings, SocialMedia}; 
+use Config\{APIs, Auth, SiteSettings, SocialMedia}; 
 use App\Controllers\UserController;
 use App\Libraries\{MyMIAnalytics, MyMIAlerts, MyMIBudget, MyMIDashboard, MyMIMarketing, MyMIUser};
 use App\Models\{AlertsModel, AnnouncementModel, InvestmentModel, ManagementModel, MarketingModel, MyMIGoldModel, UserModel};

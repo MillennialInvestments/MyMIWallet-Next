@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Commands;
 
-use App\Config\ContentEngine as ContentEngineConfig;
+use Config\ContentEngine as ContentEngineConfig;
 use App\Libraries\ContentEngine\PostDraftService;
 use App\Libraries\ContentEngine\ScannerIngestService;
 use App\Libraries\ContentEngine\ScannerScoringService;

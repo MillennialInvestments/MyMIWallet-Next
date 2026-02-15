@@ -5,7 +5,7 @@ namespace App\Services;
 use Braintree\Gateway;
 use Config\Services;
 use Exception;
-use App\Config\{APIs, SiteSettings};
+use Config\{APIs, SiteSettings};
 use App\Libraries\{BaseLoader};
 use App\Models\TransactionModel;
 

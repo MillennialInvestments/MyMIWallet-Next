@@ -3,7 +3,7 @@
 namespace App\Modules\Blog\Controllers;
 
 use Myth\Auth\Authorization\GroupModel;
-use App\Config\{Auth, SiteSettings, SocialMedia};
+use Config\{Auth, SiteSettings, SocialMedia};
 use App\Controllers\UserController; 
 use App\Libraries\{BaseLoader, MyMIAnalytics, MyMIGold};
 use App\Models\{MarketingModel, MyMIGoldModel, PageSEOModel, SubscribeModel, UserModel};

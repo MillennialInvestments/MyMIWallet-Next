@@ -2,7 +2,7 @@
 
 namespace App\Libraries;
 
-use App\Config\{SiteSettings, SocialMedia};
+use Config\{SiteSettings, SocialMedia};
 use App\Libraries\{BaseLoader, FRED, KimiClient, MyMIAlphaVantage, MyMICoinGecko, MyMIInvestments};
 use App\Libraries\Traits\TextProcessor;
 use App\Models\{AnalyticalModel, MarketingModel, MarketingNewsletterModel, WeeklyStreamWatchlistModel};

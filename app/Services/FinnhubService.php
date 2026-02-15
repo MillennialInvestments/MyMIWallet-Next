@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Config\{APIs, SiteSettings};
+use Config\{APIs, SiteSettings};
 use App\Libraries\{BaseLoader};
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\RequestException;

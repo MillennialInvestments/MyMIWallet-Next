@@ -1,6 +1,6 @@
 <?php namespace App\Libraries;
 use Config\Services;
-use App\Config\APIs;
+use Config\APIs;
 use App\Libraries\{BaseLoader, MyMISolana, ExchangeConnectorInterface};
 
 #[\AllowDynamicProperties]

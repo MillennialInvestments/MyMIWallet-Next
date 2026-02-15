@@ -2,7 +2,7 @@
 
 namespace App\Libraries;
 
-use App\Config\{SiteSettings};
+use Config\{SiteSettings};
 use App\Libraries\{BaseLoader, MyMIUser};
 use App\Models\{AccountsModel, BudgetModel, WalletModel, MgmtBudgetModel}; // Replace with actual model names and paths
 use App\Services\BudgetService;

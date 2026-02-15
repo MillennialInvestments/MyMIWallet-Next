@@ -5,7 +5,7 @@ namespace App\Modules\APIs\Controllers;
 use App\Controllers\BaseController;
 use Config\Services; 
 use Myth\Auth\Authorization\GroupModel;
-use App\Config\{Auth, SiteSettings, SocialMedia}; 
+use Config\{Auth, SiteSettings, SocialMedia}; 
 use App\Controllers\UserController;
 use App\Libraries\{BaseLoader, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIUser, MyMIWallet, MyMIWallets};
 use App\Modules\User\Libraries\{DashboardLibrary};

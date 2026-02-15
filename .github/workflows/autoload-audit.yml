@@ -1,0 +1,29 @@
+name: Autoload Audit
+
+on:
+  pull_request:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install PHP & Composer
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer
+
+      - name: Install dependencies
+        run: composer install --no-progress --no-interaction
+
+      - name: Audit duplicate classes
+        run: php scripts/check_duplicates.php
+
+      - name: Validate composer.json
+        run: composer validate
+
+      - name: Verify optimized autoload generation
+        run: composer dump-autoload --optimize

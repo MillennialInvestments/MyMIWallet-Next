@@ -3,7 +3,7 @@
 namespace App\Libraries;
 
 use Config\Services;
-use App\Config\{APIs, SiteSettings};
+use Config\{APIs, SiteSettings};
 use App\Libraries\{BaseLoader, CryptoCurrencyInterface, MyMIUser};
 use App\Models\SolanaModel;
 use App\Services\SolanaService;

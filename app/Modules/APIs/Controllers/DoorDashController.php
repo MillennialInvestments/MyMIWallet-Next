@@ -4,7 +4,7 @@ namespace App\Modules\APIs\Controllers;
 
 use App\Controllers\BaseController;
 use Myth\Auth\Authorization\GroupModel;
-use App\Config\{Auth, APIs, SiteSettings, SocialMedia}; 
+use Config\{Auth, APIs, SiteSettings, SocialMedia}; 
 use App\Controllers\UserController;
 use App\Models\UserModel;
 // use APIModule\Libraries\{BudgetLibrary, UserLibrary, WalletLibrary};

@@ -1,6 +1,6 @@
 <?php
 
-use App\Config\Discord as DiscordConfig;
+use Config\Discord as DiscordConfig;
 use App\Libraries\MyMIDiscord;
 use App\Models\DiscordModel;
 use CodeIgniter\Test\CIUnitTestCase;

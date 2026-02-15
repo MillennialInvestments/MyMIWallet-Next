@@ -1,7 +1,7 @@
 <?php namespace App\Modules\User\Controllers;
 
 use App\Controllers\UserController;
-use App\Config\{Auth, SiteSettings, SocialMedia};
+use Config\{Auth, SiteSettings, SocialMedia};
 use App\Libraries\{MyMIBudget, MyMIDashboard, MyMICoin, MyMIGold, MyMIInvestments, MyMIMarketData, MyMIMarketing, MyMIReferrals, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets, MyMISimulator, FRED, MyMIFractalAnalyzer};
 use App\Models\{AccountsModel, AlertsModel, BudgetModel, InvestmentForecastAccuracyModel, InvestmentForecastHistoryModel, InvestmentModel, InvestmentPriceForecastModel, MarketingModel, MgmtBudgetModel, MyMIGoldModel, UserModel, WalletModel};
 use App\Services\Forecasting\ForecastAggregationService;

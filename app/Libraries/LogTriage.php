@@ -35,7 +35,7 @@ class LogTriage
         'Undefined index: url'          => 'sanitize_marketing_inputs',
 
         // Duplicate config class declarations
-        'Cannot declare class App\Config\SiteSettings' => 'dedupe_config_class',
+        'Cannot declare class Config\SiteSettings' => 'dedupe_config_class',
 
         // .env loading & phpdotenv crashes
         'phpdotenv'                     => 'safe_dotenv_loading',

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Modules\APIs\Controllers;
 
-use App\Config\ContentEngine as ContentEngineConfig;
+use Config\ContentEngine as ContentEngineConfig;
 use App\Controllers\BaseController;
 use App\Libraries\ContentEngine\DistributionService;
 use App\Libraries\ContentEngine\PostDraftService;
