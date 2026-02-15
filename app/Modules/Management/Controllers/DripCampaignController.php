@@ -55,7 +55,9 @@ class DripCampaignController extends UserController
     {
         $this->commonData();
         $this->data['pageTitle'] = 'Drip Campaigns | MyMI Wallet';
-        $this->data['campaigns'] = $this->dripModel->findAll();
+        $this->data['campaigns'] = $this->dripModel
+            ->orderBy('id', 'DESC')
+            ->findAll(100);
 
         return $this->renderTheme('ManagementModule\Views\Marketing\Drip\index', $this->data);
     }
