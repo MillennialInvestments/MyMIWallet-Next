@@ -2,7 +2,7 @@
 
 namespace App\Libraries\AiOps;
 
-use App\Config\SiteSettings;
+use Config\SiteSettings;
 use App\Libraries\SiteSettingsOverride;
 use CodeIgniter\Database\BaseConnection;
 use Config\Services;

@@ -2,7 +2,7 @@
 
 namespace App\Libraries;
 
-use App\Config\SiteSettings;
+use Config\SiteSettings;
 use App\Libraries\SiteSettingsOverride;
 
 class SiteSettingsRuntime

@@ -1,7 +1,7 @@
 <?php
 namespace App\Libraries; 
 
-use App\Config\SiteSettings;
+use Config\SiteSettings;
 use App\Libraries\{BaseLoader, MyMIUser};
 use App\Models\MyMIGoldModel;
 use CodeIgniter\Session\Session;

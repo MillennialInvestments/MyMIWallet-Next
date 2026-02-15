@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use Config\Services;
-use App\Config\SiteSettings;
+use Config\SiteSettings;
 use App\DTO\Budget\{BudgetRecord, CashFlowSnapshot, DebtAccount};
 use App\Libraries\{BaseLoader};
 use App\Models\{AccountsModel, BudgetModel, UserModel};

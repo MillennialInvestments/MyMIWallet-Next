@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-14T22:00:02Z
+> Run: 2026-02-15T00:00:01Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -806,4 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/forecasting/08_ui_and_dashboard.md
   - ❌ No obvious code match found (heuristic)
-- … and 785 more
+- … and 786 more

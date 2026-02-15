@@ -6,7 +6,7 @@ use CodeIgniter\API\ResponseTrait;
 use App\Controllers\UserController;
 use App\Models\SupportModel;
 use Config\Services;
-use App\Config\SiteSettings;
+use Config\SiteSettings;
 
 #[\AllowDynamicProperties]
 class Support extends UserController

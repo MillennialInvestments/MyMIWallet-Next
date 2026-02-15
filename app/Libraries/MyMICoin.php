@@ -2,7 +2,7 @@
 
 namespace App\Libraries;
 
-use App\Config\SiteSettings;
+use Config\SiteSettings;
 use App\Libraries\{BaseLoader};
 use App\Models\{MyMICoinModel, UserModel};
 use Config\Services;

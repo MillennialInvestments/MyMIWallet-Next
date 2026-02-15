@@ -1,6 +1,6 @@
 <?php
 
-use App\Config\SiteSettings;
+use Config\SiteSettings;
 
 function aiKimiEnabled(): bool
 {

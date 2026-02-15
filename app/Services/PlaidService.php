@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Config\SiteSettings;
+use Config\SiteSettings;
 use App\Libraries\{BaseLoader};
 use CodeIgniter\Config\Services;
 use TomorrowIdeas\Plaid\Plaid;

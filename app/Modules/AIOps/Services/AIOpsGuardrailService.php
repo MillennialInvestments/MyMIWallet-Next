@@ -2,7 +2,7 @@
 
 namespace App\Modules\AIOps\Services;
 
-use App\Config\SiteSettings;
+use Config\SiteSettings;
 use App\Libraries\AiCostControls;
 use App\Libraries\SiteSettingsOverride;
 use App\Modules\AIOps\Models\AIOpsBudgetModel;

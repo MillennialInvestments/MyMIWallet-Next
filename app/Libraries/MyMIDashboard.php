@@ -7,7 +7,7 @@ use App\Models\{AlertsModel, BudgetModel, DashboardModel, ExchangeModel, Investm
 use App\Services\BudgetService;
 use CodeIgniter\Session\Session;
 use Config\Services;
-use App\Config\SiteSettings;
+use Config\SiteSettings;
 use Config\{APIs, SocialMedia};
 
 #[\AllowDynamicProperties]
