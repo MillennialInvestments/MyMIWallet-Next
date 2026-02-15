@@ -1,9 +1,0 @@
-Filesystem      Size  Used Avail Use% Mounted on
-overlay          25G  1.7G   24G   7% /
-tmpfs            15G  172K   15G   1% /run
-/dev/md10        10G  4.0K   10G   1% /tmp
-tmpfs            64M     0   64M   0% /dev
-tmpfs            15G     0   15G   0% /run/lock
-tmpfs            26G   20M   26G   1% /run/secrets
-/dev/nvme0n1p1  459G   38G  402G   9% /var/container_share
-shm              63M     0   63M   0% /dev/shm

@@ -1,9 +1,0 @@
-Filesystem        Inodes    IUsed     IFree IUse% Mounted on
-overlay        468779520 40037444 428742076    9% /
-tmpfs           32995412      179  32995233    1% /run
-/dev/md10         655360       19    655341    1% /tmp
-tmpfs           32995412       18  32995394    1% /dev
-tmpfs           32995412        3  32995409    1% /run/lock
-tmpfs           32995412     6636  32988776    1% /run/secrets
-/dev/nvme0n1p1  30352688   124332  30228356    1% /var/container_share
-shm             32995412        1  32995411    1% /dev/shm

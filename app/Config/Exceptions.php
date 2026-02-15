@@ -29,7 +29,7 @@ class Exceptions extends BaseConfig
     /**
      * Should detailed errors be shown to the client in development.
      */
-    public bool $displayErrors = false;
+    public bool $displayErrors = ENVIRONMENT !== 'production';
 
     /**
      * --------------------------------------------------------------------------

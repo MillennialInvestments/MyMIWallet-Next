@@ -1,19 +1,9 @@
-/vendor/
 /writable/*
-!/writable/.gitkeep
-!/writable/**/.gitkeep
+!/writable/.htaccess
+!/writable/index.html
 /public/writable/
+/vendor/
 # Allow checked-in smoke sample
-!/writable/logs/
-!/writable/cache/
-!/writable/cache/.gitkeep
-!/writable/cache/FactoriesCache/
-!/writable/cache/FactoriesCache/.gitkeep
-!/writable/triage/
-!/writable/samples/
-!/writable/samples/*
-!/writable/samples/daily_gainers.json
-writable/triage/server-snapshots/env-copy.txt
 /public/uploads/
 /node_modules/
 **/node_modules/
@@ -56,10 +46,6 @@ writable/logs/deploy-*.log
 application/helpers/squeeze_helper.php
 application/libraries/MyMISqueeze.php
 application/modules/investments/controllers/API_Squeeze.php
-application/helpers/squeeze_helper.php
-application/libraries/MyMISqueeze.php
-application/modules/investments/controllers/API_Squeeze.php
-
 # AIOps/chat runtime state
 /aiops/runtime/*
 !/aiops/runtime/.gitkeep
