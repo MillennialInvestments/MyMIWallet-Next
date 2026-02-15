@@ -21,17 +21,17 @@ class Logger extends BaseConfig
      *
      * @var list<string>
      */
-    // public int|string|array $threshold = [
-    //     'emergency',
-    //     'alert',
-    //     'critical',
-    //     'error',
-    //     'warning',
-    //     'notice',
-    //     'info',
-    //     'debug',
-    // ];
-    public int|string|array $threshold = 9;
+    public int|string|array $threshold = [
+        'emergency',
+        'alert',
+        'critical',
+        'error',
+        'warning',
+        'notice',
+        'info',
+        'debug',
+    ];
+    // public int|string|array $threshold = 9;
 
     /**
      * Date Format for Logs

@@ -15,12 +15,12 @@ class Debug extends BaseConfig
     /**
      * Disable Kint by default.
      */
-    public bool $enableKint = false;
+    public bool $enableKint = true;
 
     /**
      * Never auto-load debug helpers in CLI.
      */
-    public bool $showToolbar = false;
+    public bool $showToolbar = true;
 
     /**
      * Safety: never load dev-only helpers implicitly.
@@ -30,7 +30,7 @@ class Debug extends BaseConfig
     /**
      * Debug Toolbar
      */
-    public bool $toolbar = false;
+    public bool $toolbar = true;
 
     /**
      * Debug Collectors
@@ -40,7 +40,7 @@ class Debug extends BaseConfig
     /**
      * Kint (var dumping)
      */
-    public bool $kintEnabled = false;
+    public bool $kintEnabled = true;
 
     /**
      * Error Views

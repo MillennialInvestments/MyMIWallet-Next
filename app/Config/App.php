@@ -23,7 +23,7 @@ class App extends BaseConfig
     /**
      * Index File
      */
-    public string $indexPage = '';
+    public string $indexPage = 'index.php';
 
     /**
      * URI Protocol
@@ -52,7 +52,7 @@ class App extends BaseConfig
      * Configuration / Autoloader Optimization
      */
     public bool $cacheConfig        = false;
-    public bool $optimizeAutoloader = false;
+    public bool $optimizeAutoloader = true;
 
     /**
      * Force HTTPS
@@ -88,7 +88,7 @@ class App extends BaseConfig
     public bool $maintenanceMode = false;
     public string $maintenanceMessage = 'We are performing scheduled maintenance.';
     public string $maintenanceETA = '';
-    public bool $enableKint      = false;
+    public bool $enableKint      = true;
 
     /**
      * Subfolder name used for App-level view/config overrides.
