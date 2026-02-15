@@ -20,7 +20,7 @@ CRITICAL --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
 CRITICAL --> Error: Cannot use object of type Myth\Auth\Entities\User as array
 
 [3 occurrence(s)]
-CRITICAL --> ErrorException: Cannot declare class App\Config\SocialPlatforms, because the name is already in use
+CRITICAL --> ErrorException: Cannot declare class Config\SocialPlatforms, because the name is already in use
 
 [2 occurrence(s)]
 CRITICAL --> Error: Call to undefined function App\Modules\Exchange\Controllers\getCuID()

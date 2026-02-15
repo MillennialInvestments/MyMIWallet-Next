@@ -12,7 +12,7 @@
 - Replaying the merge commit from PR #128 reproduces an immediate fatal error when the Myth/Auth config loads:
 
   ```bash
-  php -r "require 'vendor/autoload.php'; require 'app/Config/Auth.php';"
+  php spark
   ```
 
   ➜ `Fatal error: Type of Config\Auth::$views must not be defined (as in class Myth\Auth\Config\Auth)`【478513†L1-L4】

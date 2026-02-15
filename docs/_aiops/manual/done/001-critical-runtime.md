@@ -4,7 +4,7 @@
 Resolve all CRITICAL runtime errors logged after 2026-02-07 21:37:55.
 
 ## Target Errors
-- Cannot declare class App\Config\SocialPlatforms
+- Cannot declare class Config\SocialPlatforms
 - Call to undefined function getCuID()
 - getUserWallets() on null
 - Undefined controller methods

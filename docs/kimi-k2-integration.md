@@ -22,7 +22,7 @@ php spark cache:clear
 When enabled, AI endpoints register, Advisor routes load, and UI buttons appear automatically.
 
 ## 2. API Configuration
-- The Kimi client reads `KIMI_API_KEY`, `KIMI_API_BASE`, and `KIMI_MODEL` from the environment via `App\Config\Kimi`.
+- The Kimi client reads `KIMI_API_KEY`, `KIMI_API_BASE`, and `KIMI_MODEL` from the environment via `Config\Kimi`.
 - All requests use Moonshot's OpenAI-style `/chat/completions` endpoint with tool-calling support.
 - If the toggle is off or the key is missing, calls throw a runtime exception.
 
@@ -45,7 +45,7 @@ When enabled, AI endpoints register, Advisor routes load, and UI buttons appear 
 - **Modal UX:** `dynamicModalLoader('/Advisor/generateInsight', { user_id })` loads a Summernote-enabled modal with copy/save actions.
 
 ## 5. Architecture & Module Wiring
-- **Config & helper:** `App\Config\SiteSettings` exposes `enableKimiK2`; `ai_helper.php` provides `aiKimiEnabled()` for routes, controllers, and views.
+- **Config & helper:** `Config\SiteSettings` exposes `enableKimiK2`; `ai_helper.php` provides `aiKimiEnabled()` for routes, controllers, and views.
 - **Client:** `service('kimiClient')` (wrapper around Moonshot's `/chat/completions`) enforces the toggle and API key presence.
 - **Modules:**
   - `MyMIBudget::getBudgetSummaryForAI($userId)` supplies cash flow and allocations.
