@@ -2,7 +2,7 @@
 
 
 
-namespace App\Config;
+namespace Config;
 
 
 

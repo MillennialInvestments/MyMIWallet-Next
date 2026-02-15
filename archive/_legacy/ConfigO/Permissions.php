@@ -1,5 +1,5 @@
 <?php
-namespace App\Config;
+namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
 
