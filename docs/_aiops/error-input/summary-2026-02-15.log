@@ -4,7 +4,7 @@
    Grouped by (LEVEL + message)
 ===============================================
 
-Last processed up to: 2026-02-15 00:58:05
+Last processed up to: 2026-02-15 10:00:03
 
 ---------------------------
 LEVEL: ERROR
@@ -22,10 +22,25 @@ ERROR --> LOG_HEALTHCHECK file probe marker=352a87c0609c
 [1 occurrence(s)]
 ERROR --> LOG_HEALTHCHECK file probe marker=40a879b1bdf3
 
+[1 occurrence(s)]
+ERROR --> LOG_HEALTHCHECK file probe marker=6645898a97fc
+
+[1 occurrence(s)]
+ERROR --> LOG_HEALTHCHECK file probe marker=14b8cd635ce5
+
+[1 occurrence(s)]
+ERROR --> LOG_HEALTHCHECK file probe marker=1a67a4ce109a
+
+[1 occurrence(s)]
+ERROR --> LOG_HEALTHCHECK file probe marker=84aa356a31d9
+
+[1 occurrence(s)]
+ERROR --> LOG_HEALTHCHECK file probe marker=6025cad77118
+
 
 ===============================================
    HERE'S THE NEW STUFF
-   (Entries logged AFTER 2026-02-15 00:58:05)
+   (Entries logged AFTER 2026-02-15 10:00:03)
 ===============================================
 
 ---------------------------
@@ -33,7 +48,7 @@ LEVEL: ERROR (NEW)
 ---------------------------
 
 [1 NEW occurrence(s)]
-ERROR --> LOG_HEALTHCHECK file probe marker=40a879b1bdf3
+ERROR --> LOG_HEALTHCHECK file probe marker=6025cad77118
 
 
 ---- CONFIG LINT ----
