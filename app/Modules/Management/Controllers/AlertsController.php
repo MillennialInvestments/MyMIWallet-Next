@@ -6,7 +6,7 @@ use App\Controllers\BaseController;
 use Config\Services;
 use Config\MyMI as MyMIConfig;
 use Myth\Auth\Authorization\GroupModel;
-use App\Config\{Auth, SiteSettings, SocialMedia}; 
+use Config\{Auth, SiteSettings, SocialMedia}; 
 use App\Controllers\UserController;
 use App\Libraries\{CacheKey, MyMIAdvisor, MyMIAlerts, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIUser, MyMIWallet, MyMIWallets, SafeCache};
 use App\Models\{AccountsModel, AlertsModel, BudgetModel, SignalsModel, UserModel};

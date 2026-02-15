@@ -3,7 +3,7 @@
 use App\Controllers\BaseController;
 use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
-use App\Config\{Auth, SiteSettings, SocialMedia};
+use Config\{Auth, SiteSettings, SocialMedia};
 use App\Controllers\UserController;
 use App\Libraries\{MyMIInstitutes, MyMIBudget, MyMIDashboard, MyMIUser};
 use App\Models\{AccountsModel, InstitutesModel, BudgetModel, UserModel};

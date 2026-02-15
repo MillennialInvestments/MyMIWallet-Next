@@ -1,7 +1,7 @@
 <?php
 namespace App\Libraries;
 
-use App\Config\{SiteSettings};
+use Config\{SiteSettings};
 use App\Libraries\{BaseLoader, MyMICoin, MyMIGold, MyMIUser};
 use App\Models\{AnaltyicalModel, InvestorModel, MyMIGoldModel, TrackerModel, WalletModel};
 use CodeIgniter\Session\Session;

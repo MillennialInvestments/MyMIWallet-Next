@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Libraries\ContentEngine;
 
 use App\Models\ContentPostModel;
-use App\Config\ContentEngine as ContentEngineConfig;
+use Config\ContentEngine as ContentEngineConfig;
 use CodeIgniter\HTTP\CURLRequest;
 
 class DistributionService

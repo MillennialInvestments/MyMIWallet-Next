@@ -1,6 +1,6 @@
 <?php namespace App\Libraries;
 
-use App\Config\Projects as ProjectsConfig;
+use Config\Projects as ProjectsConfig;
 use App\Models\{ProjectCommitmentsModel, ProjectDistributionsModel, ProjectInboxModel, ProjectPayoutsModel, ProjectTokenAllocationsModel, ProjectWithdrawalsModel, ProjectsModel};
 use CodeIgniter\I18n\Time;
 use DateTime;

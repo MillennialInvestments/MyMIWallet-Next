@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Libraries\ContentEngine;
 
-use App\Config\ContentEngine as ContentEngineConfig;
+use Config\ContentEngine as ContentEngineConfig;
 use App\Models\ContentScannerIngestModel;
 use App\Models\ContentScannerRowModel;
 use CodeIgniter\Database\BaseConnection;

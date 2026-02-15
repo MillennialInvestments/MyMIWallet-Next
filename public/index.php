@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\AutoloadAuditService;
 use CodeIgniter\Boot;
 use Config\Paths;
 
@@ -71,5 +72,9 @@ $paths = new Paths();
 
 // LOAD THE FRAMEWORK BOOTSTRAP FILE
 require $paths->systemDirectory . '/Boot.php';
+
+if ((getenv('CI_ENVIRONMENT') ?: 'production') !== 'production') {
+    AutoloadAuditService::audit();
+}
 
 exit(Boot::bootWeb($paths));

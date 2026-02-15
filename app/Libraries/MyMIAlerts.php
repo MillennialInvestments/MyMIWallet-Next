@@ -1,7 +1,7 @@
 <?php
 namespace App\Libraries;
 
-use App\Config\{APIs, Auth, SiteSettings, SocialMedia};
+use Config\{APIs, Auth, SiteSettings, SocialMedia};
 use App\Libraries\AlertChannels\{DiscordChannel, EmailChannel, ZapierChannel};
 use App\Libraries\AlertSources\{ManualEntrySource, MarketAuxNewsSource, ThinkOrSwimEmailSource};
 use App\Models\{AlertsModel, ScannerTaxonomyModel, TrackerModel, UserModel};

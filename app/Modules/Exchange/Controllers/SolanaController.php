@@ -2,7 +2,7 @@
 
 use App\Controllers\BaseController;
 use Myth\Auth\Authorization\GroupModel;
-use App\Config\{Auth, SiteSettings};
+use Config\{Auth, SiteSettings};
 use Config\Services;
 use App\Controllers\UserController;
 use App\Libraries\{MyMIBudget, MyMICoin, MyMIDashboard, MyMIDexScreener, MyMIExchange, MyMIGold, MyMIMetaMask, MyMIPhantom, MyMIRaydium, MyMISolana, MyMISolflare, MyMITrustWallet, MyMIUser, MyMIWallets, SafeProcess, WebSocketClient};

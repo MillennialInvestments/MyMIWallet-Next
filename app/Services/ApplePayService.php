@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use Stripe\StripeClient;
-use App\Config\{APIs, SiteSettings};
+use Config\{APIs, SiteSettings};
 use App\Libraries\{BaseLoader};
 
 class ApplePayService

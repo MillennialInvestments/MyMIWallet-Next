@@ -3,7 +3,7 @@ namespace App\Libraries;
 
 use CodeIgniter\Controller;
 use Myth\Auth\Authorization\GroupModel;
-use App\Config\{Auth, SiteSettings, SocialMedia}; 
+use Config\{Auth, SiteSettings, SocialMedia}; 
 use Config\Services;
 use App\Controllers\UserController;
 use App\Libraries\{

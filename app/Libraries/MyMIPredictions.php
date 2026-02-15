@@ -4,7 +4,7 @@ use App\Modules\Predictions\Models\{
     MarketsModel,OptionsModel,OrdersModel,TradesModel,PositionsModel,
     LiquidityModel,SettlementsModel,PayoutsModel
 };
-use App\Config\Predictions as PredCfg;
+use Config\Predictions as PredCfg;
 use CodeIgniter\Database\BaseConnection;
 
 class MyMIPredictions

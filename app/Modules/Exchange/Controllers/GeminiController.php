@@ -1,7 +1,7 @@
 <?php namespace App\Modules\Exchange\Controllers;
 
 use Config\Services; 
-use App\Config\{APIs, Auth, SiteSettings};
+use Config\{APIs, Auth, SiteSettings};
 use App\Libraries\{MyMIGemini};
 
 #[\AllowDynamicProperties]

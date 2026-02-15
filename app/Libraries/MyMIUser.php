@@ -3,7 +3,7 @@ namespace App\Libraries;
 
 use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
-use App\Config\{APIs, Auth, SiteSettings, SocialMedia}; 
+use Config\{APIs, Auth, SiteSettings, SocialMedia}; 
 use App\Models\{BudgetModel, ExchangeModel, InvestorModel, MyMICoinModel, TrackerModel, UserModel, WalletModel}; // Assuming your models are in App\Models namespace
 use App\Libraries\{BaseLoader, MyMICoin, MyMIGold, MyMIWallet};
 use CodeIgniter\I18n\Time;

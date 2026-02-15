@@ -1,6 +1,6 @@
 <?php namespace App\Modules\APIs\Controllers;
 
-use App\Config\ApiKeys;
+use Config\ApiKeys;
 use App\Support\Http;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;

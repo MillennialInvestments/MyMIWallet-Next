@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 
-use App\Config\Intake;
+use Config\Intake;
 
 class IntakeRouter
 {

@@ -1,6 +1,6 @@
 <?php namespace App\Libraries;
 
-use App\Config\MyMIBlogger as MyMIBloggerConfig;
+use Config\MyMIBlogger as MyMIBloggerConfig;
 
 #[\AllowDynamicProperties]
 class MyMIBlogger

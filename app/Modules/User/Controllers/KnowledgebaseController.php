@@ -287,7 +287,7 @@ use App\Controllers\UserController;
 use App\Controllers\BaseController;
 use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
-use App\Config\{Auth, SiteSettings, SocialMedia};
+use Config\{Auth, SiteSettings, SocialMedia};
 use App\Models\{DashboardModel, ExchangeModel, PageSEOModel, PublicModel, SubscribeModel};
 use App\Libraries\{MyMIAnalytics, MyMICoin, MyMIUser};
 use CodeIgniter\API\ResponseTrait;

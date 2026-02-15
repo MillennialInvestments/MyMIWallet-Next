@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use Config\Services;
-use App\Config\{APIs, SiteSettings};
+use Config\{APIs, SiteSettings};
 use App\Libraries\{BaseLoader};
 use App\Models\{ReferralModel, TransactionModel, UserModel};
 use App\Services\{ApplePayService, CashAppService, CryptoService, GooglePayService, PlaidService, PayPalService};

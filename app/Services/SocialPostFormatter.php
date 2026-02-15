@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Config\SocialPlatforms;
+use Config\SocialPlatforms;
 use App\Models\SocialPlatformModel;
 use App\Models\SocialPostTemplateModel;
 use CodeIgniter\I18n\Time;

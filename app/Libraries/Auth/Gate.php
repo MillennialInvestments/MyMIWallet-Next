@@ -1,7 +1,7 @@
 <?php
 namespace App\Libraries\Auth;
 
-use App\Config\Permissions as PermConfig;
+use Config\Permissions as PermConfig;
 use App\Models\PermissionModel;
 use App\Models\PermissionRoleModel;
 use App\Models\RoleModel;

@@ -7,7 +7,7 @@ use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Session\Session;
 use Psr\Log\LoggerInterface;
 use CodeIgniter\HTTP\CURLRequest;
-use App\Config\{APIs, SiteSettings};
+use Config\{APIs, SiteSettings};
 use App\Libraries\{BaseLoader, FRED, MyMICoin, MyMIDashboard, MyMIFractalAnalyzer, MyMIGold, MyMIInvestments, MyMIMarketing, MyMIWallet};
 
 class InvestmentService

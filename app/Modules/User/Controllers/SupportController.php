@@ -2,7 +2,7 @@
 
 namespace App\Modules\User\Controllers;
 
-use App\Config\{SiteSettings, SocialMedia};
+use Config\{SiteSettings, SocialMedia};
 use App\Controllers\UserController;
 use App\Libraries\{MyMIAnalytics, MyMIBudget, MyMIUser};
 use App\Models\{PageSEOModel, SubscribeModel, SupportModel, UserModel};

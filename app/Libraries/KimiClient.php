@@ -2,7 +2,7 @@
 
 namespace App\Libraries;
 
-use App\Config\Kimi as KimiConfig;
+use Config\Kimi as KimiConfig;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use RuntimeException;
