@@ -3,6 +3,12 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+// Load environment from .env
+require dirname(__DIR__) . '/vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->safeLoad();
+
 use App\Services\AutoloadAuditService;
 use CodeIgniter\Boot;
 use Config\Paths;

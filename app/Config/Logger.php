@@ -22,8 +22,6 @@ class Logger extends BaseConfig
      * @var list<string>
      */
     public int|string|array $threshold = [
-        'emergency',
-        'alert',
         'critical',
         'error',
         'warning',
