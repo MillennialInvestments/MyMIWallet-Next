@@ -23,31 +23,56 @@ $routes->group('Management/OpsInbox', ['filter' => 'role:admin'], static functio
     $r->post('reject/(:num)', 'App\\Modules\\Management\\Controllers\\OpsInboxController::reject/$1');
 });
 
-$routes->group('Management', ['namespace' => 'App\\Modules\\Management\\Controllers'], static function ($r) {
-    $r->get('Docs', 'DocsController::index');
+$routes->group('Management', ['namespace' => 'App\\Modules\\Management\\Controllers', 'filter' => 'permission:admin.access'], static function ($r) {
+    // Stable entry routes for Management controllers while auto-routing is disabled.
+    $indexRoutes = [
+        ''               => 'ManagementController::index',
+        '/'              => 'ManagementController::index',
+        'Admin'          => 'AdminController::index',
+        'Alerts'         => 'AlertsController::index',
+        'API'            => 'APIController::index',
+        'Assets'         => 'AssetsController::index',
+        'Budgeting'      => 'BudgetingController::index',
+        'Budgets'        => 'BudgetsController::index',
+        'Chat'           => 'ChatUsageController::index',
+        'Development'    => 'DevelopmentController::index',
+        'Discord'        => 'DiscordController::index',
+        'Docs'           => 'DocsController::index',
+        'DripCampaigns'  => 'DripCampaignController::index',
+        'Email'          => 'EmailController::index',
+        'Exchange'       => 'ExchangeController::index',
+        'Finance'        => 'FinanceController::index',
+        'HR'             => 'HRController::index',
+        'How-Tos'        => 'HowTosController::index',
+        'Investments'    => 'InvestmentsController::index',
+        'Marketing'      => 'MarketingController::index',
+        'Notification'   => 'NotificationController::index',
+        'Operations'     => 'OperationsController::index',
+        'Partners'       => 'PartnersController::index',
+        'Projects'       => 'ProjectsController::index',
+        'PublicPages'    => 'PublicPagesController::index',
+        'Security'       => 'SecurityController::index',
+        'Services'       => 'ServicesController::index',
+        'Signals'        => 'SignalsController::index',
+        'Support'        => 'SupportController::index',
+        'Users'          => 'UsersController::index',
+        'Wallets'        => 'WalletsController::index',
+        'Web-Design'     => 'WebDesignController::index',
+    ];
+
+    foreach ($indexRoutes as $path => $target) {
+        $r->get($path, $target);
+    }
+
     $r->get('Docs/browse/(:any)', 'DocsController::browse/$1');
     $r->get('Docs/view/(:any)', 'DocsController::view/$1');
-});
-
-$routes->group('Management/Users', ['namespace' => 'App\\Modules\\Management\\Controllers', 'filter' => 'auth'], static function ($r) {
-    $r->get('Referral-Report', 'UsersController::referralReport');
-});
-
-$routes->group('Management/AuthHealth', ['namespace' => 'App\\Modules\\Management\\Controllers', 'filter' => 'permission:admin.access'], static function ($r) {
-    $r->get('/', 'AuthHealthController::index');
-    $r->get('details/(:num)', 'AuthHealthController::details/$1');
-});
-
-$routes->group('Management/EmailOutbox', ['namespace' => 'App\\Modules\\Management\\Controllers', 'filter' => 'permission:admin.access'], static function ($r) {
-    $r->get('/', 'EmailOutboxController::index');
-    $r->post('send-test', 'EmailOutboxController::sendTest');
-});
-
-$routes->group('Management', ['namespace' => 'App\\Modules\\Management\\Controllers', 'filter' => 'permission:admin.access'], static function ($r) {
+    $r->get('Users/Referral-Report', 'UsersController::referralReport');
+    $r->get('AuthHealth', 'AuthHealthController::index');
+    $r->get('AuthHealth/details/(:num)', 'AuthHealthController::details/$1');
+    $r->get('EmailOutbox', 'EmailOutboxController::index');
+    $r->post('EmailOutbox/send-test', 'EmailOutboxController::sendTest');
     $r->get('AuthFunnel', 'AuthFunnelController::authFunnel');
     $r->get('Referrals', 'AuthFunnelController::referrals');
-
-    $r->get('PublicPages', 'PublicPagesController::index');
     $r->post('PublicPages/ajaxGenerateNow/(:segment)', 'PublicPagesController::ajaxGenerateNow/$1');
     $r->get('PublicPages/ajaxLoadDraft/(:num)', 'PublicPagesController::ajaxLoadDraft/$1');
     $r->post('PublicPages/ajaxSaveDraft/(:num)', 'PublicPagesController::ajaxSaveDraft/$1');
