@@ -36,7 +36,9 @@ $routes->get('/', 'Home::index');
 
 // Simple health check that should return 200 without auth
 $routes->get('healthz', 'System\HealthController::healthz', ['as' => 'healthz']);
-$routes->get('test/crash', 'Test::crash');
+if (ENVIRONMENT !== 'production') {
+    $routes->get('test/crash', 'Test::crash');
+}
 $routes->get('Learn/(:segment)', 'PublicPagesController::view/$1');
 $routes->get('Maintenance', 'MaintenanceController::index');
 
