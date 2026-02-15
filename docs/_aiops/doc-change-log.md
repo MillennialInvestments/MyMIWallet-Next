@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-15T00:53:14Z
+> Run: 2026-02-15T04:00:01Z
 
 - docs/CRON.md
   - Last updated: 2026-01-30
@@ -32,6 +32,9 @@
 - docs/_support/api-audit/20260211-023725/summary.md
   - Last updated: 2026-02-11
   - Change type: unchanged
+- docs/_support/fix-503/20260215-005841/summary.md
+  - Last updated: 2026-02-15
+  - Change type: unchanged
 - docs/_support/ops-spark-reset/20260210-130402/summary.md
   - Last updated: 2026-02-10
   - Change type: unchanged
@@ -61,6 +64,12 @@
   - Change type: unchanged
 - docs/_support/ops-spark-reset/20260213-050826/summary.md
   - Last updated: 2026-02-14
+  - Change type: unchanged
+- docs/_support/runtime-cache-boot/20260215-010126/summary.md
+  - Last updated: 2026-02-15
+  - Change type: unchanged
+- docs/_support/runtime-triage/20260215-010146/summary.md
+  - Last updated: 2026-02-15
   - Change type: unchanged
 - docs/adr/0001-standards-and-response-contract.md
   - Last updated: 2025-11-08
@@ -426,7 +435,7 @@
   - Last updated: 2026-01-31
   - Change type: unchanged
 - docs/aiops/triage/spark-command-audit.md
-  - Last updated: 2026-02-09
+  - Last updated: 2026-02-15
   - Change type: unchanged
 - docs/aiops/workflows/n8n-workflows.md
   - Last updated: 2026-01-01
@@ -456,7 +465,7 @@
   - Last updated: 2026-02-06
   - Change type: unchanged
 - docs/audit/auth_audit_last_run.md
-  - Last updated: 2026-02-09
+  - Last updated: 2026-02-15
   - Change type: unchanged
 - docs/audit/news_audit_last_run.md
   - Last updated: 2026-02-06
@@ -654,7 +663,7 @@
   - Last updated: 2026-01-04
   - Change type: unchanged
 - docs/codex/reviews/Spark-Analysis-2026-02-01.md
-  - Last updated: 2026-02-01
+  - Last updated: 2026-02-15
   - Change type: unchanged
 - docs/codex/reviews/review-2026-01-31.md
   - Last updated: 2026-01-31
@@ -723,7 +732,7 @@
   - Last updated: 2025-12-16
   - Change type: unchanged
 - docs/content_engine/scoring_rules.md
-  - Last updated: 2025-12-16
+  - Last updated: 2026-02-15
   - Change type: unchanged
 - docs/content_engine/security.md
   - Last updated: 2025-12-16
@@ -957,7 +966,7 @@
   - Last updated: 2026-01-25
   - Change type: unchanged
 - docs/functional_inventory/docs_to_code_map.md
-  - Last updated: 2025-12-10
+  - Last updated: 2026-02-15
   - Change type: unchanged
 - docs/functional_inventory/feature_inventory.md
   - Last updated: 2025-11-24
@@ -1095,7 +1104,7 @@
   - Last updated: 2026-01-04
   - Change type: unchanged
 - docs/kimi-k2-integration.md
-  - Last updated: 2026-02-10
+  - Last updated: 2026-02-15
   - Change type: unchanged
 - docs/legal/crypto_customer_agreement/README.md
   - Last updated: 2025-12-27
@@ -2700,7 +2709,7 @@
   - Last updated: 2025-11-08
   - Change type: unchanged
 - docs/ops/500-audit.md
-  - Last updated: 2025-11-08
+  - Last updated: 2026-02-15
   - Change type: unchanged
 - docs/ops/502-playbook.md
   - Last updated: 2025-12-27
@@ -2805,7 +2814,7 @@
   - Last updated: 2025-12-20
   - Change type: unchanged
 - docs/ops/docs_alignment_report_2025-12-09.md
-  - Last updated: 2025-12-10
+  - Last updated: 2026-02-15
   - Change type: unchanged
 - docs/ops/docs_browser.md
   - Last updated: 2026-01-03
@@ -2934,7 +2943,7 @@
   - Last updated: 2025-11-28
   - Change type: unchanged
 - docs/php-errors-playbook.md
-  - Last updated: 2025-11-08
+  - Last updated: 2026-02-15
   - Change type: unchanged
 - docs/platform_formats/discord.md
   - Last updated: 2025-12-27
@@ -2991,7 +3000,7 @@
   - Last updated: 2026-02-07
   - Change type: unchanged
 - docs/resolutions/PR-128-resolution.md
-  - Last updated: 2025-11-08
+  - Last updated: 2026-02-15
   - Change type: unchanged
 - docs/resolutions/_index.md
   - Last updated: 2026-02-07
@@ -3012,7 +3021,7 @@
   - Last updated: 2025-12-27
   - Change type: unchanged
 - docs/reviews/ci4-config-service-audit.md
-  - Last updated: 2026-02-14
+  - Last updated: 2026-02-15
   - Change type: unchanged
 - docs/routes/controller_method_inventory.md
   - Last updated: 2025-12-16

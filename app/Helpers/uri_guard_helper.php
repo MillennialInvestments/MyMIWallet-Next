@@ -1,16 +1,11 @@
 <?php
 
 use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 
 if (! function_exists('log_if_placeholder_in_uri')) {
     /**
      * Logs when a route placeholder like (:segment) shows up in an actual URI.
-     *
-     * @param string $uriString Raw URI string (e.g. /Wallets/Debt/Edit/Account/(:segment))
-     * @param string $context   Where this was called from (e.g. 'pre_system')
-     * @param array  $extra     Additional log context (e.g. route, user)
      */
     function log_if_placeholder_in_uri(string $uriString, string $context = 'unknown', array $extra = []): bool
     {
@@ -22,12 +17,15 @@ if (! function_exists('log_if_placeholder_in_uri')) {
         $userContext = $extra['user']
             ?? ((function_exists('current_user_id') && current_user_id()) ? 'user#' . current_user_id() : 'guest');
 
-        // Use a decoded copy for detecting real placeholders
         $decodedUri = rawurldecode($uriString);
 
-        $placeholders = ['(:segment)', '(:num)', '{id}', '{segment}'];
+        // Common CI4 placeholders (add more if you use them)
+        $needles = [
+            '(:segment)', '(:num)', '(:any)', '(:alpha)', '(:alphanum)',
+            '{id}', '{segment}',
+        ];
 
-        foreach ($placeholders as $needle) {
+        foreach ($needles as $needle) {
             if (strpos($decodedUri, $needle) !== false) {
                 log_message(
                     'warning',
@@ -36,9 +34,9 @@ if (! function_exists('log_if_placeholder_in_uri')) {
                         'context' => $context,
                         'uri'     => $decodedUri,
                         'user'    => $userContext,
+                        'extra'   => $extra,
                     ]
                 );
-
                 return true;
             }
         }
@@ -50,6 +48,7 @@ if (! function_exists('log_if_placeholder_in_uri')) {
 if (! function_exists('guard_uri_placeholders')) {
     /**
      * Validate URI for leaked placeholders.
+     * Intended to be called early (pre_system hook / filter).
      */
     function guard_uri_placeholders(IncomingRequest $request, string $context = 'unknown'): void
     {
@@ -57,9 +56,10 @@ if (! function_exists('guard_uri_placeholders')) {
             $uri       = $request->getUri();
             $uriString = (string) $uri;
             $path      = ltrim($uri->getPath(), '/');
-            $decoded   = rawurldecode($uriString);
 
-            if (str_starts_with($path, 'wp-includes/')
+            // Ignore common probes you never want to log-spam about
+            if (
+                str_starts_with($path, 'wp-includes/')
                 || str_starts_with($path, 'wp-admin/')
                 || $path === 'wp-login.php'
                 || $path === 'xmlrpc.php'
@@ -70,27 +70,17 @@ if (! function_exists('guard_uri_placeholders')) {
             $session = Services::session(null);
             $userId  = $session?->get('user_id') ?? $session?->get('cuID') ?? 'guest';
 
-            // Block encoded placeholders before they ever reach routing
-            $encodedPlaceholderPattern = '/%28:(num|segment)%29/i';
-            if (preg_match($encodedPlaceholderPattern, $uriString)) {
-                log_message(
-                    'notice',
-                    'URI guard blocked encoded placeholder request in {context}: "{uri}" (user {user})',
-                    [
-                        'context' => $context,
-                        'uri'     => $decoded,
-                        'user'    => $userId,
-                    ]
-                );
-
-                Services::response()
-                    ->setStatusCode(ResponseInterface::HTTP_NOT_FOUND)
-                    ->setBody('Not Found')
-                    ->send();
-                exit;
+            // If encoded placeholders ever make it here, log it.
+            // (NGINX should block these first.)
+            if (preg_match('/%28:(num|segment|any|alpha|alphanum)%29/i', $uriString)) {
+                log_message('notice', 'URI guard saw encoded placeholder in {context}: "{uri}" (user {user})', [
+                    'context' => $context,
+                    'uri'     => rawurldecode($uriString),
+                    'user'    => $userId,
+                ]);
+                return;
             }
 
-            // First check for unencoded placeholders in the path
             log_if_placeholder_in_uri($uriString, $context, [
                 'route' => $path,
                 'user'  => $userId,
@@ -103,24 +93,20 @@ if (! function_exists('guard_uri_placeholders')) {
 
 if (! function_exists('mymi_url_guard')) {
     /**
-     * Guard URLs against leaking CI4 route placeholders into runtime links.
-     *
-     * If a placeholder token is detected, it logs a warning and returns a safe fallback.
-     *
-     * @param string $url     Fully-formed URL or path
-     * @param array  $context Optional context (e.g., ['source' => __FILE__, 'line' => __LINE__])
+     * Guard runtime-generated URLs against leaking CI placeholders.
      */
     function mymi_url_guard(string $url, array $context = []): string
     {
         $decoded = rawurldecode($url);
-        $pattern = '/\\(:segment\\)|\\(:num\\)|%28:segment%29|%28:num%29/i';
 
-        if (preg_match($pattern, $decoded)) {
+        // Detect placeholders in final URL output
+        if (preg_match('/\(\:(segment|num|any|alpha|alphanum)\)|%28:(segment|num|any|alpha|alphanum)%29/i', $decoded)) {
             log_message('warning', 'URI guard: placeholder token detected in URL: {url}', [
                 'url'     => $decoded,
                 'context' => $context,
             ]);
 
+            // Safe fallback
             return site_url('/');
         }
 

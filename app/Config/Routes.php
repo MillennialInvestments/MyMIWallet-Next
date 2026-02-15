@@ -798,7 +798,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
 
         // UI/ops endpoints (deduped from former parallel group)
         $routes->get('/', 'MarketingController::index');
-        $routes->match(['GET', 'POST'], 'Add/(:segment)', 'MarketingController::add/$1');
+        $routes->get('Add/(:segment)', 'MarketingController::add/$1');
         $routes->match(['POST'], 'Add-Subscriber', 'MarketingController::addSubscriber');
         $routes->get('Approve-Content/(:num)', 'MarketingController::approveContent/$1');
         $routes->get('Blog-Creator', 'MarketingController::blogCreator');

@@ -173,8 +173,8 @@
             "mtime": "2026-02-06"
         },
         "docs/audit/auth_audit_last_run.md": {
-            "hash": "37f5f86335d3480975d284a7accc6d5ea40bcea142684b0de13a79085287e42f",
-            "mtime": "2026-02-09"
+            "hash": "1298982982678bc623fc33e25137ae8fd44b03d9138fa029daab66ad6f065174",
+            "mtime": "2026-02-15"
         },
         "docs/auth/auth_smoke.md": {
             "hash": "68cd0c5cf04a0a12b7b9baaedbf4ec15652ccac8c04ce084d2b5e699831aaa29",
@@ -493,8 +493,8 @@
             "mtime": "2025-12-16"
         },
         "docs/content_engine/scoring_rules.md": {
-            "hash": "07ca95b575a9a1b0c8c32207ef03e114310feda86b81de04c17d6317f36db0dc",
-            "mtime": "2025-12-16"
+            "hash": "1002af7b81a2b1f25e3226713f0c11f77812561a52b777b36e065fb76863eb36",
+            "mtime": "2026-02-15"
         },
         "docs/content_engine/security.md": {
             "hash": "31b86a78cde4c5f4c1ae3af947aef55e96ac26b1fc839f59fdd5ca409d0e9406",
@@ -777,8 +777,8 @@
             "mtime": "2026-01-25"
         },
         "docs/functional_inventory/docs_to_code_map.md": {
-            "hash": "10b3e373d48745ce5c6cabf3a3de83125d3cd62c60dfce985b8812480088d8a2",
-            "mtime": "2025-12-10"
+            "hash": "5ce639e2ae6cc13cacc413d11adf66f91934bc5fa92dea192a21eab25a45e3fb",
+            "mtime": "2026-02-15"
         },
         "docs/functional_inventory/feature_inventory.md": {
             "hash": "b4db4a351028bde9872fc0b1eecfbc27649db53ad8c305d0c6a2d8ae47811540",
@@ -949,8 +949,8 @@
             "mtime": "2026-01-04"
         },
         "docs/kimi-k2-integration.md": {
-            "hash": "7c4300b465d451faf7837691ac3bd38fcb1523e4fa3598a0b0649a7cea861914",
-            "mtime": "2026-02-10"
+            "hash": "7477c47167bbaeaa87b2cf57d5ee30917a0d31c4e3912584b6af758827aac9dd",
+            "mtime": "2026-02-15"
         },
         "docs/legal/crypto_customer_agreement/README.md": {
             "hash": "961489fe6589e9d79acaae4861889a59c167cacdd1a1d49616cb86710f5028fa",
@@ -2761,8 +2761,8 @@
             "mtime": "2025-11-08"
         },
         "docs/ops/500-audit.md": {
-            "hash": "4b54820b4e413fb3d3d146db9768addb4bd5119b88d4b402fcdfab8af0fdb1b0",
-            "mtime": "2025-11-08"
+            "hash": "89c13e0482db055aca5945de0b747c6dee9c73ec0f8967fefb4d9df3c9742c44",
+            "mtime": "2026-02-15"
         },
         "docs/ops/502-playbook.md": {
             "hash": "5d6b3019447631bb08f9d3a2584c28b2f6205cbc7abc716c1d719137a4b91376",
@@ -2901,8 +2901,8 @@
             "mtime": "2025-12-20"
         },
         "docs/ops/docs_alignment_report_2025-12-09.md": {
-            "hash": "db97c94104611799f44ee39014d50adb0876bc75750abc165a456d7c7b039e10",
-            "mtime": "2025-12-10"
+            "hash": "156a36b40d74efd8d8c06ea4d03b42155b0059a1631fd497ce7b467313c869c4",
+            "mtime": "2026-02-15"
         },
         "docs/ops/docs_browser.md": {
             "hash": "cb350b1f913ea7c0d7504287a35be6641ea59904552d56aa6f5e8cdf6a80c385",
@@ -3057,8 +3057,8 @@
             "mtime": "2025-11-28"
         },
         "docs/php-errors-playbook.md": {
-            "hash": "d4e161dbee816b97d823d4a604dfad1d3c6d8bf6e94784dfaf6fa2004cc19828",
-            "mtime": "2025-11-08"
+            "hash": "7adf2ce048e6f6ac55bfd3519f298753f00f63f0ed52d04586763f9ced777bf6",
+            "mtime": "2026-02-15"
         },
         "docs/platform_formats/discord.md": {
             "hash": "6ab75cc1d3b49e8c55325cef889b294bb27ef2a60afda875b162e1c4f79dd0c2",
@@ -3129,8 +3129,8 @@
             "mtime": "2025-11-08"
         },
         "docs/resolutions/PR-128-resolution.md": {
-            "hash": "c9253c7428555f2e0e6dfaf72d027e175ea312d4c6321f953e672904bbc81095",
-            "mtime": "2025-11-08"
+            "hash": "46c7f821be70716064ea117d2c64e3bb21f51c436ffe0d1c7b15afc88c8de9e4",
+            "mtime": "2026-02-15"
         },
         "docs/resolutions/_index.md": {
             "hash": "528337f2cce91aefec627aef66784ce3ec3d656efe795c39d55bc5170250ad98",
@@ -3753,8 +3753,8 @@
             "mtime": "2026-02-06"
         },
         "docs/codex/reviews/Spark-Analysis-2026-02-01.md": {
-            "hash": "b465720e1cae325d5675463c292af961bfa6fa5cfec1c641858f4533efe95fee",
-            "mtime": "2026-02-01"
+            "hash": "da4f57e12a3355e0386818afc7babe1b0b7be07c0896eff1ef2c0af8b82379de",
+            "mtime": "2026-02-15"
         },
         "docs/mysql/tables/bf_auth_groups_users.md": {
             "hash": "1bcdea77fdbfd37eb799a98a840d86e30f9dd0cf3e0c7d268c633e923ec171dd",
@@ -4253,8 +4253,8 @@
             "mtime": "2026-02-09"
         },
         "docs/aiops/triage/spark-command-audit.md": {
-            "hash": "b83d9cbc9332c8b2166b1069d74e99193c21bfc598e7b557b0448f3bbd626f3f",
-            "mtime": "2026-02-09"
+            "hash": "868f8f284b10fff3105e3936ebf55a20703c7c4ab17179125c1c24e6f8d00581",
+            "mtime": "2026-02-15"
         },
         "docs/codex/reviews/review-2026-02-08.md": {
             "hash": "0567d7f770df5ea0d095f7b265d5ba58928a76a6fb119ea5b0c9c047aa7df5ea",
@@ -4477,9 +4477,21 @@
             "mtime": "2026-02-14"
         },
         "docs/reviews/ci4-config-service-audit.md": {
-            "hash": "75cbbdb3af23293d9e5c2bc4f65518be70b911bf57d8668b970e3bcb70f3c06a",
-            "mtime": "2026-02-14"
+            "hash": "3d509571d2efc4889372ac8e884806b9b1f29bf01292caf8fec31664ca68907f",
+            "mtime": "2026-02-15"
+        },
+        "docs/_support/fix-503/20260215-005841/summary.md": {
+            "hash": "1c66abd41175accca99c17d261e18dc2abc7355a95c21015489a1a946ae385ba",
+            "mtime": "2026-02-15"
+        },
+        "docs/_support/runtime-cache-boot/20260215-010126/summary.md": {
+            "hash": "c3a878ef31346283d688eaccec70d5263ae7abc9366e70864d3db9467ab7fb17",
+            "mtime": "2026-02-15"
+        },
+        "docs/_support/runtime-triage/20260215-010146/summary.md": {
+            "hash": "9a38f0bd9ec7ce092be0073f53ceabafa44bf7e14e6bd61ced9c02364a40f9f9",
+            "mtime": "2026-02-15"
         }
     },
-    "last_run": "2026-02-15T00:53:14Z"
+    "last_run": "2026-02-15T04:00:01Z"
 }
