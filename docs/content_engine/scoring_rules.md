@@ -62,4 +62,4 @@ Each idea stores `reasons_json` with structured entries:
 - Top 3 signals: `{type: 'signal', label, score, weight}`
 - Penalties (if any): `{type: 'penalty', label, score, weight}`
 
-Platform recommendations by tier are read from `App\Config\ContentEngine::$recommendedPlatforms`.
+Platform recommendations by tier are read from `Config\ContentEngine::$recommendedPlatforms`.

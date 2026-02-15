@@ -50,7 +50,7 @@ CRITICAL --> Error: Call to a member function getAlertInfo() on null
 CRITICAL --> Error: Call to a member function getUserSolana() on null
 
 [4 occurrence(s)]
-CRITICAL --> ErrorException: Cannot declare class App\Config\SocialPlatforms, because the name is already in use
+CRITICAL --> ErrorException: Cannot declare class Config\SocialPlatforms, because the name is already in use
 
 [2 occurrence(s)]
 CRITICAL --> Error: Call to a member function getFirstRow() on bool

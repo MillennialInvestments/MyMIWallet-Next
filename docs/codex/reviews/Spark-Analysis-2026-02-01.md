@@ -1725,5 +1725,5 @@ CodeIgniter v4.6.4 Command Line Tool - Server Time: 2026-02-01 18:59:01 UTC+00:0
 This action is destructive. Re-run with --approve.
 Warming wallet summary cache for 125 user(s)...
 [ErrorException]
-Cannot declare class App\Config\APISettings, because the name is already in use
+Cannot declare class Config\APISettings, because the name is already in use
 at APPPATH/Config/APISettings.php:6

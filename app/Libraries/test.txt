@@ -2,7 +2,7 @@
 
 use CodeIgniter\Controller;
 use Config\Services;
-use App\Config\{Auth, SiteSettings, SocialMedia};
+use Config\{Auth, SiteSettings, SocialMedia};
 use App\Controllers\UserController;
 use App\Libraries\{BaseLoader, MyMIAlerts, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIInvestments, MyMIMarketing, MyMIOnboarding, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets};
 use App\Models\{AccountsModel, AlertsModel, DashboardModel, SolanaModel, UserModel};
@@ -2076,7 +2076,7 @@ namespace App\Modules\Management\Controllers;
 
 use CodeIgniter\Controller;
 use Config\Services;
-use App\Config\{APIs, Auth, SiteSettings, SocialMedia};
+use Config\{APIs, Auth, SiteSettings, SocialMedia};
 use App\Controllers\UserController;
 use App\Libraries\{BaseLoader, HtmlFormatter, MyMIAnalytics, MyMIAlerts, MyMIBudget, MyMIDashboard, MyMIExchange, MyMIMarketing, MyMIUser};
 use App\Models\{AlertsModel, AnnouncementModel, InvestmentModel, ManagementModel, MarketingModel, MyMIGoldModel, SolanaModel, UserModel};
@@ -4227,7 +4227,7 @@ try {
 
 namespace App\Libraries;
 
-use App\Config\{SiteSettings, SocialMedia};
+use Config\{SiteSettings, SocialMedia};
 use App\Libraries\{BaseLoader, MyMIInvestments};
 use App\Libraries\Traits\TextProcessor;
 use App\Models\{AnalyticalModel, MarketingModel};

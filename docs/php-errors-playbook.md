@@ -12,11 +12,11 @@ recommended diagnostics and fixes.
 ## Final ExceptionHandler Replacement
 - **Symptom:** Fatal error extending `CodeIgniter\Debug\ExceptionHandler` (final class).
 - **Fix:** Implement `CodeIgniter\Debug\ExceptionHandlerInterface` in a custom handler (e.g.,
-  `App\Libraries\ProductionExceptionHandler`) and register it via `App\Config\Exceptions::$handler`.
+  `App\Libraries\ProductionExceptionHandler`) and register it via `Config\Exceptions::$handler`.
 - **Verification:** Trigger a controlled exception locally and ensure the handler logs appropriately.
 
 ## Duplicate Config Classes
-- **Symptom:** Autoloader conflicts such as `Cannot redeclare class App\Config\SiteSettings`.
+- **Symptom:** Autoloader conflicts such as `Cannot redeclare class Config\SiteSettings`.
 - **Fix:** Keep a single authoritative config under `app/Config/`. Move archival copies into `_archive/`
   or adjust namespaces for module-specific overrides (e.g., `App\Modules\APIs\Config`).
 - **Verification:** Run `composer dump-autoload` and confirm no duplicate warnings remain.

@@ -9,7 +9,7 @@ PR #128 refactored authentication into the app namespace and introduced a new `C
 
 ## Symptoms
 - Browser: HTTP 500 immediately after hitting any route.
-- CLI: `php -r "require 'vendor/autoload.php'; require 'app/Config/Auth.php';"` ➜ `Fatal error: Type of Config\Auth::$views must not be defined (as in class Myth\Auth\Config\Auth)`.【478513†L1-L4】
+- CLI: `php spark` still failed in the broken revision because auth config loaded during bootstrap with incompatible property typing. 【478513†L1-L4】
 
 ## Root Cause
 The child config declared `public array $views` and `public string $viewLayout` while the parent (`Myth\Auth\Config\Auth`) keeps them untyped. PHP treats this as an incompatible override and aborts class loading. Because the file is evaluated during bootstrap, the application never reaches the front controller and returns HTTP 500. Hybridauth providers were also assembled at property definition, causing premature helper calls once `.env` loading failed in production boot.

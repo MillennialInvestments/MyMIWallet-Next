@@ -4,7 +4,7 @@
 
 ### Fixed in this patch
 1. `app/Config/SiteSettings.php` constructor previously invoked DB override logic (`SiteSettingsOverride`) and loaded another config via `config('App')`. Both operations happened during config bootstrap and could recursively trigger config/service loading.
-2. Namespace mismatches for `SiteSettings` imports were present in service/library code (`use Config\SiteSettings`) instead of `use App\Config\SiteSettings`.
+2. Namespace mismatches for `SiteSettings` imports were present in service/library code (`use Config\SiteSettings`) instead of `use Config\SiteSettings`.
 
 ### Remaining observations
 - Multiple config constructors still compute runtime values (dates/times). These are lightweight, but should progressively move to runtime services if strict pure-config constraints are required.

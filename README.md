@@ -75,7 +75,7 @@ Additionally, make sure that the following extensions are enabled in your PHP:
 
 ## MyMI Wallet Architecture Notes (Config + Dashboard Caching)
 
-- `App\Config\SiteSettings` is bootstrap-safe and does not perform DB override loading in its constructor.
+- `Config\SiteSettings` is bootstrap-safe and does not perform DB override loading in its constructor.
 - Runtime overrides are applied after boot using `App\Libraries\SiteSettingsRuntime`.
 - Executive dashboard aggregation is centralized in `App\Services\DashboardService` with user-scoped cache keys and a 120-second TTL.
 - Budget mutations invalidate dashboard summary cache through `DashboardService::invalidateExecutiveDashboardSummary()` to prevent stale data.

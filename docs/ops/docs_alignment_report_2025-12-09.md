@@ -94,7 +94,7 @@
 | docs/discord_seed.sql.md |  | aligned | Auto-evaluated via pattern scan |
 | docs/esports_preflight.md | App\Database\Migrations\, App\Libraries\MyMIEsports, App\Libraries\MyMIEsportsStartGG, ... | partial | Auto-evaluated via pattern scan |
 | docs/exports_schema.md |  | partial | Auto-evaluated via pattern scan |
-| docs/functional_inventory/docs_to_code_map.md | App\Authentication\Passwords\CustomCompositionValidator, App\Config\Exceptions, App\Config\SiteSettings, ... | partial | Auto-evaluated via pattern scan |
+| docs/functional_inventory/docs_to_code_map.md | App\Authentication\Passwords\CustomCompositionValidator, Config\Exceptions, Config\SiteSettings, ... | partial | Auto-evaluated via pattern scan |
 | docs/functional_inventory/feature_inventory.md | App\Controllers\AuctionsController, App\Controllers\AuthController, App\Controllers\Debug, ... | partial | Auto-evaluated via pattern scan |
 | docs/hardening-playbook.md | App\Support\Http, /API/Management, /bin/php-cs-fixer, ... | partial | Auto-evaluated via pattern scan |
 | docs/logs/_index.md |  | partial | Auto-evaluated via pattern scan |
@@ -178,7 +178,7 @@
 | docs/ops/runbooks/ui-error-uat.md | /Config/Routes, /Support/kb | aligned | Auto-evaluated via pattern scan |
 | docs/ops/unexpected-token-lt-audit.md | /API/Alerts/fetchMarketAuxNews, /API/Users/Comments/Add, /Config/Routes, ... | partial | Auto-evaluated via pattern scan |
 | docs/page_seo/page_seo_inventory.md | /Account/Activity, /Account/Billing, /Account/Connected-Accounts, ... | partial | Auto-evaluated via pattern scan |
-| docs/php-errors-playbook.md | App\Config\Exceptions, App\Config\SiteSettings, App\Libraries\ProductionExceptionHandler, ... | partial | Auto-evaluated via pattern scan |
+| docs/php-errors-playbook.md | Config\Exceptions, Config\SiteSettings, App\Libraries\ProductionExceptionHandler, ... | partial | Auto-evaluated via pattern scan |
 | docs/predictions/README.md | /API/Predictions, /Config/Predictions, /Config/Routes, ... | partial | Auto-evaluated via pattern scan |
 | docs/predictions/_index.md |  | partial | Auto-evaluated via pattern scan |
 | docs/predictions/mysql-migrations.md |  | partial | Auto-evaluated via pattern scan |
