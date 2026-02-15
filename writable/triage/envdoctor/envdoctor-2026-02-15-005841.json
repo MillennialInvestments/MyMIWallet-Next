@@ -1,0 +1,329 @@
+{
+    "status": "warning",
+    "generated_at": "2026-02-15T00:58:41+00:00",
+    "summary": {
+        "status": "warning",
+        "counts": {
+            "ok": 22,
+            "warning": 3,
+            "critical": 0
+        },
+        "score": 70
+    },
+    "checks": [
+        {
+            "key": "shell.bashrc_exists",
+            "status": "ok",
+            "message": ".bashrc found.",
+            "data": {
+                "path": "/home/mymiteam/.bashrc"
+            }
+        },
+        {
+            "key": "shell.bashrc_daemons",
+            "status": "ok",
+            "message": "No daemon launches detected in .bashrc.",
+            "data": {
+                "lines": []
+            }
+        },
+        {
+            "key": "shell.mymi_tools_sourced",
+            "status": "warning",
+            "message": ".mymi-tools.sh not sourced in .bashrc.",
+            "data": {
+                "path": "/home/mymiteam/.mymi-tools.sh"
+            }
+        },
+        {
+            "key": "cron.crontab_listed",
+            "status": "warning",
+            "message": "Unable to read crontab.",
+            "data": {
+                "output": [
+                    "crontabs/mymiteam/: fopen: Permission denied"
+                ]
+            }
+        },
+        {
+            "key": "cron.supervisor_reboot",
+            "status": "warning",
+            "message": "No @reboot supervisor job detected (DreamHost panel can also manage this).",
+            "data": {
+                "matched": false,
+                "panel_note": "DreamHost panel cron or web restart can substitute if @reboot is unavailable."
+            }
+        },
+        {
+            "key": "supervisor.config_exists",
+            "status": "ok",
+            "message": "Supervisor config found.",
+            "data": {
+                "path": "/home/mymiteam/supervisor/supervisord.conf",
+                "in_home_supervisor": true
+            }
+        },
+        {
+            "key": "supervisor.process",
+            "status": "ok",
+            "message": "Supervisor process running.",
+            "data": {
+                "running": true,
+                "clean_stop": false
+            }
+        },
+        {
+            "key": "php.cli_version",
+            "status": "ok",
+            "message": "CLI PHP version detected.",
+            "data": {
+                "version": "8.2.29"
+            }
+        },
+        {
+            "key": "php.socket_presence",
+            "status": "ok",
+            "message": "PHP socket files detected.",
+            "data": {
+                "sockets": [
+                    "/home/mymiteam/.php.sock"
+                ]
+            }
+        },
+        {
+            "key": "php.socket_conflicts",
+            "status": "ok",
+            "message": "No PHP socket conflicts detected.",
+            "data": {
+                "count": 1
+            }
+        },
+        {
+            "key": "php.backend_detected",
+            "status": "ok",
+            "message": "PHP backend detected via process or socket.",
+            "data": {
+                "healthy": true,
+                "process_detected": true,
+                "socket_detected": true,
+                "process_output": [
+                    "root        888  0.0  0.1   9508  4608 ?        S    16:44   0:00 sudo -H -u mymiteam env -i PATH=/home/mymiteam/bin:/bin:/usr/bin HOME=/home/mymiteam PHP_FCGI_CHILDREN=2 PHPRC=/etc/php82/php.ini nohup /usr/local/dh/cgi-system/php82.cgi -b /home/mymiteam/.php.sock",
+                    "mymiteam    890  0.0  0.9 181764 38948 ?        Ss   16:44   0:00 /usr/local/dh/cgi-system/php82.cgi -b /home/mymiteam/.php.sock",
+                    "mymiteam    891  0.0  1.4 207384 59052 ?        S    16:44   0:00 /usr/local/dh/cgi-system/php82.cgi -b /home/mymiteam/.php.sock",
+                    "mymiteam    892  0.0  0.8 185020 34848 ?        S    16:44   0:00 /usr/local/dh/cgi-system/php82.cgi -b /home/mymiteam/.php.sock",
+                    "root        893  0.0  0.1   9508  4608 ?        S    16:44   0:00 sudo -H -u tbi_user env -i PATH=/bin:/usr/bin HOME=/home/tbi_user PHP_FCGI_CHILDREN=2 PHPRC=/etc/php82/php.ini nohup /usr/local/dh/cgi-system/php82.cgi -b /home/tbi_user/.php.sock",
+                    "tbi_user    895  0.0  0.9 181756 37944 ?        Ss   16:44   0:00 /usr/local/dh/cgi-system/php82.cgi -b /home/tbi_user/.php.sock",
+                    "tbi_user    896  0.0  0.2 181756  8680 ?        S    16:44   0:00 /usr/local/dh/cgi-system/php82.cgi -b /home/tbi_user/.php.sock",
+                    "tbi_user    897  0.0  0.2 181756  8680 ?        S    16:44   0:00 /usr/local/dh/cgi-system/php82.cgi -b /home/tbi_user/.php.sock",
+                    "root        898  0.0  0.1   9508  4608 ?        S    16:44   0:00 sudo -H -u timoteo2392 env -i PATH=/home/timoteo2392/bin:/bin:/usr/bin HOME=/home/timoteo2392 PHP_FCGI_CHILDREN=2 PHPRC=/etc/php82/php.ini nohup /usr/local/dh/cgi-system/php82.cgi -b /home/timoteo2392/.php.sock",
+                    "timoteo+    900  0.0  0.9 181764 38960 ?        Ss   16:44   0:00 /usr/local/dh/cgi-system/php82.cgi -b /home/timoteo2392/.php.sock",
+                    "timoteo+    901  0.0  0.8 183232 35440 ?        S    16:44   0:00 /usr/local/dh/cgi-system/php82.cgi -b /home/timoteo2392/.php.sock",
+                    "timoteo+    902  0.0  0.8 183228 34444 ?        S    16:44   0:00 /usr/local/dh/cgi-system/php82.cgi -b /home/timoteo2392/.php.sock",
+                    "mymiteam   2940  0.0  0.0   3608  1536 pts/1    S+   16:58   0:00 grep -E php82\\.cgi|php-cgi|supervisord"
+                ],
+                "sockets": [
+                    "/home/mymiteam/.php.sock"
+                ]
+            }
+        },
+        {
+            "key": "web.active_server",
+            "status": "ok",
+            "message": "Active server detected: nginx+apache.",
+            "data": {
+                "nginx": true,
+                "apache": true
+            }
+        },
+        {
+            "key": "web.nginx_config",
+            "status": "ok",
+            "message": "Nginx config discovered.",
+            "data": {
+                "path": "/home/mymiteam/nginx/conf/nginx.conf"
+            }
+        },
+        {
+            "key": "web.nginx_config_test",
+            "status": "ok",
+            "message": "nginx -t succeeded.",
+            "data": {
+                "status": "ok",
+                "message": "nginx -t succeeded.",
+                "command": "'/home/mymiteam/nginx/sbin/nginx' -t -p '/home/mymiteam/nginx' -c 'conf/nginx.conf'",
+                "output": [
+                    "nginx: the configuration file /home/mymiteam/nginx/conf/nginx.conf syntax is ok",
+                    "nginx: configuration file /home/mymiteam/nginx/conf/nginx.conf test is successful"
+                ],
+                "prefix": "/home/mymiteam/nginx"
+            }
+        },
+        {
+            "key": "web.fastcgi_validation",
+            "status": "ok",
+            "message": "fastcgi_pass/proxy_pass missing from nginx config.",
+            "data": {
+                "valid": false
+            }
+        },
+        {
+            "key": "web.apache_handler",
+            "status": "ok",
+            "message": "Apache PHP handler not detected.",
+            "data": {
+                "valid": false
+            }
+        },
+        {
+            "key": "ci4.public_index",
+            "status": "ok",
+            "message": "public/index.php present.",
+            "data": {
+                "path": "/home/mymiteam/mymiwallet/site/current/public/index.php"
+            }
+        },
+        {
+            "key": "ci4.writable_permissions",
+            "status": "ok",
+            "message": "writable/ permissions OK.",
+            "data": {
+                "path": "/home/mymiteam/mymiwallet/site/current/writable/"
+            }
+        },
+        {
+            "key": "ci4.cache_dirs",
+            "status": "ok",
+            "message": "Writable cache/session/debugbar dirs OK.",
+            "data": {
+                "ok": true,
+                "dirs": {
+                    "cache": {
+                        "path": "/home/mymiteam/mymiwallet/site/current/writable/cache",
+                        "exists": true,
+                        "writable": true
+                    },
+                    "session": {
+                        "path": "/home/mymiteam/mymiwallet/site/current/writable/session",
+                        "exists": true,
+                        "writable": true
+                    },
+                    "debugbar": {
+                        "path": "/home/mymiteam/mymiwallet/site/current/writable/debugbar",
+                        "exists": true,
+                        "writable": true
+                    }
+                }
+            }
+        },
+        {
+            "key": "ci4.maintenance_mode",
+            "status": "ok",
+            "message": "Maintenance mode not detected.",
+            "data": {
+                "active": false
+            }
+        },
+        {
+            "key": "ci4.latest_log_errors",
+            "status": "ok",
+            "message": "No recent log errors detected.",
+            "data": {
+                "latest_log": "db_logger_fallback.log",
+                "error_count": 0,
+                "recent_errors": []
+            }
+        },
+        {
+            "key": "system.disk_usage",
+            "status": "ok",
+            "message": "Disk usage captured.",
+            "data": {
+                "path": "/home/mymiteam/mymiwallet/site/current/",
+                "total_bytes": 128849018880,
+                "free_bytes": 49024643072,
+                "free_percent": 38.05
+            }
+        },
+        {
+            "key": "system.memory",
+            "status": "ok",
+            "message": "Memory usage captured.",
+            "data": {
+                "total_kb": 4194304,
+                "available_kb": 3118608,
+                "available_percent": 74.35
+            }
+        },
+        {
+            "key": "system.listening_ports",
+            "status": "ok",
+            "message": "Listening ports captured.",
+            "data": {
+                "command": "ss -ltn",
+                "output": [
+                    "State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess",
+                    "LISTEN 0      511    67.205.42.220:443       0.0.0.0:*",
+                    "LISTEN 0      511    67.205.42.220:80        0.0.0.0:*",
+                    "LISTEN 0      180          0.0.0.0:587       0.0.0.0:*",
+                    "LISTEN 0      128          0.0.0.0:22        0.0.0.0:*",
+                    "LISTEN 0      180          0.0.0.0:25        0.0.0.0:*",
+                    "LISTEN 0      4096   127.0.0.53%lo:53        0.0.0.0:*",
+                    "LISTEN 0      4096               *:9100            *:*",
+                    "LISTEN 0      4096               *:9469            *:*",
+                    "LISTEN 0      128             [::]:22           [::]:*"
+                ]
+            }
+        },
+        {
+            "key": "system.processes",
+            "status": "ok",
+            "message": "Process summary captured.",
+            "data": {
+                "php": 14,
+                "nginx": 4,
+                "apache": 2
+            }
+        }
+    ],
+    "findings": [
+        {
+            "key": "shell.mymi_tools_sourced",
+            "status": "warning",
+            "message": ".mymi-tools.sh not sourced in .bashrc.",
+            "data": {
+                "path": "/home/mymiteam/.mymi-tools.sh"
+            }
+        },
+        {
+            "key": "cron.crontab_listed",
+            "status": "warning",
+            "message": "Unable to read crontab.",
+            "data": {
+                "output": [
+                    "crontabs/mymiteam/: fopen: Permission denied"
+                ]
+            }
+        },
+        {
+            "key": "cron.supervisor_reboot",
+            "status": "warning",
+            "message": "No @reboot supervisor job detected (DreamHost panel can also manage this).",
+            "data": {
+                "matched": false,
+                "panel_note": "DreamHost panel cron or web restart can substitute if @reboot is unavailable."
+            }
+        }
+    ],
+    "recommendations": [
+        "Ensure ~/.mymi-tools.sh exists and is sourced in ~/.bashrc.",
+        "Verify crontab exists and is readable under the app user.",
+        "Add an @reboot supervisor start entry to crontab for resiliency."
+    ],
+    "meta": {
+        "hostname": "vps33344",
+        "user": "mymiteam",
+        "app_path": "/home/mymiteam/mymiwallet/site/current/",
+        "php_version": "8.2.29",
+        "ci_version": "4.7.0"
+    }
+}

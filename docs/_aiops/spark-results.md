@@ -1,6 +1,6 @@
 # AI-Ops: Spark Results
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-15T00:00:01Z
+> Run: 2026-02-15T00:53:14Z
 
 ## Command 1
 - Cmd: `/usr/local/php82/bin/php spark logs:summarize`
@@ -8,15 +8,16 @@
 - Output:
 
 ```
-CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-15 00:00:03 UTC+00:00
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-15 00:53:15 UTC+00:00
 
 Starting logs:summarize
-```
-
-- Errors:
-
-```
-No log file found. Checked: /home/mymiteam/mymiwallet/site/current/writable/logs/log-2026-02-15.php, /home/mymiteam/mymiwallet/site/current/writable/logs/log-2026-02-15.log
+Summary generated for 2026-02-15: /home/mymiteam/mymiwallet/site/current/writable/logs/summary-2026-02-15.log
+Repo summary: docs/_aiops/error-input/summary-2026-02-15.log
+Repo sync changed=yes
+Last processed timestamp updated to: 2026-02-15 00:00:03
+total_entries=1
+new_entries=0
+⚠ Log summary: total=1, new=0
 ```
 
 ## Command 2
@@ -25,7 +26,7 @@ No log file found. Checked: /home/mymiteam/mymiwallet/site/current/writable/logs
 - Output:
 
 ```
-CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-15 00:00:03 UTC+00:00
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-15 00:53:15 UTC+00:00
 ```
 
 - Errors:
@@ -40,13 +41,13 @@ Command "routes:list" not found.
 - Output:
 
 ```
-CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-15 00:00:03 UTC+00:00
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-15 00:53:15 UTC+00:00
 
 Starting app:healthcheck
 
 App healthcheck summary
 ----------------------------------------
-marker: 65b9450014d3
+marker: bc4240f64c81
 file_log_path: /home/mymiteam/mymiwallet/site/current/writable/logs/log-2026-02-15.php
 file_log_ok=true
 db_log_ok=false

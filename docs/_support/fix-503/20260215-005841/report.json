@@ -1,0 +1,63 @@
+{
+    "command": "fix:503",
+    "timestamp": "20260215-005841",
+    "artifact_dir": "/home/mymiteam/mymiwallet/site/current/docs/_support/fix-503/20260215-005841",
+    "log_path": "/home/mymiteam/mymiwallet/site/current/docs/_support/fix-503/20260215-005841/fix-503.log",
+    "summary_path": "/home/mymiteam/mymiwallet/site/current/docs/_support/fix-503/20260215-005841/summary.md",
+    "root_cause": "CI4 bootstrap failure",
+    "risk_level": "MEDIUM",
+    "hosting_mode": "NGINX+PHP-CGI",
+    "web_server": "nginx",
+    "php_mode": "cgi",
+    "php_workers": 1,
+    "fastcgi_upstream": "unix:/home/mymiteam/.php/php-fpm.sock",
+    "ports": [
+        80,
+        443
+    ],
+    "sockets": [
+        "/dh/cgi-system/php74.cgi",
+        "/home/mymiteam/.local/phpcgi/run/php-cgi-82.sock",
+        "/home/mymiteam/.php.sock",
+        "/home/mymiteam/.php/php-fpm.sock",
+        "/run/php/php8.1-fpm.sock",
+        "127.0.0.1:9071"
+    ],
+    "php_backend_healthy": true,
+    "ci4_env_ok": false,
+    "ci4_routes_ok": false,
+    "ci4_boot_ok": false,
+    "env_exists": true,
+    "public_index_exists": true,
+    "vendor_autoload_exists": true,
+    "actions_taken": [
+        "Cleared CI4 cache"
+    ],
+    "actions_not_taken": [
+        "Web server restart (manual required)"
+    ],
+    "manual_restart_commands": [
+        "systemctl restart php-fpm (or php8.2-fpm)",
+        "service php-fpm restart",
+        "DreamHost panel: Websites > Manage Domains > Toggle PHP version to restart php-cgi",
+        "nginx -t && nginx -s reload (user-space nginx)"
+    ],
+    "recommendations": [
+        "Review PHP handler configuration in your DreamHost panel.",
+        "Add watchdogs/alerts to detect backend worker failures.",
+        "Manual restart: systemctl restart php-fpm (or php8.2-fpm)",
+        "Manual restart: service php-fpm restart",
+        "Manual restart: DreamHost panel: Websites > Manage Domains > Toggle PHP version to restart php-cgi",
+        "Manual restart: nginx -t && nginx -s reload (user-space nginx)",
+        "Confidence score: 75%",
+        "EnvDoctor summary: status=warning score=70",
+        "EnvDoctor JSON: /home/mymiteam/mymiwallet/site/current/writable/triage/envdoctor/envdoctor-2026-02-15-005841.json",
+        "EnvDoctor Markdown: /home/mymiteam/mymiwallet/site/current/writable/triage/envdoctor/envdoctor-2026-02-15-005841.md"
+    ],
+    "env_snapshot_path": "/home/mymiteam/mymiwallet/site/current/docs/_support/fix-503/20260215-005841/env-summary.txt",
+    "app_log_tail": [
+        "[2026-02-15T00:56:36+00:00][HEALTHCHECK] LOG_HEALTHCHECK fallback probe marker=cce1a3be4d64",
+        "[2026-02-15T00:57:58+00:00][HEALTHCHECK] LOG_HEALTHCHECK fallback probe marker=fc8f767f46d0",
+        "[2026-02-15T00:58:05+00:00][HEALTHCHECK] LOG_HEALTHCHECK fallback probe marker=352a87c0609c"
+    ]
+}

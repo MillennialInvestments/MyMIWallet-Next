@@ -1,0 +1,121 @@
+[00:58:41] [INIT] [OK] Log created at /home/mymiteam/mymiwallet/site/current/docs/_support/fix-503/20260215-005841/fix-503.log
+[00:58:41] [INIT] [OK] Summary created at /home/mymiteam/mymiwallet/site/current/docs/_support/fix-503/20260215-005841/summary.md
+[00:58:41] [INIT] [INFO] dry_run=false
+[00:58:41] [ENVDOCTOR] [OK] status=warning score=70 json=/home/mymiteam/mymiwallet/site/current/writable/triage/envdoctor/envdoctor-2026-02-15-005841.json md=/home/mymiteam/mymiwallet/site/current/writable/triage/envdoctor/envdoctor-2026-02-15-005841.md
+[00:58:41] [HOSTING-MODE] [PASS] web_server=nginx php_mode=cgi hosting_mode=NGINX+PHP-CGI
+[00:58:41] [HOSTING-MODE] [INFO] ports=80,443
+[00:58:41] [HOSTING-MODE] [INFO] unix:/home/mymiteam/.php/php-fpm.sock
+[00:58:41] [HOSTING-MODE] [INFO] 127.0.0.1:9000
+[00:58:41] [HOSTING-MODE] [INFO] unix:/dh/cgi-system/php74.cgi
+[00:58:41] [HOSTING-MODE] [INFO] unix:/home/mymiteam/.php.sock
+[00:58:41] [HOSTING-MODE] [INFO] unix:/home/mymiteam/.local/phpcgi/run/php-cgi-82.sock
+[00:58:41] [HOSTING-MODE] [INFO] 127.0.0.1:9071
+[00:58:41] [HOSTING-MODE] [INFO] php82
+[00:58:41] [HOSTING-MODE] [INFO] unix:127.0.0.1:9071
+[00:58:41] [HOSTING-MODE] [INFO] unix:/run/php/php8.1-fpm.sock
+[00:58:41] [HOSTING-MODE] [INFO] directives were set in the
+       location, and access was denied, and the error was redirected to a
+       static page, then the segmentation fault occurred.
+
+    *) Bugfix: if in a proxied "Location" header was a relative URL, then a
+       host name and a slash were added to them
+[00:58:41] [HOSTING-MODE] [INFO] или proxy_pass использовались переменные и
+       имя хоста должно было резолвиться
+[00:58:42] [GIT-SAFETY] [OK] git status --porcelain
+[00:58:42] [GIT-SAFETY] [INFO]  M docs/_aiops/aiops-state/run-meta.json
+[00:58:42] [GIT-SAFETY] [INFO]  M docs/_aiops/ci-summary.md
+[00:58:42] [GIT-SAFETY] [INFO]  M docs/_aiops/doc-change-log.md
+[00:58:42] [GIT-SAFETY] [INFO]  M docs/_aiops/gap-report.md
+[00:58:42] [GIT-SAFETY] [INFO]  M docs/_aiops/logs/subsystem-codeigniter-app.md
+[00:58:42] [GIT-SAFETY] [INFO]  M docs/_aiops/next-steps.md
+[00:58:42] [GIT-SAFETY] [INFO]  M docs/_aiops/nightly-summary.md
+[00:58:42] [GIT-SAFETY] [INFO]  M docs/_aiops/patches/2026-02-09-001.json
+[00:58:42] [GIT-SAFETY] [INFO]  M docs/_aiops/spark-results.md
+[00:58:42] [GIT-SAFETY] [INFO]  M docs/_aiops/stale-docs.md
+[00:58:42] [GIT-SAFETY] [INFO]  M docs/_aiops/state.json
+[00:58:42] [GIT-SAFETY] [INFO]  M docs/audit/auth_audit_last_run.md
+[00:58:42] [GIT-SAFETY] [INFO]  M writable/cache/FileLocatorCache
+[00:58:42] [GIT-SAFETY] [INFO]  D writable/cache/seo_7c2eebfe246a624f5a9407ef364a9062
+[00:58:42] [GIT-SAFETY] [INFO]  D writable/cache/seo_b99834bc19bbad24580b3adfa04fb947
+[00:58:42] [GIT-SAFETY] [INFO]  D writable/logs/aiops_daily.log
+[00:58:42] [GIT-SAFETY] [INFO]  D writable/logs/aiops_worker.log
+[00:58:42] [GIT-SAFETY] [INFO]  M writable/logs/db_logger_fallback.log
+[00:58:42] [GIT-SAFETY] [INFO]  D writable/logs/log-2026-02-14.php
+[00:58:42] [GIT-SAFETY] [INFO]  M writable/logs/log-2026-02-15.php
+[00:58:42] [GIT-SAFETY] [INFO]  D writable/logs/summary-2026-02-14.log
+[00:58:42] [GIT-SAFETY] [INFO]  D writable/logs/summary-2026-02-14.state
+[00:58:42] [GIT-SAFETY] [INFO] ?? docs/_aiops/audit/orchestration-audit-2026-02-15.md
+[00:58:42] [GIT-SAFETY] [INFO] ?? docs/_aiops/audits/aiops-audit-2026-02-15.json
+[00:58:42] [GIT-SAFETY] [INFO] ?? docs/_aiops/audits/chat-audit-2026-02-15.json
+[00:58:42] [GIT-SAFETY] [INFO] ?? docs/_aiops/audits/subs-audit-2026-02-15.json
+[00:58:42] [GIT-SAFETY] [INFO] ?? docs/_aiops/backlog-report-2026-02-15.md
+[00:58:42] [GIT-SAFETY] [INFO] ?? docs/_aiops/error-input/summary-2026-02-15.log
+[00:58:42] [GIT-SAFETY] [INFO] ?? docs/_aiops/logs/summary-2026-02-15.md
+[00:58:42] [GIT-SAFETY] [INFO] ?? docs/_aiops/nightly/self-heal-2026-02-15--0053.md
+[00:58:42] [GIT-SAFETY] [INFO] ?? docs/_aiops/repairs/aiops-repair-2026-02-15.md
+[00:58:42] [GIT-SAFETY] [INFO] ?? docs/_gap-tracker/
+[00:58:42] [GIT-SAFETY] [INFO] ?? docs/_support/fix-503.log
+[00:58:42] [GIT-SAFETY] [INFO] ?? writable/triage/envdoctor/envdoctor-2026-02-15-005725.json
+[00:58:42] [GIT-SAFETY] [INFO] ?? writable/triage/envdoctor/envdoctor-2026-02-15-005725.md
+[00:58:42] [GIT-SAFETY] [INFO] ?? writable/triage/envdoctor/envdoctor-2026-02-15-005841.json
+[00:58:42] [GIT-SAFETY] [INFO] ?? writable/triage/envdoctor/envdoctor-2026-02-15-005841.md
+[00:58:42] [WEB-REACHABILITY] [OK] curl -I https://www.mymiwallet.com status=404 server=nginx/1.28.0
+[00:58:42] [WEB-REACHABILITY] [INFO]   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+[00:58:42] [WEB-REACHABILITY] [INFO]                                  Dload  Upload   Total   Spent    Left  Speed
+[00:58:42] [WEB-REACHABILITY] [INFO]   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+[00:58:42] [WEB-REACHABILITY] [INFO] HTTP/2 404
+[00:58:42] [WEB-REACHABILITY] [INFO] server: nginx/1.28.0
+[00:58:42] [WEB-REACHABILITY] [INFO] content-type: application/json; charset=UTF-8
+[00:58:42] [WEB-REACHABILITY] [INFO] set-cookie: ci_session=5587f89e1a913c3cf2a06905dcf90936; expires=Sun, 15 Feb 2026 02:58:42 GMT; Max-Age=7200; path=/; domain=.mymiwallet.com; secure; HttpOnly; SameSite=Lax
+[00:58:42] [WEB-REACHABILITY] [INFO] expires: Thu, 19 Nov 1981 08:52:00 GMT
+[00:58:42] [WEB-REACHABILITY] [INFO] cache-control: no-store, no-cache, must-revalidate
+[00:58:42] [WEB-REACHABILITY] [INFO] pragma: no-cache
+[00:58:42] [WEB-REACHABILITY] [INFO] date: Sun, 15 Feb 2026 00:58:42 GMT
+[00:58:42] [WEB-REACHABILITY] [INFO] 
+[00:58:42] [DISK] [OK] disk_max=9% inode_max=9%
+[00:58:42] [DISK] [INFO] Filesystem      Size  Used Avail Use% Mounted on
+[00:58:42] [DISK] [INFO] overlay          25G  1.7G   24G   7% /
+[00:58:42] [DISK] [INFO] tmpfs            15G  192K   15G   1% /run
+[00:58:42] [DISK] [INFO] /dev/md10        10G  4.0K   10G   1% /tmp
+[00:58:42] [DISK] [INFO] tmpfs            64M     0   64M   0% /dev
+[00:58:42] [DISK] [INFO] tmpfs            15G     0   15G   0% /run/lock
+[00:58:42] [DISK] [INFO] tmpfs            26G   20M   26G   1% /run/secrets
+[00:58:42] [DISK] [INFO] /dev/nvme0n1p1  459G   39G  402G   9% /var/container_share
+[00:58:42] [DISK] [INFO] shm              63M     0   63M   0% /dev/shm
+[00:58:42] [INODE] [INFO] Filesystem        Inodes    IUsed     IFree IUse% Mounted on
+[00:58:42] [INODE] [INFO] overlay        468779520 40237142 428542378    9% /
+[00:58:42] [INODE] [INFO] tmpfs           32995412      190  32995222    1% /run
+[00:58:42] [INODE] [INFO] /dev/md10         655360       18    655342    1% /tmp
+[00:58:42] [INODE] [INFO] tmpfs           32995412       18  32995394    1% /dev
+[00:58:42] [INODE] [INFO] tmpfs           32995412        3  32995409    1% /run/lock
+[00:58:42] [INODE] [INFO] tmpfs           32995412     6633  32988779    1% /run/secrets
+[00:58:42] [INODE] [INFO] /dev/nvme0n1p1  30352688   124393  30228295    1% /var/container_share
+[00:58:42] [INODE] [INFO] shm             32995412        1  32995411    1% /dev/shm
+[00:58:42] [PHP-BACKEND] [OK] mode=cgi workers=1 sockets=6
+[00:58:42] [PHP-SOCKET] [OK] expected=/home/mymiteam/.php/php-fpm.sock detected=/dh/cgi-system/php74.cgi
+[00:58:42] [ENV-FILE] [OK] path=/home/mymiteam/mymiwallet/site/current/.env
+[00:58:42] [PUBLIC-INDEX] [OK] path=/home/mymiteam/mymiwallet/site/current/public/index.php
+[00:58:42] [VENDOR-AUTOLOAD] [OK] path=/home/mymiteam/mymiwallet/site/current/vendor/autoload.php
+[00:58:42] [CI4-ENV] [FAIL] php spark env
+[00:58:42] [CI4-ENV] [INFO] Could not open input file: spark
+[00:58:42] [CI4-ROUTES] [FAIL] php spark routes
+[00:58:42] [CI4-ROUTES] [INFO] Could not open input file: spark
+[00:58:42] [CACHE-RESET] [OK] rm -rf /home/mymiteam/mymiwallet/site/current/writable/cache/*
+[00:58:42] [CACHE-RESET] [OK] rm -rf /home/mymiteam/mymiwallet/site/current/writable/debugbar/*
+[00:58:42] [CACHE-RESET] [OK] rm -rf /home/mymiteam/mymiwallet/site/current/writable/session/*
+[00:58:42] [CI4-ENV] [FAIL] php spark env (post-fix)
+[00:58:42] [CI4-ENV] [INFO] Could not open input file: spark
+[00:58:42] [CI4-ROUTES] [FAIL] php spark routes (post-fix)
+[00:58:42] [CI4-ROUTES] [INFO] Could not open input file: spark
+[00:58:45] [AUTOLOAD] [OK] composer dump-autoload -o
+[00:58:45] [AUTOLOAD] [INFO] No composer.json in current directory, changing working directory to /home/mymiteam/mymiwallet/site/current
+[00:58:45] [AUTOLOAD] [INFO] Generating optimized autoload files
+[00:58:45] [AUTOLOAD] [INFO] Generated optimized autoload files containing 2108 classes
+[00:58:45] [PERMISSIONS] [FAIL] ls -ld writable
+[00:58:45] [PERMISSIONS] [INFO] ls: cannot access 'writable': No such file or directory
+[00:58:45] [PERMISSIONS] [FAIL] chmod -R 775 writable
+[00:58:45] [PERMISSIONS] [INFO] chmod: cannot access 'writable': No such file or directory
+[00:58:45] [PHP-FPM-LOG] [WARN] /var/log/php8.2-fpm.log not found
+[00:58:45] [ENV-SNAPSHOT] [OK] Wrote sanitized env snapshot: /home/mymiteam/mymiwallet/site/current/docs/_support/fix-503/20260215-005841/env-summary.txt
+[00:58:45] [APP-LOG] [OK] tail 50 /home/mymiteam/mymiwallet/site/current/writable/logs/db_logger_fallback.log
+[00:58:45] [SUMMARY] [OK] Wrote summary: /home/mymiteam/mymiwallet/site/current/docs/_support/fix-503/20260215-005841/summary.md

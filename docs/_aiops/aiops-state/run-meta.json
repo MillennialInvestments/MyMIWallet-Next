@@ -1,51 +1,7 @@
 {
-    "last_run_at": "2026-02-11T22:40:33+00:00",
-    "latest_log": "writable/logs/summary-2026-02-11.log",
-    "evaluated_signatures": [
-        "sig:5ce7fcc6cf01cc6b",
-        "sig:408d58f3e014be70",
-        "sig:963dd4d230dcd8f1",
-        "sig:ff83a42e9ef4952b",
-        "sig:729a89449721247e",
-        "sig:ce0fe24f0941faa1",
-        "sig:4b6415dbfd9b5201",
-        "sig:9e2c46c22d24b7c5",
-        "sig:8275d081318de080",
-        "sig:9c6bc64fba13276f",
-        "sig:f4b84627cae80071",
-        "sig:2e989059f9c32585",
-        "sig:43c0bfc7abf939df",
-        "sig:557c58d6daf534c4",
-        "sig:ed6b204a41c99eab",
-        "sig:1c8ed2dfb74a25d5",
-        "sig:4a3b8b692b79bbec",
-        "sig:7ba160a769789ddf",
-        "sig:b92d0337cdf285a4",
-        "sig:c5c63a0eecb61122",
-        "sig:6a27710b05f92dd3",
-        "sig:e6c27305022be9bd",
-        "sig:35b3a3293662b74c",
-        "sig:c49da611f8514095",
-        "sig:5973cf1aa4cbaeb1",
-        "sig:59293bb7f2f1c57e",
-        "sig:381fdf958927c681",
-        "sig:2a843fc0d9eb11eb",
-        "sig:59a6b28fed030180",
-        "sig:8b44b0c4c91631d7",
-        "sig:a5246a982f617110",
-        "sig:7eefeac05c52663c",
-        "sig:10e1e3eeb9c1b7ab"
-    ],
-    "blocked_tasks": [
-        {
-            "task": "002-auth-context",
-            "status": "blocked",
-            "reason": "Constraints must include Small PRs guidance"
-        },
-        {
-            "task": "2026-02-07-LogSummarize",
-            "status": "blocked",
-            "reason": "Constraints must include Small PRs guidance"
-        }
-    ]
+    "last_run_at": "2026-02-15T00:52:47+00:00",
+    "mode": "auto",
+    "latest_log": "writable/logs/summary-2026-02-14.log",
+    "status": "no-actionable-errors",
+    "evaluated_signatures": []
 }

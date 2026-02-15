@@ -1,0 +1,30 @@
+{
+    "timestamp": "2026-02-15T00:59:29+00:00",
+    "ci": false,
+    "ci_environment": "development",
+    "environment": null,
+    "paths": [
+        {
+            "path": "\/home\/mymiteam\/mymiwallet\/site\/current\/writable\/logs",
+            "exists": true,
+            "writable": true
+        },
+        {
+            "path": "\/home\/mymiteam\/mymiwallet\/site\/current\/writable\/cache",
+            "exists": true,
+            "writable": true
+        },
+        {
+            "path": "\/home\/mymiteam\/mymiwallet\/site\/current\/writable\/ci",
+            "exists": true,
+            "writable": true
+        },
+        {
+            "path": "\/home\/mymiteam\/mymiwallet\/site\/current\/docs\/_aiops",
+            "exists": true,
+            "writable": true
+        }
+    ],
+    "factory_cache_cleared": true,
+    "php_version": "8.2.29"
+}
