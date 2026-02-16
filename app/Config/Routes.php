@@ -39,7 +39,6 @@ $routes->get('healthz', 'System\HealthController::healthz', ['as' => 'healthz'])
 if (ENVIRONMENT !== 'production') {
     $routes->get('test/crash', 'Test::crash');
 }
-$routes->get('Learn/(:segment)', 'PublicPagesController::view/$1');
 $routes->get('Maintenance', 'MaintenanceController::index');
 
 $routes->get('API/Ops/health-score', 'OpsHealth::score');
@@ -1316,7 +1315,6 @@ $routes->group('Budget', ['namespace' => 'App\Modules\User\Controllers', 'filter
     $routes->get('Last-Month/(:segment)', 'BudgetController::lastMonth/$1');
     $routes->get('Next-Month', 'BudgetController::nextMonth');
     $routes->get('Next-Month/(:segment)', 'BudgetController::nextMonth/$1');
-    $routes->post('Account-Manager', 'BudgetController::accountManager');
     $routes->match(['GET', 'POST'], 'Account-Manager', 'BudgetController::accountManager');
     $routes->match(['GET', 'POST'], 'Add', 'BudgetController::add');
     $routes->match(['GET', 'POST'], 'Add/(:segment)', 'BudgetController::add/$1');
@@ -1465,7 +1463,7 @@ $routes->group('Investments', ['namespace' => 'App\Modules\User\Controllers', 'f
     $routes->post('Goals', 'InvestmentController::createGoal'); 
     $routes->get('Goals/(:num)', 'InvestmentController::createGoal/$1'); 
     $routes->put('Goals/(:num)', 'InvestmentController::updateGoal/$1'); 
-    $routes->put('Goals/(:num)', 'InvestmentController::deleteGoal/$1'); 
+    $routes->delete('Goals/(:num)', 'InvestmentController::deleteGoal/$1'); 
 
     // Routes for the new methods related to various overviews and data
     $routes->get('Crypto-Overview', 'InvestmentsController::cryptoOverview');
@@ -1553,14 +1551,6 @@ $routes->group('Support', ['namespace' => 'App\Modules\Support\Controllers'], fu
 });
 
 $routes->get('help/account', 'App\\Modules\\Support\\Controllers\\AccountSupportController::index');
-
-// How It Works (public CI4 user guides)
-$routes->group('', ['namespace' => 'App\Modules\Blog\Controllers'], static function ($routes) {
-    $routes->get('How-It-Works', 'HowItWorksController::index');
-    $routes->get('How-It-Works/Discord', 'HowItWorksController::discord');
-    $routes->get('How-It-Works/Streaming', 'HowItWorksController::streaming');
-    $routes->get('How-It-Works/(:segment)', 'HowItWorksController::show/$1');
-});
 
 // User - Referrals
 // $routes->match(['GET', 'POST'], 'My-Referrals', 'App\Modules\User\Controllers\ReferralController::index', ['filter' => 'login']);
@@ -2075,35 +2065,11 @@ $routes->group('system', static function($routes) {
     $routes->get('diag',    'System\HealthController::diag');
 });
 
-$routes->get('Support/FAQ', 'App\\Modules\\Support\\Controllers\\SupportController::view/FAQ');
 $routes->get('Subscribe/Daily-Financial-News', static function () {
     return redirect()->to(site_url('Subscribe'));
 });
-$routes->get('Blog/Investing', 'App\\Modules\\Blog\\Controllers\\InvestingController::index');
 $routes->get('Blog/Investing/(:any)', static function () {
     return redirect()->to(site_url('Blog/Investing'));
-});
-
-$routes->group('API/Management', ['namespace' => 'App\\Modules\\APIs\\Controllers'], static function($routes) {
-    $routes->post('runCronManually', 'ManagementController::runCronManually');
-    $routes->post('runDailyAlphaVantageDataPipeline', 'ManagementController::runDailyAlphaVantageDataPipeline');
-    $routes->post('triggerPostAutogenOnEmpty', 'ManagementController::triggerPostAutogenOnEmpty');
-    $routes->get('exportPostJson/(:num)', 'ManagementController::exportPostJson/$1');
-    $routes->get('logHealthcheck', 'ManagementController::logHealthcheck');
-    $routes->post('runAuthSmoke', 'ManagementController::runAuthSmoke');
-    $routes->post('generateVoiceScriptManually', 'ManagementController::generateVoiceScriptManually');
-    $routes->post('processAllTradeAlerts', 'ManagementController::processAllTradeAlerts');
-    $routes->post('distributeTodaysNewsContent', 'ManagementController::distributeTodaysNewsContent');
-    $routes->post('sendAllDiscordAlerts', 'ManagementController::sendAllDiscordAlerts');
-    $routes->post('sendToZapierManually', 'ManagementController::sendToZapierManually');
-    $routes->post('scrapeAndGenerateTodaysStoryFromInbox', 'ManagementController::scrapeAndGenerateTodaysStoryFromInbox');
-    $routes->get('fetchLatestSummaries', 'ManagementController::fetchLatestSummaries');
-    $routes->get('getUsers', 'ManagementController::getUsers');
-    $routes->get('getAlerts', 'ManagementController::getAlerts');
-    $routes->get('getAssets', 'ManagementController::getAssets');
-    $routes->get('getNews', 'ManagementController::getNews');
-    $routes->get('getReferrals', 'ManagementController::getReferrals');
-    $routes->get('getSupport', 'ManagementController::getSupport');
 });
 
 if (file_exists(APPPATH . "Modules/Management/Config/Routes.php")) {
@@ -2158,8 +2124,6 @@ $routes->group('API', ['filter' => 'internalToken'], static function ($routes) {
     $routes->get('Chat/health', 'App\Modules\Chat\Controllers\ChatController::health');
     $routes->get('Chat/usage', 'App\Modules\Chat\Controllers\ChatController::usage');
 });
-
-$routes->get('Support', 'App\\Modules\\Support\\Controllers\\SupportTicketController::index');
 
 // Economic dashboard widget + cron endpoints
 $routes->get('Dashboard/Economy/Widget', 'App\Modules\User\Controllers\EconomyController::dashboardWidget', ['filter' => 'login']);
