@@ -63,6 +63,7 @@ class Console extends BaseConfig
         \App\Commands\AiOps\Repair::class,
         \App\Commands\AiOps\RepairRunSafe::class,
         \App\Commands\AiOps\Rollback::class,
+        \App\Commands\AiOps\RoutesScan::class,
         \App\Commands\AiOps\Run::class,
         \App\Commands\AiOps\ScanCells::class,
         \App\Commands\AiOps\Seed::class,
