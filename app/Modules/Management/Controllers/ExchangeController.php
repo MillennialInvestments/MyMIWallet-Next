@@ -188,7 +188,7 @@ class ExchangeController extends UserController
             $message = json_encode(['method' => 'updateMarketPrices', 'params' => []]);
             $response = $this->webSocketClient->sendMessage($message);
             $marketData = json_decode($response, true);
-            log_message('debug', 'ExchangeController - $marketData array: ' . print_r($marketData, true));
+            $this->logSnippet('debug', 'ExchangeController market data snapshot', $marketData);
             $this->solanaModel->updateMarketData($marketData);
             if ($this->webSocketClient) {
             $this->webSocketClient->close();
@@ -205,7 +205,7 @@ class ExchangeController extends UserController
             $message = json_encode(['method' => 'updateMarketPrices', 'params' => []]);
             $response = $this->webSocketClient->sendMessage($message);
             $marketData = json_decode($response, true);
-            log_message('debug', 'ExchangeController - $marketData array: ' . print_r($marketData, true));
+            $this->logSnippet('debug', 'ExchangeController market data snapshot', $marketData);
             $this->solanaModel->updateMarketData($marketData);
             $this->data['solanaMarketData'] = $marketData;
         } catch (\Exception $e) {
