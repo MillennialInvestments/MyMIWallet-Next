@@ -4,20 +4,38 @@ on:
   workflow_dispatch:
 
 jobs:
-  review:
+  audit:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Install PHP
+      - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.2
 
-      - name: Run Codex Audit
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Index repo
+        run: php spark codex:index
+
+      - name: Continue audit in batches
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-4o
         run: |
-          find app -type f -name "*.php" > files.txt
-          while read file; do
-            echo "Reviewing $file"
-          done < files.txt
+          # Run up to 200 batches (200 * 5 files = 1000 files)
+          for i in {1..200}; do
+            php spark codex:continue 5 || true
+            php spark codex:status || true
+            # stop once complete
+            if php -r '$s=json_decode(@file_get_contents("writable/audit/state.json"),true); echo ($s["status"]??"")==="complete"?"yes":"no";' | grep -q yes; then
+              echo "Audit complete."
+              break
+            fi
+          done
+
+      - name: Gate (fail if HIGH issues)
+        run: php spark codex:gate
