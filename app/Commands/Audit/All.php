@@ -2,10 +2,10 @@
 
 namespace App\Commands\Audit;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class All extends BaseCommand
+class All extends SafeBaseCommand
 {
     protected $group = 'Audit';
     protected $name = 'audit:all';

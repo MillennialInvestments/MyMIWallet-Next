@@ -2,10 +2,10 @@
 
 namespace App\Commands\App;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class Test extends BaseCommand
+class Test extends SafeBaseCommand
 {
     protected $group       = 'App';
     protected $name        = 'app:test';

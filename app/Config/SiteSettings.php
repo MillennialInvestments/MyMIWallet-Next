@@ -148,6 +148,9 @@ class SiteSettings extends BaseConfig
         public bool $aiChatgptPlusEnabled      = true;  // Informational toggle (not enforced)
         public bool $aiCodexEnabled            = true;  // Informational toggle (enforced in code workflow triggers)
         public bool $aiGithubReviewEnabled     = true;  // Enables PR helper workflow
+        public bool $aiAutoPrEnabled = false;
+        public bool $aiOpenAiApiEnabled = false; // hard switch for OpenAI API usage
+        public bool $aiGithubPrEnabled = true;   // allows PR creation when token exists
 
         // AIOps guardrails (LLM budgeting + gating)
         public bool $aiops_enabled              = true;
@@ -186,6 +189,16 @@ class SiteSettings extends BaseConfig
             $envFlag = getenv('AI_ENABLE_KIMI_K2');
             if ($envFlag !== false && $envFlag !== null) {
                 $this->enableKimiK2 = filter_var($envFlag, FILTER_VALIDATE_BOOL);
+            }
+            
+            $autoPrEnv = getenv('AIOPS_AUTOPR_ENABLED');
+            if ($autoPrEnv !== false && $autoPrEnv !== null) {
+                $this->aiAutoPrEnabled = filter_var($autoPrEnv, FILTER_VALIDATE_BOOL);
+            }
+
+            $openAiEnv = getenv('AI_OPENAI_API_ENABLED');
+            if ($openAiEnv !== false && $openAiEnv !== null) {
+                $this->aiOpenAiApiEnabled = filter_var($openAiEnv, FILTER_VALIDATE_BOOL);
             }
 
             // // Load cached AI Ops toggles if present

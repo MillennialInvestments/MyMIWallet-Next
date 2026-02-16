@@ -36,10 +36,10 @@ class CommandBuilderService
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class {$class} extends BaseCommand
+class {$class} extends SafeBaseCommand
 {
     protected \$group       = 'Custom';
     protected \$name        = '{$command}';

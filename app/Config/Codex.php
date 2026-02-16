@@ -1,12 +1,39 @@
-User	Job Title	Status	Output emailed to	Actions
-mymiteam (vps33344)	MyMI News Generator	Inactive	team@mymiwallet.com	 
-mymiteam (vps33344)	MyMI Trade Alert Generator	Inactive	tim@mymiwallet.com	 
-mymiteam (vps33344)	Alert Generator	Active	alerts@mymiwallet.com	 
-mymiteam (vps33344)	MyMI Management CRON	Active	team@mymiwallet.com	 
-mymiteam (vps33344)	Start supervisord on boot	Active	disabled	 
-mymiteam (vps33344)	AIOPS Bridge (8500 -> 5678)	Active	team@mymiwallet.com	 
-mymiteam (vps33344)	AIOPS n8n Start	Active	team@mymiwallet.com	 
-mymiteam (vps33344)	AIOPS Daily Analysis	Active	admin@timothyburks.com	 
-mymiteam (vps33344)	AIOPS Worker - Doc-ONLY	Active	admin@timothyburks.com	 
-mymiteam (vps33344)	Alerts Audit	Active	admin@timothyburks.com	 
-tbi_user (vps33344)	Ticker Price Server	Inactive	team@mymiwallet.com	 
+<?php
+
+namespace Config;
+
+use CodeIgniter\Config\BaseConfig;
+
+class Codex extends BaseConfig
+{
+    /**
+     * OpenAI model name (override with env OPENAI_MODEL)
+     */
+    public string $model = 'gpt-4o';
+
+    /**
+     * OpenAI API URL (override with env OPENAI_API_URL)
+     */
+    public string $apiUrl = 'https://api.openai.com/v1/chat/completions';
+
+    /**
+     * Default batch size for codex:continue
+     */
+    public int $batchSize = 5;
+
+    /**
+     * Max bytes per file to send to OpenAI (avoid huge vendor blobs)
+     */
+    public int $maxFileBytes = 350000;
+
+    /**
+     * Max # of tokens to use per reponse
+     */
+    public int $maxTokens = 1500;
+
+    /**
+     * Output locations
+     */
+    public string $reportPath = 'audit/report.md';
+    public string $jsonlPath  = 'audit/report.jsonl';
+}

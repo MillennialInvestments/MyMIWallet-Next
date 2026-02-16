@@ -2,10 +2,10 @@
 
 namespace App\Commands\Codex;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class Audit extends BaseCommand
+class Audit extends SafeBaseCommand
 {
     protected $group       = 'Codex';
     protected $name        = 'codex:audit';

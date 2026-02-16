@@ -24,34 +24,6 @@ class Console extends BaseConfig
      */
     public array $commands = [
 
-        /*
-        |----------------------------------------------------------------------
-        | App / Audit
-        |----------------------------------------------------------------------
-        */
-        \App\Commands\Audit\All::class,
-        \App\Commands\App\Healthcheck::class,
-        \App\Commands\App\Test::class,
-        \App\Commands\AppUpdate::class,
-        \App\Commands\RuntimeCheck::class,
-
-        /*
-        |----------------------------------------------------------------------
-        | Runtime / Recovery
-        |----------------------------------------------------------------------
-        */
-        \App\Commands\Runtime\SparkDoctor::class,
-        \App\Commands\Runtime\SparkDoctorRuntime::class,
-        \App\Commands\Runtime\SparkFix::class,
-        \App\Commands\Runtime\SparkOptimize::class,
-        \App\Commands\Runtime\Triage::class,
-        \App\Commands\Runtime\CacheBoot::class,
-
-        \App\Commands\Diagnose503::class,
-        \App\Commands\Fix503::class,
-        \App\Commands\PurgeFastCGI::class,
-        \App\Commands\RestartSafe::class,
-        \App\Commands\TrafficSpikeGuard::class,
 
         /*
         |----------------------------------------------------------------------
@@ -68,26 +40,173 @@ class Console extends BaseConfig
         \App\Commands\AiOps\BuildCommand::class,
         \App\Commands\AiOps\ChatGovernanceIndex::class,
         \App\Commands\AiOps\CommandIndex::class,
+        \App\Commands\AiOps\ContinueAudit::class,
         \App\Commands\AiOps\CopilotValidate::class,
+        \App\Commands\AiOps\DiffFormat::class,
+        \App\Commands\AiOps\GateCost::class,
         \App\Commands\AiOps\EmailScan::class,
+        \App\Commands\AiOps\GovernanceAnalyze::class,
         \App\Commands\AiOps\Init::class,
+        \App\Commands\AiOps\ManualIndex::class,
         \App\Commands\AiOps\ManualRun::class,
         \App\Commands\AiOps\N8nLogs::class,
         \App\Commands\AiOps\N8nRestart::class,
         \App\Commands\AiOps\N8nStart::class,
         \App\Commands\AiOps\N8nStop::class,
+        \App\Commands\AiOps\Observe::class,
+        \App\Commands\AiOps\PRAuto::class,
+        \App\Commands\AiOps\PRCreate::class,
         \App\Commands\AiOps\PublicPagesAudit::class,
         \App\Commands\AiOps\PublicPagesImport::class,
         \App\Commands\AiOps\PublicPagesReport::class,
         \App\Commands\AiOps\PublicPagesRun::class,
         \App\Commands\AiOps\Repair::class,
+        \App\Commands\AiOps\RepairRunSafe::class,
+        \App\Commands\AiOps\Rollback::class,
         \App\Commands\AiOps\Run::class,
         \App\Commands\AiOps\ScanCells::class,
         \App\Commands\AiOps\Seed::class,
         \App\Commands\AiOps\SelfHeal::class,
         \App\Commands\AiOps\Status::class,
-        \App\Commands\AiOps\Unlock::class,
+        \App\Commands\AiOps\SyncPerfRoutes::class,
         \App\Commands\AiOps\Watch::class,
+        \App\Commands\AiOps\Observe\Cost::class,
+        \App\Commands\AiOps\Observe\Hash::class,
+        \App\Commands\AiOps\Observe\Map::class,
+        \App\Commands\AiOps\Observe\Patch::class,
+        \App\Commands\AiOps\Observe\Regression::class,
+        \App\Commands\AiOps\Observe\Scan::class,
+        \App\Commands\AiOps\Observe\Snapshot::class,
+        \App\Commands\AiOps\Observe\Suggest::class,
+        \App\Commands\AiOps\Patch\Apply::class,
+        \App\Commands\AiOps\Patch\DryRun::class,
+        \App\Commands\AiOps\Patch\RiskScore::class,
+        \App\Commands\AiOps\Patch\Validate::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | App / Audit
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Audit\All::class,
+        \App\Commands\App\Healthcheck::class,
+        \App\Commands\App\Test::class,
+        \App\Commands\AppUpdate::class,
+        \App\Commands\RuntimeCheck::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Auth
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Auth\Audit::class,
+        \App\Commands\Auth\FlowSmoke::class,
+        \App\Commands\Auth\FunnelCheck::class,
+        \App\Commands\Auth\Smoke::class,
+        \App\Commands\Auth\SmokeTest::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Business / Product Audits
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Audit\NodeAudit::class,
+        \App\Commands\GapTrackerSync::class,
+        \App\Commands\Growth\RetentionWatch::class,
+        \App\Commands\Revenue\CostForecast::class,
+        \App\Commands\RevenueStreamsScan::class,
+        \App\Commands\Ux\JourneyAudit::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Chat
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Chat\Audit::class,
+        \App\Commands\Chat\Logs::class,
+        \App\Commands\Chat\Repair::class,
+        \App\Commands\Chat\Restart::class,
+        \App\Commands\Chat\Start::class,
+        \App\Commands\Chat\Stop::class,
+        \App\Commands\Chat\Status::class,
+        \App\Commands\Chat\Unblock::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Content / Marketing
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\ContentIngestSample::class,
+        \App\Commands\ContentEngineSmoke::class,
+        \App\Commands\Marketing\AutomationAudit::class,
+        \App\Commands\NewsAudit::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Codex
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Codex\Instructions\Audit::class,
+        \App\Commands\Codex\Instructions\DevOpsReview::class,
+        \App\Commands\Codex\Instructions\Summarize::class,
+        \App\Commands\Codex\Auth::class,
+        \App\Commands\Codex\Audit::class,
+        \App\Commands\Codex\ContinueAudit::class,
+        \App\Commands\Codex\Gate::class,
+        \App\Commands\Codex\GateSeverity::class,
+        \App\Commands\Codex\Index::class,
+        \App\Commands\Codex\Review::class,
+        \App\Commands\Codex\ReviewList::class,
+        \App\Commands\Codex\ReviewCommit::class,
+        \App\Commands\Codex\ReviewPrOutbox::class,
+        \App\Commands\Codex\ReviewPublish::class,
+        \App\Commands\Codex\Status::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Database
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Database\ApplyDocs::class,
+        \App\Commands\Database\Drift::class,
+        \App\Commands\Database\Inventory::class,
+        \App\Commands\Database\MigrateDryRun::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Discord
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\DiscordList::class,
+        \App\Commands\DiscordProcessQueue::class,
+        \App\Commands\DiscordTest::class,
+        \App\Commands\DiscordTestLiquidity::class,
+        \App\Commands\DiscordWireCheck::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | GitHub
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\GitHub\SearchRepo::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | K6 / Performance Testing
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Performance\K6Run::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Logs
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Logs\Healthcheck::class,
+        \App\Commands\Logs\Summarize::class,
+        \App\Commands\Logs\SummarizeAll::class,
+        \App\Commands\LogsFullReport::class,
+        \App\Commands\LogsTest::class,
 
         /*
         |----------------------------------------------------------------------
@@ -121,92 +240,21 @@ class Console extends BaseConfig
 
         /*
         |----------------------------------------------------------------------
-        | Chat
+        | Runtime / Recovery
         |----------------------------------------------------------------------
         */
-        \App\Commands\Chat\Audit::class,
-        \App\Commands\Chat\Logs::class,
-        \App\Commands\Chat\Repair::class,
-        \App\Commands\Chat\Restart::class,
-        \App\Commands\Chat\Start::class,
-        \App\Commands\Chat\Stop::class,
-        \App\Commands\Chat\Status::class,
-        \App\Commands\Chat\Unblock::class,
+        \App\Commands\Runtime\SparkDoctor::class,
+        \App\Commands\Runtime\SparkDoctorRuntime::class,
+        \App\Commands\Runtime\SparkFix::class,
+        \App\Commands\Runtime\SparkOptimize::class,
+        \App\Commands\Runtime\Triage::class,
+        \App\Commands\Runtime\CacheBoot::class,
 
-        /*
-        |----------------------------------------------------------------------
-        | Logs
-        |----------------------------------------------------------------------
-        */
-        \App\Commands\Logs\Healthcheck::class,
-        \App\Commands\Logs\Summarize::class,
-        \App\Commands\Logs\SummarizeAll::class,
-        \App\Commands\LogsFullReport::class,
-        \App\Commands\LogsTest::class,
-
-        /*
-        |----------------------------------------------------------------------
-        | Auth
-        |----------------------------------------------------------------------
-        */
-        \App\Commands\Auth\Audit::class,
-        \App\Commands\Auth\FlowSmoke::class,
-        \App\Commands\Auth\FunnelCheck::class,
-        \App\Commands\Auth\Smoke::class,
-        \App\Commands\Auth\SmokeTest::class,
-
-        /*
-        |----------------------------------------------------------------------
-        | Database
-        |----------------------------------------------------------------------
-        */
-        \App\Commands\Database\ApplyDocs::class,
-        \App\Commands\Database\Drift::class,
-        \App\Commands\Database\Inventory::class,
-        \App\Commands\Database\MigrateDryRun::class,
-
-        /*
-        |----------------------------------------------------------------------
-        | Content / Marketing
-        |----------------------------------------------------------------------
-        */
-        \App\Commands\ContentIngestSample::class,
-        \App\Commands\ContentEngineSmoke::class,
-        \App\Commands\Marketing\AutomationAudit::class,
-        \App\Commands\NewsAudit::class,
-
-        /*
-        |----------------------------------------------------------------------
-        | Business / Product Audits
-        |----------------------------------------------------------------------
-        */
-        \App\Commands\Audit\NodeAudit::class,
-        \App\Commands\GapTrackerSync::class,
-        \App\Commands\Growth\RetentionWatch::class,
-        \App\Commands\Revenue\CostForecast::class,
-        \App\Commands\RevenueStreamsScan::class,
-        \App\Commands\Ux\JourneyAudit::class,
-
-        /*
-        |----------------------------------------------------------------------
-        | Discord
-        |----------------------------------------------------------------------
-        */
-        \App\Commands\DiscordList::class,
-        \App\Commands\DiscordProcessQueue::class,
-        \App\Commands\DiscordTest::class,
-        \App\Commands\DiscordTestLiquidity::class,
-        \App\Commands\DiscordWireCheck::class,
-
-        /*
-        |----------------------------------------------------------------------
-        | Security
-        |----------------------------------------------------------------------
-        */
-        \App\Commands\Security\GenerateKey::class,
-        \App\Commands\Security\GenerateCI4Key::class,
-        \App\Commands\Security\SecretsAudit::class,
-        \App\Commands\SecurityCspAudit::class,
+        \App\Commands\Diagnose503::class,
+        \App\Commands\Fix503::class,
+        \App\Commands\PurgeFastCGI::class,
+        \App\Commands\RestartSafe::class,
+        \App\Commands\TrafficSpikeGuard::class,
 
         /*
         |----------------------------------------------------------------------
@@ -219,24 +267,13 @@ class Console extends BaseConfig
 
         /*
         |----------------------------------------------------------------------
-        | GitHub
+        | Security
         |----------------------------------------------------------------------
         */
-        \App\Commands\GitHub\SearchRepo::class,
-
-        /*
-        |----------------------------------------------------------------------
-        | Codex
-        |----------------------------------------------------------------------
-        */
-        \App\Commands\Codex\Instructions\Audit::class,
-        \App\Commands\Codex\Auth::class,
-        \App\Commands\Codex\Index::class,
-        \App\Commands\Codex\Review::class,
-        \App\Commands\Codex\ReviewList::class,
-        \App\Commands\Codex\ReviewCommit::class,
-        \App\Commands\Codex\ReviewPrOutbox::class,
-        \App\Commands\Codex\ReviewPublish::class,
+        \App\Commands\Security\GenerateKey::class,
+        \App\Commands\Security\GenerateCI4Key::class,
+        \App\Commands\Security\SecretsAudit::class,
+        \App\Commands\SecurityCspAudit::class,
 
         /*
         |----------------------------------------------------------------------

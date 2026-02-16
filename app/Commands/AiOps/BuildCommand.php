@@ -2,12 +2,12 @@
 
 namespace App\Commands\AiOps;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use App\Services\AIOpsService;
 use App\Services\CommandBuilderService;
 
-class BuildCommand extends BaseCommand
+class BuildCommand extends SafeBaseCommand
 {
     protected $group       = 'AIOps';
     protected $name        = 'aiops:build-command';
