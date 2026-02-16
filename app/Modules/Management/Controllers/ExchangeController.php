@@ -93,7 +93,15 @@ class ExchangeController extends UserController
         // $this->userModel = new UserModel();
         $this->walletModel = new WalletModel();
         $this->session = Services::session();
-        
+        $this->cuID = $this->cuID ?? $this->session->get('user_id') ?? $this->auth->id();
+
+        if (!$this->cuID) {
+            log_message('warning', 'ExchangeController init aborted: no user id available.');
+            return;
+        }
+
+        log_message('debug', 'ExchangeController initialized. Memory: ' . memory_get_usage(true));
+
         $this->userAccount = $this->getMyMIUser()->getUserInformation($this->cuID);
         $this->userAssessment = $this->getMyMIUser()->getUserFinancialAssessment($this->cuID);
         $this->userBudget = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID);

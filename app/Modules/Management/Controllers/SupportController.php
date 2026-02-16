@@ -82,12 +82,20 @@ class SupportController extends UserController
         $this->walletModel = new WalletModel();
         $this->logViewer = new \CILogViewer\CILogViewer();
         $this->session = Services::session();
-        
+        $this->cuID = $this->cuID ?? $this->session->get('user_id') ?? $this->auth->id();
+
+        if (!$this->cuID) {
+            log_message('warning', 'SupportController init aborted: no user id available.');
+            return;
+        }
+
+        log_message('debug', 'SupportController initialized. Memory: ' . memory_get_usage(true));
+
         $this->userAccount = $this->getMyMIUser()->getUserInformation($this->cuID);
         $this->userAssessment = $this->getMyMIUser()->getUserFinancialAssessment($this->cuID);
         $this->userBudget = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID);
         $this->userDashboard = $this->getMyMIDashboard()->dashboardInfo($this->cuID);
-        $this->userWallets = $this->MyMIWallets->getUserWallets($this->cuID);
+        $this->userWallets = $this->getMyMIWallets()->getUserWallets($this->cuID);
     }
 
     public function commonData(): array
