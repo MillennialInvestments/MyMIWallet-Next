@@ -295,7 +295,7 @@ class WalletsController extends UserController
 
         if (!empty($report['errors'])) {
             $html .= '<h5 class="mt-4 text-danger">Errors ('.count($report['errors']).')</h5>';
-            $html .= '<pre>'.esc(print_r($report['errors'], true)).'</pre>';
+            $html .= '<pre>' . esc(json_encode($report['errors'], JSON_PRETTY_PRINT | JSON_PARTIAL_OUTPUT_ON_ERROR)) . '</pre>';
         }
 
         $html .= '</div>';

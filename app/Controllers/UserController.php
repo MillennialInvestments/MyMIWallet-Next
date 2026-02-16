@@ -126,4 +126,37 @@ class UserController extends BaseController
 
         return $this->tryView($layoutBase . '/index', $data);
     }
+
+    protected function logSnippet(string $level, string $label, mixed $value, int $max = 2000): void
+    {
+        $summary = $value;
+
+        if (is_array($value)) {
+            $summary = [
+                'type' => 'array',
+                'count' => count($value),
+                'keys' => array_slice(array_keys($value), 0, 25),
+            ];
+        } elseif (is_object($value)) {
+            $summary = [
+                'type' => 'object',
+                'class' => $value::class,
+                'properties' => array_slice(array_keys(get_object_vars($value)), 0, 25),
+            ];
+        }
+
+        $encoded = is_scalar($summary)
+            ? (string) $summary
+            : json_encode($summary, JSON_UNESCAPED_SLASHES | JSON_PARTIAL_OUTPUT_ON_ERROR);
+
+        if ($encoded === false) {
+            $encoded = '[unserializable]';
+        }
+
+        if (strlen($encoded) > $max) {
+            $encoded = substr($encoded, 0, $max) . '…[truncated]';
+        }
+
+        log_message($level, $label . ': ' . $encoded);
+    }
 }

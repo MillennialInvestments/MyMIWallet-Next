@@ -65,12 +65,19 @@ class AdminController extends UserController
             ?? $this->auth->id()
             ?? session('logged_in')
             ?? $this->session->get('user_id');
-        // $this->userAccount                          = $this->getMyMIUser()->getUserInformation($this->cuID); 
-        // $this->userAssessment                       = $this->getMyMIUser()->getUserFinancialAssessment($this->cuID);  
-        // $this->userBudget                           = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID); 
-        // $this->userDashboard                        = $this->getMyMIDashboard()->dashboardInfo($this->cuID); 
-        // $this->userWallets                          = $this->getMyMIWallets()->getUserWallets($this->cuID);  
-        // $this->reporting                            = $this->getMyMIAnalytics()->reporting($this->cuID);  
+        if (!$this->cuID) {
+            log_message('warning', 'AdminController init aborted: no user id available.');
+            return;
+        }
+
+        log_message('debug', 'AdminController initialized. Memory: ' . memory_get_usage(true));
+
+        $this->userAccount                          = $this->getMyMIUser()->getUserInformation($this->cuID); 
+        $this->userAssessment                       = $this->getMyMIUser()->getUserFinancialAssessment($this->cuID);  
+        $this->userBudget                           = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID); 
+        $this->userDashboard                        = $this->getMyMIDashboard()->dashboardInfo($this->cuID); 
+        $this->userWallets                          = $this->getMyMIWallets()->getUserWallets($this->cuID);  
+        $this->reporting                            = $this->getMyMIAnalytics()->reporting($this->cuID);  
     }
 
     public function commonData(): array {  

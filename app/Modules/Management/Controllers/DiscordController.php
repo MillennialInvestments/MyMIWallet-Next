@@ -51,7 +51,7 @@ class DiscordController extends UserController
 
         // Check for user ID
         $this->cuID                                 = function_exists('getCuID') ? $this->getCuID() : ($this->auth->id() ?? $this->session->get('user_id'));
-        log_message('debug', 'HowTosController L47 - $this->cuID: ' . (print_r($this->cuID, true)));
+        $this->logSnippet('debug', 'DiscordController init cuID', $this->cuID);
         if (empty($this->cuID)) {
             log_message('error', 'Failed to retrieve user ID.');
             return redirect()->to('/login')->with('redirect_url', current_url())->send();

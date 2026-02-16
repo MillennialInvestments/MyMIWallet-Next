@@ -4,6 +4,10 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // Load environment from .env
+if (! headers_sent()) {
+    header('X-MyMI-FrontController: 1');
+}
+
 require dirname(__DIR__) . '/vendor/autoload.php';
 
 

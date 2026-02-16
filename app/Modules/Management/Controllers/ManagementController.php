@@ -63,7 +63,7 @@ class ManagementController extends UserController
         if ($this->cuID === null) {
             $this->cuID = $this->auth->id() ?? $this->session->get('user_id');
         }
-        log_message('debug', 'HowTosController L47 - $this->cuID: ' . (print_r($this->cuID, true)));
+        $this->logSnippet('debug', 'ManagementController init cuID', $this->cuID);
         if (empty($this->cuID)) {
             // log_message('error', 'Failed to retrieve user ID.');
             // return redirect()->to('/login')->with('redirect_url', current_url())->send();
@@ -846,7 +846,7 @@ class ManagementController extends UserController
     private function checkUserAuthentication()
     {
         $this->cuID = $this->auth->id() ?? session('logged_in') ?? $this->session->get('user_id');
-        log_message('debug', 'HowTosController - checkUserAuthentication - $this->cuID: ' . (print_r($this->cuID, true)));
+        $this->logSnippet('debug', 'ManagementController checkUserAuthentication cuID', $this->cuID);
     
         if (empty($this->cuID)) {
             // log_message('error', 'Failed to retrieve user ID.');
