@@ -105,22 +105,20 @@ class MarketingController extends UserController
         // $this->MyMIMarketing = service('MyMIMarketing'); // Ensure this is correctly initialized
         // $this->marketing = $this->getMyMIMarketing()->marketing(); 
 
+        // Initialize user context before loading dependent services
+        $this->cuID = $this->session->get('user_id') ?? $this->auth->id();
+        if (!$this->cuID) {
+            log_message('error', 'MarketingController failed to retrieve a valid user id.');
+            return;
+        }
+
+        log_message('debug', 'MarketingController initialized. Memory: ' . memory_get_usage(true));
+
         // Load Services 
         // $this->userAccount = $this->getMyMIUser()->getUserInformation($this->cuID);
         $this->userDashboard = $this->getMyMIDashboard()->dashboardInfo($this->cuID);
         $this->departmentTasks = $this->getMyMIAnalytics()->get_department_tasks($this->uri->getSegment(2), ['Page SEO Edit']);
-        $this->getBlogPosts = $this->MyMIMarketing()->getBlogPosts();
-
-        // Initialize UserService and pass required dependencies
-        $this->cuID = $this->session->get('user_id') ?? $this->auth->id();
-        if (!$this->cuID) {
-            log_message('error', 'Investments ControllerFailed to retrieve valid User ID in MyMIInvestments');
-            throw new \RuntimeException('User ID could not be retrieved.');
-        }
-        log_message('debug', "InvestmentsController: cuID initialized as {$this->cuID}");
-        log_message('debug', 'MarketingController initialized');
-
-
+        $this->getBlogPosts = $this->getMyMIMarketing()->getBlogPosts();
     }
 
     public function commonData(): array {
