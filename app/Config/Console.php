@@ -80,6 +80,7 @@ class Console extends BaseConfig
         \App\Commands\AiOps\Observe\Suggest::class,
         \App\Commands\AiOps\Patch\Apply::class,
         \App\Commands\AiOps\Patch\DryRun::class,
+        \App\Commands\AiOps\Patch\Hallucination::class,
         \App\Commands\AiOps\Patch\RiskScore::class,
         \App\Commands\AiOps\Patch\Validate::class,
 

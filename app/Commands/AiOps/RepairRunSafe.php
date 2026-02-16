@@ -46,6 +46,7 @@ class RepairRunSafe extends SafeBaseCommand
             // If you have suggest -> diff -> apply:
             $this->sparkIfExists('aiops:observe:suggest');
             $this->spark('aiops:diff:format');
+            $this->spark('aiops:patch:hallucination');
             $this->spark('aiops:patch:apply');
 
             // Local validations
