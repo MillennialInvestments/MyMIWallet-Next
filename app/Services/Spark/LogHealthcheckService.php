@@ -27,7 +27,7 @@ class LogHealthcheckService
         if (! $dryRun) {
             log_message('debug', 'LOG_HEALTHCHECK debug marker={marker}', $context);
             log_message('info', 'LOG_HEALTHCHECK info marker={marker}', $context);
-            log_message('error', 'LOG_HEALTHCHECK error marker={marker}', $context);
+            log_message('notice','LOG_HEALTHCHECK probe marker={marker}',$context);
             $logWritten = true;
         }
 
@@ -163,7 +163,7 @@ class LogHealthcheckService
 
     private function writeFileProbe(string $logPath, string $marker): void
     {
-        $line = sprintf("ERROR - %s --> LOG_HEALTHCHECK file probe marker=%s%s", date('Y-m-d H:i:s'), $marker, PHP_EOL);
+        $line = sprintf("INFO - %s --> LOG_HEALTHCHECK file probe marker=%s%s", date('Y-m-d H:i:s'), $marker, PHP_EOL);
         @file_put_contents($logPath, $line, FILE_APPEND);
     }
 

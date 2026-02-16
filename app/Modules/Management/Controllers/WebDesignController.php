@@ -89,7 +89,7 @@ class WebDesignController extends UserController
         $this->userAssessment = $this->getMyMIUser()->getUserFinancialAssessment($this->cuID);
         $this->userBudget = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID);
         $this->userDashboard = $this->getMyMIDashboard()->dashboardInfo($this->cuID);
-        $this->userWallets = $this->MyMIWallets->getUserWallets($this->cuID);
+        $this->userWallets = $this->getMyMIWallets()->getUserWallets($this->cuID);
     }
 
     public function commonData(): array

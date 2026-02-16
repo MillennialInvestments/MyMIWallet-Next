@@ -6,8 +6,6 @@ error_reporting(E_ALL);
 // Load environment from .env
 require dirname(__DIR__) . '/vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
-$dotenv->safeLoad();
 
 use App\Services\AutoloadAuditService;
 use CodeIgniter\Boot;

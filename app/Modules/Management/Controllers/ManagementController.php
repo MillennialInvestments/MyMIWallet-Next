@@ -164,7 +164,8 @@ class ManagementController extends UserController
     {
         $this->commonData();
 
-        $this->data['managementOverview'] = $this->dashboardService->getManagementOverview();
+        // $this->data['managementOverview'] = $this->dashboardService->getManagementOverview();
+        $this->data['managementOverview'] = [];
 
         return $this->renderTheme(
             'App\Modules\Management\Views\index',
