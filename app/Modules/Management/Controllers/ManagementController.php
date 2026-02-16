@@ -1,860 +1,475 @@
-<?php
-// app/Modules/User/Controllers/DashboardController.php
-namespace App\Modules\Management\Controllers;
+<?php namespace App\Modules\Management\Controllers;
 
+use Config\{Auth, SiteSettings, SocialMedia};
+use App\Controllers\UserController;
+use App\Libraries\{MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIInvestments, MyMIMarketing, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets};
+use App\Models\{AccountsModel, DashboardModel, ProjectsModel, SolanaModel, UserModel};
+use App\Services\{AccountService, DashboardService, SolanaService, SupportService, UserService};
 use App\Controllers\BaseController;
+use CodeIgniter\API\ResponseTrait;
 use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
-use Config\{Auth, SiteSettings, SocialMedia}; 
-use App\Controllers\UserController;
-use App\Libraries\{AiCostControls, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIUser, MyMIWallet, MyMIWallets};
-use App\Models\{AccountsModel, AuthHealthRunModel, BudgetModel, ContentIdeaModel, ContentPostModel, ContentScannerIngestModel, MarketingNewsletterModel, UserModel, WalletModel, WeeklyStreamWatchlistModel};
-use App\Services\{AccountService, BudgetService, DashboardService, GoalTrackingService, MarketingService, SolanaService, UserService, WalletService, WeeklyStreamService};
-// use App\Modules\User\Libraries\{DashboardLibrary}; 
-use DateTime;
-use DateInterval;
-use CodeIgniter\API\ResponseTrait;
-use Psr\Log\LoggerInterface;
 
 #[\AllowDynamicProperties]
 class ManagementController extends UserController
 {
+    use ResponseTrait;
+
+    // Controller Settings
     protected $auth;
-    protected $logger;
+    protected $helpers = ['auth', 'form', 'url'];
     protected $session;
     protected $siteSettings;
-    protected $walletModel;
-    protected $accountService;
-    protected $budgetService;
-    protected $dashboardService;
-    protected $goalTrackingService;
-    protected $marketingService;
-    protected $solanaService;
-    protected $userService;
-    protected ?WalletService $walletService = null;
-    protected $budgetModel;
+    protected $socialMedia;
+    protected $uri;
+
+    // Models
+    protected $accountsModel;
+    protected $dashboardModel;
+    protected $projectsModel;
+    protected $solanaModel;
+
+    // Libraries
+    protected $MyMIBudget;
     protected $MyMIDashboard;
-    protected AiCostControls $aiCostControls;
-    protected WeeklyStreamService $weeklyStreamService;
-    protected WeeklyStreamWatchlistModel $weeklyWatchlistModel;
-    protected MarketingNewsletterModel $newsletterModel;
-    protected $helpers = ['auth', 'form', 'url'];
+    protected $MyMIGold;
+    protected $MyMIMarketing;
+    protected $MyMIProjects;
+    protected $MyMISolana;
+    protected $MyMIUser;
+    protected $MyMIWallet;
+    protected $MyMIWallets;
+
+    // Services
+    protected $accountService;
+    protected $dashboardService;
+    protected $solanaService; 
+    protected $supportService; 
+    protected $userService; 
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
         parent::initController($request, $response, $logger);
         $this->auth = service('authentication');
+        $this->request = service('request');
         $this->session = Services::session();
         $this->siteSettings = config('SiteSettings');
-        $this->debug = $this->siteSettings->debug;
-        $this->weeklyStreamService = new WeeklyStreamService();
-        $this->weeklyWatchlistModel = new WeeklyStreamWatchlistModel();
-        $this->newsletterModel = new MarketingNewsletterModel();
-        $this->budgetModel   = model(BudgetModel::class);
-        $this->accountsModel = model(AccountsModel::class);
-        $this->marketingModel = model(MarketingNewsletterModel::class);
+        $this->socialMedia = config('SocialMedia');
+        $this->debug = 1;
+        $this->uri = $this->request->getUri();
+        $this->dashboardModel = new DashboardModel();
+        $this->projectsModel = new ProjectsModel();
+//         $this->MyMIProjects = new MyMIProjects(); // replaced by BaseController getter
+//         $this->MyMIBudget = new MyMIBudget(); // replaced by BaseController getter
+//         $this->MyMIDashboard = new MyMIDashboard(); // replaced by BaseController getter
+//         $this->MyMIGold = new MyMIGold(); // replaced by BaseController getter
+//         $this->MyMISolana = new MyMISolana(); // replaced by BaseController getter
+//         $this->MyMIWallet = new MyMIWallet(); // replaced by BaseController getter
+//         $this->MyMIWallets = new MyMIWallets(); // replaced by BaseController getter
 
-        $this->aiCostControls = new AiCostControls();
-        
-        $this->dashboardService = new \App\Services\DashboardAggregatorService($this->cuID);
-
-        // Check for user ID
-        $this->cuID = $this->getCuID();
-        if ($this->cuID === null) {
-            $this->cuID = $this->auth->id() ?? $this->session->get('user_id');
-        }
-        $this->logSnippet('debug', 'ManagementController init cuID', $this->cuID);
-        if (empty($this->cuID)) {
-            // log_message('error', 'Failed to retrieve user ID.');
-            // return redirect()->to('/login')->with('redirect_url', current_url())->send();
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
-        }
-        
-        // $this->accountService = new AccountService();
-        // $this->budgetService = new BudgetService((int) $this->cuID);
-        // $this->dashboardService = new DashboardService();
-        // $this->goalTrackingService = new GoalTrackingService();
-        // $this->marketingService  = new MarketingService();
-        // $this->solanaService  = new SolanaService();
-
-        // $this->budgetModel = new BudgetModel(); 
-        // $this->MyMIDashboard = new MyMIDashboard(); 
-        $this->logger = service('logger');
-        // $this->walletModel = new WalletModel();
-        // $this->walletService = new WalletService($this->logger, $this->walletModel);
+        $this->accountService = new AccountService();
+        $this->dashboardService = new dashboardService();
+        $this->solanaService = new SolanaService();
+        $this->supportService = new SupportService();
 
         // Initialize UserService and pass required dependencies
-        // $this->cuID                                 = $this->auth->id() ?? session('logged_in') ?? $this->session->get('user_id');
-        // log_message('debug', 'HowTosController L47 - $this->cuID: ' . (print_r($this->cuID, true)));
-        // if (empty($this->cuID)) {
-        //     log_message('error', 'Failed to retrieve user ID.');
-        //     return redirect()->to('/login')->with('redirect_url', current_url())->send();
-        // }
-
+        $this->cuID = $this->getCuID();  // Assuming $this->getCuID() is a helper or service
+        $this->userService = new UserService($this->siteSettings, $this->cuID, Services::request());        
+        
+        if ($this->uri->getSegment(1) === 'Exchange') {
+            if ($this->uri->getSegment(2) === 'Solana') {
+                $this->solanaDW = $this->getSolanaService()->getUserDefaultSolana($this->cuID); 
+            }
+        }
     }
 
     public function commonData(): array
     {
-        $this->data = parent::commonData() ?? [];
-
-        $this->cuID = $this->getCuID();
-        if (!$this->cuID) {
-            return $this->data;
-        }
-
-        $this->data = array_merge([
-            'reporting'      => [],
-            'streamPrep'     => [],
-            'chatUsage'      => [],
-            'discordHealth'  => [],
-            'authHealth'     => [],
-            'autoloadHealth' => [],
-            'contentEngine'  => [],
-        ], $this->data);
-
-        // ---- LOAD SERVICES ONCE ----
-        $dashboard = $this->getMyMIDashboard();
-        $budget    = $this->getMyMIBudget();
-        $analytics = $this->getMyMIAnalytics();
-        $wallets   = $this->getMyMIWallets();
-        $solana = service('MyMISolana');
-
-        // ---- SINGLE DATA CALLS ----
-        $userData       = $this->getMyMIUser()->getUserInformation($this->cuID);
-        $dashboardInfo  = $dashboard->dashboardInfo($this->cuID);
-        $budgetInfo     = $budget->allUserBudgetInfo($this->cuID);
-        $solanaData     = $solana->getUserSolana($this->cuID);
-
-        // ---- MAP ONCE ----
+        $this->data = parent::commonData();
+        // Fetch data from UserService
+        $userData = $this->getuserService()->commonData();
+    
+        // Merge the user data with BudgetController data
         $this->data = array_merge($this->data, $userData);
 
-        $this->data['siteSettings']  = $this->siteSettings;
-        $this->data['debug']         = $this->siteSettings->debug;
-        $this->data['uri']           = $this->request->getUri();
-        $this->data['userAgent']     = $this->request->getUserAgent();
-        $this->data['date']          = $this->siteSettings->date;
-        $this->data['time']          = $this->siteSettings->time;
-        $this->data['cuID']          = $this->cuID;
+        // Site Settings
+        $this->data['siteSettings'] = $this->siteSettings;
+        $this->data['beta'] = (string) $this->siteSettings->beta;
+        $this->data['debug'] = (string) $this->siteSettings->debug;
+        $this->data['request'] = $this->request;
+        $this->data['uri'] = $this->request->getUri();
+        $this->data['userAgent'] = $this->request->getUserAgent();
+        $this->data['date'] = $this->siteSettings->date;
+        $this->data['time'] = $this->siteSettings->time;
+        $this->data['hostTime'] = $this->siteSettings->hostTime;
+        $this->data['cuID'] = $this->cuID;
 
-        // ---- DASHBOARD DATA ----
-        $this->data['getFeatures']        = $dashboardInfo['getFeatures'] ?? [];
-        $this->data['completedGoals']     = $dashboardInfo['progressGoalData']['completions'] ?? 0;
-        $this->data['pendingGoals']       = $dashboardInfo['progressGoalData']['goals'] ?? 0;
-        $this->data['promotionalBanners'] = $dashboardInfo['promotionalBanners'] ?? [];
+        // Budget Info
+        $budgetInfo = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID);
+        $this->data['totalAccountBalance'] = $budgetInfo['totalAccountBalance'];
+        $this->data['totalAccountBalanceFMT'] = $budgetInfo['totalAccountBalanceFMT'];
 
-        // ---- BUDGET DATA ----
-        $this->data['totalAccountBalance']     = $budgetInfo['totalAccountBalance'] ?? 0;
-        $this->data['totalAccountBalanceFMT']  = $budgetInfo['totalAccountBalanceFMT'] ?? 0;
-        $this->data['userBudget']              = $budget->getUserBudget($this->cuID);
-        $this->data['userWallets']             = $wallets->getUserWallets($this->cuID);
+        // Dashboard Info
+        $this->data['getFeatures'] = $this->getMyMIDashboard()->getFeatures();
+        $dashboardInfo = $this->getMyMIDashboard()->dashboardInfo($this->cuID);
+        $this->data['completedGoals'] = $dashboardInfo['progressGoalData']['completions'];
+        //log_message('debug', 'DashboardController L104 - $pendingGoals - $dashboardInfo[progressGoalData][goals]: ' . (print_r($dashboardInfo['progressGoalData']['goals'], true)));
+        $this->data['pendingGoals'] = $dashboardInfo['progressGoalData']['goals'];
+        $this->data['promotionalBanners'] = $dashboardInfo['promotionalBanners'];
 
-        // ---- ANALYTICS ----
-        $this->data['reporting'] = $analytics->reporting($this->cuID);
+        // User Info
+        $userInfo = $this->getMyMIUser()->getUserInformation($this->cuID);
+        $this->data['cuWalletID'] = $userInfo['cuWalletID'];
+        $this->data['cuRole'] = $userInfo['cuRole'] ?? 4;
+        $this->data['cuUserType'] = $userInfo['cuUserType'] ?? '';
+        $this->data['cuEmail'] = $userInfo['cuEmail'] ?? '';
+        $this->data['cuDisplayName'] = $userInfo['cuDisplayName'] ?? '';
+        $this->data['cuUsername'] = $userInfo['cuUsername'] ?? '';
+        $this->data['cuNameInitials'] = $userInfo['cuNameInitials'] ?? '';
+        $this->data['cuKYC'] = $userInfo['cuKYC'] ?? '';
+        $this->data['cuWalletCount'] = $userInfo['cuWalletCount'];
+        $this->data['MyMIGCoinSum'] = $userInfo['MyMIGCoinSum'];
+        $this->data['walletID'] = $userInfo['walletID'];
 
-        // ---- SOLANA ----
-        $this->data['cuSolanaDW']        = $dashboard->getCryptoAccount($this->cuID, 'Solana')['accountInfo'] ?? [];
-        $this->data['solanaNetworkStatus'] = $solanaData['solanaNetworkStatus'] ?? null;
-        $this->data['cuSolanaTotal']       = $solanaData['cuSolanaTotal'] ?? 0;
-        $this->data['cuSolanaValue']       = $solanaData['cuSolanaValue'] ?? 0;
+        // Fetch Solana data
+        $userSolanaData = $this->getSolanaService()->getSolanaData($this->cuID);
+        $this->data['cuSolanaDW'] = $userSolanaData['userSolanaWallets']['cuSolanaDW'] ?? null;
+        // Ensure Solana network status exists to avoid "Undefined array key"
+        try {
+            if (!isset($this->solanaService)) {
+                $this->solanaService = service('solanaService'); // or however you DI it
+            }
+            $data['solanaNetworkStatus'] = $this->solanaService->getNetworkStatus();
+        } catch (\Throwable $e) {
+            log_message('error', 'WalletsController getNetworkStatus failed: {msg}', ['msg' => $e->getMessage()]);
+            $data['solanaNetworkStatus'] = [
+                'healthy' => false,
+                'slot'    => null,
+                'version' => null,
+                'error'   => $e->getMessage(),
+            ];
+        }
+        $this->data['cuSolanaTotal'] = $userSolanaData['userSolanaWallets']['cuSolanaTotal'] ?? 0;
+        $this->data['cuSolanaValue'] = $userSolanaData['userSolanaWallets']['cuSolanaValue'] ?? 0;
+
+        // Projects Data
+        $this->data['projects'] = $this->getMyMIProjects()->projectsData($this->cuID); 
 
         return $this->data;
+}
+
+    // Refactored userAccountData to ensure all account-related data is captured
+    private function userAccountData()
+    {
+        $userInfo = $this->getMyMIUser()->getUserInformation($this->cuID);
+        $this->data['cuFirstName'] = $userInfo['cuFirstName'] ?? '';
+        $this->data['cuMiddleName'] = $userInfo['cuMiddleName'] ?? '';
+        $this->data['cuLastName'] = $userInfo['cuLastName'] ?? '';
+        $this->data['cuNameSuffix'] = $userInfo['cuNameSuffix'] ?? '';
+        $this->data['cuPhone'] = $userInfo['cuPhone'] ?? '';
+        $this->data['cuDOB'] = $userInfo['cuDOB'] ?? '';
+        $this->data['cuMailingAddress'] = $userInfo['cuMailingAddress'] ?? '';
+
+        if ($this->siteSettings->solanaExchange === 1) {
+            $exchange = 'Solana';
+            $this->data['cuSolanaDW'] = $this->getMyMIDashboard()->getCryptoAccount($this->cuID, $exchange)['accountInfo'] ?? [];
+        }
     }
 
+    // Views
     public function index()
     {
+        $this->data['pageTitle'] = 'MyMI Dashboard | MyMI Wallet | The Future of Finance';
         $this->commonData();
-
-        // $this->data['managementOverview'] = $this->dashboardService->getManagementOverview();
-        $this->data['managementOverview'] = [];
-
-        return $this->renderTheme(
-            'App\Modules\Management\Views\index',
-            $this->data
-        );
+        $this->data['useDataTables'] = true;
+        $this->data['useProjectListDT'] = true;
+        return $this->renderTheme('App\Modules\Management\Views\Projects\index', $this->data);
     }
 
-    // public function index()
-    // {
-    //     log_message('info', 'ManagementController L117 - Starting Page Load');
-    //     $this->data['pageTitle']                    = 'MyMI Management | MyMI Wallet | The Future of Finance';
-    //     $this->commonData(); // Ensure this is correctly populating $this->data
-    //     $authHealthModel = new AuthHealthRunModel();
-    //     $latestAuthHealth = $authHealthModel->getLatestRun();
-    //     $weekStart = $this->weeklyStreamService->getDefaultWeekStart()->format('Y-m-d');
-    //     $latestWeek = $this->weeklyWatchlistModel
-    //         ->select('week_start_date')
-    //         ->orderBy('week_start_date', 'DESC')
-    //         ->first();
-    //     $symbolCount = $this->weeklyWatchlistModel
-    //         ->where('week_start_date', $weekStart)
-    //         ->countAllResults();
-    //     $newsletter = $this->newsletterModel
-    //         ->where('week_start_date', $weekStart)
-    //         ->first();
-
-    //     $this->data['streamPrep'] = [
-    //         'week_start_date'    => $weekStart,
-    //         'last_prepared'      => $latestWeek['week_start_date'] ?? null,
-    //         'symbol_count'       => $symbolCount,
-    //         'newsletter_status'  => $newsletter['status'] ?? 'not generated',
-    //     ];
-    //     $this->data['authHealth'] = $this->buildAuthHealthWidget($latestAuthHealth);
-    //     $this->data['contentEngine'] = $this->buildContentEngineSummary();
-    //     $this->data['chatUsage'] = $this->aiCostControls->getChatUsageSummary();
-    //     $this->data['chatConfig'] = $this->aiCostControls->chatRuntimeConfig();
-    //     $this->data['autoloadHealth'] = Services::autoloadHealthService()->getStatus();
-    //     return $this->renderTheme('App\Modules\Management\Views\index', $this->data);
-    // }
-
-    // public function add()
-    public function add($type = null)
+    public function add()
     {
-        // Site settings and user data
-        $this->data['pageTitle']                    = 'Add Budget Record | MyMI Wallet | The Future of Finance';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        return $this->renderTheme('App\Modules\User\Views\Budget\Add', $this->data);
-    }
-
-    public function accountOverview()
-    {        
-        $uri                                        = $this->request->getUri();  
-        $budgetType                                 = $uri->getSegment(2);
-        
-        $this->data['pageTitle']                    = 'Account Overview | MyMI Wallet | The Future of Finance';
-        if ($budgetType === 'Expenses') {
-            $accountType                            = 'Expense';
-        } else {
-            $accountType                            = $budgetType;
-        }
-        $this->data['accountType']                  = $accountType;
-        $this->data['budgetType']                   = $budgetType;
-        $this->data['getSourceRecords']             = $this->budgetModel->getSourceRecords($this->cuID, $budgetType);
-        if ($this->debug === 1) {
-        // log_message('debug', 'BudgetController L148 - $getSourceRecords: ' . print_r($this->budgetModel->getSourceRecords($this->cuID, $budgetType), true));
-        }
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        return $this->renderTheme('App\Modules\User\Views\Budget\Account_Overview', $this->data);
-    }
-
-    protected function buildContentEngineSummary(): array
-    {
-        $ingestModel = model(ContentScannerIngestModel::class);
-        $ideaModel = model(ContentIdeaModel::class);
-        $postModel = model(ContentPostModel::class);
-
-        $ingests = $ingestModel->orderBy('quote_ts', 'DESC')->findAll(5);
-        $summary = [];
-        foreach ($ingests as $ingest) {
-            $tiers = [];
-            foreach (['tier1', 'tier2', 'tier3', 'avoid'] as $tier) {
-                $tiers[$tier] = $ideaModel->where('ingest_id', $ingest['id'])->where('tier', $tier)->countAllResults();
-            }
-
-            $topIdea = $ideaModel->where('ingest_id', $ingest['id'])->orderBy('score_total', 'DESC')->first();
-            $previewPost = $topIdea ? $postModel->where('idea_id', $topIdea['id'])->first() : null;
-
-            $summary[] = [
-                'ingest' => $ingest,
-                'tiers' => $tiers,
-                'topIdea' => $topIdea,
-                'preview_post_id' => $previewPost['id'] ?? null,
-            ];
-        }
-
-        $latestId = ! empty($ingests) ? $ingests[0]['id'] : null;
-
-        return [
-            'ingests' => $summary,
-            'latest_ingest_id' => $latestId,
-        ];
-    }
-
-    protected function buildAuthHealthWidget(?array $latest): array
-    {
-        $failures = [];
-        if ($latest) {
-            $details = json_decode($latest['details_json'] ?? '', true) ?? [];
-            foreach (($details['steps'] ?? []) as $step) {
-                if (($step['status'] ?? '') !== 'PASS') {
-                    $failures[] = $step['key'] ?? 'unknown';
-                }
-            }
-        }
-
-        return [
-            'latest' => $latest,
-            'failures' => array_slice($failures, 0, 3),
-        ];
-    }
-
-    public function details($accountID)
-    {
-        // Site settings and user data
-        $this->data['pageTitle']                    = 'Account Details & History | MyMI Wallet | The Future of Finance';
-        $userBudgetRecord                           = $this->getMyMIBudget()->getUserBudgetRecord($this->cuID, $accountID);
-        $this->data['userBudgetRecord']             = $userBudgetRecord;
-        if ($this->debug === 1) {
-        // log_message('debug', 'BudgetController::details L153 - $this->data[\'userBudgetRecord\']: ' . print_r($this->data['userBudgetRecord'], true));
-        }
-        $userBudgetRecordName                       = $userBudgetRecord['accountName'];
-        $this->data['userRelatedBudgetAccounts']    = $this->getMyMIBudget()->getUserRelatedBudgetRecords($this->cuID, $userBudgetRecordName);
-        if ($this->debug === 1) {
-        // log_message('debug', 'BudgetController::details L153 - $this->data[\'userRelatedBudgetAccounts\']: ' . print_r($this->data['userRelatedBudgetAccounts'], true));
-        }
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        return $this->renderTheme('App\Modules\User\Views\Budget\Details', $this->data);
-    }
-
-    // public function add()
-    public function edit($type = null)
-    {
-        $uri                                        = $this->request->getUri();  
-        $formMode                                   = $uri->getSegment(2);
-        if ($formMode === 'Recurring-Account') {
-            $accountID                              = $uri->getSegment(4);
-        } else {
-            $accountID                              = $uri->getSegment(3);
-        }
-        if ($this->debug === 1) {
-        // log_message('debug', 'BudgetController L151 - $userBudgetRecord: ' . print_r($userBudgetRecord, true));
-        }
-        $userBudgetRecord                           = $this->getMyMIBudget()->getUserBudgetRecord($this->cuID, $accountID);
-        if ($this->debug === 1) {
-        // log_message('debug', 'BudgetController L151 - $userBudgetRecord: ' . print_r($userBudgetRecord, true));
-        }
-        $userBudgetRecordID                         = $userBudgetRecord['accountID'];
-        $userBudgetRecordName                       = $userBudgetRecord['accountName'];
-        if ($this->debug === 1) {
-        // log_message('debug', 'BudgetController L153 - $userBudgetRecordName: ' . $userBudgetRecordName);
-        }
-        $userRelatedBudgetAccounts                  = $this->getMyMIBudget()->getUserRelatedBudgetRecords($this->cuID, $userBudgetRecordID);
-        if ($this->debug === 1) {
-        // log_message('debug', 'BudgetController L155 - $userRelatedBudgetAccounts: ' . print_r($userRelatedBudgetAccounts, true));
-        }
-        // Site settings and user data
-        $this->data['pageTitle']                    = 'Edit Budget Record | MyMI Wallet | The Future of Finance';
-        $this->data['getAccountInfo']               = $userBudgetRecord;
-        $this->data['userRelatedBudgetAccounts']    = $userRelatedBudgetAccounts;
-        $this->data['formMode']                     = $formMode;
-        $this->data['accountID']                    = $accountID;                       
-        
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        return $this->renderTheme('App\Modules\User\Views\Budget\Edit', $this->data);
-    }
-
-    // public function add()
-    public function history($type = null)
-    {
-        // Site settings and user data
-        $this->data['pageTitle']                    = 'Account Details & History | MyMI Wallet | The Future of Finance';
-        $this->data['getUserBankAccounts']          = $this->accountsModel->getUserBankAccounts($this->cuID);
-        $this->data['getUserCreditAccounts']        = $this->accountsModel->getUserCreditAccounts($this->cuID);
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        return $this->renderTheme('App\Modules\User\Views\Budget\History', $this->data);
-    }
-
-    public function howTos()
-    {
-        $this->data['pageTitle']                    = 'MyMI Management | MyMI Wallet | The Future of Finance';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        return $this->renderTheme('ManagementModule\Views\HowTos\index', $this->data);
-    }
+        log_message('debug', 'ProjectsController::add - Method Start');
     
-    // public function add()
-    public function recurringSchedule($accountID = null)
-    {
-        $uri = $this->request->getUri();
-        $getAccountInfo = $this->budgetModel->getUserBudgetRecord($this->cuID, $accountID);
-        $lastAccountInfo = $this->budgetModel->getLastRecurringAccountInfo($this->cuID);
-
-        $accountDetails = $getAccountInfo ?: $lastAccountInfo;
-        $account = $accountDetails[0] ?? [];
-
-        $accountID = $accountID ?? $account['id'] ?? $uri->getSegment(4);
-        $accountName = $account['name'] ?? '';
-        $accountType = $account['account_type'] ?? '';
-        $accountSourceType = $account['source_type'] ?? '';
-        $accountNetAmount = $account['net_amount'] ?? 0;
-        $accountGrossAmount = $account['gross_amount'] ?? 0;
-        $accountRecAccount = $account['recurring_account'] ?? 'No';
-        $accountIntervals = $account['intervals'] ?? 'Monthly';
-        $accountDesDate = $this->safeDateFormat($account['designated_date'] ?? date("m/d/Y"), 'm/d/Y') ?: date("m/d/Y");
-
-        $startDate = \DateTime::createFromFormat('m/d/Y', $accountDesDate);
-        $endDate = new \DateTime('12/31/' . date('Y'));
-        $data = [];
-
-        if ($accountIntervals === '15th/Last') {
-            if ((int)$startDate->format('d') >= 15) {
-                $startDate = $startDate->modify('last day of this month');
-            } else {
-                $startDate = $startDate->setDate((int)$startDate->format('Y'), (int)$startDate->format('m'), 15);
-            }
-
-            while ($startDate <= $endDate) {
-                $data[] = [
-                    'dueDate' => $startDate->format('m/d/Y'),
-                    'cuID' => $this->cuID, 
-                    'cuEmail' => $this->userAccount['cuEmail'], 
-                    'cuUsername' => $this->userAccount['cuUsername'], 
-                    'accountID' => $accountID,
-                    'accountName' => $accountName,
-                    'accountType' => $accountType,
-                    'accountSourceType' => $accountSourceType,
-                    'netAmount' => $accountNetAmount,
-                    'grossAmount' => $accountGrossAmount,
-                ];
-
-                if ((int)$startDate->format('d') == 15) {
-                    $startDate = $startDate->modify('last day of this month');
-                } else {
-                    $startDate = $startDate->modify('first day of next month')->setDate(
-                        (int)$startDate->format('Y'), 
-                        (int)$startDate->format('m'), 
-                        15
-                    );
-                }
-
-                if ($startDate > $endDate) {
-                    break;
-                }
-            }
-        } else {
-            $intervalMap = [
-                'Daily' => '+1 day',
-                'Weekly' => '+1 week',
-                'Bi-Weekly' => '+2 weeks',
-                'Monthly' => '+1 month',
-                'Quarterly' => '+3 months',
-                'Semi-Annual' => '+6 months',
-                'Annually' => '+1 year',
-            ];
-
-            $intervalString = $intervalMap[$accountIntervals] ?? '+1 month';
-
-            while ($startDate <= $endDate) {
-                $data[] = [
-                    'dueDate' => $startDate->format('m/d/Y'),
-                    'cuID' => $this->cuID, 
-                    'cuEmail' => $this->userAccount['cuEmail'], 
-                    'cuUsername' => $this->userAccount['cuUsername'], 
-                    'accountID' => $accountID,
-                    'accountName' => $accountName,
-                    'accountType' => $accountType,
-                    'accountSourceType' => $accountSourceType,
-                    'netAmount' => $accountNetAmount,
-                    'grossAmount' => $accountGrossAmount,
-                ];
-                $startDate = $startDate->modify($intervalString);
-            }
-        }
-
-        $this->data['pageTitle'] = 'Create Recurring Schedule | MyMI Wallet | The Future of Finance';
-        $this->data['recurringSchedule'] = $data; // Pass generated schedules to the view
-        $this->data['accountInfo'] = $getAccountInfo;
-        $this->data['lastAccountInfo'] = $lastAccountInfo;
-        $this->commonData(); // Populate $this->data with common data
-        return $this->renderTheme('App\Modules\User\Views\Budget\Recurring_Account\Schedule', $this->data);
-    } 
-
-    public function research() {
-        $this->commonData(); 
-        return $this->renderTheme('ManagementModule\Views\Management\research', $this->data);
-    }
-
-    public function approveRecurringSchedule($accountID)
-    {
-        $jsonData = $this->request->getJSON();
-        if (!$jsonData) {
-            return $this->failValidationError('Invalid request.');
-        }
+        if ($this->request->getMethod() === 'POST') {
+            log_message('debug', 'ProjectsController::add - POST request detected');
+            $formData = $this->request->getPost();
+            $this->logSnippet('debug', 'ProjectsController add formData', $formData);
     
-        foreach ($jsonData as $schedule) {
-            $data = [
-                'account_id' => $accountID,
-                'status' => 1,
-                'beta' => $this->siteSettings->beta,
-                'mode' => 'Recurring',
+            log_message('debug', 'ProjectsController::add - User ID matched: ' . $this->cuID);
+    
+            // Prepare project data
+            $projectData = [
+                'beta' => $formData['beta'],
+                'name' => $formData['name'],
+                'description' => $formData['description'],
+                'target_amount' => $formData['target_amount'],
+                'status' => 'pending',
                 'created_by' => $this->cuID,
-                'created_by_email' => $schedule->cuEmail,
-                'unix_timestamp' => time(),
-                'designated_date' => $schedule->dueDate,
-                'month' => date('m', strtotime($schedule->dueDate)),
-                'day' => date('d', strtotime($schedule->dueDate)),
-                'year' => date('Y', strtotime($schedule->dueDate)),
-                'username' => $schedule->cuUsername,
-                'name' => $schedule->accountName,
-                'net_amount' => $schedule->netAmount,
-                'gross_amount' => $schedule->grossAmount,
-                'recurring_account' => 'Yes',
-                'account_type' => $schedule->accountType,
-                'source_type' => $schedule->accountSourceType,
+                'user_email' => $formData['user_email'],
+                'username' => $formData['username'],
+                'created_at' => date('Y-m-d H:i:s'),
+                'investment_goal' => $formData['target_amount'],
+                'minimum_investment' => $formData['minimum_investment'],
+                'maximum_investment' => $formData['maximum_investment'],
+                'project_stage' => $formData['project_stage'],
+                'completion_date' => $formData['completion_date'],
+                'remarks' => $formData['remarks'],
+                'promotional_links' => $formData['promotional_links'],
+                'form_mode' => $formData['form_mode'],
             ];
+            $this->logSnippet('debug', 'ProjectsController add projectData', $projectData);
     
-            if (!$this->budgetModel->approveRecurringSchedule($data)) {
-                log_message('error', 'Failed to insert recurring schedule for account ID: ' . $accountID);
-            }
-        }
+            if ($this->projectsModel->createProject($projectData)) {
+                log_message('debug', 'ProjectsController::add - Project created successfully');
     
-        session()->setFlashdata('message', 'Recurring schedules successfully created.');
-        return redirect()->to('/Budget');
-    }
-    
-
-    protected function safeDateFormat($date, $format)
-    {
-        $dateTime = \DateTime::createFromFormat('m/d/Y', $date);
-        return $dateTime ? $dateTime->format($format) : false;
-    }
-
-    // public function add()
-    public function settings($type = null)
-    {
-        $uri                                        = $this->request->getUri(); 
-        // Determine budget type from URL segment or parameter
-        $budgetType                                 = $uri->getSegment(3) ?? $type; 
-    
-        // Initialize settings data array, which will hold all the settings related to the specific budget type
-        $settingsData                               = [];
-    
-        switch ($budgetType) {
-            case 'Income':
-                $settingsData = [
-                    'primaryIncomeSource'           => '', // e.g., 'Employment'
-                    'incomeFrequency'               => '', // e.g., 'Monthly'
-                    'automaticIncomeTracking'       => false,
-                    'incomeNotifications'           => false,
-                    'incomeCategories'              => [],
-                    'taxWithholdingPreferences'     => false,
-                ];
-                break;
-    
-            case 'Expenses':
-                $settingsData = [
-                    'expenseTrackingMode'           => '', // e.g., 'Automatic'
-                    'monthlyBudgetLimit'            => 0,
-                    'criticalExpenseAlerts'         => false,
-                    'recurringExpenses'             => [],
-                    'expenseCategories'             => [],
-                    'savingsGoals'                  => [],
-                ];
-                break;
-    
-            case 'Credit':
-            case 'Debt': // Assuming Credit and Debt have similar settings
-                $settingsData = [   
-                    'debtRepaymentStrategy'         => '', // e.g., 'Snowball'
-                    'creditUtilizationAlert'        => false,
-                    'automaticPaymentReminders'     => false,
-                    'interestRateTracking'          => false,
-                    'creditScoreMonitoring'         => false,
-                    'debtFreeGoalDate'              => '',
-                ];
-                break;
-    
-            case 'Investments':
-                $settingsData = [
-                    'riskToleranceProfile'          => '', // e.g., 'Moderate'
-                    'automaticInvestment'           => false,
-                    'investmentPortfolioOverview'   => [],
-                    'dividendReinvestment'          => false,
-                    'performanceAlerts'             => false,
-                    'taxLossHarvestingPreferences'  => false,
-                ];
-                break;
-    
-            default:
-                // Redirect or show error if budgetType is not recognized
-                log_message('error', 'BudgetController L245 - $budgetType: ' . $budgetType);
-                return redirect()->back()->with('error', 'Invalid budget type specified.');
-        }
-    
-        // Load common data and settings specific to the budget type
-        $this->data['pageTitle']                    = 'Budget Settings | MyMI Wallet | The Future of Finance';
-        $this->data['budgetType']                   = $budgetType;
-        $this->data['settingsData']                 = $settingsData;
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        return $this->renderTheme('App\Modules\User\Views\Budget\Settings', $this->data);
-    }
-
-    public function triggerPostAutogenOnEmpty()
-    {
-        $existing = $this->marketingModel->getLatestGeneratedSummaries(1);
-        if (!empty($existing)) {
-            return $this->respond(['status' => 'skipped', 'message' => 'Recent posts already exist.']);
-        }
-    
-        log_message('info', '⚡ Triggering fallback post generation: No recent summaries found.');
-        $results = $this->generatePostsFromSummary();
-    
-        return $this->respond([
-            'status' => 'success',
-            'generated' => $results,
-            'message' => count($results) . ' posts generated from fallback trigger.'
-        ]);
-    }
-    
-    public function accountManager() { 
-        $json = $this->request->getJSON(true);
-        $status = 1;
-        $beta = $json['beta'] ?? 'No';
-        $formMode = $json['form_mode'] ?? 'Add';
-        $userId = $json['user_id'] ?? null;
-        $userEmail = $json['user_email'] ?? null;
-        $username = $json['username'] ?? null;
-        $nickname = $json['nickname'] ?? null;
-        $netAmount = str_replace(',', '', $json['net_amount'] ?? '0');
-        $grossAmount = str_replace(',', '', $json['gross_amount'] ?? '0');
-        $recurringAccount = $json['recurring_account'] ?? 'No';
-        $accountType = $json['account_type'] ?? null;
-        $sourceType = $json['source_type'] ?? null;
-        $isDebt = preg_match('/(Debt|Loan|Mortgage)/i', $sourceType) === 1 ? 1 : 0;
-        $intervals = $json['intervals'] ?? null;
-    
-        // Parsing designated_date to extract day, month, year
-        $designatedDate = $json['designated_date'] ?? null;
-        if ($designatedDate) {
-            $dateTranslator = strtotime($designatedDate);
-            $designatedDate = date('m/d/Y', $dateTranslator);
-            $month = date('m', $dateTranslator);
-            $day = date('d', $dateTranslator);
-            $year = date('Y', $dateTranslator);
-        } else {
-           $designatedDate = $month = $day = $year = null; // Default values if no date provided
-        }
-    
-        $accountData = [
-            'status' => $status,
-            'beta' => $beta,
-            'mode' => $formMode,
-            'created_by' => $userId,
-            'created_by_email' => $userEmail,
-            'unix_timestamp' => time(),
-            'designated_date' => $designatedDate,
-            'month' => (int)$month, // Ensure these are integers
-            'day' => (int)$day,
-            'year' => (int)$year,
-            'username' => $username,
-            'name' => $nickname,
-            'net_amount' => (float)$netAmount, // Ensure this is a float
-            'gross_amount' => (float)$grossAmount,
-            'paid' => 0, // Assuming not paid by default
-            'recurring_account' => $recurringAccount,
-            'account_type' => $accountType,
-            'source_type' => $sourceType,
-            'is_debt' => $isDebt,
-            'intervals' => $intervals,
-        ];
-        if ($this->debug === 1) {
-        // log_message('debug', 'BudgetController L450 - Received $accountData: ' . print_r($accountData, true));
-        }
-        // Insert or update logic as before, ensuring the array keys match your table column names
-        try {
-            $formMode                           = $json['form_mode'];
-            switch ($formMode) {
-                case 'Add':
-                    if ($isDebt) {
-                        $debtData               = [
-                            'beta'              => $beta,
-                            'status'            => $status,
-                            'date'              => $designatedDate,
-                            // 'time'           => $time,
-                            'user_id'           => $userId,
-                            'user_email'        => $userEmail,
-                            'username'          => $username,
-                            'account_type'      => $accountType,
-                            'debtor'            => $nickname,
-                            'available_balance' => $grossAmount,
-                            'current_balance'   => $netAmount,
-                        ];
-                        $this->budgetModel->insertDebtAccount($debtData);
-                    }
-        
-                    if ($this->debug === 1) {
-                    // log_message('debug', 'BudgetController L473 - Sending $accountData to Model: ' . print_r($accountData, true));
-                        }
-                    $insertedID = $this->budgetModel->insertAccount($accountData);
-                    if ($insertedID) {
-                        $responseData           = [
-                            'accountID'         => $insertedID,
-                            'recurringAccount'  => $accountData['recurring_account'],
-                        ];
-                        session()->setFlashdata('message', 'Budget Record added successfully.');
-                        session()->setFlashdata('alert-class', 'success');
-                        return $this->response->setStatusCode(201, 'Created')->setJSON($responseData);
+                try {
+                    // Render the project received content
+                    $emailBody = view('ManagementModule\Views\Projects\_email\Project_Received', ['data' => $projectData]);
+                    log_message('debug', 'ProjectsController::add - $emailBody: ' . $emailBody);
+                
+                    // Use the layout for email rendering
+                    $emailContent = view('emails/layout', [
+                        'title' => 'New Project Submission',
+                        'content' => $emailBody,
+                        'siteSettings' => $this->siteSettings,
+                        'socialMedia' => $this->socialMedia,
+                    ]);
+                    log_message('debug', 'ProjectsController::add - $emailContent: ' . $emailContent);
+                
+                    // Email data
+                    $emailData = [
+                        'from'    => 'no-reply@mymiwallet.com',
+                        'to'      => $formData['user_email'],
+                        'subject' => 'New MyMI Wallet Project Submitted - ' . $formData['name'],
+                        'message' => $emailContent,
+                        'module'  => 'projects',
+                        'queue'   => true,
+                    ];
+                    $this->logSnippet('debug', 'ProjectsController add emailData', $emailData);
+                
+                    // Send email
+                    if ($this->supportService->sendEmail($emailData)) {
+                        log_message('info', 'ProjectsController::add - Confirmation email sent successfully');
                     } else {
-                        log_message('error', 'Insert failed');
+                        log_message('error', 'ProjectsController::add - Failed to send confirmation email');
+                        return $this->respond(['status' => 'error', 'message' => 'Failed to send confirmation email'], 500);
                     }
-                    break;
-        
-                case 'Edit':
-                    log_message('info', 'CRON job for fetching emails completed');
-                    $updated = $this->budgetModel->updateAccount($json['account_id'], $accountData);
-                    if ($updated) {
-                        $responseData           = [
-                            'accountID'         => $json['account_id'],
-                            'recurringAccount'  => $accountData['recurring_account'],
-                        ];
-                        session()->setFlashdata('message', 'Budget Record added successfully.');
-                        session()->setFlashdata('alert-class', 'success');
-                        return $this->response->setStatusCode(200, 'OK')->setJSON($responseData);
-                    } else {
-                        // !! FIX THIS: Redirect to Edit + Account Type (Income/Expense) and add session()->setFlashdata
-                        log_message('error', 'Update failed');
-                    }
-                    break;
-        
-                case 'Copy':
-                    $insertedID                 = $this->budgetModel->insertAccount($accountData);
-                    if ($insertedID) {
-                        $responseData           = [
-                            'accountID'         => $insertedID,
-                            'recurringAccount'  => $accountData['recurring_account'],
-                        ];
-                        return $this->response->setStatusCode(201, 'Created')->setJSON($responseData);
-                    } else {
-                        // !! FIX THIS: Redirect to Copy + Account Type (Income/Expense) and add session()->setFlashdata
-                        log_message('error', 'Insert failed');
-                    }
-                    break;
-        
-                default:
-                    // !! TEST THIS
-                    session()->setFlashdata('message', 'There was an error submitting your changes. Contact support by clicking <a href="' . site_url('/Support') . '">here!</a>');
-                    session()->setFlashdata('alert-class', 'danger');
-                    return $this->response->setStatusCode(400, 'Bad Request')->setBody('Invalid form mode.');
-            }
-        } catch (\Exception $e) {
-            log_message('error', 'Exception caught: ' . $e->getMessage());
-            return $this->response->setStatusCode(500, 'Server Error')->setBody('Exception occurred: ' . $e->getMessage());
-        }        
-    }
-
-    public function deleteAccount($accountID) { // !! THIS WORKS
-        // Get the HTTP referrer, or default to the '/Budget' route if not available
-        $referer  = $this->request->getServer('HTTP_REFERER');
-        $fallback = site_url_safe('/Budget');
+                } catch (\Exception $e) {
+                    log_message('error', 'ProjectsController::add - Error in sendConfirmationEmail: ' . $e->getMessage());
+                    return $this->respond(['status' => 'error', 'message' => 'Failed to send confirmation email'], 500);
+                }               
     
-        if ($this->budgetModel->cancelAccount($accountID)) {
-            session()->setFlashdata('message', 'Recurring Account deleted.');
-            session()->setFlashdata('alert-class', 'success');
-        } else {
-            session()->setFlashdata('message', 'Account could not be deleted');
-            session()->setFlashdata('alert-class', 'error');
-        }
-    
-        // Redirect to the referrer or the specified default route
-        return redirect_to_safe(
-            is_string($referer) && $referer !== '' ? $referer : null,
-            $fallback
-        );
-    }      
-    
-    public function cancelAccount($accountID)
-    {
-        $accountInfo = $this->budgetModel->getUserBudgetRecord($this->cuID, $accountID);
-
-        foreach($accountInfo as $account) {
-            if ($account['recurring_account_primary'] === 'Yes') {
-                if ($this->budgetModel->cancelAccount($accountID)) {
-                    session()->setFlashdata('message', 'Recurring Account deleted.');
-                    return redirect()->to('/Budget');
-                } else {
-                    session()->setFlashdata('message', 'Recurring Account could not be deleted');
-                    return redirect()->to("/Budget/Edit/{$accountID}");
-                }
+                return $this->respond(['status' => 'success', 'message' => 'Project submitted successfully'], 200);
             } else {
-                if ($this->budgetModel->cancelSubaccount($accountID)) {
-                    session()->setFlashdata('message', 'Subaccount deleted.');
-                    return redirect()->to("/Budget/Edit/{$accountID}");
-                } else {
-                    session()->setFlashdata('message', 'Subaccount could not be deleted');
-                    return redirect()->to("/Budget/Recurring-Account/Schedule/{$accountID}");
-                }
+                log_message('error', 'ProjectsController::add - Project creation failed');
+                return $this->respond(['status' => 'error', 'message' => 'Failed to submit the project'], 500);
             }
         }
+    
+        log_message('debug', 'ProjectsController::add - Method End');
     }
 
-    public function paid($accountID) {
-        if ($this->budgetModel->paidAccount($accountID)) {
-            session()->setFlashdata('message', 'Account status changed to: "Paid"');
-            session()->setFlashdata('message_type', 'success');
-            return redirect()->to('/Budget');
-        } else {
-            session()->setFlashdata('message', 'Account could not be updated');
-            session()->setFlashdata('message_type', 'error');
-            return redirect()->to('/Budget');
+    public function realEstateQuickIntake()
+    {
+        $this->data['pageTitle'] = 'Quick Property Intake';
+        return $this->renderTheme('App\\Modules\\Management\\Views\\Projects\\quick_intake_page', $this->data);
+    }
+
+    public function realEstateQuickSubmit()
+    {
+        helper(['form']);
+        $rules = [
+            'zillow_url'    => 'permit_empty|valid_url',
+            'address_line1' => 'permit_empty|string',
+            'city'          => 'permit_empty|string',
+            'state'         => 'permit_empty|alpha|min_length[2]|max_length[2]',
+            'postal_code'   => 'permit_empty|string',
+        ];
+        if (!$this->validate($rules)) {
+            return redirect()->back()->with('error','Invalid input.')->withInput();
+        }
+
+        $in     = $this->request->getPost();
+        $source = !empty($in['zillow_url']) ? 'zillow' : 'address';
+        if ($source === 'address' && empty($in['address_line1'])) {
+            return redirect()->back()->with('error','Provide a Zillow (or similar) link or an address.');
+        }
+
+        /** @var \App\Models\ProjectsModel $pm */
+        $pm = model('ProjectsModel');
+        $id = $pm->reSaveIntake([
+            'user_id'       => (int)$this->cuID,
+            'source'        => $source,
+            'raw_input'     => $source === 'zillow'
+                ? (string)$in['zillow_url']
+                : trim(($in['address_line1'] ?? '').' '.($in['city'] ?? '').' '.($in['state'] ?? '').' '.($in['postal_code'] ?? '')),
+            'zillow_url'    => $in['zillow_url'] ?? null,
+            'address_line1' => $in['address_line1'] ?? null,
+            'city'          => $in['city'] ?? null,
+            'state'         => strtoupper($in['state'] ?? ''),
+            'postal_code'   => $in['postal_code'] ?? null,
+            'status'        => 'queued',
+        ]);
+
+        if (!$id) {
+            return redirect()->back()->with('error','Failed to queue property.');
+        }
+
+        service('RealEstateIngestService')->queue((int)$id); // run now
+        return redirect()->back()->with('success','Submitted! We’re fetching public details now.');
+    }
+    
+    public function viewProject($projectID = null)
+    {
+        $this->data['pageTitle'] = 'MyMI Dashboard | MyMI Wallet | The Future of Finance';
+        $this->commonData();
+        return $this->renderTheme('App\Modules\Management\Views\Projects\viewProject', $this->data);
+    }
+
+    public function listProjects()
+    {
+        $projects = $this->projectsModel->getAllProjects();
+        return $this->respond(['status' => 'success', 'projects' => $projects]);
+    }
+
+    public function createProject()
+    {
+        $data = $this->request->getPost();
+        $projectId = $this->projectsModel->createProject($data);
+
+        return $projectId ? $this->respond(['status' => 'success', 'project_id' => $projectId]) : $this->fail('Project creation failed');
+    }
+
+    public function commitInvestment($projectId)
+    {
+        $userId = $this->cuID;
+        $amount = $this->request->getPost('amount');
+
+        $commitmentStatus = $this->getMyMIProjects()->commitToProject($userId, $projectId, $amount);
+        return $commitmentStatus ? $this->respond(['status' => 'success', 'message' => 'Investment committed successfully']) : $this->fail('Commitment failed');
+    }
+
+    public function distributeRevenue($projectId)
+    {
+        $distributeStatus = $this->getMyMIProjects()->distributeRevenue($projectId);
+        return $distributeStatus ? $this->respond(['status' => 'success', 'message' => 'Revenue distributed successfully']) : $this->fail('Distribution failed');
+    }
+
+    public function sendMoreInfoRequest($projectId)
+    {
+        // Fetch project and user details
+        $project = $this->projectsModel->getProjectById($projectId);
+        if (!$project) {
+            return $this->failNotFound('Project not found.');
+        }
+    
+        // Compose email data
+        $emailData = [
+            'name' => $project['username'],
+            'email' => $project['user_email'],
+            'project_name' => $project['name'],
+            'subject' => 'More Information Required for Your Project',
+            'message' => view('ManagementModule\Views\Projects\_emails\More_Information_Required', $project),
+        ];
+    
+        try {
+            $this->supportService->sendEmail($emailData);
+            return $this->respond(['status' => 'success', 'message' => 'Request for more information sent successfully.']);
+        } catch (\Exception $e) {
+            log_message('error', 'Error sending More Information Required email: ' . $e->getMessage());
+            return $this->respond(['status' => 'error', 'message' => 'Failed to send email.'], 500);
         }
     }
     
-    public function unpaid($accountID) {
-        if ($this->budgetModel->unpaidAccount($accountID)) {
-            session()->setFlashdata('message', 'Account status changed to: "Unpaid"');
-            session()->setFlashdata('message_type', 'success');
-            return redirect()->to('/Budget');
-        } else {
-            session()->setFlashdata('message', 'Account could not be updated');
-            session()->setFlashdata('message_type', 'error');
-            return redirect()->to('/Budget');
+    public function approveProject($projectId)
+    {
+        // Update project status
+        $updateStatus = $this->projectsModel->update($projectId, ['status' => 'approved']);
+        if (!$updateStatus) {
+            return $this->fail('Failed to update project status.');
+        }
+    
+        // Fetch project and user details
+        $project = $this->projectsModel->getProjectById($projectId);
+        if (!$project) {
+            return $this->failNotFound('Project not found.');
+        }
+    
+        // Compose email data
+        $emailData = [
+            'name' => $project['username'],
+            'email' => $project['user_email'],
+            'project_name' => $project['name'],
+            'subject' => 'Your Project Has Been Approved!',
+            'message' => view('ManagementModule\Views\Projects\_emails\Project_Approved', $project),
+        ];
+    
+        try {
+            $this->supportService->sendEmail($emailData);
+            return $this->respond(['status' => 'success', 'message' => 'Project approved and email sent successfully.']);
+        } catch (\Exception $e) {
+            log_message('error', 'Error sending Project Approved email: ' . $e->getMessage());
+            return $this->respond(['status' => 'error', 'message' => 'Failed to send email.'], 500);
         }
     }
     
-    public function bulkUpdateStatus()
+    public function notifyIssues($projectId)
     {
-        $ids = $this->request->getPost('ids');
-        $status = $this->request->getPost('status');
-        $budgetModel = new \App\Models\BudgetModel();
-
-        if ($budgetModel->bulkUpdateStatus($ids, $status)) {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'Records updated successfully.']);
-        } else {
-            return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to update records.']);
+        // Fetch project and user details
+        $project = $this->projectsModel->getProjectById($projectId);
+        if (!$project) {
+            return $this->failNotFound('Project not found.');
         }
-    }
-
-    public function createLinkToken()
-    {
-        $plaidModel = model(\App\Models\PlaidModel::class);
-        $client_id = config('Plaid')->client_id; // Assuming Plaid settings are stored in a separate config file
-        $secret = config('Plaid')->secret;
-
-        $linkTokenData = $plaidModel->getLinkToken($client_id, $secret);
-        return $this->response->setJSON($linkTokenData);
-    }
-
-    public function exchangeToken()
-    {
-        $publicToken = $this->request->getPost('public_token');
-        $plaidModel = model(\App\Models\PlaidModel::class);
-
-        $exchangeData = $plaidModel->exchangePublicToken($publicToken);
-        return $this->response->setJSON($exchangeData);
-    }
-
-    public function bulkDelete()
-    {
-        $ids = $this->request->getPost('ids');
-        $budgetModel = new \App\Models\BudgetModel();
-
-        if ($budgetModel->bulkDelete($ids)) {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'Records deleted successfully.']);
-        } else {
-            return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to delete records.']);
-        }
-    }
-
-    private function checkUserAuthentication()
-    {
-        $this->cuID = $this->auth->id() ?? session('logged_in') ?? $this->session->get('user_id');
-        $this->logSnippet('debug', 'ManagementController checkUserAuthentication cuID', $this->cuID);
     
-        if (empty($this->cuID)) {
-            // log_message('error', 'Failed to retrieve user ID.');
-            // // Perform the redirect and stop further execution
-            // redirect()->to('/login')->with('redirect_url', current_url())->send();
-            // exit; // Ensure the script stops running after the redirect
+        // Compose email data
+        $emailData = [
+            'name' => $project['username'],
+            'email' => $project['user_email'],
+            'project_name' => $project['name'],
+            'subject' => 'Issues Found in Your Project Submission',
+            'message' => view('ManagementModule\Views\Projects\_emails\Project_Issues', $project),
+        ];
+    
+        try {
+            $this->supportService->sendEmail($emailData);
+            return $this->respond(['status' => 'success', 'message' => 'Issues notification sent successfully.']);
+        } catch (\Exception $e) {
+            log_message('error', 'Error sending Issues Notification email: ' . $e->getMessage());
+            return $this->respond(['status' => 'error', 'message' => 'Failed to send email.'], 500);
         }
     }
-    // Implement other methods as in CI3, adapting to CI4's syntax and best practices
-    // Implement other private and public methods, converting CI3 syntax and functionality to CI4
+    
+    public function rejectProject($projectId)
+    {
+        // Update project status
+        $updateStatus = $this->projectsModel->update($projectId, ['status' => 'rejected']);
+        if (!$updateStatus) {
+            return $this->fail('Failed to update project status.');
+        }
+    
+        // Fetch project and user details
+        $project = $this->projectsModel->getProjectById($projectId);
+        if (!$project) {
+            return $this->failNotFound('Project not found.');
+        }
+    
+        // Compose email data
+        $emailData = [
+            'name' => $project['username'],
+            'email' => $project['user_email'],
+            'project_name' => $project['name'],
+            'subject' => 'Your Project Was Not Approved',
+            'message' => view('ManagementModule\Views\Projects\_emails\Project_Not_Approved', $project),
+        ];
+    
+        try {
+            $this->supportService->sendEmail($emailData);
+            log_message('info', 'Confirmation email sent successfully');
+            return $this->respond(['status' => 'success', 'message' => 'Project rejection email sent successfully.']);
+        } catch (\Exception $e) {
+            log_message('error', 'Error sending Project Not Approved email: ' . $e->getMessage());
+            return $this->respond(['status' => 'error', 'message' => 'Failed to send email.'], 500);
+        }
+    }
+    
 }

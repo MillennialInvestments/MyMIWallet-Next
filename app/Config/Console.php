@@ -26,10 +26,12 @@ class Console extends BaseConfig
 
         /*
         |----------------------------------------------------------------------
-        | App / Runtime
+        | App / Audit
         |----------------------------------------------------------------------
         */
+        \App\Commands\Audit\All::class,
         \App\Commands\App\Healthcheck::class,
+        \App\Commands\App\Test::class,
         \App\Commands\AppUpdate::class,
         \App\Commands\RuntimeCheck::class,
 
@@ -217,10 +219,19 @@ class Console extends BaseConfig
 
         /*
         |----------------------------------------------------------------------
-        | GitHub / Codex
+        | GitHub
         |----------------------------------------------------------------------
         */
         \App\Commands\GitHub\SearchRepo::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Codex
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Codex\Instructions\Audit::class,
+        \App\Commands\Codex\Auth::class,
+        \App\Commands\Codex\Index::class,
         \App\Commands\Codex\Review::class,
         \App\Commands\Codex\ReviewList::class,
         \App\Commands\Codex\ReviewCommit::class,
