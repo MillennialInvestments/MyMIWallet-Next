@@ -4,43 +4,25 @@
    Grouped by (LEVEL + message)
 ===============================================
 
-Last processed up to: 2026-02-15 10:00:03
+Last processed up to: 2026-02-15 18:00:04
 
 ---------------------------
 LEVEL: ERROR
 ---------------------------
 
 [1 occurrence(s)]
-ERROR --> LOG_HEALTHCHECK file probe marker=cce1a3be4d64
+ERROR --> LOG_HEALTHCHECK file probe marker=928f4dc37911
 
 [1 occurrence(s)]
-ERROR --> LOG_HEALTHCHECK file probe marker=fc8f767f46d0
+ERROR --> LOG_HEALTHCHECK file probe marker=aa54b4a6dedb
 
 [1 occurrence(s)]
-ERROR --> LOG_HEALTHCHECK file probe marker=352a87c0609c
-
-[1 occurrence(s)]
-ERROR --> LOG_HEALTHCHECK file probe marker=40a879b1bdf3
-
-[1 occurrence(s)]
-ERROR --> LOG_HEALTHCHECK file probe marker=6645898a97fc
-
-[1 occurrence(s)]
-ERROR --> LOG_HEALTHCHECK file probe marker=14b8cd635ce5
-
-[1 occurrence(s)]
-ERROR --> LOG_HEALTHCHECK file probe marker=1a67a4ce109a
-
-[1 occurrence(s)]
-ERROR --> LOG_HEALTHCHECK file probe marker=84aa356a31d9
-
-[1 occurrence(s)]
-ERROR --> LOG_HEALTHCHECK file probe marker=6025cad77118
+ERROR --> LOG_HEALTHCHECK file probe marker=7b43319bc8d9
 
 
 ===============================================
    HERE'S THE NEW STUFF
-   (Entries logged AFTER 2026-02-15 10:00:03)
+   (Entries logged AFTER 2026-02-15 18:00:04)
 ===============================================
 
 ---------------------------
@@ -48,7 +30,7 @@ LEVEL: ERROR (NEW)
 ---------------------------
 
 [1 NEW occurrence(s)]
-ERROR --> LOG_HEALTHCHECK file probe marker=6025cad77118
+ERROR --> LOG_HEALTHCHECK file probe marker=7b43319bc8d9
 
 
 ---- CONFIG LINT ----

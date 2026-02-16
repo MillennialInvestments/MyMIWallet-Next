@@ -41,17 +41,17 @@ class AdminController extends UserController
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
-        parent::initController($request, $response, $logger);
-        $this->auth                                 = service('authentication');
-        $this->API                                  = config('APISettings');
-        $this->siteSettings                         = config('SiteSettings');
-        $this->request                              = service('request'); 
-        $this->session                              = Services::session(); 
-        $this->debug                                = $this->siteSettings->debug; 
-        $this->uri                                  = $this->request->getUri(); 
-        $this->accountsModel                        = new AccountsModel(); 
-        $this->budgetModel                          = new BudgetModel(); 
-        $this->userModel                            = new UserModel(); 
+        // parent::initController($request, $response, $logger);
+        // $this->auth                                 = service('authentication');
+        // $this->API                                  = config('APISettings');
+        // $this->siteSettings                         = config('SiteSettings');
+        // $this->request                              = service('request'); 
+        // $this->session                              = Services::session(); 
+        // $this->debug                                = $this->siteSettings->debug; 
+        // $this->uri                                  = $this->request->getUri(); 
+        // $this->accountsModel                        = new AccountsModel(); 
+        // $this->budgetModel                          = new BudgetModel(); 
+        // $this->userModel                            = new UserModel(); 
 //         $this->MyMIAnalytics                        = new MyMIAnalytics(); // replaced by BaseController getter 
 //         $this->MyMIBudget                           = new MyMIBudget(); // replaced by BaseController getter 
 //         $this->MyMICoin                             = new MyMICoin(); // replaced by BaseController getter
@@ -92,35 +92,35 @@ class AdminController extends UserController
         $this->data['totalAccountBalance'] = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['totalAccountBalance'];
         $this->data['totalAccountBalanceFMT'] = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['totalAccountBalanceFMT'];
         $this->data['cuSolanaDW'] = $this->getMyMIDashboard()->getCryptoAccount($this->cuID, 'Solana')['accountInfo'];
-        $this->data['getFeatures'] = $this->getMyMIDashboard()->dashboardInfo($this->cuID)['getFeatures'];
-        $this->data['completedGoals'] = $this->getMyMIDashboard()->dashboardInfo($this->cuID)['progressGoalData']['completions'];
-        $this->data['pendingGoals'] = $this->getMyMIDashboard()->dashboardInfo($this->cuID)['progressGoalData']['goals'];
-        $this->data['promotionalBanners'] = $this->getMyMIDashboard()->dashboardInfo($this->cuID)['promotionalBanners'];
-        $this->data['cuRole'] = $this->getMyMIUser()->getUserInformation($this->cuID)['cuRole'] ?? 4;
-        $this->data['cuUserType'] = $this->getMyMIUser()->getUserInformation($this->cuID)['cuUserType'] ?? '';
-        $this->data['cuEmail'] = $this->getMyMIUser()->getUserInformation($this->cuID)['cuEmail'] ?? '';
-        $this->data['cuDisplayName'] = $this->getMyMIUser()->getUserInformation($this->cuID)['cuDisplayName'] ?? '';
-        $this->data['cuUsername'] = $this->getMyMIUser()->getUserInformation($this->cuID)['cuUsername'] ?? '';
-        $this->data['cuNameInitials'] = $this->getMyMIUser()->getUserInformation($this->cuID)['cuNameInitials'] ?? '';
-        $this->data['cuKYC'] = $this->getMyMIUser()->getUserInformation($this->cuID)['cuKYC'] ?? '';
-        $this->data['cuWalletID'] = $this->getMyMIUser()->getUserInformation($this->cuID)['cuWalletID'];
-        $this->data['cuWalletCount'] = $this->getMyMIUser()->getUserInformation($this->cuID)['cuWalletCount'];
-        $this->data['MyMIGCoinSum'] = $this->getMyMIUser()->getUserInformation($this->cuID)['MyMIGCoinSum'];
-        $this->data['walletID'] = $this->getMyMIUser()->getUserInformation($this->cuID)['walletID'];
-        $this->data['cuPFBT'] = 'N/A';
-        $this->data['getIncomeYTDSummary'] = $this->budgetModel->getIncomeYTDSummary($this->cuID);
-        $this->data['ytdTotals'] = $this->budgetModel->getYTDTotals($this->cuID);
-        $this->data['MyMICoinSum'] = $this->getMyMICoin()->getUserCoinTotal($this->cuID);
-        $this->data['getUserBankAccounts'] = $this->accountsModel->getUserBankAccounts($this->cuID);
-        $this->data['getUserCreditAccounts'] = $this->accountsModel->getUserCreditAccounts($this->cuID);
-        $this->data['creditAvailable'] = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['creditAvailable'];
-        $this->data['creditAvailableFMT'] = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['creditAvailableFMT'];
-        $this->data['creditLimit'] = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['creditLimit'];
-        $this->data['creditLimitFMT'] = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['creditLimitFMT'];
-        $this->data['debtSummaryFMT'] = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['debtSummaryFMT'];
-        $this->data['totalAccountBalance'] = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['totalAccountBalance'];
-        $this->data['totalAccountBalanceFMT'] = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['totalAccountBalanceFMT'];
-        $this->data['reporting'] = $this->getMyMIAnalytics()->reporting();
+        // $this->data['getFeatures'] = $this->getMyMIDashboard()->dashboardInfo($this->cuID)['getFeatures'];
+        // $this->data['completedGoals'] = $this->getMyMIDashboard()->dashboardInfo($this->cuID)['progressGoalData']['completions'];
+        // $this->data['pendingGoals'] = $this->getMyMIDashboard()->dashboardInfo($this->cuID)['progressGoalData']['goals'];
+        // $this->data['promotionalBanners'] = $this->getMyMIDashboard()->dashboardInfo($this->cuID)['promotionalBanners'];
+        // $this->data['cuRole'] = $this->getMyMIUser()->getUserInformation($this->cuID)['cuRole'] ?? 4;
+        // $this->data['cuUserType'] = $this->getMyMIUser()->getUserInformation($this->cuID)['cuUserType'] ?? '';
+        // $this->data['cuEmail'] = $this->getMyMIUser()->getUserInformation($this->cuID)['cuEmail'] ?? '';
+        // $this->data['cuDisplayName'] = $this->getMyMIUser()->getUserInformation($this->cuID)['cuDisplayName'] ?? '';
+        // $this->data['cuUsername'] = $this->getMyMIUser()->getUserInformation($this->cuID)['cuUsername'] ?? '';
+        // $this->data['cuNameInitials'] = $this->getMyMIUser()->getUserInformation($this->cuID)['cuNameInitials'] ?? '';
+        // $this->data['cuKYC'] = $this->getMyMIUser()->getUserInformation($this->cuID)['cuKYC'] ?? '';
+        // $this->data['cuWalletID'] = $this->getMyMIUser()->getUserInformation($this->cuID)['cuWalletID'];
+        // $this->data['cuWalletCount'] = $this->getMyMIUser()->getUserInformation($this->cuID)['cuWalletCount'];
+        // $this->data['MyMIGCoinSum'] = $this->getMyMIUser()->getUserInformation($this->cuID)['MyMIGCoinSum'];
+        // $this->data['walletID'] = $this->getMyMIUser()->getUserInformation($this->cuID)['walletID'];
+        // $this->data['cuPFBT'] = 'N/A';
+        // $this->data['getIncomeYTDSummary'] = $this->budgetModel->getIncomeYTDSummary($this->cuID);
+        // $this->data['ytdTotals'] = $this->budgetModel->getYTDTotals($this->cuID);
+        // $this->data['MyMICoinSum'] = $this->getMyMICoin()->getUserCoinTotal($this->cuID);
+        // $this->data['getUserBankAccounts'] = $this->accountsModel->getUserBankAccounts($this->cuID);
+        // $this->data['getUserCreditAccounts'] = $this->accountsModel->getUserCreditAccounts($this->cuID);
+        // $this->data['creditAvailable'] = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['creditAvailable'];
+        // $this->data['creditAvailableFMT'] = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['creditAvailableFMT'];
+        // $this->data['creditLimit'] = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['creditLimit'];
+        // $this->data['creditLimitFMT'] = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['creditLimitFMT'];
+        // $this->data['debtSummaryFMT'] = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['debtSummaryFMT'];
+        // $this->data['totalAccountBalance'] = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['totalAccountBalance'];
+        // $this->data['totalAccountBalanceFMT'] = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['totalAccountBalanceFMT'];
+        // $this->data['reporting'] = $this->getMyMIAnalytics()->reporting();
         
         if ($this->debug === 1) {
             // log_message('debug', 'BudgetController L107 - $ytdTotals: ' . print_r($this->budgetModel->getYTDTotals($this->cuID), true));
@@ -131,7 +131,7 @@ class AdminController extends UserController
     public function index()
     {
         $this->data['pageTitle']                    = 'Admin Management | MyMI Wallet | The Future of Finance';
-        $this->commonData(); // Ensure this is correctly populating $this->data
+        // $this->commonData(); // Ensure this is correctly populating $this->data
         $this->renderTheme('ManagementModule\Views\index', $this->data);
     }
 
