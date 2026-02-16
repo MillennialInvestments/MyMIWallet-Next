@@ -227,7 +227,7 @@ class MarketingController extends UserController
     
         // 📅 Today's summaries (created_at = today)
         $todaysSummaries = $this->marketingModel->getTodaysGeneratedSummaries();
-        log_message('debug', 'Management/MarketingController::index L182 - $todaysSummaries Array: ' . (print_r($todaysSummaries, true))); 
+        $this->logSnippet('debug', 'MarketingController index todaysSummaries', $todaysSummaries);
         $this->data['todaysStory'] = array_filter($todaysSummaries, function ($summary) {
             return isset($summary['summary']) && strlen(trim($summary['summary'])) > 10;
         });
@@ -699,7 +699,7 @@ class MarketingController extends UserController
         // log_message('debug', 'MarketingController L160 - $this->marketing: ' . (print_r($this->marketing, true))); 
         $this->data['getActiveCampaigns'] = $this->marketing['department']['getActiveCampaigns'];  
         $getDripCampaignInfo = $this->getMyMIMarketing()->getDripCampaignInfo();
-        log_message('info', 'Management/MarketingController L563 - $getDripCampaignInfo Array: ' . (print_r($getDripCampaignInfo, true)));
+        $this->logSnippet('info', 'MarketingController getDripCampaignInfo', $getDripCampaignInfo);
         $this->data['getActiveDripCampaigns'] = $getDripCampaignInfo['dripCampaigns'];  
         $this->data['getActiveDripCampaignSteps'] = $getDripCampaignInfo['dripCampaignSteps'];   
         
@@ -1211,7 +1211,7 @@ class MarketingController extends UserController
             $contentSize = strlen($content);
     
             log_message('debug', '📌 Processing record ID ' . $record['id'] . ' with content size: ' . $contentSize);
-            log_message('debug', 'Management/MarketingController L770 - $record Array: ' . print_r($record, true));
+            $this->logSnippet('debug', 'MarketingController summarizeStory record', $record);
     
             if ($contentSize === 0) {
                 log_message('debug', "⏭️ Skipped record ID {$record['id']} - empty content.");
@@ -1454,7 +1454,7 @@ class MarketingController extends UserController
             ]);
         }
     
-        log_message('debug', '📦 Loaded post data: ' . print_r($post, true));
+        $this->logSnippet('debug', 'MarketingController loaded post data', $post);
     
         $post['title']     = $this->getMyMIMarketing()->cleanTitle($post['title'] ?? 'Untitled');
         $post['cta']       = $this->getMyMIMarketing()->generateCTA($post['summary'] ?? '');
@@ -1478,7 +1478,7 @@ class MarketingController extends UserController
             'voiceover_url'  => $post['voiceover_url'] ?? null,
         ];
     
-        log_message('debug', '🎯 previewGeneratedPost: Data prepared for view: ' . (print_r($this->data,true)));
+        $this->logSnippet('debug', 'MarketingController previewGeneratedPost data', $this->data);
         
         $mode = $this->request->getGet('mode');
         if ($mode === 'insight') {

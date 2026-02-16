@@ -193,7 +193,7 @@ class ProjectsController extends UserController
         if ($this->request->getMethod() === 'POST') {
             log_message('debug', 'ProjectsController::add - POST request detected');
             $formData = $this->request->getPost();
-            log_message('debug', 'ProjectsController::add - $formData: ' . print_r($formData, true));
+            $this->logSnippet('debug', 'ProjectsController add formData', $formData);
     
             log_message('debug', 'ProjectsController::add - User ID matched: ' . $this->cuID);
     
@@ -217,7 +217,7 @@ class ProjectsController extends UserController
                 'promotional_links' => $formData['promotional_links'],
                 'form_mode' => $formData['form_mode'],
             ];
-            log_message('debug', 'ProjectsController::add - $projectData: ' . print_r($projectData, true));
+            $this->logSnippet('debug', 'ProjectsController add projectData', $projectData);
     
             if ($this->projectsModel->createProject($projectData)) {
                 log_message('debug', 'ProjectsController::add - Project created successfully');
@@ -245,7 +245,7 @@ class ProjectsController extends UserController
                         'module'  => 'projects',
                         'queue'   => true,
                     ];
-                    log_message('debug', 'ProjectsController::add - $emailData: ' . print_r($emailData, true));
+                    $this->logSnippet('debug', 'ProjectsController add emailData', $emailData);
                 
                     // Send email
                     if ($this->supportService->sendEmail($emailData)) {

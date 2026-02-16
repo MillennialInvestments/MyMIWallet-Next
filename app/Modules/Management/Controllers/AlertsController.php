@@ -89,7 +89,7 @@ class AlertsController extends UserController
 //         $this->MyMIWallets                          = new MyMIWallets(); // replaced by BaseController getter 
         // Check for user ID
         $this->cuID                                 = $this->auth->id() ?? session('logged_in') ?? $this->session->get('user_id');
-        log_message('debug', 'HowTosController L47 - $this->cuID: ' . (print_r($this->cuID, true)));
+        $this->logSnippet('debug', 'AlertsController init cuID', $this->cuID);
         if (empty($this->cuID)) {
             log_message('error', 'Failed to retrieve user ID.');
             return redirect()->to('/login')->with('redirect_url', current_url())->send();
@@ -871,17 +871,17 @@ class AlertsController extends UserController
                 if (empty($body)) {
                     $body = imap_fetchbody($inbox, $email_number, 1);
                 }
-                log_message('info', 'Fetched email header: ' . print_r($header, true));
+                $this->logSnippet('info', 'AlertsController fetched email header', $header);
                 log_message('info', 'Fetched email body: ' . $body);
     
                 $emailData = $this->parseEmail($body);
                 if ($emailData) {
-                    log_message('info', 'Parsed email data: ' . print_r($emailData, true));
+                    $this->logSnippet('info', 'AlertsController parsed email data', $emailData);
                     $insertResult = $this->alertsModel->storeAlerts($emailData);
                     if ($insertResult) {
                         log_message('info', 'Email stored successfully: ID ' . $insertResult);
                     } else {
-                        log_message('error', 'Failed to store email in database: ' . print_r($emailData, true));
+                        $this->logSnippet('error', 'AlertsController failed to store email data', $emailData);
                     }
                 } else {
                     log_message('error', 'Failed to parse email content: ' . $body);
