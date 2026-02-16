@@ -46,6 +46,7 @@ class Console extends BaseConfig
         \App\Commands\AiOps\GateCost::class,
         \App\Commands\AiOps\EmailScan::class,
         \App\Commands\AiOps\GovernanceAnalyze::class,
+        \App\Commands\AiOps\HealthFull::class,
         \App\Commands\AiOps\Init::class,
         \App\Commands\AiOps\ManualIndex::class,
         \App\Commands\AiOps\ManualRun::class,
@@ -64,6 +65,7 @@ class Console extends BaseConfig
         \App\Commands\AiOps\RepairRunSafe::class,
         \App\Commands\AiOps\Rollback::class,
         \App\Commands\AiOps\RoutesScan::class,
+        \App\Commands\AiOps\RoutesScanAuth::class,
         \App\Commands\AiOps\Run::class,
         \App\Commands\AiOps\ScanCells::class,
         \App\Commands\AiOps\Seed::class,
@@ -71,6 +73,8 @@ class Console extends BaseConfig
         \App\Commands\AiOps\Status::class,
         \App\Commands\AiOps\SyncPerfRoutes::class,
         \App\Commands\AiOps\Watch::class,
+        \App\Commands\AiOps\API\SchemeValidate::class,
+        \App\Commands\AiOps\DB\SlowScan::class,
         \App\Commands\AiOps\Observe\Cost::class,
         \App\Commands\AiOps\Observe\Hash::class,
         \App\Commands\AiOps\Observe\Map::class,
@@ -84,6 +88,12 @@ class Console extends BaseConfig
         \App\Commands\AiOps\Patch\Hallucination::class,
         \App\Commands\AiOps\Patch\RiskScore::class,
         \App\Commands\AiOps\Patch\Validate::class,
+        \App\Commands\AiOps\Redis\Stats::class,
+        \App\Commands\AiOps\Routes\Compare::class,
+        \App\Commands\AiOps\Routes\Gate::class,
+        \App\Commands\AiOps\Routes\Regress::class,
+        \App\Commands\AiOps\Routes\Scan::class,
+        \App\Commands\AiOps\Routes\ScanAuth::class,
 
         /*
         |----------------------------------------------------------------------
