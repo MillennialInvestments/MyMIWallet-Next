@@ -1,6 +1,6 @@
 # AI-Ops: Stale Docs
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-17T17:54:40Z
+> Run: 2026-02-17T20:00:01Z
 
 - docs/Kimi/README.md
   - Doc last updated: 2025-12-11 (67 days ago)
@@ -163,7 +163,7 @@
 - docs/nginx/nginx.md
   - Doc last updated: 2025-11-08 (101 days ago)
 - docs/notes/2025-11-23-alerts-preview-lazy-refresh-and-advisor-errors.md
-  - Doc last updated: 2025-11-23 (85 days ago)
+  - Doc last updated: 2025-11-23 (86 days ago)
 - docs/notes/2025-12-01-feature-corrections.md
   - Doc last updated: 2025-12-01 (78 days ago)
 - docs/operations/01-foundation.md

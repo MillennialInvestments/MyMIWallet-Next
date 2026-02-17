@@ -2195,3 +2195,51 @@ Error: Mismatching encryption keys. The encryption key in the settings file /hom
     at ModuleRegistry.loadModules (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/@n8n/backend-common/src/modules/module-registry.ts:99:20)
     at CommandRegistry.execute (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n/src/command-registry.ts:46:3)
     at /home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n/bin/n8n:63:2
+Error: Mismatching encryption keys. The encryption key in the settings file /home/mymiteam/.n8n/config does not match the N8N_ENCRYPTION_KEY env var. Please make sure both keys match. More information: https://docs.n8n.io/hosting/environment-variables/configuration-methods/#encryption-key
+    at InstanceSettings.loadOrCreate (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n-core/src/instance-settings/instance-settings.ts:192:11)
+    at new InstanceSettings (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n-core/src/instance-settings/instance-settings.ts:67:24)
+    at ContainerClass.get (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/@n8n/di/src/di.ts:104:16)
+    at CommunityPackagesModule.loadDir (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n/src/modules/community-packages/community-packages.module.ts:37:30)
+    at ModuleRegistry.loadModules (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/@n8n/backend-common/src/modules/module-registry.ts:99:20)
+    at CommandRegistry.execute (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n/src/command-registry.ts:46:3)
+    at /home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n/bin/n8n:63:2
+Error: Mismatching encryption keys. The encryption key in the settings file /home/mymiteam/.n8n/config does not match the N8N_ENCRYPTION_KEY env var. Please make sure both keys match. More information: https://docs.n8n.io/hosting/environment-variables/configuration-methods/#encryption-key
+    at InstanceSettings.loadOrCreate (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n-core/src/instance-settings/instance-settings.ts:192:11)
+    at new InstanceSettings (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n-core/src/instance-settings/instance-settings.ts:67:24)
+    at ContainerClass.get (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/@n8n/di/src/di.ts:104:16)
+    at CommunityPackagesModule.loadDir (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n/src/modules/community-packages/community-packages.module.ts:37:30)
+    at ModuleRegistry.loadModules (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/@n8n/backend-common/src/modules/module-registry.ts:99:20)
+    at CommandRegistry.execute (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n/src/command-registry.ts:46:3)
+    at /home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n/bin/n8n:63:2
+Error: Mismatching encryption keys. The encryption key in the settings file /home/mymiteam/.n8n/config does not match the N8N_ENCRYPTION_KEY env var. Please make sure both keys match. More information: https://docs.n8n.io/hosting/environment-variables/configuration-methods/#encryption-key
+    at InstanceSettings.loadOrCreate (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n-core/src/instance-settings/instance-settings.ts:192:11)
+    at new InstanceSettings (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n-core/src/instance-settings/instance-settings.ts:67:24)
+    at ContainerClass.get (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/@n8n/di/src/di.ts:104:16)
+    at CommunityPackagesModule.loadDir (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n/src/modules/community-packages/community-packages.module.ts:37:30)
+    at ModuleRegistry.loadModules (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/@n8n/backend-common/src/modules/module-registry.ts:99:20)
+    at CommandRegistry.execute (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n/src/command-registry.ts:46:3)
+    at /home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n/bin/n8n:63:2
+Error: Mismatching encryption keys. The encryption key in the settings file /home/mymiteam/.n8n/config does not match the N8N_ENCRYPTION_KEY env var. Please make sure both keys match. More information: https://docs.n8n.io/hosting/environment-variables/configuration-methods/#encryption-key
+    at InstanceSettings.loadOrCreate (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n-core/src/instance-settings/instance-settings.ts:192:11)
+    at new InstanceSettings (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n-core/src/instance-settings/instance-settings.ts:67:24)
+    at ContainerClass.get (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/@n8n/di/src/di.ts:104:16)
+    at CommunityPackagesModule.loadDir (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n/src/modules/community-packages/community-packages.module.ts:37:30)
+    at ModuleRegistry.loadModules (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/@n8n/backend-common/src/modules/module-registry.ts:99:20)
+    at CommandRegistry.execute (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n/src/command-registry.ts:46:3)
+    at /home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n/bin/n8n:63:2
+Error: Mismatching encryption keys. The encryption key in the settings file /home/mymiteam/.n8n/config does not match the N8N_ENCRYPTION_KEY env var. Please make sure both keys match. More information: https://docs.n8n.io/hosting/environment-variables/configuration-methods/#encryption-key
+    at InstanceSettings.loadOrCreate (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n-core/src/instance-settings/instance-settings.ts:192:11)
+    at new InstanceSettings (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n-core/src/instance-settings/instance-settings.ts:67:24)
+    at ContainerClass.get (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/@n8n/di/src/di.ts:104:16)
+    at CommunityPackagesModule.loadDir (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n/src/modules/community-packages/community-packages.module.ts:37:30)
+    at ModuleRegistry.loadModules (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/@n8n/backend-common/src/modules/module-registry.ts:99:20)
+    at CommandRegistry.execute (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n/src/command-registry.ts:46:3)
+    at /home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n/bin/n8n:63:2
+Error: Mismatching encryption keys. The encryption key in the settings file /home/mymiteam/.n8n/config does not match the N8N_ENCRYPTION_KEY env var. Please make sure both keys match. More information: https://docs.n8n.io/hosting/environment-variables/configuration-methods/#encryption-key
+    at InstanceSettings.loadOrCreate (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n-core/src/instance-settings/instance-settings.ts:192:11)
+    at new InstanceSettings (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n-core/src/instance-settings/instance-settings.ts:67:24)
+    at ContainerClass.get (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/@n8n/di/src/di.ts:104:16)
+    at CommunityPackagesModule.loadDir (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n/src/modules/community-packages/community-packages.module.ts:37:30)
+    at ModuleRegistry.loadModules (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/@n8n/backend-common/src/modules/module-registry.ts:99:20)
+    at CommandRegistry.execute (/home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n/src/command-registry.ts:46:3)
+    at /home/mymiteam/mymiwallet/site/current/aiops/node_modules/n8n/bin/n8n:63:2
