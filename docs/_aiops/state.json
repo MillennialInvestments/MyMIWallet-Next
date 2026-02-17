@@ -4511,7 +4511,27 @@
         "docs/_support/ops-spark-reset/20260217-032014/summary.md": {
             "hash": "99b90617e7814635f7f531aeabb3169a54dfb0ce7a3774b1139db3d83eb26913",
             "mtime": "2026-02-17"
+        },
+        "docs/_support/ops-spark-reset/20260217-041857/summary.md": {
+            "hash": "7f402d3cdfdb02d87201c31f8350945de55100e4e45a28594e3ad0eb191bff50",
+            "mtime": "2026-02-17"
+        },
+        "docs/_support/ops-spark-reset/20260217-042717/summary.md": {
+            "hash": "3d33a95b133704d609ff9f0dbad0c744a659ac35bb3909b628a0c092b3767d7f",
+            "mtime": "2026-02-17"
+        },
+        "docs/_support/ops-spark-reset/20260217-042932/summary.md": {
+            "hash": "b237caf6e3dff9f8fb3b6fa99d8f04fd366c1ad4e1abed089b5a1b0fb501a997",
+            "mtime": "2026-02-17"
+        },
+        "docs/_support/ops-spark-reset/20260217-043056/summary.md": {
+            "hash": "e67607df3f5bd07a835333383dbf16750c59a4c9ae7daf72b389a6863b1c59b2",
+            "mtime": "2026-02-17"
+        },
+        "docs/_support/ops-spark-reset/20260217-043328/summary.md": {
+            "hash": "3668952202e8465fcc5ee04514e1e67329aefb733c825c66fb26e4d2ecd16fe1",
+            "mtime": "2026-02-17"
         }
     },
-    "last_run": "2026-02-17T04:00:02Z"
+    "last_run": "2026-02-17T12:00:01Z"
 }

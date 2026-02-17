@@ -3,7 +3,7 @@
 use App\Models\{AuctionItemModel, AuctionSettlementModel, AuctionPaymentModel};
 use CodeIgniter\RESTful\ResourceController;
 
-class AuctionsController extends ResourceController
+class AuctionsAPIController extends ResourceController
 {
     protected $format = 'json';
 
