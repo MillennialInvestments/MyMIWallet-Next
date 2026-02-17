@@ -225,7 +225,6 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->get('/', 'APIController::index');
     $routes->match(['GET', 'POST'], '/', 'APIController::index');
     $routes->match(['GET', 'POST'], 'Status', 'APIController::status');
-    $routes->match(['GET', 'POST'], 'Status/(:segment)', 'APIController::status');
     $routes->get('Health', 'HealthController::index');              // /API/Health
     $routes->get('Health/spark', 'HealthController::spark');        // /API/Health/spark
     $routes->get('Ops/status', 'OpsController::status');
@@ -700,14 +699,6 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     // ✅ ManagementController
     // ------------------------
 
-    $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
-        $routes->get('banUnverifiedUsers', 'ManagementController::banUnverifiedUsers');
-        $routes->get('processQueuedEmails', 'ManagementController::processQueuedEmails');
-        $routes->get('resendActivationEmailsBatch', 'ManagementController::resendActivationEmailsBatch');
-        $routes->get('resendActivationEmailsBatchQueued', 'ManagementController::resendActivationEmailsBatchQueued');
-        $routes->get('sendTestActivationEmail', 'ManagementController::sendTestActivationEmail');
-        $routes->post('saveSuggestion', 'ManagementController::saveSuggestion');
-    });
     $routes->get('SMTP/test', 'App\\Modules\\Management\\Controllers\\SmtpTestController::probe', ['filter' => 'login']);
 
     // ------------------------
@@ -873,7 +864,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->post('composePost','ManagementController::composePost');
     });
 
-    // Predictions (API)
+    // Predictions (API + CRON)
     $routes->group('Predictions', function($routes) {
         $routes->get('/', 'PredictionsController::index');
         $routes->get('Liquidity/Add', 'PredictionsController::addLiquidity');
@@ -886,12 +877,8 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('Orders/Cancel', 'PredictionsController::cancelOrder');
         $routes->get('Portfolio', 'PredictionsController::portfolio');
         $routes->get('Settlements', 'PredictionsController::settlements');
-        $routes->post('PlaceOrder', 'PredictionsController::placeOrder');     // POST
-        $routes->post('CancelOrder', 'PredictionsController::cancelOrder');   // POST
-    });
-
-    // Predictions CRON(API)
-    $routes->group('Predictions', function($routes) {
+        $routes->post('PlaceOrder', 'PredictionsController::placeOrder');
+        $routes->post('CancelOrder', 'PredictionsController::cancelOrder');
         $routes->get('Cron/Distribute-Fees', 'PredictionsController::cronDistributeFees');
         $routes->get('Cron/Fetch-Market-Data', 'PredictionsController::cronFetchMarketData');
         $routes->get('Cron/Fetch-User-Data', 'PredictionsController::cronFetchUserData');
@@ -1009,7 +996,6 @@ $routes->group('Blog', ['namespace' => 'App\Modules\Blog\Controllers'],  functio
         $routes->get('/', 'EarningsController::index');
         $routes->get('Test', 'EarningsController::test');
         $routes->get('(:segment)', 'EarningsController::viewByDate'); // Catch any dynamic date
-        $routes->get('(:segment)', 'EarningsController::viewByDate'); // Catch any dynamic date
     });
     $routes->group('Investing', function($routes) {
         $routes->get('/', 'InvestingController::index');
@@ -1063,6 +1049,12 @@ $routes->group('Dashboard', ['namespace' => 'App\Modules\User\Controllers', 'fil
 });
 
 $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers'],  function($routes) {
+    $routes->get('banUnverifiedUsers', 'ManagementController::banUnverifiedUsers');
+    $routes->get('processQueuedEmails', 'ManagementController::processQueuedEmails');
+    $routes->get('resendActivationEmailsBatch', 'ManagementController::resendActivationEmailsBatch');
+    $routes->get('resendActivationEmailsBatchQueued', 'ManagementController::resendActivationEmailsBatchQueued');
+    $routes->get('sendTestActivationEmail', 'ManagementController::sendTestActivationEmail');
+    $routes->post('saveSuggestion', 'ManagementController::saveSuggestion');
     $routes->get('/', 'ManagementController::index');
     $routes->get('Signals', 'SignalsController::index');
     $routes->get('AiOps', 'AiOpsManagementController::index', ['filter' => 'permission:admin.access']);
@@ -1582,14 +1574,11 @@ $routes->group('Wallets', ['namespace' => 'App\Modules\User\Controllers', 'filte
     $routes->match(['GET', 'POST'], 'Banking/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.banking.details.segment']);
     $routes->match(['GET', 'POST'], 'Banking/Edit/Account/(:segment)', 'WalletsController::editBankAccount/$1', ['as' => 'wallets.banking.edit.account.segment']);
     $routes->match(['GET', 'POST'], 'Checking', 'WalletsController::checking', ['as' => 'wallets.checking']);
-    $routes->match(['GET', 'POST'], 'Create', 'WalletsController::generateWallet', ['as' => 'wallets.create']); // Previously /Wallets/Address-Generator
     $routes->match(['GET', 'POST'], 'Credit/Edit/Account/(:segment)', 'WalletsController::editCreditAccount/$1');
     $routes->match(['GET', 'POST'], 'Crypto', 'WalletsController::crypto', ['as' => 'wallets.crypto']);
-    $routes->match(['GET', 'POST'], 'Checking', 'WalletsController::index', ['as' => 'wallets.checking']);
     $routes->match(['GET', 'POST'], 'Create', 'WalletsController::generateWallet', ['as' => 'wallets.create']); // Previously /Wallets/Address-Generator
     $routes->match(['GET', 'POST'], 'Credit', 'WalletsController::index', ['as' => 'wallets.credit']);
     $routes->match(['GET', 'POST'], 'Credit/Details/(:segment)', 'WalletsController::details/$1');
-    $routes->match(['GET', 'POST'], 'Credit/Edit/Account/(:segment)', 'WalletsController::edit/$1');
     $routes->match(['GET', 'POST'], 'Coin-Swap', 'WalletsController::coinSwap', ['as' => 'wallets.coin-swap']);
     $routes->match(['GET', 'POST'], 'Coin-Swap/(:segment)', 'WalletsController::coinSwap/$1', ['as' => 'wallets.coin-swap.segment']);
     $routes->match(['GET', 'POST'], 'Complete/Purchase', 'WalletsController::completePurchase', ['as' => 'wallets.complete.purchase']);
@@ -2071,12 +2060,6 @@ $routes->get('Subscribe/Daily-Financial-News', static function () {
 $routes->get('Blog/Investing/(:any)', static function () {
     return redirect()->to(site_url('Blog/Investing'));
 });
-
-// $moduleRouteFiles = glob(APPPATH . 'Modules/*/Config/Routes.php');
-
-// foreach ($moduleRouteFiles as $file) {
-//     require_once $file;
-// }
 
 
 // Tax user module (nested under User module)
