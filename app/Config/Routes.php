@@ -293,7 +293,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->get('Chat/me', 'ChatController::me');
     $routes->post('Chat/tool', 'ChatController::tool');
 
-    $routes->group('Management', ['filter' => 'cronKey'], function($routes) {
+    $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers', 'filter' => 'cronKey'], function($routes) {
         $routes->get('Run-CRON-Tasks', 'ManagementController::Run_CRON_Tasks');
         $routes->get('ajaxGetActiveUsers', 'ManagementController::ajaxGetActiveUsers');
         $routes->get('ajaxGetInactiveUsers', 'ManagementController::ajaxGetInactiveUsers');
@@ -700,7 +700,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     // ✅ ManagementController
     // ------------------------
 
-    $routes->group('Management', function($routes) {
+    $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
         $routes->get('banUnverifiedUsers', 'ManagementController::banUnverifiedUsers');
         $routes->get('processQueuedEmails', 'ManagementController::processQueuedEmails');
         $routes->get('resendActivationEmailsBatch', 'ManagementController::resendActivationEmailsBatch');
@@ -1729,9 +1729,9 @@ if (ENVIRONMENT !== 'production') {
     });
 
     $routes->get('test-504', function () {
-        http_response_code(504);
-        include APPPATH . 'Views/errors/html/error_504.php';
-        exit;
+        return service('response')
+            ->setStatusCode(504)
+            ->setBody(view('errors/html/error_504'));
     });
 }
 // // Alerts API Group - Handles Trade Alerts, Social Media, and Voiceovers
@@ -2049,7 +2049,7 @@ if (ENVIRONMENT !== 'production') {
 //     // Define other routes for 'blog' module
 // });
 // APIs - Bitcoin (PSBT + broadcast)
-$routes->group('API/Bitcoin', static function($routes) {
+$routes->group('API/Bitcoin', ['namespace' => 'App\Modules\APIs\Controllers'], static function($routes) {
     $routes->post('buildUnsignedPsbt', 'App\Modules\APIs\Controllers\BitcoinController::buildUnsignedPsbt');
     $routes->post('broadcastSignedTx', 'App\Modules\APIs\Controllers\BitcoinController::broadcastSignedTx');
 });
@@ -2072,8 +2072,8 @@ $routes->get('Blog/Investing/(:any)', static function () {
     return redirect()->to(site_url('Blog/Investing'));
 });
 
-if (file_exists(APPPATH . "Modules/Management/Config/Routes.php")) {
-    require APPPATH . "Modules/Management/Config/Routes.php";
+if (class_exists(\App\Modules\Management\Config\Routes::class)) {
+    \App\Modules\Management\Config\Routes::map($routes);
 }
 
 // Tax user module (nested under User module)
@@ -2101,7 +2101,7 @@ $routes->group('Admin/Tax', ['namespace' => 'App\\Modules\\Management\\TaxAdmin\
     $routes->match(['GET', 'POST'], 'Rates/edit/(:num)', 'TaxConfig::editRate/$1');
 });
 
-$routes->group('API/Ops', ['filter' => 'internalToken'], static function ($routes) {
+$routes->group('API/Ops', ['namespace' => 'App\Modules\APIs\Controllers', 'filter' => 'internalToken'], static function ($routes) {
     $routes->get('healthcheck', 'App\Modules\Ops\Controllers\OpsController::healthcheck');
     $routes->post('app/update', 'App\Modules\Ops\Controllers\OpsController::appUpdate');
     $routes->get('commands', 'App\Modules\Ops\Controllers\OpsController::commands');
@@ -2111,13 +2111,13 @@ $routes->group('API/Ops', ['filter' => 'internalToken'], static function ($route
     $routes->get('public-pages/report', 'App\Modules\APIs\Controllers\OpsPublicPagesController::report');
 });
 
-$routes->group('API/AiOps', ['filter' => 'internalToken'], static function ($routes) {
+$routes->group('API/AiOps', ['namespace' => 'App\Modules\APIs\Controllers', 'filter' => 'internalToken'], static function ($routes) {
     $routes->get('snapshot', 'App\Modules\AIOps\Controllers\AIOpsController::snapshot');
     $routes->get('gaps/docs', 'App\Modules\AIOps\Controllers\AIOpsController::docsGaps');
     $routes->post('watch', 'App\Modules\AIOps\Controllers\AIOpsController::watch');
 });
 
-$routes->group('API', ['filter' => 'internalToken'], static function ($routes) {
+$routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers', 'filter' => 'internalToken'], static function ($routes) {
     $routes->get('Logs/summary', 'App\Modules\Logs\Controllers\LogsController::summary');
     $routes->post('ContentEngine/run', 'App\Modules\ContentEngine\Controllers\ContentEngineController::run');
     $routes->get('ContentEngine/drafts/(:segment)', 'App\Modules\ContentEngine\Controllers\ContentEngineController::draft/$1');
