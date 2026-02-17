@@ -10,7 +10,7 @@ use Config\Database;
 
 class Report extends SafeBaseCommand
 {
-    protected $group = 'AIOps';
+    protected $group = 'AIOps - Public Pages';
     protected $name = 'aiops:public-pages:report';
     protected $description = 'Generate report artifacts for a public pages run.';
 

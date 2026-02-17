@@ -10,7 +10,7 @@ use Config\Database;
 
 class Audit extends SafeBaseCommand
 {
-    protected $group = 'AIOps';
+    protected $group = 'AIOps - Public Pages';
     protected $name = 'aiops:public-pages:audit';
     protected $description = 'Audit public pages schema coverage, freshness, and governance conditions.';
 

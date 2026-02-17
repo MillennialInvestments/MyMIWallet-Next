@@ -11,7 +11,7 @@ use Config\Database;
 
 class Run extends SafeBaseCommand
 {
-    protected $group = 'AIOps';
+    protected $group = 'AIOps - Public Pages';
     protected $name = 'aiops:public-pages:run';
     protected $description = 'Run public pages source collection and draft generation.';
     protected $options = [

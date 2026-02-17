@@ -9,7 +9,7 @@ use Config\Database;
 
 class Worker extends SafeBaseCommand
 {
-    protected $group = 'AIOps';
+    protected $group = 'AIOps - Alerts';
     protected $name = 'aiops:alerts-worker';
     protected $description = 'Process queued alert emails';
 

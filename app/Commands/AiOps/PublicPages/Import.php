@@ -10,7 +10,7 @@ use Config\Database;
 
 class Import extends SafeBaseCommand
 {
-    protected $group = 'AIOps';
+    protected $group = 'AIOps - Public Pages';
     protected $name = 'aiops:public-pages:import';
     protected $description = 'Import docs/_aiops/inputs/public_pages.csv into bf_public_pages_catalog.';
 

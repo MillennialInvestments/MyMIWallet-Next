@@ -9,7 +9,7 @@ use Config\Database;
 
 class Health extends SafeBaseCommand
 {
-    protected $group       = 'AIOps';
+    protected $group       = 'AIOps - Alerts';
     protected $name        = 'aiops:alerts-health';
     protected $description = 'Run health checks on aiops alert queue and notify if failures are high';
 
