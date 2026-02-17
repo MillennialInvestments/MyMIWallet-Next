@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-17T12:00:01Z
+> Run: 2026-02-17T17:54:40Z
 
 - docs/CRON.md
   - Last updated: 2026-01-30
@@ -90,6 +90,9 @@
   - Last updated: 2026-02-17
   - Change type: unchanged
 - docs/_support/ops-spark-reset/20260217-043328/summary.md
+  - Last updated: 2026-02-17
+  - Change type: unchanged
+- docs/_support/ops-spark-reset/20260217-133855/summary.md
   - Last updated: 2026-02-17
   - Change type: unchanged
 - docs/_support/runtime-cache-boot/20260215-010126/summary.md
@@ -2880,7 +2883,7 @@
   - Last updated: 2025-12-27
   - Change type: unchanged
 - docs/ops/logs/logging_audit_2025-12-21.md
-  - Last updated: 2025-12-21
+  - Last updated: 2026-02-17
   - Change type: unchanged
 - docs/ops/logs/logging_breakpoint_report-2025_12_21.md
   - Last updated: 2025-12-21

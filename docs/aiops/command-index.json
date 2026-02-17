@@ -1,11 +1,11 @@
 {
-    "generated_at": "2026-02-11T02:32:29+00:00",
+    "generated_at": "2026-02-17T17:54:18+00:00",
     "summary": {
-        "total": 136,
+        "total": 191,
         "issues": 0,
         "classifications": {
             "safe": 63,
-            "read-only": 57,
+            "read-only": 112,
             "requires-approval": 14,
             "destructive": 2
         }
@@ -14,8 +14,58 @@
         {
             "command": "api:audit",
             "class": "App\\Commands\\API\\ApiAudit",
-            "group": "AI-Ops",
+            "group": "AIOps",
             "description": "Audit API endpoints defined in docs/api/schematic.yaml and capture runtime health.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:api:schema",
+            "class": "App\\Commands\\AiOps\\API\\SchemaValidate",
+            "group": "AIOps - API",
+            "description": "Validate API endpoints return JSON (optionally check required keys)",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:alerts-check",
+            "class": "App\\Commands\\AiOps\\Alerts\\Check",
+            "group": "AIOps - Alerts",
+            "description": "Fetch emails and queue them for processing",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:alerts-clean",
+            "class": "App\\Commands\\AiOps\\Alerts\\Clean",
+            "group": "AIOps",
+            "description": "Delete completed aiops alert queue rows older than 30 days",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:alerts-health",
+            "class": "App\\Commands\\AiOps\\Alerts\\Health",
+            "group": "AIOps - Alerts",
+            "description": "Run health checks on aiops alert queue and notify if failures are high",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:alerts-worker",
+            "class": "App\\Commands\\AiOps\\Alerts\\Worker",
+            "group": "AIOps - Alerts",
+            "description": "Process queued alert emails",
             "classification": "read-only",
             "requires_approval": false,
             "supports_dry_run": false,
@@ -24,7 +74,7 @@
         {
             "command": "aiops:audit",
             "class": "App\\Commands\\AiOps\\Audit",
-            "group": "AI-Ops",
+            "group": "AIOps - Audit",
             "description": "Audit aiops runtime, orchestration routes, and n8n/docs readiness",
             "classification": "read-only",
             "requires_approval": false,
@@ -34,7 +84,7 @@
         {
             "command": "aiops:auto-run",
             "class": "App\\Commands\\AiOps\\AutoRun",
-            "group": "AI-Ops",
+            "group": "AIOps - Run",
             "description": "Run AIOPS using manual priorities first, falling back to log-driven auto priorities.",
             "classification": "safe",
             "requires_approval": false,
@@ -44,8 +94,18 @@
         {
             "command": "aiops:backlog",
             "class": "App\\Commands\\AiOps\\Backlog",
-            "group": "AI-Ops",
+            "group": "AIOps - Run",
             "description": "Reconcile outstanding AIOPS patch workflow jobs.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:build-command",
+            "class": "App\\Commands\\AiOps\\BuildCommand",
+            "group": "AIOps - Commands",
+            "description": "Generate a Spark command from text logic using AIOps",
             "classification": "read-only",
             "requires_approval": false,
             "supports_dry_run": false,
@@ -54,7 +114,7 @@
         {
             "command": "aiops:chat-gov-index",
             "class": "App\\Commands\\AiOps\\ChatGovernanceIndex",
-            "group": "AI-Ops",
+            "group": "AI-Ops - Commands",
             "description": "Index ChatGPT governance steps from archived chats and sync CSV/DB outputs.",
             "classification": "read-only",
             "requires_approval": false,
@@ -64,8 +124,18 @@
         {
             "command": "aiops:command-index",
             "class": "App\\Commands\\AiOps\\CommandIndex",
-            "group": "AI-Ops",
+            "group": "AI-Ops - Commands",
             "description": "Scan and classify Spark commands for AIOps governance.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:continue",
+            "class": "App\\Commands\\AiOps\\ContinueAudit",
+            "group": "AIOps - Audit",
+            "description": "Operational audit (server + runtime focus)",
             "classification": "read-only",
             "requires_approval": false,
             "supports_dry_run": false,
@@ -74,8 +144,28 @@
         {
             "command": "aiops:copilot:validate",
             "class": "App\\Commands\\AiOps\\CopilotValidate",
-            "group": "AI-Ops",
+            "group": "AI-Ops - Audit",
             "description": "Validate copilot instructions and Spark command safety rules.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:db:slow_scan",
+            "class": "App\\Commands\\AiOps\\DB\\SlowScan",
+            "group": "AIOps - DB",
+            "description": "Scan logs for slow query markers (best-effort)",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:diff:format",
+            "class": "App\\Commands\\AiOps\\DiffFormat",
+            "group": "AIOps - Audit",
+            "description": "Generate a real unified diff from current working tree",
             "classification": "read-only",
             "requires_approval": false,
             "supports_dry_run": false,
@@ -84,7 +174,7 @@
         {
             "command": "aiops:email-scan",
             "class": "App\\Commands\\AiOps\\EmailScan",
-            "group": "AI-Ops",
+            "group": "AIOps - Marketing",
             "description": "Scan alerts mailbox for new emails and record AIOps counts.",
             "classification": "safe",
             "requires_approval": false,
@@ -92,9 +182,39 @@
             "issues": []
         },
         {
+            "command": "aiops:gate:cost",
+            "class": "App\\Commands\\AiOps\\GateCost",
+            "group": "AIOps - Management",
+            "description": "Enforce daily AI cost cap; auto-disable AiOps LLM when threshold exceeded",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:governance:analyze",
+            "class": "App\\Commands\\AiOps\\GovernanceAnalyze",
+            "group": "AIOps - Commands",
+            "description": "Analyze token usage + model anomalies",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:health:full",
+            "class": "App\\Commands\\AiOps\\HealthFull",
+            "group": "AIOps - Audit",
+            "description": "Run full system health checks and generate a consolidated report",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
             "command": "aiops:init",
             "class": "App\\Commands\\AiOps\\Init",
-            "group": "AI-Ops",
+            "group": "AIOps - Run",
             "description": "Initialize and validate the AIOps PR factory (one-time or rare use).",
             "classification": "safe",
             "requires_approval": false,
@@ -102,9 +222,19 @@
             "issues": []
         },
         {
+            "command": "aiops:manual:index",
+            "class": "App\\Commands\\AiOps\\ManualIndex",
+            "group": "AIOps - Run",
+            "description": "Index AI manual documentation under docs/_aiops/manual",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
             "command": "aiops:manual-run",
             "class": "App\\Commands\\AiOps\\ManualRun",
-            "group": "AI-Ops",
+            "group": "AIOps - Run",
             "description": "Run manual-priority AIOPS correlation, state refresh, and PR creation.",
             "classification": "safe",
             "requires_approval": false,
@@ -113,8 +243,8 @@
         },
         {
             "command": "aiops:n8n:logs",
-            "class": "App\\Commands\\AiOps\\N8nLogs",
-            "group": "AI-Ops",
+            "class": "App\\Commands\\AiOps\\N8n\\Logs",
+            "group": "AIOps - n8n",
             "description": "Tail n8n logs",
             "classification": "read-only",
             "requires_approval": false,
@@ -123,8 +253,8 @@
         },
         {
             "command": "aiops:n8n:restart",
-            "class": "App\\Commands\\AiOps\\N8nRestart",
-            "group": "AI-Ops",
+            "class": "App\\Commands\\AiOps\\N8n\\Restart",
+            "group": "AIOps - n8n",
             "description": "Restart n8n",
             "classification": "safe",
             "requires_approval": false,
@@ -133,8 +263,8 @@
         },
         {
             "command": "aiops:n8n:start",
-            "class": "App\\Commands\\AiOps\\N8nStart",
-            "group": "AI-Ops",
+            "class": "App\\Commands\\AiOps\\N8n\\Start",
+            "group": "AIOps - n8n",
             "description": "Start n8n",
             "classification": "safe",
             "requires_approval": false,
@@ -143,8 +273,8 @@
         },
         {
             "command": "aiops:n8n:stop",
-            "class": "App\\Commands\\AiOps\\N8nStop",
-            "group": "AI-Ops",
+            "class": "App\\Commands\\AiOps\\N8n\\Stop",
+            "group": "AIOps - n8n",
             "description": "Stop n8n",
             "classification": "safe",
             "requires_approval": false,
@@ -152,9 +282,169 @@
             "issues": []
         },
         {
+            "command": "aiops:observe",
+            "class": "App\\Commands\\AiOps\\Observe",
+            "group": "AIOps - Run",
+            "description": "Parse logs and detect recurring error signatures",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:observe:cost",
+            "class": "App\\Commands\\AiOps\\Observe\\Cost",
+            "group": "AIOps - Observe",
+            "description": "Correlate observability signals with AI cost logs",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:observe:hash",
+            "class": "App\\Commands\\AiOps\\Observe\\Hash",
+            "group": "AIOps - Observe",
+            "description": "Fingerprint recurring errors into stable hashes",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:observe:map",
+            "class": "App\\Commands\\AiOps\\Observe\\Map",
+            "group": "AIOps - Observe",
+            "description": "Map errors to routes and controllers",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:observe:patch",
+            "class": "App\\Commands\\AiOps\\Observe\\Patch",
+            "group": "AIOps - Observe",
+            "description": "Create patch file from suggestions",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:observe:regression",
+            "class": "App\\Commands\\AiOps\\Observe\\Regression",
+            "group": "AIOps - Observe",
+            "description": "Detect fingerprint regressions vs previous snapshot",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:observe:scan",
+            "class": "App\\Commands\\AiOps\\Observe\\Scan",
+            "group": "AIOps - Observe",
+            "description": "Scan logs and persist recurring errors",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:observe:snapshot",
+            "class": "App\\Commands\\AiOps\\Observe\\Snapshot",
+            "group": "AIOps - Observe",
+            "description": "Snapshot fingerprint map for regression detection",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:observe:suggest",
+            "class": "App\\Commands\\AiOps\\Observe\\Suggest",
+            "group": "AIOps - Observe",
+            "description": "Generate fix suggestions for recurring errors",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:pr:auto",
+            "class": "App\\Commands\\AiOps\\PRAuto",
+            "group": "AIOps - PR",
+            "description": "Full safe pipeline: observe \u2192 validate \u2192 regression \u2192 PR",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:pr:create",
+            "class": "App\\Commands\\AiOps\\PRCreate",
+            "group": "AIOps - PR",
+            "description": "Create a branch, push, and open a PR (requires token + enabled flags)",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:patch:apply",
+            "class": "App\\Commands\\AiOps\\Patch\\Apply",
+            "group": "AIOps - Patch",
+            "description": "Safely apply AI-generated patch under guardrails",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:patch:dry_run",
+            "class": "App\\Commands\\AiOps\\Patch\\DryRun",
+            "group": "AIOps - Patch",
+            "description": "Apply patch in temporary branch",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:patch:hallucination",
+            "class": "App\\Commands\\AiOps\\Patch\\Hallucination",
+            "group": "AIOps - Patch",
+            "description": "Detect hallucinated symbols in aiops_generated_patch.diff before apply",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:patch:risk_score",
+            "class": "App\\Commands\\AiOps\\Patch\\RiskScore",
+            "group": "AIOps - Patch",
+            "description": "Calculate patch risk score",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:patch:validate",
+            "class": "App\\Commands\\AiOps\\Patch\\Validate",
+            "group": "AIOps - Patch",
+            "description": "Validate PHP syntax after patch apply",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
             "command": "aiops:public-pages:audit",
-            "class": "App\\Commands\\AiOps\\PublicPagesAudit",
-            "group": "AI-Ops",
+            "class": "App\\Commands\\AiOps\\PublicPages\\Audit",
+            "group": "AIOps - Public Pages",
             "description": "Audit public pages schema coverage, freshness, and governance conditions.",
             "classification": "read-only",
             "requires_approval": false,
@@ -163,8 +453,8 @@
         },
         {
             "command": "aiops:public-pages:import",
-            "class": "App\\Commands\\AiOps\\PublicPagesImport",
-            "group": "AI-Ops",
+            "class": "App\\Commands\\AiOps\\PublicPages\\Import",
+            "group": "AIOps - Public Pages",
             "description": "Import docs/_aiops/inputs/public_pages.csv into bf_public_pages_catalog.",
             "classification": "read-only",
             "requires_approval": false,
@@ -173,8 +463,8 @@
         },
         {
             "command": "aiops:public-pages:report",
-            "class": "App\\Commands\\AiOps\\PublicPagesReport",
-            "group": "AI-Ops",
+            "class": "App\\Commands\\AiOps\\PublicPages\\Report",
+            "group": "AIOps - Public Pages",
             "description": "Generate report artifacts for a public pages run.",
             "classification": "read-only",
             "requires_approval": false,
@@ -183,9 +473,19 @@
         },
         {
             "command": "aiops:public-pages:run",
-            "class": "App\\Commands\\AiOps\\PublicPagesRun",
-            "group": "AI-Ops",
+            "class": "App\\Commands\\AiOps\\PublicPages\\Run",
+            "group": "AIOps - Public Pages",
             "description": "Run public pages source collection and draft generation.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:redis:stats",
+            "class": "App\\Commands\\AiOps\\Redis\\Stats",
+            "group": "AIOps - Redis",
+            "description": "Fetch Redis INFO stats (best-effort)",
             "classification": "read-only",
             "requires_approval": false,
             "supports_dry_run": false,
@@ -194,7 +494,7 @@
         {
             "command": "aiops:repair",
             "class": "App\\Commands\\AiOps\\Repair",
-            "group": "AI-Ops",
+            "group": "AIOps - Repair",
             "description": "Apply safe aiops repairs",
             "classification": "safe",
             "requires_approval": false,
@@ -202,9 +502,89 @@
             "issues": []
         },
         {
+            "command": "aiops:repair:run",
+            "class": "App\\Commands\\AiOps\\RepairRun",
+            "group": "AIOps - Repair",
+            "description": "Full autonomous repair pipeline",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:repair:run_safe",
+            "class": "App\\Commands\\AiOps\\RepairRunSafe",
+            "group": "AIOps - Repair",
+            "description": "Run repair pipeline with rollback safety + gating before PR",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:rollback",
+            "class": "App\\Commands\\AiOps\\Rollback",
+            "group": "AIOps - PR",
+            "description": "Rollback working tree to clean state (hard reset)",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:routes:compare",
+            "class": "App\\Commands\\AiOps\\Routes\\Compare",
+            "group": "AIOps - Routes",
+            "description": "Compare staging vs production routes scan",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:routes:gate",
+            "class": "App\\Commands\\AiOps\\Routes\\Gate",
+            "group": "AIOps - Routes",
+            "description": "Gate based on routes_scan.json thresholds",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:routes:regress",
+            "class": "App\\Commands\\AiOps\\Routes\\Regress",
+            "group": "AIOps - Routes",
+            "description": "Detect route scan regressions vs previous snapshot",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:routes:scan",
+            "class": "App\\Commands\\AiOps\\Routes\\Scan",
+            "group": "AIOps - Routes",
+            "description": "Scan Routes.php (GET routes), parallel curl, write JSON+CSV+snapshot",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:routes:scan_auth",
+            "class": "App\\Commands\\AiOps\\Routes\\ScanAuth",
+            "group": "AIOps - Routes",
+            "description": "Authenticated scan using AIOPS_AUTH_COOKIE",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
             "command": "aiops:run",
             "class": "App\\Commands\\AiOps\\Run",
-            "group": "AI-Ops",
+            "group": "AI-Ops - Run",
             "description": "Manually run the AI-Ops worker and generate docs/_aiops reports",
             "classification": "safe",
             "requires_approval": false,
@@ -214,7 +594,7 @@
         {
             "command": "aiops:scan:cells",
             "class": "App\\Commands\\AiOps\\ScanCells",
-            "group": "AI-Ops",
+            "group": "AIOps",
             "description": "Stateful scanner for repeated UI blocks and Cell candidates.",
             "classification": "safe",
             "requires_approval": false,
@@ -224,7 +604,7 @@
         {
             "command": "aiops:seed",
             "class": "App\\Commands\\AiOps\\Seed",
-            "group": "AI-Ops",
+            "group": "AI-Ops - PR",
             "description": "Seed default AI Ops caps and pricing configuration.",
             "classification": "safe",
             "requires_approval": false,
@@ -234,7 +614,7 @@
         {
             "command": "aiops:self-heal",
             "class": "App\\Commands\\AiOps\\SelfHeal",
-            "group": "AI-Ops",
+            "group": "AIOps - Repair",
             "description": "Run one-pass self-heal",
             "classification": "read-only",
             "requires_approval": false,
@@ -244,8 +624,18 @@
         {
             "command": "aiops:status",
             "class": "App\\Commands\\AiOps\\Status",
-            "group": "AI-Ops",
+            "group": "AIOps - Repair",
             "description": "AIOps runtime status",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "aiops:sync-perf",
+            "class": "App\\Commands\\AiOps\\SyncPerfRoutes",
+            "group": "AIOps - Performance",
+            "description": "Scan Routes.php and sync perf_urls.txt automatically",
             "classification": "read-only",
             "requires_approval": false,
             "supports_dry_run": false,
@@ -254,7 +644,7 @@
         {
             "command": "aiops:unlock",
             "class": "App\\Commands\\AiOps\\Unlock",
-            "group": "AI-Ops",
+            "group": "AIOps",
             "description": "Manually unlock an AIOPS patch job and reset retries.",
             "classification": "read-only",
             "requires_approval": false,
@@ -264,7 +654,7 @@
         {
             "command": "aiops:watch",
             "class": "App\\Commands\\AiOps\\Watch",
-            "group": "AI-Ops",
+            "group": "AIOps - Repair",
             "description": "Continuous aiops audit watcher",
             "classification": "read-only",
             "requires_approval": false,
@@ -292,6 +682,16 @@
             "issues": []
         },
         {
+            "command": "app:gate:coverage",
+            "class": "App\\Commands\\App\\CoverageGate",
+            "group": "App",
+            "description": "Gate on PHPUnit coverage if available (coverage-text).",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
             "command": "app:healthcheck",
             "class": "App\\Commands\\App\\Healthcheck",
             "group": "app",
@@ -302,10 +702,30 @@
             "issues": []
         },
         {
+            "command": "app:test",
+            "class": "App\\Commands\\App\\Test",
+            "group": "App",
+            "description": "Run PHPUnit test suite",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
             "command": "app:update",
             "class": "App\\Commands\\AppUpdate",
             "group": "app",
             "description": "Deprecated. Use ops:app:update instead.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "audit:all",
+            "class": "App\\Commands\\Audit\\All",
+            "group": "Audit",
+            "description": "Full system visibility audit",
             "classification": "read-only",
             "requires_approval": false,
             "supports_dry_run": false,
@@ -472,9 +892,89 @@
             "issues": []
         },
         {
+            "command": "codex:audit",
+            "class": "App\\Commands\\Codex\\Audit",
+            "group": "Codex",
+            "description": "Full repository audit via OpenAI",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "codex:continue",
+            "class": "App\\Commands\\Codex\\ContinueAudit",
+            "group": "Codex",
+            "description": "Continue audit in batches (default 5 files) with OpenAI + severity tracking",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "codex:gate",
+            "class": "App\\Commands\\Codex\\Gate",
+            "group": "Codex",
+            "description": "Fail build if high severity issues exist",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "codex:gate:severity",
+            "class": "App\\Commands\\Codex\\GateSeverity",
+            "group": "Codex",
+            "description": "Fail if severity counters exceed thresholds",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "codex:index",
+            "class": "App\\Commands\\Codex\\Index",
+            "group": "Codex",
+            "description": "Index repository and initialize audit state",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "codex:instruct:audit",
+            "class": "App\\Commands\\Codex\\Instructions\\Audit",
+            "group": "Codex",
+            "description": "Batch review repository files via OpenAI API",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "codex:instruct:devops_review",
+            "class": "App\\Commands\\Codex\\Instructions\\DevOpsReview",
+            "group": "Codex",
+            "description": "Generate instruction payload to audit AI DevOps layer against docs/*",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "codex:instruct:summarize",
+            "class": "App\\Commands\\Codex\\Instructions\\Summarize",
+            "group": "Codex",
+            "description": "Generate structured AI documentation summary template",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
             "command": "codex:review",
             "class": "App\\Commands\\Codex\\Review",
-            "group": "codex",
+            "group": "Codex",
             "description": "Generate Codex review artifacts (summary + prompt payload)",
             "classification": "safe",
             "requires_approval": false,
@@ -484,7 +984,7 @@
         {
             "command": "codex:review:commit",
             "class": "App\\Commands\\Codex\\ReviewCommit",
-            "group": "codex",
+            "group": "Codex",
             "description": "Commit Codex review artifacts intentionally (latest or by date).",
             "classification": "requires-approval",
             "requires_approval": true,
@@ -494,7 +994,7 @@
         {
             "command": "codex:review:list",
             "class": "App\\Commands\\Codex\\ReviewList",
-            "group": "codex",
+            "group": "Codex",
             "description": "List available Codex review artifacts stored under docs.",
             "classification": "read-only",
             "requires_approval": false,
@@ -514,11 +1014,31 @@
         {
             "command": "codex:review:publish",
             "class": "App\\Commands\\Codex\\ReviewPublish",
-            "group": "codex",
+            "group": "Codex",
             "description": "Aggregate governance lint results and publish review artifacts.",
             "classification": "safe",
             "requires_approval": false,
             "supports_dry_run": true,
+            "issues": []
+        },
+        {
+            "command": "codex:status",
+            "class": "App\\Commands\\Codex\\Status",
+            "group": "Codex",
+            "description": "Show audit status",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "app:compat-audit",
+            "class": "App\\Commands\\CompatAudit",
+            "group": "App",
+            "description": "Audit MyMI Wallet for CI4 + PHP compatibility issues.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
             "issues": []
         },
         {
@@ -766,6 +1286,16 @@
             "class": "App\\Commands\\Health\\Services",
             "group": "health",
             "description": "Detect web server + PHP handler status without systemctl.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "investments:economy:updateall",
+            "class": "App\\Commands\\Investments\\EconomyUpdateAll",
+            "group": "investments",
+            "description": "Fetch and store economic indicators from FRED into local tables.",
             "classification": "read-only",
             "requires_approval": false,
             "supports_dry_run": false,
@@ -1122,6 +1652,16 @@
             "issues": []
         },
         {
+            "command": "perf:k6",
+            "class": "App\\Commands\\Performance\\K6Run",
+            "group": "Performance",
+            "description": "Run k6 load test",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
             "command": "spark:purge-fastcgi",
             "class": "App\\Commands\\PurgeFastCGI",
             "group": "maintenance",
@@ -1326,6 +1866,16 @@
             "class": "App\\Commands\\SparkReset",
             "group": "ops",
             "description": "Purge Spark command cache and rebuild autoloads safely.",
+            "classification": "read-only",
+            "requires_approval": false,
+            "supports_dry_run": false,
+            "issues": []
+        },
+        {
+            "command": "test:redis",
+            "class": "App\\Commands\\Test\\RedisPing",
+            "group": "Test",
+            "description": "Test Redis connection",
             "classification": "read-only",
             "requires_approval": false,
             "supports_dry_run": false,

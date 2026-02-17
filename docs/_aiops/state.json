@@ -2942,7 +2942,7 @@
         },
         "docs/ops/logs/logging_audit_2025-12-21.md": {
             "hash": "ecf6729c9772773ee0c87dd1ede4721f9739a37861cebb96f71990a68d55c235",
-            "mtime": "2025-12-21"
+            "mtime": "2026-02-17"
         },
         "docs/ops/logs/logging_breakpoint_report-2025_12_21.md": {
             "hash": "6ba65dcf179b020a784ecd17497089e841b18e86087e4b654600a705f8bd81a7",
@@ -4531,7 +4531,11 @@
         "docs/_support/ops-spark-reset/20260217-043328/summary.md": {
             "hash": "3668952202e8465fcc5ee04514e1e67329aefb733c825c66fb26e4d2ecd16fe1",
             "mtime": "2026-02-17"
+        },
+        "docs/_support/ops-spark-reset/20260217-133855/summary.md": {
+            "hash": "54e353e11f6672f8d804405179542f1095af82b4a5d1b0d3c20b0ef1d30ccaca",
+            "mtime": "2026-02-17"
         }
     },
-    "last_run": "2026-02-17T12:00:01Z"
+    "last_run": "2026-02-17T17:54:40Z"
 }

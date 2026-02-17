@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-17T12:00:01Z
+> Run: 2026-02-17T17:54:40Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -13,77 +13,91 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/AIController.php
+- app/Modules/APIs/Controllers/AIAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/AIOpsController.php
+- app/Modules/APIs/Controllers/AIOpsAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/AiOpsController.php
+- app/Modules/APIs/Controllers/AiOpsAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/AlertsPublicController.php
+- app/Modules/APIs/Controllers/AlertsAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/AuctionsController.php
+- app/Modules/APIs/Controllers/AlertsPublicAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/BitcoinController.php
+- app/Modules/APIs/Controllers/AuctionsAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/BrokerSmokeController.php
+- app/Modules/APIs/Controllers/BitcoinAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/ChatController.php
+- app/Modules/APIs/Controllers/BrokerSmokeAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/ContentEngineController.php
+- app/Modules/APIs/Controllers/BudgetAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/DiscordController.php
+- app/Modules/APIs/Controllers/ChatAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/DocsController.php
+- app/Modules/APIs/Controllers/ContentEngineAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/DoorDashController.php
+- app/Modules/APIs/Controllers/DiscordAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/DripCampaignController.php
+- app/Modules/APIs/Controllers/DocsAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/EmailController.php
+- app/Modules/APIs/Controllers/DoorDashAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/EsportsController.php
+- app/Modules/APIs/Controllers/DripCampaignAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/KeysController.php
+- app/Modules/APIs/Controllers/EmailAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/ManagementController.php
+- app/Modules/APIs/Controllers/EsportsAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/MditAdminController.php
+- app/Modules/APIs/Controllers/HealthAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/MditBaseController.php
+- app/Modules/APIs/Controllers/InvestmentsAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/MditDepositController.php
+- app/Modules/APIs/Controllers/KeysAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/MditInvestorController.php
+- app/Modules/APIs/Controllers/ManagementAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/MditIssuanceController.php
+- app/Modules/APIs/Controllers/MarketingAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/MditRedemptionController.php
+- app/Modules/APIs/Controllers/MditAdminAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/MditWebhookController.php
+- app/Modules/APIs/Controllers/MditBaseAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/OpsPublicPagesController.php
+- app/Modules/APIs/Controllers/MditDepositAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/PredictionsController.php
+- app/Modules/APIs/Controllers/MditInvestorAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/ProjectsController.php
+- app/Modules/APIs/Controllers/MditIssuanceAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/ReferralController.php
+- app/Modules/APIs/Controllers/MditRedemptionAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/SearchController.php
+- app/Modules/APIs/Controllers/MditWebhookAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/SolanaController.php
+- app/Modules/APIs/Controllers/OpsAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/SqueezeController.php
+- app/Modules/APIs/Controllers/OpsPublicPagesAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/SupportController.php
+- app/Modules/APIs/Controllers/ProjectsAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/UserController.php
+- app/Modules/APIs/Controllers/ReferralAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/Webhooks/EmailBounceController.php
+- app/Modules/APIs/Controllers/SearchAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/Webhooks/ZapierController.php
+- app/Modules/APIs/Controllers/SolanaAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/APIs/Controllers/ZapierController.php
+- app/Modules/APIs/Controllers/SqueezeAPIController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/SupportAPIController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/UserAPIController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/WalletsAPIController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/Webhooks/EmailBounceAPIController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/Webhooks/TradingViewAPIController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/Webhooks/ZapierAPIController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/ZapierAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/APIs/Models/InvestmentsNewsModel.php
   - ⚠️ No obvious doc match found (heuristic)
@@ -263,91 +277,101 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Logs/Controllers/LogsController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Config/Routes.orig.php
+- app/Modules/Management/Controllers/APIAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/AccountRescueController.php
+- app/Modules/Management/Controllers/AccountRescueAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Controllers/AdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/AiOpsManagementController.php
+- app/Modules/Management/Controllers/AiOpsManagementAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/AssetsController.php
+- app/Modules/Management/Controllers/AlertsAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/AuthFunnelController.php
+- app/Modules/Management/Controllers/AssetsAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/AuthHealthController.php
+- app/Modules/Management/Controllers/AuthFunnelAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/BudgetingController.php
+- app/Modules/Management/Controllers/AuthHealthAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/BudgetsController.php
+- app/Modules/Management/Controllers/BudgetingAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/ChatUsageController.php
+- app/Modules/Management/Controllers/BudgetsAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/ContentEngineController.php
+- app/Modules/Management/Controllers/ChatUsageAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/DevelopmentController.php
+- app/Modules/Management/Controllers/ContentEngineAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/DiscordController.php
+- app/Modules/Management/Controllers/DevelopmentAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/DocsController.php
+- app/Modules/Management/Controllers/DiscordAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/DripCampaignController.php
+- app/Modules/Management/Controllers/DocsAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/EmailController.php
+- app/Modules/Management/Controllers/DripCampaignAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/EmailOutboxController.php
+- app/Modules/Management/Controllers/EmailAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/ExchangeController.php
+- app/Modules/Management/Controllers/EmailOutboxAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/FinanceController.php
+- app/Modules/Management/Controllers/ExchangeAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/HRController.php
+- app/Modules/Management/Controllers/FinanceAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/HowTosController.php
+- app/Modules/Management/Controllers/HRAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/ManagementController.php
+- app/Modules/Management/Controllers/HowTosAdminController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/InvestmentsAdminController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/ManagementAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Controllers/ManagementController02162026.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/Marketing/BloggerController.php
+- app/Modules/Management/Controllers/Marketing/BloggerAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/Marketing/CampaignController.php
+- app/Modules/Management/Controllers/Marketing/CampaignAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/Marketing/EmailQueueController.php
+- app/Modules/Management/Controllers/Marketing/EmailQueueAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/Marketing/EmailTemplateController.php
+- app/Modules/Management/Controllers/Marketing/EmailTemplateAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/NotificationController.php
+- app/Modules/Management/Controllers/MarketingAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/OperationsController.php
+- app/Modules/Management/Controllers/NotificationAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/OpsInboxController.php
+- app/Modules/Management/Controllers/OperationsAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/PartnersController.php
+- app/Modules/Management/Controllers/OpsAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/ProjectsController.php
+- app/Modules/Management/Controllers/OpsInboxAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/PublicPagesController.php
+- app/Modules/Management/Controllers/PartnersAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/SecurityController.php
+- app/Modules/Management/Controllers/ProjectsAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/ServicesController.php
+- app/Modules/Management/Controllers/PublicPagesAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/SignalsController.php
+- app/Modules/Management/Controllers/SecurityAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/SitemapController.php
+- app/Modules/Management/Controllers/ServicesAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/SmtpTestController.php
+- app/Modules/Management/Controllers/SignalsAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/SupportController.php
+- app/Modules/Management/Controllers/SitemapAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/TestController.php
+- app/Modules/Management/Controllers/SmtpTestAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/TradovateController.php
+- app/Modules/Management/Controllers/SupportAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/UsersController.php
+- app/Modules/Management/Controllers/TestAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/WebDesignController.php
+- app/Modules/Management/Controllers/TradovateAdminController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/UsersAdminController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/WalletsAdminController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/WebDesignAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Models/AlertPendingModel.php
   - ⚠️ No obvious doc match found (heuristic)
@@ -379,31 +403,7 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Views/Alerts/form_fields/trade_alert_fields.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Views/Alerts/modals/addTrade.php
-  - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Views/Alerts/modals/createTradeAlert.php
-  - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Views/Alerts/modals/manageTradeAlert.php
-  - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Views/Alerts/modals/updateExchange.php
-  - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Views/Alerts/modals/viewTradeChart.php
-  - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Views/Alerts/resources/action-center.php
-  - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Views/Alerts/resources/advisorMedia.php
-  - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Views/Alerts/resources/management-controls.php
-  - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Views/Alerts/resources/management-tools.php
-  - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Views/Alerts/resources/market-data.php
-  - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Views/Alerts/resources/overview-chart.php
-  - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Views/Alerts/resources/rh-keygen.php
-  - ⚠️ No obvious doc match found (heuristic)
-- … and 949 more
+- … and 961 more
 
 ## Documented Items With No Obvious Code Match (best-effort)
 - docs/CRON.md
@@ -696,6 +696,8 @@
   - ❌ No obvious code match found (heuristic)
 - docs/content_hub_inventory/content_hub_inventory.md
   - ❌ No obvious code match found (heuristic)
+- docs/controllers/APIs/TradingViewController.md
+  - ❌ No obvious code match found (heuristic)
 - docs/cron/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/cron/jobs/auth_funnel_check.md
@@ -804,6 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/forecasting/07_integration_points.md
   - ❌ No obvious code match found (heuristic)
-- docs/forecasting/08_ui_and_dashboard.md
-  - ❌ No obvious code match found (heuristic)
-- … and 787 more
+- … and 788 more
