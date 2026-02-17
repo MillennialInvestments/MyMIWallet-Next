@@ -8,9 +8,6 @@ if (! headers_sent()) {
     header('X-MyMI-FrontController: 1');
 }
 
-require dirname(__DIR__) . '/vendor/autoload.php';
-
-
 use App\Services\AutoloadAuditService;
 use CodeIgniter\Boot;
 use Config\Paths;
@@ -46,6 +43,8 @@ define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
 if (getcwd() . DIRECTORY_SEPARATOR !== FCPATH) {
     chdir(FCPATH);
 }
+
+require FCPATH . '../vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
