@@ -180,7 +180,9 @@ class InventoryScanner
 
         foreach ($files as $file) {
             $before = get_declared_classes();
-            require_once $file;
+            if (is_file($file)) {
+                include_once $file;
+            }
             $after = get_declared_classes();
             $newClasses = array_diff($after, $before);
 
