@@ -293,10 +293,12 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->post('Chat/tool', 'ChatController::tool');
 
     $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers', 'filter' => 'cronKey'], function($routes) {
-        $routes->get('Run-CRON-Tasks', 'ManagementController::Run_CRON_Tasks');
-        $routes->get('ajaxGetActiveUsers', 'ManagementController::ajaxGetActiveUsers');
-        $routes->get('ajaxGetInactiveUsers', 'ManagementController::ajaxGetInactiveUsers');
-        $routes->get('checkForSpamUsers', 'ManagementController::checkForSpamUsers');
+        $routes->match(['GET', 'POST'], 'Run-CRON-Tasks', 'ManagementController::Run_CRON_Tasks');
+        $routes->cli('Run-CRON-Tasks', 'ManagementController::runCRONTasks');
+        $routes->match(['GET', 'POST'], 'ajaxGetActiveUsers', 'ManagementController::ajaxGetActiveUsers');
+        $routes->match(['GET', 'POST'], 'ajaxGetInactiveUsers', 'ManagementController::ajaxGetInactiveUsers');
+        $routes->get('banUnverifiedUsers', 'ManagementController::banUnverifiedUsers');
+        $routes->match(['GET', 'POST'], 'checkForSpamUsers', 'ManagementController::checkForSpamUsers');
         $routes->get('distributeTodaysNewsContent', 'ManagementController::distributeTodaysNewsContent');
         $routes->get('exportWeeklyWatchlistCSV', 'ManagementController::exportWeeklyWatchlistCSV');
         $routes->get('exportPostJson/(:num)', 'ManagementController::exportPostJson/$1');
@@ -325,9 +327,27 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('scrapeAndGenerateTodaysStoryFromInbox', 'ManagementController::scrapeAndGenerateTodaysStoryFromInbox');
         $routes->get('sendAllDiscordAlerts', 'ManagementController::sendAllDiscordAlerts');
         $routes->get('sendToZapierManually', 'ManagementController::sendToZapierManually');
+        $routes->match(['GET', 'POST'], 'generateTodaysStory', 'ManagementController::generateTodaysStory');
         $routes->get('sharePost/(:num)/(:segment)', 'ManagementController::sharePost/$1/$2');
         $routes->get('triggerPostAutogenOnEmpty', 'ManagementController::triggerPostAutogenOnEmpty');
         $routes->get('updateMarketDataForAlerts', 'ManagementController::updateMarketDataForAlerts');
+        $routes->match(['GET', 'POST'], 'processQueuedEmails', 'ManagementController::processQueuedEmails');
+        $routes->match(['GET', 'POST'], 'processTempEmailsToScraper', 'ManagementController::processTempEmailsToScraper');
+        $routes->match(['GET', 'POST'], 'resendActivationEmailsBatch', 'ManagementController::resendActivationEmailsBatch');
+        $routes->match(['GET', 'POST'], 'resendActivationEmailsBatchQueued', 'ManagementController::resendActivationEmailsBatchQueued');
+        $routes->match(['GET', 'POST'], 'sendTestActivationEmail', 'ManagementController::sendTestActivationEmail');
+        $routes->match(['GET', 'POST'], 'saveSuggestion', 'ManagementController::saveSuggestion');
+
+        // Marketing-prefixed aliases kept for audit parity + backwards compatibility.
+        $routes->match(['GET', 'POST'], 'Marketing/cronAnalyzeContent', 'ManagementController::cronAnalyzeContent');
+        $routes->match(['GET', 'POST'], 'Marketing/cronFetchAndGenerateNews', 'ManagementController::cronFetchAndGenerateNews');
+        $routes->match(['GET', 'POST'], 'Marketing/generateContent', 'ManagementController::cronFetchAndGenerateNews');
+        $routes->match(['GET', 'POST'], 'Marketing/cronFetchInbox', 'ManagementController::cronFetchInbox');
+        $routes->match(['GET', 'POST'], 'Marketing/cronFetchMarketingEmails', 'ManagementController::cronFetchMarketingEmails');
+        $routes->match(['GET', 'POST'], 'Marketing/generateContentDigestFromStored', 'ManagementController::generateContentDigestFromStored');
+        $routes->match(['GET', 'POST'], 'Marketing/generateContentFromScraper', 'ManagementController::generateContentFromScraper');
+        $routes->match(['GET', 'POST'], 'Marketing/generateDailyContentDigest', 'ManagementController::generateDailyContentDigest');
+        $routes->match(['GET', 'POST'], 'Marketing/massResendActivationEmails', 'ManagementController::massResendActivationEmails');
         $routes->get('getSocialPlatforms', 'MarketingController::getSocialPlatforms');
         $routes->get('getSocialCommunities', 'MarketingController::getSocialCommunities');
         $routes->match(['GET', 'POST'], 'saveSocialCommunity', 'MarketingController::saveSocialCommunity');
@@ -979,6 +999,11 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     });
 
     $routes->group('User', function($routes) {
+        $routes->match(['GET', 'POST'], 'Comments/Add', 'UserController::addComment');
+    });
+
+    // Backwards-compatible alias for pluralized /API/Users path surface.
+    $routes->group('Users', function($routes) {
         $routes->match(['GET', 'POST'], 'Comments/Add', 'UserController::addComment');
     });
 });
