@@ -103,6 +103,7 @@ class Console extends BaseConfig
         \App\Commands\App\Test::class,
         \App\Commands\AppUpdate::class,
         \App\Commands\RuntimeCheck::class,
+        \App\Commands\SparkRegistryAudit::class,
 
         /*
         |----------------------------------------------------------------------
@@ -230,6 +231,7 @@ class Console extends BaseConfig
         \App\Commands\Ops\CommandsAutofix::class,
         \App\Commands\Ops\CommandsInventory::class,
         \App\Commands\Ops\CommandsLint::class,
+        \App\Commands\Ops\SparkRegistryAudit::class,
         \App\Commands\Ops\ConfigLint::class,
         \App\Commands\Ops\ConfigReset::class,
         \App\Commands\Ops\FilesystemFix::class,
