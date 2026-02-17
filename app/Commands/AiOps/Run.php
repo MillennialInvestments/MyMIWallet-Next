@@ -9,7 +9,7 @@ use CodeIgniter\CLI\CLI;
 
 class Run extends SafeBaseCommand
 {
-    protected $group       = 'AI-Ops';
+    protected $group       = 'AI-Ops - Run';
     protected $name        = 'aiops:run';
     protected $description = 'Manually run the AI-Ops worker and generate docs/_aiops reports';
     protected $usage       = 'aiops:run [--mode=manual|nightly] [--dry-run]';

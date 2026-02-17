@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class RepairRunSafe extends SafeBaseCommand
 {
-    protected $group = 'AIOps';
+    protected $group = 'AIOps - Repair';
     protected $name = 'aiops:repair:run_safe';
     protected $description = 'Run repair pipeline with rollback safety + gating before PR';
 

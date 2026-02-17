@@ -11,7 +11,7 @@ class Audit extends SafeBaseCommand
 {
     use SubsCommandTrait;
 
-    protected $group = 'AIOps';
+    protected $group = 'AIOps - Audit';
     protected $name = 'aiops:audit';
     protected $description = 'Audit aiops runtime, orchestration routes, and n8n/docs readiness';
     protected $options = [

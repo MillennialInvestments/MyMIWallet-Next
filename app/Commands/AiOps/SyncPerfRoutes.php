@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class SyncPerfRoutes extends SafeBaseCommand
 {
-    protected $group = 'AIOps';
+    protected $group = 'AIOps - Performance';
     protected $name = 'aiops:sync-perf';
     protected $description = 'Scan Routes.php and sync perf_urls.txt automatically';
 

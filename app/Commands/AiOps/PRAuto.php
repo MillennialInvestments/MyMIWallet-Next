@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class PRAuto extends SafeBaseCommand
 {
-    protected $group = 'AIOps';
+    protected $group = 'AIOps - PR';
     protected $name = 'aiops:pr:auto';
     protected $description = 'Full safe pipeline: observe → validate → regression → PR';
 

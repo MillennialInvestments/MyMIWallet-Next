@@ -9,7 +9,7 @@ use App\Services\CommandBuilderService;
 
 class BuildCommand extends SafeBaseCommand
 {
-    protected $group       = 'AIOps';
+    protected $group       = 'AIOps - Commands';
     protected $name        = 'aiops:build-command';
     protected $description = 'Generate a Spark command from text logic using AIOps';
 

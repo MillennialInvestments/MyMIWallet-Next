@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class Observe extends SafeBaseCommand
 {
-    protected $group = 'AIOps';
+    protected $group = 'AIOps - Run';
     protected $name = 'aiops:observe';
     protected $description = 'Parse logs and detect recurring error signatures';
 

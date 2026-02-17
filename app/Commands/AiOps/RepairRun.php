@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class RepairRun extends SafeBaseCommand
 {
-    protected $group = 'AIOps';
+    protected $group = 'AIOps - Repair';
     protected $name = 'aiops:repair:run';
     protected $description = 'Full autonomous repair pipeline';
 
