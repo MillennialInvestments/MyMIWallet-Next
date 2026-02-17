@@ -19,7 +19,7 @@ class AutoloadAuditService
             return;
         }
 
-        $path = WRITEPATH . 'autoload_audit_' . date('YmdHis') . '.log';
+        $path = WRITEPATH . '/audit/logs/autoload_audit_' . date('YmdHis') . '.log';
         file_put_contents($path, implode(PHP_EOL, $issues) . PHP_EOL);
     }
 

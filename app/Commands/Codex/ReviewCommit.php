@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class ReviewCommit extends SafeBaseCommand
 {
-    protected $group       = 'codex';
+    protected $group       = 'Codex';
     protected $name        = 'codex:review:commit';
     protected $description = 'Commit Codex review artifacts intentionally (latest or by date).';
     protected $usage       = 'codex:review:commit --latest|--date=YYYY-MM-DD [--dry-run] [--approve]';

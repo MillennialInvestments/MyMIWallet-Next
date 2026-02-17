@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class Review extends SafeBaseCommand
 {
-    protected $group       = 'codex';
+    protected $group       = 'Codex';
     protected $name        = 'codex:review';
     protected $description = 'Generate Codex review artifacts (summary + prompt payload)';
     protected $options     = [

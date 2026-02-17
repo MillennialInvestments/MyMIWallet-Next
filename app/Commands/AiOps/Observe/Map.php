@@ -2,7 +2,7 @@
 
 namespace App\Commands\AiOps\Observe;
 
-use App\Config\SafeBaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
 class Map extends SafeBaseCommand

@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class ReviewList extends SafeBaseCommand
 {
-    protected $group       = 'codex';
+    protected $group       = 'Codex';
     protected $name        = 'codex:review:list';
     protected $description = 'List available Codex review artifacts stored under docs.';
     protected $usage       = 'codex:review:list [--limit=5] [--latest]';

@@ -10,7 +10,7 @@ use CodeIgniter\CLI\CLI;
 
 class ReviewPublish extends SafeBaseCommand
 {
-    protected $group       = 'codex';
+    protected $group       = 'Codex';
     protected $name        = 'codex:review:publish';
     protected $description = 'Aggregate governance lint results and publish review artifacts.';
     protected $usage       = 'codex:review:publish [--dry-run]';
