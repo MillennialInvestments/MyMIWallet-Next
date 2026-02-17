@@ -18,9 +18,8 @@ class RoleFilter extends BaseFilter implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         // If no user is logged in then send them to the login form.
-        if (! $this->authenticate->check()) {
+        if (! isset($this->authenticate) || ! $this->authenticate->check()) {
             session()->set('redirect_url', current_url());
-
             return redirect($this->reservedRoutes['login']);
         }
 
@@ -28,7 +27,11 @@ class RoleFilter extends BaseFilter implements FilterInterface
             return;
         }
 
-        // Check each requested permission
+        // 🔥 Harden: ensure authorization service exists
+        if (! isset($this->authorize)) {
+            throw new \RuntimeException('Authorization service not initialized.');
+        }
+
         foreach ($arguments as $group) {
             if ($this->authorize->inGroup($group, $this->authenticate->id())) {
                 return;
@@ -39,11 +42,13 @@ class RoleFilter extends BaseFilter implements FilterInterface
             $redirectURL = session('redirect_url') ?? route_to($this->landingRoute);
             unset($_SESSION['redirect_url']);
 
-            return redirect()->to($redirectURL)->with('error', lang('Auth.notEnoughPrivilege'));
+            return redirect()->to($redirectURL)
+                ->with('error', lang('Auth.notEnoughPrivilege'));
         }
 
         throw new PermissionException(lang('Auth.notEnoughPrivilege'));
     }
+
 
     /**
      * Allows After filters to inspect and modify the response

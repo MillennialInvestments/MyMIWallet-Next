@@ -17,10 +17,9 @@ class PermissionFilter extends BaseFilter implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
-        // If no user is logged in then send them to the login form.
-        if (! $this->authenticate->check()) {
+        // Ensure authentication service exists and user is logged in
+        if (! isset($this->authenticate) || ! $this->authenticate->check()) {
             session()->set('redirect_url', current_url());
-
             return redirect($this->reservedRoutes['login']);
         }
 
@@ -28,24 +27,31 @@ class PermissionFilter extends BaseFilter implements FilterInterface
             return;
         }
 
-        $result = true;
-
-        // Check each requested permission
-        foreach ($arguments as $permission) {
-            $result = ($result && $this->authorize->hasPermission($permission, $this->authenticate->id()));
+        // 🔒 Harden: ensure authorization service exists
+        if (! isset($this->authorize)) {
+            throw new \RuntimeException('Authorization service not initialized.');
         }
 
-        if (! $result) {
-            if ($this->authenticate->silent()) {
-                $redirectURL = session('redirect_url') ?? route_to($this->landingRoute);
-                unset($_SESSION['redirect_url']);
+        $userId = $this->authenticate->id();
 
-                return redirect()->to($redirectURL)->with('error', lang('Auth.notEnoughPrivilege'));
+        // Fail fast instead of cumulative boolean tracking
+        foreach ($arguments as $permission) {
+            if (! $this->authorize->hasPermission($permission, $userId)) {
+
+                if ($this->authenticate->silent()) {
+                    $redirectURL = session('redirect_url') ?? route_to($this->landingRoute);
+                    unset($_SESSION['redirect_url']);
+
+                    return redirect()
+                        ->to($redirectURL)
+                        ->with('error', lang('Auth.notEnoughPrivilege'));
+                }
+
+                throw new PermissionException(lang('Auth.notEnoughPrivilege'));
             }
-
-            throw new PermissionException(lang('Auth.notEnoughPrivilege'));
         }
     }
+
 
     /**
      * Allows After filters to inspect and modify the response

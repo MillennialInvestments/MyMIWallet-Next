@@ -1,8 +1,6 @@
 <?php
 
 namespace Config;
-
-use CodeIgniter\Config\BaseConfig;
 /**
  * Paths
  *
@@ -14,7 +12,7 @@ use CodeIgniter\Config\BaseConfig;
  *
  * All paths are relative to the project's root folder.
  */
-class Paths extends BaseConfig
+class Paths
 {
     /**
      * ---------------------------------------------------------------

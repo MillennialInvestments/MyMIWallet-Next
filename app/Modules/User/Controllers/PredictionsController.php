@@ -1,6 +1,6 @@
 <?php namespace App\Modules\User\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\UserController;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 class PredictionsController extends UserController

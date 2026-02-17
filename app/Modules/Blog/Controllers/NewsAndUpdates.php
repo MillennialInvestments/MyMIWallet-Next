@@ -13,11 +13,11 @@ use App\Controllers\UserController;
 class NewsAndUpdates extends UserController
 {
     use ResponseTrait;
-    private $siteSettings;
-    private $subscribeModel;
-    private $userModel;
-    private $pageSEOModel;
-    private $myMIAnalytics;
+    protected $siteSettings;
+    protected $subscribeModel;
+    protected $userModel;
+    protected $pageSEOModel;
+    protected $myMIAnalytics;
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
         parent::initController($request, $response, $logger);

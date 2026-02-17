@@ -24,6 +24,7 @@ class Filters extends BaseConfig
         'sessionRevoked'  => \App\Filters\SessionRevokedFilter::class,
         // PATCH: register RBAC permission filter
         'permission'     => \App\Filters\PermissionFilter::class,
+        'role' => \App\Filters\PermissionFilter::class,
         // PATCH: API token authentication filter
         'apiToken'       => \App\Filters\ApiTokenAuthFilter::class,
         'internalToken' => \App\Filters\InternalTokenFilter::class,
@@ -54,7 +55,6 @@ class Filters extends BaseConfig
         // 'secureheaders' => SecureHeaders::class,
         // Safe no-op filter to satisfy routes that reference "except"
         'except'        => \App\Filters\ExceptFilter::class,
-        'responsecache' => \CodeIgniter\Filters\ResponseCache::class,
     ];
 
     /**

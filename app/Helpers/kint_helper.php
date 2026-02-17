@@ -3,5 +3,4 @@
 // Delegate to CI system helper if present.
 $system = SYSTEMPATH . 'Helpers/kint_helper.php';
 if (is_file($system)) {
-    require_once $system;
 }
