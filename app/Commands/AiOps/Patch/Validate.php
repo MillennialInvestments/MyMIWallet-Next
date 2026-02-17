@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Commands\AiOps;
+namespace App\Commands\AiOps\Patch;
 
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;

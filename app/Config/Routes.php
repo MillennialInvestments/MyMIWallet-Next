@@ -2072,9 +2072,12 @@ $routes->get('Blog/Investing/(:any)', static function () {
     return redirect()->to(site_url('Blog/Investing'));
 });
 
-if (class_exists(\App\Modules\Management\Config\Routes::class)) {
-    \App\Modules\Management\Config\Routes::map($routes);
-}
+// $moduleRouteFiles = glob(APPPATH . 'Modules/*/Config/Routes.php');
+
+// foreach ($moduleRouteFiles as $file) {
+//     require_once $file;
+// }
+
 
 // Tax user module (nested under User module)
 $routes->group('Tax', ['namespace' => 'App\\Modules\\User\\Tax\\Controllers', 'filter' => 'login'], static function ($routes) {

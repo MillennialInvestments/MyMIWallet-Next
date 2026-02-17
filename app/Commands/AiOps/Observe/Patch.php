@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Commands\AiOps;
+namespace App\Commands\AiOps\Observe;
 
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class ObservePatch extends SafeBaseCommand
+class Patch extends SafeBaseCommand
 {
     protected $group = 'AIOps - Observe';
     protected $name = 'aiops:observe:patch';

@@ -8,7 +8,7 @@ use App\Libraries\AuditState;
 use App\Libraries\OpenAIClient;
 use App\Libraries\SeverityParser;
 
-class ContinueAutdit extends SafeBaseCommand
+class ContinueAudit extends SafeBaseCommand
 {
     protected $group = 'AIOps - Audit';
     protected $name = 'aiops:continue';

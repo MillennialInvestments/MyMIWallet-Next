@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Commands\AiOps;
+namespace App\Commands\AiOps\Observe;
 
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use App\Libraries\OpenAIClient;
 
-class ObserveSuggest extends SafeBaseCommand
+class Suggest extends SafeBaseCommand
 {
     protected $group = 'AIOps - Observe';
     protected $name = 'aiops:observe:suggest';
