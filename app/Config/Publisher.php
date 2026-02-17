@@ -2,7 +2,7 @@
 
 namespace Config;
 
-use CodeIgniter\Config\Publisher as BasePublisher;
+use CodeIgniter\Config\BaseConfig as BasePublisher;
 
 /**
  * Publisher Configuration
