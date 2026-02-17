@@ -12,7 +12,7 @@ use Throwable;
 
 class Backlog extends SafeBaseCommand
 {
-    protected $group = 'AI-Ops';
+    protected $group = 'AIOps';
     protected $name = 'aiops:backlog';
     protected $description = 'Reconcile outstanding AIOPS patch workflow jobs.';
     protected $usage = 'aiops:backlog [--run=1|0] [--force=1|0]';

@@ -8,7 +8,7 @@ use App\Libraries\ErrorFingerprint;
 
 class Hash extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps - Observe';
     protected $name = 'aiops:observe:hash';
     protected $description = 'Fingerprint recurring errors into stable hashes';
 

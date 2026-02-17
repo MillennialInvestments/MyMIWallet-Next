@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Commands\AiOps;
+namespace App\Commands\AiOps\PublicPages;
 
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Database;
 
-class PublicPagesReport extends SafeBaseCommand
+class Report extends SafeBaseCommand
 {
-    protected $group = 'AI-Ops';
+    protected $group = 'AIOps';
     protected $name = 'aiops:public-pages:report';
     protected $description = 'Generate report artifacts for a public pages run.';
 

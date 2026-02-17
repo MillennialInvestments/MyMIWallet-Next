@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class Regress extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps - Routes';
     protected $name = 'aiops:routes:regress';
     protected $description = 'Detect route scan regressions vs previous snapshot';
 

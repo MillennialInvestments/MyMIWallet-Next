@@ -10,7 +10,7 @@ use App\Libraries\SeverityParser;
 
 class ContinueAutdit extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps';
     protected $name = 'aiops:continue';
     protected $description = 'Operational audit (server + runtime focus)';
 

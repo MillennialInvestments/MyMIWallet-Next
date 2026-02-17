@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class ObservePatch extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps - Observe';
     protected $name = 'aiops:observe:patch';
     protected $description = 'Create patch file from suggestions';
 

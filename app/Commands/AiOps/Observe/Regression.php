@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class Regression extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps - Observe';
     protected $name = 'aiops:observe:regression';
     protected $description = 'Detect fingerprint regressions vs previous snapshot';
 

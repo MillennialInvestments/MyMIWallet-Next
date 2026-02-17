@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class Cost extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps - Observe';
     protected $name = 'aiops:observe:cost';
     protected $description = 'Correlate observability signals with AI cost logs';
 

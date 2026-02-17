@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-16T14:00:02Z
+> Run: 2026-02-17T04:00:02Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -263,6 +263,8 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Logs/Controllers/LogsController.php
   - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Config/Routes.orig.php
+  - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Controllers/AccountRescueController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Controllers/AdminController.php
@@ -304,6 +306,8 @@
 - app/Modules/Management/Controllers/HowTosController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Controllers/ManagementController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/ManagementController02162026.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Controllers/Marketing/BloggerController.php
   - ⚠️ No obvious doc match found (heuristic)
@@ -399,11 +403,7 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Views/Alerts/resources/rh-keygen.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Views/Alerts/resources/sendDiscordAlert.php
-  - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Views/Alerts/resources/statistical-overview.php
-  - ⚠️ No obvious doc match found (heuristic)
-- … and 935 more
+- … and 949 more
 
 ## Documented Items With No Obvious Code Match (best-effort)
 - docs/CRON.md

@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class Stats extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps - Redis';
     protected $name = 'aiops:redis:stats';
     protected $description = 'Fetch Redis INFO stats (best-effort)';
 

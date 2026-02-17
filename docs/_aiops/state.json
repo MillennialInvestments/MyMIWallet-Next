@@ -4409,8 +4409,8 @@
             "mtime": "2026-02-10"
         },
         "docs/_ops/filesystem-lint.md": {
-            "hash": "0edb874600d2e673e46dcf27f9b4648479e98e2bca5ddd623f396426fc8e0d47",
-            "mtime": "2026-02-10"
+            "hash": "21bd35f31ae26278a181e4e674296d91727ed19bf3057069a43aa8d8a203410a",
+            "mtime": "2026-02-17"
         },
         "docs/_ops/filesystem-trend.md": {
             "hash": "9bcc06aaf508ce4686520b5884511d97e997da07eb0d1bb833e8b28e0cd394b9",
@@ -4495,7 +4495,23 @@
         "docs/mysql.md": {
             "hash": "75bf041b7712fa570c178c8678a871f3afe27f63d20da032ad3a9bf7331dd24c",
             "mtime": "2026-02-15"
+        },
+        "docs/_support/ops-spark-reset/20260217-000858/summary.md": {
+            "hash": "6e00447d1f8f399f88c14c09165a5975e5c19c08f95f4567ee93e6494c9ab541",
+            "mtime": "2026-02-17"
+        },
+        "docs/_support/ops-spark-reset/20260217-001035/summary.md": {
+            "hash": "c00a6dd98c09e6986efe7336425d867cc3882a7e664265eb366a20b0f8ec8109",
+            "mtime": "2026-02-17"
+        },
+        "docs/_support/ops-spark-reset/20260217-014932/summary.md": {
+            "hash": "9eff3ca4f05329f40a51ed00f524f54c793614e36c7ddfc69ef50f0a41681946",
+            "mtime": "2026-02-17"
+        },
+        "docs/_support/ops-spark-reset/20260217-032014/summary.md": {
+            "hash": "99b90617e7814635f7f531aeabb3169a54dfb0ce7a3774b1139db3d83eb26913",
+            "mtime": "2026-02-17"
         }
     },
-    "last_run": "2026-02-16T18:00:02Z"
+    "last_run": "2026-02-17T04:00:02Z"
 }

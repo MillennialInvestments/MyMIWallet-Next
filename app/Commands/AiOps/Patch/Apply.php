@@ -8,7 +8,7 @@ use App\Libraries\GuardedPatchApplier;
 
 class Apply extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps - Patch';
     protected $name = 'aiops:patch:apply';
     protected $description = 'Safely apply AI-generated patch under guardrails';
 

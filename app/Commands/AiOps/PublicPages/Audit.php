@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Commands\AiOps;
+namespace App\Commands\AiOps\PublicPages;
 
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Database;
 
-class PublicPagesAudit extends SafeBaseCommand
+class Audit extends SafeBaseCommand
 {
-    protected $group = 'AI-Ops';
+    protected $group = 'AIOps';
     protected $name = 'aiops:public-pages:audit';
     protected $description = 'Audit public pages schema coverage, freshness, and governance conditions.';
 

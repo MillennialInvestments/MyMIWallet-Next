@@ -8,7 +8,7 @@ use App\Libraries\AiOpsGuard;
 
 class GateCost extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps';
     protected $name = 'aiops:gate:cost';
     protected $description = 'Enforce daily AI cost cap; auto-disable AiOps LLM when threshold exceeded';
 

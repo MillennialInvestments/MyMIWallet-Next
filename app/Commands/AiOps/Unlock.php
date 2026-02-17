@@ -10,7 +10,7 @@ use CodeIgniter\CLI\CLI;
 
 class Unlock extends SafeBaseCommand
 {
-    protected $group = 'AI-Ops';
+    protected $group = 'AIOps';
     protected $name = 'aiops:unlock';
     protected $description = 'Manually unlock an AIOPS patch job and reset retries.';
     protected $usage = 'aiops:unlock {jobId}';

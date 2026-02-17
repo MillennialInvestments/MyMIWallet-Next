@@ -8,7 +8,7 @@ use App\Libraries\PatchRiskScorer;
 
 class RiskScore extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps - Patch';
     protected $name = 'aiops:patch:risk_score';
     protected $description = 'Calculate patch risk score';
 

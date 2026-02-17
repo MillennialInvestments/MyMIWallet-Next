@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class Map extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps - Observe';
     protected $name = 'aiops:observe:map';
     protected $description = 'Map errors to routes and controllers';
 

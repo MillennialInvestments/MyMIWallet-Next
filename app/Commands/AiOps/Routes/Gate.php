@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class Gate extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps - Routes';
     protected $name = 'aiops:routes:gate';
     protected $description = 'Gate based on routes_scan.json thresholds';
 

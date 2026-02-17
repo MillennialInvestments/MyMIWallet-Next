@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class DiffFormat extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps';
     protected $name = 'aiops:diff:format';
     protected $description = 'Generate a real unified diff from current working tree';
 

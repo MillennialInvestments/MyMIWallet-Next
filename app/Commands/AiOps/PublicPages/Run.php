@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Commands\AiOps;
+namespace App\Commands\AiOps\PublicPages;
 
 use App\Commands\SafeBaseCommand;
 use App\Services\AiOps\PublicPagesPipelineService;
 use CodeIgniter\CLI\CLI;
 use Config\Database;
 
-class PublicPagesRun extends SafeBaseCommand
+class Run extends SafeBaseCommand
 {
-    protected $group = 'AI-Ops';
+    protected $group = 'AIOps';
     protected $name = 'aiops:public-pages:run';
     protected $description = 'Run public pages source collection and draft generation.';
     protected $options = [

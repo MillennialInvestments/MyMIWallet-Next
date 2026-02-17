@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class Rollback extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps';
     protected $name = 'aiops:rollback';
     protected $description = 'Rollback working tree to clean state (hard reset)';
 

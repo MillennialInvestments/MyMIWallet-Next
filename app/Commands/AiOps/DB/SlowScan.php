@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class SlowScan extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps - DB';
     protected $name = 'aiops:db:slow_scan';
     protected $description = 'Scan logs for slow query markers (best-effort)';
 

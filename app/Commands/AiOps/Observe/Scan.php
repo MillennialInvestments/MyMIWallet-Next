@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class Scan extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps - Observe';
     protected $name = 'aiops:observe:scan';
     protected $description = 'Scan logs and persist recurring errors';
 

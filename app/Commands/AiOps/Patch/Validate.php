@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class Validate extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps - Patch';
     protected $name = 'aiops:patch:validate';
     protected $description = 'Validate PHP syntax after patch apply';
 

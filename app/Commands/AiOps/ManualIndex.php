@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class ManualIndex extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps';
     protected $name = 'aiops:manual:index';
     protected $description = 'Index AI manual documentation under docs/_aiops/manual';
 

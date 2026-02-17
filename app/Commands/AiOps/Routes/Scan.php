@@ -8,7 +8,7 @@ use App\Libraries\MultiCurl;
 
 class Scan extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps - Routes';
     protected $name = 'aiops:routes:scan';
     protected $description = 'Scan Routes.php (GET routes), parallel curl, write JSON+CSV+snapshot';
 

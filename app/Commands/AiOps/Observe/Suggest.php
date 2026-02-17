@@ -8,7 +8,7 @@ use App\Libraries\OpenAIClient;
 
 class ObserveSuggest extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps - Observe';
     protected $name = 'aiops:observe:suggest';
     protected $description = 'Generate fix suggestions for recurring errors';
 

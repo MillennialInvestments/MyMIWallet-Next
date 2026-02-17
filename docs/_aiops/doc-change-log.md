@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-16T14:00:02Z
+> Run: 2026-02-17T04:00:02Z
 
 - docs/CRON.md
   - Last updated: 2026-01-30
@@ -24,8 +24,8 @@
   - Last updated: 2026-02-10
   - Change type: unchanged
 - docs/_ops/filesystem-lint.md
-  - Last updated: 2026-02-10
-  - Change type: unchanged
+  - Last updated: 2026-02-17
+  - Change type: modified
 - docs/_ops/filesystem-trend.md
   - Last updated: 2026-02-10
   - Change type: unchanged
@@ -65,6 +65,18 @@
 - docs/_support/ops-spark-reset/20260213-050826/summary.md
   - Last updated: 2026-02-14
   - Change type: unchanged
+- docs/_support/ops-spark-reset/20260217-000858/summary.md
+  - Last updated: 2026-02-17
+  - Change type: unchanged
+- docs/_support/ops-spark-reset/20260217-001035/summary.md
+  - Last updated: 2026-02-17
+  - Change type: unchanged
+- docs/_support/ops-spark-reset/20260217-014932/summary.md
+  - Last updated: 2026-02-17
+  - Change type: unchanged
+- docs/_support/ops-spark-reset/20260217-032014/summary.md
+  - Last updated: 2026-02-17
+  - Change type: new
 - docs/_support/runtime-cache-boot/20260215-010126/summary.md
   - Last updated: 2026-02-15
   - Change type: unchanged

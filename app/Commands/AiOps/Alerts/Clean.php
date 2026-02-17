@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Commands\AiOps;
+namespace App\Commands\AiOps\Alerts;
 
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Database;
 
-class AlertsClean extends SafeBaseCommand
+class Clean extends SafeBaseCommand
 {
     protected $group       = 'AIOps';
     protected $name        = 'aiops:alerts-clean';

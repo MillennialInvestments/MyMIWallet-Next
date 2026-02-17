@@ -8,7 +8,7 @@ use App\Libraries\GitHubClient;
 
 class PRCreate extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps';
     protected $name = 'aiops:pr:create';
     protected $description = 'Create a branch, push, and open a PR (requires token + enabled flags)';
 

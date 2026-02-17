@@ -8,7 +8,7 @@ use App\Libraries\MultiCurl;
 
 class ScanAuth extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps - Routes';
     protected $name = 'aiops:routes:scan_auth';
     protected $description = 'Authenticated scan using AIOPS_AUTH_COOKIE';
 

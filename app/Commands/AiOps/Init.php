@@ -8,7 +8,7 @@ use CodeIgniter\CLI\CLI;
 
 class Init extends SafeBaseCommand
 {
-    protected $group = 'AI-Ops';
+    protected $group = 'AIOps';
     protected $name = 'aiops:init';
     protected $description = 'Initialize and validate the AIOps PR factory (one-time or rare use).';
 

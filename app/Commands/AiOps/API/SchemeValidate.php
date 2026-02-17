@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class SchemaValidate extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps - API';
     protected $name = 'aiops:api:schema';
     protected $description = 'Validate API endpoints return JSON (optionally check required keys)';
 

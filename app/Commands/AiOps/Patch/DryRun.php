@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class DryRun extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps - Patch';
     protected $name = 'aiops:patch:dry_run';
     protected $description = 'Apply patch in temporary branch';
 

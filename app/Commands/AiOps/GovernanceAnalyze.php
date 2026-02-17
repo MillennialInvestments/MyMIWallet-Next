@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class GovernanceAnalyze extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps';
     protected $name = 'aiops:governance:analyze';
     protected $description = 'Analyze token usage + model anomalies';
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Commands\AiOps;
+namespace App\Commands\AiOps\Alerts;
 
 use App\Commands\SafeBaseCommand;
 use App\Services\EmailScraperService;
 use App\Services\EmailQueueService;
 use CodeIgniter\CLI\CLI;
 
-class AlertsCheck extends SafeBaseCommand
+class Check extends SafeBaseCommand
 {
-    protected $group       = 'AIOps';
+    protected $group       = 'AIOps - Alerts';
     protected $name        = 'aiops:alerts-check';
     protected $description = 'Fetch emails and queue them for processing';
 

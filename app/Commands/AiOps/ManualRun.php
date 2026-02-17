@@ -11,7 +11,7 @@ use CodeIgniter\CLI\CLI;
 
 class ManualRun extends SafeBaseCommand
 {
-    protected $group = 'AI-Ops';
+    protected $group = 'AIOps';
     protected $name = 'aiops:manual-run';
     protected $description = 'Run manual-priority AIOPS correlation, state refresh, and PR creation.';
     protected $usage = 'aiops:manual-run [--dry-run=1|0] [--limit-tasks=1] [--limit-errors=3] [--only=file.md] [--write-state=1|0] [--create-pr=1|0] [--notify=1|0]';

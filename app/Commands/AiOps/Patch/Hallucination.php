@@ -8,7 +8,7 @@ use App\Libraries\PatchHallucinationDetector;
 
 class Hallucination extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps - Patch';
     protected $name = 'aiops:patch:hallucination';
     protected $description = 'Detect hallucinated symbols in aiops_generated_patch.diff before apply';
 

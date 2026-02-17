@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Commands\AiOps;
+namespace App\Commands\AiOps\Alerts;
 
 use App\Commands\SafeBaseCommand;
 use App\Services\SlackWebhookService;
 use CodeIgniter\CLI\CLI;
 use Config\Database;
 
-class AlertsWorker extends SafeBaseCommand
+class Worker extends SafeBaseCommand
 {
     protected $group = 'AIOps';
     protected $name = 'aiops:alerts-worker';

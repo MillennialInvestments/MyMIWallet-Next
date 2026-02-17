@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class Snapshot extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps - Observe';
     protected $name = 'aiops:observe:snapshot';
     protected $description = 'Snapshot fingerprint map for regression detection';
 

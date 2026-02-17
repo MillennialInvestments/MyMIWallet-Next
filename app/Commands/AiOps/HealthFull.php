@@ -7,7 +7,7 @@ use CodeIgniter\CLI\CLI;
 
 class HealthFull extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps';
     protected $name = 'aiops:health:full';
     protected $description = 'Run full system health checks and generate a consolidated report';
 

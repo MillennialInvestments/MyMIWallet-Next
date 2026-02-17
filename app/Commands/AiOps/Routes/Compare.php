@@ -8,7 +8,7 @@ use App\Libraries\MultiCurl;
 
 class Compare extends SafeBaseCommand
 {
-    protected $group = 'AiOps';
+    protected $group = 'AIOps - Routes';
     protected $name = 'aiops:routes:compare';
     protected $description = 'Compare staging vs production routes scan';
 

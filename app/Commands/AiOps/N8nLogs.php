@@ -1,3 +1,0 @@
-<?php
-namespace App\Commands\AiOps; use App\Commands\SafeBaseCommand; use App\Commands\Support\SubsCommandTrait; use CodeIgniter\CLI\CLI;
-class N8nLogs extends SafeBaseCommand { use SubsCommandTrait; protected $group = 'AI-Ops'; protected $name='aiops:n8n:logs'; protected $description='Tail n8n logs'; protected $options=['--lines'=>'Lines','--json'=>'JSON']; public function run(array $params){$this->parseParams($params);$lines=$this->optInt('lines', 200);$r=$this->mgr()->tailLogs('aiops.n8n',$lines); if(!$this->optBool('json')){foreach($r['lines']??[] as $line){CLI::write($line);} } else {$this->emit($r,true);} return ($r['ok']??false)?EXIT_SUCCESS:EXIT_ERROR;}}

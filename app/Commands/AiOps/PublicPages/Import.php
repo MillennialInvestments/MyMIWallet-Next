@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Commands\AiOps;
+namespace App\Commands\AiOps\PublicPages;
 
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Database;
 
-class PublicPagesImport extends SafeBaseCommand
+class Import extends SafeBaseCommand
 {
-    protected $group = 'AI-Ops';
+    protected $group = 'AIOps';
     protected $name = 'aiops:public-pages:import';
     protected $description = 'Import docs/_aiops/inputs/public_pages.csv into bf_public_pages_catalog.';
 
