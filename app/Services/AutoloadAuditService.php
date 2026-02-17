@@ -75,8 +75,27 @@ class AutoloadAuditService
         $issues = [];
         $psr4   = $composer['autoload']['psr-4'] ?? [];
 
-        if (is_array($psr4) && array_key_exists('Config\\', $psr4)) {
-            $issues[] = "composer.json autoload.psr-4 should not map 'Config\\\\'. Remove it to avoid CI4 config autoload conflicts.";
+        if (! is_array($psr4)) {
+            return $issues;
+        }
+
+        $isCi4 = self::isCodeIgniter4Project($composer);
+
+        if (! $isCi4 && array_key_exists('Config\\', $psr4)) {
+            $issues[] = "composer.json autoload.psr-4 should not map 'Config\\' outside CI4 projects.";
+        }
+
+        if ($isCi4) {
+            $appMap = $psr4['App\\'] ?? null;
+            $configMap = $psr4['Config\\'] ?? null;
+
+            if ($appMap !== 'app/') {
+                $issues[] = "CodeIgniter 4 project should map 'App\\' => 'app/' in composer.json autoload.psr-4.";
+            }
+
+            if ($configMap !== 'app/Config/') {
+                $issues[] = "CodeIgniter 4 project should map 'Config\\' => 'app/Config/' in composer.json autoload.psr-4.";
+            }
         }
 
         return $issues;
@@ -147,7 +166,7 @@ class AutoloadAuditService
             }
 
             foreach ($matches[0] as $statement) {
-                if (str_contains($statement, 'Helpers/')) {
+                if (self::shouldIgnoreIncludeWarning($file->getPathname(), $statement, $content)) {
                     continue;
                 }
 
@@ -156,6 +175,55 @@ class AutoloadAuditService
         }
 
         return $issues;
+    }
+
+
+    private static function isCodeIgniter4Project(array $composer): bool
+    {
+        $requires = $composer['require'] ?? [];
+        if (is_array($requires) && array_key_exists('codeigniter4/framework', $requires)) {
+            return true;
+        }
+
+        $publicIndex = ROOTPATH . 'public/index.php';
+        if (is_file($publicIndex)) {
+            $indexContents = file_get_contents($publicIndex);
+            if ($indexContents !== false && (str_contains($indexContents, 'CodeIgniter') || str_contains($indexContents, 'Boot::bootWeb'))) {
+                return true;
+            }
+        }
+
+        $spark = ROOTPATH . 'spark';
+        if (is_file($spark)) {
+            $sparkContents = file_get_contents($spark);
+            if ($sparkContents !== false && str_contains($sparkContents, 'CodeIgniter\Boot')) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static function shouldIgnoreIncludeWarning(string $path, string $statement, string $content): bool
+    {
+        $normalizedPath = str_replace('\\', '/', $path);
+
+        if (str_contains($statement, 'Helpers/')) {
+            return true;
+        }
+
+        if (str_contains($normalizedPath, '/app/Views/') || str_contains($normalizedPath, '/system/Views/')) {
+            return true;
+        }
+
+        if (str_ends_with($normalizedPath, '/app/Libraries/DbInventory/InventoryScanner.php')
+            && str_contains($content, 'private function scanMigrations(): array')
+            && preg_match('/\b(?:include|include_once|require|require_once)\s+\$file\s*;/', $statement) === 1
+            && str_contains($content, "APPPATH . 'Database/Migrations'")) {
+            return true;
+        }
+
+        return false;
     }
 
     private static function expectedNamespace(string $file): ?string

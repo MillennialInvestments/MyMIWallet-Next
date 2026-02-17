@@ -55,6 +55,7 @@
         "build-syndication-inventory": "python3 scripts/build_syndication_inventory.py",
         "lint:no-route-tokens": "bash scripts/lint_no_route_tokens.sh",
         "lint:csp": "bash scripts/lint_csp.sh",
-        "audit:duplicate-classes": "php scripts/check_duplicates.php"
+        "audit:duplicate-classes": "php scripts/check_duplicates.php",
+        "lint:psr4": "php scripts/psr4_scan.php"
     }
 }

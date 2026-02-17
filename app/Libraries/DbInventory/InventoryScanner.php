@@ -170,7 +170,30 @@ class InventoryScanner
     private function scanMigrations(): array
     {
         $path = APPPATH . 'Database/Migrations';
-        $files = glob($path . '/*.php');
+        $base = realpath($path);
+        $files = glob($path . '/*.php') ?: [];
+
+        if ($base !== false) {
+            $files = array_values(array_filter($files, static function (string $file) use ($base): bool {
+                $realFile = realpath($file);
+                if ($realFile === false) {
+                    return false;
+                }
+
+                if (! str_starts_with($realFile, $base . DIRECTORY_SEPARATOR)) {
+                    return false;
+                }
+
+                if (pathinfo($realFile, PATHINFO_EXTENSION) !== 'php') {
+                    return false;
+                }
+
+                return (bool) preg_match('/^\d{4}-\d{2}-\d{2}-\d{6}_[A-Za-z0-9_]+\.php$/', basename($realFile));
+            }));
+        } else {
+            $files = [];
+        }
+
         sort($files);
 
         $db = new SchemaRecorderDb();
@@ -181,7 +204,7 @@ class InventoryScanner
         foreach ($files as $file) {
             $before = get_declared_classes();
             if (is_file($file)) {
-                include_once $file;
+                require_once $file;
             }
             $after = get_declared_classes();
             $newClasses = array_diff($after, $before);
