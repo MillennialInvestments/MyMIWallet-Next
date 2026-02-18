@@ -244,7 +244,7 @@ class AccountRescueAdminController extends UserController
 
     private function currentAdminId(): int
     {
-        return (int) (service('authentication')->id() ?? session()->get('user_id') ?? 0);
+        return (int) (service('authentication')->id() ?? 0);
     }
 
     private function mailerTransport(): string

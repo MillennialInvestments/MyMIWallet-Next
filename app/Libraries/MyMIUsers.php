@@ -51,7 +51,7 @@ class MyMIUsers
             // log_message('debug', '$this->session __construct() - MyMIUser Library: ' . (print_r($this->session, true)));
         }
         
-        $this->cuID = $this->auth->id() ?? $this->session->get('user_id') ?? ($this->userModel ? $this->userModel->getUserID() : null);
+        $this->cuID = service('authentication')->id();
         $cuID = $this->cuID;
         if (empty($this->cuID)) {
             log_message('debug', 'MyMIUsers: guest session detected; skipping authenticated hydration.');
@@ -69,7 +69,7 @@ class MyMIUsers
 
     public function userAccountInfo($cuID)
     {
-        $cuID = $this->cuID ?: ($this->userModel->getUserID() ?? $this->auth->id() ?? $this->session->get('user_id'));
+        $cuID = $this->cuID ?: service('authentication')->id();
     
         if (empty($cuID) || $cuID === 0) {
             log_message('info', "MyMIUser.php L64 - Invalid User ID. MyMIUser: Method userAccountInfo called with an invalid or empty user ID.");
@@ -283,7 +283,7 @@ class MyMIUsers
     public function getUserInformation($cuID)
     {
         if (empty($cuID)) {
-            $cuID = $this->session->get('user_id') ?? $this->auth->id();
+            $cuID = service('authentication')->id();
             if (empty($cuID)) {
                 log_message('error', "Invalid User ID. MyMIUser: Method getUserInformation called with an invalid or empty user ID.");
                 return null; // Return null or an appropriate response indicating failure.
@@ -356,7 +356,7 @@ class MyMIUsers
     public function getUserDefaultWalletForExisting($cuID) 
     {
         if (empty($this->cuID)) {
-            $this->cuID                     = $this->session->get('user_id') ?? $this->auth->id();
+            $this->cuID                     = service('authentication')->id();
         }
         if ($this->debug === 1) {
             // log_message('debug', '$this->cuID - MyMI User L397: ' . $this->auth->id());
