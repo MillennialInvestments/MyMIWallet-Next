@@ -14,6 +14,8 @@ use function is_ci;
 
 class Cache extends BaseConfig
 {
+    public string $handler = 'file';
+
     /**
      * --------------------------------------------------------------------------
      * Primary Handler
@@ -22,7 +24,13 @@ class Cache extends BaseConfig
      * The name of the preferred handler that should be used. If for some reason
      * it is not available, the $backupHandler will be used in its place.
      */
-    public string $handler = 'file';
+    public array $handlers = [
+        'file' => [
+            'class' => \CodeIgniter\Cache\Handlers\FileHandler::class,
+            'path'  => WRITEPATH . 'cache/',
+        ],
+    ];
+
 
     /**
      * --------------------------------------------------------------------------

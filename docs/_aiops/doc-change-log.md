@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-18T14:00:01Z
+> Run: 2026-02-18T16:00:02Z
 
 - docs/CRON.md
   - Last updated: 2026-01-30
@@ -20,6 +20,12 @@
 - docs/README.md
   - Last updated: 2025-11-08
   - Change type: unchanged
+- docs/_audit/ci4-logger-audit-2026-02-18.md
+  - Last updated: 2026-02-18
+  - Change type: new
+- docs/_audit/ci4-logger-hardening-2026-02-18.md
+  - Last updated: 2026-02-18
+  - Change type: new
 - docs/_ops/filesystem-lint-summary.md
   - Last updated: 2026-02-10
   - Change type: unchanged

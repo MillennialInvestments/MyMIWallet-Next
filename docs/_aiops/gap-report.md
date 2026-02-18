@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-18T14:00:01Z
+> Run: 2026-02-18T16:00:02Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -403,7 +403,7 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Views/Alerts/form_fields/trade_alert_fields.php
   - ⚠️ No obvious doc match found (heuristic)
-- … and 961 more
+- … and 962 more
 
 ## Documented Items With No Obvious Code Match (best-effort)
 - docs/CRON.md
@@ -415,6 +415,10 @@
 - docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md
   - ❌ No obvious code match found (heuristic)
 - docs/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_audit/ci4-logger-audit-2026-02-18.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_audit/ci4-logger-hardening-2026-02-18.md
   - ❌ No obvious code match found (heuristic)
 - docs/_ops/filesystem-lint-summary.md
   - ❌ No obvious code match found (heuristic)
@@ -802,8 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/forecasting/05_confidence_scoring.md
   - ❌ No obvious code match found (heuristic)
-- docs/forecasting/06_database_schema.md
-  - ❌ No obvious code match found (heuristic)
-- docs/forecasting/07_integration_points.md
-  - ❌ No obvious code match found (heuristic)
-- … and 788 more
+- … and 790 more

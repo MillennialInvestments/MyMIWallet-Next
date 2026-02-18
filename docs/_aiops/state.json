@@ -4543,7 +4543,15 @@
         "docs/_support/api-audit/20260217-200919/summary.md": {
             "hash": "e39b328dcda3e14d13498735c0ad9b545ecb82cf19974c96780b0e0211f0f1a5",
             "mtime": "2026-02-17"
+        },
+        "docs/_audit/ci4-logger-audit-2026-02-18.md": {
+            "hash": "b1ffe644ace6b0042d51ecc12544eac55d5d31523bda8aaf5b76d4f8d7688467",
+            "mtime": "2026-02-18"
+        },
+        "docs/_audit/ci4-logger-hardening-2026-02-18.md": {
+            "hash": "5326b933f2580741ecadfb1917bf962027036518a38d27eff5a1db0e445aaa15",
+            "mtime": "2026-02-18"
         }
     },
-    "last_run": "2026-02-18T14:00:01Z"
+    "last_run": "2026-02-18T16:00:02Z"
 }

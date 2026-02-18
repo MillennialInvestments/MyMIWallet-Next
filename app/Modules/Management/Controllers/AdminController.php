@@ -23,7 +23,10 @@ class AdminController extends UserController
         $auth = service('authentication');
         $user = $auth ? $auth->user() : null;
 
-        $this->cuID = $user ? $user->getUserID() : null;
+        $this->cuID = $user && isset($user->id)
+            ? (int) $user->id
+            : null;
+
 
         if (!$this->cuID) {
             log_message('warning', 'AdminController init aborted: no authenticated user id available.');
