@@ -43,8 +43,8 @@ if (getcwd() . DIRECTORY_SEPARATOR !== FCPATH) {
 
 require FCPATH . '../vendor/autoload.php';
 
-$dotenv = Dotenv::createImmutable(dirname(__DIR__));
-$dotenv->safeLoad();
+// $dotenv = Dotenv::createImmutable(dirname(__DIR__));
+// $dotenv->safeLoad();
 
 /*
 |--------------------------------------------------------------------------

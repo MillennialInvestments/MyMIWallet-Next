@@ -1,0 +1,536 @@
+app/Modules/APIs/Controllers/MditIssuanceAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/MditIssuanceAPIController.php:    public function mint(): ResponseInterface
+app/Modules/APIs/Controllers/MditWebhookAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/MditWebhookAPIController.php:    public function onramp(): ResponseInterface
+app/Modules/APIs/Controllers/OpsPublicPagesAPIController.php:    public function run()
+app/Modules/APIs/Controllers/OpsPublicPagesAPIController.php:    public function import()
+app/Modules/APIs/Controllers/OpsPublicPagesAPIController.php:    public function report()
+app/Modules/APIs/Controllers/ProjectsAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/ProjectsAPIController.php:    public function fetchProjectEmails()
+app/Modules/APIs/Controllers/ProjectsAPIController.php:    public function parseProjectEmails()
+app/Modules/APIs/Controllers/ProjectsAPIController.php:    public function promoteLead(int $inboxId)
+app/Modules/APIs/Controllers/ProjectsAPIController.php:    public function updateProject(int $projectId)
+app/Modules/APIs/Controllers/ProjectsAPIController.php:    public function openCommitments(int $projectId)
+app/Modules/APIs/Controllers/ProjectsAPIController.php:    public function checkThreshold(int $projectId)
+app/Modules/APIs/Controllers/ProjectsAPIController.php:    public function launchPrivateAuction(int $projectId)
+app/Modules/APIs/Controllers/ProjectsAPIController.php:    public function settlePrivateAuction(int $projectId)
+app/Modules/APIs/Controllers/ProjectsAPIController.php:    public function markFunded(int $projectId)
+app/Modules/APIs/Controllers/ProjectsAPIController.php:    public function createQuarterlyDistribution(int $projectId)
+app/Modules/APIs/Controllers/ProjectsAPIController.php:    public function runPayouts(int $projectId)
+app/Modules/APIs/Controllers/ProjectsAPIController.php:    public function processMonthlyWithdrawals(int $projectId)
+app/Modules/APIs/Controllers/ReferralAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/ReferralAPIController.php:    public function bulkUpdateStatus(): ResponseInterface
+app/Modules/APIs/Controllers/ReferralAPIController.php:    public function bulkDelete(): ResponseInterface
+app/Modules/APIs/Controllers/SolanaAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/SolanaAPIController.php:    public function commonData(): array {
+app/Modules/APIs/Controllers/SolanaAPIController.php:    public function index() {
+app/Modules/APIs/Controllers/SolanaAPIController.php:    public function apiGetTokens() {
+app/Modules/APIs/Controllers/SolanaAPIController.php:    public function connectWallet() {
+app/Modules/APIs/Controllers/SolanaAPIController.php:    public function createSolanaWallet() {
+app/Modules/APIs/Controllers/SolanaAPIController.php:    public function createToken() {
+app/Modules/APIs/Controllers/SolanaAPIController.php:    public function executeSwap() {
+app/Modules/APIs/Controllers/SolanaAPIController.php:    public function getAssetsData() {
+app/Modules/APIs/Controllers/SolanaAPIController.php:    public function getCoinAmount($tokenAddress) {
+app/Modules/APIs/Controllers/SolanaAPIController.php:    public function getExchangePrice($tokenSymbol) {
+app/Modules/APIs/Controllers/SolanaAPIController.php:    public function getMarketPrice() {
+app/Modules/APIs/Controllers/SolanaAPIController.php:    public function getTokenPrice($tokenAddress) {
+app/Modules/APIs/Controllers/SolanaAPIController.php:    public function importWallet() {
+app/Modules/APIs/Controllers/SolanaAPIController.php:    public function updateSolanaTokens() {
+app/Modules/APIs/Controllers/SolanaAPIController.php:    public function updateSolanaPrices()
+app/Modules/APIs/Controllers/SolanaAPIController.php:    public function provisionDefaultWallet()
+app/Modules/APIs/Controllers/SupportAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/SupportAPIController.php:    public function kb()
+app/Modules/APIs/Controllers/SupportAPIController.php:    public function kbArticle(string $slug)
+app/Modules/APIs/Controllers/UserAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/UserAPIController.php:    public function health()
+app/Modules/APIs/Controllers/UserAPIController.php:    public function addComment()
+app/Modules/APIs/Controllers/UserAPIController.php:    public function getBalance($address)
+app/Modules/APIs/Controllers/UserAPIController.php:    public function getTokenAccounts($address)
+app/Modules/APIs/Controllers/UserAPIController.php:    public function transfer()
+app/Modules/APIs/Controllers/UserAPIController.php:    public function quote()
+app/Modules/APIs/Controllers/UserAPIController.php:    public function swap()
+app/Modules/APIs/Controllers/UserAPIController.php:    public function createToken()
+app/Modules/APIs/Controllers/UserAPIController.php:    public function mint()
+app/Modules/APIs/Controllers/Webhooks/EmailBounceAPIController.php:    public function ingest()
+app/Modules/APIs/Controllers/Webhooks/TradingViewAPIController.php:    public function ingest()
+app/Modules/APIs/Controllers/Webhooks/ZapierAPIController.php:    public function ingest()
+app/Modules/APIs/Controllers/ZapierAPIController.php:    public function webhookReceiver()
+app/Modules/APIs/Controllers/AuctionsAPIController.php:    public function computeFMV()
+app/Modules/APIs/Controllers/AuctionsAPIController.php:    public function settle($lotId)
+app/Modules/APIs/Controllers/AuctionsAPIController.php:    public function releaseEscrow($lotId)
+app/Modules/APIs/Controllers/AuctionsAPIController.php:    public function refundEscrow($lotId)
+app/Modules/APIs/Controllers/AuctionsAPIController.php:    public function topUp()
+app/Modules/APIs/Controllers/AIAPIController.php:    public function _remap($method, ...$params)
+app/Modules/APIs/Controllers/AIAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/AIAPIController.php:    public function postChat()
+app/Modules/APIs/Controllers/AIAPIController.php:    public function listNotes()
+app/Modules/APIs/Controllers/AIAPIController.php:    public function updateLinkSettings()
+app/Modules/APIs/Controllers/AIOpsAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/AIOpsAPIController.php:    public function health(): ResponseInterface
+app/Modules/APIs/Controllers/AIOpsAPIController.php:    public function policyCheck(): ResponseInterface
+app/Modules/APIs/Controllers/AIOpsAPIController.php:    public function logUsage(): ResponseInterface
+app/Modules/APIs/Controllers/AIOpsAPIController.php:    public function cacheStore(): ResponseInterface
+app/Modules/APIs/Controllers/AIOpsAPIController.php:    public function cacheGet(): ResponseInterface
+app/Modules/APIs/Controllers/AIOpsAPIController.php:    public function toggle(): ResponseInterface
+app/Modules/APIs/Controllers/AIOpsAPIController.php:    public function testPolicy(): ResponseInterface
+app/Modules/APIs/Controllers/AiOpsAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/AiOpsAPIController.php:    public function status()
+app/Modules/APIs/Controllers/AiOpsAPIController.php:    public function toggle()
+app/Modules/APIs/Controllers/AiOpsAPIController.php:    public function run()
+app/Modules/APIs/Controllers/AiOpsAPIController.php:    public function receiveResult()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function generateAlertCommentary($id = null)
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function generateAlertBatchCommentary()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function generateAlertSocialCopy($id = null)
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function addTradeAlert()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function createTradeAlert()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function backfillCategories()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function exportCapCutJson($userId)
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function fetchEmailAlerts()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function fetchEmailsOnly()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    // public function fetchMarketAuxNews($symbol)
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function fetchMarketAuxNews(string $ticker): ResponseInterface
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function forceFetchEmails()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function backfillEmailAlerts()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function forceFetchTickers()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function generateRankedMarketingContent()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function generateAdvisorVoiceover($userId)
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function generateAdvisorMediaFromAlert($alertId = null)
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function generateAndStoreVoiceover()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function generateSocialMediaPosts()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function generateTradeAlertSummary()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function generateTradeAlertVideos()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function generateVoiceoverAndMarketingContent($tradeId)
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function generateVoiceoverScript()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function getCachedTradeAlerts()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function getEmaComparison($symbol)
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function getEmaDataForSymbol()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function getEnrichmentHistory($alertId)
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function getFilteredAlerts()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function getFullMetrics()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function generateMarketingForAlert($id = null)
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function getLatestPrices()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    // public function getFilteredAlerts()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function getSecFilings()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function getTechnicalIndicators()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function getTopKeywordChart($id)
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function getTradeAlertDetails()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function hideTradeAlert()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function addChart()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function manageTradeAlert()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function markAlertAsSentAndSendEmail($tradeId)
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function postMarketingContentToSocials()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function previewAdvisorVoiceover($userId)
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function processActiveSecFilings()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function processAlerts()
+app/Modules/APIs/Controllers/AlertsAPIController.php:     // public function processAlerts()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function processEmailAlerts()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function processBrokerEmails()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function processAllEmails()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function previewScraper($id)
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function processSecFilings($symbol)
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function processTradeAlerts()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function processTradeBatch()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function sendAdvisorMediaToZapier($userId)
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function sendAlert() {
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function sendDiscordAlerts() {
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function sendDiscordAlertsBySymbol($symbol)
+app/Modules/APIs/Controllers/AlertsAPIController.php:     // public function sendTradeAlertEmails()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function storeMarketingContent()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function submitTradeAlert()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function updateBatchPrices()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function updateChartOverride()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function updateExchange()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function uploadFundamentals()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function updateTradeAlerts()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function updateTradeAlertsWithMarketData()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function validateSymbol()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function genKeys(): ResponseInterface
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function ingestCsvSignals()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function getSignals()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function getSignalFiles()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function previewSignalFile($id)
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function recalcSignalScores()
+app/Modules/APIs/Controllers/AlertsAPIController.php:    public function sign(): ResponseInterface
+app/Modules/APIs/Controllers/AlertsPublicAPIController.php:    public function list()
+app/Modules/APIs/Controllers/BitcoinAPIController.php:    public function buildUnsignedPsbt()
+app/Modules/APIs/Controllers/BitcoinAPIController.php:    public function broadcastSignedTx()
+app/Modules/APIs/Controllers/BrokerSmokeAPIController.php:    public function rhAccount(): ResponseInterface
+app/Modules/APIs/Controllers/BrokerSmokeAPIController.php:    public function snapAccounts(string $userId): ResponseInterface
+app/Modules/APIs/Controllers/BrokerSmokeAPIController.php:    public function rhEnvDebug()
+app/Modules/APIs/Controllers/BudgetAPIController.php:    public function apiBudgetData(): ResponseInterface
+app/Modules/APIs/Controllers/BudgetAPIController.php:    public function apiCreditData(): ResponseInterface
+app/Modules/APIs/Controllers/BudgetAPIController.php:    public function apiAvailableData(): ResponseInterface
+app/Modules/APIs/Controllers/BudgetAPIController.php:    public function apiRepaymentSummary(): ResponseInterface
+app/Modules/APIs/Controllers/ChatAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/ChatAPIController.php:    public function me(): ResponseInterface
+app/Modules/APIs/Controllers/ChatAPIController.php:    public function tool(): ResponseInterface
+app/Modules/APIs/Controllers/ContentEngineAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/ContentEngineAPIController.php:    public function ingestScanner()
+app/Modules/APIs/Controllers/ContentEngineAPIController.php:    public function processIngest(int $ingestId)
+app/Modules/APIs/Controllers/ContentEngineAPIController.php:    public function topIdeas()
+app/Modules/APIs/Controllers/ContentEngineAPIController.php:    public function posts(?int $ideaId = null)
+app/Modules/APIs/Controllers/ContentEngineAPIController.php:    public function approvePost(int $postId)
+app/Modules/APIs/Controllers/ContentEngineAPIController.php:    public function sendPost(int $postId)
+app/Modules/APIs/Controllers/ContentEngineAPIController.php:    public function runDaily()
+app/Modules/APIs/Controllers/DiscordAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/DiscordAPIController.php:    public function enqueue()
+app/Modules/APIs/Controllers/DiscordAPIController.php:    public function broadcast()
+app/Modules/APIs/Controllers/DiscordAPIController.php:    public function processQueue()
+app/Modules/APIs/Controllers/DiscordAPIController.php:    public function test()
+app/Modules/APIs/Controllers/DiscordAPIController.php:    public function coalesceNow()
+app/Modules/APIs/Controllers/DiscordAPIController.php:    public function purgeDead()
+app/Modules/APIs/Controllers/DiscordAPIController.php:    public function health()
+app/Modules/APIs/Controllers/DiscordAPIController.php:    public function commandsCatalog(): ResponseInterface
+app/Modules/APIs/Controllers/DiscordAPIController.php:    public function onboardingSteps(): ResponseInterface
+app/Modules/APIs/Controllers/DiscordAPIController.php:    public function sharingGuide(): ResponseInterface
+app/Modules/APIs/Controllers/DiscordAPIController.php:    public function handleInteraction(): ResponseInterface
+app/Modules/APIs/Controllers/DiscordAPIController.php:    public function messageHook(): ResponseInterface
+app/Modules/APIs/Controllers/DiscordAPIController.php:    public function completeOnboardingStep(): ResponseInterface
+app/Modules/APIs/Controllers/DiscordAPIController.php:    public function webhookProxy(): ResponseInterface
+app/Modules/APIs/Controllers/DiscordAPIController.php:    public function createLinkToken(): ResponseInterface
+app/Modules/APIs/Controllers/DocsAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/DocsAPIController.php:    public function index(): ResponseInterface
+app/Modules/APIs/Controllers/DocsAPIController.php:    public function view(): ResponseInterface
+app/Modules/APIs/Controllers/DoorDashAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/DoorDashAPIController.php:    public function index()
+app/Modules/APIs/Controllers/DoorDashAPIController.php:    public function connectDoorDash()
+app/Modules/APIs/Controllers/DoorDashAPIController.php:    public function doordashCallback()
+app/Modules/APIs/Controllers/DoorDashAPIController.php:    public function add()
+app/Modules/APIs/Controllers/DoorDashAPIController.php:    public function copy()
+app/Modules/APIs/Controllers/DoorDashAPIController.php:    public function accountManager()
+app/Modules/APIs/Controllers/DoorDashAPIController.php:    public function accountOverview()
+app/Modules/APIs/Controllers/DoorDashAPIController.php:    public function approveRecurringSchedule($accountId)
+app/Modules/APIs/Controllers/DoorDashAPIController.php:    public function cancelAccount($accountId)
+app/Modules/APIs/Controllers/DoorDashAPIController.php:    public function deleteAccount($accountId)
+app/Modules/APIs/Controllers/DoorDashAPIController.php:    public function bulkUpdateStatus()
+app/Modules/APIs/Controllers/DoorDashAPIController.php:    public function createLinkToken()
+app/Modules/APIs/Controllers/DoorDashAPIController.php:    public function exchangeToken()
+app/Modules/APIs/Controllers/DoorDashAPIController.php:    public function bulkDelete()
+app/Modules/APIs/Controllers/DripCampaignAPIController.php:    public function processBatch()
+app/Modules/APIs/Controllers/DripCampaignAPIController.php:    public function open($trackingId)
+app/Modules/APIs/Controllers/DripCampaignAPIController.php:    public function click($trackingId)
+app/Modules/APIs/Controllers/EmailAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/EmailAPIController.php:    public function autoScheduleDrafts()
+app/Modules/APIs/Controllers/EmailAPIController.php:    public function autoScheduleDraftCampaigns()
+app/Modules/APIs/Controllers/EmailAPIController.php:    public function cancelScheduledCampaign($campaignId)
+app/Modules/APIs/Controllers/EmailAPIController.php:    public function cloneCampaign($campaignId)
+app/Modules/APIs/Controllers/EmailAPIController.php:    public function createDraftCampaign()
+app/Modules/APIs/Controllers/EmailAPIController.php:    public function deleteCampaign($campaignId)
+app/Modules/APIs/Controllers/EmailAPIController.php:    public function fetchCampaignAnalytics()
+app/Modules/APIs/Controllers/EmailAPIController.php:    public function fetchQueuedEmailById($emailId)
+app/Modules/APIs/Controllers/EmailAPIController.php:    public function fetchQueuedEmails()
+app/Modules/APIs/Controllers/EmailAPIController.php:    public function fetchTagAnalytics()
+app/Modules/APIs/Controllers/EmailAPIController.php:    public function getAllCampaigns()
+app/Modules/APIs/Controllers/EmailAPIController.php:    public function getCampaignMetrics($campaignId)
+app/Modules/APIs/Controllers/EmailAPIController.php:    public function getCampaignStats($campaignId)
+app/Modules/APIs/Controllers/EmailAPIController.php:    public function getEmailQueueStats()
+app/Modules/APIs/Controllers/EmailAPIController.php:    public function getEmailQueueTrend()
+app/Modules/APIs/Controllers/EmailAPIController.php:    public function processScheduledCampaigns()
+app/Modules/APIs/Controllers/EmailAPIController.php:    public function scheduleCampaignApi($campaignId)
+app/Modules/APIs/Controllers/EmailAPIController.php:    public function sendMassTestCampaign()
+app/Modules/APIs/Controllers/EmailAPIController.php:    public function trackBounceWebhook()
+app/Modules/APIs/Controllers/EmailAPIController.php:    public function unsubscribe($token)
+app/Modules/APIs/Controllers/EsportsAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/EsportsAPIController.php:    public function createEvent()
+app/Modules/APIs/Controllers/EsportsAPIController.php:    public function joinEvent()
+app/Modules/APIs/Controllers/EsportsAPIController.php:    public function lockEscrow()
+app/Modules/APIs/Controllers/EsportsAPIController.php:    public function cancelEvent()
+app/Modules/APIs/Controllers/EsportsAPIController.php:    public function receiveResultWebhook()
+app/Modules/APIs/Controllers/EsportsAPIController.php:    public function settlePayouts()
+app/Modules/APIs/Controllers/EsportsAPIController.php:    public function cronProcessJobs()
+app/Modules/APIs/Controllers/EsportsAPIController.php:    public function getEvent($id = null)
+app/Modules/APIs/Controllers/EsportsAPIController.php:    public function listEvents()
+app/Modules/APIs/Controllers/HealthAPIController.php:    public function index()
+app/Modules/APIs/Controllers/HealthAPIController.php:    public function spark()
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function commonData(): array {
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function index()
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function getSymbolsByTradeType($tradeType)
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function getInvestmentData($cuID) {
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function fetchActiveTrades()
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function fetchMonthAndInsightsData() {
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function getForecastDetails(string $ticker)
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function fundamentals(string $symbol)
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function getConfidenceHeatmap()
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function getTopConfidenceBySector()
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function getConfidenceDistribution()
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function getForecastAccuracySummary()
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function searchTickers()
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function getForecastHighlights()
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function refreshForecasts()
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function reforecastTicker()
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function listNews()
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function getNews($id)
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function createNews()
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function updateNews($id)
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function deleteNews($id)
+app/Modules/APIs/Controllers/InvestmentsAPIController.php:    public function validateSymbol()
+app/Modules/APIs/Controllers/KeysAPIController.php:    public function index()
+app/Modules/APIs/Controllers/KeysAPIController.php:    public function create()
+app/Modules/APIs/Controllers/KeysAPIController.php:    public function revoke(string $prefix)
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function _remap($method, ...$params)
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function logHealthcheck()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function getAutoloadHealth(): ResponseInterface
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function subsystemsStatus(): ResponseInterface
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function subsystemsAction(): ResponseInterface
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function runAuthSmoke()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function saveSuggestion()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function initController(
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function Run_CRON_Tasks()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function runCRONTasks()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function generateWeeklyStreamData()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function backfillMarketingEmails()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function runBackfillAlertsEmails()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function runBackfillMarketingEmails()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function exportWeeklyWatchlistCSV()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function generateCoffeeAndStocksNewsletter()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function fetchCoffeeAndStocksNewsletter()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function saveCoffeeAndStocksNewsletter()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function ajaxGetActiveUsers()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function ajaxGetInactiveUsers()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function banUnverifiedUsers()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function checkForSpamUsers()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function cronAnalyzeContent()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function cronFetchAndGenerateNews() {
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function cronFetchInbox()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function cronFetchMarketingEmails()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function cronFetchAndStoreEmails()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function distributeTodaysNewsContent() {
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function exportPostJson($id)
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function fetchAlphaVantageNewsForTradeAlerts() {
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function fetchEmailsToTempScraper()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function fetchNewsEmails() {
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function forceFetchEmails()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function generateContentDigestFromStored()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function generateContentFromScraper()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function generateDailyContentDigest()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function generateRankedMarketingContent()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function getBalanceSheet($symbol, $apikey) {
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function getCashFlowStatement($symbol, $apikey) {
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function getCompanyOverview($symbol, $apikey) {
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function getEarningsCalendar($apikey, $horizon = '3month') {
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function getFixedWindowAnalytics($symbols, $rangeStart, $rangeEnd, $calculations, $apikey) {
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function getIncomeStatement($symbol, $apikey) {
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function getInsiderTransactions($symbol, $apikey) {
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function getNewsSentiment($apikey, $tickers = '', $topics = '', $time_from = '', $time_to = '', $sort = 'LATEST', $limit = 50) {
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function getSlidingWindowAnalytics($symbols, $range, $windowSize, $calculations, $apikey) {
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function generatePostsFromSummary($summaryId = null)
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function testTfIdfPipeline()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    // public function generatePostsFromSummary($id)
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function generateTodaysNewsSummary(): array {
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function generateTodaysStory()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function generateVoiceScriptManually() {
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function getAlerts()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function getAssets()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function getNews()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function getReferrals()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function getSupport()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function getTopMovers($apikey) {
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function getUpcomingIPOs($apikey) {
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function getUsers()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function massResendActivationEmails()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function processAllTradeAlerts()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function processAndGenerateMarketingContent() {
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function processQueuedEmails()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function processTempEmailsToScraper()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function reprocessIncompleteEmails()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function resendActivationEmailsBatch()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function resendActivationEmailsBatchQueued()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function runCronManually()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function runDailyAlphaVantageDataPipeline() {
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function sendTestActivationEmail()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function sendToZapierManually() {
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function scrapeAndGenerateTodaysStoryFromInbox()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function sharePost($id, $platform)
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function sendAllDiscordAlerts()
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function unsubscribe($token = null)
+app/Modules/APIs/Controllers/ManagementAPIController.php:    public function updateMarketDataForAlerts()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function _remap($method, ...$params)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function initController(
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function generateKimiSummaries()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function generateKimiPosts()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function approveBufferItem($id)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function autoScheduleNextApproved()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function cronAnalyzeContent()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function cronAutoPublishGroupedDigest()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function cronEnrichTradeAlerts()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function cronFetchAndGenerateNews()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function cronFetchInbox()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function cronFetchMarketingEmails()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function cronProcessSMSMarketingIdeas()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function cronDistributeApprovedContent()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function deleteScrape($id)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function distributeHighScoreContent()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function downloadVoiceover($filename = null)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function emailPostForApproval($postId)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function exportBufferPosts()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function exportGroupedSummariesCSV()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function fetchBufferPaginated()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function fetchFinalizedContent()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    // public function fetchGeneratedSummaries()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function fetchFinalizedSummariesBlock()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function fetchGeneratedSummaries()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function fetchGeneratedSummariesBlock()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function fetchGeneratedSummariesJson()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function forceGenerateFromTemp($tempId)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function generateAdvisorMediaOnDemand($userId = null)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function generateCampaignContent()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function generateDailyMarketCampaign()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function generateCampaignStepContent()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function generateContentFromScraper()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function generateContentDigestFromStored()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function generateDailyContentDigest()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function generateFromSimilar($tempId)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function generateLivePreview()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function generatePostsFromSummary($summaryId = null)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function getPlatforms()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function savePlatform()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function deletePlatform(int $id)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function getPlatformRules(string $platformKey)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function upsertPlatformRule()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function deletePlatformRule(int $id)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function searchTaxonomy()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function saveTaxonomy()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function deleteTaxonomy(int $id)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function listSuggestions(string $platformKey, string $contentType)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function saveSuggestion()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function deleteSuggestion(int $id)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function getPostingPlan()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function composePost()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function generatePostMediaContent()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function getGeneratedPostsPaginated()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function generateScheduledPosts()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function generateSummaryFromGoogleSearch($title, $url = '', $sourceId = null)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function generateThreadFromSummary($id)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function generateVoiceScriptManually()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function getCleanedScrapedContent($limit = 10)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function getContentPerformanceAnalytics()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function getScrapeDetails($id)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function getStoryboardPackage($summaryId)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function getTopGeneratedPosts()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function getTopKeywordChart($id)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function groupSimilarSummariesByCosine($threshold = 0.75)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function massResendActivationEmails()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function monitorKeywordsAndScrape()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function processMarketingTempEmails($limit = 5, $mode = 'daily', $id = null)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function publishGroupedContentDraft()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function rankBufferPostsDaily()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function regenerateMissingPostContent()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function rejectBufferItem($id)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function reprocessIncompleteEmails()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function runBackfillForTempEmails()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function runContentGenerationBatch()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function runEnrichTradeAlerts()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function runKeywordBackfillBatch()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function runKeywordEnrichment()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function runScheduledDistribution()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function scheduleApprovedPost($id)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function schedulePost($id, $platform, $datetime)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function sendWalkthroughEmails()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function shareGroupedSummaries($platform)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function sharePost($id, $platform)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function smartSearch()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function submitLargeContent()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function testGenerateDailyDigest()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function testGenerateFromTempEmail($id)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function testGenerateSummarizerHarness()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function testTfIdfEdgeCases()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function timeline($topic = 'General')
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function triggerPostAutogenOnEmpty()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function updateBufferScheduleInterval($id)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function updateCampaignLinks()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function updateCampaignMessageField()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function updateInsight()
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function updatePlatformToggle($id)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function updatePostSchedule($id)
+app/Modules/APIs/Controllers/MarketingAPIController.php:    public function viewTimelineGrouped()
+app/Modules/APIs/Controllers/MditAdminAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/MditAdminAPIController.php:    public function pendingRedemptions(): ResponseInterface
+app/Modules/APIs/Controllers/MditAdminAPIController.php:    public function approveRedemption(): ResponseInterface
+app/Modules/APIs/Controllers/MditAdminAPIController.php:    public function pendingDeposits(): ResponseInterface
+app/Modules/APIs/Controllers/MditAdminAPIController.php:    public function computeNavToday(): ResponseInterface
+app/Modules/APIs/Controllers/MditBaseAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/MditDepositAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/MditDepositAPIController.php:    public function initiate(): ResponseInterface
+app/Modules/APIs/Controllers/MditDepositAPIController.php:    public function confirm(): ResponseInterface
+app/Modules/APIs/Controllers/MditInvestorAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/MditInvestorAPIController.php:    public function startKyc(): ResponseInterface
+app/Modules/APIs/Controllers/MditInvestorAPIController.php:    public function kycStatus(): ResponseInterface
+app/Modules/APIs/Controllers/MditInvestorAPIController.php:    public function attestAccreditation(): ResponseInterface
+app/Modules/APIs/Controllers/MditInvestorAPIController.php:    public function portfolioSummary(): ResponseInterface
+app/Modules/APIs/Controllers/MditRedemptionAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/MditRedemptionAPIController.php:    public function requestRedemption(): ResponseInterface
+app/Modules/APIs/Controllers/OpsAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/OpsAPIController.php:    public function status(): ResponseInterface
+app/Modules/APIs/Controllers/OpsAPIController.php:    public function dispatch(): ResponseInterface
+app/Modules/APIs/Controllers/OpsAPIController.php:    public function ingestReport(): ResponseInterface
+app/Modules/APIs/Controllers/OpsAPIController.php:    public function latestReport(): ResponseInterface
+app/Modules/APIs/Controllers/OpsAPIController.php:    public function ingestMetrics(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function listMarkets()
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function createMarket()
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function placeOrder()
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cancelOrder()
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function settle($marketId)
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function addLiquidity()
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function removeLiquidity()
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function lockMarkets()
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function processPayouts()
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    // public function rebalanceOdds()
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronDistributeFees(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronFetchMarketData(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronFetchUserData(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronSettleMarkets(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronExpireMarkets(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronUpdateMarketPrices(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronUpdateMarketStates(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronUpdateUserPositions(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronUpdateUserStakes(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronUpdateUserFees(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronUpdateUserPnL(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronUpdateUserRankings(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronUpdateUserLeaderboard(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronUpdateUserStats(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronUpdateUserNotifications(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronProcessExpiredMarkets(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronProcessSettledMarkets(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronProcessUserOrders(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronProcessUserPositions(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronProcessUserStakes(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronProcessUserFees(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronProcessUserPnL(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronProcessUserRankings(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronProcessUserLeaderboard(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronProcessUserStats(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronProcessUserNotifications(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function cronProcessUserSettlements(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function lock(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function rebalanceOdds(): ResponseInterface
+app/Modules/APIs/Controllers/PredictionsAPIController.php:    public function unlock(): ResponseInterface
+app/Modules/APIs/Controllers/SearchAPIController.php:    public function index(): ResponseInterface|string
+app/Modules/APIs/Controllers/SqueezeAPIController.php:    public function initController(
+app/Modules/APIs/Controllers/SqueezeAPIController.php:    public function scorecard()
+app/Modules/APIs/Controllers/SqueezeAPIController.php:    public function zoomout()
+app/Modules/APIs/Controllers/SqueezeAPIController.php:    public function fade()
+app/Modules/APIs/Controllers/SqueezeAPIController.php:    public function run()
+app/Modules/APIs/Controllers/WalletsAPIController.php:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+app/Modules/APIs/Controllers/WalletsAPIController.php:    public function index(): ResponseInterface
+app/Modules/APIs/Controllers/WalletsAPIController.php:    public function summary(): ResponseInterface
+app/Modules/APIs/Controllers/WalletsAPIController.php:    public function create(): ResponseInterface
+app/Modules/APIs/Controllers/WalletsAPIController.php:    public function plaidConfigDebug(): \CodeIgniter\HTTP\ResponseInterface
+app/Modules/APIs/Controllers/WalletsAPIController.php:    public function plaidEnv(): ResponseInterface
+app/Modules/APIs/Controllers/WalletsAPIController.php:    public function plaidOAuthReturn()
+app/Modules/APIs/Controllers/WalletsAPIController.php:    public function plaidWebhook()
+app/Modules/APIs/Controllers/WalletsAPIController.php:    public function update($id = null): ResponseInterface
+app/Modules/APIs/Controllers/WalletsAPIController.php:    public function plaidLinkToken(): ResponseInterface
+app/Modules/APIs/Controllers/WalletsAPIController.php:    public function plaidExchange(): ResponseInterface
+app/Modules/APIs/Controllers/WalletsAPIController.php:    public function providers(): ResponseInterface
+app/Modules/APIs/Controllers/WalletsAPIController.php:    public function unlink($id = null): ResponseInterface
+app/Modules/APIs/Controllers/WalletsAPIController.php:    public function updateBank($id = null): ResponseInterface {
+app/Modules/APIs/Controllers/WalletsAPIController.php:    public function updateCredit($id = null): ResponseInterface {
+app/Modules/APIs/Controllers/WalletsAPIController.php:    public function updateDebt($id = null): ResponseInterface {
+app/Modules/APIs/Controllers/WalletsAPIController.php:    public function updateInvestment($id = null): ResponseInterface {
+app/Modules/APIs/Controllers/WalletsAPIController.php:    public function updateCrypto($id = null): ResponseInterface {
+app/Modules/APIs/Controllers/WalletsAPIController.php:    public function linkRobinhood(): ResponseInterface
+app/Modules/APIs/Controllers/WalletsAPIController.php:    public function linkSnapTrade(): ResponseInterface
+app/Modules/APIs/Controllers/WalletsAPIController.php:    public function getSnapTradeConnectUrl(): ResponseInterface

@@ -73,12 +73,12 @@ class Logger extends BaseConfig
                 'filePermissions' => 0664,
             ],
 
-            DatabaseLoggerHandler::class => [
-                'handles' => self::ALL_LEVELS,
-                'fallbackPath' => $this->logPath,
-                'notificationEmail' => (string) env('LOGGER_ALERT_EMAIL', 'support@mymiwallet.com'),
-                'emailWarningLevel' => (bool) env('LOGGER_EMAIL_WARNING', false),
-            ],
+            // DatabaseLoggerHandler::class => [
+            //     'handles' => self::ALL_LEVELS,
+            //     'fallbackPath' => $this->logPath,
+            //     'notificationEmail' => (string) env('LOGGER_ALERT_EMAIL', 'support@mymiwallet.com'),
+            //     'emailWarningLevel' => (bool) env('LOGGER_EMAIL_WARNING', false),
+            // ],
         ];
 
         if ($this->threshold === [] || $this->threshold === [9]) {

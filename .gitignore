@@ -59,3 +59,4 @@ application/modules/investments/controllers/API_Squeeze.php
 /chat/runtime/*.lock
 /chat/runtime/*.log
 /chat/runtime/*.status.json
+.archive/*
