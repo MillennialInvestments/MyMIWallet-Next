@@ -60,17 +60,6 @@ class Logger extends BaseConfig
         $this->threshold = $this->resolveThreshold();
 
         $this->handlers = [
-            /*
-             * --------------------------------------------------------------------
-             * Database Handler
-             * --------------------------------------------------------------------
-             */
-            DatabaseLoggerHandler::class => [
-                'handles'           => ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug'],
-                'fallbackPath'      => $this->logPath,
-                'notificationEmail' => 'support@mymiwallet.com',
-                'emailWarningLevel' => (bool) env('LOGGER_EMAIL_WARNING', false),
-            ],
 
             /*
              * --------------------------------------------------------------------
@@ -91,6 +80,18 @@ class Logger extends BaseConfig
                 'path'            => $this->logPath,
                 'fileExtension'   => 'php',
                 'filePermissions' => 0664,
+            ],
+
+            /*
+             * --------------------------------------------------------------------
+             * Database Handler
+             * --------------------------------------------------------------------
+             */
+            DatabaseLoggerHandler::class => [
+                'handles'           => ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug'],
+                'fallbackPath'      => $this->logPath,
+                'notificationEmail' => 'support@mymiwallet.com',
+                'emailWarningLevel' => (bool) env('LOGGER_EMAIL_WARNING', false),
             ],
 
         ];
@@ -151,6 +152,9 @@ class Logger extends BaseConfig
                 5 => ['emergency', 'alert', 'critical', 'error', 'warning', 'notice'],
                 6 => ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info'],
                 7 => ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug'],
+                8 => self::ALL_LEVELS,
+                9 => self::ALL_LEVELS,
+
             ];
 
             return $map[(int) $numeric] ?? self::ALL_LEVELS;

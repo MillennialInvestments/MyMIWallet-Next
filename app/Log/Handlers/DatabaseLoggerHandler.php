@@ -56,13 +56,18 @@ class DatabaseLoggerHandler extends BaseHandler implements HandlerInterface
 
     public function handle($level, $message, array $context = []): bool
     {
+        @file_put_contents(WRITEPATH.'logs/lock_debug.log',
+            date('c') . ' active=' . (self::$active ? '1' : '0') . PHP_EOL,
+            FILE_APPEND
+        );
+
         if (! $this->canHandle($level)) {
             return false;
         }
 
 
         if (! $this->acquireLock()) {
-            return true;
+            return false;
         }
 
         try {
@@ -98,12 +103,19 @@ class DatabaseLoggerHandler extends BaseHandler implements HandlerInterface
             'uri'        => $request['uri'] ?? null,
             'method'     => $request['method'] ?? null,
             'created_at' => date('Y-m-d H:i:s'),
+            'full_url'   => $request['uri'] ?? null,
+            'path' => parse_url($request['uri'] ?? '', PHP_URL_PATH),
+            'type'       => 'app',
+            'request_id' => $_SERVER['HTTP_X_REQUEST_ID'] ?? bin2hex(random_bytes(8)),
         ];
     }
 
     private function writeToDatabase(array $record): void
     {
         $db = Database::connect();
+        if (!$db->connID) {
+            throw new \RuntimeException('Database connection unavailable');
+        }
 
         $this->primeColumns($db);
 
