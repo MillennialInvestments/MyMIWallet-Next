@@ -94,7 +94,9 @@ class BlogController extends UserController
     {
         $cacheKey = sanitizeCacheKey('blog:page:' . md5(current_url()));
         $skipCache = false;
-        if (service('auth')->loggedIn() && service('auth')->user()->isAdmin()) {
+        $auth = service('auth');
+        $authUser = $auth ? $auth->user() : null;
+        if ($auth && $auth->loggedIn() && $authUser && $authUser->isAdmin()) {
             $skipCache = true;
         }
 
@@ -141,7 +143,9 @@ class BlogController extends UserController
     {
         $cacheKey = sanitizeCacheKey('blog:page:' . md5(current_url()));
         $skipCache = false;
-        if (service('auth')->loggedIn() && service('auth')->user()->isAdmin()) {
+        $auth = service('auth');
+        $authUser = $auth ? $auth->user() : null;
+        if ($auth && $auth->loggedIn() && $authUser && $authUser->isAdmin()) {
             $skipCache = true;
         }
 
@@ -189,7 +193,9 @@ class BlogController extends UserController
     {
         $cacheKey = sanitizeCacheKey('blog:page:' . md5(current_url()));
         $skipCache = false;
-        if (service('auth')->loggedIn() && service('auth')->user()->isAdmin()) {
+        $auth = service('auth');
+        $authUser = $auth ? $auth->user() : null;
+        if ($auth && $auth->loggedIn() && $authUser && $authUser->isAdmin()) {
             $skipCache = true;
         }
 

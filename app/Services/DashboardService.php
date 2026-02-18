@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Libraries\MyMIDashboard;
-use CodeIgniter\Cache\CacheInterface;
+use Psr\SimpleCache\CacheInterface;
 
 class DashboardService
 {
@@ -12,10 +12,10 @@ class DashboardService
     protected MyMIDashboard $myMIDashboard;
     protected CacheInterface $cache;
 
-    public function __construct(?MyMIDashboard $myMIDashboard = null, ?CacheInterface $cache = null)
+    public function __construct()
     {
-        $this->myMIDashboard = $myMIDashboard ?? new MyMIDashboard();
-        $this->cache = $cache ?? cache();
+        $this->myMIDashboard = new MyMIDashboard();
+        $this->cache = service('cache');
     }
 
     public function getPromotionalBanners($userId)
@@ -45,7 +45,7 @@ class DashboardService
         }
 
         $summary = $this->myMIDashboard->getExecutiveDashboardSummary($userId);
-        $this->cache->save($cacheKey, $summary, self::EXECUTIVE_SUMMARY_TTL_SECONDS);
+        $this->cache->set($cacheKey, $summary, self::EXECUTIVE_SUMMARY_TTL_SECONDS);
 
         return $summary;
     }
