@@ -15,7 +15,6 @@ use App\Services\Forecasting\ForecastAggregationService;
 use App\Services\Forecasting\MyMIForecaster;
 use App\Services\Forecasting\Providers\AlphaVantageProvider;
 use Config\Cache;
-use CodeIgniter\Config\BaseService;
 use CodeIgniter\Config\Services as CoreServices;
 use function is_ci;
 
@@ -32,7 +31,7 @@ use function is_ci;
  * method format you should use for your service methods. For more examples,
  * see the core Services file at system/Config/Services.php.
  */
-class Services extends BaseService
+class Services extends CoreServices
 {
     public static function cache(?Cache $config = null, bool $getShared = true)
     {
@@ -47,7 +46,7 @@ class Services extends BaseService
             $config = $cacheConfig;
         }
 
-        return CoreServices::cache($config, $getShared);
+        return parent::cache($config, $getShared);
     }
 
     public static function aiopsDocsScanner(bool $getShared = true)

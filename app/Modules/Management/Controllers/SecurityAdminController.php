@@ -60,11 +60,11 @@ class SecurityAdminController extends UserController
 //         $this->MyMIUser                             = new MyMIUser(); // replaced by BaseController getter 
 //         $this->MyMIWallet                           = new MyMIWallet(); // replaced by BaseController getter 
 //         $this->MyMIWallets                          = new MyMIWallets(); // replaced by BaseController getter 
-        // Check multiple sources for user ID
-        $this->cuID = $this->userModel->getUserID()
-            ?? $this->auth->id()
-            ?? session('logged_in')
-            ?? $this->session->get('user_id');
+        $this->cuID = service('authentication')->id();
+
+        if (! $this->cuID) {
+            return redirect()->to('/login');
+        }
         $this->userAccount                          = $this->getMyMIUser()->getUserInformation($this->cuID); 
         $this->userAssessment                       = $this->getMyMIUser()->getUserFinancialAssessment($this->cuID);  
         $this->userBudget                           = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID); 
@@ -232,7 +232,7 @@ class SecurityAdminController extends UserController
 
     public function rate_limit_actions()
     {
-        $userId = session()->get('user_id');
+        $userId = service('authentication')->id();
         $rateLimitExceeded = false;
         return $this->jsonOutput(['rate_limit_exceeded' => $rateLimitExceeded]);
     }

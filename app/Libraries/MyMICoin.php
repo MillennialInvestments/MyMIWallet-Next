@@ -28,8 +28,7 @@ class MyMICoin
         $this->userModel                    = new userModel();
         // Assuming you have services like 'auth' properly configured in CI4
         
-        $this->cuID = $this->auth->id() ?? $this->session->get('user_id') ?? $this->userModel->getUserID();
-        $cuID = $this->cuID;
+        $this->cuID = service('authentication')->id();
         if (empty($this->cuID)) {
             log_message('debug', 'MyMICoin: guest context detected; skipping user-specific preload.');
         }

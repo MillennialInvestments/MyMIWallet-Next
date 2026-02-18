@@ -20,17 +20,10 @@ class AdminController extends UserController
     {
         parent::initController($request, $response, $logger);
 
-        $auth = service('authentication');
-        $user = $auth ? $auth->user() : null;
+        $this->cuID = service('authentication')->id();
 
-        $this->cuID = $user && isset($user->id)
-            ? (int) $user->id
-            : null;
-
-
-        if (!$this->cuID) {
-            log_message('warning', 'AdminController init aborted: no authenticated user id available.');
-            return;
+        if (! $this->cuID) {
+            return redirect()->to('/login');
         }
 
         // Lightweight model instantiation only
