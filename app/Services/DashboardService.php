@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Libraries\MyMIDashboard;
-use Psr\SimpleCache\CacheInterface;
+use CodeIgniter\Cache\CacheInterface;
 
 class DashboardService
 {
@@ -16,6 +16,10 @@ class DashboardService
     {
         $this->myMIDashboard = $myMIDashboard ?? new MyMIDashboard();
         $this->cache = $cache ?? cache();
+
+        if (! $this->cache instanceof \CodeIgniter\Cache\CacheInterface) {
+            throw new \RuntimeException('Invalid cache implementation injected.');
+        }
     }
 
     public function getPromotionalBanners($userId)
