@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * CI4 Logger - Settings
+ * Audited: 2026-02-18
+ * Purpose: Applies front-controller level error display/reporting and early request hardening.
+ */
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -11,17 +18,7 @@ if (! headers_sent()) {
 use App\Services\AutoloadAuditService;
 use CodeIgniter\Boot;
 use Config\Paths;
-
-/*
-|--------------------------------------------------------------------------
-| ENVIRONMENT
-|--------------------------------------------------------------------------
-*/
-if (getenv('CI_ENVIRONMENT') === 'development') {
-    $_SERVER['CI_ENVIRONMENT'] = 'development';
-    defined('ENVIRONMENT') || define('ENVIRONMENT', 'development');
-    defined('CI_DEBUG')    || define('CI_DEBUG', true);
-}
+use Dotenv\Dotenv;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +42,23 @@ if (getcwd() . DIRECTORY_SEPARATOR !== FCPATH) {
 }
 
 require FCPATH . '../vendor/autoload.php';
+
+$dotenv = Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->safeLoad();
+
+/*
+|--------------------------------------------------------------------------
+| ENVIRONMENT
+|--------------------------------------------------------------------------
+*/
+$environment = $_ENV['CI_ENVIRONMENT'] ?? $_SERVER['CI_ENVIRONMENT'] ?? getenv('CI_ENVIRONMENT') ?: 'production';
+$_SERVER['CI_ENVIRONMENT'] = $environment;
+defined('ENVIRONMENT') || define('ENVIRONMENT', $environment);
+
+if (ENVIRONMENT === 'development') {
+    defined('CI_DEBUG') || define('CI_DEBUG', true);
+}
+
 
 /*
 |--------------------------------------------------------------------------
@@ -80,12 +94,20 @@ if (
 | BOOTSTRAP CI
 |--------------------------------------------------------------------------
 */
-require FCPATH . '../app/Config/Paths.php';
-$paths = new Paths();
+try {
+    require FCPATH . '../app/Config/Paths.php';
+    $paths = new Paths();
 
-require $paths->systemDirectory . '/Boot.php';
+    require $paths->systemDirectory . '/Boot.php';
 
-$exitCode = Boot::bootWeb($paths);
+    $exitCode = Boot::bootWeb($paths);
+} catch (Throwable $e) {
+    \App\Libraries\EmergencyLogger::write('BOOT FAILURE: ' . $e->getMessage(), [
+        'trace' => $e->getTraceAsString(),
+    ]);
+
+    throw $e;
+}
 
 /*
 |--------------------------------------------------------------------------

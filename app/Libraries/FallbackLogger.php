@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * CI4 Logger - Settings
+ * Audited: 2026-02-18
+ * Purpose: Provides a simple fallback logger sink for file-based emergency logging.
+ */
+
+
 namespace App\Libraries;
 
 class FallbackLogger

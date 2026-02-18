@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * CI4 Logger - Settings
+ * Audited: 2026-02-18
+ * Purpose: Controls exception logging behavior and custom exception handler selection.
+ */
+
+
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
@@ -122,6 +129,12 @@ class Exceptions extends BaseConfig
                 'ref' => $request->getHeaderLine('Referer') ?: 'none',
             ]);
         }
-        return new ExceptionHandler($this);
+        $handler = new ExceptionHandler($this);
+
+        if (ENVIRONMENT === 'development') {
+            return $handler;
+        }
+
+        return $handler;
     }
 }

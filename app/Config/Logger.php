@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * CI4 Logger - Settings
+ * Audited: 2026-02-18
+ * Purpose: Defines global logging thresholds, handlers, and log path resolution.
+ */
+
 namespace Config;
 
 use App\Log\Handlers\DatabaseLoggerHandler;
@@ -60,47 +66,20 @@ class Logger extends BaseConfig
         $this->threshold = $this->resolveThreshold();
 
         $this->handlers = [
-
-            /*
-             * --------------------------------------------------------------------
-             * File Handler
-             * --------------------------------------------------------------------
-             */
             FileHandler::class => [
-                'handles' => [
-                    'emergency',
-                    'alert',
-                    'critical',
-                    'error',
-                    'warning',
-                    'notice',
-                    'info',
-                    'debug',
-                ],
-                'path'            => $this->logPath,
-                'fileExtension'   => 'php',
+                'handles' => self::ALL_LEVELS,
+                'path' => $this->logPath,
+                'fileExtension' => 'php',
                 'filePermissions' => 0664,
             ],
 
-            /*
-             * --------------------------------------------------------------------
-             * Database Handler
-             * --------------------------------------------------------------------
-             */
             DatabaseLoggerHandler::class => [
-                'handles'           => ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug'],
-                'fallbackPath'      => $this->logPath,
-                'notificationEmail' => 'support@mymiwallet.com',
+                'handles' => self::ALL_LEVELS,
+                'fallbackPath' => $this->logPath,
+                'notificationEmail' => (string) env('LOGGER_ALERT_EMAIL', 'support@mymiwallet.com'),
                 'emailWarningLevel' => (bool) env('LOGGER_EMAIL_WARNING', false),
             ],
-
         ];
-
-        // Optional env override for alert email
-        $this->handlers[DatabaseLoggerHandler::class]['notificationEmail'] = (string) env(
-            'LOGGER_ALERT_EMAIL',
-            $this->handlers[DatabaseLoggerHandler::class]['notificationEmail']
-        );
 
         if ($this->threshold === [] || $this->threshold === [9]) {
             $this->threshold = [

@@ -173,4 +173,15 @@ class ContentSecurityPolicy extends BaseConfig
      * Replace nonce tag automatically
      */
     public bool $autoNonce = true;
+
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        if (ENVIRONMENT === 'development') {
+            $this->scriptSrc = ['self', 'unsafe-inline'];
+        }
+    }
+
 }
