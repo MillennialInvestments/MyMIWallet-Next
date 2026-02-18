@@ -196,6 +196,19 @@ class Console extends BaseConfig
 
         /*
         |----------------------------------------------------------------------
+        | DreamHost Diagnostics
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Dreamhost\DNSTest::class,
+        \App\Commands\Dreamhost\EnvDebug::class,
+        \App\Commands\Dreamhost\ImapFlagSweep::class,
+        \App\Commands\Dreamhost\ImapTest::class,
+        \App\Commands\Dreamhost\PortTest::class,
+        \App\Commands\Dreamhost\SmtpProbe::class,
+        \App\Commands\Dreamhost\SSLTest::class,
+
+        /*
+        |----------------------------------------------------------------------
         | GitHub
         |----------------------------------------------------------------------
         */
@@ -231,21 +244,26 @@ class Console extends BaseConfig
         \App\Commands\Ops\CommandsAutofix::class,
         \App\Commands\Ops\CommandsInventory::class,
         \App\Commands\Ops\CommandsLint::class,
-        \App\Commands\Ops\SparkRegistryAudit::class,
         \App\Commands\Ops\ConfigLint::class,
         \App\Commands\Ops\ConfigReset::class,
+        \App\Commands\Ops\DoctorFull::class,
+        \App\Commands\Ops\EnvSnapshot::class,
         \App\Commands\Ops\FilesystemFix::class,
         \App\Commands\Ops\FilesystemLint::class,
+        \App\Commands\Ops\ImageCapabilities::class,
+        \App\Commands\Ops\NetworkMatrix::class,
         \App\Commands\Ops\NextSteps::class,
         \App\Commands\Ops\NextStepsSync::class,
         \App\Commands\Ops\NextStepsSyncManual::class,
+        \App\Commands\Ops\PHPExtensionsAudit::class,
         \App\Commands\Ops\ProposePr::class,
+        \App\Commands\Ops\SparkRegistryAudit::class,
         \App\Commands\Ops\SparkReset::class,
         \App\Commands\Ops\SubsAudit::class,
         \App\Commands\Ops\SubsDoctor::class,
         \App\Commands\Ops\SubsRepair::class,
         \App\Commands\Ops\SubsStatus::class,
-
+        \App\Commands\Ops\VPSSnapshot::class,
         \App\Commands\OpsAnalyzeCommands::class,
         \App\Commands\OpsFetchCommands::class,
         \App\Commands\OpsWork::class,
@@ -293,6 +311,14 @@ class Console extends BaseConfig
         |----------------------------------------------------------------------
         */
         \App\Commands\Test\RedisPing::class,
+        \App\Commands\SecurityCspAudit::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Traits
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Traits\ParamOptions::class,
 
         /*
         |----------------------------------------------------------------------
