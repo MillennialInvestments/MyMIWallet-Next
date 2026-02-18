@@ -598,6 +598,7 @@ class AlertsAdminController extends UserController
             ->where('status', 'Opened')
             ->groupStart()->where('category', null)->orWhere('category', '')->groupEnd()
             ->orderBy('created_on', 'DESC')
+            ->limit(20)
             ->get()->getResultArray();
 
         $updated = 0; $checked = count($alerts);
@@ -613,6 +614,7 @@ class AlertsAdminController extends UserController
                 ->where('email_date >=', $start)
                 ->where('email_date <=', $end)
                 ->orderBy('email_date', 'ASC')
+                ->limit(20)
                 ->get()->getResultArray();
 
             $category = null;
@@ -1034,46 +1036,65 @@ class AlertsAdminController extends UserController
 
     public function getFilteredAlerts()
     {
-        //log_message('debug', '🔍 getFilteredAlerts - Request received.');
-    
-        $postData = $this->request->getPost();
-        //log_message('debug', '📩 getFilteredAlerts - Received POST data: ' . json_encode($postData));
-    
-        // Check if timeRange exists
-        $timeRange = $postData['timeRange'] ?? null;
+        $request = $this->request;
+
+        $draw   = (int) $request->getPost('draw');
+        $start  = (int) $request->getPost('start');
+        $length = (int) $request->getPost('length');
+
+        $timeRange = $request->getPost('timeRange');
+        $category  = $request->getPost('category');
+        $search    = $request->getPost('search')['value'] ?? null;
+
         if (!$timeRange) {
-            log_message('error', '❌ getFilteredAlerts - Missing timeRange parameter.');
-            return $this->response->setJSON(['error' => 'Missing time range'])->setStatusCode(400);
+            return $this->response->setJSON([
+                'draw' => $draw,
+                'recordsTotal' => 0,
+                'recordsFiltered' => 0,
+                'data' => []
+            ]);
         }
-    
-        // Generate date range
-        $dateRange = $this->getDateRange($timeRange);
-        if (!$dateRange) {
-            log_message('error', '❌ getFilteredAlerts - Invalid timeRange: ' . $timeRange);
-            return $this->response->setJSON(['error' => 'Invalid time range'])->setStatusCode(400);
+
+        $dateRange = $this->getDateRange(
+            $this->request->getPost('timeRange')
+        );
+
+        $result = $this->alertsModel
+                ->getFilteredTradeAlerts($dateRange, $opts);
+        // $builder = $this->alertsModel
+        //     ->select('id, created_on, ticker, exchange, category, price, entry_price, target_price, locked_profit_stop, trailing_stop_percent, ema_3_8, ema_8_13, ema_13_34, ema_34_48, ema_consensus')
+        //     ->where('created_on >=', $dateRange['start'])
+        //     ->where('created_on <=', $dateRange['end']);
+
+        if (!empty($category)) {
+            $builder->where('category', $category);
         }
-    
-        //log_message('debug', '🗓 getFilteredAlerts - Generated date range: ' . json_encode($dateRange));
-    
-        // Fetch alerts from model
-        $alerts = $this->alertsModel->getFilteredTradeAlerts($dateRange)->get()->getResultArray();
-        
-        if (empty($alerts)) {
-            log_message('warning', '⚠️ getFilteredAlerts - No alerts found for date range: ' . json_encode($dateRange));
-        } else {
-            log_message('debug', '✅ getFilteredAlerts - Found ' . count($alerts) . ' alerts.');
+
+        if (!empty($search)) {
+            $builder->groupStart()
+                ->like('ticker', $search)
+                ->orLike('exchange', $search)
+                ->orLike('category', $search)
+            ->groupEnd();
         }
-    
-        $response = [
-            'draw' => $postData['draw'] ?? 1,
-            'recordsTotal' => count($alerts),
-            'recordsFiltered' => count($alerts),
-            'data' => $alerts
-        ];
-    
-        //log_message('debug', '📤 getFilteredAlerts - Returning response: ' . json_encode($response));
-        return $this->response->setJSON($response);
+
+        $totalRecords = $builder->countAllResults(false); // keep builder state
+
+        $data = $builder
+            ->orderBy('id', 'DESC')
+            ->limit($length, $start)
+            ->limit(20)
+            ->get()
+            ->getResultArray();
+
+        return $this->response->setJSON([
+            'draw' => $draw,
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $totalRecords,
+            'data' => $data
+        ]);
     }
+
        
     public function importTickers() {
         $file = $this->request->getFile('ticker_file');
@@ -1289,7 +1310,7 @@ class AlertsAdminController extends UserController
             // Optional: trigger Discord (guards/dup-prevention should live in MyMIAlerts)
             try {
                 $lib   = new \App\Libraries\MyMIAlerts();
-                $alert = $model->db->table('bf_investment_trade_alerts')->where('id', $alertId)->get()->getRowArray();
+                $alert = $model->db->table('bf_investment_trade_alerts')->where('id', $alertId)->limit(25)->get()->getRowArray();
                 if (!empty($alert['chart_link'])) {
                     $lib->sendDiscordNotification($alert);
                 }

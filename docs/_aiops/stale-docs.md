@@ -1,13 +1,13 @@
 # AI-Ops: Stale Docs
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-18T16:00:02Z
+> Run: 2026-02-19T00:00:02Z
 
 - docs/Kimi/README.md
-  - Doc last updated: 2025-12-11 (68 days ago)
+  - Doc last updated: 2025-12-11 (69 days ago)
 - docs/Kimi/audit-2025-12-11.md
-  - Doc last updated: 2025-12-11 (68 days ago)
+  - Doc last updated: 2025-12-11 (69 days ago)
 - docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md
-  - Doc last updated: 2025-12-11 (68 days ago)
+  - Doc last updated: 2025-12-11 (69 days ago)
 - docs/OVERVIEW.md
   - Doc last updated: 2025-11-08 (102 days ago)
 - docs/README.md
@@ -17,7 +17,7 @@
 - docs/adr/_index.md
   - Doc last updated: 2025-11-08 (102 days ago)
 - docs/alerts/alerts_marketing_pipline.md
-  - Doc last updated: 2025-11-22 (87 days ago)
+  - Doc last updated: 2025-11-22 (88 days ago)
 - docs/auctions/_index.md
   - Doc last updated: 2025-11-08 (102 days ago)
 - docs/auctions/auction-schema.md
@@ -71,11 +71,11 @@
 - docs/csp-and-commondata.md
   - Doc last updated: 2025-11-08 (102 days ago)
 - docs/discord/README.md
-  - Doc last updated: 2025-12-07 (72 days ago)
+  - Doc last updated: 2025-12-07 (73 days ago)
 - docs/discord/_index.md
-  - Doc last updated: 2025-12-05 (74 days ago)
+  - Doc last updated: 2025-12-05 (75 days ago)
 - docs/discord/_inventory.md
-  - Doc last updated: 2025-12-05 (74 days ago)
+  - Doc last updated: 2025-12-05 (75 days ago)
 - docs/discord/alerts_automation.md
   - Doc last updated: 2025-11-27 (83 days ago)
 - docs/discord/discord_integration_overview.md
@@ -89,31 +89,31 @@
 - docs/discord/earnings_calendar_automation.md
   - Doc last updated: 2025-11-26 (84 days ago)
 - docs/discord/environments.md
-  - Doc last updated: 2025-12-05 (74 days ago)
+  - Doc last updated: 2025-12-05 (75 days ago)
 - docs/discord/events_matrix.md
-  - Doc last updated: 2025-12-05 (74 days ago)
+  - Doc last updated: 2025-12-05 (75 days ago)
 - docs/discord/marketing_news_automation.md
-  - Doc last updated: 2025-12-10 (69 days ago)
+  - Doc last updated: 2025-12-10 (70 days ago)
 - docs/discord/mee6_and_mymi_automation.md
-  - Doc last updated: 2025-12-05 (74 days ago)
+  - Doc last updated: 2025-12-05 (75 days ago)
 - docs/discord/mysql_discord_schema.md
-  - Doc last updated: 2025-12-05 (74 days ago)
+  - Doc last updated: 2025-12-05 (75 days ago)
 - docs/discord/operations_and_montioring.md
   - Doc last updated: 2025-11-26 (84 days ago)
 - docs/discord/premium_flows_and_upsell.md
-  - Doc last updated: 2025-12-05 (74 days ago)
+  - Doc last updated: 2025-12-05 (75 days ago)
 - docs/discord/python_workers.md
-  - Doc last updated: 2025-12-05 (74 days ago)
+  - Doc last updated: 2025-12-05 (75 days ago)
 - docs/discord/server_setup_and_alert_routing.md
   - Doc last updated: 2025-12-05 (75 days ago)
 - docs/discord/server_setup_and_ci4_integration.md
-  - Doc last updated: 2025-12-07 (72 days ago)
+  - Doc last updated: 2025-12-07 (73 days ago)
 - docs/discord/server_setup_support_category.md
-  - Doc last updated: 2025-12-07 (72 days ago)
+  - Doc last updated: 2025-12-07 (73 days ago)
 - docs/discord/streaming_setup.md
-  - Doc last updated: 2025-12-07 (72 days ago)
+  - Doc last updated: 2025-12-07 (73 days ago)
 - docs/discord/where_to_share_what.md
-  - Doc last updated: 2025-12-07 (72 days ago)
+  - Doc last updated: 2025-12-07 (73 days ago)
 - docs/discord_schema.sql.md
   - Doc last updated: 2025-11-08 (102 days ago)
 - docs/discord_seed.sql.md
@@ -177,7 +177,7 @@
 - docs/nginx/nginx.md
   - Doc last updated: 2025-11-08 (102 days ago)
 - docs/notes/2025-11-23-alerts-preview-lazy-refresh-and-advisor-errors.md
-  - Doc last updated: 2025-11-23 (86 days ago)
+  - Doc last updated: 2025-11-23 (87 days ago)
 - docs/notes/2025-12-01-feature-corrections.md
   - Doc last updated: 2025-12-01 (79 days ago)
 - docs/operations/01-foundation.md
@@ -335,4 +335,4 @@
 - docs/wallets/_index.md
   - Doc last updated: 2025-11-08 (102 days ago)
 - docs/wallets/wallets_workflow.md
-  - Doc last updated: 2025-11-16 (93 days ago)
+  - Doc last updated: 2025-11-16 (94 days ago)

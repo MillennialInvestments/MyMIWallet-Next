@@ -964,60 +964,11 @@ class AlertsModel extends Model
     /**
      * Non-datatable fallback (kept, but hardened to avoid tv_symbol when missing)
      */
-    public function getFilteredTradeAlerts(array $filters = [], array $options = [])
+    public function getFilteredTradeAlerts(array $dateRange, array $opts): array
     {
-        // If you have a server-side handler, prefer it.
-        if (method_exists($this, 'getFilteredTradeAlertsServerSide')) {
-            return $this->getFilteredTradeAlertsServerSide($filters, $options);
-        }
-
-        $builder = $this->db->table('bf_investment_trade_alerts a');
-
-        $hasTv = $this->hasColumn('bf_investment_trade_alerts', 'tv_symbol');
-
-        $select = "
-            a.id,
-            a.ticker,
-            a.status,
-            a.price,
-            a.open,
-            a.high,
-            a.low
-        ";
-
-        if ($hasTv) {
-            $select .= ",
-            a.tv_symbol,
-            CASE
-                WHEN a.tv_symbol IS NOT NULL AND a.tv_symbol <> ''
-                    THEN CONCAT('https://www.tradingview.com/chart/?symbol=', a.tv_symbol)
-                WHEN a.exchange IS NOT NULL AND a.exchange <> '' AND a.ticker IS NOT NULL AND a.ticker <> ''
-                    THEN CONCAT('https://www.tradingview.com/chart/?symbol=', a.exchange, ':', a.ticker)
-                WHEN a.ticker IS NOT NULL AND a.ticker <> ''
-                    THEN CONCAT('https://www.tradingview.com/chart/?symbol=', a.ticker)
-                ELSE NULL
-            END AS chart_link
-            ";
-        } else {
-            $select .= ",
-            CASE
-                WHEN a.exchange IS NOT NULL AND a.exchange <> '' AND a.ticker IS NOT NULL AND a.ticker <> ''
-                    THEN CONCAT('https://www.tradingview.com/chart/?symbol=', a.exchange, ':', a.ticker)
-                WHEN a.ticker IS NOT NULL AND a.ticker <> ''
-                    THEN CONCAT('https://www.tradingview.com/chart/?symbol=', a.ticker)
-                ELSE NULL
-            END AS chart_link
-            ";
-        }
-
-        $builder->select($select);
-
-        if (!empty($filters['timeRange'])) {
-            // add range handling here if needed
-        }
-
-        return $builder->limit(20)->get()->getResultArray();
+        return $this->getFilteredTradeAlertsServerSide($dateRange, $opts);
     }
+
 
     /**
      * Server-side (DataTables style) — hardened for:
