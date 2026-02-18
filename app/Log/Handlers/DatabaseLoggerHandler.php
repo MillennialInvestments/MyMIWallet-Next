@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * CI4 Logger - Settings
+ * Audited: 2026-02-18
+ * Purpose: Implements a custom database-backed CI4 log handler with fallback sinks.
+ */
+
+
 namespace App\Log\Handlers;
 
 use CodeIgniter\Log\Handlers\BaseHandler;
@@ -62,7 +69,7 @@ class DatabaseLoggerHandler extends BaseHandler implements HandlerInterface
 
 
         if (! $this->acquireLock()) {
-            return true;
+            return false; // allow FileHandler to proceed
         }
 
         try {
@@ -104,6 +111,10 @@ class DatabaseLoggerHandler extends BaseHandler implements HandlerInterface
     private function writeToDatabase(array $record): void
     {
         $db = Database::connect();
+
+        if (! $db->connID) {
+            throw new \RuntimeException('Database connection unavailable');
+        }
 
         $this->primeColumns($db);
 

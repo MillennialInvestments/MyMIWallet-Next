@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * CI4 Logger - Settings
+ * Audited: 2026-02-18
+ * Purpose: Provides URI guard wrappers that inspect and log placeholder routing leaks.
+ */
+
+
 use CodeIgniter\HTTP\IncomingRequest;
 use Config\Services;
 

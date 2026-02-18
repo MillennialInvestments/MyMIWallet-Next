@@ -10,6 +10,24 @@ use CodeIgniter\Filters\SecureHeaders;
 
 class Filters extends BaseConfig
 {
+    public function __construct()
+    {
+        parent::__construct();
+
+        if (ENVIRONMENT === 'development') {
+            if (! in_array('toolbar', $this->globals['after'], true)) {
+                $this->globals['after'][] = 'toolbar';
+            }
+
+            return;
+        }
+
+        $this->globals['after'] = array_values(array_filter(
+            $this->globals['after'],
+            static fn (string $filter): bool => $filter !== 'toolbar'
+        ));
+    }
+
     /**
      * Configures aliases for Filter classes to
      * make reading things nicer and simpler.
@@ -247,7 +265,6 @@ class Filters extends BaseConfig
         ],
         'after' => [
             // 'csp' => ['except' => ['API/*', 'assets/*']],
-            'toolbar', // force inclusion of debug toolbar
             'cspoff',
             'sessionTracker',
             'observability',

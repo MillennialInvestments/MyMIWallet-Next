@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * CI4 Logger - Settings
+ * Audited: 2026-02-18
+ * Purpose: Provides a helper wrapper that conditionally forwards debug messages to log_message().
+ */
+
+
 if (!function_exists('debugLog')) {
     function debugLog($message)
     {

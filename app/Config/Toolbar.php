@@ -3,6 +3,7 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Debug\Toolbar\Collectors\Config as ToolbarConfigCollector;
 use CodeIgniter\Debug\Toolbar\Collectors\Database;
 use CodeIgniter\Debug\Toolbar\Collectors\Events;
 use CodeIgniter\Debug\Toolbar\Collectors\Files;
@@ -64,14 +65,14 @@ class Toolbar extends BaseConfig
      * @var list<class-string>
      */
     public array $collectors = [
-        Timers::class,
+        ToolbarConfigCollector::class,
         Database::class,
-        Logs::class,
-        Views::class,
-        // \CodeIgniter\Debug\Toolbar\Collectors\Cache::class,
-        Files::class,
-        Routes::class,
         Events::class,
+        Files::class,
+        Logs::class,
+        Routes::class,
+        Timers::class,
+        Views::class,
     ];
 
     /**

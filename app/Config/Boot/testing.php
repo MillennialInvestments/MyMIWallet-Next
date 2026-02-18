@@ -1,6 +1,13 @@
 <?php
 
 /**
+ * CI4 Logger - Settings
+ * Audited: 2026-02-18
+ * Purpose: Sets PHP testing error reporting and CI debug bootstrap flags.
+ */
+
+
+/**
  * Testing/CI Boot
  * Keep it quiet and deterministic. No Services access here.
  */

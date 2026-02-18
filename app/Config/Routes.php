@@ -39,6 +39,11 @@ $routes->get('healthz', 'System\HealthController::healthz', ['as' => 'healthz'])
 if (ENVIRONMENT !== 'production') {
     $routes->get('test/crash', 'Test::crash');
 }
+if (ENVIRONMENT !== 'production') {
+    $routes->get('debug/manual-exception', static function () {
+        throw new \Exception('Manual test exception');
+    });
+}
 $routes->get('Maintenance', 'MaintenanceController::index');
 
 $routes->get('API/Ops/health-score', 'OpsHealth::score');
