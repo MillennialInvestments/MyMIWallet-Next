@@ -47,7 +47,7 @@ class AnnouncementsModel extends Model
             ->where('announcement', 1)
             ->orderBy('id', 'DESC')
             ->limit(10)
-            ->get();
+            ->limit(20)->get();
     }
 
     /**
@@ -65,6 +65,6 @@ class AnnouncementsModel extends Model
     {
         return $this->db->table('bf_external_sites')
             ->where('active', 'Yes')
-            ->get();
+            ->limit(20)->get();
     }
 }

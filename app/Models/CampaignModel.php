@@ -23,7 +23,7 @@ class CampaignModel extends Model
         $drafts = $this->where('stage', 'Draft')
             ->where('auto_schedule_at IS NOT NULL', null, false)
             ->where('auto_schedule_at <=', $nowUTC)
-            ->findAll();
+            ->findAll(20);
     
         if (empty($drafts)) {
             log_message('info', 'CampaignModel: No drafts ready for auto-scheduling.');
@@ -103,7 +103,7 @@ class CampaignModel extends Model
     public function getAllCampaigns()
     {
         return $this->orderBy('created_at', 'DESC')
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function getAutoScheduleDrafts($nowUTC)
@@ -111,14 +111,14 @@ class CampaignModel extends Model
         return $this->where('is_draft', 1)
                     ->where('auto_schedule_at IS NOT NULL')
                     ->where('auto_schedule_at <=', $nowUTC)
-                    ->findAll();
+                    ->findAll(20);
     }
     
     public function getAvailableCampaigns()
     {
         return $this->where('is_draft', 0)
                     ->orderBy('created_at', 'DESC')
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function getCampaignAnalytics($campaignId)
@@ -202,14 +202,14 @@ class CampaignModel extends Model
     {
         return $this->where('is_draft', 1)
                     ->orderBy('created_at', 'DESC')
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function getScheduledCampaigns()
     {
         return $this->where('status', 'scheduled')
                     ->where('scheduled_at <=', date('Y-m-d H:i:s'))
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function queueScheduledCampaign($campaignId)

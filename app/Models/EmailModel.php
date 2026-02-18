@@ -220,7 +220,7 @@ class EmailModel extends Model
         $builder->orderBy('created_at', 'DESC');
         $builder->limit($limit, $offset);
 
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
 
     public function getQueuedEmailsCount($search = null)

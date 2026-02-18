@@ -13,7 +13,7 @@ class AssetsModel extends Model
     public function getAssetsData($userId)
     {
         return $this->where('user_id', $userId)
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function addAsset($data)
@@ -39,7 +39,7 @@ class AssetsModel extends Model
     public function getAssetsBySymbol($symbol)
     {
         return $this->where('symbol', $symbol)
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function getTotalAssetsValue($userId)
@@ -54,21 +54,21 @@ class AssetsModel extends Model
         return $this->distinct()
                     ->select('category')
                     ->where('user_id', $userId)
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function getAssetsByCategory($userId, $category)
     {
         return $this->where('user_id', $userId)
                     ->where('category', $category)
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function searchAssets($userId, $keyword)
     {
         return $this->where('user_id', $userId)
                     ->like('coin_name', $keyword)
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function getAssetsByMarketCap($userId, $minMarketCap, $maxMarketCap)
@@ -76,14 +76,14 @@ class AssetsModel extends Model
         return $this->where('user_id', $userId)
                     ->where('market_cap >=', $minMarketCap)
                     ->where('market_cap <=', $maxMarketCap)
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function getAssetsByPurpose($userId, $purpose)
     {
         return $this->where('user_id', $userId)
                     ->like('purpose', $purpose)
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function getAssetDetails($userId, $assetId)
@@ -108,7 +108,7 @@ class AssetsModel extends Model
 
     public function getAllAssets()
     {
-        return $this->findAll();
+        return $this->findAll(20);
     }
 
     public function getAsset($assetId)
@@ -119,7 +119,7 @@ class AssetsModel extends Model
     public function listTradableAssets()
     {
         return $this->where('is_tradable', 1)
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function getClosedTradeHistory($assetId)

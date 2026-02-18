@@ -1498,7 +1498,7 @@ class MyMIInvestments
     {
         $builder = $this->investmentModel->db->table('bf_investment_strategies');
         $builder->where('user_id', $userId);
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getResultArray();
     }
 
@@ -1556,7 +1556,7 @@ class MyMIInvestments
     {
         $builder = $this->investmentModel->db->table('bf_investment_strategies');
         $builder->where('id', $id);
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getRowArray();
     }
 
@@ -1578,7 +1578,7 @@ class MyMIInvestments
     {
         $builder = $this->investmentModel->db->table('bf_investment_goals');
         $builder->where('user_id', $userId);
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getResultArray();
     }
 
@@ -1592,7 +1592,7 @@ class MyMIInvestments
     {
         $builder = $this->investmentModel->db->table('bf_investment_goals');
         $builder->where('id', $id);
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getRowArray();
     }
 
@@ -1616,7 +1616,7 @@ class MyMIInvestments
     {
         $builder = $this->investmentModel->db->table('bf_exchanges_assets');
         $builder->select('symbol, coin_name, coin_value, market_cap');
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getResultArray();
     }
 
@@ -1624,7 +1624,7 @@ class MyMIInvestments
     {
         $builder = $this->investmentModel->db->table('bf_investment_economic_data');
         $builder->select('title, notes, last_updated, source_link');
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getResultArray();
     }
 
@@ -1632,7 +1632,7 @@ class MyMIInvestments
     {
         $builder = $this->investmentModel->db->table('bf_market_news');
         $builder->select('title, description, url, published_at');
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getResultArray();
     }
 
@@ -1648,7 +1648,7 @@ class MyMIInvestments
     {
         $builder = $this->investmentModel->db->table('bf_mymi_research');
         $builder->select('title, description, url, published_at');
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getResultArray();
     }
 
@@ -1656,7 +1656,7 @@ class MyMIInvestments
     {
         $builder = $this->investmentModel->db->table('bf_investment_stock_listing');
         $builder->select('symbol, company_name, market_cap, sector');
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getResultArray();
     }
 

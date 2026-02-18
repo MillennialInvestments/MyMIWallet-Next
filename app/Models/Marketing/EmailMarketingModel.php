@@ -32,7 +32,7 @@ class EmailMarketingModel extends Model
     // Fetches all campaigns based on status (draft, scheduled, completed)
     public function getCampaignsByStage(string $stage)
     {
-        return $this->where('stage', $stage)->findAll();
+        return $this->where('stage', $stage)->findAll(20);
     }
 
     // Retrieves campaign by ID

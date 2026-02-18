@@ -116,7 +116,7 @@ class EconomicDataService
 
     public function latestSnapshot(): array
     {
-        $indicators = $this->indicatorModel->findAll();
+        $indicators = $this->indicatorModel->findAll(20);
         $latest = [];
 
         foreach ($indicators as $indicator) {

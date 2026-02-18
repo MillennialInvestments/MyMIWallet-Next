@@ -404,7 +404,7 @@ class MarketingModel extends Model
         $num_rows = $builder->where('status', 1)->countAllResults(false);
 
         // Get the result as an array
-        $result = $builder->where('status', 1)->get()->getResultArray();
+        $result = $builder->where('status', 1)->limit(20)->get()->getResultArray();
 
         return ['result' => $result, 'num_rows' => $num_rows];
     }
@@ -419,7 +419,7 @@ class MarketingModel extends Model
         $num_rows = $builder->where('is_active', 1)->countAllResults(false);
 
         // Get the result as an array
-        $result = $builder->where('is_active', 1)->get()->getResultArray();
+        $result = $builder->where('is_active', 1)->limit(20)->get()->getResultArray();
 
         return ['result' => $result, 'num_rows' => $num_rows];
     }
@@ -434,7 +434,7 @@ class MarketingModel extends Model
         $num_rows = $builder->where('is_active', 1)->countAllResults(false);
 
         // Get the result as an array
-        $result = $builder->where('is_active', 1)->get()->getResultArray();
+        $result = $builder->where('is_active', 1)->limit(20)->get()->getResultArray();
         $campaignSteps = $this->getActiveDripCampaignStepByCampaignID($campaignID); 
         return ['result' => $result, 'num_rows' => $num_rows];
     }
@@ -452,7 +452,7 @@ class MarketingModel extends Model
         // Optional: hard per-query timeout on MySQL 5.7+; harmless if unsupported
         $this->db->simpleQuery('SET SESSION MAX_EXECUTION_TIME=40000'); // 40s cap
 
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
     
     // Get all active drip campaigns
@@ -465,7 +465,7 @@ class MarketingModel extends Model
         $num_rows = $builder->countAllResults(false);
 
         // Get the result as an array
-        $result = $builder->get()->getResultArray();
+        $result = $builder->limit(20)->get()->getResultArray();
         $campaignSteps = $this->getActiveDripCampaignStepByCampaignID($campaignID); 
         return ['result' => $result, 'num_rows' => $num_rows];
     }
@@ -480,7 +480,7 @@ class MarketingModel extends Model
         $num_rows = $builder->where('id', $stepID)->countAllResults(false);
 
         // Get the result as an array
-        $result = $builder->where('id', $stepID)->get()->getResultArray();
+        $result = $builder->where('id', $stepID)->limit(20)->get()->getResultArray();
         return ['result' => 
         $result, 'num_rows' => $num_rows];
     }
@@ -494,7 +494,7 @@ class MarketingModel extends Model
         $num_rows = $builder->where('campaign_id', $campaignID)->countAllResults(false);
 
         // Get the result as an array
-        $result = $builder->where('campaign_id', $campaignID)->get()->getResultArray();
+        $result = $builder->where('campaign_id', $campaignID)->limit(20)->get()->getResultArray();
         return ['result' => $result, 'num_rows' => $num_rows];
     }
     
@@ -508,7 +508,7 @@ class MarketingModel extends Model
         $num_rows = $builder->where('is_active', 1)->countAllResults(false);
 
         // Get the result as an array
-        $result = $builder->where('is_active', 1)->get()->getResultArray();
+        $result = $builder->where('is_active', 1)->limit(20)->get()->getResultArray();
 
         return ['result' => $result, 'num_rows' => $num_rows];
     }
@@ -523,14 +523,14 @@ class MarketingModel extends Model
         $num_rows = $builder->where('is_active', 1)->where('campaign_id', $campaignID)->countAllResults(false);
 
         // Get the result as an array
-        $result = $builder->where('is_active', 1)->where('campaign_id', $campaignID)->get()->getResultArray();
+        $result = $builder->where('is_active', 1)->where('campaign_id', $campaignID)->limit(20)->get()->getResultArray();
 
         return ['campaignID' => $campaignID, 'result' => $result, 'num_rows' => $num_rows];
     }
 
     public function getActiveIdeas()
     {
-        return $this->db->table('bf_marketing_ideas')->where('status !=', 'approved')->get()->getResultArray();
+        return $this->db->table('bf_marketing_ideas')->where('status !=', 'approved')->limit(20)->get()->getResultArray();
     }
 
     // Get all active priority campaigns
@@ -543,7 +543,7 @@ class MarketingModel extends Model
         $num_rows = $builder->where('status', 1)->where('escalated', 1)->countAllResults(false);
 
         // Get the result as an array
-        $result = $builder->where('status', 1)->where('escalated', 1)->get()->getResultArray();
+        $result = $builder->where('status', 1)->where('escalated', 1)->limit(20)->get()->getResultArray();
 
         return ['result' => $result, 'num_rows' => $num_rows];
     }
@@ -609,7 +609,7 @@ class MarketingModel extends Model
     
     public function getApprovedLogos()
     {
-        return $this->db->table('bf_company_logos')->get()->getResultArray();
+        return $this->db->table('bf_company_logos')->limit(20)->get()->getResultArray();
     }
     
     public function getBlogPostBySlug($slug) {
@@ -729,7 +729,7 @@ class MarketingModel extends Model
             ->where('(title IS NULL OR title = "" OR url IS NULL OR url = "")', null, false)
             ->orderBy('date_scraped', 'DESC') // Or whatever is the actual timestamp field used
             ->limit($limit)
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     // Retrieve email summaries for review
@@ -751,7 +751,7 @@ class MarketingModel extends Model
     
     // Get MyMI Services & Features
     public function getFeatures() {
-        return $this->db->table('bf_users_memberships')->where('active', 1)->orderBy('feature_level', 'ASC')->orderBy('feature_name', 'ASC')->get()->getResultArray(); 
+        return $this->db->table('bf_users_memberships')->where('active', 1)->orderBy('feature_level', 'ASC')->orderBy('feature_name', 'ASC')->limit(20)->get()->getResultArray(); 
     }
 
     public function getFinalizedMarketingContent($limit = 10)
@@ -959,7 +959,7 @@ class MarketingModel extends Model
     
     // Get SEO information by page name
     public function getMarketingPageSeoByName($pageTitle) {
-        return $this->where('page_name', $pageTitle)->get()->getResultArray();
+        return $this->where('page_name', $pageTitle)->limit(20)->get()->getResultArray();
     }
 
     public function getMarketingTeam() {
@@ -1087,7 +1087,7 @@ class MarketingModel extends Model
             $builder->where('DATE(email_date)', $date);
         }
 
-        $results = $builder->get()->getResultArray();
+        $results = $builder->limit(20)->get()->getResultArray();
 
         $identifiers = [];
         foreach ($results as $row) {
@@ -1226,7 +1226,7 @@ class MarketingModel extends Model
     public function getScheduleByDay($day) {
         return $this->db->table('bf_marketing_calendar')
                         ->where('day', ucfirst($day))
-                        ->get()->getResultArray();
+                        ->limit(20)->get()->getResultArray();
     }
 
     public function getScheduleById($id) {
@@ -1243,7 +1243,7 @@ class MarketingModel extends Model
                 $builder->limit($limit);
             }
 
-            return $builder->get()->getResultArray();
+            return $builder->limit(20)->get()->getResultArray();
     }   
 
     // In App\Models\MarketingModel.php
@@ -1294,7 +1294,7 @@ class MarketingModel extends Model
             ->orderBy('scraped_at', 'DESC')
             ->limit($limit);
     
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         $results = $query->getResultArray();
     
         if (empty($results)) {
@@ -1534,7 +1534,7 @@ class MarketingModel extends Model
         $builder->where('processed', 0);
         $builder->limit($limit * 2); // fetch more than needed for filtering
     
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         $results = $query->getResultArray();
     
         $valid = [];
@@ -2516,7 +2516,7 @@ class MarketingModel extends Model
             if (! $includeInactive) {
                 $builder->where('is_active', 1);
             }
-            return $builder->get()->getResultArray();
+            return $builder->limit(20)->get()->getResultArray();
         });
     }
 
@@ -2577,7 +2577,7 @@ class MarketingModel extends Model
                 $builder->where('platform_id', null);
             }
             $builder->where('is_active', 1);
-            return $builder->get()->getResultArray();
+            return $builder->limit(20)->get()->getResultArray();
         });
     }
 
@@ -2667,7 +2667,7 @@ class MarketingModel extends Model
             $builder->where('content_type', $contentType);
         }
 
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
 
     /** Create suggestion */

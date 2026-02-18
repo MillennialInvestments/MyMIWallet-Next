@@ -26,7 +26,7 @@ class SiteSettingsOverride
             return $settings;
         }
 
-        $overrides = $this->db->table('bf_site_settings_overrides')->get()->getResultArray();
+        $overrides = $this->db->table('bf_site_settings_overrides')->limit(20)->get()->getResultArray();
         foreach ($overrides as $row) {
             if (property_exists($settings, $row['setting_key'])) {
                 $settings->{$row['setting_key']} = $this->castValue($settings->{$row['setting_key']}, $row['setting_value']);

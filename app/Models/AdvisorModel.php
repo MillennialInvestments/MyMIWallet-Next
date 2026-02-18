@@ -60,7 +60,7 @@ class AdvisorModel extends Model
      */
     public function getAllAdvisors()
     {
-        return $this->findAll();
+        return $this->findAll(20);
     }
 
     /**
@@ -70,6 +70,6 @@ class AdvisorModel extends Model
      */
     public function getAdvisorsBySpecialty($specialty)
     {
-        return $this->where('specialty', $specialty)->findAll();
+        return $this->where('specialty', $specialty)->findAll(20);
     }
 }

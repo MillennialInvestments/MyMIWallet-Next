@@ -23,7 +23,7 @@ class MarketingModel extends Model
 
     public function fetchEmails()
     {
-        return $this->db->table('emails')->get()->getResultArray();
+        return $this->db->table('emails')->limit(20)->get()->getResultArray();
     }
 
     public function getEmailById($emailId)

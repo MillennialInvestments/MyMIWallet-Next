@@ -57,7 +57,7 @@ class Gate
         $pm  = new PermissionModel();
         $cfg = config('Permissions');
 
-        $roleIds = array_column($rum->where('user_id', $userId)->findAll(), 'role_id');
+        $roleIds = array_column($rum->where('user_id', $userId)->findAll(20), 'role_id');
         if (empty($roleIds)) {
             $userRole = $rm->bySlug('user');
             if ($userRole) {

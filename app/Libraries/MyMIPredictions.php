@@ -322,7 +322,7 @@ class MyMIPredictions
         $this->options->setWinner($marketId, $winningOptionId);
         $this->markets->update($marketId, ['state'=>'RESOLVED','updated_at'=>$now]);
 
-        $winners = $this->positions->where(['market_id'=>$marketId,'option_id'=>$winningOptionId])->findAll();
+        $winners = $this->positions->where(['market_id'=>$marketId,'option_id'=>$winningOptionId])->findAll(20);
         $count = 0;
         foreach ($winners as $p) {
             $this->payouts->insert([

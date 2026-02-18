@@ -24,7 +24,7 @@ class GoalsModel extends Model
     // Get goals by user
     public function getGoalsByUser($userId)
     {
-        return $this->where('user_id', $userId)->findAll();
+        return $this->where('user_id', $userId)->findAll(20);
     }
 
     // Get goal by ID
@@ -49,7 +49,7 @@ class GoalsModel extends Model
     public function getGoalsByStatus($userId, $status)
     {
         return $this->where('status', $status)
-                    ->findAll();
+                    ->findAll(20);
     }
 
     // Get goals by category (e.g., daily, weekly, monthly)
@@ -57,7 +57,7 @@ class GoalsModel extends Model
     {
         return $this->where('user_id', $userId)
                     ->where('category', $category)
-                    ->findAll();
+                    ->findAll(20);
     }
     
 }

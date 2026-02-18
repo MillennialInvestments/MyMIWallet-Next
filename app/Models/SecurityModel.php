@@ -37,12 +37,12 @@ class SecurityModel extends Model
 
     public function getSecurityEventsByUser($userId)
     {
-        return $this->db->table('bf_security_log')->where('user_id', $userId)->get()->getResultArray();
+        return $this->db->table('bf_security_log')->where('user_id', $userId)->limit(20)->get()->getResultArray();
     }
 
     public function getAllSecurityEvents()
     {
-        return $this->db->table('bf_security_log')->get()->getResultArray();
+        return $this->db->table('bf_security_log')->limit(20)->get()->getResultArray();
     }
 
     public function updateSecuritySettings($settingsData)
@@ -52,7 +52,7 @@ class SecurityModel extends Model
 
     public function getSecuritySettings()
     {
-        return $this->db->table('bf_security_settings')->get()->getResultArray();
+        return $this->db->table('bf_security_settings')->limit(20)->get()->getResultArray();
     }
 
     public function enforcePasswordPolicy($password)

@@ -74,7 +74,7 @@ class DripCampaignModel extends Model
             ->groupBy('tag')
             ->orderBy('usage_count', 'DESC')
             ->limit($limit)
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     public function getStepById($stepId)
@@ -89,7 +89,7 @@ class DripCampaignModel extends Model
         return $this->db->table('bf_email_drip_campaign_steps')
             ->where('campaign_id', $campaignId)
             ->orderBy('step_number', 'ASC')
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     public function getUsersDueForEmail()
@@ -98,7 +98,7 @@ class DripCampaignModel extends Model
             ->where('status', 'active')
             ->where('next_send_at IS NOT NULL', null, false)
             ->where('next_send_at <=', date('Y-m-d H:i:s'))
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     // --- USER PROGRESS METHODS ---

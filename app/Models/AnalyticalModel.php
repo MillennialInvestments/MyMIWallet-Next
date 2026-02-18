@@ -35,7 +35,7 @@ class AnalyticalModel extends Model {
         $activeUsersQuery = $this->db->table('users')
                                      ->where('active', 1)
                                      ->where('banned', 0)
-                                     ->get();
+                                     ->limit(20)->get();
     
         $activeUsers = $activeUsersQuery->getResultArray(); // This gets the result set
         $totalActiveUsers = count($activeUsers); // Count the number of active users
@@ -49,7 +49,7 @@ class AnalyticalModel extends Model {
     public function getPendingUsers() {
         $pendingUsersQuery = $this->db->table('users')
                         ->where('active', 0)
-                        ->get();
+                        ->limit(20)->get();
         
         $pendingUsers = $pendingUsersQuery->getResult(); 
         $totalPendingUsers = count($pendingUsers); 
@@ -83,7 +83,7 @@ class AnalyticalModel extends Model {
         $pendingPartnersQuery = $this->db->table('users')
                         ->where('active', 0)
                         ->where('partner', 1)
-                        ->get();
+                        ->limit(20)->get();
         
         $pendingPartners = $pendingPartnersQuery->getResult(); 
         $totalPendingPartners = count($pendingPartners); 
@@ -98,7 +98,7 @@ class AnalyticalModel extends Model {
         $activeReferralsQuery = $this->db->table('users')
                                          ->where('active', 1)
                                          ->where('referred !=', null)
-                                         ->get();
+                                         ->limit(20)->get();
     
         $activeReferrals = $activeReferralsQuery->getResult();
         $totalActiveReferrals = count($activeReferrals);
@@ -113,7 +113,7 @@ class AnalyticalModel extends Model {
         $activePartnerReferralsQuery = $this->db->table('users')
                                                 ->where('active', 1)
                                                 ->where('referred !=', null)
-                                                ->get();
+                                                ->limit(20)->get();
     
         $activePartnerReferrals = $activePartnerReferralsQuery->getResult();
         $totalActivePartnerReferrals = count($activePartnerReferrals);
@@ -130,7 +130,7 @@ class AnalyticalModel extends Model {
         $activeCampaignsQuery = $this->db->table('bf_marketing_campaigns')
                                          ->where('status', 1)
                                          ->orderBy('created_on', 'DESC')
-                                         ->get();
+                                         ->limit(20)->get();
     
         $activeCampaigns = $activeCampaignsQuery->getResult();
         $totalActiveCampaigns = count($activeCampaigns);
@@ -146,7 +146,7 @@ class AnalyticalModel extends Model {
                                          ->where('status', 1)
                                          ->orderBy('created_on', 'DESC')
                                          ->limit($limit)
-                                         ->get();
+                                         ->limit(20)->get();
     
         $activeCampaigns = $activeCampaignsQuery->getResult();
         $totalActiveCampaigns = count($activeCampaigns);
@@ -161,7 +161,7 @@ class AnalyticalModel extends Model {
         $inactiveUsersQuery = $this->db->table('users')
                                        ->where('active', 0)
                                        ->where('banned', 0)
-                                       ->get();
+                                       ->limit(20)->get();
     
         $inactiveUsers = $inactiveUsersQuery->getResultArray();
         $totalInactiveUsers = count($inactiveUsers);
@@ -177,7 +177,7 @@ class AnalyticalModel extends Model {
                                           ->where('active', 0)
                                           ->where('banned', 0)
                                           ->where('partner', 1)
-                                          ->get();
+                                          ->limit(20)->get();
     
         $inactivePartners = $inactivePartnersQuery->getResult();
         $totalInactivePartners = count($inactivePartners);
@@ -191,7 +191,7 @@ class AnalyticalModel extends Model {
     public function getActiveServices() {
         $activeServicesQuery = $this->db->table('bf_users_services')
                                         ->where('status', 1)
-                                        ->get();
+                                        ->limit(20)->get();
     
         $activeServices = $activeServicesQuery->getResult();
         $totalActiveServices = count($activeServices);
@@ -205,7 +205,7 @@ class AnalyticalModel extends Model {
     public function getActiveServicesSubscriptions() {
         $activeServicesSubscriptionsQuery = $this->db->table('bf_users_services_purchases')
                                                       ->where('status', 'Active')
-                                                      ->get();
+                                                      ->limit(20)->get();
     
         $activeServicesSubscriptions = $activeServicesSubscriptionsQuery->getResult();
         $totalActiveServicesSubscriptions = count($activeServicesSubscriptions);
@@ -220,7 +220,7 @@ class AnalyticalModel extends Model {
         $tasksByDepartmentQuery = $this->db->table('bf_management_tasks')
                                            ->where('status', 'Pending')
                                            ->where('group', $department)
-                                           ->get();
+                                           ->limit(20)->get();
     
         $tasksByDepartment = $tasksByDepartmentQuery->getResult();
         $totalTasksByDepartment = count($tasksByDepartment);
@@ -236,7 +236,7 @@ class AnalyticalModel extends Model {
                                      ->where('status', 'Pending')
                                      ->where('group', $department)
                                      ->where('task', $tasks)
-                                     ->get();
+                                     ->limit(20)->get();
     
         $tasksByType = $tasksByTypeQuery->getResult();
         $totalTasksByType = count($tasksByType);
@@ -250,7 +250,7 @@ class AnalyticalModel extends Model {
     public function getUserInformation($userID) {
         $userInformationQuery = $this->db->table('users')
                                          ->where('id', $userID)
-                                         ->get();
+                                         ->limit(20)->get();
     
         $userInformation = $userInformationQuery->getRow();
         return $userInformation;
@@ -259,7 +259,7 @@ class AnalyticalModel extends Model {
     public function getUserActivity($cuID) {
         $userActivityQuery = $this->db->table('bf_act_logger')
                                       ->where('created_by', $cuID)
-                                      ->get();
+                                      ->limit(20)->get();
     
         $userActivity = $userActivityQuery->getResult();
         $totalUserActivity = count($userActivity);
@@ -272,7 +272,7 @@ class AnalyticalModel extends Model {
     
     public function getUsersActivity() {
         $usersActivityQuery = $this->db->table('bf_act_logger')
-                                       ->get();
+                                       ->limit(20)->get();
     
         $usersActivity = $usersActivityQuery->getResult();
         $totalUsersActivity = count($usersActivity);
@@ -288,7 +288,7 @@ class AnalyticalModel extends Model {
         $pendingAssetsQuery = $this->db->table('bf_exchanges_listing_request')
                                        ->where('status !=', 'Approved')
                                        ->where('date <=', $today)
-                                       ->get();
+                                       ->limit(20)->get();
     
         $pendingAssets = $pendingAssetsQuery->getResult();
         $totalPendingAssets = count($pendingAssets);
@@ -315,7 +315,7 @@ class AnalyticalModel extends Model {
                                         ->where('market_cap IS NOT NULL', null, false)
                                         ->orderBy('market_cap', 'DESC')
                                         ->limit(100)
-                                        ->get();
+                                        ->limit(20)->get();
     
         $approvedAssets = $approvedAssetsQuery->getResultArray();
         $totalApprovedAssets = count($approvedAssets);
@@ -341,7 +341,7 @@ class AnalyticalModel extends Model {
                                               ->where('status !=', 'Viewed')
                                               ->where('date <=', $today)
                                               ->where('partner', 1)
-                                              ->get();
+                                              ->limit(20)->get();
     
         $pendingPartnerAssets = $pendingPartnerAssetsQuery->getResult();
         $totalPendingPartnerAssets = count($pendingPartnerAssets);
@@ -419,7 +419,7 @@ class AnalyticalModel extends Model {
         $totalWalletTransactionsQuery = $this->db->table('bf_users_wallet_transactions')
                         ->where('status', 1)
                         ->where('active', 'Yes')
-                        ->get();
+                        ->limit(20)->get();
         
         $getTotalWalletTransactions = $totalWalletTransactionsQuery->getResult(); 
         $totalWalletTransactions = count($getTotalWalletTransactions); 
@@ -468,7 +468,7 @@ class AnalyticalModel extends Model {
         $builder = $this->db->table('bf_support_requests')
                             ->where('status', 'Pending')
                             ->where('topic', $department);
-        return $builder->get()->getResult();
+        return $builder->limit(20)->get()->getResult();
     }
     
     public function getPendingPartnerSupport($department) {
@@ -476,14 +476,14 @@ class AnalyticalModel extends Model {
                             ->where('status', 'Pending')
                             ->where('partner', 1)
                             ->where('topic', $department);
-        return $builder->get()->getResult();
+        return $builder->limit(20)->get()->getResult();
     }
     
     public function getCompleteSupport($department) {
         $builder = $this->db->table('bf_support_requests')
                             ->where('status', 'Complete')
                             ->where('topic', $department);
-        return $builder->get()->getResult();
+        return $builder->limit(20)->get()->getResult();
     }
     
     public function getCompletePartnerSupport($department) {
@@ -491,7 +491,7 @@ class AnalyticalModel extends Model {
                             ->where('status', 'Complete')
                             ->where('partner', 1)
                             ->where('topic', $department);
-        return $builder->get()->getResult();
+        return $builder->limit(20)->get()->getResult();
     }
     
     public function getTotalTradesTracked() {
@@ -560,7 +560,7 @@ class AnalyticalModel extends Model {
         $builder = $this->db->table('bf_management_tasks')
                             ->where('status', 'Pending')
                             ->where('group', $department);
-        $result = $builder->get()->getResultArray(); 
+        $result = $builder->limit(20)->get()->getResultArray(); 
         $num_rows = count($result);
         return ['result' => $result, 'num_rows' => $num_rows];
     }
@@ -570,7 +570,7 @@ class AnalyticalModel extends Model {
                             ->where('status', 'Pending')
                             ->where('group', $department)
                             ->where('task', $tasks);
-        $result = $builder->get()->getResultArray(); 
+        $result = $builder->limit(20)->get()->getResultArray(); 
         $num_rows = count($result);
         return ['result' => $result, 'num_rows' => $num_rows];
     }

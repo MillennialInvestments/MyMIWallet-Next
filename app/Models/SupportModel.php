@@ -68,7 +68,7 @@ class SupportModel extends Model
     {
         return $this->where('status', 'Pending')
                     ->where('topic', $department)
-                    ->findAll();
+                    ->findAll(20);
     }
 
     // Fetching completed support requests
@@ -76,7 +76,7 @@ class SupportModel extends Model
     {
         return $this->where('status', 'Complete')
                     ->where('topic', $department)
-                    ->findAll();
+                    ->findAll(20);
     }
 
     /**

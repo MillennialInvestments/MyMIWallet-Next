@@ -72,7 +72,7 @@ class APIModel extends Model
             ->where('status', 'Open')
             ->where('market_pair', $marketPair)
             ->where('market', $market)
-            ->get();
+            ->limit(20)->get();
     }
 
     public function getRecentOrders($marketPair, $market, $cuID)
@@ -82,7 +82,7 @@ class APIModel extends Model
             ->where('market_pair', $marketPair)
             ->where('market', $market)
             ->where('user_id', $cuID)
-            ->get();
+            ->limit(20)->get();
     }
 
     public function getMarketClosedOrders($marketPair, $market)

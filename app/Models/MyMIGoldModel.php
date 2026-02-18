@@ -57,7 +57,7 @@ class MyMIGoldModel extends Model
         $builder = $this->db->table('bf_exchanges');
         $builder->where('market_pair', 'USD');
         $builder->where('market', $coin);
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
     
     public function getUserCoinTotal($cuID) {

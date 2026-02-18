@@ -104,7 +104,7 @@ class BackupService
         $cutDb = time() - $dbDays*86400;
         $cutFs = time() - $fsDays*86400;
         $removed = 0;
-        $rows = db_connect()->table('bf_backup_manifests')->get()->getResultArray();
+        $rows = db_connect()->table('bf_backup_manifests')->limit(20)->get()->getResultArray();
         foreach ($rows as $r) {
             $full = $dir.'/'.$r['filename'];
             $limit = $r['type']==='db' ? $cutDb : $cutFs;
@@ -119,7 +119,7 @@ class BackupService
     private static function dumpTableJsonl(string $table): string
     {
         $db = db_connect();
-        $rows = $db->table($table)->get()->getResultArray();
+        $rows = $db->table($table)->limit(20)->get()->getResultArray();
         $out = '';
         foreach ($rows as $r) {
             $out .= json_encode($r, JSON_UNESCAPED_SLASHES)."\n";

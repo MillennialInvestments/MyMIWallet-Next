@@ -141,7 +141,7 @@ class PlaidModel extends Model
         $query = $this->db->table('bf_users_bank_accounts')
                           ->select('balance')
                           ->where('account_id', $accountId)
-                          ->get();
+                          ->limit(20)->get();
 
         if ($query->getNumRows() > 0) {
             return $query->getRow()->balance;

@@ -44,7 +44,7 @@ class MyMINotifications
     {
         $db = \Config\Database::connect();
         $builder = $db->table('bf_users_notification_subscriptions');
-        $subscriptions = $builder->get()->getResultArray();
+        $subscriptions = $builder->limit(20)->get()->getResultArray();
         $webPush = new WebPush($this->auth);
 
         foreach ($subscriptions as $subscription) {

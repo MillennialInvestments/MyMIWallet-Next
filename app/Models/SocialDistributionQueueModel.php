@@ -21,6 +21,6 @@ class SocialDistributionQueueModel extends Model
 
     public function pending(): array
     {
-        return $this->where('status', 'pending')->findAll();
+        return $this->where('status', 'pending')->findAll(20);
     }
 }

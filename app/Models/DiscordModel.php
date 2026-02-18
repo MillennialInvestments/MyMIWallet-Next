@@ -13,7 +13,7 @@ class DiscordModel extends Model
     {
         return $this->db->table('bf_discord_subscriptions')
             ->where(['event_key'=>$eventKey,'is_enabled'=>1])
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     public function getTemplate(string $templateKey): ?array
@@ -186,12 +186,12 @@ class DiscordModel extends Model
 
     public function listChannels(): array
     {
-        return $this->db->table('bf_discord_channels')->orderBy('channel_key','ASC')->get()->getResultArray();
+        return $this->db->table('bf_discord_channels')->orderBy('channel_key','ASC')->limit(20)->get()->getResultArray();
     }
 
     public function listTemplates(): array
     {
-        return $this->db->table('bf_discord_templates')->orderBy('template_key','ASC')->get()->getResultArray();
+        return $this->db->table('bf_discord_templates')->orderBy('template_key','ASC')->limit(20)->get()->getResultArray();
     }
 
     public function listSubscriptions(): array
@@ -202,7 +202,7 @@ class DiscordModel extends Model
             ->join('bf_discord_templates t', 't.template_key = s.template_key', 'left')
             ->orderBy('s.event_key','ASC')
             ->orderBy('s.channel_key','ASC')
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     public function saveChannel(array $data): bool
@@ -297,7 +297,7 @@ class DiscordModel extends Model
 
     public function listPolicies(): array
     {
-        return $this->db->table('bf_discord_policies')->orderBy('created_at','DESC')->get()->getResultArray();
+        return $this->db->table('bf_discord_policies')->orderBy('created_at','DESC')->limit(20)->get()->getResultArray();
     }
 
     public function savePolicy(array $data): bool
@@ -349,7 +349,7 @@ class DiscordModel extends Model
             ->select('context_json')
             ->orderBy('id','DESC')
             ->limit($limit)
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
 
         $keys = [];
         foreach ($rows as $row) {
@@ -384,7 +384,7 @@ class DiscordModel extends Model
         $channels = $this->db->table('bf_discord_channels')
             ->select('channel_key,name,last_sent_at,min_interval_sec,is_enabled')
             ->orderBy('channel_key','ASC')
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
 
         $nextQuiet = null;
         if (!empty($cfg->quietHoursStart) && !empty($cfg->quietHoursEnd)) {

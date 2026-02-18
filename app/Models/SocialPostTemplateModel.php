@@ -25,7 +25,7 @@ class SocialPostTemplateModel extends Model
 
     public function findByPlatform(int $platformId): array
     {
-        return $this->where('platform_id', $platformId)->orderBy('template_key', 'ASC')->findAll();
+        return $this->where('platform_id', $platformId)->orderBy('template_key', 'ASC')->findAll(20);
     }
 
     public function findByPlatformAndKey(int $platformId, string $templateKey): ?array

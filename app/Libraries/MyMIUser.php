@@ -180,7 +180,7 @@ class MyMIUser
 
     public function findPotentialSpamUsers()
     {
-        $users = $this->userModel->findAll();
+        $users = $this->userModel->findAll(20);
         $spamUsers = [];
     
         foreach ($users as $user) {

@@ -24,6 +24,6 @@ class SocialCommunityModel extends Model
 
     public function forPlatform(int $platformId): array
     {
-        return $this->where('platform_id', $platformId)->orderBy('is_primary', 'DESC')->findAll();
+        return $this->where('platform_id', $platformId)->orderBy('is_primary', 'DESC')->findAll(20);
     }
 }

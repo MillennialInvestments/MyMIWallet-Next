@@ -396,7 +396,7 @@ class MarketingService
     protected function seedDefaultPlatforms(): array
     {
         $configPlatforms = config('SocialPlatforms')->platforms;
-        $existing = $this->socialPlatformModel->findAll();
+        $existing = $this->socialPlatformModel->findAll(20);
         $existingKeys = array_column($existing, 'platform_key');
 
         foreach ($configPlatforms as $key => $meta) {
@@ -406,7 +406,7 @@ class MarketingService
             $this->socialPlatformModel->insert(array_merge(['platform_key' => $key], $meta));
         }
 
-        $platforms = $this->socialPlatformModel->findAll();
+        $platforms = $this->socialPlatformModel->findAll(20);
         foreach ($platforms as $platform) {
             $defaults = config('SocialPlatforms')->defaultTemplates;
             $existingTemplates = $this->socialTemplateModel->findByPlatform((int) $platform['id']);
@@ -430,7 +430,7 @@ class MarketingService
             }
         }
 
-        return $this->socialPlatformModel->findAll();
+        return $this->socialPlatformModel->findAll(20);
     }
 
     protected function extractTickersFromSummary(array $summary): array

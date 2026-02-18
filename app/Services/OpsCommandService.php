@@ -40,7 +40,7 @@ class OpsCommandService
             $builder->where('from_email', $filters['from_email']);
         }
 
-        return $builder->findAll();
+        return $builder->findAll(20);
     }
 
     public function getInboxItem(int $id): ?array

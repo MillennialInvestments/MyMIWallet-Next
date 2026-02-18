@@ -164,7 +164,7 @@ class MyMISecurity
     public function generateSecurityQuestions()
     {
         $securityModel = new \App\Models\SecurityModel();
-        return $securityModel->findAll();
+        return $securityModel->findAll(20);
     }
 
     public function verifySecurityAnswers($answers)
@@ -397,7 +397,7 @@ class MyMISecurity
     public function getSecurityTrainingContent()
     {
         $builder = $this->db->table('training_content');
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getResult();
     }
 
@@ -530,7 +530,7 @@ class MyMISecurity
     {
         $issues = [];
         $rolesModel = new \App\Models\RolesModel();
-        $roles = $rolesModel->findAll();
+        $roles = $rolesModel->findAll(20);
         foreach ($roles as $role) {
             if (!$this->checkRolePermissions($role['id'])) {
                 $issues[] = "Access control issue found in role: {$role['name']}";

@@ -74,7 +74,7 @@ class EsportsModel extends Model
 
         $builder->groupBy('e.id')->orderBy('e.starts_at', 'DESC');
 
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
 
     public function createPool(array $data): bool
@@ -190,7 +190,7 @@ class EsportsModel extends Model
 
     public function getPayoutsForEvent(int $eventId): array
     {
-        return $this->db->table('bf_esports_payouts')->where('event_id', $eventId)->get()->getResultArray();
+        return $this->db->table('bf_esports_payouts')->where('event_id', $eventId)->limit(20)->get()->getResultArray();
     }
 
     public function upsertPayout(array $criteria, array $values): int
@@ -258,7 +258,7 @@ class EsportsModel extends Model
             $builder->whereIn('job_type', array_map('strtoupper', $jobTypes));
         }
 
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
 
     public function markJobRunning(int $jobId): bool
@@ -308,7 +308,7 @@ class EsportsModel extends Model
             $builder->whereIn('status', $statuses);
         }
 
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
 
     public function updateEntry(int $entryId, array $data): bool

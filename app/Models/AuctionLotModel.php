@@ -55,7 +55,7 @@ class AuctionLotModel extends Model
         $builder->where('lots.starts_at <=', Time::now()->toDateTimeString());
         $builder->orderBy('lots.ends_at', 'ASC');
 
-        $rows = $builder->get()->getResultArray();
+        $rows = $builder->limit(20)->get()->getResultArray();
 
         return $this->enrichLots($rows, true);
     }
@@ -66,7 +66,7 @@ class AuctionLotModel extends Model
         $builder->where('lots.status', 'scheduled');
         $builder->orderBy('lots.starts_at', 'ASC');
 
-        $rows = $builder->get()->getResultArray();
+        $rows = $builder->limit(20)->get()->getResultArray();
 
         return $this->enrichLots($rows);
     }
@@ -80,7 +80,7 @@ class AuctionLotModel extends Model
         $builder->orderBy('lots.ends_at', 'DESC');
         $builder->limit($limit);
 
-        $rows = $builder->get()->getResultArray();
+        $rows = $builder->limit(20)->get()->getResultArray();
 
         return $this->enrichLots($rows, true);
     }

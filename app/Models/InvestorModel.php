@@ -59,7 +59,7 @@ class InvestorModel extends Model {
     {
         return $this->where('status', 'Opened')
                     ->orderBy('id', 'DESC')
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function getUserSingleTrades($tradeID)

@@ -49,7 +49,7 @@ class SignalsModel extends Model
         return $this->where('week_key', $weekKey)
             ->orderBy('score', 'DESC')
             ->limit($limit)
-            ->findAll();
+            ->findAll(20);
     }
 
     public function isSymbolHotThisWeek(string $symbol, string $weekKey): bool
@@ -78,7 +78,7 @@ class SignalsModel extends Model
             ->select('symbol, COUNT(*) as c')
             ->where('week_key', $weekKey)
             ->groupBy('symbol')
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
 
         $map = [];
         foreach ($rows as $r) {
@@ -86,7 +86,7 @@ class SignalsModel extends Model
         }
 
         // Update each signal with appearances and score boost (simple, safe)
-        $signals = $this->where('week_key', $weekKey)->findAll();
+        $signals = $this->where('week_key', $weekKey)->findAll(20);
         $updated = 0;
 
         foreach ($signals as $s) {

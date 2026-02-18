@@ -38,7 +38,7 @@ class OpsCommandInboxModel extends Model
     {
         return $this->whereIn('status', $statuses)
             ->orderBy('received_at', 'DESC')
-            ->findAll();
+            ->findAll(20);
     }
 
     public function appendSecurityFlag(int $id, string $flagKey, array $details = []): bool

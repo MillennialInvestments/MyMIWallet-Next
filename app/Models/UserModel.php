@@ -130,7 +130,7 @@ class UserModel extends Model
     }
 
     public function getCommentsByTicker($ticker) {
-        return $this->db->table('bf_users_comments')->where('ticker', $ticker)->orderBy('created_at', 'DESC')->findAll();
+        return $this->db->table('bf_users_comments')->where('ticker', $ticker)->orderBy('created_at', 'DESC')->findAll(20);
     }
 
     // Retrieve incomplete onboarding steps
@@ -217,12 +217,12 @@ class UserModel extends Model
     }
     
     public function getActiveUsers() {
-        return $this->where('active', 1)->get()->getResultArray(); 
+        return $this->where('active', 1)->limit(20)->get()->getResultArray(); 
     }
 
     public function getActiveUsersForWalkthrough()
     {
-        return $this->where('active', 1)->get()->getResultArray();
+        return $this->where('active', 1)->limit(20)->get()->getResultArray();
     }
     
     public function getPendingActivationUsers()
@@ -234,7 +234,7 @@ class UserModel extends Model
     }
     
     public function getPendingUsers() {
-        return $this->where('active', 0)->get()->getResultArray(); 
+        return $this->where('active', 0)->limit(20)->get()->getResultArray(); 
     }
 
     public function getUsersByStatus(int $status = 1, string $search = null)
@@ -250,7 +250,7 @@ class UserModel extends Model
                 ->groupEnd();
         }
     
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
     
     // Update the getUserID method

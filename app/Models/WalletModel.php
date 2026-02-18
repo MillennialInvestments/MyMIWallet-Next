@@ -89,7 +89,7 @@ class WalletModel extends Model
         $builder = $this->db->table('bf_users_wallet_transactions');
         $builder->where('user_id', $cuID);
         $builder->where('active', 'Yes');
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
 
     // --- Summaries / listings -----------------------------------------------
@@ -120,7 +120,7 @@ class WalletModel extends Model
             ->where('deleted', 0)
             ->where('user_id', $cuID)
             ->orderBy('nickname', 'ASC')
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     public function getSavingsWallets($cuID)
@@ -130,7 +130,7 @@ class WalletModel extends Model
             ->where('deleted', 0)
             ->where('user_id', $cuID)
             ->orderBy('nickname', 'ASC')
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     public function getCreditWallets($cuID)
@@ -139,7 +139,7 @@ class WalletModel extends Model
             ->where('user_id', $cuID)
             ->where('deleted', 0)
             ->orderBy('nickname', 'ASC')
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     public function getDebtWallets($cuID)
@@ -148,7 +148,7 @@ class WalletModel extends Model
             ->where('user_id', $cuID)
             ->where('deleted', 0)
             ->orderBy('nickname', 'ASC')
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     public function getInvestmentWallets($cuID)
@@ -157,7 +157,7 @@ class WalletModel extends Model
             ->where('user_id', $cuID)
             ->where('deleted', 0)
             ->orderBy('nickname', 'ASC')
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     public function getCheckingWalletsSummary($cuID)
@@ -426,7 +426,7 @@ class WalletModel extends Model
         return $this->db->table('bf_exchanges_orders')
             ->where('user_id', $cuID)
             ->orderBy('id', 'ASC')->limit(1)
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     public function getMyMIGDeposits($cuID)
@@ -435,7 +435,7 @@ class WalletModel extends Model
             ->where('user_id', $cuID)
             ->where('coin', 'MYMIG')
             ->limit(1)
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     public function purchaseFeature($data)
@@ -497,7 +497,7 @@ class WalletModel extends Model
             ->where('status', 'Opened')
             ->where('category', 'Equity Trade')
             ->orderBy('id', 'DESC')->limit(5)
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     public function getActiveOptionTradeAlerts($type)
@@ -506,14 +506,14 @@ class WalletModel extends Model
             ->where('status', 'Opened')
             ->where('category', 'Option Trade')
             ->orderBy('id', 'DESC')->limit(5)
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     public function getAllSymbols()
     {
         return $this->db->table('bf_investment_stock_listing')
             ->orderBy('symbol')
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     public function getAllWallets($cuID)
@@ -521,7 +521,7 @@ class WalletModel extends Model
         return $this->db->table('bf_users_wallet')
             ->where('user_id', $cuID)
             ->where('active', 1)
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     public function getDebtAccountsSummary($cuID)
@@ -542,7 +542,7 @@ class WalletModel extends Model
             ->where('wallet_type', 'Digital')
             ->where('default_wallet', 'No')
             ->orderBy('id', 'ASC')->limit($limit)
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     public function getDigitalWalletTotalCount($cuID)
@@ -562,7 +562,7 @@ class WalletModel extends Model
             ->where('wallet_type', 'Fiat')
             ->where('default_wallet', 'No')
             ->orderBy('id', 'ASC')->limit($limit)
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     public function getFiatWalletTotalCount($cuID)
@@ -579,7 +579,7 @@ class WalletModel extends Model
         return $this->db->table('bf_users_wallet')
             ->where('user_id', $cuID)
             ->where('active', 'No')
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     public function getLoanAccountsSummary($cuID)
@@ -627,7 +627,7 @@ class WalletModel extends Model
         return $this->db->table('bf_investment_stock_listing')
             ->orderBy('symbol')
             ->groupStart()->where('type', 'Stock')->orWhere('type', 'ETF')->groupEnd()
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     public function getSymbolInfo($symbol)
@@ -642,7 +642,7 @@ class WalletModel extends Model
         return $this->db->table('bf_users_crypto_accounts')
             ->where('user_id', $cuID)
             ->where('deleted', 0)
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     public function getUserInvestWallets($cuID)
@@ -650,7 +650,7 @@ class WalletModel extends Model
         return $this->db->table('bf_users_invest_accounts')
             ->where('user_id', $cuID)
             ->where('deleted', 0)
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     public function getUtilityAccountsSummary($cuID)
@@ -666,7 +666,7 @@ class WalletModel extends Model
 
     public function getWalletInfo($walletID)
     {
-        return $this->db->table('bf_users_wallet')->where('id', $walletID)->get()->getResultArray();
+        return $this->db->table('bf_users_wallet')->where('id', $walletID)->limit(20)->get()->getResultArray();
     }
 
     public function getWalletInitialSummary($walletID)
@@ -751,7 +751,7 @@ class WalletModel extends Model
         ]);
 
         $b->orderBy('created_on', 'DESC')->orderBy('id', 'DESC');
-        $rows = $b->get()->getResultArray();
+        $rows = $b->limit(20)->get()->getResultArray();
 
         foreach ($rows as &$r) {
             if (isset($r['credentials']) && is_string($r['credentials'])) {
@@ -887,7 +887,7 @@ class WalletModel extends Model
         if ($db->tableExists('bf_wallet_providers')) {
             $b = $db->table('bf_wallet_providers')->where('enabled', 1)->orderBy('sort_order', 'ASC');
             if ($category) { $b->where("FIND_IN_SET(?, categories) > 0", strtolower($category)); }
-            return $b->get()->getResultArray();
+            return $b->limit(20)->get()->getResultArray();
         }
 
         // fallback seed
@@ -922,7 +922,7 @@ class WalletModel extends Model
                 ->orWhereIn('active', [1, '1', 'Yes'])
             ->groupEnd();
         }
-        return $b->orderBy('created_on','DESC')->get()->getResultArray();
+        return $b->orderBy('created_on','DESC')->limit(20)->get()->getResultArray();
     }
 
     public function getUserWalletsByCategory(int $userId, string $category, bool $onlyActive=false): array
@@ -932,7 +932,7 @@ class WalletModel extends Model
             ->where('deleted', 0)
             ->where('category', strtolower($category));
         if ($onlyActive) $b->where('status','linked');
-        return $b->orderBy('created_on','DESC')->get()->getResultArray();
+        return $b->orderBy('created_on','DESC')->limit(20)->get()->getResultArray();
     }
 
     /**
@@ -1281,7 +1281,7 @@ class WalletModel extends Model
 
         $wallets = $this->db->table('bf_users_wallet')
             ->where('status', 1)
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
 
         foreach ($wallets as $w) {
             $sub = $this->mapWalletRowToSubsidiary($w);
@@ -1786,7 +1786,7 @@ class WalletModel extends Model
             'errors'    => [],
         ];
 
-        $wallets = $this->db->table('bf_users_wallet')->get()->getResultArray();
+        $wallets = $this->db->table('bf_users_wallet')->limit(20)->get()->getResultArray();
         foreach ($wallets as $w) {
             $map = $this->mapWalletCategoryToTable($w);
             if (!$map) {

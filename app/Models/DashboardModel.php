@@ -88,7 +88,7 @@ class DashboardModel extends Model
     }
 
     public function getFeatures() {
-        return $this->db->table('bf_users_memberships')->where('active', 1)->orderBy('feature_level', 'ASC')->orderBy('feature_name', 'ASC')->get()->getResultArray(); 
+        return $this->db->table('bf_users_memberships')->where('active', 1)->orderBy('feature_level', 'ASC')->orderBy('feature_name', 'ASC')->limit(20)->get()->getResultArray(); 
     }
 
     public function getFeatureInformation($featureIdentifier = null) {
@@ -109,7 +109,7 @@ class DashboardModel extends Model
     }
 
     public function searchLinks($keyword) {
-        return $this->like('keywords', $keyword)->findAll();
+        return $this->like('keywords', $keyword)->findAll(20);
     }
 
     public function createGoal($data)
@@ -145,6 +145,6 @@ class DashboardModel extends Model
     public function getCompletions($userId)
     {
         $completionTable = $this->db->table('bf_users_goal_completions');
-        return $completionTable->where('user_id', $userId)->orderBy('completion_date', 'DESC')->get()->getResult();
+        return $completionTable->where('user_id', $userId)->orderBy('completion_date', 'DESC')->limit(20)->get()->getResult();
     }
 }

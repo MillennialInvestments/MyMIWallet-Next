@@ -101,7 +101,7 @@ class MyMICoinModel extends Model
         $builder = $this->db->table('bf_investment_trade_alerts');
         $builder->where('status', 'Opened');
         $builder->orderBy('id', 'DESC');
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
     
     public function getUserSingleTrades($tradeID) {
@@ -149,7 +149,7 @@ class MyMICoinModel extends Model
     public function getAllWallets($cuID) {
         $builder = $this->db->table('bf_users_wallet');
         $builder->where('user_id', $cuID);
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
     
     public function getFiatWallets($cuID, $limit) {
@@ -159,7 +159,7 @@ class MyMICoinModel extends Model
         $builder->where('type', 'Fiat');
         $builder->orderBy('amount', 'DESC');
         $builder->limit($limit);
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
     
     public function getDigitalWallets($cuID, $limit) {
@@ -169,7 +169,7 @@ class MyMICoinModel extends Model
         $builder->where('type', 'Digital');
         $builder->orderBy('amount', 'DESC');
         $builder->limit($limit);
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
     
     public function getWalletTotals($cuID) {
@@ -235,14 +235,14 @@ class MyMICoinModel extends Model
     public function getAllSymbols() {
         $builder = $this->db->table('bf_investment_stock_listing');
         $builder->orderBy('symbol');
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
     
     public function getStockSymbols() {
         $builder = $this->db->table('bf_investment_stock_listing');
         $builder->groupBy(['type' => 'Stock', 'type' => 'ETF']);
         $builder->orderBy('symbol');
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
     
     public function getActiveSwingTradeAlerts($type) {

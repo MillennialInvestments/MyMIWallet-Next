@@ -42,7 +42,7 @@ class BlogModel extends Model
             ->where('published_at <=', date('Y-m-d H:i:s'))
             ->orderBy('published_at', 'DESC')
             ->limit($limit)
-            ->findAll();
+            ->findAll(20);
     }
 
     public function getPostsByCategory(int $categoryId): array
@@ -51,7 +51,7 @@ class BlogModel extends Model
             ->where('category_id', $categoryId)
             ->where('published_at <=', date('Y-m-d H:i:s'))
             ->orderBy('published_at', 'DESC')
-            ->findAll();
+            ->findAll(20);
     }
 
     public function getRelatedPosts(int $currentPostId, int $categoryId, int $limit = 3): array
@@ -63,7 +63,7 @@ class BlogModel extends Model
             ->where('published_at <=', date('Y-m-d H:i:s'))
             ->orderBy('published_at', 'DESC')
             ->limit($limit)
-            ->findAll();
+            ->findAll(20);
     }
 
     public function getCategoryBySlug(string $slug): ?array
