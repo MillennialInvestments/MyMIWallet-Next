@@ -15,13 +15,13 @@ class DataExportService
             'user_id'      => $userId,
             'profiles'     => $this->db->table('bf_user_profiles')->where('user_id',$userId)
                                      ->select('user_id,phone,street,city,state,postal_code,created_at,updated_at')
-                                     ->get()->getResultArray(),
+                                     ->limit(20)->get()->getResultArray(),
             'wallets'      => $this->db->table('bf_wallets')->where('user_id',$userId)
                                      ->select('id,provider,address,chain,is_default,created_at')
-                                     ->get()->getResultArray(),
+                                     ->limit(20)->get()->getResultArray(),
             'alerts'       => $this->db->table('bf_investment_trade_alerts')->where('user_id',$userId)
                                      ->select('id,ticker,status,occurrences,created_at,updated_at')
-                                     ->get()->getResultArray(),
+                                     ->limit(20)->get()->getResultArray(),
         ];
 
         $dir  = WRITEPATH . 'exports';

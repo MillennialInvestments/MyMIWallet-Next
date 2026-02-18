@@ -177,7 +177,7 @@ class WalletSummaryService
             $builder->where('user_id', $userId);
         }
 
-        return $builder->get()->getResultArray() ?? [];
+        return $builder->limit(20)->get()->getResultArray() ?? [];
     }
 
     private function tableHasColumn(string $table, string $column): bool

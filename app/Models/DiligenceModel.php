@@ -25,7 +25,7 @@ class DiligenceModel extends Model
 
     public function getResearch()
     {
-        return $this->orderBy('id', 'DESC')->findAll();
+        return $this->orderBy('id', 'DESC')->findAll(20);
     }
 
     public function getUserResearch($cuID)
@@ -45,16 +45,16 @@ class DiligenceModel extends Model
 
     public function getCommunityResearch($cuID)
     {
-        return $this->where('user_id !=', $cuID)->orderBy('id', 'DESC')->findAll();
+        return $this->where('user_id !=', $cuID)->orderBy('id', 'DESC')->findAll(20);
     }
 
     public function getMostRecentResearch()
     {
-        return $this->where('approved', 'Yes')->orderBy('id', 'DESC')->findAll();
+        return $this->where('approved', 'Yes')->orderBy('id', 'DESC')->findAll(20);
     }
 
     public function getMostRecentStockResearch($symbol)
     {
-        return $this->where('stock', $symbol)->where('approved', 'Yes')->orderBy('id', 'DESC')->findAll();
+        return $this->where('stock', $symbol)->where('approved', 'Yes')->orderBy('id', 'DESC')->findAll(20);
     }
 }

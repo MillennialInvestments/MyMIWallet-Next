@@ -265,7 +265,7 @@ class AiOpsManager
         $query = $db->table('bf_ai_ops_caps')
                     ->where('subsystem', $subsystem)
                     ->limit(1)
-                    ->get();
+                    ->limit(20)->get();
 
         $row = $query->getRowArray(); // 
         if (empty($row)) {

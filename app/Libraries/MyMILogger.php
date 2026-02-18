@@ -94,13 +94,13 @@ class MyMILogger
     public function lastLog() { return $this->db->table($this->tableName)->where('id', $this->logid)->get()->getRow(); }
 
     public function getNum() { return $this->getQueryMaker($this->db->table($this->tableName))->countAllResults(); }
-    public function get() { return $this->dbCleanResult($this->getQueryMaker($this->db->table($this->tableName))->get()->getResult()); }
+    public function get() { return $this->dbCleanResult($this->getQueryMaker($this->db->table($this->tableName))->limit(20)->get()->getResult()); }
     public function removeLog() { $this->getQueryMaker($this->db->table($this->tableName))->delete(); }
 
     public function getIds()
     {
         $builder = $this->getQueryMaker($this->db->table($this->tableName));
-        $query = $builder->select('type_id')->get();
+        $query = $builder->select('type_id')->limit(20)->get();
         $results = $query->getResultArray();
         return array_column($results, 'type_id');
     }

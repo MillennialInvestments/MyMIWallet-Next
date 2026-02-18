@@ -213,6 +213,7 @@ class SqueezeModel
         ";
 
         $query = $this->db->query($sql);
+            $sql .= " LIMIT 20";
         $rows = $query ? $query->getResultArray() : [];
 
         $this->cacheSet($cacheKey, $rows, 300);

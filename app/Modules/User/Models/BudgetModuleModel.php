@@ -50,7 +50,7 @@ class BudgetModuleModel extends Model {
     }
 
     public function getUserBudgetRecords($cuID) {
-        return $this->where(['created_by' => $cuID, 'status' => 1, 'deleted' => 0])->findAll();
+        return $this->where(['created_by' => $cuID, 'status' => 1, 'deleted' => 0])->findAll(20);
     }
 
     /**
@@ -168,7 +168,7 @@ class BudgetModuleModel extends Model {
     {
         return $this->where('id', $recordID)
                     ->where('created_by', $cuID)
-                    ->findAll();
+                    ->findAll(20);
     }
     
     public function getBudgetAccountRelatedRecords($cuID, $accountName)

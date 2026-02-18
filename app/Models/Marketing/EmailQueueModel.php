@@ -20,7 +20,7 @@ class EmailQueueModel extends Model
     // Gets all emails pending to be sent
     public function getPendingEmails()
     {
-        return $this->where('status', 'pending')->findAll();
+        return $this->where('status', 'pending')->findAll(20);
     }
 
     // Marks email as sent

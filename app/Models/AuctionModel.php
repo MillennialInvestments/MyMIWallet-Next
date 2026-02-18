@@ -25,7 +25,7 @@ class AuctionModel extends Model
 
     public function getAllAuctions()
     {
-        return $this->findAll();
+        return $this->findAll(20);
     }
 
     public function getAuction($id)
@@ -35,7 +35,7 @@ class AuctionModel extends Model
 
     public function getAuctionsByUser($userId)
     {
-        return $this->where('user_id', $userId)->findAll();
+        return $this->where('user_id', $userId)->findAll(20);
     }
 
     public function createAuction($data)

@@ -178,7 +178,7 @@ class InvestmentModel extends Model
         $builder = $this->db->table('bf_users_trades');
         $builder->where(['status' => 'Active', 'closed' => 'false', 'user_id' => $cuID]);
         $builder->orderBy('id', 'desc');
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getResultArray();
     }
 
@@ -186,7 +186,7 @@ class InvestmentModel extends Model
         $builder = $this->db->table('bf_users_trades');
         $builder->where(['status' => 'Active', 'user_id' => $cuID]);
         $builder->orderBy('id', 'desc');
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getResultArray();
     }
 
@@ -197,7 +197,7 @@ class InvestmentModel extends Model
         $builder->where('status', 'Active');
         $builder->where('open_date >=', date('Y-01-01'));
         $builder->where('open_date <=', date('Y-m-d'));
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
 
         $result = $query->getRowArray();
         return $result['net_gains'] ?? 0;
@@ -225,7 +225,7 @@ class InvestmentModel extends Model
         $builder = $this->db->table('bf_exchanges_assets');
         $builder->selectSum('market_cap');
         $builder->where(['user_id' => $cuID, 'active' => 1, 'status' => 'Approved']);
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getRow()->market_cap ?? 0;
     }
 
@@ -298,25 +298,25 @@ class InvestmentModel extends Model
         $builder->where('closed', false); // Only include open/active trades
         $builder->orderBy('open_date', 'DESC');
     
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getResultArray();
     }
 
     public function getAllInvestments()
     {
-        return $this->findAll();
+        return $this->findAll(20);
     }
 
     // public function getUserInvestments($userId)
     // {
-    //     return $this->where('user_id', $userId)->findAll();
+    //     return $this->where('user_id', $userId)->findAll(20);
     // }
 
     public function getUserInvestments($userId) {
         $builder = $this->db->table('bf_users_trades')
                         ->where('user_id', $userId)
                         ->limit(20)
-                        ->get()->getResultArray();
+                        ->limit(20)->get()->getResultArray();
         return $builder;
     }
 
@@ -362,18 +362,18 @@ class InvestmentModel extends Model
     public function getAllTradesByUser($userId)
     {
         log_message('debug', "InvestmentModel - getAllTradesByUser for User ID: {$userId}");
-        return $this->where('user_id', $userId)->findAll();
+        return $this->where('user_id', $userId)->findAll(20);
     }
 
     public function getAllTradeTrackerConfigs()
     {
         $this->table = 'bf_users_trades_configs'; // Change table for trade tracker configs
-        return $this->where('status', 1)->findAll();
+        return $this->where('status', 1)->findAll(20);
     }
 
     public function getAllWalletTrades($walletID)
     {
-        return $this->where('trading_account', $walletID)->findAll();
+        return $this->where('trading_account', $walletID)->findAll(20);
     }
     
     public function getBasicRetirementProjection($userId)
@@ -409,7 +409,7 @@ class InvestmentModel extends Model
         $builder->groupBy("DATE_FORMAT(open_date, '%Y-%m'), category");
         $builder->orderBy('month', 'ASC');
     
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getResultArray();
     }
 
@@ -417,7 +417,7 @@ class InvestmentModel extends Model
     {
         return $this->where('trading_account', $walletID)
                     ->where('status', 'Closed')
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function getCompanyEarnings($symbol) {
@@ -449,7 +449,7 @@ class InvestmentModel extends Model
         $builder->where('closed', false); // Only include open/active trades
         $builder->orderBy('open_date', 'DESC');
     
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getResultArray();
     }
 
@@ -460,7 +460,7 @@ class InvestmentModel extends Model
     
     public function getInvestmentGoals($userId)
     {
-        return $this->db->table('investment_goals')->where('user_id', $userId)->findAll();
+        return $this->db->table('investment_goals')->where('user_id', $userId)->findAll(20);
     }
     
     public function getInvestmentMonthToMonth($userId) {
@@ -471,13 +471,13 @@ class InvestmentModel extends Model
         $builder->groupBy("DATE_FORMAT(open_date, '%Y-%m')");
         $builder->orderBy('month', 'ASC');
     
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getResultArray();
     }
 
     public function getInvestmentRequest() {
         $builder = $this->db->table('bf_users_coin_purchases');
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getResultArray();
     }
 
@@ -511,7 +511,7 @@ class InvestmentModel extends Model
     public function getOrderInformation($orderID) {
         $builder = $this->db->table('bf_users_coin_purchases');
         $builder->where('id', $orderID);
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getRow();
     }
 
@@ -520,7 +520,7 @@ class InvestmentModel extends Model
         $builder->selectSum('total', 'totalCoins');
         $builder->selectSum('amount', 'totalValue');
         $builder->where('wallet_id', $cuWalletID);
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getRow();
     }
 
@@ -541,7 +541,7 @@ class InvestmentModel extends Model
         return $this->where('user_id', $cuID)
                     ->where('submitted_date', $today)
                     ->where('status', 'Closed')
-                    ->findAll();
+                    ->findAll(20);
     }
     
     public function getTradeById($tradeId)
@@ -554,7 +554,7 @@ class InvestmentModel extends Model
         return $this->where('id', $trade_id)
                     ->orWhere('trade_id', $trade_id)
                     ->orderBy('id', 'ASC')
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function getUpcomingEarnings() {
@@ -587,7 +587,7 @@ class InvestmentModel extends Model
         $builder->select('symbol, current_price');
         $builder->where('user_id', $userId);
     
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getResultArray();
     } 
 
@@ -696,7 +696,7 @@ class InvestmentModel extends Model
         $builder = $this->db->table('bf_users_trades');
         $builder->selectSum('total_trade_cost');
         $builder->where('user_id', $cuID);
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getRow()->total_trade_cost ?? 0;
     }
 
@@ -705,7 +705,7 @@ class InvestmentModel extends Model
         $builder->selectSum('total_trade_cost');
         $builder->where('user_id', $cuID);
         $builder->where('submitted_date >=', 'DATE_SUB(NOW(), INTERVAL 1 MONTH)', false);
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getRow()->total_trade_cost ?? 0;
     }
 
@@ -714,7 +714,7 @@ class InvestmentModel extends Model
         $builder->selectSum('total_trade_cost');
         $builder->where('user_id', $cuID);
         $builder->where('submitted_date >=', 'DATE_SUB(NOW(), INTERVAL 1 YEAR)', false);
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getRow()->total_trade_cost ?? 0;
     }
 
@@ -722,7 +722,7 @@ class InvestmentModel extends Model
         $builder = $this->db->table('bf_exchanges_assets');
         $builder->selectSum('coin_value', 'coin_quantity');
         $builder->where(['user_id' => $cuID, 'status' => 'Active']);
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getRow()->value ?? 0;
     }
 
@@ -879,7 +879,7 @@ class InvestmentModel extends Model
         $transactionBuilder = $this->db->table('transactions');
         $transactionBuilder->select('investment_id, price, quantity');
         $transactionBuilder->where('user_id', $userId);
-        $transactions = $transactionBuilder->get()->getResultArray();
+        $transactions = $transactionBuilder->limit(20)->get()->getResultArray();
 
         foreach ($transactions as $transaction) {
             // Process and calculate performance based on transaction data
@@ -950,7 +950,7 @@ class InvestmentModel extends Model
     
     public function getUserAlerts($userId)
     {
-        return $this->db->table('alerts')->where('user_id', $userId)->findAll();
+        return $this->db->table('alerts')->where('user_id', $userId)->findAll(20);
     }
     
     public function getRetirementRecommendations($userId)
@@ -1084,7 +1084,7 @@ class InvestmentModel extends Model
         $builder = $this->db->table('bf_users_trades');
         $builder->select('symbol, shares as quantity, current_price');
         $builder->where(['user_id' => $userId, 'active' => 1, 'deleted' => 0]);
-        $trades = $builder->get()->getResultArray();
+        $trades = $builder->limit(20)->get()->getResultArray();
     
         $performanceMetrics = [];
         foreach ($trades as $trade) {
@@ -1103,7 +1103,7 @@ class InvestmentModel extends Model
     //     $builder = $this->db->table('bf_users_trades');
     //     $builder->select('symbol, shares as quantity, current_price');
     //     $builder->where(['user_id' => $userId, 'active' => 1, 'deleted' => 0]);
-    //     $trades = $builder->get()->getResultArray();
+    //     $trades = $builder->limit(20)->get()->getResultArray();
 
     //     $performanceMetrics = [];
     //     foreach ($trades as $trade) {
@@ -1117,7 +1117,7 @@ class InvestmentModel extends Model
         $builder->select('category, SUM(shares) as total_quantity');
         $builder->where(['user_id' => $userId, 'active' => 1, 'deleted' => 0]);
         $builder->groupBy('category');
-        $assets = $builder->get()->getResultArray();
+        $assets = $builder->limit(20)->get()->getResultArray();
 
         $totalInvestments = array_sum(array_column($assets, 'total_quantity'));
         $assetAllocation = [];
@@ -1148,7 +1148,7 @@ class InvestmentModel extends Model
         $builder->select('category, SUM(shares) as total_shares');
         $builder->where(['user_id' => $userId, 'active' => 1, 'deleted' => 0]);
         $builder->groupBy('category');
-        $assets = $builder->get()->getResultArray();
+        $assets = $builder->limit(20)->get()->getResultArray();
 
         $riskLevel = 'Low';
         foreach ($assets as $asset) {
@@ -1169,7 +1169,7 @@ class InvestmentModel extends Model
         $builder->orderBy('potential_gain', 'DESC');
         $builder->limit(5);
 
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
 
         if (count($query->getResultArray()) > 0) {
             return $query->getResultArray();
@@ -1187,7 +1187,7 @@ class InvestmentModel extends Model
                 ->orderBy('count', 'DESC')
                 ->limit($limit);
     
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         $results = $query->getResultArray();
     }
 
@@ -1198,7 +1198,7 @@ class InvestmentModel extends Model
         $builder->orderBy('percent_change', 'DESC');
         $builder->limit(5);
 
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
 
         if (count($query->getResultArray()) > 0) {
             return $query->getResultArray();
@@ -1214,7 +1214,7 @@ class InvestmentModel extends Model
         $builder->orderBy('percent_change', 'ASC');
         $builder->limit(5);
 
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
 
         if (count($query->getResultArray()) > 0) {
             return $query->getResultArray();
@@ -1307,7 +1307,7 @@ class InvestmentModel extends Model
         $builder = $this->db->table('bf_exchanges_assets');
         $builder->select('performance');
         $builder->where('id', $assetId);
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         $result = $query->getRow();
 
         return $result->performance ?? 0;
@@ -1358,7 +1358,7 @@ class InvestmentModel extends Model
                         ->where('user_id', $userId)
                         ->limit(10)
                         // ->orderBy('desc', 'id')
-                        ->get()->getResultArray();
+                        ->limit(20)->get()->getResultArray();
 
         $totalValue = 0;
         foreach ($investments as $investment) {
@@ -1375,14 +1375,14 @@ class InvestmentModel extends Model
     {
         $builder = $this->db->table('bf_financial_goals');
         $builder->where('user_id', $userId);
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     } 
 
     protected function getInitialInvestment($cuID) {
         $builder = $this->db->table('bf_users_trades');
         $builder->selectSum('total_trade_cost');
         $builder->where('user_id', $cuID);
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         $result = $query->getRow();
 
         return $result->initial_investment ?? 0;
@@ -1401,7 +1401,7 @@ class InvestmentModel extends Model
         $builder = $this->db->table('bf_users_trades');
         $builder->select('symbol');
         $builder->where('id', $investmentId);
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
 
         $row = $query->getRow();
         if (!empty($row)) {
@@ -1443,13 +1443,13 @@ class InvestmentModel extends Model
     {
         $builder = $this->db->table('bf_investment_strategies');
         $builder->where('user_id', $userId);
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
 
     protected function getUserAssets($cuID) {
         $builder = $this->db->table('bf_exchanges_assets');
         $builder->where('user_id', $cuID);
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         $result = $query->getResultArray();
 
         return $result;
@@ -1499,7 +1499,7 @@ class InvestmentModel extends Model
         $builder->where('status', 'Active');
         $builder->where('open_date >=', date('Y-m-01', strtotime("-1 month")));
         $builder->where('open_date <', date('Y-m-01'));
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getRow()->net_gains ?? 0;
     }
 
@@ -1535,7 +1535,7 @@ class InvestmentModel extends Model
         $builder->where('status', 'Active');
         $builder->where('open_date >=', date('Y-m-01'));
         $builder->where('open_date <=', date('Y-m-d'));
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getRow()->net_gains ?? 0;
     }
 
@@ -1608,7 +1608,7 @@ class InvestmentModel extends Model
         $builder->where('user_id', $cuID);
         $builder->orderBy('net_gains', 'DESC');
         $builder->limit(5);
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getResultArray();
     }
 
@@ -1618,7 +1618,7 @@ class InvestmentModel extends Model
         $builder->where('user_id', $cuID);
         $builder->orderBy('net_gains', 'DESC');
         $builder->limit(1);
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getRow();
     }
 
@@ -1628,7 +1628,7 @@ class InvestmentModel extends Model
         $builder->where('user_id', $cuID);
         $builder->orderBy('net_gains', 'ASC');
         $builder->limit(5);
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getResultArray();
     }
 
@@ -1638,7 +1638,7 @@ class InvestmentModel extends Model
         $builder->where('user_id', $cuID);
         $builder->orderBy('net_gains', 'ASC');
         $builder->limit(1);
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getRow();
     }
 
@@ -1647,7 +1647,7 @@ class InvestmentModel extends Model
         $builder->selectSum('current_price');
         $builder->where('user_id', $cuID);
         $builder->where('status', 'Active');
-        $query = $builder->get();
+        $query = $builder->limit(20)->get();
         return $query->getRow()->current_value ?? 0;
     }
 

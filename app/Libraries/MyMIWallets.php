@@ -273,7 +273,7 @@ class MyMIWallets {
             if ($this->tableHasColumn($table, 'deleted')) {
                 $builder->where('deleted', 0);
             }
-            $rows = $builder->get()->getResultArray();
+            $rows = $builder->limit(20)->get()->getResultArray();
             foreach ($rows as $row) {
                 $walletId = (int)($row['wallet_id'] ?? 0);
                 if ($walletId === 0 || !in_array($walletId, $walletIds, true)) {

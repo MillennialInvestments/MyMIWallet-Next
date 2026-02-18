@@ -200,7 +200,7 @@ class ProjectsService implements ProjectsServiceInterface
      */
     public function getAssets(int $projectId): array
     {
-        return $this->db->table('project_assets')->where('project_id', $projectId)->get()->getResultArray();
+        return $this->db->table('project_assets')->where('project_id', $projectId)->limit(20)->get()->getResultArray();
     }
 }
 ?>

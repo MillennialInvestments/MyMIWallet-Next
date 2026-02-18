@@ -20,6 +20,6 @@ class EmailTemplateModel extends Model
     // Fetches all templates
     public function getAllTemplates()
     {
-        return $this->findAll();
+        return $this->findAll(20);
     }
 }

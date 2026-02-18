@@ -253,6 +253,7 @@ class Console extends BaseConfig
         \App\Commands\Ops\FilesystemFix::class,
         \App\Commands\Ops\FilesystemLint::class,
         \App\Commands\Ops\ImageCapabilities::class,
+        \App\Commands\Ops\ModelLimitAudit::class,
         \App\Commands\Ops\NetworkMatrix::class,
         \App\Commands\Ops\NextSteps::class,
         \App\Commands\Ops\NextStepsSync::class,

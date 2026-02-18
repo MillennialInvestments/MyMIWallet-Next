@@ -2713,7 +2713,7 @@ class MyMIMarketing
         $tradeAlerts = $this->alertsModel->getFilteredTradeAlerts([
             'start' => date('Y-m-d 00:00:00'),
             'end' => date('Y-m-d 23:59:59'),
-        ])->get()->getResultArray();
+        ])->limit(20)->get()->getResultArray();
     
         if (empty($tradeAlerts)) {
             return ['status' => 'error', 'message' => 'No trade alerts found for today.'];
@@ -4150,7 +4150,7 @@ class MyMIMarketing
             ->where('summary IS NOT NULL')
             ->orderBy('created_on', 'DESC')
             ->limit($limit)
-            ->findAll();
+            ->findAll(20);
     }
     
     public function getScrapesByKeyword($keyword) {
@@ -4946,9 +4946,9 @@ class MyMIMarketing
         
         $userModel = new UserModel();
         if ($targetGroup) {
-            $users = $userModel->where('group', $targetGroup)->findAll();
+            $users = $userModel->where('group', $targetGroup)->findAll(20);
         } else {
-            $users = $userModel->findAll();
+            $users = $userModel->findAll(20);
         }
 
         $viewContent = view($viewPath, $data);
@@ -6467,7 +6467,7 @@ class MyMIMarketing
             ->where('week_start_date', $weekStartDate)
             ->orderBy('watchlist_name', 'ASC')
             ->orderBy('score', 'DESC')
-            ->findAll();
+            ->findAll(20);
 
         $grouped = [];
         foreach ($records as $row) {

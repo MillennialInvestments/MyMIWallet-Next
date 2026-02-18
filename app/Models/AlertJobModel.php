@@ -47,7 +47,7 @@ class AlertJobModel extends Model
             ->orderBy('id', 'ASC')
             ->limit($limit);
 
-        $jobs = $builder->get()->getResultArray();
+        $jobs = $builder->limit(20)->get()->getResultArray();
         if (empty($jobs)) {
             return [];
         }

@@ -185,7 +185,7 @@ class MyMIDiscord
 
         try {
             $db = db_connect();
-            $rules = $db->table('bf_discord_policies')->where('is_enabled', 1)->get()->getResultArray();
+            $rules = $db->table('bf_discord_policies')->where('is_enabled', 1)->limit(20)->get()->getResultArray();
             foreach ($rules as $r) {
                 $pattern = '~' . $r['pattern'] . '~i';
                 if (!preg_match($pattern, $s)) {
@@ -214,7 +214,7 @@ class MyMIDiscord
         $subs = $db->table('bf_discord_subscriptions')
             ->where('is_enabled', 1)
             ->where('digest_window_sec >', 0)
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
 
         if (!$subs) {
             return;
@@ -236,7 +236,7 @@ class MyMIDiscord
                 ->groupEnd()
                 ->where('scheduled_at >=', $since)
                 ->orderBy('scheduled_at', 'ASC')
-                ->get()->getResultArray();
+                ->limit(20)->get()->getResultArray();
 
             if (count($rows) < 2) {
                 continue;

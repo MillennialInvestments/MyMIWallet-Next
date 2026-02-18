@@ -49,20 +49,20 @@ class ExchangeModel extends Model
     }
 
     public function getTokensByBlockchain($blockchain) {
-        return $this->where('blockchain', $blockchain)->findAll();
+        return $this->where('blockchain', $blockchain)->findAll(20);
     }
     
     public function getExchanges()
     {
         return $this->table('bf_exchanges')
                     ->where('status', 'Yes')
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function getPendingAssets()
     {
         $builder = $this->db->table('bf_exchanges_assets')->where('status', 'Pending');
-        $result = $builder->get();
+        $result = $builder->limit(20)->get();
         return [
             'getPendingAssets' => $result->getResultArray(),
             'totalPendingAssets' => $result->getNumRows(),
@@ -76,7 +76,7 @@ class ExchangeModel extends Model
                             ->where('market_cap IS NOT NULL', null, false)
                             ->orderBy('market_cap', 'DESC')
                             ->limit(50);
-        $result = $builder->get();
+        $result = $builder->limit(20)->get();
         return [
             'topApprovedAssets' => $result->getResultArray(),
             'totalTopApprovedAssets' => $result->getNumRows(),
@@ -98,7 +98,7 @@ class ExchangeModel extends Model
                             ->where('deleted', 0)
                             ->where('reported !=', 0)
                             ->where('amount >=', 9999)
-                            ->get(); 
+                            ->limit(20)->get(); 
         $request = $builder->getResultArray(); 
         $largeTransactions = [
             'getLargeTransactions' => $request,
@@ -118,7 +118,7 @@ class ExchangeModel extends Model
                             ->where('amount >=', 9999)
                             ->where('created_on >=', $startDate)
                             ->where('created_on <=', $endDate)
-                            ->get(); 
+                            ->limit(20)->get(); 
         $request            = $builder->getResultArray(); 
         $largeTransactions = [
             'getMTDLargeTransactions' => $request,
@@ -140,7 +140,7 @@ class ExchangeModel extends Model
 
     public function getSuspiciousTransactions()
     {
-        return $this->db->table('bf_exchanges_assets_ledger')->where('suspicious', 1)->findAll();
+        return $this->db->table('bf_exchanges_assets_ledger')->where('suspicious', 1)->findAll(20);
     }
     
     public function getSuspiciousTransactionCount()
@@ -165,7 +165,7 @@ class ExchangeModel extends Model
         $builder->where('market', $market);
         $builder->orderBy('id', 'DESC');
 
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
 
     public function getMarketSummaryAmount($marketPair, $market)
@@ -244,7 +244,7 @@ class ExchangeModel extends Model
     {
         $this->table = 'bf_exchanges_coin_listing';
         return $this->where('user_id', $cuID)
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function getUserWalletInfo($cuID)
@@ -289,7 +289,7 @@ class ExchangeModel extends Model
         return $this->where('status', 'Closed')
                     ->where('market_pair', $marketPair)
                     ->where('market', $market)
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function getOpenListingApp($cuID, $appID = null)
@@ -318,7 +318,7 @@ class ExchangeModel extends Model
     {
         $this->table = 'bf_exchanges_blockchains';
         return $this->where('active', 'Yes')
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function getKycStatus($cuID)
@@ -334,7 +334,7 @@ class ExchangeModel extends Model
         $this->table = 'bf_exchanges_listing_request';
         return $this->where('user_id', $cuID)
                     ->notLike('status', 'Approved')
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function getUserAssetInfo($cuID)

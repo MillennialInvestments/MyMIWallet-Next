@@ -116,7 +116,7 @@ class WeeklyStreamService
         if ($this->tableHasColumn('bf_users_watchlist', 'list_type')) {
             $builder->where('list_type', 'stream');
         }
-        $results = $builder->get()->getResultArray();
+        $results = $builder->limit(20)->get()->getResultArray();
 
         $watchlists = [];
         foreach ($results as $row) {

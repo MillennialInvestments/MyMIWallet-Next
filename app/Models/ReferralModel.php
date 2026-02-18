@@ -201,7 +201,7 @@ class ReferralModel extends Model
                           ->whereIn('user_id', $referredUserIds)
                           ->where('MONTH(submitted_date)', $currentMonth)  // Use correct date column
                           ->where('YEAR(submitted_date)', $currentYear)
-                          ->get();
+                          ->limit(20)->get();
     
         return $query->getRowArray();
     }   

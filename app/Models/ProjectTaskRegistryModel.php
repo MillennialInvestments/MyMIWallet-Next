@@ -64,7 +64,7 @@ class ProjectTaskRegistryModel extends Model
             $builder->whereIn('status', $statuses);
         }
 
-        return $builder->findAll();
+        return $builder->findAll(20);
     }
 
     public function markStatus(int $id, string $status, array $meta = []): bool

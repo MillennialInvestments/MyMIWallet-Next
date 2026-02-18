@@ -65,7 +65,7 @@ class MyMIForecaster
             $alertsQuery->orderBy('id', 'ASC');
         }
 
-        $alerts = $alertsQuery->limit($limit)->findAll();
+        $alerts = $alertsQuery->limit($limit)->findAll(20);
 
         $summary = [
             'processed' => [],
@@ -139,20 +139,20 @@ class MyMIForecaster
             ->where('forecast_confidence >=', $high)
             ->orderBy('forecast_confidence', 'DESC')
             ->limit(10)
-            ->findAll();
+            ->findAll(20);
 
         $bearish = $this->alertsModel
             ->where('forecast_direction', 'bearish')
             ->where('forecast_confidence >=', $high)
             ->orderBy('forecast_confidence', 'DESC')
             ->limit(10)
-            ->findAll();
+            ->findAll(20);
 
         $recent = $this->alertsModel
             ->where('forecast_updated_at >=', date('Y-m-d H:i:s', strtotime('-60 minutes')))
             ->orderBy('forecast_updated_at', 'DESC')
             ->limit(10)
-            ->findAll();
+            ->findAll(20);
 
         $payload = [
             'bullish' => $bullish,

@@ -114,7 +114,7 @@ class SolanaModel extends Model
         return $this->db->table($this->table)
             ->where(['user_id'=>$userId,'chain'=>'solana'])
             ->orderBy('is_default','DESC')->orderBy('id','ASC')
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
 
     public function setDefaultAddress(int $userId, int $id): bool
@@ -231,7 +231,7 @@ class SolanaModel extends Model
     public function getAllDepositAddresses($market)
     {
         $builder = $this->db->table('bf_users_wallet');
-        $builder->where('market', $market)->where('active', 'Yes')->where('default_wallet', 'Yes')->where('wallet_type', 'Crypto')->get()->getResultArray();
+        $builder->where('market', $market)->where('active', 'Yes')->where('default_wallet', 'Yes')->where('wallet_type', 'Crypto')->limit(20)->get()->getResultArray();
         return $builder;
     }
 
@@ -343,7 +343,7 @@ class SolanaModel extends Model
     public function getTransactionBySignature($signature)
     {
         $builder = $this->db->table('bf_exchanges_orders');
-        $builder->where('wallet_id', $signature)->get()->getResultArray();
+        $builder->where('wallet_id', $signature)->limit(20)->get()->getResultArray();
         return $builder;
     }
 
@@ -415,7 +415,7 @@ class SolanaModel extends Model
 
     public function getTokenInfoByID($tokenID) {
         // log_message('debug', 'SolanaModel L53 - $symbol: ' . $symbol);
-        $builder = $this->db->table('bf_exchanges_assets')->where('id', $tokenID)->get()->getResultArray(); 
+        $builder = $this->db->table('bf_exchanges_assets')->where('id', $tokenID)->limit(20)->get()->getResultArray(); 
         // log_message('debug', 'SolanaModel L53 - $builder Array: ' . (print_r($builder, true)));
         return $builder; 
     }
@@ -451,7 +451,7 @@ class SolanaModel extends Model
     public function getUserInactiveSolana($cuID)
     {
         $builder = $this->db->table('bf_users_wallet');
-        $result = $builder->where('user_id', $cuID)->where('market', 'SOL')->where('active', 'No')->get()->getResultArray();
+        $result = $builder->where('user_id', $cuID)->where('market', 'SOL')->where('active', 'No')->limit(20)->get()->getResultArray();
         return $result;
     }
 
@@ -480,7 +480,7 @@ class SolanaModel extends Model
             ->select('amount')
             ->where('user_id', $userId)
             ->where('token_address', $tokenAddress)
-            ->get();
+            ->limit(20)->get();
     
         $result = $query->getRow();
     
@@ -497,7 +497,7 @@ class SolanaModel extends Model
     public function getWalletsByUserID($cuID)
     {
         $builder = $this->db->table('bf_users_wallet');
-        $result = $builder->where('user_id', $cuID)->where('market', 'SOL')->get()->getResultArray();
+        $result = $builder->where('user_id', $cuID)->where('market', 'SOL')->limit(20)->get()->getResultArray();
         return $result;
     }
 

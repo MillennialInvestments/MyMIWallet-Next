@@ -161,7 +161,7 @@ class BudgetModel extends Model
             ->orderBy('year', 'DESC')
             ->orderBy('month', 'DESC');
 
-        $rows = $builder->get()->getResultArray();
+        $rows = $builder->limit(20)->get()->getResultArray();
 
         foreach ($rows as $row) {
             $year  = isset($row['year']) ? (int) $row['year'] : 0;
@@ -350,7 +350,7 @@ class BudgetModel extends Model
         return $this->db->table('bf_users_budgeting_forecast')
             ->where('user_id', $userId)
             ->orderBy('month')
-            ->get()->getResultArray();
+            ->limit(20)->get()->getResultArray();
     }
     
     public function getAnnualIncome($cuID) {
@@ -430,7 +430,7 @@ class BudgetModel extends Model
             $builder->where('id', $accountId);
         }
 
-        $accounts = $builder->get()->getResultArray();
+        $accounts = $builder->limit(20)->get()->getResultArray();
         if (empty($accounts)) {
             return 0.0;
         }
@@ -913,7 +913,7 @@ class BudgetModel extends Model
                 ->where(['created_by' => $cuID, 'account_type' => $budgetType, 'paid' => 1])
                 ->orderBy('submitted_on', 'DESC')
                 ->limit(5); 
-        $result = $builder->get()->getResultArray();   
+        $result = $builder->limit(20)->get()->getResultArray();   
         // log_message('info', 'BudgetModel - L53: getSourceRecords $results Array: ' . print_r($result));
         return $result; 
     }
@@ -1017,7 +1017,7 @@ class BudgetModel extends Model
     public function getUserActiveBudgetRecords($cuID) {
         // log_message('info', 'BudgetModel - L20: ' . $cuID);
         $builder = $this->where(['status' => 1, 'paid' => 0, 'created_by' => $cuID, 'deleted' => 0]);
-        $result = $builder->get()->getResultArray();        
+        $result = $builder->limit(20)->get()->getResultArray();        
         // log_message('info', 'BudgetModel - L23: ' . print_r($result, true));
         return $result; 
     } 
@@ -1028,7 +1028,7 @@ class BudgetModel extends Model
                     ->orderBy('year', 'ASC')
                     ->orderBy('month', 'ASC')
                     ->orderBy('day', 'ASC')
-                    ->findAll();
+                    ->findAll(20);
     }
 
     /**
@@ -1085,7 +1085,7 @@ class BudgetModel extends Model
             ->orderBy('month', 'ASC')
             ->orderBy('day', 'ASC');
 
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
 
     /**
@@ -1127,7 +1127,7 @@ class BudgetModel extends Model
     public function getUserBudgetRecords($cuID) {
         // log_message('info', 'BudgetModel - L20: ' . $cuID);
         $builder = $this->where(['status' => 1, 'created_by' => $cuID, 'deleted' => 0]);
-        $result = $builder->get()->getResultArray();        
+        $result = $builder->limit(20)->get()->getResultArray();        
         // log_message('info', 'BudgetModel - L23: ' . print_r($result, true));
         return $result; 
     }         
@@ -1139,7 +1139,7 @@ class BudgetModel extends Model
                     'created_by' => $cuID, 
                     'name' => $accountName
                 ])
-                ->findAll();
+                ->findAll(20);
     }
 
     public function getUserMonthlyIncome(int $userId): float
@@ -1242,7 +1242,7 @@ class BudgetModel extends Model
                         ->where('paid', 1)
                         ->where('STR_TO_DATE(designated_date, "%m/%d/%Y") >=', $startDate) // Convert designated_date format and compare
                         ->where('STR_TO_DATE(designated_date, "%m/%d/%Y") <=', $endDate) // Convert designated_date format and compare
-                        ->groupBy('name')->get()->getResultArray();
+                        ->groupBy('name')->limit(20)->get()->getResultArray();
         // log_message('info', 'BudgetModel L717 - getYTDTotals $results: ' . print_r($results, true));
         return $results;
     }   

@@ -43,7 +43,7 @@ class ScannerScoringService
             }
         }
 
-        $rows = $this->rowModel->where('ingest_id', $ingestId)->findAll();
+        $rows = $this->rowModel->where('ingest_id', $ingestId)->findAll(20);
         $ideas = [];
 
         log_message('info', sprintf('ContentEngine scoring start ingest=%d rows=%d', $ingestId, count($rows)));
@@ -185,7 +185,7 @@ class ScannerScoringService
 
     protected function loadExistingIdeas(int $ingestId): array
     {
-        $records = $this->ideaModel->where('ingest_id', $ingestId)->orderBy('score_total', 'DESC')->findAll();
+        $records = $this->ideaModel->where('ingest_id', $ingestId)->orderBy('score_total', 'DESC')->findAll(20);
         $ideas = [];
         foreach ($records as $record) {
             $ideas[] = [

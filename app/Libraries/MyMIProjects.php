@@ -240,7 +240,7 @@ class MyMIProjects
             ->where('project_id', $projectId)
             ->where('status', 'confirmed')
             ->groupBy('user_id')
-            ->findAll();
+            ->findAll(20);
         $userIds = array_map(static fn($row) => (int) $row['user_id'], $whitelist);
         if (empty($userIds)) {
             throw new RuntimeException('No confirmed commitments available for auction.');
@@ -298,7 +298,7 @@ class MyMIProjects
         $commitments = $this->commitments
             ->where('project_id', $projectId)
             ->where('status', 'confirmed')
-            ->findAll();
+            ->findAll(20);
 
         foreach ($commitments as $commitment) {
             $amount = (float) $commitment['amount'];
@@ -359,7 +359,7 @@ class MyMIProjects
             ->where('project_id', $projectId)
             ->where('token_symbol', $tokenSymbol)
             ->groupBy('user_id')
-            ->findAll();
+            ->findAll(20);
 
         $total = array_sum(array_map(static fn($row) => (float) $row['tokens'], $records));
         if ($total <= 0) {
@@ -380,7 +380,7 @@ class MyMIProjects
             throw new RuntimeException('Distribution not found.');
         }
 
-        $payouts = $this->payouts->where('distribution_id', $distributionId)->where('status', 'pending')->findAll();
+        $payouts = $this->payouts->where('distribution_id', $distributionId)->where('status', 'pending')->findAll(20);
         $count = 0;
         foreach ($payouts as $payout) {
             $this->exchange->creditUserFiatOrStable((int) $payout['user_id'], (float) $payout['amount'], 'Quarterly distribution payout');
@@ -434,7 +434,7 @@ class MyMIProjects
         $requests = $this->withdrawals
             ->where('project_id', $projectId)
             ->where('status', 'requested')
-            ->findAll();
+            ->findAll(20);
 
         $count = 0;
         foreach ($requests as $request) {
@@ -452,7 +452,7 @@ class MyMIProjects
         return $count;
     }    public function projectsData(?int $userId = null): array
     {
-        $projects = $this->projects->findAll();
+        $projects = $this->projects->findAll(20);
         $list = array_map(function (array $project) {
             $committed = $this->totalCommitted($project['id']);
             $target = (float) ($project['target_raise'] ?? 0);
@@ -642,12 +642,12 @@ class MyMIProjects
 
     public function getUserProjectHoldings(int $userId): array
     {
-        return $this->allocations->byUser($userId)->findAll();
+        return $this->allocations->byUser($userId)->findAll(20);
     }
 
     public function getUserCommitments(int $userId): array
     {
-        $records = $this->commitments->byUser($userId)->findAll();
+        $records = $this->commitments->byUser($userId)->findAll(20);
         $total = array_sum(array_map(static fn($row) => (float) $row['amount'], $records));
         return [
             'commitments' => $records,
@@ -657,7 +657,7 @@ class MyMIProjects
 
     public function getUserDistributions(int $userId): array
     {
-        return $this->payouts->byUser($userId)->findAll();
+        return $this->payouts->byUser($userId)->findAll(20);
     }
 
     public function commitToProject(int $userId, int $projectId, float $amount): bool

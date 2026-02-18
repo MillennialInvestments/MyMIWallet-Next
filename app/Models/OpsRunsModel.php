@@ -109,6 +109,6 @@ class OpsRunsModel extends Model
         return $this->orderBy('started_at', 'DESC')
             ->orderBy('id', 'DESC')
             ->limit($limit)
-            ->findAll();
+            ->findAll(20);
     }
 }

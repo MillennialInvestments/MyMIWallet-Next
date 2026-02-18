@@ -27,7 +27,7 @@ class PostDraftService
      */
     public function generateDrafts(int $ingestId, array $ideas): array
     {
-        $rows = $this->rowModel->where('ingest_id', $ingestId)->findAll();
+        $rows = $this->rowModel->where('ingest_id', $ingestId)->findAll(20);
         $rowsBySymbol = [];
         foreach ($rows as $row) {
             $rowsBySymbol[$row['symbol']] = $row;

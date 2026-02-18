@@ -35,7 +35,7 @@ class TrackerModel extends Model
     {
         $builder = $this->db->table('bf_investment_stock_listing'); 
         $builder->orderBy('symbol'); 
-        return $builder->get()->getResultArray(); 
+        return $builder->limit(20)->get()->getResultArray(); 
     }
 
     public function getSymbolTickers()
@@ -43,14 +43,14 @@ class TrackerModel extends Model
         $builder = $this->db->table('bf_investment_stock_listing'); 
         $builder->select('id, symbol, type'); 
         $builder->orderBy('symbol'); 
-        return $builder->get()->getResultArray(); 
+        return $builder->limit(20)->get()->getResultArray(); 
     }
 
     public function getSymbolInfo($stockSym)
     {
         $builder = $this->db->table('bf_investment_stock_listing'); 
         $builder->where('symbol', $stockSym); 
-        return $builder->get()->getResultArray(); 
+        return $builder->limit(20)->get()->getResultArray(); 
     }
 
     public function getUserWallets($cuID)
@@ -59,7 +59,7 @@ class TrackerModel extends Model
         $builder->select('id, broker, nickname'); 
         $builder->where('user_id', $cuID); 
         $builder-wherer('default_wallet', 'No'); 
-        return $builder->get()->getResultArray(); 
+        return $builder->limit(20)->get()->getResultArray(); 
     }
 
     public function getUserInfo($cuID)
@@ -67,14 +67,14 @@ class TrackerModel extends Model
         $builder = $this->db->table('users'); 
         $builder->select('email, username'); 
         $builder->where('id', $cuID); 
-        return $builder->get()->getResultArray(); 
+        return $builder->limit(20)->get()->getResultArray(); 
     }
 
     public function getUserTrades($cuID)
     {
         $builder = $this->db->table('bf_users_trades'); 
         $builder->where('user_id', $cuID); 
-        return $builder->get()->getResultArray(); 
+        return $builder->limit(20)->get()->getResultArray(); 
     }
 
     public function getUserClosedTrades($cuID)
@@ -83,7 +83,7 @@ class TrackerModel extends Model
         $builder->selectSum('net_gains'); 
         $builder->where('user_id', $cuID); 
         $builder->where('order_status', 'CLOSING'); 
-        return $builder->get()->getResultArray(); 
+        return $builder->limit(20)->get()->getResultArray(); 
     }
 
     public function getUserTradesSum($cuID)
@@ -154,7 +154,7 @@ class TrackerModel extends Model
         $builder = $this->db->table('bf_users_trades'); 
         $builder->selectSum('net_gains'); 
         $builder->where('wallet', $walletID); 
-        return $builder->get()->getResultArray(); 
+        return $builder->limit(20)->get()->getResultArray(); 
     }
 
     public function getNetGains($trade_id)
@@ -207,14 +207,14 @@ class TrackerModel extends Model
     public function getAllWalletTrades($walletID)
     {
         return $this->where('trading_account', $walletID)
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function getClosedTrades($walletID)
     {
         return $this->where('trading_account', $walletID)
                     ->where('status', 'Closed')
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function getTodaysTrades($cuID)
@@ -223,7 +223,7 @@ class TrackerModel extends Model
         return $this->where('user_id', $cuID)
                     ->where('submitted_date', $today)
                     ->where('status', 'Closed')
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function getLastTradeInfoByUser($cuID)
@@ -238,7 +238,7 @@ class TrackerModel extends Model
         return $this->where('id', $trade_id)
                     ->orWhere('trade_id', $trade_id)
                     ->orderBy('id', 'ASC')
-                    ->findAll();
+                    ->findAll(20);
     }
 
     public function addStock($data)

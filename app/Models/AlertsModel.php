@@ -610,7 +610,7 @@ class AlertsModel extends Model
             $builder->orderBy('alerted_on', 'DESC')->limit($limit);
         }
 
-        $rows  = $builder->get()->getResultArray();
+        $rows  = $builder->limit(20)->get()->getResultArray();
 
         if (empty($rows)) {
             log_message('warning', "⚠️ No history found for $symbol. Consider triggering backfill.");
@@ -630,7 +630,7 @@ class AlertsModel extends Model
 
     public function getAlertStatusInfo($symbol)
     {
-        return $this->db->table('bf_investment_trade_alerts')->where('ticker', $symbol)->get();
+        return $this->db->table('bf_investment_trade_alerts')->where('ticker', $symbol)->limit(20)->get();
     }
 
     public function getAllTradeAlerts(?array $dateRange = null, ?string $category = null)
@@ -958,7 +958,7 @@ class AlertsModel extends Model
 
     public function getFilingsBySymbol($symbol)
     {
-        return $this->db->table('bf_investment_filings')->where('symbol', $symbol)->get()->getResultArray();
+        return $this->db->table('bf_investment_filings')->where('symbol', $symbol)->limit(20)->get()->getResultArray();
     }
 
     /**
@@ -1016,7 +1016,7 @@ class AlertsModel extends Model
             // add range handling here if needed
         }
 
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
 
     /**
@@ -1222,7 +1222,7 @@ class AlertsModel extends Model
     {
         $tickers = array_values(array_unique(array_filter(array_map('strtoupper', $tickers))));
         if (empty($tickers)) return [];
-        return $this->db->table('bf_investment_filings')->whereIn('symbol', $tickers)->get()->getResultArray();
+        return $this->db->table('bf_investment_filings')->whereIn('symbol', $tickers)->limit(20)->get()->getResultArray();
     }
 
     public function getFreeBSCount($date)
@@ -1605,7 +1605,7 @@ class AlertsModel extends Model
 
     public function getTradeAlertsWithCreatedFlag()
     {
-        return $this->db->table('bf_investment_trade_alerts')->where('alert_created', 1)->get()->getResultArray();
+        return $this->db->table('bf_investment_trade_alerts')->where('alert_created', 1)->limit(20)->get()->getResultArray();
     }
 
     public function getUnprocessedEmails()
@@ -2143,7 +2143,7 @@ class AlertsModel extends Model
     public function processSymbols()
     {
         $builder     = $this->db->table('bf_investment_scraper');
-        $results     = $builder->select('email_body')->get()->getResultArray();
+        $results     = $builder->select('email_body')->limit(20)->get()->getResultArray();
         $symbolCounts = [];
 
         foreach ($results as $row) {
@@ -3564,7 +3564,7 @@ class AlertsModel extends Model
     // public function processSymbols()
     // {
     //     $builder = $this->db->table('bf_investment_scraper');
-    //     $results = $builder->select('email_body')->get()->getResultArray();
+    //     $results = $builder->select('email_body')->limit(20)->get()->getResultArray();
     //     $symbolCounts = [];
 
     //     foreach ($results as $row) {
@@ -3602,7 +3602,7 @@ class AlertsModel extends Model
     
     // //     // Query builder to read the bf_investment_scraper data
     // //     $builder = $this->db->table('bf_investment_scraper');
-    // //     $results = $builder->select('email_body')->get()->getResultArray();
+    // //     $results = $builder->select('email_body')->limit(20)->get()->getResultArray();
     
     // //     // Array to store symbol counts
     // //     $symbolCounts = [];

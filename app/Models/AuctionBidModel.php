@@ -109,6 +109,6 @@ class AuctionBidModel extends Model
         return $this->where('lot_id', $lotId)
             ->orderBy('created_at', 'DESC')
             ->limit($limit)
-            ->findAll();
+            ->findAll(20);
     }
 }

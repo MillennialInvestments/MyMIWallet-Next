@@ -73,7 +73,7 @@ class InvestmentPriceForecastModel extends Model
 
         return $this->whereIn('alert_id', $alertIds)
             ->orderBy('updated_at', 'DESC')
-            ->findAll();
+            ->findAll(20);
     }
 
     public function getLatestForecastsForTickers(array $tickers, array $timeframes = []): array
@@ -88,6 +88,6 @@ class InvestmentPriceForecastModel extends Model
             $builder = $builder->whereIn('timeframe', $timeframes);
         }
 
-        return $builder->orderBy('updated_at', 'DESC')->findAll();
+        return $builder->orderBy('updated_at', 'DESC')->findAll(20);
     }
 }

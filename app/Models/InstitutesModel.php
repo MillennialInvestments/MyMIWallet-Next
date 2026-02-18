@@ -31,12 +31,12 @@ class InstitutesModel extends Model
 
     public function getAllInstitutes()
     {
-        return $this->findAll();
+        return $this->findAll(20);
     }
 
     public function getInstitutesBySpecialty($specialty)
     {
-        return $this->where('specialty', $specialty)->findAll();
+        return $this->where('specialty', $specialty)->findAll(20);
     }
 }
 ?>

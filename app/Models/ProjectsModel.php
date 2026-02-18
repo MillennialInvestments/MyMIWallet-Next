@@ -72,16 +72,16 @@ class ProjectsModel extends Model
 
     public function getAllProjects(): array
     {
-        return $this->orderBy('created_at', 'desc')->findAll();
+        return $this->orderBy('created_at', 'desc')->findAll(20);
     }
 
     public function getUserProjects(int $userId): array
     {
-        return $this->byUser($userId)->orderBy('created_at', 'desc')->findAll();
+        return $this->byUser($userId)->orderBy('created_at', 'desc')->findAll(20);
     }
 
     public function getPendingProjects(): array
     {
-        return $this->pending()->orderBy('created_at', 'desc')->findAll();
+        return $this->pending()->orderBy('created_at', 'desc')->findAll(20);
     }
 }

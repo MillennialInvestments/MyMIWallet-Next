@@ -117,7 +117,7 @@ class AccountsModel extends Model
 
     public function getUserPlaidPublicKey($cuID)
     {
-        return $this->where('created_by', $cuID)->findAll();
+        return $this->where('created_by', $cuID)->findAll(20);
     }
 
     public function getUserAchBankAccounts($cuID)
@@ -277,7 +277,7 @@ class AccountsModel extends Model
         $builder->where('user_id', $cuID);
         $builder->orderBy('id', 'ASC');
         $builder->limit(1);
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
     
     public function getMyMIGDeposits($cuID) {
@@ -285,7 +285,7 @@ class AccountsModel extends Model
         $builder->where('user_id', $cuID);
         $builder->where('coin', 'MYMIG');
         $builder->limit(1);
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
     
     public function purchaseFeature($data) {
@@ -426,7 +426,7 @@ class AccountsModel extends Model
         $builder->where('category', 'Option Trade');
         $builder->orderBy('id', 'DESC');
         $builder->limit(5);
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
     
     public function getActiveSwingTradeAlerts() {
@@ -435,20 +435,20 @@ class AccountsModel extends Model
         $builder->where('category', 'Equity Trade');
         $builder->orderBy('id', 'DESC');
         $builder->limit(5);
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
     
     public function getAllSymbols() {
         $builder = $this->db->table('bf_investment_stock_listing');
         $builder->orderBy('symbol');
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
     
     public function getAllWallets($cuID) {
         $builder = $this->db->table('bf_users_wallet');
         $builder->where('user_id', $cuID);
         $builder->where('active', 'Yes');
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
     
     public function getBankAccountInfo($accountID) {
@@ -509,7 +509,7 @@ class AccountsModel extends Model
         $builder = $this->db->table('bf_users_wallet');
         $builder->where('user_id', $cuID);
         $builder->where('active', 'No');
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }    
     
     public function getInvestAccountInfo($accountID) {
@@ -535,7 +535,7 @@ class AccountsModel extends Model
         $builder = $this->db->table('bf_investment_stock_listing');
         $builder->orderBy('symbol');
         $builder->groupStart()->where('type', 'Stock')->orWhere('type', 'ETF')->groupEnd();
-        return $builder->get()->getResultArray();
+        return $builder->limit(20)->get()->getResultArray();
     }
     
     public function getSymbolInfo($symbol) {

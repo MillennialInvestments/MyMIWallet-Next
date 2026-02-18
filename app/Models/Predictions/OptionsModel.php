@@ -13,7 +13,7 @@ class OptionsModel extends Model
 
     public function forMarket(int $marketId): array
     {
-        return $this->where('market_id',$marketId)->orderBy('id','ASC')->findAll();
+        return $this->where('market_id',$marketId)->orderBy('id','ASC')->findAll(20);
     }
 
     public function setWinner(int $marketId, int $optionId): void

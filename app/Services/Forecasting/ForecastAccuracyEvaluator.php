@@ -41,7 +41,7 @@ class ForecastAccuracyEvaluator
             ->where('recorded_at <=', $cutoff)
             ->orderBy('recorded_at', 'ASC')
             ->limit($limit)
-            ->findAll();
+            ->findAll(20);
 
         foreach ($candidates as $snapshot) {
             foreach ($windows as $windowMinutes) {
@@ -280,7 +280,7 @@ class ForecastAccuracyEvaluator
         $cutoff = date('Y-m-d H:i:s', strtotime("-{$days} days"));
         $rows = $this->accuracyModel
             ->where('created_at >=', $cutoff)
-            ->findAll();
+            ->findAll(20);
 
         $total = count($rows);
         if ($total === 0) {

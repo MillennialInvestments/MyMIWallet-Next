@@ -47,7 +47,7 @@ class TransactionModel extends Model
     // Fetch transactions by user ID
     public function getTransactionsByUser($userID)
     {
-        return $this->where('user_id', $userID)->findAll();
+        return $this->where('user_id', $userID)->findAll(20);
     }
 
     // Mark a transaction as reviewed

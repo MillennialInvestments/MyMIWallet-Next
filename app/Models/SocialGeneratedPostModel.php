@@ -32,6 +32,6 @@ class SocialGeneratedPostModel extends Model
         return $this->where([
             'source_type' => $sourceType,
             'source_id'   => $sourceId,
-        ])->findAll();
+        ])->findAll(20);
     }
 }

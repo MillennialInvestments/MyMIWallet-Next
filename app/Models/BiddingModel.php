@@ -25,7 +25,7 @@ class BiddingModel extends Model
 
     public function getBidsForAuction($auctionId)
     {
-        return $this->where('auction_id', $auctionId)->findAll();
+        return $this->where('auction_id', $auctionId)->findAll(20);
     }
 
     public function placeBid($data)
@@ -35,7 +35,7 @@ class BiddingModel extends Model
 
     public function getBidsForUser($userId)
     {
-        return $this->where('user_id', $userId)->findAll();
+        return $this->where('user_id', $userId)->findAll(20);
     }
 
     public function getHighestBid($auctionId)
@@ -45,7 +45,7 @@ class BiddingModel extends Model
 
     public function getAllBids()
     {
-        return $this->findAll();
+        return $this->findAll(20);
     }
 
     public function updateBid($id, $data)
