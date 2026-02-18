@@ -99,6 +99,8 @@ class Console extends BaseConfig
         |----------------------------------------------------------------------
         */
         \App\Commands\Audit\All::class,
+        \App\Commands\App\ControllerAudit::class,
+        \App\Commands\App\CoverageGate::class,
         \App\Commands\App\Healthcheck::class,
         \App\Commands\App\Test::class,
         \App\Commands\AppUpdate::class,
