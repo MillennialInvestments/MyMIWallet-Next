@@ -41,32 +41,15 @@ class AdminController extends UserController
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
-        // parent::initController($request, $response, $logger);
-        // $this->auth                                 = service('authentication');
-        // $this->API                                  = config('APISettings');
-        // $this->siteSettings                         = config('SiteSettings');
-        // $this->request                              = service('request'); 
-        // $this->session                              = Services::session(); 
-        // $this->debug                                = $this->siteSettings->debug; 
-        // $this->uri                                  = $this->request->getUri(); 
-        // $this->accountsModel                        = new AccountsModel(); 
-        // $this->budgetModel                          = new BudgetModel(); 
-        // $this->userModel                            = new UserModel(); 
-//         $this->MyMIAnalytics                        = new MyMIAnalytics(); // replaced by BaseController getter 
-//         $this->MyMIBudget                           = new MyMIBudget(); // replaced by BaseController getter 
-//         $this->MyMICoin                             = new MyMICoin(); // replaced by BaseController getter
-//         $this->MyMIDashboard                        = new MyMIDashboard(); // replaced by BaseController getter  
-//         $this->MyMIGold                             = new MyMIGold(); // replaced by BaseController getter 
-//         $this->MyMIUser                             = new MyMIUser(); // replaced by BaseController getter 
-//         $this->MyMIWallet                           = new MyMIWallet(); // replaced by BaseController getter 
-//         $this->MyMIWallets                          = new MyMIWallets(); // replaced by BaseController getter 
-        // Check multiple sources for user ID
-        $this->cuID = $this->userModel->getUserID()
-            ?? $this->auth->id()
-            ?? session('logged_in')
-            ?? $this->session->get('user_id');
+        parent::initController($request, $response, $logger);
+
+        $auth = service('authentication');
+        $user = $auth ? $auth->user() : null;
+
+        $this->cuID = $user ? $user->getUserID() : null;
+
         if (!$this->cuID) {
-            log_message('warning', 'AdminController init aborted: no user id available.');
+            log_message('warning', 'AdminController init aborted: no authenticated user id available.');
             return;
         }
 

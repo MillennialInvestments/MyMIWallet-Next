@@ -63,18 +63,25 @@ class DatabaseLoggerHandler extends BaseHandler implements HandlerInterface
 
     public function handle($level, $message, array $context = []): bool
     {
-        @file_put_contents(WRITEPATH.'logs/lock_debug.log',
-            date('c') . ' active=' . (self::$active ? '1' : '0') . PHP_EOL,
-            FILE_APPEND
-        );
 
         if (! $this->canHandle($level)) {
             return false;
         }
 
+        if (defined('APP_BOOTSTRAPPING')) {
+            return false;
+        }
+
+        static $handling = false;
+        if ($handling) {
+            return false;
+        }
+
+        $handling = true;
 
         if (! $this->acquireLock()) {
-            return false; // allow FileHandler to proceed
+            $handling = false;
+            return false;
         }
 
         try {
@@ -89,6 +96,7 @@ class DatabaseLoggerHandler extends BaseHandler implements HandlerInterface
             return true;
         } finally {
             $this->releaseLock();
+            $handling = false;
         }
     }
 

@@ -245,8 +245,9 @@ class AuthController extends Controller
 
         if (function_exists('user_id')) {
             $userId = user_id();
-        } elseif ($this->auth->user()) {
-            $userId = $this->auth->user()->id ?? null;
+        } else {
+            $authUser = $this->auth->user();
+            $userId = $authUser?->id ?? null;
         }
 
         log_message(
@@ -280,7 +281,8 @@ class AuthController extends Controller
         }
 
         if ($userId !== null && $userId > 0) {
-            $this->ipHistoryModel->record((int) $userId, $this->auth->user()->email ?? null, $ip, $ua);
+            $authUser = $this->auth->user();
+            $this->ipHistoryModel->record((int) $userId, $authUser?->email ?? null, $ip, $ua);
             $this->clearUserCacheKeys((int) $userId);
             service('eventTracker')->track('auth.login_success', [], (int) $userId);
             log_message('info', '[AUTH] Login success', [
@@ -312,9 +314,10 @@ class AuthController extends Controller
         }
 
         // Force password reset branch
-        if ($this->auth->user()->force_pass_reset === true) {
+        $authUser = $this->auth->user();
+        if ($authUser && $authUser->force_pass_reset === true) {
             return redirect()
-                ->to(route_to('reset-password') . '?token=' . $this->auth->user()->reset_hash)
+                ->to(route_to('reset-password') . '?token=' . $authUser->reset_hash)
                 ->withCookies();
         }
 
