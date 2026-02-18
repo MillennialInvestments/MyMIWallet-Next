@@ -131,6 +131,9 @@ class Logger extends BaseConfig
                 5 => ['emergency', 'alert', 'critical', 'error', 'warning', 'notice'],
                 6 => ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info'],
                 7 => ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug'],
+                8 => self::ALL_LEVELS,
+                9 => self::ALL_LEVELS,
+
             ];
 
             return $map[(int) $numeric] ?? self::ALL_LEVELS;

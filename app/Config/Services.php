@@ -50,6 +50,33 @@ class Services extends BaseService
         return CoreServices::cache($config, $getShared);
     }
 
+    public static function aiopsDocsScanner(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsDocsScanner');
+        return new \App\Services\AIOps\DocsScannerService();
+    }
+
+    public static function aiopsRepoVerifier(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsRepoVerifier');
+        return new \App\Services\AIOps\RepoVerifierService();
+    }
+
+    public static function aiopsOllamaCodeGen(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsOllamaCodeGen');
+        return new \App\Services\AIOps\OllamaCodeGenService(
+            rtrim((string) env('OLLAMA_URL', 'http://127.0.0.1:11434'), '/'),
+            (string) env('OLLAMA_MODEL', 'qwen2.5-coder:7b')
+        );
+    }
+
+    public static function aiopsPriorityWriter(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsPriorityWriter');
+        return new \App\Services\AIOps\PriorityWriterService();
+    }
+
     public static function crudCacheInvalidator(bool $getShared = true): CrudCacheInvalidator
     {
         if ($getShared) {
