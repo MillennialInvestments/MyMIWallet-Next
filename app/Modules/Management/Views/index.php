@@ -70,7 +70,7 @@ $autoloadStatusLabel = $autoloadViolations === 0
         </div>
     </div>
 
-    <div class="nk-block mt-3">
+    <div class="nk-blockn row mt-3">
         <?php
             $chatUsageSummary = $chatUsage ?? [];
             $chatGlobal = $chatUsageSummary['global'] ?? [];
@@ -79,51 +79,19 @@ $autoloadStatusLabel = $autoloadViolations === 0
             $chatUsed = (float) ($chatGlobal['usd_used'] ?? 0);
             $chatAlert = (int) ($chatUsageSummary['alert']['percent'] ?? 80);
         ?>
-        <div class="card card-bordered mb-3">
+        <div class="card card-bordered col-4 mb-3">
             <div class="card-inner">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h5 class="mb-1">Chat AI Budget</h5>
-                        <div class="small text-soft">Month <?= esc($chatUsageSummary['month'] ?? $month); ?></div>
-                        <div class="small">USD: $<?= number_format($chatUsed, 2); ?> / $<?= number_format($chatBudget, 2); ?></div>
-                    </div>
-                    <div class="text-end">
-                        <span class="badge <?= ($chatPercent >= $chatAlert) ? 'bg-warning text-dark' : 'bg-success'; ?>"><?= $chatPercent; ?>%</span>
-                        <div><a class="btn btn-primary btn-sm mt-1" href="<?= site_url('Management/Chat/Usage'); ?>">Open controls</a></div>
-                    </div>
-                </div>
-                <div class="progress mt-2">
-                    <div class="progress-bar <?= ($chatPercent >= $chatAlert) ? 'bg-warning' : 'bg-primary'; ?>" style="width: <?= min(100, $chatPercent); ?>%"></div>
-                </div>
+                <?php echo view('ManagementModules/resources/ChatBotBudget.php'); ?>
             </div>
         </div>
         
-        <div class="card card-bordered mb-3" id="subsystemHealthTile">
+        <div class="card card-bordered col-4 mb-3" id="subsystemHealthTile">
             <div class="card-inner">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h5 class="mb-1">Subsystem Health</h5>
-                        <div class="small text-soft">AIOps + Chat control plane</div>
-                    </div>
-                    <span class="badge bg-secondary" id="subs-health-overall">Unknown</span>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-md-6 small">AIOps n8n: <span id="subs-aiops-status">-</span> (port 5678: <span id="subs-aiops-port">-</span>, bridge 8500: <span id="subs-bridge-port">-</span>)</div>
-                    <div class="col-md-6 small">Chat: <span id="subs-chat-status">-</span> (port <span id="subs-chat-port-num">-</span>: <span id="subs-chat-port">-</span>)</div>
-                </div>
-                <div class="btn-group mt-3" role="group">
-                    <button class="btn btn-sm btn-outline-primary" data-subs-action="refresh">Refresh Status</button>
-                    <button class="btn btn-sm btn-outline-info" data-subs-action="audit">Run Audit</button>
-                    <button class="btn btn-sm btn-outline-warning" data-subs-action="repair">Run Repair</button>
-                    <button class="btn btn-sm btn-outline-secondary" data-subs-action="self-heal">Self Heal</button>
-                    <button class="btn btn-sm btn-outline-danger" data-subs-action="restart-aiops">Restart AIOps</button>
-                    <button class="btn btn-sm btn-outline-danger" data-subs-action="restart-chat">Restart Chat</button>
-                </div>
-                <pre class="mt-2 mb-0 p-2 bg-light border" style="max-height:180px;overflow:auto;" id="subs-health-output">Ready.</pre>
+                <?php echo view('ManagementModules/resources/SubSystemHealth.php'); ?>
             </div>
         </div>
 
-        <div class="card card-bordered mb-3">
+        <div class="card card-bordered col-4 mb-3">
             <div class="card-inner">
                 <div class="d-flex justify-content-between flex-wrap align-items-center">
                     <div>
@@ -155,7 +123,9 @@ $autoloadStatusLabel = $autoloadViolations === 0
                 </div>
             </div>
         </div>
-        <div class="card card-bordered mb-3">
+    </div>
+    <div class="nk-blockn row mt-3">
+        <div class="card card-bordered col-4 mb-3">
             <div class="card-inner">
                 <div class="d-flex justify-content-between flex-wrap align-items-center mb-2">
                     <div>

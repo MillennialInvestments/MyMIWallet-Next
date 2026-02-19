@@ -1,11 +1,11 @@
-<?php namespace App\Commands;
+<?php namespace App\Commands\Discord;
 
 use App\Libraries\MyMIDiscord;
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Discord as DiscordConfig;
 
-class DiscordWireCheck extends SafeBaseCommand
+class WireCheck extends SafeBaseCommand
 {
     protected $group       = 'Discord';
     protected $name        = 'discord:wire-check';

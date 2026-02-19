@@ -1,10 +1,10 @@
-<?php namespace App\Commands;
+<?php namespace App\Commands\Discord;
 
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Discord as DiscordConfig;
 
-class DiscordList extends SafeBaseCommand
+class GetList extends SafeBaseCommand
 {
     protected $group       = 'Discord';
     protected $name        = 'discord:list';

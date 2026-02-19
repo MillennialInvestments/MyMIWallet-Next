@@ -16,51 +16,8 @@ if ($siteSettings->debug === 1) {
 }
 // print_r($reporting, true); 
 // // Get Approved Reports
-// $getApprovedAssets                  = $reporting['getApprovedAssets']; 
-// $totalApprovedAssets                = $reporting['totalApprovedAssets']; 
-// $getPendingSupport                  = $reporting['getPendingSupport'];
 $totalPendingSupport                = $reporting['totalPendingSupport']; 
-// $totalPendingUsers                  = $reporting['totalPendingUsers'];
-// $totalPendingPartners               = $reporting['totalPendingPartners'];
-// // Get Pending Reports 
-// $getPendingAssets                   = $reporting['getPendingAssets']; 
-// $totalPendingAssets                 = $reporting['totalPendingAssets']; 
-// $getCompleteSupport                 = $reporting['getCompleteSupport'];
 $totalCompleteSupport               = $reporting['totalCompleteSupport'];
-// // Get Percentage Reports
-// $assetPercentage                    = $reporting['assetPercentage'];
-// $transactionPercentage              = $reporting['transactionPercentage'];
-// $tradesPercentage                   = $reporting['tradesPercentage'];
-// $partnerPercentage                  = $reporting['partnerPercentage'];
-// $usersPercentage                    = $reporting['usersPercentage'];
-// $walletsPercentage                  = $reporting['walletsPercentage'];
-// $transAmountPercentage              = $reporting['transAmountPercentage'];
-// $transFeesPercentage                = $reporting['transFeesPercentage'];
-// Get Targets
-// $targetAssets                       = $reporting['targetAssets'];
-// $targetTransactions                 = $reporting['targetTransactions'];
-// $targetTransAmount                  = $reporting['targetTransAmount'];
-// $targetTransFees                    = $reporting['targetTransFees'];
-// $targetTrades                       = $reporting['targetTrades'];
-// $targetWallets                      = $reporting['targetWallets'];
-// $targetUsers                        = $reporting['targetUsers'];
-// $targetPartners                     = $reporting['targetPartners'];
-// // Get Totals Reports
-// $getTotalTrans                      = $reporting['getTotalTrans'];
-// $totalTransactions                  = $reporting['totalTransactions'];
-// $getTotalAmounts                    = $reporting['getTotalAmounts'];
-// $totalTransFees                     = $reporting['totalTransFees'];
-// $totalTransFeesPlain                = $reporting['totalTransFeesPlain'];
-// $totalTransTotalsPlain              = $reporting['totalTransTotalsPlain'];
-// $totalTransTotals                   = $reporting['totalTransTotals'];
-// $getLastTotalAmounts                = $reporting['getLastTotalAmounts'];
-// $totalLastTransFees                 = $reporting['totalLastTransFees'];
-// $totalLastTransTotals               = $reporting['totalLastTransTotals'];
-// $totalTradesTracked                 = $reporting['totalTradesTracked'];
-// $totalWalletsCreated                = $reporting['totalWalletsCreated']; 
-// $totalActiveUsers                   = $reporting['totalActiveUsers'];
-// $totalActivePartners                = $reporting['totalActivePartners'];
-
 $pendingTradeAlerts                 = $alertsInfo['pendingTradeAlerts'];
 // log_message('debug', 'Management/Alerts/index - L65: ' . print_r($pendingTradeAlerts, true));
 $pendingTradeAlertsCount            = $alertsInfo['pendingTradeAlertsCount']; // Placeholder count for pending alerts
@@ -259,7 +216,7 @@ $subViewData                        = [
                                                     <a id="downloadVoiceover" class="btn btn-success" href="#" target="_blank" style="display: none;">
                                                         <i class="icon ni ni-download"></i> Download Voiceover
                                                     </a>
-*/ ?>
+                                                    */ ?>
                                                 </div>
 
                                                 <!-- Status Messages -->

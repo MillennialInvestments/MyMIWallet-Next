@@ -1,10 +1,10 @@
-<?php namespace App\Commands;
+<?php namespace App\Commands\Discord;
 
 use App\Libraries\MyMIDiscord;
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class DiscordTest extends SafeBaseCommand
+class Test extends SafeBaseCommand
 {
     protected $group       = 'Discord';
     protected $name        = 'discord:test';

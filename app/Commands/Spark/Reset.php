@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Commands;
+namespace App\Commands\Spark;
 
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class SparkReset extends SafeBaseCommand
+class Reset extends SafeBaseCommand
 {
     protected $group       = 'ops';
     protected $name        = 'ops:spark-reset';

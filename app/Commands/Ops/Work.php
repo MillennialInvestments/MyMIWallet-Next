@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Commands;
+namespace App\Commands\Ops;
 
+use App\Commands\SafeBaseCommand;
 use App\Libraries\Ops\AiOpsTaskRunner;
 use App\Libraries\Ops\PrOutboxWriter;
 use App\Models\AiOpsSettingsModel;
 use App\Models\AiOpsTaskModel;
 use CodeIgniter\CLI\CLI;
 
-class OpsWork extends SafeBaseCommand
+class Work extends SafeBaseCommand
 {
     protected $aiOpsRunnable = true;
     protected $group = 'ops';

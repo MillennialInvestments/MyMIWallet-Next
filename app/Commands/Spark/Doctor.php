@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Commands;
+namespace App\Commands\Spark;
 
 use App\Services\AiOps\CommandHookService;
 use App\Services\Spark\CommandInventoryService;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\Commands;
 
-class SparkDoctor extends SafeBaseCommand
+class Doctor extends SafeBaseCommand
 {
     protected $group       = 'maintenance';
     protected $name        = 'spark:doctor';

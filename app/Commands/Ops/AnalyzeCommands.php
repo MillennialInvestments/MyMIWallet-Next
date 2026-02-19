@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Commands;
+namespace App\Commands\Ops;
 
 use App\Services\OpsCommandService;
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class OpsAnalyzeCommands extends SafeBaseCommand
+class AnalyzeCommands extends SafeBaseCommand
 {
     protected $group       = 'ops';
     protected $name        = 'ops:analyze-commands';

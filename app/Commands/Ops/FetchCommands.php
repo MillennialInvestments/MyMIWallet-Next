@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Commands;
+namespace App\Commands\Ops;
 
 use App\Models\OpsCommandInboxModel;
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class OpsFetchCommands extends SafeBaseCommand
+class FetchCommands extends SafeBaseCommand
 {
     protected $group       = 'ops';
     protected $name        = 'ops:fetch-commands';

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Commands;
+namespace App\Commands\Spark;
 
 use App\Services\AiOps\CommandHookService;
 use App\Services\Spark\CommandInventoryService;
 use CodeIgniter\CLI\CLI;
 
-class SparkFix extends SafeBaseCommand
+class Fix extends SafeBaseCommand
 {
     protected $defaultDryRun = true;
     protected $group       = 'maintenance';

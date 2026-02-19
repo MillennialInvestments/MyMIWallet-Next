@@ -190,11 +190,11 @@ class Console extends BaseConfig
         | Discord
         |----------------------------------------------------------------------
         */
-        \App\Commands\DiscordList::class,
-        \App\Commands\DiscordProcessQueue::class,
-        \App\Commands\DiscordTest::class,
-        \App\Commands\DiscordTestLiquidity::class,
-        \App\Commands\DiscordWireCheck::class,
+        \App\Commands\Discord\GetList::class,
+        \App\Commands\Discord\ProcessQueue::class,
+        \App\Commands\Discord\Test::class,
+        \App\Commands\Discord\TestLiquidity::class,
+        \App\Commands\Discord\WireCheck::class,
 
         /*
         |----------------------------------------------------------------------
@@ -239,6 +239,7 @@ class Console extends BaseConfig
         | Ops
         |----------------------------------------------------------------------
         */
+        \App\Commands\Ops\AnalyzeCommands::class,
         \App\Commands\Ops\AppUpdate::class,
         \App\Commands\Ops\AlertsIngest::class,
         \App\Commands\Ops\CiPrepare::class,
@@ -250,9 +251,11 @@ class Console extends BaseConfig
         \App\Commands\Ops\ConfigReset::class,
         \App\Commands\Ops\DoctorFull::class,
         \App\Commands\Ops\EnvSnapshot::class,
+        \App\Commands\Ops\FetchCommands::class,
         \App\Commands\Ops\FilesystemFix::class,
         \App\Commands\Ops\FilesystemLint::class,
         \App\Commands\Ops\ImageCapabilities::class,
+        \App\Commands\Ops\LoggerTest::class,
         \App\Commands\Ops\ModelLimitAudit::class,
         \App\Commands\Ops\NetworkMatrix::class,
         \App\Commands\Ops\NextSteps::class,
@@ -267,19 +270,13 @@ class Console extends BaseConfig
         \App\Commands\Ops\SubsRepair::class,
         \App\Commands\Ops\SubsStatus::class,
         \App\Commands\Ops\VPSSnapshot::class,
-        \App\Commands\OpsAnalyzeCommands::class,
-        \App\Commands\OpsFetchCommands::class,
-        \App\Commands\OpsWork::class,
+        \App\Commands\Ops\Work::class,
 
         /*
         |----------------------------------------------------------------------
         | Runtime / Recovery
         |----------------------------------------------------------------------
         */
-        \App\Commands\Runtime\SparkDoctor::class,
-        \App\Commands\Runtime\SparkDoctorRuntime::class,
-        \App\Commands\Runtime\SparkFix::class,
-        \App\Commands\Runtime\SparkOptimize::class,
         \App\Commands\Runtime\Triage::class,
         \App\Commands\Runtime\CacheBoot::class,
 
@@ -307,6 +304,16 @@ class Console extends BaseConfig
         \App\Commands\Security\GenerateCI4Key::class,
         \App\Commands\Security\SecretsAudit::class,
         \App\Commands\SecurityCspAudit::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Spark
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Runtime\Spark\Doctor::class,
+        \App\Commands\Runtime\Spark\DoctorRuntime::class,
+        \App\Commands\Runtime\Spark\Fix::class,
+        \App\Commands\Runtime\Spark\Optimize::class,
 
         /*
         |----------------------------------------------------------------------
