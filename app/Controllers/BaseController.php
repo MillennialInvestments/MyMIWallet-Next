@@ -216,6 +216,16 @@ abstract class BaseController extends Controller
         $this->crudCacheInvalidator()->clear($filtered);
     }
 
+
+    protected function safeView(string $view, array $data = [])
+    {
+        if (!is_string($view) || empty($view)) {
+            throw new \InvalidArgumentException('View must be string');
+        }
+
+        return view($view, $data);
+    }
+
     protected function commonData(): array|ResponseInterface
     {
         $this->logTelemetryMemory('commonData:start');

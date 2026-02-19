@@ -101,12 +101,18 @@ try {
     require $paths->systemDirectory . '/Boot.php';
 
     $exitCode = Boot::bootWeb($paths);
-} catch (Throwable $e) {
+} catch (\CodeIgniter\Exceptions\PageNotFoundException $e) {
+    $requestUri = $_SERVER['REQUEST_URI'] ?? '/';
+    error_log('404: ' . $requestUri);
+    throw $e;
+} catch (\Throwable $e) {
+    error_log('EMERGENCY BOOT FAILURE: ' . $e->getMessage());
     \App\Libraries\EmergencyLogger::write('BOOT FAILURE: ' . $e->getMessage(), [
         'trace' => $e->getTraceAsString(),
     ]);
-
-    throw $e;
+    http_response_code(500);
+    echo 'System temporarily unavailable.';
+    exit(1);
 }
 
 /*

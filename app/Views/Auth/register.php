@@ -50,16 +50,16 @@ $subViewData                = [
     <div class="row bg-white rounded shadow-sm p-3 mt-5">
         <?php if ($registerFormat === 'Split-Form') : ?>
             <div class="col-sm-6 border-right pr-3">
-                <?php echo view('App\Views\Auth\register\\' . $referralPlatform, $subViewData); ?>
+                <?php echo view('Auth/register/' . $referralPlatform, $subViewData); ?>
             </div>
             <div class="col-sm-6">
-                <?php echo view('App\Views\Auth\register_form', $subViewData); ?>
+                <?php echo view('Auth/register_form', $subViewData); ?>
                 <?php echo view('themes/public/resources/needSupport', $subViewData); ?>
             </div>
         <?php else: ?>
         <div class="col-sm-6 offset-sm-3">
 
-            <?php echo view('App\Views\Auth\register_form', $subViewData); ?>
+            <?php echo view('Auth/register_form', $subViewData); ?>
 
         </div>
         <?php endif; ?>

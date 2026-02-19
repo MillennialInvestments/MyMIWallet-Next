@@ -39,14 +39,19 @@ class Services extends CoreServices
             require APPPATH . 'Helpers/ci_guard_helper.php';
         }
 
+        $config ??= config(\Config\Cache::class);
+
         if (is_ci()) {
-            $cacheConfig = $config ?? config('Cache');
-            $cacheConfig->handler = 'dummy';
-            $cacheConfig->backupHandler = 'dummy';
-            $config = $cacheConfig;
+            $config->handler = 'file';
+            $config->backupHandler = 'file';
         }
 
-        return parent::cache($config, $getShared);
+        try {
+            return parent::cache($config, $getShared);
+        } catch (\Throwable $e) {
+            log_message('critical', 'Cache boot failure: {error}', ['error' => $e->getMessage()]);
+            return new \CodeIgniter\Cache\Handlers\FileHandler(config(\Config\Cache::class));
+        }
     }
 
     public static function aiopsDocsScanner(bool $getShared = true)
