@@ -41,7 +41,7 @@ class Cache extends BaseConfig
      * unreachable. Often, 'file' is used here since the filesystem is
      * always available, though that's not always practical for the app.
      */
-    public string $backupHandler = 'dummy';
+    public string $backupHandler = 'file';
 
     /**
      * --------------------------------------------------------------------------
@@ -159,8 +159,8 @@ class Cache extends BaseConfig
         }
 
         if (is_ci()) {
-            $this->handler = 'dummy';
-            $this->backupHandler = 'dummy';
+            $this->handler = 'file';
+            $this->backupHandler = 'file';
             $this->file['storePath'] = WRITEPATH . 'cache/';
         }
     }

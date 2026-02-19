@@ -784,7 +784,7 @@ class AuthController extends Controller
 
         log_message('info', 'AuthController::registerSuccess view rendered.');
 
-        return $this->_render('App\\Views\\Auth\\register_success', $this->data);
+        return $this->_render('Auth/register_success', $this->data);
     }
 
     public function resendRegistrationActivation()
@@ -1196,7 +1196,7 @@ class AuthController extends Controller
             return redirect()->route('login');
         }
 
-        return $this->_render($this->config->views['resendActivation'] ?? 'App\\Views\\Auth\\resend_activation', [
+        return $this->_render($this->config->views['resendActivation'] ?? 'Auth/resend_activation', [
             'config' => $this->config,
             'email'  => '',
         ]);
@@ -1453,7 +1453,12 @@ class AuthController extends Controller
 
     protected function _render(string $view, array $data = [])
     {
-        return view($view, $data);
+        if (!is_string($view) || empty($view)) {
+            log_message('critical', 'Invalid view path passed to render()', ['view' => $view]);
+            throw new \RuntimeException('Invalid view path');
+        }
+
+        return $this->safeView($view, $data);
     }
 
     private function setAuthMessage(string $type, string $text, ?string $title = null): void
