@@ -1,0 +1,171 @@
+{
+  "generated_at": "2026-02-19T00:00:00Z",
+  "source_repo": "MyMIWallet-Next",
+  "providers": [
+    {
+      "name": "AlphaVantage",
+      "classification": "NEEDS_REFACTOR",
+      "reusable": false,
+      "files": [
+        "app/Libraries/MyMIAlphaVantage.php",
+        "app/Services/AlphaVantageService.php",
+        "app/Services/Forecasting/Providers/AlphaVantageProvider.php",
+        "app/Services/Fin/PriceService.php"
+      ],
+      "entry_points": [
+        "app/Config/Services.php::forecastProvider()",
+        "app/Services/Fin/PriceService.php::getPrice()"
+      ],
+      "env_keys": [
+        "ALPHA_VANTAGE_API_KEY",
+        "ALPHA_VANTAGE_KEY",
+        "ALPHAVANTAGE_API_KEY"
+      ],
+      "rate_limit_or_cache": [
+        "Manual sleep(1) in batch quote loop",
+        "Batch fallback chain (TwelveData, Marketstack)"
+      ],
+      "db_tables": [
+        "bf_investment_trade_alerts"
+      ]
+    },
+    {
+      "name": "MarketAux",
+      "classification": "NEEDS_REFACTOR",
+      "reusable": false,
+      "files": [
+        "app/Libraries/AlertSources/MarketAuxNewsSource.php",
+        "app/Libraries/MyMIMarketing.php",
+        "app/Libraries/MyMINews.php"
+      ],
+      "entry_points": [
+        "app/Libraries/MyMIAlerts.php::scan*",
+        "app/Config/Routes.php::Marketing cron routes"
+      ],
+      "env_keys": [
+        "MARKETAUX_API_KEY",
+        "MARKET_AUX_BASE_URL"
+      ],
+      "rate_limit_or_cache": [
+        "Direct curlrequest usage; no dedicated central limiter"
+      ],
+      "db_tables": [
+        "bf_investment_trade_alerts",
+        "bf_management_alerts"
+      ]
+    },
+    {
+      "name": "CoinGecko",
+      "classification": "NEEDS_REFACTOR",
+      "reusable": false,
+      "files": [
+        "app/Config/CoinGecko.php",
+        "app/Services/SolanaService.php",
+        "app/Libraries/MyMICoinGecko.php"
+      ],
+      "entry_points": [
+        "app/Services/SolanaService.php::getSolanaPrice()"
+      ],
+      "env_keys": [
+        "COINGECKO_API_KEY"
+      ],
+      "rate_limit_or_cache": [
+        "Fallback logging when CoinGecko call fails"
+      ],
+      "db_tables": []
+    },
+    {
+      "name": "Discord",
+      "classification": "CORE_REUSABLE",
+      "reusable": true,
+      "files": [
+        "app/Config/Discord.php",
+        "app/Services/Ops/SnapshotWriter.php",
+        "app/Libraries/DiscordAlert.php"
+      ],
+      "entry_points": [
+        "app/Commands/Ops/AppUpdate.php",
+        "app/Services/AIOps/ManualRunNotifier.php"
+      ],
+      "env_keys": [
+        "DISCORD_WEBHOOK_URL",
+        "DISCORD_ALERT_WEBHOOK",
+        "AIOPS_DISCORD_WEBHOOK"
+      ],
+      "rate_limit_or_cache": [
+        "Webhook transport only; domain formatting elsewhere"
+      ],
+      "db_tables": []
+    },
+    {
+      "name": "Zapier",
+      "classification": "CORE_REUSABLE",
+      "reusable": true,
+      "files": [
+        "app/Services/ZapierService.php",
+        "app/Libraries/AlertChannels/ZapierChannel.php"
+      ],
+      "entry_points": [
+        "app/Services/MarketingService.php::getZapierWebhooks()"
+      ],
+      "env_keys": [
+        "ZAPIER_APPROVED_WEBHOOK",
+        "ZAPIER_ALERT_WEBHOOK",
+        "ZAPIER_FACEBOOK_WEBHOOK",
+        "ZAPIER_LINKEDIN_WEBHOOK"
+      ],
+      "rate_limit_or_cache": [
+        "No centralized limiter currently"
+      ],
+      "db_tables": [
+        "bf_email_outbox"
+      ]
+    },
+    {
+      "name": "IMAP",
+      "classification": "NEEDS_REFACTOR",
+      "reusable": false,
+      "files": [
+        "app/Services/AIOps/EmailScannerService.php",
+        "app/Services/EmailScraperService.php",
+        "app/Commands/Ops/AlertsIngest.php"
+      ],
+      "entry_points": [
+        "app/Config/Routes.php::cronFetchInbox",
+        "app/Commands/Ops/AlertsIngest.php"
+      ],
+      "env_keys": [
+        "MYMI_ALERTS_IMAP_HOST",
+        "MYMI_ALERTS_IMAP_PORT",
+        "IMAP_USER",
+        "IMAP_PASS"
+      ],
+      "rate_limit_or_cache": [
+        "Polling + UID dedupe in scanner"
+      ],
+      "db_tables": [
+        "bf_email_outbox"
+      ]
+    },
+    {
+      "name": "Twilio",
+      "classification": "VERTICAL_ONLY",
+      "reusable": false,
+      "files": [
+        "app/Services/MassSmsService.php"
+      ],
+      "entry_points": [
+        "app/Config/Routes.php::marketing sms cron"
+      ],
+      "env_keys": [
+        "TWILIO_SID",
+        "TWILIO_TOKEN",
+        "TWILIO_FROM"
+      ],
+      "rate_limit_or_cache": [],
+      "db_tables": [
+        "bf_sms_queue"
+      ]
+    }
+  ]
+}
