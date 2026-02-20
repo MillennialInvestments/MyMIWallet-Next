@@ -28,7 +28,7 @@ class TrafficSpikeGuard extends SafeBaseCommand
             if (preg_match('/^--threshold=(\d+)$/', $p, $m)) $threshold = (int) $m[1];
         }
 
-        $home = rtrim(getenv('HOME') ?: $_SERVER['HOME'] ?? '', '/');
+        $home = rtrim(env('HOME') ?: $_SERVER['HOME'] ?? '', '/');
         $ngErr = $home . '/nginx/logs/error.log';
         $ci4Log = WRITEPATH . 'logs/log-' . date('Y-m-d') . '.log';
 

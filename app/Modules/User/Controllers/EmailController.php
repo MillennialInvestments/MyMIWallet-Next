@@ -20,13 +20,13 @@ class EmailController extends BaseController
         $hash = crypto_hash_password($token);
         db_connect()->table('users')->where('id', $uid)->set(['email_verification_token_hash' => $hash])->update();
 
-        $link = rtrim(getenv('APP_URL') ?: site_url(), '/') . '/Account/verify-email/' . $token;
+        $link = rtrim(env('APP_URL') ?: site_url(), '/') . '/Account/verify-email/' . $token;
         $result = service('mailService')->send(
             $user['email'],
             'Verify your email',
             "Click to verify: {$link}",
             [
-                'from_email' => getenv('EMAIL_FROM') ?: 'noreply@localhost',
+                'from_email' => env('EMAIL_FROM') ?: 'noreply@localhost',
                 'from_name'  => 'MyMI Wallet',
                 'module'     => 'auth',
                 'queue'      => true,

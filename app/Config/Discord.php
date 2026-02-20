@@ -149,7 +149,7 @@ class Discord extends BaseConfig
         $this->storeWebhookMsgId  = filter_var(env('DISCORD_STORE_WEBHOOK_MSG_ID', $this->storeWebhookMsgId), FILTER_VALIDATE_BOOLEAN);
         $this->alertsStrict       = filter_var(env('DISCORD_ALERTS_STRICT', $this->alertsStrict), FILTER_VALIDATE_BOOLEAN);
         $this->alertsDryRun       = filter_var(env('DISCORD_ALERTS_DRY_RUN', $this->alertsDryRun), FILTER_VALIDATE_BOOLEAN);
-        $this->internalApiToken   = getenv('DISCORD_INTERNAL_API_TOKEN') ?: null;
+        $this->internalApiToken   = env('DISCORD_INTERNAL_API_TOKEN') ?: null;
 
 
         // JSON-based role map, if configured

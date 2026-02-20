@@ -395,14 +395,14 @@ class APISettings extends BaseConfig
     {
         parent::__construct();
         $this->emailPassword = (string) (
-            env('email.password') ?? getenv('EMAIL_PASSWORD') ?? ''
+            env('email.password') ?? env('EMAIL_PASSWORD') ?? ''
         );
     
         // Load from .env
-        $this->alpacaApiKey = getenv('ALPACA_API_KEY') ?: '';
-        $this->alphaVantageApiKey = getenv('ALPHAVANTAGE_API_KEY') ?: '';
+        $this->alpacaApiKey = env('ALPACA_API_KEY') ?: '';
+        $this->alphaVantageApiKey = env('ALPHAVANTAGE_API_KEY') ?: '';
 
-        $this->elevenLabsAPIKey = getenv('ELEVENLABS_API_KEY') ?: '';
+        $this->elevenLabsAPIKey = env('ELEVENLABS_API_KEY') ?: '';
 
         $this->elevenLabsVoiceId = '21m00Tcm4TlvDq8ikWAM';
         $this->iexcloudApiKey = (string) env('iexcloud.apiKey', $this->iexcloudApiKey);

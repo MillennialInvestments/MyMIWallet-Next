@@ -6,7 +6,7 @@ class Crypto
 {
     private static function key(): string
     {
-        $env = getenv('MYMI_KMS_KEY');
+        $env = env('MYMI_KMS_KEY');
         if (strpos($env, 'base64:') === 0) {
             return base64_decode(substr($env, 7));
         }

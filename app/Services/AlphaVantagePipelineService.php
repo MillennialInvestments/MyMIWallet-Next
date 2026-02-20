@@ -42,7 +42,7 @@ class AlphaVantagePipelineService
     public function run(array $symbols = [], ?string $apiKey = null): array
     {
         $symbols = $symbols ?: $this->collectDefaultSymbols();
-        $apiKey  = $apiKey ?? getenv('ALPHA_VANTAGE_KEY') ?: '';
+        $apiKey  = $apiKey ?? env('ALPHA_VANTAGE_KEY') ?: '';
 
         $results = [
             'processed' => [],

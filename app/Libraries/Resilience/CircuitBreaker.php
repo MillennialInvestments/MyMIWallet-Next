@@ -11,9 +11,9 @@ class CircuitBreaker
         private int $openSeconds = 0,
         private int $halfOpenTrials = 0
     ) {
-        $this->failThreshold = (int)($failThreshold ?: getenv('CB_FAIL_THRESHOLD') ?: 5);
-        $this->openSeconds   = (int)($openSeconds   ?: getenv('CB_OPEN_SECONDS')   ?: 120);
-        $this->halfOpenTrials= (int)($halfOpenTrials?: getenv('CB_HALF_OPEN_TRIALS') ?: 3);
+        $this->failThreshold = (int)($failThreshold ?: env('CB_FAIL_THRESHOLD') ?: 5);
+        $this->openSeconds   = (int)($openSeconds   ?: env('CB_OPEN_SECONDS')   ?: 120);
+        $this->halfOpenTrials= (int)($halfOpenTrials?: env('CB_HALF_OPEN_TRIALS') ?: 3);
     }
 
     public function allow(): bool

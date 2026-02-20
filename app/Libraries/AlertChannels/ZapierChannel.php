@@ -9,7 +9,7 @@ class ZapierChannel implements AlertChannelInterface
     public function __construct(private ?CURLRequest $client = null, private ?string $webhookUrl = null)
     {
         $this->client = $client ?? service('curlrequest');
-        $this->webhookUrl = $webhookUrl ?? getenv('ZAPIER_ALERT_WEBHOOK');
+        $this->webhookUrl = $webhookUrl ?? env('ZAPIER_ALERT_WEBHOOK');
     }
 
     public function getName(): string

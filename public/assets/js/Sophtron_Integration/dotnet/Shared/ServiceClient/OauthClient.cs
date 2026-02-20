@@ -10,9 +10,9 @@ namespace SophtronClient
     public class OauthClient: IAuthProvider
     {
 
-        private string UserName = Environment.GetEnvironmentVariable("SophtronUserName");
-        private string ClientId = Environment.GetEnvironmentVariable("SophtronApiClientId");
-        private string ClientSecret = Environment.GetEnvironmentVariable("SophtronApiClientSecret");
+        private string UserName = Environment.environmentVariable("SophtronUserName");
+        private string ClientId = Environment.environmentVariable("SophtronApiClientId");
+        private string ClientSecret = Environment.environmentVariable("SophtronApiClientSecret");
 
         private HttpClient client = new HttpClient() {
             BaseAddress = new Uri("https://sophtron.com/"),

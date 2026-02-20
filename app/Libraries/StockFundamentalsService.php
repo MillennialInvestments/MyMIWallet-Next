@@ -14,11 +14,12 @@ class StockFundamentalsService
     protected \CodeIgniter\Cache\CacheInterface $cache;
     protected StockFundamentalsModel $model;
 
-    public function __construct()
+    public function __construct(?CacheInterface $cache = null)
     {
         $this->alphaKey = (string) env('alphaVantage.apiKey', env('ALPHAVANTAGE_API_KEY', ''));
         $this->http = Services::curlrequest();
-        $this->cache = cache();
+
+        $this->cache = $cache ?? \Config\Services::cache();
         $this->model = new StockFundamentalsModel();
     }
 

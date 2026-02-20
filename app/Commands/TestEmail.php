@@ -22,7 +22,7 @@ class TestEmail extends SafeBaseCommand
         log_message('info', '[spark:email:test] Started', ['params' => $params]);
         [$args, $flags] = $this->parseParams($params);
         $dryRun = $this->resolveDryRun($flags);
-        $to = $args[0] ?? getenv('test.email.to');
+        $to = $args[0] ?? env('test.email.to');
 
         if (! $to) {
             CLI::error('Usage: php spark email:test you@example.com');

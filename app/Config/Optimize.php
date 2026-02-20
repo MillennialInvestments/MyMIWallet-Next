@@ -12,9 +12,9 @@ class Optimize
 {
     public function __construct()
     {
-        $ci = strtolower((string) (getenv('CI') ?: '')) === 'true';
-        $env = strtolower((string) (getenv('ENVIRONMENT') ?: ''));
-        $ciEnvironment = strtolower((string) (getenv('CI_ENVIRONMENT') ?: ''));
+        $ci = strtolower((string) (env('CI') ?: '')) === 'true';
+        $env = strtolower((string) (env('ENVIRONMENT') ?: ''));
+        $ciEnvironment = strtolower((string) (env('CI_ENVIRONMENT') ?: ''));
 
         if ($ci || $env === 'ci' || $ciEnvironment === 'ci' || $ciEnvironment === 'testing') {
             $this->cacheConfig = false;

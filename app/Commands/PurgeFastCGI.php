@@ -44,7 +44,7 @@ class PurgeFastCGI extends SafeBaseCommand
 
         CLI::write('Scanning for php-pm / fastcgi / controller.sock references…', 'yellow');
 
-        $home = rtrim(getenv('HOME') ?: $_SERVER['HOME'] ?? '', '/');
+        $home = rtrim(env('HOME') ?: $_SERVER['HOME'] ?? '', '/');
 
         $scanRoots = [
             $home . '/nginx',

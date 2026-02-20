@@ -14,9 +14,9 @@ class MailChimpService
 
     public function __construct()
     {
-        $this->apiKey = getenv('MAILCHIMP_API_KEY');
-        $this->serverPrefix = getenv('MAILCHIMP_SERVER_PREFIX');
-        $this->listId = getenv('MAILCHIMP_LIST_ID');
+        $this->apiKey = env('MAILCHIMP_API_KEY');
+        $this->serverPrefix = env('MAILCHIMP_SERVER_PREFIX');
+        $this->listId = env('MAILCHIMP_LIST_ID');
     }
 
     public function addSubscriber($email, $firstName, $lastName)

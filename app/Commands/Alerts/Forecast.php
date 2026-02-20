@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Commands;
+namespace App\Commands\Alerts;
 
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class ForecastRefresh extends SafeBaseCommand
+class Forecast extends SafeBaseCommand
 {
-    protected $group = 'Forecasts';
-    protected $name = 'forecasts:refresh';
+    protected $group = 'Alerts';
+    protected $name = 'alerts:forecast';
     protected $description = 'Refresh forecasts for open alerts.';
     protected $usage = 'forecasts:refresh [limit] [--dry-run] [--approve]';
     protected $arguments = [

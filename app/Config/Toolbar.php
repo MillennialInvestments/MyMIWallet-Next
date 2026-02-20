@@ -27,7 +27,8 @@ class Toolbar extends BaseConfig
     /**
      * Enable toolbar by default; constructor applies environment safety gates.
      */
-    public bool $enabled = true;
+    public bool $enabled = ENVIRONMENT === 'development';
+    // public bool $enabled = true;
     // public bool $enabled = false;
 
     public function __construct()

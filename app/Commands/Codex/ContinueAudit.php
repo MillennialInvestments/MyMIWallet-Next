@@ -52,7 +52,7 @@ class ContinueAudit extends SafeBaseCommand
         $client  = new OpenAIClient();
         $parser  = new SeverityParser();
 
-        $model = getenv('OPENAI_MODEL') ?: (config('Codex')->model ?? 'gpt-4o');
+        $model = env('OPENAI_MODEL') ?: (config('Codex')->model ?? 'gpt-4o');
         $maxBytes = (int)(config('Codex')->maxFileBytes ?? 350000);
 
         $reportMd   = WRITEPATH . (config('Codex')->reportPath ?? 'audit/report.md');

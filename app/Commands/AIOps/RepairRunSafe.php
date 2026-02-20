@@ -13,7 +13,7 @@ class RepairRunSafe extends SafeBaseCommand
 
     public function run(array $params)
     {
-        $baseBranch = getenv('AIOPS_BASE_BRANCH') ?: 'main';
+        $baseBranch = env('AIOPS_BASE_BRANCH') ?: 'main';
         $tmpBranch = 'aiops/tmp-validate-' . date('Ymd_His');
 
         CLI::write("Base branch: {$baseBranch}");

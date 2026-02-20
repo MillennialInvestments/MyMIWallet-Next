@@ -65,8 +65,8 @@ class MyMISolana implements CryptoCurrencyInterface
         $this->MyMIUser = new MyMIUser();
         $this->cache = \Config\Services::cache();
 
-        $primary  = getenv('SOLANA_RPC_PRIMARY') ?: ($this->apiUrl ?? 'https://api.mainnet-beta.solana.com');
-        $fallback = getenv('SOLANA_RPC_FALLBACKS') ?: ($this->backupUrl ?? '');
+        $primary  = env('SOLANA_RPC_PRIMARY') ?: ($this->apiUrl ?? 'https://api.mainnet-beta.solana.com');
+        $fallback = env('SOLANA_RPC_FALLBACKS') ?: ($this->backupUrl ?? '');
 
         $endpoints = array_merge([$primary], array_map('trim', explode(',', $fallback)));
         $this->rpcEndpoints = array_values(array_filter(array_unique($endpoints)));
@@ -298,7 +298,7 @@ class MyMISolana implements CryptoCurrencyInterface
 
     private function encKey(): string
     {
-        $k = getenv('MYMI_KMS_KEY') ?: '';
+        $k = env('MYMI_KMS_KEY') ?: '';
         if (str_starts_with($k, 'base64:')) $k = base64_decode(substr($k, 7), true) ?: '';
         if ($k === '' || strlen($k) !== 32) {
             throw new \RuntimeException('MYMI_KMS_KEY invalid; must be 32 bytes (base64).');

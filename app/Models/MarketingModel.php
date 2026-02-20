@@ -1618,7 +1618,7 @@ class MarketingModel extends Model
     {
         $MyMIMarketing = new \App\Libraries\MyMIMarketing();
         $scoreData = $MyMIMarketing->getTopKeywordScores($summary['summary']);
-        $threshold = getenv('MARKETING_TFIDF_THRESHOLD') ?: 7.5;
+        $threshold = env('MARKETING_TFIDF_THRESHOLD') ?: 7.5;
 
         $bufferRecord = [
             'keyword'      => $scoreData['top_keyword'] ?? 'general',

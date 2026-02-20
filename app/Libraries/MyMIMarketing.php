@@ -129,8 +129,8 @@ class MyMIMarketing
         // $this->initializeServices();
         
         // Initialize Scrapemax and Pscrape clients
-        $smBase = getenv('SCRAPEMAX_BASE') ?: 'https://api.scrapemax.com';
-        $smKey  = getenv('SCRAPEMAX_API_KEY') ?: null;
+        $smBase = env('SCRAPEMAX_BASE') ?: 'https://api.scrapemax.com';
+        $smKey  = env('SCRAPEMAX_API_KEY') ?: null;
 
         // Scrapemax HTTP client (optional)
         if ($smKey) {
@@ -1256,7 +1256,7 @@ class MyMIMarketing
     
     public function fetchRecentFinancialNews(string $symbol): array
     {
-        $apiKey = getenv('MARKETAUX_API_KEY') ?: $this->APIs->marketAuxApiKey;
+        $apiKey = env('MARKETAUX_API_KEY') ?: $this->APIs->marketAuxApiKey;
         if (empty($apiKey)) {
             log_message('critical', 'fetchRecentFinancialNews - Missing MARKETAUX_API_KEY');
             return ['summary' => 'News unavailable.', 'sentiment' => 'Neutral'];
@@ -1902,7 +1902,7 @@ class MyMIMarketing
     
         if ($useBing) {
             try {
-                $apiKey = getenv('BING_API_KEY');
+                $apiKey = env('BING_API_KEY');
                 $url = 'https://api.bing.microsoft.com/v7.0/search?q=' . urlencode($query);
                 $client = \Config\Services::curlrequest();
                 $response = $client->get($url, [
@@ -1928,8 +1928,8 @@ class MyMIMarketing
     
         if ($useGoogle) {
             try {
-                $apiKey = getenv('GOOGLE_API_KEY');
-                $cx = getenv('GOOGLE_SEARCH_ENGINE_ID');
+                $apiKey = env('GOOGLE_API_KEY');
+                $cx = env('GOOGLE_SEARCH_ENGINE_ID');
                 $url = "https://www.googleapis.com/customsearch/v1?q=" . urlencode($query) . "&key={$apiKey}&cx={$cx}";
                 $client = \Config\Services::curlrequest();
                 $response = $client->get($url);
@@ -4644,7 +4644,7 @@ class MyMIMarketing
      */
     public function searchWithBing(string $query): array
     {
-        $apiKey = getenv('BING_API_KEY');
+        $apiKey = env('BING_API_KEY');
         $url = 'https://api.bing.microsoft.com/v7.0/search?q=' . urlencode($query);
 
         try {
@@ -4671,8 +4671,8 @@ class MyMIMarketing
      */
     public function searchWithGoogle(string $query): array
     {
-        $apiKey = getenv('GOOGLE_API_KEY');
-        $cx = getenv('GOOGLE_SEARCH_ENGINE_ID');
+        $apiKey = env('GOOGLE_API_KEY');
+        $cx = env('GOOGLE_SEARCH_ENGINE_ID');
         $url = "https://www.googleapis.com/customsearch/v1?q=" . urlencode($query) . "&key={$apiKey}&cx={$cx}";
 
         try {
@@ -6152,7 +6152,7 @@ class MyMIMarketing
 
     public function cronFetchAndGenerateNews(int $limit = 25): array
     {
-        $apiKey = getenv('MARKETAUX_API_KEY') ?: ($this->APIs->marketAuxApiKey ?? null);
+        $apiKey = env('MARKETAUX_API_KEY') ?: ($this->APIs->marketAuxApiKey ?? null);
 
         if (empty($apiKey)) {
             throw new \RuntimeException('MARKETAUX_API_KEY is missing; cannot fetch news.');
@@ -6244,7 +6244,7 @@ class MyMIMarketing
         
         $response = $this->client->get('https://www.marketaux.com/api/v1/news/all', [
             'query' => [
-                'api_token' => getenv('MARKETAUX_API_KEY'),
+                'api_token' => env('MARKETAUX_API_KEY'),
                 'language'  => 'en',
                 'country'   => 'us',
                 'published_after' => date('Y-m-d\TH:i:s\Z', strtotime('-1 hour')),

@@ -7,7 +7,7 @@ class DocsController extends BaseController
 {
     private function dir(): string
     {
-        $d = getenv('DOCS_DIR') ?: (ROOTPATH.'docs');
+        $d = env('DOCS_DIR') ?: (ROOTPATH.'docs');
         if (!is_dir($d)) @mkdir($d,0755,true);
         return rtrim($d,'/');
     }

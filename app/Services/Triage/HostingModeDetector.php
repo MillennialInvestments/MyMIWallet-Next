@@ -229,7 +229,7 @@ class HostingModeDetector
      */
     private function readFastCgiFromUserPaths(): array
     {
-        $home = rtrim(getenv('HOME') ?: '/home/' . get_current_user(), '/');
+        $home = rtrim(env('HOME') ?: '/home/' . get_current_user(), '/');
         $paths = [
             $home . '/nginx',
             $home . '/conf',

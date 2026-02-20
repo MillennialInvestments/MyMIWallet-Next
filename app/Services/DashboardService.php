@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Libraries\MyMIDashboard;
-use Psr\SimpleCache\CacheInterface;
+use CodeIgniter\Cache\CacheInterface;
 
 class DashboardService
 {

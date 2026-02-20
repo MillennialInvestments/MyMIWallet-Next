@@ -14,7 +14,7 @@ class MetricsController extends BaseController
         }
         $user = $_SERVER['PHP_AUTH_USER'] ?? null;
         $pass = $_SERVER['PHP_AUTH_PW'] ?? null;
-        if ($user !== (getenv('METRICS_USER') ?: 'metrics') || $pass !== (getenv('METRICS_PASS') ?: '')) {
+        if ($user !== (env('METRICS_USER') ?: 'metrics') || $pass !== (env('METRICS_PASS') ?: '')) {
             header('WWW-Authenticate: Basic realm="metrics"');
             return $this->response->setStatusCode(401)->setBody('auth required');
         }

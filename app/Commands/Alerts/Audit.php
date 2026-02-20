@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Commands;
+namespace App\Commands\Alerts;
 
 use App\Models\AlertsModel;
 use App\Commands\SafeBaseCommand;
@@ -8,9 +8,9 @@ use CodeIgniter\CLI\CLI;
 use Config\Database;
 use ReflectionMethod;
 
-class AlertsAudit extends SafeBaseCommand
+class Audit extends SafeBaseCommand
 {
-    protected $group       = 'maintenance';
+    protected $group       = 'Alerts';
     protected $name        = 'alerts:audit';
     protected $description = 'Audit recent scraped alert emails against generated trade alerts.';
     protected $options     = [

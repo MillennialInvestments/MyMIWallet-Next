@@ -6,7 +6,7 @@ class SlackWebhookService
 {
     public function notify(string $message): bool
     {
-        $url = (string) getenv('SLACK_WEBHOOK');
+        $url = (string) env('SLACK_WEBHOOK');
         if ($url === '') {
             log_message('warning', '[slack-webhook] Missing SLACK_WEBHOOK env value.');
             return false;

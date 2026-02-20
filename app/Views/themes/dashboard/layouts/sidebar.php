@@ -212,12 +212,12 @@ $agent                  = service('request')->getUserAgent();
                         <li class="nk-menu-item has-sub">
                             <a href="#" class="nk-menu-link nk-menu-toggle">
                                 <span class="nk-menu-icon"><em class="icon ni ni-coin"></em></span>
-                                <span class="nk-menu-text text-yellow">My Account</span>
+                                <span class="nk-menu-text text-yellow">Account</span>
                             </a>
                             <ul class="nk-menu-sub">
                                 <li class="nk-menu-item">
                                     <a class="nk-menu-link" href="<?php echo site_url('/Account'); ?>">
-                                        <span class="nk-menu-text">Account</span>
+                                        <span class="nk-menu-text">Account Settings</span>
                                     </a>
                                 </li>
                                 <li class="nk-menu-item">
@@ -227,7 +227,7 @@ $agent                  = service('request')->getUserAgent();
                                 </li>
                                 <li class="nk-menu-item">
                                     <a class="nk-menu-link" href="<?php echo site_url('/Account/Connected-Accounts'); ?>">
-                                        <span class="nk-menu-text">Connected Accounts</span>
+                                        <span class="nk-menu-text">Integrations</span>
                                     </a>
                                 </li>
                                 <li class="nk-menu-item">

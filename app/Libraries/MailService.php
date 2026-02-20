@@ -268,7 +268,7 @@ class MailService
 
     private function renderTemplate(string $template, string $title, array $payload): string
     {
-        $appUrl = rtrim((string) (getenv('APP_URL') ?: site_url()), '/');
+        $appUrl = rtrim((string) (env('APP_URL') ?: site_url()), '/');
         $logoUrl = $appUrl . '/assets/images/MyMI-Wallet-Logo-Black.png';
 
         helper('email');
@@ -314,7 +314,7 @@ class MailService
 
     private function buildUrl(string $path, array $query = []): string
     {
-        $base = rtrim((string) (getenv('APP_URL') ?: site_url()), '/');
+        $base = rtrim((string) (env('APP_URL') ?: site_url()), '/');
         $url = $base . '/' . ltrim($path, '/');
 
         if (! empty($query)) {

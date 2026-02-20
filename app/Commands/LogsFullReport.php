@@ -50,7 +50,7 @@ class LogsFullReport extends SafeBaseCommand
         $records = array_merge($records, $this->parseCi4Log($ci4Path));
 
         // 2) Apache / server error logs (DreamHost typical)
-        $home = rtrim(getenv('HOME') ?: $_SERVER['HOME'] ?? '', '/');
+        $home = rtrim(env('HOME') ?: $_SERVER['HOME'] ?? '', '/');
         $records = array_merge($records, $this->parseGenericLogs(glob($home . '/logs/*error*.log') ?: [], 'apache', $date));
 
         // 3) PHP logs

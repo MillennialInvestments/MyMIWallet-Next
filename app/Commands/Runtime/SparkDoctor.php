@@ -55,7 +55,7 @@ class SparkDoctor extends SafeBaseCommand
         try {
             (new \App\Models\Ops\SparkHealthModel())->insert([
                 'hostname'           => gethostname() ?: null,
-                'app_env'            => getenv('CI_ENVIRONMENT') ?: null,
+                'app_env'            => env('CI_ENVIRONMENT') ?: null,
                 'php_version'        => PHP_VERSION,
                 'ci_version'         => defined('CodeIgniter\\CodeIgniter::VERSION')
                     ? \CodeIgniter\CodeIgniter::VERSION

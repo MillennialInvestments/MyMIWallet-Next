@@ -1566,7 +1566,7 @@ $routes->group('Support', ['namespace' => 'App\Modules\Support\Controllers'], fu
     $routes->get('Article/(:segment)', 'SupportController::article/$1');
     $routes->get('Discord', 'SupportController::discordOnboarding');
     $routes->get('FAQ', 'SupportController::view/FAQ');
-    $routes->match(['get', 'post'], 'Feedback', 'SupportController::view/Feedback');
+    $routes->get('Feedback', 'SupportController::view/Feedback');
     $routes->get('Test', 'SupportController::view/Test');
     $routes->get('Test-Email', 'SupportController::view/Test-Email');
     $routes->get('(:any)', 'SupportController::view/$1');

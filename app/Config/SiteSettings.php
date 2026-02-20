@@ -186,17 +186,17 @@ class SiteSettings extends BaseConfig
             $this->day                          = date("d");
             $this->year                         = date("Y");
 
-            $envFlag = getenv('AI_ENABLE_KIMI_K2');
+            $envFlag = env('AI_ENABLE_KIMI_K2');
             if ($envFlag !== false && $envFlag !== null) {
                 $this->enableKimiK2 = filter_var($envFlag, FILTER_VALIDATE_BOOL);
             }
             
-            $autoPrEnv = getenv('AIOPS_AUTOPR_ENABLED');
+            $autoPrEnv = env('AIOPS_AUTOPR_ENABLED');
             if ($autoPrEnv !== false && $autoPrEnv !== null) {
                 $this->aiAutoPrEnabled = filter_var($autoPrEnv, FILTER_VALIDATE_BOOL);
             }
 
-            $openAiEnv = getenv('AI_OPENAI_API_ENABLED');
+            $openAiEnv = env('AI_OPENAI_API_ENABLED');
             if ($openAiEnv !== false && $openAiEnv !== null) {
                 $this->aiOpenAiApiEnabled = filter_var($openAiEnv, FILTER_VALIDATE_BOOL);
             }

@@ -21,12 +21,12 @@ class ImapFlagSweep extends SafeBaseCommand
             return EXIT_ERROR;
         }
 
-        $host = $this->opt($params, 'host', getenv('MYMI_ALERTS_IMAP_HOST') ?: 'imap.dreamhost.com');
-        $port = (int) $this->opt($params, 'port', getenv('MYMI_ALERTS_IMAP_PORT') ?: '993');
-        $mailbox = $this->opt($params, 'mailbox', getenv('MYMI_ALERTS_IMAP_MAILBOX') ?: 'INBOX');
+        $host = $this->opt($params, 'host', env('MYMI_ALERTS_IMAP_HOST') ?: 'imap.dreamhost.com');
+        $port = (int) $this->opt($params, 'port', env('MYMI_ALERTS_IMAP_PORT') ?: '993');
+        $mailbox = $this->opt($params, 'mailbox', env('MYMI_ALERTS_IMAP_MAILBOX') ?: 'INBOX');
 
-        $user = getenv('MYMI_ALERTS_IMAP_USER') ?: '';
-        $pass = getenv('MYMI_ALERTS_IMAP_PASS') ?: '';
+        $user = env('MYMI_ALERTS_IMAP_USER') ?: '';
+        $pass = env('MYMI_ALERTS_IMAP_PASS') ?: '';
         if ($user === '' || $pass === '') {
             CLI::error('Missing MYMI_ALERTS_IMAP_USER or MYMI_ALERTS_IMAP_PASS.');
             return EXIT_ERROR;

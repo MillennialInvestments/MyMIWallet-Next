@@ -288,10 +288,10 @@ class MarketingService
     protected function sendToZapier($platform, $message)
     {
         $zapierHooks = [
-            'facebook' => getenv('ZAPIER_FACEBOOK_WEBHOOK'),
-            'linkedin' => getenv('ZAPIER_LINKEDIN_WEBHOOK'),
-            'stocktwits' => getenv('ZAPIER_STOCKTWITS_WEBHOOK'),
-            'email' => getenv('ZAPIER_EMAIL_WEBHOOK'),
+            'facebook' => env('ZAPIER_FACEBOOK_WEBHOOK'),
+            'linkedin' => env('ZAPIER_LINKEDIN_WEBHOOK'),
+            'stocktwits' => env('ZAPIER_STOCKTWITS_WEBHOOK'),
+            'email' => env('ZAPIER_EMAIL_WEBHOOK'),
         ];
     
         $hook = $zapierHooks[$platform] ?? null;

@@ -13,7 +13,7 @@ class MyMIMarketAux
     public function __construct()
     {
         $this->client = \Config\Services::curlrequest();
-        $this->apiKey = getenv('MARKETAUX_API_KEY');
+        $this->apiKey = env('MARKETAUX_API_KEY');
     }
 
     protected function makeRequest(string $function, string $symbol)

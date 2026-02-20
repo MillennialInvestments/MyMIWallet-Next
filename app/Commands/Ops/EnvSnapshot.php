@@ -34,7 +34,7 @@ class EnvSnapshot extends SafeBaseCommand
         CLI::write('Env snapshot (redacted):', 'yellow');
 
         foreach ($keys as $k) {
-            $v = getenv($k);
+            $v = env($k);
             if ($v === false || $v === null || $v === '') {
                 CLI::write($k . ' = (not set)');
                 continue;
@@ -49,7 +49,7 @@ class EnvSnapshot extends SafeBaseCommand
             'OPENAI_API_KEY',
         ];
         foreach ($secretKeys as $sk) {
-            $sv = getenv($sk);
+            $sv = env($sk);
             CLI::write($sk . ' = ' . (($sv && $sv !== '') ? '***REDACTED***' : '(not set)'));
         }
 

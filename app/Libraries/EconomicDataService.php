@@ -51,8 +51,8 @@ class EconomicDataService
         $this->dataPointModel = new EconomicDataPointModel();
         $this->http = service('curlrequest');
         $cfg = config(APISettings::class);
-        $this->fredApiKey = getenv('FRED_API_KEY') ?: ($cfg->fredApiKey ?? '');
-        $this->alphaVantageApiKey = getenv('ALPHAVANTAGE_API_KEY') ?: ($cfg->alphaVantageApiKey ?? '');
+        $this->fredApiKey = env('FRED_API_KEY') ?: ($cfg->fredApiKey ?? '');
+        $this->alphaVantageApiKey = env('ALPHAVANTAGE_API_KEY') ?: ($cfg->alphaVantageApiKey ?? '');
     }
 
     public function fetchFredSeries(string $seriesId): array

@@ -81,7 +81,7 @@ class MyMIInvestments
 
         // $this->queue = service('queue');
         
-        $this->alphavantageKey = getenv('ALPHA_VANTAGE_API_KEY') ?: $this->APIs->alphaVantageApiKey;
+        $this->alphavantageKey = env('ALPHA_VANTAGE_API_KEY') ?: $this->APIs->alphaVantageApiKey;
     }
 
     public function buildPortfolioLight(int $userId, array $opts = []): array

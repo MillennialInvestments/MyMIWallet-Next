@@ -50,8 +50,8 @@ class AnalyzeCommands extends SafeBaseCommand
             return EXIT_SUCCESS;
         }
 
-        $apiKey   = trim((string) getenv('OPENAI_API_KEY'));
-        $model    = trim((string) getenv('OPENAI_MODEL')) ?: 'gpt-4o-mini';
+        $apiKey   = trim((string) env('OPENAI_API_KEY'));
+        $model    = trim((string) env('OPENAI_MODEL')) ?: 'gpt-4o-mini';
         $endpoint = 'https://api.openai.com/v1/chat/completions';
 
         if ($apiKey === '' || str_contains($apiKey, 'REPLACE_ME')) {

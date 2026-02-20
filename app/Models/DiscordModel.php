@@ -144,7 +144,7 @@ class DiscordModel extends Model
     {
         $row = $this->db->table('bf_discord_queue')->where('id',$id)->get()->getRowArray();
         $attempts = (int)($row['attempts'] ?? 0) + 1;
-        $envBase = getenv('DISCORD_ALERTS_JOB_RETRY_BASE_SEC');
+        $envBase = env('DISCORD_ALERTS_JOB_RETRY_BASE_SEC');
         $base = max(5, $envBase !== false && $envBase !== null && $envBase !== '' ? (int) $envBase : 30);
         $delay = min(3600, (int) ($base * (2 ** ($attempts-1)) + random_int(0, 7)));
         $this->db->table('bf_discord_queue')->where('id',$id)->update([

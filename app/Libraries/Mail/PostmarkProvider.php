@@ -6,7 +6,7 @@ class PostmarkProvider implements MailProviderInterface
 {
     public function send(array $payload): array
     {
-        $token = getenv('postmark.token');
+        $token = env('postmark.token');
         if (! $token) {
             return [
                 'ok'         => false,

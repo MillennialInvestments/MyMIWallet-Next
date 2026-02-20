@@ -18,7 +18,7 @@ class BufferSchedulerService
     public function rankBufferPosts()
     {
         $pending = $this->model->getPendingBufferItems();
-        $threshold = getenv('MARKETING_TFIDF_THRESHOLD') ?: 7.5;
+        $threshold = env('MARKETING_TFIDF_THRESHOLD') ?: 7.5;
 
         foreach ($pending as $post) {
             $scoreData = $this->mimi->getTopKeywordScores(['summary' => $post['summary']]);

@@ -42,7 +42,7 @@ class EnvInspector
             }
         };
 
-        $home = rtrim(getenv('HOME') ?: WRITEPATH, '/');
+        $home = rtrim(env('HOME') ?: WRITEPATH, '/');
         $bashrcPath = $home . '/.bashrc';
         $bashrcExists = is_file($bashrcPath);
         $bashrcContent = $bashrcExists ? file_get_contents($bashrcPath) : '';

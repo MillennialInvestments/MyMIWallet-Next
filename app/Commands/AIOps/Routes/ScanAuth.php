@@ -14,7 +14,7 @@ class ScanAuth extends SafeBaseCommand
 
     public function run(array $params)
     {
-        $cookie = getenv('AIOPS_AUTH_COOKIE');
+        $cookie = env('AIOPS_AUTH_COOKIE');
         if (!$cookie) {
             CLI::error('AIOPS_AUTH_COOKIE not set. Example: export AIOPS_AUTH_COOKIE="ci_session=...;"');
             return;

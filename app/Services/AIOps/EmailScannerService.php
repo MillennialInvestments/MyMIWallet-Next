@@ -58,7 +58,7 @@ class EmailScannerService
         }
         $criteria = $criteriaParts === [] ? 'ALL' : implode(' ', $criteriaParts);
 
-        $port = (int) (getenv('MYMI_ALERTS_IMAP_PORT') ?: 993);
+        $port = (int) (env('MYMI_ALERTS_IMAP_PORT') ?: 993);
         $flags = $config['flags'] ?? '/imap/ssl';
         log_message('debug', [
             'library' => 'EmailScannerService',

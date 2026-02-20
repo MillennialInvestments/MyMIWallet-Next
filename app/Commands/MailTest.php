@@ -25,9 +25,9 @@ class MailTest extends SafeBaseCommand
 
         $config = config('Email');
         $to     = $args[0]
-            ?? getenv('mail.test.to')
-            ?? getenv('test.email.to')
-            ?? getenv('email.test.to');
+            ?? env('mail.test.to')
+            ?? env('test.email.to')
+            ?? env('email.test.to');
 
         if (! $to) {
             CLI::error('Usage: php spark mail:test you@example.com');

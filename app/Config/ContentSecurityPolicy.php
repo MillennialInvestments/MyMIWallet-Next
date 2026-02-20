@@ -4,184 +4,85 @@ namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
 
-/**
- * Stores the default settings for the ContentSecurityPolicy, if you
- * choose to use it. The values here will be read in and set as defaults
- * for the site. If needed, they can be overridden on a page-by-page basis.
- *
- * Suggested reference for explanations:
- *
- * @see https://www.html5rocks.com/en/tutorials/security/content-security-policy/
- */
 class ContentSecurityPolicy extends BaseConfig
 {
-    // -------------------------------------------------------------------------
-    // Broadbrush CSP management
-    // -------------------------------------------------------------------------
-
-    /**
-     * Default CSP report context
-     */
     public bool $reportOnly = false;
-
-    /**
-     * Specifies a URL where a browser will send reports
-     * when a content security policy is violated.
-     */
     public ?string $reportURI = null;
+    public bool $upgradeInsecureRequests = true;
 
-    /**
-     * Instructs user agents to rewrite URL schemes, changing
-     * HTTP to HTTPS. This directive is for websites with
-     * large numbers of old URLs that need to be rewritten.
-     */
-    public bool $upgradeInsecureRequests = false;
+    public $defaultSrc = ['self'];
 
-    // -------------------------------------------------------------------------
-    // Sources allowed
-    // NOTE: once you set a policy to 'none', it cannot be further restricted
-    // -------------------------------------------------------------------------
+    public $scriptSrc = [
+        'self',
+        'https://code.jquery.com',
+        'https://cdn.jsdelivr.net',
+        'https://cdn.datatables.net',
+        'https://cdnjs.cloudflare.com',
+        'https://unpkg.com',
+        'https://www.googletagmanager.com',
+        'https://www.google-analytics.com',
+        'https://www.google.com',
+        'https://www.gstatic.com',
+        'https://s3.tradingview.com',
+        'https://www.tradingview.com',
+        'https://connect.facebook.net',
+        'https://www.clarity.ms',
+        'https://scripts.clarity.ms'
+    ];
 
-    /**
-     * Will default to self if not overridden
-     *
-     * @var list<string>|string|null
-     */
-    public $defaultSrc;
+    public $styleSrc = [
+        'self',
+        'https://cdn.jsdelivr.net',
+        'https://cdnjs.cloudflare.com',
+        'https://fonts.googleapis.com',
+        'https://maxcdn.bootstrapcdn.com',
+        'https://stackpath.bootstrapcdn.com'
+    ];
 
-    /**
-     * Lists allowed scripts' URLs.
-     *
-     * @var list<string>|string
-     */
-    public $scriptSrc = 'self';
+    public $imageSrc = [
+        'self',
+        'data:',
+        'https://www.google-analytics.com',
+        'https://www.googletagmanager.com',
+        'https://www.facebook.com'
+    ];
 
-    /**
-     * Lists allowed stylesheets' URLs.
-     *
-     * @var list<string>|string
-     */
-    public $styleSrc = 'self';
+    public $connectSrc = [
+        'self',
+        'https://www.google-analytics.com',
+        'https://www.googletagmanager.com',
+        'https://www.facebook.com',
+        'https://s3.tradingview.com',
+        'https://www.tradingview.com'
+    ];
 
-    /**
-     * Defines the origins from which images can be loaded.
-     *
-     * @var list<string>|string
-     */
-    public $imageSrc = 'self';
+    public $fontSrc = [
+        'self',
+        'https://fonts.gstatic.com',
+        'https://fonts.googleapis.com'
+    ];
 
-    /**
-     * Restricts the URLs that can appear in a page's `<base>` element.
-     *
-     * Will default to self if not overridden
-     *
-     * @var list<string>|string|null
-     */
-    public $baseURI;
+    public $frameSrc = [
+        'self',
+        'https://s3.tradingview.com',
+        'https://www.tradingview.com'
+    ];
 
-    /**
-     * Lists the URLs for workers and embedded frame contents
-     *
-     * @var list<string>|string
-     */
-    public $childSrc = 'self';
+    public $objectSrc = 'none';
+    public $baseURI = ['self'];
+    public $formAction = ['self'];
 
-    /**
-     * Limits the origins that you can connect to (via XHR,
-     * WebSockets, and EventSource).
-     *
-     * @var list<string>|string
-     */
-    public $connectSrc = 'self';
-
-    /**
-     * Specifies the origins that can serve web fonts.
-     *
-     * @var list<string>|string
-     */
-    public $fontSrc;
-
-    /**
-     * Lists valid endpoints for submission from `<form>` tags.
-     *
-     * @var list<string>|string
-     */
-    public $formAction = 'self';
-
-    /**
-     * Specifies the sources that can embed the current page.
-     * This directive applies to `<frame>`, `<iframe>`, `<embed>`,
-     * and `<applet>` tags. This directive can't be used in
-     * `<meta>` tags and applies only to non-HTML resources.
-     *
-     * @var list<string>|string|null
-     */
-    public $frameAncestors;
-
-    /**
-     * The frame-src directive restricts the URLs which may
-     * be loaded into nested browsing contexts.
-     *
-     * @var list<string>|string|null
-     */
-    public $frameSrc;
-
-    /**
-     * Restricts the origins allowed to deliver video and audio.
-     *
-     * @var list<string>|string|null
-     */
-    public $mediaSrc;
-
-    /**
-     * Allows control over Flash and other plugins.
-     *
-     * @var list<string>|string
-     */
-    public $objectSrc = 'self';
-
-    /**
-     * @var list<string>|string|null
-     */
-    public $manifestSrc;
-
-    /**
-     * Limits the kinds of plugins a page may invoke.
-     *
-     * @var list<string>|string|null
-     */
-    public $pluginTypes;
-
-    /**
-     * List of actions allowed.
-     *
-     * @var list<string>|string|null
-     */
-    public $sandbox;
-
-    /**
-     * Nonce tag for style
-     */
     public string $styleNonceTag = '{csp-style-nonce}';
-
-    /**
-     * Nonce tag for script
-     */
     public string $scriptNonceTag = '{csp-script-nonce}';
-
-    /**
-     * Replace nonce tag automatically
-     */
-    public bool $autoNonce = true;
-
+    public bool $autoNonce = false; // Disable nonce injection for now
 
     public function __construct()
     {
         parent::__construct();
 
         if (ENVIRONMENT === 'development') {
-            $this->scriptSrc = ['self', 'unsafe-inline'];
+            $this->scriptSrc[] = 'unsafe-inline';
+            $this->styleSrc[]  = 'unsafe-inline';
         }
     }
-
 }

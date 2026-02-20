@@ -40,7 +40,7 @@ class Suggest extends SafeBaseCommand
 
         $client = new OpenAIClient();
         $response = $client->chat([
-            'model' => getenv('OPENAI_MODEL') ?: 'gpt-4o',
+            'model' => env('OPENAI_MODEL') ?: 'gpt-4o',
             'messages' => [['role' => 'user', 'content' => $prompt]]
         ]);
 

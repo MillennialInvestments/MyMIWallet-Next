@@ -17,8 +17,8 @@ class GitHubIssueHelper
             return;
         }
 
-        $token = getenv('GITHUB_TOKEN') ?: '';
-        $repo = getenv('GITHUB_REPOSITORY') ?: '';
+        $token = env('GITHUB_TOKEN') ?: '';
+        $repo = env('GITHUB_REPOSITORY') ?: '';
 
         if ($token !== '' && $repo !== '') {
             $allSucceeded = true;

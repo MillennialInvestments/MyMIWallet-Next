@@ -457,7 +457,7 @@ class AlertsAPIController extends ResourceController
     // {
     //     helper('text'); // For character_limiter()
     
-    //     $apiKey = getenv('MARKETAUX_API_KEY'); // Store in .env or Config
+    //     $apiKey = env('MARKETAUX_API_KEY'); // Store in .env or Config
     //     $url = "https://api.marketaux.com/v1/news/all?symbols={$symbol}&filter_entities=true&limit=5&language=en&api_token={$apiKey}";
     
     //     try {

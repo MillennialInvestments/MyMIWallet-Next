@@ -20,9 +20,9 @@ class TradovateAdminController extends \App\Controllers\BaseController
         parent::initController($request, $response, $logger);
         $this->client = new Client();
         $this->tradovateApiUrl = 'https://demo.tradovateapi.com/v1'; // Use the appropriate API endpoint
-        $this->clientId = getenv('TRADOVATE_CLIENT_ID'); // Ensure these are set in your .env file
-        $this->clientSecret = getenv('TRADOVATE_CLIENT_SECRET');
-        $this->redirectUri = getenv('TRADOVATE_REDIRECT_URI'); // e.g., https://yourdomain.com/tradovate/callback
+        $this->clientId = env('TRADOVATE_CLIENT_ID'); // Ensure these are set in your .env file
+        $this->clientSecret = env('TRADOVATE_CLIENT_SECRET');
+        $this->redirectUri = env('TRADOVATE_REDIRECT_URI'); // e.g., https://yourdomain.com/tradovate/callback
     }
 
     public function login(): RedirectResponse

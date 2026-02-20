@@ -14,7 +14,7 @@ class MyMIFinnhub
 
     public function __construct()
     {
-        $this->apiKey = getenv('FINNHUB_API_KEY') ?? '';
+        $this->apiKey = env('FINNHUB_API_KEY') ?? '';
         $this->client = Services::curlrequest([
             'baseURI' => $this->baseUrl,
             'timeout' => 10,

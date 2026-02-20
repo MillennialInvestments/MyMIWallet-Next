@@ -16,7 +16,7 @@ class InternalTokenFilter implements FilterInterface
             return null;
         }
 
-        $expected = trim((string) getenv('INTERNAL_API_TOKEN'));
+        $expected = trim((string) env('INTERNAL_API_TOKEN'));
         if ($expected === '') {
             $config = config('App');
             $expected = trim((string) ($config->internalApiToken ?? ''));

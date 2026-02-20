@@ -21,7 +21,7 @@ class PriceService
         }
 
         try {
-            $lib = new \App\Libraries\MyMIAlphaVantage(getenv('ALPHAVANTAGE_API_KEY'));
+            $lib = new \App\Libraries\MyMIAlphaVantage(env('ALPHAVANTAGE_API_KEY'));
             $series = $lib->fetchDaily($symbol);
             if (is_array($series)) {
                 $batch = [];

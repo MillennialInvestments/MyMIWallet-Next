@@ -13,8 +13,8 @@ class ZapierService
 
     public function __construct()
     {
-        $this->zapierEndpoint = trim((string) getenv('ZAPIER_APPROVED_WEBHOOK'));
-        $this->openAIKey = trim((string) getenv('OPENAI_API_KEY'));
+        $this->zapierEndpoint = trim((string) env('ZAPIER_APPROVED_WEBHOOK'));
+        $this->openAIKey = trim((string) env('OPENAI_API_KEY'));
         $this->model = new MarketingModel();
     }
 

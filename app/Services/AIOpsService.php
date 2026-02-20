@@ -8,7 +8,7 @@ class AIOpsService
 
     public function __construct()
     {
-        $this->endpoint = getenv('AIOPS_ENDPOINT');
+        $this->endpoint = env('AIOPS_ENDPOINT');
     }
 
     public function generateCommandDefinition(string $text)

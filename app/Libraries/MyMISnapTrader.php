@@ -39,10 +39,10 @@ class MyMISnapTrader
         ?string $redirectUrl = null,
         int $timeout = 30
     ) {
-        $this->apiKey      = $apiKey      ?? (string) getenv('SNAPTRADE_API_KEY');
-        $this->clientId    = $clientId    ?? (string) getenv('SNAPTRADE_CLIENT_ID');
-        $this->base        = rtrim($base  ?? (string) (getenv('SNAPTRADE_BASE_URL') ?: 'https://api.snaptrade.com'), '/');
-        $this->redirectUrl = $redirectUrl ?? (string) getenv('SNAPTRADE_REDIRECT_URL') ?: null;
+        $this->apiKey      = $apiKey      ?? (string) env('SNAPTRADE_API_KEY');
+        $this->clientId    = $clientId    ?? (string) env('SNAPTRADE_CLIENT_ID');
+        $this->base        = rtrim($base  ?? (string) (env('SNAPTRADE_BASE_URL') ?: 'https://api.snaptrade.com'), '/');
+        $this->redirectUrl = $redirectUrl ?? (string) env('SNAPTRADE_REDIRECT_URL') ?: null;
         $this->timeout     = $timeout;
 
         if (!$this->apiKey)   throw new \RuntimeException('SNAPTRADE_API_KEY is not set.');

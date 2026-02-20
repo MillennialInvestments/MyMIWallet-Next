@@ -14,7 +14,7 @@ class MailService
 
     public function __construct(?MailProviderInterface $provider = null, ?MailQueueModel $queue = null)
     {
-        $driver         = strtolower((string) getenv('mail.driver'));
+        $driver         = strtolower((string) env('mail.driver'));
         $this->provider = $provider ?? $this->resolveProvider($driver);
         $this->queue    = $queue ?? new MailQueueModel();
     }
@@ -25,11 +25,11 @@ class MailService
         $provider = strtolower(trim((string) $provider));
 
         if ($provider === '') {
-            $provider = strtolower(trim((string) getenv('mail.provider')));
+            $provider = strtolower(trim((string) env('mail.provider')));
         }
 
         if ($provider === '') {
-            $provider = strtolower(trim((string) getenv('email.protocol')));
+            $provider = strtolower(trim((string) env('email.protocol')));
         }
 
         if ($provider === '') {
@@ -78,8 +78,8 @@ class MailService
             'subject'    => $subject,
             'html'       => $html,
             'text'       => $opts['text'] ?? null,
-            'from_email' => $opts['from_email'] ?? getenv('mail.from.email'),
-            'from_name'  => $opts['from_name'] ?? getenv('mail.from.name'),
+            'from_email' => $opts['from_email'] ?? env('mail.from.email'),
+            'from_name'  => $opts['from_name'] ?? env('mail.from.name'),
             'reply_to'   => $opts['reply_to'] ?? null,
         ];
 

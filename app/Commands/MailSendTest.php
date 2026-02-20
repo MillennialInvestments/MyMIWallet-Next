@@ -58,8 +58,8 @@ class MailSendTest extends SafeBaseCommand
             $html = view('emails/layout', [
                 'title' => $subject,
                 'content' => '<p>This is a generic MyMI Wallet test email.</p>',
-                'logoUrl' => rtrim((string) (getenv('APP_URL') ?: site_url()), '/') . '/assets/images/MyMI-Wallet-Logo-Black.png',
-                'appUrl' => rtrim((string) (getenv('APP_URL') ?: site_url()), '/'),
+                'logoUrl' => rtrim((string) (env('APP_URL') ?: site_url()), '/') . '/assets/images/MyMI-Wallet-Logo-Black.png',
+                'appUrl' => rtrim((string) (env('APP_URL') ?: site_url()), '/'),
                 'supportEmail' => 'support@mymiwallet.com',
                 'preheader' => $subject,
             ]);

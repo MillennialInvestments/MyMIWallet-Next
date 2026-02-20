@@ -250,16 +250,16 @@ class AiOpsAPIController extends BaseController
     protected function getWebhookUrl(string $jobKey): ?string
     {
         return match ($jobKey) {
-            'gap_sync'         => getenv('AI_N8N_WEBHOOK_GAP_SYNC'),
-            'marketing_drafts' => getenv('AI_N8N_WEBHOOK_MARKETING_DRAFTS'),
-            'pr_review'        => getenv('AI_N8N_WEBHOOK_PR_REVIEW'),
+            'gap_sync'         => env('AI_N8N_WEBHOOK_GAP_SYNC'),
+            'marketing_drafts' => env('AI_N8N_WEBHOOK_MARKETING_DRAFTS'),
+            'pr_review'        => env('AI_N8N_WEBHOOK_PR_REVIEW'),
             default            => null,
         };
     }
 
     protected function signPayload(array $payload): string
     {
-        $secret = getenv('AI_OPS_SHARED_SECRET') ?: '';
+        $secret = env('AI_OPS_SHARED_SECRET') ?: '';
         $body   = json_encode($payload);
 
         return 'sha256=' . hash_hmac('sha256', $body, $secret);
@@ -270,7 +270,7 @@ class AiOpsAPIController extends BaseController
         if (! str_starts_with($headerSignature, 'sha256=')) {
             return false;
         }
-        $secret = getenv('AI_OPS_SHARED_SECRET') ?: '';
+        $secret = env('AI_OPS_SHARED_SECRET') ?: '';
         $expected = 'sha256=' . hash_hmac('sha256', $rawBody, $secret);
 
         return hash_equals($expected, $headerSignature);

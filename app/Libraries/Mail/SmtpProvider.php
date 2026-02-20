@@ -9,8 +9,8 @@ class SmtpProvider implements MailProviderInterface
         $email  = service('email');
         $config = config('Email');
 
-        $fromEmail = $payload['from_email'] ?? getenv('mail.from.email') ?? getenv('email.fromEmail') ?? $config->fromEmail;
-        $fromName  = $payload['from_name'] ?? getenv('mail.from.name') ?? getenv('email.fromName') ?? $config->fromName;
+        $fromEmail = $payload['from_email'] ?? env('mail.from.email') ?? env('email.fromEmail') ?? $config->fromEmail;
+        $fromName  = $payload['from_name'] ?? env('mail.from.name') ?? env('email.fromName') ?? $config->fromName;
 
         $email->setFrom($fromEmail, $fromName);
         $email->setTo($payload['to'] ?? '');

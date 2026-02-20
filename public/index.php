@@ -1,39 +1,38 @@
 <?php
 
 /**
- * CI4 Logger - Settings
- * Audited: 2026-02-18
- * Purpose: Applies front-controller level error display/reporting and early request hardening.
+ * MyMI Wallet Front Controller
+ * Hardened + DreamHost-Compatible + CI4 Safe
  */
+
+// ---------------------------------------------------------------------
+// Basic PHP Hardening
+// ---------------------------------------------------------------------
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+ini_set('memory_limit', '768M');
 
-// Load environment from .env
 if (! headers_sent()) {
     header('X-MyMI-FrontController: 1');
 }
 
-use App\Services\AutoloadAuditService;
-use CodeIgniter\Boot;
-use Config\Paths;
-use Dotenv\Dotenv;
+// ---------------------------------------------------------------------
+// PHP Version Enforcement
+// ---------------------------------------------------------------------
 
-/*
-|--------------------------------------------------------------------------
-| PHP VERSION CHECK
-|--------------------------------------------------------------------------
-*/
 $minPhpVersion = '8.2';
 
 if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {
-    header('HTTP/1.1 503 Service Unavailable.', true, 503);
+    header('HTTP/1.1 503 Service Unavailable', true, 503);
     echo "PHP {$minPhpVersion}+ required. Current: " . PHP_VERSION;
     exit(1);
 }
 
-ini_set('memory_limit', '768M');
+// ---------------------------------------------------------------------
+// Path Setup
+// ---------------------------------------------------------------------
 
 define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
 
@@ -43,15 +42,16 @@ if (getcwd() . DIRECTORY_SEPARATOR !== FCPATH) {
 
 require FCPATH . '../vendor/autoload.php';
 
-// $dotenv = Dotenv::createImmutable(dirname(__DIR__));
-// $dotenv->safeLoad();
+// ---------------------------------------------------------------------
+// Environment Detection
+// ---------------------------------------------------------------------
 
-/*
-|--------------------------------------------------------------------------
-| ENVIRONMENT
-|--------------------------------------------------------------------------
-*/
-$environment = $_ENV['CI_ENVIRONMENT'] ?? $_SERVER['CI_ENVIRONMENT'] ?? getenv('CI_ENVIRONMENT') ?: 'production';
+$environment =
+    $_ENV['CI_ENVIRONMENT']
+    ?? $_SERVER['CI_ENVIRONMENT']
+    ?? getenv('CI_ENVIRONMENT')
+    ?: 'production';
+
 $_SERVER['CI_ENVIRONMENT'] = $environment;
 defined('ENVIRONMENT') || define('ENVIRONMENT', $environment);
 
@@ -59,70 +59,90 @@ if (ENVIRONMENT === 'development') {
     defined('CI_DEBUG') || define('CI_DEBUG', true);
 }
 
+// ---------------------------------------------------------------------
+// EARLY URI HARDENING
+// (Allow CI internal framework routes like debugbar)
+// ---------------------------------------------------------------------
 
-/*
-|--------------------------------------------------------------------------
-| EARLY URI HARDENING (Defense in depth)
-|--------------------------------------------------------------------------
-*/
-$uriPath = ltrim((string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH), '/');
+$requestUri = $_SERVER['REQUEST_URI'] ?? '';
+$uriPath = ltrim((string) parse_url($requestUri, PHP_URL_PATH), '/');
 $decoded = rawurldecode('/' . $uriPath);
 
-if (
-    str_contains($decoded, '(:segment)') ||
-    str_contains($decoded, '(:num)') ||
-    str_contains($decoded, '(:any)')
-) {
-    header('HTTP/1.1 404 Not Found', true, 404);
-    exit(1);
+// Allow internal CI framework requests
+$frameworkBypass =
+    isset($_GET['debugbar']) ||
+    str_contains($requestUri, 'writable/debugbar');
+
+// Only apply hardening if not internal framework request
+if (! $frameworkBypass) {
+
+    // Block unresolved CI placeholders
+    if (
+        str_contains($decoded, '(:segment)') ||
+        str_contains($decoded, '(:num)') ||
+        str_contains($decoded, '(:any)')
+    ) {
+        header('HTTP/1.1 404 Not Found', true, 404);
+        exit(1);
+    }
+
+    // Block unwanted direct asset access
+    if (
+        $uriPath !== '' &&
+        (
+            str_starts_with($uriPath, 'assets/') ||
+            str_ends_with($uriPath, '.map') ||
+            str_ends_with($uriPath, '.xml')
+        )
+    ) {
+        header('HTTP/1.1 404 Not Found', true, 404);
+        exit(1);
+    }
 }
 
-if (
-    $uriPath !== '' &&
-    (
-        str_starts_with($uriPath, 'assets/') ||
-        str_ends_with($uriPath, '.map') ||
-        str_ends_with($uriPath, '.xml')
-    )
-) {
-    header('HTTP/1.1 404 Not Found', true, 404);
-    exit(1);
-}
+// ---------------------------------------------------------------------
+// BOOTSTRAP CODEIGNITER
+// ---------------------------------------------------------------------
 
-/*
-|--------------------------------------------------------------------------
-| BOOTSTRAP CI
-|--------------------------------------------------------------------------
-*/
 try {
+
     require FCPATH . '../app/Config/Paths.php';
-    $paths = new Paths();
+    $paths = new \Config\Paths();
 
     require $paths->systemDirectory . '/Boot.php';
 
-    $exitCode = Boot::bootWeb($paths);
+    $exitCode = \CodeIgniter\Boot::bootWeb($paths);
+
 } catch (\CodeIgniter\Exceptions\PageNotFoundException $e) {
-    $requestUri = $_SERVER['REQUEST_URI'] ?? '/';
+
     error_log('404: ' . $requestUri);
     throw $e;
+
 } catch (\Throwable $e) {
+
     error_log('EMERGENCY BOOT FAILURE: ' . $e->getMessage());
-    \App\Libraries\EmergencyLogger::write('BOOT FAILURE: ' . $e->getMessage(), [
-        'trace' => $e->getTraceAsString(),
-    ]);
+
+    if (class_exists(\App\Libraries\EmergencyLogger::class)) {
+        \App\Libraries\EmergencyLogger::write(
+            'BOOT FAILURE: ' . $e->getMessage(),
+            ['trace' => $e->getTraceAsString()]
+        );
+    }
+
     http_response_code(500);
     echo 'System temporarily unavailable.';
     exit(1);
 }
 
-/*
-|--------------------------------------------------------------------------
-| POST-BOOT DEV AUDIT
-|--------------------------------------------------------------------------
-*/
-if ((getenv('CI_ENVIRONMENT') ?: 'production') !== 'production') {
+// ---------------------------------------------------------------------
+// POST-BOOT DEVELOPMENT AUDIT
+// ---------------------------------------------------------------------
+
+if (ENVIRONMENT !== 'production') {
     try {
-        AutoloadAuditService::audit();
+        if (class_exists(\App\Services\AutoloadAuditService::class)) {
+            \App\Services\AutoloadAuditService::audit();
+        }
     } catch (\Throwable $e) {
         error_log('AutoloadAuditService failed: ' . $e->getMessage());
     }

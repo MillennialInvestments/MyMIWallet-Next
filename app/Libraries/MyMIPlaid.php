@@ -20,7 +20,7 @@ class MyMIPlaid
     {
         $cfg = config('APISettings');
 
-        $this->env = strtolower(getenv('PLAID_ENVIRONMENT') ?: ($cfg->plaidEnvironment ?? 'production'));
+        $this->env = strtolower(env('PLAID_ENVIRONMENT') ?: ($cfg->plaidEnvironment ?? 'production'));
         $this->baseUrl = match ($this->env) {
         'production'  => 'https://production.plaid.com',
         'development' => 'https://development.plaid.com',
@@ -28,15 +28,15 @@ class MyMIPlaid
         };
 
 
-        $this->clientId = (string) ($cfg->plaidClientID ?? getenv('PLAID_CLIENT_ID') ?? '');
+        $this->clientId = (string) ($cfg->plaidClientID ?? env('PLAID_CLIENT_ID') ?? '');
         // pick the correct secret for the active environment
-        $this->clientId = (string) (getenv('PLAID_CLIENT_ID') ?: ($cfg->plaidClientID ?? ''));
+        $this->clientId = (string) (env('PLAID_CLIENT_ID') ?: ($cfg->plaidClientID ?? ''));
         $this->secret   = $this->env === 'sandbox'
-            ? (string) (getenv('PLAID_SANDBOX_SECRET') ?: ($cfg->plaidSandboxSecret ?? (getenv('PLAID_SECRET') ?: ($cfg->plaidSecret ?? ''))))
-            : (string) (getenv('PLAID_SECRET') ?: ($cfg->plaidSecret ?? ''));
+            ? (string) (env('PLAID_SANDBOX_SECRET') ?: ($cfg->plaidSandboxSecret ?? (env('PLAID_SECRET') ?: ($cfg->plaidSecret ?? ''))))
+            : (string) (env('PLAID_SECRET') ?: ($cfg->plaidSecret ?? ''));
 
-        $prods = getenv('PLAID_PRODUCTS') ?: ($cfg->plaidProducts ?? 'auth,transactions');
-        $codes = getenv('PLAID_COUNTRY_CODES') ?: ($cfg->plaidCountryCodes ?? 'US');
+        $prods = env('PLAID_PRODUCTS') ?: ($cfg->plaidProducts ?? 'auth,transactions');
+        $codes = env('PLAID_COUNTRY_CODES') ?: ($cfg->plaidCountryCodes ?? 'US');
 
         $this->products     = array_values(array_filter(array_map('trim', is_array($prods) ? $prods : explode(',', (string)$prods))));
         $this->countryCodes = array_values(array_filter(array_map('trim', is_array($codes) ? $codes : explode(',', (string)$codes))));

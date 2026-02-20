@@ -15,7 +15,7 @@ class Compare extends SafeBaseCommand
     public function run(array $params)
     {
         $prodBase = rtrim((string)($params[0] ?? env('app.baseURL')), '/');
-        $stagBase = rtrim((string)($params[1] ?? getenv('AIOPS_STAGING_BASE_URL')), '/');
+        $stagBase = rtrim((string)($params[1] ?? env('AIOPS_STAGING_BASE_URL')), '/');
 
         if (!$prodBase || !$stagBase) {
             CLI::error('Provide prod + staging base URLs. Example: php spark aiops:routes:compare https://mymiwallet.com https://dev.mymiwallet.com');

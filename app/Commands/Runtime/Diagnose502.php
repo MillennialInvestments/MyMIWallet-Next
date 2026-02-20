@@ -411,6 +411,6 @@ class Diagnose502 extends \App\Commands\SafeBaseCommand
 
     private function homeDir(): string
     {
-        return rtrim(getenv('HOME') ?: '/home/mymiteam', '/');
+        return rtrim(env('HOME') ?: '/home/mymiteam', '/');
     }
 }

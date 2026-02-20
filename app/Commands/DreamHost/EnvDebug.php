@@ -23,7 +23,7 @@ class EnvDebug extends SafeBaseCommand
         ];
 
         foreach ($vars as $var) {
-            CLI::write($var . ' = ' . (getenv($var) ?: 'NOT SET'));
+            CLI::write($var . ' = ' . (env($var) ?: 'NOT SET'));
         }
     }
 }

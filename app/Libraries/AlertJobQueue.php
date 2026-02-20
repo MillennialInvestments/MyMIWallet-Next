@@ -12,8 +12,8 @@ class AlertJobQueue
     public function __construct(?AlertJobModel $model = null)
     {
         $this->jobs = $model ?? new AlertJobModel();
-        $this->batchSize = (int) (getenv('ALERT_QUEUE_BATCH_SIZE') ?: 20);
-        $this->maxAttempts = (int) (getenv('ALERT_QUEUE_MAX_ATTEMPTS') ?: 3);
+        $this->batchSize = (int) (env('ALERT_QUEUE_BATCH_SIZE') ?: 20);
+        $this->maxAttempts = (int) (env('ALERT_QUEUE_MAX_ATTEMPTS') ?: 3);
     }
 
     public function enqueue(string $type, array $payload = [], string $status = 'pending'): int

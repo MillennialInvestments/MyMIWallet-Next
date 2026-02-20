@@ -63,7 +63,7 @@ class MyMIRobinhood implements ExchangeConnectorInterface
             function($k){ return function_exists('env') ? env($k) : null; },
             function($k){ return $_ENV[$k]   ?? null; },
             function($k){ return $_SERVER[$k]?? null; },
-            function($k){ $v = getenv($k); return $v === false ? null : $v; },
+            function($k){ $v = env($k); return $v === false ? null : $v; },
             function($k){ return defined($k) ? constant($k) : null; },
         ];
         foreach ($candidates as $fn) {

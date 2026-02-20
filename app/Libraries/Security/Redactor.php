@@ -58,7 +58,7 @@ final class Redactor
     /** Keyed, consistent hash (for searchable digests) */
     public static function kHash(string $plaintext): string
     {
-        $env = getenv('MYMI_PII_HASH_KEY');
+        $env = env('MYMI_PII_HASH_KEY');
         $key = str_starts_with($env,'base64:') ? base64_decode(substr($env,7)) : (string)$env;
         return hash_hmac('sha256', $plaintext, $key);
     }

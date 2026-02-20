@@ -41,12 +41,12 @@ class FetchCommands extends SafeBaseCommand
             return EXIT_ERROR;
         }
 
-        $host          = trim((string) getenv('MYMI_OPS_IMAP_HOST'));
-        $user          = trim((string) getenv('MYMI_OPS_IMAP_USER'));
-        $pass          = trim((string) getenv('MYMI_OPS_IMAP_PASS'));
-        $allowed       = array_filter(array_map('trim', explode(',', (string) getenv('MYMI_OPS_ALLOWED_SENDERS'))));
-        $sharedToken   = trim((string) getenv('MYMI_OPS_EMAIL_TOKEN'));
-        $mailboxFolder = getenv('MYMI_OPS_IMAP_MAILBOX') ?: 'INBOX';
+        $host          = trim((string) env('MYMI_OPS_IMAP_HOST'));
+        $user          = trim((string) env('MYMI_OPS_IMAP_USER'));
+        $pass          = trim((string) env('MYMI_OPS_IMAP_PASS'));
+        $allowed       = array_filter(array_map('trim', explode(',', (string) env('MYMI_OPS_ALLOWED_SENDERS'))));
+        $sharedToken   = trim((string) env('MYMI_OPS_EMAIL_TOKEN'));
+        $mailboxFolder = env('MYMI_OPS_IMAP_MAILBOX') ?: 'INBOX';
 
         if ($host === '' || $user === '' || $pass === '') {
             CLI::error('IMAP credentials are not configured.');

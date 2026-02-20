@@ -20,7 +20,7 @@ class AlphaVantageProvider implements MarketDataProviderInterface
         $interval = $this->resolveInterval($timeframe);
         $isDaily = $interval === 'daily';
 
-        $apiKey = config('APISettings')->alphaVantageApiKey ?? getenv('ALPHA_VANTAGE_KEY');
+        $apiKey = config('APISettings')->alphaVantageApiKey ?? env('ALPHA_VANTAGE_KEY');
         if (! $apiKey) {
             return [
                 'status' => 'error',

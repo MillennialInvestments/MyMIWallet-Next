@@ -5,7 +5,7 @@ class CaptchaService
 {
     public static function verify(?string $token, ?string $ip = null): bool
     {
-        $secret = getenv('HCAPTCHA_SECRET') ?: '';
+        $secret = env('HCAPTCHA_SECRET') ?: '';
         if (! $secret || ! $token) {
             return false;
         }

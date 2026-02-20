@@ -1027,7 +1027,7 @@ class ManagementController extends UserController
 
     public function runDailyAlphaVantageDataPipeline() {
         $symbols = $this->alertsModel->getTopWatchlistSymbols();
-        $apikey = getenv('ALPHA_VANTAGE_KEY');
+        $apikey = env('ALPHA_VANTAGE_KEY');
     
         foreach ($symbols as $symbol) {
             $this->fetchAlphaVantageNewsForTradeAlerts($symbol['symbol'], $apikey);
@@ -5653,7 +5653,7 @@ class MyMIMarketing
         
         $response = $this->client->get('https://www.marketaux.com/api/v1/news/all', [
             'query' => [
-                'api_token' => getenv('marketaux.apiKey'),
+                'api_token' => env('marketaux.apiKey'),
                 'language'  => 'en',
                 'country'   => 'us',
                 'published_after' => date('Y-m-d\TH:i:s\Z', strtotime('-1 hour')),

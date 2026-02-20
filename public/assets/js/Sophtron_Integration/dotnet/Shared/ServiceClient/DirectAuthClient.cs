@@ -7,8 +7,8 @@ namespace SophtronClient
 {
     public class DirectAuthClient : IAuthProvider
     {
-        private string UserId = Environment.GetEnvironmentVariable("SophtronApiUserId");
-        private string AccessKey = Environment.GetEnvironmentVariable("SophtronApiUserSecret");
+        private string UserId = Environment.environmentVariable("SophtronApiUserId");
+        private string AccessKey = Environment.environmentVariable("SophtronApiUserSecret");
 
         public Task<string> GetAuthPhrase(string httpMethod, string url)
         {

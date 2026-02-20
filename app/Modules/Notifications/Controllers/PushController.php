@@ -12,7 +12,7 @@ class PushController extends BaseController
     {
         return $this->response->setJSON([
             'status' => 'success',
-            'data'   => ['vapidPublicKey' => getenv('VAPID_PUBLIC_KEY') ?: ''],
+            'data'   => ['vapidPublicKey' => env('VAPID_PUBLIC_KEY') ?: ''],
             'csrf'   => csrf_hash(),
         ]);
     }

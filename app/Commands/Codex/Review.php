@@ -20,7 +20,7 @@ class Review extends SafeBaseCommand
         [$args, $flags] = $this->parseParams($params);
         $dryRun = $this->resolveDryRun($flags);
 
-        $relativeDir = getenv('REVIEW_OUTPUT_DIR') ?: 'docs/codex/reviews';
+        $relativeDir = env('REVIEW_OUTPUT_DIR') ?: 'docs/codex/reviews';
         $outputDir   = rtrim(ROOTPATH . ltrim($relativeDir, '/'), '/');
         $docsRoot    = rtrim(ROOTPATH . 'docs', '/');
 
@@ -30,7 +30,7 @@ class Review extends SafeBaseCommand
             return EXIT_ERROR;
         }
 
-        $lookback  = (int) (getenv('REVIEW_LOOKBACK_COMMITS') ?: 10);
+        $lookback  = (int) (env('REVIEW_LOOKBACK_COMMITS') ?: 10);
         $today     = date('Y-m-d');
 
         if (! is_dir($outputDir) && ! mkdir($outputDir, 0775, true) && ! is_dir($outputDir)) {

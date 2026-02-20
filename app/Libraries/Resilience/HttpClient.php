@@ -13,8 +13,8 @@ class HttpClient
         $body = json_encode($data, JSON_UNESCAPED_SLASHES);
         $hdrs = array_merge(['Content-Type' => 'application/json'], $headers);
         $attempts = 0;
-        $max = (int)(getenv('QUEUE_MAX_ATTEMPTS') ?: 5);
-        $base = (int)(getenv('QUEUE_BACKOFF_SECONDS') ?: 10);
+        $max = (int)(env('QUEUE_MAX_ATTEMPTS') ?: 5);
+        $base = (int)(env('QUEUE_BACKOFF_SECONDS') ?: 10);
 
         while ($attempts < $max) {
             $attempts++;

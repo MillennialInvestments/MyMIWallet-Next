@@ -30,7 +30,7 @@ class OpenAIClient
             ];
         }
 
-        $apiKey = getenv('OPENAI_API_KEY');
+        $apiKey = env('OPENAI_API_KEY');
         if (!$apiKey) {
             return [
                 'ok' => false,
@@ -42,7 +42,7 @@ class OpenAIClient
         // 3️⃣ Rate limiting (prevent burst)
         usleep(500000); // 0.5s pause
 
-        $apiUrl = getenv('OPENAI_API_URL') 
+        $apiUrl = env('OPENAI_API_URL') 
             ?: (config('Codex')->apiUrl ?? 'https://api.openai.com/v1/chat/completions');
 
         $ch = curl_init($apiUrl);

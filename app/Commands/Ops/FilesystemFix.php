@@ -54,7 +54,7 @@ class FilesystemFix extends SafeBaseCommand
 
     private function isCi(): bool
     {
-        return (getenv('CI') ?: '') !== '' || (getenv('GITHUB_ACTIONS') ?: '') !== '';
+        return (env('CI') ?: '') !== '' || (env('GITHUB_ACTIONS') ?: '') !== '';
     }
 
     private function openAutoPr(array $payload): void

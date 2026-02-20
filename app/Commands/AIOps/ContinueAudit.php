@@ -61,7 +61,7 @@ File:
 ";
 
             $payload = [
-                'model' => getenv('OPENAI_MODEL') ?: 'gpt-4o',
+                'model' => env('OPENAI_MODEL') ?: 'gpt-4o',
                 'messages' => [
                     ['role' => 'user', 'content' => $prompt]
                 ]

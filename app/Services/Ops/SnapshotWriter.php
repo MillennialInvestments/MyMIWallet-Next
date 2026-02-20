@@ -67,8 +67,8 @@ class SnapshotWriter
             return ['Dry-run: webhook dispatch skipped.'];
         }
 
-        $discord = getenv('OPS_APP_UPDATE_DISCORD_WEBHOOK') ?: '';
-        $webhook = getenv('OPS_APP_UPDATE_WEBHOOK_URL') ?: '';
+        $discord = env('OPS_APP_UPDATE_DISCORD_WEBHOOK') ?: '';
+        $webhook = env('OPS_APP_UPDATE_WEBHOOK_URL') ?: '';
 
         if ($discord) {
             $warnings = array_merge($warnings, $this->postDiscord($discord, $summary));

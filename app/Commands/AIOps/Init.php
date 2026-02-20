@@ -99,7 +99,7 @@ class Init extends SafeBaseCommand
 
     private function assertEnvSecret(string $key): bool
     {
-        $value = trim((string) getenv($key));
+        $value = trim((string) env($key));
         if ($value === '') {
             CLI::error("Missing required environment value: {$key}");
             return false;

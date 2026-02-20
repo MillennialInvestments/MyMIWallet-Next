@@ -26,8 +26,8 @@ class MyMINews {
 
         /** @var APISettings $config */
         $config = config('APISettings');
-        $this->newsApiKey = getenv('NEWSAPI_ORG_API_KEY')
-            ?: getenv('NEWSAPI_AI_KEY')
+        $this->newsApiKey = env('NEWSAPI_ORG_API_KEY')
+            ?: env('NEWSAPI_AI_KEY')
             ?: ($config->newsapiOrgApiKey ?? '');
         $this->finnhub = service('myMIFinnhub');
     }
@@ -82,7 +82,7 @@ class MyMINews {
      
     public function fetchTopMarketAuxNews($limit = 10)
     {
-        $apiKey = getenv('MARKETAUX_API_KEY'); // Make sure this is set in Config\APIs
+        $apiKey = env('MARKETAUX_API_KEY'); // Make sure this is set in Config\APIs
         $url = "https://api.marketaux.com/v1/news/all?countries=us&limit={$limit}&api_token={$apiKey}";
     
         $client = \Config\Services::curlrequest();

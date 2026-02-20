@@ -20,7 +20,7 @@ class Crypto
 
     private static function key(): string
     {
-        $raw = getenv('BACKUP_KMS_KEY') ?: '';
+        $raw = env('BACKUP_KMS_KEY') ?: '';
         if (str_starts_with($raw, 'base64:')) {
             $raw = base64_decode(substr($raw, 7));
         }

@@ -37,14 +37,14 @@ class EmailScan extends SafeBaseCommand
             return EXIT_ERROR;
         }
 
-        $host = trim((string) getenv('MYMI_ALERTS_IMAP_HOST'));
-        $user = trim((string) getenv('MYMI_ALERTS_IMAP_USER'));
-        $pass = trim((string) getenv('MYMI_ALERTS_IMAP_PASS'));
-        $mailbox = trim((string) $this->resolveStringOption($params, 'mailbox', getenv('MYMI_ALERTS_IMAP_MAILBOX') ?: 'INBOX'));
-        $from = trim((string) $this->resolveStringOption($params, 'from', getenv('MYMI_ALERTS_IMAP_FROM') ?: 'alerts@mymiwallet.com'));
+        $host = trim((string) env('MYMI_ALERTS_IMAP_HOST'));
+        $user = trim((string) env('MYMI_ALERTS_IMAP_USER'));
+        $pass = trim((string) env('MYMI_ALERTS_IMAP_PASS'));
+        $mailbox = trim((string) $this->resolveStringOption($params, 'mailbox', env('MYMI_ALERTS_IMAP_MAILBOX') ?: 'INBOX'));
+        $from = trim((string) $this->resolveStringOption($params, 'from', env('MYMI_ALERTS_IMAP_FROM') ?: 'alerts@mymiwallet.com'));
         $since = trim((string) $this->resolveStringOption($params, 'since', ''));
-        $lookbackDays = $this->resolveIntOption($params, 'lookback-days', (int) (getenv('MYMI_ALERTS_IMAP_LOOKBACK_DAYS') ?: 2));
-        $limit = $this->resolveIntOption($params, 'limit', (int) (getenv('MYMI_ALERTS_IMAP_LIMIT') ?: 0));
+        $lookbackDays = $this->resolveIntOption($params, 'lookback-days', (int) (env('MYMI_ALERTS_IMAP_LOOKBACK_DAYS') ?: 2));
+        $limit = $this->resolveIntOption($params, 'limit', (int) (env('MYMI_ALERTS_IMAP_LIMIT') ?: 0));
 
         if ($host === '' || $user === '' || $pass === '') {
             CLI::error('IMAP credentials are not configured.');

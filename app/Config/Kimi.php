@@ -16,9 +16,9 @@ class Kimi extends BaseConfig
     {
         parent::__construct();
 
-        $this->apiKey  = (string) (getenv('KIMI_API_KEY') ?: $this->apiKey);
-        $this->apiBase = rtrim((string) (getenv('KIMI_API_BASE') ?: $this->apiBase), '/');
-        $this->model   = (string) (getenv('KIMI_MODEL') ?: $this->model);
+        $this->apiKey  = (string) (env('KIMI_API_KEY') ?: $this->apiKey);
+        $this->apiBase = rtrim((string) (env('KIMI_API_BASE') ?: $this->apiBase), '/');
+        $this->model   = (string) (env('KIMI_MODEL') ?: $this->model);
 
         $this->headers = [
             'Content-Type'  => 'application/json',

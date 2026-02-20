@@ -18,10 +18,10 @@ class RiskBudgetModel extends Model
         }
         $payload = [
             'user_id'=>$userId,
-            'max_position_pct'=> getenv('FIN_DEFAULT_MAX_POSITION_PCT') ?: 25,
-            'max_asset_class_pct'=> getenv('FIN_DEFAULT_MAX_ASSET_CLASS_PCT') ?: 60,
-            'max_daily_loss_pct'=> getenv('FIN_DEFAULT_MAX_DAILY_LOSS_PCT') ?: 5,
-            'max_drawdown_pct'=> getenv('FIN_DEFAULT_MAX_DRAWDOWN_PCT') ?: 30,
+            'max_position_pct'=> env('FIN_DEFAULT_MAX_POSITION_PCT') ?: 25,
+            'max_asset_class_pct'=> env('FIN_DEFAULT_MAX_ASSET_CLASS_PCT') ?: 60,
+            'max_daily_loss_pct'=> env('FIN_DEFAULT_MAX_DAILY_LOSS_PCT') ?: 5,
+            'max_drawdown_pct'=> env('FIN_DEFAULT_MAX_DRAWDOWN_PCT') ?: 30,
             'created_at'=> date('Y-m-d H:i:s'),
         ];
         $id = $this->insert($payload);

@@ -46,9 +46,9 @@ class CiPrepare extends SafeBaseCommand
 
         $report = [
             'timestamp' => date('c'),
-            'ci' => strtolower((string) getenv('CI')) === 'true',
-            'ci_environment' => getenv('CI_ENVIRONMENT') ?: null,
-            'environment' => getenv('ENVIRONMENT') ?: null,
+            'ci' => strtolower((string) env('CI')) === 'true',
+            'ci_environment' => env('CI_ENVIRONMENT') ?: null,
+            'environment' => env('ENVIRONMENT') ?: null,
             'paths' => $created,
             'factory_cache_cleared' => true,
             'php_version' => PHP_VERSION,

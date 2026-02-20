@@ -12,10 +12,10 @@ class RedisService
     {
         $this->client = new Client([
             'scheme'   => 'tcp',
-            'host'     => getenv('redis.host') ?: '127.0.0.1',
-            'port'     => (int) (getenv('redis.port') ?: 6380),
-            'password' => getenv('redis.password') ?: null,
-            'database' => (int) (getenv('redis.database') ?: 0),
+            'host'     => env('redis.host') ?: '127.0.0.1',
+            'port'     => (int) (env('redis.port') ?: 6380),
+            'password' => env('redis.password') ?: null,
+            'database' => (int) (env('redis.database') ?: 0),
         ]);
     }
 

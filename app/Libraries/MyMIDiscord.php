@@ -402,7 +402,7 @@ class MyMIDiscord
             return true;
         }
 
-        // $webhook = $chan['webhook_url'] ?: ($this->cfg->defaultWebhook ?: getenv('DISCORD_DEFAULT_WEBHOOK') ?: '');
+        // $webhook = $chan['webhook_url'] ?: ($this->cfg->defaultWebhook ?: env('DISCORD_DEFAULT_WEBHOOK') ?: '');
         $webhook = $this->resolveChannelWebhook($chan);
         if ($webhook) {
             if ($this->cfg->storeWebhookMsgId && strpos($webhook, 'wait=true') === false) {
@@ -486,27 +486,27 @@ class MyMIDiscord
 
     protected function hydrateConfigFromEnv(): void
     {
-        $envTz = getenv('DISCORD_TIMEZONE');
+        $envTz = env('DISCORD_TIMEZONE');
         if (!empty($envTz)) {
             $this->cfg->timezone = $envTz;
         }
 
-        $envWebhook = getenv('DISCORD_DEFAULT_WEBHOOK');
+        $envWebhook = env('DISCORD_DEFAULT_WEBHOOK');
         if (!empty($envWebhook)) {
             $this->cfg->defaultWebhook = $envWebhook;
         }
 
-        $envMinGap = getenv('DISCORD_MIN_SECONDS_BETWEEN_POSTS');
+        $envMinGap = env('DISCORD_MIN_SECONDS_BETWEEN_POSTS');
         if ($envMinGap !== false && $envMinGap !== null && $envMinGap !== '') {
             $this->cfg->minSecondsBetweenPosts = (int) $envMinGap;
         }
 
-        $envQuietStart = getenv('DISCORD_QUIET_HOURS_START');
+        $envQuietStart = env('DISCORD_QUIET_HOURS_START');
         if (!empty($envQuietStart)) {
             $this->cfg->quietHoursStart = $envQuietStart;
         }
 
-        $envQuietEnd = getenv('DISCORD_QUIET_HOURS_END');
+        $envQuietEnd = env('DISCORD_QUIET_HOURS_END');
         if (!empty($envQuietEnd)) {
             $this->cfg->quietHoursEnd = $envQuietEnd;
         }
@@ -523,7 +523,7 @@ class MyMIDiscord
             return $this->cfg->channelWebhooks[$key];
         }
 
-        return $this->cfg->defaultWebhook ?: (string) getenv('DISCORD_DEFAULT_WEBHOOK') ?: '';
+        return $this->cfg->defaultWebhook ?: (string) env('DISCORD_DEFAULT_WEBHOOK') ?: '';
     }
 
     protected function resolveChannelId(array $chan): string
@@ -542,7 +542,7 @@ class MyMIDiscord
 
     public function apiGet(string $endpoint)
     {
-        $token = getenv('DISCORD_BOT_TOKEN');
+        $token = env('DISCORD_BOT_TOKEN');
 
         if (empty($token)) {
             log_message('error', 'MyMIDiscord::apiGet missing DISCORD_BOT_TOKEN env var.');

@@ -16,22 +16,22 @@ class Logger extends BaseConfig
     public array $handlers = [
         FileHandler::class => [
             'class' => FileHandler::class,
-            'levels' => ['critical', 'error', 'warning', 'info', 'debug'],
-            'handles' => ['critical', 'error', 'warning', 'info', 'debug'],
+            'handles' => ['debug', 'info'], // lightweight only
             'path' => WRITEPATH . 'logs/',
             'fileExtension' => 'php',
             'filePermissions' => 0664,
         ],
+
         DatabaseLoggerHandler::class => [
             'class' => DatabaseLoggerHandler::class,
-            'levels' => ['critical', 'error', 'warning'],
-            'handles' => ['critical', 'error', 'warning'],
+            'handles' => ['critical', 'error', 'warning'], // production alerts
             'fallbackPath' => WRITEPATH . 'logs/',
         ],
+
         UnifiedLoggerHandler::class => [
             'class' => UnifiedLoggerHandler::class,
-            'levels' => ['critical', 'error', 'warning', 'info', 'debug'],
-            'handles' => ['critical', 'error', 'warning', 'info', 'debug'],
+            'handles' => [], // disable until audited
         ],
+
     ];
 }

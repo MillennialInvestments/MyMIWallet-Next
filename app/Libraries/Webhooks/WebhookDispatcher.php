@@ -8,7 +8,7 @@ class WebhookDispatcher
 {
     public static function enqueue(string $url, array $payload, array $extraHeaders = []): int
     {
-        $secret = getenv('MYMI_OUTBOUND_WEBHOOK_SECRET') ?: '';
+        $secret = env('MYMI_OUTBOUND_WEBHOOK_SECRET') ?: '';
         $body   = json_encode($payload, JSON_UNESCAPED_SLASHES);
         $sig    = 'sha256=' . hash_hmac('sha256', $body, $secret);
 

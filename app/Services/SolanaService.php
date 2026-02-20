@@ -31,15 +31,15 @@ class SolanaService
     public function __construct()
     {
         // Initialize endpoints once; merge your existing ctor code here if needed
-        $this->commitment = getenv('SOLANA_COMMITMENT') ?: 'confirmed';
+        $this->commitment = env('SOLANA_COMMITMENT') ?: 'confirmed';
 
-        $primary  = getenv('SOLANA_RPC_PRIMARY') ?: 'https://api.mainnet-beta.solana.com';
-        $fallback = getenv('SOLANA_RPC_FALLBACKS') ?: '';
+        $primary  = env('SOLANA_RPC_PRIMARY') ?: 'https://api.mainnet-beta.solana.com';
+        $fallback = env('SOLANA_RPC_FALLBACKS') ?: '';
         $defaultFallbacks = ['https://rpc.ankr.com/solana', 'https://solana-api.projectserum.com'];
         $fallbackList = $fallback ? array_map('trim', explode(',', $fallback)) : $defaultFallbacks;
         $endpoints = array_merge([$primary], $fallbackList);
         $this->rpcEndpoints = array_values(array_filter(array_unique($endpoints)));
-        $this->wsEndpoint = getenv('SOLANA_WS_PRIMARY') ?: 'wss://api.mainnet-beta.solana.com';
+        $this->wsEndpoint = env('SOLANA_WS_PRIMARY') ?: 'wss://api.mainnet-beta.solana.com';
 
         $this->client = new Client([
             'timeout' => $this->httpTimeout,

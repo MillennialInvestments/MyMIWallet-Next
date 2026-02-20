@@ -26,7 +26,7 @@ class SmtpTestAdminController extends BaseController
         }
 
         $config = config('Email');
-        $to     = $this->request->getGet('to') ?? getenv('mail.test.to') ?? $config->fromEmail;
+        $to     = $this->request->getGet('to') ?? env('mail.test.to') ?? $config->fromEmail;
 
         $email = service('email');
         $email->setFrom($config->fromEmail, $config->fromName);

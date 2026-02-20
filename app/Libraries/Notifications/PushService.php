@@ -13,9 +13,9 @@ class PushService
     {
         $this->webPush = new WebPush([
             'VAPID' => [
-                'subject' => getenv('VAPID_SUBJECT') ?: 'mailto:admin@localhost',
-                'publicKey' => getenv('VAPID_PUBLIC_KEY') ?: '',
-                'privateKey' => getenv('VAPID_PRIVATE_KEY') ?: '',
+                'subject' => env('VAPID_SUBJECT') ?: 'mailto:admin@localhost',
+                'publicKey' => env('VAPID_PUBLIC_KEY') ?: '',
+                'privateKey' => env('VAPID_PRIVATE_KEY') ?: '',
             ]
         ]);
         $this->webPush->setDefaultOptions(['TTL' => 60]);

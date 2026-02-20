@@ -42,7 +42,7 @@ $this->userService = new UserService($this->siteSettings, $this->cuID, Services:
         }
     
         // Validate private key
-        $privateKeyJson = getenv('SOLANA_PRIVATE_KEY');
+        $privateKeyJson = env('SOLANA_PRIVATE_KEY');
         $privateKeyArray = json_decode($privateKeyJson, true);
         if (json_last_error() !== JSON_ERROR_NONE || !is_array($privateKeyArray)) {
             throw new \Exception('Invalid or missing private key in the environment.');

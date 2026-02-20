@@ -58,7 +58,6 @@ class ExchangeController extends UserController
 //         $this->MyMIDashboard = new MyMIDashboard(); // replaced by BaseController getter 
 
         $this->alphavantageKey = config('APISettings')->alphaVantageApiKey;
-        $this->cache = cache();
         $this->curlRequest = service('curlrequest');
         $this->logger = service('logger');
 

@@ -3,7 +3,7 @@ helper('email');
 
 $resolvedActivationUrl = (string) ($activationUrl ?? $actionUrl ?? '');
 $resolvedSupportEmail = (string) ($supportEmail ?? 'support@mymiwallet.com');
-$resolvedBaseUrl = rtrim((string) (($baseUrl ?? getenv('APP_URL')) ?: site_url()), '/');
+$resolvedBaseUrl = rtrim((string) (($baseUrl ?? env('APP_URL')) ?: site_url()), '/');
 $recipientName = esc($user->username ?? $user->email ?? $name ?? 'there');
 
 $content = '

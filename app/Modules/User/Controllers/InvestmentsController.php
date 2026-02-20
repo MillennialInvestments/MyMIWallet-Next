@@ -49,7 +49,10 @@ class InvestmentsController extends UserController
     {
         parent::initController($request, $response, $logger);
         $this->auth = service('authentication');
-        $this->cache = cache();
+        public function __construct(?CacheInterface $cache = null)
+{
+    $this->cache = $cache ?? \Config\Services::cache();
+}
         // $this->config = config('Auth');
         $this->request = service('request');
         $this->session = Services::session();

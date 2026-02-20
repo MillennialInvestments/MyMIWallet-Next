@@ -20,11 +20,11 @@ class ImapTest extends SafeBaseCommand
             return;
         }
 
-        $host = getenv('MYMI_ALERTS_IMAP_HOST') ?: 'imap.dreamhost.com';
-        $port = (int)(getenv('MYMI_ALERTS_IMAP_PORT') ?: 993);
-        $user = getenv('MYMI_ALERTS_IMAP_USER');
-        $pass = getenv('MYMI_ALERTS_IMAP_PASS');
-        $mailbox = getenv('MYMI_ALERTS_IMAP_MAILBOX') ?: 'INBOX';
+        $host = env('MYMI_ALERTS_IMAP_HOST') ?: 'imap.dreamhost.com';
+        $port = (int)(env('MYMI_ALERTS_IMAP_PORT') ?: 993);
+        $user = env('MYMI_ALERTS_IMAP_USER');
+        $pass = env('MYMI_ALERTS_IMAP_PASS');
+        $mailbox = env('MYMI_ALERTS_IMAP_MAILBOX') ?: 'INBOX';
 
         $connection = sprintf(
             '{%s:%d/imap/ssl/novalidate-cert}%s',

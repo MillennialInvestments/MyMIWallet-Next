@@ -7,7 +7,7 @@ class BackupService
 {
     private static function dir(): string
     {
-        $dir = rtrim(getenv('BACKUP_DIR') ?: (WRITEPATH.'backups'), '/');
+        $dir = rtrim(env('BACKUP_DIR') ?: (WRITEPATH.'backups'), '/');
         if (!is_dir($dir)) {
             @mkdir($dir, 0755, true);
         }
@@ -19,7 +19,7 @@ class BackupService
         $ts = date('Ymd_His');
         $tmp = tempnam(sys_get_temp_dir(), 'dbbk_');
         $method = 'php';
-        $dump = getenv('BACKUP_MYSQLDUMP_PATH');
+        $dump = env('BACKUP_MYSQLDUMP_PATH');
         if ($dump && is_file($dump) && is_executable($dump)) {
             $cfg = config('Database')->default;
             $cmd = sprintf('%s --single-transaction --quick --routines --events --skip-lock-tables -h%s -u%s %s %s > %s 2>/dev/null',
@@ -67,8 +67,8 @@ class BackupService
         $ts = date('Ymd_His');
         $fname = 'files_'.$ts.'.enc.json';
         $path = self::dir().'/'.$fname;
-        $includes = array_filter(array_map('trim', explode(',', getenv('BACKUP_INCLUDE_DIRS') ?: 'public/uploads')));
-        $excludes = array_filter(array_map('trim', explode(',', getenv('BACKUP_EXCLUDE_GLOBS') ?: '')));
+        $includes = array_filter(array_map('trim', explode(',', env('BACKUP_INCLUDE_DIRS') ?: 'public/uploads')));
+        $excludes = array_filter(array_map('trim', explode(',', env('BACKUP_EXCLUDE_GLOBS') ?: '')));
         $tmp = tempnam(sys_get_temp_dir(), 'fbk_');
         $zip = new ZipArchive();
         $zip->open($tmp, ZipArchive::OVERWRITE);
@@ -99,8 +99,8 @@ class BackupService
     public static function prune(): array
     {
         $dir = self::dir();
-        $dbDays = (int)(getenv('BACKUP_RETENTION_DAYS_DB') ?: 14);
-        $fsDays = (int)(getenv('BACKUP_RETENTION_DAYS_FILES') ?: 30);
+        $dbDays = (int)(env('BACKUP_RETENTION_DAYS_DB') ?: 14);
+        $fsDays = (int)(env('BACKUP_RETENTION_DAYS_FILES') ?: 30);
         $cutDb = time() - $dbDays*86400;
         $cutFs = time() - $fsDays*86400;
         $removed = 0;

@@ -27,6 +27,13 @@ class Console extends BaseConfig
 
         /*
         |----------------------------------------------------------------------
+        | Standards
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\ControllerProfile::class,
+
+        /*
+        |----------------------------------------------------------------------
         | AI-Ops
         |----------------------------------------------------------------------
         */
@@ -95,6 +102,16 @@ class Console extends BaseConfig
 
         /*
         |----------------------------------------------------------------------
+        | Alerts Management
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Alerts\Audit::class,
+        \App\Commands\Alerts\Forecast::class,
+        \App\Commands\Alerts\Ingest::class,
+        \App\Commands\Alerts\ParseTest::class,
+
+        /*
+        |----------------------------------------------------------------------
         | App / Audit
         |----------------------------------------------------------------------
         */
@@ -105,8 +122,6 @@ class Console extends BaseConfig
         \App\Commands\App\Test::class,
         \App\Commands\AppUpdate::class,
         \App\Commands\RuntimeCheck::class,
-        \App\Commands\SparkRegistryAudit::class,
-
         /*
         |----------------------------------------------------------------------
         | Auth
@@ -143,6 +158,13 @@ class Console extends BaseConfig
         \App\Commands\Chat\Stop::class,
         \App\Commands\Chat\Status::class,
         \App\Commands\Chat\Unblock::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Config
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\ConfigClear::class,
 
         /*
         |----------------------------------------------------------------------
@@ -225,6 +247,13 @@ class Console extends BaseConfig
 
         /*
         |----------------------------------------------------------------------
+        | Logger
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Logger\Audit::class,
+
+        /*
+        |----------------------------------------------------------------------
         | Logs
         |----------------------------------------------------------------------
         */
@@ -241,14 +270,12 @@ class Console extends BaseConfig
         */
         \App\Commands\Ops\AnalyzeCommands::class,
         \App\Commands\Ops\AppUpdate::class,
-        \App\Commands\Ops\AlertsIngest::class,
         \App\Commands\Ops\CiPrepare::class,
         \App\Commands\Ops\CommandsAudit::class,
         \App\Commands\Ops\CommandsAutofix::class,
         \App\Commands\Ops\CommandsInventory::class,
         \App\Commands\Ops\CommandsLint::class,
         \App\Commands\Ops\ConfigLint::class,
-        \App\Commands\Ops\ConfigReset::class,
         \App\Commands\Ops\DoctorFull::class,
         \App\Commands\Ops\EnvSnapshot::class,
         \App\Commands\Ops\FetchCommands::class,
@@ -263,8 +290,6 @@ class Console extends BaseConfig
         \App\Commands\Ops\NextStepsSyncManual::class,
         \App\Commands\Ops\PHPExtensionsAudit::class,
         \App\Commands\Ops\ProposePr::class,
-        \App\Commands\Ops\SparkRegistryAudit::class,
-        \App\Commands\Ops\SparkReset::class,
         \App\Commands\Ops\SubsAudit::class,
         \App\Commands\Ops\SubsDoctor::class,
         \App\Commands\Ops\SubsRepair::class,
@@ -288,11 +313,17 @@ class Console extends BaseConfig
 
         /*
         |----------------------------------------------------------------------
+        | Routes
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Route\Audit::class,
+        \App\Commands\Route\Benchmark::class,
+
+        /*
+        |----------------------------------------------------------------------
         | Scrapers / Alerts
         |----------------------------------------------------------------------
         */
-        \App\Commands\AlertsAudit::class,
-        \App\Commands\AlertsParseTest::class,
         \App\Commands\Scrapers\EmailScraperAudit::class,
 
         /*
@@ -310,10 +341,10 @@ class Console extends BaseConfig
         | Spark
         |----------------------------------------------------------------------
         */
-        \App\Commands\Runtime\Spark\Doctor::class,
-        \App\Commands\Runtime\Spark\DoctorRuntime::class,
-        \App\Commands\Runtime\Spark\Fix::class,
-        \App\Commands\Runtime\Spark\Optimize::class,
+        \App\Commands\Spark\Doctor::class,
+        \App\Commands\Spark\DoctorRuntime::class,
+        \App\Commands\Spark\Fix::class,
+        \App\Commands\Spark\Optimize::class,
 
         /*
         |----------------------------------------------------------------------
@@ -336,7 +367,6 @@ class Console extends BaseConfig
         |----------------------------------------------------------------------
         */
         \App\Commands\ForecastEvaluate::class,
-        \App\Commands\ForecastRefresh::class,
         \App\Commands\MditNavComputeDaily::class,
         \App\Commands\WalletsWarmSummaryCache::class,
     ];

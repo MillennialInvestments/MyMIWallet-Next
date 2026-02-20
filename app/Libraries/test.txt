@@ -1727,7 +1727,7 @@ class MarketingController extends Controller
     {
         $marketingModel = new MarketingModel();
         $marketing = new MyMIMarketing();
-        $threshold = getenv('MARKETING_TFIDF_THRESHOLD') ?: 7.5;
+        $threshold = env('MARKETING_TFIDF_THRESHOLD') ?: 7.5;
     
         $pendingPosts = $marketingModel->getPendingBufferItems();
     
@@ -6831,7 +6831,7 @@ class MyMIMarketing
     
     public function postToDiscord($message)
     {
-        $discordWebhookUrl = getenv('DISCORD_WEBHOOK_URL');
+        $discordWebhookUrl = env('DISCORD_WEBHOOK_URL');
     
         // ✅ Ensure the message is within the 2000 character limit
         if (strlen($message) > 2000) {
@@ -7729,7 +7729,7 @@ class MyMIMarketing
         
         $response = $this->client->get('https://www.marketaux.com/api/v1/news/all', [
             'query' => [
-                'api_token' => getenv('marketaux.apiKey'),
+                'api_token' => env('marketaux.apiKey'),
                 'language'  => 'en',
                 'country'   => 'us',
                 'published_after' => date('Y-m-d\TH:i:s\Z', strtotime('-1 hour')),
@@ -8794,7 +8794,7 @@ class MarketingModel extends Model
     {
         $MyMIMarketing = new \App\Libraries\MyMIMarketing();
         $scoreData = $MyMIMarketing->getTopKeywordScores($summary['summary']);
-        $threshold = getenv('MARKETING_TFIDF_THRESHOLD') ?: 7.5;
+        $threshold = env('MARKETING_TFIDF_THRESHOLD') ?: 7.5;
 
         $bufferRecord = [
             'keyword'      => $scoreData['top_keyword'] ?? 'general',

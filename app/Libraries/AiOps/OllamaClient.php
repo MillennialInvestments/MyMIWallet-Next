@@ -10,7 +10,7 @@ class OllamaClient
 
     public function __construct(?string $baseUrl = null)
     {
-        $this->baseUrl = rtrim($baseUrl ?? getenv('OLLAMA_BASE_URL') ?: 'http://localhost:11434', '/');
+        $this->baseUrl = rtrim($baseUrl ?? env('OLLAMA_BASE_URL') ?: 'http://localhost:11434', '/');
     }
 
     public function generate(string $model, string $prompt, array $options = []): array

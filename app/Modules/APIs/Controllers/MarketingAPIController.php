@@ -1831,7 +1831,7 @@ class MarketingAPIController extends \App\Controllers\BaseController
     {
         $marketingModel = new MarketingModel();
         $marketing = service('MyMIMarketing');
-        $threshold = getenv('MARKETING_TFIDF_THRESHOLD') ?: 7.5;
+        $threshold = env('MARKETING_TFIDF_THRESHOLD') ?: 7.5;
     
         $pendingPosts = $marketingModel->getPendingBufferItems();
     

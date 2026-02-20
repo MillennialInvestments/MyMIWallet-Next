@@ -310,7 +310,7 @@ SQL;
     private function insertAuditRow(\mysqli $mysqli, string $operation, string $table, string $statement, $logHandle): void
     {
         $sqlHash = hash('sha256', $statement);
-        $appliedBy = getenv('USER') ?: 'codex';
+        $appliedBy = env('USER') ?: 'codex';
         $source = 'db:apply-docs';
 
         $stmt = $mysqli->prepare('INSERT INTO bf_ops_schema_audit (operation, table_name, sql_hash, applied_by, source) VALUES (?, ?, ?, ?, ?)');

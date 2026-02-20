@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Commands;
+namespace App\Commands\Alerts;
 
 use App\Libraries\Brokers\ThinkorSwimParser;
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class AlertsParseTest extends SafeBaseCommand
+class ParseTest extends SafeBaseCommand
 {
-    protected $group       = 'alerts';
+    protected $group       = 'Alerts';
     protected $name        = 'alerts:parse-test';
     protected $description = 'Parse a broker email sample and output normalized execution data.';
     protected $usage       = 'alerts:parse-test [file] [subject] [--dry-run]';

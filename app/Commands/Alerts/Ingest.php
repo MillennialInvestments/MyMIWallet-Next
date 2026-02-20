@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Commands\Ops;
+namespace App\Commands\Alerts;
 
 use App\Commands\SafeBaseCommand;
 use App\Libraries\MyMIAlerts;
@@ -10,10 +10,10 @@ use App\Models\AiOpsIngestRunModel;
 use App\Models\AlertsModel;
 use CodeIgniter\CLI\CLI;
 
-class AlertsIngest extends SafeBaseCommand
+class Ingest extends SafeBaseCommand
 {
-    protected $group = 'ops';
-    protected $name = 'ops:alerts:ingest';
+    protected $group = 'Alerts';
+    protected $name = 'alerts:ingest';
     protected $description = 'Ingest ThinkorSwim alert emails and upsert trade alerts.';
     protected $usage = 'ops:alerts:ingest [--since=15m|1h|today] [--limit=200] [--dry-run] [--verbose]';
     protected $options = [

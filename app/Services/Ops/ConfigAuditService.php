@@ -70,7 +70,7 @@ class ConfigAuditService
             }
         }
 
-        $queueEnabled = getenv('QUEUE_ENABLED') ?: getenv('queue.enabled');
+        $queueEnabled = env('QUEUE_ENABLED') ?: env('queue.enabled');
         if ($queueEnabled) {
             if (! class_exists(\Config\QueueConfig::class)) {
                 $warnings[] = 'Queue enabled but QueueConfig class missing.';

@@ -11,7 +11,7 @@ class TradingViewAPIController extends BaseController
     {
         $raw = $this->request->getBody() ?? '';
         $sig = $this->request->getHeaderLine('X-Signature');
-        $key = getenv('MYMI_WEBHOOK_SECRET_TRADINGVIEW') ?: '';
+        $key = env('MYMI_WEBHOOK_SECRET_TRADINGVIEW') ?: '';
         $calc = 'sha256=' . hash_hmac('sha256', $raw, $key);
         $idk = $this->request->getHeaderLine('Idempotency-Key') ?: null;
         $m   = new InboundWebhookModel();

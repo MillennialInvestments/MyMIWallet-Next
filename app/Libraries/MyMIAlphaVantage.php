@@ -21,19 +21,19 @@ class MyMIAlphaVantage
     {
         $config = config('APISettings');
 
-        $envKeyList = getenv('ALPHA_VANTAGE_API_KEYS');
+        $envKeyList = env('ALPHA_VANTAGE_API_KEYS');
         $parsedEnvKeys = [];
         if (!empty($envKeyList)) {
             $parsedEnvKeys = array_map('trim', explode(',', $envKeyList));
         }
 
         $knownKeys = array_filter([
-            getenv('ALPHA_VANTAGE_API_KEY') ?: null,
-            getenv('ALPHA_VANTAGE_API_KEY_A') ?: null,
-            getenv('ALPHA_VANTAGE_API_KEY_B') ?: null,
-            getenv('ALPHA_VANTAGE_API_KEY_C') ?: null,
-            getenv('ALPHA_VANTAGE_API_KEY_D') ?: null,
-            getenv('ALPHA_VANTAGE_API_KEY_E') ?: null,
+            env('ALPHA_VANTAGE_API_KEY') ?: null,
+            env('ALPHA_VANTAGE_API_KEY_A') ?: null,
+            env('ALPHA_VANTAGE_API_KEY_B') ?: null,
+            env('ALPHA_VANTAGE_API_KEY_C') ?: null,
+            env('ALPHA_VANTAGE_API_KEY_D') ?: null,
+            env('ALPHA_VANTAGE_API_KEY_E') ?: null,
             $config->alphaVantageApiKey ?? null,
             $config->alphaVantageApiKeyA ?? null,
             $config->alphaVantageApiKeyB ?? null,
@@ -46,8 +46,8 @@ class MyMIAlphaVantage
         $this->alphaKeyIndex = 0;
         $this->apiKey = $this->alphaKeys[0] ?? null;
 
-        $this->twelveDataKey = getenv('TWELVE_DATA_API_KEY') ?: ($config->twelveDataApiKey ?? null);
-        $this->marketstackKey = getenv('MARKETSTACK_API_KEY') ?: ($config->marketstackApiKey ?? null);
+        $this->twelveDataKey = env('TWELVE_DATA_API_KEY') ?: ($config->twelveDataApiKey ?? null);
+        $this->marketstackKey = env('MARKETSTACK_API_KEY') ?: ($config->marketstackApiKey ?? null);
 
         $this->client = \Config\Services::curlrequest();
 
@@ -1080,7 +1080,7 @@ class MyMIAlphaVantage
 
     public function isProUser(): bool
     {
-        return getenv('ALPHA_VANTAGE_API_KEY');
+        return env('ALPHA_VANTAGE_API_KEY');
     }
 
 

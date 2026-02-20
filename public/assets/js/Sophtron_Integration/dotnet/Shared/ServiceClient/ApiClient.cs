@@ -9,7 +9,7 @@ namespace SophtronClient
 {
     public class ApiClient 
     {
-        private string AuthUserId = Environment.GetEnvironmentVariable("SophtronApiUserId");
+        private string AuthUserId = Environment.environmentVariable("SophtronApiUserId");
         private readonly HttpClient httpClient = new HttpClient()
         {
             BaseAddress = new Uri("https://api.sophtron.com/api/")

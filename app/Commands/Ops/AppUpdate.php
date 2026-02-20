@@ -48,7 +48,7 @@ class AppUpdate extends SafeBaseCommand
         $start = microtime(true);
         $phaseResults = [];
         $phaseResults[] = $this->runPhase('Phase 0: Environment Guardrails', function () use ($params, $allowCi) {
-            $env = defined('ENVIRONMENT') ? ENVIRONMENT : getenv('CI_ENVIRONMENT');
+            $env = defined('ENVIRONMENT') ? ENVIRONMENT : env('CI_ENVIRONMENT');
             $hostname = gethostname() ?: 'unknown';
             $timestamp = date('c');
 
@@ -292,7 +292,7 @@ class AppUpdate extends SafeBaseCommand
     {
         $checks = [];
 
-        $discord = getenv('DISCORD_WEBHOOK_URL') ?: getenv('DISCORD_WEBHOOK');
+        $discord = env('DISCORD_WEBHOOK_URL') ?: env('DISCORD_WEBHOOK');
         if ($discord) {
             $checks[] = ['label' => 'external:discord', 'url' => $discord, 'method' => 'HEAD'];
         }
@@ -306,7 +306,7 @@ class AppUpdate extends SafeBaseCommand
             ];
         }
 
-        $marketHost = getenv('MARKET_AUX_BASE_URL') ?: 'https://api.marketaux.com';
+        $marketHost = env('MARKET_AUX_BASE_URL') ?: 'https://api.marketaux.com';
         $checks[] = ['label' => 'external:marketaux', 'url' => $marketHost, 'method' => 'HEAD'];
 
         $checks[] = ['label' => 'external:alphavantage', 'url' => 'https://www.alphavantage.co', 'method' => 'HEAD'];

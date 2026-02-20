@@ -24,7 +24,7 @@ class FinanceController extends BaseController
             'budget'    => $data['budget'],
             'portfolio' => $data['portfolio'],
             'breaches'  => $data['breaches'],
-            'base_ccy'  => getenv('BASE_CURRENCY') ?: 'USD',
+            'base_ccy'  => env('BASE_CURRENCY') ?: 'USD',
         ]);
     }
 

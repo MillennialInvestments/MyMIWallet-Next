@@ -5,7 +5,7 @@ declare(strict_types=1);
 if (! function_exists('is_ci')) {
     function is_ci(): bool
     {
-        return getenv('CI') === 'true'
-            || getenv('APP_ENV') === 'testing';
+        return env('CI') === 'true'
+            || env('APP_ENV') === 'testing';
     }
 }

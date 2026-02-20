@@ -1770,7 +1770,7 @@ class MyMIAlerts
     
     public function getAlphaVantageQuote($symbol)
     {
-        $apiKey = getenv('ALPHA_VANTAGE_API_KEY'); // Use .env config
+        $apiKey = env('ALPHA_VANTAGE_API_KEY'); // Use .env config
         $url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={$symbol}&apikey={$apiKey}";
 
         $client = \Config\Services::curlrequest();
@@ -2749,7 +2749,7 @@ class MyMIAlerts
     public function getMarketAuxNewsForSymbol(string $symbol): array
     {
         $client = \Config\Services::curlrequest();
-        $apiKey = getenv('MARKETAUX_API_KEY');
+        $apiKey = env('MARKETAUX_API_KEY');
 
         try {
             $response = $client->get('https://api.marketaux.com/v1/news/all', [

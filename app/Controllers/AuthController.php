@@ -7,7 +7,7 @@ use App\Services\Auth\AuthLogger;
 use App\Services\OnboardingProgressService;
 use App\Models\UserIpHistoryModel;
 use App\Modules\Support\Services\SupportTicketService;
-use CodeIgniter\Controller;
+use App\Controllers\BaseController;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\Session\Session;
 use Myth\Auth\Config\Auth as AuthConfig;
@@ -15,7 +15,7 @@ use Myth\Auth\Entities\User;
 use Myth\Auth\Models\UserModel;
 use Throwable;
 
-class AuthController extends Controller
+class AuthController extends BaseController
 {
     protected $auth;
     protected AuthLogger $authLogger;

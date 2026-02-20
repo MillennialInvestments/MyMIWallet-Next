@@ -147,7 +147,7 @@ class HealthController extends BaseController
 
     private function appVersion(): ?string
     {
-        $envVersion = getenv('APP_VERSION');
+        $envVersion = env('APP_VERSION');
         if (is_string($envVersion) && $envVersion !== '') {
             return $envVersion;
         }

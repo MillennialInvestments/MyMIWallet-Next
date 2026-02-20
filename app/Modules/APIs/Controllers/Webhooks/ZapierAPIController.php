@@ -11,7 +11,7 @@ class ZapierAPIController extends BaseController
     {
         $raw = $this->request->getBody() ?? '';
         $sig = $this->request->getHeaderLine('X-Signature');
-        $key = getenv('MYMI_WEBHOOK_SECRET_ZAPIER') ?: '';
+        $key = env('MYMI_WEBHOOK_SECRET_ZAPIER') ?: '';
         $calc = 'sha256=' . hash_hmac('sha256', $raw, $key);
         $idk = $this->request->getHeaderLine('Idempotency-Key') ?: null;
 

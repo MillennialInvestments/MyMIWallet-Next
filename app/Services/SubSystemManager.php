@@ -17,11 +17,11 @@ class SubSystemManager
                 'root' => ROOTPATH . 'aiops',
                 'runtime' => ROOTPATH . 'aiops/runtime',
                 'service' => 'n8n',
-                'port' => (int) (getenv('N8N_PORT') ?: 5678),
+                'port' => (int) (env('N8N_PORT') ?: 5678),
                 'start' => ROOTPATH . 'aiops/bin/n8n-start-safe.sh',
                 'stop' => ROOTPATH . 'aiops/bin/n8n-stop-safe.sh',
                 'log' => ROOTPATH . 'aiops/runtime/n8n.log',
-                'bridge_port' => (int) (getenv('BRIDGE_PORT') ?: 8500),
+                'bridge_port' => (int) (env('BRIDGE_PORT') ?: 8500),
             ],
             'chat.app' => [
                 'root' => ROOTPATH . 'chat',

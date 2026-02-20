@@ -34,7 +34,7 @@ class Triage extends SafeBaseCommand
 
         $checks = [
             'php_version' => PHP_VERSION,
-            'ci_environment' => getenv('CI') ? 'ci' : 'local',
+            'ci_environment' => env('CI') ? 'ci' : 'local',
             'writable_path' => WRITEPATH,
             'writable_is_dir' => is_dir(WRITEPATH),
             'writable_is_writable' => is_writable(WRITEPATH),

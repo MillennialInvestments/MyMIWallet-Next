@@ -29,7 +29,7 @@ if (! function_exists('vite_tags')) {
         $isProd = strtolower($env) === 'production';
 
         // Dev server (e.g., http://localhost:5173)
-        $dev = rtrim((string) getenv('VITE_DEV_SERVER'), '/');
+        $dev = rtrim((string) env('VITE_DEV_SERVER'), '/');
 
         // Only treat the request as "local dev" when the client is localhost.
         $clientIsLocal = in_array($_SERVER['REMOTE_ADDR'] ?? '', ['127.0.0.1', '::1'], true);

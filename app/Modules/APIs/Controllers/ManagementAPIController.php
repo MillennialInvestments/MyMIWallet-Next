@@ -2013,7 +2013,7 @@ class ManagementAPIController extends \App\Controllers\BaseController
 
         $symbols = array_values(array_filter(array_map(static fn ($symbol) => $symbol ? strtoupper((string) $symbol) : null, $symbols)));
 
-        $jobId = $this->alphaVantageService->enqueue($symbols, getenv('ALPHA_VANTAGE_KEY') ?: null);
+        $jobId = $this->alphaVantageService->enqueue($symbols, env('ALPHA_VANTAGE_KEY') ?: null);
 
         return Http::jsonSuccess([
             'job_id'  => $jobId,
@@ -2064,7 +2064,7 @@ class ManagementAPIController extends \App\Controllers\BaseController
     
     protected function requireCronAuth(): ?ResponseInterface
     {
-        $expected = trim((string) getenv('MYMI_CRON_TOKEN'));
+        $expected = trim((string) env('MYMI_CRON_TOKEN'));
 
         if ($expected === '') {
             return null;

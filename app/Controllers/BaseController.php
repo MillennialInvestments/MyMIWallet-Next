@@ -1126,7 +1126,7 @@ abstract class BaseController extends Controller
             return;
         }
 
-        $mode = strtolower((string) (getenv('APP_CSP_MODE') ?: 'permissive'));
+        $mode = strtolower((string) (env('APP_CSP_MODE') ?: 'permissive'));
 
         if ($mode === 'relaxed') {
             $mode = 'permissive';

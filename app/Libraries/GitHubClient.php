@@ -10,9 +10,9 @@ class GitHubClient
 
     public function __construct()
     {
-        $this->token = (string) getenv('AIOPS_GITHUB_TOKEN');
-        $this->owner = (string) getenv('AIOPS_GITHUB_OWNER');
-        $this->repo  = (string) getenv('AIOPS_GITHUB_REPO');
+        $this->token = (string) env('AIOPS_GITHUB_TOKEN');
+        $this->owner = (string) env('AIOPS_GITHUB_OWNER');
+        $this->repo  = (string) env('AIOPS_GITHUB_REPO');
     }
 
     public function isConfigured(): bool

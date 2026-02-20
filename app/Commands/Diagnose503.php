@@ -50,7 +50,7 @@ class Diagnose503 extends SafeBaseCommand
         $results[] = ['CI4 log today exists', is_file(WRITEPATH . 'logs/log-' . date('Y-m-d') . '.log')];
 
         // quick scan for upstream refused in nginx error log (your logs show controller.sock refused)
-        $home = rtrim(getenv('HOME') ?: $_SERVER['HOME'] ?? '', '/');
+        $home = rtrim(env('HOME') ?: $_SERVER['HOME'] ?? '', '/');
         $ngErr = $home . '/nginx/logs/error.log';
 
         $upstreamRefused = false;

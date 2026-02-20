@@ -37,10 +37,10 @@ class BrokerSmokeAPIController extends \App\Controllers\BaseController
             'env()'       => function_exists('env') ? env('ROBINHOOD_API_KEY') : null,
             '_ENV'        => $_ENV['ROBINHOOD_API_KEY']   ?? null,
             '_SERVER'     => $_SERVER['ROBINHOOD_API_KEY']?? null,
-            'getenv'      => getenv('ROBINHOOD_API_KEY'),
+            'env'      => env('ROBINHOOD_API_KEY'),
             'constant'    => defined('ROBINHOOD_API_KEY') ? ROBINHOOD_API_KEY : null,
-            'base'        => getenv('ROBINHOOD_BASE_URL'),
-            'seed_len'    => ($v = getenv('ROBINHOOD_PRIVATE_SEED_B64')) ? strlen($v) : 0,
+            'base'        => env('ROBINHOOD_BASE_URL'),
+            'seed_len'    => ($v = env('ROBINHOOD_PRIVATE_SEED_B64')) ? strlen($v) : 0,
         ];
         return $this->response->setJSON($peek);
     }

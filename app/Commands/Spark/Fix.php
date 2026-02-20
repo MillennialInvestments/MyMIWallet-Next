@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Commands\Spark;
 
+use App\Commands\SafeBaseCommand;
 use App\Services\AiOps\CommandHookService;
 use App\Services\Spark\CommandInventoryService;
 use CodeIgniter\CLI\CLI;
@@ -11,7 +12,7 @@ use CodeIgniter\CLI\CLI;
 class Fix extends SafeBaseCommand
 {
     protected $defaultDryRun = true;
-    protected $group       = 'maintenance';
+    protected $group       = 'Spark';
     protected $name        = 'spark:fix';
     protected $description = 'Safely repair Spark command and cache issues.';
     protected $usage       = 'spark:fix [--dry-run] [--approve] [--json] [--notify] [--db]';

@@ -90,7 +90,7 @@ File:
             CURLOPT_POST => true,
             CURLOPT_HTTPHEADER => [
                 'Content-Type: application/json',
-                'Authorization: Bearer ' . getenv('OPENAI_API_KEY')
+                'Authorization: Bearer ' . env('OPENAI_API_KEY')
             ],
             CURLOPT_POSTFIELDS => json_encode($payload)
         ]);

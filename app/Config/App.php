@@ -23,7 +23,7 @@ class App extends BaseConfig
     /**
      * Index File
      */
-    public string $indexPage = '';
+    public string $indexPage = 'index.php';
 
     /**
      * URI Protocol

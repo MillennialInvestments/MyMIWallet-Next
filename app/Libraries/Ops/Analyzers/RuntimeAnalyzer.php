@@ -46,7 +46,7 @@ class RuntimeAnalyzer
      */
     private function getRuntimeScanFiles(): array
     {
-        $home = rtrim(getenv('HOME') ?: '/home/mymiteam', '/');
+        $home = rtrim(env('HOME') ?: '/home/mymiteam', '/');
 
         $files = [];
 

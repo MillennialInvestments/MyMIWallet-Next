@@ -213,7 +213,7 @@ class DiscordAPIController extends BaseController
         $discordUserId = (string) $this->request->getPost('discord_user_id');
         $stepKey       = (string) $this->request->getPost('step_key');
         $apiToken      = $this->request->getHeaderLine('X-Internal-Api-Token');
-        $expectedToken = getenv('DISCORD_INTERNAL_API_TOKEN');
+        $expectedToken = env('DISCORD_INTERNAL_API_TOKEN');
 
         if (!$expectedToken || !hash_equals((string) $expectedToken, (string) $apiToken)) {
             return $this->response->setStatusCode(401)

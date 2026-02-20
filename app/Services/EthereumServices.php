@@ -22,8 +22,8 @@ class EthereumServices
 
     public function __construct(?Client $client = null, ?CacheInterface $cache = null)
     {
-        $primary  = getenv('ETH_RPC_PRIMARY') ?: 'https://mainnet.infura.io/v3/' . (getenv('INFURA_PROJECT_ID') ?: '');
-        $fallback = getenv('ETH_RPC_FALLBACKS') ?: '';
+        $primary  = env('ETH_RPC_PRIMARY') ?: 'https://mainnet.infura.io/v3/' . (env('INFURA_PROJECT_ID') ?: '');
+        $fallback = env('ETH_RPC_FALLBACKS') ?: '';
         $endpoints = array_merge([$primary], array_map('trim', explode(',', $fallback)));
         $this->rpcEndpoints = array_values(array_filter(array_unique($endpoints)));
 

@@ -7,7 +7,7 @@ class AlphaVantageService
 
     public function __construct()
     {
-        $apiKey = getenv('ALPHA_VANTAGE_API_KEY');
+        $apiKey = env('ALPHA_VANTAGE_API_KEY');
     } 
 
     public function getOverview($symbol)

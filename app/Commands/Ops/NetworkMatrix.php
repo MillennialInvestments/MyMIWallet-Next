@@ -16,7 +16,7 @@ class NetworkMatrix extends SafeBaseCommand
 
     public function run(array $params)
     {
-        $imapHost = $this->opt($params, 'imap-host', getenv('MYMI_ALERTS_IMAP_HOST') ?: 'imap.dreamhost.com');
+        $imapHost = $this->opt($params, 'imap-host', env('MYMI_ALERTS_IMAP_HOST') ?: 'imap.dreamhost.com');
         $smtpHost = $this->opt($params, 'smtp-host', 'smtp.dreamhost.com');
 
         $tests = [

@@ -13,7 +13,7 @@ class PRAuto extends SafeBaseCommand
 
     public function run(array $params)
     {
-        $cronEnabled = getenv('AIOPS_CRON_ENABLED');
+        $cronEnabled = env('AIOPS_CRON_ENABLED');
 
         if (!$cronEnabled || !filter_var($cronEnabled, FILTER_VALIDATE_BOOL)) {
             CLI::error('AIOPS_CRON_ENABLED=false; exiting.');
