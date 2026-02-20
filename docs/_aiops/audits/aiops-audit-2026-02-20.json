@@ -1,0 +1,73 @@
+{
+    "status": "degraded",
+    "issues": [
+        "Missing internalToken API group in Routes.php"
+    ],
+    "checked_at": "2026-02-20T23:30:34+00:00",
+    "n8n": {
+        "service": "aiops.n8n",
+        "pid": null,
+        "pid_file": "/home/mymiteam/mymiwallet/site/current/aiops/runtime/n8n.pid",
+        "running": false,
+        "port": 5678,
+        "port_listening": false,
+        "healthy": false,
+        "issues": [],
+        "bridge_port": 8500,
+        "bridge_port_owner": {
+            "owner": "bridge",
+            "pid": 7818,
+            "args": "node /home/mymiteam/mymiwallet/site/current/aiops/bridge-8500.js",
+            "port": 8500
+        },
+        "runtime_dir": "/home/mymiteam/mymiwallet/site/current/aiops/runtime",
+        "log_file": "/home/mymiteam/mymiwallet/site/current/aiops/runtime/n8n.log",
+        "error_log_file": null,
+        "status": "stopped",
+        "checked_at": "2026-02-20T23:30:34+00:00"
+    },
+    "orchestration": {
+        "status": "degraded",
+        "issues": [
+            "Missing internalToken API group in Routes.php"
+        ],
+        "checks": {
+            "route_protection": {
+                "status": "degraded",
+                "issues": [
+                    "Missing internalToken API group in Routes.php"
+                ],
+                "expected_routes": [],
+                "outside_internal_group": []
+            },
+            "n8n_templates": {
+                "status": "ok",
+                "found": [
+                    "docs/n8n/templates/aiops_watchdog.json",
+                    "docs/n8n/templates/chat_health_guard.json",
+                    "docs/n8n/templates/docs_gap_codex_handoff.json",
+                    "docs/n8n/templates/log_spike_alert.json",
+                    "docs/n8n/templates/market_content_push.json",
+                    "docs/n8n/templates/nightly_platform_digest.json"
+                ],
+                "required": [
+                    "docs/n8n/templates/nightly_platform_digest.json",
+                    "docs/n8n/templates/aiops_watchdog.json",
+                    "docs/n8n/templates/log_spike_alert.json",
+                    "docs/n8n/templates/docs_gap_codex_handoff.json",
+                    "docs/n8n/templates/chat_health_guard.json",
+                    "docs/n8n/templates/market_content_push.json"
+                ],
+                "missing": []
+            },
+            "documentation": {
+                "status": "ok",
+                "required": [
+                    "docs/api/internal-orchestration.md",
+                    "docs/n8n/README.md"
+                ],
+                "missing": []
+            }
+        }
+    }
+}

@@ -1,0 +1,54 @@
+{
+    "generated_at": "2026-02-20T23:43:51+00:00",
+    "total_docs": 8,
+    "documents": [
+        {
+            "file": "02112026-MarketingCampaigns.md",
+            "path": "docs\/_aiops\/manual\/02112026-MarketingCampaigns.md",
+            "updated_at": "2026-02-11T22:37:04+00:00",
+            "size_bytes": 6819
+        },
+        {
+            "file": "README.md",
+            "path": "docs\/_aiops\/manual\/README.md",
+            "updated_at": "2026-02-07T22:44:00+00:00",
+            "size_bytes": 1217
+        },
+        {
+            "file": "aiops-full-ci4-command-expansion.md",
+            "path": "docs\/_aiops\/manual\/aiops-full-ci4-command-expansion.md",
+            "updated_at": "2026-02-08T13:56:54+00:00",
+            "size_bytes": 4955
+        },
+        {
+            "file": "auth_email_ux_upgrade.md",
+            "path": "docs\/_aiops\/manual\/auth_email_ux_upgrade.md",
+            "updated_at": "2026-02-09T11:34:35+00:00",
+            "size_bytes": 1067
+        },
+        {
+            "file": "auth_login_fix_report.md",
+            "path": "docs\/_aiops\/manual\/auth_login_fix_report.md",
+            "updated_at": "2026-02-09T10:32:51+00:00",
+            "size_bytes": 4041
+        },
+        {
+            "file": "auth_myth_repair_report.md",
+            "path": "docs\/_aiops\/manual\/auth_myth_repair_report.md",
+            "updated_at": "2026-02-09T11:34:35+00:00",
+            "size_bytes": 1306
+        },
+        {
+            "file": "auth_support_ticket_automation.md",
+            "path": "docs\/_aiops\/manual\/auth_support_ticket_automation.md",
+            "updated_at": "2026-02-09T11:11:51+00:00",
+            "size_bytes": 2212
+        },
+        {
+            "file": "doc-coverage-scan.md",
+            "path": "docs\/_aiops\/manual\/doc-coverage-scan.md",
+            "updated_at": "2026-02-08T19:50:54+00:00",
+            "size_bytes": 743
+        }
+    ]
+}

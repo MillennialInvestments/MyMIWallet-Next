@@ -1,0 +1,7 @@
+{
+    "command": "aiops:init",
+    "timestamp": "20260220-234314",
+    "dry_run": false,
+    "patch_path": "/home/mymiteam/mymiwallet/site/current/docs/_support/aiops-init/20260220-234314/aiops-init.patch",
+    "artifact_dir": "/home/mymiteam/mymiwallet/site/current/docs/_support/aiops-init/20260220-234314"
+}
