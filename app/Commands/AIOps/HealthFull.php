@@ -16,26 +16,25 @@ class HealthFull extends SafeBaseCommand
         $report = WRITEPATH . 'audit/health_full_report.md';
         @mkdir(dirname($report), 0775, true);
 
-        $sections = [];
+        $commands = [
+            'logs:healthcheck',
+            'aiops:gate:cost',
+            'aiops:routes:scan 10',
+            'aiops:routes:gate ' . WRITEPATH . 'audit/routes_scan.json 1500 1200 50',
+            'aiops:routes:regress',
+        ];
 
-        $sections[] = $this->runSparkCapture('logs:healthcheck');
-        $sections[] = $this->runSparkCapture('aiops:gate:cost');
-        $sections[] = $this->runSparkCapture('aiops:routes:scan 10');
-        $sections[] = $this->runSparkCapture('aiops:routes:gate ' . WRITEPATH . 'audit/routes_scan.json 1500 1200 50');
-        $sections[] = $this->runSparkCapture('aiops:routes:regress');
+        $sections = [];
+        foreach ($commands as $cmd) {
+            $body = $this->sparkCapture($cmd, true);
+            $sections[] = "## {$cmd}\n\n```\n{$body}\n```";
+        }
 
         file_put_contents($report, "# Full Health Report\n\n" . implode("\n\n---\n\n", $sections));
         CLI::write("Wrote: {$report}");
-    }
 
-    private function runSparkCapture(string $cmd): string
-    {
-        $full = PHP_BINARY . ' ' . escapeshellarg(ROOTPATH . 'spark') . ' ' . $cmd;
-        exec($full . ' 2>&1', $out, $code);
+        $this->nextStep('aiops:doctor', 'Validate command wiring and service dependencies after health aggregation.', [$report]);
 
-        $title = "## {$cmd}\n";
-        $body = "Exit Code: {$code}\n\n```\n" . implode("\n", $out) . "\n```";
-
-        return $title . $body;
+        return EXIT_SUCCESS;
     }
 }

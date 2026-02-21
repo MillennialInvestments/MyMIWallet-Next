@@ -17,26 +17,14 @@ class DoctorFull extends SafeBaseCommand
     {
         CLI::write("Ops Doctor (full) starting...\n", 'yellow');
 
-        $this->spark('ops:php:extensions');
-        $this->spark('ops:network:matrix');
-
-        // If available in your codebase, keep these (won’t fail the whole doctor if missing)
-        $this->spark('runtime:spark-doctor', true);
-
-        // DreamHost IMAP deep probe
-        $this->spark('dreamhost:imap-capabilities', true);
+        $this->sparkRun('ops:php:extensions');
+        $this->sparkRun('ops:network:matrix');
+        $this->sparkRun('runtime:spark-doctor', true);
+        $this->sparkRun('dreamhost:imap-capabilities', true);
 
         CLI::write("\n✔ Ops Doctor complete.", 'green');
-        return EXIT_SUCCESS;
-    }
+        $this->nextStep('ops:report', 'Capture a consolidated Ops snapshot after diagnostics.');
 
-    private function runSpark(string $command, bool $optional = false): void
-    {
-        $code = \CodeIgniter\CLI\CLI::runCommand($command);
-        if ($code !== 0 && !$optional) {
-            CLI::error("Command failed: {$command}");
-        } elseif ($code !== 0 && $optional) {
-            CLI::write("Optional command failed/skipped: {$command}", 'yellow');
-        }
+        return EXIT_SUCCESS;
     }
 }

@@ -7,6 +7,8 @@ namespace App\Commands;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use App\Commands\Contracts\AiOpsRunnable;
+use App\Commands\Traits\NextStepTrait;
+use App\Commands\Traits\SparkRunnerTrait;
 use App\Commands\Contracts\DryRunCapable;
 use App\Commands\Contracts\RequiresApproval;
 
@@ -23,6 +25,9 @@ abstract class SafeBaseCommand extends BaseCommand implements
     DryRunCapable,
     AiOpsRunnable
 {
+    use SparkRunnerTrait;
+    use NextStepTrait;
+
     /**
      * Whether this command can be executed by AIOps automation.
      * Must remain untyped for CI4 Spark discovery.
@@ -251,22 +256,11 @@ abstract class SafeBaseCommand extends BaseCommand implements
     }
 
     /**
-     * Safe Spark runner wrapper.
+     * Backward-compatible Spark runner wrapper.
      */
     protected function runSparkCommand(string $command): int
     {
-        if (function_exists('service')) {
-            $runner = service('commands');
-            if (is_object($runner) && method_exists($runner, 'run')) {
-                return (int) $runner->run($command);
-            }
-        }
-
-        if (function_exists('command')) {
-            return (int) command($command);
-        }
-
-        CLI::error('Spark command runner unavailable for: ' . $command);
-        return EXIT_ERROR;
+        return $this->sparkRun($command);
     }
 }
+
