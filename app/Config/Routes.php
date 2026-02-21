@@ -691,12 +691,12 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         // $routes->get('fetchActiveTrades/(:any)', 'API::fetchActiveTrade/$1'); // Fetch User Active Trades
         // $routes->get('fetchRealTimeData/(:any)/(:any)', 'API::fetchRealTimeData/$1/$2'); // Fetch Real-Time Price Data
         // $routes->get('fetchWatchlistPrices/(:any)', 'InvestmentsController::fetchWatchlistPrices/$1');
-        // $routes->get('getInvestmentData/(:segment)', 'InvestmentsController::getInvestmentData/$1');
+        // $routes->get('getInvestmentData/(:segment)', 'InvestmentsAPIController::getInvestmentData/$1');
         // $routes->get('getSymbolsByTradeType/(:any)', 'API::getSymbolsByTradeType/$1'); // Fetch Symbols by Trade Type (Stocks, Cryptos, etc.)
         // $routes->get('GetUserWatchlist/(:any)', 'InvestmentsController::getUserWatchlist/$1');
         // $routes->get('refreshActiveTradesPrices/(:any)', 'InvestmentsController::refreshActiveTradesPrices/$1');
-        $routes->get('getSymbolsByTradeType/(:segment)', 'InvestmentsController::getSymbolsByTradeType/$1');
-        $routes->get('getInvestmentData/(:segment)', 'InvestmentsController::getInvestmentData/$1');
+        $routes->get('getSymbolsByTradeType/(:segment)', 'InvestmentsAPIController::getSymbolsByTradeType/$1');
+        $routes->get('getInvestmentData/(:segment)', 'InvestmentsAPIController::getInvestmentData/$1');
         $routes->get('searchTickers', 'InvestmentsController::searchTickers');
         $routes->get('news',              'InvestmentsController::listNews');
         $routes->get('news/(:num)',       'InvestmentsController::getNews/$1');
@@ -704,12 +704,14 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->post('news/(:num)',      'InvestmentsController::updateNews/$1');
         $routes->delete('news/(:num)',    'InvestmentsController::deleteNews/$1');
         $routes->post('validateSymbol',    'InvestmentsController::validateSymbol');
-        $routes->get('getForecastHighlights', '\\App\\Modules\\User\\Controllers\\DashboardController::getForecastHighlights', ['filter' => 'login']);
-        $routes->get('getForecastDetails/(:segment)', '\\App\\Modules\\User\\Controllers\\InvestmentsController::getForecastDetails/$1', ['filter' => 'login']);
-        $routes->get('getConfidenceHeatmap', '\\App\\Modules\\User\\Controllers\\InvestmentsController::getConfidenceHeatmap', ['filter' => 'login']);
-        $routes->get('getForecastAccuracySummary', '\\App\\Modules\\User\\Controllers\\InvestmentsController::getForecastAccuracySummary', ['filter' => 'login']);
-        $routes->post('refreshForecasts', 'InvestmentsController::refreshForecasts');
-        $routes->post('reforecastTicker', '\\App\\Modules\\User\\Controllers\\InvestmentsController::reforecastTicker', ['filter' => 'login']);
+        $routes->get('getForecastHighlights', 'InvestmentsAPIController::getForecastHighlights');
+        $routes->get('getForecastDetails/(:segment)', 'InvestmentsAPIController::getForecastDetails/$1');
+        $routes->get('getConfidenceHeatmap', 'InvestmentsAPIController::getConfidenceHeatmap');
+        $routes->get('getTopConfidenceBySector', 'InvestmentsAPIController::getTopConfidenceBySector');
+        $routes->get('getConfidenceDistribution', 'InvestmentsAPIController::getConfidenceDistribution');
+        $routes->get('getForecastAccuracySummary', 'InvestmentsAPIController::getForecastAccuracySummary');
+        $routes->post('refreshForecasts', 'InvestmentsAPIController::refreshForecasts');
+        $routes->post('reforecastTicker', 'InvestmentsAPIController::reforecastTicker');
         // $routes->get('removeTradeFromWatchlist/(:num)', 'InvestmentsController::removeTradeFromWatchlist/$1'); // NOT COMPLETED Remove Trade from Watchlist
         // $routes->post('updateTradeNotes', 'InvestmentsController::updateTradeNotes'); // NOT COMPLETED Update Trade Notes
         // $routes->post('updateTradeTargetPrice', 'InvestmentsController::updateTradeTargetPrice'); // NOT COMPLETED Update Trade Target Price
@@ -1456,8 +1458,10 @@ $routes->group('Institutes', ['namespace' => 'App\Modules\User\Controllers', 'fi
 });
 
 // Alternative links to Investment Dashboard
-$routes->match(['GET', 'POST'], 'My-Investments', 'App\Modules\User\Controllers\InvestmentsController::index', ['filter' => 'login']);
-$routes->match(['GET', 'POST'], 'My-Trades', 'App\Modules\User\Controllers\InvestmentsController::index', ['filter' => 'login']);
+$routes->group('', ['namespace' => 'App\Modules\User\Controllers', 'filter' => 'login'], static function($routes) {
+    $routes->match(['GET', 'POST'], 'My-Investments', 'InvestmentsController::index');
+    $routes->match(['GET', 'POST'], 'My-Trades', 'InvestmentsController::index');
+});
 
 // Investments:
 $routes->group('Investments', ['namespace' => 'App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {
@@ -1527,9 +1531,16 @@ $routes->group('Announcements', ['namespace' => 'App\Modules\Blog\Controllers'],
 
 
 // Legacy route compatibility aliases for logged errors
-$routes->get('Assets', 'App\Modules\Management\Controllers\AssetsController::index', ['filter' => 'login']);
-$routes->get('Marketplace', 'App\Modules\ScriptStudio\Controllers\ScriptStudioController::marketplace');
-$routes->get('API/Investments/GetUserWatchlist/(:segment)', 'App\Modules\User\Controllers\InvestmentsController::getUserWatchlist/$1', ['filter' => 'login']);
+$routes->group('', ['namespace' => 'App\Modules\Management\Controllers'], static function($routes) {
+    $routes->get('Assets', 'AssetsController::index', ['filter' => 'login']);
+});
+$routes->group('', ['namespace' => 'App\Modules\ScriptStudio\Controllers'], static function($routes) {
+    $routes->get('Marketplace', 'ScriptStudioController::marketplace');
+});
+$routes->group('API/Investments', ['namespace' => 'App\Modules\User\Controllers'], static function($routes) {
+    $routes->get('GetUserWatchlist/(:segment)', 'InvestmentsController::getUserWatchlist/$1');
+    $routes->get('Economy/latest', 'EconomyController::latest');
+});
 
 // Script Studio Module
 $routes->group('ScriptStudio', ['namespace' => 'App\\Modules\\ScriptStudio\\Controllers'], function($routes) {
@@ -2142,7 +2153,12 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers', 'filter' =
 });
 
 // Economic dashboard widget + cron endpoints
-$routes->get('Dashboard/Economy/Widget', 'App\Modules\User\Controllers\EconomyController::dashboardWidget', ['filter' => 'login']);
-$routes->get('API/Investments/Economy/latest', 'App\Modules\User\Controllers\EconomyController::latest', ['filter' => 'login']);
-$routes->match(['GET', 'POST'], 'investments/economy/update_all', 'App\Modules\User\Controllers\EconomyController::updateAll');
-$routes->get('investments/fundamentals/(:segment)', 'App\Modules\APIs\Controllers\InvestmentsController::fundamentals/$1');
+$routes->group('Dashboard/Economy', ['namespace' => 'App\Modules\User\Controllers'], static function($routes) {
+    $routes->get('Widget', 'EconomyController::dashboardWidget', ['filter' => 'login']);
+});
+$routes->group('investments/economy', ['namespace' => 'App\Modules\User\Controllers'], static function($routes) {
+    $routes->match(['GET', 'POST'], 'update_all', 'EconomyController::updateAll');
+});
+$routes->group('investments', ['namespace' => 'App\Modules\APIs\Controllers'], static function($routes) {
+    $routes->get('fundamentals/(:segment)', 'InvestmentsAPIController::fundamentals/$1');
+});
