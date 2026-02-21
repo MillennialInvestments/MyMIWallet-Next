@@ -5,6 +5,7 @@ namespace App\Commands\Ops;
 use App\Commands\SafeBaseCommand;
 use App\Commands\Support\ArtifactHelper;
 use App\Libraries\Ops\PrOutboxWriter;
+use CodeIgniter\CLI\CLI;
 
 class ProposePr extends SafeBaseCommand
 {
@@ -391,7 +392,7 @@ MD;
             if ($out !== '') {
                 $this->safeWriteFile($out, $json);
             } else {
-                $this->write($json);
+                CLI::write($json);
             }
             return $payload['exit_code'] ?? 0;
         }
@@ -418,21 +419,26 @@ MD;
         if ($out !== '') {
             $this->safeWriteFile($out, $text);
         } else {
-            $this->write($text);
+            CLI::write($text);
         }
+
+        $artifacts = isset($payload['artifacts']) && is_array($payload['artifacts']) ? $payload['artifacts'] : [];
+        $this->nextStep('ops:report', 'Use the generated PR bundle in the next ops reporting step.', $artifacts);
 
         return (int) ($payload['exit_code'] ?? 0);
     }
 
     private function failUsage(string $msg)
     {
-        $this->write("Usage Error: {$msg}" . PHP_EOL);
+        CLI::error("Usage Error: {$msg}");
+        $this->nextStep('ops:propose-pr --slug=<id> --title=<title> --body=<body> --patch=<path>', 'Re-run with all required arguments.');
         return 2;
     }
 
     private function failWith(int $exitCode, string $msg)
     {
-        $this->write("Error: {$msg}" . PHP_EOL);
+        CLI::error("Error: {$msg}");
+        $this->nextStep('ops:propose-pr', 'Fix the reported error and retry PR proposal generation.');
         return $exitCode;
     }
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Commands\AIOps\PublicPages;
 
 use App\Commands\SafeBaseCommand;
-use App\Services\AiOps\PublicPagesPipelineService;
+use App\Services\AIOps\PublicPagesPipelineService;
 use CodeIgniter\CLI\CLI;
 use Config\Database;
 
@@ -119,6 +119,8 @@ class Run extends SafeBaseCommand
             foreach ($warnings as $warning) {
                 CLI::error($warning);
             }
+            $this->nextStep('aiops:public-pages:audit', 'Review warning output before continuing publication runs.', ['docs/_aiops/public-pages/violations.md']);
+            $this->nextStep('aiops:public-pages:audit', 'Resolve governance violations before any PR creation.', ['docs/_aiops/public-pages/violations.md']);
             return EXIT_ERROR;
         }
 
@@ -141,6 +143,7 @@ class Run extends SafeBaseCommand
             return EXIT_ERROR;
         }
 
+        $this->nextStep('aiops:public-pages:report', 'Generate a report for the latest public-pages pipeline run.');
         return EXIT_SUCCESS;
     }
 

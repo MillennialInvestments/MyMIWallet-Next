@@ -3428,3 +3428,11 @@
 - docs/wallets/wallets_workflow.md
   - Last updated: 2025-11-16
   - Change type: new
+
+## 2026-02-21 AIOps engine completion pass
+- Added `SparkRunnerTrait` and standardized spark command execution helpers.
+- Added AIOps `aiops:doctor` command and generated doctor report path.
+- Added missing AIOps service skeletons (state, fingerprint, regression, PR composer, release notes, priority writer).
+- Expanded `Config\Services` AIOps factory wiring with canonical `App\Services\AIOps` casing.
+- Updated command NEXT STEP footer behavior for key AIOps/Ops/Spark commands.
+- Added architecture docs under `docs/_aiops/architecture/*`.

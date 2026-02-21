@@ -81,6 +81,55 @@ class Services extends CoreServices
         return new \App\Services\AIOps\PriorityWriterService();
     }
 
+
+    public static function aiopsOllamaPatchRunner(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsOllamaPatchRunner');
+        return new \App\Services\AIOps\OllamaPatchRunner();
+    }
+
+    public static function aiopsManualRunNotifier(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsManualRunNotifier');
+        return new \App\Services\AIOps\ManualRunNotifier(config(\Config\AiOps::class));
+    }
+
+    public static function aiopsPublicPagesPipeline(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsPublicPagesPipeline');
+        return new \App\Services\AIOps\PublicPagesPipelineService();
+    }
+
+    public static function aiopsObservabilityState(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsObservabilityState');
+        return new \App\Services\AIOps\ObservabilityStateService();
+    }
+
+    public static function aiopsFingerprint(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsFingerprint');
+        return new \App\Services\AIOps\FingerprintService();
+    }
+
+    public static function aiopsRegressionEvaluator(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsRegressionEvaluator');
+        return new \App\Services\AIOps\RegressionEvaluator();
+    }
+
+    public static function aiopsPRComposer(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsPRComposer');
+        return new \App\Services\AIOps\PRComposerService();
+    }
+
+    public static function aiopsReleaseNotes(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsReleaseNotes');
+        return new \App\Services\AIOps\ReleaseNotesService();
+    }
+
     public static function crudCacheInvalidator(bool $getShared = true): CrudCacheInvalidator
     {
         if ($getShared) {

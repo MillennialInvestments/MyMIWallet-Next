@@ -15,95 +15,62 @@ class RepairRunSafe extends SafeBaseCommand
     {
         $baseBranch = env('AIOPS_BASE_BRANCH') ?: 'main';
         $tmpBranch = 'aiops/tmp-validate-' . date('Ymd_His');
+        $failureArtifact = 'writable/audit/observability_regression_report.md';
 
         CLI::write("Base branch: {$baseBranch}");
         CLI::write("Temp branch: {$tmpBranch}");
 
-        // Ensure clean base
         $this->sh("git fetch origin {$baseBranch}");
         $this->sh("git checkout {$baseBranch}");
         $this->sh("git reset --hard origin/{$baseBranch}");
-        $this->sh("git clean -fd");
-
-        // Create temp branch
+        $this->sh('git clean -fd');
         $this->sh("git checkout -b {$tmpBranch}");
 
         try {
-            // Cost gate first (may disable)
-            $this->spark('aiops:gate:cost');
+            $this->sparkRun('aiops:gate:cost');
+            $this->sparkRun('aiops:observe:scan');
+            $this->sparkRun('aiops:observe:hash');
+            $this->sparkRun('aiops:observe:cost');
+            $this->sparkRun('aiops:observe:regression');
+            $this->sparkRun('aiops:patch:risk_score');
+            $this->sparkRun('aiops:patch:validate');
+            $this->sparkRun('aiops:patch:dry_run');
+            $this->sparkRun('aiops:governance:analyze');
+            $this->sparkRun('aiops:observe:suggest', true);
+            $this->sparkRun('aiops:diff:format');
+            $this->sparkRun('aiops:patch:hallucination');
+            $this->sparkRun('aiops:patch:apply');
 
-            // Observability pipeline
-            $this->spark('aiops:observe:scan');
-            $this->spark('aiops:observe:hash');
-            $this->spark('aiops:observe:cost');
-            $this->spark('aiops:observe:regression'); // fails if regressions found
+            $this->sparkRun('app:test', true);
+            $this->sparkRun('codex:gate', true);
+            $this->sparkRun('codex:gate:severity 0 10', true);
+            $this->sparkRun('app:gate:coverage 60 warn', true);
 
-            $this->spark('aiops:patch:risk_score');
-            $this->spark('aiops:patch:validate');
-            $this->spark('aiops:patch:dry_run');
-            $this->spark('aiops:governance:analyze');
-            
-            // If you have suggest -> diff -> apply:
-            $this->sparkIfExists('aiops:observe:suggest');
-            $this->spark('aiops:diff:format');
-            $this->spark('aiops:patch:hallucination');
-            $this->spark('aiops:patch:apply');
-
-            // Local validations
-            $this->spark('app:test');
-            $this->spark('codex:gate');
-            $this->spark('codex:gate:severity 0 10');
-            $this->spark('app:gate:coverage 60 warn');
-
-            // If all passed, leave changes staged for PR creation step
-            CLI::write("Validation passed. Ready to PR from branch: {$tmpBranch}");
+            CLI::write("Validation passed. Ready to PR from branch: {$tmpBranch}", 'green');
+            $this->nextStep('aiops:pr:create', 'Create a PR from the validated repair branch.');
+            return EXIT_SUCCESS;
         } catch (\Throwable $e) {
-            CLI::error("Validation failed: " . $e->getMessage());
+            CLI::error('Validation failed: ' . $e->getMessage());
 
-            // Rollback: go back to base and delete temp branch
-            $this->sh("git checkout {$baseBranch}");
-            $this->sh("git reset --hard origin/{$baseBranch}");
-            $this->sh("git clean -fd");
-            $this->sh("git branch -D {$tmpBranch}");
+            $this->sh("git checkout {$baseBranch}", true);
+            $this->sh("git reset --hard origin/{$baseBranch}", true);
+            $this->sh('git clean -fd', true);
+            $this->sh("git branch -D {$tmpBranch}", true);
 
-            CLI::error("Rolled back and deleted temp branch: {$tmpBranch}");
-            exit(1);
+            $this->nextStep('aiops:observe:regression', 'Inspect regression output before retrying the safe repair pipeline.', [$failureArtifact]);
+            return EXIT_ERROR;
         }
     }
 
-    private function spark(string $cmd): void
-    {
-        $full = PHP_BINARY . ' ' . escapeshellarg(ROOTPATH . 'spark') . ' ' . $cmd;
-        exec($full . ' 2>&1', $out, $code);
-        foreach ($out as $line) CLI::write($line);
-        if ($code !== 0) {
-            throw new \RuntimeException("spark failed: {$cmd}");
-        }
-    }
-
-    private function sparkIfExists(string $cmd): void
-    {
-        $full = PHP_BINARY . ' ' . escapeshellarg(ROOTPATH . 'spark') . ' ' . $cmd;
-        exec($full . ' 2>&1', $out, $code);
-        $joined = implode("\n", $out);
-
-        if (str_contains($joined, 'Command "') && str_contains($joined, '" not found')) {
-            CLI::write("Skipping missing command: {$cmd}");
-            return;
-        }
-
-        foreach ($out as $line) CLI::write($line);
-        if ($code !== 0) {
-            throw new \RuntimeException("spark failed: {$cmd}");
-        }
-    }
-
-    private function sh(string $cmd): void
+    private function sh(string $cmd, bool $optional = false): void
     {
         $full = 'cd ' . escapeshellarg(ROOTPATH) . ' && ' . $cmd;
         exec($full . ' 2>&1', $out, $code);
-        foreach ($out as $line) CLI::write($line);
-        if ($code !== 0) {
+        foreach ($out as $line) {
+            CLI::write($line);
+        }
+
+        if ($code !== 0 && ! $optional) {
             throw new \RuntimeException("shell failed: {$cmd}");
         }
     }

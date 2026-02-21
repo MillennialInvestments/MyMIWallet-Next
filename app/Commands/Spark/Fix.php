@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Commands\Spark;
 
 use App\Commands\SafeBaseCommand;
-use App\Services\AiOps\CommandHookService;
+use App\Services\AIOps\CommandHookService;
 use App\Services\Spark\CommandInventoryService;
 use CodeIgniter\CLI\CLI;
 
@@ -115,6 +115,8 @@ class Fix extends SafeBaseCommand
                 $payload
             );
         }
+
+        $this->nextStep('aiops:doctor', 'Validate AIOps service wiring after Spark repairs.');
 
         return EXIT_SUCCESS;
     }
