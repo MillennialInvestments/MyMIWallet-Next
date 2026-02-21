@@ -1,6 +1,6 @@
 # AI-Ops: Stale Docs
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-21T02:49:01Z
+> Run: 2026-02-21T12:32:27Z
 
 - docs/Kimi/README.md
   - Doc last updated: 2025-12-11 (71 days ago)
@@ -55,23 +55,23 @@
 - docs/chatgpt/prompt_templates.md
   - Doc last updated: 2025-12-21 (61 days ago)
 - docs/content_engine/api_endpoints.md
-  - Doc last updated: 2025-12-16 (66 days ago)
+  - Doc last updated: 2025-12-16 (67 days ago)
 - docs/content_engine/cron_jobs.md
-  - Doc last updated: 2025-12-16 (66 days ago)
+  - Doc last updated: 2025-12-16 (67 days ago)
 - docs/content_engine/json_contract.md
-  - Doc last updated: 2025-12-16 (66 days ago)
+  - Doc last updated: 2025-12-16 (67 days ago)
 - docs/content_engine/overview.md
-  - Doc last updated: 2025-12-16 (66 days ago)
+  - Doc last updated: 2025-12-16 (67 days ago)
 - docs/content_engine/security.md
-  - Doc last updated: 2025-12-16 (66 days ago)
+  - Doc last updated: 2025-12-16 (67 days ago)
 - docs/content_engine/sql_patch_notes.md
-  - Doc last updated: 2025-12-16 (66 days ago)
+  - Doc last updated: 2025-12-16 (67 days ago)
 - docs/content_engine/troubleshooting.md
-  - Doc last updated: 2025-12-16 (66 days ago)
+  - Doc last updated: 2025-12-16 (67 days ago)
 - docs/content_engine/ui_workflow.md
-  - Doc last updated: 2025-12-16 (66 days ago)
+  - Doc last updated: 2025-12-16 (67 days ago)
 - docs/content_hub_inventory/content_hub_inventory.md
-  - Doc last updated: 2025-11-17 (95 days ago)
+  - Doc last updated: 2025-11-17 (96 days ago)
 - docs/cron/README.md
   - Doc last updated: 2025-12-21 (61 days ago)
 - docs/cron/jobs/codex_review.md
@@ -99,7 +99,7 @@
 - docs/discord/alerts_automation.md
   - Doc last updated: 2025-11-27 (85 days ago)
 - docs/discord/discord_integration_overview.md
-  - Doc last updated: 2025-11-25 (87 days ago)
+  - Doc last updated: 2025-11-25 (88 days ago)
 - docs/discord/discord_schema_v3.sql.md
   - Doc last updated: 2025-11-08 (104 days ago)
 - docs/discord/discord_seed_v3.sql.md
@@ -107,7 +107,7 @@
 - docs/discord/discord_to_ci4_commands.md
   - Doc last updated: 2025-11-26 (86 days ago)
 - docs/discord/earnings_calendar_automation.md
-  - Doc last updated: 2025-11-26 (86 days ago)
+  - Doc last updated: 2025-11-26 (87 days ago)
 - docs/discord/environments.md
   - Doc last updated: 2025-12-05 (77 days ago)
 - docs/discord/events_matrix.md
@@ -119,7 +119,7 @@
 - docs/discord/mysql_discord_schema.md
   - Doc last updated: 2025-12-05 (77 days ago)
 - docs/discord/operations_and_montioring.md
-  - Doc last updated: 2025-11-26 (86 days ago)
+  - Doc last updated: 2025-11-26 (87 days ago)
 - docs/discord/premium_flows_and_upsell.md
   - Doc last updated: 2025-12-05 (77 days ago)
 - docs/discord/python_workers.md
@@ -141,7 +141,7 @@
 - docs/exports_schema.md
   - Doc last updated: 2025-11-08 (104 days ago)
 - docs/functional_inventory/feature_inventory.md
-  - Doc last updated: 2025-11-24 (88 days ago)
+  - Doc last updated: 2025-11-24 (89 days ago)
 - docs/logs/_index.md
   - Doc last updated: 2025-11-08 (104 days ago)
 - docs/logs/log-2025-10-06.md
@@ -277,19 +277,19 @@
 - docs/ops/cron_auth.md
   - Doc last updated: 2025-12-21 (61 days ago)
 - docs/ops/cron_kick.md
-  - Doc last updated: 2025-12-20 (62 days ago)
+  - Doc last updated: 2025-12-20 (63 days ago)
 - docs/ops/daily_runbook.md
-  - Doc last updated: 2025-12-20 (62 days ago)
+  - Doc last updated: 2025-12-20 (63 days ago)
 - docs/ops/docs_index.md
-  - Doc last updated: 2025-12-10 (72 days ago)
+  - Doc last updated: 2025-12-10 (73 days ago)
 - docs/ops/logging_healthcheck.md
   - Doc last updated: 2025-12-21 (61 days ago)
 - docs/ops/logs/logging_breakpoint_report-2025_12_21.md
   - Doc last updated: 2025-12-21 (61 days ago)
 - docs/ops/marketing_ignite.md
-  - Doc last updated: 2025-12-20 (62 days ago)
+  - Doc last updated: 2025-12-20 (63 days ago)
 - docs/ops/reviews/_index.md
-  - Doc last updated: 2025-12-10 (72 days ago)
+  - Doc last updated: 2025-12-10 (73 days ago)
 - docs/ops/runbooks/alphavantage-rotation-playbook.md
   - Doc last updated: 2025-11-08 (104 days ago)
 - docs/ops/runbooks/database-log-review.md
@@ -297,7 +297,7 @@
 - docs/ops/runbooks/env-baseline-keys.md
   - Doc last updated: 2025-11-08 (104 days ago)
 - docs/ops/runbooks/logger-repair.md
-  - Doc last updated: 2025-12-10 (72 days ago)
+  - Doc last updated: 2025-12-10 (73 days ago)
 - docs/ops/runbooks/routes-audit-playbook.md
   - Doc last updated: 2025-11-08 (104 days ago)
 - docs/ops/runbooks/ui-error-uat.md
@@ -305,11 +305,11 @@
 - docs/ops/scripts.md
   - Doc last updated: 2025-12-21 (61 days ago)
 - docs/ops/scripts_index.md
-  - Doc last updated: 2025-12-20 (62 days ago)
+  - Doc last updated: 2025-12-20 (63 days ago)
 - docs/ops/unexpected-token-lt-audit.md
   - Doc last updated: 2025-11-08 (104 days ago)
 - docs/page_seo/page_seo_inventory.md
-  - Doc last updated: 2025-11-28 (84 days ago)
+  - Doc last updated: 2025-11-28 (85 days ago)
 - docs/predictions/_index.md
   - Doc last updated: 2025-11-08 (104 days ago)
 - docs/predictions/mysql-migrations.md
@@ -335,11 +335,11 @@
 - docs/security/_index.md
   - Doc last updated: 2025-11-08 (104 days ago)
 - docs/security/auth_registration_audit.md
-  - Doc last updated: 2025-12-16 (66 days ago)
+  - Doc last updated: 2025-12-16 (67 days ago)
 - docs/sql/mysql.md
   - Doc last updated: 2025-12-21 (61 days ago)
 - docs/syndication_inventory/syndication_inventory.md
-  - Doc last updated: 2025-11-17 (95 days ago)
+  - Doc last updated: 2025-11-17 (96 days ago)
 - docs/tasks/_index.md
   - Doc last updated: 2025-11-08 (104 days ago)
 - docs/user-guides/ci4/01_Overview.md

@@ -4,7 +4,7 @@
    Grouped by (LEVEL + message)
 ===============================================
 
-Last processed up to: 2026-02-21 02:00:03
+Last processed up to: 2026-02-21 12:28:58
 
 ---------------------------
 LEVEL: DEBUG
@@ -19,48 +19,69 @@ DEBUG --> LOG_HEALTHCHECK debug marker=5a5695193df0
 [1 occurrence(s)]
 DEBUG --> LOG_HEALTHCHECK debug marker=9f96365cc85a
 
-[1 occurrence(s)]
+[3 occurrence(s)]
 DEBUG --> Session: Initialization under CLI aborted.
 
-[1 occurrence(s)]
+[3 occurrence(s)]
 DEBUG --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+
+[1 occurrence(s)]
+DEBUG --> LOG_HEALTHCHECK debug marker=2880d10185fb
+
+[1 occurrence(s)]
+DEBUG --> LOG_HEALTHCHECK debug marker=b911eca457cf
+
+[1 occurrence(s)]
+DEBUG --> LOG_HEALTHCHECK debug marker=2e96cfe00ea3
+
+[1 occurrence(s)]
+DEBUG --> LOG_HEALTHCHECK debug marker=16675acc219f
+
+[1 occurrence(s)]
+DEBUG --> LOG_HEALTHCHECK debug marker=96bb11151e0f
+
+[1 occurrence(s)]
+DEBUG --> LOG_HEALTHCHECK debug marker=a35c849c13b1
+
+[1 occurrence(s)]
+DEBUG --> LOG_HEALTHCHECK debug marker=ab180b443010
 
 
 ---------------------------
 LEVEL: INFO
 ---------------------------
 
-[4 occurrence(s)]
+[11 occurrence(s)]
 INFO --> [spark:aiops:run] Intent
 
-[12 occurrence(s)]
+[51 occurrence(s)]
 INFO --> [spark:ops:work] Started
 
-[12 occurrence(s)]
+[51 occurrence(s)]
 INFO --> [spark:ops:work] Intent
 
-[12 occurrence(s)]
+[51 occurrence(s)]
 INFO --> [spark:ops:work] Completed
 
-[4 occurrence(s)]
+[11 occurrence(s)]
 INFO --> [AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Started
 
-[4 occurrence(s)]
+[11 occurrence(s)]
 INFO --> [spark:logs:summarize] Intent
 
-[3 occurrence(s)]
+[10 occurrence(s)]
 INFO --> [AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Completed
 
-[3 occurrence(s)]
+[10 occurrence(s)]
 INFO --> [spark:app:healthcheck] Started
 
-[3 occurrence(s)]
+[10 occurrence(s)]
 INFO --> [spark:app:healthcheck] Intent
 
 [1 occurrence(s)]
 INFO --> LOG_HEALTHCHECK info marker=e885eeffa4c0
 
-[3 occurrence(s)]
+[10 occurrence(s)]
 INFO --> [spark:app:healthcheck] Completed
 
 [1 occurrence(s)]
@@ -69,7 +90,7 @@ INFO --> [spark:chat:audit] Intent
 [1 occurrence(s)]
 INFO --> [spark:chat:status] Intent
 
-[2 occurrence(s)]
+[3 occurrence(s)]
 INFO --> [spark:aiops:priority:build] Intent
 
 [2 occurrence(s)]
@@ -84,10 +105,37 @@ INFO --> LOG_HEALTHCHECK info marker=9f96365cc85a
 [1 occurrence(s)]
 INFO --> [spark:aiops:auto:run] Intent
 
+[1 occurrence(s)]
+INFO --> LOG_HEALTHCHECK info marker=2880d10185fb
+
+[3 occurrence(s)]
+INFO --> [spark:config:clear] Intent
+
+[3 occurrence(s)]
+INFO --> [spark:spark-reset] Intent
+
+[1 occurrence(s)]
+INFO --> LOG_HEALTHCHECK info marker=b911eca457cf
+
+[1 occurrence(s)]
+INFO --> LOG_HEALTHCHECK info marker=2e96cfe00ea3
+
+[1 occurrence(s)]
+INFO --> LOG_HEALTHCHECK info marker=16675acc219f
+
+[1 occurrence(s)]
+INFO --> LOG_HEALTHCHECK info marker=96bb11151e0f
+
+[1 occurrence(s)]
+INFO --> LOG_HEALTHCHECK info marker=a35c849c13b1
+
+[1 occurrence(s)]
+INFO --> LOG_HEALTHCHECK info marker=ab180b443010
+
 
 ===============================================
    HERE'S THE NEW STUFF
-   (Entries logged AFTER 2026-02-21 02:00:03)
+   (Entries logged AFTER 2026-02-21 12:28:58)
 ===============================================
 
 ---------------------------
@@ -95,13 +143,7 @@ LEVEL: DEBUG (NEW)
 ---------------------------
 
 [1 NEW occurrence(s)]
-DEBUG --> LOG_HEALTHCHECK debug marker=9f96365cc85a
-
-[1 NEW occurrence(s)]
-DEBUG --> Session: Initialization under CLI aborted.
-
-[1 NEW occurrence(s)]
-DEBUG --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG --> LOG_HEALTHCHECK debug marker=ab180b443010
 
 
 ---------------------------
@@ -115,28 +157,25 @@ INFO --> [spark:app:healthcheck] Started
 INFO --> [spark:app:healthcheck] Intent
 
 [1 NEW occurrence(s)]
-INFO --> LOG_HEALTHCHECK info marker=9f96365cc85a
+INFO --> LOG_HEALTHCHECK info marker=ab180b443010
 
 [1 NEW occurrence(s)]
 INFO --> [spark:app:healthcheck] Completed
 
-[3 NEW occurrence(s)]
+[1 NEW occurrence(s)]
 INFO --> [spark:ops:work] Started
 
-[3 NEW occurrence(s)]
+[1 NEW occurrence(s)]
 INFO --> [spark:ops:work] Intent
 
-[3 NEW occurrence(s)]
+[1 NEW occurrence(s)]
 INFO --> [spark:ops:work] Completed
 
-[1 NEW occurrence(s)]
-INFO --> [spark:aiops:priority:build] Intent
+[2 NEW occurrence(s)]
+INFO --> [spark:spark-reset] Intent
 
-[1 NEW occurrence(s)]
-INFO --> [spark:aiops:auto:run] Intent
-
-[1 NEW occurrence(s)]
-INFO --> [spark:aiops:backlog] Intent
+[2 NEW occurrence(s)]
+INFO --> [spark:config:clear] Intent
 
 [1 NEW occurrence(s)]
 INFO --> [spark:aiops:run] Intent

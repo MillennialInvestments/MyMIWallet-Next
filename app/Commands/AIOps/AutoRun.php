@@ -7,7 +7,7 @@ namespace App\Commands\AIOps;
 use App\Commands\SafeBaseCommand;
 use App\Services\AiOps\AutoRunCoordinator;
 use App\Services\AiOps\ManualRunNotifier;
-use App\Services\AiOps\OllamaPatchRunner;
+use App\Services\AIOps\OllamaPatchRunner;
 use CodeIgniter\CLI\CLI;
 
 class AutoRun extends SafeBaseCommand

@@ -1,0 +1,12 @@
+{
+    "command": "spark-reset",
+    "timestamp": "20260221-123211",
+    "dry_run": true,
+    "emit": "docs",
+    "cache_dir": "/home/mymiteam/mymiwallet/site/current/writable/cache",
+    "targets": [
+        "/home/mymiteam/mymiwallet/site/current/writable/cache/Commands.php"
+    ],
+    "deleted": [],
+    "composer_exit": null
+}

@@ -4,7 +4,7 @@ namespace App\Commands\AIOps;
 
 use App\Commands\SafeBaseCommand;
 use App\Commands\Support\ArtifactHelper;
-use App\Services\AiOps\OllamaPatchRunner;
+use App\Services\AIOps\OllamaPatchRunner;
 use CodeIgniter\CLI\CLI;
 
 class Run extends SafeBaseCommand

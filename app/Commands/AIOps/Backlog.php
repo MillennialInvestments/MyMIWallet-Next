@@ -6,7 +6,7 @@ namespace App\Commands\AIOps;
 
 use App\Commands\SafeBaseCommand;
 use App\Services\AiOps\BacklogMetaService;
-use App\Services\AiOps\OllamaPatchRunner;
+use App\Services\AIOps\OllamaPatchRunner;
 use CodeIgniter\CLI\CLI;
 use Throwable;
 
