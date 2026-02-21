@@ -44,6 +44,7 @@ class Console extends BaseConfig
         \App\Commands\AiOps\ChatGovernanceIndex::class,
         \App\Commands\AiOps\CommandIndex::class,
         \App\Commands\AiOps\ContinueAudit::class,
+        \App\Commands\AIOps\CspAudit::class,
         \App\Commands\AiOps\CopilotValidate::class,
         \App\Commands\AiOps\DiffFormat::class,
         \App\Commands\AiOps\GateCost::class,
