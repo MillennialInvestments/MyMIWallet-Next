@@ -4,7 +4,7 @@
    Grouped by (LEVEL + message)
 ===============================================
 
-Last processed up to: 2026-02-21 12:28:58
+Last processed up to: 2026-02-21 13:42:21
 
 ---------------------------
 LEVEL: DEBUG
@@ -46,42 +46,45 @@ DEBUG --> LOG_HEALTHCHECK debug marker=a35c849c13b1
 [1 occurrence(s)]
 DEBUG --> LOG_HEALTHCHECK debug marker=ab180b443010
 
+[1 occurrence(s)]
+DEBUG --> LOG_HEALTHCHECK debug marker=cd733aff8d8e
+
 
 ---------------------------
 LEVEL: INFO
 ---------------------------
 
-[11 occurrence(s)]
+[12 occurrence(s)]
 INFO --> [spark:aiops:run] Intent
 
-[51 occurrence(s)]
+[57 occurrence(s)]
 INFO --> [spark:ops:work] Started
 
-[51 occurrence(s)]
+[57 occurrence(s)]
 INFO --> [spark:ops:work] Intent
 
-[51 occurrence(s)]
+[57 occurrence(s)]
 INFO --> [spark:ops:work] Completed
 
-[11 occurrence(s)]
+[13 occurrence(s)]
 INFO --> [AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Started
 
-[11 occurrence(s)]
+[13 occurrence(s)]
 INFO --> [spark:logs:summarize] Intent
 
-[10 occurrence(s)]
+[12 occurrence(s)]
 INFO --> [AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Completed
 
-[10 occurrence(s)]
+[11 occurrence(s)]
 INFO --> [spark:app:healthcheck] Started
 
-[10 occurrence(s)]
+[11 occurrence(s)]
 INFO --> [spark:app:healthcheck] Intent
 
 [1 occurrence(s)]
 INFO --> LOG_HEALTHCHECK info marker=e885eeffa4c0
 
-[10 occurrence(s)]
+[11 occurrence(s)]
 INFO --> [spark:app:healthcheck] Completed
 
 [1 occurrence(s)]
@@ -132,50 +135,27 @@ INFO --> LOG_HEALTHCHECK info marker=a35c849c13b1
 [1 occurrence(s)]
 INFO --> LOG_HEALTHCHECK info marker=ab180b443010
 
+[1 occurrence(s)]
+INFO --> LOG_HEALTHCHECK info marker=cd733aff8d8e
+
 
 ===============================================
    HERE'S THE NEW STUFF
-   (Entries logged AFTER 2026-02-21 12:28:58)
+   (Entries logged AFTER 2026-02-21 13:42:21)
 ===============================================
-
----------------------------
-LEVEL: DEBUG (NEW)
----------------------------
-
-[1 NEW occurrence(s)]
-DEBUG --> LOG_HEALTHCHECK debug marker=ab180b443010
-
 
 ---------------------------
 LEVEL: INFO (NEW)
 ---------------------------
 
-[1 NEW occurrence(s)]
-INFO --> [spark:app:healthcheck] Started
-
-[1 NEW occurrence(s)]
-INFO --> [spark:app:healthcheck] Intent
-
-[1 NEW occurrence(s)]
-INFO --> LOG_HEALTHCHECK info marker=ab180b443010
-
-[1 NEW occurrence(s)]
-INFO --> [spark:app:healthcheck] Completed
-
-[1 NEW occurrence(s)]
+[2 NEW occurrence(s)]
 INFO --> [spark:ops:work] Started
 
-[1 NEW occurrence(s)]
+[2 NEW occurrence(s)]
 INFO --> [spark:ops:work] Intent
 
-[1 NEW occurrence(s)]
+[2 NEW occurrence(s)]
 INFO --> [spark:ops:work] Completed
-
-[2 NEW occurrence(s)]
-INFO --> [spark:spark-reset] Intent
-
-[2 NEW occurrence(s)]
-INFO --> [spark:config:clear] Intent
 
 [1 NEW occurrence(s)]
 INFO --> [spark:aiops:run] Intent

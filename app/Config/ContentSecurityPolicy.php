@@ -84,5 +84,13 @@ class ContentSecurityPolicy extends BaseConfig
             $this->scriptSrc[] = 'unsafe-inline';
             $this->styleSrc[]  = 'unsafe-inline';
         }
+        if (ENVIRONMENT === 'development') {
+            $this->scriptSrc[] = 'unsafe-inline';
+            $this->styleSrc[]  = 'unsafe-inline';
+        }
+        if (ENVIRONMENT === 'production') {
+            $this->scriptSrc[] = 'unsafe-inline';
+            $this->styleSrc[]  = 'unsafe-inline';
+        }
     }
 }
