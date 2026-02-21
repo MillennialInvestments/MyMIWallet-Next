@@ -12,7 +12,7 @@ use Throwable;
 
 class PriorityBuildCommand extends SafeBaseCommand
 {
-    protected $group       = 'AI-Ops - Audit';
+    protected $group       = 'AIOps - Audit';
     protected $name        = 'aiops:priority:build';
     protected $description = 'Scan /docs, detect gaps, verify repo, stage codegen artifacts for PR batching, and write /docs/priority outputs.';
 

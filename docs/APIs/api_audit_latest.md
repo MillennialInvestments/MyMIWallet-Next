@@ -1,0 +1,2451 @@
+# Advanced API Audit Report
+
+Generated: 2026-02-21T17:55:04+00:00
+
+## Complete APIs
+- GET Dashboard → App\\Modules\\User\\Controllers\\BudgetController::index
+- GET Marketplace → App\Modules\ScriptStudio\Controllers\ScriptStudioController::marketplace
+- GET help/account → App\\Modules\\Support\\Controllers\\AccountSupportController::index
+- GET healthcheck → App\Modules\Ops\Controllers\OpsController::healthcheck
+- POST app/update → App\Modules\Ops\Controllers\OpsController::appUpdate
+- GET commands → App\Modules\Ops\Controllers\OpsController::commands
+- GET snapshot → App\Modules\AIOps\Controllers\AIOpsController::snapshot
+- GET gaps/docs → App\Modules\AIOps\Controllers\AIOpsController::docsGaps
+- POST watch → App\Modules\AIOps\Controllers\AIOpsController::watch
+- GET Logs/summary → App\Modules\Logs\Controllers\LogsController::summary
+- POST ContentEngine/run → App\Modules\ContentEngine\Controllers\ContentEngineController::run
+- GET Chat/health → App\Modules\Chat\Controllers\ChatController::health
+- GET Chat/usage → App\Modules\Chat\Controllers\ChatController::usage
+- GET Dashboard/Economy/Widget → App\Modules\User\Controllers\EconomyController::dashboardWidget
+- GET API/Investments/Economy/latest → App\Modules\User\Controllers\EconomyController::latest
+
+## Broken Routes
+- GET assets/(.*) → Assets::file/$1
+- GET favicon.ico → Assets::favicon
+- GET / → Home::index
+- GET healthz → System\HealthController::healthz
+- GET test/crash → Test::crash
+- GET Maintenance → MaintenanceController::index
+- GET API/Ops/health-score → OpsHealth::score
+- GET API/Ops/filesystem-status → Api\OpsFilesystemStatusController::index
+- GET health → OpsHealth::index
+- POST health/run → OpsHealth::run
+- GET index → DocsController::index
+- GET view → DocsController::view
+- GET Stock/(:segment)/(:segment) → StockController::show/$1/$2
+- GET blog → Blog::index
+- GET blog/category/(:segment) → Blog::category/$1
+- GET blog/(:segment) → Blog::post/$1
+- GET /sw.js → ServiceWorker::index
+- GET /Apex/Referral → Home::apexReferral
+- GET /Apex/Referral/(:segment) → Home::apexReferral/$1
+- GET /Corporate-Earnings → Home::corporateEarnings
+- GET /Corporate-Earnings/(:segment) → Home::corporateEarnings/$1
+- GET /Economic-Calendar → Home::economicCalendar
+- GET /Economic-Calendar/(:segment) → Home::economicCalendarContent/$1
+- GET Exchange/(:segment) → Home::exchange/$1
+- GET /Getting-Started/(:segment)/(:segment) → Home::gettingStarted
+- GET /Getting-Started/(:segment) → Home::gettingStarted
+- GET /Getting-Started → Home::gettingStarted
+- GET /Memberships → Home::memberships
+- GET /Memberships/(:segment) → Home::memberships
+- GET Learn/(:segment) → App\Modules\Public\Controllers\PublicPagesController::show/$1
+- GET Alerts/Preview/(:segment) → AlertsController::preview/$1
+- GET Preview/Alert/(:segment) → AlertsController::preview/$1
+- GET /Privacy-Policy → Home::privacyPolicy
+- GET Sector/(:segment) → Home::sector/$1
+- GET /Terms-Of-Service → Home::termsOfService
+- GET /resend-activation → AuthController::resendActivation
+- POST /resend-activation → AuthController::resendActivationCode
+- GET Dev/BitcoinTest → App\Controllers\Dev\BitcoinTest::index
+- GET Debug/whoami → Debug::whoami
+- GET Debug/auth-audit-cache → Debug::authAuditCacheSelfTest
+- GET common-data/smoke → CommonDataController::smoke
+- GET health → Health::index
+- GET status → Health::status
+- GET api/health → Api\\HealthController::index
+- GET api/admin/chat-usage → Api\\AdminChatUsageController::index
+- POST api/aiops/manual-run → Api\\AiOpsManualRunController::run
+- GET ops/health → OpsHealth::index
+- GET _ops/opcache-reset → Ops::opcacheReset
+- GET login → AuthController::login
+- POST login → AuthController::attemptLogin
+- POST auth/resend-activation → AuthController::resendActivationCode
+- GET logout → AuthController::logout
+- POST logout → AuthController::logout
+- GET register → AuthController::register
+- POST register → AuthController::attemptRegister
+- GET register/success → AuthController::registerSuccess
+- POST register/resend-activation → AuthController::resendRegistrationActivation
+- GET test-create-user → AuthController::createTempUser
+- POST Auth/link-robinhood → AuthController::linkRobinhood
+- POST Auth/link-snaptrade → AuthController::linkSnapTrade
+- GET register/(:segment) → AuthController::register/$1
+- GET (:any)/register → AuthController::register
+- GET (:any)/register/(:segment) → AuthController::register/$2
+- POST (:any)/register → AuthController::attemptRegister
+- POST (:any)/register/(:segment) → AuthController::attemptRegister
+- GET activate → AuthController::activateAccount
+- GET activate-account → AuthController::activateAccount
+- POST activate-account → AuthController::activateAccount
+- POST activate-account/(:segment) → AuthController::activateAccount
+- GET resend-activate-account → AuthController::resendActivateAccount
+- GET forgot-password → AuthController::forgotPassword
+- GET reset-password → AuthController::resetPassword
+- POST forgot → AuthController::attemptForgot
+- POST reset-password → AuthController::attemptReset
+- POST get2FAQRCode → AuthController::get2FAQRCode
+- POST verify2FACode → AuthController::verify2FACode
+- GET auth/provider/(:segment) → AuthController::redirectToProvider/$1
+- GET auth/provider/(:segment)/callback → AuthController::handleProviderCallback/$1
+- GET auth/link/(:segment) → AuthController::linkProvider/$1
+- GET auth/unlink/(:segment) → AuthController::unlinkProvider/$1
+- GET /Account → DashboardController::account
+- GET /Account/Activity → DashboardController::activity
+- GET /Account/Billing → DashboardController::billing
+- GET /Account/Connected-Accounts → DashboardController::connectedAccounts
+- GET /Account/Notifications → DashboardController::notifications
+- GET /Account/Security → DashboardController::Security
+- GET /Account/Social-Media → DashboardController::SocialMedia
+- GET /Accounts/createLinkToken → AccountController::createLinkToken
+- GET /Search → SearchController::index
+- GET /Search/(:segment) → SearchController::index/$1
+- GET /Budget → BudgetController::index
+- GET /Investments → InvestmentsController::index
+- GET /Getting-Started → Subscribe::index
+- GET /MyMI-Wallet → WalletsController::MyMIWallet
+- GET /Profile → DashboardController::profile
+- GET /Profile/(:segment) → DashboardController::profile/$1
+- GET /Performance → DashboardController::performance
+- GET /Schedule → DashboardController::schedule
+- GET /Support → DashboardController::support
+- GET /Trade-Tracker → InvestmentsController::tradeTracker
+- GET /Trade-Tracker/getTradeData → InvestmentsController::getTradeData
+- POST /Trade-Tracker/saveTradeData → InvestmentsController::saveTradeData
+- GET /MyMI-Gold/Goals/(:segment) → DashboardController::goals
+- GET /MyMI-Gold/Goals/Daily → DashboardController::goals
+- GET /MyMI-Gold/Goals/Weekly → DashboardController::goals
+- GET /MyMI-Gold/Goals/Monthly → DashboardController::goals
+- GET / → AdvisorController::index
+- POST generateInsight → AdvisorController::generateAdvisorInsight
+- POST generateStoryboard → AdvisorController::generateNewsStoryboard
+- POST tradeAnalysis/(:num) → AdvisorController::generateTradeAnalysis
+- GET / → APIController::index
+- GET Health → HealthAPIController::index
+- GET Health/spark → HealthAPIController::spark
+- GET Ops/status → OpsAPIController::status
+- POST Ops/dispatch → OpsAPIController::dispatch
+- POST Ops/ingestReport → OpsAPIController::ingestReport
+- GET Ops/reports/latest → OpsAPIController::latestReport
+- GET Ops/ingest-metrics → OpsAPIController::ingestMetrics
+- GET Ops/OPcacheReset → OpsAPIController::opcacheReset
+- GET status → AiOpsAPIController::status
+- POST toggle → AiOpsAPIController::toggle
+- POST run → AiOpsAPIController::run
+- POST receiveResult → AiOpsAPIController::receiveResult
+- GET health → AiOpsAPIController::health
+- POST policy/check → AiOpsAPIController::policyCheck
+- POST usage/log → AiOpsAPIController::logUsage
+- POST cache/store → AiOpsAPIController::cacheStore
+- GET cache/get → AiOpsAPIController::cacheGet
+- POST test/policy → AiOpsAPIController::testPolicy
+- POST toggle → AiOpsAPIController::toggle
+- POST Alerts/backfillEmailAlerts → AlertsAPIController::backfillEmailAlerts
+- GET cronFetchAndGenerateNews → ManagementAPIController::cronFetchAndGenerateNews
+- POST Management/backfillMarketingEmails → ManagementAPIController::backfillMarketingEmails
+- GET Management/getAutoloadHealth → ManagementAPIController::getAutoloadHealth
+- GET Management/subsystems/status → ManagementAPIController::subsystemsStatus
+- POST Management/subsystems/action → ManagementAPIController::subsystemsAction
+- POST Discord/completeOnboardingStep → DiscordAPIController::completeOnboardingStep
+- GET Investments/getForecastDetails/(:segment) → InvestmentsAPIController::getForecastDetails/$1
+- GET Investments/getConfidenceHeatmap → InvestmentsAPIController::getConfidenceHeatmap
+- GET Investments/getTopConfidenceBySector → InvestmentsAPIController::getTopConfidenceBySector
+- GET Investments/getConfidenceDistribution → InvestmentsAPIController::getConfidenceDistribution
+- GET Investments/getForecastAccuracySummary → InvestmentsAPIController::getForecastAccuracySummary
+- POST Chat → AIAPIController::postChat
+- GET Notes → AIAPIController::listNotes
+- POST LinkSettings → AIAPIController::updateLinkSettings
+- POST kyc/start → MditInvestorAPIController::startKyc
+- GET kyc/status → MditInvestorAPIController::kycStatus
+- POST accreditation/attest → MditInvestorAPIController::attestAccreditation
+- GET portfolio/summary → MditInvestorAPIController::portfolioSummary
+- POST deposits/initiate → MditDepositAPIController::initiate
+- POST deposits/confirm → MditDepositAPIController::confirm
+- POST issuance/mint → MditIssuanceAPIController::mint
+- POST redemptions/request → MditRedemptionAPIController::requestRedemption
+- GET redemptions/pending → MditAdminAPIController::pendingRedemptions
+- POST redemptions/approve → MditAdminAPIController::approveRedemption
+- GET deposits/pending → MditAdminAPIController::pendingDeposits
+- POST nav/compute_today → MditAdminAPIController::computeNavToday
+- POST Mdit/webhooks/onramp → MditWebhookController::onramp
+- GET Chat/me → ChatController::me
+- POST Chat/tool → ChatController::tool
+- GET banUnverifiedUsers → ManagementAPIController::banUnverifiedUsers
+- GET distributeTodaysNewsContent → ManagementAPIController::distributeTodaysNewsContent
+- GET exportWeeklyWatchlistCSV → ManagementAPIController::exportWeeklyWatchlistCSV
+- GET exportPostJson/(:num) → ManagementAPIController::exportPostJson/$1
+- GET fetchAlphaVantageNewsForTradeAlerts → ManagementAPIController::fetchAlphaVantageNewsForTradeAlerts
+- GET fetchEmailsToTempScraper → ManagementAPIController::fetchEmailsToTempScraper
+- GET fetchLatestSummaries → ManagementAPIController::fetchLatestSummaries
+- GET fetchNewsEmails → ManagementAPIController::fetchNewsEmails
+- GET generatePostsFromSummary/(:num) → ManagementAPIController::generatePostsFromSummary/$1
+- GET generatePostsFromSummary → ManagementAPIController::generatePostsFromSummary
+- GET generateCoffeeAndStocksNewsletter → ManagementAPIController::generateCoffeeAndStocksNewsletter
+- GET fetchCoffeeAndStocksNewsletter → ManagementAPIController::fetchCoffeeAndStocksNewsletter
+- GET generateWeeklyStreamData → ManagementAPIController::generateWeeklyStreamData
+- POST saveCoffeeAndStocksNewsletter → ManagementAPIController::saveCoffeeAndStocksNewsletter
+- GET generateVoiceScriptManually → ManagementAPIController::generateVoiceScriptManually
+- GET runBackfillAlertsEmails → ManagementAPIController::runBackfillAlertsEmails
+- GET runBackfillMarketingEmails → ManagementAPIController::runBackfillMarketingEmails
+- GET getUsers → ManagementAPIController::getUsers
+- GET getAlerts → ManagementAPIController::getAlerts
+- GET getReferrals → ManagementAPIController::getReferrals
+- GET getAssets → ManagementAPIController::getAssets
+- GET getNews → ManagementAPIController::getNews
+- GET getSupport → ManagementAPIController::getSupport
+- GET processAllTradeAlerts → ManagementAPIController::processAllTradeAlerts
+- GET runCronManually → ManagementAPIController::runCronManually
+- GET runDailyAlphaVantageDataPipeline → ManagementAPIController::runDailyAlphaVantageDataPipeline
+- GET scrapeAndGenerateTodaysStoryFromInbox → ManagementAPIController::scrapeAndGenerateTodaysStoryFromInbox
+- GET sendAllDiscordAlerts → ManagementAPIController::sendAllDiscordAlerts
+- GET sendToZapierManually → ManagementAPIController::sendToZapierManually
+- GET sharePost/(:num)/(:segment) → ManagementAPIController::sharePost/$1/$2
+- GET triggerPostAutogenOnEmpty → ManagementAPIController::triggerPostAutogenOnEmpty
+- GET updateMarketDataForAlerts → ManagementAPIController::updateMarketDataForAlerts
+- GET getSocialPlatforms → MarketingAPIController::getSocialPlatforms
+- GET getSocialCommunities → MarketingAPIController::getSocialCommunities
+- GET getPostTemplates → MarketingAPIController::getPostTemplates
+- GET generatePlatformPosts/(:num) → MarketingAPIController::generatePlatformPosts/$1
+- GET generatePlatformPosts → MarketingAPIController::generatePlatformPosts
+- GET generateDailyCommunityPosts → MarketingAPIController::generateDailyCommunityPosts
+- GET exportGeneratedPostJson/(:num) → MarketingAPIController::exportGeneratedPostJson/$1
+- GET generateRevenueDocs → MarketingAPIController::generateRevenueDocs
+- GET cronGenerateDailyCommunityPosts → MarketingAPIController::cronGenerateDailyCommunityPosts
+- GET cronQueueDistribution → MarketingAPIController::cronQueueDistribution
+- POST fetchInbox → ProjectsController::fetchProjectEmails
+- POST parseInbox → ProjectsController::parseProjectEmails
+- POST promoteLead/(:num) → ProjectsController::promoteLead/$1
+- POST updateProject/(:num) → ProjectsController::updateProject/$1
+- POST openCommitments/(:num) → ProjectsController::openCommitments/$1
+- POST checkThreshold/(:num) → ProjectsController::checkThreshold/$1
+- POST launchPrivateAuction/(:num) → ProjectsController::launchPrivateAuction/$1
+- POST settlePrivateAuction/(:num) → ProjectsController::settlePrivateAuction/$1
+- POST markFunded/(:num) → ProjectsController::markFunded/$1
+- POST createQuarterlyDistribution/(:num) → ProjectsController::createQuarterlyDistribution/$1
+- POST runPayouts/(:num) → ProjectsController::runPayouts/$1
+- POST processMonthlyWithdrawals/(:num) → ProjectsController::processMonthlyWithdrawals/$1
+- POST bulk-update-status → ReferralController::bulkUpdateStatus
+- POST bulk-delete → ReferralController::bulkDelete
+- GET scorecard → SqueezeController::scorecard
+- GET zoomout → SqueezeController::zoomout
+- GET fade → SqueezeController::fade
+- POST run → SqueezeController::run
+- GET Usage → ChatUsageController::index
+- POST Settings → ChatUsageController::saveSettings
+- POST ResetUser → ChatUsageController::resetUser
+- GET / → OpsController::index
+- GET ajaxStatus → OpsController::ajaxStatus
+- POST ajaxDispatch → OpsController::ajaxDispatch
+- GET ingestCsvSignals → AlertsAPIController::ingestCsvSignals
+- GET signals → AlertsAPIController::getSignals
+- GET signalFiles → AlertsAPIController::getSignalFiles
+- GET previewSignalFile/(:num) → AlertsAPIController::previewSignalFile/$1
+- GET recalcSignalScores → AlertsAPIController::recalcSignalScores
+- GET fetchMarketAuxNews/(:segment) → AlertsAPIController::fetchMarketAuxNews/$1
+- POST Alerts/generateAdvisorMediaFromAlert/(:num) → AlertsAPIController::generateAdvisorMediaFromAlert/$1
+- POST Alerts/generateAdvisorMediaFromAlert → AlertsAPIController::generateAdvisorMediaFromAlert
+- GET generateAlertSocialCopy/(:num) → AlertsAPIController::generateAlertSocialCopy/$1
+- POST fmv → AuctionsAPIController::computeFMV
+- POST settle/(:num) → AuctionsAPIController::settle/$1
+- POST escrow/release/(:num) → AuctionsAPIController::releaseEscrow/$1
+- POST escrow/refund/(:num) → AuctionsAPIController::refundEscrow/$1
+- POST topup → AuctionsAPIController::topUp
+- GET summary → BrokerAPIController::summary
+- GET credit → BrokerAPIController::credit
+- GET available → BrokerAPIController::available
+- GET repayment → BrokerAPIController::repayment
+- GET categories → BrokerAPIController::categories
+- GET transactions → BrokerAPIController::transactions
+- GET goals → BrokerAPIController::goals
+- GET insights → BrokerAPIController::insights
+- GET trends → BudgetController::trends
+- GET net-worth → BudgetController::netWorth
+- GET cash-flow → BudgetController::cashFlow
+- GET budgets → BudgetController::budgets
+- GET savings-goals → BrokerAPIController::savingsGoals
+- GET investment-accounts → BrokerAPIController::investmentAccounts
+- GET linked-accounts → BrokerAPIController::linkedAccounts
+- GET add-linked-account → BrokerAPIController::addLinkedAccount
+- GET remove-linked-account/(:segment) → BrokerAPIController::removeLinkedAccount/$1
+- GET refresh-linked-account/(:segment) → BrokerAPIController::refreshLinkedAccount/$1
+- GET fetchPlaidLinkToken/(:segment) → BrokerAPIController::fetchPlaidLinkToken/$1
+- GET fetchPlaidLinkToken → BrokerAPIController::fetchPlaidLinkToken
+- POST linkPlaidAccount → BrokerAPIController::linkPlaidAccount
+- GET unlinkPlaidAccount/(:segment) → BrokerAPIController::unlinkPlaidAccount/$1
+- GET refreshPlaidAccount/(:segment) → BrokerAPIController::refreshPlaidAccount/$1
+- GET fetchPlaidAccounts/(:segment) → BrokerAPIController::fetchPlaidAccounts/$1
+- GET fetchPlaidAccounts → BrokerAPIController::fetchPlaidAccounts
+- GET fetchPlaidTransactions/(:segment) → BrokerAPIController::fetchPlaidTransactions/$1
+- GET fetchPlaidTransactions → BrokerAPIController::fetchPlaidTransactions
+- GET fetchPlaidBalances/(:segment) → BrokerAPIController::fetchPlaidBalances/$1
+- GET fetchPlaidBalances → BrokerAPIController::fetchPlaidBalances
+- GET fetchPlaidIncome/(:segment) → BrokerAPIController::fetchPlaidIncome/$1
+- GET fetchPlaidIncome → BrokerAPIController::fetchPlaidIncome
+- GET fetchPlaidLiabilities/(:segment) → BrokerAPIController::fetchPlaidLiabilities/$1
+- GET fetchPlaidLiabilities → BrokerAPIController::fetchPlaidLiabilities
+- GET fetchPlaidIdentity/(:segment) → BrokerAPIController::fetchPlaidIdentity/$1
+- GET fetchPlaidIdentity → BrokerAPIController::fetchPlaidIdentity
+- GET fetchPlaidInvestments/(:segment) → BrokerAPIController::fetchPlaidInvestments/$1
+- GET fetchPlaidInvestments → BrokerAPIController::fetchPlaidInvestments
+- GET fetchPlaidHoldings/(:segment) → BrokerAPIController::fetchPlaidHoldings/$1
+- GET fetchPlaidHoldings → BrokerAPIController::fetchPlaidHoldings
+- GET fetchRobinhoodAccounts → BrokerAPIController::fetchRobinhoodAccounts
+- GET fetchRobinhoodAccountDetails/(:segment) → BrokerAPIController::fetchRobinhoodAccountDetails/$1
+- GET fetchRobinhoodPositions/(:segment) → BrokerAPIController::fetchRobinhoodPositions/$1
+- GET fetchRobinhoodPositions → BrokerAPIController::fetchRobinhoodPositions
+- GET fetchRobinhoodPortfolio/(:segment) → BrokerAPIController::fetchRobinhoodPortfolio/$1
+- GET fetchRobinhoodPortfolio → BrokerAPIController::fetchRobinhoodPortfolio
+- GET fetchRobinhoodWatchlists/(:segment) → BrokerAPIController::fetchRobinhoodWatchlists/$1
+- GET fetchRobinhoodWatchlists → BrokerAPIController::fetchRobinhoodWatchlists
+- GET fetchRobinhoodOrders/(:segment) → BrokerAPIController::fetchRobinhoodOrders/$1
+- GET fetchRobinhoodOrders → BrokerAPIController::fetchRobinhoodOrders
+- GET fetchRobinhoodOrderDetails/(:segment) → BrokerAPIController::fetchRobinhoodOrderDetails/$1
+- GET fetchRobinhoodOrderDetails → BrokerAPIController::fetchRobinhoodOrderDetails
+- GET fetchRobinhoodInstruments/(:segment) → BrokerAPIController::fetchRobinhoodInstruments/$1
+- GET fetchRobinhoodInstruments → BrokerAPIController::fetchRobinhoodInstruments
+- GET fetchRobinhoodQuotes/(:segment) → BrokerAPIController::fetchRobinhoodQuotes/$1
+- GET fetchRobinhoodQuotes → BrokerAPIController::fetchRobinhoodQuotes
+- GET fetchRobinhoodDividends/(:segment) → BrokerAPIController::fetchRobinhoodDividends/$1
+- GET fetchRobinhoodDividends → BrokerAPIController::fetchRobinhoodDividends
+- GET fetchRobinhoodTransfers/(:segment) → BrokerAPIController::fetchRobinhoodTransfers/$1
+- GET fetchRobinhoodTransfers → BrokerAPIController::fetchRobinhoodTransfers
+- GET fetchRobinhoodWatchlistItems/(:segment) → BrokerAPIController::fetchRobinhoodWatchlistItems/$1
+- GET fetchRobinhoodWatchlistItems → BrokerAPIController::fetchRobinhoodWatchlistItems
+- GET fetchRobinhoodTransactionHistory/(:segment) → BrokerAPIController::fetchRobinhoodTransactionHistory/$1
+- GET fetchRobinhoodTransactionHistory → BrokerAPIController::fetchRobinhoodTransactionHistory
+- GET fetchRobinhoodNotifications/(:segment) → BrokerAPIController::fetchRobinhoodNotifications/$1
+- GET fetchRobinhoodNotifications → BrokerAPIController::fetchRobinhoodNotifications
+- GET fetchRobinhoodACHRelationships/(:segment) → BrokerAPIController::fetchRobinhoodACHRelationships/$1
+- GET fetchRobinhoodACHRelationships → BrokerAPIController::fetchRobinhoodACHRelationships
+- GET fetchRobinhoodCryptoAccounts/(:segment) → BrokerAPIController::fetchRobinhoodCryptoAccounts/$1
+- GET fetchRobinhoodCryptoAccounts → BrokerAPIController::fetchRobinhoodCryptoAccounts
+- GET fetchRobinhoodCryptoPositions/(:segment) → BrokerAPIController::fetchRobinhoodCryptoPositions/$1
+- GET fetchRobinhoodCryptoPositions → BrokerAPIController::fetchRobinhoodCryptoPositions
+- GET fetchRobinhoodCryptoPortfolio/(:segment) → BrokerAPIController::fetchRobinhoodCryptoPortfolio/$1
+- GET fetchRobinhoodCryptoPortfolio → BrokerAPIController::fetchRobinhoodCryptoPortfolio
+- GET fetchRobinhoodCryptoOrders/(:segment) → BrokerAPIController::fetchRobinhoodCryptoOrders/$1
+- GET fetchRobinhoodCryptoOrders → BrokerAPIController::fetchRobinhoodCryptoOrders
+- GET fetchRobinhoodCryptoOrderDetails/(:segment) → BrokerAPIController::fetchRobinhoodCryptoOrderDetails/$1
+- GET fetchRobinhoodCryptoOrderDetails → BrokerAPIController::fetchRobinhoodCryptoOrderDetails
+- GET fetchRobinhoodCryptoTransactions/(:segment) → BrokerAPIController::fetchRobinhoodCryptoTransactions/$1
+- GET fetchRobinhoodCryptoTransactions → BrokerAPIController::fetchRobinhoodCryptoTransactions
+- GET fetchRobinhoodCryptoQuotes/(:segment) → BrokerAPIController::fetchRobinhoodCryptoQuotes/$1
+- GET fetchRobinhoodCryptoQuotes → BrokerAPIController::fetchRobinhoodCryptoQuotes
+- GET summary → BudgetAPIController::summary
+- GET credit → BudgetAPIController::credit
+- GET available → BudgetAPIController::available
+- GET repayment → BudgetAPIController::repayment
+- GET categories → BudgetAPIController::categories
+- GET transactions → BudgetAPIController::transactions
+- GET goals → BudgetAPIController::goals
+- GET insights → BudgetAPIController::insights
+- GET trends → BudgetAPIController::trends
+- GET net-worth → BudgetAPIController::netWorth
+- GET cash-flow → BudgetAPIController::cashFlow
+- GET budgets → BudgetAPIController::budgets
+- GET savings-goals → BudgetAPIController::savingsGoals
+- GET investment-accounts → BudgetAPIController::investmentAccounts
+- GET linked-accounts → BudgetAPIController::linkedAccounts
+- GET add-linked-account → BudgetAPIController::addLinkedAccount
+- GET remove-linked-account/(:segment) → BudgetAPIController::removeLinkedAccount/$1
+- GET refresh-linked-account/(:segment) → BudgetAPIController::refreshLinkedAccount/$1
+- GET Data → BudgetAPIController::apiBudgetData
+- GET Credit → BudgetAPIController::apiCreditData
+- GET Available → BudgetAPIController::apiAvailableData
+- GET Repayment → BudgetAPIController::apiRepaymentSummary
+- GET getUserBudgetRecords → BudgetAPIController::getUserBudgetRecords
+- GET getUserCreditBalances → BudgetAPIController::getUserCreditBalances
+- GET getUserAvailableBalances → BudgetAPIController::getUserAvailableBalances
+- GET getUserRepaymentSummary → BudgetAPIController::getUserRepaymentSummary
+- POST ingestScanner → ContentEngineAPIController::ingestScanner
+- POST processIngest/(:num) → ContentEngineAPIController::processIngest/$1
+- GET topIdeas → ContentEngineAPIController::topIdeas
+- GET posts → ContentEngineAPIController::posts
+- GET posts/(:num) → ContentEngineAPIController::posts/$1
+- POST approvePost/(:num) → ContentEngineAPIController::approvePost/$1
+- POST sendPost/(:num) → ContentEngineAPIController::sendPost/$1
+- POST runDaily → ContentEngineAPIController::runDaily
+- GET commandsCatalog → DiscordAPIController::commandsCatalog
+- GET onboardingSteps → DiscordAPIController::onboardingSteps
+- GET sharingGuide → DiscordAPIController::sharingGuide
+- POST enqueue → DiscordAPIController::enqueue
+- POST broadcast → DiscordAPIController::broadcast
+- POST interactions → DiscordAPIController::handleInteraction
+- POST messageHook → DiscordAPIController::messageHook
+- POST webhook → DiscordAPIController::webhookProxy
+- POST createLinkToken → DiscordAPIController::createLinkToken
+- GET process-queue → DiscordAPIController::processQueue
+- GET coalesce-now → DiscordAPIController::coalesceNow
+- DELETE purge-dead → DiscordAPIController::purgeDead
+- GET health → DiscordAPIController::health
+- POST test → DiscordAPIController::test
+- GET click/(:segment) → DripCampaignAPIController::click/$1
+- GET Enroll/(:num) → DripCampaignAPIController::enrollUser/$1
+- GET open/(:segment) → DripCampaignAPIController::open/$1
+- GET processBatch → DripCampaignAPIController::processBatch
+- GET TestCron → DripCampaignAPIController::testDripCron
+- GET fetchActiveTrades/(:any) → API::fetchActiveTrade/$1
+- GET fetchRealTimeData/(:any)/(:any) → API::fetchRealTimeData/$1/$2
+- GET getSymbolsByTradeType/(:any) → API::getSymbolsByTradeType/$1
+- POST updateTradeNotes → InvestmentsController::updateTradeNotes
+- POST updateTradeTargetPrice → InvestmentsController::updateTradeTargetPrice
+- POST updateWatchlistOrder → InvestmentsController::updateWatchlistOrder
+- POST updateWatchlistTags → InvestmentsController::updateWatchlistTags
+- GET userHoldings/(:any) → InvestmentsController::userHoldings/$1
+- GET userWatchlist/(:any) → InvestmentsController::userWatchlist/$1
+- GET Search/Ticker/(:any) → InvestmentsController::searchTicker/$1
+- GET SMTP/test → SmtpTestController::probe
+- POST / → MarketingAPIController::index
+- POST approvePost/(:num) → MarketingAPIController::approvePost/$1
+- POST approveBufferItem/(:num) → MarketingAPIController::approveBufferItem/$1
+- POST autoScheduleNextApproved → MarketingAPIController::autoScheduleNextApproved
+- GET cronAnalyzeContent → MarketingAPIController::cronAnalyzeContent
+- GET cronAutoPublishGroupedDigest → MarketingAPIController::cronAutoPublishGroupedDigest
+- GET cronFetchAndGenerateNews → MarketingAPIController::cronFetchAndGenerateNews
+- GET cronFetchInbox → MarketingAPIController::cronFetchInbox
+- GET cronFetchMarketingEmails → MarketingAPIController::cronFetchMarketingEmails
+- GET cronProcessSMSMarketingIdeas → MarketingAPIController::cronProcessSMSMarketingIdeas
+- DELETE deleteScrape/(:num) → MarketingAPIController::deleteScrape/$1
+- GET downloadVoiceover/(:any) → MarketingAPIController::downloadVoiceover/$1
+- GET distributeHighScoreContent → MarketingAPIController::distributeHighScoreContent
+- GET emailPostForApproval/(:num) → MarketingAPIController::emailPostForApproval/$1
+- GET fetchBufferPaginated → MarketingAPIController::fetchBufferPaginated
+- GET fetchFinalizedSummariesBlock → MarketingAPIController::fetchFinalizedSummariesBlock
+- GET fetchGeneratedSummaries → MarketingAPIController::fetchGeneratedSummaries
+- GET fetchGeneratedSummariesBlock → MarketingAPIController::fetchGeneratedSummariesBlock
+- GET fetchGeneratedSummariesJson → MarketingAPIController::fetchGeneratedSummariesJson
+- GET forceGenerateFromTemp → MarketingAPIController::forceGenerateFromTemp
+- GET ForceGenerateFromTemp/(:num) → MarketingAPIController::ForceGenerateFromTemp/$1
+- GET generateCampaignContent/(:num) → MarketingAPIController::generateCampaignContent/$1
+- GET generateContentFromScraper → MarketingAPIController::generateContentFromScraper
+- GET generateContentDigestFromStored → MarketingAPIController::generateContentDigestFromStored
+- GET generateDailyContentDigest → MarketingAPIController::generateDailyContentDigest
+- GET generateKimiSummaries → MarketingAPIController::generateKimiSummaries
+- GET generateKimiPosts → MarketingAPIController::generateKimiPosts
+- GET GenerateFromSimilar/(:num) → MarketingAPIController::generateFromSimilar/$1
+- GET generateFromSimilar → MarketingAPIController::generateFromSimilar
+- GET generateLivePreview → MarketingAPIController::generateLivePreview
+- GET generatePostsFromSummary/(:num) → MarketingAPIController::generatePostsFromSummary/$1
+- GET generatePostsFromSummary → MarketingAPIController::generatePostsFromSummary
+- GET generateScheduledPosts → MarketingAPIController::generateScheduledPosts
+- GET getCleanedScrapedContent → MarketingAPIController::getCleanedScrapedContent
+- GET getScrapeDetails/(:num) → MarketingAPIController::getScrapeDetails/$1
+- GET generateThreadFromSummary/(:num) → MarketingAPIController::generateThreadFromSummary/$1
+- GET getContentPerformanceAnalytics → MarketingAPIController::getContentPerformanceAnalytics
+- GET getGeneratedPostsPaginated → MarketingAPIController::getGeneratedPostsPaginated
+- GET getStoryboardPackage/(:num) → MarketingAPIController::getStoryboardPackage/$1
+- GET getTopGeneratedPosts → MarketingAPIController::getTopGeneratedPosts
+- GET getTopKeywordChart/(:num) → MarketingAPIController::getTopKeywordChart/$1
+- GET groupSimilarSummariesByCosine → MarketingAPIController::groupSimilarSummariesByCosine
+- GET massResendActivationEmails → MarketingAPIController::massResendActivationEmails
+- GET monitorKeywords → MarketingAPIController::monitorKeywordsAndScrape
+- GET previewBufferItem/(:num) → MarketingAPIController::previewBufferItem/$1
+- GET previewPendingSummaries → MarketingAPIController::previewPendingSummaries
+- GET processMarketingTempEmails/(:num)/(:segment)/(:num) → MarketingAPIController::processMarketingTempEmails/$1/$2/$3
+- GET processMarketingTempEmails/(:num)/(:segment) → MarketingAPIController::processMarketingTempEmails/$1/$2
+- GET publishGroupedContentDraft → MarketingAPIController::publishGroupedContentDraft
+- GET rankBufferPostsDaily → MarketingAPIController::rankBufferPostsDaily
+- GET reprocessIncompleteEmails → MarketingAPIController::reprocessIncompleteEmails
+- POST rejectBufferItem/(:num) → MarketingAPIController::rejectBufferItem/$1
+- GET runContentGenerationBatch → MarketingAPIController::runContentGenerationBatch
+- GET runKeywordBackfillBatch → MarketingAPIController::runKeywordBackfillBatch
+- GET runKeywordEnrichment → MarketingAPIController::runKeywordEnrichment
+- GET runScheduledTasks → MarketingAPIController::runScheduledTasks
+- GET Search/(:segment)/(:any) → ManagementController::index/$1/$2
+- GET sendWalkthroughEmails → MarketingAPIController::sendWalkthroughEmails
+- GET scheduleApprovedPost/(:num) → MarketingAPIController::scheduleApprovedPost/$1
+- GET schedulePost/(:any)/(:any)/(:any) → MarketingAPIController::schedulePost/$1/$2/$3
+- GET sharePost/(:num)/(:segment) → MarketingAPIController::sharePost/$1/$2
+- GET Large-Content/Form → MarketingAPIController::submitLargeContentForm
+- POST submitLargeContent → MarketingAPIController::submitLargeContent
+- GET Manual-Content/Form → MarketingAPIController::shortLongContentForm
+- POST submitManualContent → MarketingAPIController::submitManualContent
+- GET testGenerateDailyDigest → MarketingAPIController::testGenerateDailyDigest
+- GET testGenerateFromTempEmail/(:num) → MarketingAPIController::testGenerateFromTempEmail/$1
+- GET testTfIdfEdgeCases → MarketingAPIController::testTfIdfEdgeCases
+- GET testGenerateSummarizerHarness → MarketingAPIController::testGenerateSummarizerHarness
+- GET Timeline/(:segment) → MarketingAPIController::timeline/$1
+- GET Timeline → MarketingAPIController::viewTimelineGrouped
+- GET triggerBackfill → MarketingAPIController::reprocessIncompleteEmails
+- GET triggerPostAutogenOnEmpty → MarketingAPIController::triggerPostAutogenOnEmpty
+- POST updateCampaignLinks → MarketingAPIController::updateCampaignLinks
+- POST updateInsight → MarketingAPIController::updateInsight
+- POST updateCampaignMessageField → MarketingAPIController::updateCampaignMessageField
+- POST updatePostSchedule/(:num) → MarketingAPIController::updatePostSchedule/$1
+- POST updatePlatformToggle/(:num) → MarketingAPIController::updatePlatformToggle/$1
+- POST validateSymbol → MarketingAPIController::validateSymbol
+- GET / → MarketingAPIController::index
+- GET Add/(:segment) → MarketingAPIController::add/$1
+- GET Approve-Content/(:num) → MarketingAPIController::approveContent/$1
+- GET Blog-Creator → MarketingAPIController::blogCreator
+- GET Blogs → MarketingAPIController::blogs
+- GET Campaigns → MarketingAPIController::campaigns
+- GET Content-Review → MarketingAPIController::contentReview
+- GET Content/Generator → MarketingAPIController::contentGenerator
+- GET Content/Listing → MarketingAPIController::contentListing
+- GET Daily-Log → MarketingAPIController::viewDailyLogs
+- GET Edit-Content/(:num) → MarketingAPIController::editContent/$1
+- GET Email/(:any)/(:any) → MarketingAPIController::viewEmail/$1/$2
+- GET fetchEmails → MarketingAPIController::fetchEmails
+- POST fetchMissingLogos → MarketingAPIController::fetchMissingLogos
+- GET Financial-News → MarketingAPIController::financialNews
+- POST generateAutomatedContent → MarketingAPIController::generateAutomatedContent
+- GET generateContent → MarketingAPIController::generateContent
+- GET generateNewsletter → MarketingAPIController::generateNewsletterContent
+- GET getRecentScrapes → MarketingAPIController::getRecentScrapes
+- GET Grouped-Content-Drafts → MarketingAPIController::generateGroupedContentDrafts
+- GET Ideas → MarketingAPIController::ideas
+- GET Post-Creator → MarketingAPIController::postCreator
+- GET previewGeneratedPost/(:num) → MarketingAPIController::previewGeneratedPost/$1
+- GET Promote → MarketingAPIController::promote
+- GET Promote/(:segment) → MarketingAPIController::promote
+- POST PublishBlog/(:num) → Management\MarketingAPIController::publishBlog/$1
+- GET Research → AlertsAPIController::research
+- GET RunContentGeneration → Management\MarketingAPIController::runContentGeneration
+- GET Quick-Scraper → MarketingAPIController::standaloneScrape
+- GET Reject-Content/(:num) → MarketingAPIController::rejectContent/$1
+- POST Save-Content-Edit/(:num) → MarketingAPIController::saveContentEdit/$1
+- GET Schedule → MarketingAPIController::schedule
+- GET Schedule/(:segment) → MarketingAPIController::schedule/$1
+- GET scheduleNewsletters → MarketingAPIController::scheduleNewsletterCampaign
+- GET submitDailyLog → MarketingAPIController::submitDailyLog
+- POST Scrape-Link → MarketingAPIController::scrapeLink
+- GET sendNotification → MarketingAPIController::sendNotification
+- GET sendNewsletter → MarketingAPIController::sendScheduleNewsletter
+- GET Communities → MarketingAPIController::communities
+- GET Test → MarketingAPIController::test
+- GET Twitter → MarketingAPIController::twitterDashboard
+- GET Video-Creator → MarketingAPIController::videoCreator
+- GET View-Email/(:segment)/(:segment) → MarketingAPIController::viewEmail/$1/$2
+- GET View-Grouped-Summaries → MarketingAPIController::View-Grouped-Summaries
+- GET Email-Templates/create → EmailTemplateController::create
+- POST /Email-Templates/store → EmailTemplateController::store
+- GET Email-Queue → EmailQueueController::index
+- GET Email-Queue/create → EmailQueueController::create
+- POST Email-Queue/store → EmailQueueController::store
+- POST Email-Queue/processQueue → EmailQueueController::processQueue
+- GET getPlatforms → ManagementAPIController::getPlatforms
+- POST savePlatform → ManagementAPIController::savePlatform
+- DELETE deletePlatform/(:num) → ManagementAPIController::deletePlatform/$1
+- GET getPlatformRules/(:segment) → ManagementAPIController::getPlatformRules/$1
+- POST upsertPlatformRule → ManagementAPIController::upsertPlatformRule
+- DELETE deletePlatformRule/(:num) → ManagementAPIController::deletePlatformRule/$1
+- POST searchTaxonomy → ManagementAPIController::searchTaxonomy
+- POST saveTaxonomy → ManagementAPIController::saveTaxonomy
+- DELETE deleteTaxonomy/(:num) → ManagementAPIController::deleteTaxonomy/$1
+- GET listSuggestions/(:segment)/(:segment) → ManagementAPIController::listSuggestions/$1/$2
+- POST saveSuggestion → ManagementAPIController::saveSuggestion
+- DELETE deleteSuggestion/(:num) → ManagementAPIController::deleteSuggestion/$1
+- POST getPostingPlan → ManagementAPIController::getPostingPlan
+- POST composePost → ManagementAPIController::composePost
+- GET / → PredictionsAPIController::index
+- GET Liquidity/Add → PredictionsAPIController::addLiquidity
+- GET Liquidity/Remove → PredictionsAPIController::removeLiquidity
+- GET Markets → PredictionsAPIController::markets
+- GET Market/(:num) → PredictionsAPIController::view/$1
+- GET Markets/Create → PredictionsAPIController::createMarket
+- GET Markets/Settle/(:num) → PredictionsAPIController::settle/$1
+- GET Orders/Place → PredictionsAPIController::placeOrder
+- GET Orders/Cancel → PredictionsAPIController::cancelOrder
+- GET Portfolio → PredictionsAPIController::portfolio
+- GET Settlements → PredictionsAPIController::settlements
+- POST PlaceOrder → PredictionsAPIController::placeOrder
+- POST CancelOrder → PredictionsAPIController::cancelOrder
+- GET Cron/Distribute-Fees → PredictionsAPIController::cronDistributeFees
+- GET Cron/Fetch-Market-Data → PredictionsAPIController::cronFetchMarketData
+- GET Cron/Fetch-User-Data → PredictionsAPIController::cronFetchUserData
+- GET Cron/Settle-Markets → PredictionsAPIController::cronSettleMarkets
+- GET Cron/Expire-Markets → PredictionsAPIController::cronExpireMarkets
+- GET Cron/Update-Market-Prices → PredictionsAPIController::cronUpdateMarketPrices
+- GET Cron/Update-Market-States → PredictionsAPIController::cronUpdateMarketStates
+- GET Cron/Update-User-Positions → PredictionsAPIController::cronUpdateUserPositions
+- GET Cron/Update-User-Stakes → PredictionsAPIController::cronUpdateUserStakes
+- GET Cron/Update-User-Fees → PredictionsAPIController::cronUpdateUserFees
+- GET Cron/Update-User-PnL → PredictionsAPIController::cronUpdateUserPnL
+- GET Cron/Update-User-Rankings → PredictionsAPIController::cronUpdateUserRankings
+- GET Cron/Update-User-Leaderboard → PredictionsAPIController::cronUpdateUserLeaderboard
+- GET Cron/Update-User-Stats → PredictionsAPIController::cronUpdateUserStats
+- GET Cron/Update-User-Notifications → PredictionsAPIController::cronUpdateUserNotifications
+- GET Cron/Process-Expired-Markets → PredictionsAPIController::cronProcessExpiredMarkets
+- GET Cron/Process-Settled-Markets → PredictionsAPIController::cronProcessSettledMarkets
+- GET Cron/Process-User-Orders → PredictionsAPIController::cronProcessUserOrders
+- GET Cron/Process-User-Positions → PredictionsAPIController::cronProcessUserPositions
+- GET Cron/Process-User-Stakes → PredictionsAPIController::cronProcessUserStakes
+- GET Cron/Process-User-Fees → PredictionsAPIController::cronProcessUserFees
+- GET Cron/Process-User-PnL → PredictionsAPIController::cronProcessUserPnL
+- GET Cron/Process-User-Rankings → PredictionsAPIController::cronProcessUserRankings
+- GET Cron/Process-User-Leaderboard → PredictionsAPIController::cronProcessUserLeaderboard
+- GET Cron/Process-User-Stats → PredictionsAPIController::cronProcessUserStats
+- GET Cron/Process-User-Notifications → PredictionsAPIController::cronProcessUserNotifications
+- GET Cron/Process-User-Settlements → PredictionsAPIController::cronProcessUserSettlements
+- GET Cron/Lock → PredictionsAPIController::lock
+- GET Cron/Rebalance → PredictionsAPIController::rebalanceOdds
+- GET Cron/Unlock → PredictionsAPIController::unlock
+- GET Latest → PredictionsAPIController::latest
+- GET getMarketPrice/(:segment) → SolanaAPIController::get/$1
+- GET getCoinAmount/(:segment) → SolanaAPIController::getCoinAmount/$1
+- GET getMarketPrice → SolanaAPIController::getMarketPrice
+- GET getTokenPrice/(:segment) → SolanaAPIController::getTokenPrice/$1
+- GET getExchangePrice/(:segment) → SolanaAPIController::getExchangePrice/$1
+- GET getAssetsData → SolanaAPIController::getAssetsData
+- GET provisionDefaultWallet → SolanaAPIController::provisionDefaultWallet
+- GET updatePrices → SolanaAPIController::updateSolanaPrices
+- GET updateTokens → SolanaAPIController::updateSolanaTokens
+- GET health → SolanaAPIController::health
+- GET wallet/(:segment)/balance → SolanaAPIController::getBalance/$1
+- GET wallet/(:segment)/tokens → SolanaAPIController::getTokenAccounts/$1
+- POST transfer → SolanaAPIController::transfer
+- POST swap/quote → SolanaAPIController::quote
+- POST swap/execute → SolanaAPIController::swap
+- POST token/create → SolanaAPIController::createToken
+- POST token/mint → SolanaAPIController::mint
+- GET kb → SupportAPIController::kb
+- GET kb/(:segment) → SupportAPIController::kbArticle/$1
+- GET / → WalletsAPIController::index
+- GET summary → WalletsAPIController::summary
+- GET providers → WalletsAPIController::providers
+- POST Create → WalletsAPIController::create
+- PUT Update/(:num) → WalletsAPIController::update/$1
+- DELETE Unlink/(:num) → WalletsAPIController::unlink/$1
+- POST Link-Robinhood → WalletsAPIController::linkRobinhood
+- POST Link-Snaptrade → WalletsAPIController::linkSnapTrade
+- POST Snaptrade/Connect-URL → WalletsAPIController::getSnapTradeConnectUrl
+- POST Banking/Update/(:num) → WalletsAPIController::updateBank/$1
+- POST Credit/Update/(:num) → WalletsAPIController::updateCredit/$1
+- POST Debt/Update/(:num) → WalletsAPIController::updateDebt/$1
+- POST Investments/Update/(:num) → WalletsAPIController::updateInvestment/$1
+- POST Crypto/Update/(:num) → WalletsAPIController::updateCrypto/$1
+- GET Plaid/Config-Debug → WalletsAPIController::plaidConfigDebug
+- GET Plaid/Env → WalletsAPIController::plaidEnv
+- GET Plaid/OAuth-Return → WalletsAPIController::plaidOAuthReturn
+- GET Plaid/Webhook → WalletsAPIController::plaidWebhook
+- GET Plaid/Link-Token → WalletsAPIController::plaidLinkToken
+- POST Plaid/Exchange → WalletsAPIController::plaidExchange
+- GET /(:segment)/(:segment) → WalletsAPIController::index/$1/$2
+- GET fetchMarketAuxNews/(:segment) → AlertsAPIController::fetchMarketAuxNews/$1
+- GET / → BlogController::index
+- GET Post/(:segment) → BlogController::viewBlog/$1
+- GET / → EarningsController::index
+- GET Test → EarningsController::test
+- GET (:segment) → EarningsController::viewByDate
+- GET / → InvestingController::index
+- GET The-Beginners-Guide-To-Option-Trading → InvestingController::TheBeginnersGuideToOptionTrading
+- GET The-Fundamentals-Of-Investing → InvestingController::TheFundamentalsOfInvesting
+- GET Tips-For-Effective-Investment-Portfolio-Management → InvestingController::TipsForEffectiveInvestmentPortfolioManagement
+- GET / → InvestingController::index
+- GET IRS-Expanded-Home-Energy-Tax-Credits → IRSController::IRSExpandedHomeEnergyTaxCredits
+- GET / → UpdatesController::index
+- GET / → NewsAndUpdates::index
+- GET Integrating-With-Plaid → NewsAndUpdates::IntegratingWithPlaid
+- GET The-Roadmap-To-The-Future-Of-Finance → NewsAndUpdates::TheRoadmapToTheFutureOfFinance
+- GET / → PersonalBudgetingController::index
+- GET The-Importance-of-Personal-Financial-Budgeting → PersonalBudgetingController::TheImportanceOfPersonalFinancialBudgeting
+- GET (:segment)/(:segment) → BlogController::view/$1/$2
+- GET (:segment) → BlogController::view/$1
+- GET / → DashboardController::index
+- GET Transaction-Modal/(:segment) → DashboardController::loadModalContent/$1
+- GET Transaction-Modal/(:segment)/(:segment) → DashboardController::loadModalContent/$1/$2
+- GET Transaction-Modal/(:segment)/(:segment)/(:segment) → DashboardController::loadModalContent/$1/$2/$3
+- GET Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment) → DashboardController::loadModalContent/$1/$2/$3/$4
+- GET Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)/(:segment) → DashboardController::loadModalContent/$1/$2/$3/$4/$5
+- GET Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)/(:segment) → DashboardController::loadModalContent/$1/$2/$3/$4/$5/$6
+- GET LoadingScreen → DashboardController::LoadingScreen
+- GET onboarding → DashboardController::onboarding
+- GET checkOnboardingStatus → DashboardController::checkOnboardingStatus
+- POST completeOnboardingStep/(:segment) → DashboardController::completeOnboardingStep/$1
+- GET continue-setup-modal → DashboardController::continueSetupModal
+- POST setup/dismiss → DashboardController::dismissSetup
+- GET onboarding/progress → OnboardingWalkthroughController::progress
+- POST onboarding/profile → OnboardingWalkthroughController::saveProfile
+- POST onboarding/budget-income → OnboardingWalkthroughController::saveBudgetIncome
+- POST onboarding/credit-debt → OnboardingWalkthroughController::saveCreditDebt
+- POST onboarding/recurring-expense → OnboardingWalkthroughController::saveRecurringExpense
+- POST onboarding/watchlist → OnboardingWalkthroughController::saveWatchlist
+- GET banUnverifiedUsers → ManagementController::banUnverifiedUsers
+- GET processQueuedEmails → ManagementController::processQueuedEmails
+- GET resendActivationEmailsBatch → ManagementController::resendActivationEmailsBatch
+- GET resendActivationEmailsBatchQueued → ManagementController::resendActivationEmailsBatchQueued
+- GET sendTestActivationEmail → ManagementController::sendTestActivationEmail
+- POST saveSuggestion → ManagementController::saveSuggestion
+- GET / → ManagementController::index
+- GET Signals → SignalsController::index
+- GET AiOps → AiOpsManagementController::index
+- GET Ops → OpsController::index
+- GET Ops/ajaxStatus → OpsController::ajaxStatus
+- POST Ops/ajaxDispatch → OpsController::ajaxDispatch
+- GET / → AccountRescueController::index
+- POST lookup → AccountRescueController::lookup
+- POST resend-activation → AccountRescueController::resendActivation
+- POST manual-activate → AccountRescueController::manualActivate
+- POST force-password-reset → AccountRescueController::forcePasswordReset
+- POST unlock-account → AccountRescueController::unlockAccount
+- GET / → AdminController::index
+- GET / → AlertsController::index
+- GET Add/(:segment) → AlertsController::add
+- GET addTradeAlert → AlertsController::addTradeAlert
+- GET Advisor/Media → AlertsController::advisorMedia
+- POST Generate-Advisor-Package → AlertsController::generateAdvisorPackage
+- GET Crypto/(:segment)/(:segment) → Management\AlertsController::stockOverview/$1/$2
+- GET fetchData → AlertsController::fetchData
+- GET Fetch/Ticker/(:segment) → AlertsController::fetchTickerDetails/$1
+- GET Import/Tickers → AlertsController::importTickers
+- GET Stock/(:segment)/(:segment) → Management\AlertsController::stockOverview/$1/$2
+- GET Tasks/fetchAlerts → Management\AlertsController::fetchData
+- GET Submit/TradingView → AlertsController::submitTradingView
+- GET Test → AlertsController::test
+- GET Test-Alert-Email → AlertsController::testEmail
+- GET Test-Email → AlertsController::sendTestEmail
+- GET Trades → AlertsController::trades
+- GET Top-Performance/Weekly → AlertsController::topPerformanceWeekly
+- GET / → AssetsController::index
+- GET / → BudgetsController::index
+- GET / → BudgetingController::index
+- GET / → DevelopmentController::index
+- GET / → DiscordController::index
+- POST Discord/Channels/Save → DiscordController::saveDiscordChannel
+- POST Discord/Channels/Delete → DiscordController::deleteDiscordChannel
+- POST Discord/Templates/Save → DiscordController::saveDiscordTemplate
+- POST Discord/Templates/Delete → DiscordController::deleteDiscordTemplate
+- POST Discord/Subscriptions/Save → DiscordController::saveDiscordSubscription
+- POST Discord/Subscriptions/Delete → DiscordController::deleteDiscordSubscription
+- POST Discord/Policies/Save → DiscordController::saveDiscordPolicy
+- POST Discord/Policies/Delete → DiscordController::deleteDiscordPolicy
+- GET / → DripCampaignController::index
+- GET (:num)/Steps → DripCampaignController::viewSteps/$1
+- GET / → EmailController::index
+- POST addMember → EmailController::addMember
+- GET autoScheduleDrafts → EmailController::autoScheduleDrafts
+- GET autoScheduleLogs → EmailController::autoScheduleLogs
+- GET campaigns → EmailController::campaigns
+- GET campaignStats/(:num) → EmailController::campaignStats/$1
+- POST createList → EmailController::createList
+- GET editCampaign/(:num) → EmailController::editCampaign/$1
+- GET previewQueuedEmail/(:num) → EmailController::previewQueuedEmail/$1
+- GET queued → EmailController::queued
+- POST sendCampaign → EmailController::sendCampaign
+- POST scheduleCampaign/(:num) → EmailController::scheduleCampaign/$1
+- POST scheduleCampaignSubmit/(:num) → EmailController::scheduleCampaignSubmit/$1
+- POST updateCampaign/(:num) → EmailController::updateCampaign/$1
+- GET / → ExchangeController::index
+- GET / → FinanceController::index
+- GET / → HowTosController::index
+- GET Employees/Account-Setup → HowTosController::employeeAccountSetup
+- GET Employees/Email-Setup → HowTosController::employeeEmailSetup
+- GET / → HRController::index
+- GET / → InvestmentsController::index
+- GET News → InvestmentsController::newsIndex
+- GET / → MarketingController::index
+- GET Add/(:segment) → MarketingController::addSchedule
+- GET Approve-Content/(:num) → MarketingController::approveContent/$1
+- GET Blog-Creator → MarketingController::blogCreator
+- GET Blogs → MarketingController::blogs
+- GET Campaigns → MarketingController::campaigns
+- GET Content-Review → MarketingController::contentReview
+- GET Content/Generator → MarketingController::contentGenerator
+- GET Content/Listing → MarketingController::contentListing
+- GET Daily-Log → MarketingController::viewDailyLogs
+- GET Edit-Content/(:num) → MarketingController::editContent/$1
+- GET Email/(:any)/(:any) → MarketingController::viewEmail/$1/$2
+- GET fetchEmails → MarketingController::fetchEmails
+- POST fetchMissingLogos → MarketingController::fetchMissingLogos
+- GET Financial-News → MarketingController::financialNews
+- POST generateAutomatedContent → MarketingController::generateAutomatedContent
+- GET generateContent → MarketingController::generateContent
+- GET generateDailyContentDigest → MarketingController::generateDailyContentDigest
+- GET generateNewsletter → MarketingController::generateNewsletterContent
+- GET getRecentScrapes → MarketingController::getRecentScrapes
+- GET Grouped-Content-Drafts → MarketingController::generateGroupedContentDrafts
+- GET Ideas → MarketingController::ideas
+- GET Post-Creator → MarketingController::postCreator
+- GET previewGeneratedPost/(:num) → MarketingController::previewGeneratedPost/$1
+- GET Promote → MarketingController::promote
+- GET Promote/(:segment) → MarketingController::promote
+- POST PublishBlog/(:num) → Management\MarketingController::publishBlog/$1
+- GET Research → AlertsController::research
+- GET RunContentGeneration → Management\MarketingController::runContentGeneration
+- GET Quick-Scraper → MarketingController::standaloneScrape
+- GET Reject-Content/(:num) → MarketingController::rejectContent/$1
+- POST Save-Content-Edit/(:num) → MarketingController::saveContentEdit/$1
+- GET Schedule → MarketingController::schedule
+- GET Schedule/(:segment) → MarketingController::schedule/$1
+- GET scheduleNewsletters → MarketingController::scheduleNewsletterCampaign
+- GET submitDailyLog → MarketingController::submitDailyLog
+- POST Scrape-Link → MarketingController::scrapeLink
+- GET sendNotification → MarketingController::sendNotification
+- GET sendNewsletter → MarketingController::sendScheduleNewsletter
+- GET Test → MarketingController::test
+- GET Twitter → MarketingController::twitterDashboard
+- GET Video-Creator → MarketingController::videoCreator
+- GET View-Email/(:segment)/(:segment) → MarketingController::viewEmail/$1/$2
+- GET View-Grouped-Summaries → MarketingController::View-Grouped-Summaries
+- GET Management/Marketing/Email-Templates → EmailTemplateController::index
+- GET Email-Templates/create → EmailTemplateController::create
+- POST /Email-Templates/store → EmailTemplateController::store
+- GET Email-Queue → EmailQueueController::index
+- GET Email-Queue/create → EmailQueueController::create
+- POST Email-Queue/store → EmailQueueController::store
+- POST Email-Queue/processQueue → EmailQueueController::processQueue
+- GET / → EmailController::index
+- GET / → MarketingController::index
+- GET Top-Communities → MarketingController::topCommunities
+- GET Top-Communities/(:segment) → MarketingController::topCommunities/$1
+- GET / → OperationsController::index
+- GET / → SupportController::index
+- GET / → PartnersController::index
+- GET / → ProjectsController::index
+- POST Approve/(:segment) → ProjectsController::approveProject/$1
+- POST Edit/(:segment) → ProjectsController::approveProject/$1
+- POST Reject/(:segment) → ProjectsController::rejectProject/$1
+- GET Quick-Intake → ProjectsController::realEstateQuickIntake
+- POST Quick-Intake → ProjectsController::realEstateQuickSubmit
+- GET / → ReferralsController::index
+- GET / → SecurityController::index
+- GET / → ServicesController::index
+- GET / → UsersController::index
+- GET Profile/(:segment) → UsersController::profile
+- GET / → WalletsController::index
+- GET Reconcile → WalletsController::reconcile
+- POST EmailUserAboutIssue/(:num)/(:num) → WalletsController::emailUserAboutIssue/$1/$2
+- GET / → WebDesignController::index
+- GET / → SearchController::index
+- GET / → AuctionsController::index
+- GET Item/(:num) → AuctionsController::item/$1
+- POST Create → AuctionsController::create
+- POST Bid/(:num) → AuctionsController::bid/$1
+- GET Poll/(:num) → AuctionsController::poll/$1
+- GET Budget → BudgetController::index
+- GET / → BudgetController::index
+- GET Search/(:any) → BudgetController::index
+- GET This-Month → BudgetController::thisMonth
+- GET This-Month/(:segment) → BudgetController::thisMonth/$1
+- GET Last-Month → BudgetController::lastMonth
+- GET Last-Month/(:segment) → BudgetController::lastMonth/$1
+- GET Next-Month → BudgetController::nextMonth
+- GET Next-Month/(:segment) → BudgetController::nextMonth/$1
+- POST Approve-Recurring-Schedule/(:num) → BudgetController::approveRecurringSchedule/$1
+- GET Forecast → BudgetController::forecast
+- GET Forecast/(:segment) → BudgetController::forecast/$1
+- POST fetchFrontendData → DigiByteController::fetchFrontendData
+- POST provisionDefaultWallet → DigiByteController::provisionDefaultWallet
+- POST disconnectWallet → DigiByteController::disconnectWallet
+- POST refreshWallet → DigiByteController::refreshWallet
+- POST getAssets → DigiByteController::getAssets
+- POST createWallet → DigiByteController::createWallet
+- POST connectWallet → DigiByteController::connectWallet
+- POST connectWallet → MetaMaskController::connectWallet
+- POST disconnectWallet → MetaMaskController::disconnectWallet
+- POST refreshWallet → MetaMaskController::refreshWallet
+- POST getAssets → MetaMaskController::getAssets
+- POST generateWallet → MetaMaskController::generateWallet
+- POST signTransaction → MetaMaskController::signTransaction
+- POST verifySignature → MetaMaskController::verifySignature
+- POST sendAsset → MetaMaskController::sendAsset
+- POST getTransactionStatus → MetaMaskController::getTransactionStatus
+- POST getBalance → MetaMaskController::getBalance
+- POST validateAddress → MetaMaskController::validateAddress
+- POST getCurrentBlock → MetaMaskController::getCurrentBlock
+- POST estimateTransactionFee → MetaMaskController::estimateTransactionFee
+- POST getNetworkStatus → MetaMaskController::getNetworkStatus
+- POST deployContract → MetaMaskController::deployContract
+- POST callContractFunction → MetaMaskController::callContractFunction
+- GET Test-Page → SolanaController::testPage
+- GET Assets → SolanaController::assets
+- GET Create → SolanaController::create
+- GET Wallet/Disconnect/(:segment) → SolanaController::disconnectWallet/$1
+- GET Import → SolanaController::import
+- GET Swap → SolanaController::coinSwap
+- GET Create/Wallet → SolanaController::create
+- POST Create/Wallet → SolanaController::create
+- POST createSolanaWallet → SolanaController::createSolanaWallet
+- POST fetchFrontendData → SolanaController::fetchFrontendData
+- POST provisionDefaultWallet → SolanaController::provisionDefaultWallet
+- GET Import/Wallet → SolanaController::importWallet
+- POST Import/Wallet → SolanaController::importWallet
+- POST updatePrices → SolanaController::updateSolanaPrices
+- POST updateTokens → SolanaController::updateSolanaTokens
+- GET Wallet/Verify-Ownership → SolanaController::verifyWalletOwnership
+- POST Wallet/Verify-Ownership → SolanaController::verifyWalletOwnership
+- GET Wallet/Execute-Swap → SolanaController::executeSwap
+- POST Wallet/Execute-Swap → SolanaController::executeSwap
+- GET Wallet/ViewAssets → SolanaController::viewAssets
+- POST Wallet/ViewAssets → SolanaController::viewAssets
+- POST Wallet/Connect → SolanaController::connectWallet
+- POST Wallet/Disconnect → SolanaController::disconnectWallet
+- POST Wallet/Refresh → SolanaController::refreshWallet
+- POST Connect/MetaMask → SolanaController::connectWallet
+- POST Disconnect/MetaMask → SolanaController::disconnectWallet
+- POST Refresh/MetaMask → SolanaController::refreshWallet
+- POST Connect/Solflare → SolanaController::connectWallet
+- POST Disconnect/Solflare → SolanaController::disconnectWallet
+- POST Refresh/Solflare → SolanaController::refreshWallet
+- POST Connect/Phantom → SolanaController::connectWallet
+- POST Disconnect/Phantom → SolanaController::disconnectWallet
+- POST Refresh/Phantom → SolanaController::refreshWallet
+- POST Connect/TrustWallet → SolanaController::connectWallet
+- POST Disconnect/TrustWallet → SolanaController::disconnectWallet
+- POST Refresh/TrustWallet → SolanaController::refreshWallet
+- GET forecastModal/(:segment) → InvestmentsController::forecastModal/$1
+- POST Account-Manager → InvestmentsController::accountManager
+- GET Strategies → InvestmentController::getStrategies
+- POST Strategies → InvestmentController::createStrategy
+- GET Strategies/(:num) → InvestmentController::getStrategy/$1
+- PUT Strategies/(:num) → InvestmentController::updateStrategy/$1
+- DELETE Strategies/(:num) → InvestmentController::deleteGoal/$1
+- GET Goals → InvestmentController::getGoals
+- POST Goals → InvestmentController::createGoal
+- GET Goals/(:num) → InvestmentController::createGoal/$1
+- PUT Goals/(:num) → InvestmentController::updateGoal/$1
+- DELETE Goals/(:num) → InvestmentController::deleteGoal/$1
+- GET Crypto-Overview → InvestmentsController::cryptoOverview
+- GET Economic-Data → InvestmentsController::economicData
+- GET Market-News → InvestmentsController::marketNews
+- GET MyMI-News → InvestmentsController::MyMINews
+- GET MyMI-Research → InvestmentsController::MyMIResearch
+- GET Stock-Overview → InvestmentsController::stockOverview
+- GET / → PredictionsController::index
+- GET Markets → PredictionsController::markets
+- GET Market/(:num) → PredictionsController::view/$1
+- GET Portfolio → PredictionsController::portfolio
+- GET Settlements → PredictionsController::settlements
+- POST PlaceOrder → PredictionsController::placeOrder
+- POST CancelOrder → PredictionsController::cancelOrder
+- GET / → ProjectsController::index
+- GET View/(:segment) → ProjectsController::view/$1
+- POST Commit/(:num) → ProjectsController::commit/$1
+- POST Withdraw-Commit/(:num) → ProjectsController::withdrawCommit/$1
+- GET My/Commitments → ProjectsController::myCommitments
+- POST Request-Monthly-Withdrawal/(:num) → ProjectsController::requestMonthlyWithdrawal/$1
+- POST Accept-Private-Allocation/(:num) → ProjectsController::acceptPrivateAllocation/$1
+- GET / → AnnouncementsController::index
+- GET Assets → App\Modules\Management\Controllers\AssetsController::index
+- GET API/Investments/GetUserWatchlist/(:segment) → App\Modules\User\Controllers\InvestmentsController::getUserWatchlist/$1
+- GET / → ScriptStudioController::index
+- GET Marketplace → ScriptStudioController::marketplace
+- GET Create → ScriptStudioController::create
+- POST Store → ScriptStudioController::store
+- GET Edit/(:num) → ScriptStudioController::edit/$1
+- POST Update/(:num) → ScriptStudioController::update/$1
+- GET Preview/(:num) → ScriptStudioController::preview/$1
+- GET Export/(:num)/(:segment) → ScriptStudioController::export/$1/$2
+- GET / → HowItWorksController::index
+- GET budgeting → HowItWorksController::budgeting
+- GET investing → HowItWorksController::investing
+- GET crypto → HowItWorksController::crypto
+- GET alerts → HowItWorksController::alerts
+- GET projects → HowItWorksController::projects
+- GET security → HowItWorksController::security
+- GET pricing → HowItWorksController::pricing
+- GET (:any) → HowItWorksController::show/$1
+- GET ticket/(:num) → SupportTicketController::show/$1
+- GET / → SupportController::index
+- GET Account → AccountSupportController::index
+- POST resendActivation → AccountSupportController::resendActivation
+- POST sendPasswordReset → AccountSupportController::sendPasswordReset
+- GET Article/(:segment) → SupportController::article/$1
+- GET Discord → SupportController::discordOnboarding
+- GET FAQ → SupportController::view/FAQ
+- GET Feedback → SupportController::view/Feedback
+- GET Test → SupportController::view/Test
+- GET Test-Email → SupportController::view/Test-Email
+- GET (:any) → SupportController::view/$1
+- GET / → WalletsController::index
+- GET / → ManagementController::index
+- GET How-Tos → ManagementController::howTos
+- GET / → MarketingController::index
+- GET / → Features::index
+- GET Brokerage-Integrations → Features::BrokerageIntegrations
+- GET MyMI-Gold → HowItWorks::MyMIGold
+- GET / → KnowledgebaseController::index
+- GET Account-And-Billing → KnowledgebaseController::accountBilling
+- GET Assets → KnowledgebaseController::assets
+- GET Getting-Started → KnowledgebaseController::gettingStarted
+- GET Integrating-Wallets → KnowledgebaseController::integratingWallets
+- GET Investor-Profile → KnowledgebaseController::investorProfile
+- GET KYC-Verification → KnowledgebaseController::KYCVerification
+- GET MyMI-Partnerships → KnowledgebaseController::partnerships
+- GET Promoted-Articles → KnowledgebaseController::promotedArticles
+- GET Technical-Support → KnowledgebaseController::technicalSupport
+- GET Trade-Tracker → KnowledgebaseController::tradeTracker
+- GET Tutorials → KnowledgebaseController::tutorials
+- GET Types-Of-Accounts → KnowledgebaseController::typesOfAccounts
+- GET (:any) → KnowledgebaseController::show/$1
+- GET / → NewsAndUpdates::index
+- GET Integrating-With-Plaid → NewsAndUpdates::IntegratingWithPlaid
+- GET The-Roadmap-To-The-Future-Of-Finance → NewsAndUpdates::TheRoadmapToTheFutureOfFinance
+- GET / → SubscribeController::index
+- GET /Daily-Financial-News → SubscribeController::index
+- GET Submit → SubscribeController::submit
+- GET / → SubscribeController::index
+- GET fetchEmailsToTempScraper → ManagementController::fetchEmailsToTempScraper
+- GET getUsers → ManagementController::getUsers
+- GET getReferrals → ManagementController::getReferrals
+- GET getAlerts → ManagementController::getAlerts
+- GET getNews → ManagementController::getNews
+- GET getAssets → ManagementController::getAssets
+- GET getSupport → ManagementController::getSupport
+- GET processTempEmailsToScraper → ManagementController::processTempEmailsToScraper
+- GET distributeTodaysNewsContent → ManagementController::distributeTodaysNewsContent
+- GET exportPostJson/(:num) → ManagementController::exportPostJson/$1
+- GET fetchNewsEmails → ManagementController::fetchNewsEmails
+- GET generatePostsFromSummary/(:num) → ManagementController::generatePostsFromSummary/$1
+- GET generateVoiceScriptManually → ManagementController::generateVoiceScriptManually
+- GET processAllTradeAlerts → ManagementController::processAllTradeAlerts
+- GET runCronManually → ManagementController::runCronManually
+- GET runDailyAlphaVantageDataPipeline → ManagementController::runDailyAlphaVantageDataPipeline
+- GET sendToZapierManually → ManagementController::sendToZapierManually
+- GET scrapeAndGenerateTodaysStoryFromInbox → ManagementController::scrapeAndGenerateTodaysStoryFromInbox
+- GET sharePost/(:num)/(:segment) → ManagementController::sharePost/$1/$2
+- GET sendAllDiscordAlerts → ManagementController::sendAllDiscordAlerts
+- GET updateMarketDataForAlerts → ManagementController::updateMarketDataForAlerts
+- GET / → AdminController::index
+- GET / → APIController::index
+- GET / → AssetsController::index
+- GET / → BudgetsController::index
+- GET / → BudgetingController::index
+- GET / → ExchangeController::index
+- GET / → HowTosController::index
+- GET Employees/Account-Setup → HowTosController::employeeAccountSetup
+- GET Employees/Email-Setup → HowTosController::employeeEmailSetup
+- GET / → AlertsController::index
+- GET Add/(:segment) → AlertsController::add
+- GET addTradeAlert → AlertsController::addTradeAlert
+- GET fetchData → AlertsController::fetchData
+- GET Fetch/Ticker/(:segment) → AlertsController::fetchTickerDetails/$1
+- GET Import/Tickers → AlertsController::importTickers
+- GET Tasks/fetchAlerts → Management\AlertsController::fetchData
+- GET Test → AlertsController::testEmail
+- GET Test-Email → AlertsController::sendTestEmail
+- GET Trades → AlertsController::trades
+- GET / → MarketingController::index
+- GET Add/(:segment) → MarketingController::addSchedule
+- GET Approve-Content/(:num) → MarketingController::approveContent/$1
+- GET Blog-Creator → MarketingController::blogCreator
+- GET Blogs → MarketingController::blogs
+- GET Campaigns → MarketingController::campaigns
+- GET Content-Review → MarketingController::contentReview
+- GET Content/Generator → MarketingController::contentGenerator
+- GET Content/Listing → MarketingController::contentListing
+- GET Daily-Log → MarketingController::viewDailyLogs
+- GET Edit-Content/(:num) → MarketingController::editContent/$1
+- GET Email/(:any)/(:any) → MarketingController::viewEmail/$1/$2
+- GET fetchEmails → MarketingController::fetchEmails
+- POST fetchMissingLogos → MarketingController::fetchMissingLogos
+- GET Financial-News → MarketingController::financialNews
+- POST generateAutomatedContent → MarketingController::generateAutomatedContent
+- GET generateContent → MarketingController::generateContent
+- GET generateDailyContentDigest → MarketingController::generateDailyContentDigest
+- GET generateNewsletter → MarketingController::generateNewsletterContent
+- GET getRecentScrapes → MarketingController::getRecentScrapes
+- GET Ideas → MarketingController::ideas
+- GET Post-Creator → MarketingController::postCreator
+- GET previewGeneratedPost/(:num) → MarketingController::previewGeneratedPost/$1
+- GET Promote → MarketingController::promote
+- GET Promote/(:segment) → MarketingController::promote
+- POST PublishBlog/(:num) → Management\MarketingController::publishBlog/$1
+- GET RunContentGeneration → Management\MarketingController::runContentGeneration
+- GET Quick-Scraper → MarketingController::standaloneScrape
+- GET Reject-Content/(:num) → MarketingController::rejectContent/$1
+- POST Save-Content-Edit/(:num) → MarketingController::saveContentEdit/$1
+- GET Schedule → MarketingController::schedule
+- GET Schedule/(:segment) → MarketingController::schedule/$1
+- GET scheduleNewsletters → MarketingController::scheduleNewsletterCampaign
+- GET submitDailyLog → MarketingController::submitDailyLog
+- GET Large-Content/Form → MarketingController::submitLargeContentForm
+- POST submitLargeContent → MarketingController::submitLargeContent
+- POST Scrape-Link → MarketingController::scrapeLink
+- GET sendNotification → MarketingController::sendNotification
+- GET sendNewsletter → MarketingController::sendScheduleNewsletter
+- GET Test → MarketingController::test
+- GET Twitter → MarketingController::twitterDashboard
+- GET Video-Creator → MarketingController::videoCreator
+- GET Management/Marketing/Email-Templates → EmailTemplateController::index
+- GET Email-Templates/create → EmailTemplateController::create
+- POST /Email-Templates/store → EmailTemplateController::store
+- GET Email-Queue → EmailQueueController::index
+- GET Email-Queue/create → EmailQueueController::create
+- POST Email-Queue/store → EmailQueueController::store
+- POST Email-Queue/processQueue → EmailQueueController::processQueue
+- GET / → MarketingController::index
+- GET Top-Communities → MarketingController::topCommunities
+- GET Top-Communities/(:segment) → MarketingController::topCommunities/$1
+- GET / → PartnersController::index
+- GET / → ProjectsController::index
+- POST Approve/(:segment) → ProjectsController::approveProject/$1
+- POST Edit/(:segment) → ProjectsController::approveProject/$1
+- POST Reject/(:segment) → ProjectsController::rejectProject/$1
+- GET / → ReferralsController::index
+- GET / → ServicesController::index
+- GET / → SecurityController::index
+- GET / → SupportController::index
+- GET / → UsersController::index
+- GET Profile/(:segment) → UsersController::profile
+- GET / → WalletsController::index
+- GET / → WebDesignController::index
+- GET / → BlogController::index
+- GET Post/(:segment) → BlogController::viewBlog/$1
+- GET / → EarningsController::index
+- GET Test → EarningsController::test
+- GET (:segment) → EarningsController::viewByDate
+- GET (:segment) → EarningsController::viewByDate
+- GET / → InvestingController::index
+- GET The-Beginners-Guide-To-Option-Trading → InvestingController::TheBeginnersGuideToOptionTrading
+- GET The-Fundamentals-Of-Investing → InvestingController::TheFundamentalsOfInvesting
+- GET Tips-For-Effective-Investment-Portfolio-Management → InvestingController::TipsForEffectiveInvestmentPortfolioManagement
+- GET / → InvestingController::index
+- GET IRS-Expanded-Home-Energy-Tax-Credits → IRSController::IRSExpandedHomeEnergyTaxCredits
+- GET / → UpdatesController::index
+- GET Integrating-With-Plaid → UpdatesController::IntegratingWithPlaid
+- GET The-Roadmap-To-The-Future-Of-Finance → UpdatesController::TheRoadmapToTheFutureOfFinance
+- GET / → PersonalBudgetingController::index
+- GET The-Importance-of-Personal-Financial-Budgeting → PersonalBudgetingController::TheImportanceOfPersonalFinancialBudgeting
+- POST buildUnsignedPsbt → App\Modules\APIs\Controllers\BitcoinController::buildUnsignedPsbt
+- POST broadcastSignedTx → App\Modules\APIs\Controllers\BitcoinController::broadcastSignedTx
+- GET previewScraper/(:num) → AlertsController::previewScraper/$1
+- GET healthz → System\HealthController::healthz
+- GET diag → System\HealthController::diag
+- GET / → Tax::index
+- GET edit/(:num) → Tax::edit/$1
+- GET view/(:num) → Tax::view/$1
+- GET preview/(:num) → Tax::preview/$1
+- POST ajax/saveLine → Tax::ajaxSaveLine
+- POST ajax/saveAllocation → Tax::ajaxSaveAllocation
+- GET ajax/recalc/(:num) → Tax::ajaxRecalc/$1
+- GET export/json/(:num) → Tax::exportJson/$1
+- GET export/csv/(:num) → Tax::exportCsv/$1
+- GET / → TaxConfig::index
+- GET Templates → TaxConfig::templates
+- GET Rates → TaxConfig::rates
+- POST public-pages/import → App\Modules\APIs\Controllers\OpsPublicPagesController::import
+- POST public-pages/run → App\Modules\APIs\Controllers\OpsPublicPagesController::run
+- GET public-pages/report → App\Modules\APIs\Controllers\OpsPublicPagesController::report
+- GET ContentEngine/drafts/(:segment) → App\Modules\ContentEngine\Controllers\ContentEngineController::draft/$1
+- GET investments/fundamentals/(:segment) → App\Modules\APIs\Controllers\InvestmentsController::fundamentals/$1
+
+## Missing Methods
+- MditIssuanceAPIController::initController
+- MditWebhookAPIController::initController
+- MditWebhookAPIController::onramp
+- OpsPublicPagesAPIController::run
+- OpsPublicPagesAPIController::import
+- OpsPublicPagesAPIController::report
+- ProjectsAPIController::initController
+- ProjectsAPIController::fetchProjectEmails
+- ProjectsAPIController::parseProjectEmails
+- ProjectsAPIController::promoteLead
+- ProjectsAPIController::updateProject
+- ProjectsAPIController::openCommitments
+- ProjectsAPIController::checkThreshold
+- ProjectsAPIController::launchPrivateAuction
+- ProjectsAPIController::settlePrivateAuction
+- ProjectsAPIController::markFunded
+- ProjectsAPIController::createQuarterlyDistribution
+- ProjectsAPIController::runPayouts
+- ProjectsAPIController::processMonthlyWithdrawals
+- ReferralAPIController::initController
+- ReferralAPIController::bulkUpdateStatus
+- ReferralAPIController::bulkDelete
+- SolanaAPIController::initController
+- SolanaAPIController::commonData
+- SolanaAPIController::index
+- SolanaAPIController::apiGetTokens
+- SolanaAPIController::connectWallet
+- SolanaAPIController::createSolanaWallet
+- SolanaAPIController::executeSwap
+- SolanaAPIController::importWallet
+- SupportAPIController::initController
+- UserAPIController::initController
+- UserAPIController::health
+- UserAPIController::addComment
+- UserAPIController::getBalance
+- UserAPIController::getTokenAccounts
+- UserAPIController::transfer
+- UserAPIController::quote
+- UserAPIController::swap
+- UserAPIController::createToken
+- UserAPIController::mint
+- EmailBounceAPIController::ingest
+- TradingViewAPIController::ingest
+- ZapierAPIController::webhookReceiver
+- AlertsAPIController::initController
+- AlertsAPIController::generateAlertCommentary
+- AlertsAPIController::generateAlertBatchCommentary
+- AlertsAPIController::addTradeAlert
+- AlertsAPIController::createTradeAlert
+- AlertsAPIController::backfillCategories
+- AlertsAPIController::exportCapCutJson
+- AlertsAPIController::fetchEmailAlerts
+- AlertsAPIController::fetchEmailsOnly
+- AlertsAPIController::forceFetchEmails
+- AlertsAPIController::forceFetchTickers
+- AlertsAPIController::generateRankedMarketingContent
+- AlertsAPIController::generateAdvisorVoiceover
+- AlertsAPIController::generateAndStoreVoiceover
+- AlertsAPIController::generateSocialMediaPosts
+- AlertsAPIController::generateTradeAlertSummary
+- AlertsAPIController::generateTradeAlertVideos
+- AlertsAPIController::generateVoiceoverAndMarketingContent
+- AlertsAPIController::generateVoiceoverScript
+- AlertsAPIController::getCachedTradeAlerts
+- AlertsAPIController::getEmaComparison
+- AlertsAPIController::getEmaDataForSymbol
+- AlertsAPIController::getEnrichmentHistory
+- AlertsAPIController::getFilteredAlerts
+- AlertsAPIController::getFullMetrics
+- AlertsAPIController::generateMarketingForAlert
+- AlertsAPIController::getLatestPrices
+- AlertsAPIController::getFilteredAlerts
+- AlertsAPIController::getSecFilings
+- AlertsAPIController::getTechnicalIndicators
+- AlertsAPIController::getTopKeywordChart
+- AlertsAPIController::getTradeAlertDetails
+- AlertsAPIController::hideTradeAlert
+- AlertsAPIController::addChart
+- AlertsAPIController::manageTradeAlert
+- AlertsAPIController::markAlertAsSentAndSendEmail
+- AlertsAPIController::postMarketingContentToSocials
+- AlertsAPIController::previewAdvisorVoiceover
+- AlertsAPIController::processActiveSecFilings
+- AlertsAPIController::processAlerts
+- AlertsAPIController::processAlerts
+- AlertsAPIController::processEmailAlerts
+- AlertsAPIController::processBrokerEmails
+- AlertsAPIController::processAllEmails
+- AlertsAPIController::previewScraper
+- AlertsAPIController::processSecFilings
+- AlertsAPIController::processTradeAlerts
+- AlertsAPIController::processTradeBatch
+- AlertsAPIController::sendAdvisorMediaToZapier
+- AlertsAPIController::sendAlert
+- AlertsAPIController::sendDiscordAlerts
+- AlertsAPIController::sendDiscordAlertsBySymbol
+- AlertsAPIController::sendTradeAlertEmails
+- AlertsAPIController::storeMarketingContent
+- AlertsAPIController::submitTradeAlert
+- AlertsAPIController::updateBatchPrices
+- AlertsAPIController::updateChartOverride
+- AlertsAPIController::updateExchange
+- AlertsAPIController::uploadFundamentals
+- AlertsAPIController::updateTradeAlerts
+- AlertsAPIController::updateTradeAlertsWithMarketData
+- AlertsAPIController::validateSymbol
+- AlertsAPIController::genKeys
+- AlertsAPIController::sign
+- DiscordAPIController::initController
+- MarketingAPIController::_remap
+- MarketingAPIController::initController
+- MarketingAPIController::cronEnrichTradeAlerts
+- MarketingAPIController::cronDistributeApprovedContent
+- MarketingAPIController::exportBufferPosts
+- MarketingAPIController::exportGroupedSummariesCSV
+- MarketingAPIController::fetchFinalizedContent
+- MarketingAPIController::generateAdvisorMediaOnDemand
+- MarketingAPIController::generateDailyMarketCampaign
+- MarketingAPIController::generateCampaignStepContent
+- MarketingAPIController::getPlatforms
+- MarketingAPIController::savePlatform
+- MarketingAPIController::deletePlatform
+- MarketingAPIController::getPlatformRules
+- MarketingAPIController::upsertPlatformRule
+- MarketingAPIController::deletePlatformRule
+- MarketingAPIController::searchTaxonomy
+- MarketingAPIController::saveTaxonomy
+- MarketingAPIController::deleteTaxonomy
+- MarketingAPIController::listSuggestions
+- MarketingAPIController::saveSuggestion
+- MarketingAPIController::deleteSuggestion
+- MarketingAPIController::getPostingPlan
+- MarketingAPIController::composePost
+- MarketingAPIController::generatePostMediaContent
+- MarketingAPIController::generateSummaryFromGoogleSearch
+- MarketingAPIController::generateVoiceScriptManually
+- MarketingAPIController::regenerateMissingPostContent
+- MarketingAPIController::runBackfillForTempEmails
+- MarketingAPIController::runEnrichTradeAlerts
+- MarketingAPIController::runScheduledDistribution
+- MarketingAPIController::shareGroupedSummaries
+- MarketingAPIController::smartSearch
+- MarketingAPIController::updateBufferScheduleInterval
+- AIAPIController::_remap
+- AIAPIController::initController
+- AIOpsAPIController::initController
+- AIOpsAPIController::health
+- AIOpsAPIController::policyCheck
+- AIOpsAPIController::logUsage
+- AIOpsAPIController::cacheStore
+- AIOpsAPIController::cacheGet
+- AIOpsAPIController::toggle
+- AIOpsAPIController::testPolicy
+- AlertsPublicAPIController::list
+- BitcoinAPIController::buildUnsignedPsbt
+- BitcoinAPIController::broadcastSignedTx
+- ChatAPIController::initController
+- ChatAPIController::me
+- ChatAPIController::tool
+- ContentEngineAPIController::initController
+- DocsAPIController::initController
+- DocsAPIController::index
+- DocsAPIController::view
+- DoorDashAPIController::initController
+- DoorDashAPIController::index
+- DoorDashAPIController::connectDoorDash
+- DoorDashAPIController::doordashCallback
+- DoorDashAPIController::add
+- DoorDashAPIController::copy
+- DoorDashAPIController::accountManager
+- DoorDashAPIController::accountOverview
+- DoorDashAPIController::approveRecurringSchedule
+- DoorDashAPIController::cancelAccount
+- DoorDashAPIController::deleteAccount
+- DoorDashAPIController::bulkUpdateStatus
+- DoorDashAPIController::createLinkToken
+- DoorDashAPIController::exchangeToken
+- DoorDashAPIController::bulkDelete
+- EmailAPIController::initController
+- EmailAPIController::autoScheduleDrafts
+- EmailAPIController::autoScheduleDraftCampaigns
+- EmailAPIController::cancelScheduledCampaign
+- EmailAPIController::cloneCampaign
+- EmailAPIController::createDraftCampaign
+- EmailAPIController::deleteCampaign
+- EmailAPIController::fetchCampaignAnalytics
+- EmailAPIController::fetchQueuedEmailById
+- EmailAPIController::fetchQueuedEmails
+- EmailAPIController::fetchTagAnalytics
+- EmailAPIController::getAllCampaigns
+- EmailAPIController::getCampaignMetrics
+- EmailAPIController::getCampaignStats
+- EmailAPIController::getEmailQueueStats
+- EmailAPIController::getEmailQueueTrend
+- EmailAPIController::processScheduledCampaigns
+- EmailAPIController::scheduleCampaignApi
+- EmailAPIController::sendMassTestCampaign
+- EmailAPIController::trackBounceWebhook
+- EmailAPIController::unsubscribe
+- EsportsAPIController::initController
+- EsportsAPIController::createEvent
+- EsportsAPIController::joinEvent
+- EsportsAPIController::lockEscrow
+- EsportsAPIController::cancelEvent
+- EsportsAPIController::receiveResultWebhook
+- EsportsAPIController::settlePayouts
+- EsportsAPIController::cronProcessJobs
+- EsportsAPIController::getEvent
+- EsportsAPIController::listEvents
+- InvestmentsAPIController::initController
+- InvestmentsAPIController::commonData
+- InvestmentsAPIController::index
+- InvestmentsAPIController::getSymbolsByTradeType
+- InvestmentsAPIController::getInvestmentData
+- InvestmentsAPIController::fetchActiveTrades
+- InvestmentsAPIController::fetchMonthAndInsightsData
+- InvestmentsAPIController::fundamentals
+- InvestmentsAPIController::searchTickers
+- InvestmentsAPIController::getForecastHighlights
+- InvestmentsAPIController::refreshForecasts
+- InvestmentsAPIController::reforecastTicker
+- InvestmentsAPIController::listNews
+- InvestmentsAPIController::getNews
+- InvestmentsAPIController::createNews
+- InvestmentsAPIController::updateNews
+- InvestmentsAPIController::deleteNews
+- InvestmentsAPIController::validateSymbol
+- KeysAPIController::index
+- KeysAPIController::create
+- KeysAPIController::revoke
+- MditAdminAPIController::initController
+- MditBaseAPIController::initController
+- MditDepositAPIController::initController
+- MditInvestorAPIController::initController
+- MditRedemptionAPIController::initController
+- OpsAPIController::initController
+- PredictionsAPIController::listMarkets
+- PredictionsAPIController::lockMarkets
+- PredictionsAPIController::processPayouts
+- SearchAPIController::index
+- SqueezeAPIController::initController
+- SqueezeAPIController::scorecard
+- SqueezeAPIController::zoomout
+- SqueezeAPIController::fade
+- SqueezeAPIController::run
+- WalletsAPIController::initController
+- AiOpsAPIController::initController
+- BrokerSmokeAPIController::rhAccount
+- BrokerSmokeAPIController::snapAccounts
+- BrokerSmokeAPIController::rhEnvDebug
+- ManagementAPIController::_remap
+- ManagementAPIController::logHealthcheck
+- ManagementAPIController::runAuthSmoke
+- ManagementAPIController::initController
+- ManagementAPIController::Run_CRON_Tasks
+- ManagementAPIController::runCRONTasks
+- ManagementAPIController::ajaxGetActiveUsers
+- ManagementAPIController::ajaxGetInactiveUsers
+- ManagementAPIController::checkForSpamUsers
+- ManagementAPIController::cronAnalyzeContent
+- ManagementAPIController::cronFetchInbox
+- ManagementAPIController::cronFetchMarketingEmails
+- ManagementAPIController::cronFetchAndStoreEmails
+- ManagementAPIController::forceFetchEmails
+- ManagementAPIController::generateContentDigestFromStored
+- ManagementAPIController::generateContentFromScraper
+- ManagementAPIController::generateDailyContentDigest
+- ManagementAPIController::generateRankedMarketingContent
+- ManagementAPIController::getBalanceSheet
+- ManagementAPIController::getCashFlowStatement
+- ManagementAPIController::getCompanyOverview
+- ManagementAPIController::getEarningsCalendar
+- ManagementAPIController::getFixedWindowAnalytics
+- ManagementAPIController::getIncomeStatement
+- ManagementAPIController::getInsiderTransactions
+- ManagementAPIController::getNewsSentiment
+- ManagementAPIController::getSlidingWindowAnalytics
+- ManagementAPIController::testTfIdfPipeline
+- ManagementAPIController::generateTodaysNewsSummary
+- ManagementAPIController::generateTodaysStory
+- ManagementAPIController::getTopMovers
+- ManagementAPIController::getUpcomingIPOs
+- ManagementAPIController::massResendActivationEmails
+- ManagementAPIController::processAndGenerateMarketingContent
+- ManagementAPIController::processQueuedEmails
+- ManagementAPIController::processTempEmailsToScraper
+- ManagementAPIController::reprocessIncompleteEmails
+- ManagementAPIController::resendActivationEmailsBatch
+- ManagementAPIController::resendActivationEmailsBatchQueued
+- ManagementAPIController::sendTestActivationEmail
+- ManagementAPIController::unsubscribe
+- BackupsController::list
+- BackupsController::run
+- BackupsController::prune
+- FlagsController::index
+- FlagsController::upsert
+- FlagsController::overrideUser
+- PrivacyController::requestExport
+- PrivacyController::requestErasure
+- PrivacyController::adminApproveExport
+- PrivacyController::adminApproveErasure
+- FeaturesController::initController
+- FeaturesController::index
+- FeaturesController::BrokerageIntegrations
+- FeaturesController::MyMIGold
+- FeaturesController::render
+- SubscribeController::initController
+- SubscribeController::Services
+- SubscribeController::Submit
+- EarningsController::initController
+- EarningsController::commonData
+- EarningsController::fetchMarketData
+- EarningsController::generateConfig
+- EarningsController::update
+- EarningsController::updateMarketData
+- EarningsController::upload
+- EarningsController::RegisteringAnAccount
+- EarningsController::MyMIGold
+- EarningsController::PurchaseMyMIGold
+- EarningsController::PersonalBudgeting
+- EarningsController::InvestmentPortfolioManagement
+- EarningsController::DailyFinancialNews
+- EarningsController::render
+- HowItWorks::initController
+- HowItWorks::index
+- HowItWorks::DetermineYourFinancialGoals
+- HowItWorks::PurchaseMyMIGold
+- HowItWorks::PersonalBudgeting
+- HowItWorks::render
+- HowItWorksController::initController
+- HowItWorksController::commonData
+- HowItWorksController::discord
+- HowItWorksController::streaming
+- HowItWorksController::DetermineYourFinancialGoals
+- HowItWorksController::RegisteringAnAccount
+- HowItWorksController::MyMIGold
+- HowItWorksController::PurchaseMyMIGold
+- HowItWorksController::PersonalBudgeting
+- HowItWorksController::InvestmentPortfolioManagement
+- HowItWorksController::DailyFinancialNews
+- HowItWorksController::render
+- IRSController::initController
+- IRSController::commonData
+- IRSController::index
+- IRSController::render
+- InvestingController::initController
+- InvestingController::commonData
+- NewsAndUpdates::initController
+- NewsAndUpdates::render
+- PersonalBudgetingController::initController
+- PersonalBudgetingController::commonData
+- PersonalBudgetingController::TheRoadmapToTheFutureOfFinance
+- PersonalBudgetingController::render
+- UpdatesController::initController
+- UpdatesController::commonData
+- UpdatesController::render
+- BlogController::initController
+- BlogController::commonData
+- BlogController::account_manager
+- BlogController::services
+- BlogController::submit
+- BlogController::category
+- BlogController::render
+- OpenApiController::json
+- OpenApiController::ui
+- DocsController::search
+- UserController::index
+- DigiByteController::initController
+- MetaMaskController::initController
+- GeminiController::initController
+- GeminiController::placeOrder
+- GeminiController::getBalances
+- GeminiController::getMarketPrice
+- GeminiController::subscribeToMarketData
+- GeminiController::withdrawToAddress
+- GeminiController::getDepositAddress
+- GeminiController::getOrderStatus
+- GeminiController::cancelOrder
+- GeminiController::getTradeHistory
+- SolanaController::initController
+- SolanaController::commonData
+- SolanaController::index
+- SolanaController::addExternalWallet
+- SolanaController::setDefaultWallet
+- SolanaController::apiGetTokens
+- SolanaController::createToken
+- SolanaController::confirmation
+- SolanaController::fundWallet
+- SolanaController::generateWallet
+- SolanaController::getMarketPrice
+- SolanaController::getTokenMetadata
+- SolanaController::getTokenPrice
+- SolanaController::initiateBuyback
+- SolanaController::lockTokens
+- SolanaController::mintTokens
+- SolanaController::purchaseSolana
+- SolanaController::redistributeTokens
+- SolanaController::sellSolana
+- SolanaController::setupEnvironment
+- SolanaController::swapSolana
+- SolanaController::triggerWebSocket
+- SolanaController::viewSolanaWallet
+- SolanaController::getQuote
+- SolanaController::doSwap
+- SolanaController::__destruct
+- ExchangeController::initController
+- ExchangeController::commonData
+- ExchangeController::dashboard
+- ExchangeController::applicationManager
+- ExchangeController::coinListingRequest
+- ExchangeController::coinListingAssetInformation
+- ExchangeController::coinListingAssetInformationModal
+- ExchangeController::coinListingRequestComplete
+- ExchangeController::orderEventManager
+- ExchangeController::orderBuyManager
+- ExchangeController::orderSellManager
+- ExchangeController::orderEventManagerWorking
+- ExchangeController::overview
+- ExchangeController::orderFetch
+- ExchangeController::buy
+- ExchangeController::sell
+- ExchangeController::accountInformation
+- ExchangeController::kycReward
+- ExchangeController::updateOrder
+- ExchangeController::verifyUser
+- ExchangeController::createAsset
+- ExchangeController::createToken
+- ExchangeController::createAsset
+- ExchangeController::updateAsset
+- ExchangeController::deleteAsset
+- ExchangeController::createOrder
+- ExchangeController::updateOrderNews
+- ExchangeController::deleteOrder
+- ExchangeController::executeTrade
+- ExchangeController::reportTransactions
+- ExchangeController::viewUserTrades
+- ExchangeController::enable2fa
+- ExchangeController::disable2fa
+- ExchangeController::alertSuspiciousActivity
+- ExchangeController::fetchStockData
+- ExchangeController::fetchRealTimePrice
+- FinanceController::summary
+- FinanceController::setBudget
+- WebDesignAdminController::initController
+- WebDesignAdminController::commonData
+- WebDesignAdminController::index
+- WebDesignAdminController::contentCreator
+- WebDesignAdminController::curlGenerator
+- WebDesignAdminController::pages
+- WebDesignAdminController::pageTemplate
+- WebDesignAdminController::testPage
+- WebDesignAdminController::testPageEmail
+- WebDesignAdminController::testPageCB
+- WebDesignAdminController::sitemapGenerator
+- WebDesignAdminController::basicUI
+- WebDesignAdminController::icons
+- WebDesignAdminController::forms
+- WebDesignAdminController::charts
+- WebDesignAdminController::tables
+- WebDesignAdminController::uiElements
+- WebDesignAdminController::emailTest
+- SignalsAdminController::index
+- SupportAdminController::initController
+- SupportAdminController::commonData
+- SupportAdminController::index
+- SupportAdminController::logs
+- SupportAdminController::requests
+- SupportAdminController::reporting
+- SupportAdminController::contentCreator
+- SupportAdminController::curlGenerator
+- SupportAdminController::pages
+- SupportAdminController::pageTemplate
+- SupportAdminController::testPage
+- SupportAdminController::testPageEmail
+- SupportAdminController::testPageCB
+- SupportAdminController::sitemapGenerator
+- SupportAdminController::basicUI
+- SupportAdminController::icons
+- SupportAdminController::forms
+- SupportAdminController::charts
+- SupportAdminController::tables
+- SupportAdminController::uiElements
+- SupportAdminController::emailTest
+- TradovateAdminController::initController
+- TradovateAdminController::login
+- TradovateAdminController::callback
+- TradovateAdminController::sendTradeOrder
+- TradovateAdminController::copyTrade
+- TradovateAdminController::index
+- UsersAdminController::initController
+- UsersAdminController::commonData
+- UsersAdminController::index
+- UsersAdminController::assets
+- UsersAdminController::ajaxBlockUser
+- UsersAdminController::ajaxBulkBanUsers
+- UsersAdminController::blockUser
+- UsersAdminController::distribute
+- UsersAdminController::referralReport
+- UsersAdminController::exportUsers
+- UsersAdminController::forceReset
+- UsersAdminController::orders
+- UsersAdminController::profile
+- UsersAdminController::resendActivationCode
+- UsersAdminController::renderView
+- BloggerAdminController::index
+- BloggerAdminController::generate
+- BloggerAdminController::repurpose
+- BloggerAdminController::schedule
+- BloggerAdminController::preview
+- BloggerAdminController::save
+- CampaignAdminController::uploadForm
+- CampaignAdminController::processFile
+- CampaignAdminController::saveCampaign
+- EmailQueueAdminController::create
+- EmailQueueAdminController::store
+- EmailQueueAdminController::index
+- EmailQueueAdminController::processQueue
+- EmailTemplateAdminController::index
+- EmailTemplateAdminController::create
+- EmailTemplateAdminController::store
+- TestAdminController::testITTSend
+- APIAdminController::initController
+- APIAdminController::commonData
+- APIAdminController::index
+- APIAdminController::BitcoinJS
+- APIAdminController::Sophtron
+- APIAdminController::Sophtron_Widget
+- APIAdminController::Content_Creator
+- APIAdminController::Curl_Generator
+- APIAdminController::Pages
+- APIAdminController::Page_Template
+- APIAdminController::Test_Page
+- APIAdminController::Test_Page_Email
+- APIAdminController::Test_Page_CB
+- APIAdminController::Basic_UI
+- APIAdminController::Icons
+- APIAdminController::Forms
+- APIAdminController::Charts
+- APIAdminController::Tables
+- APIAdminController::UI_Elements
+- APIAdminController::Email_Test
+- AccountRescueAdminController::index
+- AccountRescueAdminController::lookup
+- AccountRescueAdminController::resendActivation
+- AccountRescueAdminController::manualActivate
+- AccountRescueAdminController::forcePasswordReset
+- AccountRescueAdminController::unlockAccount
+- AdminController::initController
+- AdminController::commonData
+- AdminController::add
+- AdminController::accountOverview
+- AdminController::details
+- AdminController::history
+- AdminController::bulkUpdateStatus
+- AdminController::bulkDelete
+- AssetsAdminController::initController
+- AssetsAdminController::commonData
+- AssetsAdminController::index
+- AssetsAdminController::applications
+- AssetsAdminController::applicationDetails
+- AssetsAdminController::approval
+- AssetsAdminController::create
+- AssetsAdminController::distribute
+- BudgetingAdminController::initController
+- BudgetingAdminController::commonData
+- BudgetingAdminController::index
+- BudgetingAdminController::Debt_Collector_Cleanup
+- BudgetsAdminController::initController
+- BudgetsAdminController::commonData
+- BudgetsAdminController::index
+- BudgetsAdminController::applications
+- BudgetsAdminController::applicationDetails
+- BudgetsAdminController::approval
+- BudgetsAdminController::create
+- BudgetsAdminController::distribute
+- SecurityAdminController::initController
+- SecurityAdminController::commonData
+- SecurityAdminController::index
+- SecurityAdminController::encrypt
+- SecurityAdminController::decrypt
+- SecurityAdminController::mask
+- SecurityAdminController::purge_api_requests
+- SecurityAdminController::log_activity
+- SecurityAdminController::check_compliance
+- SecurityAdminController::access_control
+- SecurityAdminController::validate_password_strength
+- SecurityAdminController::anonymize_data
+- SecurityAdminController::sanitize_headers
+- SecurityAdminController::validate_file_upload
+- SecurityAdminController::file_upload_security
+- SecurityAdminController::generate_security_questions
+- SecurityAdminController::verify_security_answers
+- SecurityAdminController::log_api_request
+- SecurityAdminController::rate_limit_actions
+- SecurityAdminController::analyze_user_agent
+- SecurityAdminController::validate_input_pattern
+- SecurityAdminController::rotate_encryption_keys
+- SecurityAdminController::secure_delete_file
+- SecurityAdminController::get_security_training_content
+- SecurityAdminController::get_security_dashboard_data
+- SecurityAdminController::initiate_incident_response
+- SecurityAdminController::check_compliance_standards
+- SecurityAdminController::get_threat_intelligence_data
+- SecurityAdminController::send_security_notifications
+- SecurityAdminController::check_for_patches
+- SecurityAdminController::review_access_controls
+- SecurityAdminController::run_vulnerability_scan
+- SecurityAdminController::get_latest_version_from_repository
+- SecurityAdminController::check_role_permissions
+- SecurityAdminController::send_to_slack_channel
+- SecurityAdminController::csrf_token_provider
+- SecurityAdminController::generate_2fa_secret
+- SecurityAdminController::verify_2fa_code
+- SecurityAdminController::log_api_response
+- SecurityAdminController::log_error
+- ServicesAdminController::initController
+- ServicesAdminController::commonData
+- ServicesAdminController::index
+- ServicesAdminController::campaigns
+- ServicesAdminController::tasks
+- ServicesAdminController::blogSubscribe
+- ServicesAdminController::seoCheck
+- ServicesAdminController::assignMarketingTask
+- AlertsAdminController::initController
+- AlertsAdminController::commonData
+- AlertsAdminController::index
+- AlertsAdminController::generateAdvisorPackage
+- AlertsAdminController::index
+- AlertsAdminController::index
+- AlertsAdminController::add
+- AlertsAdminController::addTradeAlert
+- AlertsAdminController::advisorMedia
+- AlertsAdminController::auditEmailScraper
+- AlertsAdminController::backfillCategoriesFromScraper
+- AlertsAdminController::distributeAlert
+- AlertsAdminController::distributeAlerts
+- AlertsAdminController::fetchAndProcessEmails
+- AlertsAdminController::fetchAndStoreAlertsEmails
+- AlertsAdminController::fetchData
+- AlertsAdminController::fetchEmails
+- AlertsAdminController::fetchEmailAlerts
+- AlertsAdminController::fetchTickerDetails
+- AlertsAdminController::getAlerts
+- AlertsAdminController::getFilteredAlerts
+- AlertsAdminController::importTickers
+- AlertsAdminController::research
+- AlertsAdminController::sendTestEmail
+- AlertsAdminController::sendTradeAlertEmail
+- AlertsAdminController::stockOverview
+- AlertsAdminController::submitTradingView
+- AlertsAdminController::test
+- AlertsAdminController::testAlertEmail
+- AlertsAdminController::testEmail
+- AlertsAdminController::trades
+- AlertsAdminController::updateAlerts
+- AlertsAdminController::updateTradeChart
+- AlertsAdminController::viewAlert
+- AlertsAdminController::viewTradeChart
+- AlertsAdminController::weeklyTopPerformance
+- EmailOutboxAdminController::initController
+- EmailOutboxAdminController::index
+- EmailOutboxAdminController::sendTest
+- SmtpTestAdminController::probe
+- AiOpsManagementAdminController::index
+- AuthFunnelAdminController::authFunnel
+- AuthFunnelAdminController::referrals
+- AuthHealthAdminController::initController
+- AuthHealthAdminController::index
+- AuthHealthAdminController::details
+- ChatUsageAdminController::initController
+- ChatUsageAdminController::index
+- ChatUsageAdminController::saveSettings
+- ChatUsageAdminController::resetUser
+- ContentEngineAdminController::initController
+- ContentEngineAdminController::previewPost
+- DevelopmentAdminController::index
+- DiscordAdminController::initController
+- DiscordAdminController::commonData
+- DiscordAdminController::index
+- DiscordAdminController::discord
+- DiscordAdminController::saveDiscordChannel
+- DiscordAdminController::deleteDiscordChannel
+- DiscordAdminController::saveDiscordTemplate
+- DiscordAdminController::deleteDiscordTemplate
+- DiscordAdminController::saveDiscordSubscription
+- DiscordAdminController::deleteDiscordSubscription
+- DiscordAdminController::saveDiscordPolicy
+- DiscordAdminController::deleteDiscordPolicy
+- DocsAdminController::initController
+- DocsAdminController::index
+- DocsAdminController::browse
+- DocsAdminController::view
+- DripCampaignAdminController::initController
+- DripCampaignAdminController::commonData
+- DripCampaignAdminController::index
+- DripCampaignAdminController::addStep
+- DripCampaignAdminController::create
+- DripCampaignAdminController::enrollUser
+- DripCampaignAdminController::previewTemplate
+- DripCampaignAdminController::testDripCron
+- DripCampaignAdminController::trackEngagement
+- DripCampaignAdminController::viewSteps
+- EmailAdminController::initController
+- EmailAdminController::index
+- EmailAdminController::addMember
+- EmailAdminController::autoScheduleLogs
+- EmailAdminController::campaigns
+- EmailAdminController::campaignStats
+- EmailAdminController::createList
+- EmailAdminController::editCampaign
+- EmailAdminController::queued
+- EmailAdminController::previewQueuedEmail
+- EmailAdminController::sendCampaign
+- EmailAdminController::scheduleCampaign
+- EmailAdminController::scheduleCampaignSubmit
+- ExchangeAdminController::initController
+- ExchangeAdminController::commonData
+- ExchangeAdminController::index
+- ExchangeAdminController::assets
+- ExchangeAdminController::markTransactionAsSuspicious
+- ExchangeAdminController::suspiciousTransactions
+- ExchangeAdminController::triggerWebSocket
+- ExchangeAdminController::updatePrices
+- ExchangeAdminController::__destruct
+- FinanceAdminController::index
+- HowTosAdminController::initController
+- HowTosAdminController::commonData
+- HowTosAdminController::index
+- HowTosAdminController::employeeAccountSetup
+- HowTosAdminController::employeeEmailSetup
+- HowTosAdminController::add
+- HowTosAdminController::add
+- HowTosAdminController::accountOverview
+- HowTosAdminController::details
+- HowTosAdminController::add
+- HowTosAdminController::edit
+- HowTosAdminController::add
+- HowTosAdminController::history
+- HowTosAdminController::add
+- HowTosAdminController::recurringSchedule
+- HowTosAdminController::approveRecurringSchedule
+- HowTosAdminController::add
+- HowTosAdminController::settings
+- HowTosAdminController::accountManager
+- HowTosAdminController::deleteAccount
+- HowTosAdminController::cancelAccount
+- HowTosAdminController::paid
+- HowTosAdminController::unpaid
+- HowTosAdminController::bulkUpdateStatus
+- HowTosAdminController::createLinkToken
+- HowTosAdminController::exchangeToken
+- HowTosAdminController::bulkDelete
+- ManagementAdminController::initController
+- ManagementAdminController::commonData
+- ManagementAdminController::index
+- ManagementAdminController::add
+- ManagementAdminController::realEstateQuickIntake
+- ManagementAdminController::realEstateQuickSubmit
+- ManagementAdminController::viewProject
+- ManagementAdminController::listProjects
+- ManagementAdminController::createProject
+- ManagementAdminController::commitInvestment
+- ManagementAdminController::distributeRevenue
+- ManagementAdminController::sendMoreInfoRequest
+- ManagementAdminController::approveProject
+- ManagementAdminController::notifyIssues
+- ManagementAdminController::rejectProject
+- NotificationAdminController::initController
+- NotificationAdminController::commonData
+- NotificationAdminController::index
+- NotificationAdminController::sendNotification
+- NotificationAdminController::addRecord
+- OpsAdminController::initController
+- OpsAdminController::index
+- OpsAdminController::ajaxStatus
+- OpsAdminController::ajaxDispatch
+- PartnersAdminController::initController
+- PartnersAdminController::commonData
+- PartnersAdminController::index
+- PublicPagesAdminController::index
+- PublicPagesAdminController::ajaxGenerateNow
+- PublicPagesAdminController::ajaxLoadDraft
+- PublicPagesAdminController::ajaxSaveDraft
+- PublicPagesAdminController::ajaxApproveDraft
+- PublicPagesAdminController::ajaxRejectDraft
+- WalletsAdminController::initController
+- WalletsAdminController::commonData
+- WalletsAdminController::index
+- WalletsAdminController::generateWallets
+- WalletsAdminController::amlMonitoring
+- WalletsAdminController::amlForm
+- WalletsAdminController::complianceForm
+- WalletsAdminController::submitCompliance
+- WalletsAdminController::submitAML
+- WalletsAdminController::largeTransactionReview
+- WalletsAdminController::kycForm
+- WalletsAdminController::submitKYC
+- WalletsAdminController::suspiciousActivityReview
+- WalletsAdminController::reconcile
+- WalletsAdminController::NotifyUserMissingInfo
+- WalletsAdminController::notifyUser
+- WalletsAdminController::emailUserAboutIssue
+- ManagementController02162026::initController
+- ManagementController02162026::commonData
+- ManagementController02162026::index
+- ManagementController02162026::index
+- ManagementController02162026::add
+- ManagementController02162026::add
+- ManagementController02162026::accountOverview
+- ManagementController02162026::details
+- ManagementController02162026::add
+- ManagementController02162026::edit
+- ManagementController02162026::add
+- ManagementController02162026::history
+- ManagementController02162026::howTos
+- ManagementController02162026::add
+- ManagementController02162026::recurringSchedule
+- ManagementController02162026::research
+- ManagementController02162026::approveRecurringSchedule
+- ManagementController02162026::add
+- ManagementController02162026::settings
+- ManagementController02162026::triggerPostAutogenOnEmpty
+- ManagementController02162026::accountManager
+- ManagementController02162026::deleteAccount
+- ManagementController02162026::cancelAccount
+- ManagementController02162026::paid
+- ManagementController02162026::unpaid
+- ManagementController02162026::bulkUpdateStatus
+- ManagementController02162026::createLinkToken
+- ManagementController02162026::exchangeToken
+- ManagementController02162026::bulkDelete
+- HRAdminController::index
+- InvestmentsAdminController::index
+- InvestmentsAdminController::newsIndex
+- MarketingAdminController::initController
+- MarketingAdminController::commonData
+- MarketingAdminController::index
+- MarketingAdminController::index
+- MarketingAdminController::index
+- MarketingAdminController::add
+- MarketingAdminController::addSchedule
+- MarketingAdminController::addSubscriber
+- MarketingAdminController::addSubscriber
+- MarketingAdminController::addSubscriber
+- MarketingAdminController::approveBufferItem
+- MarketingAdminController::approveLogo
+- MarketingAdminController::approveAndDownloadLogo
+- MarketingAdminController::approveContent
+- MarketingAdminController::blogs
+- MarketingAdminController::bufferDashboard
+- MarketingAdminController::campaigns
+- MarketingAdminController::contentGenerator
+- MarketingAdminController::contentReview
+- MarketingAdminController::cronAnalyzeContent
+- MarketingAdminController::cronFetchAndStoreEmails
+- MarketingAdminController::cronFetchInbox
+- MarketingAdminController::cronFetchMarketingEmails
+- MarketingAdminController::cronGenerateContentFromTemp
+- MarketingAdminController::cronGenerateFinalContentFromTemp
+- MarketingAdminController::cronSendDailyLog
+- MarketingAdminController::edit
+- MarketingAdminController::editContent
+- MarketingAdminController::fetchBufferPaginated
+- MarketingAdminController::fetchLatestSummaries
+- MarketingAdminController::fetchMissingLogos
+- MarketingAdminController::financialNews
+- MarketingAdminController::generateAudio
+- MarketingAdminController::backfillBlogExcerpts
+- MarketingAdminController::generateContent
+- MarketingAdminController::generateContentDigestFromStored
+- MarketingAdminController::generateContentFromTweet
+- MarketingAdminController::generateDailyContentDigest
+- MarketingAdminController::generateGroupedContentDrafts
+- MarketingAdminController::generateNewsletterContent
+- MarketingAdminController::getRecentScrapes
+- MarketingAdminController::ideas
+- MarketingAdminController::importScheduleCSV
+- MarketingAdminController::keywords
+- MarketingAdminController::previewBufferItem
+- MarketingAdminController::previewGeneratedPost
+- MarketingAdminController::previewPendingSummaries
+- MarketingAdminController::previewVideoScript
+- MarketingAdminController::processScheduledPosts
+- MarketingAdminController::postCreator
+- MarketingAdminController::promote
+- MarketingAdminController::publishBlog
+- MarketingAdminController::rejectBufferItem
+- MarketingAdminController::rejectContent
+- MarketingAdminController::reviewBuffer
+- MarketingAdminController::runContentGeneration
+- MarketingAdminController::saveContentEdit
+- MarketingAdminController::schedule
+- MarketingAdminController::scheduleNewsletterCampaign
+- MarketingAdminController::scrapeLink
+- MarketingAdminController::searchAndApproveLogo
+- MarketingAdminController::sendScheduledNewsletter
+- MarketingAdminController::standaloneAddSubscriber
+- MarketingAdminController::standaloneScrape
+- MarketingAdminController::submitContent
+- MarketingAdminController::submitDailyLog
+- MarketingAdminController::submitLargeContent
+- MarketingAdminController::submitLargeContentForm
+- MarketingAdminController::submitMarketingCampaign
+- MarketingAdminController::submitMarketIdeas
+- MarketingAdminController::topCommunities
+- MarketingAdminController::triggerPostAutogenOnEmpty
+- MarketingAdminController::twitterDashboard
+- MarketingAdminController::upcomingEarnings
+- MarketingAdminController::updatePlatformToggle
+- MarketingAdminController::viewBlog
+- MarketingAdminController::viewCampaign
+- MarketingAdminController::viewDailyLogs
+- MarketingAdminController::viewEmail
+- MarketingAdminController::viewGeneratedContent
+- MarketingAdminController::viewGeneratedSummaries
+- MarketingAdminController::viewGroupedSummaries
+- MarketingAdminController::handleTeamMessage
+- MarketingAdminController::viewTempScrapedEmails
+- MarketingAdminController::viewTimelineGrouped
+- MarketingAdminController::shortLongContentForm
+- MarketingAdminController::submitManualContent
+- MarketingAdminController::communities
+- MarketingAdminController::getSocialPlatforms
+- MarketingAdminController::getSocialCommunities
+- MarketingAdminController::saveSocialCommunity
+- MarketingAdminController::getPostTemplates
+- MarketingAdminController::savePostTemplate
+- MarketingAdminController::generatePlatformPosts
+- MarketingAdminController::generateDailyCommunityPosts
+- MarketingAdminController::exportGeneratedPostJson
+- MarketingAdminController::generateRevenueDocs
+- MarketingAdminController::cronGenerateDailyCommunityPosts
+- MarketingAdminController::cronQueueDistribution
+- OperationsAdminController::index
+- OpsInboxAdminController::initController
+- OpsInboxAdminController::index
+- OpsInboxAdminController::view
+- OpsInboxAdminController::createTaskFile
+- OpsInboxAdminController::createTaskRegistry
+- OpsInboxAdminController::markApproved
+- OpsInboxAdminController::reject
+- ProjectsAdminController::initController
+- ProjectsAdminController::commonData
+- ProjectsAdminController::index
+- ProjectsAdminController::add
+- ProjectsAdminController::realEstateQuickIntake
+- ProjectsAdminController::realEstateQuickSubmit
+- ProjectsAdminController::viewProject
+- ProjectsAdminController::listProjects
+- ProjectsAdminController::createProject
+- ProjectsAdminController::commitInvestment
+- ProjectsAdminController::distributeRevenue
+- ProjectsAdminController::sendMoreInfoRequest
+- ProjectsAdminController::approveProject
+- ProjectsAdminController::notifyIssues
+- ProjectsAdminController::rejectProject
+- SitemapAdminController::initController
+- SitemapAdminController::index
+- SitemapAdminController::general
+- SitemapAdminController::articles
+- vars::__construct
+- TaxConfig::initController
+- TaxConfig::editTemplate
+- TaxConfig::jurisdictions
+- TaxConfig::createRate
+- TaxConfig::editRate
+- TaxJurisdictionsModel::getActiveWithCurrentRate
+- TaxRatesModel::findActiveRange
+- TaxTemplatesModel::getWithLines
+- ScraperController::initController
+- ScraperController::generateContentFromScrapedData
+- ContentGenerator::generateBlogPost
+- ContentGenerator::generateFromEmail
+- ContentGenerator::generateSocialMediaContent
+- ContentGenerator::generateNotifications
+- HtmlFormatter::format
+- HtmlFormatter::formatHTMLToBootstrap
+- WebScraper::__construct
+- WebScraper::scrapeWebsite
+- MarketingModel::saveScrapedData
+- MarketingModel::fetchEmails
+- MarketingModel::getEmailById
+- MarketingModel::saveGeneratedContent
+- PushController::publicKey
+- PushController::subscribe
+- PushController::unsubscribe
+- PushController::testSend
+- ScriptStudioController::initController
+- ScriptSeeder::run
+- ScriptEngine::convertToPineScript
+- ScriptEngine::convertToThinkScript
+- ScriptEngine::buildEmulatedCode
+- ScriptEngine::normalizeTags
+- ScriptEngine::tagsToArray
+- ScriptEngine::tagsToString
+- ScriptEngine::renderMarkdown
+- ScriptModel::getRules
+- HealthController::live
+- HealthController::ready
+- HealthController::deps
+- HealthController::depsJson
+- MetricsController::export
+- Support::initController
+- Support::index
+- Support::memberCustomerSupportRequest
+- Support::faq
+- Support::request
+- Support::response
+- Support::closeRequest
+- Support::render
+- SupportController::initController
+- SupportController::commonData
+- SupportController::handleSupportRequest
+- SupportController::test
+- SupportController::sendTestEmail
+- SupportController::Communication_Manager
+- SupportController::Feedback
+- SupportController::KnowledgeBase
+- SupportController::MyRequest
+- SupportController::Request
+- SupportController::Response
+- SupportController::Close_Request
+- SupportTicketController::index
+- DiscordSupportNotifier::notify
+- SupportTicketService::__construct
+- SupportTicketService::createAuthLoginErrorTicket
+- SupportTicketService::notifyUser
+- SupportTicketService::notifySupport
+- SupportTicketService::notifyDiscord
+- SupportTicketService::recordEvent
+- EmailController::sendVerification
+- EmailController::verifyToken
+- InvestmentsController::initController
+- InvestmentsController::commonData
+- InvestmentsController::getForecastDetails
+- InvestmentsController::getConfidenceHeatmap
+- InvestmentsController::getForecastAccuracySummary
+- InvestmentsController::getForecastHighlights
+- InvestmentsController::reforecastTicker
+- InvestmentsController::add
+- InvestmentsController::squeezes
+- InvestmentsController::addWatchlist
+- InvestmentsController::edit
+- InvestmentsController::deleteTrade
+- InvestmentsController::retirement
+- InvestmentsController::services
+- InvestmentsController::sharePortfolio
+- InvestmentsController::fetchRealTimeData
+- InvestmentsController::assessment
+- InvestmentsController::trackInvestmentReturns
+- InvestmentsController::getUserInvestmentSummary
+- InvestmentsController::getInvestmentPerformance
+- InvestmentsController::analyzeUserPortfolio
+- InvestmentsController::getSymbolsByTradeType
+- InvestmentsController::dynamicRiskAssessment
+- InvestmentsController::getCustomAlerts
+- InvestmentsController::getMarketNews
+- InvestmentsController::setCustomAlert
+- InvestmentsController::retirementPlanner
+- InvestmentsController::manageTrades
+- InvestmentsController::exportExcel
+- OnboardingController::get
+- OnboardingController::mark
+- AlertsController::initController
+- AlertsController::commonData
+- AlertsController::filterAlerts
+- AlertsController::viewAlert
+- AlertsController::getUserAlerts
+- AuctionsController::initController
+- ProjectsController::initController
+- TradeTracker::initController
+- TradeTracker::index
+- TradeTracker::log
+- TradeTracker::overview
+- TradeTracker::holdingsManager
+- TradeTracker::layoutManager
+- TradeTracker::tradeManager
+- TradeTracker::tradeTrackerEditor
+- TradeTracker::search
+- TradeTracker::add
+- TradeTracker::quickTrade
+- TradeTracker::sell
+- TradeTracker::update
+- TradeTracker::close
+- TradeTracker::delete
+- TradeTracker::addStock
+- ReferralController::initController
+- ReferralController::commonData
+- ReferralController::index
+- ReferralController::create
+- ReferralController::share
+- ReferralController::sendReferralEmail
+- ReferralController::My_Referrals
+- ReferralController::Users
+- ReferralController::Marketing_Affiliate_Program_Agreement
+- ReferralController::Apply
+- ReferralController::Success
+- ReferralController::New_Affiliate_Information
+- ReferralController::Activate_Affiliate
+- ReferralController::New_Affiliate_Procedure
+- ReferralController::processPayments
+- ReferralController::sendFollowUpEmails
+- WalletsController::initController
+- WalletsController::commonData
+- WalletsController::commonData
+- WalletsController::checking
+- WalletsController::bank
+- WalletsController::banking
+- WalletsController::all
+- WalletsController::crypto
+- WalletsController::credit
+- WalletsController::debt
+- WalletsController::investments
+- WalletsController::add
+- WalletsController::prepareAccountData
+- WalletsController::edit
+- WalletsController::edit
+- WalletsController::edit
+- WalletsController::editBankAccount
+- WalletsController::editCreditAccount
+- WalletsController::editCryptoAccount
+- WalletsController::editDebtAccount
+- WalletsController::editInvestAccount
+- WalletsController::submitEdit
+- WalletsController::delete
+- WalletsController::copy
+- WalletsController::deposit
+- WalletsController::withdraw
+- WalletsController::exchangeCurrency
+- WalletsController::details
+- WalletsController::transferFunds
+- WalletsController::executeSwap
+- WalletsController::walletSelection
+- WalletsController::purchase
+- WalletsController::purchase
+- WalletsController::purchase
+- WalletsController::purchase
+- WalletsController::purchaseGold
+- WalletsController::purchaseMyMIGold
+- WalletsController::handleMyMIGPayPalCallback
+- WalletsController::purchaseMembershipSuccess
+- WalletsController::completePurchase
+- WalletsController::purchaseComplete
+- WalletsController::purchaseComplete
+- WalletsController::securityViolation
+- WalletsController::securityViolation
+- WalletsController::confirmDeposit
+- WalletsController::depositComplete
+- WalletsController::viewTransactionHistory
+- WalletsController::auditWallet
+- WalletsController::detectFraud
+- WalletsController::convertCurrency
+- WalletsController::generateStatement
+- WalletsController::freezeWallet
+- WalletsController::unfreezeWallet
+- WalletsController::getAvailableServices
+- WalletsController::activatePremiumService
+- EconomyController::initController
+- EconomyController::updateAll
+- BudgetController::initController
+- BudgetController::commonData
+- BudgetController::commonData
+- BudgetController::accountManager
+- BudgetController::accountOverview
+- BudgetController::add
+- BudgetController::approveRecurringScheduleOld
+- BudgetController::bulkDelete
+- BudgetController::bulkUpdateStatus
+- BudgetController::cancelAccount
+- BudgetController::deleteAccount
+- BudgetController::details
+- BudgetController::edit
+- BudgetController::financialAnalysis
+- BudgetController::financialForecaster
+- BudgetController::summary
+- BudgetController::credit
+- BudgetController::available
+- BudgetController::repayment
+- BudgetController::categories
+- BudgetController::transactions
+- BudgetController::goals
+- BudgetController::insights
+- BudgetController::savingsGoals
+- BudgetController::investmentAccounts
+- BudgetController::linkedAccounts
+- BudgetController::addLinkedAccount
+- BudgetController::removeLinkedAccount
+- BudgetController::refreshLinkedAccount
+- BudgetController::forecastBudget
+- BudgetController::getUserBudgetRecords
+- BudgetController::getUserAvailableBalances
+- BudgetController::getUserCreditBalances
+- BudgetController::getUserRepaymentSummary
+- BudgetController::add
+- BudgetController::history
+- BudgetController::paid
+- BudgetController::recurringSchedule
+- BudgetController::recurringSchedule
+- BudgetController::add
+- BudgetController::settings
+- BudgetController::unpaid
+- AccountController::initController
+- AccountController::commonData
+- AccountController::exchangeToken
+- AccountController::index
+- AccountController::add
+- AccountController::copy
+- AccountController::accountManager
+- AccountController::accountOverview
+- AccountController::approveRecurringSchedule
+- AccountController::cancelAccount
+- AccountController::deleteAccount
+- AccountController::bulkUpdateStatus
+- AccountController::bulkDelete
+- AccountController::sessions
+- AccountController::revokeSession
+- AccountController::twoFactor
+- AccountController::enable2fa
+- AccountController::verify2fa
+- AccountController::disable2fa
+- AccountController::regenerateBackupCodes
+- DashboardController::initController
+- DashboardController::commonData
+- DashboardController::getForecastHighlights
+- DashboardController::loadingScreen
+- DashboardController::search
+- DashboardController::security
+- DashboardController::socialMedia
+- InstitutesController::initController
+- InstitutesController::commonData
+- InstitutesController::index
+- InstitutesController::register
+- InstitutesController::view
+- InstitutesController::edit
+- InstitutesController::delete
+- InstitutesController::filterBySpecialty
+- KnowledgebaseController::initController
+- KnowledgebaseController::commonData
+- DashboardLibrary::__construct
+- DashboardLibrary::getDashboardInfo
+- UserModuleModel::logResetAttempt
+- UserModuleModel::logActivationAttempt
+- UserModuleModel::withGroup
+- UserModuleModel::clearGroup
+- UserModuleModel::fake
+- BudgetModuleModel::__construct
+- BudgetModuleModel::getBudgetData
+- BudgetModuleModel::getUserBudgetRecords
+- BudgetModuleModel::getDailyBudgetReq
+- BudgetModuleModel::getTodaysEarnings
+- BudgetModuleModel::getTodaysExpenses
+- BudgetModuleModel::getMonthlyEarnings
+- BudgetModuleModel::getMonthlyExpenses
+- BudgetModuleModel::getUserBudgetRecord
+- BudgetModuleModel::getBudgetAccountRelatedRecords
+- BudgetModuleModel::getThisMonthsIncome
+- BudgetModuleModel::getThisMonthsExpense
+- BudgetModuleModel::getLastMonthsIncome
+- BudgetModuleModel::getLastMonthsExpense
+- BudgetModuleModel::getNextMonthsIncome
+- BudgetModuleModel::getNextMonthsExpense
+- BudgetModuleModel::getAnnualIncome
+- BudgetModuleModel::getAnnualExpense
+- BudgetModuleModel::getCheckingSummary
+- BudgetModuleModel::getIncomeYtdSummary
+- BudgetModuleModel::getExpenseYtdSummary
+- BudgetModuleModel::getCreditKimitSummary
+- BudgetModuleModel::getCreditAvailableSummary
+- BudgetModuleModel::getDebtAccounts
+- BudgetModuleModel::getLoanAccounts
+- BudgetModuleModel::approveRecurringAccount
+- BudgetModuleModel::cancelAccount
+- BudgetModuleModel::paidAccount
+- BudgetModuleModel::unpaidAccount
+- Tax::initController
+- Tax::create
+- TaxJurisdictionModel::getAllocationsForReturn
+- TaxJurisdictionModel::getEffectiveRateForDate
+- TaxReturnModel::__construct
+- TaxReturnModel::createReturn
+- TaxReturnModel::getReturnWithValues
+- TaxReturnModel::saveLineValue
+- TaxReturnModel::recalculateReturn
+- TaxReturnModel::updateAllocation
+- TaxTemplateModel::getActiveTemplates
+- TaxTemplateModel::getLinesForTemplate
+- TaxTemplateModel::getLineByNumber
+- AdvisorController::initController
+- AdvisorController::generateNow
+- AIOpsBudgetModel::findByDate
+- AIOpsCacheModel::findValidCache
+- AIOpsDedupeModel::findByHash
+- AIOpsUsageModel::insertUsage
+- AIOpsGuardrailService::__construct
+- AIOpsGuardrailService::tablesAvailable
+- AIOpsGuardrailService::validateRecord
+- AIOpsGuardrailService::hashContent
+- AIOpsGuardrailService::generateCacheKey
+- AIOpsGuardrailService::getTodayBudgetSummary
+- AIOpsGuardrailService::isHardStopReached
+- AIOpsGuardrailService::maybeSend80PercentAlert
+- AIOpsGuardrailService::checkCache
+- AIOpsGuardrailService::storeCache
+- AIOpsGuardrailService::checkDedupe
+- AIOpsGuardrailService::touchDedupe
+- AIOpsGuardrailService::checkWorkflowBudget
+- AIOpsGuardrailService::logUsage
+- PredictionsApiController::initController
+- PredictionsApiController::latest
+- PredictionsApiController::listMarkets
+- PredictionsApiController::createMarket
+- PredictionsApiController::placeOrder
+- PredictionsApiController::cancelOrder
+- PredictionsApiController::settle
+- PredictionsApiController::addLiquidity
+- PredictionsApiController::removeLiquidity
+- PublicPageCell::render

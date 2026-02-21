@@ -11,7 +11,7 @@ use CodeIgniter\CLI\CLI;
 
 class CommandIndex extends SafeBaseCommand
 {
-    protected $group       = 'AI-Ops - Commands';
+    protected $group       = 'AIOps - Commands';
     protected $name        = 'aiops:command-index';
     protected $description = 'Scan and classify Spark commands for AIOps governance.';
     protected $usage       = 'aiops:command-index [--json] [--notify] [--db]';

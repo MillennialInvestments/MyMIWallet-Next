@@ -220,77 +220,77 @@ $routes->group('', ['namespace' => 'App\Modules\User\Controllers', 'filter' => [
 
 
 $routes->group('Advisor', static function($routes) {
-    $routes->get('/', [AdvisorController::class, 'index']);
-    $routes->post('generateInsight', [AdvisorController::class, 'generateAdvisorInsight']);
-    $routes->post('generateStoryboard', [AdvisorController::class, 'generateNewsStoryboard']);
-    $routes->post('tradeAnalysis/(:num)', [AdvisorController::class, 'generateTradeAnalysis']);
+    $routes->get('/', 'AdvisorController::index');
+    $routes->post('generateInsight', 'AdvisorController::generateAdvisorInsight');
+    $routes->post('generateStoryboard', 'AdvisorController::generateNewsStoryboard');
+    $routes->post('tradeAnalysis/(:num)', 'AdvisorController::generateTradeAnalysis');
 });
 
 $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function($routes) {
     $routes->get('/', 'APIController::index');
     $routes->match(['GET', 'POST'], '/', 'APIController::index');
     $routes->match(['GET', 'POST'], 'Status', 'APIController::status');
-    $routes->get('Health', 'HealthController::index');              // /API/Health
-    $routes->get('Health/spark', 'HealthController::spark');        // /API/Health/spark
-    $routes->get('Ops/status', 'OpsController::status');
-    $routes->post('Ops/dispatch', 'OpsController::dispatch');
-    $routes->post('Ops/ingestReport', 'OpsController::ingestReport');
-    $routes->get('Ops/reports/latest', 'OpsController::latestReport');
-    $routes->get('Ops/ingest-metrics', 'OpsController::ingestMetrics');
-    $routes->get('Ops/OPcacheReset', 'OpsController::opcacheReset'); // /API/Ops/OPcacheReset
+    $routes->get('Health', 'HealthAPIController::index');              // /API/Health
+    $routes->get('Health/spark', 'HealthAPIController::spark');        // /API/Health/spark
+    $routes->get('Ops/status', 'OpsAPIController::status');
+    $routes->post('Ops/dispatch', 'OpsAPIController::dispatch');
+    $routes->post('Ops/ingestReport', 'OpsAPIController::ingestReport');
+    $routes->get('Ops/reports/latest', 'OpsAPIController::latestReport');
+    $routes->get('Ops/ingest-metrics', 'OpsAPIController::ingestMetrics');
+    $routes->get('Ops/OPcacheReset', 'OpsAPIController::opcacheReset'); // /API/Ops/OPcacheReset
     $routes->group('AiOps', static function($routes) {
-        $routes->get('status', 'AiOpsController::status');
-        $routes->post('toggle', 'AiOpsController::toggle');
-        $routes->post('run', 'AiOpsController::run');
-        $routes->post('receiveResult', 'AiOpsController::receiveResult');
+        $routes->get('status', 'AiOpsAPIController::status');
+        $routes->post('toggle', 'AiOpsAPIController::toggle');
+        $routes->post('run', 'AiOpsAPIController::run');
+        $routes->post('receiveResult', 'AiOpsAPIController::receiveResult');
     });
     $routes->group('AIOps', static function($routes) {
-        $routes->get('health', 'AIOpsController::health');
-        $routes->post('policy/check', 'AIOpsController::policyCheck');
-        $routes->post('usage/log', 'AIOpsController::logUsage');
-        $routes->post('cache/store', 'AIOpsController::cacheStore');
-        $routes->get('cache/get', 'AIOpsController::cacheGet');
-        $routes->post('test/policy', 'AIOpsController::testPolicy');
-        $routes->post('toggle', 'AIOpsController::toggle', ['filter' => 'permission:admin.access']);
+        $routes->get('health', 'AiOpsAPIController::health');
+        $routes->post('policy/check', 'AiOpsAPIController::policyCheck');
+        $routes->post('usage/log', 'AiOpsAPIController::logUsage');
+        $routes->post('cache/store', 'AiOpsAPIController::cacheStore');
+        $routes->get('cache/get', 'AiOpsAPIController::cacheGet');
+        $routes->post('test/policy', 'AiOpsAPIController::testPolicy');
+        $routes->post('toggle', 'AiOpsAPIController::toggle', ['filter' => 'permission:admin.access']);
     });
-    $routes->post('Alerts/backfillEmailAlerts', 'AlertsController::backfillEmailAlerts');
-    $routes->get('cronFetchAndGenerateNews', 'ManagementController::cronFetchAndGenerateNews');
-    $routes->post('Management/backfillMarketingEmails', 'ManagementController::backfillMarketingEmails');
-    $routes->get('Management/getAutoloadHealth', 'ManagementController::getAutoloadHealth', ['filter' => 'permission:admin.access']);
-    $routes->get('Management/subsystems/status', 'ManagementController::subsystemsStatus', ['filter' => 'permission:admin.access']);
-    $routes->post('Management/subsystems/action', 'ManagementController::subsystemsAction', ['filter' => 'permission:admin.access']);
+    $routes->post('Alerts/backfillEmailAlerts', 'AlertsAPIController::backfillEmailAlerts');
+    $routes->get('cronFetchAndGenerateNews', 'ManagementAPIController::cronFetchAndGenerateNews');
+    $routes->post('Management/backfillMarketingEmails', 'ManagementAPIController::backfillMarketingEmails');
+    $routes->get('Management/getAutoloadHealth', 'ManagementAPIController::getAutoloadHealth', ['filter' => 'permission:admin.access']);
+    $routes->get('Management/subsystems/status', 'ManagementAPIController::subsystemsStatus', ['filter' => 'permission:admin.access']);
+    $routes->post('Management/subsystems/action', 'ManagementAPIController::subsystemsAction', ['filter' => 'permission:admin.access']);
 
     // Public Discord help/onboarding endpoints
-    $routes->post('Discord/completeOnboardingStep', 'DiscordController::completeOnboardingStep');
+    $routes->post('Discord/completeOnboardingStep', 'DiscordAPIController::completeOnboardingStep');
     $routes->match(['GET', 'POST'], 'Status/(:segment)', 'APIController::status');
     $routes->match(['GET', 'POST'], 'Investments/getSymbolsByTradeType/(:segment)', 'APIController::getSymbolsByTradeType/$1');
-    $routes->get('Investments/getForecastDetails/(:segment)', 'InvestmentsController::getForecastDetails/$1');
-    $routes->get('Investments/getConfidenceHeatmap', 'InvestmentsController::getConfidenceHeatmap');
-    $routes->get('Investments/getTopConfidenceBySector', 'InvestmentsController::getTopConfidenceBySector');
-    $routes->get('Investments/getConfidenceDistribution', 'InvestmentsController::getConfidenceDistribution');
-    $routes->get('Investments/getForecastAccuracySummary', 'InvestmentsController::getForecastAccuracySummary');
+    $routes->get('Investments/getForecastDetails/(:segment)', 'InvestmentsAPIController::getForecastDetails/$1');
+    $routes->get('Investments/getConfidenceHeatmap', 'InvestmentsAPIController::getConfidenceHeatmap');
+    $routes->get('Investments/getTopConfidenceBySector', 'InvestmentsAPIController::getTopConfidenceBySector');
+    $routes->get('Investments/getConfidenceDistribution', 'InvestmentsAPIController::getConfidenceDistribution');
+    $routes->get('Investments/getForecastAccuracySummary', 'InvestmentsAPIController::getForecastAccuracySummary');
 
     $routes->group('AI', function($routes) {
-        $routes->post('Chat', 'AIController::postChat');
-        $routes->get('Notes', 'AIController::listNotes');
-        $routes->post('LinkSettings', 'AIController::updateLinkSettings');
+        $routes->post('Chat', 'AIAPIController::postChat');
+        $routes->get('Notes', 'AIAPIController::listNotes');
+        $routes->post('LinkSettings', 'AIAPIController::updateLinkSettings');
     });
     $routes->group('Mdit', ['filter' => 'authcheck'], static function($routes) {
-        $routes->post('kyc/start', 'MditInvestorController::startKyc');
-        $routes->get('kyc/status', 'MditInvestorController::kycStatus');
-        $routes->post('accreditation/attest', 'MditInvestorController::attestAccreditation');
-        $routes->get('portfolio/summary', 'MditInvestorController::portfolioSummary');
+        $routes->post('kyc/start', 'MditInvestorAPIController::startKyc');
+        $routes->get('kyc/status', 'MditInvestorAPIController::kycStatus');
+        $routes->post('accreditation/attest', 'MditInvestorAPIController::attestAccreditation');
+        $routes->get('portfolio/summary', 'MditInvestorAPIController::portfolioSummary');
 
-        $routes->post('deposits/initiate', 'MditDepositController::initiate');
-        $routes->post('deposits/confirm', 'MditDepositController::confirm');
-        $routes->post('issuance/mint', 'MditIssuanceController::mint', ['filter' => 'permission:mdit.admin']);
-        $routes->post('redemptions/request', 'MditRedemptionController::requestRedemption');
+        $routes->post('deposits/initiate', 'MditDepositAPIController::initiate');
+        $routes->post('deposits/confirm', 'MditDepositAPIController::confirm');
+        $routes->post('issuance/mint', 'MditIssuanceAPIController::mint', ['filter' => 'permission:mdit.admin']);
+        $routes->post('redemptions/request', 'MditRedemptionAPIController::requestRedemption');
 
         $routes->group('admin', ['filter' => 'permission:mdit.admin'], static function($routes) {
-            $routes->get('redemptions/pending', 'MditAdminController::pendingRedemptions');
-            $routes->post('redemptions/approve', 'MditAdminController::approveRedemption');
-            $routes->get('deposits/pending', 'MditAdminController::pendingDeposits');
-            $routes->post('nav/compute_today', 'MditAdminController::computeNavToday');
+            $routes->get('redemptions/pending', 'MditAdminAPIController::pendingRedemptions');
+            $routes->post('redemptions/approve', 'MditAdminAPIController::approveRedemption');
+            $routes->get('deposits/pending', 'MditAdminAPIController::pendingDeposits');
+            $routes->post('nav/compute_today', 'MditAdminAPIController::computeNavToday');
         });
     });
     $routes->post('Mdit/webhooks/onramp', 'MditWebhookController::onramp');
@@ -298,73 +298,73 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->post('Chat/tool', 'ChatController::tool');
 
     $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers', 'filter' => 'cronKey'], function($routes) {
-        $routes->match(['GET', 'POST'], 'Run-CRON-Tasks', 'ManagementController::Run_CRON_Tasks');
-        $routes->cli('Run-CRON-Tasks', 'ManagementController::runCRONTasks');
-        $routes->match(['GET', 'POST'], 'ajaxGetActiveUsers', 'ManagementController::ajaxGetActiveUsers');
-        $routes->match(['GET', 'POST'], 'ajaxGetInactiveUsers', 'ManagementController::ajaxGetInactiveUsers');
-        $routes->get('banUnverifiedUsers', 'ManagementController::banUnverifiedUsers');
-        $routes->match(['GET', 'POST'], 'checkForSpamUsers', 'ManagementController::checkForSpamUsers');
-        $routes->get('distributeTodaysNewsContent', 'ManagementController::distributeTodaysNewsContent');
-        $routes->get('exportWeeklyWatchlistCSV', 'ManagementController::exportWeeklyWatchlistCSV');
-        $routes->get('exportPostJson/(:num)', 'ManagementController::exportPostJson/$1');
-        $routes->get('fetchAlphaVantageNewsForTradeAlerts', 'ManagementController::fetchAlphaVantageNewsForTradeAlerts');
-        $routes->get('fetchEmailsToTempScraper', 'ManagementController::fetchEmailsToTempScraper');
-        $routes->get('fetchLatestSummaries', 'ManagementController::fetchLatestSummaries');
-        $routes->get('fetchNewsEmails', 'ManagementController::fetchNewsEmails');
-        $routes->get('generatePostsFromSummary/(:num)', 'ManagementController::generatePostsFromSummary/$1');
-        $routes->get('generatePostsFromSummary', 'ManagementController::generatePostsFromSummary');
-        $routes->get('generateCoffeeAndStocksNewsletter', 'ManagementController::generateCoffeeAndStocksNewsletter');
-        $routes->get('fetchCoffeeAndStocksNewsletter', 'ManagementController::fetchCoffeeAndStocksNewsletter');
-        $routes->get('generateWeeklyStreamData', 'ManagementController::generateWeeklyStreamData');
-        $routes->post('saveCoffeeAndStocksNewsletter', 'ManagementController::saveCoffeeAndStocksNewsletter');
-        $routes->get('generateVoiceScriptManually', 'ManagementController::generateVoiceScriptManually');
-        $routes->get('runBackfillAlertsEmails', 'ManagementController::runBackfillAlertsEmails');
-        $routes->get('runBackfillMarketingEmails', 'ManagementController::runBackfillMarketingEmails');
-        $routes->get('getUsers', 'ManagementController::getUsers');
-        $routes->get('getAlerts', 'ManagementController::getAlerts');
-        $routes->get('getReferrals', 'ManagementController::getReferrals');
-        $routes->get('getAssets', 'ManagementController::getAssets');
-        $routes->get('getNews', 'ManagementController::getNews');
-        $routes->get('getSupport', 'ManagementController::getSupport');
-        $routes->get('processAllTradeAlerts', 'ManagementController::processAllTradeAlerts');
-        $routes->get('runCronManually', 'ManagementController::runCronManually');
-        $routes->get('runDailyAlphaVantageDataPipeline', 'ManagementController::runDailyAlphaVantageDataPipeline');
-        $routes->get('scrapeAndGenerateTodaysStoryFromInbox', 'ManagementController::scrapeAndGenerateTodaysStoryFromInbox');
-        $routes->get('sendAllDiscordAlerts', 'ManagementController::sendAllDiscordAlerts');
-        $routes->get('sendToZapierManually', 'ManagementController::sendToZapierManually');
-        $routes->match(['GET', 'POST'], 'generateTodaysStory', 'ManagementController::generateTodaysStory');
-        $routes->get('sharePost/(:num)/(:segment)', 'ManagementController::sharePost/$1/$2');
-        $routes->get('triggerPostAutogenOnEmpty', 'ManagementController::triggerPostAutogenOnEmpty');
-        $routes->get('updateMarketDataForAlerts', 'ManagementController::updateMarketDataForAlerts');
-        $routes->match(['GET', 'POST'], 'processQueuedEmails', 'ManagementController::processQueuedEmails');
-        $routes->match(['GET', 'POST'], 'processTempEmailsToScraper', 'ManagementController::processTempEmailsToScraper');
-        $routes->match(['GET', 'POST'], 'resendActivationEmailsBatch', 'ManagementController::resendActivationEmailsBatch');
-        $routes->match(['GET', 'POST'], 'resendActivationEmailsBatchQueued', 'ManagementController::resendActivationEmailsBatchQueued');
-        $routes->match(['GET', 'POST'], 'sendTestActivationEmail', 'ManagementController::sendTestActivationEmail');
-        $routes->match(['GET', 'POST'], 'saveSuggestion', 'ManagementController::saveSuggestion');
+        $routes->match(['GET', 'POST'], 'Run-CRON-Tasks', 'ManagementAPIController::Run_CRON_Tasks');
+        $routes->cli('Run-CRON-Tasks', 'ManagementAPIController::runCRONTasks');
+        $routes->match(['GET', 'POST'], 'ajaxGetActiveUsers', 'ManagementAPIController::ajaxGetActiveUsers');
+        $routes->match(['GET', 'POST'], 'ajaxGetInactiveUsers', 'ManagementAPIController::ajaxGetInactiveUsers');
+        $routes->get('banUnverifiedUsers', 'ManagementAPIController::banUnverifiedUsers');
+        $routes->match(['GET', 'POST'], 'checkForSpamUsers', 'ManagementAPIController::checkForSpamUsers');
+        $routes->get('distributeTodaysNewsContent', 'ManagementAPIController::distributeTodaysNewsContent');
+        $routes->get('exportWeeklyWatchlistCSV', 'ManagementAPIController::exportWeeklyWatchlistCSV');
+        $routes->get('exportPostJson/(:num)', 'ManagementAPIController::exportPostJson/$1');
+        $routes->get('fetchAlphaVantageNewsForTradeAlerts', 'ManagementAPIController::fetchAlphaVantageNewsForTradeAlerts');
+        $routes->get('fetchEmailsToTempScraper', 'ManagementAPIController::fetchEmailsToTempScraper');
+        $routes->get('fetchLatestSummaries', 'ManagementAPIController::fetchLatestSummaries');
+        $routes->get('fetchNewsEmails', 'ManagementAPIController::fetchNewsEmails');
+        $routes->get('generatePostsFromSummary/(:num)', 'ManagementAPIController::generatePostsFromSummary/$1');
+        $routes->get('generatePostsFromSummary', 'ManagementAPIController::generatePostsFromSummary');
+        $routes->get('generateCoffeeAndStocksNewsletter', 'ManagementAPIController::generateCoffeeAndStocksNewsletter');
+        $routes->get('fetchCoffeeAndStocksNewsletter', 'ManagementAPIController::fetchCoffeeAndStocksNewsletter');
+        $routes->get('generateWeeklyStreamData', 'ManagementAPIController::generateWeeklyStreamData');
+        $routes->post('saveCoffeeAndStocksNewsletter', 'ManagementAPIController::saveCoffeeAndStocksNewsletter');
+        $routes->get('generateVoiceScriptManually', 'ManagementAPIController::generateVoiceScriptManually');
+        $routes->get('runBackfillAlertsEmails', 'ManagementAPIController::runBackfillAlertsEmails');
+        $routes->get('runBackfillMarketingEmails', 'ManagementAPIController::runBackfillMarketingEmails');
+        $routes->get('getUsers', 'ManagementAPIController::getUsers');
+        $routes->get('getAlerts', 'ManagementAPIController::getAlerts');
+        $routes->get('getReferrals', 'ManagementAPIController::getReferrals');
+        $routes->get('getAssets', 'ManagementAPIController::getAssets');
+        $routes->get('getNews', 'ManagementAPIController::getNews');
+        $routes->get('getSupport', 'ManagementAPIController::getSupport');
+        $routes->get('processAllTradeAlerts', 'ManagementAPIController::processAllTradeAlerts');
+        $routes->get('runCronManually', 'ManagementAPIController::runCronManually');
+        $routes->get('runDailyAlphaVantageDataPipeline', 'ManagementAPIController::runDailyAlphaVantageDataPipeline');
+        $routes->get('scrapeAndGenerateTodaysStoryFromInbox', 'ManagementAPIController::scrapeAndGenerateTodaysStoryFromInbox');
+        $routes->get('sendAllDiscordAlerts', 'ManagementAPIController::sendAllDiscordAlerts');
+        $routes->get('sendToZapierManually', 'ManagementAPIController::sendToZapierManually');
+        $routes->match(['GET', 'POST'], 'generateTodaysStory', 'ManagementAPIController::generateTodaysStory');
+        $routes->get('sharePost/(:num)/(:segment)', 'ManagementAPIController::sharePost/$1/$2');
+        $routes->get('triggerPostAutogenOnEmpty', 'ManagementAPIController::triggerPostAutogenOnEmpty');
+        $routes->get('updateMarketDataForAlerts', 'ManagementAPIController::updateMarketDataForAlerts');
+        $routes->match(['GET', 'POST'], 'processQueuedEmails', 'ManagementAPIController::processQueuedEmails');
+        $routes->match(['GET', 'POST'], 'processTempEmailsToScraper', 'ManagementAPIController::processTempEmailsToScraper');
+        $routes->match(['GET', 'POST'], 'resendActivationEmailsBatch', 'ManagementAPIController::resendActivationEmailsBatch');
+        $routes->match(['GET', 'POST'], 'resendActivationEmailsBatchQueued', 'ManagementAPIController::resendActivationEmailsBatchQueued');
+        $routes->match(['GET', 'POST'], 'sendTestActivationEmail', 'ManagementAPIController::sendTestActivationEmail');
+        $routes->match(['GET', 'POST'], 'saveSuggestion', 'ManagementAPIController::saveSuggestion');
 
         // Marketing-prefixed aliases kept for audit parity + backwards compatibility.
-        $routes->match(['GET', 'POST'], 'Marketing/cronAnalyzeContent', 'ManagementController::cronAnalyzeContent');
-        $routes->match(['GET', 'POST'], 'Marketing/cronFetchAndGenerateNews', 'ManagementController::cronFetchAndGenerateNews');
-        $routes->match(['GET', 'POST'], 'Marketing/generateContent', 'ManagementController::cronFetchAndGenerateNews');
-        $routes->match(['GET', 'POST'], 'Marketing/cronFetchInbox', 'ManagementController::cronFetchInbox');
-        $routes->match(['GET', 'POST'], 'Marketing/cronFetchMarketingEmails', 'ManagementController::cronFetchMarketingEmails');
-        $routes->match(['GET', 'POST'], 'Marketing/generateContentDigestFromStored', 'ManagementController::generateContentDigestFromStored');
-        $routes->match(['GET', 'POST'], 'Marketing/generateContentFromScraper', 'ManagementController::generateContentFromScraper');
-        $routes->match(['GET', 'POST'], 'Marketing/generateDailyContentDigest', 'ManagementController::generateDailyContentDigest');
-        $routes->match(['GET', 'POST'], 'Marketing/massResendActivationEmails', 'ManagementController::massResendActivationEmails');
-        $routes->get('getSocialPlatforms', 'MarketingController::getSocialPlatforms');
-        $routes->get('getSocialCommunities', 'MarketingController::getSocialCommunities');
-        $routes->match(['GET', 'POST'], 'saveSocialCommunity', 'MarketingController::saveSocialCommunity');
-        $routes->get('getPostTemplates', 'MarketingController::getPostTemplates');
-        $routes->match(['GET', 'POST'], 'savePostTemplate', 'MarketingController::savePostTemplate');
-        $routes->get('generatePlatformPosts/(:num)', 'MarketingController::generatePlatformPosts/$1');
-        $routes->get('generatePlatformPosts', 'MarketingController::generatePlatformPosts');
-        $routes->get('generateDailyCommunityPosts', 'MarketingController::generateDailyCommunityPosts');
-        $routes->get('exportGeneratedPostJson/(:num)', 'MarketingController::exportGeneratedPostJson/$1');
-        $routes->get('generateRevenueDocs', 'MarketingController::generateRevenueDocs');
-        $routes->get('cronGenerateDailyCommunityPosts', 'MarketingController::cronGenerateDailyCommunityPosts');
-        $routes->get('cronQueueDistribution', 'MarketingController::cronQueueDistribution');
+        $routes->match(['GET', 'POST'], 'Marketing/cronAnalyzeContent', 'ManagementAPIController::cronAnalyzeContent');
+        $routes->match(['GET', 'POST'], 'Marketing/cronFetchAndGenerateNews', 'ManagementAPIController::cronFetchAndGenerateNews');
+        $routes->match(['GET', 'POST'], 'Marketing/generateContent', 'ManagementAPIController::cronFetchAndGenerateNews');
+        $routes->match(['GET', 'POST'], 'Marketing/cronFetchInbox', 'ManagementAPIController::cronFetchInbox');
+        $routes->match(['GET', 'POST'], 'Marketing/cronFetchMarketingEmails', 'ManagementAPIController::cronFetchMarketingEmails');
+        $routes->match(['GET', 'POST'], 'Marketing/generateContentDigestFromStored', 'ManagementAPIController::generateContentDigestFromStored');
+        $routes->match(['GET', 'POST'], 'Marketing/generateContentFromScraper', 'ManagementAPIController::generateContentFromScraper');
+        $routes->match(['GET', 'POST'], 'Marketing/generateDailyContentDigest', 'ManagementAPIController::generateDailyContentDigest');
+        $routes->match(['GET', 'POST'], 'Marketing/massResendActivationEmails', 'ManagementAPIController::massResendActivationEmails');
+        $routes->get('getSocialPlatforms', 'MarketingAPIController::getSocialPlatforms');
+        $routes->get('getSocialCommunities', 'MarketingAPIController::getSocialCommunities');
+        $routes->match(['GET', 'POST'], 'saveSocialCommunity', 'MarketingAPIController::saveSocialCommunity');
+        $routes->get('getPostTemplates', 'MarketingAPIController::getPostTemplates');
+        $routes->match(['GET', 'POST'], 'savePostTemplate', 'MarketingAPIController::savePostTemplate');
+        $routes->get('generatePlatformPosts/(:num)', 'MarketingAPIController::generatePlatformPosts/$1');
+        $routes->get('generatePlatformPosts', 'MarketingAPIController::generatePlatformPosts');
+        $routes->get('generateDailyCommunityPosts', 'MarketingAPIController::generateDailyCommunityPosts');
+        $routes->get('exportGeneratedPostJson/(:num)', 'MarketingAPIController::exportGeneratedPostJson/$1');
+        $routes->get('generateRevenueDocs', 'MarketingAPIController::generateRevenueDocs');
+        $routes->get('cronGenerateDailyCommunityPosts', 'MarketingAPIController::cronGenerateDailyCommunityPosts');
+        $routes->get('cronQueueDistribution', 'MarketingAPIController::cronQueueDistribution');
 
         $routes->group('Advisor', static function($routes) {
             $routes->post('generateNow', [AdvisorController::class, 'generateNow']);
@@ -415,279 +415,279 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     // ✅ AlertsController
     // ------------------------
     $routes->group('Alerts', function($routes) {
-        $routes->get('ingestCsvSignals', 'AlertsController::ingestCsvSignals');
-        $routes->get('signals', 'AlertsController::getSignals');
-        $routes->get('signalFiles', 'AlertsController::getSignalFiles');
-        $routes->get('previewSignalFile/(:num)', 'AlertsController::previewSignalFile/$1');
-        $routes->get('recalcSignalScores', 'AlertsController::recalcSignalScores');
-        $routes->match(['GET', 'POST'], 'addTradeAlert', 'AlertsController::addTradeAlert');
-        $routes->match(['GET', 'POST'], 'backfillCategories', 'AlertsController::backfillCategories');
-        $routes->match(['GET', 'POST'], 'createTradeAlert/(:segment)', 'AlertsController::addTradeAlert');
-        $routes->match(['GET', 'POST'], 'createTradeAlert', 'AlertsController::addTradeAlert');
-        $routes->match(['GET', 'POST'], 'getFilteredAlerts', 'AlertsController::getFilteredAlerts');
-        $routes->match(['GET', 'POST'], 'fetchAutoGeneratedAnalysis', 'AlertsController::fetchAutoGeneratedAnalysis');
-        $routes->match(['GET', 'POST'], 'fetchEmailAlerts', 'AlertsController::fetchEmailAlerts');
-        // $routes->match(['GET', 'POST'], 'fetchMarketAuxNews/(:segment)', 'AlertsController::fetchMarketAuxNews/$1');
-        $routes->get('fetchMarketAuxNews/(:segment)', 'AlertsController::fetchMarketAuxNews/$1');
-        $routes->match(['GET', 'POST'], 'forceFetchEmails', 'AlertsController::forceFetchEmails');
-        $routes->match(['GET', 'POST'], 'forceFetchTickers', 'AlertsController::forceFetchTickers');
-        $routes->match(['GET', 'POST'], 'generateMarketingForAlert/(:num)', 'AlertsController::generateMarketingForAlert/$1');
-        $routes->post('Alerts/generateAdvisorMediaFromAlert/(:num)', 'AlertsController::generateAdvisorMediaFromAlert/$1');
-        $routes->post('Alerts/generateAdvisorMediaFromAlert', 'AlertsController::generateAdvisorMediaFromAlert');
-        $routes->match(['GET', 'POST'], 'generateNow', 'AlertsController::generateNow');
-        $routes->match(['GET', 'POST'], 'generateTradeAlertSummary', 'AlertsController::generateTradeAlertSummary');
-        $routes->match(['GET', 'POST'], 'getEmaComparison/(:segment)', 'AlertsController::getEmaComparison/$1');
-        $routes->get('generateAlertSocialCopy/(:num)', 'AlertsController::generateAlertSocialCopy/$1');
-        $routes->match(['GET', 'POST'], 'getFullMetrics', 'AlertsController::getFullMetrics');
-        $routes->match(['GET', 'POST'], 'getLatestPrices', 'AlertsController::getLatestPrices');
-        $routes->match(['GET', 'POST'], 'getTechnicalIndicators', 'AlertsController::getTechnicalIndicators');
-        $routes->match(['GET', 'POST'], 'hideTradeAlert', 'AlertsController::hideTradeAlert');
-        $routes->match(['GET', 'POST'], 'manageTradeAlert', 'AlertsController::manageTradeAlert');
-        $routes->match(['GET', 'POST'], 'markAlertAsSentAndSendEmail/(:segment)', 'AlertsController::markAlertAsSentAndSendEmail/$1');
-        $routes->match(['GET', 'POST'], 'processAlerts', 'AlertsController::processAlerts');
-        $routes->match(['GET', 'POST'], 'processEmailAlerts', 'AlertsController::processEmailAlerts');
-        $routes->match(['GET', 'POST'], 'processTradeAlerts', 'AlertsController::processTradeAlerts');
-        $routes->match(['GET', 'POST'], 'processTradeBatch', 'AlertsController::processTradeBatch');
-        $routes->match(['GET', 'POST'], 'sendAlert', 'AlertsController::sendAlert');
-        $routes->match(['GET', 'POST'], 'sendDiscordAlerts', 'AlertsController::sendDiscordAlerts');
-        $routes->match(['GET', 'POST'], 'sendDiscordAlertsBySymbol/(:segment)', 'AlertsController::sendDiscordAlertsBySymbol/$1');
-        $routes->match(['GET', 'POST'], 'storeMarketingContent', 'AlertsController::storeMarketingContent');
-        $routes->match(['GET', 'POST'], 'updateBatchPrices', 'AlertsController::updateBatchPrices');
-        $routes->match(['GET', 'POST'], 'updateChartOverride', 'AlertsController::updateChartOverride');
-        $routes->match(['GET', 'POST'], 'updateExchange', 'AlertsController::updateExchange');
-        $routes->match(['GET', 'POST'], 'updateStatus/(:num)/(:any)', 'AlertsController::updateStatus/$1/$2');
-        $routes->match(['GET', 'POST'], 'updateTradeAlerts', 'AlertsController::updateTradeAlerts');
+        $routes->get('ingestCsvSignals', 'AlertsAPIController::ingestCsvSignals');
+        $routes->get('signals', 'AlertsAPIController::getSignals');
+        $routes->get('signalFiles', 'AlertsAPIController::getSignalFiles');
+        $routes->get('previewSignalFile/(:num)', 'AlertsAPIController::previewSignalFile/$1');
+        $routes->get('recalcSignalScores', 'AlertsAPIController::recalcSignalScores');
+        $routes->match(['GET', 'POST'], 'addTradeAlert', 'AlertsAPIController::addTradeAlert');
+        $routes->match(['GET', 'POST'], 'backfillCategories', 'AlertsAPIController::backfillCategories');
+        $routes->match(['GET', 'POST'], 'createTradeAlert/(:segment)', 'AlertsAPIController::addTradeAlert');
+        $routes->match(['GET', 'POST'], 'createTradeAlert', 'AlertsAPIController::addTradeAlert');
+        $routes->match(['GET', 'POST'], 'getFilteredAlerts', 'AlertsAPIController::getFilteredAlerts');
+        $routes->match(['GET', 'POST'], 'fetchAutoGeneratedAnalysis', 'AlertsAPIController::fetchAutoGeneratedAnalysis');
+        $routes->match(['GET', 'POST'], 'fetchEmailAlerts', 'AlertsAPIController::fetchEmailAlerts');
+        // $routes->match(['GET', 'POST'], 'fetchMarketAuxNews/(:segment)', 'AlertsAPIController::fetchMarketAuxNews/$1');
+        $routes->get('fetchMarketAuxNews/(:segment)', 'AlertsAPIController::fetchMarketAuxNews/$1');
+        $routes->match(['GET', 'POST'], 'forceFetchEmails', 'AlertsAPIController::forceFetchEmails');
+        $routes->match(['GET', 'POST'], 'forceFetchTickers', 'AlertsAPIController::forceFetchTickers');
+        $routes->match(['GET', 'POST'], 'generateMarketingForAlert/(:num)', 'AlertsAPIController::generateMarketingForAlert/$1');
+        $routes->post('Alerts/generateAdvisorMediaFromAlert/(:num)', 'AlertsAPIController::generateAdvisorMediaFromAlert/$1');
+        $routes->post('Alerts/generateAdvisorMediaFromAlert', 'AlertsAPIController::generateAdvisorMediaFromAlert');
+        $routes->match(['GET', 'POST'], 'generateNow', 'AlertsAPIController::generateNow');
+        $routes->match(['GET', 'POST'], 'generateTradeAlertSummary', 'AlertsAPIController::generateTradeAlertSummary');
+        $routes->match(['GET', 'POST'], 'getEmaComparison/(:segment)', 'AlertsAPIController::getEmaComparison/$1');
+        $routes->get('generateAlertSocialCopy/(:num)', 'AlertsAPIController::generateAlertSocialCopy/$1');
+        $routes->match(['GET', 'POST'], 'getFullMetrics', 'AlertsAPIController::getFullMetrics');
+        $routes->match(['GET', 'POST'], 'getLatestPrices', 'AlertsAPIController::getLatestPrices');
+        $routes->match(['GET', 'POST'], 'getTechnicalIndicators', 'AlertsAPIController::getTechnicalIndicators');
+        $routes->match(['GET', 'POST'], 'hideTradeAlert', 'AlertsAPIController::hideTradeAlert');
+        $routes->match(['GET', 'POST'], 'manageTradeAlert', 'AlertsAPIController::manageTradeAlert');
+        $routes->match(['GET', 'POST'], 'markAlertAsSentAndSendEmail/(:segment)', 'AlertsAPIController::markAlertAsSentAndSendEmail/$1');
+        $routes->match(['GET', 'POST'], 'processAlerts', 'AlertsAPIController::processAlerts');
+        $routes->match(['GET', 'POST'], 'processEmailAlerts', 'AlertsAPIController::processEmailAlerts');
+        $routes->match(['GET', 'POST'], 'processTradeAlerts', 'AlertsAPIController::processTradeAlerts');
+        $routes->match(['GET', 'POST'], 'processTradeBatch', 'AlertsAPIController::processTradeBatch');
+        $routes->match(['GET', 'POST'], 'sendAlert', 'AlertsAPIController::sendAlert');
+        $routes->match(['GET', 'POST'], 'sendDiscordAlerts', 'AlertsAPIController::sendDiscordAlerts');
+        $routes->match(['GET', 'POST'], 'sendDiscordAlertsBySymbol/(:segment)', 'AlertsAPIController::sendDiscordAlertsBySymbol/$1');
+        $routes->match(['GET', 'POST'], 'storeMarketingContent', 'AlertsAPIController::storeMarketingContent');
+        $routes->match(['GET', 'POST'], 'updateBatchPrices', 'AlertsAPIController::updateBatchPrices');
+        $routes->match(['GET', 'POST'], 'updateChartOverride', 'AlertsAPIController::updateChartOverride');
+        $routes->match(['GET', 'POST'], 'updateExchange', 'AlertsAPIController::updateExchange');
+        $routes->match(['GET', 'POST'], 'updateStatus/(:num)/(:any)', 'AlertsAPIController::updateStatus/$1/$2');
+        $routes->match(['GET', 'POST'], 'updateTradeAlerts', 'AlertsAPIController::updateTradeAlerts');
 
         // Trade Alert Creation & Management
-        $routes->match(['GET', 'POST'], 'submitTradeAlert', 'AlertsController::submitTradeAlert');
-        $routes->match(['GET', 'POST'], 'getTradeAlertDetails', 'AlertsController::getTradeAlertDetails');
+        $routes->match(['GET', 'POST'], 'submitTradeAlert', 'AlertsAPIController::submitTradeAlert');
+        $routes->match(['GET', 'POST'], 'getTradeAlertDetails', 'AlertsAPIController::getTradeAlertDetails');
     
         // Voiceover and Marketing Content
-        $routes->match(['GET', 'POST'], 'generateVoiceoverScript', 'AlertsController::generateVoiceoverScript');
-        $routes->match(['GET', 'POST'], 'generateVoiceoverAndMarketingContent', 'AlertsController::generateVoiceoverAndMarketingContent');
-        $routes->match(['GET', 'POST'], 'generateAndStoreVoiceover', 'AlertsController::generateAndStoreVoiceover');
+        $routes->match(['GET', 'POST'], 'generateVoiceoverScript', 'AlertsAPIController::generateVoiceoverScript');
+        $routes->match(['GET', 'POST'], 'generateVoiceoverAndMarketingContent', 'AlertsAPIController::generateVoiceoverAndMarketingContent');
+        $routes->match(['GET', 'POST'], 'generateAndStoreVoiceover', 'AlertsAPIController::generateAndStoreVoiceover');
         
         // Social Media & Marketing
-        $routes->match(['GET', 'POST'], 'generateSocialMediaPosts', 'AlertsController::generateSocialMediaPosts');
-        $routes->match(['GET', 'POST'], 'postMarketingContentToSocials', 'AlertsController::postMarketingContentToSocials');
+        $routes->match(['GET', 'POST'], 'generateSocialMediaPosts', 'AlertsAPIController::generateSocialMediaPosts');
+        $routes->match(['GET', 'POST'], 'postMarketingContentToSocials', 'AlertsAPIController::postMarketingContentToSocials');
 
-        $routes->match(['GET', 'POST'], 'gen-keys', 'AlertsController::genKeys'); // Robinhood API Library :: generate keys
-        $routes->match(['GET', 'POST'], 'sign', 'AlertsController::sign'); // Robinhood API Library :: sign
+        $routes->match(['GET', 'POST'], 'gen-keys', 'AlertsAPIController::genKeys'); // Robinhood API Library :: generate keys
+        $routes->match(['GET', 'POST'], 'sign', 'AlertsAPIController::sign'); // Robinhood API Library :: sign
     });
 
     // ------------------------
     // ✅ AuctionsController
     // ------------------------
     $routes->group('Auctions', static function($routes) {
-        $routes->post('fmv', 'AuctionsController::computeFMV');
-        $routes->post('settle/(:num)', 'AuctionsController::settle/$1');
-        $routes->post('escrow/release/(:num)', 'AuctionsController::releaseEscrow/$1');
-        $routes->post('escrow/refund/(:num)', 'AuctionsController::refundEscrow/$1');
-        $routes->post('topup', 'AuctionsController::topUp');
+        $routes->post('fmv', 'AuctionsAPIController::computeFMV');
+        $routes->post('settle/(:num)', 'AuctionsAPIController::settle/$1');
+        $routes->post('escrow/release/(:num)', 'AuctionsAPIController::releaseEscrow/$1');
+        $routes->post('escrow/refund/(:num)', 'AuctionsAPIController::refundEscrow/$1');
+        $routes->post('topup', 'AuctionsAPIController::topUp');
     });
     
     // ------------------------
     // ✅ BrokerController
     // ------------------------
     $routes->group('Broker', function($routes) {
-        $routes->get('summary', 'BrokerController::summary');
-        $routes->get('credit', 'BrokerController::credit');
-        $routes->get('available', 'BrokerController::available');
-        $routes->get('repayment', 'BrokerController::repayment');
-        $routes->get('categories', 'BrokerController::categories');
-        $routes->get('transactions', 'BrokerController::transactions');
-        $routes->get('goals', 'BrokerController::goals');
-        $routes->get('insights', 'BrokerController::insights');
+        $routes->get('summary', 'BrokerAPIController::summary');
+        $routes->get('credit', 'BrokerAPIController::credit');
+        $routes->get('available', 'BrokerAPIController::available');
+        $routes->get('repayment', 'BrokerAPIController::repayment');
+        $routes->get('categories', 'BrokerAPIController::categories');
+        $routes->get('transactions', 'BrokerAPIController::transactions');
+        $routes->get('goals', 'BrokerAPIController::goals');
+        $routes->get('insights', 'BrokerAPIController::insights');
         $routes->get('trends', 'BudgetController::trends');
         $routes->get('net-worth', 'BudgetController::netWorth');
         $routes->get('cash-flow', 'BudgetController::cashFlow');
         $routes->get('budgets', 'BudgetController::budgets');
-        $routes->get('savings-goals', 'BrokerController::savingsGoals');
-        $routes->get('investment-accounts', 'BrokerController::investmentAccounts');
-        $routes->get('linked-accounts', 'BrokerController::linkedAccounts');
-        $routes->get('add-linked-account', 'BrokerController::addLinkedAccount');
-        $routes->get('remove-linked-account/(:segment)', 'BrokerController::removeLinkedAccount/$1');
-        $routes->get('refresh-linked-account/(:segment)', 'BrokerController::refreshLinkedAccount/$1');
+        $routes->get('savings-goals', 'BrokerAPIController::savingsGoals');
+        $routes->get('investment-accounts', 'BrokerAPIController::investmentAccounts');
+        $routes->get('linked-accounts', 'BrokerAPIController::linkedAccounts');
+        $routes->get('add-linked-account', 'BrokerAPIController::addLinkedAccount');
+        $routes->get('remove-linked-account/(:segment)', 'BrokerAPIController::removeLinkedAccount/$1');
+        $routes->get('refresh-linked-account/(:segment)', 'BrokerAPIController::refreshLinkedAccount/$1');
 
-        $routes->get('fetchPlaidLinkToken/(:segment)', 'BrokerController::fetchPlaidLinkToken/$1');
-        $routes->get('fetchPlaidLinkToken', 'BrokerController::fetchPlaidLinkToken');
-        $routes->post('linkPlaidAccount', 'BrokerController::linkPlaidAccount');
-        $routes->get('unlinkPlaidAccount/(:segment)', 'BrokerController::unlinkPlaidAccount/$1');
-        $routes->get('refreshPlaidAccount/(:segment)', 'BrokerController::refreshPlaidAccount/$1');
-        $routes->get('fetchPlaidAccounts/(:segment)', 'BrokerController::fetchPlaidAccounts/$1');
-        $routes->get('fetchPlaidAccounts', 'BrokerController::fetchPlaidAccounts');
-        $routes->get('fetchPlaidTransactions/(:segment)', 'BrokerController::fetchPlaidTransactions/$1');
-        $routes->get('fetchPlaidTransactions', 'BrokerController::fetchPlaidTransactions');
-        $routes->get('fetchPlaidBalances/(:segment)', 'BrokerController::fetchPlaidBalances/$1');
-        $routes->get('fetchPlaidBalances', 'BrokerController::fetchPlaidBalances');
-        $routes->get('fetchPlaidIncome/(:segment)', 'BrokerController::fetchPlaidIncome/$1');
-        $routes->get('fetchPlaidIncome', 'BrokerController::fetchPlaidIncome');
-        $routes->get('fetchPlaidLiabilities/(:segment)', 'BrokerController::fetchPlaidLiabilities/$1');
-        $routes->get('fetchPlaidLiabilities', 'BrokerController::fetchPlaidLiabilities');
-        $routes->get('fetchPlaidIdentity/(:segment)', 'BrokerController::fetchPlaidIdentity/$1');
-        $routes->get('fetchPlaidIdentity', 'BrokerController::fetchPlaidIdentity');
-        $routes->get('fetchPlaidInvestments/(:segment)', 'BrokerController::fetchPlaidInvestments/$1');
-        $routes->get('fetchPlaidInvestments', 'BrokerController::fetchPlaidInvestments');
-        $routes->get('fetchPlaidHoldings/(:segment)', 'BrokerController::fetchPlaidHoldings/$1');
-        $routes->get('fetchPlaidHoldings', 'BrokerController::fetchPlaidHoldings');
-        $routes->get('fetchRobinhoodAccounts', 'BudgetController::fetchRobinhoodAccounts');
-        $routes->get('fetchRobinhoodAccountDetails/(:segment)', 'BudgetController::fetchRobinhoodAccountDetails/$1');
-        $routes->get('fetchRobinhoodPositions/(:segment)', 'BudgetController::fetchRobinhoodPositions/$1');
-        $routes->get('fetchRobinhoodPositions', 'BudgetController::fetchRobinhoodPositions');
-        $routes->get('fetchRobinhoodPortfolio/(:segment)', 'BudgetController::fetchRobinhoodPortfolio/$1');
-        $routes->get('fetchRobinhoodPortfolio', 'BudgetController::fetchRobinhoodPortfolio');
-        $routes->get('fetchRobinhoodWatchlists/(:segment)', 'BudgetController::fetchRobinhoodWatchlists/$1');
-        $routes->get('fetchRobinhoodWatchlists', 'BudgetController::fetchRobinhoodWatchlists');
-        $routes->get('fetchRobinhoodOrders/(:segment)', 'BudgetController::fetchRobinhoodOrders/$1');
-        $routes->get('fetchRobinhoodOrders', 'BudgetController::fetchRobinhoodOrders');
-        $routes->get('fetchRobinhoodOrderDetails/(:segment)', 'BudgetController::fetchRobinhoodOrderDetails/$1');
-        $routes->get('fetchRobinhoodOrderDetails', 'BudgetController::fetchRobinhoodOrderDetails');
-        $routes->get('fetchRobinhoodInstruments/(:segment)', 'BudgetController::fetchRobinhoodInstruments/$1');
-        $routes->get('fetchRobinhoodInstruments', 'BudgetController::fetchRobinhoodInstruments');
-        $routes->get('fetchRobinhoodQuotes/(:segment)', 'BudgetController::fetchRobinhoodQuotes/$1');
-        $routes->get('fetchRobinhoodQuotes', 'BudgetController::fetchRobinhoodQuotes');
-        $routes->get('fetchRobinhoodDividends/(:segment)', 'BudgetController::fetchRobinhoodDividends/$1');
-        $routes->get('fetchRobinhoodDividends', 'BudgetController::fetchRobinhoodDividends');
-        $routes->get('fetchRobinhoodTransfers/(:segment)', 'BudgetController::fetchRobinhoodTransfers/$1');
-        $routes->get('fetchRobinhoodTransfers', 'BudgetController::fetchRobinhoodTransfers');
-        $routes->get('fetchRobinhoodWatchlistItems/(:segment)', 'BudgetController::fetchRobinhoodWatchlistItems/$1');
-        $routes->get('fetchRobinhoodWatchlistItems', 'BudgetController::fetchRobinhoodWatchlistItems');
-        $routes->get('fetchRobinhoodTransactionHistory/(:segment)', 'BudgetController::fetchRobinhoodTransactionHistory/$1');
-        $routes->get('fetchRobinhoodTransactionHistory', 'BudgetController::fetchRobinhoodTransactionHistory');
-        $routes->get('fetchRobinhoodNotifications/(:segment)', 'BudgetController::fetchRobinhoodNotifications/$1');
-        $routes->get('fetchRobinhoodNotifications', 'BudgetController::fetchRobinhoodNotifications');
-        $routes->get('fetchRobinhoodACHRelationships/(:segment)', 'BudgetController::fetchRobinhoodACHRelationships/$1');
-        $routes->get('fetchRobinhoodACHRelationships', 'BudgetController::fetchRobinhoodACHRelationships');
-        $routes->get('fetchRobinhoodCryptoAccounts/(:segment)', 'BudgetController::fetchRobinhoodCryptoAccounts/$1');
-        $routes->get('fetchRobinhoodCryptoAccounts', 'BudgetController::fetchRobinhoodCryptoAccounts');
-        $routes->get('fetchRobinhoodCryptoPositions/(:segment)', 'BudgetController::fetchRobinhoodCryptoPositions/$1');
-        $routes->get('fetchRobinhoodCryptoPositions', 'BudgetController::fetchRobinhoodCryptoPositions');
-        $routes->get('fetchRobinhoodCryptoPortfolio/(:segment)', 'BudgetController::fetchRobinhoodCryptoPortfolio/$1');
-        $routes->get('fetchRobinhoodCryptoPortfolio', 'BudgetController::fetchRobinhoodCryptoPortfolio');
-        $routes->get('fetchRobinhoodCryptoOrders/(:segment)', 'BudgetController::fetchRobinhoodCryptoOrders/$1');
-        $routes->get('fetchRobinhoodCryptoOrders', 'BudgetController::fetchRobinhoodCryptoOrders');
-        $routes->get('fetchRobinhoodCryptoOrderDetails/(:segment)', 'BudgetController::fetchRobinhoodCryptoOrderDetails/$1');
-        $routes->get('fetchRobinhoodCryptoOrderDetails', 'BudgetController::fetchRobinhoodCryptoOrderDetails');
-        $routes->get('fetchRobinhoodCryptoTransactions/(:segment)', 'BudgetController::fetchRobinhoodCryptoTransactions/$1');
-        $routes->get('fetchRobinhoodCryptoTransactions', 'BudgetController::fetchRobinhoodCryptoTransactions');
-        $routes->get('fetchRobinhoodCryptoQuotes/(:segment)', 'BudgetController::fetchRobinhoodCryptoQuotes/$1');
-        $routes->get('fetchRobinhoodCryptoQuotes', 'BudgetController::fetchRobinhoodCryptoQuotes');
+        $routes->get('fetchPlaidLinkToken/(:segment)', 'BrokerAPIController::fetchPlaidLinkToken/$1');
+        $routes->get('fetchPlaidLinkToken', 'BrokerAPIController::fetchPlaidLinkToken');
+        $routes->post('linkPlaidAccount', 'BrokerAPIController::linkPlaidAccount');
+        $routes->get('unlinkPlaidAccount/(:segment)', 'BrokerAPIController::unlinkPlaidAccount/$1');
+        $routes->get('refreshPlaidAccount/(:segment)', 'BrokerAPIController::refreshPlaidAccount/$1');
+        $routes->get('fetchPlaidAccounts/(:segment)', 'BrokerAPIController::fetchPlaidAccounts/$1');
+        $routes->get('fetchPlaidAccounts', 'BrokerAPIController::fetchPlaidAccounts');
+        $routes->get('fetchPlaidTransactions/(:segment)', 'BrokerAPIController::fetchPlaidTransactions/$1');
+        $routes->get('fetchPlaidTransactions', 'BrokerAPIController::fetchPlaidTransactions');
+        $routes->get('fetchPlaidBalances/(:segment)', 'BrokerAPIController::fetchPlaidBalances/$1');
+        $routes->get('fetchPlaidBalances', 'BrokerAPIController::fetchPlaidBalances');
+        $routes->get('fetchPlaidIncome/(:segment)', 'BrokerAPIController::fetchPlaidIncome/$1');
+        $routes->get('fetchPlaidIncome', 'BrokerAPIController::fetchPlaidIncome');
+        $routes->get('fetchPlaidLiabilities/(:segment)', 'BrokerAPIController::fetchPlaidLiabilities/$1');
+        $routes->get('fetchPlaidLiabilities', 'BrokerAPIController::fetchPlaidLiabilities');
+        $routes->get('fetchPlaidIdentity/(:segment)', 'BrokerAPIController::fetchPlaidIdentity/$1');
+        $routes->get('fetchPlaidIdentity', 'BrokerAPIController::fetchPlaidIdentity');
+        $routes->get('fetchPlaidInvestments/(:segment)', 'BrokerAPIController::fetchPlaidInvestments/$1');
+        $routes->get('fetchPlaidInvestments', 'BrokerAPIController::fetchPlaidInvestments');
+        $routes->get('fetchPlaidHoldings/(:segment)', 'BrokerAPIController::fetchPlaidHoldings/$1');
+        $routes->get('fetchPlaidHoldings', 'BrokerAPIController::fetchPlaidHoldings');
+        $routes->get('fetchRobinhoodAccounts', 'BrokerAPIController::fetchRobinhoodAccounts');
+        $routes->get('fetchRobinhoodAccountDetails/(:segment)', 'BrokerAPIController::fetchRobinhoodAccountDetails/$1');
+        $routes->get('fetchRobinhoodPositions/(:segment)', 'BrokerAPIController::fetchRobinhoodPositions/$1');
+        $routes->get('fetchRobinhoodPositions', 'BrokerAPIController::fetchRobinhoodPositions');
+        $routes->get('fetchRobinhoodPortfolio/(:segment)', 'BrokerAPIController::fetchRobinhoodPortfolio/$1');
+        $routes->get('fetchRobinhoodPortfolio', 'BrokerAPIController::fetchRobinhoodPortfolio');
+        $routes->get('fetchRobinhoodWatchlists/(:segment)', 'BrokerAPIController::fetchRobinhoodWatchlists/$1');
+        $routes->get('fetchRobinhoodWatchlists', 'BrokerAPIController::fetchRobinhoodWatchlists');
+        $routes->get('fetchRobinhoodOrders/(:segment)', 'BrokerAPIController::fetchRobinhoodOrders/$1');
+        $routes->get('fetchRobinhoodOrders', 'BrokerAPIController::fetchRobinhoodOrders');
+        $routes->get('fetchRobinhoodOrderDetails/(:segment)', 'BrokerAPIController::fetchRobinhoodOrderDetails/$1');
+        $routes->get('fetchRobinhoodOrderDetails', 'BrokerAPIController::fetchRobinhoodOrderDetails');
+        $routes->get('fetchRobinhoodInstruments/(:segment)', 'BrokerAPIController::fetchRobinhoodInstruments/$1');
+        $routes->get('fetchRobinhoodInstruments', 'BrokerAPIController::fetchRobinhoodInstruments');
+        $routes->get('fetchRobinhoodQuotes/(:segment)', 'BrokerAPIController::fetchRobinhoodQuotes/$1');
+        $routes->get('fetchRobinhoodQuotes', 'BrokerAPIController::fetchRobinhoodQuotes');
+        $routes->get('fetchRobinhoodDividends/(:segment)', 'BrokerAPIController::fetchRobinhoodDividends/$1');
+        $routes->get('fetchRobinhoodDividends', 'BrokerAPIController::fetchRobinhoodDividends');
+        $routes->get('fetchRobinhoodTransfers/(:segment)', 'BrokerAPIController::fetchRobinhoodTransfers/$1');
+        $routes->get('fetchRobinhoodTransfers', 'BrokerAPIController::fetchRobinhoodTransfers');
+        $routes->get('fetchRobinhoodWatchlistItems/(:segment)', 'BrokerAPIController::fetchRobinhoodWatchlistItems/$1');
+        $routes->get('fetchRobinhoodWatchlistItems', 'BrokerAPIController::fetchRobinhoodWatchlistItems');
+        $routes->get('fetchRobinhoodTransactionHistory/(:segment)', 'BrokerAPIController::fetchRobinhoodTransactionHistory/$1');
+        $routes->get('fetchRobinhoodTransactionHistory', 'BrokerAPIController::fetchRobinhoodTransactionHistory');
+        $routes->get('fetchRobinhoodNotifications/(:segment)', 'BrokerAPIController::fetchRobinhoodNotifications/$1');
+        $routes->get('fetchRobinhoodNotifications', 'BrokerAPIController::fetchRobinhoodNotifications');
+        $routes->get('fetchRobinhoodACHRelationships/(:segment)', 'BrokerAPIController::fetchRobinhoodACHRelationships/$1');
+        $routes->get('fetchRobinhoodACHRelationships', 'BrokerAPIController::fetchRobinhoodACHRelationships');
+        $routes->get('fetchRobinhoodCryptoAccounts/(:segment)', 'BrokerAPIController::fetchRobinhoodCryptoAccounts/$1');
+        $routes->get('fetchRobinhoodCryptoAccounts', 'BrokerAPIController::fetchRobinhoodCryptoAccounts');
+        $routes->get('fetchRobinhoodCryptoPositions/(:segment)', 'BrokerAPIController::fetchRobinhoodCryptoPositions/$1');
+        $routes->get('fetchRobinhoodCryptoPositions', 'BrokerAPIController::fetchRobinhoodCryptoPositions');
+        $routes->get('fetchRobinhoodCryptoPortfolio/(:segment)', 'BrokerAPIController::fetchRobinhoodCryptoPortfolio/$1');
+        $routes->get('fetchRobinhoodCryptoPortfolio', 'BrokerAPIController::fetchRobinhoodCryptoPortfolio');
+        $routes->get('fetchRobinhoodCryptoOrders/(:segment)', 'BrokerAPIController::fetchRobinhoodCryptoOrders/$1');
+        $routes->get('fetchRobinhoodCryptoOrders', 'BrokerAPIController::fetchRobinhoodCryptoOrders');
+        $routes->get('fetchRobinhoodCryptoOrderDetails/(:segment)', 'BrokerAPIController::fetchRobinhoodCryptoOrderDetails/$1');
+        $routes->get('fetchRobinhoodCryptoOrderDetails', 'BrokerAPIController::fetchRobinhoodCryptoOrderDetails');
+        $routes->get('fetchRobinhoodCryptoTransactions/(:segment)', 'BrokerAPIController::fetchRobinhoodCryptoTransactions/$1');
+        $routes->get('fetchRobinhoodCryptoTransactions', 'BrokerAPIController::fetchRobinhoodCryptoTransactions');
+        $routes->get('fetchRobinhoodCryptoQuotes/(:segment)', 'BrokerAPIController::fetchRobinhoodCryptoQuotes/$1');
+        $routes->get('fetchRobinhoodCryptoQuotes', 'BrokerAPIController::fetchRobinhoodCryptoQuotes');
     });
 
     // ------------------------
-    // ✅ BudgetController
+    // ✅ BudgetAPIController
     // ------------------------
     $routes->group('Budget', function($routes) {
-        $routes->get('summary', 'BudgetController::summary');
-        $routes->get('credit', 'BudgetController::credit');
-        $routes->get('available', 'BudgetController::available');
-        $routes->get('repayment', 'BudgetController::repayment');
-        $routes->get('categories', 'BudgetController::categories');
-        $routes->get('transactions', 'BudgetController::transactions');
-        $routes->get('goals', 'BudgetController::goals');
-        $routes->get('insights', 'BudgetController::insights');
-        $routes->get('trends', 'BudgetController::trends');
-        $routes->get('net-worth', 'BudgetController::netWorth');
-        $routes->get('cash-flow', 'BudgetController::cashFlow');
-        $routes->get('budgets', 'BudgetController::budgets');
-        $routes->get('savings-goals', 'BudgetController::savingsGoals');
-        $routes->get('investment-accounts', 'BudgetController::investmentAccounts');
-        $routes->get('linked-accounts', 'BudgetController::linkedAccounts');
-        $routes->get('add-linked-account', 'BudgetController::addLinkedAccount');
-        $routes->get('remove-linked-account/(:segment)', 'BudgetController::removeLinkedAccount/$1');
-        $routes->get('refresh-linked-account/(:segment)', 'BudgetController::refreshLinkedAccount/$1');     
-        $routes->get('Data', 'BudgetController::apiBudgetData');
-        $routes->get('Credit', 'BudgetController::apiCreditData');
-        $routes->get('Available', 'BudgetController::apiAvailableData');
-        $routes->get('Repayment', 'BudgetController::apiRepaymentSummary');   
+        $routes->get('summary', 'BudgetAPIController::summary');
+        $routes->get('credit', 'BudgetAPIController::credit');
+        $routes->get('available', 'BudgetAPIController::available');
+        $routes->get('repayment', 'BudgetAPIController::repayment');
+        $routes->get('categories', 'BudgetAPIController::categories');
+        $routes->get('transactions', 'BudgetAPIController::transactions');
+        $routes->get('goals', 'BudgetAPIController::goals');
+        $routes->get('insights', 'BudgetAPIController::insights');
+        $routes->get('trends', 'BudgetAPIController::trends');
+        $routes->get('net-worth', 'BudgetAPIController::netWorth');
+        $routes->get('cash-flow', 'BudgetAPIController::cashFlow');
+        $routes->get('budgets', 'BudgetAPIController::budgets');
+        $routes->get('savings-goals', 'BudgetAPIController::savingsGoals');
+        $routes->get('investment-accounts', 'BudgetAPIController::investmentAccounts');
+        $routes->get('linked-accounts', 'BudgetAPIController::linkedAccounts');
+        $routes->get('add-linked-account', 'BudgetAPIController::addLinkedAccount');
+        $routes->get('remove-linked-account/(:segment)', 'BudgetAPIController::removeLinkedAccount/$1');
+        $routes->get('refresh-linked-account/(:segment)', 'BudgetAPIController::refreshLinkedAccount/$1');     
+        $routes->get('Data', 'BudgetAPIController::apiBudgetData');
+        $routes->get('Credit', 'BudgetAPIController::apiCreditData');
+        $routes->get('Available', 'BudgetAPIController::apiAvailableData');
+        $routes->get('Repayment', 'BudgetAPIController::apiRepaymentSummary');   
 
-        $routes->get('getUserBudgetRecords', 'BudgetController::getUserBudgetRecords');
-        $routes->get('getUserCreditBalances', 'BudgetController::getUserCreditBalances');
-        $routes->get('getUserAvailableBalances', 'BudgetController::getUserAvailableBalances');
-        $routes->get('getUserRepaymentSummary', 'BudgetController::getUserRepaymentSummary');
+        $routes->get('getUserBudgetRecords', 'BudgetAPIController::getUserBudgetRecords');
+        $routes->get('getUserCreditBalances', 'BudgetAPIController::getUserCreditBalances');
+        $routes->get('getUserAvailableBalances', 'BudgetAPIController::getUserAvailableBalances');
+        $routes->get('getUserRepaymentSummary', 'BudgetAPIController::getUserRepaymentSummary');
     });
 
     $routes->group('ContentEngine', function($routes) {
-        $routes->post('ingestScanner', 'ContentEngineController::ingestScanner');
-        $routes->post('processIngest/(:num)', 'ContentEngineController::processIngest/$1');
-        $routes->get('topIdeas', 'ContentEngineController::topIdeas');
-        $routes->get('posts', 'ContentEngineController::posts');
-        $routes->get('posts/(:num)', 'ContentEngineController::posts/$1');
-        $routes->post('approvePost/(:num)', 'ContentEngineController::approvePost/$1');
-        $routes->post('sendPost/(:num)', 'ContentEngineController::sendPost/$1');
-        $routes->post('runDaily', 'ContentEngineController::runDaily');
+        $routes->post('ingestScanner', 'ContentEngineAPIController::ingestScanner');
+        $routes->post('processIngest/(:num)', 'ContentEngineAPIController::processIngest/$1');
+        $routes->get('topIdeas', 'ContentEngineAPIController::topIdeas');
+        $routes->get('posts', 'ContentEngineAPIController::posts');
+        $routes->get('posts/(:num)', 'ContentEngineAPIController::posts/$1');
+        $routes->post('approvePost/(:num)', 'ContentEngineAPIController::approvePost/$1');
+        $routes->post('sendPost/(:num)', 'ContentEngineAPIController::sendPost/$1');
+        $routes->post('runDaily', 'ContentEngineAPIController::runDaily');
     });
 
     // ------------------------
-    // ✅ DiscordController
+    // ✅ DiscordAPIController
     // ------------------------
     $routes->group('Discord', ['namespace' => 'App\Modules\APIs\Controllers'], static function($routes) {
-        $routes->get('commandsCatalog',  'DiscordController::commandsCatalog');
-        $routes->get('onboardingSteps',  'DiscordController::onboardingSteps');
-        $routes->get('sharingGuide',     'DiscordController::sharingGuide');
-        $routes->post('enqueue',         'DiscordController::enqueue');
-        $routes->post('broadcast',       'DiscordController::broadcast');
-        $routes->post('interactions',    'DiscordController::handleInteraction');
-        $routes->post('messageHook',     'DiscordController::messageHook');
-        $routes->post('webhook',         'DiscordController::webhookProxy');
-        $routes->post('createLinkToken', 'DiscordController::createLinkToken');
-        $routes->get('process-queue',    'DiscordController::processQueue');
-        $routes->get('coalesce-now',     'DiscordController::coalesceNow');
-        $routes->delete('purge-dead',    'DiscordController::purgeDead');
-        $routes->get('health',           'DiscordController::health');
-        $routes->post('test',            'DiscordController::test');
+        $routes->get('commandsCatalog',  'DiscordAPIController::commandsCatalog');
+        $routes->get('onboardingSteps',  'DiscordAPIController::onboardingSteps');
+        $routes->get('sharingGuide',     'DiscordAPIController::sharingGuide');
+        $routes->post('enqueue',         'DiscordAPIController::enqueue');
+        $routes->post('broadcast',       'DiscordAPIController::broadcast');
+        $routes->post('interactions',    'DiscordAPIController::handleInteraction');
+        $routes->post('messageHook',     'DiscordAPIController::messageHook');
+        $routes->post('webhook',         'DiscordAPIController::webhookProxy');
+        $routes->post('createLinkToken', 'DiscordAPIController::createLinkToken');
+        $routes->get('process-queue',    'DiscordAPIController::processQueue');
+        $routes->get('coalesce-now',     'DiscordAPIController::coalesceNow');
+        $routes->delete('purge-dead',    'DiscordAPIController::purgeDead');
+        $routes->get('health',           'DiscordAPIController::health');
+        $routes->post('test',            'DiscordAPIController::test');
     });
 
     // ------------------------
     // ✅ DripCampaignController
     // ------------------------
     $routes->group('DripCampaign', function($routes) {
-        $routes->get('click/(:segment)', 'DripCampaignController::click/$1');
-        $routes->get('Enroll/(:num)', 'DripCampaignController::enrollUser/$1');
-        $routes->get('open/(:segment)', 'DripCampaignController::open/$1');
-        $routes->get('processBatch', 'DripCampaignController::processBatch');
-        $routes->get('TestCron', 'DripCampaignController::testDripCron');
+        $routes->get('click/(:segment)', 'DripCampaignAPIController::click/$1');
+        $routes->get('Enroll/(:num)', 'DripCampaignAPIController::enrollUser/$1');
+        $routes->get('open/(:segment)', 'DripCampaignAPIController::open/$1');
+        $routes->get('processBatch', 'DripCampaignAPIController::processBatch');
+        $routes->get('TestCron', 'DripCampaignAPIController::testDripCron');
     });
 
     // ------------------------
     // ✅ EmailController
     // ------------------------    
     $routes->group('Email', function($routes) {        
-        $routes->get('autoScheduleDraftCampaigns', 'EmailController::autoScheduleDraftCampaigns');
-        $routes->get('cloneCampaign/(:num)', 'EmailController::cloneCampaign/$1');
-        $routes->post('createDraftCampaign', 'EmailController::createDraftCampaign');
-        $routes->post('scheduleCampaignApi/(:num)', 'EmailController::scheduleCampaignApi/$1');
-        $routes->get('cancelScheduledCampaign/(:num)', 'EmailController::cancelScheduledCampaign/$1');
-        $routes->delete('deleteCampaign/(:num)', 'EmailController::deleteCampaign/$1');
-        $routes->get('fetchCampaignAnalytics', 'EmailController::fetchCampaignAnalytics');
-        $routes->get('fetchQueuedEmails', 'EmailController::fetchQueuedEmails');
-        $routes->get('fetchQueuedEmailById/(:num)', 'EmailController::fetchQueuedEmailById/$1');
-        $routes->get('getAllCampaigns', 'EmailController::getAllCampaigns');
-        $routes->get('getCampaignMetrics/(:num)', 'EmailController::getCampaignMetrics/$1');
-        $routes->get('getCampaignStats/(:num)', 'EmailController::getCampaignStats/$1');
-        $routes->get('getEmailQueueStats', 'EmailController::getEmailQueueStats');
-        $routes->get('getEmailQueueTrend', 'EmailController::getEmailQueueTrend');
-        $routes->get('processScheduledCampaigns', 'EmailController::processScheduledCampaigns');
-        $routes->get('sendMassTestCampaign', 'EmailController::sendMassTestCampaign');
-        $routes->get('trackBounceWebhook', 'EmailController::trackBounceWebhook');
-        $routes->get('unsubscribe/(:any)', 'EmailController::unsubscribe/$1');
+        $routes->get('autoScheduleDraftCampaigns', 'EmailAPIController:autoScheduleDraftCampaigns');
+        $routes->get('cloneCampaign/(:num)', 'EmailAPIController:cloneCampaign/$1');
+        $routes->post('createDraftCampaign', 'EmailAPIController:createDraftCampaign');
+        $routes->post('scheduleCampaignApi/(:num)', 'EmailAPIController:scheduleCampaignApi/$1');
+        $routes->get('cancelScheduledCampaign/(:num)', 'EmailAPIController:cancelScheduledCampaign/$1');
+        $routes->delete('deleteCampaign/(:num)', 'EmailAPIController:deleteCampaign/$1');
+        $routes->get('fetchCampaignAnalytics', 'EmailAPIController:fetchCampaignAnalytics');
+        $routes->get('fetchQueuedEmails', 'EmailAPIController:fetchQueuedEmails');
+        $routes->get('fetchQueuedEmailById/(:num)', 'EmailAPIController:fetchQueuedEmailById/$1');
+        $routes->get('getAllCampaigns', 'EmailAPIController:getAllCampaigns');
+        $routes->get('getCampaignMetrics/(:num)', 'EmailAPIController:getCampaignMetrics/$1');
+        $routes->get('getCampaignStats/(:num)', 'EmailAPIController:getCampaignStats/$1');
+        $routes->get('getEmailQueueStats', 'EmailAPIController:getEmailQueueStats');
+        $routes->get('getEmailQueueTrend', 'EmailAPIController:getEmailQueueTrend');
+        $routes->get('processScheduledCampaigns', 'EmailAPIController:processScheduledCampaigns');
+        $routes->get('sendMassTestCampaign', 'EmailAPIController:sendMassTestCampaign');
+        $routes->get('trackBounceWebhook', 'EmailAPIController:trackBounceWebhook');
+        $routes->get('unsubscribe/(:any)', 'EmailAPIController:unsubscribe/$1');
     });
 
     $routes->group('eSports', function($routes) {
-        $routes->post('createEvent', 'EsportsController::createEvent');
-        $routes->post('joinEvent', 'EsportsController::joinEvent');
-        $routes->post('lockEscrow', 'EsportsController::lockEscrow');
-        $routes->post('cancelEvent', 'EsportsController::cancelEvent');
-        $routes->post('receiveResultWebhook', 'EsportsController::receiveResultWebhook');
-        $routes->post('settlePayouts', 'EsportsController::settlePayouts');
-        $routes->post('cronProcessJobs', 'EsportsController::cronProcessJobs');
-        $routes->get('event/(:num)', 'EsportsController::getEvent/$1');
-        $routes->get('events', 'EsportsController::listEvents');
+        $routes->post('createEvent', 'EsportsAPIController:createEvent');
+        $routes->post('joinEvent', 'EsportsAPIController:joinEvent');
+        $routes->post('lockEscrow', 'EsportsAPIController:lockEscrow');
+        $routes->post('cancelEvent', 'EsportsAPIController:cancelEvent');
+        $routes->post('receiveResultWebhook', 'EsportsAPIController:receiveResultWebhook');
+        $routes->post('settlePayouts', 'EsportsAPIController:settlePayouts');
+        $routes->post('cronProcessJobs', 'EsportsAPIController:cronProcessJobs');
+        $routes->get('event/(:num)', 'EsportsAPIController:getEvent/$1');
+        $routes->get('events', 'EsportsAPIController:listEvents');
     });
     
     $routes->group('Investments', function($routes) {
-        $routes->get('/', 'InvestmentsController::index');
-        // $routes->match(['GET', 'POST'], 'addNewTradeToWatchlist', 'InvestmentsController::addNewTradeToWatchlist');
+        $routes->get('/', 'InvestmentsAPIController:index');
+        // $routes->match(['GET', 'POST'], 'addNewTradeToWatchlist', 'InvestmentsAPIController:addNewTradeToWatchlist');
         // $routes->get('fetchActiveTrades/(:any)', 'API::fetchActiveTrade/$1'); // Fetch User Active Trades
         // $routes->get('fetchRealTimeData/(:any)/(:any)', 'API::fetchRealTimeData/$1/$2'); // Fetch Real-Time Price Data
         // $routes->get('fetchWatchlistPrices/(:any)', 'InvestmentsController::fetchWatchlistPrices/$1');
@@ -726,142 +726,142 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     // ✅ ManagementController
     // ------------------------
 
-    $routes->get('SMTP/test', 'App\\Modules\\Management\\Controllers\\SmtpTestController::probe', ['filter' => 'login']);
+    $routes->get('SMTP/test', 'SmtpTestController::probe', ['filter' => 'login']);
 
     // ------------------------
-    // ✅ MarketingController
+    // ✅ MarketingAPIController
     // ------------------------
     $routes->group('Marketing', function($routes) {
-        $routes->post('/', 'MarketingController::index');
-        $routes->post('approvePost/(:num)', 'MarketingController::approvePost/$1');
-        $routes->post('approveBufferItem/(:num)', 'MarketingController::approveBufferItem/$1');
-        $routes->post('autoScheduleNextApproved', 'MarketingController::autoScheduleNextApproved');
-        $routes->get('cronAnalyzeContent', 'MarketingController::cronAnalyzeContent');
-        $routes->get('cronAutoPublishGroupedDigest', 'MarketingController::cronAutoPublishGroupedDigest');
-        $routes->get('cronFetchAndGenerateNews', 'MarketingController::cronFetchAndGenerateNews');
-        $routes->get('cronFetchInbox', 'MarketingController::cronFetchInbox');
-        $routes->get('cronFetchMarketingEmails', 'MarketingController::cronFetchMarketingEmails');
-        $routes->get('cronProcessSMSMarketingIdeas', 'MarketingController::cronProcessSMSMarketingIdeas');
-        $routes->delete('deleteScrape/(:num)', 'MarketingController::deleteScrape/$1');
-        $routes->get('downloadVoiceover/(:any)', 'MarketingController::downloadVoiceover/$1');
-        $routes->get('distributeHighScoreContent', 'MarketingController::distributeHighScoreContent');
-        $routes->get('emailPostForApproval/(:num)', 'MarketingController::emailPostForApproval/$1');
-        $routes->get('fetchBufferPaginated', 'MarketingController::fetchBufferPaginated');
-        $routes->get('fetchFinalizedSummariesBlock', 'MarketingController::fetchFinalizedSummariesBlock');
-        $routes->get('fetchGeneratedSummaries', 'MarketingController::fetchGeneratedSummaries');
-        $routes->get('fetchGeneratedSummariesBlock', 'MarketingController::fetchGeneratedSummariesBlock');
-        $routes->get('fetchGeneratedSummariesJson', 'MarketingController::fetchGeneratedSummariesJson');
-        $routes->get('forceGenerateFromTemp', 'MarketingController::forceGenerateFromTemp');
-        $routes->get('ForceGenerateFromTemp/(:num)', 'MarketingController::ForceGenerateFromTemp/$1');
-        // $routes->get('generateCampaignContent/(:num)', 'MarketingController::generateCampaignContent/$1');
-        $routes->match(['GET', 'POST'], 'generateCampaignContent', 'MarketingController::generateCampaignContent');
-        $routes->match(['GET', 'POST'], 'generateDailyMarketCampaign', 'MarketingController::generateDailyMarketCampaign');
-        $routes->match(['GET', 'POST'], 'generateCampaignStepContent', 'MarketingController::generateCampaignStepContent');
-        $routes->get('generateContentFromScraper', 'MarketingController::generateContentFromScraper');
-        $routes->get('generateContentDigestFromStored', 'MarketingController::generateContentDigestFromStored');
-        $routes->get('generateDailyContentDigest', 'MarketingController::generateDailyContentDigest');
-        $routes->get('generateKimiSummaries', 'MarketingController::generateKimiSummaries');
-        $routes->get('generateKimiPosts', 'MarketingController::generateKimiPosts');
-        $routes->get('GenerateFromSimilar/(:num)', 'MarketingController::generateFromSimilar/$1');
-        $routes->get('generateFromSimilar', 'MarketingController::generateFromSimilar');
-        $routes->get('generateLivePreview', 'MarketingController::generateLivePreview');
-        $routes->get('generatePostsFromSummary/(:num)', 'MarketingController::generatePostsFromSummary/$1');
-        $routes->get('generatePostsFromSummary', 'MarketingController::generatePostsFromSummary');
-        $routes->match(['GET', 'POST'], 'generatePostMediaContent', 'MarketingController::generatePostMediaContent');
-        $routes->get('generateScheduledPosts', 'MarketingController::generateScheduledPosts');
-        $routes->get('getCleanedScrapedContent', 'MarketingController::getCleanedScrapedContent');
-        $routes->get('getScrapeDetails/(:num)', 'MarketingController::getScrapeDetails/$1');
-        $routes->get('generateThreadFromSummary/(:num)', 'MarketingController::generateThreadFromSummary/$1');
-        $routes->get('getContentPerformanceAnalytics', 'MarketingController::getContentPerformanceAnalytics');
-        $routes->get('getGeneratedPostsPaginated', 'MarketingController::getGeneratedPostsPaginated');
-        $routes->get('getStoryboardPackage/(:num)', 'MarketingController::getStoryboardPackage/$1');
-        $routes->get('getTopGeneratedPosts', 'MarketingController::getTopGeneratedPosts');
-        $routes->get('getTopKeywordChart/(:num)', 'MarketingController::getTopKeywordChart/$1');
-        $routes->get('groupSimilarSummariesByCosine', 'MarketingController::groupSimilarSummariesByCosine');
-        $routes->get('massResendActivationEmails', 'MarketingController::massResendActivationEmails');
-        $routes->get('monitorKeywords', 'MarketingController::monitorKeywordsAndScrape');
-        $routes->get('previewBufferItem/(:num)', 'MarketingController::previewBufferItem/$1');
-        $routes->get('previewPendingSummaries', 'MarketingController::previewPendingSummaries');
-        $routes->get('processMarketingTempEmails/(:num)/(:segment)/(:num)', 'MarketingController::processMarketingTempEmails/$1/$2/$3');
-        $routes->get('processMarketingTempEmails/(:num)/(:segment)', 'MarketingController::processMarketingTempEmails/$1/$2');
-        $routes->get('publishGroupedContentDraft', 'MarketingController::publishGroupedContentDraft');
-        $routes->get('rankBufferPostsDaily', 'MarketingController::rankBufferPostsDaily');
-        $routes->get('reprocessIncompleteEmails', 'MarketingController::reprocessIncompleteEmails');
-        $routes->post('rejectBufferItem/(:num)', 'MarketingController::rejectBufferItem/$1');
-        $routes->get('runContentGenerationBatch', 'MarketingController::runContentGenerationBatch');
-        $routes->get('runKeywordBackfillBatch', 'MarketingController::runKeywordBackfillBatch');
-        $routes->get('runKeywordEnrichment', 'MarketingController::runKeywordEnrichment');
-        $routes->get('runScheduledTasks', 'MarketingController::runScheduledTasks');
+        $routes->post('/', 'MarketingAPIController::index');
+        $routes->post('approvePost/(:num)', 'MarketingAPIController::approvePost/$1');
+        $routes->post('approveBufferItem/(:num)', 'MarketingAPIController::approveBufferItem/$1');
+        $routes->post('autoScheduleNextApproved', 'MarketingAPIController::autoScheduleNextApproved');
+        $routes->get('cronAnalyzeContent', 'MarketingAPIController::cronAnalyzeContent');
+        $routes->get('cronAutoPublishGroupedDigest', 'MarketingAPIController::cronAutoPublishGroupedDigest');
+        $routes->get('cronFetchAndGenerateNews', 'MarketingAPIController::cronFetchAndGenerateNews');
+        $routes->get('cronFetchInbox', 'MarketingAPIController::cronFetchInbox');
+        $routes->get('cronFetchMarketingEmails', 'MarketingAPIController::cronFetchMarketingEmails');
+        $routes->get('cronProcessSMSMarketingIdeas', 'MarketingAPIController::cronProcessSMSMarketingIdeas');
+        $routes->delete('deleteScrape/(:num)', 'MarketingAPIController::deleteScrape/$1');
+        $routes->get('downloadVoiceover/(:any)', 'MarketingAPIController::downloadVoiceover/$1');
+        $routes->get('distributeHighScoreContent', 'MarketingAPIController::distributeHighScoreContent');
+        $routes->get('emailPostForApproval/(:num)', 'MarketingAPIController::emailPostForApproval/$1');
+        $routes->get('fetchBufferPaginated', 'MarketingAPIController::fetchBufferPaginated');
+        $routes->get('fetchFinalizedSummariesBlock', 'MarketingAPIController::fetchFinalizedSummariesBlock');
+        $routes->get('fetchGeneratedSummaries', 'MarketingAPIController::fetchGeneratedSummaries');
+        $routes->get('fetchGeneratedSummariesBlock', 'MarketingAPIController::fetchGeneratedSummariesBlock');
+        $routes->get('fetchGeneratedSummariesJson', 'MarketingAPIController::fetchGeneratedSummariesJson');
+        $routes->get('forceGenerateFromTemp', 'MarketingAPIController::forceGenerateFromTemp');
+        $routes->get('ForceGenerateFromTemp/(:num)', 'MarketingAPIController::ForceGenerateFromTemp/$1');
+        // $routes->get('generateCampaignContent/(:num)', 'MarketingAPIController::generateCampaignContent/$1');
+        $routes->match(['GET', 'POST'], 'generateCampaignContent', 'MarketingAPIController::generateCampaignContent');
+        $routes->match(['GET', 'POST'], 'generateDailyMarketCampaign', 'MarketingAPIController::generateDailyMarketCampaign');
+        $routes->match(['GET', 'POST'], 'generateCampaignStepContent', 'MarketingAPIController::generateCampaignStepContent');
+        $routes->get('generateContentFromScraper', 'MarketingAPIController::generateContentFromScraper');
+        $routes->get('generateContentDigestFromStored', 'MarketingAPIController::generateContentDigestFromStored');
+        $routes->get('generateDailyContentDigest', 'MarketingAPIController::generateDailyContentDigest');
+        $routes->get('generateKimiSummaries', 'MarketingAPIController::generateKimiSummaries');
+        $routes->get('generateKimiPosts', 'MarketingAPIController::generateKimiPosts');
+        $routes->get('GenerateFromSimilar/(:num)', 'MarketingAPIController::generateFromSimilar/$1');
+        $routes->get('generateFromSimilar', 'MarketingAPIController::generateFromSimilar');
+        $routes->get('generateLivePreview', 'MarketingAPIController::generateLivePreview');
+        $routes->get('generatePostsFromSummary/(:num)', 'MarketingAPIController::generatePostsFromSummary/$1');
+        $routes->get('generatePostsFromSummary', 'MarketingAPIController::generatePostsFromSummary');
+        $routes->match(['GET', 'POST'], 'generatePostMediaContent', 'MarketingAPIController::generatePostMediaContent');
+        $routes->get('generateScheduledPosts', 'MarketingAPIController::generateScheduledPosts');
+        $routes->get('getCleanedScrapedContent', 'MarketingAPIController::getCleanedScrapedContent');
+        $routes->get('getScrapeDetails/(:num)', 'MarketingAPIController::getScrapeDetails/$1');
+        $routes->get('generateThreadFromSummary/(:num)', 'MarketingAPIController::generateThreadFromSummary/$1');
+        $routes->get('getContentPerformanceAnalytics', 'MarketingAPIController::getContentPerformanceAnalytics');
+        $routes->get('getGeneratedPostsPaginated', 'MarketingAPIController::getGeneratedPostsPaginated');
+        $routes->get('getStoryboardPackage/(:num)', 'MarketingAPIController::getStoryboardPackage/$1');
+        $routes->get('getTopGeneratedPosts', 'MarketingAPIController::getTopGeneratedPosts');
+        $routes->get('getTopKeywordChart/(:num)', 'MarketingAPIController::getTopKeywordChart/$1');
+        $routes->get('groupSimilarSummariesByCosine', 'MarketingAPIController::groupSimilarSummariesByCosine');
+        $routes->get('massResendActivationEmails', 'MarketingAPIController::massResendActivationEmails');
+        $routes->get('monitorKeywords', 'MarketingAPIController::monitorKeywordsAndScrape');
+        $routes->get('previewBufferItem/(:num)', 'MarketingAPIController::previewBufferItem/$1');
+        $routes->get('previewPendingSummaries', 'MarketingAPIController::previewPendingSummaries');
+        $routes->get('processMarketingTempEmails/(:num)/(:segment)/(:num)', 'MarketingAPIController::processMarketingTempEmails/$1/$2/$3');
+        $routes->get('processMarketingTempEmails/(:num)/(:segment)', 'MarketingAPIController::processMarketingTempEmails/$1/$2');
+        $routes->get('publishGroupedContentDraft', 'MarketingAPIController::publishGroupedContentDraft');
+        $routes->get('rankBufferPostsDaily', 'MarketingAPIController::rankBufferPostsDaily');
+        $routes->get('reprocessIncompleteEmails', 'MarketingAPIController::reprocessIncompleteEmails');
+        $routes->post('rejectBufferItem/(:num)', 'MarketingAPIController::rejectBufferItem/$1');
+        $routes->get('runContentGenerationBatch', 'MarketingAPIController::runContentGenerationBatch');
+        $routes->get('runKeywordBackfillBatch', 'MarketingAPIController::runKeywordBackfillBatch');
+        $routes->get('runKeywordEnrichment', 'MarketingAPIController::runKeywordEnrichment');
+        $routes->get('runScheduledTasks', 'MarketingAPIController::runScheduledTasks');
         $routes->get('Search/(:segment)/(:any)', 'ManagementController::index/$1/$2');
-        $routes->get('sendWalkthroughEmails', 'MarketingController::sendWalkthroughEmails');
-        $routes->get('scheduleApprovedPost/(:num)', 'MarketingController::scheduleApprovedPost/$1');
-        $routes->get('schedulePost/(:any)/(:any)/(:any)', 'MarketingController::schedulePost/$1/$2/$3');
-        $routes->get('sharePost/(:num)/(:segment)', 'MarketingController::sharePost/$1/$2');
-        $routes->get('Large-Content/Form', 'MarketingController::submitLargeContentForm');
-        $routes->post('submitLargeContent', 'MarketingController::submitLargeContent');
-        $routes->get('Manual-Content/Form', 'MarketingController::shortLongContentForm');
-        $routes->post('submitManualContent', 'MarketingController::submitManualContent');
-        $routes->get('testGenerateDailyDigest', 'MarketingController::testGenerateDailyDigest');
-        $routes->get('testGenerateFromTempEmail/(:num)', 'MarketingController::testGenerateFromTempEmail/$1');
-        $routes->get('testTfIdfEdgeCases', 'MarketingController::testTfIdfEdgeCases');
-        $routes->get('testGenerateSummarizerHarness', 'MarketingController::testGenerateSummarizerHarness');
-        $routes->get('Timeline/(:segment)', 'MarketingController::timeline/$1');
-        $routes->get('Timeline', 'MarketingController::viewTimelineGrouped');
-        $routes->get('triggerBackfill', 'MarketingController::reprocessIncompleteEmails');
-        $routes->get('triggerPostAutogenOnEmpty', 'MarketingController::triggerPostAutogenOnEmpty');
-        $routes->post('updateCampaignLinks', 'MarketingController::updateCampaignLinks');
-        $routes->post('updateInsight', 'MarketingController::updateInsight');
-        $routes->post('updateCampaignMessageField', 'MarketingController::updateCampaignMessageField');
-        $routes->post('updatePostSchedule/(:num)', 'MarketingController::updatePostSchedule/$1');
-        $routes->post('updatePlatformToggle/(:num)', 'MarketingController::updatePlatformToggle/$1');
-        $routes->post('validateSymbol', 'MarketingController::validateSymbol');
+        $routes->get('sendWalkthroughEmails', 'MarketingAPIController::sendWalkthroughEmails');
+        $routes->get('scheduleApprovedPost/(:num)', 'MarketingAPIController::scheduleApprovedPost/$1');
+        $routes->get('schedulePost/(:any)/(:any)/(:any)', 'MarketingAPIController::schedulePost/$1/$2/$3');
+        $routes->get('sharePost/(:num)/(:segment)', 'MarketingAPIController::sharePost/$1/$2');
+        $routes->get('Large-Content/Form', 'MarketingAPIController::submitLargeContentForm');
+        $routes->post('submitLargeContent', 'MarketingAPIController::submitLargeContent');
+        $routes->get('Manual-Content/Form', 'MarketingAPIController::shortLongContentForm');
+        $routes->post('submitManualContent', 'MarketingAPIController::submitManualContent');
+        $routes->get('testGenerateDailyDigest', 'MarketingAPIController::testGenerateDailyDigest');
+        $routes->get('testGenerateFromTempEmail/(:num)', 'MarketingAPIController::testGenerateFromTempEmail/$1');
+        $routes->get('testTfIdfEdgeCases', 'MarketingAPIController::testTfIdfEdgeCases');
+        $routes->get('testGenerateSummarizerHarness', 'MarketingAPIController::testGenerateSummarizerHarness');
+        $routes->get('Timeline/(:segment)', 'MarketingAPIController::timeline/$1');
+        $routes->get('Timeline', 'MarketingAPIController::viewTimelineGrouped');
+        $routes->get('triggerBackfill', 'MarketingAPIController::reprocessIncompleteEmails');
+        $routes->get('triggerPostAutogenOnEmpty', 'MarketingAPIController::triggerPostAutogenOnEmpty');
+        $routes->post('updateCampaignLinks', 'MarketingAPIController::updateCampaignLinks');
+        $routes->post('updateInsight', 'MarketingAPIController::updateInsight');
+        $routes->post('updateCampaignMessageField', 'MarketingAPIController::updateCampaignMessageField');
+        $routes->post('updatePostSchedule/(:num)', 'MarketingAPIController::updatePostSchedule/$1');
+        $routes->post('updatePlatformToggle/(:num)', 'MarketingAPIController::updatePlatformToggle/$1');
+        $routes->post('validateSymbol', 'MarketingAPIController::validateSymbol');
 
         // UI/ops endpoints (deduped from former parallel group)
-        $routes->get('/', 'MarketingController::index');
-        $routes->get('Add/(:segment)', 'MarketingController::add/$1');
-        $routes->match(['POST'], 'Add-Subscriber', 'MarketingController::addSubscriber');
-        $routes->get('Approve-Content/(:num)', 'MarketingController::approveContent/$1');
-        $routes->get('Blog-Creator', 'MarketingController::blogCreator');
-        $routes->get('Blogs', 'MarketingController::blogs');
-        $routes->get('Campaigns', 'MarketingController::campaigns');
-        $routes->get('Content-Review', 'MarketingController::contentReview');
-        $routes->get('Content/Generator', 'MarketingController::contentGenerator');
-        $routes->get('Content/Listing', 'MarketingController::contentListing');
-        $routes->get('Daily-Log', 'MarketingController::viewDailyLogs');
-        $routes->get('Edit-Content/(:num)', 'MarketingController::editContent/$1');
-        $routes->get('Email/(:any)/(:any)', 'MarketingController::viewEmail/$1/$2');
-        $routes->get('fetchEmails', 'MarketingController::fetchEmails');
-        $routes->post('fetchMissingLogos', 'MarketingController::fetchMissingLogos');
-        $routes->get('Financial-News', 'MarketingController::financialNews');
-        $routes->post('generateAutomatedContent', 'MarketingController::generateAutomatedContent');
-        $routes->get('generateContent', 'MarketingController::generateContent');
-        $routes->get('generateNewsletter', 'MarketingController::generateNewsletterContent');
-        $routes->get('getRecentScrapes', 'MarketingController::getRecentScrapes');
-        $routes->get('Grouped-Content-Drafts', 'MarketingController::generateGroupedContentDrafts');
-        $routes->get('Ideas', 'MarketingController::ideas');
-        $routes->get('Post-Creator', 'MarketingController::postCreator');
-        $routes->get('previewGeneratedPost/(:num)', 'MarketingController::previewGeneratedPost/$1');
-        $routes->get('Promote', 'MarketingController::promote');
-        $routes->get('Promote/(:segment)', 'MarketingController::promote');
-        $routes->post('PublishBlog/(:num)', 'Management\MarketingController::publishBlog/$1');
-        $routes->get('Research', 'AlertsController::research');
-        $routes->get('RunContentGeneration', 'Management\MarketingController::runContentGeneration');
-        $routes->get('Quick-Scraper', 'MarketingController::standaloneScrape');
-        $routes->get('Reject-Content/(:num)', 'MarketingController::rejectContent/$1');
-        $routes->post('Save-Content-Edit/(:num)', 'MarketingController::saveContentEdit/$1');
-        $routes->get('Schedule', 'MarketingController::schedule');
-        $routes->get('Schedule/(:segment)', 'MarketingController::schedule/$1');
-        $routes->get('scheduleNewsletters', 'MarketingController::scheduleNewsletterCampaign');
-        $routes->get('submitDailyLog', 'MarketingController::submitDailyLog');
-        $routes->post('Scrape-Link', 'MarketingController::scrapeLink');
-        $routes->get('sendNotification', 'MarketingController::sendNotification');
-        $routes->get('sendNewsletter', 'MarketingController::sendScheduleNewsletter');
-        $routes->get('Communities', 'MarketingController::communities');
-        $routes->get('Test', 'MarketingController::test');
-        $routes->get('Twitter', 'MarketingController::twitterDashboard');
-        $routes->get('Video-Creator', 'MarketingController::videoCreator');
-        $routes->get('View-Email/(:segment)/(:segment)', 'MarketingController::viewEmail/$1/$2');
-        $routes->get('View-Grouped-Summaries', 'MarketingController::View-Grouped-Summaries');
+        $routes->get('/', 'MarketingAPIController::index');
+        $routes->get('Add/(:segment)', 'MarketingAPIController::add/$1');
+        $routes->match(['POST'], 'Add-Subscriber', 'MarketingAPIController::addSubscriber');
+        $routes->get('Approve-Content/(:num)', 'MarketingAPIController::approveContent/$1');
+        $routes->get('Blog-Creator', 'MarketingAPIController::blogCreator');
+        $routes->get('Blogs', 'MarketingAPIController::blogs');
+        $routes->get('Campaigns', 'MarketingAPIController::campaigns');
+        $routes->get('Content-Review', 'MarketingAPIController::contentReview');
+        $routes->get('Content/Generator', 'MarketingAPIController::contentGenerator');
+        $routes->get('Content/Listing', 'MarketingAPIController::contentListing');
+        $routes->get('Daily-Log', 'MarketingAPIController::viewDailyLogs');
+        $routes->get('Edit-Content/(:num)', 'MarketingAPIController::editContent/$1');
+        $routes->get('Email/(:any)/(:any)', 'MarketingAPIController::viewEmail/$1/$2');
+        $routes->get('fetchEmails', 'MarketingAPIController::fetchEmails');
+        $routes->post('fetchMissingLogos', 'MarketingAPIController::fetchMissingLogos');
+        $routes->get('Financial-News', 'MarketingAPIController::financialNews');
+        $routes->post('generateAutomatedContent', 'MarketingAPIController::generateAutomatedContent');
+        $routes->get('generateContent', 'MarketingAPIController::generateContent');
+        $routes->get('generateNewsletter', 'MarketingAPIController::generateNewsletterContent');
+        $routes->get('getRecentScrapes', 'MarketingAPIController::getRecentScrapes');
+        $routes->get('Grouped-Content-Drafts', 'MarketingAPIController::generateGroupedContentDrafts');
+        $routes->get('Ideas', 'MarketingAPIController::ideas');
+        $routes->get('Post-Creator', 'MarketingAPIController::postCreator');
+        $routes->get('previewGeneratedPost/(:num)', 'MarketingAPIController::previewGeneratedPost/$1');
+        $routes->get('Promote', 'MarketingAPIController::promote');
+        $routes->get('Promote/(:segment)', 'MarketingAPIController::promote');
+        $routes->post('PublishBlog/(:num)', 'Management\MarketingAPIController::publishBlog/$1');
+        $routes->get('Research', 'AlertsAPIController::research');
+        $routes->get('RunContentGeneration', 'Management\MarketingAPIController::runContentGeneration');
+        $routes->get('Quick-Scraper', 'MarketingAPIController::standaloneScrape');
+        $routes->get('Reject-Content/(:num)', 'MarketingAPIController::rejectContent/$1');
+        $routes->post('Save-Content-Edit/(:num)', 'MarketingAPIController::saveContentEdit/$1');
+        $routes->get('Schedule', 'MarketingAPIController::schedule');
+        $routes->get('Schedule/(:segment)', 'MarketingAPIController::schedule/$1');
+        $routes->get('scheduleNewsletters', 'MarketingAPIController::scheduleNewsletterCampaign');
+        $routes->get('submitDailyLog', 'MarketingAPIController::submitDailyLog');
+        $routes->post('Scrape-Link', 'MarketingAPIController::scrapeLink');
+        $routes->get('sendNotification', 'MarketingAPIController::sendNotification');
+        $routes->get('sendNewsletter', 'MarketingAPIController::sendScheduleNewsletter');
+        $routes->get('Communities', 'MarketingAPIController::communities');
+        $routes->get('Test', 'MarketingAPIController::test');
+        $routes->get('Twitter', 'MarketingAPIController::twitterDashboard');
+        $routes->get('Video-Creator', 'MarketingAPIController::videoCreator');
+        $routes->get('View-Email/(:segment)/(:segment)', 'MarketingAPIController::viewEmail/$1/$2');
+        $routes->get('View-Grouped-Summaries', 'MarketingAPIController::View-Grouped-Summaries');
         $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsController::addUserGoldTasks');
         $routes->get('Email-Templates/create', 'EmailTemplateController::create');
         $routes->post('/Email-Templates/store', 'EmailTemplateController::store');
@@ -871,153 +871,153 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->post('Email-Queue/processQueue', 'EmailQueueController::processQueue');
         
         // Marketing Platforms & Posting Plan
-        $routes->get('getPlatforms','ManagementController::getPlatforms');
-        $routes->post('savePlatform','ManagementController::savePlatform');
-        $routes->delete('deletePlatform/(:num)','ManagementController::deletePlatform/$1');
+        $routes->get('getPlatforms','ManagementAPIController::getPlatforms');
+        $routes->post('savePlatform','ManagementAPIController::savePlatform');
+        $routes->delete('deletePlatform/(:num)','ManagementAPIController::deletePlatform/$1');
 
-        $routes->get('getPlatformRules/(:segment)','ManagementController::getPlatformRules/$1');
-        $routes->post('upsertPlatformRule','ManagementController::upsertPlatformRule');
-        $routes->delete('deletePlatformRule/(:num)','ManagementController::deletePlatformRule/$1');
+        $routes->get('getPlatformRules/(:segment)','ManagementAPIController::getPlatformRules/$1');
+        $routes->post('upsertPlatformRule','ManagementAPIController::upsertPlatformRule');
+        $routes->delete('deletePlatformRule/(:num)','ManagementAPIController::deletePlatformRule/$1');
 
-        $routes->post('searchTaxonomy','ManagementController::searchTaxonomy');
-        $routes->post('saveTaxonomy','ManagementController::saveTaxonomy');
-        $routes->delete('deleteTaxonomy/(:num)','ManagementController::deleteTaxonomy/$1');
+        $routes->post('searchTaxonomy','ManagementAPIController::searchTaxonomy');
+        $routes->post('saveTaxonomy','ManagementAPIController::saveTaxonomy');
+        $routes->delete('deleteTaxonomy/(:num)','ManagementAPIController::deleteTaxonomy/$1');
 
-        $routes->get('listSuggestions/(:segment)/(:segment)','ManagementController::listSuggestions/$1/$2');
-        $routes->post('saveSuggestion','ManagementController::saveSuggestion');
-        $routes->delete('deleteSuggestion/(:num)','ManagementController::deleteSuggestion/$1');
+        $routes->get('listSuggestions/(:segment)/(:segment)','ManagementAPIController::listSuggestions/$1/$2');
+        $routes->post('saveSuggestion','ManagementAPIController::saveSuggestion');
+        $routes->delete('deleteSuggestion/(:num)','ManagementAPIController::deleteSuggestion/$1');
 
-        $routes->post('getPostingPlan','ManagementController::getPostingPlan');
-        $routes->post('composePost','ManagementController::composePost');
+        $routes->post('getPostingPlan','ManagementAPIController::getPostingPlan');
+        $routes->post('composePost','ManagementAPIController::composePost');
     });
 
     // Predictions (API + CRON)
     $routes->group('Predictions', function($routes) {
-        $routes->get('/', 'PredictionsController::index');
-        $routes->get('Liquidity/Add', 'PredictionsController::addLiquidity');
-        $routes->get('Liquidity/Remove', 'PredictionsController::removeLiquidity');
-        $routes->get('Markets', 'PredictionsController::markets');
-        $routes->get('Market/(:num)', 'PredictionsController::view/$1');
-        $routes->get('Markets/Create', 'PredictionsController::createMarket');
-        $routes->get('Markets/Settle/(:num)', 'PredictionsController::settle/$1');
-        $routes->get('Orders/Place', 'PredictionsController::placeOrder');
-        $routes->get('Orders/Cancel', 'PredictionsController::cancelOrder');
-        $routes->get('Portfolio', 'PredictionsController::portfolio');
-        $routes->get('Settlements', 'PredictionsController::settlements');
-        $routes->post('PlaceOrder', 'PredictionsController::placeOrder');
-        $routes->post('CancelOrder', 'PredictionsController::cancelOrder');
-        $routes->get('Cron/Distribute-Fees', 'PredictionsController::cronDistributeFees');
-        $routes->get('Cron/Fetch-Market-Data', 'PredictionsController::cronFetchMarketData');
-        $routes->get('Cron/Fetch-User-Data', 'PredictionsController::cronFetchUserData');
-        $routes->get('Cron/Settle-Markets', 'PredictionsController::cronSettleMarkets');
-        $routes->get('Cron/Expire-Markets', 'PredictionsController::cronExpireMarkets');
-        $routes->get('Cron/Update-Market-Prices', 'PredictionsController::cronUpdateMarketPrices');
-        $routes->get('Cron/Update-Market-States', 'PredictionsController::cronUpdateMarketStates');
-        $routes->get('Cron/Update-User-Positions', 'PredictionsController::cronUpdateUserPositions');
-        $routes->get('Cron/Update-User-Stakes', 'PredictionsController::cronUpdateUserStakes');
-        $routes->get('Cron/Update-User-Fees', 'PredictionsController::cronUpdateUserFees');
-        $routes->get('Cron/Update-User-PnL', 'PredictionsController::cronUpdateUserPnL');
-        $routes->get('Cron/Update-User-Rankings', 'PredictionsController::cronUpdateUserRankings');
-        $routes->get('Cron/Update-User-Leaderboard', 'PredictionsController::cronUpdateUserLeaderboard');
-        $routes->get('Cron/Update-User-Stats', 'PredictionsController::cronUpdateUserStats');
-        $routes->get('Cron/Update-User-Notifications', 'PredictionsController::cronUpdateUserNotifications');
-        $routes->get('Cron/Process-Expired-Markets', 'PredictionsController::cronProcessExpiredMarkets');
-        $routes->get('Cron/Process-Settled-Markets', 'PredictionsController::cronProcessSettledMarkets');
-        $routes->get('Cron/Process-User-Orders', 'PredictionsController::cronProcessUserOrders');
-        $routes->get('Cron/Process-User-Positions', 'PredictionsController::cronProcessUserPositions');
-        $routes->get('Cron/Process-User-Stakes', 'PredictionsController::cronProcessUserStakes');
-        $routes->get('Cron/Process-User-Fees', 'PredictionsController::cronProcessUserFees');
-        $routes->get('Cron/Process-User-PnL', 'PredictionsController::cronProcessUserPnL');
-        $routes->get('Cron/Process-User-Rankings', 'PredictionsController::cronProcessUserRankings');
-        $routes->get('Cron/Process-User-Leaderboard', 'PredictionsController::cronProcessUserLeaderboard');
-        $routes->get('Cron/Process-User-Stats', 'PredictionsController::cronProcessUserStats');
-        $routes->get('Cron/Process-User-Notifications', 'PredictionsController::cronProcessUserNotifications');
-        $routes->get('Cron/Process-User-Settlements', 'PredictionsController::cronProcessUserSettlements');
-        $routes->get('Cron/Lock', 'PredictionsController::lock');
-        $routes->get('Cron/Rebalance', 'PredictionsController::rebalanceOdds');
-        $routes->get('Cron/Unlock', 'PredictionsController::unlock');
-        $routes->get('Latest', 'PredictionsController::latest');
+        $routes->get('/', 'PredictionsAPIController::index');
+        $routes->get('Liquidity/Add', 'PredictionsAPIController::addLiquidity');
+        $routes->get('Liquidity/Remove', 'PredictionsAPIController::removeLiquidity');
+        $routes->get('Markets', 'PredictionsAPIController::markets');
+        $routes->get('Market/(:num)', 'PredictionsAPIController::view/$1');
+        $routes->get('Markets/Create', 'PredictionsAPIController::createMarket');
+        $routes->get('Markets/Settle/(:num)', 'PredictionsAPIController::settle/$1');
+        $routes->get('Orders/Place', 'PredictionsAPIController::placeOrder');
+        $routes->get('Orders/Cancel', 'PredictionsAPIController::cancelOrder');
+        $routes->get('Portfolio', 'PredictionsAPIController::portfolio');
+        $routes->get('Settlements', 'PredictionsAPIController::settlements');
+        $routes->post('PlaceOrder', 'PredictionsAPIController::placeOrder');
+        $routes->post('CancelOrder', 'PredictionsAPIController::cancelOrder');
+        $routes->get('Cron/Distribute-Fees', 'PredictionsAPIController::cronDistributeFees');
+        $routes->get('Cron/Fetch-Market-Data', 'PredictionsAPIController::cronFetchMarketData');
+        $routes->get('Cron/Fetch-User-Data', 'PredictionsAPIController::cronFetchUserData');
+        $routes->get('Cron/Settle-Markets', 'PredictionsAPIController::cronSettleMarkets');
+        $routes->get('Cron/Expire-Markets', 'PredictionsAPIController::cronExpireMarkets');
+        $routes->get('Cron/Update-Market-Prices', 'PredictionsAPIController::cronUpdateMarketPrices');
+        $routes->get('Cron/Update-Market-States', 'PredictionsAPIController::cronUpdateMarketStates');
+        $routes->get('Cron/Update-User-Positions', 'PredictionsAPIController::cronUpdateUserPositions');
+        $routes->get('Cron/Update-User-Stakes', 'PredictionsAPIController::cronUpdateUserStakes');
+        $routes->get('Cron/Update-User-Fees', 'PredictionsAPIController::cronUpdateUserFees');
+        $routes->get('Cron/Update-User-PnL', 'PredictionsAPIController::cronUpdateUserPnL');
+        $routes->get('Cron/Update-User-Rankings', 'PredictionsAPIController::cronUpdateUserRankings');
+        $routes->get('Cron/Update-User-Leaderboard', 'PredictionsAPIController::cronUpdateUserLeaderboard');
+        $routes->get('Cron/Update-User-Stats', 'PredictionsAPIController::cronUpdateUserStats');
+        $routes->get('Cron/Update-User-Notifications', 'PredictionsAPIController::cronUpdateUserNotifications');
+        $routes->get('Cron/Process-Expired-Markets', 'PredictionsAPIController::cronProcessExpiredMarkets');
+        $routes->get('Cron/Process-Settled-Markets', 'PredictionsAPIController::cronProcessSettledMarkets');
+        $routes->get('Cron/Process-User-Orders', 'PredictionsAPIController::cronProcessUserOrders');
+        $routes->get('Cron/Process-User-Positions', 'PredictionsAPIController::cronProcessUserPositions');
+        $routes->get('Cron/Process-User-Stakes', 'PredictionsAPIController::cronProcessUserStakes');
+        $routes->get('Cron/Process-User-Fees', 'PredictionsAPIController::cronProcessUserFees');
+        $routes->get('Cron/Process-User-PnL', 'PredictionsAPIController::cronProcessUserPnL');
+        $routes->get('Cron/Process-User-Rankings', 'PredictionsAPIController::cronProcessUserRankings');
+        $routes->get('Cron/Process-User-Leaderboard', 'PredictionsAPIController::cronProcessUserLeaderboard');
+        $routes->get('Cron/Process-User-Stats', 'PredictionsAPIController::cronProcessUserStats');
+        $routes->get('Cron/Process-User-Notifications', 'PredictionsAPIController::cronProcessUserNotifications');
+        $routes->get('Cron/Process-User-Settlements', 'PredictionsAPIController::cronProcessUserSettlements');
+        $routes->get('Cron/Lock', 'PredictionsAPIController::lock');
+        $routes->get('Cron/Rebalance', 'PredictionsAPIController::rebalanceOdds');
+        $routes->get('Cron/Unlock', 'PredictionsAPIController::unlock');
+        $routes->get('Latest', 'PredictionsAPIController::latest');
     });
 
     $routes->group('Solana', function($routes) {
-        $routes->get('getMarketPrice/(:segment)', 'SolanaController::get/$1');
-        $routes->get('getCoinAmount/(:segment)', 'SolanaController::getCoinAmount/$1');
-        $routes->get('getMarketPrice', 'SolanaController::getMarketPrice');
-        $routes->get('getTokenPrice/(:segment)', 'SolanaController::getTokenPrice/$1');
-        $routes->get('getExchangePrice/(:segment)', 'SolanaController::getExchangePrice/$1');
-        $routes->get('getAssetsData', 'SolanaController::getAssetsData');
-        $routes->get('provisionDefaultWallet', 'SolanaController::provisionDefaultWallet');
-        $routes->get('updatePrices', 'SolanaController::updateSolanaPrices');
-        $routes->get('updateTokens', 'SolanaController::updateSolanaTokens');
+        $routes->get('getMarketPrice/(:segment)', 'SolanaAPIController::get/$1');
+        $routes->get('getCoinAmount/(:segment)', 'SolanaAPIController::getCoinAmount/$1');
+        $routes->get('getMarketPrice', 'SolanaAPIController::getMarketPrice');
+        $routes->get('getTokenPrice/(:segment)', 'SolanaAPIController::getTokenPrice/$1');
+        $routes->get('getExchangePrice/(:segment)', 'SolanaAPIController::getExchangePrice/$1');
+        $routes->get('getAssetsData', 'SolanaAPIController::getAssetsData');
+        $routes->get('provisionDefaultWallet', 'SolanaAPIController::provisionDefaultWallet');
+        $routes->get('updatePrices', 'SolanaAPIController::updateSolanaPrices');
+        $routes->get('updateTokens', 'SolanaAPIController::updateSolanaTokens');
 
         // New Routes - Codex Pull Request https://github.com/MillennialInvestments/MyMIWallet/pull/35/files#diff-bfda09f2b1b5c0bbb67e81be1c5a9e3f3c0abcff17f9890caa17e3557bb25653R1-R4
-        $routes->get('health', 'SolanaController::health');
-        $routes->get('wallet/(:segment)/balance', 'SolanaController::getBalance/$1');
-        $routes->get('wallet/(:segment)/tokens', 'SolanaController::getTokenAccounts/$1');
-        $routes->post('transfer', 'SolanaController::transfer');
-        $routes->post('swap/quote', 'SolanaController::quote');
-        $routes->post('swap/execute', 'SolanaController::swap');
-        $routes->post('token/create', 'SolanaController::createToken');
-        $routes->post('token/mint', 'SolanaController::mint');
+        $routes->get('health', 'SolanaAPIController::health');
+        $routes->get('wallet/(:segment)/balance', 'SolanaAPIController::getBalance/$1');
+        $routes->get('wallet/(:segment)/tokens', 'SolanaAPIController::getTokenAccounts/$1');
+        $routes->post('transfer', 'SolanaAPIController::transfer');
+        $routes->post('swap/quote', 'SolanaAPIController::quote');
+        $routes->post('swap/execute', 'SolanaAPIController::swap');
+        $routes->post('token/create', 'SolanaAPIController::createToken');
+        $routes->post('token/mint', 'SolanaAPIController::mint');
     });    
 
     $routes->group('Support', function($routes) {
         // app/Config/Routes.php (inside your existing User or API group)
-        $routes->get('kb', 'SupportController::kb');
-        $routes->get('kb/(:segment)', 'SupportController::kbArticle/$1');
+        $routes->get('kb', 'SupportAPIController::kb');
+        $routes->get('kb/(:segment)', 'SupportAPIController::kbArticle/$1');
     });
 
     $routes->group('Wallets', function($routes) {
 
-        // ✅ Add this so /API/Wallets resolves to WalletsController::index
-        $routes->get('/', 'WalletsController::index');
-        $routes->get('summary', 'WalletsController::summary');
+        // ✅ Add this so /API/Wallets resolves to WalletsAPIController::index
+        $routes->get('/', 'WalletsAPIController::index');
+        $routes->get('summary', 'WalletsAPIController::summary');
 
         // (keep your existing routes)
-        $routes->get('providers', 'WalletsController::providers');
+        $routes->get('providers', 'WalletsAPIController::providers');
 
         // CRUD
-        $routes->post('Create', 'WalletsController::create');
-        $routes->put('Update/(:num)', 'WalletsController::update/$1');
-        $routes->delete('Unlink/(:num)', 'WalletsController::unlink/$1');
+        $routes->post('Create', 'WalletsAPIController::create');
+        $routes->put('Update/(:num)', 'WalletsAPIController::update/$1');
+        $routes->delete('Unlink/(:num)', 'WalletsAPIController::unlink/$1');
 
         // Broker links
-        $routes->post('Link-Robinhood', 'WalletsController::linkRobinhood');
-        $routes->post('Link-Snaptrade', 'WalletsController::linkSnapTrade');
-        $routes->post('Snaptrade/Connect-URL', 'WalletsController::getSnapTradeConnectUrl');
+        $routes->post('Link-Robinhood', 'WalletsAPIController::linkRobinhood');
+        $routes->post('Link-Snaptrade', 'WalletsAPIController::linkSnapTrade');
+        $routes->post('Snaptrade/Connect-URL', 'WalletsAPIController::getSnapTradeConnectUrl');
 
         // (optional legacy) leave this if you still need it, but it’s not required for the client fetch:
-        $routes->post('Banking/Update/(:num)',   'WalletsController::updateBank/$1');
-        $routes->post('Credit/Update/(:num)',    'WalletsController::updateCredit/$1');
-        $routes->post('Debt/Update/(:num)',      'WalletsController::updateDebt/$1');
-        $routes->post('Investments/Update/(:num)','WalletsController::updateInvestment/$1');
-        $routes->post('Crypto/Update/(:num)',    'WalletsController::updateCrypto/$1');
+        $routes->post('Banking/Update/(:num)',   'WalletsAPIController::updateBank/$1');
+        $routes->post('Credit/Update/(:num)',    'WalletsAPIController::updateCredit/$1');
+        $routes->post('Debt/Update/(:num)',      'WalletsAPIController::updateDebt/$1');
+        $routes->post('Investments/Update/(:num)','WalletsAPIController::updateInvestment/$1');
+        $routes->post('Crypto/Update/(:num)',    'WalletsAPIController::updateCrypto/$1');
 
         // Plaid Integration Links
-        $routes->get('Plaid/Config-Debug', 'WalletsController::plaidConfigDebug');
-        $routes->get('Plaid/Env', 'WalletsController::plaidEnv');
-        $routes->get('Plaid/OAuth-Return', 'WalletsController::plaidOAuthReturn');
-        $routes->get('Plaid/Webhook', 'WalletsController::plaidWebhook');
-        $routes->get('Plaid/Link-Token', 'WalletsController::plaidLinkToken');
-        $routes->post('Plaid/Exchange', 'WalletsController::plaidExchange');
+        $routes->get('Plaid/Config-Debug', 'WalletsAPIController::plaidConfigDebug');
+        $routes->get('Plaid/Env', 'WalletsAPIController::plaidEnv');
+        $routes->get('Plaid/OAuth-Return', 'WalletsAPIController::plaidOAuthReturn');
+        $routes->get('Plaid/Webhook', 'WalletsAPIController::plaidWebhook');
+        $routes->get('Plaid/Link-Token', 'WalletsAPIController::plaidLinkToken');
+        $routes->post('Plaid/Exchange', 'WalletsAPIController::plaidExchange');
 
-        $routes->get('/(:segment)/(:segment)', 'WalletsController::index/$1/$2');
+        $routes->get('/(:segment)/(:segment)', 'WalletsAPIController::index/$1/$2');
 
     });
 
     $routes->group('User', function($routes) {
-        $routes->match(['GET', 'POST'], 'Comments/Add', 'UserController::addComment');
+        $routes->match(['GET', 'POST'], 'Comments/Add', 'UserAPIController::addComment');
     });
 
     // Backwards-compatible alias for pluralized /API/Users path surface.
     $routes->group('Users', function($routes) {
-        $routes->match(['GET', 'POST'], 'Comments/Add', 'UserController::addComment');
+        $routes->match(['GET', 'POST'], 'Comments/Add', 'UserAPIController::addComment');
     });
 });
 
 // // Alerts-related public APIs
 // $routes->group('Alerts', function ($routes) {
-//     $routes->get('fetchMarketAuxNews/(:segment)', 'AlertsController::fetchMarketAuxNews/$1');
+//     $routes->get('fetchMarketAuxNews/(:segment)', 'AlertsAPIController::fetchMarketAuxNews/$1');
 // });
 
 $routes->group('Blog', ['namespace' => 'App\Modules\Blog\Controllers'],  function($routes) {

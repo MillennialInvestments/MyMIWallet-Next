@@ -114,7 +114,7 @@
         {
             "command": "aiops:chat-gov-index",
             "class": "App\\Commands\\AiOps\\ChatGovernanceIndex",
-            "group": "AI-Ops - Commands",
+            "group": "AIOps - Commands",
             "description": "Index ChatGPT governance steps from archived chats and sync CSV/DB outputs.",
             "classification": "read-only",
             "requires_approval": false,
@@ -124,7 +124,7 @@
         {
             "command": "aiops:command-index",
             "class": "App\\Commands\\AiOps\\CommandIndex",
-            "group": "AI-Ops - Commands",
+            "group": "AIOps - Commands",
             "description": "Scan and classify Spark commands for AIOps governance.",
             "classification": "read-only",
             "requires_approval": false,
@@ -144,7 +144,7 @@
         {
             "command": "aiops:copilot:validate",
             "class": "App\\Commands\\AiOps\\CopilotValidate",
-            "group": "AI-Ops - Audit",
+            "group": "AIOps - Audit",
             "description": "Validate copilot instructions and Spark command safety rules.",
             "classification": "read-only",
             "requires_approval": false,
@@ -584,7 +584,7 @@
         {
             "command": "aiops:run",
             "class": "App\\Commands\\AiOps\\Run",
-            "group": "AI-Ops - Run",
+            "group": "AIOps - Run",
             "description": "Manually run the AI-Ops worker and generate docs/_aiops reports",
             "classification": "safe",
             "requires_approval": false,
@@ -604,7 +604,7 @@
         {
             "command": "aiops:seed",
             "class": "App\\Commands\\AiOps\\Seed",
-            "group": "AI-Ops - PR",
+            "group": "AIOps - PR",
             "description": "Seed default AI Ops caps and pricing configuration.",
             "classification": "safe",
             "requires_approval": false,

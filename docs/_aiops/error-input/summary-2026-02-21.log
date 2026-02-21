@@ -4,7 +4,7 @@
    Grouped by (LEVEL + message)
 ===============================================
 
-Last processed up to: 2026-02-21 13:42:21
+Last processed up to: 2026-02-21 18:00:04
 
 ---------------------------
 LEVEL: DEBUG
@@ -49,42 +49,54 @@ DEBUG --> LOG_HEALTHCHECK debug marker=ab180b443010
 [1 occurrence(s)]
 DEBUG --> LOG_HEALTHCHECK debug marker=cd733aff8d8e
 
+[1 occurrence(s)]
+DEBUG --> LOG_HEALTHCHECK debug marker=0fa62f38d389
+
+[1 occurrence(s)]
+DEBUG --> LOG_HEALTHCHECK debug marker=8a8fc5a0d27f
+
+[1 occurrence(s)]
+DEBUG --> LOG_HEALTHCHECK debug marker=7947951ab008
+
+[1 occurrence(s)]
+DEBUG --> LOG_HEALTHCHECK debug marker=d3128f2a8696
+
 
 ---------------------------
 LEVEL: INFO
 ---------------------------
 
-[12 occurrence(s)]
+[16 occurrence(s)]
 INFO --> [spark:aiops:run] Intent
 
-[57 occurrence(s)]
+[81 occurrence(s)]
 INFO --> [spark:ops:work] Started
 
-[57 occurrence(s)]
+[81 occurrence(s)]
 INFO --> [spark:ops:work] Intent
 
-[57 occurrence(s)]
+[81 occurrence(s)]
 INFO --> [spark:ops:work] Completed
 
-[13 occurrence(s)]
+[17 occurrence(s)]
 INFO --> [AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Started
 
-[13 occurrence(s)]
+[17 occurrence(s)]
 INFO --> [spark:logs:summarize] Intent
 
-[12 occurrence(s)]
+[16 occurrence(s)]
 INFO --> [AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Completed
 
-[11 occurrence(s)]
+[15 occurrence(s)]
 INFO --> [spark:app:healthcheck] Started
 
-[11 occurrence(s)]
+[15 occurrence(s)]
 INFO --> [spark:app:healthcheck] Intent
 
 [1 occurrence(s)]
 INFO --> LOG_HEALTHCHECK info marker=e885eeffa4c0
 
-[11 occurrence(s)]
+[15 occurrence(s)]
 INFO --> [spark:app:healthcheck] Completed
 
 [1 occurrence(s)]
@@ -111,10 +123,10 @@ INFO --> [spark:aiops:auto:run] Intent
 [1 occurrence(s)]
 INFO --> LOG_HEALTHCHECK info marker=2880d10185fb
 
-[3 occurrence(s)]
+[5 occurrence(s)]
 INFO --> [spark:config:clear] Intent
 
-[3 occurrence(s)]
+[5 occurrence(s)]
 INFO --> [spark:spark-reset] Intent
 
 [1 occurrence(s)]
@@ -138,23 +150,35 @@ INFO --> LOG_HEALTHCHECK info marker=ab180b443010
 [1 occurrence(s)]
 INFO --> LOG_HEALTHCHECK info marker=cd733aff8d8e
 
+[1 occurrence(s)]
+INFO --> LOG_HEALTHCHECK info marker=0fa62f38d389
+
+[1 occurrence(s)]
+INFO --> LOG_HEALTHCHECK info marker=8a8fc5a0d27f
+
+[1 occurrence(s)]
+INFO --> LOG_HEALTHCHECK info marker=7947951ab008
+
+[1 occurrence(s)]
+INFO --> LOG_HEALTHCHECK info marker=d3128f2a8696
+
 
 ===============================================
    HERE'S THE NEW STUFF
-   (Entries logged AFTER 2026-02-21 13:42:21)
+   (Entries logged AFTER 2026-02-21 18:00:04)
 ===============================================
 
 ---------------------------
 LEVEL: INFO (NEW)
 ---------------------------
 
-[2 NEW occurrence(s)]
+[8 NEW occurrence(s)]
 INFO --> [spark:ops:work] Started
 
-[2 NEW occurrence(s)]
+[8 NEW occurrence(s)]
 INFO --> [spark:ops:work] Intent
 
-[2 NEW occurrence(s)]
+[8 NEW occurrence(s)]
 INFO --> [spark:ops:work] Completed
 
 [1 NEW occurrence(s)]

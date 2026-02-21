@@ -11,7 +11,7 @@ use CodeIgniter\CLI\CLI;
 
 class CopilotValidate extends SafeBaseCommand
 {
-    protected $group       = 'AI-Ops - Audit';
+    protected $group       = 'AIOps - Audit';
     protected $name        = 'aiops:copilot:validate';
     protected $description = 'Validate copilot instructions and Spark command safety rules.';
     protected $usage       = 'aiops:copilot:validate [--json] [--notify] [--db]';
