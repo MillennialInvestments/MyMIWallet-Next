@@ -15,12 +15,12 @@ class RepairRun extends SafeBaseCommand
     {
         CLI::write('Starting autonomous repair pipeline...');
 
-        $this->runSpark('aiops:observe:scan');
-        $this->runSpark('aiops:observe:hash');
-        $this->runSpark('aiops:observe:cost');
-        $this->runSpark('aiops:observe:suggest');
-        $this->runSpark('aiops:diff:format');
-        $this->runSpark('aiops:patch:apply');
+        $this->spark('aiops:observe:scan');
+        $this->spark('aiops:observe:hash');
+        $this->spark('aiops:observe:cost');
+        $this->spark('aiops:observe:suggest');
+        $this->spark('aiops:diff:format');
+        $this->spark('aiops:patch:apply');
 
         CLI::write('Repair pipeline complete.');
     }

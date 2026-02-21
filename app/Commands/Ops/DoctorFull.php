@@ -17,14 +17,14 @@ class DoctorFull extends SafeBaseCommand
     {
         CLI::write("Ops Doctor (full) starting...\n", 'yellow');
 
-        $this->runSpark('ops:php:extensions');
-        $this->runSpark('ops:network:matrix');
+        $this->spark('ops:php:extensions');
+        $this->spark('ops:network:matrix');
 
         // If available in your codebase, keep these (won’t fail the whole doctor if missing)
-        $this->runSpark('runtime:spark-doctor', true);
+        $this->spark('runtime:spark-doctor', true);
 
         // DreamHost IMAP deep probe
-        $this->runSpark('dreamhost:imap-capabilities', true);
+        $this->spark('dreamhost:imap-capabilities', true);
 
         CLI::write("\n✔ Ops Doctor complete.", 'green');
         return EXIT_SUCCESS;

@@ -1,31 +1,17 @@
 # AI-Ops: Nightly Summary
 > Auto-generated. Do not edit manually.
-<<<<<<< Updated upstream
-> Run: 2026-02-19T00:00:02Z
-||||||| constructed merge base
-> Run: 2026-02-18T16:00:02Z
-=======
-> Run: 2026-02-18T20:00:01Z
->>>>>>> Stashed changes
+> Run: 2026-02-21T02:49:01Z
 
 ## Docs
-<<<<<<< Updated upstream
-- Changed docs: 0
-- Total docs scanned: 1139
-||||||| constructed merge base
-- Changed docs: 2
-- Total docs scanned: 1138
-=======
-- Changed docs: 0
-- Total docs scanned: 1138
->>>>>>> Stashed changes
+- Changed docs: 1142
+- Total docs scanned: 1142
 
 ## Gaps (heuristic)
-- Undocumented code candidates: 1162
-- Docs with no code match candidates: 991
+- Undocumented code candidates: 1164
+- Docs with no code match candidates: 993
 
 ## Stale Docs
-- Docs older than 60 days: 167
+- Docs older than 60 days: 185
 
 ## Suggestions
 - See: `docs/_aiops/next-steps.md`

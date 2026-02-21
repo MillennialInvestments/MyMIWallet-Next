@@ -24,6 +24,138 @@
             "hash": "08a25b1b7a264b7c48898486724d703dba5c76754e8f9169bb6a4d6213d41424",
             "mtime": "2025-11-08"
         },
+        "docs/_audit/ci4-logger-audit-2026-02-18.md": {
+            "hash": "b1ffe644ace6b0042d51ecc12544eac55d5d31523bda8aaf5b76d4f8d7688467",
+            "mtime": "2026-02-18"
+        },
+        "docs/_audit/ci4-logger-hardening-2026-02-18.md": {
+            "hash": "5326b933f2580741ecadfb1917bf962027036518a38d27eff5a1db0e445aaa15",
+            "mtime": "2026-02-18"
+        },
+        "docs/_ops/filesystem-lint-summary.md": {
+            "hash": "157e3555bafd13b0cd9a5b233b105f8edb9099378fcea4fb8741daa240b2fcc4",
+            "mtime": "2026-02-10"
+        },
+        "docs/_ops/filesystem-lint.md": {
+            "hash": "21bd35f31ae26278a181e4e674296d91727ed19bf3057069a43aa8d8a203410a",
+            "mtime": "2026-02-17"
+        },
+        "docs/_ops/filesystem-trend.md": {
+            "hash": "9bcc06aaf508ce4686520b5884511d97e997da07eb0d1bb833e8b28e0cd394b9",
+            "mtime": "2026-02-10"
+        },
+        "docs/_support/aiops-init.md": {
+            "hash": "e6d6afb2749947f259a6683fc7727c9ce0c4b38d0d2ef45e0d24b0e14d4a44a9",
+            "mtime": "2026-02-20"
+        },
+        "docs/_support/aiops-init/20260220-234314/summary.md": {
+            "hash": "bbdd4b12ecc00bd3db9e3adf3e666888f86d84840cdac29f2fddd5b8c4ef202d",
+            "mtime": "2026-02-20"
+        },
+        "docs/_support/api-audit/20260211-023725/summary.md": {
+            "hash": "cf8a2672c6234a4d398dfa6d885ea6452beaea6cae2b21468efe6f4bf1edef53",
+            "mtime": "2026-02-11"
+        },
+        "docs/_support/api-audit/20260217-175526/summary.md": {
+            "hash": "a86e77627821e1f22235443cf3415318f85ea3d7d006d7cf433165c1c26506ed",
+            "mtime": "2026-02-17"
+        },
+        "docs/_support/api-audit/20260217-200919/summary.md": {
+            "hash": "e39b328dcda3e14d13498735c0ad9b545ecb82cf19974c96780b0e0211f0f1a5",
+            "mtime": "2026-02-17"
+        },
+        "docs/_support/fix-503/20260215-005841/summary.md": {
+            "hash": "1c66abd41175accca99c17d261e18dc2abc7355a95c21015489a1a946ae385ba",
+            "mtime": "2026-02-15"
+        },
+        "docs/_support/ops-spark-reset/20260210-130402/summary.md": {
+            "hash": "aa3074cdca68c11900e3d512f57f6fead5133af91d2cceffa922260bbba1165d",
+            "mtime": "2026-02-10"
+        },
+        "docs/_support/ops-spark-reset/20260210-133819/summary.md": {
+            "hash": "5dc1a048c0fd47e23e63b629bf429304259c5193d65aab958cad1c8ea679186a",
+            "mtime": "2026-02-10"
+        },
+        "docs/_support/ops-spark-reset/20260212-005323/summary.md": {
+            "hash": "2e014e98950b2ba3251245a3e18b13f41c5743773532409f3123610dbaf67bf5",
+            "mtime": "2026-02-12"
+        },
+        "docs/_support/ops-spark-reset/20260212-010136/summary.md": {
+            "hash": "bbd6a3e9fdb0a59915dfe147820ba5bb181005e626b5bd05b2f161db64e07ed1",
+            "mtime": "2026-02-12"
+        },
+        "docs/_support/ops-spark-reset/20260212-010223/summary.md": {
+            "hash": "784da3a6426bd28e18cf2df12424cc66f1c23559db205ce76ece821af670dfae",
+            "mtime": "2026-02-12"
+        },
+        "docs/_support/ops-spark-reset/20260212-010317/summary.md": {
+            "hash": "97dabbdd90ce4e19f5ed0052ca920877cd6540232f364ed4f89e60ab14832180",
+            "mtime": "2026-02-12"
+        },
+        "docs/_support/ops-spark-reset/20260212-010628/summary.md": {
+            "hash": "9a114e303e73ddfd0cd3b3f0d7b2981aa31025b3e4188d08266493f326f05528",
+            "mtime": "2026-02-12"
+        },
+        "docs/_support/ops-spark-reset/20260212-023503/summary.md": {
+            "hash": "054c71c2c51759152eef005aaabf73f13fa6b76d8388c69ebb00993636ac8af6",
+            "mtime": "2026-02-12"
+        },
+        "docs/_support/ops-spark-reset/20260213-050023/summary.md": {
+            "hash": "23c6c4a0ac1172925e4997dd7f8e7ecf422063d7b330efee387a195499f7e2a4",
+            "mtime": "2026-02-14"
+        },
+        "docs/_support/ops-spark-reset/20260213-050826/summary.md": {
+            "hash": "8e0423c34011afcec0d8ad5b4a304b65e0dfa7dd6464a6613b4ea5bf9ad3e34b",
+            "mtime": "2026-02-14"
+        },
+        "docs/_support/ops-spark-reset/20260217-000858/summary.md": {
+            "hash": "6e00447d1f8f399f88c14c09165a5975e5c19c08f95f4567ee93e6494c9ab541",
+            "mtime": "2026-02-17"
+        },
+        "docs/_support/ops-spark-reset/20260217-001035/summary.md": {
+            "hash": "c00a6dd98c09e6986efe7336425d867cc3882a7e664265eb366a20b0f8ec8109",
+            "mtime": "2026-02-17"
+        },
+        "docs/_support/ops-spark-reset/20260217-014932/summary.md": {
+            "hash": "9eff3ca4f05329f40a51ed00f524f54c793614e36c7ddfc69ef50f0a41681946",
+            "mtime": "2026-02-17"
+        },
+        "docs/_support/ops-spark-reset/20260217-032014/summary.md": {
+            "hash": "99b90617e7814635f7f531aeabb3169a54dfb0ce7a3774b1139db3d83eb26913",
+            "mtime": "2026-02-17"
+        },
+        "docs/_support/ops-spark-reset/20260217-041857/summary.md": {
+            "hash": "7f402d3cdfdb02d87201c31f8350945de55100e4e45a28594e3ad0eb191bff50",
+            "mtime": "2026-02-17"
+        },
+        "docs/_support/ops-spark-reset/20260217-042717/summary.md": {
+            "hash": "3d33a95b133704d609ff9f0dbad0c744a659ac35bb3909b628a0c092b3767d7f",
+            "mtime": "2026-02-17"
+        },
+        "docs/_support/ops-spark-reset/20260217-042932/summary.md": {
+            "hash": "b237caf6e3dff9f8fb3b6fa99d8f04fd366c1ad4e1abed089b5a1b0fb501a997",
+            "mtime": "2026-02-17"
+        },
+        "docs/_support/ops-spark-reset/20260217-043056/summary.md": {
+            "hash": "e67607df3f5bd07a835333383dbf16750c59a4c9ae7daf72b389a6863b1c59b2",
+            "mtime": "2026-02-17"
+        },
+        "docs/_support/ops-spark-reset/20260217-043328/summary.md": {
+            "hash": "3668952202e8465fcc5ee04514e1e67329aefb733c825c66fb26e4d2ecd16fe1",
+            "mtime": "2026-02-17"
+        },
+        "docs/_support/ops-spark-reset/20260217-133855/summary.md": {
+            "hash": "54e353e11f6672f8d804405179542f1095af82b4a5d1b0d3c20b0ef1d30ccaca",
+            "mtime": "2026-02-17"
+        },
+        "docs/_support/runtime-cache-boot/20260215-010126/summary.md": {
+            "hash": "c3a878ef31346283d688eaccec70d5263ae7abc9366e70864d3db9467ab7fb17",
+            "mtime": "2026-02-15"
+        },
+        "docs/_support/runtime-triage/20260215-010146/summary.md": {
+            "hash": "9a38f0bd9ec7ce092be0073f53ceabafa44bf7e14e6bd61ced9c02364a40f9f9",
+            "mtime": "2026-02-15"
+        },
         "docs/adr/0001-standards-and-response-contract.md": {
             "hash": "3e6ddaeef644d044c1805c18def40543195c9ba32fd352610e417ab2aa410530",
             "mtime": "2025-11-08"
@@ -72,6 +204,10 @@
             "hash": "08d472dd633308378853ac6135d6a3be883cd6d38474b5615a84e5a910f3a7fd",
             "mtime": "2026-01-04"
         },
+        "docs/aiops/ARTIFACT_SANDBOX.md": {
+            "hash": "ff4189fdd9d93b65f59193b9afe63328f9008bc00bcd1ef131da9f017752e953",
+            "mtime": "2026-02-02"
+        },
         "docs/aiops/README.md": {
             "hash": "d06c1b59ad07313eb79c10c9d50e45b16e12a48ee2507617194e160fd7e02379",
             "mtime": "2026-02-01"
@@ -79,6 +215,74 @@
         "docs/aiops/api-audit.md": {
             "hash": "ff3dc66dad2e7e0c6a8f2a985f33857d9bd0d2c9c242b4884ae62ccf93fc0e16",
             "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/api-audit/20260209-112136/fix-report.md": {
+            "hash": "e4bdb78b85abbef118885774a8bd4c2b2f5155a169d1cbd3b3e786198d26f67a",
+            "mtime": "2026-02-09"
+        },
+        "docs/aiops/artifacts/api-audit/20260209-112136/next-steps.md": {
+            "hash": "d7103003979779e00e343a691c8c11a3ddbb1ccfaa2f725752791ed5809217eb",
+            "mtime": "2026-02-09"
+        },
+        "docs/aiops/artifacts/api-audit/20260209-112136/summary.md": {
+            "hash": "166085e81cea98aeba42a8173333618d8a170a0aed50998388288de28512539d",
+            "mtime": "2026-02-09"
+        },
+        "docs/aiops/artifacts/config-drift/20260201-180724/summary.md": {
+            "hash": "b02299ba8e6ca873a9b868d301592ce4d4a64bc7b78795c808c025e13bdaac73",
+            "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/config-drift/20260201-183558/summary.md": {
+            "hash": "be6331c9027bf67e04260e1fdcd940ff079643e0e8398158c5ab1eb1e81e073a",
+            "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/config-drift/20260201-184056/summary.md": {
+            "hash": "ad68a4260e47455a56613bb0c45efe47c3c588fbde50cda6eb3f9e42efb2126e",
+            "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/db-drift/20260201-181038/summary.md": {
+            "hash": "6d2d6b93483b14675b1b7d879727c0d62531bbe3fe49d5a457fcb2535597c391",
+            "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/db-drift/20260201-184402/summary.md": {
+            "hash": "0763a09fc97c33ac39537e5ee88d6e71bbc24d1b292f2dc5f6b00c2e5e708003",
+            "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/db-drift/20260205-024725/summary.md": {
+            "hash": "6a3c7c76d53e6125c70cf65c02488980adaa5a6e9d4f81ac8bec33b43e7be310",
+            "mtime": "2026-02-06"
+        },
+        "docs/aiops/artifacts/fix-503/20260208-195751/summary.md": {
+            "hash": "3e77749ebf6cc25942a254f12c47cf376ecbefd415cbffdd907553b0705ea534",
+            "mtime": "2026-02-09"
+        },
+        "docs/aiops/artifacts/growth-retention-watch/20260201-180732/summary.md": {
+            "hash": "e6d8c18e8a3794c13f222028ccecdc5873d4617a71bc8db712e7316fd3784664",
+            "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/growth-retention-watch/20260201-183610/summary.md": {
+            "hash": "30d23ec24da2ee3bc129cd15220492690183c6e949ec4ade7cc523446bddbde8",
+            "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/growth-retention-watch/20260201-184102/summary.md": {
+            "hash": "77ae3d34bff0ae8540531634c714a27c060201508a64b2f247ffd342f6ba28c5",
+            "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/growth-retention-watch/20260205-024348/summary.md": {
+            "hash": "3d2e24fdec085e03e926c00456261749686d96f15e61c5062d771371b3469d0e",
+            "mtime": "2026-02-06"
+        },
+        "docs/aiops/artifacts/growth-retention-watch/20260205-024413/summary.md": {
+            "hash": "22ac9568c54b9a2df6883e60a6baf8394d99d610a91ec6812d50d9b7d42c4976",
+            "mtime": "2026-02-06"
+        },
+        "docs/aiops/artifacts/marketing-automation-audit/20260201-185227/summary.md": {
+            "hash": "44a21c95f60910053010ce591d644a074c3fe1f1dd2edf9060b0924017dc1736",
+            "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/marketing-automation-audit/20260205-024948/summary.md": {
+            "hash": "6982f307eaab0cf5aff4d37e95cadd3769a4fe49019d351f35293be2faefc4d0",
+            "mtime": "2026-02-06"
         },
         "docs/aiops/artifacts/ops-spark-reset/20260201-143924/summary.md": {
             "hash": "bd6c4f463129ed81c79acaed14290dfdaa5a54d56c47d8b72442080b02036fad",
@@ -95,6 +299,278 @@
         "docs/aiops/artifacts/ops-spark-reset/20260201-180030/summary.md": {
             "hash": "9aff3ac78bc2b95c956b0ed72d6ef52aed4d6437883c4875300f3fce51f36643",
             "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260201-185612/summary.md": {
+            "hash": "9b402d39301284f2c8b911a9bc93ccdb394d83757960ebd1e40123fe14bacd86",
+            "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260201-234406/summary.md": {
+            "hash": "0d126a39155199efc7ec2199da8b445796bcfd9b2a5109904776c07d37e8604c",
+            "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260202-022437/summary.md": {
+            "hash": "b6405fdae5371cef443b7079d738479244cd2750f1aff5a9f5b8ac3377e5577a",
+            "mtime": "2026-02-02"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260207-135815/summary.md": {
+            "hash": "2a3c3b30136b25c9636b3dc60cf6880e28cae20af8b59c95c9ef10c2c3b0a78e",
+            "mtime": "2026-02-07"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260207-140038/summary.md": {
+            "hash": "bf808f26edca1149158333fbb083d45a3e79ab13a455b7e049aeac3dd20ff09e",
+            "mtime": "2026-02-07"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260207-140215/summary.md": {
+            "hash": "83691f5b0150ddfa02d7eb8741d08915d348aab8fe05ee31f8c01e1f4f2bc1de",
+            "mtime": "2026-02-07"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260207-151413/summary.md": {
+            "hash": "d22137e46a367e9a5a41e7fff61c1083c9582ecf8a5ecd159b97088759b44dc9",
+            "mtime": "2026-02-07"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260207-152502/summary.md": {
+            "hash": "431d469d8753779cf7328cdfe2152627fc4ff7ee967f99c0a4585353ec45dcbe",
+            "mtime": "2026-02-07"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260207-153004/summary.md": {
+            "hash": "2ba18809a9e59ae5b1f384ecf63dd97766250d1468960ce182cd52ea319f2f3c",
+            "mtime": "2026-02-07"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260207-212657/summary.md": {
+            "hash": "66de801b6dcaa6044412308c74f3469d5c9985f16f0da597ee767b76598b0f0e",
+            "mtime": "2026-02-07"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260207-231039/summary.md": {
+            "hash": "a70701b10b6aed94d043371194087c68146e0ea1b9e46bcebd9839de39ec97f0",
+            "mtime": "2026-02-07"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-033458/summary.md": {
+            "hash": "4702d01b5ec4e7d5809958e7b66570803d9b8836e764d8670deac17b3ad7ba61",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-131051/summary.md": {
+            "hash": "d80453f8456c5e46b22db67f6019051faf85499cf7ac58d9454b917d28c77960",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-132515/summary.md": {
+            "hash": "2d545e465b65cf51cd8575185b72207f5ae2b8ad01a225fb6c5831e323d35d1a",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-134346/summary.md": {
+            "hash": "927a77c108f51c60ad5883338f29e1d1e411288dd65d6c2e87b8b99f08124d17",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-135706/summary.md": {
+            "hash": "bc0c4dfbbb0cebd6460dfc137b393f14910db4f8b1f60cc026140a7f98ce206e",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-141537/summary.md": {
+            "hash": "5561c8d1237fe2dc8cac485221d69b4b10aa88fcd26039b3c6e249061857906c",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-141808/summary.md": {
+            "hash": "d4b9041a35f55da127ec372b9e7141a451f475f06256b23eab09c7815cb56702",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-142038/summary.md": {
+            "hash": "381dfa405f5a2110d4d325e842cfaa35c5cc20284d5dda36ad9208edb925e814",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-142127/summary.md": {
+            "hash": "13016ebf21da77c3a9bc10ce2306ea2134e24368bace865a62ce73f81c2e8054",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-142148/summary.md": {
+            "hash": "ab5908c35db481795060f147949773bcd210be2318e28a3546836cd9a01fc492",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-143848/summary.md": {
+            "hash": "6ffa0951b2fab756ce8af3dd1886e6fbc54fd3bc26c93045411f64f17a8f6437",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-154553/summary.md": {
+            "hash": "a8d00be195ce5cc8f20348e7521b0a9f367ccd9edadc9182c7757e3c4002f21f",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-165510/summary.md": {
+            "hash": "0f67138b515b8543c5dfb8825ad4503cc788380fe292b36e200ede4792687a87",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260208-201007/summary.md": {
+            "hash": "242848d347d2fd18e7c581a93ee4baff8797090ba50d6ac7e5cba4c0e7ddbe18",
+            "mtime": "2026-02-09"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260209-005441/summary.md": {
+            "hash": "92022637bd66628820b23791d5dd113c2246721c6874df6b7054dc5179216bd9",
+            "mtime": "2026-02-09"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260209-110400/summary.md": {
+            "hash": "0dfe32976456ebcc043d1491f58fba6345e4af8187991256577f101844102e7e",
+            "mtime": "2026-02-09"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260209-160123/summary.md": {
+            "hash": "f83a07d93c72ea9ca084ad16a42b1dca0ff15d23d7f12bd0a3dc1b571c0d884d",
+            "mtime": "2026-02-09"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260209-191653/summary.md": {
+            "hash": "7699ef51092ee281504f3c39c10a4f4b26e79dc472b277acfa0c1da8774350ad",
+            "mtime": "2026-02-09"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260209-191902/summary.md": {
+            "hash": "908b6caaf1971cc8ccf1679d1c6cb2c22f41791e1ac71bf0f2dcd2b08ced32ce",
+            "mtime": "2026-02-09"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260209-195604/summary.md": {
+            "hash": "5db1c9e35d79eda57448278b524a63b3bd85e9db8b586c7a359c50bff22d11e4",
+            "mtime": "2026-02-09"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260209-211333/summary.md": {
+            "hash": "f99562f60044ed42cc01b9d724db033b44233012b0e209e0ce30aa32926cee49",
+            "mtime": "2026-02-09"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260209-211618/summary.md": {
+            "hash": "d47f8a1213513054c71ba93f0bc55c9a6c191def183e73fcf2836d646ddb29fc",
+            "mtime": "2026-02-10"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260209-221128/summary.md": {
+            "hash": "44b660c8d138799703430b06e4c634ebb67148f1b3f16f65922e545de23ce966",
+            "mtime": "2026-02-10"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260209-222751/summary.md": {
+            "hash": "dbdbdf5ea10ffe3c18d367a1ff81f48bfcfcc21e0d5d61b9e86c21755edfe63e",
+            "mtime": "2026-02-10"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260210-002222/summary.md": {
+            "hash": "8930ab976c548c4e2be798e37794af0e7676ee443466dc15aa87777d8f2c658e",
+            "mtime": "2026-02-10"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260210-015456/summary.md": {
+            "hash": "bf6a9857a7e236305c2458e7e65f53d54f5cfcaa8a9ce0947196b2a5762fdb7e",
+            "mtime": "2026-02-10"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260210-015513/summary.md": {
+            "hash": "d876fc22d4118688ea4e74d5df49f9656caec1b0f43df32528c462c7204deff0",
+            "mtime": "2026-02-10"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260210-112114/summary.md": {
+            "hash": "d1cb7487316c6682ae48a14e45bfc1f299db47d5c8943df827a2f44a74a2308b",
+            "mtime": "2026-02-10"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260210-112241/summary.md": {
+            "hash": "2e9af2e94d7f181d0057e338a68942265bff40ff7f6c2a90f0b232f69bd0fae4",
+            "mtime": "2026-02-10"
+        },
+        "docs/aiops/artifacts/ops-spark-reset/20260210-130237/summary.md": {
+            "hash": "317ffcfe2e3036b00cf665183cdd24ffa4c7a97a9131d787f20712b9e9029020",
+            "mtime": "2026-02-10"
+        },
+        "docs/aiops/artifacts/revenue-cost-forecast/20260201-180746/summary.md": {
+            "hash": "a48008996a2324a6eff538c538acc49449d0e15c7d3347b969d2be15428df2dd",
+            "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/revenue-cost-forecast/20260201-183620/summary.md": {
+            "hash": "60c8d510ecd4f5b4e434ddad2c3213d129f96858164c1e487c8cf5a7ec72b3c1",
+            "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/revenue-cost-forecast/20260201-184109/summary.md": {
+            "hash": "1c6a2500cb1d9828ad2fbb664a47971a943b2ab57944bb12312ce598e4fb1050",
+            "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/revenue-cost-forecast/20260205-024422/summary.md": {
+            "hash": "99e64feb23279b239465a4dba3daf71f6a37a3b01b0c02bcd528f9458f16480d",
+            "mtime": "2026-02-06"
+        },
+        "docs/aiops/artifacts/revenue-scan/20260205-025010/README.md": {
+            "hash": "3cef2f3fd93022ed27fae357b543c9ffc27262cfe7db6cbfefbd8f8d5bceae5f",
+            "mtime": "2026-02-06"
+        },
+        "docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_by_module.md": {
+            "hash": "084c76ac08e96dcc320c7f536f2e87582aaba1d5c8dad79b0df598c5025eb6ab",
+            "mtime": "2026-02-06"
+        },
+        "docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_by_pricing_tier.md": {
+            "hash": "81ca1cb65b717a20ae0840205dbaf8a32fbb21fd381928f4a5b62f598352253c",
+            "mtime": "2026-02-06"
+        },
+        "docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_by_user_type.md": {
+            "hash": "7c16404c775e740178b603669ca43654932403c099223986d63bc1aecad724cd",
+            "mtime": "2026-02-06"
+        },
+        "docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_full.md": {
+            "hash": "0b40dee67c6a298c50017914ce822a187fd6f18f62f6989173ca1fe624a80f2e",
+            "mtime": "2026-02-06"
+        },
+        "docs/aiops/artifacts/revenue-scan/20260205-025010/summary.md": {
+            "hash": "c904f71897416447f8320efcb17e0e2ccec0e809ab5cde543cbb69f74bac49e8",
+            "mtime": "2026-02-06"
+        },
+        "docs/aiops/artifacts/runtime-cache-boot/20260201-185706/summary.md": {
+            "hash": "c8878424b550835a6f0beffa7abed503e342e39e242961ab49a0dbafe7455205",
+            "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/runtime-cache-boot/20260208-195646/summary.md": {
+            "hash": "1c469fc7c7feaddb169dea98d63f4625fe515f859ba2a79474d3bb10d9da29c6",
+            "mtime": "2026-02-09"
+        },
+        "docs/aiops/artifacts/runtime-triage/20260201-185742/summary.md": {
+            "hash": "b5b153040c9e1a95f4a9e6ba146784abebd36372df8d87e4de395c13733a7d29",
+            "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/runtime-triage/20260208-195714/summary.md": {
+            "hash": "4d9d48780f24d6cba91a14f7422486ade7b7b2883471219fcf42068edd0f20ac",
+            "mtime": "2026-02-09"
+        },
+        "docs/aiops/artifacts/scraper-audit-emails/20260205-024438/summary.md": {
+            "hash": "f311916f8dcdbf0c9a1e8908c7e66ce7d710659dc1d64e7548ca9820f6f35612",
+            "mtime": "2026-02-06"
+        },
+        "docs/aiops/artifacts/security-secrets-audit/20260201-185757/summary.md": {
+            "hash": "e53eaa42c6e8cb8a32abee1c5dff04b0632f15f7780b0e67d2681c35b65a0b92",
+            "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/security-secrets-audit/20260208-195737/summary.md": {
+            "hash": "8d99fa9737925b72780f71aeb8751fb9a0061d5c7c11a008897c56cf1b46233d",
+            "mtime": "2026-02-09"
+        },
+        "docs/aiops/artifacts/ux-journey-audit/20260201-180810/summary.md": {
+            "hash": "08241aa59faa5fe9171d1f43a500200420f5f6774c95e82ae5bc99db76cd5423",
+            "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/ux-journey-audit/20260201-183649/summary.md": {
+            "hash": "dc8d83c5a1a20e3d21e6df66f113e080a826f251082cb657a2569598fb719cea",
+            "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/ux-journey-audit/20260201-184200/summary.md": {
+            "hash": "80f55b8f21bd916e64e900408d244ccf8dd5d3c081b0a57b29aa5883d383dd8d",
+            "mtime": "2026-02-01"
+        },
+        "docs/aiops/artifacts/ux-journey-audit/20260205-024451/summary.md": {
+            "hash": "19cbbe79074c3a8c0a93258ccebbe255fce3c3f44ec3699212d7712dfc7e596a",
+            "mtime": "2026-02-06"
+        },
+        "docs/aiops/automation/_index.md": {
+            "hash": "0c9ef845c4606fb9bd98504e4d3d9cd9ce906fce5057d61c56e72b8fd9526b17",
+            "mtime": "2026-02-06"
+        },
+        "docs/aiops/automation/alerts_playbook.md": {
+            "hash": "e49762e3ea89cd26b7d1af68ac551586e2205cf0343cac1f2f0f46d3e53dd60b",
+            "mtime": "2026-02-06"
+        },
+        "docs/aiops/automation/marketing_playbook.md": {
+            "hash": "25e7ce1c6823a2f867754328acd89ac7a3d3991856421b57eb225daeac649e4f",
+            "mtime": "2026-02-06"
+        },
+        "docs/aiops/automation/news_playbook.md": {
+            "hash": "27f4c34ec1d33b49bb54062ab876fb9cf3ac29f728dc7c977419700698ee51c2",
+            "mtime": "2026-02-06"
+        },
+        "docs/aiops/automation/social_distribution_playbook.md": {
+            "hash": "9b8dadbed1a4a0a40bdb3f5c714d42a376aebe2c7b6b6164a576d10a0465237c",
+            "mtime": "2026-02-06"
+        },
+        "docs/aiops/automation/watchlist_paths.md": {
+            "hash": "9b59768992cc5de94c5d36c65c705acc031009461f3ffe755a1e1483f712c327",
+            "mtime": "2026-02-06"
         },
         "docs/aiops/command-inventory.md": {
             "hash": "7d15d01389edbdbabb99b244e941f3b60385b4ac3677e4304059381d334214fd",
@@ -116,6 +592,10 @@
             "hash": "96c23bc228419f52f3fe01beb72abccfe2cf7de2e671ee60b8fdd4a884111406",
             "mtime": "2026-02-01"
         },
+        "docs/aiops/repair-report.md": {
+            "hash": "0b2c5cf72474418bc161f4d098f06b54969d3e31d8e58a9c79306a6c24975855",
+            "mtime": "2026-02-08"
+        },
         "docs/aiops/runbooks/dreamhost-proxy-ports.md": {
             "hash": "553168bccfe40a16d35a75495dd688e0afbbe60e3f5cbb26ff9953c606784f12",
             "mtime": "2026-01-02"
@@ -127,6 +607,22 @@
         "docs/aiops/runbooks/security-hardening.md": {
             "hash": "1d2bf5ed904df12bca5e5881b07fc8a8b12e37bad9eea52fd1934b73b0ef43c0",
             "mtime": "2026-01-01"
+        },
+        "docs/aiops/runtime-architecture.md": {
+            "hash": "0103da41740269d471053b6e4063d03cfc8036ca53228027709d733e54613412",
+            "mtime": "2026-02-08"
+        },
+        "docs/aiops/scraper/_index.md": {
+            "hash": "261a54f5ebe57b781283277c0754ab57079fdb5d0c7eff3d826716a918b326bb",
+            "mtime": "2026-02-03"
+        },
+        "docs/aiops/scrapers/_index.md": {
+            "hash": "6b03df66b86b47015004655b1a76eecb8bf35bc6d475148fea89fd157e2cb61c",
+            "mtime": "2026-02-03"
+        },
+        "docs/aiops/scrapers/alerts-email-scan.md": {
+            "hash": "7ce3032349279c28b5a967b97e65dc5b82310b078a5bfdda4a467599678eb60a",
+            "mtime": "2026-02-03"
         },
         "docs/aiops/selfhosted-stack.md": {
             "hash": "f44f6da086670ab65971218e272d6261bb1af5e33d1ec9e058053fec70bfdcca",
@@ -144,6 +640,10 @@
             "hash": "d28af0c402cd1173b36a5e74bb711a09edce1a8117b3b107c7899634d48b856a",
             "mtime": "2026-01-31"
         },
+        "docs/aiops/triage/spark-command-audit.md": {
+            "hash": "868f8f284b10fff3105e3936ebf55a20703c7c4ab17179125c1c24e6f8d00581",
+            "mtime": "2026-02-17"
+        },
         "docs/aiops/workflows/n8n-workflows.md": {
             "hash": "b40baa767941237ce05824b2d90527568be97e93d57853bf1f4e0103f46732c4",
             "mtime": "2026-01-01"
@@ -156,9 +656,17 @@
             "hash": "7c52176c427f0ad85379dbe9bf37ba6ca87b1983887d2ba4dfbe71570f45f806",
             "mtime": "2026-01-17"
         },
+        "docs/api/internal-orchestration.md": {
+            "hash": "0840947e0d1f2e6afec77e2aaaf576c31cbd67a2c54f5fddd5022273bc4933df",
+            "mtime": "2026-02-09"
+        },
         "docs/architecture/marketing_module_lifecycle.md": {
             "hash": "b363a27bbe78a82dd9e9e1dd1000fc31508ed4cbf38aea4c5b8c3f38bbadf92c",
             "mtime": "2026-01-21"
+        },
+        "docs/architecture/psr4-remediation.md": {
+            "hash": "fdb30d89a33e37635f624511307309823722d60fe6b1de281a7797d838c46e15",
+            "mtime": "2026-02-07"
         },
         "docs/auctions/_index.md": {
             "hash": "871b4ebb5cc7e576a8e8cd542f9365d1a85f47181c10d005f2cb2b3e4fc637e8",
@@ -175,6 +683,18 @@
         "docs/audit/auth_audit_last_run.md": {
             "hash": "1298982982678bc623fc33e25137ae8fd44b03d9138fa029daab66ad6f065174",
             "mtime": "2026-02-15"
+        },
+        "docs/audit/news_audit_last_run.md": {
+            "hash": "90319b579c4c4126c31016403612ae7b85839f9a06fb189f382ebb6dc840bbed",
+            "mtime": "2026-02-06"
+        },
+        "docs/audits/model_limit_patch_report_20260218.md": {
+            "hash": "75acf2c162e64dc8bc6ffbc201c1c37db31d0cfea556d9ed7ee2be7c2f61ff15",
+            "mtime": "2026-02-18"
+        },
+        "docs/auth-flow.md": {
+            "hash": "aee0dae3fc3d38f4fc269fab5c02601eeffcbe1f1c784cd065cd39138c1a3a99",
+            "mtime": "2026-02-10"
         },
         "docs/auth/auth_smoke.md": {
             "hash": "68cd0c5cf04a0a12b7b9baaedbf4ec15652ccac8c04ce084d2b5e699831aaa29",
@@ -428,13 +948,41 @@
             "hash": "635611c60c1b584aa13c4092c325d50c7714c23adbb553f320ad480aa8d486b0",
             "mtime": "2026-01-04"
         },
+        "docs/codex/reviews/Spark-Analysis-2026-02-01.md": {
+            "hash": "da4f57e12a3355e0386818afc7babe1b0b7be07c0896eff1ef2c0af8b82379de",
+            "mtime": "2026-02-15"
+        },
         "docs/codex/reviews/review-2026-01-31.md": {
             "hash": "20f9d5a0287aa8aa006a3c2cbf1a677a32a98f6a33626d522c3a68e7d4ada239",
             "mtime": "2026-01-31"
         },
+        "docs/codex/reviews/review-2026-02-01.md": {
+            "hash": "dceace3d365e76c1aab945d3f2878fa7365a5875591c3257008e75efb53a67e7",
+            "mtime": "2026-02-01"
+        },
+        "docs/codex/reviews/review-2026-02-05.md": {
+            "hash": "21dfe1f9e1e8fc6dc0ca4c676b1f86648c21a5aa913d732bbd2903123f8d07f2",
+            "mtime": "2026-02-06"
+        },
+        "docs/codex/reviews/review-2026-02-08.md": {
+            "hash": "0567d7f770df5ea0d095f7b265d5ba58928a76a6fb119ea5b0c9c047aa7df5ea",
+            "mtime": "2026-02-09"
+        },
         "docs/codex/reviews/review-prompt-2026-01-31.md": {
             "hash": "863ed78a11bbb82779e972ff3de5bad2bc635a333b3d500df615b9d085caa3b6",
             "mtime": "2026-01-31"
+        },
+        "docs/codex/reviews/review-prompt-2026-02-01.md": {
+            "hash": "c3b94a17580e44426a807f88e06e0a4c57e9a27adff2d89246321fc2809fe615",
+            "mtime": "2026-02-01"
+        },
+        "docs/codex/reviews/review-prompt-2026-02-05.md": {
+            "hash": "0936f8334b34d5b11dd77fe588ef77385389defd801af772ab417363f996af3c",
+            "mtime": "2026-02-06"
+        },
+        "docs/codex/reviews/review-prompt-2026-02-08.md": {
+            "hash": "df7f524992492b317991041084a885447cb2d8b9856ba8d7f652229852b17009",
+            "mtime": "2026-02-09"
         },
         "docs/communities/discord.md": {
             "hash": "3e929096c836315045b7d09dedd5c397817043d55729176a0d9ff08263a91d47",
@@ -516,6 +1064,22 @@
             "hash": "00697ad6cfb89f96b9f47cb30d99364141c32218c7709e8b1b8f12bdcc4fc8b4",
             "mtime": "2025-11-17"
         },
+        "docs/controllers/APIs/HealthController.md": {
+            "hash": "15a50ff7cd9d2e8da38bd9b7969bb6aa3e718676880d1b44741fbc830bbf397f",
+            "mtime": "2026-02-09"
+        },
+        "docs/controllers/APIs/OpsController.md": {
+            "hash": "3b3849f2a151c29de35a518c7e99cf9260e563620dda9fde8f259c968c96233c",
+            "mtime": "2026-02-09"
+        },
+        "docs/controllers/APIs/TradingViewController.md": {
+            "hash": "683d6de5a8b52372e8fe427adaededdf3d650f6b5b121a66b76631283048323b",
+            "mtime": "2026-02-09"
+        },
+        "docs/controllers/Predictions/PredictionsApiController.md": {
+            "hash": "645fa07517b40d9959dade73386f08739e37f7ede815d6a31dc4c72f906d0fd4",
+            "mtime": "2026-02-09"
+        },
         "docs/cron/README.md": {
             "hash": "809e30863190cc87dadca93cfc2a6dd50129c0577d4c4b039c47505285570cfe",
             "mtime": "2025-12-21"
@@ -592,9 +1156,21 @@
             "hash": "1ce6ead33f888d84fe1e49d40c8d97e4cec61ac026dfdc64f9fa7c289b233f68",
             "mtime": "2026-01-25"
         },
+        "docs/debug-validation-checklist.md": {
+            "hash": "4ec24a0ef603292dba7beee370c738f7e188df6324f4f4057e2c9e2c23190710",
+            "mtime": "2026-02-10"
+        },
         "docs/deploy/quality_gates.md": {
             "hash": "520894ff594dc5a22d10a90934e4309cbf67d78202acbb515a8cf820a74e6446",
             "mtime": "2026-01-21"
+        },
+        "docs/dev/logging.md": {
+            "hash": "63718bec40f0b7fe3fb3728399dc40e273740b6124a358074e21f8fb4669d48d",
+            "mtime": "2026-02-10"
+        },
+        "docs/dev/maintenance-mode.md": {
+            "hash": "5b9749b4585ce332f674c4745f8d403fdacc645a78d0a5e428162dec6a8a1222",
+            "mtime": "2026-02-10"
         },
         "docs/discord/README.md": {
             "hash": "7d7063eb0472e106d050f91ec78dfe398bdb3fb61f292e927507dd3812948a74",
@@ -670,7 +1246,7 @@
         },
         "docs/discord/server_setup_and_alert_routing.md": {
             "hash": "b6048ffb8d5f484ca1ed679b3bca31734075b225399fff63378c0a71d4e17a58",
-            "mtime": "2025-12-05"
+            "mtime": "2026-02-20"
         },
         "docs/discord/server_setup_and_ci4_integration.md": {
             "hash": "89ac8f66a26fca5c420b00edbcbb714ff9eec97f0fc5e62b02ff3cbaf2cb0055",
@@ -835,6 +1411,18 @@
         "docs/gap_tracker/reports/gap_sync_2026-01-02.md": {
             "hash": "e53cec6a57c332a9b5ec5001b56bd3cef0df6e4dfb879f9188afa012c31a41dc",
             "mtime": "2026-01-02"
+        },
+        "docs/gap_tracker/reports/gap_sync_2026-02-01.md": {
+            "hash": "5523918fc3f66986e70c152c0061a30941e801ab65cb544f14e28253a5f790a1",
+            "mtime": "2026-02-01"
+        },
+        "docs/gap_tracker/reports/gap_sync_2026-02-05.md": {
+            "hash": "3df74f9c007e9bffc9d0418cf766efeb5194eaa752b668ce9696a28c9d77bd62",
+            "mtime": "2026-02-06"
+        },
+        "docs/gap_tracker/reports/gap_sync_2026-02-08.md": {
+            "hash": "ab20d417e0e58e00fe2a59cbe5d5824649e5af78df110f0513fafc2c338d5c12",
+            "mtime": "2026-02-08"
         },
         "docs/go-live/README.md": {
             "hash": "17ad5f1a7b08e98f7458b66fcc1367eef0e9542fc18c3f1403b123f1d8683017",
@@ -1072,6 +1660,10 @@
             "hash": "c98427207f429b2e88a27fc158165d58749a16daf8e1e3d6515d7c5d1dd1485b",
             "mtime": "2026-01-30"
         },
+        "docs/marketing/00-Go-To-Market-Strategy.md": {
+            "hash": "aff30dc53448def626ebcaba61cb8be540db7143dc40eb5de78a441501805971",
+            "mtime": "2026-02-20"
+        },
         "docs/marketing/01-mymi-gold-and-coin.md": {
             "hash": "b7cb5dfdf71873aeb983980325029e1839fc68333f4c36bfb92e60a5356334ae",
             "mtime": "2025-11-08"
@@ -1212,6 +1804,34 @@
             "hash": "6f1254c5b498c880ea55e3be9608882a12cf0567073fc9e8a0d22cdfb25b52b9",
             "mtime": "2026-01-04"
         },
+        "docs/models/AIOps/AIOpsDedupeModel.md": {
+            "hash": "2779fee1d6139ddc8fbe8eb15e56d4c5fb2d531a67084db88d0f2efc7e0eb0ca",
+            "mtime": "2026-02-09"
+        },
+        "docs/models/AIOps/AIOpsUsageModel.md": {
+            "hash": "85f434ccd88159da0c574e3ee193b75718ba072c154732087252d87b1ca7d99a",
+            "mtime": "2026-02-09"
+        },
+        "docs/modules/AIOps/README.md": {
+            "hash": "aabf398092c8b7d3617b32f0fe240955ef92d4cfb12cde3c658fdefb9275d370",
+            "mtime": "2026-02-09"
+        },
+        "docs/modules/APIs/README.md": {
+            "hash": "1c96cf98eeab213a1a4f75f5900d8379909930b67020466d6a697628a12ec3b1",
+            "mtime": "2026-02-09"
+        },
+        "docs/modules/Notifications/README.md": {
+            "hash": "6cea9deedb9cf869f9418ebd8eeec170d290af5c3ef5a5d2997cea577fd74287",
+            "mtime": "2026-02-09"
+        },
+        "docs/modules/Predictions/README.md": {
+            "hash": "deccdb3c556a3065a1ed4f27b28123eaaf1326e3d7f33790eef4746ad733347f",
+            "mtime": "2026-02-09"
+        },
+        "docs/mysql.md": {
+            "hash": "75bf041b7712fa570c178c8678a871f3afe27f63d20da032ad3a9bf7331dd24c",
+            "mtime": "2026-02-15"
+        },
         "docs/mysql/README.md": {
             "hash": "eeec1d64da2d0a506734fe3018a9e506df884ae66192c209f9363c7908e54337",
             "mtime": "2026-02-05"
@@ -1223,6 +1843,14 @@
         "docs/mysql/adjustments/adjustment_log_2026-01-25.md": {
             "hash": "ec689e2e111f05a6d9436e3510ac3b00196f282a684cdc4b1f42c71e14b38d8e",
             "mtime": "2026-01-25"
+        },
+        "docs/mysql/adjustments/adjustment_log_2026-02-01.md": {
+            "hash": "571d2c13dffd978c0c308abea5e78af78bd9e0540e758c90f12550606a57484a",
+            "mtime": "2026-02-01"
+        },
+        "docs/mysql/adjustments/adjustment_log_2026-02-05.md": {
+            "hash": "e8421dfc4bcc3b7be933720c5093c8d16d735a8f8f000993db5b3feb2f4e68dc",
+            "mtime": "2026-02-06"
         },
         "docs/mysql/squeeze_scorecard.md": {
             "hash": "7e15250303c2c758a4023752b607c867b769d5380ddbc1f1ab3ee7cea29a632e",
@@ -1270,6 +1898,10 @@
         },
         "docs/mysql/tables/bf_aiops_dedupe.md": {
             "hash": "8a515bf71fd0700081cb4c7b5d974f4738ce973633289e9bcc51869ecd617cc9",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_aiops_email_processed.md": {
+            "hash": "6a719d263fdf414da14e3545024b01dbeaacdfca1e242bd39c93a185177369cd",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_aiops_registry.md": {
@@ -1380,12 +2012,36 @@
             "hash": "5954748c305df222a660e0c0444f2f1f03348733594b02c3921f0a163a4027bd",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_auth_groups_users.md": {
+            "hash": "1bcdea77fdbfd37eb799a98a840d86e30f9dd0cf3e0c7d268c633e923ec171dd",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_auth_health_runs.md": {
             "hash": "df8e14bdc40a2262a9921f0fbc17a12a5067f5860599d6fb150097b88a77d812",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_auth_identities.md": {
+            "hash": "b2116806b9f2eb55f2e6fa8511496083af0d3a0743b4a4582e5d3f2b44583a00",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_auth_logins.md": {
+            "hash": "e69db22a6cfacb74d7235ccb96a80e2307e6df26750458db45e1be590a40b351",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_auth_permissions_users.md": {
+            "hash": "af123cb417207d925744b5c57f24092e40900a721b63083bbba63141b48bb4d4",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_auth_registration_attempts.md": {
             "hash": "fdb90ff2fe42b4da298d6402c8bf1ecbcc456e85f580b933a30f10ce1fa141d9",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_auth_remember_tokens.md": {
+            "hash": "b2fc3f95ff22a9083228956f259507d1b976572b9c55f35a5c2e3430af5f3e46",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_auth_token_logins.md": {
+            "hash": "67f905ffbd1d53cb11efe55ed0c9dba160f0009e5317f7c076c80ff4afd7b524",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_backup_manifests.md": {
@@ -1400,6 +2056,14 @@
             "hash": "05727b96359c70828043376dfa68e5c0951a005d5e25d30d0e833c876253336f",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_chat_archives.md": {
+            "hash": "e510b267352e00b00ed3a8b8c0e8deb28226993f6abb1eb8848801af82881414",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_chat_steps.md": {
+            "hash": "db11b0111ab21039ce2bf8c62b48eef4bf06b701ed56018bc7113c12e6a2ce22",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_chat_tool_runs.md": {
             "hash": "65d07089e91ef11c781f57ece6170493df47db83e1b33a1166081ac6f218ad0c",
             "mtime": "2026-02-06"
@@ -1408,8 +2072,16 @@
             "hash": "28ddc1a93ebf2212c92fe22b23eef50045f38b420a890c4b9e5692a7b4f3b8cd",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_coin_redistribution_items.md": {
+            "hash": "eae264cd7ee00edb087d6f6976c8100426d1120f069a80c0efc0ec69c1c22bd4",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_company_logos.md": {
             "hash": "405b1f626fea17a3e363be8985441fd278a7321e72614df07a8cd07bc9d903a1",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_compliance_audits.md": {
+            "hash": "127cecdc449eaae38b529dfacbedfce38ac7463cd5ef8ddd5cb7697a4bc7b139",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_contactus.md": {
@@ -1532,6 +2204,14 @@
             "hash": "455e26f4725959136a79f483183eb541c1caee8b9d5f74d9dde2f578dc9d9a35",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_email_bounces.md": {
+            "hash": "ef504fd3694ae992e3cfc47888a6f15194aecfd087fb36e1ae096fc032a2b5af",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_email_campaigns.md": {
+            "hash": "7f4fa5e7a0295d55844e387fb3a7850f4b9ef4b7d79b321b9aeb3b97b250fc03",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_email_distribution_lists.md": {
             "hash": "b918100f9ad0d57307126b5d65c54a9ed9b737aca5be9354d30254674969047b",
             "mtime": "2026-02-06"
@@ -1566,6 +2246,10 @@
         },
         "docs/mysql/tables/bf_email_user_drip_progress.md": {
             "hash": "0e656b9038afc85b528b9030d44c9b3497a523095b0518f68b06b8a656c3b286",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_emails_campaigns.md": {
+            "hash": "6751589dbb9029c4113d9afbc7bedd41a9d6286c681b3eb3d6ac50862cd01ae2",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_employees.md": {
@@ -1656,6 +2340,10 @@
             "hash": "ca34f141ac17098c82d994b56fe96ccf0cf48f9d6d7b368d734a179fe0835af3",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_exchanges_transactions.md": {
+            "hash": "5a5f90e1688ad2715fbd439eca2a6af711e2520c2a2e00c39ac94a3a95a204a1",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_external_sites.md": {
             "hash": "ea4a08caea76840d53881f0f9d5d7d106e528bcb49af77ba16bcde3f71fd2c37",
             "mtime": "2026-02-06"
@@ -1694,6 +2382,10 @@
         },
         "docs/mysql/tables/bf_financial_goals.md": {
             "hash": "2bc368a41fe68e925612f5b19286e26f2a9a55fca4a30b7fbefb78a46b224bfb",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_ftp_file_data.md": {
+            "hash": "ca3adb9608a4381880477aaf39e9f6446326a314b0526a896b336bd968b2ae1a",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_gdpr_requests.md": {
@@ -1804,6 +2496,10 @@
             "hash": "a4a02ed54974eb784c8f0570249d1469d3402b7a71b5f608fbeaabab4abc74d4",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_investment_scanner_lineage.md": {
+            "hash": "b6f9c1feabe2c35d2c4e74b481ceeb505e0f356596cb7c2fb65968fbc8ecd096",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_investment_scraper.md": {
             "hash": "13517ffdcc6327a6b294e7dfb378c3c5787f3611b7afbf137dce387c626b807c",
             "mtime": "2026-02-06"
@@ -1826,6 +2522,10 @@
         },
         "docs/mysql/tables/bf_investment_technical_snapshots.md": {
             "hash": "22b808076db1002ae55a32eaf768db9c268f0f98b22814015238e6494a1fa383",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_investment_ticker_daily_counts.md": {
+            "hash": "e6eec9de02bb61cf84584fbc93eeb186fcc215b8c6b684ba293966bfff25cf64",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_investment_tickers.md": {
@@ -1892,8 +2592,24 @@
             "hash": "0c0df84bbb8f76b460aa4c7d81f272d4220420057d1285485ad71a4a6b0b007c",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_marketing_ab_tests.md": {
+            "hash": "f57e9df0e4911c8694450df74e294725b75497497392ea3298676d35baebe7d8",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_marketing_ab_variants.md": {
+            "hash": "3e2685ddaa7be8add843844907533cfc3b5130915df8d6ec753d1d84f3a01774",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_marketing_analysis.md": {
             "hash": "acc731b70570de7b06aa32bac14ac88ba291d3a9a083d150a6b1e02190dedb76",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_marketing_audience_selection.md": {
+            "hash": "16d5b4fc5336b45fff710a7250cc9163382b796b96ae18a17849b0ad0a02015e",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_marketing_best_times.md": {
+            "hash": "8edecf14770ed53989e5fda2e735032cb16ba0e4e012be77fbaa4df1a7f95ff4",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_marketing_blog_posts.md": {
@@ -1904,6 +2620,10 @@
             "hash": "9d565747bf29f6e1917d53f8c0538f709256e7bbae04a75f07703000879bd8b8",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_marketing_buffer_posts.md": {
+            "hash": "d5ca6a93cdb87446bbb0432b808d79c384f542a2f39ded2bec670e80e9d736e9",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_marketing_calendar.md": {
             "hash": "b356f4f548eb93d1be2c9bc21b76508c5857324fe3883762bf0c85ddedd3b2ba",
             "mtime": "2026-02-06"
@@ -1912,8 +2632,20 @@
             "hash": "7d580600c6118af70f81925efdc701b7bb5e57ec5b210f508f0b9bc074b9ec17",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_marketing_compliance_rules.md": {
+            "hash": "ec7661e16a23147065fa2e44460b267143b92ffbe2f712a0cdfdb41833043db9",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_marketing_content_enrichment_cache.md": {
             "hash": "71524fed6051c88e87630c1bb9b50c6c57f77ac8a7472f45639005b6a7e92bb0",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_marketing_content_fingerprints.md": {
+            "hash": "23fca94f466d4f4ce86d2866a2e1de6e6460b266bafa5b4192d60f32d7b46606",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_marketing_content_versions.md": {
+            "hash": "b536a068c62aba1b68cdfbbaea8722da7545fd0e2739429793d29cb96eaf88cc",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_marketing_email_bounces.md": {
@@ -1932,6 +2664,14 @@
             "hash": "15a0f5826d73df71090cd514f9f0fd580c191ea527e8a5e99aaf4236860c41d6",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_marketing_engagements.md": {
+            "hash": "b5e45a4146061227405d5681dff0d35b82b2d3872bd48669c7ec70666daedcc0",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_marketing_events.md": {
+            "hash": "6d09f270cc265dd5e662d0608bcbbe125a826f36010a9fb6bc5fafff3e3631ee",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_marketing_generated_content.md": {
             "hash": "f39fb22f199779d97d31b6bdb33d15100ff5142e7c9ee4159d2a606ad16395c4",
             "mtime": "2026-02-06"
@@ -1942,6 +2682,14 @@
         },
         "docs/mysql/tables/bf_marketing_ideas.md": {
             "hash": "fafba9f90d9c1b56bc579451e4c6a47866367f128e3a1dbf1138482e83cce68b",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_marketing_job_runs.md": {
+            "hash": "f1193312fa29e7ed249452405bc53f3ab9083c88855b949cd82a97e710522b52",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_marketing_media_assets.md": {
+            "hash": "4c5ae160a08f7f57cdad7624cf9d39bde4c4f03b6e6648326d839e8f3b8c1b6a",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_marketing_news_content.md": {
@@ -1964,6 +2712,10 @@
             "hash": "76838d63b04ad7271742763efb9f3da277e8b13ed9e5c8bfe2cb793f3177f72c",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_marketing_pages_missing.md": {
+            "hash": "17c3d8533f9c2dabde5bd830350ddb78879b60d06d1fa558fce84e351157de2e",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_marketing_platform_rules.md": {
             "hash": "ac8e45c697037d0ed63ecd49c7b03cde6c6b8c3ba9b7d28fc571f55f3d5c061c",
             "mtime": "2026-02-06"
@@ -1980,12 +2732,20 @@
             "hash": "c02480fba26a2588aeffffa7822ee7d9a13b854f2a52b5402c6c0ec1bb4848b3",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_marketing_promotions.md": {
+            "hash": "800117ff3d81e86221087c34afae29cd7be7a0799e5e0bdb28ce009f3d0ab39f",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_marketing_raw_emails.md": {
             "hash": "92bb9ec3f9326366b16bb7952e84bd299f25c32470e069f6d909ac8a0eb3a396",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_marketing_schedule.md": {
             "hash": "f8c9beea6f51cd2614794f568f52ecf512c7fccdb8117bebee6605800992f858",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_marketing_schedule_content.md": {
+            "hash": "6649905f501e36c1c4e292f1dbe9f44361e998410e0103af3ce024850e8dbb53",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_marketing_scraper.md": {
@@ -1998,6 +2758,10 @@
         },
         "docs/mysql/tables/bf_marketing_search_engine_usage.md": {
             "hash": "d7fd1e3220a8ec46a90461a51fdc9d9a46db6b92070f09edc17ab7b6ea2c16fa",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_marketing_search_enrichment_log.md": {
+            "hash": "9230556073fbc1ea1427d0605acdbf4b4a092097fa62553fcd4676f1faeb9924",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_marketing_social_templates.md": {
@@ -2020,8 +2784,44 @@
             "hash": "66ac8f887a960f705f36c5a70f6fd9f296a9baa68b5c210bbf5236201f9920b9",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_mdit_deposits.md": {
+            "hash": "d82a208673b3cf9164448378d4ca4aa5065cb434bbbe2b9dbcbeab3c22defba2",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_mdit_disclosures_acceptance.md": {
+            "hash": "fff7d3f4fca9b4bb0e27c9e7defb3b78f07c2038186a31dd9a25ac9da50acad3",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_mdit_investor_profiles.md": {
+            "hash": "cfb813ae3760d1e1670935626268ab1e73eaa8c87494dfab4eea4a78b4fd7661",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_mdit_nav_snapshots.md": {
+            "hash": "2014af9d5c744ebde89fe444a127445bce963cdaa050665930d2ba24dcf88901",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_mdit_redemptions.md": {
+            "hash": "c3e4b2a6925e82054f69e437888b160f7420dc13f80bd73aa4416df8ccf0bcd3",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_mdit_token_ledger.md": {
+            "hash": "196a6a228d2d09711fdab86de5e45caf751fa27dccd9f456cd9a35178e51bfb9",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_mdit_wallets.md": {
+            "hash": "9df247ecb6920bc3ead96ca1c06882e25a6a4f81b0938e2dbe2fdb028a4b5bcc",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_mdit_webhook_events.md": {
+            "hash": "4d8dadeff4d4eedfbb056d3a02413225c656a7f6e7d9325393dee1b5da5553da",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_messaging.md": {
             "hash": "eac07486d1310fa46aca2e15301d7ed0dc7ad40a900ca8b0bdb3526a439d3620",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_migrations.md": {
+            "hash": "ae933f91824cf0d1fe387850f98da136de4e731bcbc43385ff202e837d851cb2",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_mymi_news.md": {
@@ -2038,6 +2838,10 @@
         },
         "docs/mysql/tables/bf_mymigold_overview.md": {
             "hash": "49db01c93fe0928148fe75d97c7a5885a5e67826aa192443b0c80656cc7393a0",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_notification_outbox.md": {
+            "hash": "e2507ac0ab3bdfe05c46578d7fcce1a6a3c20f07f20da2af9c1214453c43f1e9",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_onboarding_progress.md": {
@@ -2070,6 +2874,10 @@
         },
         "docs/mysql/tables/bf_ops_schema_audit.md": {
             "hash": "f8c827108c7816f2c93e6f90f9477402e571d29d03975f436c352b8ea363ec66",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_ops_spark_health.md": {
+            "hash": "d03020510f3a64f22c9227e7ba52be56d024390d02dd231114e561dcb8a2ee85",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_page_seo.md": {
@@ -2132,6 +2940,10 @@
             "hash": "fd2e2859a2be00a7a6d120ca074e996cb254cf81f50a193a6728a7590ae59e38",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_project_comments.md": {
+            "hash": "d1d325649bea879c886796d1a8a7198d4eab17531534d165e107bc8c4f28d591",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_project_commitments.md": {
             "hash": "d958e659a738bee084b5dbd454e656c5f97dc879deb830b730d83122a3343e18",
             "mtime": "2026-02-06"
@@ -2146,6 +2958,10 @@
         },
         "docs/mysql/tables/bf_project_scheduling.md": {
             "hash": "d7ae7102a019c8b7e4c29a95a78e0f3dcd529729d78e0d8c655eaceafe828500",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_project_task_registry.md": {
+            "hash": "4b4f9637e12abd76451555fffbf423a58cf2fcefe1b3c800a4939d13c3d5232a",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_project_token_allocations.md": {
@@ -2164,12 +2980,60 @@
             "hash": "9c16f01f5a837dcda57e2726acf23e9719161eee491bf593289f0a5a78640098",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_projects_auctions.md": {
+            "hash": "d5923adcdac7b6bf7c337b71f46a3de74eed3f9b5ed0b78d45b7aba8104860be",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_projects_coin_redistributions.md": {
+            "hash": "95296bd2370d1243c6b767211fc382a94f696dd6cefff1d72c47584ac2e8c6d5",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_projects_commitments.md": {
+            "hash": "07970d626491cf55285fc8455e32b4082da3e015eea706343dd13c10e76aecfb",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_projects_distributions.md": {
+            "hash": "84d82687c320ed65c622901b28328a987d7bab736f07509a0633b3533ed1cc0e",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_projects_inbox.md": {
             "hash": "03291a3b8ca08d6e83c48c93b2eafd06c55fc0a3c36f74378dadf273acf4e3f7",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_projects_insurance_reserve.md": {
+            "hash": "c2151c11e3107b1d6c73113cc00396da792a7511e324df8668ee4492dd14ea47",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_projects_investments.md": {
+            "hash": "ac6d3276048fcad6bd3b4d25f3bc51d39a44a418d28486f116e048bba02cc5c9",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_projects_providers.md": {
+            "hash": "5df004c96538f2b0f62c151536b821aa03653b5f294a65517419cb62555f23fd",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_projects_real_estate.md": {
+            "hash": "231965a575d7ad114af12f3447650ede6957fced2083063a824edd224af04b17",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_projects_revenue.md": {
+            "hash": "7fcbe4030095d041803f60097fcdc4d3e06f709bbf624e4b44a43134a1a3ffb5",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_projects_revenue_distributions.md": {
             "hash": "85a4b46ae6d5f904e6d61cbd60158bd001056046f9d5b2291b4e57ff463b88ed",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_projects_revenue_distributions_items.md": {
+            "hash": "1e59894c848b7f4c69c190ac49d06d56460fb077f4a066ed01ec27363f0227d5",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_projects_revenue_events.md": {
+            "hash": "3b893301ee50e2966dc1339e0e7bef2b7581130c0744f83600d0fd4755b2c87e",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_projects_token_allocations.md": {
+            "hash": "ce09341474418efd9115ab9a3b636bd0545d665356530f055a6422a11bb89725",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_push_subscriptions.md": {
@@ -2192,6 +3056,10 @@
             "hash": "5d5a84041622e6b951c3a8fd0a8b6e2ad7bd895e1bcc9bc490d097733783fa34",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_retirement_goals.md": {
+            "hash": "484491f92fe945743b0fe718e1e2f09f25810cb3dee297d07d64835041417ade",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_role_user.md": {
             "hash": "fbee379cdee4e64b97a24ca7326863a4a6afb3083e86c5119f980ef94b0ce80b",
             "mtime": "2026-02-06"
@@ -2212,6 +3080,10 @@
             "hash": "9951897f76324a334c3510c283631b25ea98ba9c8c718a7d2a876c0f7b768dac",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_sec_filings.md": {
+            "hash": "c9fce1d00d39f468428a931713e400020ad37eb3029cf79968bbe3a594856973",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_security.md": {
             "hash": "9b2474af3ddd30113f66835d653b495a9a4163e6afd3585b3a69059441ac959b",
             "mtime": "2026-02-06"
@@ -2230,6 +3102,10 @@
         },
         "docs/mysql/tables/bf_services.md": {
             "hash": "233bd9c7a5ee5e23b9a0a6d96ef3e5f10188b886efd4387d12c819f12335370b",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_settings.md": {
+            "hash": "dd272ee88da051d3e05729f74f1f1827b42bff530494718cbbabf19b1cc19f70",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_site_settings_overrides.md": {
@@ -2270,6 +3146,10 @@
         },
         "docs/mysql/tables/bf_squeeze_zoomout.md": {
             "hash": "1245406d25398d7ddb64af861c073001f1c4f40d7381f4112fd783a07587ea00",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_strategy_progress.md": {
+            "hash": "adbbc6e71d0150c79f5600c1a6569ead69abd11a06f3f65173ac38b3d8ef8d79",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_suggestions.md": {
@@ -2336,6 +3216,10 @@
             "hash": "9d71c721345f3503aec0e8793adaf1f7e86ac62ada7b9eb65fd96bdfa1469560",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_trade_plans.md": {
+            "hash": "7e86a8e9478155e4921a535dd88d332a81c3b61f8a328538722502a3829750d0",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_user_2fa.md": {
             "hash": "9dc7ed9847ca83d822bbde16ebf6bb33a0fa075594057f02e14e10e164818f01",
             "mtime": "2026-02-06"
@@ -2346,6 +3230,10 @@
         },
         "docs/mysql/tables/bf_user_consent.md": {
             "hash": "ad5e684db6c55aeedffe6f5ea234e7493e920088f55814a80e7d4285882a8d4b",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_user_discord_rewards.md": {
+            "hash": "f75e937b5fe0f1cd8eb529531ff1d50483dff9464a0d82378b17fc714c0a7000",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_user_employment.md": {
@@ -2416,6 +3304,14 @@
             "hash": "457728ca8d737142edc654ea69322389c5c7c50b0770246b5ac528fa6bde2bae",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_user_trading_accounts.md": {
+            "hash": "91ded58601597afe61392286cef9a5ec1048c700ecea1fe319a387d41f34211a",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_user_trading_profile.md": {
+            "hash": "1994936e8f83738d97bb97e6270d97bb0dcdf2a1154f6b1d7eb28c97209a3a6f",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_user_wallets.md": {
             "hash": "2f4d8eb5ac2c15c9fddbec42a7d4b89dce6b45f0308bf195fd30d4d5ca7826b4",
             "mtime": "2026-02-06"
@@ -2424,12 +3320,20 @@
             "hash": "fb3d1e87fdffcf3a9c4dc0d4674c4d2be2edbc29edf95fea44c0f75220072a0c",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_users_2fa.md": {
+            "hash": "ca4acf437f75a9d1b4daa96e2ded6d9f16bd6f9f6f8158044d7e0a0aa590494e",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_users_account_ledger.md": {
             "hash": "686093b31c5386d104fcf7147dc466b526ca4a23b269e7e752ba34c8d5499a7d",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_users_accounting_accounts.md": {
             "hash": "6fc264284fd511ef96c73cb1b25f3615733c0e308878cedbc68a9e525047ea2f",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_users_alerts.md": {
+            "hash": "ac878d789e8b525b61ba119c5683a8a2daa61bad27a862a290a6f709abd46f5c",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_users_anonymous.md": {
@@ -2458,6 +3362,10 @@
         },
         "docs/mysql/tables/bf_users_budgeting_forecast.md": {
             "hash": "16a99436e8788b2ac9bbcd13e8a52a17b892545040a5bed0e4e5a90908ce6041",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_users_budgeting_goals.md": {
+            "hash": "ca2a323326aff960d081400569a81a9a3c498a63d438183638c18943a015daf2",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_users_certified_advisors.md": {
@@ -2532,6 +3440,10 @@
             "hash": "9f8bac21bc1603860cce59cbeda0745a26582aba6b2355a7566f58c2e009bf44",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_users_onboarding.md": {
+            "hash": "dad28f807294e35834f9ac02df15f80a465b22c94995b69576444b1dda9c5a85",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_users_post_likes.md": {
             "hash": "94b397dc0c20409df567eff59562b1e1153026e6020ed440c7129f0678dc17fc",
             "mtime": "2026-02-06"
@@ -2568,12 +3480,20 @@
             "hash": "d36d181d32f758963bda7cb396d6039445e6456221444643053d50c5379d0d80",
             "mtime": "2026-02-06"
         },
+        "docs/mysql/tables/bf_users_retirement.md": {
+            "hash": "f42d52ed562f2b1471b353f534b7491e320f1f2e5b7baa7872ebcea2cd7c9388",
+            "mtime": "2026-02-06"
+        },
         "docs/mysql/tables/bf_users_retirement_goals.md": {
             "hash": "9d6cd2666ebb6e70a186a74a94e2ea40334ff2f48df1518c219a7b6b82ad20a4",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_users_retirement_plans.md": {
             "hash": "2ceac6772499ce0819ee6d0d1813814b809cf95f1dee81637efdfcc7cdd09e78",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_users_retirement_progress_logs.md": {
+            "hash": "1a55fdcb97d6797a7b0aedb4d09bef608ccb05f2eb1b2587bbb43f2b14945aec",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_users_services.md": {
@@ -2606,6 +3526,10 @@
         },
         "docs/mysql/tables/bf_users_trades_configs.md": {
             "hash": "d5d377f9a5e4d1b7f47a1092814efc840c4e9b3b37ec0ac530ac4336bfb5325b",
+            "mtime": "2026-02-06"
+        },
+        "docs/mysql/tables/bf_users_trades_logs.md": {
+            "hash": "5a93a8365e975bf94eaa871bf7fdc05a0732c2b424a2fdb7cf4148cf80ef1b3e",
             "mtime": "2026-02-06"
         },
         "docs/mysql/tables/bf_users_trading_accounts.md": {
@@ -2912,6 +3836,10 @@
             "hash": "100f358889b05e45d4a4659c202614f0f061badb4b6bb4f75cdb4ec27de8374a",
             "mtime": "2025-12-10"
         },
+        "docs/ops/env-vars.md": {
+            "hash": "99263eda521c6e9468daaa177fa2decf8291d04f3777f3711ac72988f1f93b56",
+            "mtime": "2026-02-09"
+        },
         "docs/ops/envdoctor.md": {
             "hash": "e513f56006e72aeed1a886c97891fed72f18c9c14a090d215f5ca65ca1a866d7",
             "mtime": "2026-01-25"
@@ -2927,6 +3855,10 @@
         "docs/ops/fix503.md": {
             "hash": "c319f476a904307c293ac9a45b2b06880ff9cfbe9e5beddfcceb3d80691edffb",
             "mtime": "2026-02-10"
+        },
+        "docs/ops/legacy_psr4_exceptions.md": {
+            "hash": "8338e48109e7e847b405c1b691930a4b7b226001163a1cf35045f50f263fe820",
+            "mtime": "2026-02-01"
         },
         "docs/ops/log-fixes/2026-01-01.md": {
             "hash": "6dd09077097711a8a864bc4e1a4cefb6bb2260cb15390a6359ed437e1a731ff2",
@@ -3023,6 +3955,14 @@
         "docs/ops/sidebar_toggle_changelog.md": {
             "hash": "157426f9126f03958c54a7c2bdb2c40037363d41a697b7cbe730ad493be36f6e",
             "mtime": "2026-01-02"
+        },
+        "docs/ops/spark_known_issues.md": {
+            "hash": "2972acdac8291a9fb18f8f07185fcf42096e0827127d5a13178c7c9b1dc79524",
+            "mtime": "2026-02-01"
+        },
+        "docs/ops/subsystems.md": {
+            "hash": "579f69ec1953a0524a8112dd8d4bd99247c52d70daf9ef488e0b6933e32cbca0",
+            "mtime": "2026-02-08"
         },
         "docs/ops/unexpected-token-lt-audit.md": {
             "hash": "2f29e830fe7a935a4aedd47e41ba2fb83d2a7e32ebb62635a96a9a2e8593f0e3",
@@ -3128,6 +4068,10 @@
             "hash": "6c94905c68329695454ef57acf20fa1469ce5da9a6c7f3de9d53210f19f5d593",
             "mtime": "2025-11-08"
         },
+        "docs/resolutions/2026-02-07-db-port-type-fix.md": {
+            "hash": "45b177eef975a5671c924511f2c4a0c1fa190235274c711c95d59bfcb62060a7",
+            "mtime": "2026-02-07"
+        },
         "docs/resolutions/PR-128-resolution.md": {
             "hash": "46c7f821be70716064ea117d2c64e3bb21f51c436ffe0d1c7b15afc88c8de9e4",
             "mtime": "2026-02-15"
@@ -3155,6 +4099,10 @@
         "docs/revenue_streams/revenue_streams_full.md": {
             "hash": "b59821ac9d27f7ab392d9c11b8a4d8b881e91ccfd2847c8f4cc87b1f3c3fbe49",
             "mtime": "2025-12-27"
+        },
+        "docs/reviews/ci4-config-service-audit.md": {
+            "hash": "3d509571d2efc4889372ac8e884806b9b1f29bf01292caf8fec31664ca68907f",
+            "mtime": "2026-02-15"
         },
         "docs/routes/controller_method_inventory.md": {
             "hash": "1735e1c4e9d594d92158b55ff54311a7f02e5c682f6429d23111c7f161b62f27",
@@ -3223,6 +4171,10 @@
         "docs/server/migration-playbook.md": {
             "hash": "71693fb283ef0c0e8e824b64248d6ea00478bba419cc423398b71f4177f3866b",
             "mtime": "2026-01-25"
+        },
+        "docs/services/AIOpsGuardrailService.md": {
+            "hash": "8c185a9da860f58cce2d05711f4eb45fb762107619479b7ec252db6a5d5f896c",
+            "mtime": "2026-02-09"
         },
         "docs/spark/COMMAND_AUDIT.md": {
             "hash": "fdfd4b01bd7947e18f856727bc7375f97eba86297f2900f889c0b5df973f4304",
@@ -3408,6 +4360,10 @@
             "hash": "e614ea95c37ec61d61f84e76a590386c45b623a41b415c2fa2c3da7cb0527abb",
             "mtime": "2026-01-25"
         },
+        "docs/standards/doc-coverage.md": {
+            "hash": "16ba88bbf22646711fb27bc271e31a461e6b9251a04b50d6a4c11ef9b804a990",
+            "mtime": "2026-02-08"
+        },
         "docs/standards/psr4_autoloading.md": {
             "hash": "30f068b2f184c01c8767fbf371c92cc2256b9047ecf52fe6b352f7d8bf3319ae",
             "mtime": "2026-01-25"
@@ -3431,6 +4387,10 @@
         "docs/tax/README.md": {
             "hash": "5a3bb4e2da11600b6495bf2f0dfbd93db581204bf9d83682389e7fa52ae81838",
             "mtime": "2025-12-31"
+        },
+        "docs/testing/auth-tests.md": {
+            "hash": "954236e4f752a4a60e1ba254a875e3cb88dee83c52a831a619dfdea60d1b0e30",
+            "mtime": "2026-02-10"
         },
         "docs/testing/auth_onboarding_test_plan.md": {
             "hash": "9437bda6c9c68e698ee3b2fd80609027b1122822acfe959c338ca0d0d2fb2a85",
@@ -3607,961 +4567,7 @@
         "docs/wallets/wallets_workflow.md": {
             "hash": "eb51973b24eb162f1b8cf2ca2c86f53badfc063bbd48cd1ae96735ee24483597",
             "mtime": "2025-11-16"
-        },
-        "docs/aiops/artifacts/config-drift/20260201-180724/summary.md": {
-            "hash": "b02299ba8e6ca873a9b868d301592ce4d4a64bc7b78795c808c025e13bdaac73",
-            "mtime": "2026-02-01"
-        },
-        "docs/aiops/artifacts/db-drift/20260201-181038/summary.md": {
-            "hash": "6d2d6b93483b14675b1b7d879727c0d62531bbe3fe49d5a457fcb2535597c391",
-            "mtime": "2026-02-01"
-        },
-        "docs/aiops/artifacts/growth-retention-watch/20260201-180732/summary.md": {
-            "hash": "e6d8c18e8a3794c13f222028ccecdc5873d4617a71bc8db712e7316fd3784664",
-            "mtime": "2026-02-01"
-        },
-        "docs/aiops/artifacts/revenue-cost-forecast/20260201-180746/summary.md": {
-            "hash": "a48008996a2324a6eff538c538acc49449d0e15c7d3347b969d2be15428df2dd",
-            "mtime": "2026-02-01"
-        },
-        "docs/aiops/artifacts/ux-journey-audit/20260201-180810/summary.md": {
-            "hash": "08241aa59faa5fe9171d1f43a500200420f5f6774c95e82ae5bc99db76cd5423",
-            "mtime": "2026-02-01"
-        },
-        "docs/codex/reviews/review-2026-02-01.md": {
-            "hash": "dceace3d365e76c1aab945d3f2878fa7365a5875591c3257008e75efb53a67e7",
-            "mtime": "2026-02-01"
-        },
-        "docs/codex/reviews/review-prompt-2026-02-01.md": {
-            "hash": "c3b94a17580e44426a807f88e06e0a4c57e9a27adff2d89246321fc2809fe615",
-            "mtime": "2026-02-01"
-        },
-        "docs/gap_tracker/reports/gap_sync_2026-02-01.md": {
-            "hash": "5523918fc3f66986e70c152c0061a30941e801ab65cb544f14e28253a5f790a1",
-            "mtime": "2026-02-01"
-        },
-        "docs/mysql/adjustments/adjustment_log_2026-02-01.md": {
-            "hash": "571d2c13dffd978c0c308abea5e78af78bd9e0540e758c90f12550606a57484a",
-            "mtime": "2026-02-01"
-        },
-        "docs/mysql/tables/bf_chat_archives.md": {
-            "hash": "e510b267352e00b00ed3a8b8c0e8deb28226993f6abb1eb8848801af82881414",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_chat_steps.md": {
-            "hash": "db11b0111ab21039ce2bf8c62b48eef4bf06b701ed56018bc7113c12e6a2ce22",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_mdit_deposits.md": {
-            "hash": "d82a208673b3cf9164448378d4ca4aa5065cb434bbbe2b9dbcbeab3c22defba2",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_mdit_disclosures_acceptance.md": {
-            "hash": "fff7d3f4fca9b4bb0e27c9e7defb3b78f07c2038186a31dd9a25ac9da50acad3",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_mdit_investor_profiles.md": {
-            "hash": "cfb813ae3760d1e1670935626268ab1e73eaa8c87494dfab4eea4a78b4fd7661",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_mdit_nav_snapshots.md": {
-            "hash": "2014af9d5c744ebde89fe444a127445bce963cdaa050665930d2ba24dcf88901",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_mdit_redemptions.md": {
-            "hash": "c3e4b2a6925e82054f69e437888b160f7420dc13f80bd73aa4416df8ccf0bcd3",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_mdit_token_ledger.md": {
-            "hash": "196a6a228d2d09711fdab86de5e45caf751fa27dccd9f456cd9a35178e51bfb9",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_mdit_wallets.md": {
-            "hash": "9df247ecb6920bc3ead96ca1c06882e25a6a4f81b0938e2dbe2fdb028a4b5bcc",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_mdit_webhook_events.md": {
-            "hash": "4d8dadeff4d4eedfbb056d3a02413225c656a7f6e7d9325393dee1b5da5553da",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_ops_spark_health.md": {
-            "hash": "d03020510f3a64f22c9227e7ba52be56d024390d02dd231114e561dcb8a2ee85",
-            "mtime": "2026-02-06"
-        },
-        "docs/aiops/artifacts/config-drift/20260201-183558/summary.md": {
-            "hash": "be6331c9027bf67e04260e1fdcd940ff079643e0e8398158c5ab1eb1e81e073a",
-            "mtime": "2026-02-01"
-        },
-        "docs/aiops/artifacts/config-drift/20260201-184056/summary.md": {
-            "hash": "ad68a4260e47455a56613bb0c45efe47c3c588fbde50cda6eb3f9e42efb2126e",
-            "mtime": "2026-02-01"
-        },
-        "docs/aiops/artifacts/db-drift/20260201-184402/summary.md": {
-            "hash": "0763a09fc97c33ac39537e5ee88d6e71bbc24d1b292f2dc5f6b00c2e5e708003",
-            "mtime": "2026-02-01"
-        },
-        "docs/aiops/artifacts/growth-retention-watch/20260201-183610/summary.md": {
-            "hash": "30d23ec24da2ee3bc129cd15220492690183c6e949ec4ade7cc523446bddbde8",
-            "mtime": "2026-02-01"
-        },
-        "docs/aiops/artifacts/growth-retention-watch/20260201-184102/summary.md": {
-            "hash": "77ae3d34bff0ae8540531634c714a27c060201508a64b2f247ffd342f6ba28c5",
-            "mtime": "2026-02-01"
-        },
-        "docs/aiops/artifacts/marketing-automation-audit/20260201-185227/summary.md": {
-            "hash": "44a21c95f60910053010ce591d644a074c3fe1f1dd2edf9060b0924017dc1736",
-            "mtime": "2026-02-01"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260201-185612/summary.md": {
-            "hash": "9b402d39301284f2c8b911a9bc93ccdb394d83757960ebd1e40123fe14bacd86",
-            "mtime": "2026-02-01"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260201-234406/summary.md": {
-            "hash": "0d126a39155199efc7ec2199da8b445796bcfd9b2a5109904776c07d37e8604c",
-            "mtime": "2026-02-01"
-        },
-        "docs/aiops/artifacts/revenue-cost-forecast/20260201-183620/summary.md": {
-            "hash": "60c8d510ecd4f5b4e434ddad2c3213d129f96858164c1e487c8cf5a7ec72b3c1",
-            "mtime": "2026-02-01"
-        },
-        "docs/aiops/artifacts/revenue-cost-forecast/20260201-184109/summary.md": {
-            "hash": "1c6a2500cb1d9828ad2fbb664a47971a943b2ab57944bb12312ce598e4fb1050",
-            "mtime": "2026-02-01"
-        },
-        "docs/aiops/artifacts/runtime-cache-boot/20260201-185706/summary.md": {
-            "hash": "c8878424b550835a6f0beffa7abed503e342e39e242961ab49a0dbafe7455205",
-            "mtime": "2026-02-01"
-        },
-        "docs/aiops/artifacts/runtime-triage/20260201-185742/summary.md": {
-            "hash": "b5b153040c9e1a95f4a9e6ba146784abebd36372df8d87e4de395c13733a7d29",
-            "mtime": "2026-02-01"
-        },
-        "docs/aiops/artifacts/security-secrets-audit/20260201-185757/summary.md": {
-            "hash": "e53eaa42c6e8cb8a32abee1c5dff04b0632f15f7780b0e67d2681c35b65a0b92",
-            "mtime": "2026-02-01"
-        },
-        "docs/aiops/artifacts/ux-journey-audit/20260201-183649/summary.md": {
-            "hash": "dc8d83c5a1a20e3d21e6df66f113e080a826f251082cb657a2569598fb719cea",
-            "mtime": "2026-02-01"
-        },
-        "docs/aiops/artifacts/ux-journey-audit/20260201-184200/summary.md": {
-            "hash": "80f55b8f21bd916e64e900408d244ccf8dd5d3c081b0a57b29aa5883d383dd8d",
-            "mtime": "2026-02-01"
-        },
-        "docs/audit/news_audit_last_run.md": {
-            "hash": "90319b579c4c4126c31016403612ae7b85839f9a06fb189f382ebb6dc840bbed",
-            "mtime": "2026-02-06"
-        },
-        "docs/codex/reviews/Spark-Analysis-2026-02-01.md": {
-            "hash": "da4f57e12a3355e0386818afc7babe1b0b7be07c0896eff1ef2c0af8b82379de",
-            "mtime": "2026-02-15"
-        },
-        "docs/mysql/tables/bf_auth_groups_users.md": {
-            "hash": "1bcdea77fdbfd37eb799a98a840d86e30f9dd0cf3e0c7d268c633e923ec171dd",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_auth_identities.md": {
-            "hash": "b2116806b9f2eb55f2e6fa8511496083af0d3a0743b4a4582e5d3f2b44583a00",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_auth_logins.md": {
-            "hash": "e69db22a6cfacb74d7235ccb96a80e2307e6df26750458db45e1be590a40b351",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_auth_permissions_users.md": {
-            "hash": "af123cb417207d925744b5c57f24092e40900a721b63083bbba63141b48bb4d4",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_auth_remember_tokens.md": {
-            "hash": "b2fc3f95ff22a9083228956f259507d1b976572b9c55f35a5c2e3430af5f3e46",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_auth_token_logins.md": {
-            "hash": "67f905ffbd1d53cb11efe55ed0c9dba160f0009e5317f7c076c80ff4afd7b524",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_coin_redistribution_items.md": {
-            "hash": "eae264cd7ee00edb087d6f6976c8100426d1120f069a80c0efc0ec69c1c22bd4",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_compliance_audits.md": {
-            "hash": "127cecdc449eaae38b529dfacbedfce38ac7463cd5ef8ddd5cb7697a4bc7b139",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_email_bounces.md": {
-            "hash": "ef504fd3694ae992e3cfc47888a6f15194aecfd087fb36e1ae096fc032a2b5af",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_email_campaigns.md": {
-            "hash": "7f4fa5e7a0295d55844e387fb3a7850f4b9ef4b7d79b321b9aeb3b97b250fc03",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_emails_campaigns.md": {
-            "hash": "6751589dbb9029c4113d9afbc7bedd41a9d6286c681b3eb3d6ac50862cd01ae2",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_exchanges_transactions.md": {
-            "hash": "5a5f90e1688ad2715fbd439eca2a6af711e2520c2a2e00c39ac94a3a95a204a1",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_ftp_file_data.md": {
-            "hash": "ca3adb9608a4381880477aaf39e9f6446326a314b0526a896b336bd968b2ae1a",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_marketing_ab_tests.md": {
-            "hash": "f57e9df0e4911c8694450df74e294725b75497497392ea3298676d35baebe7d8",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_marketing_ab_variants.md": {
-            "hash": "3e2685ddaa7be8add843844907533cfc3b5130915df8d6ec753d1d84f3a01774",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_marketing_audience_selection.md": {
-            "hash": "16d5b4fc5336b45fff710a7250cc9163382b796b96ae18a17849b0ad0a02015e",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_marketing_best_times.md": {
-            "hash": "8edecf14770ed53989e5fda2e735032cb16ba0e4e012be77fbaa4df1a7f95ff4",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_marketing_buffer_posts.md": {
-            "hash": "d5ca6a93cdb87446bbb0432b808d79c384f542a2f39ded2bec670e80e9d736e9",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_marketing_compliance_rules.md": {
-            "hash": "ec7661e16a23147065fa2e44460b267143b92ffbe2f712a0cdfdb41833043db9",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_marketing_content_fingerprints.md": {
-            "hash": "23fca94f466d4f4ce86d2866a2e1de6e6460b266bafa5b4192d60f32d7b46606",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_marketing_content_versions.md": {
-            "hash": "b536a068c62aba1b68cdfbbaea8722da7545fd0e2739429793d29cb96eaf88cc",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_marketing_engagements.md": {
-            "hash": "b5e45a4146061227405d5681dff0d35b82b2d3872bd48669c7ec70666daedcc0",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_marketing_events.md": {
-            "hash": "6d09f270cc265dd5e662d0608bcbbe125a826f36010a9fb6bc5fafff3e3631ee",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_marketing_job_runs.md": {
-            "hash": "f1193312fa29e7ed249452405bc53f3ab9083c88855b949cd82a97e710522b52",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_marketing_media_assets.md": {
-            "hash": "4c5ae160a08f7f57cdad7624cf9d39bde4c4f03b6e6648326d839e8f3b8c1b6a",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_marketing_pages_missing.md": {
-            "hash": "17c3d8533f9c2dabde5bd830350ddb78879b60d06d1fa558fce84e351157de2e",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_marketing_promotions.md": {
-            "hash": "800117ff3d81e86221087c34afae29cd7be7a0799e5e0bdb28ce009f3d0ab39f",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_marketing_schedule_content.md": {
-            "hash": "6649905f501e36c1c4e292f1dbe9f44361e998410e0103af3ce024850e8dbb53",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_marketing_search_enrichment_log.md": {
-            "hash": "9230556073fbc1ea1427d0605acdbf4b4a092097fa62553fcd4676f1faeb9924",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_migrations.md": {
-            "hash": "ae933f91824cf0d1fe387850f98da136de4e731bcbc43385ff202e837d851cb2",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_notification_outbox.md": {
-            "hash": "e2507ac0ab3bdfe05c46578d7fcce1a6a3c20f07f20da2af9c1214453c43f1e9",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_project_comments.md": {
-            "hash": "d1d325649bea879c886796d1a8a7198d4eab17531534d165e107bc8c4f28d591",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_project_task_registry.md": {
-            "hash": "4b4f9637e12abd76451555fffbf423a58cf2fcefe1b3c800a4939d13c3d5232a",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_projects_auctions.md": {
-            "hash": "d5923adcdac7b6bf7c337b71f46a3de74eed3f9b5ed0b78d45b7aba8104860be",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_projects_coin_redistributions.md": {
-            "hash": "95296bd2370d1243c6b767211fc382a94f696dd6cefff1d72c47584ac2e8c6d5",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_projects_commitments.md": {
-            "hash": "07970d626491cf55285fc8455e32b4082da3e015eea706343dd13c10e76aecfb",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_projects_distributions.md": {
-            "hash": "84d82687c320ed65c622901b28328a987d7bab736f07509a0633b3533ed1cc0e",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_projects_insurance_reserve.md": {
-            "hash": "c2151c11e3107b1d6c73113cc00396da792a7511e324df8668ee4492dd14ea47",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_projects_investments.md": {
-            "hash": "ac6d3276048fcad6bd3b4d25f3bc51d39a44a418d28486f116e048bba02cc5c9",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_projects_providers.md": {
-            "hash": "5df004c96538f2b0f62c151536b821aa03653b5f294a65517419cb62555f23fd",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_projects_real_estate.md": {
-            "hash": "231965a575d7ad114af12f3447650ede6957fced2083063a824edd224af04b17",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_projects_revenue.md": {
-            "hash": "7fcbe4030095d041803f60097fcdc4d3e06f709bbf624e4b44a43134a1a3ffb5",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_projects_revenue_distributions_items.md": {
-            "hash": "1e59894c848b7f4c69c190ac49d06d56460fb077f4a066ed01ec27363f0227d5",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_projects_revenue_events.md": {
-            "hash": "3b893301ee50e2966dc1339e0e7bef2b7581130c0744f83600d0fd4755b2c87e",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_projects_token_allocations.md": {
-            "hash": "ce09341474418efd9115ab9a3b636bd0545d665356530f055a6422a11bb89725",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_retirement_goals.md": {
-            "hash": "484491f92fe945743b0fe718e1e2f09f25810cb3dee297d07d64835041417ade",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_sec_filings.md": {
-            "hash": "c9fce1d00d39f468428a931713e400020ad37eb3029cf79968bbe3a594856973",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_settings.md": {
-            "hash": "dd272ee88da051d3e05729f74f1f1827b42bff530494718cbbabf19b1cc19f70",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_strategy_progress.md": {
-            "hash": "adbbc6e71d0150c79f5600c1a6569ead69abd11a06f3f65173ac38b3d8ef8d79",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_trade_plans.md": {
-            "hash": "7e86a8e9478155e4921a535dd88d332a81c3b61f8a328538722502a3829750d0",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_user_discord_rewards.md": {
-            "hash": "f75e937b5fe0f1cd8eb529531ff1d50483dff9464a0d82378b17fc714c0a7000",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_user_trading_accounts.md": {
-            "hash": "91ded58601597afe61392286cef9a5ec1048c700ecea1fe319a387d41f34211a",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_user_trading_profile.md": {
-            "hash": "1994936e8f83738d97bb97e6270d97bb0dcdf2a1154f6b1d7eb28c97209a3a6f",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_users_2fa.md": {
-            "hash": "ca4acf437f75a9d1b4daa96e2ded6d9f16bd6f9f6f8158044d7e0a0aa590494e",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_users_alerts.md": {
-            "hash": "ac878d789e8b525b61ba119c5683a8a2daa61bad27a862a290a6f709abd46f5c",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_users_budgeting_goals.md": {
-            "hash": "ca2a323326aff960d081400569a81a9a3c498a63d438183638c18943a015daf2",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_users_onboarding.md": {
-            "hash": "dad28f807294e35834f9ac02df15f80a465b22c94995b69576444b1dda9c5a85",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_users_retirement.md": {
-            "hash": "f42d52ed562f2b1471b353f534b7491e320f1f2e5b7baa7872ebcea2cd7c9388",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_users_retirement_progress_logs.md": {
-            "hash": "1a55fdcb97d6797a7b0aedb4d09bef608ccb05f2eb1b2587bbb43f2b14945aec",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_users_trades_logs.md": {
-            "hash": "5a93a8365e975bf94eaa871bf7fdc05a0732c2b424a2fdb7cf4148cf80ef1b3e",
-            "mtime": "2026-02-06"
-        },
-        "docs/ops/legacy_psr4_exceptions.md": {
-            "hash": "8338e48109e7e847b405c1b691930a4b7b226001163a1cf35045f50f263fe820",
-            "mtime": "2026-02-01"
-        },
-        "docs/ops/spark_known_issues.md": {
-            "hash": "2972acdac8291a9fb18f8f07185fcf42096e0827127d5a13178c7c9b1dc79524",
-            "mtime": "2026-02-01"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260202-022437/summary.md": {
-            "hash": "b6405fdae5371cef443b7079d738479244cd2750f1aff5a9f5b8ac3377e5577a",
-            "mtime": "2026-02-02"
-        },
-        "docs/aiops/ARTIFACT_SANDBOX.md": {
-            "hash": "ff4189fdd9d93b65f59193b9afe63328f9008bc00bcd1ef131da9f017752e953",
-            "mtime": "2026-02-02"
-        },
-        "docs/aiops/scraper/_index.md": {
-            "hash": "261a54f5ebe57b781283277c0754ab57079fdb5d0c7eff3d826716a918b326bb",
-            "mtime": "2026-02-03"
-        },
-        "docs/aiops/scrapers/_index.md": {
-            "hash": "6b03df66b86b47015004655b1a76eecb8bf35bc6d475148fea89fd157e2cb61c",
-            "mtime": "2026-02-03"
-        },
-        "docs/aiops/scrapers/alerts-email-scan.md": {
-            "hash": "7ce3032349279c28b5a967b97e65dc5b82310b078a5bfdda4a467599678eb60a",
-            "mtime": "2026-02-03"
-        },
-        "docs/aiops/artifacts/db-drift/20260205-024725/summary.md": {
-            "hash": "6a3c7c76d53e6125c70cf65c02488980adaa5a6e9d4f81ac8bec33b43e7be310",
-            "mtime": "2026-02-06"
-        },
-        "docs/aiops/artifacts/growth-retention-watch/20260205-024348/summary.md": {
-            "hash": "3d2e24fdec085e03e926c00456261749686d96f15e61c5062d771371b3469d0e",
-            "mtime": "2026-02-06"
-        },
-        "docs/aiops/artifacts/growth-retention-watch/20260205-024413/summary.md": {
-            "hash": "22ac9568c54b9a2df6883e60a6baf8394d99d610a91ec6812d50d9b7d42c4976",
-            "mtime": "2026-02-06"
-        },
-        "docs/aiops/artifacts/marketing-automation-audit/20260205-024948/summary.md": {
-            "hash": "6982f307eaab0cf5aff4d37e95cadd3769a4fe49019d351f35293be2faefc4d0",
-            "mtime": "2026-02-06"
-        },
-        "docs/aiops/artifacts/revenue-cost-forecast/20260205-024422/summary.md": {
-            "hash": "99e64feb23279b239465a4dba3daf71f6a37a3b01b0c02bcd528f9458f16480d",
-            "mtime": "2026-02-06"
-        },
-        "docs/aiops/artifacts/revenue-scan/20260205-025010/README.md": {
-            "hash": "3cef2f3fd93022ed27fae357b543c9ffc27262cfe7db6cbfefbd8f8d5bceae5f",
-            "mtime": "2026-02-06"
-        },
-        "docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_by_module.md": {
-            "hash": "084c76ac08e96dcc320c7f536f2e87582aaba1d5c8dad79b0df598c5025eb6ab",
-            "mtime": "2026-02-06"
-        },
-        "docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_by_pricing_tier.md": {
-            "hash": "81ca1cb65b717a20ae0840205dbaf8a32fbb21fd381928f4a5b62f598352253c",
-            "mtime": "2026-02-06"
-        },
-        "docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_by_user_type.md": {
-            "hash": "7c16404c775e740178b603669ca43654932403c099223986d63bc1aecad724cd",
-            "mtime": "2026-02-06"
-        },
-        "docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_full.md": {
-            "hash": "0b40dee67c6a298c50017914ce822a187fd6f18f62f6989173ca1fe624a80f2e",
-            "mtime": "2026-02-06"
-        },
-        "docs/aiops/artifacts/revenue-scan/20260205-025010/summary.md": {
-            "hash": "c904f71897416447f8320efcb17e0e2ccec0e809ab5cde543cbb69f74bac49e8",
-            "mtime": "2026-02-06"
-        },
-        "docs/aiops/artifacts/scraper-audit-emails/20260205-024438/summary.md": {
-            "hash": "f311916f8dcdbf0c9a1e8908c7e66ce7d710659dc1d64e7548ca9820f6f35612",
-            "mtime": "2026-02-06"
-        },
-        "docs/aiops/artifacts/ux-journey-audit/20260205-024451/summary.md": {
-            "hash": "19cbbe79074c3a8c0a93258ccebbe255fce3c3f44ec3699212d7712dfc7e596a",
-            "mtime": "2026-02-06"
-        },
-        "docs/codex/reviews/review-2026-02-05.md": {
-            "hash": "21dfe1f9e1e8fc6dc0ca4c676b1f86648c21a5aa913d732bbd2903123f8d07f2",
-            "mtime": "2026-02-06"
-        },
-        "docs/codex/reviews/review-prompt-2026-02-05.md": {
-            "hash": "0936f8334b34d5b11dd77fe588ef77385389defd801af772ab417363f996af3c",
-            "mtime": "2026-02-06"
-        },
-        "docs/gap_tracker/reports/gap_sync_2026-02-05.md": {
-            "hash": "3df74f9c007e9bffc9d0418cf766efeb5194eaa752b668ce9696a28c9d77bd62",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/adjustments/adjustment_log_2026-02-05.md": {
-            "hash": "e8421dfc4bcc3b7be933720c5093c8d16d735a8f8f000993db5b3feb2f4e68dc",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_aiops_email_processed.md": {
-            "hash": "6a719d263fdf414da14e3545024b01dbeaacdfca1e242bd39c93a185177369cd",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_investment_scanner_lineage.md": {
-            "hash": "b6f9c1feabe2c35d2c4e74b481ceeb505e0f356596cb7c2fb65968fbc8ecd096",
-            "mtime": "2026-02-06"
-        },
-        "docs/mysql/tables/bf_investment_ticker_daily_counts.md": {
-            "hash": "e6eec9de02bb61cf84584fbc93eeb186fcc215b8c6b684ba293966bfff25cf64",
-            "mtime": "2026-02-06"
-        },
-        "docs/aiops/automation/_index.md": {
-            "hash": "0c9ef845c4606fb9bd98504e4d3d9cd9ce906fce5057d61c56e72b8fd9526b17",
-            "mtime": "2026-02-06"
-        },
-        "docs/aiops/automation/alerts_playbook.md": {
-            "hash": "e49762e3ea89cd26b7d1af68ac551586e2205cf0343cac1f2f0f46d3e53dd60b",
-            "mtime": "2026-02-06"
-        },
-        "docs/aiops/automation/marketing_playbook.md": {
-            "hash": "25e7ce1c6823a2f867754328acd89ac7a3d3991856421b57eb225daeac649e4f",
-            "mtime": "2026-02-06"
-        },
-        "docs/aiops/automation/news_playbook.md": {
-            "hash": "27f4c34ec1d33b49bb54062ab876fb9cf3ac29f728dc7c977419700698ee51c2",
-            "mtime": "2026-02-06"
-        },
-        "docs/aiops/automation/social_distribution_playbook.md": {
-            "hash": "9b8dadbed1a4a0a40bdb3f5c714d42a376aebe2c7b6b6164a576d10a0465237c",
-            "mtime": "2026-02-06"
-        },
-        "docs/aiops/automation/watchlist_paths.md": {
-            "hash": "9b59768992cc5de94c5d36c65c705acc031009461f3ffe755a1e1483f712c327",
-            "mtime": "2026-02-06"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260207-135815/summary.md": {
-            "hash": "2a3c3b30136b25c9636b3dc60cf6880e28cae20af8b59c95c9ef10c2c3b0a78e",
-            "mtime": "2026-02-07"
-        },
-        "docs/architecture/psr4-remediation.md": {
-            "hash": "fdb30d89a33e37635f624511307309823722d60fe6b1de281a7797d838c46e15",
-            "mtime": "2026-02-07"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260207-140038/summary.md": {
-            "hash": "bf808f26edca1149158333fbb083d45a3e79ab13a455b7e049aeac3dd20ff09e",
-            "mtime": "2026-02-07"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260207-140215/summary.md": {
-            "hash": "83691f5b0150ddfa02d7eb8741d08915d348aab8fe05ee31f8c01e1f4f2bc1de",
-            "mtime": "2026-02-07"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260207-151413/summary.md": {
-            "hash": "d22137e46a367e9a5a41e7fff61c1083c9582ecf8a5ecd159b97088759b44dc9",
-            "mtime": "2026-02-07"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260207-152502/summary.md": {
-            "hash": "431d469d8753779cf7328cdfe2152627fc4ff7ee967f99c0a4585353ec45dcbe",
-            "mtime": "2026-02-07"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260207-153004/summary.md": {
-            "hash": "2ba18809a9e59ae5b1f384ecf63dd97766250d1468960ce182cd52ea319f2f3c",
-            "mtime": "2026-02-07"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260207-212657/summary.md": {
-            "hash": "66de801b6dcaa6044412308c74f3469d5c9985f16f0da597ee767b76598b0f0e",
-            "mtime": "2026-02-07"
-        },
-        "docs/resolutions/2026-02-07-db-port-type-fix.md": {
-            "hash": "45b177eef975a5671c924511f2c4a0c1fa190235274c711c95d59bfcb62060a7",
-            "mtime": "2026-02-07"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260207-231039/summary.md": {
-            "hash": "a70701b10b6aed94d043371194087c68146e0ea1b9e46bcebd9839de39ec97f0",
-            "mtime": "2026-02-07"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260208-033458/summary.md": {
-            "hash": "4702d01b5ec4e7d5809958e7b66570803d9b8836e764d8670deac17b3ad7ba61",
-            "mtime": "2026-02-08"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260208-131051/summary.md": {
-            "hash": "d80453f8456c5e46b22db67f6019051faf85499cf7ac58d9454b917d28c77960",
-            "mtime": "2026-02-08"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260208-132515/summary.md": {
-            "hash": "2d545e465b65cf51cd8575185b72207f5ae2b8ad01a225fb6c5831e323d35d1a",
-            "mtime": "2026-02-08"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260208-134346/summary.md": {
-            "hash": "927a77c108f51c60ad5883338f29e1d1e411288dd65d6c2e87b8b99f08124d17",
-            "mtime": "2026-02-08"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260208-135706/summary.md": {
-            "hash": "bc0c4dfbbb0cebd6460dfc137b393f14910db4f8b1f60cc026140a7f98ce206e",
-            "mtime": "2026-02-08"
-        },
-        "docs/aiops/repair-report.md": {
-            "hash": "0b2c5cf72474418bc161f4d098f06b54969d3e31d8e58a9c79306a6c24975855",
-            "mtime": "2026-02-08"
-        },
-        "docs/aiops/runtime-architecture.md": {
-            "hash": "0103da41740269d471053b6e4063d03cfc8036ca53228027709d733e54613412",
-            "mtime": "2026-02-08"
-        },
-        "docs/ops/subsystems.md": {
-            "hash": "579f69ec1953a0524a8112dd8d4bd99247c52d70daf9ef488e0b6933e32cbca0",
-            "mtime": "2026-02-08"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260208-141537/summary.md": {
-            "hash": "5561c8d1237fe2dc8cac485221d69b4b10aa88fcd26039b3c6e249061857906c",
-            "mtime": "2026-02-08"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260208-141808/summary.md": {
-            "hash": "d4b9041a35f55da127ec372b9e7141a451f475f06256b23eab09c7815cb56702",
-            "mtime": "2026-02-08"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260208-142038/summary.md": {
-            "hash": "381dfa405f5a2110d4d325e842cfaa35c5cc20284d5dda36ad9208edb925e814",
-            "mtime": "2026-02-08"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260208-142127/summary.md": {
-            "hash": "13016ebf21da77c3a9bc10ce2306ea2134e24368bace865a62ce73f81c2e8054",
-            "mtime": "2026-02-08"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260208-142148/summary.md": {
-            "hash": "ab5908c35db481795060f147949773bcd210be2318e28a3546836cd9a01fc492",
-            "mtime": "2026-02-08"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260208-143848/summary.md": {
-            "hash": "6ffa0951b2fab756ce8af3dd1886e6fbc54fd3bc26c93045411f64f17a8f6437",
-            "mtime": "2026-02-08"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260208-154553/summary.md": {
-            "hash": "a8d00be195ce5cc8f20348e7521b0a9f367ccd9edadc9182c7757e3c4002f21f",
-            "mtime": "2026-02-08"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260208-165510/summary.md": {
-            "hash": "0f67138b515b8543c5dfb8825ad4503cc788380fe292b36e200ede4792687a87",
-            "mtime": "2026-02-08"
-        },
-        "docs/gap_tracker/reports/gap_sync_2026-02-08.md": {
-            "hash": "ab20d417e0e58e00fe2a59cbe5d5824649e5af78df110f0513fafc2c338d5c12",
-            "mtime": "2026-02-08"
-        },
-        "docs/aiops/artifacts/fix-503/20260208-195751/summary.md": {
-            "hash": "3e77749ebf6cc25942a254f12c47cf376ecbefd415cbffdd907553b0705ea534",
-            "mtime": "2026-02-09"
-        },
-        "docs/aiops/artifacts/runtime-cache-boot/20260208-195646/summary.md": {
-            "hash": "1c469fc7c7feaddb169dea98d63f4625fe515f859ba2a79474d3bb10d9da29c6",
-            "mtime": "2026-02-09"
-        },
-        "docs/aiops/artifacts/runtime-triage/20260208-195714/summary.md": {
-            "hash": "4d9d48780f24d6cba91a14f7422486ade7b7b2883471219fcf42068edd0f20ac",
-            "mtime": "2026-02-09"
-        },
-        "docs/aiops/artifacts/security-secrets-audit/20260208-195737/summary.md": {
-            "hash": "8d99fa9737925b72780f71aeb8751fb9a0061d5c7c11a008897c56cf1b46233d",
-            "mtime": "2026-02-09"
-        },
-        "docs/aiops/triage/spark-command-audit.md": {
-            "hash": "868f8f284b10fff3105e3936ebf55a20703c7c4ab17179125c1c24e6f8d00581",
-            "mtime": "2026-02-17"
-        },
-        "docs/codex/reviews/review-2026-02-08.md": {
-            "hash": "0567d7f770df5ea0d095f7b265d5ba58928a76a6fb119ea5b0c9c047aa7df5ea",
-            "mtime": "2026-02-09"
-        },
-        "docs/codex/reviews/review-prompt-2026-02-08.md": {
-            "hash": "df7f524992492b317991041084a885447cb2d8b9856ba8d7f652229852b17009",
-            "mtime": "2026-02-09"
-        },
-        "docs/standards/doc-coverage.md": {
-            "hash": "16ba88bbf22646711fb27bc271e31a461e6b9251a04b50d6a4c11ef9b804a990",
-            "mtime": "2026-02-08"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260208-201007/summary.md": {
-            "hash": "242848d347d2fd18e7c581a93ee4baff8797090ba50d6ac7e5cba4c0e7ddbe18",
-            "mtime": "2026-02-09"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260209-005441/summary.md": {
-            "hash": "92022637bd66628820b23791d5dd113c2246721c6874df6b7054dc5179216bd9",
-            "mtime": "2026-02-09"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260209-110400/summary.md": {
-            "hash": "0dfe32976456ebcc043d1491f58fba6345e4af8187991256577f101844102e7e",
-            "mtime": "2026-02-09"
-        },
-        "docs/api/internal-orchestration.md": {
-            "hash": "0840947e0d1f2e6afec77e2aaaf576c31cbd67a2c54f5fddd5022273bc4933df",
-            "mtime": "2026-02-09"
-        },
-        "docs/controllers/APIs/HealthController.md": {
-            "hash": "15a50ff7cd9d2e8da38bd9b7969bb6aa3e718676880d1b44741fbc830bbf397f",
-            "mtime": "2026-02-09"
-        },
-        "docs/controllers/APIs/OpsController.md": {
-            "hash": "3b3849f2a151c29de35a518c7e99cf9260e563620dda9fde8f259c968c96233c",
-            "mtime": "2026-02-09"
-        },
-        "docs/controllers/APIs/TradingViewController.md": {
-            "hash": "683d6de5a8b52372e8fe427adaededdf3d650f6b5b121a66b76631283048323b",
-            "mtime": "2026-02-09"
-        },
-        "docs/controllers/Predictions/PredictionsApiController.md": {
-            "hash": "645fa07517b40d9959dade73386f08739e37f7ede815d6a31dc4c72f906d0fd4",
-            "mtime": "2026-02-09"
-        },
-        "docs/models/AIOps/AIOpsDedupeModel.md": {
-            "hash": "2779fee1d6139ddc8fbe8eb15e56d4c5fb2d531a67084db88d0f2efc7e0eb0ca",
-            "mtime": "2026-02-09"
-        },
-        "docs/models/AIOps/AIOpsUsageModel.md": {
-            "hash": "85f434ccd88159da0c574e3ee193b75718ba072c154732087252d87b1ca7d99a",
-            "mtime": "2026-02-09"
-        },
-        "docs/modules/AIOps/README.md": {
-            "hash": "aabf398092c8b7d3617b32f0fe240955ef92d4cfb12cde3c658fdefb9275d370",
-            "mtime": "2026-02-09"
-        },
-        "docs/modules/APIs/README.md": {
-            "hash": "1c96cf98eeab213a1a4f75f5900d8379909930b67020466d6a697628a12ec3b1",
-            "mtime": "2026-02-09"
-        },
-        "docs/modules/Notifications/README.md": {
-            "hash": "6cea9deedb9cf869f9418ebd8eeec170d290af5c3ef5a5d2997cea577fd74287",
-            "mtime": "2026-02-09"
-        },
-        "docs/modules/Predictions/README.md": {
-            "hash": "deccdb3c556a3065a1ed4f27b28123eaaf1326e3d7f33790eef4746ad733347f",
-            "mtime": "2026-02-09"
-        },
-        "docs/ops/env-vars.md": {
-            "hash": "99263eda521c6e9468daaa177fa2decf8291d04f3777f3711ac72988f1f93b56",
-            "mtime": "2026-02-09"
-        },
-        "docs/services/AIOpsGuardrailService.md": {
-            "hash": "8c185a9da860f58cce2d05711f4eb45fb762107619479b7ec252db6a5d5f896c",
-            "mtime": "2026-02-09"
-        },
-        "docs/aiops/artifacts/api-audit/20260209-112136/summary.md": {
-            "hash": "166085e81cea98aeba42a8173333618d8a170a0aed50998388288de28512539d",
-            "mtime": "2026-02-09"
-        },
-        "docs/aiops/artifacts/api-audit/20260209-112136/fix-report.md": {
-            "hash": "e4bdb78b85abbef118885774a8bd4c2b2f5155a169d1cbd3b3e786198d26f67a",
-            "mtime": "2026-02-09"
-        },
-        "docs/aiops/artifacts/api-audit/20260209-112136/next-steps.md": {
-            "hash": "d7103003979779e00e343a691c8c11a3ddbb1ccfaa2f725752791ed5809217eb",
-            "mtime": "2026-02-09"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260209-160123/summary.md": {
-            "hash": "f83a07d93c72ea9ca084ad16a42b1dca0ff15d23d7f12bd0a3dc1b571c0d884d",
-            "mtime": "2026-02-09"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260209-191653/summary.md": {
-            "hash": "7699ef51092ee281504f3c39c10a4f4b26e79dc472b277acfa0c1da8774350ad",
-            "mtime": "2026-02-09"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260209-191902/summary.md": {
-            "hash": "908b6caaf1971cc8ccf1679d1c6cb2c22f41791e1ac71bf0f2dcd2b08ced32ce",
-            "mtime": "2026-02-09"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260209-195604/summary.md": {
-            "hash": "5db1c9e35d79eda57448278b524a63b3bd85e9db8b586c7a359c50bff22d11e4",
-            "mtime": "2026-02-09"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260209-211333/summary.md": {
-            "hash": "f99562f60044ed42cc01b9d724db033b44233012b0e209e0ce30aa32926cee49",
-            "mtime": "2026-02-09"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260209-211618/summary.md": {
-            "hash": "d47f8a1213513054c71ba93f0bc55c9a6c191def183e73fcf2836d646ddb29fc",
-            "mtime": "2026-02-10"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260209-221128/summary.md": {
-            "hash": "44b660c8d138799703430b06e4c634ebb67148f1b3f16f65922e545de23ce966",
-            "mtime": "2026-02-10"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260209-222751/summary.md": {
-            "hash": "dbdbdf5ea10ffe3c18d367a1ff81f48bfcfcc21e0d5d61b9e86c21755edfe63e",
-            "mtime": "2026-02-10"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260210-002222/summary.md": {
-            "hash": "8930ab976c548c4e2be798e37794af0e7676ee443466dc15aa87777d8f2c658e",
-            "mtime": "2026-02-10"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260210-015456/summary.md": {
-            "hash": "bf6a9857a7e236305c2458e7e65f53d54f5cfcaa8a9ce0947196b2a5762fdb7e",
-            "mtime": "2026-02-10"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260210-015513/summary.md": {
-            "hash": "d876fc22d4118688ea4e74d5df49f9656caec1b0f43df32528c462c7204deff0",
-            "mtime": "2026-02-10"
-        },
-        "docs/dev/logging.md": {
-            "hash": "63718bec40f0b7fe3fb3728399dc40e273740b6124a358074e21f8fb4669d48d",
-            "mtime": "2026-02-10"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260210-112114/summary.md": {
-            "hash": "d1cb7487316c6682ae48a14e45bfc1f299db47d5c8943df827a2f44a74a2308b",
-            "mtime": "2026-02-10"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260210-112241/summary.md": {
-            "hash": "2e9af2e94d7f181d0057e338a68942265bff40ff7f6c2a90f0b232f69bd0fae4",
-            "mtime": "2026-02-10"
-        },
-        "docs/debug-validation-checklist.md": {
-            "hash": "4ec24a0ef603292dba7beee370c738f7e188df6324f4f4057e2c9e2c23190710",
-            "mtime": "2026-02-10"
-        },
-        "docs/_ops/filesystem-lint-summary.md": {
-            "hash": "157e3555bafd13b0cd9a5b233b105f8edb9099378fcea4fb8741daa240b2fcc4",
-            "mtime": "2026-02-10"
-        },
-        "docs/_ops/filesystem-lint.md": {
-            "hash": "21bd35f31ae26278a181e4e674296d91727ed19bf3057069a43aa8d8a203410a",
-            "mtime": "2026-02-17"
-        },
-        "docs/_ops/filesystem-trend.md": {
-            "hash": "9bcc06aaf508ce4686520b5884511d97e997da07eb0d1bb833e8b28e0cd394b9",
-            "mtime": "2026-02-10"
-        },
-        "docs/_support/ops-spark-reset/20260210-130402/summary.md": {
-            "hash": "aa3074cdca68c11900e3d512f57f6fead5133af91d2cceffa922260bbba1165d",
-            "mtime": "2026-02-10"
-        },
-        "docs/_support/ops-spark-reset/20260210-133819/summary.md": {
-            "hash": "5dc1a048c0fd47e23e63b629bf429304259c5193d65aab958cad1c8ea679186a",
-            "mtime": "2026-02-10"
-        },
-        "docs/aiops/artifacts/ops-spark-reset/20260210-130237/summary.md": {
-            "hash": "317ffcfe2e3036b00cf665183cdd24ffa4c7a97a9131d787f20712b9e9029020",
-            "mtime": "2026-02-10"
-        },
-        "docs/auth-flow.md": {
-            "hash": "aee0dae3fc3d38f4fc269fab5c02601eeffcbe1f1c784cd065cd39138c1a3a99",
-            "mtime": "2026-02-10"
-        },
-        "docs/dev/maintenance-mode.md": {
-            "hash": "5b9749b4585ce332f674c4745f8d403fdacc645a78d0a5e428162dec6a8a1222",
-            "mtime": "2026-02-10"
-        },
-        "docs/testing/auth-tests.md": {
-            "hash": "954236e4f752a4a60e1ba254a875e3cb88dee83c52a831a619dfdea60d1b0e30",
-            "mtime": "2026-02-10"
-        },
-        "docs/_support/api-audit/20260211-023725/summary.md": {
-            "hash": "cf8a2672c6234a4d398dfa6d885ea6452beaea6cae2b21468efe6f4bf1edef53",
-            "mtime": "2026-02-11"
-        },
-        "docs/_support/ops-spark-reset/20260212-005323/summary.md": {
-            "hash": "2e014e98950b2ba3251245a3e18b13f41c5743773532409f3123610dbaf67bf5",
-            "mtime": "2026-02-12"
-        },
-        "docs/_support/ops-spark-reset/20260212-010136/summary.md": {
-            "hash": "bbd6a3e9fdb0a59915dfe147820ba5bb181005e626b5bd05b2f161db64e07ed1",
-            "mtime": "2026-02-12"
-        },
-        "docs/_support/ops-spark-reset/20260212-010223/summary.md": {
-            "hash": "784da3a6426bd28e18cf2df12424cc66f1c23559db205ce76ece821af670dfae",
-            "mtime": "2026-02-12"
-        },
-        "docs/_support/ops-spark-reset/20260212-010317/summary.md": {
-            "hash": "97dabbdd90ce4e19f5ed0052ca920877cd6540232f364ed4f89e60ab14832180",
-            "mtime": "2026-02-12"
-        },
-        "docs/_support/ops-spark-reset/20260212-010628/summary.md": {
-            "hash": "9a114e303e73ddfd0cd3b3f0d7b2981aa31025b3e4188d08266493f326f05528",
-            "mtime": "2026-02-12"
-        },
-        "docs/_support/ops-spark-reset/20260212-023503/summary.md": {
-            "hash": "054c71c2c51759152eef005aaabf73f13fa6b76d8388c69ebb00993636ac8af6",
-            "mtime": "2026-02-12"
-        },
-        "docs/_support/ops-spark-reset/20260213-050023/summary.md": {
-            "hash": "23c6c4a0ac1172925e4997dd7f8e7ecf422063d7b330efee387a195499f7e2a4",
-            "mtime": "2026-02-14"
-        },
-        "docs/_support/ops-spark-reset/20260213-050826/summary.md": {
-            "hash": "8e0423c34011afcec0d8ad5b4a304b65e0dfa7dd6464a6613b4ea5bf9ad3e34b",
-            "mtime": "2026-02-14"
-        },
-        "docs/reviews/ci4-config-service-audit.md": {
-            "hash": "3d509571d2efc4889372ac8e884806b9b1f29bf01292caf8fec31664ca68907f",
-            "mtime": "2026-02-15"
-        },
-        "docs/_support/fix-503/20260215-005841/summary.md": {
-            "hash": "1c66abd41175accca99c17d261e18dc2abc7355a95c21015489a1a946ae385ba",
-            "mtime": "2026-02-15"
-        },
-        "docs/_support/runtime-cache-boot/20260215-010126/summary.md": {
-            "hash": "c3a878ef31346283d688eaccec70d5263ae7abc9366e70864d3db9467ab7fb17",
-            "mtime": "2026-02-15"
-        },
-        "docs/_support/runtime-triage/20260215-010146/summary.md": {
-            "hash": "9a38f0bd9ec7ce092be0073f53ceabafa44bf7e14e6bd61ced9c02364a40f9f9",
-            "mtime": "2026-02-15"
-        },
-        "docs/mysql.md": {
-            "hash": "75bf041b7712fa570c178c8678a871f3afe27f63d20da032ad3a9bf7331dd24c",
-            "mtime": "2026-02-15"
-        },
-        "docs/_support/ops-spark-reset/20260217-000858/summary.md": {
-            "hash": "6e00447d1f8f399f88c14c09165a5975e5c19c08f95f4567ee93e6494c9ab541",
-            "mtime": "2026-02-17"
-        },
-        "docs/_support/ops-spark-reset/20260217-001035/summary.md": {
-            "hash": "c00a6dd98c09e6986efe7336425d867cc3882a7e664265eb366a20b0f8ec8109",
-            "mtime": "2026-02-17"
-        },
-        "docs/_support/ops-spark-reset/20260217-014932/summary.md": {
-            "hash": "9eff3ca4f05329f40a51ed00f524f54c793614e36c7ddfc69ef50f0a41681946",
-            "mtime": "2026-02-17"
-        },
-        "docs/_support/ops-spark-reset/20260217-032014/summary.md": {
-            "hash": "99b90617e7814635f7f531aeabb3169a54dfb0ce7a3774b1139db3d83eb26913",
-            "mtime": "2026-02-17"
-        },
-        "docs/_support/ops-spark-reset/20260217-041857/summary.md": {
-            "hash": "7f402d3cdfdb02d87201c31f8350945de55100e4e45a28594e3ad0eb191bff50",
-            "mtime": "2026-02-17"
-        },
-        "docs/_support/ops-spark-reset/20260217-042717/summary.md": {
-            "hash": "3d33a95b133704d609ff9f0dbad0c744a659ac35bb3909b628a0c092b3767d7f",
-            "mtime": "2026-02-17"
-        },
-        "docs/_support/ops-spark-reset/20260217-042932/summary.md": {
-            "hash": "b237caf6e3dff9f8fb3b6fa99d8f04fd366c1ad4e1abed089b5a1b0fb501a997",
-            "mtime": "2026-02-17"
-        },
-        "docs/_support/ops-spark-reset/20260217-043056/summary.md": {
-            "hash": "e67607df3f5bd07a835333383dbf16750c59a4c9ae7daf72b389a6863b1c59b2",
-            "mtime": "2026-02-17"
-        },
-        "docs/_support/ops-spark-reset/20260217-043328/summary.md": {
-            "hash": "3668952202e8465fcc5ee04514e1e67329aefb733c825c66fb26e4d2ecd16fe1",
-            "mtime": "2026-02-17"
-        },
-        "docs/_support/ops-spark-reset/20260217-133855/summary.md": {
-            "hash": "54e353e11f6672f8d804405179542f1095af82b4a5d1b0d3c20b0ef1d30ccaca",
-            "mtime": "2026-02-17"
-        },
-        "docs/_support/api-audit/20260217-175526/summary.md": {
-            "hash": "a86e77627821e1f22235443cf3415318f85ea3d7d006d7cf433165c1c26506ed",
-            "mtime": "2026-02-17"
-        },
-        "docs/_support/api-audit/20260217-200919/summary.md": {
-            "hash": "e39b328dcda3e14d13498735c0ad9b545ecb82cf19974c96780b0e0211f0f1a5",
-            "mtime": "2026-02-17"
-        },
-        "docs/_audit/ci4-logger-audit-2026-02-18.md": {
-            "hash": "b1ffe644ace6b0042d51ecc12544eac55d5d31523bda8aaf5b76d4f8d7688467",
-            "mtime": "2026-02-18"
-        },
-        "docs/_audit/ci4-logger-hardening-2026-02-18.md": {
-            "hash": "5326b933f2580741ecadfb1917bf962027036518a38d27eff5a1db0e445aaa15",
-            "mtime": "2026-02-18"
-        },
-        "docs/audits/model_limit_patch_report_20260218.md": {
-            "hash": "75acf2c162e64dc8bc6ffbc201c1c37db31d0cfea556d9ed7ee2be7c2f61ff15",
-            "mtime": "2026-02-18"
         }
     },
-<<<<<<< Updated upstream
-    "last_run": "2026-02-19T00:00:02Z"
-||||||| constructed merge base
-    "last_run": "2026-02-18T16:00:02Z"
-=======
-    "last_run": "2026-02-18T20:00:01Z"
->>>>>>> Stashed changes
+    "last_run": "2026-02-21T02:49:01Z"
 }

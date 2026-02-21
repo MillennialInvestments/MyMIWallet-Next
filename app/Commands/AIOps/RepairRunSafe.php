@@ -38,10 +38,10 @@ class RepairRunSafe extends SafeBaseCommand
             $this->spark('aiops:observe:cost');
             $this->spark('aiops:observe:regression'); // fails if regressions found
 
-            $this->runSpark('aiops:patch:risk_score');
-            $this->runSpark('aiops:patch:validate');
-            $this->runSpark('aiops:patch:dry_run');
-            $this->runSpark('aiops:governance:analyze');
+            $this->spark('aiops:patch:risk_score');
+            $this->spark('aiops:patch:validate');
+            $this->spark('aiops:patch:dry_run');
+            $this->spark('aiops:governance:analyze');
             
             // If you have suggest -> diff -> apply:
             $this->sparkIfExists('aiops:observe:suggest');

@@ -1,12 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-<<<<<<< Updated upstream
-> Run: 2026-02-19T00:00:02Z
-||||||| constructed merge base
-> Run: 2026-02-18T16:00:02Z
-=======
-> Run: 2026-02-18T20:00:01Z
->>>>>>> Stashed changes
+> Run: 2026-02-21T02:49:01Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -409,7 +403,7 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Views/Alerts/form_fields/trade_alert_fields.php
   - ⚠️ No obvious doc match found (heuristic)
-- … and 962 more
+- … and 964 more
 
 ## Documented Items With No Obvious Code Match (best-effort)
 - docs/CRON.md
@@ -431,6 +425,8 @@
 - docs/_ops/filesystem-lint.md
   - ❌ No obvious code match found (heuristic)
 - docs/_ops/filesystem-trend.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_support/aiops-init.md
   - ❌ No obvious code match found (heuristic)
 - docs/adr/0001-standards-and-response-contract.md
   - ❌ No obvious code match found (heuristic)
@@ -810,6 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/forecasting/03_analysis_modules.md
   - ❌ No obvious code match found (heuristic)
-- docs/forecasting/04_forecast_model.md
-  - ❌ No obvious code match found (heuristic)
-- … and 791 more
+- … and 793 more
