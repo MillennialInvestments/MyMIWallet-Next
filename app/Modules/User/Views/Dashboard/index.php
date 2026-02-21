@@ -950,7 +950,7 @@ $showSetupBanner   = ! empty($setupStatus)
     function loadHeatmap() {
         if (!heatmapSelect) return;
         const timeframe = heatmapSelect.value || '5m';
-        fetch(`/API/Investments/getConfidenceHeatmap?timeframe=${encodeURIComponent(timeframe)}&window=60`)
+        fetch(`API/Investments/getConfidenceHeatmap?timeframe=${encodeURIComponent(timeframe)}&window=60`)
             .then(resp => resp.json())
             .then(data => renderHeatmap(data))
             .catch(() => {
@@ -997,7 +997,7 @@ $showSetupBanner   = ! empty($setupStatus)
     }
 
     function loadHighlights() {
-        fetch('/API/Investments/getForecastHighlights')
+        fetch('API/Investments/getForecastHighlights')
             .then(resp => resp.json())
             .then(data => renderHighlights(data))
             .catch(() => {
@@ -1008,7 +1008,7 @@ $showSetupBanner   = ! empty($setupStatus)
     }
 
     function loadForecastQuality() {
-        fetch('/API/Investments/getForecastAccuracySummary?window=7d')
+        fetch('API/Investments/getForecastAccuracySummary?window=7d')
             .then(resp => resp.json())
             .then(data => {
                 if (qualityRate) {
@@ -1113,7 +1113,7 @@ $showSetupBanner   = ! empty($setupStatus)
         }
 
         try {
-            const response = await fetch('/API/Investments/getForecastHighlights');
+            const response = await fetch('API/Investments/getForecastHighlights');
             const json = await response.json();
             const data = json?.data || {};
 
@@ -1155,7 +1155,7 @@ $showSetupBanner   = ! empty($setupStatus)
         }
 
         try {
-            const response = await fetch(`/API/Investments/getConfidenceHeatmap?timeframe=all&window=<?= esc($heatmapWindow, 'url') ?>`);
+            const response = await fetch(`API/Investments/getConfidenceHeatmap?timeframe=all&window=<?= esc($heatmapWindow, 'url') ?>`);
             const json = await response.json();
             const data = json?.data || {};
             const grid = data.grid || {};
@@ -1282,7 +1282,7 @@ $showSetupBanner   = ! empty($setupStatus)
             aiChatStatus.textContent = 'Sending...';
         }
 
-        fetch('/API/AI/Chat', {
+        fetch('API/AI/Chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

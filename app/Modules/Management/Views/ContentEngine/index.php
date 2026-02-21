@@ -151,7 +151,7 @@ $latestIngestId = $contentEngine['latest_ingest_id'] ?? null;
     });
 
     document.getElementById('ce-run-cron')?.addEventListener('click', function() {
-        fetch('/API/ContentEngine/runDaily', {method: 'POST'})
+        fetch('API/ContentEngine/runDaily', {method: 'POST'})
             .then(resp => resp.json())
             .then(() => loadIdeas())
             .catch(() => alert('Failed to trigger daily run.'));

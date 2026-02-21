@@ -309,7 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <?php if (aiKimiEnabled()): ?>
     document.getElementById('marketingGenerateStoryboard')?.addEventListener('click', async () => {
         try {
-            const response = await fetch('/Advisor/generateStoryboard', { method: 'POST' });
+            const response = await fetch('Advisor/generateStoryboard', { method: 'POST' });
             const json = await response.json();
             const storyboard = json?.content || json?.data?.choices?.[0]?.message?.content || '';
 
@@ -336,13 +336,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     document.getElementById('marketingKimiSummaries')?.addEventListener('click', async () => {
-        const res = await fetch('/Marketing/generateKimiSummaries');
+        const res = await fetch('Marketing/generateKimiSummaries');
         const json = await res.json();
         showKimiResults(json?.data || json);
     });
 
     document.getElementById('marketingKimiPosts')?.addEventListener('click', async () => {
-        const res = await fetch('/Marketing/generateKimiPosts');
+        const res = await fetch('Marketing/generateKimiPosts');
         const json = await res.json();
         showKimiResults(json?.data || json);
     });

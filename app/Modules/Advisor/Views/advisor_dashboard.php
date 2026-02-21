@@ -116,7 +116,7 @@
 
         document.getElementById('generateStoryboard')?.addEventListener('click', async () => {
             try {
-                const response = await fetch('/Advisor/generateStoryboard', { method: 'POST' });
+                const response = await fetch('Advisor/generateStoryboard', { method: 'POST' });
                 const json = await response.json();
                 if (json?.content) {
                     document.getElementById('advisor-macro').innerHTML = json.content;

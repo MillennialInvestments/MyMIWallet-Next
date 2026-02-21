@@ -1084,7 +1084,7 @@ $subViewData                        = [
     const $ = window.jQuery;
 
     setInterval(() => {
-        fetch('/index.php/API/Alerts/getLatestPrices')
+        fetch('index.php/API/Alerts/getLatestPrices')
             .then(res => res.json())
             .then(response => {
                 if (response.status === 'success') {

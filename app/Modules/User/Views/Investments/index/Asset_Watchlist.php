@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function fetchWatchlistData() {
     // Replace with the actual endpoint URL
-    fetch('/path/to/your/api/endpoint')
+    fetch('path/to/your/api/endpoint')
         .then(response => response.json())
         .then(data => populateWatchlistTable(data))
         .catch(error => console.error('Error fetching watchlist data:', error));

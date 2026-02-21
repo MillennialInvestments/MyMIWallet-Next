@@ -698,7 +698,7 @@ $(document).ready(function () {
 </script>
 <script <?= $nonce['script'] ?? '' ?>>
 setInterval(() => {
-    fetch('/index.php/API/Alerts/getLatestPrices')
+    fetch('API/Alerts/getLatestPrices')
         .then(res => res.json())
         .then(response => {
             if (response.status === 'success') {

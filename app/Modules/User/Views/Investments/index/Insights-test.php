@@ -136,7 +136,7 @@
     //     const assetName = document.getElementById('assetName').value;
     //     const currentValue = document.getElementById('currentValue').value;
 
-    //     fetch('/path/to/your/controller/method', { // Update this URL
+    //     fetch('path/to/your/controller/method', { // Update this URL
     //         method: 'POST',
     //         headers: {
     //             'Content-Type': 'application/json',
@@ -156,7 +156,7 @@
 
     // Function to fetch and refresh the watchlist
     function refreshWatchlist() {
-        fetch('/user/investments/get_user_watchlist') // Update this URL to your method
+        fetch('user/investments/get_user_watchlist') // Update this URL to your method
             .then(response => response.json())
             .then(data => {
                 const watchlistTableBody = document.getElementById('watchlistTableBody');

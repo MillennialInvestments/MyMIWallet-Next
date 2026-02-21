@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const selected = e.target.value;
         previewContainer.innerHTML = '📦 Loading preview...';
 
-        fetch('/API/Templates/Preview/' + selected)
+        fetch('API/Templates/Preview/' + selected)
             .then(res => res.ok ? res.text() : Promise.reject('Preview not available'))
             .then(html => previewContainer.innerHTML = '<strong>Template Preview:</strong><br>' + html)
             .catch(() => previewContainer.innerHTML = '⚠️ Preview not available.');
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 <script <?= $nonce['script'] ?? '' ?>>
 function loadTemplatePreview(templateName) {
-    fetch('/Management/DripCampaign/previewTemplate', {
+    fetch('Management/DripCampaign/previewTemplate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: 'template=' + encodeURIComponent(templateName)

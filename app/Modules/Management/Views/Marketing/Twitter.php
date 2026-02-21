@@ -53,7 +53,7 @@
     async function fetchTweets() {
         const hashtags = document.getElementById('hashtags').value;
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        const response = await fetch('/Management/Marketing/Twitter', {
+        const response = await fetch('Management/Marketing/Twitter', {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',

@@ -349,7 +349,7 @@ document.addEventListener('DOMContentLoaded', function () {
         statusBox.innerText = '🔄 Fetching prices...';
 
         try {
-            const res = await fetch('/index.php/API/Alerts/getLatestPrices');
+            const res = await fetch('index.php/API/Alerts/getLatestPrices');
             const data = await res.json();
 
             if (data.status === 'success') {

@@ -21,7 +21,7 @@
 
   async function run(query, o=0){
     const params = new URLSearchParams({q: query, limit, offset: o});
-    const res = await fetch('/API/Search?'+params.toString(), {headers:{'Accept':'application/json'}});
+    const res = await fetch('API/Search?'+params.toString(), {headers:{'Accept':'application/json'}});
     const json = await res.json();
     if (json?.csrf){ const meta=document.querySelector('meta[name="csrf-token"]'); if(meta) meta.setAttribute('content', json.csrf); }
     render(json?.data?.items || [], json?.data?.total || 0, query, o);

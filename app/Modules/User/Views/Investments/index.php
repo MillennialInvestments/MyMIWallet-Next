@@ -527,7 +527,7 @@ document.addEventListener('DOMContentLoaded', () => {
             heatmapStatus.textContent = 'Loading heatmap...';
         }
         try {
-            const response = await fetch(`/API/Investments/getConfidenceHeatmap?timeframe=all&window=<?= esc($heatmapWindow, 'url') ?>`);
+            const response = await fetch(`API/Investments/getConfidenceHeatmap?timeframe=all&window=<?= esc($heatmapWindow, 'url') ?>`);
             const json = await response.json();
             renderHeatmap(json?.data || {}, json?.cached);
         } catch (error) {
@@ -571,7 +571,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const loadAccuracy = async () => {
         try {
-            const response = await fetch('/API/Investments/getForecastAccuracySummary?days=30');
+            const response = await fetch('API/Investments/getForecastAccuracySummary?days=30');
             const json = await response.json();
             const data = json?.data || {};
 
@@ -708,7 +708,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function loadHeatmap() {
         const timeframe = heatmapSelect?.value || '5m';
-        fetch(`/API/Investments/getConfidenceHeatmap?timeframe=${encodeURIComponent(timeframe)}&window=60`)
+        fetch(`API/Investments/getConfidenceHeatmap?timeframe=${encodeURIComponent(timeframe)}&window=60`)
             .then(resp => resp.json())
             .then(data => renderHeatmap(data))
             .catch(() => {
@@ -724,7 +724,7 @@ document.addEventListener('DOMContentLoaded', function () {
         payload.append('ticker', ticker);
         payload.append('timeframes', timeframe);
 
-        fetch('/API/Investments/reforecastTicker', {
+        fetch('API/Investments/reforecastTicker', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -794,7 +794,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function loadAccuracySummary() {
-        fetch('/API/Investments/getForecastAccuracySummary?window=7d')
+        fetch('API/Investments/getForecastAccuracySummary?window=7d')
             .then(resp => resp.json())
             .then(data => renderAccuracySummary(data))
             .catch(() => {});

@@ -399,7 +399,7 @@ document.addEventListener('DOMContentLoaded', function () {
             btn.textContent = 'Refreshing...';
 
             try {
-                const response = await fetch('/API/Investments/reforecastTicker', {
+                const response = await fetch('API/Investments/reforecastTicker', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',

@@ -126,7 +126,7 @@
         const banner = document.getElementById('aiops-banner');
 
         function fetchStatus() {
-            fetch('/API/AiOps/status')
+            fetch('API/AiOps/status')
                 .then(resp => resp.json())
                 .then(renderStatus)
                 .catch(() => {});
@@ -222,7 +222,7 @@
         document.querySelectorAll('[data-setting]').forEach(input => {
             input.addEventListener('change', () => {
                 const body = new URLSearchParams({ key: input.dataset.setting, value: input.checked ? '1' : '0' });
-                fetch('/API/AiOps/toggle', {
+                fetch('API/AiOps/toggle', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body
@@ -233,7 +233,7 @@
         document.querySelectorAll('[data-run]').forEach(btn => {
             btn.addEventListener('click', () => {
                 const jobKey = btn.dataset.run;
-                fetch('/API/AiOps/run', {
+                fetch('API/AiOps/run', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ jobKey })

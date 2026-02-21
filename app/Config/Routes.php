@@ -690,20 +690,20 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         // $routes->match(['GET', 'POST'], 'addNewTradeToWatchlist', 'InvestmentsAPIController:addNewTradeToWatchlist');
         // $routes->get('fetchActiveTrades/(:any)', 'API::fetchActiveTrade/$1'); // Fetch User Active Trades
         // $routes->get('fetchRealTimeData/(:any)/(:any)', 'API::fetchRealTimeData/$1/$2'); // Fetch Real-Time Price Data
-        // $routes->get('fetchWatchlistPrices/(:any)', 'InvestmentsController::fetchWatchlistPrices/$1');
+        // $routes->get('fetchWatchlistPrices/(:any)', 'InvestmentsAPIController::fetchWatchlistPrices/$1');
         // $routes->get('getInvestmentData/(:segment)', 'InvestmentsAPIController::getInvestmentData/$1');
         // $routes->get('getSymbolsByTradeType/(:any)', 'API::getSymbolsByTradeType/$1'); // Fetch Symbols by Trade Type (Stocks, Cryptos, etc.)
-        // $routes->get('GetUserWatchlist/(:any)', 'InvestmentsController::getUserWatchlist/$1');
-        // $routes->get('refreshActiveTradesPrices/(:any)', 'InvestmentsController::refreshActiveTradesPrices/$1');
+        // $routes->get('GetUserWatchlist/(:any)', 'InvestmentsAPIController::getUserWatchlist/$1');
+        // $routes->get('refreshActiveTradesPrices/(:any)', 'InvestmentsAPIController::refreshActiveTradesPrices/$1');
         $routes->get('getSymbolsByTradeType/(:segment)', 'InvestmentsAPIController::getSymbolsByTradeType/$1');
         $routes->get('getInvestmentData/(:segment)', 'InvestmentsAPIController::getInvestmentData/$1');
-        $routes->get('searchTickers', 'InvestmentsController::searchTickers');
-        $routes->get('news',              'InvestmentsController::listNews');
-        $routes->get('news/(:num)',       'InvestmentsController::getNews/$1');
-        $routes->post('news',             'InvestmentsController::createNews');
-        $routes->post('news/(:num)',      'InvestmentsController::updateNews/$1');
-        $routes->delete('news/(:num)',    'InvestmentsController::deleteNews/$1');
-        $routes->post('validateSymbol',    'InvestmentsController::validateSymbol');
+        $routes->get('searchTickers', 'InvestmentsAPIController::searchTickers');
+        $routes->get('news',              'InvestmentsAPIController::listNews');
+        $routes->get('news/(:num)',       'InvestmentsAPIController::getNews/$1');
+        $routes->post('news',             'InvestmentsAPIController::createNews');
+        $routes->post('news/(:num)',      'InvestmentsAPIController::updateNews/$1');
+        $routes->delete('news/(:num)',    'InvestmentsAPIController::deleteNews/$1');
+        $routes->post('validateSymbol',    'InvestmentsAPIController::validateSymbol');
         $routes->get('getForecastHighlights', 'InvestmentsAPIController::getForecastHighlights');
         $routes->get('getForecastDetails/(:segment)', 'InvestmentsAPIController::getForecastDetails/$1');
         $routes->get('getConfidenceHeatmap', 'InvestmentsAPIController::getConfidenceHeatmap');
@@ -712,14 +712,14 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('getForecastAccuracySummary', 'InvestmentsAPIController::getForecastAccuracySummary');
         $routes->post('refreshForecasts', 'InvestmentsAPIController::refreshForecasts');
         $routes->post('reforecastTicker', 'InvestmentsAPIController::reforecastTicker');
-        // $routes->get('removeTradeFromWatchlist/(:num)', 'InvestmentsController::removeTradeFromWatchlist/$1'); // NOT COMPLETED Remove Trade from Watchlist
-        // $routes->post('updateTradeNotes', 'InvestmentsController::updateTradeNotes'); // NOT COMPLETED Update Trade Notes
-        // $routes->post('updateTradeTargetPrice', 'InvestmentsController::updateTradeTargetPrice'); // NOT COMPLETED Update Trade Target Price
-        // $routes->post('updateWatchlistOrder', 'InvestmentsController::updateWatchlistOrder'); // NOT COMPLETED Update Watchlist Order
-        // $routes->post('updateWatchlistTags', 'InvestmentsController::updateWatchlistTags'); // NOT COMPLETED Update Watchlist Tags
-        // $routes->get('userHoldings/(:any)', 'InvestmentsController::userHoldings/$1'); // Fetch User Holdings
-        // $routes->get('userWatchlist/(:any)', 'InvestmentsController::userWatchlist/$1'); // Fetch User Watchlist
-        // $routes->get('Search/Ticker/(:any)', 'InvestmentsController::searchTicker/$1'); // Search User Holdings
+        // $routes->get('removeTradeFromWatchlist/(:num)', 'InvestmentsAPIController::removeTradeFromWatchlist/$1'); // NOT COMPLETED Remove Trade from Watchlist
+        // $routes->post('updateTradeNotes', 'InvestmentsAPIController::updateTradeNotes'); // NOT COMPLETED Update Trade Notes
+        // $routes->post('updateTradeTargetPrice', 'InvestmentsAPIController::updateTradeTargetPrice'); // NOT COMPLETED Update Trade Target Price
+        // $routes->post('updateWatchlistOrder', 'InvestmentsAPIController::updateWatchlistOrder'); // NOT COMPLETED Update Watchlist Order
+        // $routes->post('updateWatchlistTags', 'InvestmentsAPIController::updateWatchlistTags'); // NOT COMPLETED Update Watchlist Tags
+        // $routes->get('userHoldings/(:any)', 'InvestmentsAPIController::userHoldings/$1'); // Fetch User Holdings
+        // $routes->get('userWatchlist/(:any)', 'InvestmentsAPIController::userWatchlist/$1'); // Fetch User Watchlist
+        // $routes->get('Search/Ticker/(:any)', 'InvestmentsAPIController::searchTicker/$1'); // Search User Holdings
     });
 
     // ------------------------
@@ -862,7 +862,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('Video-Creator', 'MarketingAPIController::videoCreator');
         $routes->get('View-Email/(:segment)/(:segment)', 'MarketingAPIController::viewEmail/$1/$2');
         $routes->get('View-Grouped-Summaries', 'MarketingAPIController::View-Grouped-Summaries');
-        $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsController::addUserGoldTasks');
+        $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsAPIController::addUserGoldTasks');
         $routes->get('Email-Templates/create', 'EmailTemplateController::create');
         $routes->post('/Email-Templates/store', 'EmailTemplateController::store');
         $routes->get('Email-Queue', 'EmailQueueController::index');

@@ -93,7 +93,7 @@ document.getElementById('addTradeAlertForm').addEventListener('submit', async fu
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     try {
-        const response = await fetch('/Management/Alerts/addTradeAlert', {
+        const response = await fetch('Management/Alerts/addTradeAlert', {
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': "<?= csrf_hash(); ?>"

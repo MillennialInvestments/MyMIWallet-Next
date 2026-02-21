@@ -222,7 +222,7 @@
     //     const assetName = document.getElementById('assetName').value;
     //     const currentValue = document.getElementById('currentValue').value;
 
-    //     fetch('/path/to/your/controller/method', { // Update this URL
+    //     fetch('path/to/your/controller/method', { // Update this URL
     //         method: 'POST',
     //         headers: {
     //             'Content-Type': 'application/json',

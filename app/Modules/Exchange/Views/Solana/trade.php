@@ -107,7 +107,7 @@ document.getElementById('sellAmount').addEventListener('input', function () {
 document.getElementById('refreshPrice').addEventListener('click', function() {
     document.getElementById('price-loader').style.display = 'inline-block';
 
-    fetch('/index.php/API/Solana/getMarketPrice')
+    fetch('index.php/API/Solana/getMarketPrice')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -143,7 +143,7 @@ document.getElementById('buyForm').addEventListener('submit', function (event) {
     const formData = new FormData(this);
     formData.append('method', 'fiat'); // Set the method dynamically (crypto_swap, fiat, mymi_gold)
 
-    fetch('/Exchange/Solana/Purchase', {
+    fetch('Exchange/Solana/Purchase', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -167,7 +167,7 @@ document.getElementById('sellForm').addEventListener('submit', function (event) 
     event.preventDefault(); // Prevent default form submission
     const formData = new FormData(this);
 
-    fetch('/Exchange/Solana/Sell', { // Ensure the correct URL is used for processing the sell request
+    fetch('Exchange/Solana/Sell', { // Ensure the correct URL is used for processing the sell request
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

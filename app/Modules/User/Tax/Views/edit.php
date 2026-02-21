@@ -63,7 +63,7 @@
 
 <script>
     function saveLine(returnId, lineNumber, amount, explainText) {
-        return fetch('/Tax/ajax/saveLine', {
+        return fetch('Tax/ajax/saveLine', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: new URLSearchParams({
@@ -99,7 +99,7 @@
             const allocationId = event.target.dataset.id;
             const taxable = event.target.value;
             const returnId = <?= esc($returnRow['id']); ?>;
-            const resp = await fetch('/Tax/ajax/saveAllocation', {
+            const resp = await fetch('Tax/ajax/saveAllocation', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 body: new URLSearchParams({
