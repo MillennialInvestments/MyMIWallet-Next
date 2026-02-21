@@ -151,15 +151,23 @@ class Run extends SafeBaseCommand
     {
         $violations = [];
 
-        $published = $db->query('SELECT p.schema_json,c.slug,c.type,p.published_meta_json FROM bf_public_pages_published p JOIN bf_public_pages_catalog c ON c.id=p.page_id')->getResultArray();
+       $fields = $db->getFieldNames('bf_public_pages_published');
+        $hasMeta = in_array('published_meta_json', $fields, true);
+
+        $sql = 'SELECT p.schema_json,c.slug,c.type';
+        if ($hasMeta) {
+            $sql .= ',p.published_meta_json';
+        }
+        $sql .= ' FROM bf_public_pages_published p JOIN bf_public_pages_catalog c ON c.id=p.page_id';
+
+        $published = $db->query($sql)->getResultArray();
         foreach ($published as $row) {
             $type = strtolower((string) ($row['type'] ?? ''));
             if (in_array($type, ['review', 'glossary'], true) && trim((string) ($row['schema_json'] ?? '')) === '') {
                 $violations[] = "Published page {$row['slug']} ({$type}) missing schema_json.";
             }
             if ($type === 'hybrid') {
-                $meta = json_decode((string) ($row['published_meta_json'] ?? ''), true);
-                if (! is_array($meta) || ! isset($meta['news_items']) || ! is_array($meta['news_items']) || $meta['news_items'] === []) {
+                    $meta = json_decode((string) ($row['published_meta_json'] ?? ''), true);                if (! is_array($meta) || ! isset($meta['news_items']) || ! is_array($meta['news_items']) || $meta['news_items'] === []) {
                     $violations[] = "Hybrid page {$row['slug']} missing news block in published_meta_json.";
                 }
             }
