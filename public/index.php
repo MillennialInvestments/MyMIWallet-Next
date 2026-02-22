@@ -41,7 +41,7 @@ if (getcwd() . DIRECTORY_SEPARATOR !== FCPATH) {
 }
 
 require FCPATH . '../vendor/autoload.php';
-
+require FCPATH . '../vendor/codeigniter4/framework/system/Common.php';
 // ---------------------------------------------------------------------
 // Environment Detection
 // ---------------------------------------------------------------------
