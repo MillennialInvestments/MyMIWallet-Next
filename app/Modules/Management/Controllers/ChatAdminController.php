@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\UserController;
 use App\Models\AIOpsChatAdminModel;
 use App\Services\AIOps\ChatIngestService;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class ChatAdminController extends BaseController
+class ChatAdminController extends UserController
 {
     use ResponseTrait;
 
@@ -24,11 +24,11 @@ class ChatAdminController extends BaseController
         $this->chatAdminModel = new AIOpsChatAdminModel();
     }
 
-    public function index(): ResponseInterface|string
+    public function index()
     {
-        if (! $this->isAdmin()) {
-            return $this->response->setStatusCode(403)->setBody('Forbidden');
-        }
+        // if (! $this->isAdmin()) {
+        //     return $this->response->setStatusCode(403)->setBody('Forbidden');
+        // }
 
         $data = $this->commonData();
         if ($data instanceof ResponseInterface) {
@@ -37,10 +37,10 @@ class ChatAdminController extends BaseController
 
         $data['pageTitle'] = 'AIOps Chat Admin';
 
-        return view('App\Modules\Management\Views\admin\chat', $data);
+        return $this->renderTheme('App\Modules\Management\Views\admin\chat', $data);
     }
 
-    public function submit(): ResponseInterface
+    public function submit()
     {
         if (! $this->isAdmin()) {
             return $this->failUnauthorized('Unauthorized');
@@ -96,7 +96,7 @@ class ChatAdminController extends BaseController
         }
     }
 
-    public function history(): ResponseInterface
+    public function history()
     {
         if (! $this->isAdmin()) {
             return $this->failUnauthorized('Unauthorized');
@@ -113,7 +113,7 @@ class ChatAdminController extends BaseController
         ]);
     }
 
-    private function isAdmin(): bool
+    private function isAdmin()
     {
         if (function_exists('has_permission') && has_permission('admin.access')) {
             return true;
@@ -134,7 +134,7 @@ class ChatAdminController extends BaseController
         return false;
     }
 
-    private function currentUserId(): ?int
+    private function currentUserId()
     {
         $auth = service('authentication');
         if (! method_exists($auth, 'id')) {
@@ -146,7 +146,7 @@ class ChatAdminController extends BaseController
         return is_numeric($id) ? (int) $id : null;
     }
 
-    private function checkThrottle(): bool
+    private function checkThrottle()
     {
         $session = session();
         $key = 'chat_admin_last_submit_' . ($this->currentUserId() ?? 'guest');
@@ -161,7 +161,7 @@ class ChatAdminController extends BaseController
         return true;
     }
 
-    private function logFailureToDatabase(string $message): void
+    private function logFailureToDatabase(string $message)
     {
         try {
             $db = \Config\Database::connect();

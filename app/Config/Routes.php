@@ -44,7 +44,7 @@ if (ENVIRONMENT !== 'production') {
         throw new \Exception('Manual test exception');
     });
 }
-$routes->get('ops/health', 'OpsController::health', ['filter' => 'none']);
+$routes->get('ops/health', 'OpsController::health');
 $routes->get('Maintenance', 'MaintenanceController::index');
 
 $routes->get('API/Ops/health-score', 'OpsHealth::score');
