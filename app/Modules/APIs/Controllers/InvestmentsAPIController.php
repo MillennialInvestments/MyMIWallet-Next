@@ -292,6 +292,11 @@ class InvestmentsAPIController extends UserController
         $refresh = filter_var($this->request->getGet('refresh'), FILTER_VALIDATE_BOOLEAN);
 
         $aggregation = service('forecastAggregationService');
+
+        if (!$aggregation) {
+            log_message('critical', 'forecastAggregationService returned null');
+            return $this->failServerError('Aggregation service unavailable');
+        }
         $result = $aggregation->getConfidenceHeatmap($timeframe, $window, $refresh);
 
         return $this->respond([
@@ -356,6 +361,11 @@ class InvestmentsAPIController extends UserController
         $days = max(1, min(90, $days));
 
         $evaluator = service('forecastAccuracyEvaluator');
+
+        if (!$evaluator) {
+            log_message('critical', 'forecastAccuracyEvaluator returned null');
+            return $this->failServerError('Accuracy service unavailable');
+        }
         $payload = $evaluator->getAccuracyDashboardData($days);
 
         return $this->respond([
