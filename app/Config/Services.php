@@ -10,8 +10,8 @@ use App\Services\EventTracker;
 use App\Services\OnboardingProgressService;
 use App\Services\Psr4AuditService;
 use App\Services\SetupStatusService;
-use App\Services\Forecasting\ForecastAccuracyEvaluator;
-use App\Services\Forecasting\ForecastAggregationService;
+use App\Services\ForecastAccuracyEvaluator;
+use App\Services\ForecastAggregationService;
 use App\Services\Forecasting\MyMIForecaster;
 use App\Services\Forecasting\Providers\AlphaVantageProvider;
 use Config\Cache;
@@ -284,35 +284,27 @@ class Services extends CoreServices
         return new MyMIForecaster($provider, $forecastModel, $alertsModel, $cache, $config);
     }
 
-    public static function forecastAggregation(bool $getShared = true): ForecastAggregationService
+    public static function forecastAggregationService(bool $getShared = true)
     {
         if ($getShared) {
-            /** @var ForecastAggregationService $service */
-            $service = static::getSharedInstance('forecastAggregation');
-            return $service;
+            return static::getSharedInstance('forecastAggregationService');
         }
 
-        $forecastModel = model(\App\Models\InvestmentPriceForecastModel::class);
-        $alertsModel = model(\App\Models\AlertsModel::class);
-        $config = config('MyMIForecasting');
-
-        return new ForecastAggregationService($forecastModel, $alertsModel, $config);
+        return new ForecastAggregationService();
     }
 
-    public static function forecastAccuracyEvaluator(bool $getShared = true): ForecastAccuracyEvaluator
+
+    public static function forecastAggregation(bool $getShared = true)
+    {
+        return static::forecastAggregationService($getShared);
+    }
+    public static function forecastAccuracyEvaluator(bool $getShared = true)
     {
         if ($getShared) {
-            /** @var ForecastAccuracyEvaluator $service */
-            $service = static::getSharedInstance('forecastAccuracyEvaluator');
-            return $service;
+            return static::getSharedInstance('forecastAccuracyEvaluator');
         }
 
-        $historyModel = model(\App\Models\InvestmentForecastHistoryModel::class);
-        $accuracyModel = model(\App\Models\InvestmentForecastAccuracyModel::class);
-        $provider = new AlphaVantageProvider();
-        $config = config('MyMIForecasting');
-
-        return new ForecastAccuracyEvaluator($historyModel, $accuracyModel, $provider, $config);
+        return new ForecastAccuracyEvaluator();
     }
     
     /*
