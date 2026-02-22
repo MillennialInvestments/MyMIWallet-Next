@@ -1,0 +1,25 @@
+{
+    "file_candidates": [
+        "app/Config/Routes.php",
+        "app/Modules/Management/Controllers/EmailTemplateController.php",
+        "app/Modules/Management/Controllers/EmailQueueController.php",
+        "app/Services/Email/EmailTemplateService.php",
+        "app/Services/Email/EmailQueueService.php",
+        "app/Services/Email/EmailProcessorService.php",
+        "app/Models/EmailTemplateModel.php",
+        "app/Models/EmailQueueModel.php",
+        "app/Models/EmailLogModel.php",
+        "app/Database/Migrations/2026-xx-xx-CreateEmailTemplates.php",
+        "app/Database/Migrations/2026-xx-xx-CreateEmailQueue.php",
+        "app/Database/Migrations/2026-xx-xx-CreateEmailLogs.php",
+        "app/Commands/Email/ProcessQueue.php",
+        "app/Commands/",
+        "app/Controllers/",
+        "app/Models/",
+        "app/Services/",
+        "app/Services/AIOps/",
+        "app/Database/Migrations/",
+        "app/Views/"
+    ],
+    "notes": "Heuristic inference only; AIOps/Ollama should confirm exact file placements."
+}

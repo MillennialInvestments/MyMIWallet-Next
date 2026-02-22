@@ -1,6 +1,6 @@
 # AI-Ops: Stale Docs
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-22T16:00:01Z
+> Run: 2026-02-22T20:00:02Z
 
 - docs/Kimi/README.md
   - Doc last updated: 2025-12-11 (72 days ago)
@@ -47,7 +47,7 @@
 - docs/chatgpt/mymi_alert_system/inventory.md
   - Doc last updated: 2025-12-20 (64 days ago)
 - docs/chatgpt/mymi_alert_system/standards.md
-  - Doc last updated: 2025-12-21 (62 days ago)
+  - Doc last updated: 2025-12-21 (63 days ago)
 - docs/chatgpt/mymi_alert_system/summary.md
   - Doc last updated: 2025-12-20 (64 days ago)
 - docs/chatgpt/prompt_template.md
@@ -113,7 +113,7 @@
 - docs/discord/events_matrix.md
   - Doc last updated: 2025-12-05 (78 days ago)
 - docs/discord/marketing_news_automation.md
-  - Doc last updated: 2025-12-10 (73 days ago)
+  - Doc last updated: 2025-12-10 (74 days ago)
 - docs/discord/mee6_and_mymi_automation.md
   - Doc last updated: 2025-12-05 (78 days ago)
 - docs/discord/mysql_discord_schema.md
@@ -199,7 +199,7 @@
 - docs/nginx/production.md
   - Doc last updated: 2025-12-21 (63 days ago)
 - docs/notes/2025-11-23-alerts-preview-lazy-refresh-and-advisor-errors.md
-  - Doc last updated: 2025-11-23 (90 days ago)
+  - Doc last updated: 2025-11-23 (91 days ago)
 - docs/notes/2025-12-01-feature-corrections.md
   - Doc last updated: 2025-12-01 (83 days ago)
 - docs/operations/01-foundation.md
@@ -283,9 +283,9 @@
 - docs/ops/docs_index.md
   - Doc last updated: 2025-12-10 (74 days ago)
 - docs/ops/logging_healthcheck.md
-  - Doc last updated: 2025-12-21 (62 days ago)
+  - Doc last updated: 2025-12-21 (63 days ago)
 - docs/ops/logs/logging_breakpoint_report-2025_12_21.md
-  - Doc last updated: 2025-12-21 (62 days ago)
+  - Doc last updated: 2025-12-21 (63 days ago)
 - docs/ops/marketing_ignite.md
   - Doc last updated: 2025-12-20 (64 days ago)
 - docs/ops/reviews/_index.md
@@ -371,4 +371,4 @@
 - docs/wallets/_index.md
   - Doc last updated: 2025-11-08 (106 days ago)
 - docs/wallets/wallets_workflow.md
-  - Doc last updated: 2025-11-16 (97 days ago)
+  - Doc last updated: 2025-11-16 (98 days ago)

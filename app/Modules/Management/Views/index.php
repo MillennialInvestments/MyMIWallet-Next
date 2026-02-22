@@ -81,7 +81,7 @@ $autoloadStatusLabel = $autoloadViolations === 0
         ?>
         <div class="card card-bordered col-4 mb-3">
             <div class="card-inner">
-                <?php echo view('ManagementModules/resources/ChatBotBudget.php'); ?>
+                <?php //echo view('ManagementModules/resources/ChatBotBudget.php'); ?>
             </div>
         </div>
         
