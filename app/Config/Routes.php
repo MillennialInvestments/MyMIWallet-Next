@@ -1111,6 +1111,9 @@ $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers
     });
     $routes->group('Admin', function($routes) {
         $routes->get('/', 'AdminController::index');
+        $routes->get('Chat', 'ChatAdminController::index', ['filter' => 'permission:admin.access']);
+        $routes->post('Chat/submit', 'ChatAdminController::submit', ['filter' => 'permission:admin.access']);
+        $routes->get('Chat/history', 'ChatAdminController::history', ['filter' => 'permission:admin.access']);
     });
     $routes->group('Alerts', function($routes) {
         $routes->get('/', 'AlertsAdminController::index');
