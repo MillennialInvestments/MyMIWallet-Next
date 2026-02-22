@@ -19,6 +19,6 @@ class CspOff implements FilterInterface
         $response->removeHeader('Content-Security-Policy');
         $response->removeHeader('Content-Security-Policy-Report-Only');
 
-        return $response;
+        return $null;
     }
 }

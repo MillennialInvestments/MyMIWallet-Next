@@ -4,7 +4,7 @@
    Grouped by (LEVEL + message)
 ===============================================
 
-Last processed up to: 2026-02-21 18:00:04
+Last processed up to: 2026-02-21 20:00:03
 
 ---------------------------
 LEVEL: DEBUG
@@ -61,42 +61,45 @@ DEBUG --> LOG_HEALTHCHECK debug marker=7947951ab008
 [1 occurrence(s)]
 DEBUG --> LOG_HEALTHCHECK debug marker=d3128f2a8696
 
+[1 occurrence(s)]
+DEBUG --> LOG_HEALTHCHECK debug marker=469f2cafc286
+
 
 ---------------------------
 LEVEL: INFO
 ---------------------------
 
-[16 occurrence(s)]
+[17 occurrence(s)]
 INFO --> [spark:aiops:run] Intent
 
-[81 occurrence(s)]
+[89 occurrence(s)]
 INFO --> [spark:ops:work] Started
 
-[81 occurrence(s)]
+[89 occurrence(s)]
 INFO --> [spark:ops:work] Intent
 
-[81 occurrence(s)]
+[89 occurrence(s)]
 INFO --> [spark:ops:work] Completed
 
-[17 occurrence(s)]
+[18 occurrence(s)]
 INFO --> [AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Started
 
-[17 occurrence(s)]
+[18 occurrence(s)]
 INFO --> [spark:logs:summarize] Intent
 
-[16 occurrence(s)]
+[17 occurrence(s)]
 INFO --> [AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Completed
 
-[15 occurrence(s)]
+[16 occurrence(s)]
 INFO --> [spark:app:healthcheck] Started
 
-[15 occurrence(s)]
+[16 occurrence(s)]
 INFO --> [spark:app:healthcheck] Intent
 
 [1 occurrence(s)]
 INFO --> LOG_HEALTHCHECK info marker=e885eeffa4c0
 
-[15 occurrence(s)]
+[16 occurrence(s)]
 INFO --> [spark:app:healthcheck] Completed
 
 [1 occurrence(s)]
@@ -162,10 +165,19 @@ INFO --> LOG_HEALTHCHECK info marker=7947951ab008
 [1 occurrence(s)]
 INFO --> LOG_HEALTHCHECK info marker=d3128f2a8696
 
+[1 occurrence(s)]
+INFO --> LOG_HEALTHCHECK info marker=469f2cafc286
+
+[1 occurrence(s)]
+INFO --> [spark:aiops:email-scan] Started
+
+[1 occurrence(s)]
+INFO --> [spark:aiops:email-scan] Intent
+
 
 ===============================================
    HERE'S THE NEW STUFF
-   (Entries logged AFTER 2026-02-21 18:00:04)
+   (Entries logged AFTER 2026-02-21 20:00:03)
 ===============================================
 
 ---------------------------
@@ -180,6 +192,12 @@ INFO --> [spark:ops:work] Intent
 
 [8 NEW occurrence(s)]
 INFO --> [spark:ops:work] Completed
+
+[1 NEW occurrence(s)]
+INFO --> [spark:aiops:email-scan] Started
+
+[1 NEW occurrence(s)]
+INFO --> [spark:aiops:email-scan] Intent
 
 [1 NEW occurrence(s)]
 INFO --> [spark:aiops:run] Intent

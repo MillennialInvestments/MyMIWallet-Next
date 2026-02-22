@@ -4611,7 +4611,19 @@
         "docs/_support/spark-reset/20260221-175347/summary.md": {
             "hash": "f4dba227b4c9e2c01bd4a79eb39ef324aa227c968c89e72e7f09803843952257",
             "mtime": "2026-02-21"
+        },
+        "docs/_support/config-clear/20260222-004516/summary.md": {
+            "hash": "08a193432e61c43ecf4f6f090ffecd247fab62f48ef5ab538ce19b2efa24bcb2",
+            "mtime": "2026-02-22"
+        },
+        "docs/_support/config-clear/20260222-033759/summary.md": {
+            "hash": "3c64bc41a2c6b32be24049d03aa5dcf94d7f517704bb1c94f9cbd91b3597c817",
+            "mtime": "2026-02-22"
+        },
+        "docs/_support/spark-reset/20260222-033804/summary.md": {
+            "hash": "1c91416670dc65f40a41c58b1d40d3972ee727bf74417c58676f1c30e1b62b05",
+            "mtime": "2026-02-22"
         }
     },
-    "last_run": "2026-02-21T20:00:01Z"
+    "last_run": "2026-02-22T16:00:01Z"
 }
