@@ -282,14 +282,15 @@ class InvestmentsAPIController extends UserController
 
     public function getConfidenceHeatmap()
     {
-        $config = config('MyMIForecasting');
-        if (! ($config->features['confidenceHeatmaps'] ?? true)) {
-            return $this->failForbidden('Confidence heatmaps are disabled.');
-        }
+        try {
+            $config = config('MyMIForecasting');
+            if (! ($config->features['confidenceHeatmaps'] ?? true)) {
+                return $this->failForbidden('Confidence heatmaps are disabled.');
+            }
 
-        $timeframe = (string) ($this->request->getGet('timeframe') ?? 'all');
-        $window = (string) ($this->request->getGet('window') ?? ($config->heatmap['defaultWindow'] ?? '6h'));
-        $refresh = filter_var($this->request->getGet('refresh'), FILTER_VALIDATE_BOOLEAN);
+            $timeframe = (string) ($this->request->getGet('timeframe') ?? 'all');
+            $window = (string) ($this->request->getGet('window') ?? ($config->heatmap['defaultWindow'] ?? '6h'));
+            $refresh = filter_var($this->request->getGet('refresh'), FILTER_VALIDATE_BOOLEAN);
 
         $aggregation = service('forecastAggregationService');
 
@@ -299,13 +300,17 @@ class InvestmentsAPIController extends UserController
         }
         $result = $aggregation->getConfidenceHeatmap($timeframe, $window, $refresh);
 
-        return $this->respond([
-            'status' => 'success',
-            'cached' => $result['cached'],
-            'timeframe' => $timeframe,
-            'window' => $window,
-            'data' => $result['payload'],
-        ]);
+            return $this->respond([
+                'status' => 'success',
+                'cached' => $result['cached'],
+                'timeframe' => $timeframe,
+                'window' => $window,
+                'data' => $result['payload'],
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'API getConfidenceHeatmap failed: {msg}', ['msg' => $e->getMessage()]);
+            return $this->failServerError('Heatmap generation failed');
+        }
     }
 
     public function getTopConfidenceBySector()
@@ -352,13 +357,14 @@ class InvestmentsAPIController extends UserController
 
     public function getForecastAccuracySummary()
     {
-        $config = config('MyMIForecasting');
-        if (! ($config->features['accuracyTracking'] ?? true)) {
-            return $this->failForbidden('Forecast accuracy tracking is disabled.');
-        }
+        try {
+            $config = config('MyMIForecasting');
+            if (! ($config->features['accuracyTracking'] ?? true)) {
+                return $this->failForbidden('Forecast accuracy tracking is disabled.');
+            }
 
-        $days = (int) ($this->request->getGet('days') ?? ($config->accuracy['cacheDays'] ?? 30));
-        $days = max(1, min(90, $days));
+            $days = (int) ($this->request->getGet('days') ?? ($config->accuracy['cacheDays'] ?? 30));
+            $days = max(1, min(90, $days));
 
         $evaluator = service('forecastAccuracyEvaluator');
 
@@ -368,11 +374,15 @@ class InvestmentsAPIController extends UserController
         }
         $payload = $evaluator->getAccuracyDashboardData($days);
 
-        return $this->respond([
-            'status' => 'success',
-            'days' => $days,
-            'data' => $payload,
-        ]);
+            return $this->respond([
+                'status' => 'success',
+                'days' => $days,
+                'data' => $payload,
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'API getForecastAccuracySummary failed: {msg}', ['msg' => $e->getMessage()]);
+            return $this->failServerError('Forecast accuracy summary failed');
+        }
     }
 
     private function buildForecastDetailsPayload(string $ticker, array $latestForecasts, array $history): array

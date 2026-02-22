@@ -307,6 +307,14 @@ class Services extends CoreServices
         return new ForecastAccuracyEvaluator();
     }
     
+    public static function forecastAggregationService($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('forecastAggregationService');
+        }
+
+        return new \App\Services\ForecastAggregationService();
+    }
     /*
      * public static function example($getShared = true)
      * {
