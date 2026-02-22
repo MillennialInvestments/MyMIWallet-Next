@@ -14,6 +14,14 @@ use App\Services\ForecastAccuracyEvaluator;
 use App\Services\ForecastAggregationService;
 use App\Services\Forecasting\MyMIForecaster;
 use App\Services\Forecasting\Providers\AlphaVantageProvider;
+use App\Services\Scanning\CacheLayer;
+use App\Services\Scanning\RateLimiter;
+use App\Services\Scanning\ScannerService;
+use App\Services\Scanning\SignalEngine;
+use App\Services\Scanning\Providers\AlphaVantageProvider as ScannerAlphaVantageProvider;
+use App\Services\Scanning\Providers\FinnhubProvider;
+use App\Services\Scanning\Providers\ProviderRouter;
+use App\Services\Scanning\Providers\StooqProvider;
 use Config\Cache;
 use CodeIgniter\Config\Services as CoreServices;
 use function is_ci;
@@ -304,6 +312,71 @@ class Services extends CoreServices
         }
 
         return new \App\Services\ForecastAggregationService();
+    }
+
+    public static function scannerCacheLayer(bool $getShared = true): CacheLayer
+    {
+        if ($getShared) {
+            /** @var CacheLayer $service */
+            $service = static::getSharedInstance('scannerCacheLayer');
+            return $service;
+        }
+
+        return new CacheLayer(static::cache());
+    }
+
+    public static function scannerRateLimiter(bool $getShared = true): RateLimiter
+    {
+        if ($getShared) {
+            /** @var RateLimiter $service */
+            $service = static::getSharedInstance('scannerRateLimiter');
+            return $service;
+        }
+
+        return new RateLimiter(75);
+    }
+
+    public static function scannerSignalEngine(bool $getShared = true): SignalEngine
+    {
+        if ($getShared) {
+            /** @var SignalEngine $service */
+            $service = static::getSharedInstance('scannerSignalEngine');
+            return $service;
+        }
+
+        return new SignalEngine();
+    }
+
+    public static function scannerProviderRouter(bool $getShared = true): ProviderRouter
+    {
+        if ($getShared) {
+            /** @var ProviderRouter $service */
+            $service = static::getSharedInstance('scannerProviderRouter');
+            return $service;
+        }
+
+        return new ProviderRouter(
+            static::scannerCacheLayer(),
+            static::scannerRateLimiter(),
+            new ScannerAlphaVantageProvider(service('curlrequest')),
+            new FinnhubProvider(service('curlrequest')),
+            new StooqProvider(service('curlrequest')),
+        );
+    }
+
+    public static function scannerService(bool $getShared = true): ScannerService
+    {
+        if ($getShared) {
+            /** @var ScannerService $service */
+            $service = static::getSharedInstance('scannerService');
+            return $service;
+        }
+
+        return new ScannerService(
+            new \App\Modules\APIs\Models\ScannerModel(),
+            static::scannerProviderRouter(),
+            static::scannerSignalEngine(),
+        );
     }
     /*
      * public static function example($getShared = true)

@@ -144,6 +144,7 @@ class Console extends BaseConfig
         \App\Commands\Growth\RetentionWatch::class,
         \App\Commands\Revenue\CostForecast::class,
         \App\Commands\RevenueStreamsScan::class,
+        \App\Commands\Scanning\RunScanner::class,
         \App\Commands\Ux\JourneyAudit::class,
 
         /*

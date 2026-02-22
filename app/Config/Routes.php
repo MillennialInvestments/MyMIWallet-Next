@@ -257,6 +257,13 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->post('Alerts/backfillEmailAlerts', 'AlertsAPIController::backfillEmailAlerts');
     $routes->get('cronFetchAndGenerateNews', 'ManagementAPIController::cronFetchAndGenerateNews');
     $routes->post('Management/backfillMarketingEmails', 'ManagementAPIController::backfillMarketingEmails');
+    $routes->group('Scanner', static function($routes) {
+        $routes->get('status', 'ScannerController::status');
+        $routes->post('run', 'ScannerController::run');
+        $routes->get('results', 'ScannerController::results');
+        $routes->get('results/(:segment)', 'ScannerController::symbol/$1');
+        $routes->post('universe/sync', 'ScannerController::syncUniverse');
+    });
     $routes->get('Management/getAutoloadHealth', 'ManagementAPIController::getAutoloadHealth', ['filter' => 'permission:admin.access']);
     $routes->get('Management/subsystems/status', 'ManagementAPIController::subsystemsStatus', ['filter' => 'permission:admin.access']);
     $routes->post('Management/subsystems/action', 'ManagementAPIController::subsystemsAction', ['filter' => 'permission:admin.access']);
