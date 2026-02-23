@@ -60,14 +60,14 @@ class View extends BaseView
      */
     public array $decorators = [];
 
+    /**
+     * Explicitly declare this property for PHP 8.2 compatibility
+     */
+    public string $appOverridesFolder = 'overrides';
+
     public function __construct()
     {
         parent::__construct();
-
-        // HARD COERCE: prevent trim(null) fatals in system/View/View.php
-        if (! is_string($this->appOverridesFolder)) {
-            $this->appOverridesFolder = 'overrides';
-        }
 
         $this->appOverridesFolder = trim($this->appOverridesFolder, "/\\");
     }

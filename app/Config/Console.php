@@ -238,6 +238,15 @@ class Console extends BaseConfig
         | GitHub
         |----------------------------------------------------------------------
         */
+        \App\Commands\Errors\ConsolidateErrors::class,
+        \App\Commands\Errors\DispatchAlerts::class,
+        \App\Commands\Errors\LearnPatterns::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | GitHub
+        |----------------------------------------------------------------------
+        */
         \App\Commands\GitHub\SearchRepo::class,
 
         /*
@@ -259,6 +268,8 @@ class Console extends BaseConfig
         | Logs
         |----------------------------------------------------------------------
         */
+        \App\Commands\Logs\CheckServerLogs::class,
+        \App\Commands\Logs\EnableFullLogging::class,
         \App\Commands\Logs\Healthcheck::class,
         \App\Commands\Logs\Summarize::class,
         \App\Commands\Logs\SummarizeAll::class,

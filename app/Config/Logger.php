@@ -9,7 +9,8 @@ use CodeIgniter\Log\Handlers\FileHandler;
 
 class Logger extends BaseConfig
 {
-    public int|string|array $threshold = (ENVIRONMENT === 'production') ? 9 : 9;
+    // public int|string|array $threshold = (ENVIRONMENT === 'production') ? 9 : 9;
+    public int|string|array $threshold = 9;
 
     public string $dateFormat = 'Y-m-d H:i:s';
 
@@ -18,6 +19,14 @@ class Logger extends BaseConfig
             'class' => FileHandler::class,
             'handles' => ['debug', 'info', 'warning', 'error', 'critical'], // lightweight only
             'path' => WRITEPATH . 'logs/',
+            'fileExtension' => 'php',
+            'filePermissions' => 0664,
+        ],
+
+        MyMIDBLoggerHandler::class => [
+            'class' => MyMIDBLoggerHandler::class,
+            'handles' => ['critical', 'error', 'warning'], // production alerts
+            'fallbackPath' => WRITEPATH . 'logs/',
             'fileExtension' => 'php',
             'filePermissions' => 0664,
         ],

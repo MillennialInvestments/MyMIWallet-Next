@@ -1180,6 +1180,13 @@ $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers
         $routes->post('scheduleCampaignSubmit/(:num)', 'EmailAdminController::scheduleCampaignSubmit/$1');
         $routes->post('updateCampaign/(:num)', 'EmailAdminController::updateCampaign/$1');
     });
+    $routes->group('ErrorOps', function($routes) {
+        $routes->get('/', 'ErrorOpsController::index');
+        $routes->get('apiKpis', 'ErrorOpsController::apiKpis');
+        $routes->get('apiTopControllers', 'ErrorOpsController::apiTopControllers');
+        $routes->get('apiHeatmap', 'ErrorOpsController::apiHeatmap');
+        $routes->get('apiPatterns', 'ErrorOpsController::apiPatterns');
+    });
     $routes->group('Exchange', function($routes) {
         $routes->get('/', 'ExchangeAdminController::index');
     }); 
