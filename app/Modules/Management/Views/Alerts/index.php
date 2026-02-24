@@ -173,6 +173,12 @@ $subViewData                        = [
                                                         <option value="AI_Penny_1Hr">AI Penny 1Hr</option>
                                                         <option value="AI_Penny_4Hr">AI Penny 4Hr</option>
                                                     </select>
+                                                    <select id="sourceFilter" class="form-control form-select w-auto">
+                                                        <option value="" <?= empty($alertsSourceFilter) ? "selected" : ""; ?>>All Sources</option>
+                                                        <option value="manual" <?= ($alertsSourceFilter ?? "") === "manual" ? "selected" : ""; ?>>manual</option>
+                                                        <option value="email" <?= ($alertsSourceFilter ?? "") === "email" ? "selected" : ""; ?>>email</option>
+                                                        <option value="scanner" <?= ($alertsSourceFilter ?? "") === "scanner" ? "selected" : ""; ?>>scanner</option>
+                                                    </select>
                                                     <?php if ($cuRole <= 3) { ?>
                                                     <button class="dynamicModalLoader btn btn-primary" data-formtype="Alerts" data-endpoint="createTradeAlert" data-accountid="">
                                                         <i class="icon ni ni-plus"></i> New Alert
@@ -307,6 +313,23 @@ $subViewData                        = [
                                             </div>
                                         </div>
                                         <?php endif; ?>
+
+                                        <div class="card mt-3">
+                                            <div class="card-inner">
+                                                <h5 class="title">Scanner Signals</h5>
+                                                <div class="table-responsive">
+                                                    <table class="table table-responsive display" id="scannerSignalsTable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>ID</th><th>Date</th><th>Ticker</th><th>Category</th><th>Price</th><th>Status</th><th>Source</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div> 
                                     <!-- <div class="project-progress">
                                         <div class="project-progress-details">
@@ -662,6 +685,7 @@ $subViewData                        = [
                 d.timeRange = $('#timeFilter').val();
                 d.category = $('#categoryFilter').val();
                 d.alert_created = 1;
+                d.source = $('#sourceFilter').val();
                 d[csrfName] = csrfHash;
             },
             dataSrc: 'data'
@@ -687,6 +711,7 @@ $subViewData                        = [
                 d.timeRange = $('#timeFilter').val();
                 d.category = $('#categoryFilter').val();
                 d.alert_created = 0;
+                d.source = $('#sourceFilter').val();
                 d[csrfName] = csrfHash;
             },
             dataSrc: 'data'
@@ -695,6 +720,25 @@ $subViewData                        = [
         columns: getColumnConfig()
     });
     <?php endif; ?>
+
+
+    let scannerTable = $('#scannerSignalsTable').DataTable({
+        processing: true,
+        ajax: {
+            url: '<?= site_url("API/Alerts/scanner"); ?>',
+            dataSrc: 'data'
+        },
+        order: [[0, 'desc']],
+        columns: [
+            { data: 'id' },
+            { data: 'created_on' },
+            { data: 'ticker' },
+            { data: 'category' },
+            { data: 'price' },
+            { data: 'status' },
+            { data: 'source' }
+        ]
+    });
 
     // 🔄 Toggle Columns Logic
     let columnsVisible = false;
@@ -877,7 +921,7 @@ $subViewData                        = [
     refreshPricesEveryMinute();
 
     // ✅ Refresh Data on Filter Change
-    $('#timeFilter, #categoryFilter').on('change', function () {
+    $('#timeFilter, #categoryFilter, #sourceFilter').on('change', function () {
         if ($('#confirmedTradeAlertTable').length) {
             $('#confirmedTradeAlertTable').DataTable().ajax.reload();
         }
@@ -886,6 +930,7 @@ $subViewData                        = [
             $('#pendingTradeAlertTable').DataTable().ajax.reload(); 
         }
         <?php endif; ?>
+        if ($('#scannerSignalsTable').length) { $('#scannerSignalsTable').DataTable().ajax.reload(); }
     });
 
     // ✅ Handle Creating New Trade Alert

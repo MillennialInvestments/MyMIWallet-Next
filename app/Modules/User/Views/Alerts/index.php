@@ -30,6 +30,7 @@ foreach ($pendingTradeAlerts as $alert) {
 }
 
 $alertNews = $alertNews ?? [];
+$scannerSignals = $scannerSignals ?? [];
 ?>
 
 <div class="nk-block">
@@ -226,7 +227,36 @@ $alertNews = $alertNews ?? [];
     </div>
     <div class="row g-gs mt-3">
         <div class="col-lg-12 h-20">
-            <div class="card card-bordered h-100">
+            
+
+    <div class="row g-gs mt-3">
+        <div class="col-lg-12">
+            <div class="card card-bordered">
+                <div class="card-inner">
+                    <h5 class="title mb-2">Scanner Signals (Watchlist)</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead><tr><th>Ticker</th><th>Category</th><th>Price</th><th>Status</th><th>Source</th></tr></thead>
+                            <tbody>
+                                <?php if (! empty($scannerSignals)): foreach ($scannerSignals as $signal): ?>
+                                    <tr>
+                                        <td><?= esc($signal['ticker'] ?? '-'); ?></td>
+                                        <td><?= esc($signal['category'] ?? '-'); ?></td>
+                                        <td><?= esc(number_format((float) ($signal['price'] ?? 0), 2)); ?></td>
+                                        <td><?= esc($signal['status'] ?? 'Opened'); ?></td>
+                                        <td><?= esc($signal['source'] ?? 'scanner'); ?></td>
+                                    </tr>
+                                <?php endforeach; else: ?>
+                                    <tr><td colspan="5" class="text-soft">No scanner watchlist signals yet.</td></tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="card card-bordered h-100">
                 <div class="card-inner">
                     <h5 class="title mb-1">Alerted Tickers – Trend Snapshot</h5>
                     <p class="sub-text">Quick view of last price &amp; EMAs on your active alerts.</p>

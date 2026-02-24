@@ -13,6 +13,7 @@ class ScannerService
         private readonly ScannerModel $model,
         private readonly ProviderRouter $router,
         private readonly SignalEngine $engine,
+        private readonly ScannerAlertBridge $alertBridge,
     ) {
     }
 
@@ -88,6 +89,9 @@ class ScannerService
             }
 
             $this->model->insertResults($rows);
+            foreach ($rows as $row) {
+                $this->alertBridge->syncToAlerts(ScannerResult::fromScannerRow($row));
+            }
             $provider = 'mixed';
             $uniq = array_values(array_unique(array_filter($providers)));
             if (count($uniq) === 1) {

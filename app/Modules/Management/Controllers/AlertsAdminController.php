@@ -229,6 +229,7 @@ class AlertsAdminController extends UserController
         $this->data['total']             = $pending['total'];
         $this->data['page']              = $pending['page'];
         $this->data['perPage']           = $pending['perPage'];
+        $this->data['alertsSourceFilter'] = (string) ($this->request->getGet('source') ?? '');
 
         if (!empty($this->alertsFlags['enableMomentumScoring'])) {
             log_message('debug', 'AlertsController::index - Momentum scoring enabled');
