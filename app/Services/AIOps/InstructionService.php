@@ -85,6 +85,17 @@ class InstructionService
         ];
     }
 
+
+    public function create(
+        string $text,
+        string $source = 'manual',
+        bool $autoPR = false,
+        bool $dryRun = false,
+        ?string $severityOverride = null
+    ): array {
+        return $this->enqueueInstruction($text, $source, $autoPR, $dryRun, $severityOverride);
+    }
+
     public function claimNextQueued(): ?array
     {
         $row = $this->instructions
@@ -176,6 +187,7 @@ class InstructionService
     {
         $t = strtolower($text);
         if (str_contains($t, 'audit')) return 'audit';
+        if (str_contains($t, 'log') || str_contains($t, 'critical') || str_contains($t, 'warning')) return 'logs';
         if (str_contains($t, 'refactor') || str_contains($t, 'optimize')) return 'optimization';
         if (str_contains($t, 'fix') || str_contains($t, 'error') || str_contains($t, 'bug')) return 'repair';
         if (str_contains($t, 'build') || str_contains($t, 'add feature')) return 'feature';

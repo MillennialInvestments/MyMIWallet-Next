@@ -4,6 +4,7 @@ namespace App\Commands\Logs;
 
 use App\Services\Spark\LogSummarizeService;
 use App\Commands\SafeBaseCommand;
+use App\Commands\AIOps\WorkerLogs;
 use CodeIgniter\CLI\CLI;
 
 class Summarize extends SafeBaseCommand
@@ -20,6 +21,7 @@ class Summarize extends SafeBaseCommand
     protected $options = [
         '--dry-run' => 'Preview actions without writing data',
         '--json' => 'Output compact JSON payload for automation',
+        '--auto-aiops' => 'After summarize, enqueue and run aiops:worker:logs pipeline',
     ];
 
     public function run(array $params)
@@ -101,6 +103,13 @@ class Summarize extends SafeBaseCommand
             CLI::write('✔ Logs are clean. No errors or warnings found.', 'green');
         } else {
             CLI::write("⚠ Log summary: total={$total}, new={$new}", 'yellow');
+        }
+
+
+        if (isset($flags['auto-aiops'])) {
+            CLI::write('Auto AIOps pipeline enabled; dispatching aiops:worker:logs', 'yellow');
+            $workerLogs = new WorkerLogs();
+            $workerLogs->run([]);
         }
 
         return EXIT_SUCCESS;
