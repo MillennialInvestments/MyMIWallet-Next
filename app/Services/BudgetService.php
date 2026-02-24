@@ -233,7 +233,7 @@ class BudgetService
     public function getRecurringSchedules(string $category): array
     {
         return match (strtolower(trim($category))) {
-            'income' => ['Weekly', 'Bi-Weekly', 'Monthly'],
+            'income' => ['Weekly', 'Bi-Weekly', 'Monthly', '15/Last'],
             'expense' => ['Monthly', 'Quarterly', 'Annual'],
             default => [],
         };
@@ -243,7 +243,7 @@ class BudgetService
     {
         $recurringAccount = trim((string) ($data['recurring_account'] ?? 'No'));
         $scheduleValue = $data['recurring_schedule'] ?? ($data['intervals'] ?? null);
-        $accountType = (string) ($data['account_type'] ?? '');
+        $accountType = (string) ($data['account_type'] ?? ($data['accountType'] ?? ''));
         $allowedSchedules = $this->getRecurringSchedules($accountType);
 
         log_message('debug', 'BudgetService::applyRecurringScheduleRules input: ' . json_encode([
@@ -263,8 +263,12 @@ class BudgetService
             throw new UnexpectedValueException('Recurring schedule is required and must match the allowed options.');
         }
 
+        if (strcasecmp($normalizedSchedule, '15/Last') === 0 && strcasecmp($accountType, 'Income') !== 0) {
+            throw new \RuntimeException('15/Last is allowed only for Income accounts.');
+        }
+
         $data['recurring_schedule'] = $normalizedSchedule;
-        $data['intervals'] = $normalizedSchedule;
+        $data['intervals'] = (strcasecmp($normalizedSchedule, '15/Last') === 0) ? 'Monthly' : $normalizedSchedule;
 
         return $data;
     }
@@ -328,6 +332,8 @@ class BudgetService
         $normalized = strtolower($scheduleValue);
         if ($normalized === 'annually') {
             $scheduleValue = 'Annual';
+        } elseif (in_array($normalized, ['15th/last', '15/last'], true)) {
+            $scheduleValue = '15/Last';
         }
 
         foreach ($allowedSchedules as $allowed) {
@@ -337,6 +343,14 @@ class BudgetService
         }
 
         return null;
+    }
+
+    private function getFifteenthAndLastDates(int $year, int $month): array
+    {
+        $fifteenth = sprintf('%04d-%02d-15', $year, $month);
+        $lastDay   = date('Y-m-t', strtotime("$year-$month-01"));
+
+        return [$fifteenth, $lastDay];
     }
 
     /**
@@ -1790,7 +1804,7 @@ class BudgetService
     }
     
     // Generates the recurring schedule based on intervals
-    public function generateRecurringSchedule($accountID, $intervals, $designatedDate, $netAmount, $grossAmount, $accountName, $accountType, $sourceType) {
+    public function generateRecurringSchedule($accountID, $intervals, $designatedDate, $netAmount, $grossAmount, $accountName, $accountType, $sourceType, ?string $recurringSchedule = null) {
         try {
             log_message('debug', 'Service - Generating Schedule - Inputs: ' . json_encode(compact(
                 'accountID',
@@ -1805,19 +1819,25 @@ class BudgetService
     
             $startDate = new DateTime($designatedDate);
             $endDate = new DateTime('12/31/' . $startDate->format('Y'));
-            $recurringSchedule = [];
+            $generatedSchedule = [];
     
-            if (strtolower($intervals) === '15th/last') {
-                // Handle 15th and last day of the month interval
-                while ($startDate <= $endDate) {
-                    $month = (int)$startDate->format('m');
-                    $year = (int)$startDate->format('Y');
-    
-                    // Add the 15th
-                    $fifteenthDate = new DateTime("$year-$month-15");
-                    if ($fifteenthDate >= $startDate && $fifteenthDate <= $endDate) {
-                        $recurringSchedule[] = [
-                            'dueDate' => $fifteenthDate->format('m/d/Y'),
+            $scheduleDriver = strtolower(trim((string) ($recurringSchedule ?? $intervals ?? 'monthly')));
+
+            if (in_array($scheduleDriver, ['15th/last', '15/last'], true)) {
+                $current = clone $startDate;
+                while ($current <= $endDate) {
+                    $month = (int) $current->format('m');
+                    $year  = (int) $current->format('Y');
+                    [$fifteenthDate, $lastDate] = $this->getFifteenthAndLastDates($year, $month);
+
+                    foreach ([$fifteenthDate, $lastDate] as $generatedDate) {
+                        $generated = new DateTime($generatedDate);
+                        if ($generated < $startDate || $generated > $endDate) {
+                            continue;
+                        }
+
+                        $generatedSchedule[] = [
+                            'dueDate' => $generated->format('m/d/Y'),
                             'netAmount' => $netAmount,
                             'grossAmount' => $grossAmount,
                             'accountName' => $accountName,
@@ -1825,23 +1845,8 @@ class BudgetService
                             'accountSourceType' => $sourceType,
                         ];
                     }
-    
-                    // Add the last day of the month
-                    $lastDay = (int)(new DateTime("$year-$month-01"))->format('t');
-                    $lastDate = new DateTime("$year-$month-$lastDay");
-                    if ($lastDate >= $startDate && $lastDate <= $endDate) {
-                        $recurringSchedule[] = [
-                            'dueDate' => $lastDate->format('m/d/Y'),
-                            'netAmount' => $netAmount,
-                            'grossAmount' => $grossAmount,
-                            'accountName' => $accountName,
-                            'accountType' => $accountType,
-                            'accountSourceType' => $sourceType,
-                        ];
-                    }
-    
-                    // Move to the next month
-                    $startDate->modify('+1 month');
+
+                    $current->modify('first day of next month');
                 }
             } else {
                 // Default intervals (daily, weekly, bi-weekly, monthly, etc.)
@@ -1874,7 +1879,7 @@ class BudgetService
                         }
                     }
     
-                    $recurringSchedule[] = [
+                    $generatedSchedule[] = [
                         'dueDate' => $startDate->format('m/d/Y'),
                         'netAmount' => $netAmount,
                         'grossAmount' => $grossAmount,
@@ -1890,8 +1895,8 @@ class BudgetService
                 }
             }
     
-            log_message('debug', 'Generated Schedule: ' . print_r($recurringSchedule, true));
-            return $recurringSchedule;
+            log_message('debug', 'Generated Schedule: ' . print_r($generatedSchedule, true));
+            return $generatedSchedule;
     
         } catch (Exception $e) {
             log_message('error', 'Service - Error Generating Schedule: ' . $e->getMessage());
@@ -2130,6 +2135,7 @@ class BudgetService
         $accountType = $account['account_type'] ?? 'Expense'; // Default to 'Expense'
         $accountSourceType = $account['source_type'] ?? 'Unknown Source'; // Default to 'Unknown Source'
         $accountIntervals = $account['intervals'] ?? 'Monthly';
+        $accountRecurringSchedule = $account['recurring_schedule'] ?? null;
         $accountDesDate = $account['designated_date'] ?? date("m/d/Y");
         $accountNetAmount = $account['net_amount'] ?? 0;
         $accountGrossAmount = $account['gross_amount'] ?? 0;
@@ -2151,7 +2157,8 @@ class BudgetService
             $accountGrossAmount,
             $accountName,         // Pass correct account name
             $accountType,         // Pass correct account type
-            $accountSourceType    // Pass correct source type
+            $accountSourceType,   // Pass correct source type
+            $accountRecurringSchedule
         );
 
         // Return structured data

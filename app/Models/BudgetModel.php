@@ -1291,6 +1291,10 @@ class BudgetModel extends Model
     }
 
     public function saveForecast($userId, $accountId, $forecastDate, $recurringSchedule) {
+        if ($this->forecastEntryExists($userId, $accountId, $forecastDate)) {
+            return true;
+        }
+
         $this->db->table('bf_users_budgeting_forecast')->insert([
             'user_id' => $userId,
             'account_id' => $accountId,
@@ -1299,6 +1303,15 @@ class BudgetModel extends Model
             'created_at' => date('Y-m-d H:i:s')
         ]);
     }    
+
+    public function forecastEntryExists(int $userId, int $accountId, string $forecastDate): bool
+    {
+        return (bool) $this->db->table('bf_users_budgeting_forecast')
+            ->where('user_id', $userId)
+            ->where('account_id', $accountId)
+            ->where('forecast_date', $forecastDate)
+            ->countAllResults();
+    }
 
     public function updateAccount($accountID, $data) {
         
