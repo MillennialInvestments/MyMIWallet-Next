@@ -394,10 +394,21 @@ class BudgetController extends UserController
             return $this->respondUnauthorized('Authentication required to manage budget accounts.');
         }
  
+        $post = $this->request->getPost();
         $json = $this->request->getJSON(true);
-        if (!is_array($json) || $json === []) {
-            return $this->respondFailure('Invalid JSON payload.', 400);
+
+        log_message('debug', 'Budget/Account-Manager POST: ' . json_encode($post));
+        log_message('debug', 'Budget/Account-Manager JSON: ' . json_encode($json));
+
+        if (!is_array($post) || $post === []) {
+            $post = (array) $json;
         }
+
+        if (!is_array($post) || $post === []) {
+            return $this->respondFailure('Invalid request payload.', 400);
+        }
+
+        $json = $post;
 
         if (isset($json['user_id']) && (int) $json['user_id'] !== $userId) {
             $this->logSecurityEvent('accountManager', 'User ID mismatch detected during payload validation.', $userId, $json);
