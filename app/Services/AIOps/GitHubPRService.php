@@ -4,71 +4,115 @@ namespace App\Services\AIOps;
 
 class GitHubPRService
 {
-    public function createPRFromReadyDir(int $id, string $branch, string $readyDir, string $risk, array $gov): ?string
+    private ?string $lastPrUrl = null;
+
+    public function createFromPrReady(int $instructionId): bool
     {
+        $readyDir = ROOTPATH . 'docs/_aiops/pr_ready/' . $instructionId;
+        $targetsFile = $readyDir . '/targets.json';
+        $prBodyFile = $readyDir . '/pr.md';
+
+        if (!is_dir($readyDir) || !is_file($targetsFile) || !is_file($prBodyFile)) {
+            log_message('error', "GitHubPRService createFromPrReady missing ready artifacts for #{$instructionId}");
+            return false;
+        }
+
         $token = getenv('GITHUB_TOKEN') ?: '';
         $owner = getenv('GITHUB_OWNER') ?: '';
         $repo  = getenv('GITHUB_REPO') ?: '';
         $base  = getenv('GITHUB_BASE_BRANCH') ?: 'main';
 
-        if (!$token || !$owner || !$repo) {
-            log_message('error', "GitHubPRService missing env vars (GITHUB_TOKEN/OWNER/REPO).");
-            return null;
+        if ($token === '' || $owner === '' || $repo === '') {
+            log_message('error', 'GitHubPRService missing env vars (GITHUB_TOKEN/GITHUB_OWNER/GITHUB_REPO).');
+            return false;
         }
 
-        if (!is_dir($readyDir)) {
-            log_message('error', "GitHubPRService readyDir missing: {$readyDir}");
-            return null;
+        $branch = 'aiops/patch/' . $instructionId;
+        $title = 'AIOps #' . $instructionId . ' deterministic PR';
+        $body = (string) file_get_contents($prBodyFile);
+
+        $targets = json_decode((string) file_get_contents($targetsFile), true);
+        $fileCandidates = (array) ($targets['file_candidates'] ?? []);
+        sort($fileCandidates, SORT_STRING);
+
+        $addFiles = [$this->relativePath($readyDir)];
+        foreach ($fileCandidates as $candidate) {
+            $abs = ROOTPATH . ltrim((string) $candidate, '/');
+            if (is_file($abs)) {
+                $addFiles[] = ltrim((string) $candidate, '/');
+            }
+        }
+        $addFiles = array_values(array_unique($addFiles));
+
+        if (!$this->gitCheckoutAndBranch($base, $branch)) {
+            return false;
         }
 
-        // Safety: avoid running if repo is not a git repo
+        foreach ($addFiles as $file) {
+            shell_exec('cd ' . escapeshellarg(ROOTPATH) . ' && git add ' . escapeshellarg($file) . ' 2>&1');
+        }
+
+        $status = trim((string) shell_exec('cd ' . escapeshellarg(ROOTPATH) . ' && git status --porcelain'));
+        if ($status === '') {
+            log_message('warning', "GitHubPRService no changes to commit for #{$instructionId}");
+            return false;
+        }
+
+        shell_exec('cd ' . escapeshellarg(ROOTPATH) . ' && git commit -m ' . escapeshellarg($title) . ' 2>&1');
+        shell_exec('cd ' . escapeshellarg(ROOTPATH) . ' && git push -u origin ' . escapeshellarg($branch) . ' 2>&1');
+
+        $this->lastPrUrl = $this->createGithubPr($token, $owner, $repo, $title, $branch, $base, $body);
+        return $this->lastPrUrl !== null;
+    }
+
+    public function getLastPrUrl(): ?string
+    {
+        return $this->lastPrUrl;
+    }
+
+    public function createPRFromReadyDir(int $id, string $branch, string $readyDir, string $risk, array $gov): ?string
+    {
+        if ($this->createFromPrReady($id)) {
+            return $this->lastPrUrl;
+        }
+
+        return null;
+    }
+
+    private function gitCheckoutAndBranch(string $base, string $branch): bool
+    {
         if (!is_dir(ROOTPATH . '.git')) {
             log_message('error', 'GitHubPRService: ROOTPATH is not a git repo');
-            return null;
+            return false;
         }
 
-        // Ensure clean state (basic)
-        $status = trim((string) shell_exec('cd ' . escapeshellarg(ROOTPATH) . ' && git status --porcelain'));
-        if ($status !== '') {
-            log_message('warning', 'GitHubPRService: working tree not clean; committing anyway.');
-        }
-
-        // Create branch
+        shell_exec('cd ' . escapeshellarg(ROOTPATH) . ' && git fetch origin ' . escapeshellarg($base) . ' 2>&1');
         shell_exec('cd ' . escapeshellarg(ROOTPATH) . ' && git checkout ' . escapeshellarg($base) . ' 2>&1');
         shell_exec('cd ' . escapeshellarg(ROOTPATH) . ' && git pull origin ' . escapeshellarg($base) . ' 2>&1');
         shell_exec('cd ' . escapeshellarg(ROOTPATH) . ' && git checkout -B ' . escapeshellarg($branch) . ' 2>&1');
 
-        // Commit ready artifacts (you can change this to commit actual patches once you apply them)
-        shell_exec('cd ' . escapeshellarg(ROOTPATH) . ' && git add ' . escapeshellarg($this->relativePath($readyDir)) . ' 2>&1');
+        return true;
+    }
 
-        $title = $this->buildTitle($id, $risk, $gov);
-        $body  = $this->buildBody($id, $readyDir, $risk, $gov);
-
-        $msg = escapeshellarg($title);
-        shell_exec('cd ' . escapeshellarg(ROOTPATH) . ' && git commit -m ' . $msg . ' 2>&1');
-
-        // Push
-        shell_exec('cd ' . escapeshellarg(ROOTPATH) . ' && git push -u origin ' . escapeshellarg($branch) . ' 2>&1');
-
-        // Create PR via GitHub API
+    private function createGithubPr(string $token, string $owner, string $repo, string $title, string $head, string $base, string $body): ?string
+    {
         $api = "https://api.github.com/repos/{$owner}/{$repo}/pulls";
         $payload = json_encode([
             'title' => $title,
-            'head'  => $branch,
+            'head'  => $head,
             'base'  => $base,
             'body'  => $body,
         ], JSON_UNESCAPED_SLASHES);
 
         $cmd = "curl -sS -X POST "
             . "-H " . escapeshellarg("Authorization: token {$token}") . " "
-            . "-H " . escapeshellarg("User-Agent: MyMI-AIOps") . " "
-            . "-H " . escapeshellarg("Accept: application/vnd.github+json") . " "
-            . "-d " . escapeshellarg($payload) . " "
+            . "-H " . escapeshellarg('User-Agent: MyMI-AIOps') . " "
+            . "-H " . escapeshellarg('Accept: application/vnd.github+json') . " "
+            . "-d " . escapeshellarg((string) $payload) . " "
             . escapeshellarg($api);
 
         $resp = (string) shell_exec($cmd);
         $json = json_decode($resp, true);
-
         if (!is_array($json) || empty($json['html_url'])) {
             log_message('error', 'GitHubPRService PR create failed: ' . substr($resp, 0, 500));
             return null;
@@ -77,38 +121,13 @@ class GitHubPRService
         return (string) $json['html_url'];
     }
 
-    private function buildTitle(int $id, string $risk, array $gov): string
-    {
-        $manual = $gov['requires_manual_review'] ? 'manual-review' : 'auto';
-        return "AIOps #{$id} ({$manual}, risk={$risk}, gov={$gov['score']})";
-    }
-
-    private function buildBody(int $id, string $readyDir, string $risk, array $gov): string
-    {
-        $manual = $gov['requires_manual_review'] ? 'YES' : 'NO';
-        $rel = $this->relativePath($readyDir);
-
-        return <<<MD
-## AIOps Instruction #{$id}
-
-- Risk: **{$risk}**
-- Governance Score: **{$gov['score']}**
-- Manual Review Required: **{$manual}**
-
-Artifacts staged in: `{$rel}`
-
-### Reviewer Notes
-- This PR currently commits AIOps-ready artifacts (targets/pr scaffold/diff artifact).
-- Apply/validate actual code patches from `{$rel}/patch/` before merge if present.
-MD;
-    }
-
     private function relativePath(string $abs): string
     {
         $root = rtrim(ROOTPATH, '/');
         if (str_starts_with($abs, $root)) {
             return ltrim(substr($abs, strlen($root)), '/');
         }
+
         return $abs;
     }
 }

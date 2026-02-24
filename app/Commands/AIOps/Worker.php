@@ -17,13 +17,14 @@ class Worker extends SafeBaseCommand
     protected $group       = 'AIOps - Run';
     protected $name        = 'aiops:worker';
     protected $description = 'Process queued AIOps instructions (governance + targeting + diff + optional PR).';
-    protected $usage       = 'aiops:worker [--once] [--max=10]';
+    protected $usage       = 'aiops:worker [--once] [--max=10] [--create-pr=0|1]';
 
     public function run(array $params)
     {
         $argv = $_SERVER['argv'] ?? [];
         $once = in_array('--once', $argv, true);
-        $max  = $this->getArgvInt($argv, 'max', 10);
+        $max  = min($this->getArgvInt($argv, 'max', 10), 25);
+        $createPrFlag = $this->getArgvInt($argv, 'create-pr', 0) === 1;
 
         $instructions = new InstructionService();
         $deps         = new DependencyResolver();
@@ -46,6 +47,14 @@ class Worker extends SafeBaseCommand
             $id   = (int) $job['id'];
             $text = (string) ($job['instruction_text'] ?? '');
 
+            if ($this->isRecursiveInstruction($text)) {
+                $instructions->fail($id, 'Recursive AIOps trigger blocked by governance safeguard.');
+                CLI::error("Blocked recursive instruction #{$id}");
+                $processed++;
+                if ($once || $processed >= $max) break;
+                continue;
+            }
+
             // ✅ Dependency gate (defensive: in case status changed after claim)
             $depCheck = $deps->checkDependencies($id);
             if (!$depCheck['ok']) {
@@ -59,6 +68,7 @@ class Worker extends SafeBaseCommand
             // Flags
             $auto = ((int) ($job['auto_pr'] ?? 0)) === 1;
             $dry  = ((int) ($job['dry_run'] ?? 0)) === 1;
+            $classification = strtolower((string) ($job['classification'] ?? 'general'));
 
             // Risk level: severity override > governance derived > heuristic
             $risk = $job['severity_override'] ?: ($job['risk_level'] ?? null);
@@ -104,6 +114,7 @@ class Worker extends SafeBaseCommand
                 if (!is_dir($patchDir)) mkdir($patchDir, 0775, true);
 
                 $generated = [];
+                $instructionState = 'processing';
 
                 // Persist raw instruction
                 $instructionFile = $outDir . "/instruction.md";
@@ -129,7 +140,9 @@ class Worker extends SafeBaseCommand
 
                 // Dry run stops after staging
                 if ($dry) {
-                    $instructions->complete($id, [
+                    $instructionState = 'patched';
+                    $instructions->updateFields($id, [
+                        'status' => $instructionState,
                         'risk_level'      => $risk,
                         'pr_branch'       => $branch,
                         'generated_files' => json_encode($generated),
@@ -137,6 +150,13 @@ class Worker extends SafeBaseCommand
                     ]);
 
                     $this->printGenerated($id, $outDir, $readyDir, $generated, null);
+                    $this->printNextActions($this->determineNextSteps($job, [
+                        'classification' => $classification,
+                        'patch_generated' => $this->hasFilesInDirectory($patchDir),
+                        'pr_url' => null,
+                        'state' => $instructionState,
+                        'pr_ready_id' => $id,
+                    ]));
                     $processed++;
                     if ($once || $processed >= $max) break;
                     continue;
@@ -163,9 +183,33 @@ class Worker extends SafeBaseCommand
                         $generated[] = $diffOut['diff_file'];
                     }
 
+                    $patchGenerated = $this->hasFilesInDirectory($patchDir);
+
+                    if ($classification === 'logs') {
+                        $auto = true;
+                        if ($this->needsMysqlDoc($targets)) {
+                            $mysqlMd = $readyDir . '/mysql.md';
+                            if (!is_file($mysqlMd)) {
+                                file_put_contents($mysqlMd, "# MySQL Change Notes\n\nDocument schema impact and rollback steps.\n");
+                                $generated[] = $mysqlMd;
+                            }
+                        }
+                    }
+
                     // === GitHub PR Automation (optional) ===
-                    if ($auto) {
-                        $prUrl = $ghSvc->createPRFromReadyDir($id, $branch, $readyDir, $risk, $gov);
+                    $criticalRisk = strtoupper((string) ($risk ?: '')) === 'CRITICAL' || strtoupper((string) ($job['severity_override'] ?? '')) === 'CRITICAL';
+                    $shouldAttemptPr = ($auto || $createPrFlag || $criticalRisk) && $patchGenerated;
+
+                    if ($shouldAttemptPr) {
+                        $prCreated = $ghSvc->createFromPrReady($id);
+                        $prUrl = $ghSvc->getLastPrUrl();
+                        if ($prCreated) {
+                            $instructionState = 'pr_sent';
+                        } else {
+                            $instructionState = 'pr_ready';
+                        }
+                    } else {
+                        $instructionState = $patchGenerated ? 'pr_ready' : 'patched';
                     }
 
                     // refresh TTL if work took a while
@@ -176,7 +220,8 @@ class Worker extends SafeBaseCommand
                 }
 
                 // Complete job
-                $instructions->complete($id, [
+                $instructions->updateFields($id, [
+                    'status'          => $instructionState,
                     'risk_level'      => $risk,
                     'pr_branch'       => $branch,
                     'pr_url'          => $prUrl,
@@ -185,6 +230,13 @@ class Worker extends SafeBaseCommand
                 ]);
 
                 $this->printGenerated($id, $outDir, $readyDir, $generated, $prUrl);
+                $this->printNextActions($this->determineNextSteps($job, [
+                    'classification' => $classification,
+                    'patch_generated' => $this->hasFilesInDirectory($patchDir),
+                    'pr_url' => $prUrl,
+                    'state' => $instructionState,
+                    'pr_ready_id' => $id,
+                ]));
 
             } catch (\Throwable $e) {
                 $instructions->fail($id, 'Worker failure: ' . $e->getMessage());
@@ -210,6 +262,78 @@ class Worker extends SafeBaseCommand
             CLI::write("PR URL: {$prUrl}");
         }
         CLI::newLine();
+    }
+
+    private function printNextActions(array $actions): void
+    {
+        CLI::write('NEXT STEPS:');
+        foreach ($actions as $action) {
+            CLI::write('- ' . $action);
+        }
+        CLI::newLine();
+    }
+
+    private function determineNextSteps(array $instruction, array $result): array
+    {
+        $classification = strtolower((string) ($result['classification'] ?? $instruction['classification'] ?? 'general'));
+        $patchGenerated = (bool) ($result['patch_generated'] ?? false);
+        $prUrl = (string) ($result['pr_url'] ?? '');
+        $id = (int) ($result['pr_ready_id'] ?? $instruction['id'] ?? 0);
+
+        $steps = ['Instruction lifecycle state: ' . ($result['state'] ?? 'unknown')];
+
+        if ($classification === 'audit' && $patchGenerated) {
+            $steps[] = 'php spark aiops:worker --create-pr=1';
+            $steps[] = 'php spark aiops:pr:send --id=' . $id;
+        }
+
+        if ($classification === 'logs') {
+            $steps[] = 'php spark logs:summarize';
+            $steps[] = 'php spark aiops:worker:logs';
+        }
+
+        if ($patchGenerated && $prUrl === '') {
+            $steps[] = 'Review docs/_aiops/pr_ready/' . $id . '/pr.md';
+            $steps[] = 'php spark aiops:pr:send --id=' . $id;
+        }
+
+        if ($prUrl !== '') {
+            $steps[] = 'PR created: ' . $prUrl;
+        }
+
+        return array_values(array_unique($steps));
+    }
+
+    private function hasFilesInDirectory(string $dir): bool
+    {
+        if (!is_dir($dir)) {
+            return false;
+        }
+
+        $files = glob(rtrim($dir, '/') . '/*');
+        return is_array($files) && $files !== [];
+    }
+
+    private function needsMysqlDoc(array $targets): bool
+    {
+        foreach (($targets['file_candidates'] ?? []) as $file) {
+            $f = strtolower((string) $file);
+            if (str_contains($f, 'migration') || str_contains($f, '.sql') || str_contains($f, 'database')) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function isRecursiveInstruction(string $text): bool
+    {
+        $t = strtolower($text);
+        if (str_contains($t, 'aiops:worker:logs') || str_contains($t, 'logs:summarize --auto-aiops --auto-aiops')) {
+            return true;
+        }
+
+        return substr_count($t, 'aiops:worker') > 2;
     }
 
     private function buildPrScaffold(int $id, string $risk, array $gov, array $targets): string

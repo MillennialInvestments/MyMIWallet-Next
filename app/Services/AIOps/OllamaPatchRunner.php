@@ -6,11 +6,19 @@ namespace App\Services\AIOps;
 
 class OllamaPatchRunner
 {
-    private const MODEL = 'qwen2.5-coder:3b';
-    private const GENERATE_URL = 'http://127.0.0.1:11434/api/generate';
+    private const DEFAULT_MODEL = 'qwen2.5-coder:3b';
+    private const DEFAULT_GENERATE_URL = 'http://127.0.0.1:11434/api/generate';
 
     public function run(string $jobFile, array $options = []): PatchResult
     {
+        $audit = $this->auditOllamaConfig();
+        if (! $audit['ok']) {
+            return $this->persist(new PatchResult('failed_ollama_config', basename($jobFile, '.md'), null, false, [
+                'job_file' => $jobFile,
+                'audit' => $audit,
+            ]));
+        }
+
         $jobPath = ROOTPATH . ltrim($jobFile, '/');
         if (! is_file($jobPath)) {
             return $this->persist(new PatchResult('failed_missing_job', basename($jobFile, '.md'), null, false, ['job_file' => $jobFile]));
@@ -35,16 +43,26 @@ class OllamaPatchRunner
         }
 
         $prompt = $this->buildPrompt($job);
-        $diff = $this->callOllama($prompt);
+        $diff = $this->callOllama($prompt, $audit);
+
+        if (! $this->validateGeneratedPatch($diff)) {
+            $diff = $this->callOllama($prompt, $audit); // retry once
+            if (! $this->validateGeneratedPatch($diff)) {
+                return $this->persist(new PatchResult('failed_invalid_model_output', $job->jobId, null, false, [
+                    'job_file' => $job->jobFile,
+                ]));
+            }
+        }
+
         $validation = $this->validateDiff($diff, $job);
-        $this->writeOutputs($job, $diff, $validation);
+        $this->writeOutputs($job, $diff, $validation, $audit['model']);
 
         $status = $validation->status;
         return $this->persist(new PatchResult($status, $job->jobId, $validation->valid ? $this->rel($diffPath) : null, $validation->valid, [
             'job_file' => $job->jobFile,
             'files_touched' => $validation->filesTouched,
             'violations' => $validation->violations,
-            'model' => self::MODEL,
+            'model' => $audit['model'],
         ]));
     }
 
@@ -62,35 +80,39 @@ class OllamaPatchRunner
         $constraintText = implode("\n", array_map(static fn(string $line): string => '- ' . $line, $constraints));
         $targetText = implode("\n", array_map(static fn(string $line): string => '- ' . $line, $job->targetFiles));
 
-        return trim("AIOPS PATCH EXECUTION\n" .
-            "You are a mechanical unified-diff writer.\n" .
-            "Return only git unified diff output.\n" .
-            "The first line must be: diff --git\n\n" .
-            "JOB ID: {$job->jobId}\n" .
-            "TARGET FILES:\n{$targetText}\n\n" .
-            "CONSTRAINTS:\n{$constraintText}\n\n" .
-            "INSTRUCTIONS:\n{$job->instructions}\n");
+        return trim("AIOPS PATCH EXECUTION\n"
+            . "You are a mechanical unified-diff writer.\n"
+            . "Return only git unified diff output.\n"
+            . "The first line must be: diff --git\n\n"
+            . "JOB ID: {$job->jobId}\n"
+            . "TARGET FILES:\n{$targetText}\n\n"
+            . "CONSTRAINTS:\n{$constraintText}\n\n"
+            . "INSTRUCTIONS:\n{$job->instructions}\n");
     }
 
-    protected function callOllama(string $prompt): string
+    protected function callOllama(string $prompt, array $audit): string
     {
         $payload = [
-            'model' => self::MODEL,
+            'model' => $audit['model'],
             'stream' => false,
             'prompt' => $prompt,
             'options' => [
                 'temperature' => 0,
-                'num_ctx' => 2048,
+                'num_ctx' => $audit['token_limit'],
+                'num_predict' => $audit['token_limit'],
+                'num_batch' => 64,
                 'stop' => ['```', '\n#', '\nExplanation:', '\nSummary:'],
             ],
         ];
 
-        $ch = curl_init(self::GENERATE_URL);
+        $ch = curl_init($audit['endpoint']);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload, JSON_UNESCAPED_SLASHES));
-        curl_setopt($ch, CURLOPT_TIMEOUT, 120);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $audit['timeout']);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+
         $body = (string) curl_exec($ch);
         $http = (int) curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
         curl_close($ch);
@@ -104,7 +126,33 @@ class OllamaPatchRunner
             return '';
         }
 
-        return trim((string) ($decoded['response'] ?? ''));
+        $response = trim((string) ($decoded['response'] ?? ''));
+        if (strlen($response) > 150000) {
+            $response = substr($response, 0, 150000);
+        }
+
+        return $response;
+    }
+
+    private function validateGeneratedPatch(string $content): bool
+    {
+        $trim = trim($content);
+        if ($trim === '') {
+            return false;
+        }
+
+        $lower = strtolower($trim);
+        foreach (['todo', 'placeholder', 'pseudo', 'example'] as $bad) {
+            if (str_contains($lower, $bad)) {
+                return false;
+            }
+        }
+
+        $hasNamespace = preg_match('/\bnamespace\s+[A-Za-z0-9_\\\\]+\s*;/', $trim) === 1;
+        $hasSql = preg_match('/\b(select|insert|update|delete|alter|create|drop)\b\s+/i', $trim) === 1;
+        $hasDiff = str_starts_with(ltrim($trim), 'diff --git');
+
+        return $hasNamespace || $hasSql || $hasDiff;
     }
 
     protected function validateDiff(string $diff, PatchJob $job): DiffValidationResult
@@ -124,7 +172,7 @@ class OllamaPatchRunner
         return new DiffValidationResult(true, $filesTouched, [], 'success');
     }
 
-    protected function writeOutputs(PatchJob $job, string $diff, DiffValidationResult $validation): void
+    protected function writeOutputs(PatchJob $job, string $diff, DiffValidationResult $validation, string $model): void
     {
         $patchDir = ROOTPATH . 'docs/_aiops/patches';
         $runDir = ROOTPATH . 'docs/_aiops/runs';
@@ -152,7 +200,7 @@ class OllamaPatchRunner
             'job_id' => $job->jobId,
             'job_file' => $job->jobFile,
             'status' => $validation->status,
-            'model' => self::MODEL,
+            'model' => $model,
             'files_touched' => $validation->filesTouched,
             'violations' => $validation->violations,
             'diff_sha256' => hash('sha256', $diff),
@@ -167,6 +215,60 @@ class OllamaPatchRunner
             . "## Checklist\n- [ ] See docs/_aiops/pr-checklist.md\n"
             . "\nCodex role: reviewer only.\n";
         file_put_contents($runDir . '/' . $job->jobId . '.pr.md', $body);
+    }
+
+    private function auditOllamaConfig(): array
+    {
+        $endpoint = getenv('OLLAMA_ENDPOINT') ?: self::DEFAULT_GENERATE_URL;
+        $model = getenv('OLLAMA_MODEL') ?: self::DEFAULT_MODEL;
+        $timeout = (int) (getenv('OLLAMA_TIMEOUT_SECONDS') ?: 120);
+        $tokenLimit = (int) (getenv('OLLAMA_TOKEN_LIMIT') ?: 2048);
+        $memoryLimitMb = (int) (getenv('OLLAMA_MEMORY_LIMIT_MB') ?: 512);
+
+        $ok = true;
+        $issues = [];
+
+        if ($model === '') {
+            $ok = false;
+            $issues[] = 'OLLAMA_MODEL missing';
+        }
+        if ($tokenLimit <= 0) {
+            $ok = false;
+            $issues[] = 'OLLAMA_TOKEN_LIMIT invalid';
+        }
+        if ($memoryLimitMb > 512) {
+            $ok = false;
+            $issues[] = 'OLLAMA_MEMORY_LIMIT_MB must be <= 512';
+        }
+
+        $reachable = false;
+        $ch = curl_init($endpoint);
+        curl_setopt($ch, CURLOPT_NOBODY, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_exec($ch);
+        $http = (int) curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+        curl_close($ch);
+
+        if ($http >= 200 && $http < 500) {
+            $reachable = true;
+        }
+
+        if (! $reachable) {
+            $ok = false;
+            $issues[] = 'Ollama endpoint unreachable';
+        }
+
+        return [
+            'ok' => $ok,
+            'issues' => $issues,
+            'endpoint' => $endpoint,
+            'model' => $model,
+            'timeout' => max(30, $timeout),
+            'token_limit' => min(max(256, $tokenLimit), 4096),
+            'memory_limit_mb' => $memoryLimitMb,
+            'reachable' => $reachable,
+        ];
     }
 
     private function persist(PatchResult $result): PatchResult
