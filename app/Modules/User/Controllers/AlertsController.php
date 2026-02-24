@@ -348,6 +348,8 @@ class AlertsController extends UserController
             return redirect()->to(site_url('login'));
         }
 
+        $scannerSignals = $this->alertsModel->getScannerAlertsForUserWatchlist($userId, 100);
+
         $risk     = $this->getMyMIBudget()->getUserRiskProfileSafe($userId);
         $forecast = $this->getMyMIBudget()->getForecastForUser($userId);
         $advisor  = $this->getMyMIAdvisor()->generateAdvisorNotes($userId);
@@ -380,6 +382,7 @@ class AlertsController extends UserController
         $this->data['pendingTradeAlerts']          = $pendingTradeAlerts;
         $this->data['pendingAlertsCount']          = $alertsInfo['pendingAlertsCount'] ?? count($pendingTradeAlerts);
         $this->data['resolvedAlertsCount']         = $alertsInfo['resolvedAlertsCount'] ?? 0;
+        $this->data['scannerSignals']              = $scannerSignals;
 
         // Ensure the dashboard theme loads the jQuery DataTables bundle used by the view.
         $this->data['useDataTables'] = true;

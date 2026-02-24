@@ -16,6 +16,7 @@ use App\Services\Forecasting\MyMIForecaster;
 use App\Services\Forecasting\Providers\AlphaVantageProvider;
 use App\Services\Scanning\CacheLayer;
 use App\Services\Scanning\RateLimiter;
+use App\Services\Scanning\ScannerAlertBridge;
 use App\Services\Scanning\ScannerService;
 use App\Services\Scanning\SignalEngine;
 use App\Services\Scanning\Providers\AlphaVantageProvider as ScannerAlphaVantageProvider;
@@ -364,6 +365,21 @@ class Services extends CoreServices
         );
     }
 
+
+    public static function scannerAlertBridge(bool $getShared = true): ScannerAlertBridge
+    {
+        if ($getShared) {
+            /** @var ScannerAlertBridge $service */
+            $service = static::getSharedInstance('scannerAlertBridge');
+            return $service;
+        }
+
+        return new ScannerAlertBridge(
+            \Config\Database::connect(),
+            service('mymialerts'),
+        );
+    }
+
     public static function scannerService(bool $getShared = true): ScannerService
     {
         if ($getShared) {
@@ -376,6 +392,7 @@ class Services extends CoreServices
             new \App\Modules\APIs\Models\ScannerModel(),
             static::scannerProviderRouter(),
             static::scannerSignalEngine(),
+            static::scannerAlertBridge(),
         );
     }
     /*

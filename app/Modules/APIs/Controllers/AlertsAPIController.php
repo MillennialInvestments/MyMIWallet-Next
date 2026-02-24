@@ -1252,6 +1252,7 @@ class AlertsAPIController extends ResourceController
         $q           = trim($postData['q'] ?? $searchValue);         // your extra ?q= from the form
         $category    = trim($postData['category'] ?? '');
         $alertCreated = isset($postData['alert_created']) ? (int)$postData['alert_created'] : null; // 1 confirmed, 0 pending
+        $source       = trim((string) ($postData['source'] ?? ''));
 
         // Map columns index -> DB field (adjust if your schema differs)
         $columns = [
@@ -1281,6 +1282,7 @@ class AlertsAPIController extends ResourceController
             'q'             => $q,
             'category'      => $category,
             'alert_created' => $alertCreated,       // can be 0 or 1 or null
+            'source'        => $source,
             'orderBy'       => $orderBy,
             'orderDir'      => $orderDir,
             'limit'         => $length,
@@ -2892,5 +2894,21 @@ class AlertsAPIController extends ResourceController
             return Http::jsonError('Signing failed', 500);
         }
     }
+
+    public function scanner(): ResponseInterface
+    {
+        $limit = (int) ($this->request->getGet('limit') ?? 100);
+        if ($limit < 1) {
+            $limit = 100;
+        }
+
+        $alerts = $this->alertsModel->getScannerAlerts(min($limit, 500));
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'data' => $alerts,
+        ]);
+    }
+
 }
 ?>

@@ -1024,6 +1024,9 @@ class AlertsModel extends Model
 
         $selectParts[] = $chartCase;
         $selectParts[] = 'a.status';
+        if ($this->hasColumn($tableName, 'source')) {
+            $selectParts[] = 'a.source';
+        }
 
         if ($hasAlertCreated) {
             $selectParts[] = 'a.alert_created';
@@ -1042,6 +1045,7 @@ class AlertsModel extends Model
         $category     = $opts['category']      ?? null;
         $q            = trim($opts['q']        ?? '');
         $orderBy      = $opts['orderBy']       ?? 'a.created_on';
+        $source       = trim((string) ($opts['source'] ?? ''));
         $orderDir     = strtoupper($opts['orderDir'] ?? 'DESC');
         $limit        = (int) ($opts['limit']  ?? 50);
         $offset       = (int) ($opts['offset'] ?? 0);
@@ -1052,6 +1056,10 @@ class AlertsModel extends Model
 
         if (!empty($category)) {
             $base->where('a.category', $category);
+        }
+
+        if ($source !== '' && $this->hasColumn($tableName, 'source')) {
+            $base->where('a.source', $source);
         }
 
         if ($this->hasColumn($tableName, 'active')) {
@@ -1416,6 +1424,41 @@ class AlertsModel extends Model
         return $this->db->table('bf_investment_trade_alert_changes')
             ->orderBy('created_at', 'DESC')
             ->limit(50)
+            ->get()
+            ->getResultArray();
+    }
+
+
+    public function getScannerAlerts(int $limit = 100): array
+    {
+        $builder = $this->db->table('bf_investment_trade_alerts')
+            ->where('active', 1)
+            ->where('source', 'scanner')
+            ->orderBy('created_on', 'DESC')
+            ->limit($limit);
+
+        return $builder->get()->getResultArray();
+    }
+
+    public function getScannerAlertsForUserWatchlist(int $userId, int $limit = 100): array
+    {
+        $watchlist = $this->db->table('bf_users_watchlist')
+            ->select('symbol')
+            ->where('user_id', $userId)
+            ->get()
+            ->getResultArray();
+
+        $symbols = array_values(array_unique(array_filter(array_map(static fn($r) => strtoupper((string) ($r['symbol'] ?? '')), $watchlist))));
+        if ($symbols === []) {
+            return [];
+        }
+
+        return $this->db->table('bf_investment_trade_alerts')
+            ->where('active', 1)
+            ->where('source', 'scanner')
+            ->whereIn('ticker', $symbols)
+            ->orderBy('created_on', 'DESC')
+            ->limit($limit)
             ->get()
             ->getResultArray();
     }
