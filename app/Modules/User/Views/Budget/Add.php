@@ -314,55 +314,47 @@ $fieldData = array(
     }
 
     const addAccountForm = document.querySelector("#add_user_budgeting_account");
-    const addAccountSubmit = {};
 
     if (addAccountForm) {
         addAccountForm.addEventListener("submit", async (e) => {
             e.preventDefault();
-            const formData = new FormData();
-            const designatedDate = formData.get("accountDesignatedDate"); // Ensure this field is present
-            const accountID = formData.get("accountID");
-
-            addAccountForm.querySelectorAll("input").forEach((inputField) => {
-                formData.append(inputField.name, inputField.value);
-                addAccountSubmit[inputField.name] = inputField.value;
-            });
-
-            addAccountForm.querySelectorAll("select").forEach((inputField) => {
-                formData.append(inputField.name, inputField.value);
-                addAccountSubmit[inputField.name] = inputField.value;
-            });
-
-            // Get the value from the "recurring_account" select field
-            const recurringAccountSelect = document.getElementById("recurring_account");
-            const recurringAccount = recurringAccountSelect ? recurringAccountSelect.value : null;
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            console.log(addAccountSubmit);
-            console.log("recurringAccount: ", recurringAccount);
+            const formData = new FormData(addAccountForm);
+            const recurringAccount = formData.get("recurring_account");
 
             try {
                 const response = await fetch("<?php echo site_url('Budget/Account-Manager'); ?>", {
                     method: "POST",
-                    body: JSON.stringify(addAccountSubmit),
-                    headers: { 
-                        "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": csrfToken, // Include the CSRF token in the headers 
-                    },
+                    body: formData,
                     credentials: "same-origin",
-                    redirect: "manual",
                 });
 
-                if (response.ok) {
-                    const responseData = await response.json();
-                    const accountID = responseData.accountID;
+                const contentType = response.headers.get("content-type") || "";
+                if (!response.ok) {
+                    console.error("Server responded:", response.status);
+                    const text = await response.text();
+                    console.error("Response body:", text);
+                    return;
+                }
 
-                    if (recurringAccount === "Yes") {
-                        location.href = `<?php echo site_url('/Budget/Recurring-Account/Schedule/'); ?>${accountID}`;
-                    } else {
-                        location.href = `<?php echo site_url('/Budget'); ?>`;
-                    }
+                if (!contentType.includes("application/json")) {
+                    const text = await response.text();
+                    console.error("Expected JSON but got:", contentType);
+                    console.error("Response body:", text);
+                    return;
+                }
+
+                const responseData = await response.json();
+                const accountID = responseData.accountID || responseData.data?.accountID;
+
+                if (!accountID) {
+                    console.error("Missing accountID in response:", responseData);
+                    return;
+                }
+
+                if (recurringAccount === "Yes") {
+                    window.location.href = `<?php echo site_url('/Budget/Recurring-Account/Schedule/'); ?>${accountID}`;
                 } else {
-                    console.error("Server responded with status: ", response.status);
+                    window.location.href = `<?php echo site_url('/Budget'); ?>`;
                 }
             } catch (err) {
                 console.error(err);

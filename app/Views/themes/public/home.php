@@ -1,6 +1,8 @@
 <?php
-log_message('error', 'LOGGER TEST ERROR - ' . date('H:i:s'));
-log_message('debug', 'LOGGER TEST DEBUG - ' . date('H:i:s'));
+if (ENVIRONMENT !== 'production' && (bool) env('APP_LOGGER_TESTS', false)) {
+    log_message('error', 'LOGGER TEST ERROR - ' . date('H:i:s'));
+    log_message('debug', 'LOGGER TEST DEBUG - ' . date('H:i:s'));
+}
 
 $currentUserID     = $current_user->id ?? '';
 $currentUserRoleID = $current_user->role_id ?? '';
