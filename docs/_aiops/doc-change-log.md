@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-22T20:00:02Z
+> Run: 2026-02-24T22:00:02Z
 
 - docs/APIs/api_audit_latest.md
   - Last updated: 2026-02-21
@@ -73,6 +73,24 @@
   - Change type: unchanged
 - docs/_support/config-clear/20260222-033759/summary.md
   - Last updated: 2026-02-22
+  - Change type: unchanged
+- docs/_support/config-clear/20260222-224306/summary.md
+  - Last updated: 2026-02-22
+  - Change type: unchanged
+- docs/_support/config-clear/20260222-230252/summary.md
+  - Last updated: 2026-02-22
+  - Change type: unchanged
+- docs/_support/config-clear/20260222-230405/summary.md
+  - Last updated: 2026-02-22
+  - Change type: unchanged
+- docs/_support/config-clear/20260222-230452/summary.md
+  - Last updated: 2026-02-22
+  - Change type: unchanged
+- docs/_support/config-clear/20260223-002620/summary.md
+  - Last updated: 2026-02-23
+  - Change type: unchanged
+- docs/_support/config-clear/20260223-005145/summary.md
+  - Last updated: 2026-02-23
   - Change type: unchanged
 - docs/_support/fix-503/20260215-005841/summary.md
   - Last updated: 2026-02-15
@@ -160,6 +178,9 @@
   - Change type: unchanged
 - docs/_support/spark-reset/20260222-033804/summary.md
   - Last updated: 2026-02-22
+  - Change type: unchanged
+- docs/_support/spark-reset/20260223-002623/summary.md
+  - Last updated: 2026-02-23
   - Change type: unchanged
 - docs/adr/0001-standards-and-response-contract.md
   - Last updated: 2025-11-08
@@ -3340,6 +3361,33 @@
   - Change type: unchanged
 - docs/testing/auth_onboarding_test_plan.md
   - Last updated: 2026-01-17
+  - Change type: unchanged
+- docs/trading/codeigniter4/README.md
+  - Last updated: 2026-02-22
+  - Change type: unchanged
+- docs/trading/codeigniter4/architecture.md
+  - Last updated: 2026-02-22
+  - Change type: unchanged
+- docs/trading/codeigniter4/cron.md
+  - Last updated: 2026-02-22
+  - Change type: unchanged
+- docs/trading/codeigniter4/endpoints.md
+  - Last updated: 2026-02-22
+  - Change type: unchanged
+- docs/trading/codeigniter4/integration-alerts.md
+  - Last updated: 2026-02-24
+  - Change type: unchanged
+- docs/trading/codeigniter4/providers.md
+  - Last updated: 2026-02-22
+  - Change type: unchanged
+- docs/trading/codeigniter4/schema.md
+  - Last updated: 2026-02-22
+  - Change type: unchanged
+- docs/trading/codeigniter4/signals.md
+  - Last updated: 2026-02-22
+  - Change type: unchanged
+- docs/trading/codeigniter4/testing.md
+  - Last updated: 2026-02-22
   - Change type: unchanged
 - docs/trading/datapoint-groups/MyMI-Momentum-and-Inflow-Core.md
   - Last updated: 2026-01-21

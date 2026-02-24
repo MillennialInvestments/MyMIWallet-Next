@@ -15,47 +15,80 @@ class ConsolidateErrors extends SafeBaseCommand
     public function run(array $params)
     {
         $db = Database::connect();
-        $errors = $db->table('bf_error_logs')->get()->getResultArray();
+        $batchSize = 1000;
 
-        foreach ($errors as $error) {
+        // ---- Ensure checkpoint exists ----
+        $checkpoint = $db->table('bf_error_processing_checkpoint')
+            ->where('process_name', 'log_consolidation')
+            ->get()
+            ->getRow();
 
-            $fingerprint = md5($this->normalize($error['message']));
-            $category = $this->categorize($error['message']);
-
-            $existing = $db->table('bf_error_consolidated_logs')
-                ->where('fingerprint', $fingerprint)
-                ->get()->getRowArray();
-
-            if ($existing) {
-                $db->table('bf_error_consolidated_logs')
-                    ->where('id', $existing['id'])
-                    ->update([
-                        'occurrence_count' => $existing['occurrence_count'] + 1,
-                        'last_seen' => date('Y-m-d H:i:s')
-                    ]);
-            } else {
-                $db->table('bf_error_consolidated_logs')->insert([
-                    'fingerprint' => $fingerprint,
-                    'category' => $category,
-                    'error_type' => $this->detectType($error['message']),
-                    'message_sample' => substr($error['message'], 0, 500),
-                    'occurrence_count' => 1,
-                    'created_at' => date('Y-m-d H:i:s'),
-                    'last_seen' => date('Y-m-d H:i:s')
-                ]);
-            }
+        if (! $checkpoint) {
+            $db->table('bf_error_processing_checkpoint')->insert([
+                'process_name' => 'log_consolidation',
+                'last_processed_id' => 0,
+            ]);
+            $lastId = 0;
+        } else {
+            $lastId = (int) $checkpoint->last_processed_id;
         }
 
-        CLI::write('Error consolidation complete.', 'green');
+        CLI::write("Starting from ID: {$lastId}");
+
+        while (true) {
+
+            $rows = $db->table('bf_error_logs')
+                ->where('id >', $lastId)
+                ->orderBy('id', 'ASC')
+                ->limit($batchSize)
+                ->get()
+                ->getResultArray();
+
+            if (empty($rows)) {
+                break;
+            }
+
+            foreach ($rows as $row) {
+
+                $normalized = $this->normalizeError($row['message']);
+                $category   = $this->categorize($normalized);
+                $type       = $this->detectType($normalized);
+
+                $this->consolidateRow($row, $normalized, $category, $type);
+
+                $lastId = $row['id'];
+            }
+
+            // Update checkpoint
+            $db->table('bf_error_processing_checkpoint')
+                ->where('process_name', 'log_consolidation')
+                ->update(['last_processed_id' => $lastId]);
+
+            unset($rows);
+            gc_collect_cycles();
+
+            CLI::write("Processed up to ID: {$lastId}");
+        }
+
+        CLI::write("Log consolidation complete.");
     }
 
-    private function normalize($msg)
+    // -------------------------------------------------------
+    // NORMALIZER
+    // -------------------------------------------------------
+
+    private function normalizeError(string $message): string
     {
-        $msg = preg_replace('/\d+/', '', $msg);
-        return strtolower(trim($msg));
+        $message = preg_replace('/\d+/', '{number}', $message);
+        $message = preg_replace('/\/[^\s]+/', '{path}', $message);
+        return strtolower(substr(trim($message), 0, 300));
     }
 
-    private function categorize($msg)
+    // -------------------------------------------------------
+    // CATEGORY DETECTOR
+    // -------------------------------------------------------
+
+    private function categorize(string $msg): string
     {
         if (str_contains($msg, 'database')) return 'Database';
         if (str_contains($msg, 'curl')) return 'External API';
@@ -65,11 +98,51 @@ class ConsolidateErrors extends SafeBaseCommand
         return 'General';
     }
 
-    private function detectType($msg)
+    // -------------------------------------------------------
+    // TYPE DETECTOR
+    // -------------------------------------------------------
+
+    private function detectType(string $msg): string
     {
         if (str_contains($msg, 'deprecated')) return 'Deprecated';
         if (str_contains($msg, 'exception')) return 'Exception';
         if (str_contains($msg, 'warning')) return 'Warning';
         return 'Error';
+    }
+
+    // -------------------------------------------------------
+    // CONSOLIDATION LOGIC
+    // -------------------------------------------------------
+
+    private function consolidateRow(array $row, string $normalized, string $category, string $type): void
+    {
+        $db = Database::connect();
+
+        $existing = $db->table('bf_error_consolidated_logs')
+            ->where('normalized_message', $normalized)
+            ->get()
+            ->getRow();
+
+        if ($existing) {
+
+            $db->table('bf_error_consolidated_logs')
+                ->where('id', $existing->id)
+                ->set('count', 'count+1', false)
+                ->set('last_seen_at', $row['created_at'])
+                ->update();
+
+        } else {
+
+            $db->table('bf_error_consolidated_logs')
+                ->insert([
+                    'normalized_message' => $normalized,
+                    'sample_message'     => $row['message'],
+                    'category'           => $category,
+                    'type'               => $type,
+                    'count'              => 1,
+                    'first_seen_at'      => $row['created_at'],
+                    'last_seen_at'       => $row['created_at'],
+                ]);
+        }
     }
 }

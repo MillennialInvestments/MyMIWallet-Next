@@ -233,8 +233,8 @@ class BudgetService
     public function getRecurringSchedules(string $category): array
     {
         return match (strtolower(trim($category))) {
-            'income' => ['Weekly', 'Bi-Weekly', 'Monthly', '15/Last'],
-            'expense' => ['Monthly', 'Quarterly', 'Annual'],
+            'income' => ['Daily', 'Weekly', 'Bi-Weekly', 'Monthly', 'Quarterly', 'Annual', '15/Last'],
+            'expense' => ['Weekly', 'Bi-Monthly', 'Monthly', 'Quarterly', 'Semi-Annual', 'Annual'],
             default => [],
         };
     }

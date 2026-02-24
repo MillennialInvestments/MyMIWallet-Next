@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-22T20:00:02Z
+> Run: 2026-02-24T22:00:02Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -79,6 +79,8 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/APIs/Controllers/ReferralAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/ScannerController.php
+  - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/APIs/Controllers/SearchAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/APIs/Controllers/SolanaAPIController.php
@@ -104,6 +106,8 @@
 - app/Modules/APIs/Models/InvestmentsTickersModel.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/APIs/Models/MarketingNewsContentModel.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Models/ScannerModel.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Admin/Controllers/BackupsController.php
   - ⚠️ No obvious doc match found (heuristic)
@@ -297,6 +301,8 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Controllers/BudgetsAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/ChatAdminController.php
+  - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Controllers/ChatUsageAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Controllers/ContentEngineAdminController.php
@@ -312,6 +318,8 @@
 - app/Modules/Management/Controllers/EmailAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Controllers/EmailOutboxAdminController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Controllers/ErrorOpsController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Controllers/ExchangeAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
@@ -395,15 +403,7 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Views/API/Sophtron_Widget.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Views/Alerts/add/user_fields.php
-  - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Views/Alerts/batchEmailAudit.php
-  - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Views/Alerts/emails/layout.php
-  - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Views/Alerts/form_fields/trade_alert_fields.php
-  - ⚠️ No obvious doc match found (heuristic)
-- … and 964 more
+- … and 969 more
 
 ## Documented Items With No Obvious Code Match (best-effort)
 - docs/APIs/api_audit_latest.md
@@ -806,4 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/forecasting/02_forecasting_inputs.md
   - ❌ No obvious code match found (heuristic)
-- … and 797 more
+- … and 804 more

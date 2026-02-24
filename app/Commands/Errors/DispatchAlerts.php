@@ -8,8 +8,8 @@ use App\Services\Observability\ErrorAlertService;
 
 class DispatchAlerts extends SafeBaseCommand
 {
-    protected $group = 'MyMI';
-    protected $name = 'errors:alerts:dispatch';
+    protected $group = 'App - Logging';
+    protected $name = 'app:errors:dispatch';
     protected $description = 'Evaluate alert rules and send notifications.';
     protected $usage = 'errors:alerts:dispatch';
 

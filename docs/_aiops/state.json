@@ -4635,7 +4635,71 @@
         "docs/trading/tradingview/indicators/MyMI-Liquidity-Scanner.md": {
             "hash": "74a39c478052d58bbf951a633116f6f3ce762fb332b6e5a82aa6ea1959b14b2c",
             "mtime": "2026-02-22"
+        },
+        "docs/trading/codeigniter4/README.md": {
+            "hash": "65be4b7211f54454d9019f7f755759df9bb349c1d024876d589034bd6da4cfd3",
+            "mtime": "2026-02-22"
+        },
+        "docs/trading/codeigniter4/architecture.md": {
+            "hash": "f6ae5b2a3cd02e03aada753a468cabb2c567a1d1c233ac13c168cc8f2c50e2e0",
+            "mtime": "2026-02-22"
+        },
+        "docs/trading/codeigniter4/cron.md": {
+            "hash": "6529994ff2e561bbb6e9c521ef2944d5b1287e84ad6999360c04603ca375dd03",
+            "mtime": "2026-02-22"
+        },
+        "docs/trading/codeigniter4/endpoints.md": {
+            "hash": "d8adde960f7e8e2d08ef9ca8f411f976875331a97080cac033eff26ce1edad20",
+            "mtime": "2026-02-22"
+        },
+        "docs/trading/codeigniter4/providers.md": {
+            "hash": "3fc150148a50e15f27d1d2c67d84234d4fcbbae5e6d0f355f65c7dc01c3a663f",
+            "mtime": "2026-02-22"
+        },
+        "docs/trading/codeigniter4/schema.md": {
+            "hash": "afe75c601a92620437aa644725617242dec215801920effa78248c12c0af6c76",
+            "mtime": "2026-02-22"
+        },
+        "docs/trading/codeigniter4/signals.md": {
+            "hash": "e750771b83bbdbfecb4e0f4bbcbccba3ff8c0bddf09f344789253b7055c1ab2b",
+            "mtime": "2026-02-22"
+        },
+        "docs/trading/codeigniter4/testing.md": {
+            "hash": "5d66e6ef4d27393eebd7c0cafc9c73ed65daf1bda045447444420fee78a0b383",
+            "mtime": "2026-02-22"
+        },
+        "docs/_support/config-clear/20260222-224306/summary.md": {
+            "hash": "f7c813a3c799b47bc88fb83544aa998f2b7b3cbd63cf072f9ad12f163eaff395",
+            "mtime": "2026-02-22"
+        },
+        "docs/_support/config-clear/20260222-230252/summary.md": {
+            "hash": "d16a0f6da36a2ba3b657ebda98e4ff0adf29f2a4c54c90807b994fb80d83435c",
+            "mtime": "2026-02-22"
+        },
+        "docs/_support/config-clear/20260222-230405/summary.md": {
+            "hash": "0e57fed8803b23a1c326bfcef720782c39f930f8a4572aa61b7c030a8782e47a",
+            "mtime": "2026-02-22"
+        },
+        "docs/_support/config-clear/20260222-230452/summary.md": {
+            "hash": "1c068e96a26957ad6c2205608adf0cc806724fb166607279ad0ba9a6750a7022",
+            "mtime": "2026-02-22"
+        },
+        "docs/_support/config-clear/20260223-002620/summary.md": {
+            "hash": "47cba0ee80159865232a0b35b359495338bae4505e1d0d59de85f85eca75705b",
+            "mtime": "2026-02-23"
+        },
+        "docs/_support/config-clear/20260223-005145/summary.md": {
+            "hash": "d9fd57c11e2da4b54d32df139bbf471ad045e252814b658aa42fe989661c6e1b",
+            "mtime": "2026-02-23"
+        },
+        "docs/_support/spark-reset/20260223-002623/summary.md": {
+            "hash": "f5b8931342b8f0d103dbe18a073faa6df438643a84d31a481c19c1b4192c581b",
+            "mtime": "2026-02-23"
+        },
+        "docs/trading/codeigniter4/integration-alerts.md": {
+            "hash": "a74a0c8e126b1c6ccb8adc615dfc4050b71491899872c4f54c403096525500e8",
+            "mtime": "2026-02-24"
         }
     },
-    "last_run": "2026-02-22T20:00:02Z"
+    "last_run": "2026-02-24T22:00:02Z"
 }

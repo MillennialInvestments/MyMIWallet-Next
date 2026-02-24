@@ -1,0 +1,5244 @@
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-15 16:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-15T16:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-15T16:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-15T16:00:01Z
+
+## Docs
+- Changed docs: 1
+- Total docs scanned: 1124
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1134
+- Docs with no code match candidates: 987
+
+## Stale Docs
+- Docs older than 60 days: 155
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-15 18:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-15T18:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-15T18:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-15T18:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1124
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1134
+- Docs with no code match candidates: 987
+
+## Stale Docs
+- Docs older than 60 days: 155
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-15 20:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-15T20:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-15T20:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-15T20:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1124
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1135
+- Docs with no code match candidates: 987
+
+## Stale Docs
+- Docs older than 60 days: 155
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-15 22:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-15T22:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-15T22:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-15T22:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1124
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1135
+- Docs with no code match candidates: 987
+
+## Stale Docs
+- Docs older than 60 days: 155
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-16 00:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-16T00:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-16T00:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-16T00:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1124
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1135
+- Docs with no code match candidates: 987
+
+## Stale Docs
+- Docs older than 60 days: 155
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-16 02:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-16T02:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-16T02:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-16T02:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1124
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1135
+- Docs with no code match candidates: 987
+
+## Stale Docs
+- Docs older than 60 days: 155
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-16 04:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-16T04:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-16T04:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-16T04:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1124
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1135
+- Docs with no code match candidates: 987
+
+## Stale Docs
+- Docs older than 60 days: 155
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-16 06:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-16T06:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-16T06:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-16T06:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1124
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1135
+- Docs with no code match candidates: 987
+
+## Stale Docs
+- Docs older than 60 days: 155
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-16 08:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-16T08:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-16T08:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-16T08:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1124
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1135
+- Docs with no code match candidates: 987
+
+## Stale Docs
+- Docs older than 60 days: 155
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-16 10:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-16T10:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-16T10:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-16T10:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1124
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1135
+- Docs with no code match candidates: 987
+
+## Stale Docs
+- Docs older than 60 days: 155
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-16 12:00:02 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-16T12:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-16T12:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-16T12:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1124
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1135
+- Docs with no code match candidates: 987
+
+## Stale Docs
+- Docs older than 60 days: 155
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-16 14:00:02 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-16T14:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-16T14:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-16T14:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1124
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1135
+- Docs with no code match candidates: 987
+
+## Stale Docs
+- Docs older than 60 days: 155
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-16 16:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-16T16:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-16T16:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-16T16:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1124
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1141
+- Docs with no code match candidates: 987
+
+## Stale Docs
+- Docs older than 60 days: 155
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-16 18:00:02 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-16T18:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-16T18:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-16T18:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1124
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1144
+- Docs with no code match candidates: 987
+
+## Stale Docs
+- Docs older than 60 days: 155
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-16 20:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-16T20:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-16T20:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-16T20:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1124
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1149
+- Docs with no code match candidates: 987
+
+## Stale Docs
+- Docs older than 60 days: 155
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-16 22:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-16T22:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-16T22:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-16T22:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1124
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1149
+- Docs with no code match candidates: 987
+
+## Stale Docs
+- Docs older than 60 days: 155
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-17 00:00:01 UTC+00:00
+
+[Error]
+Class "App\Config\SafeBaseCommand" not found
+at APPPATH/Commands/AiOps/Observe/Map.php:8
+
+Backtrace:
+  1    VENDORPATH/composer/ClassLoader.php:576
+       include()
+
+  2    VENDORPATH/composer/ClassLoader.php:427
+       Composer\Autoload\{closure}('/home/mymiteam/mymiwallet/site/current/vendor/composer/../../app/Commands/AiOps/Observe/Map.php')
+
+  3    [internal function]
+       Composer\Autoload\ClassLoader()->loadClass('App\\Commands\\AiOps\\Observe\\Map')
+
+  4    SYSTEMPATH/Autoloader/FileLocator.php:306
+       class_exists('App\\Commands\\AiOps\\Observe\\Map')
+
+  5    SYSTEMPATH/Autoloader/FileLocatorCached.php:97
+       CodeIgniter\Autoloader\FileLocator()->findQualifiedNameFromPath('/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/Observe/Map.php')
+
+  6    SYSTEMPATH/CLI/Commands.php:117
+       CodeIgniter\Autoloader\FileLocatorCached()->findQualifiedNameFromPath('/home/mymiteam/mymiwallet/site/current/app/Commands/AiOps/Observe/Map.php')
+
+  7    SYSTEMPATH/CLI/Commands.php:51
+       CodeIgniter\CLI\Commands()->discoverCommands()
+
+  8    SYSTEMPATH/Config/Services.php:178
+       CodeIgniter\CLI\Commands()->__construct()
+
+  9    SYSTEMPATH/Config/BaseService.php:325
+       CodeIgniter\Config\Services::commands(false)
+
+ 10    SYSTEMPATH/Config/BaseService.php:264
+       CodeIgniter\Config\BaseService::__callStatic('commands', [...])
+
+ 11    SYSTEMPATH/Config/Services.php:175
+       CodeIgniter\Config\BaseService::getSharedInstance('commands')
+
+ 12    SYSTEMPATH/Config/BaseService.php:334
+       CodeIgniter\Config\Services::commands()
+
+ 13    SYSTEMPATH/Config/BaseService.php:203
+       CodeIgniter\Config\BaseService::__callStatic('commands', [])
+
+ 14    SYSTEMPATH/Common.php:1078
+       CodeIgniter\Config\BaseService::get('commands')
+
+ 15    SYSTEMPATH/CLI/Console.php:47
+       service('commands')
+
+ 16    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+ 17    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+ 18    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-17 02:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-17T02:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-17T02:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-17T02:00:01Z
+
+## Docs
+- Changed docs: 3
+- Total docs scanned: 1127
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1149
+- Docs with no code match candidates: 987
+
+## Stale Docs
+- Docs older than 60 days: 155
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-17 04:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-17T04:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-17T04:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-17T04:00:02Z
+
+## Docs
+- Changed docs: 2
+- Total docs scanned: 1128
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1149
+- Docs with no code match candidates: 987
+
+## Stale Docs
+- Docs older than 60 days: 155
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-17 06:00:02 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-17T06:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-17T06:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-17T06:00:02Z
+
+## Docs
+- Changed docs: 5
+- Total docs scanned: 1133
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1149
+- Docs with no code match candidates: 987
+
+## Stale Docs
+- Docs older than 60 days: 155
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-17 08:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-17T08:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-17T08:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-17T08:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1133
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1149
+- Docs with no code match candidates: 987
+
+## Stale Docs
+- Docs older than 60 days: 155
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-17 10:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-17T10:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-17T10:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-17T10:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1133
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1149
+- Docs with no code match candidates: 987
+
+## Stale Docs
+- Docs older than 60 days: 155
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-17 12:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-17T12:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-17T12:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-17T12:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1133
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1149
+- Docs with no code match candidates: 987
+
+## Stale Docs
+- Docs older than 60 days: 155
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+Fatal error: Uncaught Error: Class "CodeIgniter\Config\BaseConfig" not found in /home/mymiteam/mymiwallet/site/current/app/Config/Paths.php:17
+Stack trace:
+#0 /home/mymiteam/mymiwallet/site/current/spark(91): require()
+#1 {main}
+  thrown in /home/mymiteam/mymiwallet/site/current/app/Config/Paths.php on line 17
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-17 16:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-17T16:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-17T16:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-17T16:00:01Z
+
+## Docs
+- Changed docs: 1
+- Total docs scanned: 1134
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1161
+- Docs with no code match candidates: 988
+
+## Stale Docs
+- Docs older than 60 days: 156
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-17 18:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-17T18:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-17T18:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-17T18:00:01Z
+
+## Docs
+- Changed docs: 1
+- Total docs scanned: 1135
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1161
+- Docs with no code match candidates: 988
+
+## Stale Docs
+- Docs older than 60 days: 156
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-17 20:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-17T20:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-17T20:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-17T20:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1135
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1161
+- Docs with no code match candidates: 988
+
+## Stale Docs
+- Docs older than 60 days: 156
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-17 22:00:02 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-17T22:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-17T22:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-17T22:00:02Z
+
+## Docs
+- Changed docs: 1
+- Total docs scanned: 1136
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1161
+- Docs with no code match candidates: 988
+
+## Stale Docs
+- Docs older than 60 days: 156
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-18 00:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-18T00:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-18T00:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-18T00:00:02Z
+
+## Docs
+- Changed docs: 1
+- Total docs scanned: 1136
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1161
+- Docs with no code match candidates: 988
+
+## Stale Docs
+- Docs older than 60 days: 156
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-18 02:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-18T02:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-18T02:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-18T02:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1136
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1161
+- Docs with no code match candidates: 988
+
+## Stale Docs
+- Docs older than 60 days: 156
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-18 04:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-18T04:00:02Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AiOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AiOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-18 06:00:02 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-18T06:00:02Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AiOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AiOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-18 08:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-18T08:00:01Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AiOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AiOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-18 10:00:02 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-18T10:00:02Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AiOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AiOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-18 12:00:01 UTC+00:00
+
+
+Fatal error: Type of App\Commands\AIOps\PriorityBuildCommand::$aiOpsRunnable must not be defined (as in class App\Commands\SafeBaseCommand) in /home/mymiteam/mymiwallet/site/current/app/Commands/AIOps/PriorityBuildCommand.php on line 13
+[ErrorException]
+Type of App\Commands\AIOps\PriorityBuildCommand::$aiOpsRunnable must not be defined (as in class App\Commands\SafeBaseCommand)
+at APPPATH/Commands/AIOps/PriorityBuildCommand.php:13
+
+Backtrace:
+  1    [internal function]
+       CodeIgniter\Debug\Exceptions()->shutdownHandler()
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-18 14:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-18T14:00:01Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-18 16:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-18T16:00:02Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-18 18:00:02 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-18T18:00:02Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-18 20:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-18T20:00:01Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-18 22:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-18T22:00:02Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-19 00:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-19T00:00:02Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-19 02:00:02 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-19T02:00:02Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-19 04:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-19T04:00:01Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-19 06:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-19T06:00:02Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-19 08:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-19T08:00:01Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-19 10:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-19T10:00:02Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-19 12:00:01 UTC+00:00
+
+[Error]
+Class "App\Command\Ops\SafeBaseCommand" not found
+at APPPATH/Commands/Ops/Work.php:12
+
+Backtrace:
+  1    VENDORPATH/composer/ClassLoader.php:576
+       include()
+
+  2    VENDORPATH/composer/ClassLoader.php:427
+       Composer\Autoload\{closure}('/home/mymiteam/mymiwallet/site/current/vendor/composer/../../app/Commands/Ops/Work.php')
+
+  3    [internal function]
+       Composer\Autoload\ClassLoader()->loadClass('App\\Commands\\Ops\\Work')
+
+  4    SYSTEMPATH/Autoloader/FileLocator.php:306
+       class_exists('App\\Commands\\Ops\\Work')
+
+  5    SYSTEMPATH/Autoloader/FileLocatorCached.php:97
+       CodeIgniter\Autoloader\FileLocator()->findQualifiedNameFromPath('/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/Work.php')
+
+  6    SYSTEMPATH/CLI/Commands.php:117
+       CodeIgniter\Autoloader\FileLocatorCached()->findQualifiedNameFromPath('/home/mymiteam/mymiwallet/site/current/app/Commands/Ops/Work.php')
+
+  7    SYSTEMPATH/CLI/Commands.php:51
+       CodeIgniter\CLI\Commands()->discoverCommands()
+
+  8    SYSTEMPATH/Config/Services.php:178
+       CodeIgniter\CLI\Commands()->__construct()
+
+  9    SYSTEMPATH/Config/BaseService.php:264
+       CodeIgniter\Config\Services::commands(false)
+
+ 10    SYSTEMPATH/Config/Services.php:175
+       CodeIgniter\Config\BaseService::getSharedInstance('commands')
+
+ 11    SYSTEMPATH/Config/BaseService.php:334
+       CodeIgniter\Config\Services::commands()
+
+ 12    SYSTEMPATH/Config/BaseService.php:203
+       CodeIgniter\Config\BaseService::__callStatic('commands', [])
+
+ 13    SYSTEMPATH/Common.php:1078
+       CodeIgniter\Config\BaseService::get('commands')
+
+ 14    SYSTEMPATH/CLI/Console.php:47
+       service('commands')
+
+ 15    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+ 16    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+ 17    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-19 14:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-19T14:00:01Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-19 16:00:02 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-19T16:00:02Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-19 18:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-19T18:00:02Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-19 20:00:02 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-19T20:00:02Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-19 22:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-19T22:00:01Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-20 00:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-20T00:00:01Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-20 02:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-20T02:00:02Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-20 04:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-20T04:00:01Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-20 06:00:02 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-20T06:00:02Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-20 08:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-20T08:00:01Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-20 10:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-20T10:00:02Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-20 12:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-20T12:00:01Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-20 14:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-20T14:00:02Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-20 16:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-20T16:00:02Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-20 18:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-20T18:00:02Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-20 20:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-20T20:00:01Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-20 22:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-20T22:00:01Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-21 00:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-21T00:00:01Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-21 02:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-21T02:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-21T02:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-21T02:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1142
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1164
+- Docs with no code match candidates: 993
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-21 04:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-21T04:00:02Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-21 06:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-21T06:00:01Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-21 08:00:02 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-21T08:00:02Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-21 10:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-21T10:00:01Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-21 12:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-21T12:00:01Z
+
+[Error]
+Class "App\Services\AiOps\OllamaPatchRunner" not found
+at APPPATH/Commands/AIOps/Run.php:87
+
+Backtrace:
+  1    SYSTEMPATH/CLI/Commands.php:74
+       App\Commands\AIOps\Run()->run([])
+
+  2    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run('aiops:run', [])
+
+  3    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+  4    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+  5    ROOTPATH/spark:99
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-21 14:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-21T14:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-21T14:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-21T14:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1148
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1164
+- Docs with no code match candidates: 993
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-21 16:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-21T16:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-21T16:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-21T16:00:02Z
+
+## Docs
+- Changed docs: 2
+- Total docs scanned: 1150
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1164
+- Docs with no code match candidates: 993
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-21 18:00:02 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-21T18:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-21T18:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-21T18:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1153
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1164
+- Docs with no code match candidates: 994
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-21 20:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-21T20:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-21T20:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-21T20:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1153
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1164
+- Docs with no code match candidates: 994
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-21 22:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-21T22:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-21T22:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-21T22:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1153
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1164
+- Docs with no code match candidates: 994
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-22 00:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-22T00:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-22T00:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-22T00:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1153
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1164
+- Docs with no code match candidates: 994
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-22 02:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-22T02:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-22T02:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-22T02:00:02Z
+
+## Docs
+- Changed docs: 1
+- Total docs scanned: 1154
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1164
+- Docs with no code match candidates: 994
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-22 04:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-22T04:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-22T04:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-22T04:00:01Z
+
+## Docs
+- Changed docs: 2
+- Total docs scanned: 1156
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1164
+- Docs with no code match candidates: 994
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-22 06:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-22T06:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-22T06:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-22T06:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1156
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1164
+- Docs with no code match candidates: 994
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-22 08:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-22T08:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-22T08:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-22T08:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1156
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1164
+- Docs with no code match candidates: 994
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-22 10:00:02 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-22T10:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-22T10:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-22T10:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1156
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1164
+- Docs with no code match candidates: 994
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-22 12:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-22T12:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-22T12:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-22T12:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1156
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1164
+- Docs with no code match candidates: 994
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-22 14:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-22T14:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-22T14:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-22T14:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1156
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1164
+- Docs with no code match candidates: 994
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-22 16:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-22T16:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-22T16:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-22T16:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1156
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1164
+- Docs with no code match candidates: 994
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-22 18:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-22T18:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-22T18:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-22T18:00:02Z
+
+## Docs
+- Changed docs: 3
+- Total docs scanned: 1159
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1164
+- Docs with no code match candidates: 997
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-22 20:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-22T20:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-22T20:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-22T20:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1159
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1164
+- Docs with no code match candidates: 997
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-22 22:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-22T22:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-22T22:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-22T22:00:01Z
+
+## Docs
+- Changed docs: 8
+- Total docs scanned: 1167
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1166
+- Docs with no code match candidates: 1003
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-23 00:00:02 UTC+00:00
+
+
+Fatal error: Uncaught Error: Class "Config\MyMIDBLoggerHandler" not found in /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Log/Logger.php:261
+Stack trace:
+#0 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Common.php(817): CodeIgniter\Log\Logger->log('critical', 'Error: Class "C...', Array)
+#1 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Debug/Exceptions.php(123): log_message('critical', 'Error: {message...', Array)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(Error))
+#3 {main}
+  thrown in /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Log/Logger.php on line 261
+
+Fatal error: Uncaught Error: Class "Config\MyMIDBLoggerHandler" not found in /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Log/Logger.php:261
+Stack trace:
+#0 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Common.php(817): CodeIgniter\Log\Logger->log('critical', 'ErrorException:...', Array)
+#1 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Debug/Exceptions.php(123): log_message('critical', 'ErrorException:...', Array)
+#2 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Debug/Exceptions.php(306): CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#4 {main}
+  thrown in /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Log/Logger.php on line 261
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-23 02:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-23T02:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-23T02:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-23T02:00:01Z
+
+## Docs
+- Changed docs: 7
+- Total docs scanned: 1174
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1003
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-23 04:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-23T04:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-23T04:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-23T04:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1174
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1003
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-23 06:00:02 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-23T06:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-23T06:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-23T06:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1174
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1003
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-23 08:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-23T08:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-23T08:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-23T08:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1174
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1003
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-23 10:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-23T10:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-23T10:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-23T10:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1174
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1003
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-23 12:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-23T12:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-23T12:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-23T12:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1174
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1003
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-23 14:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-23T14:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-23T14:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-23T14:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1174
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1003
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-23 16:00:02 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-23T16:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-23T16:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-23T16:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1174
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1003
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-23 18:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-23T18:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-23T18:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-23T18:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1174
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1003
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-23 20:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-23T20:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-23T20:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-23T20:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1174
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1003
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-23 22:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-23T22:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-23T22:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-23T22:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1174
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1003
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-24 00:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-24T00:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-24T00:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-24T00:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1174
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1003
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-24 02:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-24T02:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-24T02:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-24T02:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1174
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1003
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-24 04:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-24T04:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-24T04:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-24T04:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1174
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1003
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-24 06:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-24T06:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-24T06:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-24T06:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1174
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1003
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-24 08:00:02 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-24T08:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-24T08:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-24T08:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1174
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1003
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-24 10:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-24T10:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-24T10:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-24T10:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1174
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1003
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-24 12:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-24T12:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "files_touched": [],
+    "violations": [
+        "Output did not start with \"diff --git\""
+    ],
+    "model": "qwen2.5-coder:3b",
+    "status": "failed_invalid_diff",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-24T12:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-24T12:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1174
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1003
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-24 14:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-24T14:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "audit": {
+        "ok": false,
+        "issues": [
+            "Ollama endpoint unreachable"
+        ],
+        "endpoint": "http://127.0.0.1:11434/api/generate",
+        "model": "qwen2.5-coder:3b",
+        "timeout": 120,
+        "token_limit": 2048,
+        "memory_limit_mb": 512,
+        "reachable": false
+    },
+    "status": "failed_ollama_config",
+    "job_id": "README",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-24T14:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-24T14:00:02Z
+
+## Docs
+- Changed docs: 1
+- Total docs scanned: 1175
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1004
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-24 16:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-24T16:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "audit": {
+        "ok": false,
+        "issues": [
+            "Ollama endpoint unreachable"
+        ],
+        "endpoint": "http://127.0.0.1:11434/api/generate",
+        "model": "qwen2.5-coder:3b",
+        "timeout": 120,
+        "token_limit": 2048,
+        "memory_limit_mb": 512,
+        "reachable": false
+    },
+    "status": "failed_ollama_config",
+    "job_id": "README",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-24T16:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-24T16:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1175
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1004
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-24 18:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-24T18:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "audit": {
+        "ok": false,
+        "issues": [
+            "Ollama endpoint unreachable"
+        ],
+        "endpoint": "http://127.0.0.1:11434/api/generate",
+        "model": "qwen2.5-coder:3b",
+        "timeout": 120,
+        "token_limit": 2048,
+        "memory_limit_mb": 512,
+        "reachable": false
+    },
+    "status": "failed_ollama_config",
+    "job_id": "README",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-24T18:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-24T18:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1175
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1004
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-24 20:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-24T20:00:01Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "audit": {
+        "ok": false,
+        "issues": [
+            "Ollama endpoint unreachable"
+        ],
+        "endpoint": "http://127.0.0.1:11434/api/generate",
+        "model": "qwen2.5-coder:3b",
+        "timeout": 120,
+        "token_limit": 2048,
+        "memory_limit_mb": 512,
+        "reachable": false
+    },
+    "status": "failed_ollama_config",
+    "job_id": "README",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-24T20:00:03+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-24T20:00:01Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1175
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1004
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-02-24 22:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-02-24T22:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "audit": {
+        "ok": false,
+        "issues": [
+            "Ollama endpoint unreachable"
+        ],
+        "endpoint": "http://127.0.0.1:11434/api/generate",
+        "model": "qwen2.5-coder:3b",
+        "timeout": 120,
+        "token_limit": 2048,
+        "memory_limit_mb": 512,
+        "reachable": false
+    },
+    "status": "failed_ollama_config",
+    "job_id": "README",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-24T22:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-02-24T22:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1175
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1169
+- Docs with no code match candidates: 1004
+
+## Stale Docs
+- Docs older than 60 days: 185
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+

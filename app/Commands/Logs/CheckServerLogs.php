@@ -13,7 +13,7 @@ class CheckServerLogs extends SafeBaseCommand
 
     public function run(array $params)
     {
-        $path = '/home/mymiteam/logs/mymiwallet/https/error.log';
+        $path = rtrim($_SERVER['HOME'] ?? getenv('HOME'), '/') . '/logs/mymiwallet.com/https/error.log';
 
         if (!file_exists($path)) {
             CLI::error('Server error.log not found.');

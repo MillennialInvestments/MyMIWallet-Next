@@ -30,7 +30,7 @@ class ErrorPatternLearnerService
         // Take newest consolidated items (you already have fingerprint/category/error_type)
         // If you add a "pattern_id" later to consolidated table, we can exclude already-learned.
         $consolidated = $db->query("
-            SELECT id, fingerprint, category, error_type, message_sample, occurrence_count, last_seen, created_at
+            SELECT id, fingerprint, category, error_type, sample_message, occurrence_count, last_seen, created_at
             FROM bf_error_consolidated_logs
             ORDER BY last_seen DESC
             LIMIT {$limit}
@@ -51,14 +51,14 @@ class ErrorPatternLearnerService
                 'fingerprint' => $fingerprint,
                 'category' => $row['category'] ?? null,
                 'error_type' => $row['error_type'] ?? null,
-                'example_message' => $row['message_sample'] ?? null,
+                'example_message' => $row['sample_message'] ?? null,
                 'occurrence_count' => (int)($row['occurrence_count'] ?? 0),
                 'first_seen' => $row['created_at'] ?? null,
                 'last_seen' => $row['last_seen'] ?? null,
             ];
 
             // Deterministic baseline classification
-            $baseline = $this->baselineInference((string)($row['message_sample'] ?? ''), (string)($row['category'] ?? ''), (string)($row['error_type'] ?? ''));
+            $baseline = $this->baselineInference((string)($row['sample_message'] ?? ''), (string)($row['category'] ?? ''), (string)($row['error_type'] ?? ''));
 
             $data = array_merge($payload, $baseline);
 
@@ -150,13 +150,13 @@ class ErrorPatternLearnerService
         $fingerprint = (string)($row['fingerprint'] ?? '');
         $category = (string)($row['category'] ?? '');
         $type = (string)($row['error_type'] ?? '');
-        $msg = (string)($row['message_sample'] ?? '');
+        $msg = (string)($row['sample_message'] ?? '');
 
         return "You are an expert CI4/PHP observability assistant.\n".
             "Given this consolidated error signature, output strict JSON with keys:\n".
             "severity (LOW|MEDIUM|HIGH|CRITICAL), title, summary, likely_root_cause, suggested_fix,\n".
             "controllers (array), services (array), tags (array).\n\n".
-            "fingerprint: {$fingerprint}\ncategory: {$category}\nerror_type: {$type}\nmessage_sample: {$msg}\n";
+            "fingerprint: {$fingerprint}\ncategory: {$category}\nerror_type: {$type}\nsample_message: {$msg}\n";
     }
 
     private function ollamaGenerate(string $prompt): array

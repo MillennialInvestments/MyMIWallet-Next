@@ -1,0 +1,9 @@
+{
+    "command": "config:clear",
+    "timestamp": "20260222-230452",
+    "dry_run": true,
+    "emit": "docs",
+    "cache_dir": "/home/mymiteam/mymiwallet/site/current/writable/cache",
+    "targets": [],
+    "deleted": []
+}

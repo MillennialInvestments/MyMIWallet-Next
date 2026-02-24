@@ -1,0 +1,8 @@
+{
+    "file_candidates": [
+        "app/Services/Scanning/ScannerAlertBridge.php",
+        "app/Controllers/",
+        "app/Services/"
+    ],
+    "notes": "Heuristic inference only; AIOps/Ollama should confirm exact file placements."
+}

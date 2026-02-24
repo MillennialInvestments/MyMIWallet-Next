@@ -1,0 +1,20 @@
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "audit": {
+        "ok": false,
+        "issues": [
+            "Ollama endpoint unreachable"
+        ],
+        "endpoint": "http://127.0.0.1:11434/api/generate",
+        "model": "qwen2.5-coder:3b",
+        "timeout": 120,
+        "token_limit": 2048,
+        "memory_limit_mb": 512,
+        "reachable": false
+    },
+    "status": "failed_ollama_config",
+    "job_id": "README",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-02-24T22:00:04+00:00"
+}

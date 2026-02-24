@@ -1,0 +1,201 @@
+# AIOPS INGEST JOB #6
+
+## Goal
+Analyze the instruction and produce minimal CI4-compatible code changes.
+
+## Governance Context
+- Risk Level: HIGH
+- Governance Score: 75
+- Manual Review Required: YES
+
+## Targeting Hints (best-effort)
+- app/Config/Logger.php
+- app/Commands/Ops/Work.php
+- app/Config/Routes.php
+- app/Log/Handlers/DatabaseLoggerHandler.php
+- app/Commands/
+- app/Controllers/
+- app/Services/AIOps/
+- app/Views/
+- app/Config/Cache.php
+
+
+## Output Contract (STRICT)
+Write outputs into:
+- docs/_aiops/pr_ready/6/
+Include:
+- pr.md (title, summary, rationale, rollback, tests)
+- patch/ (full replacement files OR unified diffs per file)
+- risks.md
+- tests.md
+
+## Instruction
+AIOPS_PATCH_JOB_TITLE=2026-02-23_LOG_CRITICAL_AND_WARNING_REMEDIATION
+AIOPS_OBJECTIVE=Eliminate_CRITICAL_logger_boot_failures_fix_database_schema_mismatch_patch_deprecated_str_starts_with_usage_reduce_PageNotFoundException_noise_and_remove_test_logger_spam
+
+SCOPE_OF_WORK:
+1_FIX_MISSING_LOGGER_HANDLER_CLASSES
+2_FIX_UNKNOWN_COLUMN_COUNT_IN_BF_ERROR_CONSOLIDATED_LOGS
+3_PATCH_STR_STARTS_WITH_NULL_DEPRECATION
+4_REMOVE_LOGGER_TEST_DEBUG_AND_ERROR_SPAM
+5_REDUCE_404_ROUTE_MISS_NOISE_WITH_FALLBACK_OR_ROUTE_FIX
+6_FIX_MYMIDBLOGGER_HANDLER_NAMESPACE_MISMATCH
+7_INVESTIGATE_AND_PREVENT_MEMORY_EXHAUSTION
+
+TASK_1_FIX_LOGGER_HANDLER_CLASS_NOT_FOUND_CRITICAL
+
+ROOT_CAUSE:
+Config\MyMIDBLoggerHandler_and_App\Libraries\Logging\MyMIDBLoggerHandler_not_found_but_referenced_by_Config\Logger_or_bootstrap
+
+ACTIONS:
+1_SEARCH_FOR_ALL_REFERENCES_TO:
+
+Config\MyMIDBLoggerHandler
+
+App\Libraries\Logging\MyMIDBLoggerHandler
+
+2_STANDARDIZE_TO_SINGLE_HANDLER:
+App\Log\Handlers\DatabaseLoggerHandler
+
+3_UPDATE_FILE:
+app/Config/Logger.php
+
+ENSURE_HANDLER_CONFIG_MATCHES:
+DatabaseLoggerHandler::class => [
+'class' => \App\Log\Handlers\DatabaseLoggerHandler::class,
+'levels' => ['critical','error','warning','info','debug'],
+'handles' => ['critical','error','warning','info','debug'],
+]
+
+4_REMOVE_ANY_REFERENCE_TO_Config\MyMIDBLoggerHandler
+5_REMOVE_ANY_REFERENCE_TO_App\Libraries\Logging\MyMIDBLoggerHandler
+6_RUN_PSR4_NAMESPACE_AUDIT_AND_FIX_USE_STATEMENTS
+7_CLEAR_CONFIG_AND_CACHE_AFTER_PATCH
+
+TASK_2_FIX_UNKNOWN_COLUMN_COUNT_IN_BF_ERROR_CONSOLIDATED_LOGS
+
+ROOT_CAUSE:
+INSERT_REFERENCES_column_count_not_present_in_table
+
+GENERATE_mysql.md_WITH_RAW_SQL_ONLY:
+
+ALTER_TABLE_bf_error_consolidated_logs_ADD_COLUMN_count:
+
+ALTER TABLE bf_error_consolidated_logs
+ADD COLUMN count INT NOT NULL DEFAULT 1 AFTER type;
+
+IF_TABLE_DOES_NOT_MATCH_EXPECTED_STRUCTURE_REBUILD_WITH:
+
+CREATE TABLE IF NOT EXISTS bf_error_consolidated_logs (
+id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+normalized_message TEXT NOT NULL,
+sample_message TEXT NULL,
+category VARCHAR(255) NULL,
+type VARCHAR(50) NULL,
+count INT NOT NULL DEFAULT 1,
+first_seen_at DATETIME NULL,
+last_seen_at DATETIME NULL,
+created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+TASK_3_PATCH_DEPRECATED_STR_STARTS_WITH_NULL
+
+FILE:
+app/Commands/Ops/Work.php
+LINE_APPROX:114
+
+REPLACE_ANY:
+str_starts_with(,'--')
+
+WITH_NULL_SAFE_PATTERN:
+
+if (is_string() && str_starts_with(,'--')) {
+...
+}
+
+OR_USE_COALESCE:
+
+if (str_starts_with((string)( ?? ''),'--')) {
+...
+}
+
+ENSURE_NO_NULL_IS_PASSED_TO_STR_STARTS_WITH
+
+TASK_4_REMOVE_LOGGER_TEST_SPAM
+
+SEARCH_AND_REMOVE_ALL_LOG_MESSAGE_CALLS_CONTAINING:
+LOGGER TEST DEBUG
+LOGGER TEST ERROR
+
+ENSURE_NO_TEST_LOGS_EXIST_IN_PRODUCTION_PATHS
+CONFIRM_NO_CRON_OR_CONTROLLER_IS_EMITTING_TEST_LOGS
+
+TASK_5_REDUCE_PAGE_NOT_FOUND_CRITICAL_NOISE
+
+ROOT_CAUSE:
+Unmapped_routes_and_missing_aliases
+
+ACTIONS:
+1_AUDIT_app/Config/Routes.php
+2_ADD_ROUTES_FOR:
+Legal/Privacy-Policy
+Legal/Terms-And-Conditions
+Customer-Support
+Investments/News
+Profile
+
+OR_CREATE_FALLBACK_REDIRECTS_TO:
+SupportController::index
+
+ENSURE_404_HANDLER_DOES_NOT_THROW_CRITICAL
+CONFIRM_custom_error_views_do_not_log_CRITICAL_on_expected_404
+
+TASK_6_FIX_MYMIDBLOGGER_HANDLER_NAMESPACE
+
+VERIFY_FILE_EXISTS:
+app/Log/Handlers/DatabaseLoggerHandler.php
+
+CONFIRM_NAMESPACE:
+namespace App\Log\Handlers;
+
+ENSURE_AUTLOAD_PSR4_MATCHES_APP_NAMESPACE
+RUN_COMPOSER_DUMP_AUTOLOAD_IF_NEEDED
+
+TASK_7_MEMORY_EXHAUSTION_PREVENTION
+
+ROOT_CAUSE:
+Likely_large_log_aggregation_or_recursive_logger_boot_failure
+
+ACTIONS:
+1_CONFIRM_LOGGER_HANDLER_DOES_NOT_TRIGGER_LOG_WITHIN_ITSELF
+2_WRAP_DB_LOG_INSERT_IN_TRY_CATCH_AND_PREVENT_RECURSIVE_LOGGING
+3_LIMIT_LOG_PAYLOAD_SIZE_BEFORE_INSERT
+4_TRUNCATE_MESSAGE_FIELD_TO_5000_CHARACTERS
+5_VERIFY_MEMORY_LIMIT_NOT_EXCEEDED_BY_CONSOLIDATION_QUERY
+6_ADD_BATCH_LIMIT_TO_logs_consolidate_COMMAND
+
+POST_PATCH_VALIDATION_STEPS
+
+php spark config:clear
+php spark cache:clear
+php spark routes
+php spark logs:summarize
+php spark app:healthcheck
+
+VERIFY:
+NO_Class_not_found_CRITICAL
+NO_Unknown_column_count_ERROR
+NO_str_starts_with_deprecation_WARNING
+NO_LOGGER_TEST_spam
+404s_only_WARNING_not_CRITICAL
+NO_memory_exhaustion
+
+PRIORITY_ORDER:
+1_LOGGER_CLASS_FIX
+2_DATABASE_SCHEMA_FIX
+3_STR_STARTS_WITH_PATCH
+4_REMOVE_TEST_LOGS
+5_ROUTE_AUDIT
+6_MEMORY_HARDENING
+
+END_OF_PATCH_JOB

@@ -73,6 +73,7 @@ class Console extends BaseConfig
         \App\Commands\AiOps\Alerts\Worker::class,
         \App\Commands\AiOps\API\SchemeValidate::class,
         \App\Commands\AiOps\DB\SlowScan::class,
+        \App\Commands\AiOps\Forms\TestScan::class,
         \App\Commands\AiOps\N8n\Logs::class,
         \App\Commands\AiOps\N8n\Restart::class,
         \App\Commands\AiOps\N8n\Start::class,

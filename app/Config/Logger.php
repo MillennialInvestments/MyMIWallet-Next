@@ -2,22 +2,23 @@
 
 namespace Config;
 
-use App\Log\Handlers\DatabaseLoggerHandler;
-use App\Log\Handlers\UnifiedLoggerHandler;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Log\Handlers\FileHandler;
+use App\Log\Handlers\MyMIDBLoggerHandler;
+use App\Log\Handlers\DatabaseLoggerHandler;
+use App\Log\Handlers\UnifiedLoggerHandler;
 
 class Logger extends BaseConfig
 {
-    // public int|string|array $threshold = (ENVIRONMENT === 'production') ? 9 : 9;
     public int|string|array $threshold = 9;
 
     public string $dateFormat = 'Y-m-d H:i:s';
 
     public array $handlers = [
+
         FileHandler::class => [
             'class' => FileHandler::class,
-            'handles' => ['debug', 'info', 'warning', 'error', 'critical'], // lightweight only
+            'handles' => ['debug','info','notice','warning','error','critical','alert','emergency'],
             'path' => WRITEPATH . 'logs/',
             'fileExtension' => 'php',
             'filePermissions' => 0664,
@@ -25,22 +26,17 @@ class Logger extends BaseConfig
 
         MyMIDBLoggerHandler::class => [
             'class' => MyMIDBLoggerHandler::class,
-            'handles' => ['critical', 'error', 'warning'], // production alerts
-            'fallbackPath' => WRITEPATH . 'logs/',
-            'fileExtension' => 'php',
-            'filePermissions' => 0664,
+            'handles' => ['warning','error','critical','alert','emergency'],
         ],
 
         DatabaseLoggerHandler::class => [
             'class' => DatabaseLoggerHandler::class,
-            'handles' => ['critical', 'error', 'warning'], // production alerts
-            'fallbackPath' => WRITEPATH . 'logs/',
+            'handles' => [],
         ],
 
         UnifiedLoggerHandler::class => [
             'class' => UnifiedLoggerHandler::class,
-            'handles' => [], // disable until audited
+            'handles' => [],
         ],
-
     ];
 }

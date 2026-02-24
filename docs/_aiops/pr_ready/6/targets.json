@@ -1,0 +1,14 @@
+{
+    "file_candidates": [
+        "app/Config/Logger.php",
+        "app/Commands/Ops/Work.php",
+        "app/Config/Routes.php",
+        "app/Log/Handlers/DatabaseLoggerHandler.php",
+        "app/Commands/",
+        "app/Controllers/",
+        "app/Services/AIOps/",
+        "app/Views/",
+        "app/Config/Cache.php"
+    ],
+    "notes": "Heuristic inference only; AIOps/Ollama should confirm exact file placements."
+}

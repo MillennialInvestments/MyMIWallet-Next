@@ -1,4 +1,5 @@
 /writable/*
+!/writable/logs
 !/writable/.htaccess
 !/writable/index.html
 /public/writable/
@@ -43,6 +44,7 @@ app/Config/APIs.php
 scripts/social_output/
 scripts/social_input.json
 writable/logs/deploy-*.log
+!writable/logs/summary-*.log
 application/helpers/squeeze_helper.php
 application/libraries/MyMISqueeze.php
 application/modules/investments/controllers/API_Squeeze.php
