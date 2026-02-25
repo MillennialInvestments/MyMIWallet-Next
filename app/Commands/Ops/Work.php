@@ -106,15 +106,15 @@ class Work extends SafeBaseCommand
     {
         $value = $default;
         foreach ($params as $index => $param) {
-            $param = is_string($param) ? $param : (string) ($param ?? '');
+            $haystack = (string) ($param ?? '');
 
-            if ($param === '--' . $key && isset($params[$index + 1])) {
+            if ($haystack === '--' . $key && isset($params[$index + 1])) {
                 $value = (int) $params[$index + 1];
                 continue;
             }
 
-            if ($param !== '' && str_starts_with($param, '--' . $key . '=')) {
-                $value = (int) substr($param, strlen('--' . $key . '='));
+            if ($haystack !== '' && str_starts_with($haystack, '--' . $key . '=')) {
+                $value = (int) substr($haystack, strlen('--' . $key . '='));
             }
         }
 

@@ -393,6 +393,10 @@ class BudgetController extends UserController
         if ($userId === null) {
             return $this->respondUnauthorized('Authentication required to manage budget accounts.');
         }
+
+        if (! $this->request->isAJAX()) {
+            return redirect()->to('/Budget');
+        }
  
         $post = $this->request->getPost();
         $json = $this->request->getJSON(true);
@@ -405,14 +409,24 @@ class BudgetController extends UserController
         }
 
         if (!is_array($post) || $post === []) {
-            return $this->respondFailure('Invalid request payload.', 400);
+            return $this->response->setStatusCode(422)->setJSON([
+                'status' => 'error',
+                'errors' => [
+                    'payload' => 'Invalid request payload.',
+                ],
+            ]);
         }
 
         $json = $post;
 
         if (isset($json['user_id']) && (int) $json['user_id'] !== $userId) {
             $this->logSecurityEvent('accountManager', 'User ID mismatch detected during payload validation.', $userId, $json);
-            return $this->respondFailure('User mismatch detected for this session.', 403);
+            return $this->response->setStatusCode(422)->setJSON([
+                'status' => 'error',
+                'errors' => [
+                    'user_id' => 'User mismatch detected for this session.',
+                ],
+            ]);
         }
 
         $status     = 1;
@@ -522,16 +536,21 @@ class BudgetController extends UserController
                             'budget',
                             $userId > 0 ? 'user:' . $userId : null,
                         ]));
-                        $responseData = [
-                            'accountID'        => $insertedID,
-                            'recurringAccount' => $accountData['recurring_account'],
-                            'dueDateEstimated' => $dueDateEstimated,
-                        ];
                         session()->setFlashdata('message', 'Budget record added successfully.');
                         session()->setFlashdata('alert-class', 'success');
-                        return $this->respondSuccess($responseData, false, 'Budget record created.', 201);
+                        $accountId = $insertedID;
+
+                        return $this->response->setJSON([
+                            'status' => 'success',
+                            'accountID' => $accountId,
+                        ]);
                     }
-                    return $this->respondFailure('Unable to create the budget record.', 500);              
+                    return $this->response->setStatusCode(422)->setJSON([
+                        'status' => 'error',
+                        'errors' => [
+                            'account' => 'Unable to create the budget record.',
+                        ],
+                    ]);
         
                 case 'Edit':
                     $accountId = isset($json['account_id']) ? (int) $json['account_id'] : 0;
@@ -545,17 +564,20 @@ class BudgetController extends UserController
                             'budget',
                             $userId > 0 ? 'user:' . $userId : null,
                         ]));
-                        $responseData = [
-                            'accountID'        => $accountId,
-                            'recurringAccount' => $accountData['recurring_account'],
-                            'dueDateEstimated' => $dueDateEstimated,
-                        ];
                         session()->setFlashdata('message', 'Budget record updated successfully.');
                         session()->setFlashdata('alert-class', 'success');
-                        return $this->respondSuccess($responseData, false, 'Budget record updated.');
+                        return $this->response->setJSON([
+                            'status' => 'success',
+                            'accountID' => $accountId,
+                        ]);
                     }
 
-                    return $this->respondFailure('Unable to update the budget record.', 500);
+                    return $this->response->setStatusCode(422)->setJSON([
+                        'status' => 'error',
+                        'errors' => [
+                            'account' => 'Unable to update the budget record.',
+                        ],
+                    ]);
         
                  case 'Copy':
                     $insertedID = (int) $this->budgetService->save($accountData);
@@ -564,27 +586,47 @@ class BudgetController extends UserController
                             'budget',
                             $userId > 0 ? 'user:' . $userId : null,
                         ]));
-                        $responseData = [
-                            'accountID'        => $insertedID,
-                            'recurringAccount' => $accountData['recurring_account'],
-                            'dueDateEstimated' => $dueDateEstimated,
-                        ];
-                        return $this->respondSuccess($responseData, false, 'Budget record duplicated.', 201);
+                        $accountId = $insertedID;
+
+                        return $this->response->setJSON([
+                            'status' => 'success',
+                            'accountID' => $accountId,
+                        ]);
                     }
 
-                    return $this->respondFailure('Unable to duplicate the budget record.', 500);
+                    return $this->response->setStatusCode(422)->setJSON([
+                        'status' => 'error',
+                        'errors' => [
+                            'account' => 'Unable to duplicate the budget record.',
+                        ],
+                    ]);
 
                 default:
                     session()->setFlashdata('message', 'There was an error submitting your changes. Contact support by clicking <a href="' . site_url('/Support') . '">here!</a>');
                     session()->setFlashdata('alert-class', 'danger');
-                    return $this->respondFailure('Invalid form mode supplied.', 400);
+                    return $this->response->setStatusCode(422)->setJSON([
+                        'status' => 'error',
+                        'errors' => [
+                            'form_mode' => 'Invalid form mode supplied.',
+                        ],
+                    ]);
             }
         } catch (\UnexpectedValueException $e) {
             log_message('debug', 'BudgetController::accountManager recurring validation failed: ' . $e->getMessage());
-            return $this->respondFailure($e->getMessage(), 422);
+            return $this->response->setStatusCode(422)->setJSON([
+                'status' => 'error',
+                'errors' => [
+                    'validation' => $e->getMessage(),
+                ],
+            ]);
         } catch (\Throwable $e) {
             $this->logException('accountManager', $e, $userId, ['payloadKeys' => array_keys($json)]);
-            return $this->respondFailure('An unexpected error occurred while processing the account.', 500);
+            return $this->response->setStatusCode(422)->setJSON([
+                'status' => 'error',
+                'errors' => [
+                    'server' => 'An unexpected error occurred while processing the account.',
+                ],
+            ]);
         }
     }
 
