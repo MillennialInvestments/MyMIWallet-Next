@@ -18,3 +18,22 @@ AIOPS_OBJECTIVE=Autotest_form_submission_capture_logs_and_generate_patch_PR
 ## Generated Payload
 ```json
 {}
+```
+
+## Submission Result
+- final_url: ...
+- status: ...
+
+## Response Headers (partial)
+...
+
+## Response Body (partial)
+...
+
+## Logs Snapshot (partial)
+...
+
+## Fix Instructions
+- Identify the controller+method handling this route.
+- Reproduce failure using payload above.
+- Apply the minimal corrective patch.

@@ -321,7 +321,7 @@ class Services extends CoreServices
             return static::getSharedInstance('formIntelligenceService');
         }
 
-        return new \App\Services\AIOps\FormIntelligenceService();
+        return new \App\Services\AiOps\FormIntelligenceService();
     }
     
     public static function formPatchPlanner($getShared = true)
@@ -330,16 +330,16 @@ class Services extends CoreServices
             return static::getSharedInstance('formPatchPlanner');
         }
 
-        return new \App\Services\AIOps\FormPatchPlannerService();
+        return new \App\Services\AiOps\FormPatchPlanner();
     }
     
-    public static function formTextExecutor($getShared = true)
+    public static function formTestExecutor($getShared = true)
     {
         if ($getShared) {
-            return static::getSharedInstance('formTextExecutor');
+            return static::getSharedInstance('formTestExecutor');
         }
 
-        return new \App\Services\AIOps\FormTextExecutorService();
+        return new \App\Services\AiOps\FormTestExecutor();
     }
 
     public static function scannerCacheLayer(bool $getShared = true): CacheLayer
