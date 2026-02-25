@@ -2,13 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App\Commands\Ollama;
+namespace App\Commands\Ollama\Logs;
 
-class Logs extends BaseOllamaCommand
+use App\Commands\Ollama\BaseOllamaCommand;
+
+class Tail extends BaseOllamaCommand
 {
-    protected $name = 'ollama:logs';
-    protected $description = 'Backward-compatible alias of ollama:logs:tail.';
-    protected $options = ['--tail' => 'Lines', '--file' => 'File', '--json' => 'JSON output'];
+    protected $name = 'ollama:logs:tail';
+    protected $description = 'Tail app-captured Ollama logs from file.';
+    protected $options = [
+        '--tail' => 'Number of lines',
+        '--file' => 'Override log file',
+        '--json' => 'JSON output',
+    ];
 
     public function run(array $params)
     {
@@ -29,6 +35,12 @@ class Logs extends BaseOllamaCommand
         $lines = array_slice($all, -1 * $tail);
         $matches = array_values(array_filter($lines, static fn ($line) => stripos($line, 'ollama') !== false));
 
-        return $this->emitPayload(['status' => 'ok', 'file' => $file, 'lines' => $matches], $flags, EXIT_SUCCESS);
+        return $this->emitPayload([
+            'status' => 'ok',
+            'file' => $file,
+            'tail' => $tail,
+            'matched_count' => count($matches),
+            'lines' => $matches,
+        ], $flags, EXIT_SUCCESS);
     }
 }

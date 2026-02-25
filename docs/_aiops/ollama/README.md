@@ -21,6 +21,9 @@ Structured exit codes:
 - `php spark ollama:version --json=1`
 - `php spark ollama:ping --retries=3 --sleep-ms=250 --json=1`
 - `php spark ollama:diagnose --json=1 --include-env=1`
+- `php spark ollama:doctor --json=1 --include-env=1`
+- `php spark ollama:logs:tail --tail=200 --json=1`
+- `php spark ollama:logs:export --limit=100 --json=1`
 
 ### Model lifecycle
 - `php spark ollama:models:list --json=1`
@@ -29,6 +32,7 @@ Structured exit codes:
 - `php spark ollama:models:rm llama3.2:latest --force=1 --json=1`
 - `php spark ollama:models:prune --keep=llama3.2:latest,mxbai-embed-large:latest --json=1`
 - `php spark ollama:models:ensure --profile=aiops --json=1`
+- `php spark ollama:models:diff --profile=aiops --json=1`
 
 ### Inference
 - `php spark ollama:generate --model=llama3.2:latest --prompt="ping" --json=1`

@@ -16,8 +16,8 @@ class Generate extends BaseOllamaCommand
     {
         [, $flags] = $this->parseParams($params);
         $cfg = config(Ollama::class);
-        $model = $this->optString($flags, 'model', $cfg->defaultChatModel);
-        $prompt = $this->optString($flags, 'prompt', '');
+        $model = trim((string) $this->option('model', $this->optString($flags, 'model', $cfg->defaultChatModel)));
+        $prompt = trim((string) $this->option('prompt', $this->optString($flags, 'prompt', '')));
         if ($prompt === '') {
             return $this->emitPayload(['error' => 'Missing --prompt'], $flags, self::EXIT_ERROR);
         }
@@ -28,11 +28,11 @@ class Generate extends BaseOllamaCommand
             $payload = [
                 'model' => $model,
                 'prompt' => $prompt,
-                'stream' => $this->optBool($flags, 'stream', false),
+                'stream' => in_array(strtolower((string) $this->option('stream', $this->optString($flags, 'stream', '0'))), ['1', 'true', 'yes', 'on'], true),
                 'options' => [
-                    'temperature' => (float) $this->optString($flags, 'temperature', '0.2'),
-                    'top_p' => (float) $this->optString($flags, 'top-p', '0.9'),
-                    'num_predict' => $this->optInt($flags, 'max-tokens', $cfg->maxTokens),
+                    'temperature' => (float) $this->option('temperature', $this->optString($flags, 'temperature', '0.2')),
+                    'top_p' => (float) $this->option('top-p', $this->optString($flags, 'top-p', '0.9')),
+                    'num_predict' => (int) $this->option('max-tokens', (string) $this->optInt($flags, 'max-tokens', $cfg->maxTokens)),
                 ],
             ];
             $res = $this->client()->generate($payload, $this->resolveBaseUrl($flags), $this->resolveTimeout($flags));

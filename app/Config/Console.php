@@ -171,6 +171,7 @@ class Console extends BaseConfig
         \App\Commands\Ollama\Version::class,
         \App\Commands\Ollama\Ping::class,
         \App\Commands\Ollama\Diagnose::class,
+        \App\Commands\Ollama\Doctor::class,
         \App\Commands\Ollama\Models\ListModels::class,
         \App\Commands\Ollama\Models\ShowModel::class,
         \App\Commands\Ollama\Models\PullModel::class,
@@ -187,7 +188,10 @@ class Console extends BaseConfig
         \App\Commands\Ollama\Docs\Sync::class,
 
         \App\Commands\Ollama\Logs::class,
+        \App\Commands\Ollama\Logs\Tail::class,
+        \App\Commands\Ollama\Logs\Export::class,
         \App\Commands\Ollama\Models\ExportModels::class,
+        \App\Commands\Ollama\Models\DiffModels::class,
         \App\Commands\Ollama\Stream::class,
         \App\Commands\Ollama\Bench::class,
         \App\Commands\Ollama\EmbedFile::class,
