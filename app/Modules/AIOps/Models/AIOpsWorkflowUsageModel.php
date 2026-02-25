@@ -2,9 +2,9 @@
 
 namespace App\Modules\AIOps\Models;
 
-use CodeIgniter\Model;
+use App\Models\ObservedModel;
 
-class AIOpsWorkflowUsageModel extends Model
+class AIOpsWorkflowUsageModel extends ObservedModel
 {
     protected $table         = 'bf_aiops_workflow_usage';
     protected $primaryKey    = 'workflow_id';

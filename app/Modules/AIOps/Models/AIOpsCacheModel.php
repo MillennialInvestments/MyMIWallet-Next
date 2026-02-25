@@ -2,9 +2,9 @@
 
 namespace App\Modules\AIOps\Models;
 
-use CodeIgniter\Model;
+use App\Models\ObservedModel;
 
-class AIOpsCacheModel extends Model
+class AIOpsCacheModel extends ObservedModel
 {
     protected $table         = 'bf_aiops_cache';
     protected $primaryKey    = 'id';

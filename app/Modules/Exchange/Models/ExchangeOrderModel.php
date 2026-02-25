@@ -1,12 +1,12 @@
 <?php
 namespace App\Modules\Exchange\Models;
 
-use CodeIgniter\Model;
+use App\Models\ObservedModel;
 
 /**
  * Placeholder model for exchange orders.
  */
-class ExchangeOrderModel extends Model
+class ExchangeOrderModel extends ObservedModel
 {
     protected $table      = 'exchange_orders';
     protected $primaryKey = 'id';

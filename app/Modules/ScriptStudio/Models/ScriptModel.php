@@ -1,9 +1,9 @@
 <?php
 namespace App\Modules\ScriptStudio\Models;
 
-use CodeIgniter\Model;
+use App\Models\ObservedModel;
 
-class ScriptModel extends Model
+class ScriptModel extends ObservedModel
 {
     protected $table            = 'bf_script_studio';
     protected $primaryKey       = 'id';

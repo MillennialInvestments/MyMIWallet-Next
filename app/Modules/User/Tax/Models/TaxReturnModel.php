@@ -6,11 +6,11 @@ namespace App\Modules\User\Tax\Models;
 
 use App\Modules\User\Tax\Models\TaxJurisdictionModel;
 use App\Modules\User\Tax\Models\TaxTemplateModel;
-use CodeIgniter\Model;
+use App\Models\ObservedModel;
 use DateInterval;
 use DateTime;
 
-class TaxReturnModel extends Model
+class TaxReturnModel extends ObservedModel
 {
     protected $table         = 'bf_user_tax_returns';
     protected $primaryKey    = 'id';

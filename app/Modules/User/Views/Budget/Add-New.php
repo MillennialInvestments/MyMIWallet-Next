@@ -149,7 +149,10 @@ $fieldData = array(
             console.log("recurringAccount: ", recurringAccount);
 
             try {
-                const response = await fetch("<?php echo site_url('User/Budget/Account_Manager'); ?>", {
+                const url = "<?php echo site_url('User/Budget/Account_Manager'); ?>";
+                console.log("Submitting form to:", url);
+                console.log("FormData:", Object.fromEntries(formData.entries()));
+                const response = await fetch(url, {
                     method: "POST",
                     body: JSON.stringify(Object.fromEntries(formData)),
                     headers: { "Content-Type": "application/json" },
@@ -157,8 +160,11 @@ $fieldData = array(
                     redirect: "manual",
                 });
 
+                const rawText = await response.text();
+                console.log("RAW RESPONSE:", rawText);
+
                 if (response.ok) {
-                    const responseData = await response.json();
+                    const responseData = JSON.parse(rawText);
                     console.log("Response Data:", responseData);
                     const accountID = responseData.accountID;
 

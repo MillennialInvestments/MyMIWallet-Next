@@ -9,62 +9,59 @@ use Config\Services;
 class Audit extends SafeBaseCommand
 {
     protected $group       = 'Diagnostics';
-    protected $name        = 'route:audit';
-    protected $description = 'Audit routes for duplicates, lowercase methods, and invalid controllers.';
+    protected $name        = 'debug:route';
+    protected $description = 'Resolve a route and verify controller, method, and HTTP method coverage.';
 
     public function run(array $params)
     {
-        $routes = Services::routes();
+        $this->beginSparkTrace();
+
+        try {
+            $target = $params[0] ?? '';
+            if ($target === '') {
+                CLI::error('Usage: php spark debug:route <uri>');
+                return;
+            }
+
+            $routes = Services::routes();
         $routes->loadRoutes();
 
         $collection = $routes->getRoutes();
-
-        $uriMap = [];
-        $errors = [];
+        $matches = [];
 
         foreach ($collection as $uri => $route) {
+            if (strcasecmp(trim((string) $uri, '/'), trim($target, '/')) !== 0) {
+                continue;
+            }
 
             foreach ($route as $method => $handler) {
-
-                $methodUpper = strtoupper($method);
-
-                // Detect lowercase HTTP method
-                if ($method !== $methodUpper) {
-                    $errors[] = "Lowercase HTTP method detected: {$method} for URI {$uri}";
-                }
-
-                $key = "{$methodUpper}::{$uri}";
-
-                if (isset($uriMap[$key])) {
-                    $errors[] = "Duplicate route detected: {$methodUpper} {$uri}";
-                }
-
-                $uriMap[$key] = true;
-
-                // Validate controller
-                if (is_string($handler) && str_contains($handler, '::')) {
-
-                    [$controller, $methodName] = explode('::', $handler);
-
-                    if (! class_exists($controller)) {
-                        $errors[] = "Missing controller: {$controller}";
-                        continue;
-                    }
-
-                    if (! method_exists($controller, $methodName)) {
-                        $errors[] = "Missing method {$methodName} in {$controller}";
-                    }
-                }
+                $matches[] = [strtoupper((string) $method), $handler];
             }
         }
 
-        if (empty($errors)) {
-            CLI::write("✔ No route issues detected.", 'green');
-        } else {
-            CLI::write("Route Audit Issues:", 'red');
-            foreach ($errors as $error) {
-                CLI::write("- {$error}", 'yellow');
+        if ($matches === []) {
+            CLI::error('No route definitions matched: ' . $target);
+            return;
+        }
+
+            foreach ($matches as [$method, $handler]) {
+            CLI::write($method . ' => ' . (is_string($handler) ? $handler : json_encode($handler)), 'yellow');
+
+            if (! is_string($handler) || ! str_contains($handler, '::')) {
+                CLI::write('  - Handler is not controller::method format; skipping method check.', 'red');
+                continue;
             }
+
+            [$controller, $methodName] = explode('::', $handler, 2);
+            $controllerExists = class_exists($controller);
+            $methodExists = $controllerExists ? method_exists($controller, $methodName) : false;
+
+            CLI::write('  - Controller exists: ' . ($controllerExists ? 'YES' : 'NO'), $controllerExists ? 'green' : 'red');
+            CLI::write('  - Method exists: ' . ($methodExists ? 'YES' : 'NO'), $methodExists ? 'green' : 'red');
+                CLI::write('  - HTTP method allowed: ' . $method, 'green');
+            }
+        } finally {
+            $this->finishSparkTrace();
         }
     }
 }

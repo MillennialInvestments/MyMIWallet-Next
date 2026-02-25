@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Modules\Management\TaxAdmin\Models;
 
-use CodeIgniter\Model;
+use App\Models\ObservedModel;
 
-class TaxRatesModel extends Model
+class TaxRatesModel extends ObservedModel
 {
     protected $table         = 'bf_tax_rates';
     protected $primaryKey    = 'id';

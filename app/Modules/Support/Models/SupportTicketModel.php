@@ -2,9 +2,9 @@
 
 namespace App\Modules\Support\Models;
 
-use CodeIgniter\Model;
+use App\Models\ObservedModel;
 
-class SupportTicketModel extends Model
+class SupportTicketModel extends ObservedModel
 {
     protected $table = 'bf_support_tickets';
     protected $primaryKey = 'id';

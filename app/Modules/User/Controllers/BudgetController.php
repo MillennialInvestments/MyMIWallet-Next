@@ -57,6 +57,7 @@ class BudgetController extends UserController
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] initController');
         parent::initController($request, $response, $logger);
         $this->auth = service('authentication');
         $this->request                              = service('request'); 
@@ -232,6 +233,7 @@ class BudgetController extends UserController
     // }
 
     public function index() {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] index');
         $activeUserId = $this->cuID ?? null;
         log_message(
             'debug',
@@ -288,6 +290,7 @@ class BudgetController extends UserController
 
     public function thisMonth(?string $type = null)
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] thisMonth');
         return $this->renderMonthlyPeriod(
             $type,
             'first day of this month 00:00:00',
@@ -300,6 +303,7 @@ class BudgetController extends UserController
 
     public function lastMonth(?string $type = null)
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] lastMonth');
         return $this->renderMonthlyPeriod(
             $type,
             'first day of last month 00:00:00',
@@ -312,6 +316,7 @@ class BudgetController extends UserController
 
     public function nextMonth(?string $type = null)
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] nextMonth');
         return $this->renderMonthlyPeriod(
             $type,
             'first day of next month 00:00:00',
@@ -374,6 +379,7 @@ class BudgetController extends UserController
             'periodRouteBase'  => $routeBase,
         ]);
 
+        $this->logMemory('before-view-render:monthly-overview');
         return $this->renderTheme('User/Budget/monthly_overview', $this->data);
     }
 
@@ -389,6 +395,10 @@ class BudgetController extends UserController
     
     public function accountManager() 
     {
+        $this->trace('[METHOD_ENTRY] ' . __FUNCTION__);
+        $this->trace('[AJAX CHECK] isAJAX=' . ($this->request->isAJAX() ? 'YES' : 'NO'));
+        $this->trace('[AJAX_HEADERS] ' . json_encode($this->request->headers()));
+        $this->trace('[AJAX_POST] ' . json_encode($this->request->getPost()));
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('Authentication required to manage budget accounts.');
@@ -530,7 +540,9 @@ class BudgetController extends UserController
                         log_message('debug', 'BudgetController L473 - Sending $accountData to Model: ' . print_r($accountData, true));
                     }
 
+                    $this->logMemory('before-db-insert');
                     $insertedID = (int) $this->budgetService->save($accountData);
+                    $this->logMemory('after-db-insert');
                     if ($insertedID > 0) {
                         $this->invalidateCrudCache(array_filter([
                             'budget',
@@ -540,6 +552,8 @@ class BudgetController extends UserController
                         session()->setFlashdata('alert-class', 'success');
                         $accountId = $insertedID;
 
+$this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
+                        $this->trace('[METHOD_EXIT] ' . __FUNCTION__);
                         return $this->response->setJSON([
                             'status' => 'success',
                             'accountID' => $accountId,
@@ -566,6 +580,8 @@ class BudgetController extends UserController
                         ]));
                         session()->setFlashdata('message', 'Budget record updated successfully.');
                         session()->setFlashdata('alert-class', 'success');
+$this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
+                        $this->trace('[METHOD_EXIT] ' . __FUNCTION__);
                         return $this->response->setJSON([
                             'status' => 'success',
                             'accountID' => $accountId,
@@ -580,7 +596,9 @@ class BudgetController extends UserController
                     ]);
         
                  case 'Copy':
+                    $this->logMemory('before-db-insert');
                     $insertedID = (int) $this->budgetService->save($accountData);
+                    $this->logMemory('after-db-insert');
                     if ($insertedID > 0) {
                         $this->invalidateCrudCache(array_filter([
                             'budget',
@@ -588,6 +606,8 @@ class BudgetController extends UserController
                         ]));
                         $accountId = $insertedID;
 
+$this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
+                        $this->trace('[METHOD_EXIT] ' . __FUNCTION__);
                         return $this->response->setJSON([
                             'status' => 'success',
                             'accountID' => $accountId,
@@ -785,6 +805,7 @@ class BudgetController extends UserController
 
 
     public function accountOverview() {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] accountOverview');
         $budgetType = $this->request->getUri()->getSegment(2);
         $this->data['pageTitle'] = 'Account Overview | MyMI Wallet | The Future of Finance';
 
@@ -801,6 +822,7 @@ class BudgetController extends UserController
     }
 
     public function add($type = null) {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] add');
         $this->data['pageTitle'] = 'Add Budget Record | MyMI Wallet | The Future of Finance';
         $common = $this->ensureCommonDataReady();
         if ($common instanceof ResponseInterface) {
@@ -811,6 +833,7 @@ class BudgetController extends UserController
 
     public function approveRecurringSchedule($accountID)
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] approveRecurringSchedule');
         log_message('debug', 'BudgetController::approveRecurringSchedule - Start processing for AccountID: ' . $accountID);
     
         // Check if the request content type is JSON
@@ -892,6 +915,7 @@ class BudgetController extends UserController
     }
     
     public function approveRecurringScheduleOld($accountID) {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] approveRecurringScheduleOld');
         log_message('debug', 'Request headers: ' . print_r($this->request->getHeaders(), true));
         log_message('debug', 'Request body: ' . $this->request->getBody());
         
@@ -919,6 +943,7 @@ class BudgetController extends UserController
     }    
 
     public function bulkDelete() {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] bulkDelete');
         $ids = $this->request->getPost('ids');
 
         if ($this->getBudgetService()->bulkDelete($ids)) {
@@ -933,6 +958,7 @@ class BudgetController extends UserController
     }
 
     public function bulkUpdateStatus() {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] bulkUpdateStatus');
         $ids = $this->request->getPost('ids');
         $status = $this->request->getPost('status');
 
@@ -949,6 +975,7 @@ class BudgetController extends UserController
     
     public function cancelAccount($accountID)
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] cancelAccount');
         $accountInfo = $this->budgetModel->getUserBudgetRecord($this->cuID, $accountID);
 
         foreach($accountInfo as $account) {
@@ -981,6 +1008,7 @@ class BudgetController extends UserController
     }
 
     public function deleteAccount($accountID) {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] deleteAccount');
         if ($this->getBudgetService()->cancelAccount($accountID)) {
             $this->invalidateCrudCache(array_filter([
                 'budget',
@@ -995,6 +1023,7 @@ class BudgetController extends UserController
     }
 
     public function details($accountID) {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] details');
         $this->data['pageTitle'] = 'Account Details & History | MyMI Wallet | The Future of Finance';
         $this->data['userBudgetRecord'] = $this->getBudgetService()->getUserBudgetRecord($this->cuID, $accountID);
 
@@ -1010,6 +1039,7 @@ class BudgetController extends UserController
     }
 
     public function edit($type = null) {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] edit');
         $uri = $this->request->getUri();
         $formMode = $uri->getSegment(2);
         $accountID = ($formMode === 'Recurring-Account') ? $uri->getSegment(4) : $uri->getSegment(3);
@@ -1066,6 +1096,7 @@ class BudgetController extends UserController
     }
     
     public function financialAnalysis() {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] financialAnalysis');
         $this->data['pageTitle'] = 'My Financial Analysis | MyMI Wallet | The Future of Finance';
 
         // Use service for financial analysis data
@@ -1083,6 +1114,7 @@ class BudgetController extends UserController
 
     public function financialForecaster()
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] financialForecaster');
         $this->data['pageTitle'] = 'Financial Forecaster | MyMI Wallet | The Future of Finance';
 
         $userId = $this->resolveAuthenticatedUserId();
@@ -1126,6 +1158,7 @@ class BudgetController extends UserController
      */
     public function forecast(?string $horizon = null)
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] forecast');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return redirect()->to(site_url('login'));
@@ -1312,6 +1345,7 @@ class BudgetController extends UserController
 
     public function summary()
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] summary');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('User not logged in.');
@@ -1348,6 +1382,7 @@ class BudgetController extends UserController
 
     public function credit()
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] credit');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('User not logged in.');
@@ -1374,6 +1409,7 @@ class BudgetController extends UserController
 
     public function available()
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] available');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('User not logged in.');
@@ -1410,6 +1446,7 @@ class BudgetController extends UserController
 
     public function repayment()
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] repayment');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('User not logged in.');
@@ -1443,6 +1480,7 @@ class BudgetController extends UserController
 
     public function categories()
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] categories');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('User not logged in.');
@@ -1495,6 +1533,7 @@ class BudgetController extends UserController
 
     public function transactions()
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] transactions');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('User not logged in.');
@@ -1505,6 +1544,7 @@ class BudgetController extends UserController
 
     public function goals()
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] goals');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('User not logged in.');
@@ -1515,6 +1555,7 @@ class BudgetController extends UserController
 
     public function insights()
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] insights');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('User not logged in.');
@@ -1525,6 +1566,7 @@ class BudgetController extends UserController
 
     public function trends()
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] trends');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('User not logged in.');
@@ -1535,6 +1577,7 @@ class BudgetController extends UserController
 
     public function netWorth()
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] netWorth');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('User not logged in.');
@@ -1545,6 +1588,7 @@ class BudgetController extends UserController
 
     public function cashFlow()
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] cashFlow');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('User not logged in.');
@@ -1555,6 +1599,7 @@ class BudgetController extends UserController
 
     public function budgets()
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] budgets');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('User not logged in.');
@@ -1565,6 +1610,7 @@ class BudgetController extends UserController
 
     public function savingsGoals()
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] savingsGoals');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('User not logged in.');
@@ -1575,6 +1621,7 @@ class BudgetController extends UserController
 
     public function investmentAccounts()
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] investmentAccounts');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('User not logged in.');
@@ -1585,6 +1632,7 @@ class BudgetController extends UserController
 
     public function linkedAccounts()
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] linkedAccounts');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('User not logged in.');
@@ -1595,6 +1643,7 @@ class BudgetController extends UserController
 
     public function addLinkedAccount()
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] addLinkedAccount');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('User not logged in.');
@@ -1605,6 +1654,7 @@ class BudgetController extends UserController
 
     public function removeLinkedAccount(string $accountKey)
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] removeLinkedAccount');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('User not logged in.');
@@ -1618,6 +1668,7 @@ class BudgetController extends UserController
 
     public function refreshLinkedAccount(string $accountKey)
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] refreshLinkedAccount');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('User not logged in.');
@@ -1630,6 +1681,7 @@ class BudgetController extends UserController
     }
     
     public function forecastBudget($accountId) {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] forecastBudget');
         // Fetch account details using the model
         $account = $this->budgetModel->getAccountInformation($accountId);
     
@@ -1654,6 +1706,7 @@ class BudgetController extends UserController
 
     public function getUserBudgetRecords()
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] getUserBudgetRecords');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('User not logged in.');
@@ -1670,6 +1723,7 @@ class BudgetController extends UserController
 
     public function getUserAvailableBalances()
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] getUserAvailableBalances');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('Unauthorized. User not found.');
@@ -1686,6 +1740,7 @@ class BudgetController extends UserController
 
     public function getUserCreditBalances()
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] getUserCreditBalances');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('Unauthorized. User not found.');
@@ -1702,6 +1757,7 @@ class BudgetController extends UserController
 
     public function getUserRepaymentSummary()
     {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] getUserRepaymentSummary');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('Unauthorized. User not found.');
@@ -1718,6 +1774,7 @@ class BudgetController extends UserController
     
     // public function add()
     public function history($type = null) {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] history');
         // Site settings and user data
         $this->data['pageTitle'] = 'Account Details & History | MyMI Wallet | The Future of Finance';
 
@@ -1732,6 +1789,7 @@ class BudgetController extends UserController
     }
 
     public function paid($accountID) {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] paid');
         if ($this->getBudgetService()->markAsPaid($accountID)) {
             session()->setFlashdata('message', 'Account status changed to: "Paid"');
             return redirect()->back()->withInput()->with('message', 'Account status changed to: "Paid"');
@@ -1742,6 +1800,7 @@ class BudgetController extends UserController
     }
 
     public function recurringSchedule($accountID = null) {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] recurringSchedule');
         log_message('debug', 'BudgetController::recurringSchedule  L531 - Recurring Schedule - Start processing for Account ID: ' . $accountID);
     
         $common = $this->ensureCommonDataReady();
@@ -1796,6 +1855,7 @@ class BudgetController extends UserController
 
     // public function add()
     public function settings($type = null) {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] settings');
         $uri                                        = $this->request->getUri(); 
         // Determine budget type from URL segment or parameter
         $budgetType                                 = $uri->getSegment(3) ?? $type; 
@@ -1868,6 +1928,7 @@ class BudgetController extends UserController
     }
 
     public function unpaid($accountID) {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] unpaid');
         if ($this->getBudgetService()->markAsUnpaid($accountID)) {
             session()->setFlashdata('message', 'Account status changed to: "Unpaid"');
             return redirect()->back()->withInput()->with('message', 'Account status changed to: "Unpaid"');

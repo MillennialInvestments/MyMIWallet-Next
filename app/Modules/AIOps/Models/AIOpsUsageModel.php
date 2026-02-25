@@ -2,9 +2,9 @@
 
 namespace App\Modules\AIOps\Models;
 
-use CodeIgniter\Model;
+use App\Models\ObservedModel;
 
-class AIOpsUsageModel extends Model
+class AIOpsUsageModel extends ObservedModel
 {
     protected $table            = 'bf_aiops_usage';
     protected $primaryKey       = 'id';

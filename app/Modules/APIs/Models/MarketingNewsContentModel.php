@@ -2,9 +2,9 @@
 
 namespace App\Modules\APIs\Models;
 
-use CodeIgniter\Model;
+use App\Models\ObservedModel;
 
-class MarketingNewsContentModel extends Model
+class MarketingNewsContentModel extends ObservedModel
 {
     protected $table      = 'bf_marketing_news_content';
     protected $primaryKey = 'id';

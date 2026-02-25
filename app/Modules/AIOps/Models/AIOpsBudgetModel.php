@@ -2,9 +2,9 @@
 
 namespace App\Modules\AIOps\Models;
 
-use CodeIgniter\Model;
+use App\Models\ObservedModel;
 
-class AIOpsBudgetModel extends Model
+class AIOpsBudgetModel extends ObservedModel
 {
     protected $table         = 'bf_aiops_budget';
     protected $primaryKey    = 'id';

@@ -1,12 +1,12 @@
 <?php
 namespace App\Modules\Management\Models;
 
-use CodeIgniter\Model;
+use App\Models\ObservedModel;
 
 /**
  * Model for alerts pending review.
  */
-class AlertPendingModel extends Model
+class AlertPendingModel extends ObservedModel
 {
     protected $table      = 'alert_pending';
     protected $primaryKey = 'id';

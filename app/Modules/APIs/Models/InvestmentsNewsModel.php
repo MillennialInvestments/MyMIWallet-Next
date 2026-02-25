@@ -2,9 +2,9 @@
 
 namespace App\Modules\APIs\Models;
 
-use CodeIgniter\Model;
+use App\Models\ObservedModel;
 
-class InvestmentsNewsModel extends Model
+class InvestmentsNewsModel extends ObservedModel
 {
     protected $table      = 'bf_investments_news';
     protected $primaryKey = 'id';

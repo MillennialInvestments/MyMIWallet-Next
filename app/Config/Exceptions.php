@@ -22,6 +22,13 @@ use Throwable;
  */
 class Exceptions extends BaseConfig
 {
+    public function logException(\Throwable $exception): void
+    {
+        log_message('critical', '[EXCEPTION] ' . $exception->getMessage() .
+            ' File=' . $exception->getFile() .
+            ' Line=' . $exception->getLine());
+    }
+
     /**
      * --------------------------------------------------------------------------
      * LOG EXCEPTIONS?
@@ -116,6 +123,7 @@ class Exceptions extends BaseConfig
      */
     public function handler(int $statusCode, Throwable $exception): ExceptionHandlerInterface
     {
+        $this->logException($exception);
         if ($exception instanceof BadRequestException) {
             log_message('error', 'BadRequestException: {msg} | URI: {uri}', [
                 'msg' => $exception->getMessage(),
@@ -124,10 +132,20 @@ class Exceptions extends BaseConfig
         }
         if ($exception instanceof PageNotFoundException) {
             $request = service('request');
+            log_message('warning', '[404] URI=' . (string) $request->getUri());
             log_message('warning', '404 route miss: {uri} | referrer: {ref}', [
                 'uri' => (string) $request->getUri(),
                 'ref' => $request->getHeaderLine('Referer') ?: 'none',
             ]);
+
+            try {
+                $router = service('router');
+                if (method_exists($router, 'getRoutes')) {
+                    log_message('debug', '[ROUTE_COLLECTION] ' . json_encode($router->getRoutes()));
+                }
+            } catch (\Throwable $routeException) {
+                log_message('error', '[ROUTE_COLLECTION_ERROR] ' . $routeException->getMessage());
+            }
         }
         $handler = new ExceptionHandler($this);
 

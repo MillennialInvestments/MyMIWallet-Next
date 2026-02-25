@@ -21,6 +21,9 @@ class UserController extends BaseController
         LoggerInterface $logger
     ) {
         parent::initController($request, $response, $logger);
+        $router = service('router');
+        $method = method_exists($router, 'methodName') ? (string) $router->methodName() : 'unknown';
+        $this->trace('[METHOD_ENTRY] ' . $method);
         $this->initUserContext();
     }
 
@@ -88,6 +91,7 @@ class UserController extends BaseController
 
     protected function renderTheme(string $view, mixed $data = []): ResponseInterface|string
     {
+        $this->trace('[VIEW_RENDER] ' . $view);
         $data = $this->normalizeRenderData($view, $data);
         // If caller passed a Response, just return it.
         if ($data instanceof ResponseInterface) {

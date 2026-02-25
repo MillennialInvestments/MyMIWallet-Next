@@ -1,12 +1,12 @@
 <?php
 namespace App\Modules\Template\Models;
 
-use CodeIgniter\Model;
+use App\Models\ObservedModel;
 
 /**
  * Generic model for Template module.
  */
-class TemplateModel extends Model
+class TemplateModel extends ObservedModel
 {
     protected $table      = 'template';
     protected $primaryKey = 'id';

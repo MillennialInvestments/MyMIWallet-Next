@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Modules\APIs\Models;
 
-use CodeIgniter\Model;
+use App\Models\ObservedModel;
 
-class ScannerModel extends Model
+class ScannerModel extends ObservedModel
 {
     protected $table = 'bf_scanner_jobs';
     protected $primaryKey = 'id';
