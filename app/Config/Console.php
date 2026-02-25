@@ -164,6 +164,48 @@ class Console extends BaseConfig
 
         /*
         |----------------------------------------------------------------------
+        | Ollama - Control
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Ollama\Health::class,
+        \App\Commands\Ollama\Version::class,
+        \App\Commands\Ollama\Ping::class,
+        \App\Commands\Ollama\Diagnose::class,
+        \App\Commands\Ollama\Models\ListModels::class,
+        \App\Commands\Ollama\Models\ShowModel::class,
+        \App\Commands\Ollama\Models\PullModel::class,
+        \App\Commands\Ollama\Models\RmModel::class,
+        \App\Commands\Ollama\Models\PruneModels::class,
+        \App\Commands\Ollama\Models\EnsureModels::class,
+        \App\Commands\Ollama\Generate::class,
+        \App\Commands\Ollama\Chat::class,
+        \App\Commands\Ollama\Embed::class,
+        \App\Commands\Ollama\Queue\Push::class,
+        \App\Commands\Ollama\Queue\Work::class,
+        \App\Commands\Ollama\Queue\Stats::class,
+        \App\Commands\Ollama\Policy\Check::class,
+        \App\Commands\Ollama\Docs\Sync::class,
+
+        \App\Commands\Ollama\Logs::class,
+        \App\Commands\Ollama\Models\ExportModels::class,
+        \App\Commands\Ollama\Stream::class,
+        \App\Commands\Ollama\Bench::class,
+        \App\Commands\Ollama\EmbedFile::class,
+        \App\Commands\Ollama\RagQuery::class,
+        \App\Commands\Ollama\Sessions\ListSessions::class,
+        \App\Commands\Ollama\Sessions\ShowSession::class,
+        \App\Commands\Ollama\Sessions\RmSession::class,
+        \App\Commands\Ollama\Policy\Export::class,
+        \App\Commands\Ollama\Queue\Retry::class,
+        \App\Commands\Ollama\Circuit\Status::class,
+        \App\Commands\Ollama\Circuit\Reset::class,
+        \App\Commands\Ollama\Modelfile\Validate::class,
+        \App\Commands\Ollama\Models\CreateModel::class,
+        \App\Commands\Ollama\Models\PushModel::class,
+        \App\Commands\Ollama\Docs\Inventory::class,
+
+        /*
+        |----------------------------------------------------------------------
         | Config
         |----------------------------------------------------------------------
         */
