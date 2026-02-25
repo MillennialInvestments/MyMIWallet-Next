@@ -1,13 +1,13 @@
 # AI-Ops: Stale Docs
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-24T22:00:02Z
+> Run: 2026-02-25T02:00:01Z
 
 - docs/Kimi/README.md
-  - Doc last updated: 2025-12-11 (74 days ago)
+  - Doc last updated: 2025-12-11 (75 days ago)
 - docs/Kimi/audit-2025-12-11.md
-  - Doc last updated: 2025-12-11 (74 days ago)
+  - Doc last updated: 2025-12-11 (75 days ago)
 - docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md
-  - Doc last updated: 2025-12-11 (74 days ago)
+  - Doc last updated: 2025-12-11 (75 days ago)
 - docs/OVERVIEW.md
   - Doc last updated: 2025-11-08 (108 days ago)
 - docs/README.md
@@ -93,9 +93,9 @@
 - docs/discord/README.md
   - Doc last updated: 2025-12-07 (79 days ago)
 - docs/discord/_index.md
-  - Doc last updated: 2025-12-05 (80 days ago)
+  - Doc last updated: 2025-12-05 (81 days ago)
 - docs/discord/_inventory.md
-  - Doc last updated: 2025-12-05 (80 days ago)
+  - Doc last updated: 2025-12-05 (81 days ago)
 - docs/discord/alerts_automation.md
   - Doc last updated: 2025-11-27 (89 days ago)
 - docs/discord/discord_integration_overview.md
@@ -109,21 +109,21 @@
 - docs/discord/earnings_calendar_automation.md
   - Doc last updated: 2025-11-26 (90 days ago)
 - docs/discord/environments.md
-  - Doc last updated: 2025-12-05 (80 days ago)
+  - Doc last updated: 2025-12-05 (81 days ago)
 - docs/discord/events_matrix.md
-  - Doc last updated: 2025-12-05 (80 days ago)
+  - Doc last updated: 2025-12-05 (81 days ago)
 - docs/discord/marketing_news_automation.md
   - Doc last updated: 2025-12-10 (76 days ago)
 - docs/discord/mee6_and_mymi_automation.md
-  - Doc last updated: 2025-12-05 (80 days ago)
+  - Doc last updated: 2025-12-05 (81 days ago)
 - docs/discord/mysql_discord_schema.md
-  - Doc last updated: 2025-12-05 (80 days ago)
+  - Doc last updated: 2025-12-05 (81 days ago)
 - docs/discord/operations_and_montioring.md
   - Doc last updated: 2025-11-26 (90 days ago)
 - docs/discord/premium_flows_and_upsell.md
-  - Doc last updated: 2025-12-05 (80 days ago)
+  - Doc last updated: 2025-12-05 (81 days ago)
 - docs/discord/python_workers.md
-  - Doc last updated: 2025-12-05 (80 days ago)
+  - Doc last updated: 2025-12-05 (81 days ago)
 - docs/discord/server_setup_and_ci4_integration.md
   - Doc last updated: 2025-12-07 (79 days ago)
 - docs/discord/server_setup_support_category.md

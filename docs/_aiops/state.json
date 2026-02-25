@@ -4699,7 +4699,19 @@
         "docs/trading/codeigniter4/integration-alerts.md": {
             "hash": "a74a0c8e126b1c6ccb8adc615dfc4050b71491899872c4f54c403096525500e8",
             "mtime": "2026-02-24"
+        },
+        "docs/_support/config-clear/20260225-005807/summary.md": {
+            "hash": "f7a435ce6949e3743dd380137c9cd6d526d19b329c6c278fe22d3c1410a25bd8",
+            "mtime": "2026-02-25"
+        },
+        "docs/_support/config-clear/20260225-011911/summary.md": {
+            "hash": "71f224b4c38a728926ba1bdfd4a834a2404ef59014fd7e3ad3107cd0dc213a50",
+            "mtime": "2026-02-25"
+        },
+        "docs/_support/spark-reset/20260225-005815/summary.md": {
+            "hash": "3351cc8561f355981c28c5ab6c8ba25f8ff203efca0b3df425348362e18501f0",
+            "mtime": "2026-02-25"
         }
     },
-    "last_run": "2026-02-24T22:00:02Z"
+    "last_run": "2026-02-25T02:00:01Z"
 }

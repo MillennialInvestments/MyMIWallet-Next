@@ -314,6 +314,33 @@ class Services extends CoreServices
 
         return new \App\Services\ForecastAggregationService();
     }
+    
+    public static function formIntelligenceService($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('formIntelligenceService');
+        }
+
+        return new \App\Services\AIOps\FormIntelligenceService();
+    }
+    
+    public static function formPatchPlanner($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('formPatchPlanner');
+        }
+
+        return new \App\Services\AIOps\FormPatchPlannerService();
+    }
+    
+    public static function formTextExecutor($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('formTextExecutor');
+        }
+
+        return new \App\Services\AIOps\FormTextExecutorService();
+    }
 
     public static function scannerCacheLayer(bool $getShared = true): CacheLayer
     {

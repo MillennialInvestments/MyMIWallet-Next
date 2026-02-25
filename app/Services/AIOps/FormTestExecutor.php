@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\AiOps;
 
-use App\Models\AiOps\FormTestModel;
+use App\Models\AIOps\FormTestModel;
 use CodeIgniter\Config\Services;
 
 class FormTestExecutor
