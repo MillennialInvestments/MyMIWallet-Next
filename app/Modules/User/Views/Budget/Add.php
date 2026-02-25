@@ -318,44 +318,47 @@ $fieldData = array(
     if (addAccountForm) {
         addAccountForm.addEventListener("submit", async (e) => {
             e.preventDefault();
+
             const formData = new FormData(addAccountForm);
             const recurringAccount = formData.get("recurring_account");
 
             try {
-                const response = await fetch("<?php echo site_url('Budget/Account-Manager'); ?>", {
+                const response = await fetch("<?= site_url('Budget/Account-Manager'); ?>", {
                     method: "POST",
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest"
+                    },
                     body: formData,
-                    credentials: "same-origin",
+                    credentials: "same-origin"
                 });
 
                 const contentType = response.headers.get("content-type") || "";
+
                 if (!response.ok) {
                     console.error("Server responded:", response.status);
-                    const text = await response.text();
-                    console.error("Response body:", text);
                     return;
                 }
 
                 if (!contentType.includes("application/json")) {
                     const text = await response.text();
-                    console.error("Expected JSON but got:", contentType);
-                    console.error("Response body:", text);
+                    console.error("Expected JSON but got:", text);
                     return;
                 }
 
-                const responseData = await response.json();
-                const accountID = responseData.accountID || responseData.data?.accountID;
+                const data = await response.json();
+                const accountID = data.accountID;
 
                 if (!accountID) {
-                    console.error("Missing accountID in response:", responseData);
+                    console.error("Missing accountID in response");
                     return;
                 }
 
                 if (recurringAccount === "Yes") {
-                    window.location.href = `<?php echo site_url('/Budget/Recurring-Account/Schedule/'); ?>${accountID}`;
+                    window.location.href = `<?= site_url('/Budget/Recurring-Account/Schedule/'); ?>${accountID}`;
                 } else {
-                    window.location.href = `<?php echo site_url('/Budget'); ?>`;
+                    window.location.href = "<?= site_url('/Budget'); ?>";
                 }
+
             } catch (err) {
                 console.error(err);
             }

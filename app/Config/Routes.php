@@ -98,11 +98,11 @@ $routes->group('', ['namespace' => 'App\Modules\User\Controllers'], static funct
     $routes->get('Preview/Alert/(:segment)', 'AlertsController::preview/$1');
 });
 $routes->get('/Privacy-Policy', 'Home::privacyPolicy');
-$routes->get('/Legal/Privacy-Policy', static fn() => redirect()->to('/Privacy-Policy', 301));
-$routes->get('/Legal/Terms-And-Conditions', static fn() => redirect()->to('/Terms-Of-Service', 301));
-$routes->get('/Customer-Support', static fn() => redirect()->to('/Support', 301));
+$routes->get('/Legal/Privacy-Policy', 'Home::privacyPolicy');
+$routes->get('/Legal/Terms-And-Conditions', 'Home::terms');
+$routes->get('/Customer-Support', 'App\Modules\Support\Controllers\SupportController::index');
 $routes->get('/Investments/News', static fn() => redirect()->to('/News', 301));
-$routes->get('/Profile', static fn() => redirect()->to('/Account', 301));
+$routes->get('/Profile', 'App\Modules\User\Controllers\DashboardController::profile', ['filter' => 'login']);
 $routes->get('/Purchase/MyMIGold', static fn() => redirect()->to('/Wallets/Purchase/MyMI-Gold', 301));
 $routes->post('auth/resend-activation', 'AuthController::resendActivationCode', ['as' => 'auth/resend-activation-legacy']);
 $routes->get('/How-It-Works/Purchase/MyMIGold', static fn() => redirect()->to('/How-It-Works/Purchase-MyMI-Gold', 301));
