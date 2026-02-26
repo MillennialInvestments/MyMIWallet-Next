@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Modules\User\Tax\Models;
 
-use CodeIgniter\Model;
+use App\Models\ObservedModel;
 
-class TaxTemplateModel extends Model
+class TaxTemplateModel extends ObservedModel
 {
     protected $table         = 'bf_tax_return_templates';
     protected $primaryKey    = 'id';

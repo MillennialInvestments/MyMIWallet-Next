@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Modules\Management\TaxAdmin\Models;
 
-use CodeIgniter\Model;
+use App\Models\ObservedModel;
 
-class TaxLinesModel extends Model
+class TaxLinesModel extends ObservedModel
 {
     protected $table         = 'bf_tax_return_lines';
     protected $primaryKey    = 'id';

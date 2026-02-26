@@ -73,6 +73,7 @@ class Filters extends BaseConfig
         // 'secureheaders' => SecureHeaders::class,
         // Safe no-op filter to satisfy routes that reference "except"
         'except'        => \App\Filters\ExceptFilter::class,
+        'requestLifecycle' => \App\Filters\RequestLifecycleLogger::class,
     ];
 
     /**
@@ -96,6 +97,7 @@ class Filters extends BaseConfig
                 ],
             ],
             // PATCH: request observability
+            'requestLifecycle',
             'observability',
             'ratelimit',
             'sessionRevoked',
@@ -267,6 +269,7 @@ class Filters extends BaseConfig
             // 'csp' => ['except' => ['API/*', 'assets/*']],
             'cspoff',
             'sessionTracker',
+            'requestLifecycle',
             'observability',
             'jsonException',
             // 'honeypot',

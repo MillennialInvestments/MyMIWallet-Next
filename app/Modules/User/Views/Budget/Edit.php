@@ -296,7 +296,10 @@ if (addAccountForm) {
         // console.log(...formData);
         //Fetch
         try {
-            const result = await fetch("<?php echo site_url('Budget/Account-Manager'); ?>", {
+            const url = "<?php echo site_url('Budget/Account-Manager'); ?>";
+            console.log("Submitting form to:", url);
+            console.log("FormData:", Object.fromEntries(formData.entries()));
+            const result = await fetch(url, {
 			
 			method: "POST",
 			body: JSON.stringify(addAccountSubmit),
@@ -304,7 +307,9 @@ if (addAccountForm) {
 			credentials: "same-origin",
 			redirect: "manual",
             });
-            const data                          = await result;
+            const rawResponse = await result.text();
+            console.log("RAW RESPONSE:", rawResponse);
+            const data = rawResponse;
             const accountID                     = document.getElementById('account_id').value;
             const formMode                      = document.getElementById('form_mode').value;
             const recurringAccountPrimary       = <?php echo '"' . $accountRecurringPrimary . '"'; ?>;

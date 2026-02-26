@@ -33,6 +33,11 @@ class BudgetService
     protected $userService;
     protected string $timezone = 'America/Chicago';
 
+    private function serviceTrace(string $message, string $level = 'debug'): void
+    {
+        log_message($level, '[SERVICE] ' . static::class . ' ' . $message);
+    }
+
     public function __construct(?int $userId = null)
     {
         helper(['budget']);
@@ -53,6 +58,7 @@ class BudgetService
 
     public function setUserId(?int $userId): void
     {
+        $this->serviceTrace('::' . __FUNCTION__);
         $userId = $userId !== null ? (int) $userId : null;
 
         if ($this->cuID === $userId) {
@@ -189,41 +195,47 @@ class BudgetService
      */
     public function prepareAccountPayload(int $userId, array $input): array
     {
-        $userId = (int) $userId;
-        if ($userId <= 0) {
-            throw new UnexpectedValueException('A valid user identifier is required to persist budget accounts.');
+        $this->serviceTrace('::' . __FUNCTION__);
+        try {
+            $userId = (int) $userId;
+            if ($userId <= 0) {
+                throw new UnexpectedValueException('A valid user identifier is required to persist budget accounts.');
+            }
+
+            $dueDate   = $this->resolveDesignatedDate($input['designated_date'] ?? null);
+            $net       = $this->asFloat($input['net_amount'] ?? 0.0);
+            $gross     = $this->asFloat($input['gross_amount'] ?? $net);
+            $source    = isset($input['source_type']) ? trim((string) $input['source_type']) : null;
+            $isDebt    = $source ? (preg_match('/(Debt|Loan|Mortgage|Credit)/i', $source) === 1) : ((bool) ($input['is_debt'] ?? false));
+
+            return [
+                'status'            => (int) ($input['status'] ?? 1),
+                'beta'              => (string) ($input['beta'] ?? 'No'),
+                'mode'              => (string) ($input['form_mode'] ?? 'Add'),
+                'created_by'        => $userId,
+                'created_by_email'  => (string) ($input['user_email'] ?? ''),
+                'unix_timestamp'    => time(),
+                'designated_date'   => $dueDate['formatted'],
+                'month'             => $dueDate['month'],
+                'day'               => $dueDate['day'],
+                'year'              => $dueDate['year'],
+                'username'          => (string) ($input['username'] ?? ''),
+                'name'              => (string) ($input['nickname'] ?? ($input['name'] ?? '')),
+                'net_amount'        => $net,
+                'gross_amount'      => $gross,
+                'paid'              => (int) ($input['paid'] ?? 0),
+                'recurring_account' => (string) ($input['recurring_account'] ?? 'No'),
+                'recurring_schedule'=> $input['recurring_schedule'] ?? null,
+                'account_type'      => isset($input['account_type']) ? trim((string) $input['account_type']) : null,
+                'source_type'       => $source,
+                'is_debt'           => $isDebt ? 1 : 0,
+                'intervals'         => $input['intervals'] ?? null,
+                'due_date_estimated'=> $dueDate['estimated'],
+            ];
+        } catch (\Throwable $e) {
+            log_message('error', '[SERVICE_EXCEPTION] ' . $e->getMessage());
+            throw $e;
         }
-
-        $dueDate   = $this->resolveDesignatedDate($input['designated_date'] ?? null);
-        $net       = $this->asFloat($input['net_amount'] ?? 0.0);
-        $gross     = $this->asFloat($input['gross_amount'] ?? $net);
-        $source    = isset($input['source_type']) ? trim((string) $input['source_type']) : null;
-        $isDebt    = $source ? (preg_match('/(Debt|Loan|Mortgage|Credit)/i', $source) === 1) : ((bool) ($input['is_debt'] ?? false));
-
-        return [
-            'status'            => (int) ($input['status'] ?? 1),
-            'beta'              => (string) ($input['beta'] ?? 'No'),
-            'mode'              => (string) ($input['form_mode'] ?? 'Add'),
-            'created_by'        => $userId,
-            'created_by_email'  => (string) ($input['user_email'] ?? ''),
-            'unix_timestamp'    => time(),
-            'designated_date'   => $dueDate['formatted'],
-            'month'             => $dueDate['month'],
-            'day'               => $dueDate['day'],
-            'year'              => $dueDate['year'],
-            'username'          => (string) ($input['username'] ?? ''),
-            'name'              => (string) ($input['nickname'] ?? ($input['name'] ?? '')),
-            'net_amount'        => $net,
-            'gross_amount'      => $gross,
-            'paid'              => (int) ($input['paid'] ?? 0),
-            'recurring_account' => (string) ($input['recurring_account'] ?? 'No'),
-            'recurring_schedule'=> $input['recurring_schedule'] ?? null,
-            'account_type'      => isset($input['account_type']) ? trim((string) $input['account_type']) : null,
-            'source_type'       => $source,
-            'is_debt'           => $isDebt ? 1 : 0,
-            'intervals'         => $input['intervals'] ?? null,
-            'due_date_estimated'=> $dueDate['estimated'],
-        ];
     }
 
     /**
@@ -275,37 +287,49 @@ class BudgetService
 
     public function save(array $data): int
     {
-        $data = $this->applyRecurringScheduleRules($data);
+        $this->serviceTrace('::' . __FUNCTION__);
+        try {
+            $data = $this->applyRecurringScheduleRules($data);
 
-        log_message('debug', 'BudgetService::save normalized recurring payload: ' . json_encode([
-            'recurring_account' => $data['recurring_account'] ?? null,
-            'recurring_schedule' => $data['recurring_schedule'] ?? null,
-            'intervals' => $data['intervals'] ?? null,
-        ]));
+            log_message('debug', 'BudgetService::save normalized recurring payload: ' . json_encode([
+                'recurring_account' => $data['recurring_account'] ?? null,
+                'recurring_schedule' => $data['recurring_schedule'] ?? null,
+                'intervals' => $data['intervals'] ?? null,
+            ]));
 
-        $insertId = (int) $this->budgetModel->insertAccount($data);
-        $this->invalidateExecutiveSummaryCache();
+            $insertId = (int) $this->budgetModel->insertAccount($data);
+            $this->invalidateExecutiveSummaryCache();
 
-        return $insertId;
+            return $insertId;
+        } catch (\Throwable $e) {
+            log_message('error', '[SERVICE_EXCEPTION] ' . $e->getMessage());
+            throw $e;
+        }
     }
 
     public function update(int $accountId, array $data): bool
     {
-        $data = $this->applyRecurringScheduleRules($data);
+        $this->serviceTrace('::' . __FUNCTION__);
+        try {
+            $data = $this->applyRecurringScheduleRules($data);
 
-        log_message('debug', 'BudgetService::update normalized recurring payload: ' . json_encode([
-            'account_id' => $accountId,
-            'recurring_account' => $data['recurring_account'] ?? null,
-            'recurring_schedule' => $data['recurring_schedule'] ?? null,
-            'intervals' => $data['intervals'] ?? null,
-        ]));
+            log_message('debug', 'BudgetService::update normalized recurring payload: ' . json_encode([
+                'account_id' => $accountId,
+                'recurring_account' => $data['recurring_account'] ?? null,
+                'recurring_schedule' => $data['recurring_schedule'] ?? null,
+                'intervals' => $data['intervals'] ?? null,
+            ]));
 
-        $updated = $this->budgetModel->updateAccount($accountId, $data);
-        if ($updated) {
-            $this->invalidateExecutiveSummaryCache();
+            $updated = $this->budgetModel->updateAccount($accountId, $data);
+            if ($updated) {
+                $this->invalidateExecutiveSummaryCache();
+            }
+
+            return $updated;
+        } catch (\Throwable $e) {
+            log_message('error', '[SERVICE_EXCEPTION] ' . $e->getMessage());
+            throw $e;
         }
-
-        return $updated;
     }
 
 
@@ -2256,6 +2280,7 @@ class BudgetService
     }
 
     public function getUserBudget($userId) {
+        $this->serviceTrace('::' . __FUNCTION__);
         $records = $this->budgetModel->getUserBudgetData($userId) ?? [];
         $records = array_map(static fn($row) => (array) $row, $records);
         $activeRecords = array_values(array_filter($records, static function ($row) {

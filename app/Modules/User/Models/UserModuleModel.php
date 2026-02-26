@@ -2,7 +2,7 @@
 
 namespace App\Modules\User\Models;
 
-use CodeIgniter\Model;
+use App\Models\ObservedModel;
 use Faker\Generator;
 use Myth\Auth\Authorization\GroupModel;
 use Myth\Auth\Entities\User;
@@ -10,7 +10,7 @@ use Myth\Auth\Entities\User;
 /**
  * @method User|null first()
  */
-class UserModuleModel extends Model
+class UserModuleModel extends ObservedModel
 {
     protected $table          = 'users';
     protected $primaryKey     = 'id';

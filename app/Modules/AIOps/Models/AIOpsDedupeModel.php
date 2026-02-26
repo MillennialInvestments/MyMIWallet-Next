@@ -2,9 +2,9 @@
 
 namespace App\Modules\AIOps\Models;
 
-use CodeIgniter\Model;
+use App\Models\ObservedModel;
 
-class AIOpsDedupeModel extends Model
+class AIOpsDedupeModel extends ObservedModel
 {
     protected $table         = 'bf_aiops_dedupe';
     protected $primaryKey    = 'id';

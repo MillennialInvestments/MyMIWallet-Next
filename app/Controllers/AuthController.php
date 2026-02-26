@@ -199,6 +199,7 @@ class AuthController extends BaseController
 
         // 🔴 AUTH ATTEMPT
         if (! $attempt) {
+            log_message('warning', '[AUTH_FAILURE] ' . (string) $identifier);
             // LocalAuthenticator exposes `error()` (single last error message)
             $errorMsg = $this->auth->error() ?? lang('Auth.badAttempt');
             $inactiveMessage = lang('Auth.notActivated');

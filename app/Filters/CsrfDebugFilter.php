@@ -17,9 +17,12 @@ class CsrfDebugFilter extends CSRF
      */
     public function before(RequestInterface $request, $arguments = null)
     {
+        log_message('debug', '[CSRF] token name=' . csrf_token() . ' hash=' . csrf_hash());
+
         try {
             return parent::before($request, $arguments);
         } catch (SecurityException $exception) {
+            log_message('critical', '[CSRF][EXCEPTION] ' . $exception->getMessage());
             $this->logLoginCsrfDebug($request, $exception);
 
             throw $exception;

@@ -1,13 +1,13 @@
 <?php namespace App\Models;
 
-use CodeIgniter\Model;
+use App\Models\ObservedModel;
 use CodeIgniter\Database\ConnectionInterface;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 
 #[\AllowDynamicProperties]
-class BudgetModel extends Model
+class BudgetModel extends ObservedModel
 {
     protected $table = 'bf_users_budgeting'; // Update the table name as per your CI4 database schema
     protected $primaryKey = 'id';
@@ -237,6 +237,13 @@ class BudgetModel extends Model
         }
 
         return $accountType === 'income' ? 'income' : 'expense';
+    }
+
+    public function insert($data = null, bool $returnID = true)
+    {
+        log_message('debug', '[DB INSERT] Data=' . json_encode($data));
+
+        return parent::insert($data, $returnID);
     }
 
     public function addAccount($data) {

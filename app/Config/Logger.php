@@ -10,7 +10,7 @@ use App\Log\Handlers\UnifiedLoggerHandler;
 
 class Logger extends BaseConfig
 {
-    public int|string|array $threshold = 9;
+    public int|string|array $threshold = 4;
 
     public string $dateFormat = 'Y-m-d H:i:s';
 

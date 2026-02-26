@@ -40,6 +40,8 @@ abstract class BaseController extends Controller
     protected array $csp = [];
     protected ?string $cspNonce = null;
     protected bool $telemetryEnabled = false;
+    protected ?string $requestId = null;
+    protected ?float $startTime = null;
     protected int $maxListItems = 250;
 
     protected array $pageDefaults = [
@@ -88,7 +90,10 @@ abstract class BaseController extends Controller
         LoggerInterface $logger
     ) {
         parent::initController($request, $response, $logger);
-        log_message('debug', static::class . ' initController executed');
+        $this->startTime = microtime(true);
+        $this->requestId = bin2hex(random_bytes(6));
+        $this->trace('[INIT] ' . static::class . '::' . $this->request->getMethod());
+        $this->memoryCheckpoint('controller-start');
 
         if (is_cli()) {
             return;
@@ -151,6 +156,11 @@ abstract class BaseController extends Controller
         $this->data['uri']         = $this->request->getUri();
         $this->data['userAgent']   = $this->request->getUserAgent();
 
+        if ($this->request->isAJAX()) {
+            $this->trace('[AJAX_HEADERS] ' . json_encode($this->request->headers()));
+            $this->trace('[AJAX_POST] ' . json_encode($this->request->getPost()));
+        }
+
         if (CI_DEBUG && ENVIRONMENT !== 'production') {
             Services::toolbar();
             log_message('debug', '[AIOPS][GOVERNANCE] Toolbar service initialized from BaseController.');
@@ -160,6 +170,21 @@ abstract class BaseController extends Controller
     protected function getCuID(): ?int
     {
         return $this->resolveCurrentUserId();
+    }
+
+    protected function trace($message, $level = 'debug'): void
+    {
+        log_message($level, '[REQ_ID=' . ($this->requestId ?? 'N/A') . '] ' . $message);
+    }
+
+    protected function memoryCheckpoint($label): void
+    {
+        $this->trace('[MEMORY][' . $label . '] ' . memory_get_usage(true), 'info');
+    }
+
+    protected function logMemory($label = ''): void
+    {
+        $this->memoryCheckpoint((string) $label);
     }
 
 
@@ -229,6 +254,7 @@ abstract class BaseController extends Controller
     protected function commonData(): array|ResponseInterface
     {
         $this->logTelemetryMemory('commonData:start');
+        $this->logMemory('commonData:start');
         $cuID = $this->getCuID();
         $this->data['cuID'] = $cuID;
 
@@ -513,6 +539,14 @@ abstract class BaseController extends Controller
     }
 
 
+    public function __destruct()
+    {
+        if ($this->startTime !== null) {
+            $duration = microtime(true) - $this->startTime;
+            $this->trace('[PERF] Execution time=' . number_format($duration, 6), 'info');
+        }
+    }
+
     protected function normalizeAppOverridesFolder(): void
     {
         $config = config('App');
@@ -530,6 +564,7 @@ abstract class BaseController extends Controller
         if ($data instanceof ResponseInterface) {
             return $data; // just hand it back
         }
+        $this->trace('[VIEW_RENDER] ' . $view);
         $this->normalizeAppOverridesFolder();
 
         // Pick theme (public/dashboard) just like before

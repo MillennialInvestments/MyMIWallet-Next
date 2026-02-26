@@ -39,6 +39,12 @@ class SafeCache
             'hit' => $value !== null,
         ]);
 
+        if ($value !== null) {
+            log_message('debug', '[CACHE_HIT] ' . $key);
+        } else {
+            log_message('debug', '[CACHE_MISS] ' . $key);
+        }
+
         return $value;
     }
 

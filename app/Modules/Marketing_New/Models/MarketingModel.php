@@ -2,9 +2,9 @@
 
 namespace App\Modules\Marketing_New\Models;
 
-use CodeIgniter\Model;
+use App\Models\ObservedModel;
 
-class MarketingModel extends Model
+class MarketingModel extends ObservedModel
 {
     protected $table = 'bf_marketing_scraper';
     protected $primaryKey = 'id';

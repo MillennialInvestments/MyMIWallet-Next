@@ -45,6 +45,8 @@ abstract class SafeBaseCommand extends BaseCommand implements
      * Must remain untyped.
      */
     protected $parsedFlags = [];
+    protected $sparkTraceStarted = false;
+    protected $sparkTraceStartTime = null;
 
     /**
      * CI4-safe parameter parser.
@@ -52,8 +54,42 @@ abstract class SafeBaseCommand extends BaseCommand implements
      * @param array $params
      * @return array{0: array<int, string>, 1: array<string, mixed>}
      */
+
+    protected function beginSparkTrace(): void
+    {
+        if ($this->sparkTraceStarted) {
+            return;
+        }
+
+        $this->sparkTraceStarted = true;
+        $this->sparkTraceStartTime = microtime(true);
+        log_message('info', '[SPARK_START] ' . static::class);
+        log_message('info', '[SPARK_MEMORY] ' . memory_get_usage(true));
+    }
+
+    protected function finishSparkTrace(): void
+    {
+        if (! $this->sparkTraceStarted) {
+            return;
+        }
+
+        $duration = $this->sparkTraceStartTime !== null
+            ? microtime(true) - $this->sparkTraceStartTime
+            : 0;
+
+        log_message('info', '[SPARK_COMPLETE] ' . static::class . ' duration=' . number_format((float) $duration, 6));
+        log_message('info', '[SPARK_MEMORY] ' . memory_get_usage(true));
+        $this->sparkTraceStarted = false;
+    }
+
+    public function __destruct()
+    {
+        $this->finishSparkTrace();
+    }
+
     protected function parseParams(array $params): array
     {
+        $this->beginSparkTrace();
         $args  = [];
         $flags = [];
 

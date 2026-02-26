@@ -1,9 +1,9 @@
 <?php 
 namespace App\Modules\User\Models;
 
-use CodeIgniter\Model;
+use App\Models\ObservedModel;
 
-class BudgetModuleModel extends Model {
+class BudgetModuleModel extends ObservedModel {
     protected $DBGroup = 'default';
     protected $table = 'bf_users_budgeting';
     protected $primaryKey = 'id';

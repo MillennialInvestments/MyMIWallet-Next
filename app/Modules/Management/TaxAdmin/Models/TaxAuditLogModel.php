@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Modules\Management\TaxAdmin\Models;
 
-use CodeIgniter\Model;
+use App\Models\ObservedModel;
 
-class TaxAuditLogModel extends Model
+class TaxAuditLogModel extends ObservedModel
 {
     protected $table         = 'bf_tax_audit_log';
     protected $primaryKey    = 'id';

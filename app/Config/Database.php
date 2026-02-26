@@ -80,7 +80,7 @@ class Database extends Config
             'DBDriver' => env('database.default.DBDriver', 'MySQLi'),
             'DBPrefix' => '',
             'pConnect' => false,
-            'DBDebug'  => ENVIRONMENT !== 'production',
+            'DBDebug'  => true,
             'charset'  => 'utf8mb4',
             'DBCollat' => 'utf8mb4_general_ci',
             'swapPre'  => '',
