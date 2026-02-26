@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Services\AiOps;
+namespace App\Services\AIOps;
 
 use CodeIgniter\Config\Services;
+use Config\App;
 
 class FormIntelligenceService
 {
@@ -52,31 +53,10 @@ class FormIntelligenceService
         }
 
         if ($type === 'file') {
-            $real = realpath($value);
-            if ($real === false || !is_file($real)) {
+            if (!is_file($value)) {
                 return '';
             }
-
-            // Restrict local file scans to project/application writable scopes.
-            $allowedRoots = [
-                rtrim(realpath(ROOTPATH) ?: ROOTPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR,
-                rtrim(realpath(APPPATH) ?: APPPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR,
-                rtrim(realpath(WRITEPATH) ?: WRITEPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR,
-            ];
-
-            $withinAllowedRoot = false;
-            foreach ($allowedRoots as $root) {
-                if (str_starts_with($real, $root)) {
-                    $withinAllowedRoot = true;
-                    break;
-                }
-            }
-
-            if (!$withinAllowedRoot) {
-                return '';
-            }
-
-            $content = @file_get_contents($real);
+            $content = @file_get_contents($value);
             return $content === false ? '' : $content;
         }
 
@@ -226,16 +206,11 @@ class FormIntelligenceService
         $bestMatch = null;
 
         foreach ($all as $routePattern => $handler) {
+            // We do a simple contains-based match first; you can upgrade to regex later.
             $normalizedPattern = '/' . ltrim((string) $routePattern, '/');
 
             if ($normalizedPattern === $pathOnlyNoQuery) {
                 $bestMatch = [$routePattern, $handler, 'exact'];
-                break;
-            }
-
-            $regex = $this->routePatternToRegex($normalizedPattern);
-            if ($regex !== null && preg_match($regex, $pathOnlyNoQuery) === 1) {
-                $bestMatch = [$routePattern, $handler, 'regex'];
                 break;
             }
 
@@ -272,26 +247,5 @@ class FormIntelligenceService
             'match_type' => $matchType,
             'note' => null,
         ];
-    }
-
-    private function routePatternToRegex(string $pattern): ?string
-    {
-        if ($pattern === '') {
-            return null;
-        }
-
-        $regex = preg_quote($pattern, '#');
-        $map = [
-            '\(:num\)' => '([0-9]+)',
-            '\(:segment\)' => '([^/]+)',
-            '\(:any\)' => '(.+)',
-            '\(:alpha\)' => '([a-zA-Z]+)',
-            '\(:alphanum\)' => '([a-zA-Z0-9]+)',
-            '\(:hash\)' => '([^/]+)',
-        ];
-
-        $regex = strtr($regex, $map);
-
-        return '#^' . $regex . '$#u';
     }
 }

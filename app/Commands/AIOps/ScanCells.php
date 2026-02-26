@@ -6,7 +6,7 @@ namespace App\Commands\AIOps;
 
 use App\Commands\SafeBaseCommand;
 use App\Models\AiOpsScanStateModel;
-use App\Services\AiOps\CellDiscoveryScanner;
+use App\Services\AIOps\CellDiscoveryScanner;
 use CodeIgniter\CLI\CLI;
 
 class ScanCells extends SafeBaseCommand

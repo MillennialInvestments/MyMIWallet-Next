@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Commands\AIOps;
 
 use App\Commands\SafeBaseCommand;
-use App\Services\AiOps\BacklogMetaService;
+use App\Services\AIOps\BacklogMetaService;
 use CodeIgniter\CLI\CLI;
 
 class Unlock extends SafeBaseCommand

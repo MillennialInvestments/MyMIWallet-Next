@@ -56,13 +56,13 @@ class WorkerLogs extends SafeBaseCommand
 
         CLI::write("Queued log-fix instruction #{$instructionId}", 'yellow');
 
-        $worker = new Worker();
-        $_SERVER['argv'] = ['spark', 'aiops:worker', '--once'];
+        $args = ['aiops:worker', '--once'];
+
         if ($hasCritical) {
-            $_SERVER['argv'][] = '--create-pr=1';
+            $args[] = '--create-pr=1';
         }
 
-        $worker->run(['--once', $hasCritical ? '--create-pr=1' : null]);
+        command(implode(' ', $args));
 
         return EXIT_SUCCESS;
     }

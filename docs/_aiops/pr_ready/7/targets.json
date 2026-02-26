@@ -1,0 +1,15 @@
+{
+    "file_candidates": [
+        "app/Commands/Ops/Work.php",
+        "app/Libraries/CacheKeySanitizer.php",
+        "app/Config/Routes.php",
+        "app/Commands/",
+        "app/Controllers/",
+        "app/Models/",
+        "app/Services/",
+        "app/Services/AIOps/",
+        "app/Views/",
+        "app/Config/Cache.php"
+    ],
+    "notes": "Heuristic inference only; AIOps/Ollama should confirm exact file placements."
+}

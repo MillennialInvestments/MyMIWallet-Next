@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-25T02:00:01Z
+> Run: 2026-02-26T02:00:02Z
 
 - docs/APIs/api_audit_latest.md
   - Last updated: 2026-02-21
@@ -94,10 +94,10 @@
   - Change type: unchanged
 - docs/_support/config-clear/20260225-005807/summary.md
   - Last updated: 2026-02-25
-  - Change type: new
+  - Change type: unchanged
 - docs/_support/config-clear/20260225-011911/summary.md
   - Last updated: 2026-02-25
-  - Change type: new
+  - Change type: unchanged
 - docs/_support/fix-503/20260215-005841/summary.md
   - Last updated: 2026-02-15
   - Change type: unchanged
@@ -190,7 +190,7 @@
   - Change type: unchanged
 - docs/_support/spark-reset/20260225-005815/summary.md
   - Last updated: 2026-02-25
-  - Change type: new
+  - Change type: unchanged
 - docs/adr/0001-standards-and-response-contract.md
   - Last updated: 2025-11-08
   - Change type: unchanged

@@ -1,0 +1,10 @@
+{
+    "file_candidates": [
+        "app/Controllers/",
+        "app/Models/",
+        "app/Services/",
+        "app/Services/AIOps/",
+        "app/Config/Cache.php"
+    ],
+    "notes": "Heuristic inference only; AIOps/Ollama should confirm exact file placements."
+}

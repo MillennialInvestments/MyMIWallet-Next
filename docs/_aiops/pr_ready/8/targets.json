@@ -1,0 +1,13 @@
+{
+    "file_candidates": [
+        "app/Config/Events.php",
+        "app/Config/Filters.php",
+        "app/Controllers/BaseController.php",
+        "app/Config/Routes.php",
+        "app/Controllers/",
+        "app/Models/",
+        "app/Services/",
+        "app/Config/Logger.php"
+    ],
+    "notes": "Heuristic inference only; AIOps/Ollama should confirm exact file placements."
+}

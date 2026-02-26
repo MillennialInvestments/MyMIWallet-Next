@@ -167,6 +167,8 @@ class Console extends BaseConfig
         | Ollama - Control
         |----------------------------------------------------------------------
         */
+        \App\Commands\Ollama\CircuitReset::class,
+        \App\Commands\Ollama\CircuitStatus::class,
         \App\Commands\Ollama\Health::class,
         \App\Commands\Ollama\Version::class,
         \App\Commands\Ollama\Ping::class,

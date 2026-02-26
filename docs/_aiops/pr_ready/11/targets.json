@@ -1,0 +1,6 @@
+{
+    "file_candidates": [
+        "app/Services/AIOps/"
+    ],
+    "notes": "Heuristic inference only; AIOps/Ollama should confirm exact file placements."
+}

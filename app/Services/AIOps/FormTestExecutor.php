@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Services\AiOps;
+namespace App\Services\AIOps;
 
-use App\Models\AiOps\FormTestModel;
+use App\Models\AIOps\FormTestModel;
 use CodeIgniter\Config\Services;
 
 class FormTestExecutor
@@ -171,7 +171,7 @@ class FormTestExecutor
         $client = Services::curlrequest([
             'timeout' => 25,
             'http_errors' => false,
-            'allow_redirects' => ['max' => 3, 'strict' => true],
+            'allow_redirects' => true,
         ]);
 
         try {
@@ -199,7 +199,7 @@ class FormTestExecutor
             return [
                 'status' => $resp->getStatusCode(),
                 'headers' => $headers,
-                'body' => mb_substr((string) $resp->getBody(), 0, 120000),
+                'body' => (string) $resp->getBody(),
                 'final_url' => $url,
             ];
         } catch (\Throwable $e) {

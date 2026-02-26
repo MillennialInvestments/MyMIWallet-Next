@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Services\AiOps;
+namespace App\Services\AIOps;
 
-use App\Models\AiOps\FormTestModel;
+use App\Models\AIOps\FormTestModel;
 
 class FormPatchPlanner
 {
@@ -27,8 +27,8 @@ class FormPatchPlanner
         $row      = $executionResult['row'] ?? [];
 
         $jobDir = ROOTPATH . 'docs/_aiops/patch_jobs/';
-        if (!is_dir($jobDir) && !@mkdir($jobDir, 0775, true) && !is_dir($jobDir)) {
-            return ['ok' => false, 'note' => 'Unable to create patch job directory: ' . $jobDir];
+        if (!is_dir($jobDir)) {
+            @mkdir($jobDir, 0775, true);
         }
 
         $jobId = 'FORM_TEST_' . date('Ymd_His') . '_ID' . $testId;
@@ -36,9 +36,7 @@ class FormPatchPlanner
 
         $md = $this->buildPatchJobMarkdown($jobId, $testId, $analysis, $executionResult);
 
-        if (file_put_contents($jobFile, $md) === false) {
-            return ['ok' => false, 'note' => 'Unable to write patch job file: ' . $jobFile];
-        }
+        file_put_contents($jobFile, $md);
 
         // Update DB: patch job created
         $model = new FormTestModel();
@@ -109,25 +107,19 @@ AIOPS_OBJECTIVE=Autotest_form_submission_capture_logs_and_generate_patch_PR
 
 ## Generated Payload
 ```json
-{$payloadJson}
-```
-
-## Submission Result
+{$payloadJson}Submission Result
 
 final_url: {$finalUrl}
 
 status: {$status}
 
-## Response Headers (partial)
+Response Headers (partial)
 {$headers}
-
-## Response Body (partial)
+Response Body (partial)
 {$bodyTrim}
-
-## Logs Snapshot (partial)
+Logs Snapshot (partial)
 {$logsTrim}
-
-## Fix Instructions (for Ollama / AIOps Worker)
+Fix Instructions (for Ollama / AIOps Worker)
 
 Identify the controller+method handling this route.
 

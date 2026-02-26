@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Commands\AIOps;
 
 use App\Commands\SafeBaseCommand;
-use App\Services\AiOps\ManualPriorityRunner;
-use App\Services\AiOps\ManualRunNotifier;
+use App\Services\AIOps\ManualPriorityRunner;
+use App\Services\AIOps\ManualRunNotifier;
 use CodeIgniter\CLI\CLI;
 
 class ManualRun extends SafeBaseCommand

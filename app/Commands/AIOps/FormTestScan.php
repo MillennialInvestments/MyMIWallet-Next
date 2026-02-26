@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Commands\AIOps;
 
 use App\Commands\SafeBaseCommand;
-use App\Services\AiOps\FormIntelligenceService;
-use App\Services\AiOps\FormPatchPlanner;
-use App\Services\AiOps\FormTestExecutor;
+use App\Services\AIOps\FormIntelligenceService;
+use App\Services\AIOps\FormPatchPlanner;
+use App\Services\AIOps\FormTestExecutor;
 use CodeIgniter\CLI\CLI;
 
 class FormTestScan extends SafeBaseCommand

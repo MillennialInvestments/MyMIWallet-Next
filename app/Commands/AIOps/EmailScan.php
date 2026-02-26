@@ -6,7 +6,7 @@ namespace App\Commands\AIOps;
 
 use App\Commands\SafeBaseCommand;
 use App\Models\AiOpsRunModel;
-use App\Services\AiOps\EmailScannerService;
+use App\Services\AIOps\EmailScannerService;
 use CodeIgniter\CLI\CLI;
 use Config\Database;
 
