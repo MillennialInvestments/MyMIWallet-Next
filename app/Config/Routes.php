@@ -49,6 +49,7 @@ $routes->get('Maintenance', 'MaintenanceController::index');
 
 $routes->get('API/Ops/health-score', 'OpsHealth::score');
 $routes->get('API/Ops/filesystem-status', 'Api\OpsFilesystemStatusController::index', ['filter' => 'permission:admin.access']);
+$routes->get('API/docs', 'Api\SwaggerDocsController::index', ['filter' => 'permission:admin.access']);
 $routes->group('admin/ops', ['filter' => 'permission:admin.access'], static function ($routes) {
     $routes->get('health', 'OpsHealth::index');
     $routes->post('health/run', 'OpsHealth::run');
@@ -235,6 +236,17 @@ $routes->group('Advisor', static function($routes) {
     $routes->post('generateStoryboard', 'AdvisorController::generateNewsStoryboard');
     $routes->post('tradeAnalysis/(:num)', 'AdvisorController::generateTradeAnalysis');
 });
+
+$routes->group('API/v1', ['namespace' => 'App\Modules\APIs\Controllers', 'filter' => ['apiToken', 'ratelimit']],  function($routes) {
+    $routes->match(['GET', 'POST'], 'Status', 'APIController::status');
+    $routes->get('Health', 'HealthAPIController::index');
+    $routes->get('Health/spark', 'HealthAPIController::spark');
+    $routes->get('Ops/status', 'OpsAPIController::status');
+});
+
+// Backward-compatible legacy aliases (deprecated; migrate to /API/v1/*)
+$routes->addRedirect('API/Status', 'API/v1/Status', 302);
+$routes->addRedirect('API/Health', 'API/v1/Health', 302);
 
 $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function($routes) {
     $routes->get('/', 'APIController::index');
