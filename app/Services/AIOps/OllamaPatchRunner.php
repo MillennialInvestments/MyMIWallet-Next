@@ -80,6 +80,10 @@ class OllamaPatchRunner
         $constraintText = implode("\n", array_map(static fn(string $line): string => '- ' . $line, $constraints));
         $targetText = implode("\n", array_map(static fn(string $line): string => '- ' . $line, $job->targetFiles));
 
+        $repoSummary = (new RepoScannerService())->buildContextSummary();
+        $schemaSummary = $this->buildSchemaSummaryFromInstruction($job->instructions);
+        $recentLogs = $this->getRecentLogSummary();
+
         return trim("AIOPS PATCH EXECUTION\n"
             . "You are a mechanical unified-diff writer.\n"
             . "Return only git unified diff output.\n"
@@ -87,7 +91,51 @@ class OllamaPatchRunner
             . "JOB ID: {$job->jobId}\n"
             . "TARGET FILES:\n{$targetText}\n\n"
             . "CONSTRAINTS:\n{$constraintText}\n\n"
+            . "REPO CONTEXT SUMMARY (JSON):\n" . json_encode($repoSummary, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n\n"
+            . "RELEVANT DB SCHEMA (JSON):\n" . json_encode($schemaSummary, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n\n"
+            . "RECENT LOG SUMMARY:\n{$recentLogs}\n\n"
             . "INSTRUCTIONS:\n{$job->instructions}\n");
+    }
+
+    /** @return array<string, array<string, mixed>> */
+    private function buildSchemaSummaryFromInstruction(string $instruction): array
+    {
+        preg_match_all('/\\b(bf_[a-z0-9_]+)\\b/i', $instruction, $matches);
+        $tables = array_values(array_unique(array_map('strtolower', $matches[1] ?? [])));
+
+        $summary = [];
+        $inspector = new SchemaInspectorService();
+        foreach ($tables as $table) {
+            try {
+                $schema = $inspector->getTableSchema($table);
+                if ($schema !== []) {
+                    $summary[$table] = $schema;
+                }
+            } catch (\Throwable $e) {
+                $summary[$table] = ['error' => $e->getMessage()];
+            }
+        }
+
+        return $summary;
+    }
+
+    private function getRecentLogSummary(): string
+    {
+        $logDir = ROOTPATH . 'writable/logs';
+        if (! is_dir($logDir)) {
+            return 'No log directory found.';
+        }
+
+        $files = glob($logDir . '/*.log') ?: [];
+        rsort($files);
+        $latest = $files[0] ?? null;
+        if ($latest === null || ! is_file($latest)) {
+            return 'No log files found.';
+        }
+
+        $lines = @file($latest, FILE_IGNORE_NEW_LINES) ?: [];
+
+        return implode("\n", array_slice($lines, -40));
     }
 
     protected function callOllama(string $prompt, array $audit): string
