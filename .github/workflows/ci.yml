@@ -57,6 +57,19 @@ jobs:
           php spark ops:subs:audit --json=1 --strict=0 > subs-audit.json
 
 
+
+      - name: API Governance Audit
+        run: php spark api:audit
+
+      - name: API Filters Gate
+        run: php spark api:filters-check
+
+      - name: API Rate Limit Gate
+        run: php spark api:rate-limit-check
+
+      - name: API Versioning Gate
+        run: php spark api:versioning-check
+
       - name: PHPUnit (unit)
         run: phpunit --testsuite unit
 
@@ -84,6 +97,9 @@ jobs:
             writable/logs/*
             writable/ci/*
             docs/_aiops/*
+            docs/APIs/audit/latest.md
+            docs/APIs/audit/*
+            docs/security/*
 
   aiops-guardrails:
     runs-on: ubuntu-latest
@@ -124,3 +140,6 @@ jobs:
             writable/logs/*
             writable/ci/*
             docs/_aiops/*
+            docs/APIs/audit/latest.md
+            docs/APIs/audit/*
+            docs/security/*

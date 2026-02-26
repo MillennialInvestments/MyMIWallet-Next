@@ -124,6 +124,19 @@ class Console extends BaseConfig
         \App\Commands\App\Test::class,
         \App\Commands\AppUpdate::class,
         \App\Commands\RuntimeCheck::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | API Governance
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\API\ApiAudit::class,
+        \App\Commands\API\ApiList::class,
+        \App\Commands\API\ApiPermissions::class,
+        \App\Commands\API\ApiFiltersCheck::class,
+        \App\Commands\API\ApiRateLimitCheck::class,
+        \App\Commands\API\ApiVersioningCheck::class,
+
         /*
         |----------------------------------------------------------------------
         | Auth

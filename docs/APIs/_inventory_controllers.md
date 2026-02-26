@@ -1,0 +1,33 @@
+# Controllers Inventory
+
+- Count: 29
+
+- `App\Controllers\Api\AiOpsManualRunController::run`
+- `App\Controllers\Api\OpsFilesystemStatusController::index`
+- `App\Controllers\Api\AdminChatUsageController::index`
+- `App\Controllers\Api\SwaggerDocsController::index`
+- `App\Controllers\StockController::show`
+- `App\Controllers\Test::crash`
+- `App\Controllers\MaintenanceController::index`
+- `App\Controllers\UserController::initController`
+- `App\Modules\User\Controllers\SearchController::index`
+- `App\Modules\Public\Controllers\PublicPagesController::show`
+- `App\Modules\Status\Controllers\MetricsController::export`
+- `App\Modules\Exchange\Controllers\UserController::index`
+- `App\Modules\Template\Controllers\TemplateController::index`
+- `App\Modules\Logs\Controllers\LogsController::summary`
+- `App\Modules\Management\Controllers\AiOpsManagementAdminController::index`
+- `App\Modules\Management\Controllers\DevelopmentAdminController::index`
+- `App\Modules\Management\Controllers\HRAdminController::index`
+- `App\Modules\Management\Controllers\TestAdminController::testITTSend`
+- `App\Modules\Management\Controllers\SignalsAdminController::index`
+- `App\Modules\Management\Controllers\SmtpTestAdminController::probe`
+- `App\Modules\Management\Controllers\FinanceAdminController::index`
+- `App\Modules\Management\Controllers\OperationsAdminController::index`
+- `App\Modules\APIs\Controllers\AlertsPublicAPIController::list`
+- `App\Modules\APIs\Controllers\ZapierAPIController::webhookReceiver`
+- `App\Modules\APIs\Controllers\Webhooks\ZapierAPIController::ingest`
+- `App\Modules\APIs\Controllers\Webhooks\TradingViewAPIController::ingest`
+- `App\Modules\APIs\Controllers\Webhooks\EmailBounceAPIController::ingest`
+- `App\Modules\APIs\Controllers\SearchAPIController::index`
+- `App\Modules\APIs\Controllers\MditBaseAPIController::initController`

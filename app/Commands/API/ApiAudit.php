@@ -5,376 +5,190 @@ declare(strict_types=1);
 namespace App\Commands\API;
 
 use App\Commands\SafeBaseCommand;
-use App\Commands\Support\ArtifactHelper;
-use Config\App;
-use Config\Services;
+use App\Services\ApiGovernanceService;
 use CodeIgniter\CLI\CLI;
-use RuntimeException;
+use Config\Database;
 
 class ApiAudit extends SafeBaseCommand
 {
-    protected $group = 'AIOps';
+    protected $group = 'API';
     protected $name = 'api:audit';
-    protected $description = 'Audit API endpoints defined in docs/api/schematic.yaml and capture runtime health.';
-
-    private const RESPONSE_PREVIEW_LIMIT = 1200;
-    private const PERFORMANCE_THRESHOLD_MS = 2000;
+    protected $description = 'Institutional API governance audit: routes, permissions, filters, rate limits, and versioning.';
 
     public function run(array $params)
     {
-        $this->parseParams($params);
-        log_message('info', '[spark:api:audit] Started', ['params' => $params]);
+        $runUuid = bin2hex(random_bytes(8));
+        $svc = new ApiGovernanceService();
+        $scan = $svc->scan($runUuid);
 
-        $resolved = ArtifactHelper::resolveArtifactDirs($this->name, null);
-        if (isset($resolved['error'])) {
-            CLI::error($resolved['error']);
-            return EXIT_ERROR;
+        $stamp = date('Ymd-His');
+        $dir = ROOTPATH . 'docs/APIs/audit/' . $stamp . '_' . $runUuid;
+        @mkdir($dir, 0775, true);
+
+        $this->writeInventoryDocs($scan);
+        $this->writeCoverageDocs($scan);
+        $this->writeOpenApi($scan);
+        try {
+            $this->persistAudit($scan);
+        } catch (\Throwable $e) {
+            CLI::write('DB persistence skipped: ' . $e->getMessage(), 'yellow');
         }
 
-        $schematicPath = ROOTPATH . 'docs/api/schematic.yaml';
-        if (! is_file($schematicPath)) {
-            CLI::error('Missing schematic.yaml at ' . $schematicPath);
-            return EXIT_ERROR;
-        }
-
-        $entries = $this->loadSchematic($schematicPath);
-        if ($entries === []) {
-            CLI::error('No endpoints found in schematic.yaml');
-            return EXIT_ERROR;
-        }
-
-        $requester = new ApiAuditRequester();
-        $report = [
-            'generated_at' => date('c'),
-            'timestamp' => $resolved['timestamp'],
-            'summary' => [
-                'total' => count($entries),
-                'skipped' => 0,
-                'passed' => 0,
-                'failed' => 0,
-            ],
-            'endpoints' => [],
+        $lines = [
+            '# API Governance Audit Report',
+            '- Timestamp: ' . $scan['metadata']['timestamp'],
+            '- Run UUID: ' . $scan['metadata']['run_uuid'],
+            '- Environment: ' . $scan['metadata']['environment'],
+            '- Summary Counts: ' . json_encode($scan['metadata']['summary']),
+            '',
+            '## Actionable Remediation List',
         ];
+        foreach ($scan['remediations'] as $item) {
+            $lines[] = sprintf('- [%s] %s => %s', $item['severity'], $item['endpoint'], $item['remediation']);
+        }
 
-        $rows = [];
+        $body = implode(PHP_EOL, $lines) . PHP_EOL;
+        file_put_contents($dir . '/report.md', $body);
+        @mkdir(ROOTPATH . 'docs/APIs/audit', 0775, true);
+        file_put_contents(ROOTPATH . 'docs/APIs/audit/latest.md', $body);
 
-        foreach ($entries as $entry) {
-            $audit = $this->auditEndpoint($requester, $entry);
-            $report['endpoints'][] = $audit;
-
-            if ($audit['skipped']) {
-                $report['summary']['skipped']++;
-            } elseif ($audit['status'] === 'pass') {
-                $report['summary']['passed']++;
-            } else {
-                $report['summary']['failed']++;
-            }
-
-            $rows[] = [
-                $audit['id'],
-                $audit['http_method'],
-                $audit['route'] ?? 'n/a',
-                $audit['status'],
-                $audit['status_code'] ?? 'n/a',
-            $audit['response_time_ms'] ?? 'n/a',
-            $audit['failure_classification'] ?? '-',
-        ];
-    }
-
-    CLI::newLine();
-    CLI::table($rows, ['id', 'method', 'route', 'status', 'code', 'ms', 'failure']);
-
-    $summaryLines = [
-        '# API Audit Report',
-        '',
-        '- Timestamp: ' . $resolved['timestamp'],
-        '- Total endpoints: ' . $report['summary']['total'],
-        '- Passed: ' . $report['summary']['passed'],
-        '- Failed: ' . $report['summary']['failed'],
-        '- Skipped: ' . $report['summary']['skipped'],
-        '',
-        '## Endpoints',
-    ];
-
-    foreach ($report['endpoints'] as $endpoint) {
-        $summaryLines[] = sprintf(
-            '- %s %s: %s (%s)',
-            $endpoint['http_method'],
-            $endpoint['route'] ?? 'n/a',
-            $endpoint['status'],
-            $endpoint['status_code'] ?? 'n/a'
-        );
-    }
-
-    $summary = implode(PHP_EOL, $summaryLines) . PHP_EOL;
-    $report['artifact_dir'] = $resolved['dir'];
-
-    if (! ArtifactHelper::writeArtifacts($resolved['dir'], $summary, $report)) {
-        return EXIT_ERROR;
-    }
-
-    CLI::newLine();
-    CLI::write('Report saved to ' . $resolved['dir'], 'green');
-
-    log_message('info', '[spark:api:audit] Completed', [
-        'summary' => $report['summary'],
-        'report_path' => $resolved['dir'],
-    ]);
-
+        CLI::write('Audit completed: ' . $dir, 'green');
         return EXIT_SUCCESS;
     }
 
-    /**
-     * @return array<int, array<string, mixed>>
-     */
-    private function loadSchematic(string $path): array
+    private function writeInventoryDocs(array $scan): void
     {
-        $raw = trim((string) file_get_contents($path));
-        if ($raw === '') {
-            return [];
-        }
-
-        $decoded = json_decode($raw, true);
-        if (! is_array($decoded)) {
-            throw new RuntimeException('schematic.yaml must be valid JSON (YAML-compatible).');
-        }
-
-        return $decoded;
+        @mkdir(ROOTPATH . 'docs/APIs', 0775, true);
+        file_put_contents(ROOTPATH . 'docs/APIs/_inventory_routes.md', $this->renderRoutesInventory($scan));
+        file_put_contents(ROOTPATH . 'docs/APIs/_inventory_controllers.md', $this->renderControllersInventory($scan));
+        file_put_contents(ROOTPATH . 'docs/APIs/_inventory_filters.md', $this->renderFiltersInventory($scan));
+        file_put_contents(ROOTPATH . 'docs/APIs/_inventory_rate_limits.md', $this->renderRateInventory($scan));
     }
 
-    /**
-     * @param array<string, mixed> $entry
-     * @return array<string, mixed>
-     */
-    private function auditEndpoint(ApiAuditRequester $requester, array $entry): array
+    private function writeCoverageDocs(array $scan): void
     {
-        $id = (string) ($entry['id'] ?? 'unknown');
-        $httpMethod = strtoupper((string) ($entry['http_method'] ?? 'UNKNOWN'));
-        $route = $entry['route'] ?? null;
-        $expectedKeys = $entry['expected_response_keys'] ?? [];
-        $testStrategy = (string) ($entry['test_strategy'] ?? 'skip');
+        @mkdir(ROOTPATH . 'docs/security', 0775, true);
+        file_put_contents(ROOTPATH . 'docs/security/filter-coverage.md', $this->renderFilterCoverage($scan));
+        file_put_contents(ROOTPATH . 'docs/APIs/rate-limit-coverage.md', $this->renderRateCoverage($scan));
+        file_put_contents(ROOTPATH . 'docs/APIs/deprecations.md', $this->renderDeprecations($scan));
+    }
 
-        $audit = [
-            'id' => $id,
-            'controller' => $entry['controller'] ?? null,
-            'method' => $entry['method'] ?? null,
-            'route' => $route,
-            'http_method' => $httpMethod,
-            'skipped' => false,
-            'status' => 'fail',
-            'status_code' => null,
-            'response_time_ms' => null,
-            'response_preview' => null,
-            'validation_passed' => false,
-            'failure_classification' => null,
-            'recommended_fix' => null,
-            'notes' => [],
+    private function writeOpenApi(array $scan): void
+    {
+        @mkdir(ROOTPATH . 'docs/APIs/openapi', 0775, true);
+        $spec = [
+            'openapi' => '3.0.3',
+            'info' => ['title' => 'MyMI Wallet API', 'version' => 'v1'],
+            'paths' => [],
+            'components' => ['securitySchemes' => ['bearerAuth' => ['type' => 'http', 'scheme' => 'bearer']]],
         ];
-
-        if ($testStrategy === 'skip' || $route === null) {
-            $audit['skipped'] = true;
-            $audit['status'] = 'skip';
-            if ($route === null) {
-                $audit['failure_classification'] = 'ROUTE_MISSING';
-                $audit['recommended_fix'] = 'Register the route in app/Config/Routes.php or update schematic.yaml.';
+        foreach ($scan['routes'] as $r) {
+            if (($r['is_api'] ?? 0) !== 1 || $r['version'] === 'none') {
+                continue;
             }
-            return $audit;
+            $path = '/' . ltrim($r['uri'], '/');
+            $verb = strtolower($r['http_methods']);
+            $spec['paths'][$path][$verb] = [
+                'summary' => $r['controller'] . '::' . $r['action'],
+                'description' => 'Required filters: ' . implode(', ', $r['filters']),
+                'responses' => ['200' => ['description' => 'OK']],
+                'x-required-permission' => $this->extractPermission($r['filters']),
+                'x-rate-limit' => $r['has_rate_limit'] ? 'ratelimit filter enabled' : 'missing',
+            ];
         }
-
-        if ($httpMethod !== 'GET') {
-            $audit['skipped'] = true;
-            $audit['status'] = 'skip';
-            $audit['notes'][] = 'Non-GET requests are skipped to avoid side effects.';
-            return $audit;
-        }
-
-        $uri = ltrim($route, '/');
-        $start = microtime(true);
-
-        try {
-            $response = $requester->get($uri);
-            $durationMs = (int) round((microtime(true) - $start) * 1000);
-
-            $statusCode = $response->getStatusCode();
-            $body = (string) $response->getBody();
-            $preview = $this->truncate($body, self::RESPONSE_PREVIEW_LIMIT);
-
-            $audit['status_code'] = $statusCode;
-            $audit['response_time_ms'] = $durationMs;
-            $audit['response_preview'] = $preview;
-
-            $validation = $this->validateResponse($statusCode, $body, $expectedKeys);
-            $audit['validation_passed'] = $validation['passed'];
-
-            if ($validation['passed'] && $statusCode < 500 && $durationMs < self::PERFORMANCE_THRESHOLD_MS) {
-                $audit['status'] = 'pass';
-                return $audit;
-            }
-
-            $audit['status'] = 'fail';
-            $classification = $this->classifyFailure($statusCode, $body, $durationMs, $validation['passed']);
-            $audit['failure_classification'] = $classification['type'];
-            $audit['recommended_fix'] = $classification['recommendation'];
-            if ($validation['notes'] !== []) {
-                $audit['notes'] = array_merge($audit['notes'], $validation['notes']);
-            }
-        } catch (\Throwable $error) {
-            $audit['status'] = 'fail';
-            $audit['failure_classification'] = 'EXCEPTION_THROWN';
-            $audit['recommended_fix'] = 'Inspect logs for exceptions and add guards around service dependencies.';
-            $audit['notes'][] = $error->getMessage();
-        }
-
-        return $audit;
+        file_put_contents(ROOTPATH . 'docs/APIs/openapi/openapi.v1.json', json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 
-    /**
-     * @param array<int, string> $expectedKeys
-     * @return array{passed: bool, notes: array<int, string>}
-     */
-    private function validateResponse(int $statusCode, string $body, array $expectedKeys): array
+    private function persistAudit(array $scan): void
     {
-        $notes = [];
-
-        if ($statusCode >= 500) {
-            return ['passed' => false, 'notes' => ['Server error response']];
-        }
-
-        if (trim($body) === '') {
-            return ['passed' => false, 'notes' => ['Empty response body']];
-        }
-
-        $decoded = null;
-        $isJson = false;
-        $trimmed = trim($body);
-        if (str_starts_with($trimmed, '{') || str_starts_with($trimmed, '[')) {
-            $decoded = json_decode($body, true);
-            $isJson = json_last_error() === JSON_ERROR_NONE;
-            if (! $isJson) {
-                return ['passed' => false, 'notes' => ['Malformed JSON response']];
-            }
-        }
-
-        if ($expectedKeys !== [] && $isJson && is_array($decoded)) {
-            foreach ($expectedKeys as $key) {
-                if (! array_key_exists($key, $decoded)) {
-                    $notes[] = sprintf('Missing expected key: %s', $key);
-                }
-            }
-        }
-
-        return ['passed' => $notes === [], 'notes' => $notes];
-    }
-
-    /**
-     * @return array{type: string, recommendation: string}
-     */
-    private function classifyFailure(int $statusCode, string $body, int $durationMs, bool $validationPassed): array
-    {
-        if ($statusCode === 404) {
-            return [
-                'type' => 'ROUTE_MISSING',
-                'recommendation' => 'Confirm route registration in app/Config/Routes.php and update docs/api/schematic.yaml.',
-            ];
-        }
-
-        if (in_array($statusCode, [401, 403], true)) {
-            return [
-                'type' => 'AUTH_BLOCKED',
-                'recommendation' => 'Verify auth filters, tokens, or session requirements for this endpoint.',
-            ];
-        }
-
-        if ($statusCode >= 500) {
-            return [
-                'type' => 'EXCEPTION_THROWN',
-                'recommendation' => 'Inspect server logs for stack traces and ensure dependencies are available.',
-            ];
-        }
-
-        if ($durationMs >= self::PERFORMANCE_THRESHOLD_MS) {
-            return [
-                'type' => 'PERFORMANCE_DEGRADED',
-                'recommendation' => 'Profile slow calls, add caching, or review downstream service latency.',
-            ];
-        }
-
-        if (! $validationPassed || trim($body) === '') {
-            return [
-                'type' => 'INVALID_RESPONSE',
-                'recommendation' => 'Normalize JSON responses and ensure required keys are always returned.',
-            ];
-        }
-
-        return [
-            'type' => 'INVALID_RESPONSE',
-            'recommendation' => 'Validate response payloads and ensure API contracts are met.',
+        $db = Database::connect();
+        $runData = [
+            'run_uuid' => $scan['metadata']['run_uuid'],
+            'started_at' => date('Y-m-d H:i:s'),
+            'finished_at' => date('Y-m-d H:i:s'),
+            'environment' => $scan['metadata']['environment'],
+            'git_commit' => trim((string) @shell_exec('git rev-parse --short HEAD')),
+            'summary_json' => json_encode($scan['metadata']['summary']),
         ];
-    }
+        $db->table('bf_api_audit_runs')->insert($runData);
+        $runId = (int) $db->insertID();
 
-    private function truncate(string $value, int $limit): string
-    {
-        if (mb_strlen($value) <= $limit) {
-            return $value;
+        foreach ($scan['routes'] as $r) {
+            $endpointId = $this->upsertEndpoint($db, $r);
+            $this->upsertRule($db, $endpointId, $r);
+            foreach ($r['findings'] as $finding) {
+                $db->table('bf_api_audit_findings')->insert([
+                    'run_id' => $runId,
+                    'endpoint_id' => $endpointId,
+                    'severity' => $r['severity'],
+                    'category' => 'governance',
+                    'finding' => $finding,
+                    'remediation' => $finding,
+                    'evidence_json' => json_encode($r),
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+            }
         }
-
-        return mb_substr($value, 0, $limit) . '…';
     }
-}
 
-class ApiAuditRequester
-{
-    /**
-     * @return ApiAuditHttpResponse
-     */
-    public function get(string $uri, array $params = []): ApiAuditHttpResponse
+    private function upsertEndpoint($db, array $r): int
     {
-        /** @var App $app */
-        $app = config('App');
-        $baseUri = rtrim((string) ($app->baseURL ?? ''), '/');
-
-        if ($baseUri === '') {
-            throw new RuntimeException('App.baseURL is not configured; unable to audit API routes over HTTP.');
+        $table = $db->table('bf_api_endpoints');
+        $existing = $table->where('uri', $r['uri'])->where('http_methods', $r['http_methods'])->get()->getRowArray();
+        $data = [
+            'uri' => $r['uri'], 'http_methods' => $r['http_methods'], 'controller' => $r['controller'], 'action' => $r['action'],
+            'module' => $r['module'], 'is_api' => $r['is_api'], 'version' => $r['version'], 'discovered_at' => date('Y-m-d H:i:s'),
+        ];
+        if ($existing) {
+            $table->where('id', $existing['id'])->update($data);
+            return (int) $existing['id'];
         }
+        $table->insert($data);
+        return (int) $db->insertID();
+    }
 
-        $requestUrl = $baseUri . '/' . ltrim($uri, '/');
-        if ($params !== []) {
-            $requestUrl .= '?' . http_build_query($params);
+    private function upsertRule($db, int $endpointId, array $r): void
+    {
+        $table = $db->table('bf_api_endpoint_rules');
+        $existing = $table->where('endpoint_id', $endpointId)->get()->getRowArray();
+        if ($existing && (int) ($existing['is_manual_override'] ?? 0) === 1) {
+            return;
         }
-
-        $client = Services::curlrequest([
-            'http_errors' => false,
-            'timeout' => 15,
-            'verify' => false,
-        ]);
-
-        $response = $client->request('GET', $requestUrl);
-
-        return ApiAuditHttpResponse::fromValues($response->getStatusCode(), (string) $response->getBody());
+        $data = [
+            'endpoint_id' => $endpointId,
+            'requires_auth' => $r['auth_required'] ? 1 : 0,
+            'required_group' => null,
+            'required_permission' => $this->extractPermission($r['filters']),
+            'filters_expected' => json_encode($r['filters']),
+            'rate_limit_policy' => $r['has_rate_limit'] ? 'default' : null,
+            'is_cli_only' => 0,
+            'internal_token_required' => in_array('internaltoken', $r['filters'], true) ? 1 : 0,
+            'is_manual_override' => $existing['is_manual_override'] ?? 0,
+            'updated_at' => date('Y-m-d H:i:s'),
+        ];
+        if ($existing) {
+            $table->where('id', $existing['id'])->update($data);
+            return;
+        }
+        $data['created_at'] = date('Y-m-d H:i:s');
+        $table->insert($data);
     }
-}
 
-class ApiAuditHttpResponse
-{
-    private int $statusCode = 0;
-    private string $body = '';
-
-    public static function fromValues(int $statusCode, string $body): self
+    private function extractPermission(array $filters): ?string
     {
-        $instance = new self();
-        $instance->statusCode = $statusCode;
-        $instance->body = $body;
-
-        return $instance;
+        foreach ($filters as $f) {
+            if (str_starts_with($f, 'permission')) {
+                return $f;
+            }
+        }
+        return null;
     }
 
-    public function getStatusCode(): int
-    {
-        return $this->statusCode;
-    }
-
-    public function getBody(): string
-    {
-        return $this->body;
-    }
+    private function renderRoutesInventory(array $scan): string { return "# Routes Inventory\n\n- Timestamp: {$scan['metadata']['timestamp']}\n- Run UUID: {$scan['metadata']['run_uuid']}\n\n" . implode("\n", array_map(fn($r) => sprintf('- %s `%s` => `%s::%s`', $r['http_methods'], $r['uri'], $r['controller'], $r['action']), $scan['routes'])) . "\n"; }
+    private function renderControllersInventory(array $scan): string { return "# Controllers Inventory\n\n- Count: " . count($scan['controllers']) . "\n\n" . implode("\n", array_map(fn($c) => "- `{$c['controller']}::{$c['action']}`", $scan['controllers'])) . "\n"; }
+    private function renderFiltersInventory(array $scan): string { return "# Filter Inventory\n\n" . implode("\n", array_map(fn($r) => "- {$r['http_methods']} `{$r['uri']}` filters=" . implode(',', $r['filters']), $scan['routes'])) . "\n"; }
+    private function renderRateInventory(array $scan): string { return "# Rate Limit Inventory\n\n" . implode("\n", array_map(fn($r) => "- {$r['http_methods']} `{$r['uri']}` has_rate_limit=" . ($r['has_rate_limit'] ? 'yes':'no'), $scan['routes'])) . "\n"; }
+    private function renderFilterCoverage(array $scan): string { return "# Filter Coverage\n\n" . implode("\n", array_map(fn($r) => "- [{$r['severity']}] {$r['http_methods']} `{$r['uri']}` " . implode('; ', $r['findings']), $scan['routes'])) . "\n"; }
+    private function renderRateCoverage(array $scan): string { return "# Rate Limit Coverage\n\n" . implode("\n", array_map(fn($r) => "- {$r['http_methods']} `{$r['uri']}` policy=" . ($r['has_rate_limit'] ? 'configured':'missing'), $scan['routes'])) . "\n"; }
+    private function renderDeprecations(array $scan): string { return "# API Deprecations\n\nLegacy `/API/*` routes should migrate to `/API/v1/*`; keep aliases temporarily.\n"; }
 }
