@@ -1,0 +1,1 @@
+Review my entire CI4 Application Repository and all of it's subsystems and provide a summary go-to market plan that you think would be the most easiest and beneficial path to take to get started with getting the CI4 Application to start generating revenue

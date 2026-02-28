@@ -47,15 +47,18 @@ class OllamaPatchRunner
         $diff = $attemptOne['response'];
 
         if (! $this->validateGeneratedPatch($diff)) {
+            log_message('warning', 'OllamaPatchRunner:L49 - Original Diff: ' . print_r($diff, true)); 
             $this->writeInvalidModelOutput($job->jobId, $attemptOne, 'attempt_1');
 
             $attemptTwo = $this->callOllama($prompt, $audit); // retry once
             $diff = $attemptTwo['response'];
 
+            log_message('debug', 'OllamaPatchRunner:L51 - Retried Diff: ' . print_r($diff, true)); 
             if (! $this->validateGeneratedPatch($diff)) {
                 $this->writeInvalidModelOutput($job->jobId, $attemptTwo, 'attempt_2');
                 $this->writeDiffSkeletonFallback($job);
 
+                log_message('debug', 'OllamaPatchRunner:L53 - Validating Generated Patch Failed');
                 return $this->persist(new PatchResult('failed_invalid_model_output', $job->jobId, null, false, [
                     'job_file' => $job->jobFile,
                     'debug_file' => 'docs/_aiops/debug/' . $job->jobId . '.attempt_2.raw-output.json',
@@ -196,10 +199,12 @@ class OllamaPatchRunner
 
     private function validateGeneratedPatch(string $content): bool
     {
+        log_message('debug', 'OllamaPatchRunner:L142 - validateGeneratedPatch Content: ' . print_r($content, true));
         $trim = trim($content);
         if ($trim === '') {
             return false;
         }
+        log_message('debug', 'OllamaPatchRunner:L147 - Trimmed validateGeneratedPatch Content: ' . print_r($trim, true));
 
         $lower = strtolower($trim);
         foreach (['todo', 'placeholder', 'pseudo', 'example'] as $bad) {
@@ -211,6 +216,7 @@ class OllamaPatchRunner
         $hasNamespace = preg_match('/\bnamespace\s+[A-Za-z0-9_\\\\]+\s*;/', $trim) === 1;
         $hasSql = preg_match('/\b(select|insert|update|delete|alter|create|drop)\b\s+/i', $trim) === 1;
         $hasDiff = str_starts_with(ltrim($trim), 'diff --git');
+        log_message('debug', 'OllamaPatchRunner:L147 - Trimmed validateGeneratedPatch hasNamespace: ' . $hasNamespace . ', hasSql: ' . $hasSql . ', hasDiff: ' . $hasDiff);
 
         return $hasNamespace || $hasSql || $hasDiff;
     }

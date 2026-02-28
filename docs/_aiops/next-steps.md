@@ -11211,6 +11211,1766 @@ q
 - [LOW RISK] Add/verify headers in docs/_aiops outputs
     - Reason: enforce 'Auto-generated' rule and reduce accidental edits
 
+## Run: 2026-02-26T04:00:02Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 95 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 109 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-26T06:00:02Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 95 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 109 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-26T08:00:01Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 95 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 109 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-26T10:00:02Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 95 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 109 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-26T12:00:02Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 95 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 109 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-26T14:00:02Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 95 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 109 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 109 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-26T16:00:01Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 95 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 110 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-26T18:00:02Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 95 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 110 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-26T20:00:01Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 95 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 110 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-26T22:00:02Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 76 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 96 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 110 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-27T00:00:02Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 96 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 110 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-27T02:00:02Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 96 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 110 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-27T04:00:02Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 96 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 110 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-27T06:00:01Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 96 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 110 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-27T08:00:02Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 96 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 110 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-27T10:00:02Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 96 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 110 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-27T12:00:01Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 96 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 110 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-27T14:00:02Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 96 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 110 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 110 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-27T16:00:01Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 96 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 111 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-27T18:00:02Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 96 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 111 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-27T20:00:01Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 96 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 111 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-27T22:00:02Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 77 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 97 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 111 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-28T00:00:01Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 97 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 111 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-28T02:00:02Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 97 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 111 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-28T04:00:01Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 97 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 111 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-28T06:00:02Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 97 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 111 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-28T08:00:02Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 97 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 111 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-28T10:00:01Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 97 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 111 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-28T12:00:01Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 97 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 111 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-28T14:00:02Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 97 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 111 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 111 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-28T16:00:02Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 112 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 112 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 112 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 112 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 97 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 112 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 112 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
+## Run: 2026-02-28T18:00:01Z
+
+- [DOC ONLY] Add/extend docs mentioning `AIOpsController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Controllers/AIOpsController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsBudgetModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsBudgetModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsCacheModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsCacheModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowUsageModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsWorkflowsModel.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/AIOps/Models/AIOpsWorkflowsModel.php
+- [DOC ONLY] Add/extend docs mentioning `AIAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AIOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AIOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AiOpsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AiOpsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsAPIController.php
+- [DOC ONLY] Add/extend docs mentioning `AlertsPublicAPIController.php`
+    - Reason: Code exists with no obvious doc reference (heuristic)
+    - File: app/Modules/APIs/Controllers/AlertsPublicAPIController.php
+- [DOC ONLY] Review stale doc: `docs/Kimi/README.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/audit-2025-12-11.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md`
+    - Reason: Doc unchanged for 78 days
+- [DOC ONLY] Review stale doc: `docs/OVERVIEW.md`
+    - Reason: Doc unchanged for 112 days
+- [DOC ONLY] Review stale doc: `docs/README.md`
+    - Reason: Doc unchanged for 112 days
+- [DOC ONLY] Review stale doc: `docs/adr/0001-standards-and-response-contract.md`
+    - Reason: Doc unchanged for 112 days
+- [DOC ONLY] Review stale doc: `docs/adr/_index.md`
+    - Reason: Doc unchanged for 112 days
+- [DOC ONLY] Review stale doc: `docs/alerts/alerts_marketing_pipline.md`
+    - Reason: Doc unchanged for 97 days
+- [DOC ONLY] Review stale doc: `docs/auctions/_index.md`
+    - Reason: Doc unchanged for 112 days
+- [DOC ONLY] Review stale doc: `docs/auctions/auction-schema.md`
+    - Reason: Doc unchanged for 112 days
+- [LOW RISK] Add/verify headers in docs/_aiops outputs
+    - Reason: enforce 'Auto-generated' rule and reduce accidental edits
+
 ## MANUAL_TODOS
 <!-- AIOPS_MANUAL_TODOS_START -->
 - [ ] Example: Review scraper pacing for 15m cycle

@@ -487,42 +487,42 @@ class HowItWorksController extends BaseController
 
     public function index()
     {
-        return $this->renderPage('overview');
+        return $this->renderTheme('overview');
     }
 
     public function budgeting()
     {
-        return $this->renderPage('budgeting');
+        return $this->renderTheme('budgeting');
     }
 
     public function investing()
     {
-        return $this->renderPage('investing');
+        return $this->renderTheme('investing');
     }
 
     public function crypto()
     {
-        return $this->renderPage('crypto');
+        return $this->renderTheme('crypto');
     }
 
     public function alerts()
     {
-        return $this->renderPage('alerts');
+        return $this->renderTheme('alerts');
     }
 
     public function projects()
     {
-        return $this->renderPage('projects');
+        return $this->renderTheme('projects');
     }
 
     public function security()
     {
-        return $this->renderPage('security');
+        return $this->renderTheme('security');
     }
 
     public function pricing()
     {
-        return $this->renderPage('pricing');
+        return $this->renderTheme('pricing');
     }
 
     /**
