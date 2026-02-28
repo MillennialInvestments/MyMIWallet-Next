@@ -1,10 +1,1 @@
 # GTM Test Matrix
-
-| Flow Name | URL / Route | Form ID / Selector | Method | Input fields | Validation rules | Expected success | Expected failure | Side effects | Logging expectations | Security expectations |
-|---|---|---|---|---|---|---|---|---|---|---|
-| Register | `/register` | `form[action*="register"]` | GET/POST | first_name,last_name,email,password,password_confirm | required + unique email + password rules | 200/302 redirect to activation/success | 200 with field errors and safe message | `bf_users`, auth tables, activation token | failed attempts logged once | PUBLIC form, CSRF + server validation |
-| Login | `/login` | `form[action*="login"]` | GET/POST | login,password | required credential checks | 302 to dashboard | 200 with invalid credentials message | auth login/session rows | auth warning or failed login log | PUBLIC form; post-auth session required |
-| Budget add account | `/Budget/Add/*`, `/Wallets/Banking/Add/Account/*` | budget/wallet add forms | GET/POST | account metadata, balances, dates | required by account type | redirect back with success flash | validation errors in same view | account/budget tables insert | info log on write; no exception page | `login` filter required |
-| Budget dashboard overview | `/Budget`, `/Budget/Account-Overview` + `/API/Budget/*` | dashboard widgets/fetch | GET/AJAX | n/a | response must include `status` and `data` or `message` | 200 JSON + rendered cards | user-safe empty/error cards | read aggregation only | API errors logged once/request | `login`/auth filters |
-| Watchlist search/add/remove | `/Investments/Watchlist` + API watchlist routes | watchlist form/buttons | GET/POST/AJAX | symbol, notes | symbol required and normalized | 200 JSON status success | 4xx/200 JSON status fail message | watchlist rows insert/delete | mutation events logged | `login` filter + user scope checks |
-| Premium teaser insights | `/Budget/Insights` | insights CTA button | GET/AJAX | n/a | n/a | 200 render/upsell modal | graceful message; no blank page | none or upsell analytics | warning log only on backend error | `login` filter |

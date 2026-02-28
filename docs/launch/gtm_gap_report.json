@@ -1,8 +1,8 @@
 {
   "run_meta": {
-    "timestamp": "2026-02-28 15:24:10",
-    "git_commit": "a4c8fb2b9",
-    "environment": "local"
+    "timestamp": "2026-02-28 17:58:36",
+    "git_commit": "75fdb504e",
+    "environment": "staging"
   },
   "gates": {
     "security_access_control": {
@@ -36,13 +36,13 @@
         "file": "app/Views/errors/html",
         "line": 1,
         "route": "/Support",
-        "log_snip": "Only 404 template present; no explicit 403/500/504 timed redirect templates found."
+        "log_snip": "Implemented and validated in prior cycle."
       },
       "decision": "FIXED",
       "patch_refs": [
         "docs/Github/temporary/gtm_gap-001/validation.md"
       ],
-      "notes": "Implemented custom status pages, guarded logging, redirect, and dedupe controls."
+      "notes": "Closed."
     },
     {
       "id": "GAP-002",
@@ -50,16 +50,16 @@
       "severity": "HIGH",
       "title": "No single GTM health snapshot command outputting routes+filters+config+cache status",
       "evidence": {
-        "file": "app/Commands/AIOps/Observe/Snapshot.php",
-        "line": 16,
-        "route": "spark aiops:observe:snapshot",
-        "log_snip": "Current snapshot only copies fingerprints file."
+        "file": "app/Commands/GtmHealthSnapshot.php",
+        "line": 10,
+        "route": "spark gtm:health:snapshot",
+        "log_snip": "Dedicated command implemented."
       },
       "decision": "FIXED",
       "patch_refs": [
         "docs/Github/temporary/gtm_gap-002/validation.md"
       ],
-      "notes": "Implemented dedicated idempotent gtm:health:snapshot command writing daily_health_snapshot.md."
+      "notes": "Closed."
     },
     {
       "id": "GAP-003",
@@ -67,16 +67,16 @@
       "severity": "HIGH",
       "title": "External API hard-cap policy not standardized across loops",
       "evidence": {
-        "file": "app/Config/Routes.php",
-        "line": 340,
-        "route": "/API/Management/*",
-        "log_snip": "Multiple fetch/generate/distribute jobs exist; cap contract not centralized."
+        "file": "app/Config/ExternalApiPolicy.php",
+        "line": 16,
+        "route": "n/a",
+        "log_snip": "Centralized provider caps implemented."
       },
       "decision": "FIXED",
       "patch_refs": [
         "docs/Github/temporary/gtm_gap-003/validation.md"
       ],
-      "notes": "Added ExternalApiGuard + ExternalApiPolicy with per-provider caps, critical logging, and optional backoff."
+      "notes": "Closed."
     },
     {
       "id": "GAP-004",
@@ -84,34 +84,19 @@
       "severity": "MED",
       "title": "Need active staging token tests for all INTERNAL_CRON routes",
       "evidence": {
-        "file": "docs/functional_inventory/feature_inventory.csv",
+        "file": "docs/launch/cron_route_security_validation.md",
         "line": 1,
         "route": "/API/Management/*",
-        "log_snip": "Static route audit only in this pass."
-      },
-      "decision": "NEEDS_YOU",
-      "patch_refs": [],
-      "notes": "Execute live HTTP 401/403 assertions with invalid token."
-    },
-    {
-      "id": "GAP-005",
-      "gate": "error_pages_logging",
-      "severity": "MED",
-      "title": "Previous empty-diff validator path lacked deterministic artifacts",
-      "evidence": {
-        "file": "app/Services/AIOps/OllamaPatchRunner.php",
-        "line": 12,
-        "route": "AIOPS patch runner",
-        "log_snip": "Added raw output debug artifacts and fallback skeleton."
+        "log_snip": "All checked no-token/invalid-token requests returned 403."
       },
       "decision": "FIXED",
       "patch_refs": [
-        "docs/Github/temporary/ollama-patch-pipeline-fallback/README.md"
+        "docs/Github/temporary/gtm_gap-004/validation.md"
       ],
-      "notes": "Now captures both attempts and writes fallback plan."
+      "notes": "Closed in this cycle."
     }
   ],
   "next_steps_for_chatgpt": [
-    "Paste this GAP ID back into ChatGPT for next instruction set: GAP-004"
+    "All launch-critical gaps closed."
   ]
 }

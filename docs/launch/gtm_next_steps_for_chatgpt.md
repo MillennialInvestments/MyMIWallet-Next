@@ -1,8 +1,8 @@
 # Next Steps for ChatGPT
 
-Paste this GAP ID back into ChatGPT for next instruction set: **GAP-004**.
+All launch-critical GTM gaps are currently closed.
 
-Remaining work (non-launch-blocking):
-1. Execute staged token/permission runtime tests for INTERNAL_CRON routes and attach evidence.
-2. Keep `gtm:health:snapshot` in daily ops schedule.
-3. Add optional provider-specific dashboarding for ExternalApiGuard counters.
+Recommended maintenance:
+1. Run `gtm:cron:validate-security` on schedule.
+2. Run `gtm:health:snapshot` daily.
+3. Re-run full GTM loop after route/filter/auth changes.
