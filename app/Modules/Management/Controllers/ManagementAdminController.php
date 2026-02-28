@@ -183,7 +183,7 @@ class ManagementAdminController extends UserController
         $this->commonData();
         $this->data['useDataTables'] = true;
         $this->data['useProjectListDT'] = true;
-        return $this->renderTheme('App\Modules\Management\Views\Projects\index', $this->data);
+        return $this->renderTheme('App\Modules\Management\Views\index', $this->data);
     }
 
     public function add()

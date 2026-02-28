@@ -31,6 +31,7 @@ class Console extends BaseConfig
         |----------------------------------------------------------------------
         */
         \App\Commands\ControllerProfile::class,
+        \App\Commands\GtmHealthSnapshot::class,
 
         /*
         |----------------------------------------------------------------------
@@ -372,7 +373,7 @@ class Console extends BaseConfig
         \App\Commands\Ops\SubsStatus::class,
         \App\Commands\Ops\VPSSnapshot::class,
         \App\Commands\Ops\Work::class,
-
+        
         /*
         |----------------------------------------------------------------------
         | Runtime / Recovery

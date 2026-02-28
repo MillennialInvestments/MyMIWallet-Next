@@ -61,9 +61,9 @@ class WorkerLogs extends SafeBaseCommand
         if ($hasCritical) {
             $args[] = '--create-pr=1';
         }
-
+        
+        CLI::write('Launching worker...', 'cyan');
         command(implode(' ', $args));
-
         return EXIT_SUCCESS;
     }
 
