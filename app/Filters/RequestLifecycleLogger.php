@@ -2,6 +2,7 @@
 
 namespace App\Filters;
 
+use Closure;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -18,8 +19,11 @@ class RequestLifecycleLogger implements FilterInterface
         self::$memory[$key] = memory_get_usage(true);
 
         $router = service('router');
-        $controller = method_exists($router, 'controllerName') ? (string) $router->controllerName() : 'unresolved';
-        $method = method_exists($router, 'methodName') ? (string) $router->methodName() : 'unresolved';
+        $controllerRaw = method_exists($router, 'controllerName') ? $router->controllerName() : null;
+        $methodRaw = method_exists($router, 'methodName') ? $router->methodName() : null;
+
+        $controller = $controllerRaw instanceof Closure ? 'closure_route' : (string) ($controllerRaw ?? 'unresolved');
+        $method = $methodRaw instanceof Closure ? 'closure' : (string) ($methodRaw ?? 'unresolved');
 
         $reqId = $_SERVER['HTTP_X_REQUEST_ID'] ?? 'N/A';
         log_message('debug', '[REQ_ID=' . $reqId . '] [FILTER_BEFORE] ' . ($_SERVER['REQUEST_URI'] ?? (string) $request->getUri()));

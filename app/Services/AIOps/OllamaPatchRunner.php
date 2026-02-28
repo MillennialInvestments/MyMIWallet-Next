@@ -43,13 +43,23 @@ class OllamaPatchRunner
         }
 
         $prompt = $this->buildPrompt($job);
-        $diff = $this->callOllama($prompt, $audit);
+        $attemptOne = $this->callOllama($prompt, $audit);
+        $diff = $attemptOne['response'];
 
         if (! $this->validateGeneratedPatch($diff)) {
-            $diff = $this->callOllama($prompt, $audit); // retry once
+            $this->writeInvalidModelOutput($job->jobId, $attemptOne, 'attempt_1');
+
+            $attemptTwo = $this->callOllama($prompt, $audit); // retry once
+            $diff = $attemptTwo['response'];
+
             if (! $this->validateGeneratedPatch($diff)) {
+                $this->writeInvalidModelOutput($job->jobId, $attemptTwo, 'attempt_2');
+                $this->writeDiffSkeletonFallback($job);
+
                 return $this->persist(new PatchResult('failed_invalid_model_output', $job->jobId, null, false, [
                     'job_file' => $job->jobFile,
+                    'debug_file' => 'docs/_aiops/debug/' . $job->jobId . '.attempt_2.raw-output.json',
+                    'fallback_plan' => 'docs/_aiops/patch_jobs_failed/' . $job->jobId . '.md',
                 ]));
             }
         }
@@ -138,7 +148,8 @@ class OllamaPatchRunner
         return implode("\n", array_slice($lines, -40));
     }
 
-    protected function callOllama(string $prompt, array $audit): string
+    /** @return array{response:string,raw:string,http:int,error:string|null} */
+    protected function callOllama(string $prompt, array $audit): array
     {
         $payload = [
             'model' => $audit['model'],
@@ -163,15 +174,16 @@ class OllamaPatchRunner
 
         $body = (string) curl_exec($ch);
         $http = (int) curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+        $error = curl_error($ch) ?: null;
         curl_close($ch);
 
         if ($http < 200 || $http >= 300) {
-            return '';
+            return ['response' => '', 'raw' => $body, 'http' => $http, 'error' => $error];
         }
 
         $decoded = json_decode($body, true);
         if (! is_array($decoded)) {
-            return '';
+            return ['response' => '', 'raw' => $body, 'http' => $http, 'error' => $error];
         }
 
         $response = trim((string) ($decoded['response'] ?? ''));
@@ -179,7 +191,7 @@ class OllamaPatchRunner
             $response = substr($response, 0, 150000);
         }
 
-        return $response;
+        return ['response' => $response, 'raw' => $body, 'http' => $http, 'error' => $error];
     }
 
     private function validateGeneratedPatch(string $content): bool
@@ -263,6 +275,63 @@ class OllamaPatchRunner
             . "## Checklist\n- [ ] See docs/_aiops/pr-checklist.md\n"
             . "\nCodex role: reviewer only.\n";
         file_put_contents($runDir . '/' . $job->jobId . '.pr.md', $body);
+    }
+
+
+    private function writeInvalidModelOutput(string $jobId, array $attempt, string $suffix): void
+    {
+        $debugDir = ROOTPATH . 'docs/_aiops/debug';
+        if (! is_dir($debugDir)) {
+            mkdir($debugDir, 0775, true);
+        }
+
+        $payload = [
+            'job_id' => $jobId,
+            'suffix' => $suffix,
+            'http' => $attempt['http'] ?? 0,
+            'error' => $attempt['error'] ?? null,
+            'raw' => $attempt['raw'] ?? '',
+            'response' => $attempt['response'] ?? '',
+            'captured_at' => gmdate('c'),
+        ];
+
+        file_put_contents(
+            $debugDir . '/' . $jobId . '.' . $suffix . '.raw-output.json',
+            json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL
+        );
+    }
+
+    private function writeDiffSkeletonFallback(PatchJob $job): void
+    {
+        $dir = ROOTPATH . 'docs/_aiops/patch_jobs_failed';
+        if (! is_dir($dir)) {
+            mkdir($dir, 0775, true);
+        }
+
+        $targets = implode("
+", array_map(static fn(string $path): string => '- ' . $path, $job->targetFiles));
+        $body = "# Patch Skeleton Fallback: {$job->jobId}
+
+"
+            . "Ollama failed to produce a valid unified diff after 2 attempts.
+
+"
+            . "## Target files
+{$targets}
+
+"
+            . "## Required changes
+{$job->instructions}
+
+"
+            . "## Evidence
+"
+            . "- docs/_aiops/debug/{$job->jobId}.attempt_1.raw-output.json
+"
+            . "- docs/_aiops/debug/{$job->jobId}.attempt_2.raw-output.json
+";
+
+        file_put_contents($dir . '/' . $job->jobId . '.md', $body);
     }
 
     private function auditOllamaConfig(): array

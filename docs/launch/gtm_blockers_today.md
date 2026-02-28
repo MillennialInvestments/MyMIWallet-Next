@@ -1,0 +1,3 @@
+# GTM Blockers Today
+
+- None.
