@@ -38,6 +38,16 @@ class DatabaseLoggerHandler extends BaseHandler implements HandlerInterface
     private bool $emailWarningLevel = false;
 
     /**
+     * Minutes to suppress duplicate alert emails.
+     */
+    private int $emailDedupeTtl = 300;
+
+    /**
+     * Seconds to suppress duplicate DB log inserts for identical signatures.
+     */
+    private int $insertDedupeTtl = 5;
+
+    /**
      * Local fallback file when DB inserts fail.
      */
     private string $fallbackFile;
@@ -57,6 +67,8 @@ class DatabaseLoggerHandler extends BaseHandler implements HandlerInterface
         $this->fallbackFile  = rtrim($fallbackPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'db_logger_fallback.log';
         $this->notificationEmail = $config['notificationEmail'] ?? null;
         $this->emailWarningLevel = (bool) ($config['emailWarningLevel'] ?? false);
+        $this->emailDedupeTtl = max(60, (int) ($config['emailDedupeTtl'] ?? 300));
+        $this->insertDedupeTtl = max(1, (int) ($config['insertDedupeTtl'] ?? 5));
 
         $this->ensureFallbackPath();
     }
@@ -86,7 +98,13 @@ class DatabaseLoggerHandler extends BaseHandler implements HandlerInterface
 
         try {
             $record = $this->buildRecord($level, $message, $context);
+
+            if ($this->shouldSuppressInsert($record)) {
+                return true;
+            }
+
             $this->writeToDatabase($record);
+            $this->rememberInsert($record);
             $this->maybeSendEmail($record);
 
             return true;
@@ -188,6 +206,10 @@ class DatabaseLoggerHandler extends BaseHandler implements HandlerInterface
             return;
         }
 
+        if ($this->isDuplicateEmailAlert($record)) {
+            return;
+        }
+
         try {
             $email = Services::email();
             $email->setTo($this->notificationEmail);
@@ -195,10 +217,78 @@ class DatabaseLoggerHandler extends BaseHandler implements HandlerInterface
             $email->setMessage($this->buildEmailBody($record));
             $email->send();
             $this->emailSent = true;
+            $this->rememberEmailAlert($record);
         } catch (Throwable $e) {
             // Never re-enter the logger; write straight to fallback sinks.
             $this->writeFallback('email', 'Email dispatch failed', ['error' => $e->getMessage()]);
         }
+    }
+
+
+
+    private function shouldSuppressInsert(array $record): bool
+    {
+        try {
+            $cache = Services::cache();
+            return (bool) $cache->get($this->insertDedupeKey($record));
+        } catch (Throwable $e) {
+            return false;
+        }
+    }
+
+    private function rememberInsert(array $record): void
+    {
+        try {
+            $cache = Services::cache();
+            $cache->save($this->insertDedupeKey($record), 1, $this->insertDedupeTtl);
+        } catch (Throwable $e) {
+            // Intentionally silent to avoid recursive logging.
+        }
+    }
+
+    private function insertDedupeKey(array $record): string
+    {
+        $signature = implode('|', [
+            $record['level'] ?? 'unknown',
+            $record['message'] ?? '',
+            $record['file'] ?? '',
+            (string) ($record['line'] ?? ''),
+            $record['path'] ?? '',
+        ]);
+
+        return 'db_logger:insert:' . sha1($signature);
+    }
+
+    private function isDuplicateEmailAlert(array $record): bool
+    {
+        try {
+            $cache = Services::cache();
+            return (bool) $cache->get($this->emailDedupeKey($record));
+        } catch (Throwable $e) {
+            return false;
+        }
+    }
+
+    private function rememberEmailAlert(array $record): void
+    {
+        try {
+            $cache = Services::cache();
+            $cache->save($this->emailDedupeKey($record), 1, $this->emailDedupeTtl);
+        } catch (Throwable $e) {
+            // Intentionally silent to avoid recursive logging.
+        }
+    }
+
+    private function emailDedupeKey(array $record): string
+    {
+        $signature = implode('|', [
+            $record['level'] ?? 'unknown',
+            $record['message'] ?? '',
+            $record['file'] ?? '',
+            (string) ($record['line'] ?? ''),
+        ]);
+
+        return 'db_logger:email:' . sha1($signature);
     }
 
     private function buildEmailBody(array $record): string

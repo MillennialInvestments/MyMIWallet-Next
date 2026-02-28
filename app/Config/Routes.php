@@ -1787,7 +1787,9 @@ $routes->post('debug', function () {
 // 🔁 DEV-ONLY ERROR TEST ROUTES
 if (ENVIRONMENT !== 'production') {
     $routes->get('test-403', function () {
-        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Forbidden access.');
+        return service('response')
+            ->setStatusCode(403)
+            ->setBody(view('errors/html/error_403'));
     });
 
     $routes->get('test-404', function () {

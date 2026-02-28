@@ -432,4 +432,14 @@ class Services extends CoreServices
      *     return new \CodeIgniter\Example();
      * }
      */
+    public static function externalApiGuard(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('externalApiGuard');
+        }
+
+        return new \App\Services\ExternalApiGuard(config(\Config\ExternalApiPolicy::class));
+    }
+
+
 }

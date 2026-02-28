@@ -107,6 +107,10 @@ class Filters extends BaseConfig
                     'api/*',
                     'debugbar*',
                     '_debugbar*',
+                    'test-403',
+                    'test-404',
+                    'test-500',
+                    'test-504',
                 ],
             ],
             // 'csrf' => [
