@@ -678,7 +678,7 @@
         },
         "docs/audit/alerts_audit_last_run.md": {
             "hash": "30691ca579a37b3fe1e500e76289520f049fcc8fd02a5fd51d785dab20b22293",
-            "mtime": "2026-02-27"
+            "mtime": "2026-02-28"
         },
         "docs/audit/auth_audit_last_run.md": {
             "hash": "1298982982678bc623fc33e25137ae8fd44b03d9138fa029daab66ad6f065174",
@@ -4715,7 +4715,143 @@
         "docs/_support/spark-reset/20260226-024907/summary.md": {
             "hash": "e8dd417821417fd1ceb1d2c9c5c7f16e3296f6d00f15e88f0bfd4f6777f87003",
             "mtime": "2026-02-26"
+        },
+        "docs/APIs/_inventory_controllers.md": {
+            "hash": "843a8072ca5a7be4ec53a00f8e9f3f569c3376479fecbbea23c291e3595833a9",
+            "mtime": "2026-02-28"
+        },
+        "docs/APIs/_inventory_filters.md": {
+            "hash": "e1632132526dfa9d53ce3d42b3c554418f5f4d41a5d9f6a94ff0bacca4a4b454",
+            "mtime": "2026-02-28"
+        },
+        "docs/APIs/_inventory_rate_limits.md": {
+            "hash": "55f34171019667d83ab0b7f5763bcf8c67238fde46fbfc998f9f677b7c372b8d",
+            "mtime": "2026-02-28"
+        },
+        "docs/APIs/_inventory_routes.md": {
+            "hash": "a2392dba8744dad1e3aa4c43060f13bf3101ec9bcfbcab2ceb21da672772a4b6",
+            "mtime": "2026-02-28"
+        },
+        "docs/APIs/audit/20260226-032119_bdb17080249dcd27/report.md": {
+            "hash": "7bb444c00fc0272191bddb778e9f5458f3ebe51db5a09bf15e8c97238b8cc80a",
+            "mtime": "2026-02-28"
+        },
+        "docs/APIs/audit/latest.md": {
+            "hash": "7bb444c00fc0272191bddb778e9f5458f3ebe51db5a09bf15e8c97238b8cc80a",
+            "mtime": "2026-02-28"
+        },
+        "docs/APIs/deprecations.md": {
+            "hash": "2ca2382bea48c6185fe6eb27f12fd769df7fb248a2e61b87aea6c7ddc8453c8f",
+            "mtime": "2026-02-28"
+        },
+        "docs/APIs/list/latest.md": {
+            "hash": "9e37b3c6ebb8a06692633c21a44f638acecf5b3a231e0bd37467844bfd935e38",
+            "mtime": "2026-02-28"
+        },
+        "docs/APIs/rate-limit-coverage.md": {
+            "hash": "a2444b58d89ad92caa04f16840f01f27e8a7940ef1ae2d048d3b7468c460670b",
+            "mtime": "2026-02-28"
+        },
+        "docs/Github/temporary/gtm_gap-001/validation.md": {
+            "hash": "09771fbada243adf484bb7d6d68973573d6f5c3376f1932512ec0d1c489e024f",
+            "mtime": "2026-02-28"
+        },
+        "docs/Github/temporary/gtm_gap-002/validation.md": {
+            "hash": "3cfe2cfb2eb265345d0aabb72b11545d9d0b5bb2d4f08f6325d98c1c41d3dc4c",
+            "mtime": "2026-02-28"
+        },
+        "docs/Github/temporary/gtm_gap-003/validation.md": {
+            "hash": "9fb8678c040b6183c644c9b5cd8fe2c87dd57807c68802679434ffa64aa9f006",
+            "mtime": "2026-02-28"
+        },
+        "docs/Github/temporary/ollama-patch-pipeline-fallback/README.md": {
+            "hash": "d47cfb0a8ba774fb8227b2f333b429b37bd54fc7d3ad71221ecf03e6dffddba1",
+            "mtime": "2026-02-28"
+        },
+        "docs/launch/aiops_ollama_dependency_audit.md": {
+            "hash": "33417a553d11656fd9489ecd2426835c64b0e0106dd8b2527fdcf6ede174656f",
+            "mtime": "2026-02-28"
+        },
+        "docs/launch/aiops_patch_pipeline_audit.md": {
+            "hash": "33c2762db84d16d6402f5d9177f15b3303d339c5f052395c4ed6d5b653980a3b",
+            "mtime": "2026-02-28"
+        },
+        "docs/launch/core_flow_smoke_tests.md": {
+            "hash": "7380de0fa19e0f1a42fa60870943cb528e1ab472d98342a73d14012374407bd1",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/daily_health_snapshot.md": {
+            "hash": "b3f92c71782b1b8c90b06b6be9b15a0c96a9c07e10d5e57941dfcbe20b0a9283",
+            "mtime": "2026-02-28"
+        },
+        "docs/launch/error_pages_and_logging.md": {
+            "hash": "220b4197d02271a9a66d8330644f144f332c18039c891e020ebbcf0a7a775a2f",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/external_api_cost_controls.md": {
+            "hash": "e4623bed9ba4b1fefa4028d38f17749ceaf14c062fcfc460bf0a7cb59a9a5fbe",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/gtm_blockers_today.md": {
+            "hash": "9c1ebcf5db4aa7f0e8d0132b946cd01a424d9429fe12c78a96b626b1ba0ce757",
+            "mtime": "2026-02-28"
+        },
+        "docs/launch/gtm_change_log.md": {
+            "hash": "2c90ee3a7c3390a4912eaea13f8cb1b88c47fefcb491cc872dfb5079f8cca832",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/gtm_execution_queue.md": {
+            "hash": "799eea930188869b3ffda89d37301a0801aef2c81f47131c140137a93dced303",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/gtm_next_steps_for_chatgpt.md": {
+            "hash": "b3efb3b917832eb3e1096e188b344c7f477ec7c0f2490db74dfc76552c5e7a0a",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/gtm_readiness_report.md": {
+            "hash": "70d2a82d8ddc5dca2b6d4253f521d907d892e6573f0e48b7c7ec11318647fe62",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/gtm_test_matrix.md": {
+            "hash": "69bafb32485328993fc6bab455b23638ede3d799e339eaff1d165fbca15fc3f8",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/ops_observability.md": {
+            "hash": "64449da8451947ccb98f58e7a015419d19e6eba03e98ff1a8bfddb6fd8731629",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/security_access_control.md": {
+            "hash": "f1f33ed834ae2f129d142465bd12ced3f6f49bead57448ba4c40f8a56ba6efd8",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/trust_and_compliance.md": {
+            "hash": "34cd463611f2d9a805c139c4312c1016b8c84cba9a3a70074bb8d833622e9337",
+            "mtime": "2026-03-01"
+        },
+        "docs/security/endpoint-permission-matrix.md": {
+            "hash": "047fbe6e0f53669b69807963e5889230276a5dba3a48c546a7cd66bdbb0e6805",
+            "mtime": "2026-02-28"
+        },
+        "docs/security/filter-coverage.md": {
+            "hash": "bc6fe06a761698e51d391a56edab5171ae90ab08a7607013dbb654a315b5836c",
+            "mtime": "2026-02-28"
+        },
+        "docs/Github/temporary/gtm_gap-004/validation.md": {
+            "hash": "ec5975e41995e85c4c4e35d61d99dbe667953998f7ee4aef4013f09447ce24ad",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/cron_route_security_validation.md": {
+            "hash": "cb6a88b590d2b2a62c81511a3668fcc5f3209df5e188417029f19f218a703316",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/customer_interaction_matrix.md": {
+            "hash": "a7fecfe9e3329d80e0c303fbc9e073cfda2cb370f1345b83011eb100976f6c27",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/functional_hardening_queue.md": {
+            "hash": "debdc407455a7904fd092265ad40a2eb9b63a7270abd8ffef4fb82ebe667da41",
+            "mtime": "2026-03-01"
         }
     },
-    "last_run": "2026-02-28T18:00:01Z"
+    "last_run": "2026-03-01T02:00:02Z"
 }

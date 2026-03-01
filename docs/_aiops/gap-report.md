@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-28T18:00:01Z
+> Run: 2026-03-01T02:00:02Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -403,12 +403,38 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Views/API/Sophtron_Widget.php
   - ⚠️ No obvious doc match found (heuristic)
-- … and 969 more
+- … and 970 more
 
 ## Documented Items With No Obvious Code Match (best-effort)
+- docs/APIs/_inventory_controllers.md
+  - ❌ No obvious code match found (heuristic)
+- docs/APIs/_inventory_filters.md
+  - ❌ No obvious code match found (heuristic)
+- docs/APIs/_inventory_rate_limits.md
+  - ❌ No obvious code match found (heuristic)
+- docs/APIs/_inventory_routes.md
+  - ❌ No obvious code match found (heuristic)
 - docs/APIs/api_audit_latest.md
   - ❌ No obvious code match found (heuristic)
+- docs/APIs/audit/latest.md
+  - ❌ No obvious code match found (heuristic)
+- docs/APIs/deprecations.md
+  - ❌ No obvious code match found (heuristic)
+- docs/APIs/list/latest.md
+  - ❌ No obvious code match found (heuristic)
+- docs/APIs/rate-limit-coverage.md
+  - ❌ No obvious code match found (heuristic)
 - docs/CRON.md
+  - ❌ No obvious code match found (heuristic)
+- docs/Github/temporary/gtm_gap-001/validation.md
+  - ❌ No obvious code match found (heuristic)
+- docs/Github/temporary/gtm_gap-002/validation.md
+  - ❌ No obvious code match found (heuristic)
+- docs/Github/temporary/gtm_gap-003/validation.md
+  - ❌ No obvious code match found (heuristic)
+- docs/Github/temporary/gtm_gap-004/validation.md
+  - ❌ No obvious code match found (heuristic)
+- docs/Github/temporary/ollama-patch-pipeline-fallback/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/Kimi/README.md
   - ❌ No obvious code match found (heuristic)
@@ -780,30 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/discord/server_setup_and_alert_routing.md
   - ❌ No obvious code match found (heuristic)
-- docs/discord/server_setup_and_ci4_integration.md
-  - ❌ No obvious code match found (heuristic)
-- docs/discord/server_setup_support_category.md
-  - ❌ No obvious code match found (heuristic)
-- docs/discord/streaming_setup.md
-  - ❌ No obvious code match found (heuristic)
-- docs/discord/where_to_share_what.md
-  - ❌ No obvious code match found (heuristic)
-- docs/discord_schema.sql.md
-  - ❌ No obvious code match found (heuristic)
-- docs/discord_seed.sql.md
-  - ❌ No obvious code match found (heuristic)
-- docs/email/deliverability.md
-  - ❌ No obvious code match found (heuristic)
-- docs/emergency-playbook.md
-  - ❌ No obvious code match found (heuristic)
-- docs/errors/marketingcontroller_mymimarketing_undefined.md
-  - ❌ No obvious code match found (heuristic)
-- docs/esports_preflight.md
-  - ❌ No obvious code match found (heuristic)
-- docs/exports_schema.md
-  - ❌ No obvious code match found (heuristic)
-- docs/forecasting/01_data_flow.md
-  - ❌ No obvious code match found (heuristic)
-- docs/forecasting/02_forecasting_inputs.md
-  - ❌ No obvious code match found (heuristic)
-- … and 804 more
+- … and 837 more

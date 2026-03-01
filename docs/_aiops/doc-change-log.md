@@ -1,12 +1,54 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-02-28T18:00:01Z
+> Run: 2026-03-01T02:00:02Z
 
+- docs/APIs/_inventory_controllers.md
+  - Last updated: 2026-02-28
+  - Change type: unchanged
+- docs/APIs/_inventory_filters.md
+  - Last updated: 2026-02-28
+  - Change type: unchanged
+- docs/APIs/_inventory_rate_limits.md
+  - Last updated: 2026-02-28
+  - Change type: unchanged
+- docs/APIs/_inventory_routes.md
+  - Last updated: 2026-02-28
+  - Change type: unchanged
 - docs/APIs/api_audit_latest.md
   - Last updated: 2026-02-21
   - Change type: unchanged
+- docs/APIs/audit/20260226-032119_bdb17080249dcd27/report.md
+  - Last updated: 2026-02-28
+  - Change type: unchanged
+- docs/APIs/audit/latest.md
+  - Last updated: 2026-02-28
+  - Change type: unchanged
+- docs/APIs/deprecations.md
+  - Last updated: 2026-02-28
+  - Change type: unchanged
+- docs/APIs/list/latest.md
+  - Last updated: 2026-02-28
+  - Change type: unchanged
+- docs/APIs/rate-limit-coverage.md
+  - Last updated: 2026-02-28
+  - Change type: unchanged
 - docs/CRON.md
   - Last updated: 2026-01-30
+  - Change type: unchanged
+- docs/Github/temporary/gtm_gap-001/validation.md
+  - Last updated: 2026-02-28
+  - Change type: unchanged
+- docs/Github/temporary/gtm_gap-002/validation.md
+  - Last updated: 2026-02-28
+  - Change type: unchanged
+- docs/Github/temporary/gtm_gap-003/validation.md
+  - Last updated: 2026-02-28
+  - Change type: unchanged
+- docs/Github/temporary/gtm_gap-004/validation.md
+  - Last updated: 2026-03-01
+  - Change type: new
+- docs/Github/temporary/ollama-patch-pipeline-fallback/README.md
+  - Last updated: 2026-02-28
   - Change type: unchanged
 - docs/Kimi/README.md
   - Last updated: 2025-12-11
@@ -585,7 +627,7 @@
   - Last updated: 2025-11-08
   - Change type: unchanged
 - docs/audit/alerts_audit_last_run.md
-  - Last updated: 2026-02-27
+  - Last updated: 2026-02-28
   - Change type: unchanged
 - docs/audit/auth_audit_last_run.md
   - Last updated: 2026-02-15
@@ -1232,6 +1274,60 @@
 - docs/kimi-k2-integration.md
   - Last updated: 2026-02-15
   - Change type: unchanged
+- docs/launch/aiops_ollama_dependency_audit.md
+  - Last updated: 2026-02-28
+  - Change type: unchanged
+- docs/launch/aiops_patch_pipeline_audit.md
+  - Last updated: 2026-02-28
+  - Change type: unchanged
+- docs/launch/core_flow_smoke_tests.md
+  - Last updated: 2026-03-01
+  - Change type: modified
+- docs/launch/cron_route_security_validation.md
+  - Last updated: 2026-03-01
+  - Change type: new
+- docs/launch/customer_interaction_matrix.md
+  - Last updated: 2026-03-01
+  - Change type: new
+- docs/launch/daily_health_snapshot.md
+  - Last updated: 2026-02-28
+  - Change type: unchanged
+- docs/launch/error_pages_and_logging.md
+  - Last updated: 2026-03-01
+  - Change type: modified
+- docs/launch/external_api_cost_controls.md
+  - Last updated: 2026-03-01
+  - Change type: modified
+- docs/launch/functional_hardening_queue.md
+  - Last updated: 2026-03-01
+  - Change type: new
+- docs/launch/gtm_blockers_today.md
+  - Last updated: 2026-02-28
+  - Change type: unchanged
+- docs/launch/gtm_change_log.md
+  - Last updated: 2026-03-01
+  - Change type: modified
+- docs/launch/gtm_execution_queue.md
+  - Last updated: 2026-03-01
+  - Change type: modified
+- docs/launch/gtm_next_steps_for_chatgpt.md
+  - Last updated: 2026-03-01
+  - Change type: modified
+- docs/launch/gtm_readiness_report.md
+  - Last updated: 2026-03-01
+  - Change type: modified
+- docs/launch/gtm_test_matrix.md
+  - Last updated: 2026-03-01
+  - Change type: modified
+- docs/launch/ops_observability.md
+  - Last updated: 2026-03-01
+  - Change type: modified
+- docs/launch/security_access_control.md
+  - Last updated: 2026-03-01
+  - Change type: modified
+- docs/launch/trust_and_compliance.md
+  - Last updated: 2026-03-01
+  - Change type: modified
 - docs/legal/crypto_customer_agreement/README.md
   - Last updated: 2025-12-27
   - Change type: unchanged
@@ -3193,6 +3289,12 @@
   - Change type: unchanged
 - docs/security/csp.md
   - Last updated: 2026-01-25
+  - Change type: unchanged
+- docs/security/endpoint-permission-matrix.md
+  - Last updated: 2026-02-28
+  - Change type: unchanged
+- docs/security/filter-coverage.md
+  - Last updated: 2026-02-28
   - Change type: unchanged
 - docs/security/public_routes_inventory.md
   - Last updated: 2026-01-18

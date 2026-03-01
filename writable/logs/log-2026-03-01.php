@@ -595,3 +595,13 @@ INFO - 2026-03-01 02:15:02 --> [REQ_ID=416255544b73] [PERF] Execution time=0.087
 INFO - 2026-03-01 02:15:02 --> [spark:ops:work] Completed
 INFO - 2026-03-01 02:15:02 --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.131891
 INFO - 2026-03-01 02:15:02 --> [SPARK_MEMORY] 18874368
+DEBUG - 2026-03-01 02:16:12 --> [REQ_ID=5095b832e789] [REQUEST][START] GET /index.php/register
+DEBUG - 2026-03-01 02:16:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-01 02:16:12 --> [REQ_ID=5095b832e789] [FILTER_BEFORE] /index.php/register
+DEBUG - 2026-03-01 02:16:12 --> [REQ_ID=5095b832e789] [ROUTE] Controller=\App\Controllers\AuthController Method=register
+DEBUG - 2026-03-01 02:16:12 --> [REQ_ID=5095b832e789] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/register
+DEBUG - 2026-03-01 02:16:12 --> [CSRF] token name=csrf_test_name hash=bd76760c0aa50b4e38432fd7f7668f2e
+DEBUG - 2026-03-01 02:16:12 --> [REQ_ID=1b3e8c910d61] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-01 02:16:12 --> [REQ_ID=1b3e8c910d61] [MEMORY][controller-start] 6291456
+INFO - 2026-03-01 02:16:12 --> [REGISTRATION] Form loaded
+INFO - 2026-03-01 02:16:12 --> [REQ_ID=1b3e8c910d61] [PERF] Execution time=0.132646
