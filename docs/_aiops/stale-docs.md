@@ -1,6 +1,6 @@
 # AI-Ops: Stale Docs
 > Auto-generated. Do not edit manually.
-> Run: 2026-03-01T18:00:02Z
+> Run: 2026-03-01T20:00:01Z
 
 - docs/Kimi/README.md
   - Doc last updated: 2025-12-11 (79 days ago)
@@ -53,7 +53,7 @@
 - docs/chatgpt/mymi_alert_system/inventory.md
   - Doc last updated: 2025-12-20 (71 days ago)
 - docs/chatgpt/mymi_alert_system/standards.md
-  - Doc last updated: 2025-12-21 (69 days ago)
+  - Doc last updated: 2025-12-21 (70 days ago)
 - docs/chatgpt/mymi_alert_system/summary.md
   - Doc last updated: 2025-12-20 (71 days ago)
 - docs/chatgpt/prompt_template.md
@@ -295,7 +295,7 @@
 - docs/nginx/production.md
   - Doc last updated: 2025-12-21 (70 days ago)
 - docs/notes/2025-11-23-alerts-preview-lazy-refresh-and-advisor-errors.md
-  - Doc last updated: 2025-11-23 (97 days ago)
+  - Doc last updated: 2025-11-23 (98 days ago)
 - docs/notes/2025-12-01-feature-corrections.md
   - Doc last updated: 2025-12-01 (90 days ago)
 - docs/operations/01-foundation.md
@@ -383,11 +383,11 @@
 - docs/ops/docs_index.md
   - Doc last updated: 2025-12-10 (81 days ago)
 - docs/ops/logging_healthcheck.md
-  - Doc last updated: 2025-12-21 (69 days ago)
+  - Doc last updated: 2025-12-21 (70 days ago)
 - docs/ops/logs/2025-12-25_fixes.md
   - Doc last updated: 2025-12-27 (64 days ago)
 - docs/ops/logs/logging_breakpoint_report-2025_12_21.md
-  - Doc last updated: 2025-12-21 (69 days ago)
+  - Doc last updated: 2025-12-21 (70 days ago)
 - docs/ops/marketing_ignite.md
   - Doc last updated: 2025-12-20 (71 days ago)
 - docs/ops/reviews/_index.md
