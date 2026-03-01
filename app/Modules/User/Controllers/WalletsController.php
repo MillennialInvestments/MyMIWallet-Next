@@ -48,7 +48,8 @@ class WalletsController extends UserController
     private ?WalletSummaryCalculator $summaryCalculator = null;
     private ?MyMISolana $solanaLibrary = null;
     protected $userAccount;
-    protected $helpers = ['auth', 'form', 'url'];
+    protected $helpers = ['auth', 'form', 'url', 'feature'];
+    protected ?ResponseInterface $walletFeatureGuardResponse = null;
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
@@ -81,6 +82,7 @@ class WalletsController extends UserController
 //         // log_message('info', 'DashboardController L72 - $checkingSummary: ' . $userBudget['checkingSummary']);
 //         $this->data['checkingSummary'] = $userBudget['checkingSummary'];
         helper($this->helpers);
+        $this->walletFeatureGuardResponse = feature_guard('FEATURE_WALLETS', ['controller' => __CLASS__, 'phase' => 'phase_a']);
 
         $this->walletModel        = new WalletModel();
         $this->accountService     = new AccountService();
@@ -720,6 +722,10 @@ class WalletsController extends UserController
 
     public function index(): ResponseInterface|string
     {
+        if ($this->walletFeatureGuardResponse instanceof ResponseInterface) {
+            return $this->walletFeatureGuardResponse;
+        }
+
         return $this->renderWalletLandingPage();
     }
 
@@ -800,6 +806,10 @@ class WalletsController extends UserController
 
     public function add()
     {
+        if ($this->walletFeatureGuardResponse instanceof ResponseInterface) {
+            return $this->walletFeatureGuardResponse;
+        }
+
         log_message('debug', "WalletsController::add - START");
         
         if ($this->request->getMethod() === 'POST') {
@@ -1372,6 +1382,10 @@ class WalletsController extends UserController
     // Example of using the CurrencyService and TransactionService within a deposit method
     public function deposit()
     {
+        if ($this->walletFeatureGuardResponse instanceof ResponseInterface) {
+            return $this->walletFeatureGuardResponse;
+        }
+
         $amount = $this->request->getPost('amount');
         $walletID = $this->request->getPost('wallet_id');
         $currency = $this->request->getPost('currency', 'USD'); // Default to USD

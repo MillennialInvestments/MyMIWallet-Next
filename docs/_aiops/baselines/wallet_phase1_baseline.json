@@ -1,0 +1,27 @@
+{
+  "timestamp_utc": "2026-03-01T02:53:30Z",
+  "phase": "phase1_wallet_hardening",
+  "deployment_status": "halted_not_promoted",
+  "gates": {
+    "diff_artifact_path_present": false,
+    "business_logic_removed": true,
+    "public_methods_missing": true,
+    "route_dependencies_broken": true,
+    "model_property_renames_detected": false,
+    "controller_signature_changes_detected": true,
+    "integrity_precheck_command_available": false,
+    "integrity_precheck_passed": false
+  },
+  "commands": {
+    "syntax_wallet_service": "pass",
+    "syntax_wallets_controller": "pass",
+    "ops_integrity_wallet": "missing_command",
+    "ops_drift_scan": "not_run_blocked"
+  },
+  "hashes_sha256": {
+    "app/Services/WalletService.php": "9a022c539f5063b007263e6d326177434a4fa981ea64716af821336625c30120",
+    "app/Modules/User/Controllers/WalletsController.php": "16063d81f1ff8b9d1247ab906b18a2851f06dd43711d53c35cfce57ecb2203ed",
+    "docs/Github/temporary/phase1_wallet_hardening/WalletService.php": "ce63e5049a1fc5b7f042e88f2aedc145d80a16cd35e4b711cf178d128e3ee224",
+    "docs/Github/temporary/phase1_wallet_hardening/WalletsController.php": "3cf6b64449d28780de2369b587d0ab99502bbc6f44264d1bb74cc008279fb02d"
+  }
+}

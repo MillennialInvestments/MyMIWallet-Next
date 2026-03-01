@@ -7,6 +7,7 @@ This queue converts the Customer Interaction Surface Audit into an execution-ord
 
 ## PHASE 1 – Wallet Financial Mutation Hardening
 **Risk:** **CRITICAL**
+**Deployment Status (2026-03-01):** **HALTED / NOT PROMOTED** after patch artifact validation detected major method and route-surface regressions plus missing required ops commands in this runtime.
 
 ### Controller methods involved (exact)
 - `App\Modules\User\Controllers\WalletsController::add`

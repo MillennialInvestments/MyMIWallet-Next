@@ -32,6 +32,8 @@ class Console extends BaseConfig
         */
         \App\Commands\ControllerProfile::class,
         \App\Commands\GtmHealthSnapshot::class,
+        \App\Commands\GtmLaunchAudit::class,
+        \App\Commands\GtmLaunchSmoke::class,
 
         /*
         |----------------------------------------------------------------------
