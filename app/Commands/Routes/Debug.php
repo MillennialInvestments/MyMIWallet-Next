@@ -6,10 +6,10 @@ use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Services;
 
-class Audit extends SafeBaseCommand
+class Debug extends SafeBaseCommand
 {
     protected $group       = 'Diagnostics';
-    protected $name        = 'debug:route';
+    protected $name        = 'routes:debug';
     protected $description = 'Resolve a route and verify controller, method, and HTTP method coverage.';
 
     public function run(array $params)

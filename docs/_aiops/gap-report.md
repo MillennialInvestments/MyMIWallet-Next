@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-03-01T02:00:02Z
+> Run: 2026-03-01T18:00:02Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -806,4 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/discord/server_setup_and_alert_routing.md
   - ❌ No obvious code match found (heuristic)
-- … and 837 more
+- … and 840 more

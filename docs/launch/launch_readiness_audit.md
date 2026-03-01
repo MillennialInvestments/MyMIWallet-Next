@@ -1,8 +1,8 @@
 # Launch Readiness Audit (Phase A)
 
 ## run_meta
-- timestamp_utc: `2026-03-01T17:03:09+00:00`
-- git_commit: `ec6b179ff`
+- timestamp_utc: `2026-03-01T19:34:13+00:00`
+- git_commit: `c5b472330`
 - env: `development`
 - command: `php spark gtm:launch:audit`
 
@@ -85,7 +85,7 @@
 - `GET /resend-activation` => `AuthController::resendActivation`
 
 ## route->controller integrity scan
-- scanned: 1009
+- scanned: 1036
 - missing targets: 457
 - ❌ `GET /healthz => System\HealthController::healthz`
 - ❌ `GET /ops/health => OpsController::health`

@@ -1,7 +1,7 @@
 /
-/API/Investments/Economy/latest
 /API/Ops/filesystem-status
 /API/Ops/health-score
+/API/docs
 /Account
 /Account-And-Billing
 /Account-Manager
@@ -29,7 +29,9 @@
 /CancelOrder
 /Chat
 /Chat/health
+/Chat/history
 /Chat/me
+/Chat/submit
 /Chat/tool
 /Chat/usage
 /Communities
@@ -76,10 +78,10 @@
 /Cron/Update-User-Stakes
 /Cron/Update-User-Stats
 /Crypto-Overview
+/Customer-Support
 /Daily-Financial-News
 /Daily-Log
 /Dashboard
-/Dashboard/Economy/Widget
 /Data
 /Debug/auth-audit-cache
 /Debug/whoami
@@ -100,6 +102,7 @@
 /Discord/completeOnboardingStep
 /Economic-Calendar
 /Economic-Data
+/Economy/latest
 /Email-Queue
 /Email-Queue/create
 /Email-Queue/processQueue
@@ -118,6 +121,7 @@
 /Grouped-Content-Drafts
 /Health
 /Health/spark
+/How-It-Works/Purchase/MyMIGold
 /How-Tos
 /IRS-Expanded-Home-Energy-Tax-Credits
 /Ideas
@@ -127,6 +131,7 @@
 /Integrating-Wallets
 /Integrating-With-Plaid
 /Investments
+/Investments/News
 /Investments/getConfidenceDistribution
 /Investments/getConfidenceHeatmap
 /Investments/getForecastAccuracySummary
@@ -136,6 +141,8 @@
 /Large-Content/Form
 /Last-Month
 /Latest
+/Legal/Privacy-Policy
+/Legal/Terms-And-Conditions
 /Link-Robinhood
 /Link-Snaptrade
 /LinkSettings
@@ -194,6 +201,7 @@
 /Profile
 /Promote
 /Promoted-Articles
+/Purchase/MyMIGold
 /Quick-Intake
 /Quick-Scraper
 /Rates
@@ -256,6 +264,7 @@
 /Wallet/Refresh
 /Wallet/Verify-Ownership
 /Wallet/ViewAssets
+/Widget
 /_ops/opcache-reset
 /accreditation/attest
 /activate
@@ -271,6 +280,10 @@
 /api/admin/chat-usage
 /api/aiops/manual-run
 /api/health
+/apiHeatmap
+/apiKpis
+/apiPatterns
+/apiTopControllers
 /app/update
 /assets/(.*)
 /auth/resend-activation
@@ -418,6 +431,7 @@
 /getAssetsData
 /getBalance
 /getCleanedScrapedContent
+/getConfidenceDistribution
 /getConfidenceHeatmap
 /getContentPerformanceAnalytics
 /getCurrentBlock
@@ -437,6 +451,7 @@
 /getSocialCommunities
 /getSocialPlatforms
 /getSupport
+/getTopConfidenceBySector
 /getTopGeneratedPosts
 /getTransactionStatus
 /getUserAvailableBalances
@@ -526,6 +541,7 @@
 /resendActivationEmailsBatch
 /resendActivationEmailsBatchQueued
 /reset-password
+/results
 /run
 /runBackfillAlertsEmails
 /runBackfillMarketingEmails
@@ -541,6 +557,7 @@
 /saveSuggestion
 /saveTaxonomy
 /savings-goals
+/scanner
 /scheduleNewsletters
 /scorecard
 /scrapeAndGenerateTodaysStoryFromInbox
@@ -594,6 +611,7 @@
 /trends
 /triggerBackfill
 /triggerPostAutogenOnEmpty
+/universe/sync
 /unlock-account
 /updateCampaignLinks
 /updateCampaignMessageField
