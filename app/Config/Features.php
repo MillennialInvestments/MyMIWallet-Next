@@ -19,10 +19,10 @@ class Features extends BaseConfig
             'FEATURE_BUDGET' => $this->readBool('FEATURE_BUDGET', true),
             'FEATURE_INVESTMENTS' => $this->readBool('FEATURE_INVESTMENTS', true),
             'FEATURE_WATCHLIST' => $this->readBool('FEATURE_WATCHLIST', true),
-            'FEATURE_TRADE_ALERTS' => $this->readBool('FEATURE_TRADE_ALERTS', true),
+            'FEATURE_TRADE_ALERTS' => $this->readBool('FEATURE_TRADE_ALERTS', false),
             'FEATURE_WALLETS' => $this->readBool('FEATURE_WALLETS', false),
             'FEATURE_PREDICTIONS' => $this->readBool('FEATURE_PREDICTIONS', false),
-            'FEATURE_MARKETING_AUTOMATION' => $this->readBool('FEATURE_MARKETING_AUTOMATION', true),
+            'FEATURE_MARKETING_AUTOMATION' => $this->readBool('FEATURE_MARKETING_AUTOMATION', false),
         ];
     }
 

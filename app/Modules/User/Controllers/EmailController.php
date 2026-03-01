@@ -78,4 +78,10 @@ class EmailController extends BaseController
     {
         return $this->response->setStatusCode(403)->setJSON(['status' => 'error', 'message' => 'Forbidden', 'csrf' => csrf_hash()]);
     }
+
+    public function index(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: EmailController::index');
+        return redirect()->to('/Maintenance');
+    }
 }

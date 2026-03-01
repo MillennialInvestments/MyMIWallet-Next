@@ -477,4 +477,52 @@ class SolanaAPIController extends UserController {
         $this->email->setMessage('Your transaction was successful. Transaction ID: ' . $transactionResult);
         $this->email->send();
     }
+
+    public function get(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: SolanaAPIController::get');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function getBalance(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: SolanaAPIController::getBalance');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function getTokenAccounts(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: SolanaAPIController::getTokenAccounts');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function health(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: SolanaAPIController::health');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function mint(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: SolanaAPIController::mint');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function quote(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: SolanaAPIController::quote');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function swap(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: SolanaAPIController::swap');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function transfer(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: SolanaAPIController::transfer');
+        return redirect()->to('/Maintenance');
+    }
 }

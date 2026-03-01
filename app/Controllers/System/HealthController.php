@@ -186,4 +186,10 @@ class HealthController extends BaseController
     {
         return (int) round((microtime(true) - $started) * 1000);
     }
+
+    public function index(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: Api\\HealthController::index');
+        return redirect()->to('/Maintenance');
+    }
 }

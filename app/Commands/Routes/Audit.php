@@ -1,67 +1,90 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Commands\Routes;
 
 use App\Commands\SafeBaseCommand;
+use App\Services\RouteInspectionService;
 use CodeIgniter\CLI\CLI;
-use Config\Services;
 
 class Audit extends SafeBaseCommand
 {
-    protected $group       = 'Diagnostics';
-    protected $name        = 'debug:route';
-    protected $description = 'Resolve a route and verify controller, method, and HTTP method coverage.';
+    protected $group = 'Routes';
+    protected $name = 'routes:docs';
+    protected $description = 'Inspect routes with controller/method integrity, duplicates, and optional filters.';
+    protected $options = [
+        '--errors-only=1' => 'Only show routes with class/method errors.',
+        '--duplicates-only=1' => 'Only show duplicate method+URI routes.',
+        '--phase=PhaseA|full' => 'Inspect phase fragments only.',
+    ];
 
     public function run(array $params)
     {
-        $this->beginSparkTrace();
+                $errorsOnly = $this->cliFlag('errors-only');
+        $duplicatesOnly = $this->cliFlag('duplicates-only');
+        $phase = CLI::getOption('phase');
+        $phase = is_string($phase) && $phase !== "" ? $phase : null;
 
-        try {
-            $target = $params[0] ?? '';
-            if ($target === '') {
-                CLI::error('Usage: php spark debug:route <uri>');
-                return;
-            }
+        $rows = (new RouteInspectionService())->inspect($phase);
 
-            $routes = Services::routes();
-        $routes->loadRoutes();
-
-        $collection = $routes->getRoutes();
-        $matches = [];
-
-        foreach ($collection as $uri => $route) {
-            if (strcasecmp(trim((string) $uri, '/'), trim($target, '/')) !== 0) {
-                continue;
-            }
-
-            foreach ($route as $method => $handler) {
-                $matches[] = [strtoupper((string) $method), $handler];
-            }
+        if ($errorsOnly) {
+            $rows = array_values(array_filter($rows, static fn(array $r): bool => ! $r['exists'] || ! $r['methodExists']));
         }
 
-        if ($matches === []) {
-            CLI::error('No route definitions matched: ' . $target);
-            return;
+        if ($duplicatesOnly) {
+            $rows = array_values(array_filter($rows, static fn(array $r): bool => $r['isDuplicate']));
         }
 
-            foreach ($matches as [$method, $handler]) {
-            CLI::write($method . ' => ' . (is_string($handler) ? $handler : json_encode($handler)), 'yellow');
+        $lines = [
+            '# Route Inspection Report',
+            '',
+            '- generated_at_utc: `' . gmdate('c') . '`',
+            '- phase_filter: `' . ($phase ?? 'runtime') . '`',
+            '- errors_only: `' . ($errorsOnly ? '1' : '0') . '`',
+            '- duplicates_only: `' . ($duplicatesOnly ? '1' : '0') . '`',
+            '- total_routes: ' . count($rows),
+            '',
+            '| Method | URI | Handler | Exists | Method Exists | Duplicate | Source |',
+            '|---|---|---|---|---|---|---|',
+        ];
 
-            if (! is_string($handler) || ! str_contains($handler, '::')) {
-                CLI::write('  - Handler is not controller::method format; skipping method check.', 'red');
-                continue;
-            }
-
-            [$controller, $methodName] = explode('::', $handler, 2);
-            $controllerExists = class_exists($controller);
-            $methodExists = $controllerExists ? method_exists($controller, $methodName) : false;
-
-            CLI::write('  - Controller exists: ' . ($controllerExists ? 'YES' : 'NO'), $controllerExists ? 'green' : 'red');
-            CLI::write('  - Method exists: ' . ($methodExists ? 'YES' : 'NO'), $methodExists ? 'green' : 'red');
-                CLI::write('  - HTTP method allowed: ' . $method, 'green');
-            }
-        } finally {
-            $this->finishSparkTrace();
+        foreach ($rows as $r) {
+            $lines[] = sprintf(
+                '| %s | %s | `%s` | %s | %s | %s | %s |',
+                $r['method'],
+                $r['uri'],
+                $r['handler'],
+                $r['exists'] ? 'YES' : 'NO',
+                $r['methodExists'] ? 'YES' : 'NO',
+                $r['isDuplicate'] ? 'YES' : 'NO',
+                $r['sourceFile']
+            );
         }
+
+        $out = ROOTPATH . 'docs/architecture/routes_inspection.md';
+        if (! is_dir(dirname($out))) {
+            mkdir(dirname($out), 0775, true);
+        }
+        file_put_contents($out, implode(PHP_EOL, $lines) . PHP_EOL);
+
+        CLI::write('Route docs written: ' . $out, 'green');
+        CLI::write('Rows: ' . count($rows), 'yellow');
+
+        return EXIT_SUCCESS;
+    }
+
+    private function cliFlag(string $key): bool
+    {
+        $value = CLI::getOption($key);
+        if ($value === null) {
+            return false;
+        }
+
+        if ($value === true) {
+            return true;
+        }
+
+        return in_array(strtolower((string) $value), ['1', 'true', 'yes', 'on'], true);
     }
 }

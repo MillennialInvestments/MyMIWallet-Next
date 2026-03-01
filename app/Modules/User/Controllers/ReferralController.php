@@ -569,4 +569,16 @@ class ReferralController extends UserController {
         $data = $this->referralService->prepareData($this->request->getPost());
         return $type === 'insert' ? $this->referralService->saveReferral($data) : $this->referralService->updateReferral($id, $data);
     }
+
+    public function bulkDelete(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ReferralController::bulkDelete');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function bulkUpdateStatus(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ReferralController::bulkUpdateStatus');
+        return redirect()->to('/Maintenance');
+    }
 }

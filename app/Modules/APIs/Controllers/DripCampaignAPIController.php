@@ -36,5 +36,17 @@ class DripCampaignAPIController extends UserController
             '/'
         );
     }
+
+    public function enrollUser(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: DripCampaignAPIController::enrollUser');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function testDripCron(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: DripCampaignAPIController::testDripCron');
+        return redirect()->to('/Maintenance');
+    }
 }
 ?>

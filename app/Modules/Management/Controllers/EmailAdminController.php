@@ -177,5 +177,17 @@ class EmailAdminController extends UserController
     
         return redirect()->to('/Management/Email/campaigns')->with('success', 'Campaign scheduled successfully.');
     }
+
+    public function autoScheduleDrafts(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: EmailAdminController::autoScheduleDrafts');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function updateCampaign(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: EmailAdminController::updateCampaign');
+        return redirect()->to('/Maintenance');
+    }
 }
 ?>

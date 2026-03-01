@@ -632,4 +632,10 @@ class HowItWorksController extends BaseController
             ],
         ];
     }
+
+    public function show(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: HowItWorksController::show');
+        return redirect()->to('/Maintenance');
+    }
 }

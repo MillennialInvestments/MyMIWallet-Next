@@ -49,4 +49,28 @@ class OpsController extends InternalApiController
 
         return $this->jsonOk(['commands' => $commands, 'hint' => $hint], ['endpoint' => 'ops.commands']);
     }
+
+    public function ajaxDispatch(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: OpsController::ajaxDispatch');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function ajaxStatus(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: OpsController::ajaxStatus');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function health(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: OpsController::health');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function index(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: OpsController::index');
+        return redirect()->to('/Maintenance');
+    }
 }

@@ -154,4 +154,100 @@ class ProjectsController extends BaseController
         }
         return (int) $userId;
     }
+
+    public function approveProject(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ProjectsController::approveProject');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function checkThreshold(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ProjectsController::checkThreshold');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function createQuarterlyDistribution(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ProjectsController::createQuarterlyDistribution');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function fetchProjectEmails(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ProjectsController::fetchProjectEmails');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function launchPrivateAuction(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ProjectsController::launchPrivateAuction');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function markFunded(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ProjectsController::markFunded');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function openCommitments(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ProjectsController::openCommitments');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function parseProjectEmails(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ProjectsController::parseProjectEmails');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function processMonthlyWithdrawals(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ProjectsController::processMonthlyWithdrawals');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function promoteLead(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ProjectsController::promoteLead');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function realEstateQuickIntake(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ProjectsController::realEstateQuickIntake');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function realEstateQuickSubmit(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ProjectsController::realEstateQuickSubmit');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function rejectProject(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ProjectsController::rejectProject');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function runPayouts(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ProjectsController::runPayouts');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function settlePrivateAuction(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ProjectsController::settlePrivateAuction');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function updateProject(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ProjectsController::updateProject');
+        return redirect()->to('/Maintenance');
+    }
 }

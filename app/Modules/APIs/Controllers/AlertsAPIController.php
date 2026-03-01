@@ -2910,5 +2910,11 @@ class AlertsAPIController extends ResourceController
         ]);
     }
 
+
+    public function research(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: AlertsAPIController::research');
+        return redirect()->to('/Maintenance');
+    }
 }
 ?>

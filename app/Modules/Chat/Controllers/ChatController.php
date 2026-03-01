@@ -24,4 +24,16 @@ class ChatController extends InternalApiController
     {
         return $this->jsonError('not_implemented', 'Chat usage endpoint is not implemented.', 501);
     }
+
+    public function me(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ChatController::me');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function tool(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ChatController::tool');
+        return redirect()->to('/Maintenance');
+    }
 }

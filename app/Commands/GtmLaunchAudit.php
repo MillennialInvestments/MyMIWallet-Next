@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Commands;
 
+use App\Services\RouteInspectionService;
 use CodeIgniter\CLI\CLI;
 
 class GtmLaunchAudit extends SafeBaseCommand
@@ -138,41 +139,16 @@ class GtmLaunchAudit extends SafeBaseCommand
     /** @return list<array{verb:string,path:string,target:string}> */
     private function parseRoutesFile(): array
     {
-        $file = ROOTPATH . 'app/Config/Routes.php';
-        if (! is_file($file)) {
-            return [];
-        }
+        $rows = (new RouteInspectionService())->inspect();
 
-        $lines = file($file, FILE_IGNORE_NEW_LINES) ?: [];
-        $routes = [];
-
-        foreach ($lines as $line) {
-            $trim = trim($line);
-            if ($trim === '' || str_starts_with($trim, '//')) {
-                continue;
-            }
-
-            if (preg_match('/\$routes->(get|post|put|delete|patch|options|cli|match)\((.+)\);/i', $trim, $m) !== 1) {
-                continue;
-            }
-
-            $verb = strtoupper($m[1]);
-            $args = $m[2];
-            if (preg_match('/^[\'\"]([^\'\"]+)[\'\"]\s*,\s*[\'\"]([^\'\"]+)[\'\"]/i', $args, $a) !== 1) {
-                continue;
-            }
-
-            $path = '/' . ltrim($a[1], '/');
-            $target = $a[2];
-
-            if ($verb === 'MATCH') {
-                $verb = 'GET|POST';
-            }
-
-            $routes[] = ['verb' => $verb, 'path' => $path, 'target' => $target];
-        }
-
-        return $routes;
+        return array_values(array_map(
+            static fn(array $r): array => [
+                'verb' => $r['method'],
+                'path' => $r['uri'],
+                'target' => $r['handler'],
+            ],
+            $rows
+        ));
     }
 
     /** @param list<array{verb:string,path:string,target:string}> $routes */
@@ -203,12 +179,20 @@ class GtmLaunchAudit extends SafeBaseCommand
     /** @return array{0:?string,1:bool} */
     private function resolveControllerFile(string $controller): array
     {
-        $relativeCandidates = [
-            'app/Controllers/' . $controller . '.php',
-            'app/Modules/User/Controllers/' . $controller . '.php',
-            'app/Modules/APIs/Controllers/' . $controller . '.php',
-            'app/Modules/Management/Controllers/' . $controller . '.php',
-        ];
+        $normalized = ltrim($controller, '\\');
+        $relativeCandidates = [];
+
+        if (str_starts_with($normalized, 'App\\')) {
+            $relativeCandidates[] = 'app/' . str_replace('App\\', '', str_replace('\\', '/', $normalized)) . '.php';
+        }
+
+        $classBase = basename(str_replace('\\', '/', $normalized));
+        $relativeCandidates = array_merge($relativeCandidates, [
+            'app/Controllers/' . $classBase . '.php',
+            'app/Modules/User/Controllers/' . $classBase . '.php',
+            'app/Modules/APIs/Controllers/' . $classBase . '.php',
+            'app/Modules/Management/Controllers/' . $classBase . '.php',
+        ]);
 
         foreach ($relativeCandidates as $relativePath) {
             $absolute = ROOTPATH . $relativePath;

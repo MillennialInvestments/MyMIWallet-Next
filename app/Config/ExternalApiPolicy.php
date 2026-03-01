@@ -25,10 +25,10 @@ class ExternalApiPolicy extends BaseConfig
     /**
      * Optional micro-sleep backoff (microseconds) after each allowed call.
      */
-    public int $microSleepBackoffUs = 0;
+    public int $microSleepBackoffUs = 50000;
 
     /**
      * Whether to apply micro-sleep backoff automatically.
      */
-    public bool $enableBackoff = false;
+    public bool $enableBackoff = true;
 }

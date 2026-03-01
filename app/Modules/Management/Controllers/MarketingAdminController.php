@@ -2839,5 +2839,53 @@ class MarketingAdminController extends UserController
         return array_map(static fn ($k) => preg_replace('/\\s+/', '', strtolower((string) $k)), array_slice($keywords, 0, 6));
     }
     
+
+    public function blogCreator(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAdminController::blogCreator');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function contentListing(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAdminController::contentListing');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function fetchEmails(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAdminController::fetchEmails');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function generateAutomatedContent(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAdminController::generateAutomatedContent');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function sendNotification(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAdminController::sendNotification');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function sendScheduleNewsletter(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAdminController::sendScheduleNewsletter');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function test(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAdminController::test');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function videoCreator(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAdminController::videoCreator');
+        return redirect()->to('/Maintenance');
+    }
 }
 ?>

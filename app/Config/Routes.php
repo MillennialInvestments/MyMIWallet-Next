@@ -683,41 +683,41 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     // ✅ EmailController
     // ------------------------    
     $routes->group('Email', function($routes) {        
-        $routes->get('autoScheduleDraftCampaigns', 'EmailAPIController:autoScheduleDraftCampaigns');
-        $routes->get('cloneCampaign/(:num)', 'EmailAPIController:cloneCampaign/$1');
-        $routes->post('createDraftCampaign', 'EmailAPIController:createDraftCampaign');
-        $routes->post('scheduleCampaignApi/(:num)', 'EmailAPIController:scheduleCampaignApi/$1');
-        $routes->get('cancelScheduledCampaign/(:num)', 'EmailAPIController:cancelScheduledCampaign/$1');
-        $routes->delete('deleteCampaign/(:num)', 'EmailAPIController:deleteCampaign/$1');
-        $routes->get('fetchCampaignAnalytics', 'EmailAPIController:fetchCampaignAnalytics');
-        $routes->get('fetchQueuedEmails', 'EmailAPIController:fetchQueuedEmails');
-        $routes->get('fetchQueuedEmailById/(:num)', 'EmailAPIController:fetchQueuedEmailById/$1');
-        $routes->get('getAllCampaigns', 'EmailAPIController:getAllCampaigns');
-        $routes->get('getCampaignMetrics/(:num)', 'EmailAPIController:getCampaignMetrics/$1');
-        $routes->get('getCampaignStats/(:num)', 'EmailAPIController:getCampaignStats/$1');
-        $routes->get('getEmailQueueStats', 'EmailAPIController:getEmailQueueStats');
-        $routes->get('getEmailQueueTrend', 'EmailAPIController:getEmailQueueTrend');
-        $routes->get('processScheduledCampaigns', 'EmailAPIController:processScheduledCampaigns');
-        $routes->get('sendMassTestCampaign', 'EmailAPIController:sendMassTestCampaign');
-        $routes->get('trackBounceWebhook', 'EmailAPIController:trackBounceWebhook');
-        $routes->get('unsubscribe/(:any)', 'EmailAPIController:unsubscribe/$1');
+        $routes->get('autoScheduleDraftCampaigns', 'EmailAPIController::autoScheduleDraftCampaigns');
+        $routes->get('cloneCampaign/(:num)', 'EmailAPIController::cloneCampaign/$1');
+        $routes->post('createDraftCampaign', 'EmailAPIController::createDraftCampaign');
+        $routes->post('scheduleCampaignApi/(:num)', 'EmailAPIController::scheduleCampaignApi/$1');
+        $routes->get('cancelScheduledCampaign/(:num)', 'EmailAPIController::cancelScheduledCampaign/$1');
+        $routes->delete('deleteCampaign/(:num)', 'EmailAPIController::deleteCampaign/$1');
+        $routes->get('fetchCampaignAnalytics', 'EmailAPIController::fetchCampaignAnalytics');
+        $routes->get('fetchQueuedEmails', 'EmailAPIController::fetchQueuedEmails');
+        $routes->get('fetchQueuedEmailById/(:num)', 'EmailAPIController::fetchQueuedEmailById/$1');
+        $routes->get('getAllCampaigns', 'EmailAPIController::getAllCampaigns');
+        $routes->get('getCampaignMetrics/(:num)', 'EmailAPIController::getCampaignMetrics/$1');
+        $routes->get('getCampaignStats/(:num)', 'EmailAPIController::getCampaignStats/$1');
+        $routes->get('getEmailQueueStats', 'EmailAPIController::getEmailQueueStats');
+        $routes->get('getEmailQueueTrend', 'EmailAPIController::getEmailQueueTrend');
+        $routes->get('processScheduledCampaigns', 'EmailAPIController::processScheduledCampaigns');
+        $routes->get('sendMassTestCampaign', 'EmailAPIController::sendMassTestCampaign');
+        $routes->get('trackBounceWebhook', 'EmailAPIController::trackBounceWebhook');
+        $routes->get('unsubscribe/(:any)', 'EmailAPIController::unsubscribe/$1');
     });
 
     $routes->group('eSports', function($routes) {
-        $routes->post('createEvent', 'EsportsAPIController:createEvent');
-        $routes->post('joinEvent', 'EsportsAPIController:joinEvent');
-        $routes->post('lockEscrow', 'EsportsAPIController:lockEscrow');
-        $routes->post('cancelEvent', 'EsportsAPIController:cancelEvent');
-        $routes->post('receiveResultWebhook', 'EsportsAPIController:receiveResultWebhook');
-        $routes->post('settlePayouts', 'EsportsAPIController:settlePayouts');
-        $routes->post('cronProcessJobs', 'EsportsAPIController:cronProcessJobs');
-        $routes->get('event/(:num)', 'EsportsAPIController:getEvent/$1');
-        $routes->get('events', 'EsportsAPIController:listEvents');
+        $routes->post('createEvent', 'EsportsAPIController::createEvent');
+        $routes->post('joinEvent', 'EsportsAPIController::joinEvent');
+        $routes->post('lockEscrow', 'EsportsAPIController::lockEscrow');
+        $routes->post('cancelEvent', 'EsportsAPIController::cancelEvent');
+        $routes->post('receiveResultWebhook', 'EsportsAPIController::receiveResultWebhook');
+        $routes->post('settlePayouts', 'EsportsAPIController::settlePayouts');
+        $routes->post('cronProcessJobs', 'EsportsAPIController::cronProcessJobs');
+        $routes->get('event/(:num)', 'EsportsAPIController::getEvent/$1');
+        $routes->get('events', 'EsportsAPIController::listEvents');
     });
     
     $routes->group('Investments', function($routes) {
-        $routes->get('/', 'InvestmentsAPIController:index');
-        // $routes->match(['GET', 'POST'], 'addNewTradeToWatchlist', 'InvestmentsAPIController:addNewTradeToWatchlist');
+        $routes->get('/', 'InvestmentsAPIController::index');
+        // $routes->match(['GET', 'POST'], 'addNewTradeToWatchlist', 'InvestmentsAPIController::addNewTradeToWatchlist');
         // $routes->get('fetchActiveTrades/(:any)', 'API::fetchActiveTrade/$1'); // Fetch User Active Trades
         // $routes->get('fetchRealTimeData/(:any)/(:any)', 'API::fetchRealTimeData/$1/$2'); // Fetch Real-Time Price Data
         // $routes->get('fetchWatchlistPrices/(:any)', 'InvestmentsAPIController::fetchWatchlistPrices/$1');
@@ -891,7 +891,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('Twitter', 'MarketingAPIController::twitterDashboard');
         $routes->get('Video-Creator', 'MarketingAPIController::videoCreator');
         $routes->get('View-Email/(:segment)/(:segment)', 'MarketingAPIController::viewEmail/$1/$2');
-        $routes->get('View-Grouped-Summaries', 'MarketingAPIController::View-Grouped-Summaries');
+        $routes->get('View-Grouped-Summaries', 'MarketingAPIController::viewGroupedSummaries');
         $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsAPIController::addUserGoldTasks');
         $routes->get('Email-Templates/create', 'EmailTemplateController::create');
         $routes->post('/Email-Templates/store', 'EmailTemplateController::store');
@@ -1273,7 +1273,7 @@ $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers
         $routes->get('Twitter', 'MarketingAdminController::twitterDashboard'); 
         $routes->get('Video-Creator', 'MarketingAdminController::videoCreator');
         $routes->get('View-Email/(:segment)/(:segment)', 'MarketingAdminController::viewEmail/$1/$2');
-        $routes->get('View-Grouped-Summaries', 'MarketingAdminController::View-Grouped-Summaries');
+        $routes->get('View-Grouped-Summaries', 'MarketingAdminController::viewGroupedSummaries');
         $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsAdminController::addUserGoldTasks');
         // Define other routes for 'blog' module
         // $routes->get('Management/Marketing/Email-Templates', 'EmailTemplateController::index');

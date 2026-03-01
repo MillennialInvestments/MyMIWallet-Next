@@ -2630,5 +2630,341 @@ class MarketingAPIController extends \App\Controllers\BaseController
         return $this->renderTheme('ManagementModule\Views\Marketing\resources\timelineGroupedView', $this->data);
     }
     
+
+    public function publishBlog(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: Management\MarketingAPIController::publishBlog');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function runContentGeneration(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: Management\MarketingAPIController::runContentGeneration');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function add(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::add');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function approveContent(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::approveContent');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function approvePost(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::approvePost');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function blogCreator(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::blogCreator');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function blogs(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::blogs');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function campaigns(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::campaigns');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function communities(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::communities');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function contentGenerator(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::contentGenerator');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function contentListing(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::contentListing');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function contentReview(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::contentReview');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function cronGenerateDailyCommunityPosts(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::cronGenerateDailyCommunityPosts');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function cronQueueDistribution(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::cronQueueDistribution');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function editContent(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::editContent');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function exportGeneratedPostJson(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::exportGeneratedPostJson');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function fetchEmails(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::fetchEmails');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function fetchMissingLogos(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::fetchMissingLogos');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function financialNews(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::financialNews');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function generateAutomatedContent(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::generateAutomatedContent');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function generateContent(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::generateContent');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function generateDailyCommunityPosts(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::generateDailyCommunityPosts');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function generateGroupedContentDrafts(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::generateGroupedContentDrafts');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function generateNewsletterContent(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::generateNewsletterContent');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function generatePlatformPosts(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::generatePlatformPosts');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function generateRevenueDocs(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::generateRevenueDocs');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function getPostTemplates(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::getPostTemplates');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function getRecentScrapes(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::getRecentScrapes');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function getSocialCommunities(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::getSocialCommunities');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function getSocialPlatforms(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::getSocialPlatforms');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function ideas(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::ideas');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function index(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::index');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function postCreator(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::postCreator');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function previewBufferItem(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::previewBufferItem');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function previewGeneratedPost(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::previewGeneratedPost');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function previewPendingSummaries(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::previewPendingSummaries');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function promote(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::promote');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function rejectContent(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::rejectContent');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function runScheduledTasks(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::runScheduledTasks');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function saveContentEdit(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::saveContentEdit');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function schedule(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::schedule');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function scheduleNewsletterCampaign(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::scheduleNewsletterCampaign');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function scrapeLink(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::scrapeLink');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function sendNotification(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::sendNotification');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function sendScheduleNewsletter(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::sendScheduleNewsletter');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function shortLongContentForm(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::shortLongContentForm');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function standaloneScrape(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::standaloneScrape');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function submitDailyLog(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::submitDailyLog');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function submitLargeContentForm(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::submitLargeContentForm');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function submitManualContent(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::submitManualContent');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function test(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::test');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function twitterDashboard(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::twitterDashboard');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function validateSymbol(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::validateSymbol');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function videoCreator(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::videoCreator');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function viewDailyLogs(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::viewDailyLogs');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function viewEmail(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: MarketingAPIController::viewEmail');
+        return redirect()->to('/Maintenance');
+    }
 }
 ?>

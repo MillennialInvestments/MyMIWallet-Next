@@ -2071,5 +2071,23 @@ class WalletsController extends UserController
         return $this->response->setJSON(['status' => 'success', 'message' => 'Premium service activated.']);
     }
 
+
+    public function MyMIWallet(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: WalletsController::MyMIWallet');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function emailUserAboutIssue(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: WalletsController::emailUserAboutIssue');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function reconcile(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: WalletsController::reconcile');
+        return redirect()->to('/Maintenance');
+    }
 }
 ?>

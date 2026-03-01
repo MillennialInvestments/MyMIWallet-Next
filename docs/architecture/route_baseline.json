@@ -1,0 +1,9 @@
+{
+    "generated_at_utc": "2026-03-01T16:19:18+00:00",
+    "source": "app/Config/Routes.php",
+    "declared_route_count": 1266,
+    "guard": {
+        "min_expected": 1241,
+        "message": "Fail CI if declared route count drops unexpectedly below min_expected."
+    }
+}

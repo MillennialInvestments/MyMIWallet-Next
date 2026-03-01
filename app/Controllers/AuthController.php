@@ -1499,4 +1499,58 @@ class AuthController extends BaseController
             'count'  => count($fields),
         ];
     }
+
+    public function createTempUser(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: AuthController::createTempUser');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function get2FAQRCode(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: AuthController::get2FAQRCode');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function handleProviderCallback(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: AuthController::handleProviderCallback');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function linkProvider(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: AuthController::linkProvider');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function linkRobinhood(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: AuthController::linkRobinhood');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function linkSnapTrade(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: AuthController::linkSnapTrade');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function redirectToProvider(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: AuthController::redirectToProvider');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function unlinkProvider(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: AuthController::unlinkProvider');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function verify2FACode(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: AuthController::verify2FACode');
+        return redirect()->to('/Maintenance');
+    }
 }

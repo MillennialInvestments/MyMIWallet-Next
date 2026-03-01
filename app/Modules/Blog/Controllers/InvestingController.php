@@ -100,4 +100,22 @@ class InvestingController extends UserController
         $this->commonData(); // Ensure this is correctly populating $this->data
         $this->renderTheme('App\Modules\Blog\Views\index', $this->data);
     }
+
+    public function TheBeginnersGuideToOptionTrading(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: InvestingController::TheBeginnersGuideToOptionTrading');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function TheFundamentalsOfInvesting(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: InvestingController::TheFundamentalsOfInvesting');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function TipsForEffectiveInvestmentPortfolioManagement(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: InvestingController::TipsForEffectiveInvestmentPortfolioManagement');
+        return redirect()->to('/Maintenance');
+    }
 }

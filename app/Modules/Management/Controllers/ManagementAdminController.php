@@ -472,4 +472,40 @@ class ManagementAdminController extends UserController
         }
     }
     
+
+    public function banUnverifiedUsers(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ManagementAdminController::banUnverifiedUsers');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function processQueuedEmails(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ManagementAdminController::processQueuedEmails');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function resendActivationEmailsBatch(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ManagementAdminController::resendActivationEmailsBatch');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function resendActivationEmailsBatchQueued(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ManagementAdminController::resendActivationEmailsBatchQueued');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function saveSuggestion(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ManagementAdminController::saveSuggestion');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function sendTestActivationEmail(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ManagementAdminController::sendTestActivationEmail');
+        return redirect()->to('/Maintenance');
+    }
 }

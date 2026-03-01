@@ -287,4 +287,10 @@ class OpsAPIController extends BaseController
             'message' => $message,
         ], $statusCode);
     }
+
+    public function opcacheReset(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: OpsAPIController::opcacheReset');
+        return redirect()->to('/Maintenance');
+    }
 }

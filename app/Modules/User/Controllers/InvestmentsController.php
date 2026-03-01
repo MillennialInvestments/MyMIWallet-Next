@@ -1146,5 +1146,41 @@ class InvestmentsController extends UserController
             });
         }, $filename);
     }
+
+    public function MyMINews(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: InvestmentsController::MyMINews');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function MyMIResearch(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: InvestmentsController::MyMIResearch');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function cryptoOverview(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: InvestmentsController::cryptoOverview');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function economicData(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: InvestmentsController::economicData');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function marketNews(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: InvestmentsController::marketNews');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function stockOverview(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: InvestmentsController::stockOverview');
+        return redirect()->to('/Maintenance');
+    }
 }
 ?>

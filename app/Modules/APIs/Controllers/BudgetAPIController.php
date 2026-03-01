@@ -210,4 +210,136 @@ class BudgetAPIController extends UserBudgetController
             ]);
         }
     }
+
+    public function addLinkedAccount(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: BudgetAPIController::addLinkedAccount');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function available(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: BudgetAPIController::available');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function budgets(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: BudgetAPIController::budgets');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function cashFlow(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: BudgetAPIController::cashFlow');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function categories(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: BudgetAPIController::categories');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function credit(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: BudgetAPIController::credit');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function getUserAvailableBalances(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: BudgetAPIController::getUserAvailableBalances');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function getUserBudgetRecords(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: BudgetAPIController::getUserBudgetRecords');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function getUserCreditBalances(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: BudgetAPIController::getUserCreditBalances');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function getUserRepaymentSummary(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: BudgetAPIController::getUserRepaymentSummary');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function goals(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: BudgetAPIController::goals');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function insights(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: BudgetAPIController::insights');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function investmentAccounts(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: BudgetAPIController::investmentAccounts');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function linkedAccounts(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: BudgetAPIController::linkedAccounts');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function netWorth(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: BudgetAPIController::netWorth');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function refreshLinkedAccount(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: BudgetAPIController::refreshLinkedAccount');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function removeLinkedAccount(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: BudgetAPIController::removeLinkedAccount');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function repayment(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: BudgetAPIController::repayment');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function savingsGoals(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: BudgetAPIController::savingsGoals');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function summary(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: BudgetAPIController::summary');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function transactions(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: BudgetAPIController::transactions');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function trends(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: BudgetAPIController::trends');
+        return redirect()->to('/Maintenance');
+    }
 }

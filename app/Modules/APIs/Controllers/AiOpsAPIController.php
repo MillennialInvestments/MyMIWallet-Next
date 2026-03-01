@@ -275,4 +275,40 @@ class AiOpsAPIController extends BaseController
 
         return hash_equals($expected, $headerSignature);
     }
+
+    public function cacheGet(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: AiOpsAPIController::cacheGet');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function cacheStore(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: AiOpsAPIController::cacheStore');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function health(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: AiOpsAPIController::health');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function logUsage(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: AiOpsAPIController::logUsage');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function policyCheck(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: AiOpsAPIController::policyCheck');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function testPolicy(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: AiOpsAPIController::testPolicy');
+        return redirect()->to('/Maintenance');
+    }
 }

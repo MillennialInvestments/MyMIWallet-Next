@@ -2271,5 +2271,95 @@ class ManagementAPIController extends \App\Controllers\BaseController
             return false;
         }
     }
+
+    public function composePost(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ManagementAPIController::composePost');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function deletePlatform(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ManagementAPIController::deletePlatform');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function deletePlatformRule(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ManagementAPIController::deletePlatformRule');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function deleteSuggestion(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ManagementAPIController::deleteSuggestion');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function deleteTaxonomy(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ManagementAPIController::deleteTaxonomy');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function fetchLatestSummaries(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ManagementAPIController::fetchLatestSummaries');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function getPlatformRules(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ManagementAPIController::getPlatformRules');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function getPlatforms(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ManagementAPIController::getPlatforms');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function getPostingPlan(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ManagementAPIController::getPostingPlan');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function listSuggestions(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ManagementAPIController::listSuggestions');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function savePlatform(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ManagementAPIController::savePlatform');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function saveTaxonomy(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ManagementAPIController::saveTaxonomy');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function searchTaxonomy(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ManagementAPIController::searchTaxonomy');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function triggerPostAutogenOnEmpty(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ManagementAPIController::triggerPostAutogenOnEmpty');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function upsertPlatformRule(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: ManagementAPIController::upsertPlatformRule');
+        return redirect()->to('/Maintenance');
+    }
 }
 ?>

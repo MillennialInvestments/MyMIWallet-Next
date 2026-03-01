@@ -342,6 +342,7 @@ class Console extends BaseConfig
         \App\Commands\LogsFullReport::class,
         \App\Commands\LogsTest::class,
 
+
         /*
         |----------------------------------------------------------------------
         | Ops

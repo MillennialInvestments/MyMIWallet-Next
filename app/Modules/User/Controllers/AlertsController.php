@@ -451,5 +451,17 @@ class AlertsController extends UserController
         $userAlerts = $this->alertsModel->getUserSubscribedAlerts($this->cuID);
         return $this->respond(['status' => 'success', 'alerts' => $userAlerts]);
     }
+
+    public function previewScraper(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: AlertsController::previewScraper');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function research(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: AlertsController::research');
+        return redirect()->to('/Maintenance');
+    }
 }
 ?>

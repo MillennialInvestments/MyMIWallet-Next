@@ -741,4 +741,40 @@ class PredictionsAPIController extends BaseController
             ],
         ];
     }
+
+    public function index(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: PredictionsAPIController::index');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function latest(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: PredictionsAPIController::latest');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function markets(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: PredictionsAPIController::markets');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function portfolio(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: PredictionsAPIController::portfolio');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function settlements(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: PredictionsAPIController::settlements');
+        return redirect()->to('/Maintenance');
+    }
+
+    public function view(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: PredictionsAPIController::view');
+        return redirect()->to('/Maintenance');
+    }
 }

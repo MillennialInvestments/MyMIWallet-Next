@@ -1306,5 +1306,11 @@ $addr = $svc->normalizeAddress($row);
 
     //     return $this->response->setJSON($payload);
     // }
+
+    public function verifyWalletOwnership(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: SolanaController::verifyWalletOwnership');
+        return redirect()->to('/Maintenance');
+    }
 }
 ?>

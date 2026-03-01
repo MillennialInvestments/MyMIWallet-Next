@@ -11,7 +11,7 @@ class DevelopmentAdminController extends UserController
 
     protected ?int $cuID = null;
     protected array $data = [];
-    protected array $helpers = ['url', 'form', 'security'];
+    protected $helpers = ['url', 'form', 'security'];
 
     public function index(): string
     {

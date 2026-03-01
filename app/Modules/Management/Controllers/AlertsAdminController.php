@@ -1529,4 +1529,10 @@ class AlertsAdminController extends UserController
             'mem' => memory_get_usage(true),
         ]);
     }
+
+    public function topPerformanceWeekly(...$args)
+    {
+        log_message('warning', 'Unimplemented endpoint accessed: AlertsAdminController::topPerformanceWeekly');
+        return redirect()->to('/Maintenance');
+    }
 }
