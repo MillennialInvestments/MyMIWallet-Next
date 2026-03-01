@@ -16,7 +16,7 @@ use CodeIgniter\API\ResponseTrait; // Import the ResponseTrait
 class APIAdminController extends UserController
 {
     protected $auth;
-    protected $helpers = ['auth', 'form', 'url'];
+    
     protected $library;
     protected $session;
     protected $siteSettings;

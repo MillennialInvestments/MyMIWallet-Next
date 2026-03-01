@@ -25,7 +25,7 @@ class AlertsAdminController extends UserController
     
     protected $API;
     protected $auth;
-    protected $helpers = ['auth', 'form', 'url'];
+    
     protected $library;
     protected $session;
     protected $siteSettings;

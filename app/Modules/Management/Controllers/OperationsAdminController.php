@@ -11,7 +11,7 @@ class OperationsAdminController extends UserController
 
     protected ?int $cuID = null;
     protected array $data = [];
-    protected array $helpers = ['url', 'form', 'security'];
+    
 
     public function index(): string
     {

@@ -21,7 +21,7 @@ class MarketingAdminController extends UserController
     use ResponseTrait;
     protected $API;
     protected $auth;
-    protected $helpers = ['auth', 'form', 'url'];
+    
     protected $logger;
     protected $request;
     protected $session;

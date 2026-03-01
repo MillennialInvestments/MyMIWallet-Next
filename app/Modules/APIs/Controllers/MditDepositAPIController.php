@@ -2,13 +2,14 @@
 
 namespace App\Modules\APIs\Controllers;
 
+use App\Modules\APIs\Controllers\MditBaseAPIController;
 use App\Models\MDIT\MditDepositModel;
 use App\Services\MDIT\MditDepositService;
 use App\Services\MDIT\MditInvestorService;
 use CodeIgniter\HTTP\ResponseInterface;
 
 #[\AllowDynamicProperties]
-class MditDepositAPIController extends MditBaseController
+class MditDepositAPIController extends MditBaseAPIController
 {
     private MditDepositService $depositService;
     private MditInvestorService $investorService;

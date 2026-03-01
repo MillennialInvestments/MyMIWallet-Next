@@ -20,7 +20,7 @@ class ExchangeAdminController extends UserController
     protected $auth;
     protected $db;
     // Remove protected $format; to avoid conflict with ResponseTrait
-    protected $helpers = ['auth', 'form', 'url'];
+    
     protected $request;
     protected $session;
     protected $siteSettings;

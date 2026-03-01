@@ -21,7 +21,7 @@ class SupportAdminController extends UserController
 
     protected $auth;
     protected $format;
-    protected $helpers = ['auth', 'form', 'url'];
+    
     protected $request;
     protected $session;
     protected $siteSettings;

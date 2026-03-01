@@ -2,6 +2,7 @@
 
 namespace App\Modules\APIs\Controllers;
 
+use App\Modules\APIs\Controllers\MditBaseAPIController;
 use App\Models\MDIT\MditDepositModel;
 use App\Models\MDIT\MditRedemptionModel;
 use App\Models\MDIT\MditWebhookEventModel;
@@ -10,7 +11,7 @@ use App\Services\MDIT\MditRedemptionService;
 use CodeIgniter\HTTP\ResponseInterface;
 
 #[\AllowDynamicProperties]
-class MditAdminAPIController extends MditBaseController
+class MditAdminAPIController extends MditBaseAPIController
 {
     private MditRedemptionModel $redemptions;
     private MditDepositModel $deposits;

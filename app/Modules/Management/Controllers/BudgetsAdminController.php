@@ -17,7 +17,7 @@ use CodeIgniter\API\ResponseTrait; // Import the ResponseTrait
 class BudgetsAdminController extends UserController
 {
     protected $auth;
-    protected $helpers = ['auth', 'form', 'url'];
+    
     protected $library;
     protected $session;
     protected $siteSettings;

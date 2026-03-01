@@ -20,7 +20,7 @@ class PartnersAdminController extends UserController
     // Controller Settings
     protected $API;
     protected $auth;
-    protected $helpers = ['auth', 'form', 'url'];
+    
     protected $request;
     protected $session; 
     protected $uri; 

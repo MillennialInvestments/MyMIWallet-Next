@@ -2,7 +2,7 @@
 
 namespace App\Modules\APIs\Controllers;
 
-use App\Modules\APIs\Controllers\MditBaseController;
+use App\Modules\APIs\Controllers\MditBaseAPIController;
 use App\Models\MDIT\MditInvestorProfileModel;
 use App\Models\MDIT\MditTokenLedgerModel;
 use App\Services\MDIT\MditInvestorService;
@@ -10,7 +10,7 @@ use App\Services\MDIT\MditNavService;
 use CodeIgniter\HTTP\ResponseInterface;
 
 #[\AllowDynamicProperties]
-class MditInvestorAPIController extends MditBaseController
+class MditInvestorAPIController extends MditBaseAPIController
 {
     private MditInvestorService $investorService;
     private MditNavService $navService;

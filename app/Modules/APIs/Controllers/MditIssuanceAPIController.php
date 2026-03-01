@@ -2,6 +2,7 @@
 
 namespace App\Modules\APIs\Controllers;
 
+use App\Modules\APIs\Controllers\MditBaseAPIController;
 use App\Models\MDIT\MditTokenLedgerModel;
 use App\Models\MDIT\MditDepositModel;
 use App\Services\MDIT\MditInvestorService;
@@ -9,7 +10,7 @@ use App\Services\MDIT\MditIssuanceService;
 use CodeIgniter\HTTP\ResponseInterface;
 
 #[\AllowDynamicProperties]
-class MditIssuanceAPIController extends MditBaseController
+class MditIssuanceAPIController extends MditBaseAPIController
 {
     private MditIssuanceService $issuanceService;
     private MditInvestorService $investorService;

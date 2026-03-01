@@ -19,7 +19,7 @@ class UsersAdminController extends UserController
     use ResponseTrait;
 
     protected $auth;
-    protected $helpers = ['auth', 'form', 'url'];
+    
     protected $request;
     protected $session;
     protected $siteSettings;

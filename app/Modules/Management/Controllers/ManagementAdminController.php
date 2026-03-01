@@ -17,7 +17,7 @@ class ManagementAdminController extends UserController
 
     // Controller Settings
     protected $auth;
-    protected $helpers = ['auth', 'form', 'url'];
+    
     protected $session;
     protected $siteSettings;
     protected $socialMedia;

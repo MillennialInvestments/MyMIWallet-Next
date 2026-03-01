@@ -2,12 +2,13 @@
 
 namespace App\Modules\APIs\Controllers;
 
+use App\Modules\APIs\Controllers\MditBaseAPIController;
 use App\Models\MDIT\MditWebhookEventModel;
 use App\Services\MDIT\MditDepositService;
 use CodeIgniter\HTTP\ResponseInterface;
 
 #[\AllowDynamicProperties]
-class MditWebhookAPIController extends MditBaseController
+class MditWebhookAPIController extends MditBaseAPIController
 {
     private MditDepositService $depositService;
     private MditWebhookEventModel $events;

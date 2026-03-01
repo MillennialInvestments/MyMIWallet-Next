@@ -28,10 +28,10 @@ class HowTosAdminController extends UserController
     protected $marketingService;
     protected $solanaService;
     protected $userService;
-    protected $walletService;
+    protected ?WalletService $walletService = null;
     protected $budgetModel;
     protected $MyMIDashboard;
-    protected $helpers = ['auth', 'form', 'url'];
+    
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {

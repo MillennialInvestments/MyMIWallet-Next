@@ -10,7 +10,7 @@ class InvestmentsAdminController extends UserController
     use ResponseTrait;
 
     protected array $data = [];
-    protected array $helpers = ['url', 'form', 'security'];
+    
 
     public function index()
     {

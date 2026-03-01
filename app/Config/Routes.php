@@ -683,36 +683,36 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     // ✅ EmailController
     // ------------------------    
     $routes->group('Email', function($routes) {        
-        $routes->get('autoScheduleDraftCampaigns', 'EmailAPIController:autoScheduleDraftCampaigns');
-        $routes->get('cloneCampaign/(:num)', 'EmailAPIController:cloneCampaign/$1');
-        $routes->post('createDraftCampaign', 'EmailAPIController:createDraftCampaign');
-        $routes->post('scheduleCampaignApi/(:num)', 'EmailAPIController:scheduleCampaignApi/$1');
-        $routes->get('cancelScheduledCampaign/(:num)', 'EmailAPIController:cancelScheduledCampaign/$1');
-        $routes->delete('deleteCampaign/(:num)', 'EmailAPIController:deleteCampaign/$1');
-        $routes->get('fetchCampaignAnalytics', 'EmailAPIController:fetchCampaignAnalytics');
-        $routes->get('fetchQueuedEmails', 'EmailAPIController:fetchQueuedEmails');
-        $routes->get('fetchQueuedEmailById/(:num)', 'EmailAPIController:fetchQueuedEmailById/$1');
-        $routes->get('getAllCampaigns', 'EmailAPIController:getAllCampaigns');
-        $routes->get('getCampaignMetrics/(:num)', 'EmailAPIController:getCampaignMetrics/$1');
-        $routes->get('getCampaignStats/(:num)', 'EmailAPIController:getCampaignStats/$1');
-        $routes->get('getEmailQueueStats', 'EmailAPIController:getEmailQueueStats');
-        $routes->get('getEmailQueueTrend', 'EmailAPIController:getEmailQueueTrend');
-        $routes->get('processScheduledCampaigns', 'EmailAPIController:processScheduledCampaigns');
-        $routes->get('sendMassTestCampaign', 'EmailAPIController:sendMassTestCampaign');
-        $routes->get('trackBounceWebhook', 'EmailAPIController:trackBounceWebhook');
-        $routes->get('unsubscribe/(:any)', 'EmailAPIController:unsubscribe/$1');
+        $routes->get('autoScheduleDraftCampaigns', 'EmailAPIController::autoScheduleDraftCampaigns');
+        $routes->get('cloneCampaign/(:num)', 'EmailAPIController::cloneCampaign/$1');
+        $routes->post('createDraftCampaign', 'EmailAPIController::createDraftCampaign');
+        $routes->post('scheduleCampaignApi/(:num)', 'EmailAPIController::scheduleCampaignApi/$1');
+        $routes->get('cancelScheduledCampaign/(:num)', 'EmailAPIController::cancelScheduledCampaign/$1');
+        $routes->delete('deleteCampaign/(:num)', 'EmailAPIController::deleteCampaign/$1');
+        $routes->get('fetchCampaignAnalytics', 'EmailAPIController::fetchCampaignAnalytics');
+        $routes->get('fetchQueuedEmails', 'EmailAPIController::fetchQueuedEmails');
+        $routes->get('fetchQueuedEmailById/(:num)', 'EmailAPIController::fetchQueuedEmailById/$1');
+        $routes->get('getAllCampaigns', 'EmailAPIController::getAllCampaigns');
+        $routes->get('getCampaignMetrics/(:num)', 'EmailAPIController::getCampaignMetrics/$1');
+        $routes->get('getCampaignStats/(:num)', 'EmailAPIController::getCampaignStats/$1');
+        $routes->get('getEmailQueueStats', 'EmailAPIController::getEmailQueueStats');
+        $routes->get('getEmailQueueTrend', 'EmailAPIController::getEmailQueueTrend');
+        $routes->get('processScheduledCampaigns', 'EmailAPIController::processScheduledCampaigns');
+        $routes->get('sendMassTestCampaign', 'EmailAPIController::sendMassTestCampaign');
+        $routes->get('trackBounceWebhook', 'EmailAPIController::trackBounceWebhook');
+        $routes->get('unsubscribe/(:any)', 'EmailAPIController::unsubscribe/$1');
     });
 
     $routes->group('eSports', function($routes) {
-        $routes->post('createEvent', 'EsportsAPIController:createEvent');
-        $routes->post('joinEvent', 'EsportsAPIController:joinEvent');
-        $routes->post('lockEscrow', 'EsportsAPIController:lockEscrow');
-        $routes->post('cancelEvent', 'EsportsAPIController:cancelEvent');
-        $routes->post('receiveResultWebhook', 'EsportsAPIController:receiveResultWebhook');
-        $routes->post('settlePayouts', 'EsportsAPIController:settlePayouts');
-        $routes->post('cronProcessJobs', 'EsportsAPIController:cronProcessJobs');
-        $routes->get('event/(:num)', 'EsportsAPIController:getEvent/$1');
-        $routes->get('events', 'EsportsAPIController:listEvents');
+        $routes->post('createEvent', 'EsportsAPIController::createEvent');
+        $routes->post('joinEvent', 'EsportsAPIController::joinEvent');
+        $routes->post('lockEscrow', 'EsportsAPIController::lockEscrow');
+        $routes->post('cancelEvent', 'EsportsAPIController::cancelEvent');
+        $routes->post('receiveResultWebhook', 'EsportsAPIController::receiveResultWebhook');
+        $routes->post('settlePayouts', 'EsportsAPIController::settlePayouts');
+        $routes->post('cronProcessJobs', 'EsportsAPIController::cronProcessJobs');
+        $routes->get('event/(:num)', 'EsportsAPIController::getEvent/$1');
+        $routes->get('events', 'EsportsAPIController::listEvents');
     });
     
     $routes->group('Investments', function($routes) {

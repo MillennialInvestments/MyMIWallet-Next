@@ -38,7 +38,7 @@ class ManagementController02162026 extends UserController
     protected WeeklyStreamService $weeklyStreamService;
     protected WeeklyStreamWatchlistModel $weeklyWatchlistModel;
     protected MarketingNewsletterModel $newsletterModel;
-    protected $helpers = ['auth', 'form', 'url'];
+    
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {

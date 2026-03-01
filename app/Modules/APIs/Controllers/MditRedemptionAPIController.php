@@ -2,12 +2,13 @@
 
 namespace App\Modules\APIs\Controllers;
 
+use App\Modules\APIs\Controllers\MditBaseAPIController;
 use App\Services\MDIT\MditInvestorService;
 use App\Services\MDIT\MditRedemptionService;
 use CodeIgniter\HTTP\ResponseInterface;
 
 #[\AllowDynamicProperties]
-class MditRedemptionAPIController extends MditBaseController
+class MditRedemptionAPIController extends MditBaseAPIController
 {
     private MditInvestorService $investorService;
     private MditRedemptionService $redemptionService;
