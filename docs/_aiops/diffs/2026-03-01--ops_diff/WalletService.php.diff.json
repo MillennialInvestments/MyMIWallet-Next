@@ -1,0 +1,12 @@
+{
+    "generated_at": "2026-03-01 02:13:09",
+    "file_a": "app\/Services\/WalletService.php",
+    "file_b": "docs\/Github\/temporary\/phase1_wallet_hardening\/WalletService.php",
+    "sha256_a": "9a022c539f5063b007263e6d326177434a4fa981ea64716af821336625c30120",
+    "sha256_b": "ce63e5049a1fc5b7f042e88f2aedc145d80a16cd35e4b711cf178d128e3ee224",
+    "lines_added": 295,
+    "lines_removed": 1010,
+    "total_changes": 1305,
+    "risk_score": "CRITICAL",
+    "identical": false
+}

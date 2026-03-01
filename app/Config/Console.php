@@ -355,6 +355,7 @@ class Console extends BaseConfig
         \App\Commands\Ops\CommandsInventory::class,
         \App\Commands\Ops\CommandsLint::class,
         \App\Commands\Ops\ConfigLint::class,
+        \App\Commands\Ops\Diff::class,
         \App\Commands\Ops\DoctorFull::class,
         \App\Commands\Ops\EnvSnapshot::class,
         \App\Commands\Ops\FetchCommands::class,

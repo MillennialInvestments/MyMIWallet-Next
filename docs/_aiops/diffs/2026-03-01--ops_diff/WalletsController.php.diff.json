@@ -1,0 +1,12 @@
+{
+    "generated_at": "2026-03-01 02:14:59",
+    "file_a": "app\/Modules\/User\/Controllers\/WalletsController.php",
+    "file_b": "docs\/Github\/temporary\/phase1_wallet_hardening\/WalletsController.php",
+    "sha256_a": "16063d81f1ff8b9d1247ab906b18a2851f06dd43711d53c35cfce57ecb2203ed",
+    "sha256_b": "3cf6b64449d28780de2369b587d0ab99502bbc6f44264d1bb74cc008279fb02d",
+    "lines_added": 286,
+    "lines_removed": 1919,
+    "total_changes": 2205,
+    "risk_score": "CRITICAL",
+    "identical": false
+}
