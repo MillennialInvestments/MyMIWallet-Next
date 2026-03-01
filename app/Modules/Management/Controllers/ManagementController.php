@@ -17,7 +17,7 @@ use CodeIgniter\API\ResponseTrait;
 use Psr\Log\LoggerInterface;
 
 #[\AllowDynamicProperties]
-class ManagementController02162026 extends UserController
+class ManagementController extends UserController
 {
     protected $auth;
     protected $logger;

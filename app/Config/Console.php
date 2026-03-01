@@ -401,6 +401,7 @@ class Console extends BaseConfig
         */
         \App\Commands\Route\Audit::class,
         \App\Commands\Route\Benchmark::class,
+        \App\Commands\Route\Docs::class,
 
         /*
         |----------------------------------------------------------------------
