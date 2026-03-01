@@ -42,12 +42,15 @@ class InvestmentsController extends UserController
     protected $myMIGoldModel;
     protected $userModel;
     protected $walletModel;
+    protected ?\CodeIgniter\HTTP\ResponseInterface $featureGuardResponse = null;
     
     // Libraries
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
         parent::initController($request, $response, $logger);
+        helper(['feature']);
+        $this->featureGuardResponse = feature_guard('FEATURE_INVESTMENTS', ['controller' => __CLASS__, 'phase' => 'phase_a']);
         $this->auth = service('authentication');
         // $this->config = config('Auth');
         $this->request = service('request');
@@ -495,6 +498,10 @@ class InvestmentsController extends UserController
     // Views
     public function index()
     {
+        if ($this->featureGuardResponse instanceof \CodeIgniter\HTTP\ResponseInterface) {
+            return $this->featureGuardResponse;
+        }
+
         // Assuming you have a model or service that fetches user investments
         $cuID = $this->cuID; // User ID
         $userInvestments = $this->investmentService->getInvestmentData($cuID); // Adjust this line to your implementation
@@ -603,6 +610,14 @@ class InvestmentsController extends UserController
     
     public function addWatchlist()
     {
+        if ($this->featureGuardResponse instanceof \CodeIgniter\HTTP\ResponseInterface) {
+            return $this->featureGuardResponse;
+        }
+
+        if ($featureGuard = feature_guard('FEATURE_WATCHLIST', ['controller' => __CLASS__, 'method' => __FUNCTION__])) {
+            return $featureGuard;
+        }
+
         $request = service('request');
     
         if (!$this->validate([
@@ -611,7 +626,7 @@ class InvestmentsController extends UserController
             'market' => 'required|string',
             'user_id' => 'required|integer'
         ])) {
-            return $this->response->setJSON(['status' => 'error', 'message' => $this->validator->getErrors()]);
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $this->validator->getErrors()]);
         }
     
         $data = [
@@ -630,7 +645,7 @@ class InvestmentsController extends UserController
             ]));
             return $this->response->setJSON(['status' => 'success', 'message' => 'Watchlist updated successfully']);
         } else {
-            return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to update watchlist']);
+            return $this->response->setStatusCode(500)->setJSON(['status' => 'error', 'message' => 'Failed to update watchlist']);
         }
     }
     
@@ -727,6 +742,10 @@ class InvestmentsController extends UserController
        
     public function accountManager()
     {
+        if ($this->featureGuardResponse instanceof \CodeIgniter\HTTP\ResponseInterface) {
+            return $this->featureGuardResponse;
+        }
+
         $rawInput = $this->request->getBody();
         log_message('debug', 'InvestmentsController::accountManager L290 - Raw Input: ' . $rawInput);
     
@@ -932,6 +951,14 @@ class InvestmentsController extends UserController
     
     public function getUserWatchlist($cuID)
     {
+        if ($this->featureGuardResponse instanceof \CodeIgniter\HTTP\ResponseInterface) {
+            return $this->featureGuardResponse;
+        }
+
+        if ($featureGuard = feature_guard('FEATURE_WATCHLIST', ['controller' => __CLASS__, 'method' => __FUNCTION__])) {
+            return $featureGuard;
+        }
+
         try {
             $watchlist = $this->investmentModel->getUserWatchlist($cuID);
             $symbols = array_values(array_unique(array_filter(array_map(static fn ($row) => strtoupper((string) ($row['symbol'] ?? '')), $watchlist))));
@@ -1026,6 +1053,10 @@ class InvestmentsController extends UserController
 
     public function saveTradeData()
     {
+        if ($this->featureGuardResponse instanceof \CodeIgniter\HTTP\ResponseInterface) {
+            return $this->featureGuardResponse;
+        }
+
         log_message('debug', 'InvestmentsController: Starting saveTradeData');
         $decodedInput = $this->request->getJSON(true); // Parse JSON payload
         log_message('debug', 'Decoded Input: ' . print_r($decodedInput, true));

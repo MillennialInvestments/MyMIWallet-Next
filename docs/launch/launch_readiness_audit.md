@@ -1,0 +1,583 @@
+# Launch Readiness Audit (Phase A)
+
+## run_meta
+- timestamp_utc: `2026-03-01T14:15:20+00:00`
+- git_commit: `14a4b19d5`
+- env: `development`
+- command: `php spark gtm:launch:audit`
+
+## route scan summary
+- total routes discovered: 1037
+- Phase A routes included: 29
+- Excluded routes: 1008
+
+### Included user-facing routes (Phase A)
+- `GET /login` => `AuthController::login`
+- `POST /login` => `AuthController::attemptLogin`
+- `GET /logout` => `AuthController::logout`
+- `POST /logout` => `AuthController::logout`
+- `GET /register` => `AuthController::register`
+- `POST /register` => `AuthController::attemptRegister`
+- `GET /register/success` => `AuthController::registerSuccess`
+- `POST /register/resend-activation` => `AuthController::resendRegistrationActivation`
+- `GET /register/(:segment)` => `AuthController::register/$1`
+- `GET /(:any)/register` => `AuthController::register`
+- `GET /(:any)/register/(:segment)` => `AuthController::register/$2`
+- `POST /(:any)/register` => `AuthController::attemptRegister`
+- `POST /(:any)/register/(:segment)` => `AuthController::attemptRegister`
+- `GET /forgot-password` => `AuthController::forgotPassword`
+- `GET /reset-password` => `AuthController::resetPassword`
+- `POST /forgot` => `AuthController::attemptForgot`
+- `POST /reset-password` => `AuthController::attemptReset`
+- `GET /Investments/getForecastDetails/(:segment)` => `InvestmentsAPIController::getForecastDetails/$1`
+- `GET /Investments/getConfidenceHeatmap` => `InvestmentsAPIController::getConfidenceHeatmap`
+- `GET /Investments/getTopConfidenceBySector` => `InvestmentsAPIController::getTopConfidenceBySector`
+- `GET /Investments/getConfidenceDistribution` => `InvestmentsAPIController::getConfidenceDistribution`
+- `GET /Investments/getForecastAccuracySummary` => `InvestmentsAPIController::getForecastAccuracySummary`
+- `POST /ResetUser` => `ChatUsageController::resetUser`
+- `GET /budgets` => `BudgetController::budgets`
+- `GET /budgets` => `BudgetAPIController::budgets`
+- `POST /Investments/Update/(:num)` => `WalletsAPIController::updateInvestment/$1`
+- `POST /onboarding/budget-income` => `OnboardingWalkthroughController::saveBudgetIncome`
+- `POST /onboarding/watchlist` => `OnboardingWalkthroughController::saveWatchlist`
+- `GET /budgeting` => `HowItWorksController::budgeting`
+
+### Excluded route samples
+- `GET /` => `Home::index`
+- `GET /healthz` => `System\HealthController::healthz`
+- `GET /test/crash` => `Test::crash`
+- `GET /ops/health` => `OpsController::health`
+- `GET /Maintenance` => `MaintenanceController::index`
+- `GET /API/Ops/health-score` => `OpsHealth::score`
+- `GET /API/Ops/filesystem-status` => `Api\OpsFilesystemStatusController::index`
+- `GET /API/docs` => `Api\SwaggerDocsController::index`
+- `GET /health` => `OpsHealth::index`
+- `POST /health/run` => `OpsHealth::run`
+- `GET /index` => `DocsController::index`
+- `GET /view` => `DocsController::view`
+- `GET /Stock/(:segment)/(:segment)` => `StockController::show/$1/$2`
+- `GET /blog` => `Blog::index`
+- `GET /blog/category/(:segment)` => `Blog::category/$1`
+- `GET /blog/(:segment)` => `Blog::post/$1`
+- `GET /sw.js` => `ServiceWorker::index`
+- `GET /Apex/Referral` => `Home::apexReferral`
+- `GET /Apex/Referral/(:segment)` => `Home::apexReferral/$1`
+- `GET /Corporate-Earnings` => `Home::corporateEarnings`
+- `GET /Corporate-Earnings/(:segment)` => `Home::corporateEarnings/$1`
+- `GET /Economic-Calendar` => `Home::economicCalendar`
+- `GET /Economic-Calendar/(:segment)` => `Home::economicCalendarContent/$1`
+- `GET /Getting-Started/(:segment)/(:segment)` => `Home::gettingStarted`
+- `GET /Getting-Started/(:segment)` => `Home::gettingStarted`
+- `GET /Getting-Started` => `Home::gettingStarted`
+- `GET /Memberships` => `Home::memberships`
+- `GET /Memberships/(:segment)` => `Home::memberships`
+- `GET /Learn/(:segment)` => `App\Modules\Public\Controllers\PublicPagesController::show/$1`
+- `GET /Alerts/Preview/(:segment)` => `AlertsController::preview/$1`
+- `GET /Preview/Alert/(:segment)` => `AlertsController::preview/$1`
+- `GET /Privacy-Policy` => `Home::privacyPolicy`
+- `GET /Legal/Privacy-Policy` => `Home::privacyPolicy`
+- `GET /Legal/Terms-And-Conditions` => `Home::terms`
+- `GET /Customer-Support` => `App\Modules\Support\Controllers\SupportController::index`
+- `GET /Profile` => `App\Modules\User\Controllers\DashboardController::profile`
+- `POST /auth/resend-activation` => `AuthController::resendActivationCode`
+- `GET /Sector/(:segment)` => `Home::sector/$1`
+- `GET /Terms-Of-Service` => `Home::termsOfService`
+- `GET /resend-activation` => `AuthController::resendActivation`
+
+## route->controller integrity scan
+- scanned: 1009
+- missing targets: 457
+- ❌ `GET /healthz => System\HealthController::healthz`
+- ❌ `GET /ops/health => OpsController::health`
+- ❌ `GET /API/Ops/filesystem-status => Api\OpsFilesystemStatusController::index`
+- ❌ `GET /API/docs => Api\SwaggerDocsController::index`
+- ❌ `GET /index => DocsController::index`
+- ❌ `GET /view => DocsController::view`
+- ❌ `GET /sw.js => ServiceWorker::index`
+- ❌ `GET /Learn/(:segment) => App\Modules\Public\Controllers\PublicPagesController::show/$1`
+- ❌ `GET /Customer-Support => App\Modules\Support\Controllers\SupportController::index`
+- ❌ `GET /Profile => App\Modules\User\Controllers\DashboardController::profile`
+- ❌ `GET /Dev/BitcoinTest => App\Controllers\Dev\BitcoinTest::index`
+- ❌ `GET /common-data/smoke => CommonDataController::smoke`
+- ❌ `GET /api/health => Api\\HealthController::index`
+- ❌ `GET /api/admin/chat-usage => Api\\AdminChatUsageController::index`
+- ❌ `POST /api/aiops/manual-run => Api\\AiOpsManualRunController::run`
+- ❌ `GET /_ops/opcache-reset => Ops::opcacheReset`
+- ❌ `GET /test-create-user => AuthController::createTempUser`
+- ❌ `POST /Auth/link-robinhood => AuthController::linkRobinhood`
+- ❌ `POST /Auth/link-snaptrade => AuthController::linkSnapTrade`
+- ❌ `POST /get2FAQRCode => AuthController::get2FAQRCode`
+- ❌ `POST /verify2FACode => AuthController::verify2FACode`
+- ❌ `GET /auth/provider/(:segment) => AuthController::redirectToProvider/$1`
+- ❌ `GET /auth/provider/(:segment)/callback => AuthController::handleProviderCallback/$1`
+- ❌ `GET /auth/link/(:segment) => AuthController::linkProvider/$1`
+- ❌ `GET /auth/unlink/(:segment) => AuthController::unlinkProvider/$1`
+- ❌ `GET /MyMI-Wallet => WalletsController::MyMIWallet`
+- ❌ `GET / => AdvisorController::index`
+- ❌ `POST /generateInsight => AdvisorController::generateAdvisorInsight`
+- ❌ `POST /generateStoryboard => AdvisorController::generateNewsStoryboard`
+- ❌ `POST /tradeAnalysis/(:num) => AdvisorController::generateTradeAnalysis`
+- ❌ `GET / => APIController::index`
+- ❌ `GET /Ops/OPcacheReset => OpsAPIController::opcacheReset`
+- ❌ `GET /health => AiOpsAPIController::health`
+- ❌ `POST /policy/check => AiOpsAPIController::policyCheck`
+- ❌ `POST /usage/log => AiOpsAPIController::logUsage`
+- ❌ `POST /cache/store => AiOpsAPIController::cacheStore`
+- ❌ `GET /cache/get => AiOpsAPIController::cacheGet`
+- ❌ `POST /test/policy => AiOpsAPIController::testPolicy`
+- ❌ `POST /Mdit/webhooks/onramp => MditWebhookController::onramp`
+- ❌ `GET /Chat/me => ChatController::me`
+- ❌ `POST /Chat/tool => ChatController::tool`
+- ❌ `GET /fetchLatestSummaries => ManagementAPIController::fetchLatestSummaries`
+- ❌ `GET /triggerPostAutogenOnEmpty => ManagementAPIController::triggerPostAutogenOnEmpty`
+- ❌ `GET /getSocialPlatforms => MarketingAPIController::getSocialPlatforms`
+- ❌ `GET /getSocialCommunities => MarketingAPIController::getSocialCommunities`
+- ❌ `GET /getPostTemplates => MarketingAPIController::getPostTemplates`
+- ❌ `GET /generatePlatformPosts/(:num) => MarketingAPIController::generatePlatformPosts/$1`
+- ❌ `GET /generatePlatformPosts => MarketingAPIController::generatePlatformPosts`
+- ❌ `GET /generateDailyCommunityPosts => MarketingAPIController::generateDailyCommunityPosts`
+- ❌ `GET /exportGeneratedPostJson/(:num) => MarketingAPIController::exportGeneratedPostJson/$1`
+- ❌ `GET /generateRevenueDocs => MarketingAPIController::generateRevenueDocs`
+- ❌ `GET /cronGenerateDailyCommunityPosts => MarketingAPIController::cronGenerateDailyCommunityPosts`
+- ❌ `GET /cronQueueDistribution => MarketingAPIController::cronQueueDistribution`
+- ❌ `POST /fetchInbox => ProjectsController::fetchProjectEmails`
+- ❌ `POST /parseInbox => ProjectsController::parseProjectEmails`
+- ❌ `POST /promoteLead/(:num) => ProjectsController::promoteLead/$1`
+- ❌ `POST /updateProject/(:num) => ProjectsController::updateProject/$1`
+- ❌ `POST /openCommitments/(:num) => ProjectsController::openCommitments/$1`
+- ❌ `POST /checkThreshold/(:num) => ProjectsController::checkThreshold/$1`
+- ❌ `POST /launchPrivateAuction/(:num) => ProjectsController::launchPrivateAuction/$1`
+- ❌ `POST /settlePrivateAuction/(:num) => ProjectsController::settlePrivateAuction/$1`
+- ❌ `POST /markFunded/(:num) => ProjectsController::markFunded/$1`
+- ❌ `POST /createQuarterlyDistribution/(:num) => ProjectsController::createQuarterlyDistribution/$1`
+- ❌ `POST /runPayouts/(:num) => ProjectsController::runPayouts/$1`
+- ❌ `POST /processMonthlyWithdrawals/(:num) => ProjectsController::processMonthlyWithdrawals/$1`
+- ❌ `POST /bulk-update-status => ReferralController::bulkUpdateStatus`
+- ❌ `POST /bulk-delete => ReferralController::bulkDelete`
+- ❌ `GET /scorecard => SqueezeController::scorecard`
+- ❌ `GET /zoomout => SqueezeController::zoomout`
+- ❌ `GET /fade => SqueezeController::fade`
+- ❌ `POST /run => SqueezeController::run`
+- ❌ `GET /Usage => ChatUsageController::index`
+- ❌ `POST /Settings => ChatUsageController::saveSettings`
+- ❌ `POST /ResetUser => ChatUsageController::resetUser`
+- ❌ `GET / => OpsController::index`
+- ❌ `GET /ajaxStatus => OpsController::ajaxStatus`
+- ❌ `POST /ajaxDispatch => OpsController::ajaxDispatch`
+- ❌ `GET /summary => BrokerAPIController::summary`
+- ❌ `GET /credit => BrokerAPIController::credit`
+- ❌ `GET /available => BrokerAPIController::available`
+- ❌ `GET /repayment => BrokerAPIController::repayment`
+- ❌ `GET /categories => BrokerAPIController::categories`
+- ❌ `GET /transactions => BrokerAPIController::transactions`
+- ❌ `GET /goals => BrokerAPIController::goals`
+- ❌ `GET /insights => BrokerAPIController::insights`
+- ❌ `GET /savings-goals => BrokerAPIController::savingsGoals`
+- ❌ `GET /investment-accounts => BrokerAPIController::investmentAccounts`
+- ❌ `GET /linked-accounts => BrokerAPIController::linkedAccounts`
+- ❌ `GET /add-linked-account => BrokerAPIController::addLinkedAccount`
+- ❌ `GET /remove-linked-account/(:segment) => BrokerAPIController::removeLinkedAccount/$1`
+- ❌ `GET /refresh-linked-account/(:segment) => BrokerAPIController::refreshLinkedAccount/$1`
+- ❌ `GET /fetchPlaidLinkToken/(:segment) => BrokerAPIController::fetchPlaidLinkToken/$1`
+- ❌ `GET /fetchPlaidLinkToken => BrokerAPIController::fetchPlaidLinkToken`
+- ❌ `POST /linkPlaidAccount => BrokerAPIController::linkPlaidAccount`
+- ❌ `GET /unlinkPlaidAccount/(:segment) => BrokerAPIController::unlinkPlaidAccount/$1`
+- ❌ `GET /refreshPlaidAccount/(:segment) => BrokerAPIController::refreshPlaidAccount/$1`
+- ❌ `GET /fetchPlaidAccounts/(:segment) => BrokerAPIController::fetchPlaidAccounts/$1`
+- ❌ `GET /fetchPlaidAccounts => BrokerAPIController::fetchPlaidAccounts`
+- ❌ `GET /fetchPlaidTransactions/(:segment) => BrokerAPIController::fetchPlaidTransactions/$1`
+- ❌ `GET /fetchPlaidTransactions => BrokerAPIController::fetchPlaidTransactions`
+- ❌ `GET /fetchPlaidBalances/(:segment) => BrokerAPIController::fetchPlaidBalances/$1`
+- ❌ `GET /fetchPlaidBalances => BrokerAPIController::fetchPlaidBalances`
+- ❌ `GET /fetchPlaidIncome/(:segment) => BrokerAPIController::fetchPlaidIncome/$1`
+- ❌ `GET /fetchPlaidIncome => BrokerAPIController::fetchPlaidIncome`
+- ❌ `GET /fetchPlaidLiabilities/(:segment) => BrokerAPIController::fetchPlaidLiabilities/$1`
+- ❌ `GET /fetchPlaidLiabilities => BrokerAPIController::fetchPlaidLiabilities`
+- ❌ `GET /fetchPlaidIdentity/(:segment) => BrokerAPIController::fetchPlaidIdentity/$1`
+- ❌ `GET /fetchPlaidIdentity => BrokerAPIController::fetchPlaidIdentity`
+- ❌ `GET /fetchPlaidInvestments/(:segment) => BrokerAPIController::fetchPlaidInvestments/$1`
+- ❌ `GET /fetchPlaidInvestments => BrokerAPIController::fetchPlaidInvestments`
+- ❌ `GET /fetchPlaidHoldings/(:segment) => BrokerAPIController::fetchPlaidHoldings/$1`
+- ❌ `GET /fetchPlaidHoldings => BrokerAPIController::fetchPlaidHoldings`
+- ❌ `GET /fetchRobinhoodAccounts => BrokerAPIController::fetchRobinhoodAccounts`
+- ❌ `GET /fetchRobinhoodAccountDetails/(:segment) => BrokerAPIController::fetchRobinhoodAccountDetails/$1`
+- ❌ `GET /fetchRobinhoodPositions/(:segment) => BrokerAPIController::fetchRobinhoodPositions/$1`
+- ❌ `GET /fetchRobinhoodPositions => BrokerAPIController::fetchRobinhoodPositions`
+- ❌ `GET /fetchRobinhoodPortfolio/(:segment) => BrokerAPIController::fetchRobinhoodPortfolio/$1`
+- ❌ `GET /fetchRobinhoodPortfolio => BrokerAPIController::fetchRobinhoodPortfolio`
+- ❌ `GET /fetchRobinhoodWatchlists/(:segment) => BrokerAPIController::fetchRobinhoodWatchlists/$1`
+- ❌ `GET /fetchRobinhoodWatchlists => BrokerAPIController::fetchRobinhoodWatchlists`
+- ❌ `GET /fetchRobinhoodOrders/(:segment) => BrokerAPIController::fetchRobinhoodOrders/$1`
+- ❌ `GET /fetchRobinhoodOrders => BrokerAPIController::fetchRobinhoodOrders`
+- ❌ `GET /fetchRobinhoodOrderDetails/(:segment) => BrokerAPIController::fetchRobinhoodOrderDetails/$1`
+- ❌ `GET /fetchRobinhoodOrderDetails => BrokerAPIController::fetchRobinhoodOrderDetails`
+- ❌ `GET /fetchRobinhoodInstruments/(:segment) => BrokerAPIController::fetchRobinhoodInstruments/$1`
+- ❌ `GET /fetchRobinhoodInstruments => BrokerAPIController::fetchRobinhoodInstruments`
+- ❌ `GET /fetchRobinhoodQuotes/(:segment) => BrokerAPIController::fetchRobinhoodQuotes/$1`
+- ❌ `GET /fetchRobinhoodQuotes => BrokerAPIController::fetchRobinhoodQuotes`
+- ❌ `GET /fetchRobinhoodDividends/(:segment) => BrokerAPIController::fetchRobinhoodDividends/$1`
+- ❌ `GET /fetchRobinhoodDividends => BrokerAPIController::fetchRobinhoodDividends`
+- ❌ `GET /fetchRobinhoodTransfers/(:segment) => BrokerAPIController::fetchRobinhoodTransfers/$1`
+- ❌ `GET /fetchRobinhoodTransfers => BrokerAPIController::fetchRobinhoodTransfers`
+- ❌ `GET /fetchRobinhoodWatchlistItems/(:segment) => BrokerAPIController::fetchRobinhoodWatchlistItems/$1`
+- ❌ `GET /fetchRobinhoodWatchlistItems => BrokerAPIController::fetchRobinhoodWatchlistItems`
+- ❌ `GET /fetchRobinhoodTransactionHistory/(:segment) => BrokerAPIController::fetchRobinhoodTransactionHistory/$1`
+- ❌ `GET /fetchRobinhoodTransactionHistory => BrokerAPIController::fetchRobinhoodTransactionHistory`
+- ❌ `GET /fetchRobinhoodNotifications/(:segment) => BrokerAPIController::fetchRobinhoodNotifications/$1`
+- ❌ `GET /fetchRobinhoodNotifications => BrokerAPIController::fetchRobinhoodNotifications`
+- ❌ `GET /fetchRobinhoodACHRelationships/(:segment) => BrokerAPIController::fetchRobinhoodACHRelationships/$1`
+- ❌ `GET /fetchRobinhoodACHRelationships => BrokerAPIController::fetchRobinhoodACHRelationships`
+- ❌ `GET /fetchRobinhoodCryptoAccounts/(:segment) => BrokerAPIController::fetchRobinhoodCryptoAccounts/$1`
+- ❌ `GET /fetchRobinhoodCryptoAccounts => BrokerAPIController::fetchRobinhoodCryptoAccounts`
+- ❌ `GET /fetchRobinhoodCryptoPositions/(:segment) => BrokerAPIController::fetchRobinhoodCryptoPositions/$1`
+- ❌ `GET /fetchRobinhoodCryptoPositions => BrokerAPIController::fetchRobinhoodCryptoPositions`
+- ❌ `GET /fetchRobinhoodCryptoPortfolio/(:segment) => BrokerAPIController::fetchRobinhoodCryptoPortfolio/$1`
+- ❌ `GET /fetchRobinhoodCryptoPortfolio => BrokerAPIController::fetchRobinhoodCryptoPortfolio`
+- ❌ `GET /fetchRobinhoodCryptoOrders/(:segment) => BrokerAPIController::fetchRobinhoodCryptoOrders/$1`
+- ❌ `GET /fetchRobinhoodCryptoOrders => BrokerAPIController::fetchRobinhoodCryptoOrders`
+- ❌ `GET /fetchRobinhoodCryptoOrderDetails/(:segment) => BrokerAPIController::fetchRobinhoodCryptoOrderDetails/$1`
+- ❌ `GET /fetchRobinhoodCryptoOrderDetails => BrokerAPIController::fetchRobinhoodCryptoOrderDetails`
+- ❌ `GET /fetchRobinhoodCryptoTransactions/(:segment) => BrokerAPIController::fetchRobinhoodCryptoTransactions/$1`
+- ❌ `GET /fetchRobinhoodCryptoTransactions => BrokerAPIController::fetchRobinhoodCryptoTransactions`
+- ❌ `GET /fetchRobinhoodCryptoQuotes/(:segment) => BrokerAPIController::fetchRobinhoodCryptoQuotes/$1`
+- ❌ `GET /fetchRobinhoodCryptoQuotes => BrokerAPIController::fetchRobinhoodCryptoQuotes`
+- ❌ `GET /summary => BudgetAPIController::summary`
+- ❌ `GET /credit => BudgetAPIController::credit`
+- ❌ `GET /available => BudgetAPIController::available`
+- ❌ `GET /repayment => BudgetAPIController::repayment`
+- ❌ `GET /categories => BudgetAPIController::categories`
+- ❌ `GET /transactions => BudgetAPIController::transactions`
+- ❌ `GET /goals => BudgetAPIController::goals`
+- ❌ `GET /insights => BudgetAPIController::insights`
+- ❌ `GET /trends => BudgetAPIController::trends`
+- ❌ `GET /net-worth => BudgetAPIController::netWorth`
+- ❌ `GET /cash-flow => BudgetAPIController::cashFlow`
+- ❌ `GET /budgets => BudgetAPIController::budgets`
+- ❌ `GET /savings-goals => BudgetAPIController::savingsGoals`
+- ❌ `GET /investment-accounts => BudgetAPIController::investmentAccounts`
+- ❌ `GET /linked-accounts => BudgetAPIController::linkedAccounts`
+- ❌ `GET /add-linked-account => BudgetAPIController::addLinkedAccount`
+- ❌ `GET /remove-linked-account/(:segment) => BudgetAPIController::removeLinkedAccount/$1`
+- ❌ `GET /refresh-linked-account/(:segment) => BudgetAPIController::refreshLinkedAccount/$1`
+- ❌ `GET /getUserBudgetRecords => BudgetAPIController::getUserBudgetRecords`
+- ❌ `GET /getUserCreditBalances => BudgetAPIController::getUserCreditBalances`
+- ❌ `GET /getUserAvailableBalances => BudgetAPIController::getUserAvailableBalances`
+- ❌ `GET /getUserRepaymentSummary => BudgetAPIController::getUserRepaymentSummary`
+- ❌ `GET /Enroll/(:num) => DripCampaignAPIController::enrollUser/$1`
+- ❌ `GET /TestCron => DripCampaignAPIController::testDripCron`
+- ❌ `GET /SMTP/test => SmtpTestController::probe`
+- ❌ `POST / => MarketingAPIController::index`
+- ❌ `POST /approvePost/(:num) => MarketingAPIController::approvePost/$1`
+- ❌ `GET /previewBufferItem/(:num) => MarketingAPIController::previewBufferItem/$1`
+- ❌ `GET /previewPendingSummaries => MarketingAPIController::previewPendingSummaries`
+- ❌ `GET /runScheduledTasks => MarketingAPIController::runScheduledTasks`
+- ❌ `GET /Large-Content/Form => MarketingAPIController::submitLargeContentForm`
+- ❌ `GET /Manual-Content/Form => MarketingAPIController::shortLongContentForm`
+- ❌ `POST /submitManualContent => MarketingAPIController::submitManualContent`
+- ❌ `POST /validateSymbol => MarketingAPIController::validateSymbol`
+- ❌ `GET / => MarketingAPIController::index`
+- ❌ `GET /Add/(:segment) => MarketingAPIController::add/$1`
+- ❌ `GET /Approve-Content/(:num) => MarketingAPIController::approveContent/$1`
+- ❌ `GET /Blog-Creator => MarketingAPIController::blogCreator`
+- ❌ `GET /Blogs => MarketingAPIController::blogs`
+- ❌ `GET /Campaigns => MarketingAPIController::campaigns`
+- ❌ `GET /Content-Review => MarketingAPIController::contentReview`
+- ❌ `GET /Content/Generator => MarketingAPIController::contentGenerator`
+- ❌ `GET /Content/Listing => MarketingAPIController::contentListing`
+- ❌ `GET /Daily-Log => MarketingAPIController::viewDailyLogs`
+- ❌ `GET /Edit-Content/(:num) => MarketingAPIController::editContent/$1`
+- ❌ `GET /Email/(:any)/(:any) => MarketingAPIController::viewEmail/$1/$2`
+- ❌ `GET /fetchEmails => MarketingAPIController::fetchEmails`
+- ❌ `POST /fetchMissingLogos => MarketingAPIController::fetchMissingLogos`
+- ❌ `GET /Financial-News => MarketingAPIController::financialNews`
+- ❌ `POST /generateAutomatedContent => MarketingAPIController::generateAutomatedContent`
+- ❌ `GET /generateContent => MarketingAPIController::generateContent`
+- ❌ `GET /generateNewsletter => MarketingAPIController::generateNewsletterContent`
+- ❌ `GET /getRecentScrapes => MarketingAPIController::getRecentScrapes`
+- ❌ `GET /Grouped-Content-Drafts => MarketingAPIController::generateGroupedContentDrafts`
+- ❌ `GET /Ideas => MarketingAPIController::ideas`
+- ❌ `GET /Post-Creator => MarketingAPIController::postCreator`
+- ❌ `GET /previewGeneratedPost/(:num) => MarketingAPIController::previewGeneratedPost/$1`
+- ❌ `GET /Promote => MarketingAPIController::promote`
+- ❌ `GET /Promote/(:segment) => MarketingAPIController::promote`
+- ❌ `POST /PublishBlog/(:num) => Management\MarketingAPIController::publishBlog/$1`
+- ❌ `GET /Research => AlertsAPIController::research`
+- ❌ `GET /RunContentGeneration => Management\MarketingAPIController::runContentGeneration`
+- ❌ `GET /Quick-Scraper => MarketingAPIController::standaloneScrape`
+- ❌ `GET /Reject-Content/(:num) => MarketingAPIController::rejectContent/$1`
+- ❌ `POST /Save-Content-Edit/(:num) => MarketingAPIController::saveContentEdit/$1`
+- ❌ `GET /Schedule => MarketingAPIController::schedule`
+- ❌ `GET /Schedule/(:segment) => MarketingAPIController::schedule/$1`
+- ❌ `GET /scheduleNewsletters => MarketingAPIController::scheduleNewsletterCampaign`
+- ❌ `GET /submitDailyLog => MarketingAPIController::submitDailyLog`
+- ❌ `POST /Scrape-Link => MarketingAPIController::scrapeLink`
+- ❌ `GET /sendNotification => MarketingAPIController::sendNotification`
+- ❌ `GET /sendNewsletter => MarketingAPIController::sendScheduleNewsletter`
+- ❌ `GET /Communities => MarketingAPIController::communities`
+- ❌ `GET /Test => MarketingAPIController::test`
+- ❌ `GET /Twitter => MarketingAPIController::twitterDashboard`
+- ❌ `GET /Video-Creator => MarketingAPIController::videoCreator`
+- ❌ `GET /View-Email/(:segment)/(:segment) => MarketingAPIController::viewEmail/$1/$2`
+- ❌ `GET /View-Grouped-Summaries => MarketingAPIController::View-Grouped-Summaries`
+- ❌ `GET /Email-Templates/create => EmailTemplateController::create`
+- ❌ `POST /Email-Templates/store => EmailTemplateController::store`
+- ❌ `GET /Email-Queue => EmailQueueController::index`
+- ❌ `GET /Email-Queue/create => EmailQueueController::create`
+- ❌ `POST /Email-Queue/store => EmailQueueController::store`
+- ❌ `POST /Email-Queue/processQueue => EmailQueueController::processQueue`
+- ❌ `GET /getPlatforms => ManagementAPIController::getPlatforms`
+- ❌ `POST /savePlatform => ManagementAPIController::savePlatform`
+- ❌ `DELETE /deletePlatform/(:num) => ManagementAPIController::deletePlatform/$1`
+- ❌ `GET /getPlatformRules/(:segment) => ManagementAPIController::getPlatformRules/$1`
+- ❌ `POST /upsertPlatformRule => ManagementAPIController::upsertPlatformRule`
+- ❌ `DELETE /deletePlatformRule/(:num) => ManagementAPIController::deletePlatformRule/$1`
+- ❌ `POST /searchTaxonomy => ManagementAPIController::searchTaxonomy`
+- ❌ `POST /saveTaxonomy => ManagementAPIController::saveTaxonomy`
+- ❌ `DELETE /deleteTaxonomy/(:num) => ManagementAPIController::deleteTaxonomy/$1`
+- ❌ `GET /listSuggestions/(:segment)/(:segment) => ManagementAPIController::listSuggestions/$1/$2`
+- ❌ `DELETE /deleteSuggestion/(:num) => ManagementAPIController::deleteSuggestion/$1`
+- ❌ `POST /getPostingPlan => ManagementAPIController::getPostingPlan`
+- ❌ `POST /composePost => ManagementAPIController::composePost`
+- ❌ `GET / => PredictionsAPIController::index`
+- ❌ `GET /Markets => PredictionsAPIController::markets`
+- ❌ `GET /Market/(:num) => PredictionsAPIController::view/$1`
+- ❌ `GET /Portfolio => PredictionsAPIController::portfolio`
+- ❌ `GET /Settlements => PredictionsAPIController::settlements`
+- ❌ `GET /Latest => PredictionsAPIController::latest`
+- ❌ `GET /getMarketPrice/(:segment) => SolanaAPIController::get/$1`
+- ❌ `GET /health => SolanaAPIController::health`
+- ❌ `GET /wallet/(:segment)/balance => SolanaAPIController::getBalance/$1`
+- ❌ `GET /wallet/(:segment)/tokens => SolanaAPIController::getTokenAccounts/$1`
+- ❌ `POST /transfer => SolanaAPIController::transfer`
+- ❌ `POST /swap/quote => SolanaAPIController::quote`
+- ❌ `POST /swap/execute => SolanaAPIController::swap`
+- ❌ `POST /token/mint => SolanaAPIController::mint`
+- ❌ `GET / => BlogController::index`
+- ❌ `GET /Post/(:segment) => BlogController::viewBlog/$1`
+- ❌ `GET / => EarningsController::index`
+- ❌ `GET /Test => EarningsController::test`
+- ❌ `GET /(:segment) => EarningsController::viewByDate`
+- ❌ `GET / => InvestingController::index`
+- ❌ `GET /The-Beginners-Guide-To-Option-Trading => InvestingController::TheBeginnersGuideToOptionTrading`
+- ❌ `GET /The-Fundamentals-Of-Investing => InvestingController::TheFundamentalsOfInvesting`
+- ❌ `GET /Tips-For-Effective-Investment-Portfolio-Management => InvestingController::TipsForEffectiveInvestmentPortfolioManagement`
+- ❌ `GET /IRS-Expanded-Home-Energy-Tax-Credits => IRSController::IRSExpandedHomeEnergyTaxCredits`
+- ❌ `GET / => UpdatesController::index`
+- ❌ `GET / => NewsAndUpdates::index`
+- ❌ `GET /Integrating-With-Plaid => NewsAndUpdates::IntegratingWithPlaid`
+- ❌ `GET /The-Roadmap-To-The-Future-Of-Finance => NewsAndUpdates::TheRoadmapToTheFutureOfFinance`
+- ❌ `GET / => PersonalBudgetingController::index`
+- ❌ `GET /The-Importance-of-Personal-Financial-Budgeting => PersonalBudgetingController::TheImportanceOfPersonalFinancialBudgeting`
+- ❌ `GET /(:segment)/(:segment) => BlogController::view/$1/$2`
+- ❌ `GET /(:segment) => BlogController::view/$1`
+- ❌ `GET /banUnverifiedUsers => ManagementAdminController::banUnverifiedUsers`
+- ❌ `GET /processQueuedEmails => ManagementAdminController::processQueuedEmails`
+- ❌ `GET /resendActivationEmailsBatch => ManagementAdminController::resendActivationEmailsBatch`
+- ❌ `GET /resendActivationEmailsBatchQueued => ManagementAdminController::resendActivationEmailsBatchQueued`
+- ❌ `GET /sendTestActivationEmail => ManagementAdminController::sendTestActivationEmail`
+- ❌ `POST /saveSuggestion => ManagementAdminController::saveSuggestion`
+- ❌ `GET /Crypto/(:segment)/(:segment) => Management\AlertsAdminController::stockOverview/$1/$2`
+- ❌ `GET /Stock/(:segment)/(:segment) => Management\AlertsAdminController::stockOverview/$1/$2`
+- ❌ `GET /Tasks/fetchAlerts => Management\AlertsAdminController::fetchData`
+- ❌ `GET /Top-Performance/Weekly => AlertsAdminController::topPerformanceWeekly`
+- ❌ `GET /autoScheduleDrafts => EmailAdminController::autoScheduleDrafts`
+- ❌ `POST /updateCampaign/(:num) => EmailAdminController::updateCampaign/$1`
+- ❌ `GET /Blog-Creator => MarketingAdminController::blogCreator`
+- ❌ `GET /Content/Listing => MarketingAdminController::contentListing`
+- ❌ `GET /fetchEmails => MarketingAdminController::fetchEmails`
+- ❌ `POST /generateAutomatedContent => MarketingAdminController::generateAutomatedContent`
+- ❌ `POST /PublishBlog/(:num) => Management\MarketingAdminController::publishBlog/$1`
+- ❌ `GET /Research => AlertsController::research`
+- ❌ `GET /RunContentGeneration => Management\MarketingAdminController::runContentGeneration`
+- ❌ `GET /sendNotification => MarketingAdminController::sendNotification`
+- ❌ `GET /sendNewsletter => MarketingAdminController::sendScheduleNewsletter`
+- ❌ `GET /Test => MarketingAdminController::test`
+- ❌ `GET /Video-Creator => MarketingAdminController::videoCreator`
+- ❌ `GET /View-Grouped-Summaries => MarketingAdminController::View-Grouped-Summaries`
+- ❌ `GET / => EmailController::index`
+- ❌ `GET / => MarketingController::index`
+- ❌ `GET /Top-Communities => MarketingController::topCommunities`
+- ❌ `GET /Top-Communities/(:segment) => MarketingController::topCommunities/$1`
+- ❌ `GET / => OperationsController::index`
+- ❌ `GET / => PartnersController::index`
+- ❌ `POST /Approve/(:segment) => ProjectsController::approveProject/$1`
+- ❌ `POST /Edit/(:segment) => ProjectsController::approveProject/$1`
+- ❌ `POST /Reject/(:segment) => ProjectsController::rejectProject/$1`
+- ❌ `GET /Quick-Intake => ProjectsController::realEstateQuickIntake`
+- ❌ `POST /Quick-Intake => ProjectsController::realEstateQuickSubmit`
+- ❌ `GET / => ReferralsController::index`
+- ❌ `GET / => SecurityController::index`
+- ❌ `GET / => ServicesController::index`
+- ❌ `GET / => UsersController::index`
+- ❌ `GET /Profile/(:segment) => UsersController::profile`
+- ❌ `GET /Reconcile => WalletsController::reconcile`
+- ❌ `POST /EmailUserAboutIssue/(:num)/(:num) => WalletsController::emailUserAboutIssue/$1/$2`
+- ❌ `GET / => WebDesignController::index`
+- ❌ `POST /fetchFrontendData => DigiByteController::fetchFrontendData`
+- ❌ `POST /provisionDefaultWallet => DigiByteController::provisionDefaultWallet`
+- ❌ `POST /disconnectWallet => DigiByteController::disconnectWallet`
+- ❌ `POST /refreshWallet => DigiByteController::refreshWallet`
+- ❌ `POST /getAssets => DigiByteController::getAssets`
+- ❌ `POST /createWallet => DigiByteController::createWallet`
+- ❌ `POST /connectWallet => DigiByteController::connectWallet`
+- ❌ `POST /connectWallet => MetaMaskController::connectWallet`
+- ❌ `POST /disconnectWallet => MetaMaskController::disconnectWallet`
+- ❌ `POST /refreshWallet => MetaMaskController::refreshWallet`
+- ❌ `POST /getAssets => MetaMaskController::getAssets`
+- ❌ `POST /generateWallet => MetaMaskController::generateWallet`
+- ❌ `POST /signTransaction => MetaMaskController::signTransaction`
+- ❌ `POST /verifySignature => MetaMaskController::verifySignature`
+- ❌ `POST /sendAsset => MetaMaskController::sendAsset`
+- ❌ `POST /getTransactionStatus => MetaMaskController::getTransactionStatus`
+- ❌ `POST /getBalance => MetaMaskController::getBalance`
+- ❌ `POST /validateAddress => MetaMaskController::validateAddress`
+- ❌ `POST /getCurrentBlock => MetaMaskController::getCurrentBlock`
+- ❌ `POST /estimateTransactionFee => MetaMaskController::estimateTransactionFee`
+- ❌ `POST /getNetworkStatus => MetaMaskController::getNetworkStatus`
+- ❌ `POST /deployContract => MetaMaskController::deployContract`
+- ❌ `POST /callContractFunction => MetaMaskController::callContractFunction`
+- ❌ `GET /Test-Page => SolanaController::testPage`
+- ❌ `GET /Assets => SolanaController::assets`
+- ❌ `GET /Create => SolanaController::create`
+- ❌ `GET /Wallet/Disconnect/(:segment) => SolanaController::disconnectWallet/$1`
+- ❌ `GET /Import => SolanaController::import`
+- ❌ `GET /Swap => SolanaController::coinSwap`
+- ❌ `GET /Create/Wallet => SolanaController::create`
+- ❌ `POST /Create/Wallet => SolanaController::create`
+- ❌ `POST /createSolanaWallet => SolanaController::createSolanaWallet`
+- ❌ `POST /fetchFrontendData => SolanaController::fetchFrontendData`
+- ❌ `POST /provisionDefaultWallet => SolanaController::provisionDefaultWallet`
+- ❌ `GET /Import/Wallet => SolanaController::importWallet`
+- ❌ `POST /Import/Wallet => SolanaController::importWallet`
+- ❌ `POST /updatePrices => SolanaController::updateSolanaPrices`
+- ❌ `POST /updateTokens => SolanaController::updateSolanaTokens`
+- ❌ `GET /Wallet/Verify-Ownership => SolanaController::verifyWalletOwnership`
+- ❌ `POST /Wallet/Verify-Ownership => SolanaController::verifyWalletOwnership`
+- ❌ `GET /Wallet/Execute-Swap => SolanaController::executeSwap`
+- ❌ `POST /Wallet/Execute-Swap => SolanaController::executeSwap`
+- ❌ `GET /Wallet/ViewAssets => SolanaController::viewAssets`
+- ❌ `POST /Wallet/ViewAssets => SolanaController::viewAssets`
+- ❌ `POST /Wallet/Connect => SolanaController::connectWallet`
+- ❌ `POST /Wallet/Disconnect => SolanaController::disconnectWallet`
+- ❌ `POST /Wallet/Refresh => SolanaController::refreshWallet`
+- ❌ `POST /Connect/MetaMask => SolanaController::connectWallet`
+- ❌ `POST /Disconnect/MetaMask => SolanaController::disconnectWallet`
+- ❌ `POST /Refresh/MetaMask => SolanaController::refreshWallet`
+- ❌ `POST /Connect/Solflare => SolanaController::connectWallet`
+- ❌ `POST /Disconnect/Solflare => SolanaController::disconnectWallet`
+- ❌ `POST /Refresh/Solflare => SolanaController::refreshWallet`
+- ❌ `POST /Connect/Phantom => SolanaController::connectWallet`
+- ❌ `POST /Disconnect/Phantom => SolanaController::disconnectWallet`
+- ❌ `POST /Refresh/Phantom => SolanaController::refreshWallet`
+- ❌ `POST /Connect/TrustWallet => SolanaController::connectWallet`
+- ❌ `POST /Disconnect/TrustWallet => SolanaController::disconnectWallet`
+- ❌ `POST /Refresh/TrustWallet => SolanaController::refreshWallet`
+- ❌ `GET /Strategies => InvestmentController::getStrategies`
+- ❌ `POST /Strategies => InvestmentController::createStrategy`
+- ❌ `GET /Strategies/(:num) => InvestmentController::getStrategy/$1`
+- ❌ `PUT /Strategies/(:num) => InvestmentController::updateStrategy/$1`
+- ❌ `DELETE /Strategies/(:num) => InvestmentController::deleteGoal/$1`
+- ❌ `GET /Goals => InvestmentController::getGoals`
+- ❌ `POST /Goals => InvestmentController::createGoal`
+- ❌ `GET /Goals/(:num) => InvestmentController::createGoal/$1`
+- ❌ `PUT /Goals/(:num) => InvestmentController::updateGoal/$1`
+- ❌ `DELETE /Goals/(:num) => InvestmentController::deleteGoal/$1`
+- ❌ `GET /Crypto-Overview => InvestmentsController::cryptoOverview`
+- ❌ `GET /Economic-Data => InvestmentsController::economicData`
+- ❌ `GET /Market-News => InvestmentsController::marketNews`
+- ❌ `GET /MyMI-News => InvestmentsController::MyMINews`
+- ❌ `GET /MyMI-Research => InvestmentsController::MyMIResearch`
+- ❌ `GET /Stock-Overview => InvestmentsController::stockOverview`
+- ❌ `GET / => AnnouncementsController::index`
+- ❌ `GET /Assets => AssetsController::index`
+- ❌ `GET /Marketplace => ScriptStudioController::marketplace`
+- ❌ `GET / => ScriptStudioController::index`
+- ❌ `GET /Create => ScriptStudioController::create`
+- ❌ `POST /Store => ScriptStudioController::store`
+- ❌ `GET /Edit/(:num) => ScriptStudioController::edit/$1`
+- ❌ `POST /Update/(:num) => ScriptStudioController::update/$1`
+- ❌ `GET /Preview/(:num) => ScriptStudioController::preview/$1`
+- ❌ `GET /Export/(:num)/(:segment) => ScriptStudioController::export/$1/$2`
+- ❌ `GET /(:any) => HowItWorksController::show/$1`
+- ❌ `GET /ticket/(:num) => SupportTicketController::show/$1`
+- ❌ `GET /Account => AccountSupportController::index`
+- ❌ `POST /resendActivation => AccountSupportController::resendActivation`
+- ❌ `POST /sendPasswordReset => AccountSupportController::sendPasswordReset`
+- ❌ `GET /Article/(:segment) => SupportController::article/$1`
+- ❌ `GET /Discord => SupportController::discordOnboarding`
+- ❌ `GET /FAQ => SupportController::view/FAQ`
+- ❌ `GET /Feedback => SupportController::view/Feedback`
+- ❌ `GET /Test => SupportController::view/Test`
+- ❌ `GET /Test-Email => SupportController::view/Test-Email`
+- ❌ `GET /(:any) => SupportController::view/$1`
+- ❌ `GET /help/account => App\\Modules\\Support\\Controllers\\AccountSupportController::index`
+- ❌ `GET / => Features::index`
+- ❌ `GET /Brokerage-Integrations => Features::BrokerageIntegrations`
+- ❌ `GET /MyMI-Gold => HowItWorks::MyMIGold`
+- ❌ `POST /buildUnsignedPsbt => App\Modules\APIs\Controllers\BitcoinController::buildUnsignedPsbt`
+- ❌ `POST /broadcastSignedTx => App\Modules\APIs\Controllers\BitcoinController::broadcastSignedTx`
+- ❌ `GET /previewScraper/(:num) => AlertsController::previewScraper/$1`
+- ❌ `GET /diag => System\HealthController::diag`
+- ❌ `GET / => Tax::index`
+- ❌ `GET /edit/(:num) => Tax::edit/$1`
+- ❌ `GET /view/(:num) => Tax::view/$1`
+- ❌ `GET /preview/(:num) => Tax::preview/$1`
+- ❌ `POST /ajax/saveLine => Tax::ajaxSaveLine`
+- ❌ `POST /ajax/saveAllocation => Tax::ajaxSaveAllocation`
+- ❌ `GET /ajax/recalc/(:num) => Tax::ajaxRecalc/$1`
+- ❌ `GET /export/json/(:num) => Tax::exportJson/$1`
+- ❌ `GET /export/csv/(:num) => Tax::exportCsv/$1`
+- ❌ `GET / => TaxConfig::index`
+- ❌ `GET /Templates => TaxConfig::templates`
+- ❌ `GET /Rates => TaxConfig::rates`
+- ❌ `GET /healthcheck => App\Modules\Ops\Controllers\OpsController::healthcheck`
+- ❌ `POST /app/update => App\Modules\Ops\Controllers\OpsController::appUpdate`
+- ❌ `GET /commands => App\Modules\Ops\Controllers\OpsController::commands`
+- ❌ `POST /public-pages/import => App\Modules\APIs\Controllers\OpsPublicPagesController::import`
+- ❌ `POST /public-pages/run => App\Modules\APIs\Controllers\OpsPublicPagesController::run`
+- ❌ `GET /public-pages/report => App\Modules\APIs\Controllers\OpsPublicPagesController::report`
+- ❌ `GET /snapshot => App\Modules\AIOps\Controllers\AIOpsController::snapshot`
+- ❌ `GET /gaps/docs => App\Modules\AIOps\Controllers\AIOpsController::docsGaps`
+- ❌ `POST /watch => App\Modules\AIOps\Controllers\AIOpsController::watch`
+- ❌ `GET /Logs/summary => App\Modules\Logs\Controllers\LogsController::summary`
+- ❌ `POST /ContentEngine/run => App\Modules\ContentEngine\Controllers\ContentEngineController::run`
+- ❌ `GET /ContentEngine/drafts/(:segment) => App\Modules\ContentEngine\Controllers\ContentEngineController::draft/$1`
+- ❌ `GET /Chat/health => App\Modules\Chat\Controllers\ChatController::health`
+- ❌ `GET /Chat/usage => App\Modules\Chat\Controllers\ChatController::usage`
+
+## feature toggles state summary
+- FEATURE_BUDGET: `enabled`
+- FEATURE_INVESTMENTS: `enabled`
+- FEATURE_WATCHLIST: `enabled`
+- FEATURE_TRADE_ALERTS: `enabled`
+- FEATURE_WALLETS: `disabled`
+- FEATURE_PREDICTIONS: `disabled`
+- FEATURE_MARKETING_AUTOMATION: `enabled`
+
+## ExternalApiPolicy caps summary
+- alphavantage: `120`
+- marketaux: `120`
+- plaid: `80`
+- robinhood: `80`
+- discord: `200`
+- llm: `100`
+- enableBackoff: `false`
+- microSleepBackoffUs: `0`
+
+## logger handler summary
+- `CodeIgniter\Log\Handlers\FileHandler` handles `debug,info,notice,warning,error,critical,alert,emergency`
+- `App\Log\Handlers\MyMIDBLoggerHandler` handles `warning,error,critical,alert,emergency`
+- `App\Log\Handlers\DatabaseLoggerHandler` handles ``
+- `App\Log\Handlers\UnifiedLoggerHandler` handles ``
+
+## CRON command existence check
+- gtm:health:snapshot: `present`
+- gtm:cron:validate-security: `present`
+- gtm:launch:audit: `present`
+- gtm:launch:smoke: `present`
+
+## blockers list
+- Missing route targets detected: 457
+
+## decision
+- **HOLD**

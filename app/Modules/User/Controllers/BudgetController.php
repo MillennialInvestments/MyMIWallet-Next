@@ -53,7 +53,8 @@ class BudgetController extends UserController
         'api-repayment'      => false,
         'api-categories'     => false,
     ];
-    protected $helpers = ['auth', 'form', 'url', 'cache'];
+    protected $helpers = ['auth', 'form', 'url', 'cache', 'feature'];
+    protected ?ResponseInterface $featureGuardResponse = null;
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
@@ -82,10 +83,15 @@ class BudgetController extends UserController
             'debug',
             'BudgetController::constructor - sanitizedCacheKey exists? ' . (function_exists('sanitizedCacheKey') ? 'YES' : 'NO')
         );
+
+        $this->featureGuardResponse = feature_guard('FEATURE_BUDGET', ['controller' => __CLASS__, 'phase' => 'phase_a']);
     }
 
     public function commonData(): ResponseInterface|array
     {
+        if ($this->featureGuardResponse instanceof ResponseInterface) {
+            return $this->featureGuardResponse;
+        }
         $base = parent::commonData();
 
         if ($base instanceof ResponseInterface) {
@@ -232,7 +238,11 @@ class BudgetController extends UserController
     //     return $this->data;
     // }
 
-    public function index() {
+    public function index()
+    {
+        if ($this->featureGuardResponse instanceof ResponseInterface) {
+            return $this->featureGuardResponse;
+        }
         log_message('debug', '[BudgetController::METHOD_ENTRY] index');
         $activeUserId = $this->cuID ?? null;
         log_message(
@@ -393,8 +403,11 @@ class BudgetController extends UserController
         return in_array($normalized, ['income', 'expense'], true) ? $normalized : null;
     }
     
-    public function accountManager() 
+    public function accountManager()
     {
+        if ($this->featureGuardResponse instanceof ResponseInterface) {
+            return $this->featureGuardResponse;
+        }
         $this->trace('[METHOD_ENTRY] ' . __FUNCTION__);
         $this->trace('[AJAX CHECK] isAJAX=' . ($this->request->isAJAX() ? 'YES' : 'NO'));
         $this->trace('[AJAX_HEADERS] ' . json_encode($this->request->headers()));
@@ -1345,6 +1358,9 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
 
     public function summary()
     {
+        if ($this->featureGuardResponse instanceof ResponseInterface) {
+            return $this->featureGuardResponse;
+        }
         log_message('debug', '[BudgetController::METHOD_ENTRY] summary');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
@@ -1555,6 +1571,9 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
 
     public function insights()
     {
+        if ($this->featureGuardResponse instanceof ResponseInterface) {
+            return $this->featureGuardResponse;
+        }
         log_message('debug', '[BudgetController::METHOD_ENTRY] insights');
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
