@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Commands;
 
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
 class GtmLaunchSmoke extends SafeBaseCommand

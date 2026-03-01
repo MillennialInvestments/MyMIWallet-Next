@@ -2,6 +2,7 @@
 
 namespace App\Modules\APIs\Controllers;
 
+use App\Modules\APIs\Controllers\MditBaseController;
 use App\Models\MDIT\MditInvestorProfileModel;
 use App\Models\MDIT\MditTokenLedgerModel;
 use App\Services\MDIT\MditInvestorService;

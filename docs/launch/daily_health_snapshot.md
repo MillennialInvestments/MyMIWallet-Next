@@ -1,10 +1,10 @@
 # Daily Health Snapshot
 
-- Generated: 2026-02-28 15:24:17 UTC
+- Generated: 2026-03-01 14:38:30 UTC
 - Command: `php spark gtm:health:snapshot`
 
 ## Environment Flags
-- APP_ENV: `codex`
+- APP_ENV: `unset`
 - CI_ENVIRONMENT: `development`
 - ENVIRONMENT_CONSTANT: `development`
 

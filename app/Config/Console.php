@@ -356,6 +356,8 @@ class Console extends BaseConfig
         \App\Commands\Ops\CommandsLint::class,
         \App\Commands\Ops\ConfigLint::class,
         \App\Commands\Ops\Diff::class,
+        \App\Commands\Ops\DiffWallet::class,
+        \App\Commands\Ops\DriftScan::class,
         \App\Commands\Ops\DoctorFull::class,
         \App\Commands\Ops\EnvSnapshot::class,
         \App\Commands\Ops\FetchCommands::class,
@@ -375,6 +377,7 @@ class Console extends BaseConfig
         \App\Commands\Ops\SubsRepair::class,
         \App\Commands\Ops\SubsStatus::class,
         \App\Commands\Ops\VPSSnapshot::class,
+        \App\Commands\Ops\WalletIntegrity::class,
         \App\Commands\Ops\Work::class,
         
         /*
