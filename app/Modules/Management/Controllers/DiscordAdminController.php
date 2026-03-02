@@ -31,7 +31,7 @@ class DiscordAdminController extends UserController
     protected $marketingService;
     protected $solanaService;
     protected $userService;
-    protected $walletService;
+    protected ?WalletService $walletService = null;
     protected $budgetModel;
     protected $MyMIDashboard;
     protected $discordModel;
