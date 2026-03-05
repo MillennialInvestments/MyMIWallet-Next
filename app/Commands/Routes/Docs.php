@@ -12,12 +12,13 @@ final class Docs extends SafeBaseCommand
     protected $group       = 'Routes';
     protected $name        = 'routes:docs';
     protected $description = 'Export active routes to Markdown + JSON under docs/routes/.';
-    protected $usage       = 'routes:docs [--out=docs/routes/routes.md] [--mode=all|missing-targets|invalid-handler] [--timestamp=1]';
+    protected $usage       = 'routes:docs [--out=docs/routes/routes.md] [--mode=all|missing-targets|invalid-handler] [--limit=0] [--timestamp=1]';
 
     public function run(array $params)
     {
         $out = $this->getOptionValue($params, '--out', 'docs/routes/routes.md');
         $mode = $this->getOptionValue($params, '--mode', 'all');
+        $limit = max(0, (int) $this->getOptionValue($params, '--limit', '0'));
         $timestamp = $this->getOptionValue($params, '--timestamp', '1') === '1';
 
         $root = rtrim((string) realpath(ROOTPATH), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
@@ -29,33 +30,28 @@ final class Docs extends SafeBaseCommand
             @mkdir($dir, 0775, true);
         }
 
-        $router = service('router');
+        // Ensure routing is bootstrapped
+        $router = service('router'); // CodeIgniter\Router\Router
+        $routes = service('routes'); // CodeIgniter\Router\RouteCollection
 
-        /** @var \CodeIgniter\Router\RouteCollection|null $collection */
-        $collection = null;
-        if (method_exists($router, 'getRoutes')) {
-            $collection = $router->getRoutes();
+        // Prefer the RouteCollection's internal verb-based route map.
+        // In some CI4 setups, getRoutes() can return named group structures.
+        $collection = $routes->getRoutes();
+
+        // If it doesn't look like [VERB => [route => handler]], fall back to reflection
+        // to read the internal verb-keyed "routes" property.
+        if (! self::looksLikeVerbMap($collection)) {
+            $collection = self::readVerbMapViaReflection($routes);
         }
 
-        if (! $collection instanceof \CodeIgniter\Router\RouteCollection) {
-            $collection = (function () {
-                return $this->collection ?? null;
-            })->call($router);
-        }
-
-        if (! $collection instanceof \CodeIgniter\Router\RouteCollection) {
-            $collection = service('routes');
-        }
-
-        $routeTable = $collection->getRoutes();
-
-        $items = $this->normalizeRoutes($routeTable, $mode);
+        $items = $this->normalizeRoutes($collection, $mode, $limit);
         $summary = $this->buildSummary($items);
 
         $payload = [
             'generated_utc' => gmdate('Y-m-d\TH:i:s\Z'),
             'environment'   => ENVIRONMENT,
             'mode'          => $mode,
+            'limit'         => $limit,
             'summary'       => $summary,
             'routes'        => $items,
         ];
@@ -68,6 +64,7 @@ final class Docs extends SafeBaseCommand
             $md[] = '- Environment: `' . ENVIRONMENT . '`';
         }
         $md[] = '- Mode: `' . $mode . '`';
+        $md[] = '- Limit: `' . (string) $limit . '`';
         $md[] = '';
         $md[] = '## Summary';
         $md[] = '- Total routes: `' . (string) $summary['total'] . '`';
@@ -78,27 +75,13 @@ final class Docs extends SafeBaseCommand
         $md[] = '';
         $md[] = '| Method | Route | Handler | Surface | Issues |';
         $md[] = '|---|---|---|---|---|';
-        foreach ($routeTable as $method => $routesForMethod) {
-            if (! is_array($routesForMethod)) {
-                continue;
-            }
-
-            foreach ($routesForMethod as $routeKey => $handler) {
-                $route = (string) $routeKey;
-                $handlerStr = $this->handlerToString($handler);
-                $issues = $this->detectIssues($handlerStr);
-
-                if (! $this->isIncludedByMode($mode, $issues)) {
-                    continue;
-                }
-
-                $md[] = '| '
-                    . $this->escTable((string) $method) . ' | '
-                    . $this->escTable($route) . ' | '
-                    . $this->escTable($handlerStr) . ' | '
-                    . $this->escTable($this->detectSurface($route)) . ' | '
-                    . $this->escTable($issues) . ' |';
-            }
+        foreach ($items as $item) {
+            $md[] = '| '
+                . $this->escTable((string) $item['method']) . ' | '
+                . $this->escTable((string) $item['route']) . ' | '
+                . $this->escTable((string) $item['handler']) . ' | '
+                . $this->escTable((string) $item['surface']) . ' | '
+                . $this->escTable(implode(',', $item['issues'])) . ' |';
         }
 
         if (@file_put_contents($fullOut, implode("\n", $md) . "\n") === false) {
@@ -114,7 +97,7 @@ final class Docs extends SafeBaseCommand
         CLI::write('Wrote routes docs: ' . $fullOut . ' and ' . $jsonOut, 'green');
     }
 
-    private function normalizeRoutes(array $routeTable, string $mode): array
+    private function normalizeRoutes(array $routeTable, string $mode, int $limit): array
     {
         $rows = [];
         foreach ($routeTable as $method => $routesForMethod) {
@@ -124,20 +107,28 @@ final class Docs extends SafeBaseCommand
 
             foreach ($routesForMethod as $routeKey => $handler) {
                 $route = (string) $routeKey;
-                $handlerStr = $this->handlerToString($handler);
-                $issue = $this->detectIssues($handlerStr);
+                $parsed = $this->parseHandler($handler);
+                $issues = $parsed['issues'];
+                if ($this->isMissingTarget($parsed['class'], $parsed['method']) && ! $this->isMaintenanceStub($route)) {
+                    $issues[] = 'missing_target';
+                }
+                $issues = array_values(array_unique($issues));
 
-                if (! $this->isIncludedByMode($mode, $issue)) {
+                if (! $this->isIncludedByMode($mode, $issues)) {
                     continue;
                 }
 
                 $rows[] = [
                     'method' => (string) $method,
                     'route' => $route,
-                    'handler' => $handlerStr,
+                    'handler' => $parsed['raw'],
                     'surface' => $this->detectSurface($route),
-                    'issues' => $issue !== '' ? [$issue] : [],
+                    'issues' => $issues,
                 ];
+
+                if ($limit > 0 && count($rows) >= $limit) {
+                    break 2;
+                }
             }
         }
 
@@ -146,33 +137,45 @@ final class Docs extends SafeBaseCommand
         return $rows;
     }
 
-    private function detectIssues(string $handler): string
+    private function parseHandler($handler): array
     {
-        if (strpos($handler, '::') === false) {
-            return 'invalid_handler';
+        $raw = $this->handlerToString($handler);
+
+        if ($raw === 'closure' || $raw === 'object') {
+            return ['raw' => $raw, 'class' => null, 'method' => null, 'issues' => []];
         }
 
-        [$class, $method] = explode('::', $handler);
-
-        if (! class_exists($class)) {
-            return 'missing_controller';
+        // invalid namespace delimiter detection
+        if (strpos($raw, '/') !== false && strpos($raw, '\\') !== false) {
+            return ['raw' => $raw, 'class' => null, 'method' => null, 'issues' => ['invalid_handler']];
         }
 
-        if (! method_exists($class, $method)) {
-            return 'missing_method';
+        // normalize leading backslash
+        $rawNorm = ltrim($raw, '\\');
+
+        // Accept "Class::method" only
+        if (strpos($rawNorm, '::') !== false) {
+            [$class, $method] = explode('::', $rawNorm, 2);
+            $method = (string) preg_replace('#/.*$#', '', $method); // remove "/$1" suffix
+            return ['raw' => $raw, 'class' => $class, 'method' => $method, 'issues' => []];
         }
 
-        return '';
+        // Catch the old single-colon format
+        if (preg_match('#^[A-Za-z0-9_\\\\]+:[A-Za-z0-9_]+#', $rawNorm)) {
+            return ['raw' => $raw, 'class' => null, 'method' => null, 'issues' => ['invalid_handler']];
+        }
+
+        return ['raw' => $raw, 'class' => null, 'method' => null, 'issues' => []];
     }
 
-    private function isIncludedByMode(string $mode, string $issue): bool
+    private function isIncludedByMode(string $mode, array $issues): bool
     {
         if ($mode === 'missing-targets') {
-            return in_array($issue, ['missing_controller', 'missing_method'], true);
+            return in_array('missing_target', $issues, true);
         }
 
         if ($mode === 'invalid-handler') {
-            return $issue === 'invalid_handler';
+            return in_array('invalid_handler', $issues, true);
         }
 
         return true;
@@ -184,15 +187,19 @@ final class Docs extends SafeBaseCommand
             return 'API';
         }
 
+        if (stripos($route, 'api/') === 0) {
+            return 'API';
+        }
+
+        if (stripos($route, 'Ops') === 0 || stripos($route, '/Ops') === 0) {
+            return 'Ops';
+        }
+
         if (stripos($route, 'Admin/') === 0) {
             return 'Admin';
         }
 
-        if (stripos($route, 'Ops/') === 0) {
-            return 'Ops';
-        }
-
-        return 'Public';
+        return 'Public/User';
     }
 
     private function buildSummary(array $items): array
@@ -244,20 +251,24 @@ final class Docs extends SafeBaseCommand
             return $handler;
         }
 
-        if (is_array($handler)) {
-            if (isset($handler[0]) && isset($handler[1])) {
-                return $handler[0] . '::' . $handler[1];
+        if (is_array($handler) && isset($handler[0], $handler[1])) {
+            $class = $handler[0];
+            if (is_string($class) && class_exists($class)) {
+                $class = ltrim($class, '\\');
+            }
+            if (is_object($class)) {
+                $class = get_class($class);
             }
 
-            foreach ($handler as $v) {
-                if (is_string($v)) {
-                    return $v;
-                }
-            }
+            return (string) $class . '::' . (string) $handler[1];
+        }
+
+        if ($handler instanceof \Closure) {
+            return 'closure';
         }
 
         if (is_object($handler)) {
-            return get_class($handler);
+            return 'object';
         }
 
         return 'unknown_handler';
@@ -266,5 +277,53 @@ final class Docs extends SafeBaseCommand
     private function escTable(string $s): string
     {
         return trim(str_replace(['|', "\n", "\r"], ['\\|', ' ', ' '], $s));
+    }
+
+    private static function looksLikeVerbMap($collection): bool
+    {
+        if (! is_array($collection) || $collection === []) {
+            return false;
+        }
+        $verbs = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD'];
+        foreach (array_keys($collection) as $k) {
+            if (! in_array((string) $k, $verbs, true)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static function readVerbMapViaReflection($routes): array
+    {
+        // RouteCollection has an internal "routes" property in CI4.
+        // We'll read it safely to get the real [VERB => [route => handler]] structure.
+        try {
+            $ref = new \ReflectionObject($routes);
+            if ($ref->hasProperty('routes')) {
+                $prop = $ref->getProperty('routes');
+                $prop->setAccessible(true);
+                $val = $prop->getValue($routes);
+                return is_array($val) ? $val : [];
+            }
+        } catch (\Throwable $e) {
+            // ignore
+        }
+        return [];
+    }
+
+    private function isMissingTarget(?string $class, ?string $method): bool
+    {
+        if (! $class || ! $method) {
+            return false;
+        }
+        if (! class_exists($class)) {
+            return true;
+        }
+        return ! method_exists($class, $method);
+    }
+
+    private function isMaintenanceStub(string $route): bool
+    {
+        return trim($route, '/') === 'Maintenance';
     }
 }

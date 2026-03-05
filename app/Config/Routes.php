@@ -44,11 +44,11 @@ if (ENVIRONMENT !== 'production') {
         throw new \Exception('Manual test exception');
     });
 }
-$routes->get('ops/health', 'OpsController::health');
+$routes->get('ops/health', '\\App\\Controllers\\OpsHealth::index');
 $routes->get('Maintenance', 'MaintenanceController::index');
 
 $routes->group('Ops', ['filter' => 'auth'], static function ($routes) {
-    $routes->get('/', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::index');
+    $routes->get('', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::index');
     $routes->get('projects', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::projects');
     $routes->post('projects/save', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::saveProject');
     $routes->get('tasks', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::tasks');
@@ -58,12 +58,12 @@ $routes->group('Ops', ['filter' => 'auth'], static function ($routes) {
     $routes->get('export/workbook.xlsx', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::exportWorkbookXlsx');
 });
 
-$routes->get('API/Ops/health-score', 'OpsHealth::score');
-$routes->get('API/Ops/filesystem-status', 'Api\OpsFilesystemStatusController::index', ['filter' => 'permission:admin.access']);
-$routes->get('API/docs', 'Api\SwaggerDocsController::index', ['filter' => 'permission:admin.access']);
+$routes->get('API/Ops/health-score', '\\App\\Controllers\\OpsHealth::score');
+$routes->get('API/Ops/filesystem-status', '\\App\\Controllers\\Api\\OpsFilesystemStatusController::index', ['filter' => 'permission:admin.access']);
+$routes->get('API/docs', '\\App\\Controllers\\Api\\SwaggerDocsController::index', ['filter' => 'permission:admin.access']);
 $routes->group('admin/ops', ['filter' => 'permission:admin.access'], static function ($routes) {
-    $routes->get('health', 'OpsHealth::index');
-    $routes->post('health/run', 'OpsHealth::run');
+    $routes->get('health', '\\App\\Controllers\\OpsHealth::index');
+    $routes->post('health/run', '\\App\\Controllers\\OpsHealth::run');
 });
 
 // Docs index for AI orchestration
