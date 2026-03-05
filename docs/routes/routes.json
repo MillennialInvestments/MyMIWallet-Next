@@ -1,0 +1,74 @@
+{
+    "generated_utc": "2026-03-05T03:55:09Z",
+    "environment": "development",
+    "mode": "all",
+    "summary": {
+        "total": 6,
+        "methods": {
+            "GET": 0,
+            "POST": 0,
+            "PUT": 0,
+            "DELETE": 0,
+            "PATCH": 0,
+            "OPTIONS": 0,
+            "CLI": 6,
+            "OTHER": 0
+        },
+        "surfaces": {
+            "API": 3,
+            "Public": 3
+        }
+    },
+    "routes": [
+        {
+            "method": "CLI",
+            "route": "API/Health",
+            "handler": "{\"API/v1/Health\":\"\\\\App\\\\Modules\\\\APIs\\\\Controllers\\\\HealthAPIController::index\"}",
+            "surface": "API",
+            "issues": [
+                "missing_target"
+            ]
+        },
+        {
+            "method": "CLI",
+            "route": "API/Management/Run-CRON-Tasks",
+            "handler": "\\App\\Modules\\Management\\Controllers\\ManagementAPIController::runCRONTasks",
+            "surface": "API",
+            "issues": [
+                "missing_target"
+            ]
+        },
+        {
+            "method": "CLI",
+            "route": "API/Status",
+            "handler": "{\"API/v1/Status\":\"\\\\App\\\\Modules\\\\APIs\\\\Controllers\\\\APIController::status\"}",
+            "surface": "API",
+            "issues": [
+                "missing_target"
+            ]
+        },
+        {
+            "method": "CLI",
+            "route": "Home",
+            "handler": "{\"/\":\"\\\\App\\\\Controllers\\\\Home::index\"}",
+            "surface": "Public",
+            "issues": [
+                "missing_target"
+            ]
+        },
+        {
+            "method": "CLI",
+            "route": "News",
+            "handler": "Blog/News-And-Updates",
+            "surface": "Public",
+            "issues": []
+        },
+        {
+            "method": "CLI",
+            "route": "index.php/(.*)",
+            "handler": "$1",
+            "surface": "Public",
+            "issues": []
+        }
+    ]
+}

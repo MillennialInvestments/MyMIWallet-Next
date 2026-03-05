@@ -47,6 +47,17 @@ if (ENVIRONMENT !== 'production') {
 $routes->get('ops/health', 'OpsController::health');
 $routes->get('Maintenance', 'MaintenanceController::index');
 
+$routes->group('Ops', ['filter' => 'auth'], static function ($routes) {
+    $routes->get('/', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::index');
+    $routes->get('projects', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::projects');
+    $routes->post('projects/save', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::saveProject');
+    $routes->get('tasks', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::tasks');
+    $routes->post('tasks/save', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::saveTask');
+    $routes->post('import/xlsx', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::importXlsx');
+    $routes->get('export/tasks.csv', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::exportTasksCsv');
+    $routes->get('export/workbook.xlsx', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::exportWorkbookXlsx');
+});
+
 $routes->get('API/Ops/health-score', 'OpsHealth::score');
 $routes->get('API/Ops/filesystem-status', 'Api\OpsFilesystemStatusController::index', ['filter' => 'permission:admin.access']);
 $routes->get('API/docs', 'Api\SwaggerDocsController::index', ['filter' => 'permission:admin.access']);
