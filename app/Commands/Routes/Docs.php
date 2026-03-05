@@ -12,7 +12,7 @@ final class Docs extends SafeBaseCommand
     protected $group       = 'Routes';
     protected $name        = 'routes:docs';
     protected $description = 'Export active routes to Markdown + JSON under docs/routes/.';
-    protected $usage       = 'routes:docs [--out=docs/routes/routes.md] [--mode=all|missing-targets|invalid-handler] [--limit=0] [--timestamp=1]';
+    protected $usage       = 'routes:docs [--mode=all|issues|missing-targets|invalid-handler] [--out=docs/routes/routes.md]';
 
     public function run(array $params)
     {
@@ -30,16 +30,11 @@ final class Docs extends SafeBaseCommand
             @mkdir($dir, 0775, true);
         }
 
-        // Ensure routing is bootstrapped
-        $router = service('router'); // CodeIgniter\Router\Router
-        $routes = service('routes'); // CodeIgniter\Router\RouteCollection
+        $router = service('router');
+        $routes = service('routes');
 
-        // Prefer the RouteCollection's internal verb-based route map.
-        // In some CI4 setups, getRoutes() can return named group structures.
         $collection = $routes->getRoutes();
 
-        // If it doesn't look like [VERB => [route => handler]], fall back to reflection
-        // to read the internal verb-keyed "routes" property.
         if (! self::looksLikeVerbMap($collection)) {
             $collection = self::readVerbMapViaReflection($routes);
         }
@@ -58,23 +53,28 @@ final class Docs extends SafeBaseCommand
 
         $md = [];
         $md[] = '# Routes Export';
+
         if ($timestamp) {
             $md[] = '';
             $md[] = '- Generated (UTC): `' . $payload['generated_utc'] . '`';
             $md[] = '- Environment: `' . ENVIRONMENT . '`';
         }
+
         $md[] = '- Mode: `' . $mode . '`';
         $md[] = '- Limit: `' . (string) $limit . '`';
         $md[] = '';
+
         $md[] = '## Summary';
         $md[] = '- Total routes: `' . (string) $summary['total'] . '`';
         $md[] = '- Methods: `' . json_encode($summary['methods'], JSON_UNESCAPED_SLASHES) . '`';
         $md[] = '- Surface groups: `' . json_encode($summary['surfaces'], JSON_UNESCAPED_SLASHES) . '`';
+
         $md[] = '';
         $md[] = '## Routes';
         $md[] = '';
         $md[] = '| Method | Route | Handler | Surface | Issues |';
         $md[] = '|---|---|---|---|---|';
+
         foreach ($items as $item) {
             $md[] = '| '
                 . $this->escTable((string) $item['method']) . ' | '
@@ -100,18 +100,33 @@ final class Docs extends SafeBaseCommand
     private function normalizeRoutes(array $routeTable, string $mode, int $limit): array
     {
         $rows = [];
+        $seen = [];
+
         foreach ($routeTable as $method => $routesForMethod) {
+
             if (! is_array($routesForMethod)) {
                 continue;
             }
 
             foreach ($routesForMethod as $routeKey => $handler) {
+
                 $route = (string) $routeKey;
+
                 $parsed = $this->parseHandler($handler);
                 $issues = $parsed['issues'];
+
                 if ($this->isMissingTarget($parsed['class'], $parsed['method']) && ! $this->isMaintenanceStub($route)) {
                     $issues[] = 'missing_target';
                 }
+
+                $dupKey = $method . ':' . $route;
+
+                if (isset($seen[$dupKey])) {
+                    $issues[] = 'duplicate_route';
+                }
+
+                $seen[$dupKey] = true;
+
                 $issues = array_values(array_unique($issues));
 
                 if (! $this->isIncludedByMode($mode, $issues)) {
@@ -119,11 +134,11 @@ final class Docs extends SafeBaseCommand
                 }
 
                 $rows[] = [
-                    'method' => (string) $method,
-                    'route' => $route,
+                    'method'  => (string) $method,
+                    'route'   => $route,
                     'handler' => $parsed['raw'],
                     'surface' => $this->detectSurface($route),
-                    'issues' => $issues,
+                    'issues'  => $issues,
                 ];
 
                 if ($limit > 0 && count($rows) >= $limit) {
@@ -145,22 +160,26 @@ final class Docs extends SafeBaseCommand
             return ['raw' => $raw, 'class' => null, 'method' => null, 'issues' => []];
         }
 
-        // invalid namespace delimiter detection
         if (strpos($raw, '/') !== false && strpos($raw, '\\') !== false) {
             return ['raw' => $raw, 'class' => null, 'method' => null, 'issues' => ['invalid_handler']];
         }
 
-        // normalize leading backslash
         $rawNorm = ltrim($raw, '\\');
 
-        // Accept "Class::method" only
         if (strpos($rawNorm, '::') !== false) {
+
             [$class, $method] = explode('::', $rawNorm, 2);
-            $method = (string) preg_replace('#/.*$#', '', $method); // remove "/$1" suffix
-            return ['raw' => $raw, 'class' => $class, 'method' => $method, 'issues' => []];
+
+            $method = preg_replace('#/.*$#', '', $method);
+
+            return [
+                'raw' => $raw,
+                'class' => $class,
+                'method' => $method,
+                'issues' => []
+            ];
         }
 
-        // Catch the old single-colon format
         if (preg_match('#^[A-Za-z0-9_\\\\]+:[A-Za-z0-9_]+#', $rawNorm)) {
             return ['raw' => $raw, 'class' => null, 'method' => null, 'issues' => ['invalid_handler']];
         }
@@ -170,6 +189,10 @@ final class Docs extends SafeBaseCommand
 
     private function isIncludedByMode(string $mode, array $issues): bool
     {
+        if ($mode === 'issues') {
+            return count($issues) > 0;
+        }
+
         if ($mode === 'missing-targets') {
             return in_array('missing_target', $issues, true);
         }
@@ -183,11 +206,7 @@ final class Docs extends SafeBaseCommand
 
     private function detectSurface(string $route): string
     {
-        if (stripos($route, 'API/') === 0) {
-            return 'API';
-        }
-
-        if (stripos($route, 'api/') === 0) {
+        if (stripos($route, 'API/') === 0 || stripos($route, 'api/') === 0) {
             return 'API';
         }
 
@@ -204,11 +223,13 @@ final class Docs extends SafeBaseCommand
 
     private function buildSummary(array $items): array
     {
-        $methods = ['GET' => 0, 'POST' => 0, 'PUT' => 0, 'DELETE' => 0, 'PATCH' => 0, 'OPTIONS' => 0, 'CLI' => 0, 'OTHER' => 0];
+        $methods = ['GET'=>0,'POST'=>0,'PUT'=>0,'DELETE'=>0,'PATCH'=>0,'OPTIONS'=>0,'CLI'=>0,'OTHER'=>0];
         $surfaces = [];
 
         foreach ($items as $item) {
+
             $method = strtoupper($item['method']);
+
             if (! array_key_exists($method, $methods)) {
                 $methods['OTHER']++;
             } else {
@@ -216,20 +237,27 @@ final class Docs extends SafeBaseCommand
             }
 
             $surface = $item['surface'];
+
             $surfaces[$surface] = ($surfaces[$surface] ?? 0) + 1;
         }
 
-        return ['total' => count($items), 'methods' => $methods, 'surfaces' => $surfaces];
+        return [
+            'total' => count($items),
+            'methods' => $methods,
+            'surfaces' => $surfaces
+        ];
     }
 
     private function getOptionValue(array $params, string $key, string $default): string
     {
         foreach ($params as $p) {
+
             if (! is_string($p)) {
                 continue;
             }
+
             if (strpos($p, $key . '=') === 0) {
-                return (string) substr($p, strlen($key) + 1);
+                return substr($p, strlen($key) + 1);
             }
         }
 
@@ -252,15 +280,18 @@ final class Docs extends SafeBaseCommand
         }
 
         if (is_array($handler) && isset($handler[0], $handler[1])) {
+
             $class = $handler[0];
+
             if (is_string($class) && class_exists($class)) {
                 $class = ltrim($class, '\\');
             }
+
             if (is_object($class)) {
                 $class = get_class($class);
             }
 
-            return (string) $class . '::' . (string) $handler[1];
+            return $class . '::' . $handler[1];
         }
 
         if ($handler instanceof \Closure) {
@@ -284,30 +315,38 @@ final class Docs extends SafeBaseCommand
         if (! is_array($collection) || $collection === []) {
             return false;
         }
-        $verbs = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD'];
+
+        $verbs = ['GET','POST','PUT','DELETE','PATCH','OPTIONS','HEAD'];
+
         foreach (array_keys($collection) as $k) {
             if (! in_array((string) $k, $verbs, true)) {
                 return false;
             }
         }
+
         return true;
     }
 
     private static function readVerbMapViaReflection($routes): array
     {
-        // RouteCollection has an internal "routes" property in CI4.
-        // We'll read it safely to get the real [VERB => [route => handler]] structure.
         try {
+
             $ref = new \ReflectionObject($routes);
+
             if ($ref->hasProperty('routes')) {
+
                 $prop = $ref->getProperty('routes');
+
                 $prop->setAccessible(true);
+
                 $val = $prop->getValue($routes);
+
                 return is_array($val) ? $val : [];
             }
+
         } catch (\Throwable $e) {
-            // ignore
         }
+
         return [];
     }
 
@@ -316,9 +355,11 @@ final class Docs extends SafeBaseCommand
         if (! $class || ! $method) {
             return false;
         }
+
         if (! class_exists($class)) {
             return true;
         }
+
         return ! method_exists($class, $method);
     }
 

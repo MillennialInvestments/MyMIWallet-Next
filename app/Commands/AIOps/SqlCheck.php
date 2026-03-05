@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Commands\AiOps;
+namespace App\Commands\AIOps;
 
 use App\Commands\SafeBaseCommand;
 use App\Services\AIOps\SchemaInspectorService;

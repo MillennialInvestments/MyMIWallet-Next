@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-03-01T20:00:01Z
+> Run: 2026-03-06T12:00:01Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -403,7 +403,7 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Views/API/Sophtron_Widget.php
   - ⚠️ No obvious doc match found (heuristic)
-- … and 970 more
+- … and 971 more
 
 ## Documented Items With No Obvious Code Match (best-effort)
 - docs/APIs/_inventory_controllers.md

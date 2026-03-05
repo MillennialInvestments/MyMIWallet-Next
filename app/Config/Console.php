@@ -301,7 +301,7 @@ class Console extends BaseConfig
 
         /*
         |----------------------------------------------------------------------
-        | GitHub
+        | Errors / Incidents
         |----------------------------------------------------------------------
         */
         \App\Commands\Errors\ConsolidateErrors::class,
@@ -313,7 +313,11 @@ class Console extends BaseConfig
         | GitHub
         |----------------------------------------------------------------------
         */
+        \App\Commands\GitHub\PullSafe::class,
+        \App\Commands\GitHub\PullSafe::class,
         \App\Commands\GitHub\SearchRepo::class,
+        \App\Commands\GitHub\WorkspaceGuard::class,
+        \App\Commands\GitHub\WorkspaceRepair::class,
 
         /*
         |----------------------------------------------------------------------
@@ -376,9 +380,28 @@ class Console extends BaseConfig
         \App\Commands\Ops\SubsDoctor::class,
         \App\Commands\Ops\SubsRepair::class,
         \App\Commands\Ops\SubsStatus::class,
+        \App\Commands\Ops\Sync::class,
         \App\Commands\Ops\VPSSnapshot::class,
         \App\Commands\Ops\WalletIntegrity::class,
         \App\Commands\Ops\Work::class,
+        
+        /*
+        |----------------------------------------------------------------------
+        | Repo
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Repo\Health::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Routes
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Route\Audit::class,
+        \App\Commands\Route\Benchmark::class,
+        \App\Commands\Route\Debug::class,
+        \App\Commands\Route\Docs::class,
+        \App\Commands\Route\Repair::class,
         
         /*
         |----------------------------------------------------------------------
@@ -393,16 +416,6 @@ class Console extends BaseConfig
         \App\Commands\PurgeFastCGI::class,
         \App\Commands\RestartSafe::class,
         \App\Commands\TrafficSpikeGuard::class,
-
-        /*
-        |----------------------------------------------------------------------
-        | Routes
-        |----------------------------------------------------------------------
-        */
-        \App\Commands\Route\Audit::class,
-        \App\Commands\Route\Benchmark::class,
-        \App\Commands\Route\Debug::class,
-        \App\Commands\Route\Docs::class,
 
         /*
         |----------------------------------------------------------------------

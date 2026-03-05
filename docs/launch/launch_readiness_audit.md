@@ -1,8 +1,8 @@
 # Launch Readiness Audit (Phase A)
 
 ## run_meta
-- timestamp_utc: `2026-03-05T03:55:13+00:00`
-- git_commit: `8aba3cbf9`
+- timestamp_utc: `2026-03-05T04:25:59+00:00`
+- git_commit: `f00dbbfb9`
 - env: `development`
 - command: `php spark gtm:launch:audit`
 
@@ -557,7 +557,7 @@
 - FEATURE_BUDGET: `enabled`
 - FEATURE_INVESTMENTS: `enabled`
 - FEATURE_WATCHLIST: `enabled`
-- FEATURE_TRADE_ALERTS: `enabled`
+- FEATURE_TRADE_ALERTS: `disabled`
 - FEATURE_WALLETS: `disabled`
 - FEATURE_PREDICTIONS: `disabled`
 - FEATURE_MARKETING_AUTOMATION: `enabled`
