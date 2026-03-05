@@ -30,20 +30,26 @@ final class Docs extends SafeBaseCommand
         }
 
         $router = service('router');
+
+        /** @var \CodeIgniter\Router\RouteCollection|null $collection */
         $collection = null;
-        if (is_object($router)) {
+        if (method_exists($router, 'getRoutes')) {
+            $collection = $router->getRoutes();
+        }
+
+        if (! $collection instanceof \CodeIgniter\Router\RouteCollection) {
             $collection = (function () {
                 return $this->collection ?? null;
             })->call($router);
         }
 
-        if (! is_object($collection) || ! method_exists($collection, 'getRoutes')) {
+        if (! $collection instanceof \CodeIgniter\Router\RouteCollection) {
             $collection = service('routes');
         }
 
-        $routeMap = method_exists($collection, 'getRoutes') ? $collection->getRoutes() : [];
+        $routeTable = $collection->getRoutes();
 
-        $items = $this->normalizeRoutes($routeMap, $mode);
+        $items = $this->normalizeRoutes($routeTable, $mode);
         $summary = $this->buildSummary($items);
 
         $payload = [
@@ -72,13 +78,27 @@ final class Docs extends SafeBaseCommand
         $md[] = '';
         $md[] = '| Method | Route | Handler | Surface | Issues |';
         $md[] = '|---|---|---|---|---|';
-        foreach ($items as $item) {
-            $md[] = '| ' . $this->escTable($item['method'])
-                . ' | ' . $this->escTable($item['route'])
-                . ' | ' . $this->escTable($item['handler'])
-                . ' | ' . $this->escTable($item['surface'])
-                . ' | ' . $this->escTable(implode('; ', $item['issues']))
-                . ' |';
+        foreach ($routeTable as $method => $routesForMethod) {
+            if (! is_array($routesForMethod)) {
+                continue;
+            }
+
+            foreach ($routesForMethod as $routeKey => $handler) {
+                $route = (string) $routeKey;
+                $handlerStr = $this->handlerToString($handler);
+                $issues = $this->detectIssues($handlerStr);
+
+                if (! $this->isIncludedByMode($mode, $issues)) {
+                    continue;
+                }
+
+                $md[] = '| '
+                    . $this->escTable((string) $method) . ' | '
+                    . $this->escTable($route) . ' | '
+                    . $this->escTable($handlerStr) . ' | '
+                    . $this->escTable($this->detectSurface($route)) . ' | '
+                    . $this->escTable($issues) . ' |';
+            }
         }
 
         if (@file_put_contents($fullOut, implode("\n", $md) . "\n") === false) {
@@ -94,34 +114,31 @@ final class Docs extends SafeBaseCommand
         CLI::write('Wrote routes docs: ' . $fullOut . ' and ' . $jsonOut, 'green');
     }
 
-    private function normalizeRoutes(array $routeMap, string $mode): array
+    private function normalizeRoutes(array $routeTable, string $mode): array
     {
         $rows = [];
-        foreach ($routeMap as $route => $handler) {
-            $handlerStr = $this->handlerToString($handler);
-            $method = 'CLI';
-            $uri = (string) $route;
-
-            if (str_contains((string) $route, '\x00')) {
-                [$method, $uri] = explode("\x00", (string) $route, 2);
-                $method = strtoupper($method);
-            }
-
-            $issues = $this->findIssues($handlerStr);
-            if ($mode === 'missing-targets' && ! in_array('missing_target', $issues, true)) {
-                continue;
-            }
-            if ($mode === 'invalid-handler' && ! in_array('invalid_handler_delimiter', $issues, true)) {
+        foreach ($routeTable as $method => $routesForMethod) {
+            if (! is_array($routesForMethod)) {
                 continue;
             }
 
-            $rows[] = [
-                'method' => $method,
-                'route' => $uri,
-                'handler' => $handlerStr,
-                'surface' => $this->guessSurface($uri),
-                'issues' => $issues,
-            ];
+            foreach ($routesForMethod as $routeKey => $handler) {
+                $route = (string) $routeKey;
+                $handlerStr = $this->handlerToString($handler);
+                $issue = $this->detectIssues($handlerStr);
+
+                if (! $this->isIncludedByMode($mode, $issue)) {
+                    continue;
+                }
+
+                $rows[] = [
+                    'method' => (string) $method,
+                    'route' => $route,
+                    'handler' => $handlerStr,
+                    'surface' => $this->detectSurface($route),
+                    'issues' => $issue !== '' ? [$issue] : [],
+                ];
+            }
         }
 
         usort($rows, static fn(array $a, array $b): int => strcmp($a['route'], $b['route']));
@@ -129,38 +146,50 @@ final class Docs extends SafeBaseCommand
         return $rows;
     }
 
-    private function findIssues(string $handler): array
+    private function detectIssues(string $handler): string
     {
-        $issues = [];
-        if (preg_match('/\\w+:\\w+/', $handler)) {
-            $issues[] = 'invalid_handler_delimiter';
+        if (strpos($handler, '::') === false) {
+            return 'invalid_handler';
         }
 
-        if (str_contains($handler, '::')) {
-            [$class, $method] = explode('::', $handler, 2);
-            $class = trim($class, '\\');
-            if (! class_exists($class) || ! method_exists($class, $method)) {
-                $issues[] = 'missing_target';
-            }
+        [$class, $method] = explode('::', $handler);
+
+        if (! class_exists($class)) {
+            return 'missing_controller';
         }
 
-        return $issues;
+        if (! method_exists($class, $method)) {
+            return 'missing_method';
+        }
+
+        return '';
     }
 
-    private function guessSurface(string $route): string
+    private function isIncludedByMode(string $mode, string $issue): bool
     {
-        $route = ltrim(strtolower($route), '/');
-        if (str_starts_with($route, 'api/')) {
+        if ($mode === 'missing-targets') {
+            return in_array($issue, ['missing_controller', 'missing_method'], true);
+        }
+
+        if ($mode === 'invalid-handler') {
+            return $issue === 'invalid_handler';
+        }
+
+        return true;
+    }
+
+    private function detectSurface(string $route): string
+    {
+        if (stripos($route, 'API/') === 0) {
             return 'API';
         }
-        if (str_starts_with($route, 'admin/') || str_starts_with($route, 'management/')) {
+
+        if (stripos($route, 'Admin/') === 0) {
             return 'Admin';
         }
-        if (str_starts_with($route, 'cron/') || str_starts_with($route, 'ops/cron')) {
-            return 'Cron';
-        }
-        if (str_starts_with($route, 'account') || str_starts_with($route, 'dashboard') || str_starts_with($route, 'wallet') || str_starts_with($route, 'profile')) {
-            return 'User';
+
+        if (stripos($route, 'Ops/') === 0) {
+            return 'Ops';
         }
 
         return 'Public';
@@ -214,17 +243,24 @@ final class Docs extends SafeBaseCommand
         if (is_string($handler)) {
             return $handler;
         }
-        if (is_array($handler) && count($handler) === 2 && is_string($handler[0]) && is_string($handler[1])) {
-            return $handler[0] . '::' . $handler[1];
+
+        if (is_array($handler)) {
+            if (isset($handler[0]) && isset($handler[1])) {
+                return $handler[0] . '::' . $handler[1];
+            }
+
+            foreach ($handler as $v) {
+                if (is_string($v)) {
+                    return $v;
+                }
+            }
         }
 
-        if (is_scalar($handler)) {
-            return (string) $handler;
+        if (is_object($handler)) {
+            return get_class($handler);
         }
 
-        $encoded = json_encode($handler, JSON_UNESCAPED_SLASHES);
-
-        return $encoded !== false ? $encoded : 'unknown_handler';
+        return 'unknown_handler';
     }
 
     private function escTable(string $s): string
