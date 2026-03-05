@@ -1,15 +1,15 @@
 # Launch Readiness Audit (Phase A)
 
 ## run_meta
-- timestamp_utc: `2026-03-01T19:34:13+00:00`
-- git_commit: `c5b472330`
+- timestamp_utc: `2026-03-05T03:55:13+00:00`
+- git_commit: `8aba3cbf9`
 - env: `development`
 - command: `php spark gtm:launch:audit`
 
 ## route scan summary
-- total routes discovered: 1037
+- total routes discovered: 1045
 - Phase A routes included: 29
-- Excluded routes: 1008
+- Excluded routes: 1016
 
 ### Included user-facing routes (Phase A)
 - `GET /login` => `AuthController::login`
@@ -48,6 +48,14 @@
 - `GET /test/crash` => `Test::crash`
 - `GET /ops/health` => `OpsController::health`
 - `GET /Maintenance` => `MaintenanceController::index`
+- `GET /` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::index`
+- `GET /projects` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::projects`
+- `POST /projects/save` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::saveProject`
+- `GET /tasks` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::tasks`
+- `POST /tasks/save` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::saveTask`
+- `POST /import/xlsx` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::importXlsx`
+- `GET /export/tasks.csv` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::exportTasksCsv`
+- `GET /export/workbook.xlsx` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::exportWorkbookXlsx`
 - `GET /API/Ops/health-score` => `OpsHealth::score`
 - `GET /API/Ops/filesystem-status` => `Api\OpsFilesystemStatusController::index`
 - `GET /API/docs` => `Api\SwaggerDocsController::index`
@@ -75,20 +83,20 @@
 - `GET /Alerts/Preview/(:segment)` => `AlertsController::preview/$1`
 - `GET /Preview/Alert/(:segment)` => `AlertsController::preview/$1`
 - `GET /Privacy-Policy` => `Home::privacyPolicy`
-- `GET /Legal/Privacy-Policy` => `Home::privacyPolicy`
-- `GET /Legal/Terms-And-Conditions` => `Home::terms`
-- `GET /Customer-Support` => `App\Modules\Support\Controllers\SupportController::index`
-- `GET /Profile` => `App\Modules\User\Controllers\DashboardController::profile`
-- `POST /auth/resend-activation` => `AuthController::resendActivationCode`
-- `GET /Sector/(:segment)` => `Home::sector/$1`
-- `GET /Terms-Of-Service` => `Home::termsOfService`
-- `GET /resend-activation` => `AuthController::resendActivation`
 
 ## route->controller integrity scan
-- scanned: 1036
-- missing targets: 457
+- scanned: 1044
+- missing targets: 465
 - ❌ `GET /healthz => System\HealthController::healthz`
 - ❌ `GET /ops/health => OpsController::health`
+- ❌ `GET / => App\\Modules\\Ops\\Controllers\\OpsManagementController::index`
+- ❌ `GET /projects => App\\Modules\\Ops\\Controllers\\OpsManagementController::projects`
+- ❌ `POST /projects/save => App\\Modules\\Ops\\Controllers\\OpsManagementController::saveProject`
+- ❌ `GET /tasks => App\\Modules\\Ops\\Controllers\\OpsManagementController::tasks`
+- ❌ `POST /tasks/save => App\\Modules\\Ops\\Controllers\\OpsManagementController::saveTask`
+- ❌ `POST /import/xlsx => App\\Modules\\Ops\\Controllers\\OpsManagementController::importXlsx`
+- ❌ `GET /export/tasks.csv => App\\Modules\\Ops\\Controllers\\OpsManagementController::exportTasksCsv`
+- ❌ `GET /export/workbook.xlsx => App\\Modules\\Ops\\Controllers\\OpsManagementController::exportWorkbookXlsx`
 - ❌ `GET /API/Ops/filesystem-status => Api\OpsFilesystemStatusController::index`
 - ❌ `GET /API/docs => Api\SwaggerDocsController::index`
 - ❌ `GET /index => DocsController::index`
@@ -549,7 +557,7 @@
 - FEATURE_BUDGET: `enabled`
 - FEATURE_INVESTMENTS: `enabled`
 - FEATURE_WATCHLIST: `enabled`
-- FEATURE_TRADE_ALERTS: `disabled`
+- FEATURE_TRADE_ALERTS: `enabled`
 - FEATURE_WALLETS: `disabled`
 - FEATURE_PREDICTIONS: `disabled`
 - FEATURE_MARKETING_AUTOMATION: `enabled`
@@ -577,7 +585,7 @@
 - gtm:launch:smoke: `present`
 
 ## blockers list
-- Missing route targets detected: 457
+- Missing route targets detected: 465
 
 ## decision
 - **HOLD**
