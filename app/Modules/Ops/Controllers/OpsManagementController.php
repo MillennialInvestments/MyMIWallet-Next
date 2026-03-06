@@ -6,6 +6,7 @@ namespace App\Modules\Ops\Controllers;
 
 use App\Controllers\UserController;
 use App\Models\OpsProjectModel;
+use App\Models\OpsSubprojectModel;
 use App\Models\OpsTaskModel;
 use App\Services\OpsExportService;
 use App\Services\OpsImportService;
@@ -15,6 +16,7 @@ class OpsManagementController extends UserController
 {
     private OpsProjectModel $projects;
     private OpsTaskModel $tasks;
+    private OpsSubprojectModel $subprojects;
     private OpsImportService $importer;
     private OpsExportService $exporter;
 
@@ -23,6 +25,7 @@ class OpsManagementController extends UserController
         parent::initController($request, $response, $logger);
         $this->projects = new OpsProjectModel();
         $this->tasks = new OpsTaskModel();
+        $this->subprojects = new OpsSubprojectModel();
         $this->importer = new OpsImportService();
         $this->exporter = new OpsExportService();
     }
@@ -69,6 +72,33 @@ class OpsManagementController extends UserController
             $id = (int) $this->projects->insert($payload, true);
         }
 
+        $this->refreshRepoExports();
+
+        return $this->response->setJSON(['ok' => true, 'id' => $id]);
+    }
+
+    public function subprojects(): ResponseInterface
+    {
+        return $this->response->setJSON(['data' => $this->subprojects->orderBy('updated_at', 'DESC')->findAll()]);
+    }
+
+    public function saveSubproject(): ResponseInterface
+    {
+        $payload = $this->request->getPost();
+        $id = isset($payload['id']) ? (int) $payload['id'] : 0;
+        unset($payload['id']);
+
+        if ($id > 0) {
+            $this->subprojects->update($id, $payload);
+        } else {
+            if (($payload['code'] ?? '') === '') {
+                $payload['code'] = sprintf('SP-%03d', $this->subprojects->countAllResults() + 1);
+            }
+            $id = (int) $this->subprojects->insert($payload, true);
+        }
+
+        $this->refreshRepoExports();
+
         return $this->response->setJSON(['ok' => true, 'id' => $id]);
     }
 
@@ -93,6 +123,8 @@ class OpsManagementController extends UserController
             $id = (int) $this->tasks->insert($payload, true);
         }
 
+        $this->refreshRepoExports();
+
         return $this->response->setJSON(['ok' => true, 'id' => $id]);
     }
 
@@ -105,6 +137,10 @@ class OpsManagementController extends UserController
 
         $result = $this->importer->importXlsx($file->getRealPath() ?: $file->getTempName(), (string) (service('request')->getServer('REMOTE_USER') ?? 'web'));
         $result['ok'] = $result['ok'] ?? false;
+
+        if ($result['ok']) {
+            $this->refreshRepoExports();
+        }
 
         return $this->response->setJSON($result);
     }
@@ -130,5 +166,11 @@ class OpsManagementController extends UserController
         return $this->response
             ->download($repoPath, null)
             ->setFileName('workbook.xlsx');
+    }
+
+    private function refreshRepoExports(): void
+    {
+        $this->exporter->exportTasksCsv(ROOTPATH . 'docs/_aiops/gtm/tasks.csv');
+        $this->exporter->exportWorkbookXlsx(ROOTPATH . 'docs/_aiops/gtm/workbook.xlsx');
     }
 }
