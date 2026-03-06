@@ -15,6 +15,34 @@
         <div class="col-md-3"><div class="card"><div class="card-body"><strong>Readiness</strong><div class="display-4 text-success"><?= (int) ($opsSummary['readiness'] ?? 0) ?>%</div></div></div></div>
     </div>
 
+    <div class="card mb-3">
+        <div class="card-header">Create / Update Project & Subproject</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 border-right">
+                    <h6>Project</h6>
+                    <form id="project-form" class="form-row">
+                        <input type="hidden" name="id" id="project-id">
+                        <div class="form-group col-3"><input class="form-control" name="code" placeholder="P-001"></div>
+                        <div class="form-group col-4"><input class="form-control" name="name" placeholder="Project name" required></div>
+                        <div class="form-group col-3"><input class="form-control" name="owner" placeholder="Owner"></div>
+                        <div class="form-group col-2"><button class="btn btn-success btn-block" type="submit">Save</button></div>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <h6>Subproject</h6>
+                    <form id="subproject-form" class="form-row">
+                        <input type="hidden" name="id" id="subproject-id">
+                        <div class="form-group col-3"><input class="form-control" name="code" placeholder="SP-001"></div>
+                        <div class="form-group col-4"><input class="form-control" name="name" placeholder="Subproject name"></div>
+                        <div class="form-group col-3"><select class="form-control" name="project_id" id="subproject-project-id"></select></div>
+                        <div class="form-group col-2"><button class="btn btn-success btn-block" type="submit">Save</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <table class="table table-sm table-bordered" id="ops-tasks-table">
         <thead>
         <tr>
@@ -33,6 +61,21 @@
 <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap4.min.js"></script>
 <script>
 $(function () {
+    const projectSelect = $('#subproject-project-id');
+
+    function loadProjects() {
+        $.getJSON('<?= site_url('Ops/projects') ?>', function(resp) {
+            const items = (resp && resp.data) ? resp.data : [];
+            projectSelect.empty();
+            projectSelect.append('<option value="">Project</option>');
+            items.forEach(function (p) {
+                projectSelect.append(`<option value="${p.id}">${p.code} - ${p.name}</option>`);
+            });
+        });
+    }
+
+    loadProjects();
+
     const table = $('#ops-tasks-table').DataTable({
         ajax: '<?= site_url('Ops/tasks') ?>',
         columns: [
@@ -46,7 +89,22 @@ $(function () {
     $(document).on('change', '.inline-update', function() {
         const id = $(this).data('id');
         const field = $(this).data('field');
-        $.post('<?= site_url('Ops/tasks/save') ?>', {id: id, [field]: $(this).val()}, function(){});
+        $.post('<?= site_url('Ops/tasks/save') ?>', {id: id, [field]: $(this).val()}, function() { table.ajax.reload(null, false); });
+    });
+
+    $('#project-form').on('submit', function(e){
+        e.preventDefault();
+        $.post('<?= site_url('Ops/projects/save') ?>', $(this).serialize(), function(){
+            loadProjects();
+            location.reload();
+        });
+    });
+
+    $('#subproject-form').on('submit', function(e){
+        e.preventDefault();
+        $.post('<?= site_url('Ops/subprojects/save') ?>', $(this).serialize(), function(){
+            table.ajax.reload(null, false);
+        });
     });
 
     $('#btn-import').on('click', function() {

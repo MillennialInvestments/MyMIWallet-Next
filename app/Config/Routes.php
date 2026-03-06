@@ -51,6 +51,8 @@ $routes->group('Ops', ['filter' => 'auth'], static function ($routes) {
     $routes->get('', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::index');
     $routes->get('projects', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::projects');
     $routes->post('projects/save', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::saveProject');
+    $routes->get('subprojects', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::subprojects');
+    $routes->post('subprojects/save', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::saveSubproject');
     $routes->get('tasks', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::tasks');
     $routes->post('tasks/save', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::saveTask');
     $routes->post('import/xlsx', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::importXlsx');
