@@ -1,15 +1,15 @@
 # Launch Readiness Audit (Phase A)
 
 ## run_meta
-- timestamp_utc: `2026-03-05T04:25:59+00:00`
-- git_commit: `f00dbbfb9`
+- timestamp_utc: `2026-03-06T13:40:48+00:00`
+- git_commit: `93011cb8f`
 - env: `development`
 - command: `php spark gtm:launch:audit`
 
 ## route scan summary
-- total routes discovered: 1045
+- total routes discovered: 1044
 - Phase A routes included: 29
-- Excluded routes: 1016
+- Excluded routes: 1015
 
 ### Included user-facing routes (Phase A)
 - `GET /login` => `AuthController::login`
@@ -46,9 +46,8 @@
 - `GET /` => `Home::index`
 - `GET /healthz` => `System\HealthController::healthz`
 - `GET /test/crash` => `Test::crash`
-- `GET /ops/health` => `OpsController::health`
+- `GET /ops/health` => `\\App\\Controllers\\OpsHealth::index`
 - `GET /Maintenance` => `MaintenanceController::index`
-- `GET /` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::index`
 - `GET /projects` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::projects`
 - `POST /projects/save` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::saveProject`
 - `GET /tasks` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::tasks`
@@ -56,11 +55,11 @@
 - `POST /import/xlsx` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::importXlsx`
 - `GET /export/tasks.csv` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::exportTasksCsv`
 - `GET /export/workbook.xlsx` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::exportWorkbookXlsx`
-- `GET /API/Ops/health-score` => `OpsHealth::score`
-- `GET /API/Ops/filesystem-status` => `Api\OpsFilesystemStatusController::index`
-- `GET /API/docs` => `Api\SwaggerDocsController::index`
-- `GET /health` => `OpsHealth::index`
-- `POST /health/run` => `OpsHealth::run`
+- `GET /API/Ops/health-score` => `\\App\\Controllers\\OpsHealth::score`
+- `GET /API/Ops/filesystem-status` => `\\App\\Controllers\\Api\\OpsFilesystemStatusController::index`
+- `GET /API/docs` => `\\App\\Controllers\\Api\\SwaggerDocsController::index`
+- `GET /health` => `\\App\\Controllers\\OpsHealth::index`
+- `POST /health/run` => `\\App\\Controllers\\OpsHealth::run`
 - `GET /index` => `DocsController::index`
 - `GET /view` => `DocsController::view`
 - `GET /Stock/(:segment)/(:segment)` => `StockController::show/$1/$2`
@@ -83,13 +82,13 @@
 - `GET /Alerts/Preview/(:segment)` => `AlertsController::preview/$1`
 - `GET /Preview/Alert/(:segment)` => `AlertsController::preview/$1`
 - `GET /Privacy-Policy` => `Home::privacyPolicy`
+- `GET /Legal/Privacy-Policy` => `Home::privacyPolicy`
 
 ## route->controller integrity scan
-- scanned: 1044
-- missing targets: 465
+- scanned: 1043
+- missing targets: 467
 - ❌ `GET /healthz => System\HealthController::healthz`
-- ❌ `GET /ops/health => OpsController::health`
-- ❌ `GET / => App\\Modules\\Ops\\Controllers\\OpsManagementController::index`
+- ❌ `GET /ops/health => \\App\\Controllers\\OpsHealth::index`
 - ❌ `GET /projects => App\\Modules\\Ops\\Controllers\\OpsManagementController::projects`
 - ❌ `POST /projects/save => App\\Modules\\Ops\\Controllers\\OpsManagementController::saveProject`
 - ❌ `GET /tasks => App\\Modules\\Ops\\Controllers\\OpsManagementController::tasks`
@@ -97,8 +96,11 @@
 - ❌ `POST /import/xlsx => App\\Modules\\Ops\\Controllers\\OpsManagementController::importXlsx`
 - ❌ `GET /export/tasks.csv => App\\Modules\\Ops\\Controllers\\OpsManagementController::exportTasksCsv`
 - ❌ `GET /export/workbook.xlsx => App\\Modules\\Ops\\Controllers\\OpsManagementController::exportWorkbookXlsx`
-- ❌ `GET /API/Ops/filesystem-status => Api\OpsFilesystemStatusController::index`
-- ❌ `GET /API/docs => Api\SwaggerDocsController::index`
+- ❌ `GET /API/Ops/health-score => \\App\\Controllers\\OpsHealth::score`
+- ❌ `GET /API/Ops/filesystem-status => \\App\\Controllers\\Api\\OpsFilesystemStatusController::index`
+- ❌ `GET /API/docs => \\App\\Controllers\\Api\\SwaggerDocsController::index`
+- ❌ `GET /health => \\App\\Controllers\\OpsHealth::index`
+- ❌ `POST /health/run => \\App\\Controllers\\OpsHealth::run`
 - ❌ `GET /index => DocsController::index`
 - ❌ `GET /view => DocsController::view`
 - ❌ `GET /sw.js => ServiceWorker::index`
@@ -585,7 +587,7 @@
 - gtm:launch:smoke: `present`
 
 ## blockers list
-- Missing route targets detected: 465
+- Missing route targets detected: 467
 
 ## decision
 - **HOLD**
