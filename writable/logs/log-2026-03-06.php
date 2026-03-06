@@ -4047,3 +4047,16 @@ in SYSTEMPATH/CodeIgniter.php on line 1001.
 CRITICAL - 2026-03-06 13:31:19 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
 WARNING - 2026-03-06 13:31:19 --> [404] URI=https://www.mymiwallet.com/index.php/
 WARNING - 2026-03-06 13:31:19 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-06 13:36:19 --> [REQ_ID=5ee4ab1ac8b3] [REQUEST][START] HEAD /
+DEBUG - 2026-03-06 13:36:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-06 13:36:19 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-06 13:36:19 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-06 13:36:19 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-06 13:36:19 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220

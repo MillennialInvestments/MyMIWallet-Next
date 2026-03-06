@@ -13751,6 +13751,7 @@ in APPPATH/Modules/APIs/Controllers/MditInvestorAPIController.php on line 12.
 [2026-03-01T16:00:04+00:00][HEALTHCHECK] LOG_HEALTHCHECK fallback probe marker=e995ec7d9070
 [2026-03-01T18:00:04+00:00][HEALTHCHECK] LOG_HEALTHCHECK fallback probe marker=74f84661c5a5
 [2026-03-01T20:00:03+00:00][HEALTHCHECK] LOG_HEALTHCHECK fallback probe marker=941690ee8670
+<<<<<<< Updated upstream
 [2026-03-05T14:00:03+00:00][HEALTHCHECK] LOG_HEALTHCHECK fallback probe marker=549c6652616d
 [2026-03-05T16:00:03+00:00][HEALTHCHECK] LOG_HEALTHCHECK fallback probe marker=b0cd7803d094
 [2026-03-05T18:00:03+00:00][HEALTHCHECK] LOG_HEALTHCHECK fallback probe marker=0ce554860db1
@@ -13763,3 +13764,10 @@ in APPPATH/Modules/APIs/Controllers/MditInvestorAPIController.php on line 12.
 [2026-03-06T08:00:03+00:00][HEALTHCHECK] LOG_HEALTHCHECK fallback probe marker=0464e8fd875c
 [2026-03-06T10:00:03+00:00][HEALTHCHECK] LOG_HEALTHCHECK fallback probe marker=4386b141036a
 [2026-03-06T12:00:03+00:00][HEALTHCHECK] LOG_HEALTHCHECK fallback probe marker=079cceeff3fc
+||||||| constructed merge base
+=======
+[2026-03-05T06:00:03+00:00][HEALTHCHECK] LOG_HEALTHCHECK fallback probe marker=2c3f543e9336
+[2026-03-05T08:00:03+00:00][HEALTHCHECK] LOG_HEALTHCHECK fallback probe marker=f0f40b198bc9
+[2026-03-05T10:00:03+00:00][HEALTHCHECK] LOG_HEALTHCHECK fallback probe marker=bfb35ef6a828
+[2026-03-05T12:00:03+00:00][HEALTHCHECK] LOG_HEALTHCHECK fallback probe marker=3c7eb0af07a0
+>>>>>>> Stashed changes
