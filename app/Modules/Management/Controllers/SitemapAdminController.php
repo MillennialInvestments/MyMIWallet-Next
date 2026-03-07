@@ -2,12 +2,13 @@
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAdminController;
+
 use App\Models\SitemapModel;
 use CodeIgniter\HTTP\IncomingRequest;
 
 #[\AllowDynamicProperties]
-class SitemapAdminController extends \App\Controllers\BaseController
+class SitemapAdminController extends BaseAdminController
 {
     protected $sitemapModel;
     protected $articles;

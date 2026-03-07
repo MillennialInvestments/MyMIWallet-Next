@@ -2,10 +2,11 @@
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAdminController;
+
 use Parsedown;
 
-class DocsAdminController extends BaseController
+class DocsAdminController extends BaseAdminController
 {
     protected string $docsRoot;
 

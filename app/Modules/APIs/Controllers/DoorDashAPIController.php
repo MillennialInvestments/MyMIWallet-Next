@@ -2,17 +2,17 @@
 // app/Modules/User/Controllers/DashboardController.php
 namespace App\Modules\APIs\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAPIController;
+
 use Myth\Auth\Authorization\GroupModel;
 use Config\{Auth, APIs, SiteSettings, SocialMedia}; 
-use App\Controllers\UserController;
 use App\Models\UserModel;
 // use APIModule\Libraries\{BudgetLibrary, UserLibrary, WalletLibrary};
 // use APIModule\Models\{BudgetModel, WalletModel};
 use CodeIgniter\API\ResponseTrait; // Import the ResponseTrait
 
 #[\AllowDynamicProperties]
-class DoorDashAPIController extends UserController
+class DoorDashAPIController extends BaseAPIController
 {
     protected $APIs;
     protected $auth;

@@ -1,9 +1,10 @@
 <?php namespace App\Modules\APIs\Controllers;
 
-use CodeIgniter\RESTful\ResourceController;
+use App\Controllers\BaseAPIController;
+
 
 #[\AllowDynamicProperties]
-class HealthAPIController extends ResourceController
+class HealthAPIController extends BaseAPIController
 {
     public function index()
     {

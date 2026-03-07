@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Modules\APIs\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAPIController;
+
 use App\Models\ChatToolRunModel;
 use App\Models\OpsQueueModel;
 use CodeIgniter\API\ResponseTrait;
@@ -13,7 +14,7 @@ use InvalidArgumentException;
 use Myth\Auth\Authorization\GroupModel;
 use Throwable;
 
-class ChatAPIController extends BaseController
+class ChatAPIController extends BaseAPIController
 {
     use ResponseTrait;
 

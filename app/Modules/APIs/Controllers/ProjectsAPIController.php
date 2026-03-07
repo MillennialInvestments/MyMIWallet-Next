@@ -1,13 +1,14 @@
 <?php
 namespace App\Modules\APIs\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAPIController;
+
 use App\Libraries\MyMIProjects;
 use App\Models\ProjectInboxModel;
 use App\Models\ProjectsModel;
 use CodeIgniter\API\ResponseTrait;
 
-class ProjectsAPIController extends BaseController
+class ProjectsAPIController extends BaseAPIController
 {
     use ResponseTrait;
 

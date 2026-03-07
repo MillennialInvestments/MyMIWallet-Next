@@ -1,10 +1,11 @@
 <?php
 namespace App\Modules\User\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseUserController;
+
 use App\Libraries\Security\Redactor;
 
-class EmailController extends BaseController
+class EmailController extends BaseUserController
 {
     public function sendVerification()
     {

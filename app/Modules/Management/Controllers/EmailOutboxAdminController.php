@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseAdminController;
+
 use App\Libraries\MailService;
 use App\Models\EmailOutboxModel;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class EmailOutboxAdminController extends UserController
+class EmailOutboxAdminController extends BaseAdminController
 {
     protected EmailOutboxModel $outbox;
 

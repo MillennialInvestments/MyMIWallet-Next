@@ -2,11 +2,12 @@
 
 namespace App\Modules\APIs\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseAPIController;
+
 use App\Services\DripCampaignService;
 
 #[\AllowDynamicProperties]
-class DripCampaignAPIController extends UserController
+class DripCampaignAPIController extends BaseAPIController
 {
     public function processBatch()
     {

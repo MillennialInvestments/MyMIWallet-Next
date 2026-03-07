@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Modules\APIs\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAPIController;
+
 use App\Libraries\Ops\OpsReportWriter;
 use App\Libraries\Ops\OpsJobRegistry;
 use App\Models\AiOpsIngestRunModel;
@@ -16,7 +17,7 @@ use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use Throwable;
 
-class OpsAPIController extends BaseController
+class OpsAPIController extends BaseAPIController
 {
     use ResponseTrait;
 

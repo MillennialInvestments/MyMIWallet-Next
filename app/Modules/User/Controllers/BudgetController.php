@@ -1,8 +1,8 @@
 <?php namespace App\Modules\User\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseUserController;
+
 use Config\Services;
-use App\Controllers\UserController;
 use App\Libraries\{MyMIDashboard, SafeCache};
 use App\Models\{AccountsModel, BudgetModel};
 use App\Services\{AccountService, BudgetService, DashboardService, GoalTrackingService, MarketingService, SolanaService, UserService, WalletService};
@@ -15,7 +15,7 @@ use DateTimeZone;
 use Psr\Log\LoggerInterface;
 
 #[\AllowDynamicProperties]
-class BudgetController extends UserController
+class BudgetController extends BaseUserController
 {
     use ResponseTrait;
     // protected $data = [];

@@ -2,9 +2,9 @@
 
 namespace App\Modules\User\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseUserController;
+
 use Config\Services;
-use App\Controllers\UserController;
 use App\Libraries\{MyMIDashboard};
 use App\Models\{BudgetModel, UserModel, WalletModel};
 use App\Services\{AccountService, BudgetService, DashboardService, GoalTrackingService, MarketingService, ReferralService, SolanaService, UserService, WalletService};
@@ -12,7 +12,7 @@ use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
 
 #[\AllowDynamicProperties]
-class ReferralController extends UserController {
+class ReferralController extends BaseUserController {
     use ResponseTrait;
     protected $auth;
     protected $email;

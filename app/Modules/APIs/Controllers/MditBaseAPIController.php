@@ -2,11 +2,12 @@
 
 namespace App\Modules\APIs\Controllers;
 
+use App\Controllers\BaseAPIController;
+
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\RESTful\ResourceController;
 
 #[\AllowDynamicProperties]
-class MditBaseAPIController extends ResourceController
+class MditBaseAPIController extends BaseAPIController
 {
     protected $format = 'json';
 

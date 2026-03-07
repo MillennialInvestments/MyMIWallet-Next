@@ -283,8 +283,9 @@ What serious gaps would exist if certain company employees left the organization
 
 namespace App\Modules\User\Controllers;
 
+use App\Controllers\BaseUserController;
+
 use App\Controllers\UserController; 
-use App\Controllers\BaseController;
 use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
 use Config\{Auth, SiteSettings, SocialMedia};
@@ -294,7 +295,7 @@ use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
 
 #[\AllowDynamicProperties]
-class KnowledgebaseController extends UserController
+class KnowledgebaseController extends BaseUserController
 {
     use ResponseTrait;
     protected $auth;

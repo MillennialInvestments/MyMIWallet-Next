@@ -2,12 +2,13 @@
 
 namespace App\Modules\Management\Controllers\Marketing;
 
+use App\Controllers\BaseAdminController;
+
 use App\Models\EmailQueueModel;
 use App\Models\EmailTemplateModel;
-use App\Controllers\BaseController;
 
 #[\AllowDynamicProperties]
-class EmailQueueAdminController extends \App\Controllers\BaseController
+class EmailQueueAdminController extends BaseAdminController
 {
     public function create()
     {

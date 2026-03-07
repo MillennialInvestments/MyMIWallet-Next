@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Modules\User\Controllers;
+namespace App\Deprecated\Controllers;
 
 use Config\{SiteSettings, SocialMedia};
-use App\Controllers\UserController;
+use App\Controllers\BaseUserController;
 use App\Libraries\{MyMIAnalytics, MyMIBudget, MyMIUser};
 use App\Models\{PageSEOModel, SubscribeModel, SupportModel, UserModel};
 use CodeIgniter\API\ResponseTrait; // Import the ResponseTrait
@@ -11,7 +11,7 @@ use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
 
 #[\AllowDynamicProperties]
-class SupportController extends UserController
+class LegacyUserSupportController extends BaseUserController
 {
     use ResponseTrait;
     protected $auth;

@@ -1,12 +1,12 @@
 <?php namespace App\Modules\APIs\Controllers;
 
+use App\Controllers\BaseAPIController;
+
 use Config\ApiKeys;
 use App\Support\Http;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\RESTful\ResourceController;   // ⬅️ ADD THIS
 use App\Libraries\{
-    BaseLoader,
     MyMIAlerts,
     MyMIAlphaVantage,
     MyMIInvestments,
@@ -17,10 +17,10 @@ use App\Libraries\{
 };
 use App\Libraries\Signals\MyMISignalIngestor;
 use App\Libraries\Brokers\ThinkorSwimParser;
-use App\Models\AlertsModel;
 use App\Models\SignalFilesModel;
 use App\Models\SignalsModel;
 use App\Tasks\ProcessTradeAlertChanges;
+use App\Services\AlertService;
 use DateTime;
 
 // Steps to Add a Public API Endpoint for Alerts
@@ -49,10 +49,9 @@ use DateTime;
 // curl -s https://www.mymiwallet.com/index.php/API/Alerts/processAlerts >> /home/mymiteam/cron_logs/alerts.log 2>&1
 
 #[\AllowDynamicProperties]
-class AlertsAPIController extends ResourceController
+class AlertsAPIController extends BaseAPIController
 {
     use ResponseTrait;
-    use BaseLoader;
     protected $cache;
     protected $alertManager;
     protected $MyMIAlerts;
@@ -62,6 +61,7 @@ class AlertsAPIController extends ResourceController
     protected $MyMIRobinhood;
     protected $MyMISEC;
     protected $alertsModel;
+    protected AlertService $alertService;
     protected bool $stringAsHtml = true;
 
     private function guardAdmin(): ?ResponseInterface
@@ -82,8 +82,9 @@ class AlertsAPIController extends ResourceController
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
         parent::initController($request, $response, $logger);
-        $this->alertManager = new MyMIAlerts();
-        $this->alertsModel = new AlertsModel();
+        $this->alertService = service('alertService');
+        $this->alertManager = $this->alertService->getAlertManager();
+        $this->alertsModel  = $this->alertService->getAlertsModel();
         $this->MyMIMarketing = service('MyMIMarketing');
 //         $this->MyMIAlphaVantage = new MyMIAlphaVantage(); // replaced by BaseController getter
 //         $this->MyMIInvestments = new MyMIInvestments(); // replaced by BaseController getter
@@ -97,14 +98,17 @@ class AlertsAPIController extends ResourceController
             return $this->failForbidden('Kimi AI disabled.');
         }
 
-        $alertId = $id ?? $this->request->getGet('id');
-        $alert = $this->alertsModel->find($alertId);
-        if (! $alert) {
+        $alertId = (int) ($id ?? $this->request->getGet('id') ?? 0);
+        if ($alertId <= 0) {
+            return $this->failValidationErrors('Alert id is required.');
+        }
+
+        $result = $this->alertService->generateAlertCommentary($alertId);
+        if ($result === null) {
             return $this->failNotFound('Alert not found');
         }
 
-        $result = $this->alertManager->generateAlertCommentaryWithKimi((array) $alert);
-        return $this->response->setJSON(['status' => 'success', 'data' => $result]);
+        return $this->success($result);
     }
 
     public function generateAlertBatchCommentary()
@@ -114,15 +118,10 @@ class AlertsAPIController extends ResourceController
         }
 
         $payload = $this->request->getJSON(true) ?? [];
-        $ids = $payload['ids'] ?? [];
-        $alerts = $ids ? $this->alertsModel->whereIn('id', $ids)->findAll() : [];
+        $ids = array_map('intval', (array) ($payload['ids'] ?? []));
+        $responses = $this->alertService->generateAlertBatchCommentary($ids);
 
-        $responses = [];
-        foreach ($alerts as $alert) {
-            $responses[$alert['id']] = $this->alertManager->generateAlertCommentaryWithKimi((array) $alert);
-        }
-
-        return $this->response->setJSON(['status' => 'success', 'data' => $responses]);
+        return $this->success($responses);
     }
 
     public function generateAlertSocialCopy($id = null)
@@ -131,16 +130,19 @@ class AlertsAPIController extends ResourceController
             return $this->failForbidden('Kimi AI disabled.');
         }
 
-        $alertId = $id ?? $this->request->getGet('id');
-        $alert = $this->alertsModel->find($alertId);
-        if (! $alert) {
+        $alertId = (int) ($id ?? $this->request->getGet('id') ?? 0);
+        if ($alertId <= 0) {
+            return $this->failValidationErrors('Alert id is required.');
+        }
+
+        $result = $this->alertService->generateAlertSocialCopy($alertId);
+        if ($result === null) {
             return $this->failNotFound('Alert not found');
         }
 
-        $result = $this->alertManager->generateAlertSocialCopyWithKimi((array) $alert);
-        return $this->response->setJSON(['status' => 'success', 'data' => $result]);
+        return $this->success($result);
     }
-    
+
     public function addTradeAlert()
     {
         $post = $this->request->getPost();

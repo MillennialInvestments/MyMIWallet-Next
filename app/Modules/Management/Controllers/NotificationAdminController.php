@@ -1,11 +1,11 @@
 <?php // app/Modules/Management/Controllers/AlertsController.php
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAdminController;
+
 use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
 use Config\{APIs, Auth, SiteSettings, SocialMedia}; 
-use App\Controllers\UserController;
 use App\Libraries\{MyMIAnalytics, MyMIAlerts, MyMIBudget, MyMIDashboard, MyMIMarketing, MyMIUser};
 use App\Models\{AlertsModel, AnnouncementModel, InvestmentModel, ManagementModel, MarketingModel, MyMIGoldModel, UserModel};
 use CodeIgniter\API\ResponseTrait; 
@@ -17,7 +17,7 @@ use Ratchet\Client\Connector;
 
 
 #[\AllowDynamicProperties]
-class NotificationAdminController extends UserController
+class NotificationAdminController extends BaseAdminController
 {
     // Controller Settings
     protected $API;

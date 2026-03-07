@@ -1,10 +1,11 @@
 <?php namespace App\Modules\APIs\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseAPIController;
+
 use CodeIgniter\API\ResponseTrait;
 
 #[\AllowDynamicProperties]
-class ZapierAPIController extends UserController
+class ZapierAPIController extends BaseAPIController
 {
     use ResponseTrait;
 

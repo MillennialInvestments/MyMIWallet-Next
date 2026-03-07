@@ -1,12 +1,12 @@
 <?php
-namespace App\Modules\Template\Controllers;
+namespace App\Deprecated\Controllers;
 
 use App\Controllers\BaseController;
 
 /**
  * Example controller for the Template module.
  */
-class TemplateController extends BaseController
+class LegacyTemplateController extends BaseController
 {
     public function index()
     {

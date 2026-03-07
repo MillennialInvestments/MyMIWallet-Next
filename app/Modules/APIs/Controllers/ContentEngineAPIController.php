@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Modules\APIs\Controllers;
 
+use App\Controllers\BaseAPIController;
+
 use Config\ContentEngine as ContentEngineConfig;
-use App\Controllers\BaseController;
 use App\Libraries\ContentEngine\DistributionService;
 use App\Libraries\ContentEngine\PostDraftService;
 use App\Libraries\ContentEngine\ScannerIngestService;
@@ -17,7 +18,7 @@ use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
 use Myth\Auth\Authorization\GroupModel;
 
-class ContentEngineAPIController extends BaseController
+class ContentEngineAPIController extends BaseAPIController
 {
     use ResponseTrait;
 

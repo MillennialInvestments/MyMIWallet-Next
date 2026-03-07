@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Support\Controllers;
+namespace App\Deprecated\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
 use App\Controllers\UserController;
@@ -9,7 +9,7 @@ use Config\Services;
 use Config\SiteSettings;
 
 #[\AllowDynamicProperties]
-class Support extends UserController
+class LegacySupportController extends UserController
 {
     use ResponseTrait;
 

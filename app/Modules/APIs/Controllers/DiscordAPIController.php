@@ -1,6 +1,7 @@
 <?php namespace App\Modules\APIs\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAPIController;
+
 use App\Libraries\MyMIDiscord;
 use App\Libraries\MyMIAssistant;
 use App\Models\AlertsModel;
@@ -9,7 +10,7 @@ use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Discord as DiscordConfig;
 
-class DiscordAPIController extends BaseController
+class DiscordAPIController extends BaseAPIController
 {
     use ResponseTrait;
 

@@ -4,6 +4,7 @@ namespace Config;
 
 use App\Libraries\{CrudCacheInvalidator, KimiClient, MyMIAnalytics, MyMIInvestments, SafeCache};
 use App\Services\AuthAuditService;
+use App\Services\AlertService;
 use App\Services\DashboardService;
 use App\Services\AutoloadHealthService;
 use App\Services\EventTracker;
@@ -272,6 +273,18 @@ class Services extends CoreServices
         }
 
         return new SetupStatusService();
+    }
+
+
+    public static function alertService(bool $getShared = true): AlertService
+    {
+        if ($getShared) {
+            /** @var AlertService $service */
+            $service = static::getSharedInstance('alertService');
+            return $service;
+        }
+
+        return new AlertService();
     }
 
     public static function mailService(bool $getShared = true)

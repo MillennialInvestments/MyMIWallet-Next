@@ -2,13 +2,14 @@
 
 namespace App\Modules\APIs\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAPIController;
+
 use App\Libraries\MyMISqueeze;
 use App\Models\SqueezeModel;
 use CodeIgniter\API\ResponseTrait;
 
 #[\AllowDynamicProperties]
-class SqueezeAPIController extends BaseController
+class SqueezeAPIController extends BaseAPIController
 {
     use ResponseTrait;
 

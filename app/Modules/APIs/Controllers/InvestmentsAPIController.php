@@ -2,11 +2,11 @@
 // app/Controllers/Home.php
 namespace App\Modules\APIs\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAPIController;
+
 use Config\Services; 
 use Myth\Auth\Authorization\GroupModel;
 use Config\{Auth, SiteSettings, SocialMedia}; 
-use App\Controllers\UserController;
 use App\Libraries\{BaseLoader, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIUser, MyMIWallet, MyMIWallets};
 use App\Modules\User\Libraries\{DashboardLibrary};
 use App\Models\{InvestmentModel, PageSEOModel, ReferralModel, SubscribeModel, UserModel, AlertsModel, InvestmentPriceForecastModel, InvestmentForecastHistoryModel};
@@ -16,7 +16,7 @@ use App\Modules\APIs\Models\InvestmentsNewsModel;
 use App\Libraries\StockFundamentalsService;
 
 #[\AllowDynamicProperties]
-class InvestmentsAPIController extends UserController
+class InvestmentsAPIController extends BaseAPIController
 {
     use ResponseTrait; // Use the trait in your controller
     protected $auth;

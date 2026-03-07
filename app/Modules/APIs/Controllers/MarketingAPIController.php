@@ -2,12 +2,12 @@
 
 namespace App\Modules\APIs\Controllers;
 
+use App\Controllers\BaseAPIController;
+
 use CodeIgniter\API\ResponseTrait;
-use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
-use App\Controllers\BaseController;
 use App\Libraries\{MyMIDiscord, MyMIMarketing};
 use App\Services\MarketingService;
 use App\Models\MarketingModel;
@@ -15,7 +15,7 @@ use App\Support\Http;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 #[\AllowDynamicProperties]
-class MarketingAPIController extends \App\Controllers\BaseController
+class MarketingAPIController extends BaseAPIController
 {
     use ResponseTrait;
 

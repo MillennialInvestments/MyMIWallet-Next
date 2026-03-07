@@ -2,16 +2,16 @@
 // app/Modules/User/Controllers/AccountController.php
 namespace App\Modules\User\Controllers;
 
+use App\Controllers\BaseUserController;
+
 use Config\{APIs, SiteSettings};
-use App\Controllers\UserController;
 use App\Services\{AccountService, UserService};
 use App\Models\BudgetModel;
-use App\Controllers\BaseController;
 use Config\Services;
 use Myth\Auth\Password;
 
 #[\AllowDynamicProperties]
-class AccountController extends UserController
+class AccountController extends BaseUserController
 {
     // Controller Settings
     protected $API;

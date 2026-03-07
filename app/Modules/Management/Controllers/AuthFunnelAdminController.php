@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseAdminController;
+
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\HTTP\ResponseInterface;
 use DateInterval;
 use DatePeriod;
 use DateTimeImmutable;
 
-class AuthFunnelAdminController extends UserController
+class AuthFunnelAdminController extends BaseAdminController
 {
     public function authFunnel(): ResponseInterface|string
     {

@@ -1,10 +1,11 @@
 <?php namespace App\Modules\User\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseUserController;
+
 use App\Models\{MarketingModel, BudgetModel, MyMIGoldModel, SubscribeModel};
 
 #[\AllowDynamicProperties]
-class SubscribeController extends UserController
+class SubscribeController extends BaseUserController
 {
     private $siteSettings;
 

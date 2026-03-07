@@ -1,7 +1,8 @@
 <?php
 namespace App\Modules\APIs\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAPIController;
+
 use App\Libraries\Flags;
 use App\Libraries\MyMIEsports;
 use App\Libraries\MyMIUser;
@@ -17,7 +18,7 @@ use DomainException;
 use InvalidArgumentException;
 use RuntimeException;
 
-class EsportsAPIController extends BaseController
+class EsportsAPIController extends BaseAPIController
 {
     use ResponseTrait;
 

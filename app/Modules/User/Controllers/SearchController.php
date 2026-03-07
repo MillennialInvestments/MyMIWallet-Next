@@ -2,10 +2,11 @@
 
 namespace App\Modules\User\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseUserController;
+
 use App\Models\UserModel;
 
-class SearchController extends UserController
+class SearchController extends BaseUserController
 {
     public function index()
     {

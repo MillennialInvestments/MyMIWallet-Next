@@ -2,11 +2,12 @@
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAdminController;
+
 use App\Services\Observability\ErrorAggregationService;
 use App\Models\ErrorPatternModel;
 
-class ErrorOpsController extends BaseController
+class ErrorOpsController extends BaseAdminController
 {
     public function index()
     {

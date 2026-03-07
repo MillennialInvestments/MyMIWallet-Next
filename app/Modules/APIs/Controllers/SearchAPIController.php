@@ -2,13 +2,14 @@
 
 namespace App\Modules\APIs\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseAPIController;
+
 use App\Models\UserModel;
 use CodeIgniter\HTTP\ResponseInterface;
 use Throwable;
 
 #[\AllowDynamicProperties]
-class SearchAPIController extends UserController
+class SearchAPIController extends BaseAPIController
 {
     public function index(): ResponseInterface|string
     {

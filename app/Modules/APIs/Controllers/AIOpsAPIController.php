@@ -2,14 +2,14 @@
 
 namespace App\Modules\APIs\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAPIController;
 use App\Libraries\SiteSettingsOverride;
 use App\Modules\AIOps\Services\AIOpsGuardrailService;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
 use Throwable;
 
-class AIOpsAPIController extends BaseController
+class AIOpsAPIController extends BaseAPIController
 {
     use ResponseTrait;
 
@@ -25,22 +25,8 @@ class AIOpsAPIController extends BaseController
 
     public function health(): ResponseInterface
     {
-        if (! is_cli()) {
-            try {
-                $tokenService = service('internalToken');
-            } catch (Throwable $e) {
-                log_message('error', '[API] internalToken service unavailable for {route}: {message}', [
-                    'route' => current_url(),
-                    'message' => $e->getMessage(),
-                ]);
-
-                return $this->failServerError('Internal processing error');
-            }
-
-            if (! $tokenService || ! method_exists($tokenService, 'allowed') || ! $tokenService->allowed()) {
-                log_message('warning', '[API] Internal endpoint blocked: {route}', ['route' => current_url()]);
-                return $this->failForbidden('Internal endpoint');
-            }
+        if ($guard = $this->authorizeInternalEndpoint(false)) {
+            return $guard;
         }
 
         try {

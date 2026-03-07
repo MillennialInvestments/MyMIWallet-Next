@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseAdminController;
+
 use App\Services\PublicPages\SchemaGenerator;
 use Config\Database;
 
-class PublicPagesAdminController extends UserController
+class PublicPagesAdminController extends BaseAdminController
 {
     public function index()
     {

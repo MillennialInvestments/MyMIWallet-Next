@@ -2,12 +2,13 @@
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseAdminController;
+
 use App\Services\EmailService;
 use App\Models\EmailModel;
 
 #[\AllowDynamicProperties]
-class EmailAdminController extends UserController
+class EmailAdminController extends BaseAdminController
 {
     protected $emailService;
     protected $emailModel;

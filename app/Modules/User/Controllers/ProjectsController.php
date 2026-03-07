@@ -1,6 +1,7 @@
 <?php namespace App\Modules\User\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseUserController;
+
 use App\Libraries\MyMIProjects;
 use App\Models\ProjectCommitmentsModel;
 use App\Models\ProjectsModel;
@@ -8,7 +9,7 @@ use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Config\Services;
 
-class ProjectsController extends BaseController
+class ProjectsController extends BaseUserController
 {
     use ResponseTrait;
 

@@ -1,10 +1,10 @@
 <?php namespace App\Modules\APIs\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAPIController;
+
 use Myth\Auth\Authorization\GroupModel;
 use Config\{Auth, SiteSettings};
 use Config\Services;
-use App\Controllers\UserController;
 use App\Libraries\{
     MyMIBudget, MyMICoin, MyMIDashboard, MyMIDexScreener, MyMIExchange,
     MyMIGold, MyMIMetaMask, MyMIPhantom, MyMIRaydium, MyMISolana,
@@ -13,11 +13,10 @@ use App\Libraries\{
 use App\Models\{AccountsModel, APIModel, ExchangeModel, SolanaModel, UserModel, WalletModel};
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\API\RequestTrait;
-use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\HTTP\IncomingRequest;
 
 #[\AllowDynamicProperties]
-class SolanaAPIController extends UserController {
+class SolanaAPIController extends BaseAPIController {
     use ResponseTrait;
     protected $apiUrl;
     protected $auth;

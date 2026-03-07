@@ -2,11 +2,12 @@
 
 namespace App\Modules\APIs\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAPIController;
+
 use App\Models\ReferralModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class ReferralAPIController extends BaseController
+class ReferralAPIController extends BaseAPIController
 {
     protected ReferralModel $referralModel;
     protected $auth;

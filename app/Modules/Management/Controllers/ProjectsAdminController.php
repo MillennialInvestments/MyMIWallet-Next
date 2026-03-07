@@ -1,17 +1,17 @@
 <?php namespace App\Modules\Management\Controllers;
 
+use App\Controllers\BaseAdminController;
+
 use Config\{Auth, SiteSettings, SocialMedia};
-use App\Controllers\UserController;
 use App\Libraries\{MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIInvestments, MyMIMarketing, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets};
 use App\Models\{AccountsModel, DashboardModel, ProjectsModel, SolanaModel, UserModel};
 use App\Services\{AccountService, DashboardService, SolanaService, SupportService, UserService};
-use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
 
 #[\AllowDynamicProperties]
-class ProjectsAdminController extends UserController
+class ProjectsAdminController extends BaseAdminController
 {
     use ResponseTrait;
 

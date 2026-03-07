@@ -2,10 +2,11 @@
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseAdminController;
+
 use CodeIgniter\API\ResponseTrait;
 
-class DevelopmentAdminController extends UserController
+class DevelopmentAdminController extends BaseAdminController
 {
     use ResponseTrait;
 

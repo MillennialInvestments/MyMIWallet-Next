@@ -2,11 +2,11 @@
 // app/Modules/User/Controllers/DashboardController.php
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAdminController;
+
 use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
 use Config\{Auth, SiteSettings, SocialMedia}; 
-use App\Controllers\UserController;
 use App\Libraries\{MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIUser, MyMIWallet, MyMIWallets};
 use App\Models\{AccountsModel, BudgetModel, DiscordModel, WalletModel, UserModel};
 use App\Services\{AccountService, BudgetService, DashboardService, GoalTrackingService, MarketingService, SolanaService, UserService, WalletService};
@@ -17,7 +17,7 @@ use CodeIgniter\API\ResponseTrait;
 use Psr\Log\LoggerInterface;
 
 #[\AllowDynamicProperties]
-class DiscordAdminController extends UserController
+class DiscordAdminController extends BaseAdminController
 {
     protected $auth;
     protected $logger;

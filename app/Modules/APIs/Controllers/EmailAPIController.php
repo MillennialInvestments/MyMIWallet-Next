@@ -2,13 +2,13 @@
 
 namespace App\Modules\APIs\Controllers;
 
-use CodeIgniter\RESTful\ResourceController;
+use App\Controllers\BaseAPIController;
+
 use CodeIgniter\API\ResponseTrait;
-use App\Controllers\BaseController;
 use App\Models\{CampaignModel, EmailModel};
 
 #[\AllowDynamicProperties]
-class EmailAPIController extends \App\Controllers\BaseController
+class EmailAPIController extends BaseAPIController
 {
     use ResponseTrait;
 

@@ -1,0 +1,229 @@
+# Routes Validation Report
+
+- Command executed: `php spark routes` (completed successfully).
+- Static route declaration scan performed across `app/**/Routes.php`.
+
+## Potential duplicate route declarations
+- `GET /`
+  - `app/Config/Routes.php:31` -> `Home::index`
+  - `app/Config/Routes.php:247` -> `AdvisorController::index`
+  - `app/Config/Routes.php:265` -> `APIController::index`
+  - `app/Config/Routes.php:451` -> `OpsController::index`
+  - `app/Config/Routes.php:732` -> `InvestmentsAPIController:index`
+  - `app/Config/Routes.php:863` -> `MarketingAPIController::index`
+  - `app/Config/Routes.php:939` -> `PredictionsAPIController::index`
+  - `app/Config/Routes.php:1016` -> `WalletsAPIController::index`
+  - `app/Config/Routes.php:1067` -> `BlogController::index`
+  - `app/Config/Routes.php:1071` -> `EarningsController::index`
+  - `app/Config/Routes.php:1076` -> `InvestingController::index`
+  - `app/Config/Routes.php:1082` -> `InvestingController::index`
+  - `app/Config/Routes.php:1086` -> `UpdatesController::index`
+  - `app/Config/Routes.php:1087` -> `NewsAndUpdates::index`
+  - `app/Config/Routes.php:1092` -> `PersonalBudgetingController::index`
+  - `app/Config/Routes.php:1102` -> `DashboardController::index`
+  - `app/Config/Routes.php:1133` -> `ManagementAdminController::index`
+  - `app/Config/Routes.php:1140` -> `AccountRescueAdminController::index`
+  - `app/Config/Routes.php:1148` -> `AdminController::index`
+  - `app/Config/Routes.php:1154` -> `AlertsAdminController::index`
+  - `app/Config/Routes.php:1174` -> `AssetsAdminController::index`
+  - `app/Config/Routes.php:1177` -> `BudgetsAdminController::index`
+  - `app/Config/Routes.php:1180` -> `BudgetingAdminController::index`
+  - `app/Config/Routes.php:1183` -> `DevelopmentAdminController::index`
+  - `app/Config/Routes.php:1186` -> `DiscordAdminController::index`
+  - `app/Config/Routes.php:1197` -> `DripCampaignAdminController::index`
+  - `app/Config/Routes.php:1203` -> `EmailAdminController::index`
+  - `app/Config/Routes.php:1219` -> `ErrorOpsController::index`
+  - `app/Config/Routes.php:1226` -> `ExchangeAdminController::index`
+  - `app/Config/Routes.php:1229` -> `FinanceAdminController::index`
+  - `app/Config/Routes.php:1232` -> `HowTosAdminController::index`
+  - `app/Config/Routes.php:1237` -> `HRAdminController::index`
+  - `app/Config/Routes.php:1240` -> `InvestmentsAdminController::index`
+  - `app/Config/Routes.php:1244` -> `MarketingAdminController::index`
+  - `app/Config/Routes.php:1302` -> `EmailController::index`
+  - `app/Config/Routes.php:1305` -> `MarketingController::index`
+  - `app/Config/Routes.php:1311` -> `OperationsController::index`
+  - `app/Config/Routes.php:1314` -> `SupportController::index`
+  - `app/Config/Routes.php:1317` -> `PartnersController::index`
+  - `app/Config/Routes.php:1320` -> `ProjectsController::index`
+  - `app/Config/Routes.php:1328` -> `ReferralsController::index`
+  - `app/Config/Routes.php:1331` -> `SecurityController::index`
+  - `app/Config/Routes.php:1334` -> `ServicesController::index`
+  - `app/Config/Routes.php:1337` -> `UsersController::index`
+  - `app/Config/Routes.php:1343` -> `WalletsController::index`
+  - `app/Config/Routes.php:1349` -> `WebDesignController::index`
+  - `app/Config/Routes.php:1354` -> `SearchController::index`
+  - `app/Config/Routes.php:1375` -> `AuctionsController::index`
+  - `app/Config/Routes.php:1385` -> `BudgetController::index`
+  - `app/Config/Routes.php:1559` -> `PredictionsController::index`
+  - `app/Config/Routes.php:1570` -> `ProjectsController::index`
+  - `app/Config/Routes.php:1581` -> `AnnouncementsController::index`
+  - `app/Config/Routes.php:1600` -> `ScriptStudioController::index`
+  - `app/Config/Routes.php:1612` -> `HowItWorksController::index`
+  - `app/Config/Routes.php:1626` -> `SupportController::index`
+  - `app/Config/Routes.php:1655` -> `WalletsController::index`
+  - `app/Config/Routes.php:1736` -> `ManagementController::index`
+  - `app/Config/Routes.php:1743` -> `MarketingController::index`
+  - `app/Config/Routes.php:1749` -> `Features::index`
+  - `app/Config/Routes.php:1757` -> `KnowledgebaseController::index`
+  - `app/Config/Routes.php:1776` -> `NewsAndUpdates::index`
+  - `app/Config/Routes.php:1784` -> `SubscribeController::index`
+  - `app/Config/Routes.php:1792` -> `SubscribeController::index`
+  - `app/Config/Routes.php:1903` -> `AdminController::index`
+  - `app/Config/Routes.php:1909` -> `APIController::index`
+  - `app/Config/Routes.php:1915` -> `AssetsController::index`
+  - `app/Config/Routes.php:1921` -> `BudgetsController::index`
+  - `app/Config/Routes.php:1927` -> `BudgetingController::index`
+  - `app/Config/Routes.php:1933` -> `ExchangeController::index`
+  - `app/Config/Routes.php:1939` -> `HowTosController::index`
+  - `app/Config/Routes.php:1947` -> `AlertsController::index`
+  - `app/Config/Routes.php:1962` -> `MarketingController::index`
+  - `app/Config/Routes.php:2021` -> `MarketingController::index`
+  - `app/Config/Routes.php:2031` -> `PartnersController::index`
+  - `app/Config/Routes.php:2037` -> `ProjectsController::index`
+  - `app/Config/Routes.php:2046` -> `ReferralsController::index`
+  - `app/Config/Routes.php:2052` -> `ServicesController::index`
+  - `app/Config/Routes.php:2058` -> `SecurityController::index`
+  - `app/Config/Routes.php:2064` -> `SupportController::index`
+  - `app/Config/Routes.php:2070` -> `UsersController::index`
+  - `app/Config/Routes.php:2079` -> `WalletsController::index`
+  - `app/Config/Routes.php:2085` -> `WebDesignController::index`
+  - `app/Config/Routes.php:2092` -> `BlogController::index`
+  - `app/Config/Routes.php:2099` -> `EarningsController::index`
+  - `app/Config/Routes.php:2108` -> `InvestingController::index`
+  - `app/Config/Routes.php:2117` -> `InvestingController::index`
+  - `app/Config/Routes.php:2124` -> `UpdatesController::index`
+  - `app/Config/Routes.php:2132` -> `PersonalBudgetingController::index`
+  - `app/Config/Routes.php:2164` -> `Tax::index`
+  - `app/Config/Routes.php:2178` -> `TaxConfig::index`
+  - `app/Modules/Management/Routes.php:4` -> `BlogController::index`
+  - `app/Modules/User/Routes.php:4` -> `BlogController::index`
+  - `app/Modules/Template/Routes.php:4` -> `BlogController::index`
+  - `app/Modules/Blog/Config/Routes.php:9` -> `Blog::index`
+  - `app/Modules/ScriptStudio/Config/Routes.php:7` -> `ScriptStudioController::index`
+- `GET healthz`
+  - `app/Config/Routes.php:38` -> `System\HealthController::healthz`
+  - `app/Config/Routes.php:2150` -> `System\HealthController::healthz`
+- `GET ops/health`
+  - `app/Config/Routes.php:47` -> `\\App\\Controllers\\OpsHealth::index`
+  - `app/Config/Routes.php:146` -> `OpsHealth::index`
+- `GET projects`
+  - `app/Config/Routes.php:52` -> `App\\Modules\\Ops\\Controllers\\OpsManagementController::projects`
+  - `app/Config/Routes.php:1617` -> `HowItWorksController::projects`
+- `GET health`
+  - `app/Config/Routes.php:67` -> `\\App\\Controllers\\OpsHealth::index`
+  - `app/Config/Routes.php:141` -> `Health::index`
+  - `app/Config/Routes.php:283` -> `AiOpsAPIController::health`
+  - `app/Config/Routes.php:680` -> `DiscordAPIController::health`
+  - `app/Config/Routes.php:997` -> `SolanaAPIController::health`
+- `GET Stock/(:segment)/(:segment)`
+  - `app/Config/Routes.php:84` -> `StockController::show/$1/$2`
+  - `app/Config/Routes.php:1164` -> `Management\AlertsAdminController::stockOverview/$1/$2`
+- `GET /Getting-Started`
+  - `app/Config/Routes.php:102` -> `Home::gettingStarted`
+  - `app/Config/Routes.php:226` -> `Subscribe::index`
+- `GET /Profile`
+  - `app/Config/Routes.php:119` -> `App\Modules\User\Controllers\DashboardController::profile`
+  - `app/Config/Routes.php:228` -> `DashboardController::profile`
+- `POST auth/resend-activation`
+  - `app/Config/Routes.php:121` -> `AuthController::resendActivationCode`
+  - `app/Config/Routes.php:157` -> `AuthController::resendActivationCode`
+- `GET status`
+  - `app/Config/Routes.php:142` -> `Health::status`
+  - `app/Config/Routes.php:277` -> `AiOpsAPIController::status`
+  - `app/Config/Routes.php:295` -> `ScannerController::status`
+- `GET Health`
+  - `app/Config/Routes.php:255` -> `HealthAPIController::index`
+  - `app/Config/Routes.php:268` -> `HealthAPIController::index`
+- `GET Health/spark`
+  - `app/Config/Routes.php:256` -> `HealthAPIController::spark`
+  - `app/Config/Routes.php:269` -> `HealthAPIController::spark`
+- `GET Ops/status`
+  - `app/Config/Routes.php:257` -> `OpsAPIController::status`
+  - `app/Config/Routes.php:270` -> `OpsAPIController::status`
+- `POST toggle`
+  - `app/Config/Routes.php:278` -> `AiOpsAPIController::toggle`
+  - `app/Config/Routes.php:289` -> `AiOpsAPIController::toggle`
+- `POST run`
+  - `app/Config/Routes.php:279` -> `AiOpsAPIController::run`
+  - `app/Config/Routes.php:296` -> `ScannerController::run`
+  - `app/Config/Routes.php:441` -> `SqueezeController::run`
+- `GET cronFetchAndGenerateNews`
+  - `app/Config/Routes.php:292` -> `ManagementAPIController::cronFetchAndGenerateNews`
+  - `app/Config/Routes.php:784` -> `MarketingAPIController::cronFetchAndGenerateNews`
+- `GET banUnverifiedUsers`
+  - `app/Config/Routes.php:347` -> `ManagementAPIController::banUnverifiedUsers`
+  - `app/Config/Routes.php:1127` -> `ManagementAdminController::banUnverifiedUsers`
+- `GET distributeTodaysNewsContent`
+  - `app/Config/Routes.php:349` -> `ManagementAPIController::distributeTodaysNewsContent`
+  - `app/Config/Routes.php:1880` -> `ManagementController::distributeTodaysNewsContent`
+- `GET exportPostJson/(:num)`
+  - `app/Config/Routes.php:351` -> `ManagementAPIController::exportPostJson/$1`
+  - `app/Config/Routes.php:1881` -> `ManagementController::exportPostJson/$1`
+- `GET fetchEmailsToTempScraper`
+  - `app/Config/Routes.php:353` -> `ManagementAPIController::fetchEmailsToTempScraper`
+  - `app/Config/Routes.php:1871` -> `ManagementController::fetchEmailsToTempScraper`
+- `GET fetchNewsEmails`
+  - `app/Config/Routes.php:355` -> `ManagementAPIController::fetchNewsEmails`
+  - `app/Config/Routes.php:1882` -> `ManagementController::fetchNewsEmails`
+- `GET generatePostsFromSummary/(:num)`
+  - `app/Config/Routes.php:356` -> `ManagementAPIController::generatePostsFromSummary/$1`
+  - `app/Config/Routes.php:811` -> `MarketingAPIController::generatePostsFromSummary/$1`
+  - `app/Config/Routes.php:1883` -> `ManagementController::generatePostsFromSummary/$1`
+- `GET generatePostsFromSummary`
+  - `app/Config/Routes.php:357` -> `ManagementAPIController::generatePostsFromSummary`
+  - `app/Config/Routes.php:812` -> `MarketingAPIController::generatePostsFromSummary`
+- `GET generateVoiceScriptManually`
+  - `app/Config/Routes.php:362` -> `ManagementAPIController::generateVoiceScriptManually`
+  - `app/Config/Routes.php:1884` -> `ManagementController::generateVoiceScriptManually`
+- `GET getUsers`
+  - `app/Config/Routes.php:365` -> `ManagementAPIController::getUsers`
+  - `app/Config/Routes.php:1872` -> `ManagementController::getUsers`
+- `GET getAlerts`
+  - `app/Config/Routes.php:366` -> `ManagementAPIController::getAlerts`
+  - `app/Config/Routes.php:1874` -> `ManagementController::getAlerts`
+- `GET getReferrals`
+  - `app/Config/Routes.php:367` -> `ManagementAPIController::getReferrals`
+  - `app/Config/Routes.php:1873` -> `ManagementController::getReferrals`
+- `GET getAssets`
+  - `app/Config/Routes.php:368` -> `ManagementAPIController::getAssets`
+  - `app/Config/Routes.php:1876` -> `ManagementController::getAssets`
+- `GET getNews`
+  - `app/Config/Routes.php:369` -> `ManagementAPIController::getNews`
+  - `app/Config/Routes.php:1875` -> `ManagementController::getNews`
+- `GET getSupport`
+  - `app/Config/Routes.php:370` -> `ManagementAPIController::getSupport`
+  - `app/Config/Routes.php:1877` -> `ManagementController::getSupport`
+- `GET processAllTradeAlerts`
+  - `app/Config/Routes.php:371` -> `ManagementAPIController::processAllTradeAlerts`
+  - `app/Config/Routes.php:1885` -> `ManagementController::processAllTradeAlerts`
+- `GET runCronManually`
+  - `app/Config/Routes.php:372` -> `ManagementAPIController::runCronManually`
+  - `app/Config/Routes.php:1886` -> `ManagementController::runCronManually`
+- `GET runDailyAlphaVantageDataPipeline`
+  - `app/Config/Routes.php:373` -> `ManagementAPIController::runDailyAlphaVantageDataPipeline`
+  - `app/Config/Routes.php:1887` -> `ManagementController::runDailyAlphaVantageDataPipeline`
+- `GET scrapeAndGenerateTodaysStoryFromInbox`
+  - `app/Config/Routes.php:374` -> `ManagementAPIController::scrapeAndGenerateTodaysStoryFromInbox`
+  - `app/Config/Routes.php:1889` -> `ManagementController::scrapeAndGenerateTodaysStoryFromInbox`
+- `GET sendAllDiscordAlerts`
+  - `app/Config/Routes.php:375` -> `ManagementAPIController::sendAllDiscordAlerts`
+  - `app/Config/Routes.php:1891` -> `ManagementController::sendAllDiscordAlerts`
+- `GET sendToZapierManually`
+  - `app/Config/Routes.php:376` -> `ManagementAPIController::sendToZapierManually`
+  - `app/Config/Routes.php:1888` -> `ManagementController::sendToZapierManually`
+- `GET sharePost/(:num)/(:segment)`
+  - `app/Config/Routes.php:378` -> `ManagementAPIController::sharePost/$1/$2`
+  - `app/Config/Routes.php:842` -> `MarketingAPIController::sharePost/$1/$2`
+  - `app/Config/Routes.php:1890` -> `ManagementController::sharePost/$1/$2`
+- `GET triggerPostAutogenOnEmpty`
+  - `app/Config/Routes.php:379` -> `ManagementAPIController::triggerPostAutogenOnEmpty`
+  - `app/Config/Routes.php:854` -> `MarketingAPIController::triggerPostAutogenOnEmpty`
+- `GET updateMarketDataForAlerts`
+  - `app/Config/Routes.php:380` -> `ManagementAPIController::updateMarketDataForAlerts`
+  - `app/Config/Routes.php:1892` -> `ManagementController::updateMarketDataForAlerts`
+- `GET scanner`
+  - `app/Config/Routes.php:470` -> `AlertsAPIController::scanner`
+  - `app/Config/Routes.php:2146` -> `AlertsAPIController::scanner`
+
+## Namespace/controller resolution
+- `php spark routes` returned successfully with full route table output; no fatal namespace/controller resolution errors were raised during route collection.

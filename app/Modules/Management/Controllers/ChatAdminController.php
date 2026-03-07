@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseAdminController;
+
 use App\Models\AIOpsChatAdminModel;
 use App\Services\AIOps\ChatIngestService;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class ChatAdminController extends UserController
+class ChatAdminController extends BaseAdminController
 {
     use ResponseTrait;
 

@@ -2,10 +2,11 @@
 // PATCH: inbound Zapier webhook endpoint
 namespace App\Modules\APIs\Controllers\Webhooks;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAPIController;
+
 use App\Models\InboundWebhookModel;
 
-class ZapierAPIController extends BaseController
+class ZapierAPIController extends BaseAPIController
 {
     public function ingest()
     {

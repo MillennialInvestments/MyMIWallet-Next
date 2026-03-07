@@ -2,10 +2,11 @@
 // PATCH: example public API endpoint requiring scope
 namespace App\Modules\APIs\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAPIController;
+
 use App\Libraries\Api\ApiRequestContext;
 
-class AlertsPublicAPIController extends BaseController
+class AlertsPublicAPIController extends BaseAPIController
 {
     public function list()
     {

@@ -2,10 +2,11 @@
 // PATCH: personal API token management endpoints
 namespace App\Modules\APIs\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAPIController;
+
 use App\Models\ApiTokenModel;
 
-class KeysAPIController extends BaseController
+class KeysAPIController extends BaseAPIController
 {
     public function index()
     {

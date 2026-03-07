@@ -2,14 +2,14 @@
 // app/Modules/User/Controllers/DashboardController.php
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\BaseController;
 use Config\Services;
 use Config\MyMI as MyMIConfig;
 use Myth\Auth\Authorization\GroupModel;
 use Config\{Auth, SiteSettings, SocialMedia}; 
-use App\Controllers\UserController;
+use App\Controllers\BaseAdminController;
 use App\Libraries\{CacheKey, MyMIAdvisor, MyMIAlerts, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIUser, MyMIWallet, MyMIWallets, SafeCache};
 use App\Models\{AccountsModel, AlertsModel, BudgetModel, SignalsModel, UserModel};
+use App\Services\AlertService;
 // use App\Modules\User\Libraries\{DashboardLibrary}; 
 use CodeIgniter\API\ResponseTrait; // Import the ResponseTrait
 use Google\Cloud\TextToSpeech\V1\TextToSpeechClient;
@@ -19,7 +19,7 @@ use Google\Cloud\TextToSpeech\V1\AudioConfig;
 use Google\Cloud\TextToSpeech\V1\AudioEncoding;
 
 #[\AllowDynamicProperties]
-class AlertsAdminController extends UserController
+class AlertsAdminController extends BaseAdminController
 {
     use ResponseTrait;
     
@@ -55,6 +55,7 @@ class AlertsAdminController extends UserController
     protected $userWallets;
     protected array $alertsFlags = [];
     protected SafeCache $safeCache;
+    protected AlertService $alertService;
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
@@ -72,7 +73,8 @@ class AlertsAdminController extends UserController
         $config                                     = new MyMIConfig();
         $this->alertsFlags                          = $config->alertsDashboard ?? [];
 
-        $this->alertsModel                          = new AlertsModel(); 
+        $this->alertService                         = service('alertService');
+        $this->alertsModel                          = $this->alertService->getAlertsModel();
         $this->accountsModel                        = new AccountsModel(); 
         $this->budgetModel                          = new BudgetModel(); 
         $this->userModel                            = new UserModel(); 

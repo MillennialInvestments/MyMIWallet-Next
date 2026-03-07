@@ -2,10 +2,11 @@
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAdminController;
+
 use CodeIgniter\HTTP\ResponseInterface;
 
-class SmtpTestAdminController extends BaseController
+class SmtpTestAdminController extends BaseAdminController
 {
     public function probe(): ResponseInterface
     {
