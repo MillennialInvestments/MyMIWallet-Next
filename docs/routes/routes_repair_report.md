@@ -1,0 +1,2602 @@
+# Routes Repair Report
+
+- Generated (UTC): `2026-03-07T11:23:22Z`
+- Apply mode: `0`
+- Files scanned: `1`
+- Invalid handlers fixed: `1152`
+- Namespace repairs applied: `1155`
+- Exact duplicates removed: `31`
+- Manual review required: `248`
+
+## Files
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php`
+
+## Applied Changes
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `16` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `31` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `38` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `40` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `47` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `48` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `48` — Repaired handler namespace: MaintenanceController::::index -> App\Controllers\MaintenanceController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `51` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `51` — Repaired handler namespace: App\\Modules\\Ops\\Controllers\\OpsManagementController::::index -> App\Modules\Ops\Controllers\OpsManagementController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `52` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `52` — Repaired handler namespace: App\\Modules\\Ops\\Controllers\\OpsManagementController::::projects -> App\Modules\Ops\Controllers\OpsManagementController::::projects
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `53` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `53` — Repaired handler namespace: App\\Modules\\Ops\\Controllers\\OpsManagementController::::saveProject -> App\Modules\Ops\Controllers\OpsManagementController::::saveProject
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `54` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `54` — Repaired handler namespace: App\\Modules\\Ops\\Controllers\\OpsManagementController::::subprojects -> App\Modules\Ops\Controllers\OpsManagementController::::subprojects
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `55` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `55` — Repaired handler namespace: App\\Modules\\Ops\\Controllers\\OpsManagementController::::saveSubproject -> App\Modules\Ops\Controllers\OpsManagementController::::saveSubproject
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `56` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `56` — Repaired handler namespace: App\\Modules\\Ops\\Controllers\\OpsManagementController::::tasks -> App\Modules\Ops\Controllers\OpsManagementController::::tasks
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `57` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `57` — Repaired handler namespace: App\\Modules\\Ops\\Controllers\\OpsManagementController::::saveTask -> App\Modules\Ops\Controllers\OpsManagementController::::saveTask
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `58` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `58` — Repaired handler namespace: App\\Modules\\Ops\\Controllers\\OpsManagementController::::importXlsx -> App\Modules\Ops\Controllers\OpsManagementController::::importXlsx
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `59` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `59` — Repaired handler namespace: App\\Modules\\Ops\\Controllers\\OpsManagementController::::exportTasksCsv -> App\Modules\Ops\Controllers\OpsManagementController::::exportTasksCsv
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `60` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `60` — Repaired handler namespace: App\\Modules\\Ops\\Controllers\\OpsManagementController::::exportWorkbookXlsx -> App\Modules\Ops\Controllers\OpsManagementController::::exportWorkbookXlsx
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `63` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `64` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `64` — Repaired handler namespace: \\App\\Controllers\\Api\\OpsFilesystemStatusController::::index -> App\Controllers\Api\OpsFilesystemStatusController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `65` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `65` — Repaired handler namespace: \\App\\Controllers\\Api\\SwaggerDocsController::::index -> App\Controllers\Api\SwaggerDocsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `67` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `68` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `73` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `73` — Repaired handler namespace: DocsController::::index -> App\Modules\Docs\Controllers\DocsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `74` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `74` — Repaired handler namespace: DocsController::::view -> App\Modules\Docs\Controllers\DocsController::::view
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `84` — Repaired handler namespace: StockController::show/$1/$2 -> App\Controllers\StockController::show/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `86` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `89` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `89` — Repaired handler namespace: App\\Modules\\User\\Controllers\\BudgetController::::index -> App\Modules\User\Controllers\BudgetController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `92` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `93` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `95` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `97` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `100` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `101` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `102` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `103` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `104` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `110` — Repaired handler namespace: AlertsController::preview/$1 -> App\Modules\User\Controllers\AlertsController::preview/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `112` — Repaired handler namespace: AlertsController::preview/$1 -> App\Modules\User\Controllers\AlertsController::preview/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `114` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `115` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `116` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `117` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `119` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `121` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `121` — Repaired handler namespace: AuthController::::resendActivationCode -> App\Controllers\AuthController::::resendActivationCode
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `125` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `126` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `126` — Repaired handler namespace: AuthController::::resendActivation -> App\Controllers\AuthController::::resendActivation
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `127` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `127` — Repaired handler namespace: AuthController::::resendActivationCode -> App\Controllers\AuthController::::resendActivationCode
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `130` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `131` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `132` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `135` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `141` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `142` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `143` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `144` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `144` — Repaired handler namespace: Api\\AdminChatUsageController::::index -> App\Controllers\Api\AdminChatUsageController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `145` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `145` — Repaired handler namespace: Api\\AiOpsManualRunController::::run -> App\Controllers\Api\AiOpsManualRunController::::run
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `146` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `149` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `155` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `155` — Repaired handler namespace: AuthController::::login -> App\Controllers\AuthController::::login
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `156` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `156` — Repaired handler namespace: AuthController::::attemptLogin -> App\Controllers\AuthController::::attemptLogin
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `157` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `157` — Repaired handler namespace: AuthController::::resendActivationCode -> App\Controllers\AuthController::::resendActivationCode
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `158` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `158` — Repaired handler namespace: AuthController::::logout -> App\Controllers\AuthController::::logout
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `159` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `159` — Repaired handler namespace: AuthController::::logout -> App\Controllers\AuthController::::logout
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `161` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `161` — Repaired handler namespace: AuthController::::register -> App\Controllers\AuthController::::register
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `162` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `162` — Repaired handler namespace: AuthController::::attemptRegister -> App\Controllers\AuthController::::attemptRegister
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `163` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `163` — Repaired handler namespace: AuthController::::registerSuccess -> App\Controllers\AuthController::::registerSuccess
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `164` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `164` — Repaired handler namespace: AuthController::::resendRegistrationActivation -> App\Controllers\AuthController::::resendRegistrationActivation
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `175` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `175` — Repaired handler namespace: AuthController::::createTempUser -> App\Controllers\AuthController::::createTempUser
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `178` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `178` — Repaired handler namespace: AuthController::::linkRobinhood -> App\Controllers\AuthController::::linkRobinhood
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `179` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `179` — Repaired handler namespace: AuthController::::linkSnapTrade -> App\Controllers\AuthController::::linkSnapTrade
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `182` — Repaired handler namespace: AuthController::register/$1 -> App\Controllers\AuthController::register/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `183` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `183` — Repaired handler namespace: AuthController::::register -> App\Controllers\AuthController::::register
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `184` — Repaired handler namespace: AuthController::register/$2 -> App\Controllers\AuthController::register/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `185` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `185` — Repaired handler namespace: AuthController::::attemptRegister -> App\Controllers\AuthController::::attemptRegister
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `186` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `186` — Repaired handler namespace: AuthController::::attemptRegister -> App\Controllers\AuthController::::attemptRegister
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `189` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `189` — Repaired handler namespace: AuthController::::activateAccount -> App\Controllers\AuthController::::activateAccount
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `190` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `190` — Repaired handler namespace: AuthController::::activateAccount -> App\Controllers\AuthController::::activateAccount
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `191` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `191` — Repaired handler namespace: AuthController::::activateAccount -> App\Controllers\AuthController::::activateAccount
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `192` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `192` — Repaired handler namespace: AuthController::::activateAccount -> App\Controllers\AuthController::::activateAccount
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `193` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `193` — Repaired handler namespace: AuthController::::resendActivateAccount -> App\Controllers\AuthController::::resendActivateAccount
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `196` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `196` — Repaired handler namespace: AuthController::::forgotPassword -> App\Controllers\AuthController::::forgotPassword
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `197` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `197` — Repaired handler namespace: AuthController::::resetPassword -> App\Controllers\AuthController::::resetPassword
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `198` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `198` — Repaired handler namespace: AuthController::::attemptForgot -> App\Controllers\AuthController::::attemptForgot
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `199` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `199` — Repaired handler namespace: AuthController::::attemptReset -> App\Controllers\AuthController::::attemptReset
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `202` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `202` — Repaired handler namespace: AuthController::::get2FAQRCode -> App\Controllers\AuthController::::get2FAQRCode
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `203` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `203` — Repaired handler namespace: AuthController::::verify2FACode -> App\Controllers\AuthController::::verify2FACode
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `206` — Repaired handler namespace: AuthController::redirectToProvider/$1 -> App\Controllers\AuthController::redirectToProvider/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `207` — Repaired handler namespace: AuthController::handleProviderCallback/$1 -> App\Controllers\AuthController::handleProviderCallback/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `208` — Repaired handler namespace: AuthController::linkProvider/$1 -> App\Controllers\AuthController::linkProvider/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `209` — Repaired handler namespace: AuthController::unlinkProvider/$1 -> App\Controllers\AuthController::unlinkProvider/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `214` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `214` — Repaired handler namespace: DashboardController::::account -> App\Modules\User\Controllers\DashboardController::::account
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `215` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `215` — Repaired handler namespace: DashboardController::::activity -> App\Modules\User\Controllers\DashboardController::::activity
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `216` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `216` — Repaired handler namespace: DashboardController::::billing -> App\Modules\User\Controllers\DashboardController::::billing
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `217` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `217` — Repaired handler namespace: DashboardController::::connectedAccounts -> App\Modules\User\Controllers\DashboardController::::connectedAccounts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `218` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `218` — Repaired handler namespace: DashboardController::::notifications -> App\Modules\User\Controllers\DashboardController::::notifications
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `219` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `219` — Repaired handler namespace: DashboardController::::Security -> App\Modules\User\Controllers\DashboardController::::Security
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `220` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `220` — Repaired handler namespace: DashboardController::::SocialMedia -> App\Modules\User\Controllers\DashboardController::::SocialMedia
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `221` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `221` — Repaired handler namespace: AccountController::::createLinkToken -> App\Modules\User\Controllers\AccountController::::createLinkToken
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `222` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `224` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `224` — Repaired handler namespace: BudgetController::::index -> App\Modules\User\Controllers\BudgetController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `225` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `225` — Repaired handler namespace: InvestmentsController::::index -> App\Modules\User\Controllers\InvestmentsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `226` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `227` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `227` — Repaired handler namespace: WalletsController::::MyMIWallet -> App\Modules\User\Controllers\WalletsController::::MyMIWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `228` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `228` — Repaired handler namespace: DashboardController::::profile -> App\Modules\User\Controllers\DashboardController::::profile
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `229` — Repaired handler namespace: DashboardController::profile/$1 -> App\Modules\User\Controllers\DashboardController::profile/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `230` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `230` — Repaired handler namespace: DashboardController::::performance -> App\Modules\User\Controllers\DashboardController::::performance
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `231` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `231` — Repaired handler namespace: DashboardController::::schedule -> App\Modules\User\Controllers\DashboardController::::schedule
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `232` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `232` — Repaired handler namespace: DashboardController::::support -> App\Modules\User\Controllers\DashboardController::::support
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `233` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `233` — Repaired handler namespace: InvestmentsController::::tradeTracker -> App\Modules\User\Controllers\InvestmentsController::::tradeTracker
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `234` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `234` — Repaired handler namespace: InvestmentsController::::tradeTracker -> App\Modules\User\Controllers\InvestmentsController::::tradeTracker
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `235` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `235` — Repaired handler namespace: InvestmentsController::::getTradeData -> App\Modules\User\Controllers\InvestmentsController::::getTradeData
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `236` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `236` — Repaired handler namespace: InvestmentsController::::saveTradeData -> App\Modules\User\Controllers\InvestmentsController::::saveTradeData
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `237` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `237` — Repaired handler namespace: DashboardController::::goals -> App\Modules\User\Controllers\DashboardController::::goals
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `238` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `238` — Repaired handler namespace: DashboardController::::goals -> App\Modules\User\Controllers\DashboardController::::goals
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `239` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `239` — Repaired handler namespace: DashboardController::::goals -> App\Modules\User\Controllers\DashboardController::::goals
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `240` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `240` — Repaired handler namespace: DashboardController::::goals -> App\Modules\User\Controllers\DashboardController::::goals
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `247` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `247` — Repaired handler namespace: AdvisorController::::index -> App\Modules\Advisor\Controllers\AdvisorController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `248` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `248` — Repaired handler namespace: AdvisorController::::generateAdvisorInsight -> App\Modules\Advisor\Controllers\AdvisorController::::generateAdvisorInsight
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `249` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `249` — Repaired handler namespace: AdvisorController::::generateNewsStoryboard -> App\Modules\Advisor\Controllers\AdvisorController::::generateNewsStoryboard
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `250` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `250` — Repaired handler namespace: AdvisorController::::generateTradeAnalysis -> App\Modules\Advisor\Controllers\AdvisorController::::generateTradeAnalysis
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `254` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `255` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `255` — Repaired handler namespace: HealthAPIController::::index -> App\Modules\APIs\Controllers\HealthAPIController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `256` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `256` — Repaired handler namespace: HealthAPIController::::spark -> App\Modules\APIs\Controllers\HealthAPIController::::spark
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `257` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `257` — Repaired handler namespace: OpsAPIController::::status -> App\Modules\APIs\Controllers\OpsAPIController::::status
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `265` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `266` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `267` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `267` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `268` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `268` — Repaired handler namespace: HealthAPIController::::index -> App\Modules\APIs\Controllers\HealthAPIController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `269` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `269` — Repaired handler namespace: HealthAPIController::::spark -> App\Modules\APIs\Controllers\HealthAPIController::::spark
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `270` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `270` — Repaired handler namespace: OpsAPIController::::status -> App\Modules\APIs\Controllers\OpsAPIController::::status
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `270` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `271` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `271` — Repaired handler namespace: OpsAPIController::::dispatch -> App\Modules\APIs\Controllers\OpsAPIController::::dispatch
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `272` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `272` — Repaired handler namespace: OpsAPIController::::ingestReport -> App\Modules\APIs\Controllers\OpsAPIController::::ingestReport
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `273` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `273` — Repaired handler namespace: OpsAPIController::::latestReport -> App\Modules\APIs\Controllers\OpsAPIController::::latestReport
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `274` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `274` — Repaired handler namespace: OpsAPIController::::ingestMetrics -> App\Modules\APIs\Controllers\OpsAPIController::::ingestMetrics
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `275` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `275` — Repaired handler namespace: OpsAPIController::::opcacheReset -> App\Modules\APIs\Controllers\OpsAPIController::::opcacheReset
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `277` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `277` — Repaired handler namespace: AiOpsAPIController::::status -> App\Modules\APIs\Controllers\AiOpsAPIController::::status
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `278` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `278` — Repaired handler namespace: AiOpsAPIController::::toggle -> App\Modules\APIs\Controllers\AiOpsAPIController::::toggle
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `279` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `279` — Repaired handler namespace: AiOpsAPIController::::run -> App\Modules\APIs\Controllers\AiOpsAPIController::::run
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `280` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `280` — Repaired handler namespace: AiOpsAPIController::::receiveResult -> App\Modules\APIs\Controllers\AiOpsAPIController::::receiveResult
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `283` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `283` — Repaired handler namespace: AiOpsAPIController::::health -> App\Modules\APIs\Controllers\AiOpsAPIController::::health
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `284` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `284` — Repaired handler namespace: AiOpsAPIController::::policyCheck -> App\Modules\APIs\Controllers\AiOpsAPIController::::policyCheck
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `285` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `285` — Repaired handler namespace: AiOpsAPIController::::logUsage -> App\Modules\APIs\Controllers\AiOpsAPIController::::logUsage
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `286` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `286` — Repaired handler namespace: AiOpsAPIController::::cacheStore -> App\Modules\APIs\Controllers\AiOpsAPIController::::cacheStore
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `287` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `287` — Repaired handler namespace: AiOpsAPIController::::cacheGet -> App\Modules\APIs\Controllers\AiOpsAPIController::::cacheGet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `288` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `288` — Repaired handler namespace: AiOpsAPIController::::testPolicy -> App\Modules\APIs\Controllers\AiOpsAPIController::::testPolicy
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `289` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `289` — Repaired handler namespace: AiOpsAPIController::::toggle -> App\Modules\APIs\Controllers\AiOpsAPIController::::toggle
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `291` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `291` — Repaired handler namespace: AlertsAPIController::::backfillEmailAlerts -> App\Modules\APIs\Controllers\AlertsAPIController::::backfillEmailAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `292` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `292` — Repaired handler namespace: ManagementAPIController::::cronFetchAndGenerateNews -> App\Modules\APIs\Controllers\ManagementAPIController::::cronFetchAndGenerateNews
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `293` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `293` — Repaired handler namespace: ManagementAPIController::::backfillMarketingEmails -> App\Modules\APIs\Controllers\ManagementAPIController::::backfillMarketingEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `295` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `295` — Repaired handler namespace: ScannerController::::status -> App\Modules\APIs\Controllers\ScannerController::::status
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `296` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `296` — Repaired handler namespace: ScannerController::::run -> App\Modules\APIs\Controllers\ScannerController::::run
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `297` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `297` — Repaired handler namespace: ScannerController::::results -> App\Modules\APIs\Controllers\ScannerController::::results
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `298` — Repaired handler namespace: ScannerController::symbol/$1 -> App\Modules\APIs\Controllers\ScannerController::symbol/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `299` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `299` — Repaired handler namespace: ScannerController::::syncUniverse -> App\Modules\APIs\Controllers\ScannerController::::syncUniverse
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `301` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `301` — Repaired handler namespace: ManagementAPIController::::getAutoloadHealth -> App\Modules\APIs\Controllers\ManagementAPIController::::getAutoloadHealth
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `302` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `302` — Repaired handler namespace: ManagementAPIController::::subsystemsStatus -> App\Modules\APIs\Controllers\ManagementAPIController::::subsystemsStatus
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `303` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `303` — Repaired handler namespace: ManagementAPIController::::subsystemsAction -> App\Modules\APIs\Controllers\ManagementAPIController::::subsystemsAction
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `306` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `306` — Repaired handler namespace: DiscordAPIController::::completeOnboardingStep -> App\Modules\APIs\Controllers\DiscordAPIController::::completeOnboardingStep
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `307` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `309` — Repaired handler namespace: InvestmentsAPIController::getForecastDetails/$1 -> App\Modules\APIs\Controllers\InvestmentsAPIController::getForecastDetails/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `310` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `310` — Repaired handler namespace: InvestmentsAPIController::::getConfidenceHeatmap -> App\Modules\APIs\Controllers\InvestmentsAPIController::::getConfidenceHeatmap
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `311` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `311` — Repaired handler namespace: InvestmentsAPIController::::getTopConfidenceBySector -> App\Modules\APIs\Controllers\InvestmentsAPIController::::getTopConfidenceBySector
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `312` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `312` — Repaired handler namespace: InvestmentsAPIController::::getConfidenceDistribution -> App\Modules\APIs\Controllers\InvestmentsAPIController::::getConfidenceDistribution
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `313` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `313` — Repaired handler namespace: InvestmentsAPIController::::getForecastAccuracySummary -> App\Modules\APIs\Controllers\InvestmentsAPIController::::getForecastAccuracySummary
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `316` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `316` — Repaired handler namespace: AIAPIController::::postChat -> App\Modules\APIs\Controllers\AIAPIController::::postChat
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `317` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `317` — Repaired handler namespace: AIAPIController::::listNotes -> App\Modules\APIs\Controllers\AIAPIController::::listNotes
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `318` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `318` — Repaired handler namespace: AIAPIController::::updateLinkSettings -> App\Modules\APIs\Controllers\AIAPIController::::updateLinkSettings
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `321` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `321` — Repaired handler namespace: MditInvestorAPIController::::startKyc -> App\Modules\APIs\Controllers\MditInvestorAPIController::::startKyc
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `322` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `322` — Repaired handler namespace: MditInvestorAPIController::::kycStatus -> App\Modules\APIs\Controllers\MditInvestorAPIController::::kycStatus
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `323` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `323` — Repaired handler namespace: MditInvestorAPIController::::attestAccreditation -> App\Modules\APIs\Controllers\MditInvestorAPIController::::attestAccreditation
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `324` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `324` — Repaired handler namespace: MditInvestorAPIController::::portfolioSummary -> App\Modules\APIs\Controllers\MditInvestorAPIController::::portfolioSummary
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `326` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `326` — Repaired handler namespace: MditDepositAPIController::::initiate -> App\Modules\APIs\Controllers\MditDepositAPIController::::initiate
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `327` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `327` — Repaired handler namespace: MditDepositAPIController::::confirm -> App\Modules\APIs\Controllers\MditDepositAPIController::::confirm
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `328` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `328` — Repaired handler namespace: MditIssuanceAPIController::::mint -> App\Modules\APIs\Controllers\MditIssuanceAPIController::::mint
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `329` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `329` — Repaired handler namespace: MditRedemptionAPIController::::requestRedemption -> App\Modules\APIs\Controllers\MditRedemptionAPIController::::requestRedemption
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `332` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `332` — Repaired handler namespace: MditAdminAPIController::::pendingRedemptions -> App\Modules\APIs\Controllers\MditAdminAPIController::::pendingRedemptions
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `333` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `333` — Repaired handler namespace: MditAdminAPIController::::approveRedemption -> App\Modules\APIs\Controllers\MditAdminAPIController::::approveRedemption
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `334` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `334` — Repaired handler namespace: MditAdminAPIController::::pendingDeposits -> App\Modules\APIs\Controllers\MditAdminAPIController::::pendingDeposits
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `335` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `335` — Repaired handler namespace: MditAdminAPIController::::computeNavToday -> App\Modules\APIs\Controllers\MditAdminAPIController::::computeNavToday
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `338` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `339` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `339` — Repaired handler namespace: ChatController::::me -> App\Modules\Chat\Controllers\ChatController::::me
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `340` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `340` — Repaired handler namespace: ChatController::::tool -> App\Modules\Chat\Controllers\ChatController::::tool
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `343` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `343` — Repaired handler namespace: ManagementAPIController::::Run_CRON_Tasks -> App\Modules\APIs\Controllers\ManagementAPIController::::Run_CRON_Tasks
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `344` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `344` — Repaired handler namespace: ManagementAPIController::::runCRONTasks -> App\Modules\APIs\Controllers\ManagementAPIController::::runCRONTasks
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `345` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `345` — Repaired handler namespace: ManagementAPIController::::ajaxGetActiveUsers -> App\Modules\APIs\Controllers\ManagementAPIController::::ajaxGetActiveUsers
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `346` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `346` — Repaired handler namespace: ManagementAPIController::::ajaxGetInactiveUsers -> App\Modules\APIs\Controllers\ManagementAPIController::::ajaxGetInactiveUsers
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `347` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `347` — Repaired handler namespace: ManagementAPIController::::banUnverifiedUsers -> App\Modules\APIs\Controllers\ManagementAPIController::::banUnverifiedUsers
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `348` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `348` — Repaired handler namespace: ManagementAPIController::::checkForSpamUsers -> App\Modules\APIs\Controllers\ManagementAPIController::::checkForSpamUsers
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `349` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `349` — Repaired handler namespace: ManagementAPIController::::distributeTodaysNewsContent -> App\Modules\APIs\Controllers\ManagementAPIController::::distributeTodaysNewsContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `350` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `350` — Repaired handler namespace: ManagementAPIController::::exportWeeklyWatchlistCSV -> App\Modules\APIs\Controllers\ManagementAPIController::::exportWeeklyWatchlistCSV
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `351` — Repaired handler namespace: ManagementAPIController::exportPostJson/$1 -> App\Modules\APIs\Controllers\ManagementAPIController::exportPostJson/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `352` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `352` — Repaired handler namespace: ManagementAPIController::::fetchAlphaVantageNewsForTradeAlerts -> App\Modules\APIs\Controllers\ManagementAPIController::::fetchAlphaVantageNewsForTradeAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `353` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `353` — Repaired handler namespace: ManagementAPIController::::fetchEmailsToTempScraper -> App\Modules\APIs\Controllers\ManagementAPIController::::fetchEmailsToTempScraper
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `354` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `354` — Repaired handler namespace: ManagementAPIController::::fetchLatestSummaries -> App\Modules\APIs\Controllers\ManagementAPIController::::fetchLatestSummaries
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `355` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `355` — Repaired handler namespace: ManagementAPIController::::fetchNewsEmails -> App\Modules\APIs\Controllers\ManagementAPIController::::fetchNewsEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `356` — Repaired handler namespace: ManagementAPIController::generatePostsFromSummary/$1 -> App\Modules\APIs\Controllers\ManagementAPIController::generatePostsFromSummary/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `357` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `357` — Repaired handler namespace: ManagementAPIController::::generatePostsFromSummary -> App\Modules\APIs\Controllers\ManagementAPIController::::generatePostsFromSummary
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `358` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `358` — Repaired handler namespace: ManagementAPIController::::generateCoffeeAndStocksNewsletter -> App\Modules\APIs\Controllers\ManagementAPIController::::generateCoffeeAndStocksNewsletter
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `359` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `359` — Repaired handler namespace: ManagementAPIController::::fetchCoffeeAndStocksNewsletter -> App\Modules\APIs\Controllers\ManagementAPIController::::fetchCoffeeAndStocksNewsletter
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `360` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `360` — Repaired handler namespace: ManagementAPIController::::generateWeeklyStreamData -> App\Modules\APIs\Controllers\ManagementAPIController::::generateWeeklyStreamData
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `361` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `361` — Repaired handler namespace: ManagementAPIController::::saveCoffeeAndStocksNewsletter -> App\Modules\APIs\Controllers\ManagementAPIController::::saveCoffeeAndStocksNewsletter
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `362` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `362` — Repaired handler namespace: ManagementAPIController::::generateVoiceScriptManually -> App\Modules\APIs\Controllers\ManagementAPIController::::generateVoiceScriptManually
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `363` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `363` — Repaired handler namespace: ManagementAPIController::::runBackfillAlertsEmails -> App\Modules\APIs\Controllers\ManagementAPIController::::runBackfillAlertsEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `364` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `364` — Repaired handler namespace: ManagementAPIController::::runBackfillMarketingEmails -> App\Modules\APIs\Controllers\ManagementAPIController::::runBackfillMarketingEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `365` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `365` — Repaired handler namespace: ManagementAPIController::::getUsers -> App\Modules\APIs\Controllers\ManagementAPIController::::getUsers
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `366` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `366` — Repaired handler namespace: ManagementAPIController::::getAlerts -> App\Modules\APIs\Controllers\ManagementAPIController::::getAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `367` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `367` — Repaired handler namespace: ManagementAPIController::::getReferrals -> App\Modules\APIs\Controllers\ManagementAPIController::::getReferrals
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `368` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `368` — Repaired handler namespace: ManagementAPIController::::getAssets -> App\Modules\APIs\Controllers\ManagementAPIController::::getAssets
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `369` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `369` — Repaired handler namespace: ManagementAPIController::::getNews -> App\Modules\APIs\Controllers\ManagementAPIController::::getNews
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `370` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `370` — Repaired handler namespace: ManagementAPIController::::getSupport -> App\Modules\APIs\Controllers\ManagementAPIController::::getSupport
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `371` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `371` — Repaired handler namespace: ManagementAPIController::::processAllTradeAlerts -> App\Modules\APIs\Controllers\ManagementAPIController::::processAllTradeAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `372` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `372` — Repaired handler namespace: ManagementAPIController::::runCronManually -> App\Modules\APIs\Controllers\ManagementAPIController::::runCronManually
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `373` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `373` — Repaired handler namespace: ManagementAPIController::::runDailyAlphaVantageDataPipeline -> App\Modules\APIs\Controllers\ManagementAPIController::::runDailyAlphaVantageDataPipeline
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `374` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `374` — Repaired handler namespace: ManagementAPIController::::scrapeAndGenerateTodaysStoryFromInbox -> App\Modules\APIs\Controllers\ManagementAPIController::::scrapeAndGenerateTodaysStoryFromInbox
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `375` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `375` — Repaired handler namespace: ManagementAPIController::::sendAllDiscordAlerts -> App\Modules\APIs\Controllers\ManagementAPIController::::sendAllDiscordAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `376` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `376` — Repaired handler namespace: ManagementAPIController::::sendToZapierManually -> App\Modules\APIs\Controllers\ManagementAPIController::::sendToZapierManually
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `377` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `377` — Repaired handler namespace: ManagementAPIController::::generateTodaysStory -> App\Modules\APIs\Controllers\ManagementAPIController::::generateTodaysStory
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `378` — Repaired handler namespace: ManagementAPIController::sharePost/$1/$2 -> App\Modules\APIs\Controllers\ManagementAPIController::sharePost/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `379` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `379` — Repaired handler namespace: ManagementAPIController::::triggerPostAutogenOnEmpty -> App\Modules\APIs\Controllers\ManagementAPIController::::triggerPostAutogenOnEmpty
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `380` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `380` — Repaired handler namespace: ManagementAPIController::::updateMarketDataForAlerts -> App\Modules\APIs\Controllers\ManagementAPIController::::updateMarketDataForAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `381` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `381` — Repaired handler namespace: ManagementAPIController::::processQueuedEmails -> App\Modules\APIs\Controllers\ManagementAPIController::::processQueuedEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `382` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `382` — Repaired handler namespace: ManagementAPIController::::processTempEmailsToScraper -> App\Modules\APIs\Controllers\ManagementAPIController::::processTempEmailsToScraper
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `383` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `383` — Repaired handler namespace: ManagementAPIController::::resendActivationEmailsBatch -> App\Modules\APIs\Controllers\ManagementAPIController::::resendActivationEmailsBatch
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `384` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `384` — Repaired handler namespace: ManagementAPIController::::resendActivationEmailsBatchQueued -> App\Modules\APIs\Controllers\ManagementAPIController::::resendActivationEmailsBatchQueued
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `385` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `385` — Repaired handler namespace: ManagementAPIController::::sendTestActivationEmail -> App\Modules\APIs\Controllers\ManagementAPIController::::sendTestActivationEmail
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `386` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `386` — Repaired handler namespace: ManagementAPIController::::saveSuggestion -> App\Modules\APIs\Controllers\ManagementAPIController::::saveSuggestion
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `389` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `389` — Repaired handler namespace: ManagementAPIController::::cronAnalyzeContent -> App\Modules\APIs\Controllers\ManagementAPIController::::cronAnalyzeContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `390` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `390` — Repaired handler namespace: ManagementAPIController::::cronFetchAndGenerateNews -> App\Modules\APIs\Controllers\ManagementAPIController::::cronFetchAndGenerateNews
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `391` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `391` — Repaired handler namespace: ManagementAPIController::::cronFetchAndGenerateNews -> App\Modules\APIs\Controllers\ManagementAPIController::::cronFetchAndGenerateNews
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `392` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `392` — Repaired handler namespace: ManagementAPIController::::cronFetchInbox -> App\Modules\APIs\Controllers\ManagementAPIController::::cronFetchInbox
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `393` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `393` — Repaired handler namespace: ManagementAPIController::::cronFetchMarketingEmails -> App\Modules\APIs\Controllers\ManagementAPIController::::cronFetchMarketingEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `394` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `394` — Repaired handler namespace: ManagementAPIController::::generateContentDigestFromStored -> App\Modules\APIs\Controllers\ManagementAPIController::::generateContentDigestFromStored
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `395` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `395` — Repaired handler namespace: ManagementAPIController::::generateContentFromScraper -> App\Modules\APIs\Controllers\ManagementAPIController::::generateContentFromScraper
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `396` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `396` — Repaired handler namespace: ManagementAPIController::::generateDailyContentDigest -> App\Modules\APIs\Controllers\ManagementAPIController::::generateDailyContentDigest
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `397` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `397` — Repaired handler namespace: ManagementAPIController::::massResendActivationEmails -> App\Modules\APIs\Controllers\ManagementAPIController::::massResendActivationEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `398` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `398` — Repaired handler namespace: MarketingAPIController::::getSocialPlatforms -> App\Modules\APIs\Controllers\MarketingAPIController::::getSocialPlatforms
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `399` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `399` — Repaired handler namespace: MarketingAPIController::::getSocialCommunities -> App\Modules\APIs\Controllers\MarketingAPIController::::getSocialCommunities
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `400` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `400` — Repaired handler namespace: MarketingAPIController::::saveSocialCommunity -> App\Modules\APIs\Controllers\MarketingAPIController::::saveSocialCommunity
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `401` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `401` — Repaired handler namespace: MarketingAPIController::::getPostTemplates -> App\Modules\APIs\Controllers\MarketingAPIController::::getPostTemplates
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `402` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `402` — Repaired handler namespace: MarketingAPIController::::savePostTemplate -> App\Modules\APIs\Controllers\MarketingAPIController::::savePostTemplate
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `403` — Repaired handler namespace: MarketingAPIController::generatePlatformPosts/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::generatePlatformPosts/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `404` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `404` — Repaired handler namespace: MarketingAPIController::::generatePlatformPosts -> App\Modules\APIs\Controllers\MarketingAPIController::::generatePlatformPosts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `405` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `405` — Repaired handler namespace: MarketingAPIController::::generateDailyCommunityPosts -> App\Modules\APIs\Controllers\MarketingAPIController::::generateDailyCommunityPosts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `406` — Repaired handler namespace: MarketingAPIController::exportGeneratedPostJson/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::exportGeneratedPostJson/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `407` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `407` — Repaired handler namespace: MarketingAPIController::::generateRevenueDocs -> App\Modules\APIs\Controllers\MarketingAPIController::::generateRevenueDocs
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `408` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `408` — Repaired handler namespace: MarketingAPIController::::cronGenerateDailyCommunityPosts -> App\Modules\APIs\Controllers\MarketingAPIController::::cronGenerateDailyCommunityPosts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `409` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `409` — Repaired handler namespace: MarketingAPIController::::cronQueueDistribution -> App\Modules\APIs\Controllers\MarketingAPIController::::cronQueueDistribution
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `411` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `416` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `416` — Repaired handler namespace: ProjectsController::::fetchProjectEmails -> App\Modules\User\Controllers\ProjectsController::::fetchProjectEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `417` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `417` — Repaired handler namespace: ProjectsController::::parseProjectEmails -> App\Modules\User\Controllers\ProjectsController::::parseProjectEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `418` — Repaired handler namespace: ProjectsController::promoteLead/$1 -> App\Modules\User\Controllers\ProjectsController::promoteLead/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `419` — Repaired handler namespace: ProjectsController::updateProject/$1 -> App\Modules\User\Controllers\ProjectsController::updateProject/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `420` — Repaired handler namespace: ProjectsController::openCommitments/$1 -> App\Modules\User\Controllers\ProjectsController::openCommitments/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `421` — Repaired handler namespace: ProjectsController::checkThreshold/$1 -> App\Modules\User\Controllers\ProjectsController::checkThreshold/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `422` — Repaired handler namespace: ProjectsController::launchPrivateAuction/$1 -> App\Modules\User\Controllers\ProjectsController::launchPrivateAuction/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `423` — Repaired handler namespace: ProjectsController::settlePrivateAuction/$1 -> App\Modules\User\Controllers\ProjectsController::settlePrivateAuction/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `424` — Repaired handler namespace: ProjectsController::markFunded/$1 -> App\Modules\User\Controllers\ProjectsController::markFunded/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `425` — Repaired handler namespace: ProjectsController::createQuarterlyDistribution/$1 -> App\Modules\User\Controllers\ProjectsController::createQuarterlyDistribution/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `426` — Repaired handler namespace: ProjectsController::runPayouts/$1 -> App\Modules\User\Controllers\ProjectsController::runPayouts/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `427` — Repaired handler namespace: ProjectsController::processMonthlyWithdrawals/$1 -> App\Modules\User\Controllers\ProjectsController::processMonthlyWithdrawals/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `433` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `433` — Repaired handler namespace: ReferralController::::bulkUpdateStatus -> App\Modules\User\Controllers\ReferralController::::bulkUpdateStatus
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `434` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `434` — Repaired handler namespace: ReferralController::::bulkDelete -> App\Modules\User\Controllers\ReferralController::::bulkDelete
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `438` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `439` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `440` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `441` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `445` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `446` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `447` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `451` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `451` — Repaired handler namespace: OpsController::::index -> App\Modules\Ops\Controllers\OpsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `452` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `452` — Repaired handler namespace: OpsController::::ajaxStatus -> App\Modules\Ops\Controllers\OpsController::::ajaxStatus
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `453` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `453` — Repaired handler namespace: OpsController::::ajaxDispatch -> App\Modules\Ops\Controllers\OpsController::::ajaxDispatch
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `461` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `461` — Repaired handler namespace: AlertsAPIController::::ingestCsvSignals -> App\Modules\APIs\Controllers\AlertsAPIController::::ingestCsvSignals
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `462` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `462` — Repaired handler namespace: AlertsAPIController::::getSignals -> App\Modules\APIs\Controllers\AlertsAPIController::::getSignals
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `463` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `463` — Repaired handler namespace: AlertsAPIController::::getSignalFiles -> App\Modules\APIs\Controllers\AlertsAPIController::::getSignalFiles
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `464` — Repaired handler namespace: AlertsAPIController::previewSignalFile/$1 -> App\Modules\APIs\Controllers\AlertsAPIController::previewSignalFile/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `465` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `465` — Repaired handler namespace: AlertsAPIController::::recalcSignalScores -> App\Modules\APIs\Controllers\AlertsAPIController::::recalcSignalScores
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `466` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `466` — Repaired handler namespace: AlertsAPIController::::addTradeAlert -> App\Modules\APIs\Controllers\AlertsAPIController::::addTradeAlert
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `467` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `467` — Repaired handler namespace: AlertsAPIController::::backfillCategories -> App\Modules\APIs\Controllers\AlertsAPIController::::backfillCategories
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `468` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `468` — Repaired handler namespace: AlertsAPIController::::addTradeAlert -> App\Modules\APIs\Controllers\AlertsAPIController::::addTradeAlert
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `469` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `469` — Repaired handler namespace: AlertsAPIController::::addTradeAlert -> App\Modules\APIs\Controllers\AlertsAPIController::::addTradeAlert
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `470` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `470` — Repaired handler namespace: AlertsAPIController::::getFilteredAlerts -> App\Modules\APIs\Controllers\AlertsAPIController::::getFilteredAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `471` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `471` — Repaired handler namespace: AlertsAPIController::::scanner -> App\Modules\APIs\Controllers\AlertsAPIController::::scanner
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `472` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `472` — Repaired handler namespace: AlertsAPIController::::fetchAutoGeneratedAnalysis -> App\Modules\APIs\Controllers\AlertsAPIController::::fetchAutoGeneratedAnalysis
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `473` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `473` — Repaired handler namespace: AlertsAPIController::::fetchEmailAlerts -> App\Modules\APIs\Controllers\AlertsAPIController::::fetchEmailAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `474` — Repaired handler namespace: AlertsAPIController::fetchMarketAuxNews/$1 -> App\Modules\APIs\Controllers\AlertsAPIController::fetchMarketAuxNews/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `475` — Repaired handler namespace: AlertsAPIController::fetchMarketAuxNews/$1 -> App\Modules\APIs\Controllers\AlertsAPIController::fetchMarketAuxNews/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `476` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `476` — Repaired handler namespace: AlertsAPIController::::forceFetchEmails -> App\Modules\APIs\Controllers\AlertsAPIController::::forceFetchEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `477` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `477` — Repaired handler namespace: AlertsAPIController::::forceFetchTickers -> App\Modules\APIs\Controllers\AlertsAPIController::::forceFetchTickers
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `478` — Repaired handler namespace: AlertsAPIController::generateMarketingForAlert/$1 -> App\Modules\APIs\Controllers\AlertsAPIController::generateMarketingForAlert/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `479` — Repaired handler namespace: AlertsAPIController::generateAdvisorMediaFromAlert/$1 -> App\Modules\APIs\Controllers\AlertsAPIController::generateAdvisorMediaFromAlert/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `480` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `480` — Repaired handler namespace: AlertsAPIController::::generateAdvisorMediaFromAlert -> App\Modules\APIs\Controllers\AlertsAPIController::::generateAdvisorMediaFromAlert
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `481` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `481` — Repaired handler namespace: AlertsAPIController::::generateNow -> App\Modules\APIs\Controllers\AlertsAPIController::::generateNow
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `482` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `482` — Repaired handler namespace: AlertsAPIController::::generateTradeAlertSummary -> App\Modules\APIs\Controllers\AlertsAPIController::::generateTradeAlertSummary
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `483` — Repaired handler namespace: AlertsAPIController::getEmaComparison/$1 -> App\Modules\APIs\Controllers\AlertsAPIController::getEmaComparison/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `484` — Repaired handler namespace: AlertsAPIController::generateAlertSocialCopy/$1 -> App\Modules\APIs\Controllers\AlertsAPIController::generateAlertSocialCopy/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `485` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `485` — Repaired handler namespace: AlertsAPIController::::getFullMetrics -> App\Modules\APIs\Controllers\AlertsAPIController::::getFullMetrics
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `486` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `486` — Repaired handler namespace: AlertsAPIController::::getLatestPrices -> App\Modules\APIs\Controllers\AlertsAPIController::::getLatestPrices
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `487` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `487` — Repaired handler namespace: AlertsAPIController::::getTechnicalIndicators -> App\Modules\APIs\Controllers\AlertsAPIController::::getTechnicalIndicators
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `488` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `488` — Repaired handler namespace: AlertsAPIController::::hideTradeAlert -> App\Modules\APIs\Controllers\AlertsAPIController::::hideTradeAlert
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `489` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `489` — Repaired handler namespace: AlertsAPIController::::manageTradeAlert -> App\Modules\APIs\Controllers\AlertsAPIController::::manageTradeAlert
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `490` — Repaired handler namespace: AlertsAPIController::markAlertAsSentAndSendEmail/$1 -> App\Modules\APIs\Controllers\AlertsAPIController::markAlertAsSentAndSendEmail/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `491` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `491` — Repaired handler namespace: AlertsAPIController::::processAlerts -> App\Modules\APIs\Controllers\AlertsAPIController::::processAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `492` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `492` — Repaired handler namespace: AlertsAPIController::::processEmailAlerts -> App\Modules\APIs\Controllers\AlertsAPIController::::processEmailAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `493` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `493` — Repaired handler namespace: AlertsAPIController::::processTradeAlerts -> App\Modules\APIs\Controllers\AlertsAPIController::::processTradeAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `494` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `494` — Repaired handler namespace: AlertsAPIController::::processTradeBatch -> App\Modules\APIs\Controllers\AlertsAPIController::::processTradeBatch
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `495` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `495` — Repaired handler namespace: AlertsAPIController::::sendAlert -> App\Modules\APIs\Controllers\AlertsAPIController::::sendAlert
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `496` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `496` — Repaired handler namespace: AlertsAPIController::::sendDiscordAlerts -> App\Modules\APIs\Controllers\AlertsAPIController::::sendDiscordAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `497` — Repaired handler namespace: AlertsAPIController::sendDiscordAlertsBySymbol/$1 -> App\Modules\APIs\Controllers\AlertsAPIController::sendDiscordAlertsBySymbol/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `498` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `498` — Repaired handler namespace: AlertsAPIController::::storeMarketingContent -> App\Modules\APIs\Controllers\AlertsAPIController::::storeMarketingContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `499` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `499` — Repaired handler namespace: AlertsAPIController::::updateBatchPrices -> App\Modules\APIs\Controllers\AlertsAPIController::::updateBatchPrices
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `500` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `500` — Repaired handler namespace: AlertsAPIController::::updateChartOverride -> App\Modules\APIs\Controllers\AlertsAPIController::::updateChartOverride
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `501` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `501` — Repaired handler namespace: AlertsAPIController::::updateExchange -> App\Modules\APIs\Controllers\AlertsAPIController::::updateExchange
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `502` — Repaired handler namespace: AlertsAPIController::updateStatus/$1/$2 -> App\Modules\APIs\Controllers\AlertsAPIController::updateStatus/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `503` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `503` — Repaired handler namespace: AlertsAPIController::::updateTradeAlerts -> App\Modules\APIs\Controllers\AlertsAPIController::::updateTradeAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `506` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `506` — Repaired handler namespace: AlertsAPIController::::submitTradeAlert -> App\Modules\APIs\Controllers\AlertsAPIController::::submitTradeAlert
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `507` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `507` — Repaired handler namespace: AlertsAPIController::::getTradeAlertDetails -> App\Modules\APIs\Controllers\AlertsAPIController::::getTradeAlertDetails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `510` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `510` — Repaired handler namespace: AlertsAPIController::::generateVoiceoverScript -> App\Modules\APIs\Controllers\AlertsAPIController::::generateVoiceoverScript
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `511` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `511` — Repaired handler namespace: AlertsAPIController::::generateVoiceoverAndMarketingContent -> App\Modules\APIs\Controllers\AlertsAPIController::::generateVoiceoverAndMarketingContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `512` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `512` — Repaired handler namespace: AlertsAPIController::::generateAndStoreVoiceover -> App\Modules\APIs\Controllers\AlertsAPIController::::generateAndStoreVoiceover
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `515` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `515` — Repaired handler namespace: AlertsAPIController::::generateSocialMediaPosts -> App\Modules\APIs\Controllers\AlertsAPIController::::generateSocialMediaPosts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `516` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `516` — Repaired handler namespace: AlertsAPIController::::postMarketingContentToSocials -> App\Modules\APIs\Controllers\AlertsAPIController::::postMarketingContentToSocials
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `518` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `518` — Repaired handler namespace: AlertsAPIController::::genKeys -> App\Modules\APIs\Controllers\AlertsAPIController::::genKeys
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `519` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `519` — Repaired handler namespace: AlertsAPIController::::sign -> App\Modules\APIs\Controllers\AlertsAPIController::::sign
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `527` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `527` — Repaired handler namespace: AuctionsAPIController::::computeFMV -> App\Modules\APIs\Controllers\AuctionsAPIController::::computeFMV
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `528` — Repaired handler namespace: AuctionsAPIController::settle/$1 -> App\Modules\APIs\Controllers\AuctionsAPIController::settle/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `529` — Repaired handler namespace: AuctionsAPIController::releaseEscrow/$1 -> App\Modules\APIs\Controllers\AuctionsAPIController::releaseEscrow/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `530` — Repaired handler namespace: AuctionsAPIController::refundEscrow/$1 -> App\Modules\APIs\Controllers\AuctionsAPIController::refundEscrow/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `531` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `531` — Repaired handler namespace: AuctionsAPIController::::topUp -> App\Modules\APIs\Controllers\AuctionsAPIController::::topUp
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `539` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `540` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `541` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `542` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `543` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `544` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `545` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `546` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `547` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `547` — Repaired handler namespace: BudgetController::::trends -> App\Modules\User\Controllers\BudgetController::::trends
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `548` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `548` — Repaired handler namespace: BudgetController::::netWorth -> App\Modules\User\Controllers\BudgetController::::netWorth
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `549` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `549` — Repaired handler namespace: BudgetController::::cashFlow -> App\Modules\User\Controllers\BudgetController::::cashFlow
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `550` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `550` — Repaired handler namespace: BudgetController::::budgets -> App\Modules\User\Controllers\BudgetController::::budgets
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `551` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `552` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `553` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `554` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `559` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `560` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `564` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `566` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `568` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `570` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `572` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `574` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `576` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `578` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `579` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `582` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `584` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `586` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `588` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `590` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `592` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `594` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `596` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `598` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `600` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `602` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `604` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `606` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `608` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `610` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `612` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `614` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `616` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `618` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `620` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `628` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `628` — Repaired handler namespace: BudgetAPIController::::summary -> App\Modules\APIs\Controllers\BudgetAPIController::::summary
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `629` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `629` — Repaired handler namespace: BudgetAPIController::::credit -> App\Modules\APIs\Controllers\BudgetAPIController::::credit
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `630` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `630` — Repaired handler namespace: BudgetAPIController::::available -> App\Modules\APIs\Controllers\BudgetAPIController::::available
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `631` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `631` — Repaired handler namespace: BudgetAPIController::::repayment -> App\Modules\APIs\Controllers\BudgetAPIController::::repayment
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `632` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `632` — Repaired handler namespace: BudgetAPIController::::categories -> App\Modules\APIs\Controllers\BudgetAPIController::::categories
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `633` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `633` — Repaired handler namespace: BudgetAPIController::::transactions -> App\Modules\APIs\Controllers\BudgetAPIController::::transactions
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `634` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `634` — Repaired handler namespace: BudgetAPIController::::goals -> App\Modules\APIs\Controllers\BudgetAPIController::::goals
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `635` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `635` — Repaired handler namespace: BudgetAPIController::::insights -> App\Modules\APIs\Controllers\BudgetAPIController::::insights
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `636` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `636` — Repaired handler namespace: BudgetAPIController::::trends -> App\Modules\APIs\Controllers\BudgetAPIController::::trends
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `637` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `637` — Repaired handler namespace: BudgetAPIController::::netWorth -> App\Modules\APIs\Controllers\BudgetAPIController::::netWorth
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `638` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `638` — Repaired handler namespace: BudgetAPIController::::cashFlow -> App\Modules\APIs\Controllers\BudgetAPIController::::cashFlow
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `639` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `639` — Repaired handler namespace: BudgetAPIController::::budgets -> App\Modules\APIs\Controllers\BudgetAPIController::::budgets
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `640` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `640` — Repaired handler namespace: BudgetAPIController::::savingsGoals -> App\Modules\APIs\Controllers\BudgetAPIController::::savingsGoals
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `641` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `641` — Repaired handler namespace: BudgetAPIController::::investmentAccounts -> App\Modules\APIs\Controllers\BudgetAPIController::::investmentAccounts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `642` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `642` — Repaired handler namespace: BudgetAPIController::::linkedAccounts -> App\Modules\APIs\Controllers\BudgetAPIController::::linkedAccounts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `643` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `643` — Repaired handler namespace: BudgetAPIController::::addLinkedAccount -> App\Modules\APIs\Controllers\BudgetAPIController::::addLinkedAccount
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `644` — Repaired handler namespace: BudgetAPIController::removeLinkedAccount/$1 -> App\Modules\APIs\Controllers\BudgetAPIController::removeLinkedAccount/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `645` — Repaired handler namespace: BudgetAPIController::refreshLinkedAccount/$1 -> App\Modules\APIs\Controllers\BudgetAPIController::refreshLinkedAccount/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `646` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `646` — Repaired handler namespace: BudgetAPIController::::apiBudgetData -> App\Modules\APIs\Controllers\BudgetAPIController::::apiBudgetData
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `647` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `647` — Repaired handler namespace: BudgetAPIController::::apiCreditData -> App\Modules\APIs\Controllers\BudgetAPIController::::apiCreditData
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `648` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `648` — Repaired handler namespace: BudgetAPIController::::apiAvailableData -> App\Modules\APIs\Controllers\BudgetAPIController::::apiAvailableData
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `649` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `649` — Repaired handler namespace: BudgetAPIController::::apiRepaymentSummary -> App\Modules\APIs\Controllers\BudgetAPIController::::apiRepaymentSummary
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `651` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `651` — Repaired handler namespace: BudgetAPIController::::getUserBudgetRecords -> App\Modules\APIs\Controllers\BudgetAPIController::::getUserBudgetRecords
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `652` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `652` — Repaired handler namespace: BudgetAPIController::::getUserCreditBalances -> App\Modules\APIs\Controllers\BudgetAPIController::::getUserCreditBalances
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `653` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `653` — Repaired handler namespace: BudgetAPIController::::getUserAvailableBalances -> App\Modules\APIs\Controllers\BudgetAPIController::::getUserAvailableBalances
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `654` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `654` — Repaired handler namespace: BudgetAPIController::::getUserRepaymentSummary -> App\Modules\APIs\Controllers\BudgetAPIController::::getUserRepaymentSummary
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `658` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `658` — Repaired handler namespace: ContentEngineAPIController::::ingestScanner -> App\Modules\APIs\Controllers\ContentEngineAPIController::::ingestScanner
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `659` — Repaired handler namespace: ContentEngineAPIController::processIngest/$1 -> App\Modules\APIs\Controllers\ContentEngineAPIController::processIngest/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `660` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `660` — Repaired handler namespace: ContentEngineAPIController::::topIdeas -> App\Modules\APIs\Controllers\ContentEngineAPIController::::topIdeas
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `661` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `661` — Repaired handler namespace: ContentEngineAPIController::::posts -> App\Modules\APIs\Controllers\ContentEngineAPIController::::posts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `662` — Repaired handler namespace: ContentEngineAPIController::posts/$1 -> App\Modules\APIs\Controllers\ContentEngineAPIController::posts/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `663` — Repaired handler namespace: ContentEngineAPIController::approvePost/$1 -> App\Modules\APIs\Controllers\ContentEngineAPIController::approvePost/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `664` — Repaired handler namespace: ContentEngineAPIController::sendPost/$1 -> App\Modules\APIs\Controllers\ContentEngineAPIController::sendPost/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `665` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `665` — Repaired handler namespace: ContentEngineAPIController::::runDaily -> App\Modules\APIs\Controllers\ContentEngineAPIController::::runDaily
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `673` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `673` — Repaired handler namespace: DiscordAPIController::::commandsCatalog -> App\Modules\APIs\Controllers\DiscordAPIController::::commandsCatalog
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `674` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `674` — Repaired handler namespace: DiscordAPIController::::onboardingSteps -> App\Modules\APIs\Controllers\DiscordAPIController::::onboardingSteps
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `675` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `675` — Repaired handler namespace: DiscordAPIController::::sharingGuide -> App\Modules\APIs\Controllers\DiscordAPIController::::sharingGuide
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `676` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `676` — Repaired handler namespace: DiscordAPIController::::enqueue -> App\Modules\APIs\Controllers\DiscordAPIController::::enqueue
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `677` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `677` — Repaired handler namespace: DiscordAPIController::::broadcast -> App\Modules\APIs\Controllers\DiscordAPIController::::broadcast
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `678` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `678` — Repaired handler namespace: DiscordAPIController::::handleInteraction -> App\Modules\APIs\Controllers\DiscordAPIController::::handleInteraction
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `679` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `679` — Repaired handler namespace: DiscordAPIController::::messageHook -> App\Modules\APIs\Controllers\DiscordAPIController::::messageHook
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `680` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `680` — Repaired handler namespace: DiscordAPIController::::webhookProxy -> App\Modules\APIs\Controllers\DiscordAPIController::::webhookProxy
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `681` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `681` — Repaired handler namespace: DiscordAPIController::::createLinkToken -> App\Modules\APIs\Controllers\DiscordAPIController::::createLinkToken
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `682` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `682` — Repaired handler namespace: DiscordAPIController::::processQueue -> App\Modules\APIs\Controllers\DiscordAPIController::::processQueue
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `683` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `683` — Repaired handler namespace: DiscordAPIController::::coalesceNow -> App\Modules\APIs\Controllers\DiscordAPIController::::coalesceNow
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `684` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `684` — Repaired handler namespace: DiscordAPIController::::purgeDead -> App\Modules\APIs\Controllers\DiscordAPIController::::purgeDead
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `685` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `685` — Repaired handler namespace: DiscordAPIController::::health -> App\Modules\APIs\Controllers\DiscordAPIController::::health
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `686` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `686` — Repaired handler namespace: DiscordAPIController::::test -> App\Modules\APIs\Controllers\DiscordAPIController::::test
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `694` — Repaired handler namespace: DripCampaignAPIController::click/$1 -> App\Modules\APIs\Controllers\DripCampaignAPIController::click/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `695` — Repaired handler namespace: DripCampaignAPIController::enrollUser/$1 -> App\Modules\APIs\Controllers\DripCampaignAPIController::enrollUser/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `696` — Repaired handler namespace: DripCampaignAPIController::open/$1 -> App\Modules\APIs\Controllers\DripCampaignAPIController::open/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `697` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `697` — Repaired handler namespace: DripCampaignAPIController::::processBatch -> App\Modules\APIs\Controllers\DripCampaignAPIController::::processBatch
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `698` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `698` — Repaired handler namespace: DripCampaignAPIController::::testDripCron -> App\Modules\APIs\Controllers\DripCampaignAPIController::::testDripCron
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `706` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `706` — Repaired handler namespace: EmailAPIController::::autoScheduleDraftCampaigns -> App\Modules\APIs\Controllers\EmailAPIController::::autoScheduleDraftCampaigns
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `707` — Repaired handler namespace: EmailAPIController::cloneCampaign/$1 -> App\Modules\APIs\Controllers\EmailAPIController::cloneCampaign/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `708` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `708` — Repaired handler namespace: EmailAPIController::::createDraftCampaign -> App\Modules\APIs\Controllers\EmailAPIController::::createDraftCampaign
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `709` — Repaired handler namespace: EmailAPIController::scheduleCampaignApi/$1 -> App\Modules\APIs\Controllers\EmailAPIController::scheduleCampaignApi/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `710` — Repaired handler namespace: EmailAPIController::cancelScheduledCampaign/$1 -> App\Modules\APIs\Controllers\EmailAPIController::cancelScheduledCampaign/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `711` — Repaired handler namespace: EmailAPIController::deleteCampaign/$1 -> App\Modules\APIs\Controllers\EmailAPIController::deleteCampaign/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `712` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `712` — Repaired handler namespace: EmailAPIController::::fetchCampaignAnalytics -> App\Modules\APIs\Controllers\EmailAPIController::::fetchCampaignAnalytics
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `713` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `713` — Repaired handler namespace: EmailAPIController::::fetchQueuedEmails -> App\Modules\APIs\Controllers\EmailAPIController::::fetchQueuedEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `714` — Repaired handler namespace: EmailAPIController::fetchQueuedEmailById/$1 -> App\Modules\APIs\Controllers\EmailAPIController::fetchQueuedEmailById/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `715` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `715` — Repaired handler namespace: EmailAPIController::::getAllCampaigns -> App\Modules\APIs\Controllers\EmailAPIController::::getAllCampaigns
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `716` — Repaired handler namespace: EmailAPIController::getCampaignMetrics/$1 -> App\Modules\APIs\Controllers\EmailAPIController::getCampaignMetrics/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `717` — Repaired handler namespace: EmailAPIController::getCampaignStats/$1 -> App\Modules\APIs\Controllers\EmailAPIController::getCampaignStats/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `718` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `718` — Repaired handler namespace: EmailAPIController::::getEmailQueueStats -> App\Modules\APIs\Controllers\EmailAPIController::::getEmailQueueStats
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `719` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `719` — Repaired handler namespace: EmailAPIController::::getEmailQueueTrend -> App\Modules\APIs\Controllers\EmailAPIController::::getEmailQueueTrend
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `720` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `720` — Repaired handler namespace: EmailAPIController::::processScheduledCampaigns -> App\Modules\APIs\Controllers\EmailAPIController::::processScheduledCampaigns
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `721` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `721` — Repaired handler namespace: EmailAPIController::::sendMassTestCampaign -> App\Modules\APIs\Controllers\EmailAPIController::::sendMassTestCampaign
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `722` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `722` — Repaired handler namespace: EmailAPIController::::trackBounceWebhook -> App\Modules\APIs\Controllers\EmailAPIController::::trackBounceWebhook
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `723` — Repaired handler namespace: EmailAPIController::unsubscribe/$1 -> App\Modules\APIs\Controllers\EmailAPIController::unsubscribe/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `727` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `727` — Repaired handler namespace: EsportsAPIController::::createEvent -> App\Modules\APIs\Controllers\EsportsAPIController::::createEvent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `728` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `728` — Repaired handler namespace: EsportsAPIController::::joinEvent -> App\Modules\APIs\Controllers\EsportsAPIController::::joinEvent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `729` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `729` — Repaired handler namespace: EsportsAPIController::::lockEscrow -> App\Modules\APIs\Controllers\EsportsAPIController::::lockEscrow
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `730` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `730` — Repaired handler namespace: EsportsAPIController::::cancelEvent -> App\Modules\APIs\Controllers\EsportsAPIController::::cancelEvent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `731` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `731` — Repaired handler namespace: EsportsAPIController::::receiveResultWebhook -> App\Modules\APIs\Controllers\EsportsAPIController::::receiveResultWebhook
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `732` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `732` — Repaired handler namespace: EsportsAPIController::::settlePayouts -> App\Modules\APIs\Controllers\EsportsAPIController::::settlePayouts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `733` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `733` — Repaired handler namespace: EsportsAPIController::::cronProcessJobs -> App\Modules\APIs\Controllers\EsportsAPIController::::cronProcessJobs
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `734` — Repaired handler namespace: EsportsAPIController::getEvent/$1 -> App\Modules\APIs\Controllers\EsportsAPIController::getEvent/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `735` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `735` — Repaired handler namespace: EsportsAPIController::::listEvents -> App\Modules\APIs\Controllers\EsportsAPIController::::listEvents
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `739` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `739` — Repaired handler namespace: InvestmentsAPIController::index -> App\Modules\APIs\Controllers\InvestmentsAPIController::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `740` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `740` — Repaired handler namespace: InvestmentsAPIController::addNewTradeToWatchlist -> App\Modules\APIs\Controllers\InvestmentsAPIController::addNewTradeToWatchlist
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `743` — Repaired handler namespace: InvestmentsAPIController::fetchWatchlistPrices/$1 -> App\Modules\APIs\Controllers\InvestmentsAPIController::fetchWatchlistPrices/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `744` — Repaired handler namespace: InvestmentsAPIController::getInvestmentData/$1 -> App\Modules\APIs\Controllers\InvestmentsAPIController::getInvestmentData/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `746` — Repaired handler namespace: InvestmentsAPIController::getUserWatchlist/$1 -> App\Modules\APIs\Controllers\InvestmentsAPIController::getUserWatchlist/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `747` — Repaired handler namespace: InvestmentsAPIController::refreshActiveTradesPrices/$1 -> App\Modules\APIs\Controllers\InvestmentsAPIController::refreshActiveTradesPrices/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `748` — Repaired handler namespace: InvestmentsAPIController::getSymbolsByTradeType/$1 -> App\Modules\APIs\Controllers\InvestmentsAPIController::getSymbolsByTradeType/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `749` — Repaired handler namespace: InvestmentsAPIController::getInvestmentData/$1 -> App\Modules\APIs\Controllers\InvestmentsAPIController::getInvestmentData/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `750` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `750` — Repaired handler namespace: InvestmentsAPIController::::searchTickers -> App\Modules\APIs\Controllers\InvestmentsAPIController::::searchTickers
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `751` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `751` — Repaired handler namespace: InvestmentsAPIController::::listNews -> App\Modules\APIs\Controllers\InvestmentsAPIController::::listNews
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `752` — Repaired handler namespace: InvestmentsAPIController::getNews/$1 -> App\Modules\APIs\Controllers\InvestmentsAPIController::getNews/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `753` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `753` — Repaired handler namespace: InvestmentsAPIController::::createNews -> App\Modules\APIs\Controllers\InvestmentsAPIController::::createNews
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `754` — Repaired handler namespace: InvestmentsAPIController::updateNews/$1 -> App\Modules\APIs\Controllers\InvestmentsAPIController::updateNews/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `755` — Repaired handler namespace: InvestmentsAPIController::deleteNews/$1 -> App\Modules\APIs\Controllers\InvestmentsAPIController::deleteNews/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `756` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `756` — Repaired handler namespace: InvestmentsAPIController::::validateSymbol -> App\Modules\APIs\Controllers\InvestmentsAPIController::::validateSymbol
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `757` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `757` — Repaired handler namespace: InvestmentsAPIController::::getForecastHighlights -> App\Modules\APIs\Controllers\InvestmentsAPIController::::getForecastHighlights
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `758` — Repaired handler namespace: InvestmentsAPIController::getForecastDetails/$1 -> App\Modules\APIs\Controllers\InvestmentsAPIController::getForecastDetails/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `759` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `759` — Repaired handler namespace: InvestmentsAPIController::::getConfidenceHeatmap -> App\Modules\APIs\Controllers\InvestmentsAPIController::::getConfidenceHeatmap
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `760` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `760` — Repaired handler namespace: InvestmentsAPIController::::getTopConfidenceBySector -> App\Modules\APIs\Controllers\InvestmentsAPIController::::getTopConfidenceBySector
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `761` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `761` — Repaired handler namespace: InvestmentsAPIController::::getConfidenceDistribution -> App\Modules\APIs\Controllers\InvestmentsAPIController::::getConfidenceDistribution
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `762` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `762` — Repaired handler namespace: InvestmentsAPIController::::getForecastAccuracySummary -> App\Modules\APIs\Controllers\InvestmentsAPIController::::getForecastAccuracySummary
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `763` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `763` — Repaired handler namespace: InvestmentsAPIController::::refreshForecasts -> App\Modules\APIs\Controllers\InvestmentsAPIController::::refreshForecasts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `764` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `764` — Repaired handler namespace: InvestmentsAPIController::::reforecastTicker -> App\Modules\APIs\Controllers\InvestmentsAPIController::::reforecastTicker
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `765` — Repaired handler namespace: InvestmentsAPIController::removeTradeFromWatchlist/$1 -> App\Modules\APIs\Controllers\InvestmentsAPIController::removeTradeFromWatchlist/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `766` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `766` — Repaired handler namespace: InvestmentsAPIController::::updateTradeNotes -> App\Modules\APIs\Controllers\InvestmentsAPIController::::updateTradeNotes
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `767` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `767` — Repaired handler namespace: InvestmentsAPIController::::updateTradeTargetPrice -> App\Modules\APIs\Controllers\InvestmentsAPIController::::updateTradeTargetPrice
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `768` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `768` — Repaired handler namespace: InvestmentsAPIController::::updateWatchlistOrder -> App\Modules\APIs\Controllers\InvestmentsAPIController::::updateWatchlistOrder
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `769` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `769` — Repaired handler namespace: InvestmentsAPIController::::updateWatchlistTags -> App\Modules\APIs\Controllers\InvestmentsAPIController::::updateWatchlistTags
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `770` — Repaired handler namespace: InvestmentsAPIController::userHoldings/$1 -> App\Modules\APIs\Controllers\InvestmentsAPIController::userHoldings/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `771` — Repaired handler namespace: InvestmentsAPIController::userWatchlist/$1 -> App\Modules\APIs\Controllers\InvestmentsAPIController::userWatchlist/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `772` — Repaired handler namespace: InvestmentsAPIController::searchTicker/$1 -> App\Modules\APIs\Controllers\InvestmentsAPIController::searchTicker/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `780` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `787` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `787` — Repaired handler namespace: MarketingAPIController::::index -> App\Modules\APIs\Controllers\MarketingAPIController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `788` — Repaired handler namespace: MarketingAPIController::approvePost/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::approvePost/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `789` — Repaired handler namespace: MarketingAPIController::approveBufferItem/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::approveBufferItem/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `790` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `790` — Repaired handler namespace: MarketingAPIController::::autoScheduleNextApproved -> App\Modules\APIs\Controllers\MarketingAPIController::::autoScheduleNextApproved
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `791` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `791` — Repaired handler namespace: MarketingAPIController::::cronAnalyzeContent -> App\Modules\APIs\Controllers\MarketingAPIController::::cronAnalyzeContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `792` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `792` — Repaired handler namespace: MarketingAPIController::::cronAutoPublishGroupedDigest -> App\Modules\APIs\Controllers\MarketingAPIController::::cronAutoPublishGroupedDigest
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `793` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `793` — Repaired handler namespace: MarketingAPIController::::cronFetchAndGenerateNews -> App\Modules\APIs\Controllers\MarketingAPIController::::cronFetchAndGenerateNews
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `794` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `794` — Repaired handler namespace: MarketingAPIController::::cronFetchInbox -> App\Modules\APIs\Controllers\MarketingAPIController::::cronFetchInbox
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `795` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `795` — Repaired handler namespace: MarketingAPIController::::cronFetchMarketingEmails -> App\Modules\APIs\Controllers\MarketingAPIController::::cronFetchMarketingEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `796` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `796` — Repaired handler namespace: MarketingAPIController::::cronProcessSMSMarketingIdeas -> App\Modules\APIs\Controllers\MarketingAPIController::::cronProcessSMSMarketingIdeas
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `797` — Repaired handler namespace: MarketingAPIController::deleteScrape/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::deleteScrape/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `798` — Repaired handler namespace: MarketingAPIController::downloadVoiceover/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::downloadVoiceover/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `799` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `799` — Repaired handler namespace: MarketingAPIController::::distributeHighScoreContent -> App\Modules\APIs\Controllers\MarketingAPIController::::distributeHighScoreContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `800` — Repaired handler namespace: MarketingAPIController::emailPostForApproval/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::emailPostForApproval/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `801` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `801` — Repaired handler namespace: MarketingAPIController::::fetchBufferPaginated -> App\Modules\APIs\Controllers\MarketingAPIController::::fetchBufferPaginated
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `802` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `802` — Repaired handler namespace: MarketingAPIController::::fetchFinalizedSummariesBlock -> App\Modules\APIs\Controllers\MarketingAPIController::::fetchFinalizedSummariesBlock
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `803` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `803` — Repaired handler namespace: MarketingAPIController::::fetchGeneratedSummaries -> App\Modules\APIs\Controllers\MarketingAPIController::::fetchGeneratedSummaries
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `804` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `804` — Repaired handler namespace: MarketingAPIController::::fetchGeneratedSummariesBlock -> App\Modules\APIs\Controllers\MarketingAPIController::::fetchGeneratedSummariesBlock
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `805` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `805` — Repaired handler namespace: MarketingAPIController::::fetchGeneratedSummariesJson -> App\Modules\APIs\Controllers\MarketingAPIController::::fetchGeneratedSummariesJson
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `806` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `806` — Repaired handler namespace: MarketingAPIController::::forceGenerateFromTemp -> App\Modules\APIs\Controllers\MarketingAPIController::::forceGenerateFromTemp
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `807` — Repaired handler namespace: MarketingAPIController::ForceGenerateFromTemp/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::ForceGenerateFromTemp/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `808` — Repaired handler namespace: MarketingAPIController::generateCampaignContent/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::generateCampaignContent/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `809` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `809` — Repaired handler namespace: MarketingAPIController::::generateCampaignContent -> App\Modules\APIs\Controllers\MarketingAPIController::::generateCampaignContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `810` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `810` — Repaired handler namespace: MarketingAPIController::::generateDailyMarketCampaign -> App\Modules\APIs\Controllers\MarketingAPIController::::generateDailyMarketCampaign
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `811` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `811` — Repaired handler namespace: MarketingAPIController::::generateCampaignStepContent -> App\Modules\APIs\Controllers\MarketingAPIController::::generateCampaignStepContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `812` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `812` — Repaired handler namespace: MarketingAPIController::::generateContentFromScraper -> App\Modules\APIs\Controllers\MarketingAPIController::::generateContentFromScraper
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `813` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `813` — Repaired handler namespace: MarketingAPIController::::generateContentDigestFromStored -> App\Modules\APIs\Controllers\MarketingAPIController::::generateContentDigestFromStored
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `814` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `814` — Repaired handler namespace: MarketingAPIController::::generateDailyContentDigest -> App\Modules\APIs\Controllers\MarketingAPIController::::generateDailyContentDigest
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `815` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `815` — Repaired handler namespace: MarketingAPIController::::generateKimiSummaries -> App\Modules\APIs\Controllers\MarketingAPIController::::generateKimiSummaries
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `816` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `816` — Repaired handler namespace: MarketingAPIController::::generateKimiPosts -> App\Modules\APIs\Controllers\MarketingAPIController::::generateKimiPosts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `817` — Repaired handler namespace: MarketingAPIController::generateFromSimilar/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::generateFromSimilar/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `818` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `818` — Repaired handler namespace: MarketingAPIController::::generateFromSimilar -> App\Modules\APIs\Controllers\MarketingAPIController::::generateFromSimilar
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `819` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `819` — Repaired handler namespace: MarketingAPIController::::generateLivePreview -> App\Modules\APIs\Controllers\MarketingAPIController::::generateLivePreview
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `820` — Repaired handler namespace: MarketingAPIController::generatePostsFromSummary/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::generatePostsFromSummary/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `821` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `821` — Repaired handler namespace: MarketingAPIController::::generatePostsFromSummary -> App\Modules\APIs\Controllers\MarketingAPIController::::generatePostsFromSummary
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `822` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `822` — Repaired handler namespace: MarketingAPIController::::generatePostMediaContent -> App\Modules\APIs\Controllers\MarketingAPIController::::generatePostMediaContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `823` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `823` — Repaired handler namespace: MarketingAPIController::::generateScheduledPosts -> App\Modules\APIs\Controllers\MarketingAPIController::::generateScheduledPosts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `824` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `824` — Repaired handler namespace: MarketingAPIController::::getCleanedScrapedContent -> App\Modules\APIs\Controllers\MarketingAPIController::::getCleanedScrapedContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `825` — Repaired handler namespace: MarketingAPIController::getScrapeDetails/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::getScrapeDetails/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `826` — Repaired handler namespace: MarketingAPIController::generateThreadFromSummary/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::generateThreadFromSummary/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `827` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `827` — Repaired handler namespace: MarketingAPIController::::getContentPerformanceAnalytics -> App\Modules\APIs\Controllers\MarketingAPIController::::getContentPerformanceAnalytics
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `828` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `828` — Repaired handler namespace: MarketingAPIController::::getGeneratedPostsPaginated -> App\Modules\APIs\Controllers\MarketingAPIController::::getGeneratedPostsPaginated
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `829` — Repaired handler namespace: MarketingAPIController::getStoryboardPackage/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::getStoryboardPackage/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `830` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `830` — Repaired handler namespace: MarketingAPIController::::getTopGeneratedPosts -> App\Modules\APIs\Controllers\MarketingAPIController::::getTopGeneratedPosts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `831` — Repaired handler namespace: MarketingAPIController::getTopKeywordChart/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::getTopKeywordChart/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `832` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `832` — Repaired handler namespace: MarketingAPIController::::groupSimilarSummariesByCosine -> App\Modules\APIs\Controllers\MarketingAPIController::::groupSimilarSummariesByCosine
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `833` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `833` — Repaired handler namespace: MarketingAPIController::::massResendActivationEmails -> App\Modules\APIs\Controllers\MarketingAPIController::::massResendActivationEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `834` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `834` — Repaired handler namespace: MarketingAPIController::::monitorKeywordsAndScrape -> App\Modules\APIs\Controllers\MarketingAPIController::::monitorKeywordsAndScrape
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `835` — Repaired handler namespace: MarketingAPIController::previewBufferItem/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::previewBufferItem/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `836` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `836` — Repaired handler namespace: MarketingAPIController::::previewPendingSummaries -> App\Modules\APIs\Controllers\MarketingAPIController::::previewPendingSummaries
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `837` — Repaired handler namespace: MarketingAPIController::processMarketingTempEmails/$1/$2/$3 -> App\Modules\APIs\Controllers\MarketingAPIController::processMarketingTempEmails/$1/$2/$3
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `838` — Repaired handler namespace: MarketingAPIController::processMarketingTempEmails/$1/$2 -> App\Modules\APIs\Controllers\MarketingAPIController::processMarketingTempEmails/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `839` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `839` — Repaired handler namespace: MarketingAPIController::::publishGroupedContentDraft -> App\Modules\APIs\Controllers\MarketingAPIController::::publishGroupedContentDraft
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `840` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `840` — Repaired handler namespace: MarketingAPIController::::rankBufferPostsDaily -> App\Modules\APIs\Controllers\MarketingAPIController::::rankBufferPostsDaily
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `841` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `841` — Repaired handler namespace: MarketingAPIController::::reprocessIncompleteEmails -> App\Modules\APIs\Controllers\MarketingAPIController::::reprocessIncompleteEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `842` — Repaired handler namespace: MarketingAPIController::rejectBufferItem/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::rejectBufferItem/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `843` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `843` — Repaired handler namespace: MarketingAPIController::::runContentGenerationBatch -> App\Modules\APIs\Controllers\MarketingAPIController::::runContentGenerationBatch
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `844` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `844` — Repaired handler namespace: MarketingAPIController::::runKeywordBackfillBatch -> App\Modules\APIs\Controllers\MarketingAPIController::::runKeywordBackfillBatch
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `845` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `845` — Repaired handler namespace: MarketingAPIController::::runKeywordEnrichment -> App\Modules\APIs\Controllers\MarketingAPIController::::runKeywordEnrichment
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `846` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `846` — Repaired handler namespace: MarketingAPIController::::runScheduledTasks -> App\Modules\APIs\Controllers\MarketingAPIController::::runScheduledTasks
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `847` — Repaired handler namespace: ManagementController::index/$1/$2 -> App\Modules\Management\Controllers\ManagementController::index/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `848` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `848` — Repaired handler namespace: MarketingAPIController::::sendWalkthroughEmails -> App\Modules\APIs\Controllers\MarketingAPIController::::sendWalkthroughEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `849` — Repaired handler namespace: MarketingAPIController::scheduleApprovedPost/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::scheduleApprovedPost/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `850` — Repaired handler namespace: MarketingAPIController::schedulePost/$1/$2/$3 -> App\Modules\APIs\Controllers\MarketingAPIController::schedulePost/$1/$2/$3
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `851` — Repaired handler namespace: MarketingAPIController::sharePost/$1/$2 -> App\Modules\APIs\Controllers\MarketingAPIController::sharePost/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `852` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `852` — Repaired handler namespace: MarketingAPIController::::submitLargeContentForm -> App\Modules\APIs\Controllers\MarketingAPIController::::submitLargeContentForm
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `853` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `853` — Repaired handler namespace: MarketingAPIController::::submitLargeContent -> App\Modules\APIs\Controllers\MarketingAPIController::::submitLargeContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `854` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `854` — Repaired handler namespace: MarketingAPIController::::shortLongContentForm -> App\Modules\APIs\Controllers\MarketingAPIController::::shortLongContentForm
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `855` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `855` — Repaired handler namespace: MarketingAPIController::::submitManualContent -> App\Modules\APIs\Controllers\MarketingAPIController::::submitManualContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `856` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `856` — Repaired handler namespace: MarketingAPIController::::testGenerateDailyDigest -> App\Modules\APIs\Controllers\MarketingAPIController::::testGenerateDailyDigest
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `857` — Repaired handler namespace: MarketingAPIController::testGenerateFromTempEmail/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::testGenerateFromTempEmail/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `858` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `858` — Repaired handler namespace: MarketingAPIController::::testTfIdfEdgeCases -> App\Modules\APIs\Controllers\MarketingAPIController::::testTfIdfEdgeCases
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `859` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `859` — Repaired handler namespace: MarketingAPIController::::testGenerateSummarizerHarness -> App\Modules\APIs\Controllers\MarketingAPIController::::testGenerateSummarizerHarness
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `860` — Repaired handler namespace: MarketingAPIController::timeline/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::timeline/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `861` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `861` — Repaired handler namespace: MarketingAPIController::::viewTimelineGrouped -> App\Modules\APIs\Controllers\MarketingAPIController::::viewTimelineGrouped
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `862` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `862` — Repaired handler namespace: MarketingAPIController::::reprocessIncompleteEmails -> App\Modules\APIs\Controllers\MarketingAPIController::::reprocessIncompleteEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `863` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `863` — Repaired handler namespace: MarketingAPIController::::triggerPostAutogenOnEmpty -> App\Modules\APIs\Controllers\MarketingAPIController::::triggerPostAutogenOnEmpty
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `864` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `864` — Repaired handler namespace: MarketingAPIController::::updateCampaignLinks -> App\Modules\APIs\Controllers\MarketingAPIController::::updateCampaignLinks
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `865` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `865` — Repaired handler namespace: MarketingAPIController::::updateInsight -> App\Modules\APIs\Controllers\MarketingAPIController::::updateInsight
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `866` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `866` — Repaired handler namespace: MarketingAPIController::::updateCampaignMessageField -> App\Modules\APIs\Controllers\MarketingAPIController::::updateCampaignMessageField
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `867` — Repaired handler namespace: MarketingAPIController::updatePostSchedule/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::updatePostSchedule/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `868` — Repaired handler namespace: MarketingAPIController::updatePlatformToggle/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::updatePlatformToggle/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `869` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `869` — Repaired handler namespace: MarketingAPIController::::validateSymbol -> App\Modules\APIs\Controllers\MarketingAPIController::::validateSymbol
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `872` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `872` — Repaired handler namespace: MarketingAPIController::::index -> App\Modules\APIs\Controllers\MarketingAPIController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `873` — Repaired handler namespace: MarketingAPIController::add/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::add/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `874` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `874` — Repaired handler namespace: MarketingAPIController::::addSubscriber -> App\Modules\APIs\Controllers\MarketingAPIController::::addSubscriber
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `875` — Repaired handler namespace: MarketingAPIController::approveContent/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::approveContent/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `876` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `876` — Repaired handler namespace: MarketingAPIController::::blogCreator -> App\Modules\APIs\Controllers\MarketingAPIController::::blogCreator
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `877` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `877` — Repaired handler namespace: MarketingAPIController::::blogs -> App\Modules\APIs\Controllers\MarketingAPIController::::blogs
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `878` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `878` — Repaired handler namespace: MarketingAPIController::::campaigns -> App\Modules\APIs\Controllers\MarketingAPIController::::campaigns
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `879` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `879` — Repaired handler namespace: MarketingAPIController::::contentReview -> App\Modules\APIs\Controllers\MarketingAPIController::::contentReview
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `880` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `880` — Repaired handler namespace: MarketingAPIController::::contentGenerator -> App\Modules\APIs\Controllers\MarketingAPIController::::contentGenerator
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `881` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `881` — Repaired handler namespace: MarketingAPIController::::contentListing -> App\Modules\APIs\Controllers\MarketingAPIController::::contentListing
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `882` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `882` — Repaired handler namespace: MarketingAPIController::::viewDailyLogs -> App\Modules\APIs\Controllers\MarketingAPIController::::viewDailyLogs
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `883` — Repaired handler namespace: MarketingAPIController::editContent/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::editContent/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `884` — Repaired handler namespace: MarketingAPIController::viewEmail/$1/$2 -> App\Modules\APIs\Controllers\MarketingAPIController::viewEmail/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `885` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `885` — Repaired handler namespace: MarketingAPIController::::fetchEmails -> App\Modules\APIs\Controllers\MarketingAPIController::::fetchEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `886` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `886` — Repaired handler namespace: MarketingAPIController::::fetchMissingLogos -> App\Modules\APIs\Controllers\MarketingAPIController::::fetchMissingLogos
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `887` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `887` — Repaired handler namespace: MarketingAPIController::::financialNews -> App\Modules\APIs\Controllers\MarketingAPIController::::financialNews
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `888` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `888` — Repaired handler namespace: MarketingAPIController::::generateAutomatedContent -> App\Modules\APIs\Controllers\MarketingAPIController::::generateAutomatedContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `889` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `889` — Repaired handler namespace: MarketingAPIController::::generateContent -> App\Modules\APIs\Controllers\MarketingAPIController::::generateContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `890` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `890` — Repaired handler namespace: MarketingAPIController::::generateNewsletterContent -> App\Modules\APIs\Controllers\MarketingAPIController::::generateNewsletterContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `891` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `891` — Repaired handler namespace: MarketingAPIController::::getRecentScrapes -> App\Modules\APIs\Controllers\MarketingAPIController::::getRecentScrapes
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `892` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `892` — Repaired handler namespace: MarketingAPIController::::generateGroupedContentDrafts -> App\Modules\APIs\Controllers\MarketingAPIController::::generateGroupedContentDrafts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `893` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `893` — Repaired handler namespace: MarketingAPIController::::ideas -> App\Modules\APIs\Controllers\MarketingAPIController::::ideas
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `894` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `894` — Repaired handler namespace: MarketingAPIController::::postCreator -> App\Modules\APIs\Controllers\MarketingAPIController::::postCreator
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `895` — Repaired handler namespace: MarketingAPIController::previewGeneratedPost/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::previewGeneratedPost/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `896` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `896` — Repaired handler namespace: MarketingAPIController::::promote -> App\Modules\APIs\Controllers\MarketingAPIController::::promote
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `897` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `897` — Repaired handler namespace: MarketingAPIController::::promote -> App\Modules\APIs\Controllers\MarketingAPIController::::promote
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `898` — Repaired handler namespace: Management\MarketingAPIController::publishBlog/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::publishBlog/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `899` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `899` — Repaired handler namespace: AlertsAPIController::::research -> App\Modules\APIs\Controllers\AlertsAPIController::::research
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `900` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `900` — Repaired handler namespace: Management\MarketingAPIController::::runContentGeneration -> App\Modules\APIs\Controllers\MarketingAPIController::::runContentGeneration
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `901` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `901` — Repaired handler namespace: MarketingAPIController::::standaloneScrape -> App\Modules\APIs\Controllers\MarketingAPIController::::standaloneScrape
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `902` — Repaired handler namespace: MarketingAPIController::rejectContent/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::rejectContent/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `903` — Repaired handler namespace: MarketingAPIController::saveContentEdit/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::saveContentEdit/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `904` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `904` — Repaired handler namespace: MarketingAPIController::::schedule -> App\Modules\APIs\Controllers\MarketingAPIController::::schedule
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `905` — Repaired handler namespace: MarketingAPIController::schedule/$1 -> App\Modules\APIs\Controllers\MarketingAPIController::schedule/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `906` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `906` — Repaired handler namespace: MarketingAPIController::::scheduleNewsletterCampaign -> App\Modules\APIs\Controllers\MarketingAPIController::::scheduleNewsletterCampaign
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `907` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `907` — Repaired handler namespace: MarketingAPIController::::submitDailyLog -> App\Modules\APIs\Controllers\MarketingAPIController::::submitDailyLog
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `908` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `908` — Repaired handler namespace: MarketingAPIController::::scrapeLink -> App\Modules\APIs\Controllers\MarketingAPIController::::scrapeLink
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `909` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `909` — Repaired handler namespace: MarketingAPIController::::sendNotification -> App\Modules\APIs\Controllers\MarketingAPIController::::sendNotification
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `910` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `910` — Repaired handler namespace: MarketingAPIController::::sendScheduleNewsletter -> App\Modules\APIs\Controllers\MarketingAPIController::::sendScheduleNewsletter
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `911` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `911` — Repaired handler namespace: MarketingAPIController::::communities -> App\Modules\APIs\Controllers\MarketingAPIController::::communities
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `912` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `912` — Repaired handler namespace: MarketingAPIController::::test -> App\Modules\APIs\Controllers\MarketingAPIController::::test
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `913` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `913` — Repaired handler namespace: MarketingAPIController::::twitterDashboard -> App\Modules\APIs\Controllers\MarketingAPIController::::twitterDashboard
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `914` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `914` — Repaired handler namespace: MarketingAPIController::::videoCreator -> App\Modules\APIs\Controllers\MarketingAPIController::::videoCreator
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `915` — Repaired handler namespace: MarketingAPIController::viewEmail/$1/$2 -> App\Modules\APIs\Controllers\MarketingAPIController::viewEmail/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `916` — Repaired handler namespace: MarketingAPIController::View-Grouped-Summaries -> App\Modules\APIs\Controllers\MarketingAPIController::View-Grouped-Summaries
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `917` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `917` — Repaired handler namespace: WalletsAPIController::::addUserGoldTasks -> App\Modules\APIs\Controllers\WalletsAPIController::::addUserGoldTasks
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `918` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `919` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `920` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `921` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `922` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `923` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `926` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `926` — Repaired handler namespace: ManagementAPIController::::getPlatforms -> App\Modules\APIs\Controllers\ManagementAPIController::::getPlatforms
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `927` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `927` — Repaired handler namespace: ManagementAPIController::::savePlatform -> App\Modules\APIs\Controllers\ManagementAPIController::::savePlatform
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `928` — Repaired handler namespace: ManagementAPIController::deletePlatform/$1 -> App\Modules\APIs\Controllers\ManagementAPIController::deletePlatform/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `930` — Repaired handler namespace: ManagementAPIController::getPlatformRules/$1 -> App\Modules\APIs\Controllers\ManagementAPIController::getPlatformRules/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `931` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `931` — Repaired handler namespace: ManagementAPIController::::upsertPlatformRule -> App\Modules\APIs\Controllers\ManagementAPIController::::upsertPlatformRule
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `932` — Repaired handler namespace: ManagementAPIController::deletePlatformRule/$1 -> App\Modules\APIs\Controllers\ManagementAPIController::deletePlatformRule/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `934` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `934` — Repaired handler namespace: ManagementAPIController::::searchTaxonomy -> App\Modules\APIs\Controllers\ManagementAPIController::::searchTaxonomy
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `935` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `935` — Repaired handler namespace: ManagementAPIController::::saveTaxonomy -> App\Modules\APIs\Controllers\ManagementAPIController::::saveTaxonomy
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `936` — Repaired handler namespace: ManagementAPIController::deleteTaxonomy/$1 -> App\Modules\APIs\Controllers\ManagementAPIController::deleteTaxonomy/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `938` — Repaired handler namespace: ManagementAPIController::listSuggestions/$1/$2 -> App\Modules\APIs\Controllers\ManagementAPIController::listSuggestions/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `939` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `939` — Repaired handler namespace: ManagementAPIController::::saveSuggestion -> App\Modules\APIs\Controllers\ManagementAPIController::::saveSuggestion
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `940` — Repaired handler namespace: ManagementAPIController::deleteSuggestion/$1 -> App\Modules\APIs\Controllers\ManagementAPIController::deleteSuggestion/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `942` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `942` — Repaired handler namespace: ManagementAPIController::::getPostingPlan -> App\Modules\APIs\Controllers\ManagementAPIController::::getPostingPlan
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `943` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `943` — Repaired handler namespace: ManagementAPIController::::composePost -> App\Modules\APIs\Controllers\ManagementAPIController::::composePost
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `948` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `948` — Repaired handler namespace: PredictionsAPIController::::index -> App\Modules\APIs\Controllers\PredictionsAPIController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `949` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `949` — Repaired handler namespace: PredictionsAPIController::::addLiquidity -> App\Modules\APIs\Controllers\PredictionsAPIController::::addLiquidity
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `950` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `950` — Repaired handler namespace: PredictionsAPIController::::removeLiquidity -> App\Modules\APIs\Controllers\PredictionsAPIController::::removeLiquidity
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `951` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `951` — Repaired handler namespace: PredictionsAPIController::::markets -> App\Modules\APIs\Controllers\PredictionsAPIController::::markets
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `952` — Repaired handler namespace: PredictionsAPIController::view/$1 -> App\Modules\APIs\Controllers\PredictionsAPIController::view/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `953` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `953` — Repaired handler namespace: PredictionsAPIController::::createMarket -> App\Modules\APIs\Controllers\PredictionsAPIController::::createMarket
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `954` — Repaired handler namespace: PredictionsAPIController::settle/$1 -> App\Modules\APIs\Controllers\PredictionsAPIController::settle/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `955` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `955` — Repaired handler namespace: PredictionsAPIController::::placeOrder -> App\Modules\APIs\Controllers\PredictionsAPIController::::placeOrder
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `956` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `956` — Repaired handler namespace: PredictionsAPIController::::cancelOrder -> App\Modules\APIs\Controllers\PredictionsAPIController::::cancelOrder
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `957` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `957` — Repaired handler namespace: PredictionsAPIController::::portfolio -> App\Modules\APIs\Controllers\PredictionsAPIController::::portfolio
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `958` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `958` — Repaired handler namespace: PredictionsAPIController::::settlements -> App\Modules\APIs\Controllers\PredictionsAPIController::::settlements
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `959` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `959` — Repaired handler namespace: PredictionsAPIController::::placeOrder -> App\Modules\APIs\Controllers\PredictionsAPIController::::placeOrder
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `960` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `960` — Repaired handler namespace: PredictionsAPIController::::cancelOrder -> App\Modules\APIs\Controllers\PredictionsAPIController::::cancelOrder
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `961` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `961` — Repaired handler namespace: PredictionsAPIController::::cronDistributeFees -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronDistributeFees
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `962` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `962` — Repaired handler namespace: PredictionsAPIController::::cronFetchMarketData -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronFetchMarketData
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `963` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `963` — Repaired handler namespace: PredictionsAPIController::::cronFetchUserData -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronFetchUserData
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `964` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `964` — Repaired handler namespace: PredictionsAPIController::::cronSettleMarkets -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronSettleMarkets
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `965` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `965` — Repaired handler namespace: PredictionsAPIController::::cronExpireMarkets -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronExpireMarkets
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `966` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `966` — Repaired handler namespace: PredictionsAPIController::::cronUpdateMarketPrices -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronUpdateMarketPrices
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `967` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `967` — Repaired handler namespace: PredictionsAPIController::::cronUpdateMarketStates -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronUpdateMarketStates
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `968` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `968` — Repaired handler namespace: PredictionsAPIController::::cronUpdateUserPositions -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronUpdateUserPositions
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `969` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `969` — Repaired handler namespace: PredictionsAPIController::::cronUpdateUserStakes -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronUpdateUserStakes
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `970` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `970` — Repaired handler namespace: PredictionsAPIController::::cronUpdateUserFees -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronUpdateUserFees
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `971` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `971` — Repaired handler namespace: PredictionsAPIController::::cronUpdateUserPnL -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronUpdateUserPnL
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `972` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `972` — Repaired handler namespace: PredictionsAPIController::::cronUpdateUserRankings -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronUpdateUserRankings
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `973` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `973` — Repaired handler namespace: PredictionsAPIController::::cronUpdateUserLeaderboard -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronUpdateUserLeaderboard
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `974` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `974` — Repaired handler namespace: PredictionsAPIController::::cronUpdateUserStats -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronUpdateUserStats
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `975` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `975` — Repaired handler namespace: PredictionsAPIController::::cronUpdateUserNotifications -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronUpdateUserNotifications
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `976` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `976` — Repaired handler namespace: PredictionsAPIController::::cronProcessExpiredMarkets -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronProcessExpiredMarkets
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `977` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `977` — Repaired handler namespace: PredictionsAPIController::::cronProcessSettledMarkets -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronProcessSettledMarkets
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `978` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `978` — Repaired handler namespace: PredictionsAPIController::::cronProcessUserOrders -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronProcessUserOrders
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `979` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `979` — Repaired handler namespace: PredictionsAPIController::::cronProcessUserPositions -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronProcessUserPositions
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `980` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `980` — Repaired handler namespace: PredictionsAPIController::::cronProcessUserStakes -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronProcessUserStakes
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `981` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `981` — Repaired handler namespace: PredictionsAPIController::::cronProcessUserFees -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronProcessUserFees
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `982` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `982` — Repaired handler namespace: PredictionsAPIController::::cronProcessUserPnL -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronProcessUserPnL
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `983` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `983` — Repaired handler namespace: PredictionsAPIController::::cronProcessUserRankings -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronProcessUserRankings
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `984` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `984` — Repaired handler namespace: PredictionsAPIController::::cronProcessUserLeaderboard -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronProcessUserLeaderboard
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `985` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `985` — Repaired handler namespace: PredictionsAPIController::::cronProcessUserStats -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronProcessUserStats
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `986` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `986` — Repaired handler namespace: PredictionsAPIController::::cronProcessUserNotifications -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronProcessUserNotifications
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `987` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `987` — Repaired handler namespace: PredictionsAPIController::::cronProcessUserSettlements -> App\Modules\APIs\Controllers\PredictionsAPIController::::cronProcessUserSettlements
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `988` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `988` — Repaired handler namespace: PredictionsAPIController::::lock -> App\Modules\APIs\Controllers\PredictionsAPIController::::lock
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `989` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `989` — Repaired handler namespace: PredictionsAPIController::::rebalanceOdds -> App\Modules\APIs\Controllers\PredictionsAPIController::::rebalanceOdds
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `990` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `990` — Repaired handler namespace: PredictionsAPIController::::unlock -> App\Modules\APIs\Controllers\PredictionsAPIController::::unlock
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `991` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `991` — Repaired handler namespace: PredictionsAPIController::::latest -> App\Modules\APIs\Controllers\PredictionsAPIController::::latest
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `995` — Repaired handler namespace: SolanaAPIController::get/$1 -> App\Modules\APIs\Controllers\SolanaAPIController::get/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `996` — Repaired handler namespace: SolanaAPIController::getCoinAmount/$1 -> App\Modules\APIs\Controllers\SolanaAPIController::getCoinAmount/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `997` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `997` — Repaired handler namespace: SolanaAPIController::::getMarketPrice -> App\Modules\APIs\Controllers\SolanaAPIController::::getMarketPrice
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `998` — Repaired handler namespace: SolanaAPIController::getTokenPrice/$1 -> App\Modules\APIs\Controllers\SolanaAPIController::getTokenPrice/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `999` — Repaired handler namespace: SolanaAPIController::getExchangePrice/$1 -> App\Modules\APIs\Controllers\SolanaAPIController::getExchangePrice/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1000` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1000` — Repaired handler namespace: SolanaAPIController::::getAssetsData -> App\Modules\APIs\Controllers\SolanaAPIController::::getAssetsData
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1001` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1001` — Repaired handler namespace: SolanaAPIController::::provisionDefaultWallet -> App\Modules\APIs\Controllers\SolanaAPIController::::provisionDefaultWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1002` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1002` — Repaired handler namespace: SolanaAPIController::::updateSolanaPrices -> App\Modules\APIs\Controllers\SolanaAPIController::::updateSolanaPrices
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1003` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1003` — Repaired handler namespace: SolanaAPIController::::updateSolanaTokens -> App\Modules\APIs\Controllers\SolanaAPIController::::updateSolanaTokens
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1006` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1006` — Repaired handler namespace: SolanaAPIController::::health -> App\Modules\APIs\Controllers\SolanaAPIController::::health
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1007` — Repaired handler namespace: SolanaAPIController::getBalance/$1 -> App\Modules\APIs\Controllers\SolanaAPIController::getBalance/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1008` — Repaired handler namespace: SolanaAPIController::getTokenAccounts/$1 -> App\Modules\APIs\Controllers\SolanaAPIController::getTokenAccounts/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1009` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1009` — Repaired handler namespace: SolanaAPIController::::transfer -> App\Modules\APIs\Controllers\SolanaAPIController::::transfer
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1010` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1010` — Repaired handler namespace: SolanaAPIController::::quote -> App\Modules\APIs\Controllers\SolanaAPIController::::quote
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1011` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1011` — Repaired handler namespace: SolanaAPIController::::swap -> App\Modules\APIs\Controllers\SolanaAPIController::::swap
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1012` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1012` — Repaired handler namespace: SolanaAPIController::::createToken -> App\Modules\APIs\Controllers\SolanaAPIController::::createToken
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1013` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1013` — Repaired handler namespace: SolanaAPIController::::mint -> App\Modules\APIs\Controllers\SolanaAPIController::::mint
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1018` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1018` — Repaired handler namespace: SupportAPIController::::kb -> App\Modules\APIs\Controllers\SupportAPIController::::kb
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1019` — Repaired handler namespace: SupportAPIController::kbArticle/$1 -> App\Modules\APIs\Controllers\SupportAPIController::kbArticle/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1026` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1026` — Repaired handler namespace: WalletsAPIController::::index -> App\Modules\APIs\Controllers\WalletsAPIController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1027` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1027` — Repaired handler namespace: WalletsAPIController::::summary -> App\Modules\APIs\Controllers\WalletsAPIController::::summary
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1030` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1030` — Repaired handler namespace: WalletsAPIController::::providers -> App\Modules\APIs\Controllers\WalletsAPIController::::providers
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1033` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1033` — Repaired handler namespace: WalletsAPIController::::create -> App\Modules\APIs\Controllers\WalletsAPIController::::create
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1034` — Repaired handler namespace: WalletsAPIController::update/$1 -> App\Modules\APIs\Controllers\WalletsAPIController::update/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1035` — Repaired handler namespace: WalletsAPIController::unlink/$1 -> App\Modules\APIs\Controllers\WalletsAPIController::unlink/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1038` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1038` — Repaired handler namespace: WalletsAPIController::::linkRobinhood -> App\Modules\APIs\Controllers\WalletsAPIController::::linkRobinhood
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1039` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1039` — Repaired handler namespace: WalletsAPIController::::linkSnapTrade -> App\Modules\APIs\Controllers\WalletsAPIController::::linkSnapTrade
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1040` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1040` — Repaired handler namespace: WalletsAPIController::::getSnapTradeConnectUrl -> App\Modules\APIs\Controllers\WalletsAPIController::::getSnapTradeConnectUrl
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1043` — Repaired handler namespace: WalletsAPIController::updateBank/$1 -> App\Modules\APIs\Controllers\WalletsAPIController::updateBank/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1044` — Repaired handler namespace: WalletsAPIController::updateCredit/$1 -> App\Modules\APIs\Controllers\WalletsAPIController::updateCredit/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1045` — Repaired handler namespace: WalletsAPIController::updateDebt/$1 -> App\Modules\APIs\Controllers\WalletsAPIController::updateDebt/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1046` — Repaired handler namespace: WalletsAPIController::updateInvestment/$1 -> App\Modules\APIs\Controllers\WalletsAPIController::updateInvestment/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1047` — Repaired handler namespace: WalletsAPIController::updateCrypto/$1 -> App\Modules\APIs\Controllers\WalletsAPIController::updateCrypto/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1050` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1050` — Repaired handler namespace: WalletsAPIController::::plaidConfigDebug -> App\Modules\APIs\Controllers\WalletsAPIController::::plaidConfigDebug
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1051` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1051` — Repaired handler namespace: WalletsAPIController::::plaidEnv -> App\Modules\APIs\Controllers\WalletsAPIController::::plaidEnv
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1052` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1052` — Repaired handler namespace: WalletsAPIController::::plaidOAuthReturn -> App\Modules\APIs\Controllers\WalletsAPIController::::plaidOAuthReturn
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1053` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1053` — Repaired handler namespace: WalletsAPIController::::plaidWebhook -> App\Modules\APIs\Controllers\WalletsAPIController::::plaidWebhook
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1054` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1054` — Repaired handler namespace: WalletsAPIController::::plaidLinkToken -> App\Modules\APIs\Controllers\WalletsAPIController::::plaidLinkToken
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1055` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1055` — Repaired handler namespace: WalletsAPIController::::plaidExchange -> App\Modules\APIs\Controllers\WalletsAPIController::::plaidExchange
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1057` — Repaired handler namespace: WalletsAPIController::index/$1/$2 -> App\Modules\APIs\Controllers\WalletsAPIController::index/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1062` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1062` — Repaired handler namespace: UserAPIController::::addComment -> App\Modules\APIs\Controllers\UserAPIController::::addComment
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1067` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1067` — Repaired handler namespace: UserAPIController::::addComment -> App\Modules\APIs\Controllers\UserAPIController::::addComment
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1067` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1073` — Repaired handler namespace: AlertsAPIController::fetchMarketAuxNews/$1 -> App\Modules\APIs\Controllers\AlertsAPIController::fetchMarketAuxNews/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1077` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1077` — Repaired handler namespace: BlogController::::index -> App\Modules\Blog\Controllers\BlogController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1078` — Repaired handler namespace: BlogController::viewBlog/$1 -> App\Modules\Blog\Controllers\BlogController::viewBlog/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1081` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1081` — Repaired handler namespace: EarningsController::::index -> App\Modules\Blog\Controllers\EarningsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1082` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1082` — Repaired handler namespace: EarningsController::::test -> App\Modules\Blog\Controllers\EarningsController::::test
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1083` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1083` — Repaired handler namespace: EarningsController::::viewByDate -> App\Modules\Blog\Controllers\EarningsController::::viewByDate
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1086` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1086` — Repaired handler namespace: InvestingController::::index -> App\Modules\Blog\Controllers\InvestingController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1087` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1087` — Repaired handler namespace: InvestingController::::TheBeginnersGuideToOptionTrading -> App\Modules\Blog\Controllers\InvestingController::::TheBeginnersGuideToOptionTrading
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1088` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1088` — Repaired handler namespace: InvestingController::::TheFundamentalsOfInvesting -> App\Modules\Blog\Controllers\InvestingController::::TheFundamentalsOfInvesting
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1089` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1089` — Repaired handler namespace: InvestingController::::TipsForEffectiveInvestmentPortfolioManagement -> App\Modules\Blog\Controllers\InvestingController::::TipsForEffectiveInvestmentPortfolioManagement
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1092` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1092` — Repaired handler namespace: InvestingController::::index -> App\Modules\Blog\Controllers\InvestingController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1092` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1093` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1093` — Repaired handler namespace: IRSController::::IRSExpandedHomeEnergyTaxCredits -> App\Modules\Blog\Controllers\IRSController::::IRSExpandedHomeEnergyTaxCredits
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1096` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1096` — Repaired handler namespace: UpdatesController::::index -> App\Modules\Blog\Controllers\UpdatesController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1097` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1098` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1099` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1102` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1102` — Repaired handler namespace: PersonalBudgetingController::::index -> App\Modules\Blog\Controllers\PersonalBudgetingController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1103` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1103` — Repaired handler namespace: PersonalBudgetingController::::TheImportanceOfPersonalFinancialBudgeting -> App\Modules\Blog\Controllers\PersonalBudgetingController::::TheImportanceOfPersonalFinancialBudgeting
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1106` — Repaired handler namespace: BlogController::view/$1/$2 -> App\Modules\Blog\Controllers\BlogController::view/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1107` — Repaired handler namespace: BlogController::view/$1 -> App\Modules\Blog\Controllers\BlogController::view/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1112` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1112` — Repaired handler namespace: DashboardController::::index -> App\Modules\User\Controllers\DashboardController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1113` — Repaired handler namespace: DashboardController::loadModalContent/$1 -> App\Modules\User\Controllers\DashboardController::loadModalContent/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1114` — Repaired handler namespace: DashboardController::loadModalContent/$1/$2 -> App\Modules\User\Controllers\DashboardController::loadModalContent/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1115` — Repaired handler namespace: DashboardController::loadModalContent/$1/$2/$3 -> App\Modules\User\Controllers\DashboardController::loadModalContent/$1/$2/$3
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1116` — Repaired handler namespace: DashboardController::loadModalContent/$1/$2/$3/$4 -> App\Modules\User\Controllers\DashboardController::loadModalContent/$1/$2/$3/$4
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1117` — Repaired handler namespace: DashboardController::loadModalContent/$1/$2/$3/$4/$5 -> App\Modules\User\Controllers\DashboardController::loadModalContent/$1/$2/$3/$4/$5
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1118` — Repaired handler namespace: DashboardController::loadModalContent/$1/$2/$3/$4/$5/$6 -> App\Modules\User\Controllers\DashboardController::loadModalContent/$1/$2/$3/$4/$5/$6
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1119` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1119` — Repaired handler namespace: DashboardController::::LoadingScreen -> App\Modules\User\Controllers\DashboardController::::LoadingScreen
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1124` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1124` — Repaired handler namespace: DashboardController::::onboarding -> App\Modules\User\Controllers\DashboardController::::onboarding
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1125` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1125` — Repaired handler namespace: DashboardController::::checkOnboardingStatus -> App\Modules\User\Controllers\DashboardController::::checkOnboardingStatus
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1126` — Repaired handler namespace: DashboardController::completeOnboardingStep/$1 -> App\Modules\User\Controllers\DashboardController::completeOnboardingStep/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1127` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1127` — Repaired handler namespace: DashboardController::::continueSetupModal -> App\Modules\User\Controllers\DashboardController::::continueSetupModal
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1128` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1128` — Repaired handler namespace: DashboardController::::dismissSetup -> App\Modules\User\Controllers\DashboardController::::dismissSetup
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1129` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1129` — Repaired handler namespace: OnboardingWalkthroughController::::progress -> App\Modules\User\Controllers\OnboardingWalkthroughController::::progress
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1130` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1130` — Repaired handler namespace: OnboardingWalkthroughController::::saveProfile -> App\Modules\User\Controllers\OnboardingWalkthroughController::::saveProfile
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1131` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1131` — Repaired handler namespace: OnboardingWalkthroughController::::saveBudgetIncome -> App\Modules\User\Controllers\OnboardingWalkthroughController::::saveBudgetIncome
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1132` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1132` — Repaired handler namespace: OnboardingWalkthroughController::::saveCreditDebt -> App\Modules\User\Controllers\OnboardingWalkthroughController::::saveCreditDebt
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1133` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1133` — Repaired handler namespace: OnboardingWalkthroughController::::saveRecurringExpense -> App\Modules\User\Controllers\OnboardingWalkthroughController::::saveRecurringExpense
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1134` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1134` — Repaired handler namespace: OnboardingWalkthroughController::::saveWatchlist -> App\Modules\User\Controllers\OnboardingWalkthroughController::::saveWatchlist
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1138` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1138` — Repaired handler namespace: ManagementAdminController::::banUnverifiedUsers -> App\Modules\Management\Controllers\ManagementAdminController::::banUnverifiedUsers
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1139` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1139` — Repaired handler namespace: ManagementAdminController::::processQueuedEmails -> App\Modules\Management\Controllers\ManagementAdminController::::processQueuedEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1140` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1140` — Repaired handler namespace: ManagementAdminController::::resendActivationEmailsBatch -> App\Modules\Management\Controllers\ManagementAdminController::::resendActivationEmailsBatch
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1141` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1141` — Repaired handler namespace: ManagementAdminController::::resendActivationEmailsBatchQueued -> App\Modules\Management\Controllers\ManagementAdminController::::resendActivationEmailsBatchQueued
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1142` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1142` — Repaired handler namespace: ManagementAdminController::::sendTestActivationEmail -> App\Modules\Management\Controllers\ManagementAdminController::::sendTestActivationEmail
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1143` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1143` — Repaired handler namespace: ManagementAdminController::::saveSuggestion -> App\Modules\Management\Controllers\ManagementAdminController::::saveSuggestion
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1144` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1144` — Repaired handler namespace: ManagementAdminController::::index -> App\Modules\Management\Controllers\ManagementAdminController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1145` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1145` — Repaired handler namespace: SignalsAdminController::::index -> App\Modules\Management\Controllers\SignalsAdminController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1146` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1146` — Repaired handler namespace: AiOpsManagementAdminController::::index -> App\Modules\Management\Controllers\AiOpsManagementAdminController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1147` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1147` — Repaired handler namespace: OpsAdminController::::index -> App\Modules\Management\Controllers\OpsAdminController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1148` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1148` — Repaired handler namespace: OpsAdminController::::ajaxStatus -> App\Modules\Management\Controllers\OpsAdminController::::ajaxStatus
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1149` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1149` — Repaired handler namespace: OpsAdminController::::ajaxDispatch -> App\Modules\Management\Controllers\OpsAdminController::::ajaxDispatch
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1151` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1151` — Repaired handler namespace: AccountRescueAdminController::::index -> App\Modules\Management\Controllers\AccountRescueAdminController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1152` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1152` — Repaired handler namespace: AccountRescueAdminController::::lookup -> App\Modules\Management\Controllers\AccountRescueAdminController::::lookup
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1153` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1153` — Repaired handler namespace: AccountRescueAdminController::::resendActivation -> App\Modules\Management\Controllers\AccountRescueAdminController::::resendActivation
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1154` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1154` — Repaired handler namespace: AccountRescueAdminController::::manualActivate -> App\Modules\Management\Controllers\AccountRescueAdminController::::manualActivate
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1155` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1155` — Repaired handler namespace: AccountRescueAdminController::::forcePasswordReset -> App\Modules\Management\Controllers\AccountRescueAdminController::::forcePasswordReset
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1156` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1156` — Repaired handler namespace: AccountRescueAdminController::::unlockAccount -> App\Modules\Management\Controllers\AccountRescueAdminController::::unlockAccount
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1159` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1159` — Repaired handler namespace: AdminController::::index -> App\Modules\Management\Controllers\AdminController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1160` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1160` — Repaired handler namespace: ChatAdminController::::index -> App\Modules\Management\Controllers\ChatAdminController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1161` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1161` — Repaired handler namespace: ChatAdminController::::submit -> App\Modules\Management\Controllers\ChatAdminController::::submit
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1162` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1162` — Repaired handler namespace: ChatAdminController::::history -> App\Modules\Management\Controllers\ChatAdminController::::history
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1164` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1165` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1165` — Repaired handler namespace: AlertsAdminController::::index -> App\Modules\Management\Controllers\AlertsAdminController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1166` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1166` — Repaired handler namespace: AlertsAdminController::::add -> App\Modules\Management\Controllers\AlertsAdminController::::add
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1167` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1167` — Repaired handler namespace: AlertsAdminController::::addTradeAlert -> App\Modules\Management\Controllers\AlertsAdminController::::addTradeAlert
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1168` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1168` — Repaired handler namespace: AlertsAdminController::::advisorMedia -> App\Modules\Management\Controllers\AlertsAdminController::::advisorMedia
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1169` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1169` — Repaired handler namespace: AlertsAdminController::::generateAdvisorPackage -> App\Modules\Management\Controllers\AlertsAdminController::::generateAdvisorPackage
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1170` — Repaired handler namespace: Management\AlertsAdminController::stockOverview/$1/$2 -> App\Modules\Management\Controllers\AlertsAdminController::stockOverview/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1171` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1171` — Repaired handler namespace: AlertsAdminController::::auditEmailScraper -> App\Modules\Management\Controllers\AlertsAdminController::::auditEmailScraper
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1172` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1172` — Repaired handler namespace: AlertsAdminController::::fetchData -> App\Modules\Management\Controllers\AlertsAdminController::::fetchData
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1173` — Repaired handler namespace: AlertsAdminController::fetchTickerDetails/$1 -> App\Modules\Management\Controllers\AlertsAdminController::fetchTickerDetails/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1174` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1174` — Repaired handler namespace: AlertsAdminController::::importTickers -> App\Modules\Management\Controllers\AlertsAdminController::::importTickers
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1175` — Repaired handler namespace: Management\AlertsAdminController::stockOverview/$1/$2 -> App\Modules\Management\Controllers\AlertsAdminController::stockOverview/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1176` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1176` — Repaired handler namespace: Management\AlertsAdminController::::fetchData -> App\Modules\Management\Controllers\AlertsAdminController::::fetchData
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1177` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1177` — Repaired handler namespace: AlertsAdminController::::submitTradingView -> App\Modules\Management\Controllers\AlertsAdminController::::submitTradingView
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1178` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1178` — Repaired handler namespace: AlertsAdminController::::test -> App\Modules\Management\Controllers\AlertsAdminController::::test
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1179` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1179` — Repaired handler namespace: AlertsAdminController::::testEmail -> App\Modules\Management\Controllers\AlertsAdminController::::testEmail
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1180` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1180` — Repaired handler namespace: AlertsAdminController::::sendTestEmail -> App\Modules\Management\Controllers\AlertsAdminController::::sendTestEmail
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1181` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1181` — Repaired handler namespace: AlertsAdminController::::trades -> App\Modules\Management\Controllers\AlertsAdminController::::trades
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1182` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1182` — Repaired handler namespace: AlertsAdminController::::topPerformanceWeekly -> App\Modules\Management\Controllers\AlertsAdminController::::topPerformanceWeekly
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1185` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1185` — Repaired handler namespace: AssetsAdminController::::index -> App\Modules\Management\Controllers\AssetsAdminController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1188` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1188` — Repaired handler namespace: BudgetsAdminController::::index -> App\Modules\Management\Controllers\BudgetsAdminController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1191` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1191` — Repaired handler namespace: BudgetingAdminController::::index -> App\Modules\Management\Controllers\BudgetingAdminController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1194` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1194` — Repaired handler namespace: DevelopmentAdminController::::index -> App\Modules\Management\Controllers\DevelopmentAdminController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1197` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1197` — Repaired handler namespace: DiscordAdminController::::index -> App\Modules\Management\Controllers\DiscordAdminController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1198` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1198` — Repaired handler namespace: DiscordAdminController::::saveDiscordChannel -> App\Modules\Management\Controllers\DiscordAdminController::::saveDiscordChannel
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1199` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1199` — Repaired handler namespace: DiscordAdminController::::deleteDiscordChannel -> App\Modules\Management\Controllers\DiscordAdminController::::deleteDiscordChannel
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1200` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1200` — Repaired handler namespace: DiscordAdminController::::saveDiscordTemplate -> App\Modules\Management\Controllers\DiscordAdminController::::saveDiscordTemplate
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1201` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1201` — Repaired handler namespace: DiscordAdminController::::deleteDiscordTemplate -> App\Modules\Management\Controllers\DiscordAdminController::::deleteDiscordTemplate
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1202` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1202` — Repaired handler namespace: DiscordAdminController::::saveDiscordSubscription -> App\Modules\Management\Controllers\DiscordAdminController::::saveDiscordSubscription
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1203` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1203` — Repaired handler namespace: DiscordAdminController::::deleteDiscordSubscription -> App\Modules\Management\Controllers\DiscordAdminController::::deleteDiscordSubscription
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1204` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1204` — Repaired handler namespace: DiscordAdminController::::saveDiscordPolicy -> App\Modules\Management\Controllers\DiscordAdminController::::saveDiscordPolicy
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1205` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1205` — Repaired handler namespace: DiscordAdminController::::deleteDiscordPolicy -> App\Modules\Management\Controllers\DiscordAdminController::::deleteDiscordPolicy
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1208` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1208` — Repaired handler namespace: DripCampaignAdminController::::index -> App\Modules\Management\Controllers\DripCampaignAdminController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1209` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1209` — Repaired handler namespace: DripCampaignAdminController::::create -> App\Modules\Management\Controllers\DripCampaignAdminController::::create
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1210` — Repaired handler namespace: DripCampaignAdminController::viewSteps/$1 -> App\Modules\Management\Controllers\DripCampaignAdminController::viewSteps/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1211` — Repaired handler namespace: DripCampaignAdminController::addStep/$1 -> App\Modules\Management\Controllers\DripCampaignAdminController::addStep/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1213` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1214` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1214` — Repaired handler namespace: EmailAdminController::::index -> App\Modules\Management\Controllers\EmailAdminController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1215` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1215` — Repaired handler namespace: EmailAdminController::::addMember -> App\Modules\Management\Controllers\EmailAdminController::::addMember
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1216` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1216` — Repaired handler namespace: EmailAdminController::::autoScheduleDrafts -> App\Modules\Management\Controllers\EmailAdminController::::autoScheduleDrafts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1217` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1217` — Repaired handler namespace: EmailAdminController::::autoScheduleLogs -> App\Modules\Management\Controllers\EmailAdminController::::autoScheduleLogs
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1218` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1218` — Repaired handler namespace: EmailAdminController::::campaigns -> App\Modules\Management\Controllers\EmailAdminController::::campaigns
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1219` — Repaired handler namespace: EmailAdminController::campaignStats/$1 -> App\Modules\Management\Controllers\EmailAdminController::campaignStats/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1220` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1220` — Repaired handler namespace: EmailAdminController::::createList -> App\Modules\Management\Controllers\EmailAdminController::::createList
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1221` — Repaired handler namespace: EmailAdminController::editCampaign/$1 -> App\Modules\Management\Controllers\EmailAdminController::editCampaign/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1222` — Repaired handler namespace: EmailAdminController::previewQueuedEmail/$1 -> App\Modules\Management\Controllers\EmailAdminController::previewQueuedEmail/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1223` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1223` — Repaired handler namespace: EmailAdminController::::queued -> App\Modules\Management\Controllers\EmailAdminController::::queued
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1224` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1224` — Repaired handler namespace: EmailAdminController::::sendCampaign -> App\Modules\Management\Controllers\EmailAdminController::::sendCampaign
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1225` — Repaired handler namespace: EmailAdminController::scheduleCampaign/$1 -> App\Modules\Management\Controllers\EmailAdminController::scheduleCampaign/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1226` — Repaired handler namespace: EmailAdminController::scheduleCampaignSubmit/$1 -> App\Modules\Management\Controllers\EmailAdminController::scheduleCampaignSubmit/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1227` — Repaired handler namespace: EmailAdminController::updateCampaign/$1 -> App\Modules\Management\Controllers\EmailAdminController::updateCampaign/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1230` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1230` — Repaired handler namespace: ErrorOpsController::::index -> App\Modules\Management\Controllers\ErrorOpsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1231` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1231` — Repaired handler namespace: ErrorOpsController::::apiKpis -> App\Modules\Management\Controllers\ErrorOpsController::::apiKpis
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1232` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1233` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1233` — Repaired handler namespace: ErrorOpsController::::apiHeatmap -> App\Modules\Management\Controllers\ErrorOpsController::::apiHeatmap
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1234` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1234` — Repaired handler namespace: ErrorOpsController::::apiPatterns -> App\Modules\Management\Controllers\ErrorOpsController::::apiPatterns
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1237` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1237` — Repaired handler namespace: ExchangeAdminController::::index -> App\Modules\Management\Controllers\ExchangeAdminController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1240` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1240` — Repaired handler namespace: FinanceAdminController::::index -> App\Modules\Management\Controllers\FinanceAdminController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1243` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1243` — Repaired handler namespace: HowTosAdminController::::index -> App\Modules\Management\Controllers\HowTosAdminController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1244` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1244` — Repaired handler namespace: HowTosAdminController::::employeeAccountSetup -> App\Modules\Management\Controllers\HowTosAdminController::::employeeAccountSetup
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1245` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1245` — Repaired handler namespace: HowTosAdminController::::employeeEmailSetup -> App\Modules\Management\Controllers\HowTosAdminController::::employeeEmailSetup
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1248` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1248` — Repaired handler namespace: HRAdminController::::index -> App\Modules\Management\Controllers\HRAdminController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1250` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1251` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1251` — Repaired handler namespace: InvestmentsAdminController::::index -> App\Modules\Management\Controllers\InvestmentsAdminController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1252` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1252` — Repaired handler namespace: InvestmentsAdminController::::newsIndex -> App\Modules\Management\Controllers\InvestmentsAdminController::::newsIndex
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1254` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1255` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1255` — Repaired handler namespace: MarketingAdminController::::index -> App\Modules\Management\Controllers\MarketingAdminController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1256` — Repaired handler namespace: MarketingAdminController::add/$1 -> App\Modules\Management\Controllers\MarketingAdminController::add/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1257` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1257` — Repaired handler namespace: MarketingAdminController::::addSchedule -> App\Modules\Management\Controllers\MarketingAdminController::::addSchedule
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1258` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1258` — Repaired handler namespace: MarketingAdminController::::addSubscriber -> App\Modules\Management\Controllers\MarketingAdminController::::addSubscriber
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1259` — Repaired handler namespace: MarketingAdminController::approveContent/$1 -> App\Modules\Management\Controllers\MarketingAdminController::approveContent/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1260` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1260` — Repaired handler namespace: MarketingAdminController::::blogCreator -> App\Modules\Management\Controllers\MarketingAdminController::::blogCreator
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1261` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1261` — Repaired handler namespace: MarketingAdminController::::blogs -> App\Modules\Management\Controllers\MarketingAdminController::::blogs
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1262` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1262` — Repaired handler namespace: MarketingAdminController::::campaigns -> App\Modules\Management\Controllers\MarketingAdminController::::campaigns
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1263` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1263` — Repaired handler namespace: MarketingAdminController::::contentReview -> App\Modules\Management\Controllers\MarketingAdminController::::contentReview
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1264` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1264` — Repaired handler namespace: MarketingAdminController::::contentGenerator -> App\Modules\Management\Controllers\MarketingAdminController::::contentGenerator
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1265` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1265` — Repaired handler namespace: MarketingAdminController::::contentListing -> App\Modules\Management\Controllers\MarketingAdminController::::contentListing
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1266` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1266` — Repaired handler namespace: MarketingAdminController::::viewDailyLogs -> App\Modules\Management\Controllers\MarketingAdminController::::viewDailyLogs
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1267` — Repaired handler namespace: MarketingAdminController::editContent/$1 -> App\Modules\Management\Controllers\MarketingAdminController::editContent/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1268` — Repaired handler namespace: MarketingAdminController::viewEmail/$1/$2 -> App\Modules\Management\Controllers\MarketingAdminController::viewEmail/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1269` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1269` — Repaired handler namespace: MarketingAdminController::::fetchEmails -> App\Modules\Management\Controllers\MarketingAdminController::::fetchEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1270` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1270` — Repaired handler namespace: MarketingAdminController::::fetchMissingLogos -> App\Modules\Management\Controllers\MarketingAdminController::::fetchMissingLogos
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1271` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1271` — Repaired handler namespace: MarketingAdminController::::financialNews -> App\Modules\Management\Controllers\MarketingAdminController::::financialNews
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1272` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1272` — Repaired handler namespace: MarketingAdminController::::generateAutomatedContent -> App\Modules\Management\Controllers\MarketingAdminController::::generateAutomatedContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1273` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1273` — Repaired handler namespace: MarketingAdminController::::generateContent -> App\Modules\Management\Controllers\MarketingAdminController::::generateContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1274` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1274` — Repaired handler namespace: MarketingAdminController::::generateDailyContentDigest -> App\Modules\Management\Controllers\MarketingAdminController::::generateDailyContentDigest
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1275` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1275` — Repaired handler namespace: MarketingAdminController::::generateNewsletterContent -> App\Modules\Management\Controllers\MarketingAdminController::::generateNewsletterContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1276` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1276` — Repaired handler namespace: MarketingAdminController::::getRecentScrapes -> App\Modules\Management\Controllers\MarketingAdminController::::getRecentScrapes
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1277` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1277` — Repaired handler namespace: MarketingAdminController::::generateGroupedContentDrafts -> App\Modules\Management\Controllers\MarketingAdminController::::generateGroupedContentDrafts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1278` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1278` — Repaired handler namespace: MarketingAdminController::::ideas -> App\Modules\Management\Controllers\MarketingAdminController::::ideas
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1279` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1279` — Repaired handler namespace: MarketingAdminController::::postCreator -> App\Modules\Management\Controllers\MarketingAdminController::::postCreator
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1280` — Repaired handler namespace: MarketingAdminController::previewGeneratedPost/$1 -> App\Modules\Management\Controllers\MarketingAdminController::previewGeneratedPost/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1281` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1281` — Repaired handler namespace: MarketingAdminController::::promote -> App\Modules\Management\Controllers\MarketingAdminController::::promote
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1282` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1282` — Repaired handler namespace: MarketingAdminController::::promote -> App\Modules\Management\Controllers\MarketingAdminController::::promote
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1283` — Repaired handler namespace: Management\MarketingAdminController::publishBlog/$1 -> App\Modules\Management\Controllers\MarketingAdminController::publishBlog/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1284` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1284` — Repaired handler namespace: AlertsController::::research -> App\Modules\User\Controllers\AlertsController::::research
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1285` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1285` — Repaired handler namespace: Management\MarketingAdminController::::runContentGeneration -> App\Modules\Management\Controllers\MarketingAdminController::::runContentGeneration
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1286` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1286` — Repaired handler namespace: MarketingAdminController::::standaloneScrape -> App\Modules\Management\Controllers\MarketingAdminController::::standaloneScrape
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1287` — Repaired handler namespace: MarketingAdminController::rejectContent/$1 -> App\Modules\Management\Controllers\MarketingAdminController::rejectContent/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1288` — Repaired handler namespace: MarketingAdminController::saveContentEdit/$1 -> App\Modules\Management\Controllers\MarketingAdminController::saveContentEdit/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1289` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1289` — Repaired handler namespace: MarketingAdminController::::schedule -> App\Modules\Management\Controllers\MarketingAdminController::::schedule
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1290` — Repaired handler namespace: MarketingAdminController::schedule/$1 -> App\Modules\Management\Controllers\MarketingAdminController::schedule/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1291` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1291` — Repaired handler namespace: MarketingAdminController::::scheduleNewsletterCampaign -> App\Modules\Management\Controllers\MarketingAdminController::::scheduleNewsletterCampaign
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1292` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1292` — Repaired handler namespace: MarketingAdminController::::submitDailyLog -> App\Modules\Management\Controllers\MarketingAdminController::::submitDailyLog
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1293` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1293` — Repaired handler namespace: MarketingAdminController::::scrapeLink -> App\Modules\Management\Controllers\MarketingAdminController::::scrapeLink
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1294` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1294` — Repaired handler namespace: MarketingAdminController::::sendNotification -> App\Modules\Management\Controllers\MarketingAdminController::::sendNotification
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1295` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1295` — Repaired handler namespace: MarketingAdminController::::sendScheduleNewsletter -> App\Modules\Management\Controllers\MarketingAdminController::::sendScheduleNewsletter
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1296` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1296` — Repaired handler namespace: MarketingAdminController::::test -> App\Modules\Management\Controllers\MarketingAdminController::::test
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1297` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1297` — Repaired handler namespace: MarketingAdminController::::twitterDashboard -> App\Modules\Management\Controllers\MarketingAdminController::::twitterDashboard
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1298` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1298` — Repaired handler namespace: MarketingAdminController::::videoCreator -> App\Modules\Management\Controllers\MarketingAdminController::::videoCreator
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1299` — Repaired handler namespace: MarketingAdminController::viewEmail/$1/$2 -> App\Modules\Management\Controllers\MarketingAdminController::viewEmail/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1300` — Repaired handler namespace: MarketingAdminController::View-Grouped-Summaries -> App\Modules\Management\Controllers\MarketingAdminController::View-Grouped-Summaries
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1301` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1301` — Repaired handler namespace: WalletsAdminController::::addUserGoldTasks -> App\Modules\Management\Controllers\WalletsAdminController::::addUserGoldTasks
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1303` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1304` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1304` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1305` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1305` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1307` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1307` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1308` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1308` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1309` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1309` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1310` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1310` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1313` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1313` — Repaired handler namespace: EmailController::::index -> App\Modules\User\Controllers\EmailController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1316` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1318` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1322` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1325` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1328` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1331` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1331` — Repaired handler namespace: ProjectsController::::index -> App\Modules\User\Controllers\ProjectsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1332` — Repaired handler namespace: ProjectsController::approveProject/$1 -> App\Modules\User\Controllers\ProjectsController::approveProject/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1333` — Repaired handler namespace: ProjectsController::approveProject/$1 -> App\Modules\User\Controllers\ProjectsController::approveProject/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1334` — Repaired handler namespace: ProjectsController::rejectProject/$1 -> App\Modules\User\Controllers\ProjectsController::rejectProject/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1335` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1335` — Repaired handler namespace: ProjectsController::::realEstateQuickIntake -> App\Modules\User\Controllers\ProjectsController::::realEstateQuickIntake
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1336` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1336` — Repaired handler namespace: ProjectsController::::realEstateQuickSubmit -> App\Modules\User\Controllers\ProjectsController::::realEstateQuickSubmit
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1339` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1342` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1345` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1347` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1348` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1349` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1350` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1351` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1353` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1354` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1354` — Repaired handler namespace: WalletsController::::index -> App\Modules\User\Controllers\WalletsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1355` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1355` — Repaired handler namespace: WalletsController::::reconcile -> App\Modules\User\Controllers\WalletsController::::reconcile
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1356` — Repaired handler namespace: WalletsController::emailUserAboutIssue/$1/$2 -> App\Modules\User\Controllers\WalletsController::emailUserAboutIssue/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1360` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1365` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1375` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1380` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1380` — Repaired handler namespace: AlertsController::::index -> App\Modules\User\Controllers\AlertsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1381` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1381` — Repaired handler namespace: AlertsController::::trades -> App\Modules\User\Controllers\AlertsController::::trades
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1385` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1386` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1386` — Repaired handler namespace: AuctionsController::::index -> App\Modules\User\Controllers\AuctionsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1387` — Repaired handler namespace: AuctionsController::item/$1 -> App\Modules\User\Controllers\AuctionsController::item/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1388` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1388` — Repaired handler namespace: AuctionsController::::create -> App\Modules\User\Controllers\AuctionsController::::create
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1389` — Repaired handler namespace: AuctionsController::bid/$1 -> App\Modules\User\Controllers\AuctionsController::bid/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1390` — Repaired handler namespace: AuctionsController::poll/$1 -> App\Modules\User\Controllers\AuctionsController::poll/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1394` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1394` — Repaired handler namespace: BudgetController::::index -> App\Modules\User\Controllers\BudgetController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1396` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1396` — Repaired handler namespace: BudgetController::::index -> App\Modules\User\Controllers\BudgetController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1397` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1397` — Repaired handler namespace: BudgetController::::index -> App\Modules\User\Controllers\BudgetController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1400` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1400` — Repaired handler namespace: BudgetController::::thisMonth -> App\Modules\User\Controllers\BudgetController::::thisMonth
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1401` — Repaired handler namespace: BudgetController::thisMonth/$1 -> App\Modules\User\Controllers\BudgetController::thisMonth/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1402` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1402` — Repaired handler namespace: BudgetController::::lastMonth -> App\Modules\User\Controllers\BudgetController::::lastMonth
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1403` — Repaired handler namespace: BudgetController::lastMonth/$1 -> App\Modules\User\Controllers\BudgetController::lastMonth/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1404` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1404` — Repaired handler namespace: BudgetController::::nextMonth -> App\Modules\User\Controllers\BudgetController::::nextMonth
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1405` — Repaired handler namespace: BudgetController::nextMonth/$1 -> App\Modules\User\Controllers\BudgetController::nextMonth/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1406` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1406` — Repaired handler namespace: BudgetController::::accountManager -> App\Modules\User\Controllers\BudgetController::::accountManager
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1407` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1407` — Repaired handler namespace: BudgetController::::add -> App\Modules\User\Controllers\BudgetController::::add
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1408` — Repaired handler namespace: BudgetController::add/$1 -> App\Modules\User\Controllers\BudgetController::add/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1409` — Repaired handler namespace: BudgetController::approveRecurringSchedule/$1 -> App\Modules\User\Controllers\BudgetController::approveRecurringSchedule/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1411` — Repaired handler namespace: BudgetController::approveRecurringSchedule/$1 -> App\Modules\User\Controllers\BudgetController::approveRecurringSchedule/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1412` — Repaired handler namespace: BudgetController::cancelAccount/$1 -> App\Modules\User\Controllers\BudgetController::cancelAccount/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1413` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1413` — Repaired handler namespace: BudgetController::::edit -> App\Modules\User\Controllers\BudgetController::::edit
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1414` — Repaired handler namespace: BudgetController::edit/$1 -> App\Modules\User\Controllers\BudgetController::edit/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1415` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1415` — Repaired handler namespace: BudgetController::::deleteAccount -> App\Modules\User\Controllers\BudgetController::::deleteAccount
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1416` — Repaired handler namespace: BudgetController::deleteAccount/$1 -> App\Modules\User\Controllers\BudgetController::deleteAccount/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1417` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1417` — Repaired handler namespace: BudgetController::::details -> App\Modules\User\Controllers\BudgetController::::details
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1418` — Repaired handler namespace: BudgetController::details/$1 -> App\Modules\User\Controllers\BudgetController::details/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1419` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1419` — Repaired handler namespace: BudgetController::::edit -> App\Modules\User\Controllers\BudgetController::::edit
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1420` — Repaired handler namespace: BudgetController::edit/$1 -> App\Modules\User\Controllers\BudgetController::edit/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1421` — Repaired handler namespace: BudgetController::edit/$1/$2 -> App\Modules\User\Controllers\BudgetController::edit/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1422` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1422` — Repaired handler namespace: BudgetController::::accountOverview -> App\Modules\User\Controllers\BudgetController::::accountOverview
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1423` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1423` — Repaired handler namespace: BudgetController::::financialAnalysis -> App\Modules\User\Controllers\BudgetController::::financialAnalysis
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1424` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1424` — Repaired handler namespace: BudgetController::::financialForecaster -> App\Modules\User\Controllers\BudgetController::::financialForecaster
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1426` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1426` — Repaired handler namespace: BudgetController::::forecast -> App\Modules\User\Controllers\BudgetController::::forecast
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1427` — Repaired handler namespace: BudgetController::forecast/$1 -> App\Modules\User\Controllers\BudgetController::forecast/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1428` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1428` — Repaired handler namespace: BudgetController::::history -> App\Modules\User\Controllers\BudgetController::::history
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1429` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1429` — Repaired handler namespace: BudgetController::::history -> App\Modules\User\Controllers\BudgetController::::history
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1430` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1430` — Repaired handler namespace: BudgetController::::accountOverview -> App\Modules\User\Controllers\BudgetController::::accountOverview
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1431` — Repaired handler namespace: BudgetController::recurringSchedule/$1 -> App\Modules\User\Controllers\BudgetController::recurringSchedule/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1432` — Repaired handler namespace: BudgetController::recurringSchedule/$1 -> App\Modules\User\Controllers\BudgetController::recurringSchedule/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1433` — Repaired handler namespace: BudgetController::edit/$1 -> App\Modules\User\Controllers\BudgetController::edit/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1434` — Repaired handler namespace: BudgetController::settings/$1 -> App\Modules\User\Controllers\BudgetController::settings/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1435` — Repaired handler namespace: BudgetController::paid/$1 -> App\Modules\User\Controllers\BudgetController::paid/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1436` — Repaired handler namespace: BudgetController::unpaid/$1 -> App\Modules\User\Controllers\BudgetController::unpaid/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1442` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1442` — Repaired handler namespace: ExchangeController::::index -> App\Modules\Exchange\Controllers\ExchangeController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1444` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1444` — Repaired handler namespace: DigiByteController::::fetchFrontendData -> App\Modules\Exchange\Controllers\DigiByteController::::fetchFrontendData
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1445` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1445` — Repaired handler namespace: DigiByteController::::provisionDefaultWallet -> App\Modules\Exchange\Controllers\DigiByteController::::provisionDefaultWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1446` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1446` — Repaired handler namespace: DigiByteController::::disconnectWallet -> App\Modules\Exchange\Controllers\DigiByteController::::disconnectWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1447` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1447` — Repaired handler namespace: DigiByteController::::refreshWallet -> App\Modules\Exchange\Controllers\DigiByteController::::refreshWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1448` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1448` — Repaired handler namespace: DigiByteController::::getAssets -> App\Modules\Exchange\Controllers\DigiByteController::::getAssets
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1449` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1449` — Repaired handler namespace: DigiByteController::::createWallet -> App\Modules\Exchange\Controllers\DigiByteController::::createWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1450` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1450` — Repaired handler namespace: DigiByteController::::connectWallet -> App\Modules\Exchange\Controllers\DigiByteController::::connectWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1453` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1453` — Repaired handler namespace: MetaMaskController::::index -> App\Modules\Exchange\Controllers\MetaMaskController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1454` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1454` — Repaired handler namespace: MetaMaskController::::connectWallet -> App\Modules\Exchange\Controllers\MetaMaskController::::connectWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1455` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1455` — Repaired handler namespace: MetaMaskController::::disconnectWallet -> App\Modules\Exchange\Controllers\MetaMaskController::::disconnectWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1456` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1456` — Repaired handler namespace: MetaMaskController::::refreshWallet -> App\Modules\Exchange\Controllers\MetaMaskController::::refreshWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1457` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1457` — Repaired handler namespace: MetaMaskController::::getAssets -> App\Modules\Exchange\Controllers\MetaMaskController::::getAssets
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1458` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1458` — Repaired handler namespace: MetaMaskController::::generateWallet -> App\Modules\Exchange\Controllers\MetaMaskController::::generateWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1459` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1459` — Repaired handler namespace: MetaMaskController::::signTransaction -> App\Modules\Exchange\Controllers\MetaMaskController::::signTransaction
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1460` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1460` — Repaired handler namespace: MetaMaskController::::verifySignature -> App\Modules\Exchange\Controllers\MetaMaskController::::verifySignature
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1461` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1461` — Repaired handler namespace: MetaMaskController::::sendAsset -> App\Modules\Exchange\Controllers\MetaMaskController::::sendAsset
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1462` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1462` — Repaired handler namespace: MetaMaskController::::getTransactionStatus -> App\Modules\Exchange\Controllers\MetaMaskController::::getTransactionStatus
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1463` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1463` — Repaired handler namespace: MetaMaskController::::getBalance -> App\Modules\Exchange\Controllers\MetaMaskController::::getBalance
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1464` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1464` — Repaired handler namespace: MetaMaskController::::validateAddress -> App\Modules\Exchange\Controllers\MetaMaskController::::validateAddress
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1465` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1465` — Repaired handler namespace: MetaMaskController::::getCurrentBlock -> App\Modules\Exchange\Controllers\MetaMaskController::::getCurrentBlock
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1466` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1466` — Repaired handler namespace: MetaMaskController::::estimateTransactionFee -> App\Modules\Exchange\Controllers\MetaMaskController::::estimateTransactionFee
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1467` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1467` — Repaired handler namespace: MetaMaskController::::getNetworkStatus -> App\Modules\Exchange\Controllers\MetaMaskController::::getNetworkStatus
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1468` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1468` — Repaired handler namespace: MetaMaskController::::deployContract -> App\Modules\Exchange\Controllers\MetaMaskController::::deployContract
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1469` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1469` — Repaired handler namespace: MetaMaskController::::callContractFunction -> App\Modules\Exchange\Controllers\MetaMaskController::::callContractFunction
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1471` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1472` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1472` — Repaired handler namespace: SolanaController::::index -> App\Modules\Exchange\Controllers\SolanaController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1473` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1473` — Repaired handler namespace: SolanaController::::testPage -> App\Modules\Exchange\Controllers\SolanaController::::testPage
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1474` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1474` — Repaired handler namespace: SolanaController::::assets -> App\Modules\Exchange\Controllers\SolanaController::::assets
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1475` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1475` — Repaired handler namespace: SolanaController::::create -> App\Modules\Exchange\Controllers\SolanaController::::create
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1476` — Repaired handler namespace: SolanaController::disconnectWallet/$1 -> App\Modules\Exchange\Controllers\SolanaController::disconnectWallet/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1477` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1477` — Repaired handler namespace: SolanaController::::import -> App\Modules\Exchange\Controllers\SolanaController::::import
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1478` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1478` — Repaired handler namespace: SolanaController::::coinSwap -> App\Modules\Exchange\Controllers\SolanaController::::coinSwap
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1479` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1479` — Repaired handler namespace: SolanaController::::create -> App\Modules\Exchange\Controllers\SolanaController::::create
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1480` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1480` — Repaired handler namespace: SolanaController::::create -> App\Modules\Exchange\Controllers\SolanaController::::create
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1481` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1481` — Repaired handler namespace: SolanaController::::createSolanaWallet -> App\Modules\Exchange\Controllers\SolanaController::::createSolanaWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1482` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1482` — Repaired handler namespace: SolanaController::::fetchFrontendData -> App\Modules\Exchange\Controllers\SolanaController::::fetchFrontendData
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1483` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1483` — Repaired handler namespace: SolanaController::::provisionDefaultWallet -> App\Modules\Exchange\Controllers\SolanaController::::provisionDefaultWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1484` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1484` — Repaired handler namespace: SolanaController::::importWallet -> App\Modules\Exchange\Controllers\SolanaController::::importWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1485` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1485` — Repaired handler namespace: SolanaController::::importWallet -> App\Modules\Exchange\Controllers\SolanaController::::importWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1486` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1486` — Repaired handler namespace: SolanaController::::updateSolanaPrices -> App\Modules\Exchange\Controllers\SolanaController::::updateSolanaPrices
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1487` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1487` — Repaired handler namespace: SolanaController::::updateSolanaTokens -> App\Modules\Exchange\Controllers\SolanaController::::updateSolanaTokens
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1488` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1488` — Repaired handler namespace: SolanaController::::verifyWalletOwnership -> App\Modules\Exchange\Controllers\SolanaController::::verifyWalletOwnership
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1489` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1489` — Repaired handler namespace: SolanaController::::verifyWalletOwnership -> App\Modules\Exchange\Controllers\SolanaController::::verifyWalletOwnership
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1490` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1490` — Repaired handler namespace: SolanaController::::executeSwap -> App\Modules\Exchange\Controllers\SolanaController::::executeSwap
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1491` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1491` — Repaired handler namespace: SolanaController::::executeSwap -> App\Modules\Exchange\Controllers\SolanaController::::executeSwap
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1492` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1492` — Repaired handler namespace: SolanaController::::viewAssets -> App\Modules\Exchange\Controllers\SolanaController::::viewAssets
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1493` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1493` — Repaired handler namespace: SolanaController::::viewAssets -> App\Modules\Exchange\Controllers\SolanaController::::viewAssets
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1494` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1494` — Repaired handler namespace: SolanaController::::connectWallet -> App\Modules\Exchange\Controllers\SolanaController::::connectWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1495` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1495` — Repaired handler namespace: SolanaController::::disconnectWallet -> App\Modules\Exchange\Controllers\SolanaController::::disconnectWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1496` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1496` — Repaired handler namespace: SolanaController::::refreshWallet -> App\Modules\Exchange\Controllers\SolanaController::::refreshWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1500` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1500` — Repaired handler namespace: SolanaController::::connectWallet -> App\Modules\Exchange\Controllers\SolanaController::::connectWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1501` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1501` — Repaired handler namespace: SolanaController::::disconnectWallet -> App\Modules\Exchange\Controllers\SolanaController::::disconnectWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1502` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1502` — Repaired handler namespace: SolanaController::::refreshWallet -> App\Modules\Exchange\Controllers\SolanaController::::refreshWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1504` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1504` — Repaired handler namespace: SolanaController::::connectWallet -> App\Modules\Exchange\Controllers\SolanaController::::connectWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1505` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1505` — Repaired handler namespace: SolanaController::::disconnectWallet -> App\Modules\Exchange\Controllers\SolanaController::::disconnectWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1506` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1506` — Repaired handler namespace: SolanaController::::refreshWallet -> App\Modules\Exchange\Controllers\SolanaController::::refreshWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1508` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1508` — Repaired handler namespace: SolanaController::::connectWallet -> App\Modules\Exchange\Controllers\SolanaController::::connectWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1509` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1509` — Repaired handler namespace: SolanaController::::disconnectWallet -> App\Modules\Exchange\Controllers\SolanaController::::disconnectWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1510` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1510` — Repaired handler namespace: SolanaController::::refreshWallet -> App\Modules\Exchange\Controllers\SolanaController::::refreshWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1512` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1512` — Repaired handler namespace: SolanaController::::connectWallet -> App\Modules\Exchange\Controllers\SolanaController::::connectWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1513` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1513` — Repaired handler namespace: SolanaController::::disconnectWallet -> App\Modules\Exchange\Controllers\SolanaController::::disconnectWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1514` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1514` — Repaired handler namespace: SolanaController::::refreshWallet -> App\Modules\Exchange\Controllers\SolanaController::::refreshWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1521` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1521` — Repaired handler namespace: InstitutesController::::index -> App\Modules\User\Controllers\InstitutesController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1526` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1526` — Repaired handler namespace: InvestmentsController::::index -> App\Modules\User\Controllers\InvestmentsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1527` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1527` — Repaired handler namespace: InvestmentsController::::index -> App\Modules\User\Controllers\InvestmentsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1532` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1532` — Repaired handler namespace: InvestmentsController::::index -> App\Modules\User\Controllers\InvestmentsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1533` — Repaired handler namespace: InvestmentsController::forecastModal/$1 -> App\Modules\User\Controllers\InvestmentsController::forecastModal/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1534` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1534` — Repaired handler namespace: InvestmentsController::::accountManager -> App\Modules\User\Controllers\InvestmentsController::::accountManager
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1535` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1535` — Repaired handler namespace: InvestmentsController::::add -> App\Modules\User\Controllers\InvestmentsController::::add
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1536` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1536` — Repaired handler namespace: InvestmentsController::::add -> App\Modules\User\Controllers\InvestmentsController::::add
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1537` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1537` — Repaired handler namespace: InvestmentsController::::autoSave -> App\Modules\User\Controllers\InvestmentsController::::autoSave
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1538` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1538` — Repaired handler namespace: InvestmentsController::::overview -> App\Modules\User\Controllers\InvestmentsController::::overview
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1539` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1539` — Repaired handler namespace: InvestmentsController::::retirement -> App\Modules\User\Controllers\InvestmentsController::::retirement
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1540` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1540` — Repaired handler namespace: InvestmentsController::::save -> App\Modules\User\Controllers\InvestmentsController::::save
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1541` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1541` — Repaired handler namespace: InvestmentsController::::services -> App\Modules\User\Controllers\InvestmentsController::::services
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1542` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1542` — Repaired handler namespace: InvestmentsController::::squeezes -> App\Modules\User\Controllers\InvestmentsController::::squeezes
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1543` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1543` — Repaired handler namespace: InvestmentsController::::test -> App\Modules\User\Controllers\InvestmentsController::::test
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1544` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1544` — Repaired handler namespace: InvestmentsController::::watchlist -> App\Modules\User\Controllers\InvestmentsController::::watchlist
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1546` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1547` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1552` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1553` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1559` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1559` — Repaired handler namespace: InvestmentsController::::cryptoOverview -> App\Modules\User\Controllers\InvestmentsController::::cryptoOverview
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1560` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1560` — Repaired handler namespace: InvestmentsController::::economicData -> App\Modules\User\Controllers\InvestmentsController::::economicData
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1561` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1561` — Repaired handler namespace: InvestmentsController::::marketNews -> App\Modules\User\Controllers\InvestmentsController::::marketNews
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1562` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1562` — Repaired handler namespace: InvestmentsController::::MyMINews -> App\Modules\User\Controllers\InvestmentsController::::MyMINews
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1563` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1563` — Repaired handler namespace: InvestmentsController::::MyMIResearch -> App\Modules\User\Controllers\InvestmentsController::::MyMIResearch
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1564` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1564` — Repaired handler namespace: InvestmentsController::::stockOverview -> App\Modules\User\Controllers\InvestmentsController::::stockOverview
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1570` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1570` — Repaired handler namespace: PredictionsController::::index -> App\Modules\User\Controllers\PredictionsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1571` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1571` — Repaired handler namespace: PredictionsController::::markets -> App\Modules\User\Controllers\PredictionsController::::markets
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1572` — Repaired handler namespace: PredictionsController::view/$1 -> App\Modules\User\Controllers\PredictionsController::view/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1573` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1573` — Repaired handler namespace: PredictionsController::::portfolio -> App\Modules\User\Controllers\PredictionsController::::portfolio
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1574` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1574` — Repaired handler namespace: PredictionsController::::settlements -> App\Modules\User\Controllers\PredictionsController::::settlements
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1575` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1575` — Repaired handler namespace: PredictionsController::::placeOrder -> App\Modules\User\Controllers\PredictionsController::::placeOrder
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1576` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1576` — Repaired handler namespace: PredictionsController::::cancelOrder -> App\Modules\User\Controllers\PredictionsController::::cancelOrder
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1581` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1581` — Repaired handler namespace: ProjectsController::::index -> App\Modules\User\Controllers\ProjectsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1581` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1582` — Repaired handler namespace: ProjectsController::view/$1 -> App\Modules\User\Controllers\ProjectsController::view/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1583` — Repaired handler namespace: ProjectsController::commit/$1 -> App\Modules\User\Controllers\ProjectsController::commit/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1584` — Repaired handler namespace: ProjectsController::withdrawCommit/$1 -> App\Modules\User\Controllers\ProjectsController::withdrawCommit/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1585` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1585` — Repaired handler namespace: ProjectsController::::myCommitments -> App\Modules\User\Controllers\ProjectsController::::myCommitments
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1586` — Repaired handler namespace: ProjectsController::requestMonthlyWithdrawal/$1 -> App\Modules\User\Controllers\ProjectsController::requestMonthlyWithdrawal/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1587` — Repaired handler namespace: ProjectsController::acceptPrivateAllocation/$1 -> App\Modules\User\Controllers\ProjectsController::acceptPrivateAllocation/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1592` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1599` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1602` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1602` — Repaired handler namespace: ScriptStudioController::::marketplace -> App\Modules\ScriptStudio\Controllers\ScriptStudioController::::marketplace
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1605` — Repaired handler namespace: InvestmentsController::getUserWatchlist/$1 -> App\Modules\User\Controllers\InvestmentsController::getUserWatchlist/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1606` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1606` — Repaired handler namespace: EconomyController::::latest -> App\Modules\User\Controllers\EconomyController::::latest
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1611` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1611` — Repaired handler namespace: ScriptStudioController::::index -> App\Modules\ScriptStudio\Controllers\ScriptStudioController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1612` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1612` — Repaired handler namespace: ScriptStudioController::::marketplace -> App\Modules\ScriptStudio\Controllers\ScriptStudioController::::marketplace
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1612` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1613` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1613` — Repaired handler namespace: ScriptStudioController::::create -> App\Modules\ScriptStudio\Controllers\ScriptStudioController::::create
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1614` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1614` — Repaired handler namespace: ScriptStudioController::::store -> App\Modules\ScriptStudio\Controllers\ScriptStudioController::::store
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1615` — Repaired handler namespace: ScriptStudioController::edit/$1 -> App\Modules\ScriptStudio\Controllers\ScriptStudioController::edit/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1616` — Repaired handler namespace: ScriptStudioController::update/$1 -> App\Modules\ScriptStudio\Controllers\ScriptStudioController::update/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1617` — Repaired handler namespace: ScriptStudioController::preview/$1 -> App\Modules\ScriptStudio\Controllers\ScriptStudioController::preview/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1618` — Repaired handler namespace: ScriptStudioController::export/$1/$2 -> App\Modules\ScriptStudio\Controllers\ScriptStudioController::export/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1623` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1624` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1625` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1626` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1627` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1628` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1629` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1630` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1636` — Repaired handler namespace: SupportTicketController::show/$1 -> App\Modules\Support\Controllers\SupportTicketController::show/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1637` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1638` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1638` — Repaired handler namespace: AccountSupportController::::index -> App\Modules\Support\Controllers\AccountSupportController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1639` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1639` — Repaired handler namespace: AccountSupportController::::resendActivation -> App\Modules\Support\Controllers\AccountSupportController::::resendActivation
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1640` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1640` — Repaired handler namespace: AccountSupportController::::sendPasswordReset -> App\Modules\Support\Controllers\AccountSupportController::::sendPasswordReset
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1642` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1650` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1650` — Repaired handler namespace: App\\Modules\\Support\\Controllers\\AccountSupportController::::index -> App\Modules\Support\Controllers\AccountSupportController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1653` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1656` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1656` — Repaired handler namespace: ReferralController::::index -> App\Modules\User\Controllers\ReferralController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1659` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1659` — Repaired handler namespace: ReferralController::::index -> App\Modules\User\Controllers\ReferralController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1659` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1660` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1660` — Repaired handler namespace: ReferralController::::create -> App\Modules\User\Controllers\ReferralController::::create
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1661` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1661` — Repaired handler namespace: ReferralController::::sendReferralEmail -> App\Modules\User\Controllers\ReferralController::::sendReferralEmail
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1666` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1666` — Repaired handler namespace: WalletsController::::index -> App\Modules\User\Controllers\WalletsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1667` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1667` — Repaired handler namespace: WalletsController::::all -> App\Modules\User\Controllers\WalletsController::::all
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1668` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1668` — Repaired handler namespace: WalletsController::::accountManager -> App\Modules\User\Controllers\WalletsController::::accountManager
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1669` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1669` — Repaired handler namespace: WalletsController::::add -> App\Modules\User\Controllers\WalletsController::::add
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1670` — Repaired handler namespace: WalletsController::add/$1 -> App\Modules\User\Controllers\WalletsController::add/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1671` — Repaired handler namespace: WalletsController::addFetch/$1/$2 -> App\Modules\User\Controllers\WalletsController::addFetch/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1672` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1672` — Repaired handler namespace: WalletsController::::createBankeAccount -> App\Modules\User\Controllers\WalletsController::::createBankeAccount
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1673` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1673` — Repaired handler namespace: WalletsController::::attachAccount -> App\Modules\User\Controllers\WalletsController::::attachAccount
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1674` — Repaired handler namespace: WalletsController::attachAccount/$1/$2/$3 -> App\Modules\User\Controllers\WalletsController::attachAccount/$1/$2/$3
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1675` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1675` — Repaired handler namespace: WalletsController::::bank -> App\Modules\User\Controllers\WalletsController::::bank
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1676` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1676` — Repaired handler namespace: WalletsController::::banking -> App\Modules\User\Controllers\WalletsController::::banking
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1677` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1677` — Repaired handler namespace: WalletsController::::add -> App\Modules\User\Controllers\WalletsController::::add
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1678` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1678` — Repaired handler namespace: WalletsController::::addAccount -> App\Modules\User\Controllers\WalletsController::::addAccount
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1679` — Repaired handler namespace: WalletsController::details/$1 -> App\Modules\User\Controllers\WalletsController::details/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1680` — Repaired handler namespace: WalletsController::editBankAccount/$1 -> App\Modules\User\Controllers\WalletsController::editBankAccount/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1681` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1681` — Repaired handler namespace: WalletsController::::checking -> App\Modules\User\Controllers\WalletsController::::checking
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1682` — Repaired handler namespace: WalletsController::editCreditAccount/$1 -> App\Modules\User\Controllers\WalletsController::editCreditAccount/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1683` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1683` — Repaired handler namespace: WalletsController::::crypto -> App\Modules\User\Controllers\WalletsController::::crypto
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1684` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1684` — Repaired handler namespace: WalletsController::::generateWallet -> App\Modules\User\Controllers\WalletsController::::generateWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1685` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1685` — Repaired handler namespace: WalletsController::::index -> App\Modules\User\Controllers\WalletsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1686` — Repaired handler namespace: WalletsController::details/$1 -> App\Modules\User\Controllers\WalletsController::details/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1687` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1687` — Repaired handler namespace: WalletsController::::coinSwap -> App\Modules\User\Controllers\WalletsController::::coinSwap
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1688` — Repaired handler namespace: WalletsController::coinSwap/$1 -> App\Modules\User\Controllers\WalletsController::coinSwap/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1689` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1689` — Repaired handler namespace: WalletsController::::completePurchase -> App\Modules\User\Controllers\WalletsController::::completePurchase
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1690` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1690` — Repaired handler namespace: WalletsController::::confirmDeposit -> App\Modules\User\Controllers\WalletsController::::confirmDeposit
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1691` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1691` — Repaired handler namespace: WalletsController::::debt -> App\Modules\User\Controllers\WalletsController::::debt
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1692` — Repaired handler namespace: WalletsController::details/$1 -> App\Modules\User\Controllers\WalletsController::details/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1693` — Repaired handler namespace: WalletsController::editDebtAccount/$1 -> App\Modules\User\Controllers\WalletsController::editDebtAccount/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1694` — Repaired handler namespace: WalletsController::delete/$1/$2 -> App\Modules\User\Controllers\WalletsController::delete/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1695` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1695` — Repaired handler namespace: WalletsController::::deposit -> App\Modules\User\Controllers\WalletsController::::deposit
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1696` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1696` — Repaired handler namespace: WalletsController::::addDepositFetch -> App\Modules\User\Controllers\WalletsController::::addDepositFetch
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1697` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1697` — Repaired handler namespace: WalletsController::::depositComplete -> App\Modules\User\Controllers\WalletsController::::depositComplete
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1698` — Repaired handler namespace: WalletsController::depositComplete/$1 -> App\Modules\User\Controllers\WalletsController::depositComplete/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1699` — Repaired handler namespace: WalletsController::deposit/$1 -> App\Modules\User\Controllers\WalletsController::deposit/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1700` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1700` — Repaired handler namespace: WalletsController::::deposit -> App\Modules\User\Controllers\WalletsController::::deposit
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1701` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1701` — Repaired handler namespace: WalletsController::::details -> App\Modules\User\Controllers\WalletsController::::details
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1702` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1702` — Repaired handler namespace: WalletsController::::edit -> App\Modules\User\Controllers\WalletsController::::edit
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1703` — Repaired handler namespace: WalletsController::edit/$1 -> App\Modules\User\Controllers\WalletsController::edit/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1704` — Repaired handler namespace: WalletsController::edit/$1/$2 -> App\Modules\User\Controllers\WalletsController::edit/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1705` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1705` — Repaired handler namespace: WalletsController::::featureManager -> App\Modules\User\Controllers\WalletsController::::featureManager
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1706` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1706` — Repaired handler namespace: WalletsController::::generateWallet -> App\Modules\User\Controllers\WalletsController::::generateWallet
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1707` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1707` — Repaired handler namespace: WalletsController::::investments -> App\Modules\User\Controllers\WalletsController::::investments
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1708` — Repaired handler namespace: WalletsController::details/$1 -> App\Modules\User\Controllers\WalletsController::details/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1709` — Repaired handler namespace: WalletsController::editInvestAccount/$1 -> App\Modules\User\Controllers\WalletsController::editInvestAccount/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1710` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1710` — Repaired handler namespace: WalletsController::::linkAccount -> App\Modules\User\Controllers\WalletsController::::linkAccount
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1711` — Repaired handler namespace: WalletsController::linkAccount/$1 -> App\Modules\User\Controllers\WalletsController::linkAccount/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1712` — Repaired handler namespace: WalletsController::linkAccount/$1 -> App\Modules\User\Controllers\WalletsController::linkAccount/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1713` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1713` — Repaired handler namespace: WalletsController::::linkAccountSuccess -> App\Modules\User\Controllers\WalletsController::::linkAccountSuccess
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1714` — Repaired handler namespace: WalletsController::linkAccountSuccess/$1 -> App\Modules\User\Controllers\WalletsController::linkAccountSuccess/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1715` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1715` — Repaired handler namespace: WalletsController::::walletManager -> App\Modules\User\Controllers\WalletsController::::walletManager
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1716` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1716` — Repaired handler namespace: WalletsController::::handleMyMIGPayPalCallback -> App\Modules\User\Controllers\WalletsController::::handleMyMIGPayPalCallback
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1717` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1717` — Repaired handler namespace: WalletsController::::purchase -> App\Modules\User\Controllers\WalletsController::::purchase
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1718` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1718` — Repaired handler namespace: WalletsController::::purchaseManager -> App\Modules\User\Controllers\WalletsController::::purchaseManager
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1719` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1719` — Repaired handler namespace: WalletsController::::purchase -> App\Modules\User\Controllers\WalletsController::::purchase
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1720` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1720` — Repaired handler namespace: WalletsController::::customizeMembership -> App\Modules\User\Controllers\WalletsController::::customizeMembership
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1721` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1721` — Repaired handler namespace: WalletsController::::purchaseMembershipSuccess -> App\Modules\User\Controllers\WalletsController::::purchaseMembershipSuccess
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1722` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1722` — Repaired handler namespace: WalletsController::::purchaseMembershipSuccess -> App\Modules\User\Controllers\WalletsController::::purchaseMembershipSuccess
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1722` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1723` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1723` — Repaired handler namespace: WalletsController::::purchase -> App\Modules\User\Controllers\WalletsController::::purchase
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1724` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1724` — Repaired handler namespace: WalletsController::::purchase -> App\Modules\User\Controllers\WalletsController::::purchase
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1725` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1725` — Repaired handler namespace: WalletsController::::purchaseGold -> App\Modules\User\Controllers\WalletsController::::purchaseGold
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1726` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1726` — Repaired handler namespace: WalletsController::::purchaseComplete -> App\Modules\User\Controllers\WalletsController::::purchaseComplete
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1727` — Repaired handler namespace: WalletsController::purchaseComplete/$1 -> App\Modules\User\Controllers\WalletsController::purchaseComplete/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1728` — Repaired handler namespace: WalletsController::purchaseComplete/$1/$2 -> App\Modules\User\Controllers\WalletsController::purchaseComplete/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1729` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1729` — Repaired handler namespace: WalletsController::::purchaseMyMIGold -> App\Modules\User\Controllers\WalletsController::::purchaseMyMIGold
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1730` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1730` — Repaired handler namespace: WalletsController::::purchaseMyMIGold -> App\Modules\User\Controllers\WalletsController::::purchaseMyMIGold
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1731` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1731` — Repaired handler namespace: WalletsController::::purchaseMyMIGold -> App\Modules\User\Controllers\WalletsController::::purchaseMyMIGold
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1732` — Repaired handler namespace: WalletsController::purchaseComplete/$1 -> App\Modules\User\Controllers\WalletsController::purchaseComplete/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1733` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1733` — Repaired handler namespace: WalletsController::::securityViolation -> App\Modules\User\Controllers\WalletsController::::securityViolation
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1734` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1734` — Repaired handler namespace: WalletsController::::transferFunds -> App\Modules\User\Controllers\WalletsController::::transferFunds
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1735` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1735` — Repaired handler namespace: WalletsController::::walletGenerator -> App\Modules\User\Controllers\WalletsController::::walletGenerator
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1736` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1736` — Repaired handler namespace: WalletsController::::walletSelections -> App\Modules\User\Controllers\WalletsController::::walletSelections
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1737` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1737` — Repaired handler namespace: WalletsController::::walletTransaction -> App\Modules\User\Controllers\WalletsController::::walletTransaction
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1738` — Repaired handler namespace: WalletsController::walletTransaction/$1 -> App\Modules\User\Controllers\WalletsController::walletTransaction/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1739` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1739` — Repaired handler namespace: WalletsController::::withdraw -> App\Modules\User\Controllers\WalletsController::::withdraw
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1740` — Repaired handler namespace: WalletsController::withdraw/$1 -> App\Modules\User\Controllers\WalletsController::withdraw/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1741` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1741` — Repaired handler namespace: WalletsController::::addWithdrawFetch -> App\Modules\User\Controllers\WalletsController::::addWithdrawFetch
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1747` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1747` — Repaired handler namespace: ManagementController::::index -> App\Modules\Management\Controllers\ManagementController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1748` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1748` — Repaired handler namespace: ManagementController::::howTos -> App\Modules\Management\Controllers\ManagementController::::howTos
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1754` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1760` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1761` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1762` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1768` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1768` — Repaired handler namespace: KnowledgebaseController::::index -> App\Modules\User\Controllers\KnowledgebaseController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1769` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1769` — Repaired handler namespace: KnowledgebaseController::::accountBilling -> App\Modules\User\Controllers\KnowledgebaseController::::accountBilling
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1770` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1770` — Repaired handler namespace: KnowledgebaseController::::assets -> App\Modules\User\Controllers\KnowledgebaseController::::assets
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1771` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1771` — Repaired handler namespace: KnowledgebaseController::::gettingStarted -> App\Modules\User\Controllers\KnowledgebaseController::::gettingStarted
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1772` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1772` — Repaired handler namespace: KnowledgebaseController::::integratingWallets -> App\Modules\User\Controllers\KnowledgebaseController::::integratingWallets
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1773` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1773` — Repaired handler namespace: KnowledgebaseController::::investorProfile -> App\Modules\User\Controllers\KnowledgebaseController::::investorProfile
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1774` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1774` — Repaired handler namespace: KnowledgebaseController::::KYCVerification -> App\Modules\User\Controllers\KnowledgebaseController::::KYCVerification
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1775` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1775` — Repaired handler namespace: KnowledgebaseController::::partnerships -> App\Modules\User\Controllers\KnowledgebaseController::::partnerships
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1776` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1776` — Repaired handler namespace: KnowledgebaseController::::promotedArticles -> App\Modules\User\Controllers\KnowledgebaseController::::promotedArticles
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1777` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1777` — Repaired handler namespace: KnowledgebaseController::::technicalSupport -> App\Modules\User\Controllers\KnowledgebaseController::::technicalSupport
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1778` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1778` — Repaired handler namespace: KnowledgebaseController::::tradeTracker -> App\Modules\User\Controllers\KnowledgebaseController::::tradeTracker
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1779` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1779` — Repaired handler namespace: KnowledgebaseController::::tutorials -> App\Modules\User\Controllers\KnowledgebaseController::::tutorials
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1780` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1780` — Repaired handler namespace: KnowledgebaseController::::typesOfAccounts -> App\Modules\User\Controllers\KnowledgebaseController::::typesOfAccounts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1781` — Repaired handler namespace: KnowledgebaseController::show/$1 -> App\Modules\User\Controllers\KnowledgebaseController::show/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1787` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1788` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1789` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1795` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1796` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1797` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1803` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1835` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1835` — Repaired handler namespace: AlertsController::::addTradeAlert -> App\Modules\User\Controllers\AlertsController::::addTradeAlert
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1836` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1836` — Repaired handler namespace: AlertsController::::getFilteredAlerts -> App\Modules\User\Controllers\AlertsController::::getFilteredAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1837` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1837` — Repaired handler namespace: AlertsController::::fetchEmailAlerts -> App\Modules\User\Controllers\AlertsController::::fetchEmailAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1838` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1838` — Repaired handler namespace: AlertsController::::forceFetchEmails -> App\Modules\User\Controllers\AlertsController::::forceFetchEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1839` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1839` — Repaired handler namespace: AlertsController::::forceFetchTickers -> App\Modules\User\Controllers\AlertsController::::forceFetchTickers
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1840` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1840` — Repaired handler namespace: AlertsController::::manageTradeAlert -> App\Modules\User\Controllers\AlertsController::::manageTradeAlert
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1841` — Repaired handler namespace: AlertsController::markAlertAsSentAndSendEmail/$1 -> App\Modules\User\Controllers\AlertsController::markAlertAsSentAndSendEmail/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1842` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1842` — Repaired handler namespace: AlertsController::::updateTradeAlerts -> App\Modules\User\Controllers\AlertsController::::updateTradeAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1843` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1843` — Repaired handler namespace: AlertsController::::processAlerts -> App\Modules\User\Controllers\AlertsController::::processAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1844` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1844` — Repaired handler namespace: AlertsController::::processTradeAlerts -> App\Modules\User\Controllers\AlertsController::::processTradeAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1845` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1845` — Repaired handler namespace: AlertsController::::sendAlert -> App\Modules\User\Controllers\AlertsController::::sendAlert
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1846` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1846` — Repaired handler namespace: AlertsController::::sendDiscordAlerts -> App\Modules\User\Controllers\AlertsController::::sendDiscordAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1847` — Repaired handler namespace: AlertsController::sendDiscordAlertsBySymbol/$1 -> App\Modules\User\Controllers\AlertsController::sendDiscordAlertsBySymbol/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1848` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1848` — Repaired handler namespace: AlertsController::::storeMarketingContent -> App\Modules\User\Controllers\AlertsController::::storeMarketingContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1849` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1849` — Repaired handler namespace: AlertsController::::updateChartOverride -> App\Modules\User\Controllers\AlertsController::::updateChartOverride
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1850` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1850` — Repaired handler namespace: AlertsController::::updateExchange -> App\Modules\User\Controllers\AlertsController::::updateExchange
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1853` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1853` — Repaired handler namespace: AlertsController::::submitTradeAlert -> App\Modules\User\Controllers\AlertsController::::submitTradeAlert
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1854` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1854` — Repaired handler namespace: AlertsController::::getTradeAlertDetails -> App\Modules\User\Controllers\AlertsController::::getTradeAlertDetails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1857` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1857` — Repaired handler namespace: AlertsController::::generateVoiceoverScript -> App\Modules\User\Controllers\AlertsController::::generateVoiceoverScript
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1858` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1858` — Repaired handler namespace: AlertsController::::generateVoiceoverAndMarketingContent -> App\Modules\User\Controllers\AlertsController::::generateVoiceoverAndMarketingContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1859` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1859` — Repaired handler namespace: AlertsController::::generateAndStoreVoiceover -> App\Modules\User\Controllers\AlertsController::::generateAndStoreVoiceover
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1862` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1862` — Repaired handler namespace: AlertsController::::generateSocialMediaPosts -> App\Modules\User\Controllers\AlertsController::::generateSocialMediaPosts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1863` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1863` — Repaired handler namespace: AlertsController::::postMarketingContentToSocials -> App\Modules\User\Controllers\AlertsController::::postMarketingContentToSocials
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1868` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1868` — Repaired handler namespace: ManagementController::::ajaxGetActiveUsers -> App\Modules\Management\Controllers\ManagementController::::ajaxGetActiveUsers
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1869` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1869` — Repaired handler namespace: ManagementController::::ajaxGetInactiveUsers -> App\Modules\Management\Controllers\ManagementController::::ajaxGetInactiveUsers
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1870` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1870` — Repaired handler namespace: ManagementController::::checkForSpamUsers -> App\Modules\Management\Controllers\ManagementController::::checkForSpamUsers
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1871` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1871` — Repaired handler namespace: ManagementController::::cronAnalyzeContent -> App\Modules\Management\Controllers\ManagementController::::cronAnalyzeContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1872` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1872` — Repaired handler namespace: ManagementController::::cronFetchAndGenerateNews -> App\Modules\Management\Controllers\ManagementController::::cronFetchAndGenerateNews
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1873` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1873` — Repaired handler namespace: ManagementController::::cronFetchMarketingEmails -> App\Modules\Management\Controllers\ManagementController::::cronFetchMarketingEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1874` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1874` — Repaired handler namespace: ManagementController::::cronFetchInbox -> App\Modules\Management\Controllers\ManagementController::::cronFetchInbox
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1875` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1875` — Repaired handler namespace: ManagementController::::generateTodaysStory -> App\Modules\Management\Controllers\ManagementController::::generateTodaysStory
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1876` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1876` — Repaired handler namespace: ManagementController::::cronFetchAndGenerateNews -> App\Modules\Management\Controllers\ManagementController::::cronFetchAndGenerateNews
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1877` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1877` — Repaired handler namespace: ManagementController::::generateContentFromScraper -> App\Modules\Management\Controllers\ManagementController::::generateContentFromScraper
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1878` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1878` — Repaired handler namespace: ManagementController::::generateContentDigestFromStored -> App\Modules\Management\Controllers\ManagementController::::generateContentDigestFromStored
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1879` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1879` — Repaired handler namespace: ManagementController::::generateDailyContentDigest -> App\Modules\Management\Controllers\ManagementController::::generateDailyContentDigest
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1880` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1880` — Repaired handler namespace: ManagementController::::massResendActivationEmails -> App\Modules\Management\Controllers\ManagementController::::massResendActivationEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1881` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1881` — Repaired handler namespace: ManagementController::::runCRONTasks -> App\Modules\Management\Controllers\ManagementController::::runCRONTasks
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1882` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1882` — Repaired handler namespace: ManagementController::::fetchEmailsToTempScraper -> App\Modules\Management\Controllers\ManagementController::::fetchEmailsToTempScraper
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1883` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1883` — Repaired handler namespace: ManagementController::::getUsers -> App\Modules\Management\Controllers\ManagementController::::getUsers
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1884` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1884` — Repaired handler namespace: ManagementController::::getReferrals -> App\Modules\Management\Controllers\ManagementController::::getReferrals
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1885` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1885` — Repaired handler namespace: ManagementController::::getAlerts -> App\Modules\Management\Controllers\ManagementController::::getAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1886` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1886` — Repaired handler namespace: ManagementController::::getNews -> App\Modules\Management\Controllers\ManagementController::::getNews
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1887` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1887` — Repaired handler namespace: ManagementController::::getAssets -> App\Modules\Management\Controllers\ManagementController::::getAssets
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1888` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1888` — Repaired handler namespace: ManagementController::::getSupport -> App\Modules\Management\Controllers\ManagementController::::getSupport
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1889` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1889` — Repaired handler namespace: ManagementController::::processTempEmailsToScraper -> App\Modules\Management\Controllers\ManagementController::::processTempEmailsToScraper
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1891` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1891` — Repaired handler namespace: ManagementController::::distributeTodaysNewsContent -> App\Modules\Management\Controllers\ManagementController::::distributeTodaysNewsContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1892` — Repaired handler namespace: ManagementController::exportPostJson/$1 -> App\Modules\Management\Controllers\ManagementController::exportPostJson/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1893` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1893` — Repaired handler namespace: ManagementController::::fetchNewsEmails -> App\Modules\Management\Controllers\ManagementController::::fetchNewsEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1894` — Repaired handler namespace: ManagementController::generatePostsFromSummary/$1 -> App\Modules\Management\Controllers\ManagementController::generatePostsFromSummary/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1895` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1895` — Repaired handler namespace: ManagementController::::generateVoiceScriptManually -> App\Modules\Management\Controllers\ManagementController::::generateVoiceScriptManually
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1896` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1896` — Repaired handler namespace: ManagementController::::processAllTradeAlerts -> App\Modules\Management\Controllers\ManagementController::::processAllTradeAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1897` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1897` — Repaired handler namespace: ManagementController::::runCronManually -> App\Modules\Management\Controllers\ManagementController::::runCronManually
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1898` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1898` — Repaired handler namespace: ManagementController::::runDailyAlphaVantageDataPipeline -> App\Modules\Management\Controllers\ManagementController::::runDailyAlphaVantageDataPipeline
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1899` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1899` — Repaired handler namespace: ManagementController::::sendToZapierManually -> App\Modules\Management\Controllers\ManagementController::::sendToZapierManually
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1900` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1900` — Repaired handler namespace: ManagementController::::scrapeAndGenerateTodaysStoryFromInbox -> App\Modules\Management\Controllers\ManagementController::::scrapeAndGenerateTodaysStoryFromInbox
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1901` — Repaired handler namespace: ManagementController::sharePost/$1/$2 -> App\Modules\Management\Controllers\ManagementController::sharePost/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1902` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1902` — Repaired handler namespace: ManagementController::::sendAllDiscordAlerts -> App\Modules\Management\Controllers\ManagementController::::sendAllDiscordAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1903` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1903` — Repaired handler namespace: ManagementController::::updateMarketDataForAlerts -> App\Modules\Management\Controllers\ManagementController::::updateMarketDataForAlerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1908` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1914` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1914` — Repaired handler namespace: AdminController::::index -> App\Modules\Management\Controllers\AdminController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1920` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1926` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1932` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1938` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1944` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1944` — Repaired handler namespace: ExchangeController::::index -> App\Modules\Exchange\Controllers\ExchangeController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1950` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1951` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1952` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1958` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1958` — Repaired handler namespace: AlertsController::::index -> App\Modules\User\Controllers\AlertsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1959` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1959` — Repaired handler namespace: AlertsController::::add -> App\Modules\User\Controllers\AlertsController::::add
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1960` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1960` — Repaired handler namespace: AlertsController::::addTradeAlert -> App\Modules\User\Controllers\AlertsController::::addTradeAlert
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1961` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1961` — Repaired handler namespace: AlertsController::::fetchData -> App\Modules\User\Controllers\AlertsController::::fetchData
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1962` — Repaired handler namespace: AlertsController::fetchTickerDetails/$1 -> App\Modules\User\Controllers\AlertsController::fetchTickerDetails/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1963` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1963` — Repaired handler namespace: AlertsController::::importTickers -> App\Modules\User\Controllers\AlertsController::::importTickers
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1964` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1964` — Repaired handler namespace: Management\AlertsController::::fetchData -> App\Modules\User\Controllers\AlertsController::::fetchData
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1965` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1965` — Repaired handler namespace: AlertsController::::testEmail -> App\Modules\User\Controllers\AlertsController::::testEmail
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1966` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1966` — Repaired handler namespace: AlertsController::::sendTestEmail -> App\Modules\User\Controllers\AlertsController::::sendTestEmail
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1967` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1967` — Repaired handler namespace: AlertsController::::trades -> App\Modules\User\Controllers\AlertsController::::trades
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1973` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1973` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1975` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1976` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1978` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1979` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1980` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1981` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1982` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1983` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1984` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1987` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1988` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1989` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1990` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1991` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1992` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1993` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1994` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1995` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1996` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1998` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1999` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2001` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2002` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2005` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2007` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2008` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2009` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2010` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2011` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2012` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2013` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2014` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2015` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2016` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2017` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2017` — Repaired handler namespace: WalletsController::::addUserGoldTasks -> App\Modules\User\Controllers\WalletsController::::addUserGoldTasks
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2019` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2020` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2021` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2023` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2024` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2025` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2026` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2032` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2032` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2034` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2036` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2036` — Repaired handler namespace: WalletsController::::addUserGoldTasks -> App\Modules\User\Controllers\WalletsController::::addUserGoldTasks
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2042` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2048` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2048` — Repaired handler namespace: ProjectsController::::index -> App\Modules\User\Controllers\ProjectsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2049` — Repaired handler namespace: ProjectsController::approveProject/$1 -> App\Modules\User\Controllers\ProjectsController::approveProject/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2050` — Repaired handler namespace: ProjectsController::approveProject/$1 -> App\Modules\User\Controllers\ProjectsController::approveProject/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2051` — Repaired handler namespace: ProjectsController::rejectProject/$1 -> App\Modules\User\Controllers\ProjectsController::rejectProject/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2057` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2063` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2069` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2075` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2075` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2081` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2082` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2083` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2084` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2090` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2090` — Repaired handler namespace: WalletsController::::index -> App\Modules\User\Controllers\WalletsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2096` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2103` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2103` — Repaired handler namespace: BlogController::::index -> App\Modules\Blog\Controllers\BlogController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2104` — Repaired handler namespace: BlogController::viewBlog/$1 -> App\Modules\Blog\Controllers\BlogController::viewBlog/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2110` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2110` — Repaired handler namespace: EarningsController::::index -> App\Modules\Blog\Controllers\EarningsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2111` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2111` — Repaired handler namespace: EarningsController::::test -> App\Modules\Blog\Controllers\EarningsController::::test
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2112` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2112` — Repaired handler namespace: EarningsController::::viewByDate -> App\Modules\Blog\Controllers\EarningsController::::viewByDate
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2113` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2113` — Repaired handler namespace: EarningsController::::viewByDate -> App\Modules\Blog\Controllers\EarningsController::::viewByDate
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2113` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2119` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2119` — Repaired handler namespace: InvestingController::::index -> App\Modules\Blog\Controllers\InvestingController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2120` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2120` — Repaired handler namespace: InvestingController::::TheBeginnersGuideToOptionTrading -> App\Modules\Blog\Controllers\InvestingController::::TheBeginnersGuideToOptionTrading
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2121` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2121` — Repaired handler namespace: InvestingController::::TheFundamentalsOfInvesting -> App\Modules\Blog\Controllers\InvestingController::::TheFundamentalsOfInvesting
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2122` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2122` — Repaired handler namespace: InvestingController::::TipsForEffectiveInvestmentPortfolioManagement -> App\Modules\Blog\Controllers\InvestingController::::TipsForEffectiveInvestmentPortfolioManagement
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2128` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2128` — Repaired handler namespace: InvestingController::::index -> App\Modules\Blog\Controllers\InvestingController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2128` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2129` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2129` — Repaired handler namespace: IRSController::::IRSExpandedHomeEnergyTaxCredits -> App\Modules\Blog\Controllers\IRSController::::IRSExpandedHomeEnergyTaxCredits
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2134` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2135` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2135` — Repaired handler namespace: UpdatesController::::index -> App\Modules\Blog\Controllers\UpdatesController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2136` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2136` — Repaired handler namespace: UpdatesController::::IntegratingWithPlaid -> App\Modules\Blog\Controllers\UpdatesController::::IntegratingWithPlaid
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2137` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2137` — Repaired handler namespace: UpdatesController::::TheRoadmapToTheFutureOfFinance -> App\Modules\Blog\Controllers\UpdatesController::::TheRoadmapToTheFutureOfFinance
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2143` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2143` — Repaired handler namespace: PersonalBudgetingController::::index -> App\Modules\Blog\Controllers\PersonalBudgetingController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2144` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2144` — Repaired handler namespace: PersonalBudgetingController::::TheImportanceOfPersonalFinancialBudgeting -> App\Modules\Blog\Controllers\PersonalBudgetingController::::TheImportanceOfPersonalFinancialBudgeting
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2149` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2150` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2154` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2154` — Repaired handler namespace: AlertsController::::processBrokerEmails -> App\Modules\User\Controllers\AlertsController::::processBrokerEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2155` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2155` — Repaired handler namespace: AlertsController::::processAllEmails -> App\Modules\User\Controllers\AlertsController::::processAllEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2156` — Repaired handler namespace: AlertsController::previewScraper/$1 -> App\Modules\User\Controllers\AlertsController::previewScraper/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2157` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2157` — Repaired handler namespace: AlertsAPIController::::scanner -> App\Modules\APIs\Controllers\AlertsAPIController::::scanner
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2157` — Removed exact duplicate route line.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2161` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2162` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2175` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2176` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2180` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2181` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2189` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2190` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2192` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2193` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2194` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2199` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2200` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2201` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2203` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2204` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2205` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2209` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2210` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2211` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2215` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2216` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2218` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2219` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2224` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2224` — Repaired handler namespace: EconomyController::::dashboardWidget -> App\Modules\User\Controllers\EconomyController::::dashboardWidget
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2227` — Fixed invalid single-colon handler syntax.
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2227` — Repaired handler namespace: EconomyController::::updateAll -> App\Modules\User\Controllers\EconomyController::::updateAll
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2230` — Repaired handler namespace: InvestmentsAPIController::fundamentals/$1 -> App\Modules\APIs\Controllers\InvestmentsAPIController::fundamentals/$1
+
+## Manual Review
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `38` — Could not resolve handler namespace: System\HealthController::::healthz
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `47` — Could not resolve handler namespace: \\App\\Controllers\\OpsHealth::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `63` — Could not resolve handler namespace: \\App\\Controllers\\OpsHealth::::score
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `67` — Could not resolve handler namespace: \\App\\Controllers\\OpsHealth::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `68` — Could not resolve handler namespace: \\App\\Controllers\\OpsHealth::::run
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `130` — Could not resolve handler namespace: App\Controllers\Dev\BitcoinTest::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `135` — Could not resolve handler namespace: CommonDataController::::smoke
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `143` — Could not resolve handler namespace: Api\\HealthController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `222` — Could not resolve handler namespace: SearchController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `223` — Could not resolve handler namespace: SearchController::index/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `254` — Could not resolve handler namespace: APIController::::status
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `265` — Could not resolve handler namespace: APIController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `266` — Could not resolve handler namespace: APIController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `267` — Could not resolve handler namespace: APIController::::status
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `307` — Could not resolve handler namespace: APIController::::status
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `308` — Could not resolve handler namespace: APIController::getSymbolsByTradeType/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `338` — Could not resolve handler namespace: MditWebhookController::::onramp
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `412` — Could not resolve handler namespace: , [AdvisorController::class, 
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `438` — Could not resolve handler namespace: SqueezeController::::scorecard
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `439` — Could not resolve handler namespace: SqueezeController::::zoomout
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `440` — Could not resolve handler namespace: SqueezeController::::fade
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `441` — Could not resolve handler namespace: SqueezeController::::run
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `445` — Could not resolve handler namespace: ChatUsageController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `446` — Could not resolve handler namespace: ChatUsageController::::saveSettings
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `447` — Could not resolve handler namespace: ChatUsageController::::resetUser
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `539` — Could not resolve handler namespace: BrokerAPIController::::summary
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `540` — Could not resolve handler namespace: BrokerAPIController::::credit
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `541` — Could not resolve handler namespace: BrokerAPIController::::available
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `542` — Could not resolve handler namespace: BrokerAPIController::::repayment
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `543` — Could not resolve handler namespace: BrokerAPIController::::categories
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `544` — Could not resolve handler namespace: BrokerAPIController::::transactions
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `545` — Could not resolve handler namespace: BrokerAPIController::::goals
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `546` — Could not resolve handler namespace: BrokerAPIController::::insights
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `551` — Could not resolve handler namespace: BrokerAPIController::::savingsGoals
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `552` — Could not resolve handler namespace: BrokerAPIController::::investmentAccounts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `553` — Could not resolve handler namespace: BrokerAPIController::::linkedAccounts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `554` — Could not resolve handler namespace: BrokerAPIController::::addLinkedAccount
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `555` — Could not resolve handler namespace: BrokerAPIController::removeLinkedAccount/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `556` — Could not resolve handler namespace: BrokerAPIController::refreshLinkedAccount/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `558` — Could not resolve handler namespace: BrokerAPIController::fetchPlaidLinkToken/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `559` — Could not resolve handler namespace: BrokerAPIController::::fetchPlaidLinkToken
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `560` — Could not resolve handler namespace: BrokerAPIController::::linkPlaidAccount
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `561` — Could not resolve handler namespace: BrokerAPIController::unlinkPlaidAccount/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `562` — Could not resolve handler namespace: BrokerAPIController::refreshPlaidAccount/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `563` — Could not resolve handler namespace: BrokerAPIController::fetchPlaidAccounts/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `564` — Could not resolve handler namespace: BrokerAPIController::::fetchPlaidAccounts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `565` — Could not resolve handler namespace: BrokerAPIController::fetchPlaidTransactions/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `566` — Could not resolve handler namespace: BrokerAPIController::::fetchPlaidTransactions
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `567` — Could not resolve handler namespace: BrokerAPIController::fetchPlaidBalances/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `568` — Could not resolve handler namespace: BrokerAPIController::::fetchPlaidBalances
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `569` — Could not resolve handler namespace: BrokerAPIController::fetchPlaidIncome/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `570` — Could not resolve handler namespace: BrokerAPIController::::fetchPlaidIncome
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `571` — Could not resolve handler namespace: BrokerAPIController::fetchPlaidLiabilities/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `572` — Could not resolve handler namespace: BrokerAPIController::::fetchPlaidLiabilities
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `573` — Could not resolve handler namespace: BrokerAPIController::fetchPlaidIdentity/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `574` — Could not resolve handler namespace: BrokerAPIController::::fetchPlaidIdentity
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `575` — Could not resolve handler namespace: BrokerAPIController::fetchPlaidInvestments/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `576` — Could not resolve handler namespace: BrokerAPIController::::fetchPlaidInvestments
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `577` — Could not resolve handler namespace: BrokerAPIController::fetchPlaidHoldings/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `578` — Could not resolve handler namespace: BrokerAPIController::::fetchPlaidHoldings
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `579` — Could not resolve handler namespace: BrokerAPIController::::fetchRobinhoodAccounts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `580` — Could not resolve handler namespace: BrokerAPIController::fetchRobinhoodAccountDetails/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `581` — Could not resolve handler namespace: BrokerAPIController::fetchRobinhoodPositions/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `582` — Could not resolve handler namespace: BrokerAPIController::::fetchRobinhoodPositions
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `583` — Could not resolve handler namespace: BrokerAPIController::fetchRobinhoodPortfolio/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `584` — Could not resolve handler namespace: BrokerAPIController::::fetchRobinhoodPortfolio
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `585` — Could not resolve handler namespace: BrokerAPIController::fetchRobinhoodWatchlists/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `586` — Could not resolve handler namespace: BrokerAPIController::::fetchRobinhoodWatchlists
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `587` — Could not resolve handler namespace: BrokerAPIController::fetchRobinhoodOrders/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `588` — Could not resolve handler namespace: BrokerAPIController::::fetchRobinhoodOrders
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `589` — Could not resolve handler namespace: BrokerAPIController::fetchRobinhoodOrderDetails/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `590` — Could not resolve handler namespace: BrokerAPIController::::fetchRobinhoodOrderDetails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `591` — Could not resolve handler namespace: BrokerAPIController::fetchRobinhoodInstruments/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `592` — Could not resolve handler namespace: BrokerAPIController::::fetchRobinhoodInstruments
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `593` — Could not resolve handler namespace: BrokerAPIController::fetchRobinhoodQuotes/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `594` — Could not resolve handler namespace: BrokerAPIController::::fetchRobinhoodQuotes
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `595` — Could not resolve handler namespace: BrokerAPIController::fetchRobinhoodDividends/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `596` — Could not resolve handler namespace: BrokerAPIController::::fetchRobinhoodDividends
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `597` — Could not resolve handler namespace: BrokerAPIController::fetchRobinhoodTransfers/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `598` — Could not resolve handler namespace: BrokerAPIController::::fetchRobinhoodTransfers
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `599` — Could not resolve handler namespace: BrokerAPIController::fetchRobinhoodWatchlistItems/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `600` — Could not resolve handler namespace: BrokerAPIController::::fetchRobinhoodWatchlistItems
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `601` — Could not resolve handler namespace: BrokerAPIController::fetchRobinhoodTransactionHistory/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `602` — Could not resolve handler namespace: BrokerAPIController::::fetchRobinhoodTransactionHistory
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `603` — Could not resolve handler namespace: BrokerAPIController::fetchRobinhoodNotifications/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `604` — Could not resolve handler namespace: BrokerAPIController::::fetchRobinhoodNotifications
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `605` — Could not resolve handler namespace: BrokerAPIController::fetchRobinhoodACHRelationships/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `606` — Could not resolve handler namespace: BrokerAPIController::::fetchRobinhoodACHRelationships
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `607` — Could not resolve handler namespace: BrokerAPIController::fetchRobinhoodCryptoAccounts/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `608` — Could not resolve handler namespace: BrokerAPIController::::fetchRobinhoodCryptoAccounts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `609` — Could not resolve handler namespace: BrokerAPIController::fetchRobinhoodCryptoPositions/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `610` — Could not resolve handler namespace: BrokerAPIController::::fetchRobinhoodCryptoPositions
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `611` — Could not resolve handler namespace: BrokerAPIController::fetchRobinhoodCryptoPortfolio/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `612` — Could not resolve handler namespace: BrokerAPIController::::fetchRobinhoodCryptoPortfolio
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `613` — Could not resolve handler namespace: BrokerAPIController::fetchRobinhoodCryptoOrders/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `614` — Could not resolve handler namespace: BrokerAPIController::::fetchRobinhoodCryptoOrders
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `615` — Could not resolve handler namespace: BrokerAPIController::fetchRobinhoodCryptoOrderDetails/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `616` — Could not resolve handler namespace: BrokerAPIController::::fetchRobinhoodCryptoOrderDetails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `617` — Could not resolve handler namespace: BrokerAPIController::fetchRobinhoodCryptoTransactions/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `618` — Could not resolve handler namespace: BrokerAPIController::::fetchRobinhoodCryptoTransactions
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `619` — Could not resolve handler namespace: BrokerAPIController::fetchRobinhoodCryptoQuotes/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `620` — Could not resolve handler namespace: BrokerAPIController::::fetchRobinhoodCryptoQuotes
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `780` — Could not resolve handler namespace: SmtpTestController::::probe
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `918` — Could not resolve handler namespace: EmailTemplateController::::create
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `919` — Could not resolve handler namespace: EmailTemplateController::::store
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `920` — Could not resolve handler namespace: EmailQueueController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `921` — Could not resolve handler namespace: EmailQueueController::::create
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `922` — Could not resolve handler namespace: EmailQueueController::::store
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `923` — Could not resolve handler namespace: EmailQueueController::::processQueue
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1303` — Could not resolve handler namespace: EmailTemplateController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1304` — Could not resolve handler namespace: EmailTemplateController::::create
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1305` — Could not resolve handler namespace: EmailTemplateController::::store
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1307` — Could not resolve handler namespace: EmailQueueController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1308` — Could not resolve handler namespace: EmailQueueController::::create
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1309` — Could not resolve handler namespace: EmailQueueController::::store
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1310` — Could not resolve handler namespace: EmailQueueController::::processQueue
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1316` — Could not resolve handler namespace: MarketingController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1317` — Could not resolve handler namespace: MarketingController::edit/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1318` — Could not resolve handler namespace: MarketingController::::topCommunities
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1319` — Could not resolve handler namespace: MarketingController::topCommunities/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1322` — Could not resolve handler namespace: OperationsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1325` — Could not resolve handler namespace: SupportController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1328` — Could not resolve handler namespace: PartnersController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1339` — Could not resolve handler namespace: ReferralsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1342` — Could not resolve handler namespace: SecurityController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1345` — Could not resolve handler namespace: ServicesController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1348` — Could not resolve handler namespace: UsersController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1349` — Could not resolve handler namespace: UsersController::::profile
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1350` — Could not resolve handler namespace: UsersController::::ajaxBlockUser
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1351` — Could not resolve handler namespace: UsersController::::ajaxBulkBanUsers
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1360` — Could not resolve handler namespace: WebDesignController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1365` — Could not resolve handler namespace: SearchController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1370` — Could not resolve handler namespace: , [AdvisorController::class, 
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1375` — Could not resolve handler namespace: , [AdvisorController::class, 
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1546` — Could not resolve handler namespace: InvestmentController::::getStrategies
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1547` — Could not resolve handler namespace: InvestmentController::::createStrategy
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1548` — Could not resolve handler namespace: InvestmentController::getStrategy/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1549` — Could not resolve handler namespace: InvestmentController::updateStrategy/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1550` — Could not resolve handler namespace: InvestmentController::deleteGoal/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1552` — Could not resolve handler namespace: InvestmentController::::getGoals
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1553` — Could not resolve handler namespace: InvestmentController::::createGoal
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1554` — Could not resolve handler namespace: InvestmentController::createGoal/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1555` — Could not resolve handler namespace: InvestmentController::updateGoal/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1556` — Could not resolve handler namespace: InvestmentController::deleteGoal/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1592` — Could not resolve handler namespace: AnnouncementsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1599` — Could not resolve handler namespace: AssetsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1623` — Could not resolve handler namespace: HowItWorksController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1624` — Could not resolve handler namespace: HowItWorksController::::budgeting
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1625` — Could not resolve handler namespace: HowItWorksController::::investing
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1626` — Could not resolve handler namespace: HowItWorksController::::crypto
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1627` — Could not resolve handler namespace: HowItWorksController::::alerts
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1628` — Could not resolve handler namespace: HowItWorksController::::projects
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1629` — Could not resolve handler namespace: HowItWorksController::::security
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1630` — Could not resolve handler namespace: HowItWorksController::::pricing
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1631` — Could not resolve handler namespace: HowItWorksController::show/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1637` — Could not resolve handler namespace: SupportController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1641` — Could not resolve handler namespace: SupportController::article/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1642` — Could not resolve handler namespace: SupportController::::discordOnboarding
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1643` — Could not resolve handler namespace: SupportController::view/FAQ
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1644` — Could not resolve handler namespace: SupportController::view/Feedback
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1645` — Could not resolve handler namespace: SupportController::view/Test
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1646` — Could not resolve handler namespace: SupportController::view/Test-Email
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1647` — Could not resolve handler namespace: SupportController::view/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1754` — Could not resolve handler namespace: MarketingController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1795` — Could not resolve handler namespace: SubscribeController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1796` — Could not resolve handler namespace: SubscribeController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1797` — Could not resolve handler namespace: SubscribeController::::submit
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1803` — Could not resolve handler namespace: SubscribeController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1908` — Could not resolve handler namespace: UserController::::addComment
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1920` — Could not resolve handler namespace: APIController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1926` — Could not resolve handler namespace: AssetsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1932` — Could not resolve handler namespace: BudgetsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1938` — Could not resolve handler namespace: BudgetingController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1950` — Could not resolve handler namespace: HowTosController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1951` — Could not resolve handler namespace: HowTosController::::employeeAccountSetup
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1952` — Could not resolve handler namespace: HowTosController::::employeeEmailSetup
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1973` — Could not resolve handler namespace: MarketingController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1974` — Could not resolve handler namespace: MarketingController::add/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1975` — Could not resolve handler namespace: MarketingController::::addSchedule
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1976` — Could not resolve handler namespace: MarketingController::::addSubscriber
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1977` — Could not resolve handler namespace: MarketingController::approveContent/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1978` — Could not resolve handler namespace: MarketingController::::blogCreator
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1979` — Could not resolve handler namespace: MarketingController::::blogs
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1980` — Could not resolve handler namespace: MarketingController::::campaigns
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1981` — Could not resolve handler namespace: MarketingController::::contentReview
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1982` — Could not resolve handler namespace: MarketingController::::contentGenerator
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1983` — Could not resolve handler namespace: MarketingController::::contentListing
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1984` — Could not resolve handler namespace: MarketingController::::viewDailyLogs
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1985` — Could not resolve handler namespace: MarketingController::editContent/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1986` — Could not resolve handler namespace: MarketingController::viewEmail/$1/$2
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1987` — Could not resolve handler namespace: MarketingController::::fetchEmails
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1988` — Could not resolve handler namespace: MarketingController::::fetchMissingLogos
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1989` — Could not resolve handler namespace: MarketingController::::financialNews
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1990` — Could not resolve handler namespace: MarketingController::::generateAutomatedContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1991` — Could not resolve handler namespace: MarketingController::::generateContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1992` — Could not resolve handler namespace: MarketingController::::generateDailyContentDigest
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1993` — Could not resolve handler namespace: MarketingController::::generateNewsletterContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1994` — Could not resolve handler namespace: MarketingController::::getRecentScrapes
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1995` — Could not resolve handler namespace: MarketingController::::ideas
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1996` — Could not resolve handler namespace: MarketingController::::postCreator
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1997` — Could not resolve handler namespace: MarketingController::previewGeneratedPost/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1998` — Could not resolve handler namespace: MarketingController::::promote
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `1999` — Could not resolve handler namespace: MarketingController::::promote
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2000` — Could not resolve handler namespace: Management\MarketingController::publishBlog/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2001` — Could not resolve handler namespace: Management\MarketingController::::runContentGeneration
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2002` — Could not resolve handler namespace: MarketingController::::standaloneScrape
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2003` — Could not resolve handler namespace: MarketingController::rejectContent/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2004` — Could not resolve handler namespace: MarketingController::saveContentEdit/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2005` — Could not resolve handler namespace: MarketingController::::schedule
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2006` — Could not resolve handler namespace: MarketingController::schedule/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2007` — Could not resolve handler namespace: MarketingController::::scheduleNewsletterCampaign
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2008` — Could not resolve handler namespace: MarketingController::::submitDailyLog
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2009` — Could not resolve handler namespace: MarketingController::::submitLargeContentForm
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2010` — Could not resolve handler namespace: MarketingController::::submitLargeContent
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2011` — Could not resolve handler namespace: MarketingController::::scrapeLink
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2012` — Could not resolve handler namespace: MarketingController::::sendNotification
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2013` — Could not resolve handler namespace: MarketingController::::sendScheduleNewsletter
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2014` — Could not resolve handler namespace: MarketingController::::test
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2015` — Could not resolve handler namespace: MarketingController::::twitterDashboard
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2016` — Could not resolve handler namespace: MarketingController::::videoCreator
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2019` — Could not resolve handler namespace: EmailTemplateController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2020` — Could not resolve handler namespace: EmailTemplateController::::create
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2021` — Could not resolve handler namespace: EmailTemplateController::::store
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2023` — Could not resolve handler namespace: EmailQueueController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2024` — Could not resolve handler namespace: EmailQueueController::::create
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2025` — Could not resolve handler namespace: EmailQueueController::::store
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2026` — Could not resolve handler namespace: EmailQueueController::::processQueue
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2032` — Could not resolve handler namespace: MarketingController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2033` — Could not resolve handler namespace: MarketingController::edit/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2034` — Could not resolve handler namespace: MarketingController::::topCommunities
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2035` — Could not resolve handler namespace: MarketingController::topCommunities/$1
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2042` — Could not resolve handler namespace: PartnersController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2057` — Could not resolve handler namespace: ReferralsController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2063` — Could not resolve handler namespace: ServicesController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2069` — Could not resolve handler namespace: SecurityController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2075` — Could not resolve handler namespace: SupportController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2081` — Could not resolve handler namespace: UsersController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2082` — Could not resolve handler namespace: UsersController::::profile
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2083` — Could not resolve handler namespace: UsersController::::ajaxBlockUser
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2084` — Could not resolve handler namespace: UsersController::::ajaxBulkBanUsers
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2096` — Could not resolve handler namespace: WebDesignController::::index
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2149` — Could not resolve handler namespace: App\Modules\APIs\Controllers\BitcoinController::::buildUnsignedPsbt
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2150` — Could not resolve handler namespace: App\Modules\APIs\Controllers\BitcoinController::::broadcastSignedTx
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2161` — Could not resolve handler namespace: System\HealthController::::healthz
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2162` — Could not resolve handler namespace: System\HealthController::::diag
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2203` — Could not resolve handler namespace: App\Modules\APIs\Controllers\OpsPublicPagesController::::import
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2204` — Could not resolve handler namespace: App\Modules\APIs\Controllers\OpsPublicPagesController::::run
+- `/workspace/MyMIWallet-Next/app/Config/Routes.php` line `2205` — Could not resolve handler namespace: App\Modules\APIs\Controllers\OpsPublicPagesController::::report
