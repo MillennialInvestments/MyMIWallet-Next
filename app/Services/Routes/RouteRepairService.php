@@ -215,11 +215,17 @@ final class RouteRepairService
 
         if (str_contains($handler, '\\') && str_contains($handler, '::')) {
             [$class, $method] = explode('::', $handler, 2);
-            if (class_exists(ltrim($class, '\\'))) {
-                return ltrim($handler, '\\');
+            $normalizedClass = ltrim($class, '\\');
+
+            // Avoid runtime autoload side effects in route reconciliation.
+            // We resolve names strictly from the static controller index.
+            foreach ($controllerIndex as $fqcns) {
+                if (in_array($normalizedClass, $fqcns, true)) {
+                    return $normalizedClass . '::' . $method;
+                }
             }
 
-            $short = substr($class, strrpos($class, '\\') + 1);
+            $short = substr($normalizedClass, strrpos($normalizedClass, '\\') + 1);
             if (! isset($controllerIndex[$short]) || count($controllerIndex[$short]) !== 1) {
                 return null;
             }
