@@ -1,7 +1,8 @@
 <?php
 namespace App\Modules\APIs\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAPIController;
+
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -10,7 +11,7 @@ use App\Models\UserModel;
 use Throwable;
 
 #[\AllowDynamicProperties]
-class UserAPIController extends BaseController
+class UserAPIController extends BaseAPIController
 {
     use ResponseTrait;
 

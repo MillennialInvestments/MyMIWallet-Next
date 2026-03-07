@@ -1,11 +1,13 @@
 <?php
 namespace App\Modules\APIs\Controllers;
 
+use App\Controllers\BaseAPIController;
+
 use App\Modules\User\Controllers\BudgetController as UserBudgetController;
 use CodeIgniter\HTTP\ResponseInterface;
 
 #[\AllowDynamicProperties]
-class BudgetAPIController extends UserBudgetController
+class BudgetAPIController extends BaseAPIController
 {
     private function guard(): ?ResponseInterface
     {

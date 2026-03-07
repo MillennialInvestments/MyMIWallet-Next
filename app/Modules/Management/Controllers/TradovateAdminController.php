@@ -2,12 +2,13 @@
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAdminController;
+
 use GuzzleHttp\Client;
 use CodeIgniter\HTTP\RedirectResponse;
 
 #[\AllowDynamicProperties]
-class TradovateAdminController extends \App\Controllers\BaseController
+class TradovateAdminController extends BaseAdminController
 {
     private $client;
     private $tradovateApiUrl;

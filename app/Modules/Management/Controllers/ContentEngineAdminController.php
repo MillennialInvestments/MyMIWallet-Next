@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAdminController;
+
 use App\Models\ContentIdeaModel;
 use App\Models\ContentPostModel;
 
-class ContentEngineAdminController extends BaseController
+class ContentEngineAdminController extends BaseAdminController
 {
     protected ContentPostModel $postModel;
     protected ContentIdeaModel $ideaModel;

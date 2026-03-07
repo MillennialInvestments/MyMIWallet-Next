@@ -2,13 +2,14 @@
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseAdminController;
+
 use App\Models\AuditLogModel;
 use App\Models\UserModel;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class AccountRescueAdminController extends UserController
+class AccountRescueAdminController extends BaseAdminController
 {
     protected $helpers = ['form', 'url'];
 

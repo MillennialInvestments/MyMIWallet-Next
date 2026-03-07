@@ -2,9 +2,10 @@
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAdminController;
 
-class SignalsAdminController extends BaseController
+
+class SignalsAdminController extends BaseAdminController
 {
     public function index()
     {

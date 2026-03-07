@@ -1,0 +1,4015 @@
+# Controller Inventory
+
+## Controller: AdminChatUsageController
+- **Namespace:** `App\Controllers\Api`
+- **Path:** `app/Controllers/Api/AdminChatUsageController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `index()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('api/admin/chat-usage', 'Api\\AdminChatUsageController::index', ['filter' => 'permission:admin.access']);`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: AiOpsManualRunController
+- **Namespace:** `App\Controllers\Api`
+- **Path:** `app/Controllers/Api/AiOpsManualRunController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `run()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->post('api/aiops/manual-run', 'Api\\AiOpsManualRunController::run', ['filter' => 'permission:admin.access']);`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: InternalApiController
+- **Namespace:** `App\Controllers\Api`
+- **Path:** `app/Controllers/Api/InternalApiController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `jsonOk()`, `jsonError()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: OpsFilesystemStatusController
+- **Namespace:** `App\Controllers\Api`
+- **Path:** `app/Controllers/Api/OpsFilesystemStatusController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `index()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('API/Ops/filesystem-status', '\\App\\Controllers\\Api\\OpsFilesystemStatusController::index', ['filter' => 'permission:admin.access']);`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: SwaggerDocsController
+- **Namespace:** `App\Controllers\Api`
+- **Path:** `app/Controllers/Api/SwaggerDocsController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `index()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('API/docs', '\\App\\Controllers\\Api\\SwaggerDocsController::index', ['filter' => 'permission:admin.access']);`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** `api/swagger_docs`
+
+## Controller: AuthController
+- **Namespace:** `App\Controllers`
+- **Path:** `app/Controllers/AuthController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `login()`, `attemptLogin()`, `logout()`, `clearUserCacheKeys()`, `register()`, `attemptRegister()`, `attemptRegister()`, `registerSuccess()`, `resendRegistrationActivation()`, `forgotPassword()`, `attemptForgot()`, `resetPassword()`, `attemptReset()`, `activateAccount()`, `resendActivateAccount()`, `resendActivation()`, `resendActivationCode()`, `redirectAfterLogin()`, `determineRedirectDestination()`, `rememberRedirectUrl()`, `isValidRedirectTarget()`, `passesRedirectValidation()`, `isRootDestination()`, `isLoginDestination()`, `isLogoutDestination()`, `isExternalDestination()`, `normalisePath()`, `dashboardUrl()`, `_render()`, `setAuthMessage()`, `formatValidationErrors()`, `validationSummary()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->post('auth/resend-activation', 'AuthController::resendActivationCode', ['as' => 'auth/resend-activation-legacy']);`
+  - `app/Config/Routes.php` → `$routes->get('/resend-activation', 'AuthController::resendActivation', ['as' => 'resend-activation']);`
+  - `app/Config/Routes.php` → `$routes->post('/resend-activation', 'AuthController::resendActivationCode', ['as' => 'resend-activation-code']);`
+  - `app/Config/Routes.php` → `$routes->get('login', 'AuthController::login', ['as' => 'login']);`
+  - `app/Config/Routes.php` → `$routes->post('login', 'AuthController::attemptLogin', ['as' => 'auth/attemptLogin']);`
+  - `app/Config/Routes.php` → `$routes->post('auth/resend-activation', 'AuthController::resendActivationCode', ['as' => 'auth/resend-activation']);`
+  - `app/Config/Routes.php` → `$routes->get('logout', 'AuthController::logout');`
+  - `app/Config/Routes.php` → `$routes->post('logout', 'AuthController::logout', ['as' => 'auth/logout']);`
+  - `app/Config/Routes.php` → `$routes->get('register', 'AuthController::register', ['as' => 'register']);`
+  - `app/Config/Routes.php` → `$routes->post('register', 'AuthController::attemptRegister', ['as' => 'register-attempt']);`
+  - `app/Config/Routes.php` → `$routes->get('register/success', 'AuthController::registerSuccess', ['as' => 'register-success']);`
+  - `app/Config/Routes.php` → `$routes->post('register/resend-activation', 'AuthController::resendRegistrationActivation', ['as' => 'register-resend-activation']);`
+  - `app/Config/Routes.php` → `$routes->get('test-create-user', 'AuthController::createTempUser');`
+  - `app/Config/Routes.php` → `$routes->post('Auth/link-robinhood', 'AuthController::linkRobinhood');`
+  - `app/Config/Routes.php` → `$routes->post('Auth/link-snaptrade', 'AuthController::linkSnapTrade');`
+  - `app/Config/Routes.php` → `$routes->get('register/(:segment)', 'AuthController::register/$1', ['as' => 'register-segment']);`
+  - `app/Config/Routes.php` → `$routes->get('(:any)/register', 'AuthController::register', ['as' => 'dynamic-register']);`
+  - `app/Config/Routes.php` → `$routes->get('(:any)/register/(:segment)', 'AuthController::register/$2', ['as' => 'dynamic-register-referral']);`
+  - `app/Config/Routes.php` → `$routes->post('(:any)/register', 'AuthController::attemptRegister');`
+  - `app/Config/Routes.php` → `$routes->post('(:any)/register/(:segment)', 'AuthController::attemptRegister');`
+  - `app/Config/Routes.php` → `$routes->get('activate', 'AuthController::activateAccount', ['as' => 'activate']);`
+  - `app/Config/Routes.php` → `$routes->get('activate-account', 'AuthController::activateAccount', ['as' => 'activate-account-get']);`
+  - `app/Config/Routes.php` → `$routes->post('activate-account', 'AuthController::activateAccount', ['as' => 'activate-account']);`
+  - `app/Config/Routes.php` → `$routes->post('activate-account/(:segment)', 'AuthController::activateAccount', ['as' => 'activate-account-by-uri']);`
+  - `app/Config/Routes.php` → `$routes->get('resend-activate-account', 'AuthController::resendActivateAccount', ['as' => 'resend-activate-account']);`
+  - `app/Config/Routes.php` → `$routes->get('forgot-password', 'AuthController::forgotPassword', ['as' => 'forgot-password']);`
+  - `app/Config/Routes.php` → `$routes->get('reset-password', 'AuthController::resetPassword', ['as' => 'reset-password']);`
+  - `app/Config/Routes.php` → `$routes->post('forgot', 'AuthController::attemptForgot');`
+  - `app/Config/Routes.php` → `$routes->post('reset-password', 'AuthController::attemptReset', ['as' => 'reset-password-attempt']);`
+  - `app/Config/Routes.php` → `$routes->post('get2FAQRCode', 'AuthController::get2FAQRCode', ['as' => 'get-2FA-QRCode']);`
+  - `app/Config/Routes.php` → `$routes->post('verify2FACode', 'AuthController::verify2FACode', ['as' => 'verify-2FA-Code']);`
+  - `app/Config/Routes.php` → `$routes->get('auth/provider/(:segment)', 'AuthController::redirectToProvider/$1', ['as' => 'auth-provider']);`
+  - `app/Config/Routes.php` → `$routes->get('auth/provider/(:segment)/callback', 'AuthController::handleProviderCallback/$1', ['as' => 'auth-provider-callback']);`
+  - `app/Config/Routes.php` → `$routes->get('auth/link/(:segment)', 'AuthController::linkProvider/$1', ['as' => 'auth-link-provider']);`
+  - `app/Config/Routes.php` → `$routes->get('auth/unlink/(:segment)', 'AuthController::unlinkProvider/$1', ['as' => 'auth-unlink-provider']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('login', 'AuthController::login', ['as' => 'login']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('login', 'AuthController::attemptLogin', ['as' => 'auth/attemptLogin']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('logout', 'AuthController::logout');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('test-create-user', 'AuthController::createTempUser');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Auth/link-robinhood', '\Myth\Auth\Controllers\AuthController::linkRobinhood');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Auth/link-snaptrade', '\Myth\Auth\Controllers\AuthController::linkSnapTrade');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('register', 'AuthController::register', ['as' => 'register']); // Base route`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('register/(:segment)', 'AuthController::register/$1', ['as' => 'register-segment']); // /register/<referral>`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('(:any)/register', 'AuthController::register', ['as' => 'dynamic-register']); // /<dynamic>/register`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('(:any)/register/(:segment)', 'AuthController::register/$2', ['as' => 'dynamic-register-referral']); // /<dynamic>/register/<referral>`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('activate', 'AuthController::activateAccount', ['as' => 'activate']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('activate-account', 'AuthController::activateAccount', ['as' => 'activate-account']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('activate-account/(:segment)', 'AuthController::activateAccount', ['as' => 'activate-account-by-uri']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `// $routes->get('resend-activation', 'AuthController::resend', ['as' => 'resend-activation-view']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `// $routes->post('resend-activation', 'AuthController::resendActivationCode', ['as' => 'resend-activation-code']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('forgot-password', 'AuthController::forgotPassword', ['as' => 'forgot-password']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('reset-password', 'AuthController::resetPassword', ['as' => 'reset-password']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('forgot', 'AuthController::attemptForgot');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('get2FAQRCode', 'AuthController::get2FAQRCode', ['as' => 'get-2FA-QRCode']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('verify2FACode', 'AuthController::verify2FACode', ['as' => 'verify-2FA-Code']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('auth/(:any)', 'SocialAuthController::login/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('auth/callback', 'SocialAuthController::callback');`
+- **Services/Libraries used:** `App\Modules\Support\Services\SupportTicketService`, `App\Services\AuthAuditService`, `App\Services\Auth\AuthLogger`, `App\Services\OnboardingProgressService`, `SupportTicketService`, `activator`, `authAuditService`, `authentication`, `eventTracker`, `onboardingProgressService`, `request`, `resetter`, `response`, `safeCache`, `session`, `throttler`
+- **Models used:** `App\Models\UserIpHistoryModel`, `Myth\Auth\Models\UserModel`
+- **View files used:** None detected
+
+## Controller: BaseController
+- **Namespace:** `App\Controllers`
+- **Path:** `app/Controllers/BaseController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `getCuID()`, `trace()`, `memoryCheckpoint()`, `logMemory()`, `hydrateLegacyLibraryProperties()`, `crudCacheInvalidator()`, `invalidateCrudCache()`, `safeView()`, `commonData()`, `__destruct()`, `normalizeAppOverridesFolder()`, `renderTheme()`, `tryView()`, `resolveView()`, `viewExists()`, `expandViewCandidates()`, `autoViewPath()`, `injectThemeDefaults()`, `shouldLoadHeavyData()`, `logTelemetryMemory()`, `loadCurrentUserOrNull()`, `resolveCurrentUserId()`, `resolveUserId()`, `requireUserOrJson()`, `getMyMIAdvisor()`, `getMyMIAnalytics()`, `getMyMIBudget()`, `getMyMICoin()`, `getMyMIInvestments()`, `getMyMIDashboard()`, `getMyMIExchange()`, `getMyMIProjects()`, `getMyMISolana()`, `getMyMIUser()`, `getMyMIWallet()`, `getMyMIWallets()`, `getMyMIAlerts()`, `getAccountService()`, `getBudgetService()`, `getDashboardService()`, `getGoalTrackingService()`, `getMarketingService()`, `getSolanaService()`, `getUserService()`, `loadCurrentUser()`, `getWalletService()`, `summarizeWalletGroups()`, `__get()`, `generateNonce()`, `applyContentSecurityPolicy()`, `cspAttr()`, `normalizeNonceAttributes()`, `formatNonceAttribute()`, `applyCspRelaxed()`, `applyCspStrict()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `AccountService`, `App\Services\{AccountService`, `BudgetService`, `Config\Services`, `DashboardService`, `GoalTrackingService`, `MarketingService`, `SolanaService`, `UserService`, `WalletService`, `alerts`, `authentication`, `crudCacheInvalidator`, `dashboardService`, `locator`, `myMIAnalytics`, `myMIInvestments`, `response`, `router`, `session`
+- **Models used:** `App\Models\WalletModel`, `WalletModel`
+- **View files used:** None detected
+
+## Controller: Blog
+- **Namespace:** `App\Controllers`
+- **Path:** `app/Controllers/Blog.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `post()`, `category()`, `defaultKeywords()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('blog', 'Blog::index');`
+  - `app/Config/Routes.php` → `$routes->get('blog/category/(:segment)', 'Blog::category/$1');`
+  - `app/Config/Routes.php` → `$routes->get('blog/(:segment)', 'Blog::post/$1');`
+  - `app/Config/Routes.php` → `$routes->group('Blog', ['namespace' => 'App\Modules\Blog\Controllers'],  function($routes) {`
+  - `app/Config/Routes.php` → `// $routes->group('Blog', ['namespace' => 'App\Modules\Blog\Controllers'], function($routes) {`
+  - `app/Modules/Blog/Config/Routes.php` → `$routes->get('/', 'Blog::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->group('Blog', ['namespace' => 'App\Modules\Blog\Controllers'],  function($routes) {`
+  - `.archive/_legacy/ConfigO/Routes.php` → `// $routes->group('Blog', ['namespace' => 'App\Modules\Blog\Controllers'], function($routes) {`
+- **Services/Libraries used:** None detected
+- **Models used:** `App\Models\BlogModel`, `BlogModel`
+- **View files used:** `blog/category`, `blog/index`, `blog/single_post`
+
+## Controller: Debug
+- **Namespace:** `App\Controllers`
+- **Path:** `app/Controllers/Debug.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `whoami()`, `authAuditCacheSelfTest()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('Debug/whoami', 'Debug::whoami');`
+  - `app/Config/Routes.php` → `$routes->get('Debug/auth-audit-cache', 'Debug::authAuditCacheSelfTest');`
+  - `app/Config/Routes.php` → `$routes->group('debug', ['namespace' => 'App\Controllers\Debug'], static function ($routes) {`
+  - `app/Config/Routes.php` → `$routes->get('Plaid/Config-Debug', 'WalletsAPIController::plaidConfigDebug');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('rhEnvDebug', 'BrokerSmokeController::rhEnvDebug');`
+- **Services/Libraries used:** `App\Services\AuthAuditService`, `authAuditService`, `authentication`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: Health
+- **Namespace:** `App\Controllers`
+- **Path:** `app/Controllers/Health.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `index()`, `status()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('ops/health', '\\App\\Controllers\\OpsHealth::index');`
+  - `app/Config/Routes.php` → `$routes->get('API/Ops/health-score', '\\App\\Controllers\\OpsHealth::score');`
+  - `app/Config/Routes.php` → `$routes->get('health', '\\App\\Controllers\\OpsHealth::index');`
+  - `app/Config/Routes.php` → `$routes->post('health/run', '\\App\\Controllers\\OpsHealth::run');`
+  - `app/Config/Routes.php` → `$routes->get('health', 'Health::index', ['filter' => 'responsecache:60']);     // JSON {"status":"ok",...}`
+  - `app/Config/Routes.php` → `$routes->get('status', 'Health::status', ['filter' => 'responsecache:60']);    // plain "OK"`
+  - `app/Config/Routes.php` → `$routes->get('ops/health', 'OpsHealth::index');`
+  - `app/Config/Routes.php` → `$routes->get('Health', 'HealthAPIController::index');`
+  - `app/Config/Routes.php` → `$routes->addRedirect('API/Health', 'API/v1/Health', 302);`
+  - `app/Config/Routes.php` → `$routes->get('Health', 'HealthAPIController::index');              // /API/Health`
+  - `app/Config/Routes.php` → `$routes->get('Management/getAutoloadHealth', 'ManagementAPIController::getAutoloadHealth', ['filter' => 'permission:admin.access']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('health', 'Health::index');     // JSON {"status":"ok",...}`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('status', 'Health::status');    // plain "OK"`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('api/health', 'Health::index'); // convenient alias`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('health', 'Health::index');     // JSON {"status":"ok",...}`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('status', 'Health::status');    // plain "OK"`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('api/health', 'Health::index'); // convenient alias`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Health', 'HealthController::index');              // /API/Health`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Health', 'HealthController::index');              // /API/Health`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: Home
+- **Namespace:** `App\Controllers`
+- **Path:** `app/Controllers/Home.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `buildCommonData()`, `temp()`, `index()`, `apexReferral()`, `corporateEarnings()`, `economicCalendar()`, `economicCalendarContent()`, `exchange()`, `gettingStarted()`, `memberships()`, `previewAlert()`, `privacy()`, `privacyPolicy()`, `sector()`, `terms()`, `termsOfService()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->setDefaultController('Home');   // change if you have a different landing controller`
+  - `app/Config/Routes.php` → `$routes->get('/', 'Home::index');`
+  - `app/Config/Routes.php` → `// Explicit home route. If you don't have Home::index, temporarily redirect to /login.`
+  - `app/Config/Routes.php` → `//     return redirect()->to('/login');  // change to 'Home::index' once that exists`
+  - `app/Config/Routes.php` → `$routes->addRedirect('Home', '/', 301);`
+  - `app/Config/Routes.php` → `$routes->get('/Apex/Referral', 'Home::apexReferral');`
+  - `app/Config/Routes.php` → `$routes->get('/Apex/Referral/(:segment)', 'Home::apexReferral/$1');`
+  - `app/Config/Routes.php` → `$routes->get('/Corporate-Earnings', 'Home::corporateEarnings');`
+  - `app/Config/Routes.php` → `$routes->get('/Corporate-Earnings/(:segment)', 'Home::corporateEarnings/$1');`
+  - `app/Config/Routes.php` → `$routes->get('/Economic-Calendar', 'Home::economicCalendar');`
+  - `app/Config/Routes.php` → `$routes->get('/Economic-Calendar/(:segment)', 'Home::economicCalendarContent/$1');`
+  - `app/Config/Routes.php` → `// $routes->get('Exchange/(:segment)', 'Home::exchange/$1');`
+  - `app/Config/Routes.php` → `$routes->get('/Getting-Started/(:segment)/(:segment)', 'Home::gettingStarted');`
+  - `app/Config/Routes.php` → `$routes->get('/Getting-Started/(:segment)', 'Home::gettingStarted');`
+  - `app/Config/Routes.php` → `$routes->get('/Getting-Started', 'Home::gettingStarted');`
+  - `app/Config/Routes.php` → `$routes->get('/Memberships', 'Home::memberships');`
+  - `app/Config/Routes.php` → `$routes->get('/Memberships/(:segment)', 'Home::memberships');`
+  - `app/Config/Routes.php` → `$routes->get('/Privacy-Policy', 'Home::privacyPolicy');`
+  - `app/Config/Routes.php` → `$routes->get('/Legal/Privacy-Policy', 'Home::privacyPolicy');`
+  - `app/Config/Routes.php` → `$routes->get('/Legal/Terms-And-Conditions', 'Home::terms');`
+  - `app/Config/Routes.php` → `$routes->get('Sector/(:segment)', 'Home::sector/$1');`
+  - `app/Config/Routes.php` → `$routes->get('/Terms-Of-Service', 'Home::termsOfService');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->setDefaultController('Home');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'Home::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Apex/Referral', 'Home::apexReferral');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Apex/Referral/(:any)', 'Home::apexReferral/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Corporate-Earnings', 'Home::corporateEarnings');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Corporate-Earnings/(:any)', 'Home::corporateEarnings/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Economic-Calendar', 'Home::economicCalendar');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Economic-Calendar/(:any)', 'Home::economicCalendarContent/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Getting-Started/(:any)/(:any)', 'Home::gettingStarted');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Getting-Started/(:any)', 'Home::gettingStarted');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Getting-Started', 'Home::gettingStarted');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Memberships', 'Home::memberships');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Memberships/(:any)', 'Home::memberships');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Preview/Alert/(:any)', 'Home::previewAlert');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Privacy-Policy', 'Home::privacyPolicy');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Terms-Of-Service', 'Home::termsOfService');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/resend-activation', 'Home::resendActivation');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('/resend-activation', 'Home::resendActivationCode');`
+- **Services/Libraries used:** `App\Services\MetaService`, `MetaService`, `authentication`, `session`
+- **Models used:** `AlertsModel`, `App\Models\{AlertsModel`, `PageSEOModel`, `ReferralModel`, `SubscribeModel`, `UserModel`
+- **View files used:** None detected
+
+## Controller: HowItWorksController
+- **Namespace:** `App\Controllers`
+- **Path:** `app/Controllers/HowItWorksController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `index()`, `budgeting()`, `investing()`, `crypto()`, `alerts()`, `projects()`, `security()`, `pricing()`, `renderPage()`, `hydratePage()`, `withNavUrls()`, `navLink()`, `prepareActions()`, `defaultCta()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'HowItWorksController::index');`
+  - `app/Config/Routes.php` → `$routes->get('budgeting', 'HowItWorksController::budgeting');`
+  - `app/Config/Routes.php` → `$routes->get('investing', 'HowItWorksController::investing');`
+  - `app/Config/Routes.php` → `$routes->get('crypto', 'HowItWorksController::crypto');`
+  - `app/Config/Routes.php` → `$routes->get('alerts', 'HowItWorksController::alerts');`
+  - `app/Config/Routes.php` → `$routes->get('projects', 'HowItWorksController::projects');`
+  - `app/Config/Routes.php` → `$routes->get('security', 'HowItWorksController::security');`
+  - `app/Config/Routes.php` → `$routes->get('pricing', 'HowItWorksController::pricing');`
+  - `app/Config/Routes.php` → `$routes->get('(:any)', 'HowItWorksController::show/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'HowItWorksController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Determining-Your-Financial-Goals', 'HowItWorksController::DetermineYourFinancialGoals');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Daily-Financial-News', 'HowItWorksController::DailyFinancialNews');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Investment-Portfolio-Management', 'HowItWorksController::InvestmentPortfolioManagement');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Personal-Budgeting', 'HowItWorksController::PersonalBudgeting');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Registering-An-Account', 'HowItWorksController::RegisteringAnAccount');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('MyMI-Gold', 'HowItWorksController::MyMIGold');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Purchase-MyMI-Gold', 'HowItWorksController::PurchaseMyMIGold');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Determining-Your-Financial-Goals', 'HowItWorksController::DetermineYourFinancialGoals');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Personal-Budgeting', 'HowItWorksController::PersonalBudgeting');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Registering-An-Account', 'HowItWorksController::RegisteringAnAccount');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('MyMI-Gold', 'HowItWorksController::MyMIGold');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Purchase/MyMIGold', 'HowItWorksController::PurchaseMyMIGold');`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: MaintenanceController
+- **Namespace:** `App\Controllers`
+- **Path:** `app/Controllers/MaintenanceController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `index()`, `loadDocsSection()`, `extractSummary()`, `isAdmin()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('Maintenance', 'MaintenanceController::index');`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** `maintenance/index`
+
+## Controller: OpsHealth
+- **Namespace:** `App\Controllers`
+- **Path:** `app/Controllers/OpsHealth.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `index()`, `score()`, `run()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('ops/health', '\\App\\Controllers\\OpsHealth::index');`
+  - `app/Config/Routes.php` → `$routes->get('API/Ops/health-score', '\\App\\Controllers\\OpsHealth::score');`
+  - `app/Config/Routes.php` → `$routes->get('health', '\\App\\Controllers\\OpsHealth::index');`
+  - `app/Config/Routes.php` → `$routes->post('health/run', '\\App\\Controllers\\OpsHealth::run');`
+  - `app/Config/Routes.php` → `$routes->get('ops/health', 'OpsHealth::index');`
+- **Services/Libraries used:** `App\Services\Ops\EnvDoctorService`, `EnvDoctorService`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: StockController
+- **Namespace:** `App\Controllers`
+- **Path:** `app/Controllers/StockController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `show()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('Stock/(:segment)/(:segment)', 'StockController::show/$1/$2');`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: HealthController
+- **Namespace:** `App\Controllers\System`
+- **Path:** `app/Controllers/System/HealthController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `healthz()`, `diag()`, `collectChecks()`, `now()`, `logCheckFailure()`, `databaseCheck()`, `cacheCheck()`, `areChecksPassing()`, `appVersion()`, `gitRef()`, `durationMs()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('healthz', 'System\HealthController::healthz', ['as' => 'healthz']);`
+  - `app/Config/Routes.php` → `$routes->get('api/health', 'Api\\HealthController::index'); // convenient alias`
+  - `app/Config/Routes.php` → `$routes->get('healthz', 'System\HealthController::healthz');`
+  - `app/Config/Routes.php` → `$routes->get('diag',    'System\HealthController::diag');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Health', 'HealthController::index');              // /API/Health`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Health', 'HealthController::index');              // /API/Health`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: Test
+- **Namespace:** `App\Controllers`
+- **Path:** `app/Controllers/Test.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `crash()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('test/crash', 'Test::crash');`
+  - `app/Config/Routes.php` → `$routes->get('Dev/BitcoinTest', 'App\Controllers\Dev\BitcoinTest::index');`
+  - `app/Config/Routes.php` → `$routes->get('Debug/auth-audit-cache', 'Debug::authAuditCacheSelfTest');`
+  - `app/Config/Routes.php` → `$routes->get('Test', 'MarketingAPIController::test');`
+  - `app/Config/Routes.php` → `$routes->get('Test', 'EarningsController::test');`
+  - `app/Config/Routes.php` → `$routes->get('Test', 'AlertsAdminController::test');`
+  - `app/Config/Routes.php` → `$routes->get('Test', 'MarketingAdminController::test');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Test', 'InvestmentsController::test');`
+  - `app/Config/Routes.php` → `$routes->get('Test', 'SupportController::view/Test');`
+  - `app/Config/Routes.php` → `//     $routes->get('Test', 'AlertsController::testEmail');`
+  - `app/Config/Routes.php` → `//     $routes->get('Test', 'MarketingController::test');`
+  - `app/Config/Routes.php` → `//     $routes->get('Test', 'EarningsController::test');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Test', 'EarningsController::test');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Test', 'AlertsController::test');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Test', 'MarketingController::test');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Test', 'InvestmentsController::test');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Test', 'SupportController::test');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('Test', 'AlertsController::testEmail');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('Test', 'MarketingController::test');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('Test', 'EarningsController::test');`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: UserController
+- **Namespace:** `App\Controllers`
+- **Path:** `app/Controllers/UserController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `normalizeRenderData()`, `resolveCurrentUserId()`, `renderTheme()`, `logSnippet()`
+- **Route references:**
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'Comments/Add', 'UserController::addComment');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Comments/Add', 'UserController::addComment');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'Comments/Add', 'UserController::addComment');`
+- **Services/Libraries used:** `router`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: AIOpsController
+- **Namespace:** `App\Modules\AIOps\Controllers`
+- **Path:** `app/Modules/AIOps/Controllers/AIOpsController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `snapshot()`, `docsGaps()`, `watch()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('snapshot', 'App\Modules\AIOps\Controllers\AIOpsController::snapshot');`
+  - `app/Config/Routes.php` → `$routes->get('gaps/docs', 'App\Modules\AIOps\Controllers\AIOpsController::docsGaps');`
+  - `app/Config/Routes.php` → `$routes->post('watch', 'App\Modules\AIOps\Controllers\AIOpsController::watch');`
+- **Services/Libraries used:** `App\Services\Ops\SparkRunnerService`, `SparkRunnerService`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: AIAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/AIAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `_remap()`, `initController()`, `postChat()`, `listNotes()`, `updateLinkSettings()`, `normalizeScopes()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->post('Chat', 'AIAPIController::postChat');`
+  - `app/Config/Routes.php` → `$routes->get('Notes', 'AIAPIController::listNotes');`
+  - `app/Config/Routes.php` → `$routes->post('LinkSettings', 'AIAPIController::updateLinkSettings');`
+- **Services/Libraries used:** None detected
+- **Models used:** `App\Models\DiscordLinkModel`, `DiscordLinkModel`
+- **View files used:** None detected
+
+## Controller: AIOpsAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/AIOpsAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `health()`, `policyCheck()`, `logUsage()`, `cacheStore()`, `cacheGet()`, `toggle()`, `testPolicy()`, `generateRequestId()`, `castSetting()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `AIOpsGuardrailService`, `App\Modules\AIOps\Services\AIOpsGuardrailService`, `internalToken`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: AiOpsAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/AiOpsAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `guardInternalOrAuthorized()`, `status()`, `toggle()`, `run()`, `receiveResult()`, `mapSubsystem()`, `getWebhookUrl()`, `signPayload()`, `isValidSignature()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('status', 'AiOpsAPIController::status');`
+  - `app/Config/Routes.php` → `$routes->post('toggle', 'AiOpsAPIController::toggle');`
+  - `app/Config/Routes.php` → `$routes->post('run', 'AiOpsAPIController::run');`
+  - `app/Config/Routes.php` → `$routes->post('receiveResult', 'AiOpsAPIController::receiveResult');`
+  - `app/Config/Routes.php` → `$routes->get('health', 'AiOpsAPIController::health');`
+  - `app/Config/Routes.php` → `$routes->post('policy/check', 'AiOpsAPIController::policyCheck');`
+  - `app/Config/Routes.php` → `$routes->post('usage/log', 'AiOpsAPIController::logUsage');`
+  - `app/Config/Routes.php` → `$routes->post('cache/store', 'AiOpsAPIController::cacheStore');`
+  - `app/Config/Routes.php` → `$routes->get('cache/get', 'AiOpsAPIController::cacheGet');`
+  - `app/Config/Routes.php` → `$routes->post('test/policy', 'AiOpsAPIController::testPolicy');`
+  - `app/Config/Routes.php` → `$routes->post('toggle', 'AiOpsAPIController::toggle', ['filter' => 'permission:admin.access']);`
+- **Services/Libraries used:** `Config\Services`, `internalToken`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: AlertsAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/AlertsAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `guardAdmin()`, `initController()`, `generateAlertCommentary()`, `generateAlertBatchCommentary()`, `generateAlertSocialCopy()`, `addTradeAlert()`, `createTradeAlert()`, `backfillCategories()`, `calculateCurrentRatio()`, `calculateDebtToEquity()`, `calculateEPSGrowth()`, `calculateFreeCashFlow()`, `calculateQuickRatio()`, `cleanText()`, `exportCapCutJson()`, `fetchEmailAlerts()`, `fetchEmailsOnly()`, `fetchMarketAuxNews()`, `fetchMarketAuxNews()`, `fetchSecFilings()`, `forceFetchEmails()`, `backfillEmailAlerts()`, `forceFetchTickers()`, `generateRankedMarketingContent()`, `generateAdvisorVoiceover()`, `generateAdvisorMediaFromAlert()`, `generateAndStoreVoiceover()`, `generateSocialMediaPosts()`, `generateTradeAlertSummary()`, `generateTradeAlertVideos()`, `generateVoiceoverAndMarketingContent()`, `generateVoiceoverScript()`, `getAlertBySymbol()`, `getCachedTradeAlerts()`, `getCikFromSymbol()`, `getDateRange()`, `getDateRangeFromTimeRange()`, `getEmaComparison()`, `getEmaDataForSymbol()`, `getEnrichmentHistory()`, `getFilteredAlerts()`, `getFullMetrics()`, `generateMarketingForAlert()`, `getLatestPrices()`, `getFilteredAlerts()`, `getSecFilings()`, `getTechnicalIndicators()`, `getTopKeywordChart()`, `getTradeAlertDetails()`, `hideTradeAlert()`, `addChart()`, `manageTradeAlert()`, `markAlertAsSentAndSendEmail()`, `postMarketingContentToSocials()`, `parseFilings()`, `previewAdvisorVoiceover()`, `processActiveSecFilings()`, `processAlerts()`, `processAlerts()`, `processEmailAlerts()`, `processBrokerEmails()`, `processAllEmails()`, `previewScraper()`, `processFundamentals()`, `processSecFilings()`, `processTradeAlerts()`, `processTradeBatch()`, `sanitizeText()`, `scrapeTradingViewContent()`, `sendAdvisorMediaToZapier()`, `sendAlert()`, `sendDiscordAlerts()`, `sendDiscordAlertsBySymbol()`, `enforceCronKey()`, `sendEmailToList()`, `sendTradeAlertEmail()`, `sendTradeAlertEmails()`, `storeMarketingContent()`, `submitTradeAlert()`, `updateBatchPrices()`, `updateChartOverride()`, `updateExchange()`, `uploadFundamentals()`, `updateTradeAlerts()`, `updateTradeAlertsWithMarketData()`, `validateSymbol()`, `genKeys()`, `ingestCsvSignals()`, `getSignals()`, `getSignalFiles()`, `previewSignalFile()`, `recalcSignalScores()`, `sign()`, `scanner()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->post('Alerts/backfillEmailAlerts', 'AlertsAPIController::backfillEmailAlerts');`
+  - `app/Config/Routes.php` → `$routes->get('ingestCsvSignals', 'AlertsAPIController::ingestCsvSignals');`
+  - `app/Config/Routes.php` → `$routes->get('signals', 'AlertsAPIController::getSignals');`
+  - `app/Config/Routes.php` → `$routes->get('signalFiles', 'AlertsAPIController::getSignalFiles');`
+  - `app/Config/Routes.php` → `$routes->get('previewSignalFile/(:num)', 'AlertsAPIController::previewSignalFile/$1');`
+  - `app/Config/Routes.php` → `$routes->get('recalcSignalScores', 'AlertsAPIController::recalcSignalScores');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'addTradeAlert', 'AlertsAPIController::addTradeAlert');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'backfillCategories', 'AlertsAPIController::backfillCategories');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'createTradeAlert/(:segment)', 'AlertsAPIController::addTradeAlert');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'createTradeAlert', 'AlertsAPIController::addTradeAlert');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'getFilteredAlerts', 'AlertsAPIController::getFilteredAlerts');`
+  - `app/Config/Routes.php` → `$routes->get('scanner', 'AlertsAPIController::scanner');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'fetchAutoGeneratedAnalysis', 'AlertsAPIController::fetchAutoGeneratedAnalysis');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'fetchEmailAlerts', 'AlertsAPIController::fetchEmailAlerts');`
+  - `app/Config/Routes.php` → `// $routes->match(['GET', 'POST'], 'fetchMarketAuxNews/(:segment)', 'AlertsAPIController::fetchMarketAuxNews/$1');`
+  - `app/Config/Routes.php` → `$routes->get('fetchMarketAuxNews/(:segment)', 'AlertsAPIController::fetchMarketAuxNews/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'forceFetchEmails', 'AlertsAPIController::forceFetchEmails');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'forceFetchTickers', 'AlertsAPIController::forceFetchTickers');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'generateMarketingForAlert/(:num)', 'AlertsAPIController::generateMarketingForAlert/$1');`
+  - `app/Config/Routes.php` → `$routes->post('Alerts/generateAdvisorMediaFromAlert/(:num)', 'AlertsAPIController::generateAdvisorMediaFromAlert/$1');`
+  - `app/Config/Routes.php` → `$routes->post('Alerts/generateAdvisorMediaFromAlert', 'AlertsAPIController::generateAdvisorMediaFromAlert');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'generateNow', 'AlertsAPIController::generateNow');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'generateTradeAlertSummary', 'AlertsAPIController::generateTradeAlertSummary');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'getEmaComparison/(:segment)', 'AlertsAPIController::getEmaComparison/$1');`
+  - `app/Config/Routes.php` → `$routes->get('generateAlertSocialCopy/(:num)', 'AlertsAPIController::generateAlertSocialCopy/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'getFullMetrics', 'AlertsAPIController::getFullMetrics');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'getLatestPrices', 'AlertsAPIController::getLatestPrices');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'getTechnicalIndicators', 'AlertsAPIController::getTechnicalIndicators');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'hideTradeAlert', 'AlertsAPIController::hideTradeAlert');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'manageTradeAlert', 'AlertsAPIController::manageTradeAlert');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'markAlertAsSentAndSendEmail/(:segment)', 'AlertsAPIController::markAlertAsSentAndSendEmail/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'processAlerts', 'AlertsAPIController::processAlerts');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'processEmailAlerts', 'AlertsAPIController::processEmailAlerts');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'processTradeAlerts', 'AlertsAPIController::processTradeAlerts');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'processTradeBatch', 'AlertsAPIController::processTradeBatch');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'sendAlert', 'AlertsAPIController::sendAlert');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'sendDiscordAlerts', 'AlertsAPIController::sendDiscordAlerts');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'sendDiscordAlertsBySymbol/(:segment)', 'AlertsAPIController::sendDiscordAlertsBySymbol/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'storeMarketingContent', 'AlertsAPIController::storeMarketingContent');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'updateBatchPrices', 'AlertsAPIController::updateBatchPrices');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'updateChartOverride', 'AlertsAPIController::updateChartOverride');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'updateExchange', 'AlertsAPIController::updateExchange');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'updateStatus/(:num)/(:any)', 'AlertsAPIController::updateStatus/$1/$2');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'updateTradeAlerts', 'AlertsAPIController::updateTradeAlerts');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'submitTradeAlert', 'AlertsAPIController::submitTradeAlert');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'getTradeAlertDetails', 'AlertsAPIController::getTradeAlertDetails');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'generateVoiceoverScript', 'AlertsAPIController::generateVoiceoverScript');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'generateVoiceoverAndMarketingContent', 'AlertsAPIController::generateVoiceoverAndMarketingContent');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'generateAndStoreVoiceover', 'AlertsAPIController::generateAndStoreVoiceover');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'generateSocialMediaPosts', 'AlertsAPIController::generateSocialMediaPosts');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'postMarketingContentToSocials', 'AlertsAPIController::postMarketingContentToSocials');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'gen-keys', 'AlertsAPIController::genKeys'); // Robinhood API Library :: generate keys`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'sign', 'AlertsAPIController::sign'); // Robinhood API Library :: sign`
+  - `app/Config/Routes.php` → `$routes->get('Research', 'AlertsAPIController::research');`
+  - `app/Config/Routes.php` → `//     $routes->get('fetchMarketAuxNews/(:segment)', 'AlertsAPIController::fetchMarketAuxNews/$1');`
+  - `app/Config/Routes.php` → `$routes->get('scanner', 'AlertsAPIController::scanner');`
+- **Services/Libraries used:** `MyMIMarketing`, `authentication`, `authorization`, `email`, `mailService`
+- **Models used:** `AlertsModel`, `App\Models\AlertsModel`, `App\Models\SignalFilesModel`, `App\Models\SignalsModel`, `App\Modules\Management\Models\AlertsModel`, `SignalFilesModel`, `SignalsModel`
+- **View files used:** `App\\Modules\\Management\\Views\\Signals\\modals\\preview_file`, `ManagementModule\\Views\\Alerts\\modals\\createTradeAlert`, `ManagementModule\\Views\\Alerts\\modals\\manageTradeAlert`, `ManagementModule\\Views\\Alerts\\modals\\updateExchange`, `ManagementModule\\Views\\Alerts\\modals\\viewTradeChart`
+
+## Controller: AlertsPublicAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/AlertsPublicAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `list()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: AuctionsAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/AuctionsAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `computeFMV()`, `settle()`, `releaseEscrow()`, `refundEscrow()`, `topUp()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->post('fmv', 'AuctionsAPIController::computeFMV');`
+  - `app/Config/Routes.php` → `$routes->post('settle/(:num)', 'AuctionsAPIController::settle/$1');`
+  - `app/Config/Routes.php` → `$routes->post('escrow/release/(:num)', 'AuctionsAPIController::releaseEscrow/$1');`
+  - `app/Config/Routes.php` → `$routes->post('escrow/refund/(:num)', 'AuctionsAPIController::refundEscrow/$1');`
+  - `app/Config/Routes.php` → `$routes->post('topup', 'AuctionsAPIController::topUp');`
+- **Services/Libraries used:** `fmv`
+- **Models used:** `App\Models\{AuctionItemModel`, `AuctionSettlementModel`
+- **View files used:** None detected
+
+## Controller: BitcoinAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/BitcoinAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `buildUnsignedPsbt()`, `broadcastSignedTx()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `App\Services\BitcoinService`, `BitcoinService`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: BrokerSmokeAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/BrokerSmokeAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `rhAccount()`, `snapAccounts()`, `rhEnvDebug()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: BudgetAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/BudgetAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `guard()`, `apiBudgetData()`, `apiCreditData()`, `apiAvailableData()`, `apiRepaymentSummary()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('summary', 'BudgetAPIController::summary');`
+  - `app/Config/Routes.php` → `$routes->get('credit', 'BudgetAPIController::credit');`
+  - `app/Config/Routes.php` → `$routes->get('available', 'BudgetAPIController::available');`
+  - `app/Config/Routes.php` → `$routes->get('repayment', 'BudgetAPIController::repayment');`
+  - `app/Config/Routes.php` → `$routes->get('categories', 'BudgetAPIController::categories');`
+  - `app/Config/Routes.php` → `$routes->get('transactions', 'BudgetAPIController::transactions');`
+  - `app/Config/Routes.php` → `$routes->get('goals', 'BudgetAPIController::goals');`
+  - `app/Config/Routes.php` → `$routes->get('insights', 'BudgetAPIController::insights');`
+  - `app/Config/Routes.php` → `$routes->get('trends', 'BudgetAPIController::trends');`
+  - `app/Config/Routes.php` → `$routes->get('net-worth', 'BudgetAPIController::netWorth');`
+  - `app/Config/Routes.php` → `$routes->get('cash-flow', 'BudgetAPIController::cashFlow');`
+  - `app/Config/Routes.php` → `$routes->get('budgets', 'BudgetAPIController::budgets');`
+  - `app/Config/Routes.php` → `$routes->get('savings-goals', 'BudgetAPIController::savingsGoals');`
+  - `app/Config/Routes.php` → `$routes->get('investment-accounts', 'BudgetAPIController::investmentAccounts');`
+  - `app/Config/Routes.php` → `$routes->get('linked-accounts', 'BudgetAPIController::linkedAccounts');`
+  - `app/Config/Routes.php` → `$routes->get('add-linked-account', 'BudgetAPIController::addLinkedAccount');`
+  - `app/Config/Routes.php` → `$routes->get('remove-linked-account/(:segment)', 'BudgetAPIController::removeLinkedAccount/$1');`
+  - `app/Config/Routes.php` → `$routes->get('refresh-linked-account/(:segment)', 'BudgetAPIController::refreshLinkedAccount/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Data', 'BudgetAPIController::apiBudgetData');`
+  - `app/Config/Routes.php` → `$routes->get('Credit', 'BudgetAPIController::apiCreditData');`
+  - `app/Config/Routes.php` → `$routes->get('Available', 'BudgetAPIController::apiAvailableData');`
+  - `app/Config/Routes.php` → `$routes->get('Repayment', 'BudgetAPIController::apiRepaymentSummary');`
+  - `app/Config/Routes.php` → `$routes->get('getUserBudgetRecords', 'BudgetAPIController::getUserBudgetRecords');`
+  - `app/Config/Routes.php` → `$routes->get('getUserCreditBalances', 'BudgetAPIController::getUserCreditBalances');`
+  - `app/Config/Routes.php` → `$routes->get('getUserAvailableBalances', 'BudgetAPIController::getUserAvailableBalances');`
+  - `app/Config/Routes.php` → `$routes->get('getUserRepaymentSummary', 'BudgetAPIController::getUserRepaymentSummary');`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: ChatAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/ChatAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `me()`, `tool()`, `dispatchTool()`, `buildBudgetSnapshot()`, `buildPortfolioOverview()`, `buildTradeAlerts()`, `buildMarketQuestion()`, `buildOpsStatus()`, `buildLatestErrors()`, `runCronPreview()`, `resolveRoles()`, `resolveTier()`, `hasManagementRole()`, `isPremiumTool()`, `hasPremiumTier()`, `logToolRun()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** `App\Models\ChatToolRunModel`, `App\Models\OpsQueueModel`, `ChatToolRunModel`, `Myth\Auth\Authorization\GroupModel`, `OpsQueueModel`
+- **View files used:** None detected
+
+## Controller: ContentEngineAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/ContentEngineAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `ingestScanner()`, `processIngest()`, `topIdeas()`, `posts()`, `approvePost()`, `sendPost()`, `runDaily()`, `summarizeIdeas()`, `guardAdminOrToken()`, `allowTokenOnly()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->post('ingestScanner', 'ContentEngineAPIController::ingestScanner');`
+  - `app/Config/Routes.php` → `$routes->post('processIngest/(:num)', 'ContentEngineAPIController::processIngest/$1');`
+  - `app/Config/Routes.php` → `$routes->get('topIdeas', 'ContentEngineAPIController::topIdeas');`
+  - `app/Config/Routes.php` → `$routes->get('posts', 'ContentEngineAPIController::posts');`
+  - `app/Config/Routes.php` → `$routes->get('posts/(:num)', 'ContentEngineAPIController::posts/$1');`
+  - `app/Config/Routes.php` → `$routes->post('approvePost/(:num)', 'ContentEngineAPIController::approvePost/$1');`
+  - `app/Config/Routes.php` → `$routes->post('sendPost/(:num)', 'ContentEngineAPIController::sendPost/$1');`
+  - `app/Config/Routes.php` → `$routes->post('runDaily', 'ContentEngineAPIController::runDaily');`
+- **Services/Libraries used:** `App\Libraries\ContentEngine\DistributionService`, `App\Libraries\ContentEngine\PostDraftService`, `App\Libraries\ContentEngine\ScannerIngestService`, `App\Libraries\ContentEngine\ScannerScoringService`, `DistributionService`, `PostDraftService`, `ScannerIngestService`, `ScannerScoringService`, `authentication`
+- **Models used:** `App\Models\ContentIdeaModel`, `App\Models\ContentPostModel`, `App\Models\ContentScannerIngestModel`, `GroupModel`, `Myth\Auth\Authorization\GroupModel`
+- **View files used:** None detected
+
+## Controller: DiscordAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/DiscordAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `enqueue()`, `broadcast()`, `processQueue()`, `test()`, `coalesceNow()`, `purgeDead()`, `health()`, `commandsCatalog()`, `onboardingSteps()`, `sharingGuide()`, `handleInteraction()`, `messageHook()`, `completeOnboardingStep()`, `webhookProxy()`, `createLinkToken()`, `handleMymiCommand()`, `handleAiChatFromInteraction()`, `handleHelpCommand()`, `handleSupportCommand()`, `formatTickerResponse()`, `interactionMessage()`, `verifySignature()`, `extractOptionValue()`, `latestAlerts()`, `latestAlertForSymbol()`, `summarizeAlert()`, `alertEmbed()`, `maybeDenyPremiumCommand()`, `formatCommandList()`, `formatOnboardingChecklist()`, `mapStepKeyToAchievementKey()`, `getDiscordUser()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->post('Discord/completeOnboardingStep', 'DiscordAPIController::completeOnboardingStep');`
+  - `app/Config/Routes.php` → `$routes->get('commandsCatalog',  'DiscordAPIController::commandsCatalog');`
+  - `app/Config/Routes.php` → `$routes->get('onboardingSteps',  'DiscordAPIController::onboardingSteps');`
+  - `app/Config/Routes.php` → `$routes->get('sharingGuide',     'DiscordAPIController::sharingGuide');`
+  - `app/Config/Routes.php` → `$routes->post('enqueue',         'DiscordAPIController::enqueue');`
+  - `app/Config/Routes.php` → `$routes->post('broadcast',       'DiscordAPIController::broadcast');`
+  - `app/Config/Routes.php` → `$routes->post('interactions',    'DiscordAPIController::handleInteraction');`
+  - `app/Config/Routes.php` → `$routes->post('messageHook',     'DiscordAPIController::messageHook');`
+  - `app/Config/Routes.php` → `$routes->post('webhook',         'DiscordAPIController::webhookProxy');`
+  - `app/Config/Routes.php` → `$routes->post('createLinkToken', 'DiscordAPIController::createLinkToken');`
+  - `app/Config/Routes.php` → `$routes->get('process-queue',    'DiscordAPIController::processQueue');`
+  - `app/Config/Routes.php` → `$routes->get('coalesce-now',     'DiscordAPIController::coalesceNow');`
+  - `app/Config/Routes.php` → `$routes->delete('purge-dead',    'DiscordAPIController::purgeDead');`
+  - `app/Config/Routes.php` → `$routes->get('health',           'DiscordAPIController::health');`
+  - `app/Config/Routes.php` → `$routes->post('test',            'DiscordAPIController::test');`
+- **Services/Libraries used:** `logger`
+- **Models used:** `AlertsModel`, `App\Models\AlertsModel`, `App\Models\DiscordLinkModel`, `DiscordLinkModel`
+- **View files used:** None detected
+
+## Controller: DocsAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/DocsAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `view()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: DoorDashAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/DoorDashAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `connectDoorDash()`, `doordashCallback()`, `add()`, `copy()`, `accountManager()`, `accountOverview()`, `approveRecurringSchedule()`, `cancelAccount()`, `deleteAccount()`, `bulkUpdateStatus()`, `createLinkToken()`, `exchangeToken()`, `bulkDelete()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `authentication`, `curlrequest`, `request`
+- **Models used:** `App\Models\BudgetModel`, `App\Models\UserModel`, `Myth\Auth\Authorization\GroupModel`, `UserModel`
+- **View files used:** None detected
+
+## Controller: DripCampaignAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/DripCampaignAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `processBatch()`, `open()`, `click()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('click/(:segment)', 'DripCampaignAPIController::click/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Enroll/(:num)', 'DripCampaignAPIController::enrollUser/$1');`
+  - `app/Config/Routes.php` → `$routes->get('open/(:segment)', 'DripCampaignAPIController::open/$1');`
+  - `app/Config/Routes.php` → `$routes->get('processBatch', 'DripCampaignAPIController::processBatch');`
+  - `app/Config/Routes.php` → `$routes->get('TestCron', 'DripCampaignAPIController::testDripCron');`
+- **Services/Libraries used:** `App\Services\DripCampaignService`, `DripCampaignService`
+- **Models used:** `App\Models\DripCampaignModel`
+- **View files used:** None detected
+
+## Controller: EmailAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/EmailAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `autoScheduleDrafts()`, `autoScheduleDraftCampaigns()`, `cancelScheduledCampaign()`, `cloneCampaign()`, `createDraftCampaign()`, `deleteCampaign()`, `fetchCampaignAnalytics()`, `fetchQueuedEmailById()`, `fetchQueuedEmails()`, `fetchTagAnalytics()`, `getAllCampaigns()`, `getCampaignMetrics()`, `getCampaignStats()`, `getEmailQueueStats()`, `getEmailQueueTrend()`, `processScheduledCampaigns()`, `scheduleCampaignApi()`, `sendMassTestCampaign()`, `trackBounceWebhook()`, `unsubscribe()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('autoScheduleDraftCampaigns', 'EmailAPIController::autoScheduleDraftCampaigns');`
+  - `app/Config/Routes.php` → `$routes->get('cloneCampaign/(:num)', 'EmailAPIController::cloneCampaign/$1');`
+  - `app/Config/Routes.php` → `$routes->post('createDraftCampaign', 'EmailAPIController::createDraftCampaign');`
+  - `app/Config/Routes.php` → `$routes->post('scheduleCampaignApi/(:num)', 'EmailAPIController::scheduleCampaignApi/$1');`
+  - `app/Config/Routes.php` → `$routes->get('cancelScheduledCampaign/(:num)', 'EmailAPIController::cancelScheduledCampaign/$1');`
+  - `app/Config/Routes.php` → `$routes->delete('deleteCampaign/(:num)', 'EmailAPIController::deleteCampaign/$1');`
+  - `app/Config/Routes.php` → `$routes->get('fetchCampaignAnalytics', 'EmailAPIController::fetchCampaignAnalytics');`
+  - `app/Config/Routes.php` → `$routes->get('fetchQueuedEmails', 'EmailAPIController::fetchQueuedEmails');`
+  - `app/Config/Routes.php` → `$routes->get('fetchQueuedEmailById/(:num)', 'EmailAPIController::fetchQueuedEmailById/$1');`
+  - `app/Config/Routes.php` → `$routes->get('getAllCampaigns', 'EmailAPIController::getAllCampaigns');`
+  - `app/Config/Routes.php` → `$routes->get('getCampaignMetrics/(:num)', 'EmailAPIController::getCampaignMetrics/$1');`
+  - `app/Config/Routes.php` → `$routes->get('getCampaignStats/(:num)', 'EmailAPIController::getCampaignStats/$1');`
+  - `app/Config/Routes.php` → `$routes->get('getEmailQueueStats', 'EmailAPIController::getEmailQueueStats');`
+  - `app/Config/Routes.php` → `$routes->get('getEmailQueueTrend', 'EmailAPIController::getEmailQueueTrend');`
+  - `app/Config/Routes.php` → `$routes->get('processScheduledCampaigns', 'EmailAPIController::processScheduledCampaigns');`
+  - `app/Config/Routes.php` → `$routes->get('sendMassTestCampaign', 'EmailAPIController::sendMassTestCampaign');`
+  - `app/Config/Routes.php` → `$routes->get('trackBounceWebhook', 'EmailAPIController::trackBounceWebhook');`
+  - `app/Config/Routes.php` → `$routes->get('unsubscribe/(:any)', 'EmailAPIController::unsubscribe/$1');`
+- **Services/Libraries used:** None detected
+- **Models used:** `App\Models\{CampaignModel`, `CampaignModel`, `EmailModel`
+- **View files used:** None detected
+
+## Controller: EsportsAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/EsportsAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `createEvent()`, `joinEvent()`, `lockEscrow()`, `cancelEvent()`, `receiveResultWebhook()`, `settlePayouts()`, `cronProcessJobs()`, `getEvent()`, `listEvents()`, `processSettlePayoutsJob()`, `processRefundJob()`, `handleSettlement()`, `requiresKycBlock()`, `resolveUserInfo()`, `isAllowedJurisdiction()`, `computeFeeBreakdown()`, `kycRequiredResponse()`, `guardFeature()`, `getRequestPayload()`, `logInvocation()`, `calculateBackoffDelay()`, `handleWebhookFailure()`, `processWebhookJob()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->post('createEvent', 'EsportsAPIController::createEvent');`
+  - `app/Config/Routes.php` → `$routes->post('joinEvent', 'EsportsAPIController::joinEvent');`
+  - `app/Config/Routes.php` → `$routes->post('lockEscrow', 'EsportsAPIController::lockEscrow');`
+  - `app/Config/Routes.php` → `$routes->post('cancelEvent', 'EsportsAPIController::cancelEvent');`
+  - `app/Config/Routes.php` → `$routes->post('receiveResultWebhook', 'EsportsAPIController::receiveResultWebhook');`
+  - `app/Config/Routes.php` → `$routes->post('settlePayouts', 'EsportsAPIController::settlePayouts');`
+  - `app/Config/Routes.php` → `$routes->post('cronProcessJobs', 'EsportsAPIController::cronProcessJobs');`
+  - `app/Config/Routes.php` → `$routes->get('event/(:num)', 'EsportsAPIController::getEvent/$1');`
+  - `app/Config/Routes.php` → `$routes->get('events', 'EsportsAPIController::listEvents');`
+- **Services/Libraries used:** `Config\Services`
+- **Models used:** `App\Models\EsportsModel`
+- **View files used:** None detected
+
+## Controller: HealthAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/HealthAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `index()`, `spark()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('Health', 'HealthAPIController::index');`
+  - `app/Config/Routes.php` → `$routes->get('Health/spark', 'HealthAPIController::spark');`
+  - `app/Config/Routes.php` → `$routes->get('Health', 'HealthAPIController::index');              // /API/Health`
+  - `app/Config/Routes.php` → `$routes->get('Health/spark', 'HealthAPIController::spark');        // /API/Health/spark`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: InvestmentsAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/InvestmentsAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `getSymbolsByTradeType()`, `getInvestmentData()`, `fetchActiveTrades()`, `fetchMonthAndInsightsData()`, `getMonthToMonthData()`, `getInsightsData()`, `getForecastDetails()`, `fundamentals()`, `getConfidenceHeatmap()`, `getTopConfidenceBySector()`, `getConfidenceDistribution()`, `getForecastAccuracySummary()`, `buildForecastDetailsPayload()`, `decodeIndicators()`, `searchTickers()`, `guardAdmin()`, `getForecastHighlights()`, `refreshForecasts()`, `reforecastTicker()`, `listNews()`, `getNews()`, `createNews()`, `updateNews()`, `deleteNews()`, `validateSymbol()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('Investments/getForecastDetails/(:segment)', 'InvestmentsAPIController::getForecastDetails/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Investments/getConfidenceHeatmap', 'InvestmentsAPIController::getConfidenceHeatmap');`
+  - `app/Config/Routes.php` → `$routes->get('Investments/getTopConfidenceBySector', 'InvestmentsAPIController::getTopConfidenceBySector');`
+  - `app/Config/Routes.php` → `$routes->get('Investments/getConfidenceDistribution', 'InvestmentsAPIController::getConfidenceDistribution');`
+  - `app/Config/Routes.php` → `$routes->get('Investments/getForecastAccuracySummary', 'InvestmentsAPIController::getForecastAccuracySummary');`
+  - `app/Config/Routes.php` → `// $routes->get('fetchWatchlistPrices/(:any)', 'InvestmentsAPIController::fetchWatchlistPrices/$1');`
+  - `app/Config/Routes.php` → `// $routes->get('getInvestmentData/(:segment)', 'InvestmentsAPIController::getInvestmentData/$1');`
+  - `app/Config/Routes.php` → `// $routes->get('GetUserWatchlist/(:any)', 'InvestmentsAPIController::getUserWatchlist/$1');`
+  - `app/Config/Routes.php` → `// $routes->get('refreshActiveTradesPrices/(:any)', 'InvestmentsAPIController::refreshActiveTradesPrices/$1');`
+  - `app/Config/Routes.php` → `$routes->get('getSymbolsByTradeType/(:segment)', 'InvestmentsAPIController::getSymbolsByTradeType/$1');`
+  - `app/Config/Routes.php` → `$routes->get('getInvestmentData/(:segment)', 'InvestmentsAPIController::getInvestmentData/$1');`
+  - `app/Config/Routes.php` → `$routes->get('searchTickers', 'InvestmentsAPIController::searchTickers');`
+  - `app/Config/Routes.php` → `$routes->get('news',              'InvestmentsAPIController::listNews');`
+  - `app/Config/Routes.php` → `$routes->get('news/(:num)',       'InvestmentsAPIController::getNews/$1');`
+  - `app/Config/Routes.php` → `$routes->post('news',             'InvestmentsAPIController::createNews');`
+  - `app/Config/Routes.php` → `$routes->post('news/(:num)',      'InvestmentsAPIController::updateNews/$1');`
+  - `app/Config/Routes.php` → `$routes->delete('news/(:num)',    'InvestmentsAPIController::deleteNews/$1');`
+  - `app/Config/Routes.php` → `$routes->post('validateSymbol',    'InvestmentsAPIController::validateSymbol');`
+  - `app/Config/Routes.php` → `$routes->get('getForecastHighlights', 'InvestmentsAPIController::getForecastHighlights');`
+  - `app/Config/Routes.php` → `$routes->get('getForecastDetails/(:segment)', 'InvestmentsAPIController::getForecastDetails/$1');`
+  - `app/Config/Routes.php` → `$routes->get('getConfidenceHeatmap', 'InvestmentsAPIController::getConfidenceHeatmap');`
+  - `app/Config/Routes.php` → `$routes->get('getTopConfidenceBySector', 'InvestmentsAPIController::getTopConfidenceBySector');`
+  - `app/Config/Routes.php` → `$routes->get('getConfidenceDistribution', 'InvestmentsAPIController::getConfidenceDistribution');`
+  - `app/Config/Routes.php` → `$routes->get('getForecastAccuracySummary', 'InvestmentsAPIController::getForecastAccuracySummary');`
+  - `app/Config/Routes.php` → `$routes->post('refreshForecasts', 'InvestmentsAPIController::refreshForecasts');`
+  - `app/Config/Routes.php` → `$routes->post('reforecastTicker', 'InvestmentsAPIController::reforecastTicker');`
+  - `app/Config/Routes.php` → `// $routes->get('removeTradeFromWatchlist/(:num)', 'InvestmentsAPIController::removeTradeFromWatchlist/$1'); // NOT COMPLETED Remove Trade from Watchlist`
+  - `app/Config/Routes.php` → `// $routes->post('updateTradeNotes', 'InvestmentsAPIController::updateTradeNotes'); // NOT COMPLETED Update Trade Notes`
+  - `app/Config/Routes.php` → `// $routes->post('updateTradeTargetPrice', 'InvestmentsAPIController::updateTradeTargetPrice'); // NOT COMPLETED Update Trade Target Price`
+  - `app/Config/Routes.php` → `// $routes->post('updateWatchlistOrder', 'InvestmentsAPIController::updateWatchlistOrder'); // NOT COMPLETED Update Watchlist Order`
+  - `app/Config/Routes.php` → `// $routes->post('updateWatchlistTags', 'InvestmentsAPIController::updateWatchlistTags'); // NOT COMPLETED Update Watchlist Tags`
+  - `app/Config/Routes.php` → `// $routes->get('userHoldings/(:any)', 'InvestmentsAPIController::userHoldings/$1'); // Fetch User Holdings`
+  - `app/Config/Routes.php` → `// $routes->get('userWatchlist/(:any)', 'InvestmentsAPIController::userWatchlist/$1'); // Fetch User Watchlist`
+  - `app/Config/Routes.php` → `// $routes->get('Search/Ticker/(:any)', 'InvestmentsAPIController::searchTicker/$1'); // Search User Holdings`
+  - `app/Config/Routes.php` → `$routes->get('fundamentals/(:segment)', 'InvestmentsAPIController::fundamentals/$1');`
+- **Services/Libraries used:** `App\Libraries\StockFundamentalsService`, `App\Services\{InvestmentService}`, `Config\Services`, `InvestmentService`, `StockFundamentalsService`, `authentication`, `authorization`, `forecastAccuracyEvaluator`, `forecastAggregationService`, `mymiForecaster`, `mymiInvestments`, `request`, `session`
+- **Models used:** `AlertsModel`, `App\Models\{InvestmentModel`, `App\Modules\APIs\Models\InvestmentsNewsModel`, `InvestmentModel`, `InvestmentPriceForecastModel`, `InvestmentsNewsModel`, `Myth\Auth\Authorization\GroupModel`, `PageSEOModel`, `ReferralModel`, `SubscribeModel`, `UserModel`
+- **View files used:** None detected
+
+## Controller: KeysAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/KeysAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `index()`, `create()`, `revoke()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** `ApiTokenModel`, `App\Models\ApiTokenModel`
+- **View files used:** None detected
+
+## Controller: ManagementAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/ManagementAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `_remap()`, `guardAdmin()`, `logHealthcheck()`, `getAutoloadHealth()`, `subsystemsStatus()`, `subsystemsAction()`, `runAuthSmoke()`, `saveSuggestion()`, `initController()`, `Run_CRON_Tasks()`, `runCRONTasks()`, `getRequestIdempotencyKey()`, `isIdempotencyExpired()`, `reserveIdempotencyKey()`, `finalizeIdempotencyKey()`, `executeCronWorkflow()`, `generateWeeklyStreamData()`, `backfillMarketingEmails()`, `runBackfillAlertsEmails()`, `runBackfillMarketingEmails()`, `exportWeeklyWatchlistCSV()`, `generateCoffeeAndStocksNewsletter()`, `fetchCoffeeAndStocksNewsletter()`, `saveCoffeeAndStocksNewsletter()`, `ajaxGetActiveUsers()`, `ajaxGetInactiveUsers()`, `arrayToXml()`, `banUnverifiedUsers()`, `checkForSpamUsers()`, `cronAnalyzeContent()`, `cronFetchAndGenerateNews()`, `cronFetchInbox()`, `cronFetchMarketingEmails()`, `cronFetchAndStoreEmails()`, `distributeTodaysNewsContent()`, `exportPostJson()`, `fetchAlphaVantageNewsForTradeAlerts()`, `fetchEmailsToTempScraper()`, `fetchNewsEmails()`, `forceFetchEmails()`, `generateContentDigestFromStored()`, `generateContentFromScraper()`, `generateDailyContentDigest()`, `generateRankedMarketingContent()`, `getBalanceSheet()`, `getCashFlowStatement()`, `getCompanyOverview()`, `getEarningsCalendar()`, `getFixedWindowAnalytics()`, `getIncomeStatement()`, `getInsiderTransactions()`, `getNewsSentiment()`, `getSlidingWindowAnalytics()`, `generatePostsFromSummary()`, `testTfIdfPipeline()`, `generatePostsFromSummary()`, `generateTodaysNewsSummary()`, `generateTodaysStory()`, `generateVoiceScriptManually()`, `getAlerts()`, `getAssets()`, `getNews()`, `getReferrals()`, `getSupport()`, `getTopMovers()`, `getUpcomingIPOs()`, `getUsers()`, `massResendActivationEmails()`, `processAllTradeAlerts()`, `processAndGenerateMarketingContent()`, `processQueuedEmails()`, `processTempEmailsToScraper()`, `reprocessIncompleteEmails()`, `resendActivationEmailsBatch()`, `resendActivationEmailsBatchQueued()`, `runCronManually()`, `runDailyAlphaVantageDataPipeline()`, `sendTestActivationEmail()`, `requireCronAuth()`, `sendToZapierManually()`, `scrapeAndGenerateTodaysStoryFromInbox()`, `sharePost()`, `sendAllDiscordAlerts()`, `unsubscribe()`, `updateMarketDataForAlerts()`, `isHealthcheckAllowed()`, `resolveLogPath()`, `dbHealthcheck()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('cronFetchAndGenerateNews', 'ManagementAPIController::cronFetchAndGenerateNews');`
+  - `app/Config/Routes.php` → `$routes->post('Management/backfillMarketingEmails', 'ManagementAPIController::backfillMarketingEmails');`
+  - `app/Config/Routes.php` → `$routes->get('Management/getAutoloadHealth', 'ManagementAPIController::getAutoloadHealth', ['filter' => 'permission:admin.access']);`
+  - `app/Config/Routes.php` → `$routes->get('Management/subsystems/status', 'ManagementAPIController::subsystemsStatus', ['filter' => 'permission:admin.access']);`
+  - `app/Config/Routes.php` → `$routes->post('Management/subsystems/action', 'ManagementAPIController::subsystemsAction', ['filter' => 'permission:admin.access']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Run-CRON-Tasks', 'ManagementAPIController::Run_CRON_Tasks');`
+  - `app/Config/Routes.php` → `$routes->cli('Run-CRON-Tasks', 'ManagementAPIController::runCRONTasks');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'ajaxGetActiveUsers', 'ManagementAPIController::ajaxGetActiveUsers');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'ajaxGetInactiveUsers', 'ManagementAPIController::ajaxGetInactiveUsers');`
+  - `app/Config/Routes.php` → `$routes->get('banUnverifiedUsers', 'ManagementAPIController::banUnverifiedUsers');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'checkForSpamUsers', 'ManagementAPIController::checkForSpamUsers');`
+  - `app/Config/Routes.php` → `$routes->get('distributeTodaysNewsContent', 'ManagementAPIController::distributeTodaysNewsContent');`
+  - `app/Config/Routes.php` → `$routes->get('exportWeeklyWatchlistCSV', 'ManagementAPIController::exportWeeklyWatchlistCSV');`
+  - `app/Config/Routes.php` → `$routes->get('exportPostJson/(:num)', 'ManagementAPIController::exportPostJson/$1');`
+  - `app/Config/Routes.php` → `$routes->get('fetchAlphaVantageNewsForTradeAlerts', 'ManagementAPIController::fetchAlphaVantageNewsForTradeAlerts');`
+  - `app/Config/Routes.php` → `$routes->get('fetchEmailsToTempScraper', 'ManagementAPIController::fetchEmailsToTempScraper');`
+  - `app/Config/Routes.php` → `$routes->get('fetchLatestSummaries', 'ManagementAPIController::fetchLatestSummaries');`
+  - `app/Config/Routes.php` → `$routes->get('fetchNewsEmails', 'ManagementAPIController::fetchNewsEmails');`
+  - `app/Config/Routes.php` → `$routes->get('generatePostsFromSummary/(:num)', 'ManagementAPIController::generatePostsFromSummary/$1');`
+  - `app/Config/Routes.php` → `$routes->get('generatePostsFromSummary', 'ManagementAPIController::generatePostsFromSummary');`
+  - `app/Config/Routes.php` → `$routes->get('generateCoffeeAndStocksNewsletter', 'ManagementAPIController::generateCoffeeAndStocksNewsletter');`
+  - `app/Config/Routes.php` → `$routes->get('fetchCoffeeAndStocksNewsletter', 'ManagementAPIController::fetchCoffeeAndStocksNewsletter');`
+  - `app/Config/Routes.php` → `$routes->get('generateWeeklyStreamData', 'ManagementAPIController::generateWeeklyStreamData');`
+  - `app/Config/Routes.php` → `$routes->post('saveCoffeeAndStocksNewsletter', 'ManagementAPIController::saveCoffeeAndStocksNewsletter');`
+  - `app/Config/Routes.php` → `$routes->get('generateVoiceScriptManually', 'ManagementAPIController::generateVoiceScriptManually');`
+  - `app/Config/Routes.php` → `$routes->get('runBackfillAlertsEmails', 'ManagementAPIController::runBackfillAlertsEmails');`
+  - `app/Config/Routes.php` → `$routes->get('runBackfillMarketingEmails', 'ManagementAPIController::runBackfillMarketingEmails');`
+  - `app/Config/Routes.php` → `$routes->get('getUsers', 'ManagementAPIController::getUsers');`
+  - `app/Config/Routes.php` → `$routes->get('getAlerts', 'ManagementAPIController::getAlerts');`
+  - `app/Config/Routes.php` → `$routes->get('getReferrals', 'ManagementAPIController::getReferrals');`
+  - `app/Config/Routes.php` → `$routes->get('getAssets', 'ManagementAPIController::getAssets');`
+  - `app/Config/Routes.php` → `$routes->get('getNews', 'ManagementAPIController::getNews');`
+  - `app/Config/Routes.php` → `$routes->get('getSupport', 'ManagementAPIController::getSupport');`
+  - `app/Config/Routes.php` → `$routes->get('processAllTradeAlerts', 'ManagementAPIController::processAllTradeAlerts');`
+  - `app/Config/Routes.php` → `$routes->get('runCronManually', 'ManagementAPIController::runCronManually');`
+  - `app/Config/Routes.php` → `$routes->get('runDailyAlphaVantageDataPipeline', 'ManagementAPIController::runDailyAlphaVantageDataPipeline');`
+  - `app/Config/Routes.php` → `$routes->get('scrapeAndGenerateTodaysStoryFromInbox', 'ManagementAPIController::scrapeAndGenerateTodaysStoryFromInbox');`
+  - `app/Config/Routes.php` → `$routes->get('sendAllDiscordAlerts', 'ManagementAPIController::sendAllDiscordAlerts');`
+  - `app/Config/Routes.php` → `$routes->get('sendToZapierManually', 'ManagementAPIController::sendToZapierManually');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'generateTodaysStory', 'ManagementAPIController::generateTodaysStory');`
+  - `app/Config/Routes.php` → `$routes->get('sharePost/(:num)/(:segment)', 'ManagementAPIController::sharePost/$1/$2');`
+  - `app/Config/Routes.php` → `$routes->get('triggerPostAutogenOnEmpty', 'ManagementAPIController::triggerPostAutogenOnEmpty');`
+  - `app/Config/Routes.php` → `$routes->get('updateMarketDataForAlerts', 'ManagementAPIController::updateMarketDataForAlerts');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'processQueuedEmails', 'ManagementAPIController::processQueuedEmails');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'processTempEmailsToScraper', 'ManagementAPIController::processTempEmailsToScraper');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'resendActivationEmailsBatch', 'ManagementAPIController::resendActivationEmailsBatch');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'resendActivationEmailsBatchQueued', 'ManagementAPIController::resendActivationEmailsBatchQueued');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'sendTestActivationEmail', 'ManagementAPIController::sendTestActivationEmail');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'saveSuggestion', 'ManagementAPIController::saveSuggestion');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Marketing/cronAnalyzeContent', 'ManagementAPIController::cronAnalyzeContent');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Marketing/cronFetchAndGenerateNews', 'ManagementAPIController::cronFetchAndGenerateNews');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Marketing/generateContent', 'ManagementAPIController::cronFetchAndGenerateNews');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Marketing/cronFetchInbox', 'ManagementAPIController::cronFetchInbox');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Marketing/cronFetchMarketingEmails', 'ManagementAPIController::cronFetchMarketingEmails');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Marketing/generateContentDigestFromStored', 'ManagementAPIController::generateContentDigestFromStored');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Marketing/generateContentFromScraper', 'ManagementAPIController::generateContentFromScraper');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Marketing/generateDailyContentDigest', 'ManagementAPIController::generateDailyContentDigest');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Marketing/massResendActivationEmails', 'ManagementAPIController::massResendActivationEmails');`
+  - `app/Config/Routes.php` → `$routes->get('getPlatforms','ManagementAPIController::getPlatforms');`
+  - `app/Config/Routes.php` → `$routes->post('savePlatform','ManagementAPIController::savePlatform');`
+  - `app/Config/Routes.php` → `$routes->delete('deletePlatform/(:num)','ManagementAPIController::deletePlatform/$1');`
+  - `app/Config/Routes.php` → `$routes->get('getPlatformRules/(:segment)','ManagementAPIController::getPlatformRules/$1');`
+  - `app/Config/Routes.php` → `$routes->post('upsertPlatformRule','ManagementAPIController::upsertPlatformRule');`
+  - `app/Config/Routes.php` → `$routes->delete('deletePlatformRule/(:num)','ManagementAPIController::deletePlatformRule/$1');`
+  - `app/Config/Routes.php` → `$routes->post('searchTaxonomy','ManagementAPIController::searchTaxonomy');`
+  - `app/Config/Routes.php` → `$routes->post('saveTaxonomy','ManagementAPIController::saveTaxonomy');`
+  - `app/Config/Routes.php` → `$routes->delete('deleteTaxonomy/(:num)','ManagementAPIController::deleteTaxonomy/$1');`
+  - `app/Config/Routes.php` → `$routes->get('listSuggestions/(:segment)/(:segment)','ManagementAPIController::listSuggestions/$1/$2');`
+  - `app/Config/Routes.php` → `$routes->post('saveSuggestion','ManagementAPIController::saveSuggestion');`
+  - `app/Config/Routes.php` → `$routes->delete('deleteSuggestion/(:num)','ManagementAPIController::deleteSuggestion/$1');`
+  - `app/Config/Routes.php` → `$routes->post('getPostingPlan','ManagementAPIController::getPostingPlan');`
+  - `app/Config/Routes.php` → `$routes->post('composePost','ManagementAPIController::composePost');`
+- **Services/Libraries used:** `AlphaVantagePipelineService`, `App\Services\SubSystemManager`, `App\Services\{AlphaVantagePipelineService`, `AuthSmokeService`, `Config\Services`, `MarketingService`, `MyMIMarketing`, `WeeklyStreamService`, `activator`, `authorization`, `mailService`, `request`
+- **Models used:** `App\Models\{AlertsModel`, `ExchangeModel`, `IdempotencyModel`, `MarketingModel`, `MarketingNewsletterModel`, `ReferralModel`, `SupportModel`, `UserModel`
+- **View files used:** `ManagementModule\Views\Users\partials\action_buttons`, `emails/completeActivation`
+
+## Controller: MarketingAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/MarketingAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `_remap()`, `initController()`, `generateKimiSummaries()`, `generateKimiPosts()`, `approveBufferItem()`, `autoScheduleNextApproved()`, `cronAnalyzeContent()`, `cronAutoPublishGroupedDigest()`, `cronEnrichTradeAlerts()`, `cronFetchAndGenerateNews()`, `cronFetchInbox()`, `cronFetchMarketingEmails()`, `cronProcessSMSMarketingIdeas()`, `cronDistributeApprovedContent()`, `deleteScrape()`, `distributeHighScoreContent()`, `downloadVoiceover()`, `emailPostForApproval()`, `exportBufferPosts()`, `exportGroupedSummariesCSV()`, `fetchAndCleanHtml()`, `fetchBufferPaginated()`, `fetchFinalizedContent()`, `fetchGeneratedSummaries()`, `fetchFinalizedSummariesBlock()`, `fetchGeneratedSummaries()`, `fetchGeneratedSummariesBlock()`, `fetchGeneratedSummariesJson()`, `forceGenerateFromTemp()`, `generateAdvisorMediaOnDemand()`, `generateCampaignContent()`, `generateDailyMarketCampaign()`, `generateCampaignStepContent()`, `generateContentFromScraper()`, `generateContentDigestFromStored()`, `generateDailyContentDigest()`, `generateFromSimilar()`, `generateLivePreview()`, `generatePostsFromSummary()`, `logApiError()`, `getPlatforms()`, `savePlatform()`, `deletePlatform()`, `getPlatformRules()`, `upsertPlatformRule()`, `deletePlatformRule()`, `searchTaxonomy()`, `saveTaxonomy()`, `deleteTaxonomy()`, `listSuggestions()`, `saveSuggestion()`, `deleteSuggestion()`, `getPostingPlan()`, `composePost()`, `generatePostMediaContent()`, `getGeneratedPostsPaginated()`, `generateScheduledPosts()`, `generateSummaryFromGoogleSearch()`, `generateThreadFromSummary()`, `generateVoiceScriptManually()`, `getCleanedScrapedContent()`, `getContentPerformanceAnalytics()`, `getNextAvailableSlot()`, `getScrapeDetails()`, `getStoryboardPackage()`, `getTopGeneratedPosts()`, `getTopKeywordChart()`, `groupSimilarSummariesByCosine()`, `massResendActivationEmails()`, `monitorKeywordsAndScrape()`, `processMarketingTempEmails()`, `publishGroupedContentDraft()`, `rankBufferPostsDaily()`, `regenerateMissingPostContent()`, `rejectBufferItem()`, `reprocessIncompleteEmails()`, `runBackfillForTempEmails()`, `runContentGenerationBatch()`, `runEnrichTradeAlerts()`, `runKeywordBackfillBatch()`, `runKeywordEnrichment()`, `runScheduledDistribution()`, `sanitizeEmailContent()`, `scheduleApprovedPost()`, `schedulePost()`, `scrapeWebsiteWithFallback()`, `sendWalkthroughEmails()`, `shareGroupedSummaries()`, `sharePost()`, `smartSearch()`, `submitLargeContent()`, `testGenerateDailyDigest()`, `testGenerateFromTempEmail()`, `testGenerateSummarizerHarness()`, `testTfIdfEdgeCases()`, `timeline()`, `triggerPostAutogenOnEmpty()`, `updateBufferScheduleInterval()`, `updateCampaignLinks()`, `updateCampaignMessageField()`, `updateInsight()`, `updatePlatformToggle()`, `updatePostSchedule()`, `viewTimelineGrouped()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('getSocialPlatforms', 'MarketingAPIController::getSocialPlatforms');`
+  - `app/Config/Routes.php` → `$routes->get('getSocialCommunities', 'MarketingAPIController::getSocialCommunities');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'saveSocialCommunity', 'MarketingAPIController::saveSocialCommunity');`
+  - `app/Config/Routes.php` → `$routes->get('getPostTemplates', 'MarketingAPIController::getPostTemplates');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'savePostTemplate', 'MarketingAPIController::savePostTemplate');`
+  - `app/Config/Routes.php` → `$routes->get('generatePlatformPosts/(:num)', 'MarketingAPIController::generatePlatformPosts/$1');`
+  - `app/Config/Routes.php` → `$routes->get('generatePlatformPosts', 'MarketingAPIController::generatePlatformPosts');`
+  - `app/Config/Routes.php` → `$routes->get('generateDailyCommunityPosts', 'MarketingAPIController::generateDailyCommunityPosts');`
+  - `app/Config/Routes.php` → `$routes->get('exportGeneratedPostJson/(:num)', 'MarketingAPIController::exportGeneratedPostJson/$1');`
+  - `app/Config/Routes.php` → `$routes->get('generateRevenueDocs', 'MarketingAPIController::generateRevenueDocs');`
+  - `app/Config/Routes.php` → `$routes->get('cronGenerateDailyCommunityPosts', 'MarketingAPIController::cronGenerateDailyCommunityPosts');`
+  - `app/Config/Routes.php` → `$routes->get('cronQueueDistribution', 'MarketingAPIController::cronQueueDistribution');`
+  - `app/Config/Routes.php` → `$routes->post('/', 'MarketingAPIController::index');`
+  - `app/Config/Routes.php` → `$routes->post('approvePost/(:num)', 'MarketingAPIController::approvePost/$1');`
+  - `app/Config/Routes.php` → `$routes->post('approveBufferItem/(:num)', 'MarketingAPIController::approveBufferItem/$1');`
+  - `app/Config/Routes.php` → `$routes->post('autoScheduleNextApproved', 'MarketingAPIController::autoScheduleNextApproved');`
+  - `app/Config/Routes.php` → `$routes->get('cronAnalyzeContent', 'MarketingAPIController::cronAnalyzeContent');`
+  - `app/Config/Routes.php` → `$routes->get('cronAutoPublishGroupedDigest', 'MarketingAPIController::cronAutoPublishGroupedDigest');`
+  - `app/Config/Routes.php` → `$routes->get('cronFetchAndGenerateNews', 'MarketingAPIController::cronFetchAndGenerateNews');`
+  - `app/Config/Routes.php` → `$routes->get('cronFetchInbox', 'MarketingAPIController::cronFetchInbox');`
+  - `app/Config/Routes.php` → `$routes->get('cronFetchMarketingEmails', 'MarketingAPIController::cronFetchMarketingEmails');`
+  - `app/Config/Routes.php` → `$routes->get('cronProcessSMSMarketingIdeas', 'MarketingAPIController::cronProcessSMSMarketingIdeas');`
+  - `app/Config/Routes.php` → `$routes->delete('deleteScrape/(:num)', 'MarketingAPIController::deleteScrape/$1');`
+  - `app/Config/Routes.php` → `$routes->get('downloadVoiceover/(:any)', 'MarketingAPIController::downloadVoiceover/$1');`
+  - `app/Config/Routes.php` → `$routes->get('distributeHighScoreContent', 'MarketingAPIController::distributeHighScoreContent');`
+  - `app/Config/Routes.php` → `$routes->get('emailPostForApproval/(:num)', 'MarketingAPIController::emailPostForApproval/$1');`
+  - `app/Config/Routes.php` → `$routes->get('fetchBufferPaginated', 'MarketingAPIController::fetchBufferPaginated');`
+  - `app/Config/Routes.php` → `$routes->get('fetchFinalizedSummariesBlock', 'MarketingAPIController::fetchFinalizedSummariesBlock');`
+  - `app/Config/Routes.php` → `$routes->get('fetchGeneratedSummaries', 'MarketingAPIController::fetchGeneratedSummaries');`
+  - `app/Config/Routes.php` → `$routes->get('fetchGeneratedSummariesBlock', 'MarketingAPIController::fetchGeneratedSummariesBlock');`
+  - `app/Config/Routes.php` → `$routes->get('fetchGeneratedSummariesJson', 'MarketingAPIController::fetchGeneratedSummariesJson');`
+  - `app/Config/Routes.php` → `$routes->get('forceGenerateFromTemp', 'MarketingAPIController::forceGenerateFromTemp');`
+  - `app/Config/Routes.php` → `$routes->get('ForceGenerateFromTemp/(:num)', 'MarketingAPIController::ForceGenerateFromTemp/$1');`
+  - `app/Config/Routes.php` → `// $routes->get('generateCampaignContent/(:num)', 'MarketingAPIController::generateCampaignContent/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'generateCampaignContent', 'MarketingAPIController::generateCampaignContent');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'generateDailyMarketCampaign', 'MarketingAPIController::generateDailyMarketCampaign');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'generateCampaignStepContent', 'MarketingAPIController::generateCampaignStepContent');`
+  - `app/Config/Routes.php` → `$routes->get('generateContentFromScraper', 'MarketingAPIController::generateContentFromScraper');`
+  - `app/Config/Routes.php` → `$routes->get('generateContentDigestFromStored', 'MarketingAPIController::generateContentDigestFromStored');`
+  - `app/Config/Routes.php` → `$routes->get('generateDailyContentDigest', 'MarketingAPIController::generateDailyContentDigest');`
+  - `app/Config/Routes.php` → `$routes->get('generateKimiSummaries', 'MarketingAPIController::generateKimiSummaries');`
+  - `app/Config/Routes.php` → `$routes->get('generateKimiPosts', 'MarketingAPIController::generateKimiPosts');`
+  - `app/Config/Routes.php` → `$routes->get('GenerateFromSimilar/(:num)', 'MarketingAPIController::generateFromSimilar/$1');`
+  - `app/Config/Routes.php` → `$routes->get('generateFromSimilar', 'MarketingAPIController::generateFromSimilar');`
+  - `app/Config/Routes.php` → `$routes->get('generateLivePreview', 'MarketingAPIController::generateLivePreview');`
+  - `app/Config/Routes.php` → `$routes->get('generatePostsFromSummary/(:num)', 'MarketingAPIController::generatePostsFromSummary/$1');`
+  - `app/Config/Routes.php` → `$routes->get('generatePostsFromSummary', 'MarketingAPIController::generatePostsFromSummary');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'generatePostMediaContent', 'MarketingAPIController::generatePostMediaContent');`
+  - `app/Config/Routes.php` → `$routes->get('generateScheduledPosts', 'MarketingAPIController::generateScheduledPosts');`
+  - `app/Config/Routes.php` → `$routes->get('getCleanedScrapedContent', 'MarketingAPIController::getCleanedScrapedContent');`
+  - `app/Config/Routes.php` → `$routes->get('getScrapeDetails/(:num)', 'MarketingAPIController::getScrapeDetails/$1');`
+  - `app/Config/Routes.php` → `$routes->get('generateThreadFromSummary/(:num)', 'MarketingAPIController::generateThreadFromSummary/$1');`
+  - `app/Config/Routes.php` → `$routes->get('getContentPerformanceAnalytics', 'MarketingAPIController::getContentPerformanceAnalytics');`
+  - `app/Config/Routes.php` → `$routes->get('getGeneratedPostsPaginated', 'MarketingAPIController::getGeneratedPostsPaginated');`
+  - `app/Config/Routes.php` → `$routes->get('getStoryboardPackage/(:num)', 'MarketingAPIController::getStoryboardPackage/$1');`
+  - `app/Config/Routes.php` → `$routes->get('getTopGeneratedPosts', 'MarketingAPIController::getTopGeneratedPosts');`
+  - `app/Config/Routes.php` → `$routes->get('getTopKeywordChart/(:num)', 'MarketingAPIController::getTopKeywordChart/$1');`
+  - `app/Config/Routes.php` → `$routes->get('groupSimilarSummariesByCosine', 'MarketingAPIController::groupSimilarSummariesByCosine');`
+  - `app/Config/Routes.php` → `$routes->get('massResendActivationEmails', 'MarketingAPIController::massResendActivationEmails');`
+  - `app/Config/Routes.php` → `$routes->get('monitorKeywords', 'MarketingAPIController::monitorKeywordsAndScrape');`
+  - `app/Config/Routes.php` → `$routes->get('previewBufferItem/(:num)', 'MarketingAPIController::previewBufferItem/$1');`
+  - `app/Config/Routes.php` → `$routes->get('previewPendingSummaries', 'MarketingAPIController::previewPendingSummaries');`
+  - `app/Config/Routes.php` → `$routes->get('processMarketingTempEmails/(:num)/(:segment)/(:num)', 'MarketingAPIController::processMarketingTempEmails/$1/$2/$3');`
+  - `app/Config/Routes.php` → `$routes->get('processMarketingTempEmails/(:num)/(:segment)', 'MarketingAPIController::processMarketingTempEmails/$1/$2');`
+  - `app/Config/Routes.php` → `$routes->get('publishGroupedContentDraft', 'MarketingAPIController::publishGroupedContentDraft');`
+  - `app/Config/Routes.php` → `$routes->get('rankBufferPostsDaily', 'MarketingAPIController::rankBufferPostsDaily');`
+  - `app/Config/Routes.php` → `$routes->get('reprocessIncompleteEmails', 'MarketingAPIController::reprocessIncompleteEmails');`
+  - `app/Config/Routes.php` → `$routes->post('rejectBufferItem/(:num)', 'MarketingAPIController::rejectBufferItem/$1');`
+  - `app/Config/Routes.php` → `$routes->get('runContentGenerationBatch', 'MarketingAPIController::runContentGenerationBatch');`
+  - `app/Config/Routes.php` → `$routes->get('runKeywordBackfillBatch', 'MarketingAPIController::runKeywordBackfillBatch');`
+  - `app/Config/Routes.php` → `$routes->get('runKeywordEnrichment', 'MarketingAPIController::runKeywordEnrichment');`
+  - `app/Config/Routes.php` → `$routes->get('runScheduledTasks', 'MarketingAPIController::runScheduledTasks');`
+  - `app/Config/Routes.php` → `$routes->get('sendWalkthroughEmails', 'MarketingAPIController::sendWalkthroughEmails');`
+  - `app/Config/Routes.php` → `$routes->get('scheduleApprovedPost/(:num)', 'MarketingAPIController::scheduleApprovedPost/$1');`
+  - `app/Config/Routes.php` → `$routes->get('schedulePost/(:any)/(:any)/(:any)', 'MarketingAPIController::schedulePost/$1/$2/$3');`
+  - `app/Config/Routes.php` → `$routes->get('sharePost/(:num)/(:segment)', 'MarketingAPIController::sharePost/$1/$2');`
+  - `app/Config/Routes.php` → `$routes->get('Large-Content/Form', 'MarketingAPIController::submitLargeContentForm');`
+  - `app/Config/Routes.php` → `$routes->post('submitLargeContent', 'MarketingAPIController::submitLargeContent');`
+  - `app/Config/Routes.php` → `$routes->get('Manual-Content/Form', 'MarketingAPIController::shortLongContentForm');`
+  - `app/Config/Routes.php` → `$routes->post('submitManualContent', 'MarketingAPIController::submitManualContent');`
+  - `app/Config/Routes.php` → `$routes->get('testGenerateDailyDigest', 'MarketingAPIController::testGenerateDailyDigest');`
+  - `app/Config/Routes.php` → `$routes->get('testGenerateFromTempEmail/(:num)', 'MarketingAPIController::testGenerateFromTempEmail/$1');`
+  - `app/Config/Routes.php` → `$routes->get('testTfIdfEdgeCases', 'MarketingAPIController::testTfIdfEdgeCases');`
+  - `app/Config/Routes.php` → `$routes->get('testGenerateSummarizerHarness', 'MarketingAPIController::testGenerateSummarizerHarness');`
+  - `app/Config/Routes.php` → `$routes->get('Timeline/(:segment)', 'MarketingAPIController::timeline/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Timeline', 'MarketingAPIController::viewTimelineGrouped');`
+  - `app/Config/Routes.php` → `$routes->get('triggerBackfill', 'MarketingAPIController::reprocessIncompleteEmails');`
+  - `app/Config/Routes.php` → `$routes->get('triggerPostAutogenOnEmpty', 'MarketingAPIController::triggerPostAutogenOnEmpty');`
+  - `app/Config/Routes.php` → `$routes->post('updateCampaignLinks', 'MarketingAPIController::updateCampaignLinks');`
+  - `app/Config/Routes.php` → `$routes->post('updateInsight', 'MarketingAPIController::updateInsight');`
+  - `app/Config/Routes.php` → `$routes->post('updateCampaignMessageField', 'MarketingAPIController::updateCampaignMessageField');`
+  - `app/Config/Routes.php` → `$routes->post('updatePostSchedule/(:num)', 'MarketingAPIController::updatePostSchedule/$1');`
+  - `app/Config/Routes.php` → `$routes->post('updatePlatformToggle/(:num)', 'MarketingAPIController::updatePlatformToggle/$1');`
+  - `app/Config/Routes.php` → `$routes->post('validateSymbol', 'MarketingAPIController::validateSymbol');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'MarketingAPIController::index');`
+  - `app/Config/Routes.php` → `$routes->get('Add/(:segment)', 'MarketingAPIController::add/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['POST'], 'Add-Subscriber', 'MarketingAPIController::addSubscriber');`
+  - `app/Config/Routes.php` → `$routes->get('Approve-Content/(:num)', 'MarketingAPIController::approveContent/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Blog-Creator', 'MarketingAPIController::blogCreator');`
+  - `app/Config/Routes.php` → `$routes->get('Blogs', 'MarketingAPIController::blogs');`
+  - `app/Config/Routes.php` → `$routes->get('Campaigns', 'MarketingAPIController::campaigns');`
+  - `app/Config/Routes.php` → `$routes->get('Content-Review', 'MarketingAPIController::contentReview');`
+  - `app/Config/Routes.php` → `$routes->get('Content/Generator', 'MarketingAPIController::contentGenerator');`
+  - `app/Config/Routes.php` → `$routes->get('Content/Listing', 'MarketingAPIController::contentListing');`
+  - `app/Config/Routes.php` → `$routes->get('Daily-Log', 'MarketingAPIController::viewDailyLogs');`
+  - `app/Config/Routes.php` → `$routes->get('Edit-Content/(:num)', 'MarketingAPIController::editContent/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Email/(:any)/(:any)', 'MarketingAPIController::viewEmail/$1/$2');`
+  - `app/Config/Routes.php` → `$routes->get('fetchEmails', 'MarketingAPIController::fetchEmails');`
+  - `app/Config/Routes.php` → `$routes->post('fetchMissingLogos', 'MarketingAPIController::fetchMissingLogos');`
+  - `app/Config/Routes.php` → `$routes->get('Financial-News', 'MarketingAPIController::financialNews');`
+  - `app/Config/Routes.php` → `$routes->post('generateAutomatedContent', 'MarketingAPIController::generateAutomatedContent');`
+  - `app/Config/Routes.php` → `$routes->get('generateContent', 'MarketingAPIController::generateContent');`
+  - `app/Config/Routes.php` → `$routes->get('generateNewsletter', 'MarketingAPIController::generateNewsletterContent');`
+  - `app/Config/Routes.php` → `$routes->get('getRecentScrapes', 'MarketingAPIController::getRecentScrapes');`
+  - `app/Config/Routes.php` → `$routes->get('Grouped-Content-Drafts', 'MarketingAPIController::generateGroupedContentDrafts');`
+  - `app/Config/Routes.php` → `$routes->get('Ideas', 'MarketingAPIController::ideas');`
+  - `app/Config/Routes.php` → `$routes->get('Post-Creator', 'MarketingAPIController::postCreator');`
+  - `app/Config/Routes.php` → `$routes->get('previewGeneratedPost/(:num)', 'MarketingAPIController::previewGeneratedPost/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Promote', 'MarketingAPIController::promote');`
+  - `app/Config/Routes.php` → `$routes->get('Promote/(:segment)', 'MarketingAPIController::promote');`
+  - `app/Config/Routes.php` → `$routes->post('PublishBlog/(:num)', 'Management\MarketingAPIController::publishBlog/$1');`
+  - `app/Config/Routes.php` → `$routes->get('RunContentGeneration', 'Management\MarketingAPIController::runContentGeneration');`
+  - `app/Config/Routes.php` → `$routes->get('Quick-Scraper', 'MarketingAPIController::standaloneScrape');`
+  - `app/Config/Routes.php` → `$routes->get('Reject-Content/(:num)', 'MarketingAPIController::rejectContent/$1');`
+  - `app/Config/Routes.php` → `$routes->post('Save-Content-Edit/(:num)', 'MarketingAPIController::saveContentEdit/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Schedule', 'MarketingAPIController::schedule');`
+  - `app/Config/Routes.php` → `$routes->get('Schedule/(:segment)', 'MarketingAPIController::schedule/$1');`
+  - `app/Config/Routes.php` → `$routes->get('scheduleNewsletters', 'MarketingAPIController::scheduleNewsletterCampaign');`
+  - `app/Config/Routes.php` → `$routes->get('submitDailyLog', 'MarketingAPIController::submitDailyLog');`
+  - `app/Config/Routes.php` → `$routes->post('Scrape-Link', 'MarketingAPIController::scrapeLink');`
+  - `app/Config/Routes.php` → `$routes->get('sendNotification', 'MarketingAPIController::sendNotification');`
+  - `app/Config/Routes.php` → `$routes->get('sendNewsletter', 'MarketingAPIController::sendScheduleNewsletter');`
+  - `app/Config/Routes.php` → `$routes->get('Communities', 'MarketingAPIController::communities');`
+  - `app/Config/Routes.php` → `$routes->get('Test', 'MarketingAPIController::test');`
+  - `app/Config/Routes.php` → `$routes->get('Twitter', 'MarketingAPIController::twitterDashboard');`
+  - `app/Config/Routes.php` → `$routes->get('Video-Creator', 'MarketingAPIController::videoCreator');`
+  - `app/Config/Routes.php` → `$routes->get('View-Email/(:segment)/(:segment)', 'MarketingAPIController::viewEmail/$1/$2');`
+  - `app/Config/Routes.php` → `$routes->get('View-Grouped-Summaries', 'MarketingAPIController::View-Grouped-Summaries');`
+- **Services/Libraries used:** `App\Services\MarketingService`, `App\Services\SearchRotationService`, `App\Services\ZapierService`, `MarketingService`, `MyMIMarketing`, `activator`, `mailService`, `request`
+- **Models used:** `App\Models\AlertsModel`, `App\Models\MarketingModel`, `App\Models\UserModel`, `MarketingModel`
+- **View files used:** `emails/Marketing/ReviewPostEmail`
+
+## Controller: MditAdminAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/MditAdminAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `pendingRedemptions()`, `approveRedemption()`, `pendingDeposits()`, `computeNavToday()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('redemptions/pending', 'MditAdminAPIController::pendingRedemptions');`
+  - `app/Config/Routes.php` → `$routes->post('redemptions/approve', 'MditAdminAPIController::approveRedemption');`
+  - `app/Config/Routes.php` → `$routes->get('deposits/pending', 'MditAdminAPIController::pendingDeposits');`
+  - `app/Config/Routes.php` → `$routes->post('nav/compute_today', 'MditAdminAPIController::computeNavToday');`
+- **Services/Libraries used:** `App\Services\MDIT\MditNavService`, `App\Services\MDIT\MditRedemptionService`, `MditNavService`, `MditRedemptionService`
+- **Models used:** `App\Models\MDIT\MditDepositModel`, `App\Models\MDIT\MditRedemptionModel`, `App\Models\MDIT\MditWebhookEventModel`, `MditDepositModel`, `MditRedemptionModel`, `MditWebhookEventModel`
+- **View files used:** None detected
+
+## Controller: MditBaseAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/MditBaseAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `currentUserId()`, `requireUserId()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `authentication`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: MditDepositAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/MditDepositAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `initiate()`, `confirm()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->post('deposits/initiate', 'MditDepositAPIController::initiate');`
+  - `app/Config/Routes.php` → `$routes->post('deposits/confirm', 'MditDepositAPIController::confirm');`
+- **Services/Libraries used:** `App\Services\MDIT\MditDepositService`, `App\Services\MDIT\MditInvestorService`, `MditDepositService`, `MditInvestorService`
+- **Models used:** `App\Models\MDIT\MditDepositModel`, `MditDepositModel`
+- **View files used:** None detected
+
+## Controller: MditInvestorAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/MditInvestorAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `startKyc()`, `kycStatus()`, `attestAccreditation()`, `portfolioSummary()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->post('kyc/start', 'MditInvestorAPIController::startKyc');`
+  - `app/Config/Routes.php` → `$routes->get('kyc/status', 'MditInvestorAPIController::kycStatus');`
+  - `app/Config/Routes.php` → `$routes->post('accreditation/attest', 'MditInvestorAPIController::attestAccreditation');`
+  - `app/Config/Routes.php` → `$routes->get('portfolio/summary', 'MditInvestorAPIController::portfolioSummary');`
+- **Services/Libraries used:** `App\Services\MDIT\MditInvestorService`, `App\Services\MDIT\MditNavService`, `MditInvestorService`, `MditNavService`
+- **Models used:** `App\Models\MDIT\MditInvestorProfileModel`, `App\Models\MDIT\MditTokenLedgerModel`, `MditInvestorProfileModel`, `MditTokenLedgerModel`
+- **View files used:** None detected
+
+## Controller: MditIssuanceAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/MditIssuanceAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `mint()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->post('issuance/mint', 'MditIssuanceAPIController::mint', ['filter' => 'permission:mdit.admin']);`
+- **Services/Libraries used:** `App\Services\MDIT\MditInvestorService`, `App\Services\MDIT\MditIssuanceService`, `MditInvestorService`, `MditIssuanceService`
+- **Models used:** `App\Models\MDIT\MditDepositModel`, `App\Models\MDIT\MditTokenLedgerModel`, `MditDepositModel`, `MditTokenLedgerModel`
+- **View files used:** None detected
+
+## Controller: MditRedemptionAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/MditRedemptionAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `requestRedemption()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->post('redemptions/request', 'MditRedemptionAPIController::requestRedemption');`
+- **Services/Libraries used:** `App\Services\MDIT\MditInvestorService`, `App\Services\MDIT\MditRedemptionService`, `MditInvestorService`, `MditRedemptionService`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: MditWebhookAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/MditWebhookAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `onramp()`, `isValidSignature()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `App\Services\MDIT\MditDepositService`, `MditDepositService`
+- **Models used:** `App\Models\MDIT\MditWebhookEventModel`, `MditWebhookEventModel`
+- **View files used:** None detected
+
+## Controller: OpsAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/OpsAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `status()`, `dispatch()`, `ingestReport()`, `latestReport()`, `ingestMetrics()`, `authorizeRequest()`, `isAdmin()`, `validateHmac()`, `respondError()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('Ops/status', 'OpsAPIController::status');`
+  - `app/Config/Routes.php` → `$routes->get('Ops/status', 'OpsAPIController::status');`
+  - `app/Config/Routes.php` → `$routes->post('Ops/dispatch', 'OpsAPIController::dispatch');`
+  - `app/Config/Routes.php` → `$routes->post('Ops/ingestReport', 'OpsAPIController::ingestReport');`
+  - `app/Config/Routes.php` → `$routes->get('Ops/reports/latest', 'OpsAPIController::latestReport');`
+  - `app/Config/Routes.php` → `$routes->get('Ops/ingest-metrics', 'OpsAPIController::ingestMetrics');`
+  - `app/Config/Routes.php` → `$routes->get('Ops/OPcacheReset', 'OpsAPIController::opcacheReset'); // /API/Ops/OPcacheReset`
+  - `app/Config/Routes.php` → `$routes->get('status', 'AiOpsAPIController::status');`
+  - `app/Config/Routes.php` → `$routes->post('toggle', 'AiOpsAPIController::toggle');`
+  - `app/Config/Routes.php` → `$routes->post('run', 'AiOpsAPIController::run');`
+  - `app/Config/Routes.php` → `$routes->post('receiveResult', 'AiOpsAPIController::receiveResult');`
+  - `app/Config/Routes.php` → `$routes->get('health', 'AiOpsAPIController::health');`
+  - `app/Config/Routes.php` → `$routes->post('policy/check', 'AiOpsAPIController::policyCheck');`
+  - `app/Config/Routes.php` → `$routes->post('usage/log', 'AiOpsAPIController::logUsage');`
+  - `app/Config/Routes.php` → `$routes->post('cache/store', 'AiOpsAPIController::cacheStore');`
+  - `app/Config/Routes.php` → `$routes->get('cache/get', 'AiOpsAPIController::cacheGet');`
+  - `app/Config/Routes.php` → `$routes->post('test/policy', 'AiOpsAPIController::testPolicy');`
+  - `app/Config/Routes.php` → `$routes->post('toggle', 'AiOpsAPIController::toggle', ['filter' => 'permission:admin.access']);`
+- **Services/Libraries used:** `authentication`
+- **Models used:** `AiOpsIngestRunModel`, `App\Models\AiOpsIngestRunModel`, `App\Models\OpsJobsModel`, `App\Models\OpsQueueModel`, `App\Models\OpsRunsModel`, `OpsJobsModel`, `OpsQueueModel`, `OpsRunsModel`
+- **View files used:** None detected
+
+## Controller: OpsPublicPagesAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/OpsPublicPagesAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `run()`, `import()`, `report()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: PredictionsAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/PredictionsAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `svc()`, `uid()`, `listMarkets()`, `createMarket()`, `placeOrder()`, `cancelOrder()`, `settle()`, `addLiquidity()`, `removeLiquidity()`, `lockMarkets()`, `processPayouts()`, `rebalanceOdds()`, `cronDistributeFees()`, `cronFetchMarketData()`, `cronFetchUserData()`, `cronSettleMarkets()`, `cronExpireMarkets()`, `cronUpdateMarketPrices()`, `cronUpdateMarketStates()`, `cronUpdateUserPositions()`, `cronUpdateUserStakes()`, `cronUpdateUserFees()`, `cronUpdateUserPnL()`, `cronUpdateUserRankings()`, `cronUpdateUserLeaderboard()`, `cronUpdateUserStats()`, `cronUpdateUserNotifications()`, `cronProcessExpiredMarkets()`, `cronProcessSettledMarkets()`, `cronProcessUserOrders()`, `cronProcessUserPositions()`, `cronProcessUserStakes()`, `cronProcessUserFees()`, `cronProcessUserPnL()`, `cronProcessUserRankings()`, `cronProcessUserLeaderboard()`, `cronProcessUserStats()`, `cronProcessUserNotifications()`, `cronProcessUserSettlements()`, `lock()`, `rebalanceOdds()`, `unlock()`, `respondCron()`, `runExpireMarkets()`, `runRebalanceOdds()`, `runProcessPayouts()`, `buildUserLeaderboard()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'PredictionsAPIController::index');`
+  - `app/Config/Routes.php` → `$routes->get('Liquidity/Add', 'PredictionsAPIController::addLiquidity');`
+  - `app/Config/Routes.php` → `$routes->get('Liquidity/Remove', 'PredictionsAPIController::removeLiquidity');`
+  - `app/Config/Routes.php` → `$routes->get('Markets', 'PredictionsAPIController::markets');`
+  - `app/Config/Routes.php` → `$routes->get('Market/(:num)', 'PredictionsAPIController::view/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Markets/Create', 'PredictionsAPIController::createMarket');`
+  - `app/Config/Routes.php` → `$routes->get('Markets/Settle/(:num)', 'PredictionsAPIController::settle/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Orders/Place', 'PredictionsAPIController::placeOrder');`
+  - `app/Config/Routes.php` → `$routes->get('Orders/Cancel', 'PredictionsAPIController::cancelOrder');`
+  - `app/Config/Routes.php` → `$routes->get('Portfolio', 'PredictionsAPIController::portfolio');`
+  - `app/Config/Routes.php` → `$routes->get('Settlements', 'PredictionsAPIController::settlements');`
+  - `app/Config/Routes.php` → `$routes->post('PlaceOrder', 'PredictionsAPIController::placeOrder');`
+  - `app/Config/Routes.php` → `$routes->post('CancelOrder', 'PredictionsAPIController::cancelOrder');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Distribute-Fees', 'PredictionsAPIController::cronDistributeFees');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Fetch-Market-Data', 'PredictionsAPIController::cronFetchMarketData');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Fetch-User-Data', 'PredictionsAPIController::cronFetchUserData');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Settle-Markets', 'PredictionsAPIController::cronSettleMarkets');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Expire-Markets', 'PredictionsAPIController::cronExpireMarkets');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Update-Market-Prices', 'PredictionsAPIController::cronUpdateMarketPrices');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Update-Market-States', 'PredictionsAPIController::cronUpdateMarketStates');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Update-User-Positions', 'PredictionsAPIController::cronUpdateUserPositions');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Update-User-Stakes', 'PredictionsAPIController::cronUpdateUserStakes');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Update-User-Fees', 'PredictionsAPIController::cronUpdateUserFees');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Update-User-PnL', 'PredictionsAPIController::cronUpdateUserPnL');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Update-User-Rankings', 'PredictionsAPIController::cronUpdateUserRankings');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Update-User-Leaderboard', 'PredictionsAPIController::cronUpdateUserLeaderboard');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Update-User-Stats', 'PredictionsAPIController::cronUpdateUserStats');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Update-User-Notifications', 'PredictionsAPIController::cronUpdateUserNotifications');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Process-Expired-Markets', 'PredictionsAPIController::cronProcessExpiredMarkets');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Process-Settled-Markets', 'PredictionsAPIController::cronProcessSettledMarkets');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Process-User-Orders', 'PredictionsAPIController::cronProcessUserOrders');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Process-User-Positions', 'PredictionsAPIController::cronProcessUserPositions');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Process-User-Stakes', 'PredictionsAPIController::cronProcessUserStakes');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Process-User-Fees', 'PredictionsAPIController::cronProcessUserFees');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Process-User-PnL', 'PredictionsAPIController::cronProcessUserPnL');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Process-User-Rankings', 'PredictionsAPIController::cronProcessUserRankings');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Process-User-Leaderboard', 'PredictionsAPIController::cronProcessUserLeaderboard');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Process-User-Stats', 'PredictionsAPIController::cronProcessUserStats');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Process-User-Notifications', 'PredictionsAPIController::cronProcessUserNotifications');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Process-User-Settlements', 'PredictionsAPIController::cronProcessUserSettlements');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Lock', 'PredictionsAPIController::lock');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Rebalance', 'PredictionsAPIController::rebalanceOdds');`
+  - `app/Config/Routes.php` → `$routes->get('Cron/Unlock', 'PredictionsAPIController::unlock');`
+  - `app/Config/Routes.php` → `$routes->get('Latest', 'PredictionsAPIController::latest');`
+- **Services/Libraries used:** `auth`, `mymipredictions`
+- **Models used:** `App\Modules\Predictions\Models\MarketsModel`, `App\Modules\Predictions\Models\PayoutsModel`, `MarketsModel`, `OrdersModel`, `PayoutsModel`, `PositionsModel`, `TradesModel`
+- **View files used:** None detected
+
+## Controller: ProjectsAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/ProjectsAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `fetchProjectEmails()`, `parseProjectEmails()`, `promoteLead()`, `updateProject()`, `openCommitments()`, `checkThreshold()`, `launchPrivateAuction()`, `settlePrivateAuction()`, `markFunded()`, `createQuarterlyDistribution()`, `runPayouts()`, `processMonthlyWithdrawals()`, `assertCron()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** `App\Models\ProjectInboxModel`, `App\Models\ProjectsModel`, `ProjectInboxModel`, `ProjectsModel`
+- **View files used:** None detected
+
+## Controller: ReferralAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/ReferralAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `resolveUserId()`, `guard()`, `bulkUpdateStatus()`, `bulkDelete()`, `getPayload()`, `sanitizeIds()`, `respondSuccess()`, `respondError()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `authentication`, `session`
+- **Models used:** `App\Models\ReferralModel`, `ReferralModel`
+- **View files used:** None detected
+
+## Controller: ScannerController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/ScannerController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `status()`, `run()`, `results()`, `symbol()`, `syncUniverse()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('status', 'ScannerController::status');`
+  - `app/Config/Routes.php` → `$routes->post('run', 'ScannerController::run');`
+  - `app/Config/Routes.php` → `$routes->get('results', 'ScannerController::results');`
+  - `app/Config/Routes.php` → `$routes->get('results/(:segment)', 'ScannerController::symbol/$1');`
+  - `app/Config/Routes.php` → `$routes->post('universe/sync', 'ScannerController::syncUniverse');`
+- **Services/Libraries used:** `scannerService`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: SearchAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/SearchAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `index()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** `App\Models\UserModel`
+- **View files used:** None detected
+
+## Controller: SolanaAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/SolanaAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `apiGetTokens()`, `connectWallet()`, `createSolanaWallet()`, `createToken()`, `executeSwap()`, `getAssetsData()`, `getCoinAmount()`, `getExchangePrice()`, `getMarketPrice()`, `getTokenPrice()`, `importWallet()`, `updateSolanaTokens()`, `updateSolanaPrices()`, `calculateTransactionFees()`, `provisionDefaultWallet()`, `updateUserBalance()`, `recordTransactionHistory()`, `sendTransactionConfirmation()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('getMarketPrice/(:segment)', 'SolanaAPIController::get/$1');`
+  - `app/Config/Routes.php` → `$routes->get('getCoinAmount/(:segment)', 'SolanaAPIController::getCoinAmount/$1');`
+  - `app/Config/Routes.php` → `$routes->get('getMarketPrice', 'SolanaAPIController::getMarketPrice');`
+  - `app/Config/Routes.php` → `$routes->get('getTokenPrice/(:segment)', 'SolanaAPIController::getTokenPrice/$1');`
+  - `app/Config/Routes.php` → `$routes->get('getExchangePrice/(:segment)', 'SolanaAPIController::getExchangePrice/$1');`
+  - `app/Config/Routes.php` → `$routes->get('getAssetsData', 'SolanaAPIController::getAssetsData');`
+  - `app/Config/Routes.php` → `$routes->get('provisionDefaultWallet', 'SolanaAPIController::provisionDefaultWallet');`
+  - `app/Config/Routes.php` → `$routes->get('updatePrices', 'SolanaAPIController::updateSolanaPrices');`
+  - `app/Config/Routes.php` → `$routes->get('updateTokens', 'SolanaAPIController::updateSolanaTokens');`
+  - `app/Config/Routes.php` → `$routes->get('health', 'SolanaAPIController::health');`
+  - `app/Config/Routes.php` → `$routes->get('wallet/(:segment)/balance', 'SolanaAPIController::getBalance/$1');`
+  - `app/Config/Routes.php` → `$routes->get('wallet/(:segment)/tokens', 'SolanaAPIController::getTokenAccounts/$1');`
+  - `app/Config/Routes.php` → `$routes->post('transfer', 'SolanaAPIController::transfer');`
+  - `app/Config/Routes.php` → `$routes->post('swap/quote', 'SolanaAPIController::quote');`
+  - `app/Config/Routes.php` → `$routes->post('swap/execute', 'SolanaAPIController::swap');`
+  - `app/Config/Routes.php` → `$routes->post('token/create', 'SolanaAPIController::createToken');`
+  - `app/Config/Routes.php` → `$routes->post('token/mint', 'SolanaAPIController::mint');`
+- **Services/Libraries used:** `Config\Services`, `authentication`, `request`
+- **Models used:** `APIModel`, `App\Models\AssetsModel`, `App\Models\{AccountsModel`, `ExchangeModel`, `Myth\Auth\Authorization\GroupModel`, `SolanaModel`, `UserModel`
+- **View files used:** None detected
+
+## Controller: SqueezeAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/SqueezeAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `scorecard()`, `zoomout()`, `fade()`, `run()`, `mockDailyBars()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** `App\Models\SqueezeModel`, `SqueezeModel`
+- **View files used:** None detected
+
+## Controller: SupportAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/SupportAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `kb()`, `kbArticle()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('kb', 'SupportAPIController::kb');`
+  - `app/Config/Routes.php` → `$routes->get('kb/(:segment)', 'SupportAPIController::kbArticle/$1');`
+- **Services/Libraries used:** None detected
+- **Models used:** `App\Models\SupportModel`, `SupportModel`
+- **View files used:** None detected
+
+## Controller: UserAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/UserAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `requireAuthenticatedUser()`, `requireInternalAccess()`, `health()`, `addComment()`, `getBalance()`, `getTokenAccounts()`, `transfer()`, `quote()`, `swap()`, `createToken()`, `mint()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Comments/Add', 'UserAPIController::addComment');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Comments/Add', 'UserAPIController::addComment');`
+- **Services/Libraries used:** `MyMIExchange`, `MyMIMarketing`, `internalToken`
+- **Models used:** `App\Models\UserModel`
+- **View files used:** None detected
+
+## Controller: WalletsAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/WalletsAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `initController()`, `invalidateCaches()`, `currentUserId()`, `getWalletSummaryService()`, `index()`, `summary()`, `create()`, `plaidConfigDebug()`, `plaidEnv()`, `plaidOAuthReturn()`, `plaidWebhook()`, `update()`, `plaidLinkToken()`, `plaidExchange()`, `providers()`, `unlink()`, `updateBank()`, `updateCredit()`, `updateDebt()`, `updateInvestment()`, `updateCrypto()`, `updateByType()`, `linkRobinhood()`, `linkSnapTrade()`, `getSnapTradeConnectUrl()`, `parseCredentials()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsAPIController::addUserGoldTasks');`
+  - `app/Config/Routes.php` → `// ✅ Add this so /API/Wallets resolves to WalletsAPIController::index`
+  - `app/Config/Routes.php` → `$routes->get('/', 'WalletsAPIController::index');`
+  - `app/Config/Routes.php` → `$routes->get('summary', 'WalletsAPIController::summary');`
+  - `app/Config/Routes.php` → `$routes->get('providers', 'WalletsAPIController::providers');`
+  - `app/Config/Routes.php` → `$routes->post('Create', 'WalletsAPIController::create');`
+  - `app/Config/Routes.php` → `$routes->put('Update/(:num)', 'WalletsAPIController::update/$1');`
+  - `app/Config/Routes.php` → `$routes->delete('Unlink/(:num)', 'WalletsAPIController::unlink/$1');`
+  - `app/Config/Routes.php` → `$routes->post('Link-Robinhood', 'WalletsAPIController::linkRobinhood');`
+  - `app/Config/Routes.php` → `$routes->post('Link-Snaptrade', 'WalletsAPIController::linkSnapTrade');`
+  - `app/Config/Routes.php` → `$routes->post('Snaptrade/Connect-URL', 'WalletsAPIController::getSnapTradeConnectUrl');`
+  - `app/Config/Routes.php` → `$routes->post('Banking/Update/(:num)',   'WalletsAPIController::updateBank/$1');`
+  - `app/Config/Routes.php` → `$routes->post('Credit/Update/(:num)',    'WalletsAPIController::updateCredit/$1');`
+  - `app/Config/Routes.php` → `$routes->post('Debt/Update/(:num)',      'WalletsAPIController::updateDebt/$1');`
+  - `app/Config/Routes.php` → `$routes->post('Investments/Update/(:num)','WalletsAPIController::updateInvestment/$1');`
+  - `app/Config/Routes.php` → `$routes->post('Crypto/Update/(:num)',    'WalletsAPIController::updateCrypto/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Plaid/Config-Debug', 'WalletsAPIController::plaidConfigDebug');`
+  - `app/Config/Routes.php` → `$routes->get('Plaid/Env', 'WalletsAPIController::plaidEnv');`
+  - `app/Config/Routes.php` → `$routes->get('Plaid/OAuth-Return', 'WalletsAPIController::plaidOAuthReturn');`
+  - `app/Config/Routes.php` → `$routes->get('Plaid/Webhook', 'WalletsAPIController::plaidWebhook');`
+  - `app/Config/Routes.php` → `$routes->get('Plaid/Link-Token', 'WalletsAPIController::plaidLinkToken');`
+  - `app/Config/Routes.php` → `$routes->post('Plaid/Exchange', 'WalletsAPIController::plaidExchange');`
+  - `app/Config/Routes.php` → `$routes->get('/(:segment)/(:segment)', 'WalletsAPIController::index/$1/$2');`
+- **Services/Libraries used:** `App\Services\WalletService`, `App\Services\WalletSummaryService`, `WalletService`, `WalletSummaryService`, `authentication`, `crudCacheInvalidator`, `logger`, `renderer`, `walletService`
+- **Models used:** `App\Models\WalletModel`, `WalletModel`
+- **View files used:** None detected
+
+## Controller: EmailBounceAPIController
+- **Namespace:** `App\Modules\APIs\Controllers\Webhooks`
+- **Path:** `app/Modules/APIs/Controllers/Webhooks/EmailBounceAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `ingest()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: TradingViewAPIController
+- **Namespace:** `App\Modules\APIs\Controllers\Webhooks`
+- **Path:** `app/Modules/APIs/Controllers/Webhooks/TradingViewAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `ingest()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** `App\Models\InboundWebhookModel`, `InboundWebhookModel`
+- **View files used:** None detected
+
+## Controller: ZapierAPIController
+- **Namespace:** `App\Modules\APIs\Controllers\Webhooks`
+- **Path:** `app/Modules/APIs/Controllers/Webhooks/ZapierAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `ingest()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** `App\Models\InboundWebhookModel`, `InboundWebhookModel`
+- **View files used:** None detected
+
+## Controller: ZapierAPIController
+- **Namespace:** `App\Modules\APIs\Controllers`
+- **Path:** `app/Modules/APIs/Controllers/ZapierAPIController.php`
+- **Classification:** `API_CONTROLLER`
+- **Methods:** `webhookReceiver()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: BackupsController
+- **Namespace:** `App\Modules\Admin\Controllers`
+- **Path:** `app/Modules/Admin/Controllers/BackupsController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `list()`, `run()`, `prune()`, `ok()`, `fail()`, `forbid()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `App\Libraries\Backups\BackupService`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: FlagsController
+- **Namespace:** `App\Modules\Admin\Controllers`
+- **Path:** `app/Modules/Admin/Controllers/FlagsController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `index()`, `upsert()`, `overrideUser()`, `ok()`, `fail()`, `forbid()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** `App\Models\FeatureFlagModel`, `App\Models\FeatureFlagOverrideModel`, `FeatureFlagModel`, `FeatureFlagOverrideModel`
+- **View files used:** None detected
+
+## Controller: PrivacyController
+- **Namespace:** `App\Modules\Admin\Controllers`
+- **Path:** `app/Modules/Admin/Controllers/PrivacyController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `requestExport()`, `requestErase()`, `downloadArtifact()`, `buildUserExport()`, `eraseUser()`, `ok()`, `fail()`, `forbid()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: FeaturesController
+- **Namespace:** `App\Modules\Advertise\Controllers`
+- **Path:** `app/Modules/Advertise/Controllers/FeaturesController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `BrokerageIntegrations()`, `MyMIGold()`, `renderPage()`, `getViewFileData()`, `getSiteSettings()`, `getPageTitle()`, `ensureSEOData()`, `render()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `Config\Services`
+- **Models used:** `App\Models\{MyMIGoldModel`, `MyMIGoldModel`, `PageSEOModel`, `SubscribeModel`, `UserModel`
+- **View files used:** `Modules\Advertise\Views\Features\Brokerage_Integrations`, `Modules\Advertise\Views\Features\MyMI_Gold`, `Modules\Advertise\Views\Features\index`, `themes/default/layouts/index`
+
+## Controller: AdvisorController
+- **Namespace:** `App\Modules\Advisor\Controllers`
+- **Path:** `app/Modules/Advisor/Controllers/AdvisorController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `generateNow()`, `generateAdvisorInsight()`, `generateNewsStoryboard()`, `generateTradeAnalysis()`, `safeCall()`, `disabledResponse()`, `extractContent()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'AdvisorController::index');`
+  - `app/Config/Routes.php` → `$routes->post('generateInsight', 'AdvisorController::generateAdvisorInsight');`
+  - `app/Config/Routes.php` → `$routes->post('generateStoryboard', 'AdvisorController::generateNewsStoryboard');`
+  - `app/Config/Routes.php` → `$routes->post('tradeAnalysis/(:num)', 'AdvisorController::generateTradeAnalysis');`
+  - `app/Config/Routes.php` → `$routes->post('generateNow', [AdvisorController::class, 'generateNow']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], '/', [AdvisorController::class, 'index']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], '/', [AdvisorController::class, 'index']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], '/', 'AdvisorController::index');`
+- **Services/Libraries used:** `kimiClient`
+- **Models used:** `App\Models\AlertsModel`
+- **View files used:** `App\\Modules\\Advisor\\Views\\advisor_dashboard`
+
+## Controller: BlogController
+- **Namespace:** `App\Modules\Blog\Controllers`
+- **Path:** `app/Modules/Blog/Controllers/BlogController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `account_manager()`, `services()`, `submit()`, `viewBlog()`, `view()`, `category()`, `renderPage()`, `getViewFileData()`, `getSiteSettings()`, `getPageTitle()`, `ensureSEOData()`, `render()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'BlogController::index'); // Landing Page`
+  - `app/Config/Routes.php` → `$routes->get('Post/(:segment)', 'BlogController::viewBlog/$1'); // Dynamic Blog Post View`
+  - `app/Config/Routes.php` → `$routes->get('(:segment)/(:segment)', 'BlogController::view/$1/$2');`
+  - `app/Config/Routes.php` → `$routes->get('(:segment)', 'BlogController::view/$1');`
+  - `app/Config/Routes.php` → `//     $routes->get('/', 'BlogController::index'); // Landing Page`
+  - `app/Config/Routes.php` → `//     $routes->get('Post/(:segment)', 'BlogController::viewBlog/$1'); // Dynamic Blog Post View`
+  - `app/Modules/Management/Routes.php` → `$routes->get('/', 'BlogController::index');`
+  - `app/Modules/Management/Routes.php` → `$routes->get('post/(:any)', 'BlogController::post/$1');`
+  - `app/Modules/User/Routes.php` → `$routes->get('/', 'BlogController::index');`
+  - `app/Modules/User/Routes.php` → `$routes->get('post/(:any)', 'BlogController::post/$1');`
+  - `app/Modules/Template/Routes.php` → `$routes->get('/', 'BlogController::index');`
+  - `app/Modules/Template/Routes.php` → `$routes->get('post/(:any)', 'BlogController::post/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'BlogController::index'); // Landing Page`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Post/(:segment)', 'BlogController::viewBlog/$1'); // Dynamic Blog Post View`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('/', 'BlogController::index'); // Landing Page`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('Post/(:segment)', 'BlogController::viewBlog/$1'); // Dynamic Blog Post View`
+- **Services/Libraries used:** `Config\Services`, `auth`, `authentication`
+- **Models used:** `App\Models\{BlogModel`, `BlogModel`, `Myth\Auth\Authorization\GroupModel`, `PageSEOModel`, `SubscribeModel`, `UserModel`
+- **View files used:** `themes/default/layouts/index`
+
+## Controller: EarningsController
+- **Namespace:** `App\Modules\Blog\Controllers`
+- **Path:** `app/Modules/Blog/Controllers/EarningsController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `test()`, `fetchMarketData()`, `generateConfig()`, `update()`, `updateMarketData()`, `upload()`, `viewByDate()`, `RegisteringAnAccount()`, `MyMIGold()`, `PurchaseMyMIGold()`, `PersonalBudgeting()`, `InvestmentPortfolioManagement()`, `DailyFinancialNews()`, `renderPage()`, `getViewFileData()`, `getSiteSettings()`, `getPageTitle()`, `ensureSEOData()`, `render()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'EarningsController::index');`
+  - `app/Config/Routes.php` → `$routes->get('Test', 'EarningsController::test');`
+  - `app/Config/Routes.php` → `$routes->get('(:segment)', 'EarningsController::viewByDate'); // Catch any dynamic date`
+  - `app/Config/Routes.php` → `//     $routes->get('/', 'EarningsController::index');`
+  - `app/Config/Routes.php` → `//     $routes->get('Test', 'EarningsController::test');`
+  - `app/Config/Routes.php` → `//     $routes->get('(:segment)', 'EarningsController::viewByDate'); // Catch any dynamic date`
+  - `app/Config/Routes.php` → `//     $routes->get('(:segment)', 'EarningsController::viewByDate'); // Catch any dynamic date`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'EarningsController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Test', 'EarningsController::test');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('(:segment)', 'EarningsController::viewByDate'); // Catch any dynamic date`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('(:segment)', 'EarningsController::viewByDate'); // Catch any dynamic date`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('/', 'EarningsController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('Test', 'EarningsController::test');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('(:segment)', 'EarningsController::viewByDate'); // Catch any dynamic date`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('(:segment)', 'EarningsController::viewByDate'); // Catch any dynamic date`
+- **Services/Libraries used:** `Config\Services`, `authentication`
+- **Models used:** `App\Models\{MyMIGoldModel`, `InvestmentsCalendarModel`, `MyMIGoldModel`, `Myth\Auth\Authorization\GroupModel`, `PageSEOModel`, `SubscribeModel`, `UserModel`
+- **View files used:** `Modules\Blog\Views\HowItWorks\MyMI_Gold`, `Modules\Blog\Views\HowItWorks\Purchase_MyMI_Gold`, `themes/default/layouts/index`
+
+## Controller: HowItWorks
+- **Namespace:** `App\Modules\Blog\Controllers`
+- **Path:** `app/Modules/Blog/Controllers/HowItWorks.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `DetermineYourFinancialGoals()`, `MyMIGold()`, `PurchaseMyMIGold()`, `PersonalBudgeting()`, `renderPage()`, `getViewFileData()`, `getSiteSettings()`, `getPageTitle()`, `ensureSEOData()`, `render()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('MyMI-Gold', 'HowItWorks::MyMIGold');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('MyMI-Gold', 'HowItWorks::MyMIGold');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'HowItWorks::index');`
+- **Services/Libraries used:** `Config\Services`
+- **Models used:** `App\Models\{MyMIGoldModel`, `MyMIGoldModel`, `PageSEOModel`, `SubscribeModel`, `UserModel`
+- **View files used:** `Modules\Blog\Views\HowItWorks\Determining_Your_Financial_Goals`, `Modules\Blog\Views\HowItWorks\MyMI_Gold`, `Modules\Blog\Views\HowItWorks\Personal_Budgeting`, `Modules\Blog\Views\HowItWorks\Purchase_MyMI_Gold`, `Modules\Blog\Views\HowItWorks\index`, `themes/default/layouts/index`
+
+## Controller: HowItWorksController
+- **Namespace:** `App\Modules\Blog\Controllers`
+- **Path:** `app/Modules/Blog/Controllers/HowItWorksController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `show()`, `discord()`, `streaming()`, `DetermineYourFinancialGoals()`, `RegisteringAnAccount()`, `MyMIGold()`, `PurchaseMyMIGold()`, `parseMarkdownToHtml()`, `getGuideTitle()`, `getNavItems()`, `PersonalBudgeting()`, `InvestmentPortfolioManagement()`, `DailyFinancialNews()`, `renderPage()`, `getViewFileData()`, `getSiteSettings()`, `getPageTitle()`, `ensureSEOData()`, `render()`, `normalizeSlug()`, `respondWithRendered()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'HowItWorksController::index');`
+  - `app/Config/Routes.php` → `$routes->get('budgeting', 'HowItWorksController::budgeting');`
+  - `app/Config/Routes.php` → `$routes->get('investing', 'HowItWorksController::investing');`
+  - `app/Config/Routes.php` → `$routes->get('crypto', 'HowItWorksController::crypto');`
+  - `app/Config/Routes.php` → `$routes->get('alerts', 'HowItWorksController::alerts');`
+  - `app/Config/Routes.php` → `$routes->get('projects', 'HowItWorksController::projects');`
+  - `app/Config/Routes.php` → `$routes->get('security', 'HowItWorksController::security');`
+  - `app/Config/Routes.php` → `$routes->get('pricing', 'HowItWorksController::pricing');`
+  - `app/Config/Routes.php` → `$routes->get('(:any)', 'HowItWorksController::show/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'HowItWorksController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Determining-Your-Financial-Goals', 'HowItWorksController::DetermineYourFinancialGoals');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Daily-Financial-News', 'HowItWorksController::DailyFinancialNews');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Investment-Portfolio-Management', 'HowItWorksController::InvestmentPortfolioManagement');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Personal-Budgeting', 'HowItWorksController::PersonalBudgeting');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Registering-An-Account', 'HowItWorksController::RegisteringAnAccount');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('MyMI-Gold', 'HowItWorksController::MyMIGold');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Purchase-MyMI-Gold', 'HowItWorksController::PurchaseMyMIGold');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Determining-Your-Financial-Goals', 'HowItWorksController::DetermineYourFinancialGoals');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Personal-Budgeting', 'HowItWorksController::PersonalBudgeting');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Registering-An-Account', 'HowItWorksController::RegisteringAnAccount');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('MyMI-Gold', 'HowItWorksController::MyMIGold');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Purchase/MyMIGold', 'HowItWorksController::PurchaseMyMIGold');`
+- **Services/Libraries used:** `Config\Services`, `authentication`, `myMIGold`, `request`, `safeCache`
+- **Models used:** `App\Models\{MarketingModel`, `MyMIGoldModel`, `Myth\Auth\Authorization\GroupModel`, `PageSEOModel`, `SubscribeModel`, `UserModel`
+- **View files used:** `Modules/Blog/HowItWorks/Discord`, `Modules/Blog/HowItWorks/Streaming`, `Modules\Blog\Views\HowItWorks\Purchase_MyMI_Gold`, `errors/html/error_404`, `themes/default/layouts/index`
+
+## Controller: IRSController
+- **Namespace:** `App\Modules\Blog\Controllers`
+- **Path:** `app/Modules/Blog/Controllers/IRSController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `IRSExpandedHomeEnergyTaxCredits()`, `renderPage()`, `getViewFileData()`, `getSiteSettings()`, `getPageTitle()`, `ensureSEOData()`, `render()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('IRS-Expanded-Home-Energy-Tax-Credits', 'IRSController::IRSExpandedHomeEnergyTaxCredits');`
+  - `app/Config/Routes.php` → `//     $routes->get('IRS-Expanded-Home-Energy-Tax-Credits', 'IRSController::IRSExpandedHomeEnergyTaxCredits');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('IRS-Expanded-Home-Energy-Tax-Credits', 'IRSController::IRSExpandedHomeEnergyTaxCredits');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('IRS-Expanded-Home-Energy-Tax-Credits', 'IRSController::IRSExpandedHomeEnergyTaxCredits');`
+- **Services/Libraries used:** `Config\Services`, `authentication`, `session`
+- **Models used:** `App\Models\{PageSEOModel`, `Myth\Auth\Authorization\GroupModel`, `PageSEOModel`, `SubscribeModel`, `UserModel`
+- **View files used:** `themes/default/layouts/index`
+
+## Controller: InvestingController
+- **Namespace:** `App\Modules\Blog\Controllers`
+- **Path:** `app/Modules/Blog/Controllers/InvestingController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'InvestingController::index');`
+  - `app/Config/Routes.php` → `$routes->get('The-Beginners-Guide-To-Option-Trading', 'InvestingController::TheBeginnersGuideToOptionTrading');`
+  - `app/Config/Routes.php` → `$routes->get('The-Fundamentals-Of-Investing', 'InvestingController::TheFundamentalsOfInvesting');`
+  - `app/Config/Routes.php` → `$routes->get('Tips-For-Effective-Investment-Portfolio-Management', 'InvestingController::TipsForEffectiveInvestmentPortfolioManagement');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'InvestingController::index');`
+  - `app/Config/Routes.php` → `//     $routes->get('/', 'InvestingController::index');`
+  - `app/Config/Routes.php` → `//     $routes->get('The-Beginners-Guide-To-Option-Trading', 'InvestingController::TheBeginnersGuideToOptionTrading');`
+  - `app/Config/Routes.php` → `//     $routes->get('The-Fundamentals-Of-Investing', 'InvestingController::TheFundamentalsOfInvesting');`
+  - `app/Config/Routes.php` → `//     $routes->get('Tips-For-Effective-Investment-Portfolio-Management', 'InvestingController::TipsForEffectiveInvestmentPortfolioManagement');`
+  - `app/Config/Routes.php` → `//     $routes->get('/', 'InvestingController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'InvestingController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('The-Beginners-Guide-To-Option-Trading', 'InvestingController::TheBeginnersGuideToOptionTrading');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('The-Fundamentals-Of-Investing', 'InvestingController::TheFundamentalsOfInvesting');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Tips-For-Effective-Investment-Portfolio-Management', 'InvestingController::TipsForEffectiveInvestmentPortfolioManagement');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'InvestingController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('/', 'InvestingController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('The-Beginners-Guide-To-Option-Trading', 'InvestingController::TheBeginnersGuideToOptionTrading');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('The-Fundamentals-Of-Investing', 'InvestingController::TheFundamentalsOfInvesting');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('Tips-For-Effective-Investment-Portfolio-Management', 'InvestingController::TipsForEffectiveInvestmentPortfolioManagement');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('/', 'InvestingController::index');`
+- **Services/Libraries used:** `Config\Services`, `authentication`
+- **Models used:** `App\Models\{PageSEOModel`, `Myth\Auth\Authorization\GroupModel`, `PageSEOModel`, `SubscribeModel`, `UserModel`
+- **View files used:** None detected
+
+## Controller: NewsAndUpdates
+- **Namespace:** `App\Modules\Blog\Controllers`
+- **Path:** `app/Modules/Blog/Controllers/NewsAndUpdates.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `IntegratingWithPlaid()`, `TheRoadmapToTheFutureOfFinance()`, `renderPage()`, `getViewFileData()`, `getSiteSettings()`, `getPageTitle()`, `ensureSEOData()`, `render()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'NewsAndUpdates::index');`
+  - `app/Config/Routes.php` → `$routes->get('Integrating-With-Plaid', 'NewsAndUpdates::IntegratingWithPlaid');`
+  - `app/Config/Routes.php` → `$routes->get('The-Roadmap-To-The-Future-Of-Finance', 'NewsAndUpdates::TheRoadmapToTheFutureOfFinance');`
+  - `app/Config/Routes.php` → `//     $routes->get('/', 'NewsAndUpdates::index');`
+  - `app/Config/Routes.php` → `//     $routes->get('Integrating-With-Plaid', 'NewsAndUpdates::IntegratingWithPlaid');`
+  - `app/Config/Routes.php` → `//     $routes->get('The-Roadmap-To-The-Future-Of-Finance', 'NewsAndUpdates::TheRoadmapToTheFutureOfFinance');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'NewsAndUpdates::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Integrating-With-Plaid', 'NewsAndUpdates::IntegratingWithPlaid');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('The-Roadmap-To-The-Future-Of-Finance', 'NewsAndUpdates::TheRoadmapToTheFutureOfFinance');`
+- **Services/Libraries used:** `Config\Services`
+- **Models used:** `App\Models\{PageSEOModel`, `PageSEOModel`, `SubscribeModel`, `UserModel`
+- **View files used:** `Modules\Blog\Views\NewsAndUpdates\Integrating_With_Plaid`, `Modules\Blog\Views\NewsAndUpdates\The_Roadmap_To_The_Future_Of_Finance`, `Modules\Blog\Views\NewsAndUpdates\index`, `themes/default/layouts/index`
+
+## Controller: PersonalBudgetingController
+- **Namespace:** `App\Modules\Blog\Controllers`
+- **Path:** `app/Modules/Blog/Controllers/PersonalBudgetingController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `TheImportanceOfPersonalFinancialBudgeting()`, `TheRoadmapToTheFutureOfFinance()`, `renderPage()`, `getViewFileData()`, `getSiteSettings()`, `getPageTitle()`, `ensureSEOData()`, `render()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'PersonalBudgetingController::index');`
+  - `app/Config/Routes.php` → `$routes->get('The-Importance-of-Personal-Financial-Budgeting', 'PersonalBudgetingController::TheImportanceOfPersonalFinancialBudgeting');`
+  - `app/Config/Routes.php` → `//     $routes->get('/', 'PersonalBudgetingController::index');`
+  - `app/Config/Routes.php` → `//     $routes->get('The-Importance-of-Personal-Financial-Budgeting', 'PersonalBudgetingController::TheImportanceOfPersonalFinancialBudgeting');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'PersonalBudgetingController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('The-Importance-of-Personal-Financial-Budgeting', 'PersonalBudgetingController::TheImportanceOfPersonalFinancialBudgeting');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('/', 'PersonalBudgetingController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('The-Importance-of-Personal-Financial-Budgeting', 'PersonalBudgetingController::TheImportanceOfPersonalFinancialBudgeting');`
+- **Services/Libraries used:** `Config\Services`, `authentication`
+- **Models used:** `App\Models\{PageSEOModel`, `Myth\Auth\Authorization\GroupModel`, `PageSEOModel`, `SubscribeModel`, `UserModel`
+- **View files used:** `themes/default/layouts/index`
+
+## Controller: SubscribeController
+- **Namespace:** `App\Modules\Blog\Controllers`
+- **Path:** `app/Modules/Blog/Controllers/SubscribeController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `account_manager()`, `services()`, `submit()`, `renderPage()`, `getViewFileData()`, `getSiteSettings()`, `getPageTitle()`, `ensureSEOData()`, `render()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'SubscribeController::index');`
+  - `app/Config/Routes.php` → `$routes->get('/Daily-Financial-News', 'SubscribeController::index');`
+  - `app/Config/Routes.php` → `$routes->get('Submit', 'SubscribeController::submit');`
+  - `app/Config/Routes.php` → `//     $routes->get('/', 'SubscribeController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'SubscribeController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Daily-Financial-News', 'SubscribeController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Submit', 'SubscribeController::submit');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('/', 'SubscribeController::index');`
+- **Services/Libraries used:** None detected
+- **Models used:** `App\Models\PageSEOModel`, `App\Models\SubscribeModel`, `App\Models\UserModel`, `PageSEOModel`, `SubscribeModel`, `UserModel`
+- **View files used:** `themes/default/layouts/index`
+
+## Controller: UpdatesController
+- **Namespace:** `App\Modules\Blog\Controllers`
+- **Path:** `app/Modules/Blog/Controllers/UpdatesController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `IntegratingWithPlaid()`, `TheRoadmapToTheFutureOfFinance()`, `renderPage()`, `getViewFileData()`, `getSiteSettings()`, `getPageTitle()`, `ensureSEOData()`, `render()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'UpdatesController::index');`
+  - `app/Config/Routes.php` → `//     $routes->get('/', 'UpdatesController::index');`
+  - `app/Config/Routes.php` → `//     $routes->get('Integrating-With-Plaid', 'UpdatesController::IntegratingWithPlaid');`
+  - `app/Config/Routes.php` → `//     $routes->get('The-Roadmap-To-The-Future-Of-Finance', 'UpdatesController::TheRoadmapToTheFutureOfFinance');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'UpdatesController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Integrating-With-Plaid', 'UpdatesController::IntegratingWithPlaid');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('The-Roadmap-To-The-Future-Of-Finance', 'UpdatesController::TheRoadmapToTheFutureOfFinance');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('/', 'UpdatesController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('Integrating-With-Plaid', 'UpdatesController::IntegratingWithPlaid');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('The-Roadmap-To-The-Future-Of-Finance', 'UpdatesController::TheRoadmapToTheFutureOfFinance');`
+- **Services/Libraries used:** `Config\Services`, `authentication`
+- **Models used:** `App\Models\{PageSEOModel`, `Myth\Auth\Authorization\GroupModel`, `PageSEOModel`, `SubscribeModel`, `UserModel`
+- **View files used:** `themes/default/layouts/index`
+
+## Controller: ChatController
+- **Namespace:** `App\Modules\Chat\Controllers`
+- **Path:** `app/Modules/Chat/Controllers/ChatController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `health()`, `usage()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('Chat/me', 'ChatController::me');`
+  - `app/Config/Routes.php` → `$routes->post('Chat/tool', 'ChatController::tool');`
+  - `app/Config/Routes.php` → `$routes->get('Chat/health', 'App\Modules\Chat\Controllers\ChatController::health');`
+  - `app/Config/Routes.php` → `$routes->get('Chat/usage', 'App\Modules\Chat\Controllers\ChatController::usage');`
+- **Services/Libraries used:** `App\Services\Ops\SparkRunnerService`, `SparkRunnerService`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: ContentEngineController
+- **Namespace:** `App\Modules\ContentEngine\Controllers`
+- **Path:** `app/Modules/ContentEngine/Controllers/ContentEngineController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `run()`, `draft()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->post('ContentEngine/run', 'App\Modules\ContentEngine\Controllers\ContentEngineController::run');`
+  - `app/Config/Routes.php` → `$routes->get('ContentEngine/drafts/(:segment)', 'App\Modules\ContentEngine\Controllers\ContentEngineController::draft/$1');`
+  - `app/Modules/Management/Config/Routes.php` → `$r->get('previewPost/(:num)', 'App\\Modules\\Management\\Controllers\\ContentEngineController::previewPost/$1');`
+- **Services/Libraries used:** `App\Services\Ops\SparkRunnerService`, `SparkRunnerService`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: DocsController
+- **Namespace:** `App\Modules\Docs\Controllers`
+- **Path:** `app/Modules/Docs/Controllers/DocsController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `dir()`, `index()`, `view()`, `search()`, `walk()`, `resolvePath()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('API/docs', '\\App\\Controllers\\Api\\SwaggerDocsController::index', ['filter' => 'permission:admin.access']);`
+  - `app/Config/Routes.php` → `$routes->get('index', 'DocsController::index');`
+  - `app/Config/Routes.php` → `$routes->get('view', 'DocsController::view');`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** `App\Modules\Docs\Views\doc`, `App\Modules\Docs\Views\index`
+
+## Controller: OpenApiController
+- **Namespace:** `App\Modules\Docs\Controllers`
+- **Path:** `app/Modules/Docs/Controllers/OpenApiController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `json()`, `ui()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** `App\Modules\Docs\Views\openapi`
+
+## Controller: DigiByteController
+- **Namespace:** `App\Modules\Exchange\Controllers`
+- **Path:** `app/Modules/Exchange/Controllers/DigiByteController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `respondError()`, `fetchFrontendData()`, `provisionDefaultWallet()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->post('fetchFrontendData', 'DigiByteController::fetchFrontendData', ['filter' => 'csrf']);`
+  - `app/Config/Routes.php` → `$routes->post('provisionDefaultWallet', 'DigiByteController::provisionDefaultWallet', ['filter' => 'csrf']);`
+  - `app/Config/Routes.php` → `$routes->post('disconnectWallet', 'DigiByteController::disconnectWallet', ['filter' => 'csrf']);`
+  - `app/Config/Routes.php` → `$routes->post('refreshWallet', 'DigiByteController::refreshWallet', ['filter' => 'csrf']);`
+  - `app/Config/Routes.php` → `$routes->post('getAssets', 'DigiByteController::getAssets', ['filter' => 'csrf']);`
+  - `app/Config/Routes.php` → `$routes->post('createWallet', 'DigiByteController::createWallet', ['filter' => 'csrf']);`
+  - `app/Config/Routes.php` → `$routes->post('connectWallet', 'DigiByteController::connectWallet', ['filter' => 'csrf']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('fetchFrontendData', 'DigiByteController::fetchFrontendData', ['filter' => 'csrf']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('provisionDefaultWallet', 'DigiByteController::provisionDefaultWallet', ['filter' => 'csrf']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('disconnectWallet', 'DigiByteController::disconnectWallet', ['filter' => 'csrf']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('refreshWallet', 'DigiByteController::refreshWallet', ['filter' => 'csrf']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('getAssets', 'DigiByteController::getAssets', ['filter' => 'csrf']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('createWallet', 'DigiByteController::createWallet', ['filter' => 'csrf']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('connectWallet', 'DigiByteController::connectWallet', ['filter' => 'csrf']);`
+- **Services/Libraries used:** `App\Services\DigiByteService`, `DigiByteService`, `request`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: ExchangeController
+- **Namespace:** `App\Modules\Exchange\Controllers`
+- **Path:** `app/Modules/Exchange/Controllers/ExchangeController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `dashboard()`, `applicationManager()`, `coinListingRequest()`, `coinListingAssetInformation()`, `coinListingAssetInformationModal()`, `coinListingRequestComplete()`, `orderEventManager()`, `orderBuyManager()`, `orderSellManager()`, `orderEventManagerWorking()`, `overview()`, `orderFetch()`, `buy()`, `sell()`, `accountInformation()`, `kycReward()`, `updateOrder()`, `verifyUser()`, `createAsset()`, `createToken()`, `createAsset()`, `updateAsset()`, `deleteAsset()`, `createOrder()`, `updateOrderNews()`, `deleteOrder()`, `executeTrade()`, `reportTransactions()`, `viewUserTrades()`, `enable2fa()`, `disable2fa()`, `alertSuspiciousActivity()`, `fetchStockData()`, `makeAlphaVantageAPICall()`, `fetchRealTimePrice()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('', 'ExchangeController::index', ['as' => 'mymi-exchange']);`
+  - `app/Config/Routes.php` → `//     $routes->get('/', 'ExchangeController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'ExchangeController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('', 'ExchangeController::index', ['as' => 'mymi-exchange']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('/', 'ExchangeController::index');`
+- **Services/Libraries used:** `App\Services\WalletService`, `App\Services\{BudgetService`, `BudgetService`, `Config\Services`, `DashboardService`, `ExchangeService`, `GoalTrackingService`, `SolanaService`, `UserService`, `authentication`, `curlrequest`, `logger`, `queue`, `solanaService`
+- **Models used:** `APIModel`, `AnnouncementsModel`, `App\Models\{AnalyticalModel`, `ExchangeModel`, `MarketingModel`, `MyMIGoldModel`, `TrackerModel`, `WalletModel`
+- **View files used:** `exchange/account_information`, `exchange/application_manager`, `exchange/coin_listing_asset_information`, `exchange/coin_listing_asset_information_modal`, `exchange/coin_listing_request`, `exchange/coin_listing_request_complete`, `exchange/dashboard`, `exchange/order_buy_manager`, `exchange/order_event_manager`, `exchange/order_sell_manager`, `exchange/overview`, `templates/footer`, `templates/header`
+
+## Controller: GeminiController
+- **Namespace:** `App\Modules\Exchange\Controllers`
+- **Path:** `app/Modules/Exchange/Controllers/GeminiController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `placeOrder()`, `getBalances()`, `getMarketPrice()`, `subscribeToMarketData()`, `withdrawToAddress()`, `getDepositAddress()`, `getOrderStatus()`, `cancelOrder()`, `getTradeHistory()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `Config\Services`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: MetaMaskController
+- **Namespace:** `App\Modules\Exchange\Controllers`
+- **Path:** `app/Modules/Exchange/Controllers/MetaMaskController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `connectWallet()`, `disconnectWallet()`, `refreshWallet()`, `getAssets()`, `generateWallet()`, `signTransaction()`, `verifySignature()`, `sendAsset()`, `getTransactionStatus()`, `getBalance()`, `validateAddress()`, `getCurrentBlock()`, `estimateTransactionFee()`, `getNetworkStatus()`, `deployContract()`, `callContractFunction()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('', 'MetaMaskController::index', ['as' => 'mymi-metamask']);`
+  - `app/Config/Routes.php` → `$routes->post('connectWallet', 'MetaMaskController::connectWallet');`
+  - `app/Config/Routes.php` → `$routes->post('disconnectWallet', 'MetaMaskController::disconnectWallet');`
+  - `app/Config/Routes.php` → `$routes->post('refreshWallet', 'MetaMaskController::refreshWallet');`
+  - `app/Config/Routes.php` → `$routes->post('getAssets', 'MetaMaskController::getAssets');`
+  - `app/Config/Routes.php` → `$routes->post('generateWallet', 'MetaMaskController::generateWallet');`
+  - `app/Config/Routes.php` → `$routes->post('signTransaction', 'MetaMaskController::signTransaction');`
+  - `app/Config/Routes.php` → `$routes->post('verifySignature', 'MetaMaskController::verifySignature');`
+  - `app/Config/Routes.php` → `$routes->post('sendAsset', 'MetaMaskController::sendAsset');`
+  - `app/Config/Routes.php` → `$routes->post('getTransactionStatus', 'MetaMaskController::getTransactionStatus');`
+  - `app/Config/Routes.php` → `$routes->post('getBalance', 'MetaMaskController::getBalance');`
+  - `app/Config/Routes.php` → `$routes->post('validateAddress', 'MetaMaskController::validateAddress');`
+  - `app/Config/Routes.php` → `$routes->post('getCurrentBlock', 'MetaMaskController::getCurrentBlock');`
+  - `app/Config/Routes.php` → `$routes->post('estimateTransactionFee', 'MetaMaskController::estimateTransactionFee');`
+  - `app/Config/Routes.php` → `$routes->post('getNetworkStatus', 'MetaMaskController::getNetworkStatus');`
+  - `app/Config/Routes.php` → `$routes->post('deployContract', 'MetaMaskController::deployContract');`
+  - `app/Config/Routes.php` → `$routes->post('callContractFunction', 'MetaMaskController::callContractFunction');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('', 'MetaMaskController::index', ['as' => 'mymi-metamask']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('connectWallet', 'MetaMaskController::connectWallet');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('disconnectWallet', 'MetaMaskController::disconnectWallet');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('refreshWallet', 'MetaMaskController::refreshWallet');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('getAssets', 'MetaMaskController::getAssets');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('generateWallet', 'MetaMaskController::generateWallet');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('signTransaction', 'MetaMaskController::signTransaction');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('verifySignature', 'MetaMaskController::verifySignature');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('sendAsset', 'MetaMaskController::sendAsset');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('getTransactionStatus', 'MetaMaskController::getTransactionStatus');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('getBalance', 'MetaMaskController::getBalance');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('validateAddress', 'MetaMaskController::validateAddress');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('getCurrentBlock', 'MetaMaskController::getCurrentBlock');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('estimateTransactionFee', 'MetaMaskController::estimateTransactionFee');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('getNetworkStatus', 'MetaMaskController::getNetworkStatus');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('deployContract', 'MetaMaskController::deployContract');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('callContractFunction', 'MetaMaskController::callContractFunction');`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: SolanaController
+- **Namespace:** `App\Modules\Exchange\Controllers`
+- **Path:** `app/Modules/Exchange/Controllers/SolanaController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `currentUserId()`, `index()`, `addExternalWallet()`, `setDefaultWallet()`, `apiGetTokens()`, `assets()`, `calculateSwapFees()`, `calculateTransactionFees()`, `coinSwap()`, `connectWallet()`, `create()`, `createSolanaWallet()`, `createToken()`, `confirmation()`, `disconnectWallet()`, `executeSwap()`, `fetchFrontendData()`, `updateUserBalance()`, `fetchRealTimeData()`, `provisionDefaultWallet()`, `fundWallet()`, `generateMetadataUri()`, `generateWallet()`, `getMarketPrice()`, `getTokenMetadata()`, `getTokenPrice()`, `import()`, `importWallet()`, `initiateBuyback()`, `lockTokens()`, `mintTokens()`, `processCryptoSwap()`, `processCryptoSell()`, `processFiatPurchase()`, `processFiatSell()`, `processMyMIGoldPurchase()`, `processMyMIGoldSell()`, `purchaseSolana()`, `recordTransactionHistory()`, `redistributeTokens()`, `refreshWallet()`, `sellSolana()`, `sendTransactionConfirmation()`, `setupEnvironment()`, `swapSolana()`, `testPage()`, `triggerWebSocket()`, `updateSolanaTokens()`, `updateSolanaPrices()`, `viewAssets()`, `viewSolanaWallet()`, `getQuote()`, `doSwap()`, `fetchRealTimeData()`, `fetchRealTimeData()`, `__destruct()`, `fetchFrontendData()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('', 'SolanaController::index', ['as' => 'mymi-solana']);`
+  - `app/Config/Routes.php` → `$routes->get('Test-Page', 'SolanaController::testPage', ['as' => 'mymi-solana-test-page']);`
+  - `app/Config/Routes.php` → `$routes->get('Assets', 'SolanaController::assets', ['as' => 'mymi-solana-assets']);`
+  - `app/Config/Routes.php` → `$routes->get('Create', 'SolanaController::create', ['as' => 'mymi-solana-create']);`
+  - `app/Config/Routes.php` → `$routes->get('Wallet/Disconnect/(:segment)', 'SolanaController::disconnectWallet/$1', ['as' => 'mymi-solana-create']);`
+  - `app/Config/Routes.php` → `$routes->get('Import', 'SolanaController::import', ['as' => 'mymi-solana-import']);`
+  - `app/Config/Routes.php` → `$routes->get('Swap', 'SolanaController::coinSwap', ['as' => 'mymi-solana-coin-swap']);`
+  - `app/Config/Routes.php` → `$routes->get('Create/Wallet', 'SolanaController::create', ['as' => 'mymi-solana-create-wallet']);`
+  - `app/Config/Routes.php` → `$routes->post('Create/Wallet', 'SolanaController::create');`
+  - `app/Config/Routes.php` → `$routes->post('createSolanaWallet', 'SolanaController::createSolanaWallet');`
+  - `app/Config/Routes.php` → `$routes->post('fetchFrontendData', 'SolanaController::fetchFrontendData', ['filter' => 'csrf']);`
+  - `app/Config/Routes.php` → `$routes->post('provisionDefaultWallet', 'SolanaController::provisionDefaultWallet', ['filter' => 'csrf']);`
+  - `app/Config/Routes.php` → `$routes->get('Import/Wallet', 'SolanaController::importWallet', ['as' => 'mymi-solana-import-wallet']);`
+  - `app/Config/Routes.php` → `$routes->post('Import/Wallet', 'SolanaController::importWallet');`
+  - `app/Config/Routes.php` → `$routes->post('updatePrices', 'SolanaController::updateSolanaPrices');`
+  - `app/Config/Routes.php` → `$routes->post('updateTokens', 'SolanaController::updateSolanaTokens');`
+  - `app/Config/Routes.php` → `$routes->get('Wallet/Verify-Ownership', 'SolanaController::verifyWalletOwnership', ['as' => 'mymi-solana-verify-wallet']);`
+  - `app/Config/Routes.php` → `$routes->post('Wallet/Verify-Ownership', 'SolanaController::verifyWalletOwnership');`
+  - `app/Config/Routes.php` → `$routes->get('Wallet/Execute-Swap', 'SolanaController::executeSwap', ['as' => 'mymi-solana-execute-swap']);`
+  - `app/Config/Routes.php` → `$routes->post('Wallet/Execute-Swap', 'SolanaController::executeSwap');`
+  - `app/Config/Routes.php` → `$routes->get('Wallet/ViewAssets', 'SolanaController::viewAssets', ['as' => 'mymi-solana-view-assets']);`
+  - `app/Config/Routes.php` → `$routes->post('Wallet/ViewAssets', 'SolanaController::viewAssets');`
+  - `app/Config/Routes.php` → `$routes->post('Wallet/Connect', 'SolanaController::connectWallet', ['as' => 'mymi-solana-connect-wallet']);`
+  - `app/Config/Routes.php` → `$routes->post('Wallet/Disconnect', 'SolanaController::disconnectWallet', ['as' => 'mymi-solana-disconnect-wallet']);`
+  - `app/Config/Routes.php` → `$routes->post('Wallet/Refresh', 'SolanaController::refreshWallet', ['as' => 'mymi-solana-refresh-wallet']);`
+  - `app/Config/Routes.php` → `$routes->post('Connect/MetaMask', 'SolanaController::connectWallet', ['as' => 'connect-wallet-metamask']);`
+  - `app/Config/Routes.php` → `$routes->post('Disconnect/MetaMask', 'SolanaController::disconnectWallet', ['as' => 'disconnect-wallet-metamask']);`
+  - `app/Config/Routes.php` → `$routes->post('Refresh/MetaMask', 'SolanaController::refreshWallet', ['as' => 'refresh-wallet-metamask']);`
+  - `app/Config/Routes.php` → `$routes->post('Connect/Solflare', 'SolanaController::connectWallet', ['as' => 'connect-wallet-solflare']);`
+  - `app/Config/Routes.php` → `$routes->post('Disconnect/Solflare', 'SolanaController::disconnectWallet', ['as' => 'disconnect-wallet-solflare']);`
+  - `app/Config/Routes.php` → `$routes->post('Refresh/Solflare', 'SolanaController::refreshWallet', ['as' => 'refresh-wallet-solflare']);`
+  - `app/Config/Routes.php` → `$routes->post('Connect/Phantom', 'SolanaController::connectWallet', ['as' => 'connect-wallet-phantom']);`
+  - `app/Config/Routes.php` → `$routes->post('Disconnect/Phantom', 'SolanaController::disconnectWallet', ['as' => 'disconnect-wallet-phantom']);`
+  - `app/Config/Routes.php` → `$routes->post('Refresh/Phantom', 'SolanaController::refreshWallet', ['as' => 'refresh-wallet-phantom']);`
+  - `app/Config/Routes.php` → `$routes->post('Connect/TrustWallet', 'SolanaController::connectWallet', ['as' => 'connect-wallet-trustwallet']);`
+  - `app/Config/Routes.php` → `$routes->post('Disconnect/TrustWallet', 'SolanaController::disconnectWallet', ['as' => 'disconnect-wallet-trustwallet']);`
+  - `app/Config/Routes.php` → `$routes->post('Refresh/TrustWallet', 'SolanaController::refreshWallet', ['as' => 'refresh-wallet-trustwallet']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getMarketPrice/(:segment)', 'SolanaController::get/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getCoinAmount/(:segment)', 'SolanaController::getCoinAmount/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getMarketPrice', 'SolanaController::getMarketPrice');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getTokenPrice/(:segment)', 'SolanaController::getTokenPrice/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getExchangePrice/(:segment)', 'SolanaController::getExchangePrice/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getAssetsData', 'SolanaController::getAssetsData');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('provisionDefaultWallet', 'SolanaController::provisionDefaultWallet');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('updatePrices', 'SolanaController::updateSolanaPrices');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('updateTokens', 'SolanaController::updateSolanaTokens');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('health', 'SolanaController::health');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('wallet/(:segment)/balance', 'SolanaController::getBalance/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('wallet/(:segment)/tokens', 'SolanaController::getTokenAccounts/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('transfer', 'SolanaController::transfer');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('swap/quote', 'SolanaController::quote');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('swap/execute', 'SolanaController::swap');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('token/create', 'SolanaController::createToken');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('token/mint', 'SolanaController::mint');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('', 'SolanaController::index', ['as' => 'mymi-solana']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Test-Page', 'SolanaController::testPage', ['as' => 'mymi-solana-test-page']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Assets', 'SolanaController::assets', ['as' => 'mymi-solana-assets']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Create', 'SolanaController::create', ['as' => 'mymi-solana-create']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Wallet/Disconnect/(:segment)', 'SolanaController::disconnectWallet/$1', ['as' => 'mymi-solana-create']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Import', 'SolanaController::import', ['as' => 'mymi-solana-import']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Swap', 'SolanaController::coinSwap', ['as' => 'mymi-solana-coin-swap']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Create/Wallet', 'SolanaController::create', ['as' => 'mymi-solana-create-wallet']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Create/Wallet', 'SolanaController::create');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('createSolanaWallet', 'SolanaController::createSolanaWallet');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('fetchFrontendData', 'SolanaController::fetchFrontendData', ['filter' => 'csrf']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('provisionDefaultWallet', 'SolanaController::provisionDefaultWallet', ['filter' => 'csrf']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Import/Wallet', 'SolanaController::importWallet', ['as' => 'mymi-solana-import-wallet']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Import/Wallet', 'SolanaController::importWallet');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('updatePrices', 'SolanaController::updateSolanaPrices');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('updateTokens', 'SolanaController::updateSolanaTokens');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Wallet/Verify-Ownership', 'SolanaController::verifyWalletOwnership', ['as' => 'mymi-solana-verify-wallet']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Wallet/Verify-Ownership', 'SolanaController::verifyWalletOwnership');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Wallet/Execute-Swap', 'SolanaController::executeSwap', ['as' => 'mymi-solana-execute-swap']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Wallet/Execute-Swap', 'SolanaController::executeSwap');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Wallet/ViewAssets', 'SolanaController::viewAssets', ['as' => 'mymi-solana-view-assets']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Wallet/ViewAssets', 'SolanaController::viewAssets');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Wallet/Connect', 'SolanaController::connectWallet', ['as' => 'mymi-solana-connect-wallet']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Wallet/Disconnect', 'SolanaController::disconnectWallet', ['as' => 'mymi-solana-disconnect-wallet']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Wallet/Refresh', 'SolanaController::refreshWallet', ['as' => 'mymi-solana-refresh-wallet']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Connect/MetaMask', 'SolanaController::connectWallet', ['as' => 'connect-wallet-metamask']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Disconnect/MetaMask', 'SolanaController::disconnectWallet', ['as' => 'disconnect-wallet-metamask']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Refresh/MetaMask', 'SolanaController::refreshWallet', ['as' => 'refresh-wallet-metamask']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Connect/Solflare', 'SolanaController::connectWallet', ['as' => 'connect-wallet-solflare']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Disconnect/Solflare', 'SolanaController::disconnectWallet', ['as' => 'disconnect-wallet-solflare']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Refresh/Solflare', 'SolanaController::refreshWallet', ['as' => 'refresh-wallet-solflare']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Connect/Phantom', 'SolanaController::connectWallet', ['as' => 'connect-wallet-phantom']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Disconnect/Phantom', 'SolanaController::disconnectWallet', ['as' => 'disconnect-wallet-phantom']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Refresh/Phantom', 'SolanaController::refreshWallet', ['as' => 'refresh-wallet-phantom']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Connect/TrustWallet', 'SolanaController::connectWallet', ['as' => 'connect-wallet-trustwallet']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Disconnect/TrustWallet', 'SolanaController::disconnectWallet', ['as' => 'disconnect-wallet-trustwallet']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Refresh/TrustWallet', 'SolanaController::refreshWallet', ['as' => 'refresh-wallet-trustwallet']);`
+- **Services/Libraries used:** `App\Services\SolanaService`, `App\Services\{SolanaService}`, `Config\Services`, `authentication`, `request`, `solanaService`
+- **Models used:** `APIModel`, `AccountsModel`, `App\Models\{AccountsModel`, `ExchangeModel`, `Myth\Auth\Authorization\GroupModel`, `SolanaModel`, `TokenModel`, `UserModel`, `WalletModel`
+- **View files used:** None detected
+
+## Controller: UserController
+- **Namespace:** `App\Modules\Exchange\Controllers`
+- **Path:** `app/Modules/Exchange/Controllers/UserController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `index()`
+- **Route references:**
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'Comments/Add', 'UserController::addComment');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Comments/Add', 'UserController::addComment');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'Comments/Add', 'UserController::addComment');`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: FinanceController
+- **Namespace:** `App\Modules\Finance\Controllers`
+- **Path:** `app/Modules/Finance/Controllers/FinanceController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `summary()`, `setBudget()`, `ok()`, `fail()`, `forbid()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `App\Services\Fin\RiskService`
+- **Models used:** `App\Models\Fin\RiskBudgetModel`, `RiskBudgetModel`
+- **View files used:** None detected
+
+## Controller: LogsController
+- **Namespace:** `App\Modules\Logs\Controllers`
+- **Path:** `app/Modules/Logs/Controllers/LogsController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `summary()`, `fromSummaryFiles()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('Logs/summary', 'App\Modules\Logs\Controllers\LogsController::summary');`
+- **Services/Libraries used:** `App\Services\Ops\SparkRunnerService`, `SparkRunnerService`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: APIAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/APIAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `BitcoinJS()`, `Sophtron()`, `Sophtron_Widget()`, `Content_Creator()`, `Curl_Generator()`, `Pages()`, `Page_Template()`, `Test_Page()`, `Test_Page_Email()`, `Test_Page_CB()`, `Basic_UI()`, `Icons()`, `Forms()`, `Charts()`, `Tables()`, `UI_Elements()`, `Email_Test()`, `saveData()`, `set_current_user()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `Config\Services`, `authentication`, `request`
+- **Models used:** `AccountsModel`, `App\Models\{AccountsModel`, `BudgetModel`, `Myth\Auth\Authorization\GroupModel`, `UserModel`
+- **View files used:** None detected
+
+## Controller: AccountRescueAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/AccountRescueAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `index()`, `lookup()`, `resendActivation()`, `manualActivate()`, `forcePasswordReset()`, `unlockAccount()`, `handleActivationAction()`, `mapUser()`, `logAudit()`, `currentAdminId()`, `mailerTransport()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'AccountRescueAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->post('lookup', 'AccountRescueAdminController::lookup');`
+  - `app/Config/Routes.php` → `$routes->post('resend-activation', 'AccountRescueAdminController::resendActivation');`
+  - `app/Config/Routes.php` → `$routes->post('manual-activate', 'AccountRescueAdminController::manualActivate');`
+  - `app/Config/Routes.php` → `$routes->post('force-password-reset', 'AccountRescueAdminController::forcePasswordReset');`
+  - `app/Config/Routes.php` → `$routes->post('unlock-account', 'AccountRescueAdminController::unlockAccount');`
+- **Services/Libraries used:** `activator`, `authentication`, `resetter`
+- **Models used:** `App\Models\AuditLogModel`, `App\Models\UserModel`
+- **View files used:** None detected
+
+## Controller: AdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/AdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `add()`, `accountOverview()`, `details()`, `history()`, `bulkUpdateStatus()`, `bulkDelete()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('banUnverifiedUsers', 'ManagementAdminController::banUnverifiedUsers');`
+  - `app/Config/Routes.php` → `$routes->get('processQueuedEmails', 'ManagementAdminController::processQueuedEmails');`
+  - `app/Config/Routes.php` → `$routes->get('resendActivationEmailsBatch', 'ManagementAdminController::resendActivationEmailsBatch');`
+  - `app/Config/Routes.php` → `$routes->get('resendActivationEmailsBatchQueued', 'ManagementAdminController::resendActivationEmailsBatchQueued');`
+  - `app/Config/Routes.php` → `$routes->get('sendTestActivationEmail', 'ManagementAdminController::sendTestActivationEmail');`
+  - `app/Config/Routes.php` → `$routes->post('saveSuggestion', 'ManagementAdminController::saveSuggestion');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'ManagementAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->get('Signals', 'SignalsAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->get('AiOps', 'AiOpsManagementAdminController::index', ['filter' => 'permission:admin.access']);`
+  - `app/Config/Routes.php` → `$routes->get('Ops', 'OpsAdminController::index', ['filter' => 'permission:admin.access']);`
+  - `app/Config/Routes.php` → `$routes->get('Ops/ajaxStatus', 'OpsAdminController::ajaxStatus', ['filter' => 'permission:admin.access']);`
+  - `app/Config/Routes.php` → `$routes->post('Ops/ajaxDispatch', 'OpsAdminController::ajaxDispatch', ['filter' => 'permission:admin.access']);`
+  - `app/Config/Routes.php` → `$routes->get('/', 'AccountRescueAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->post('lookup', 'AccountRescueAdminController::lookup');`
+  - `app/Config/Routes.php` → `$routes->post('resend-activation', 'AccountRescueAdminController::resendActivation');`
+  - `app/Config/Routes.php` → `$routes->post('manual-activate', 'AccountRescueAdminController::manualActivate');`
+  - `app/Config/Routes.php` → `$routes->post('force-password-reset', 'AccountRescueAdminController::forcePasswordReset');`
+  - `app/Config/Routes.php` → `$routes->post('unlock-account', 'AccountRescueAdminController::unlockAccount');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'AdminController::index');`
+  - `app/Config/Routes.php` → `$routes->get('Chat', 'ChatAdminController::index', ['filter' => 'permission:admin.access']);`
+  - `app/Config/Routes.php` → `$routes->post('Chat/submit', 'ChatAdminController::submit', ['filter' => 'permission:admin.access']);`
+  - `app/Config/Routes.php` → `$routes->get('Chat/history', 'ChatAdminController::history', ['filter' => 'permission:admin.access']);`
+  - `app/Config/Routes.php` → `$routes->get('/', 'AlertsAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->get('Add/(:segment)', 'AlertsAdminController::add');`
+  - `app/Config/Routes.php` → `$routes->get('addTradeAlert', 'AlertsAdminController::addTradeAlert');`
+  - `app/Config/Routes.php` → `$routes->get('Advisor/Media', 'AlertsAdminController::advisorMedia');`
+  - `app/Config/Routes.php` → `$routes->post('Generate-Advisor-Package', 'AlertsAdminController::generateAdvisorPackage', ['filter' => 'auth']);`
+  - `app/Config/Routes.php` → `$routes->get('Crypto/(:segment)/(:segment)', 'Management\AlertsAdminController::stockOverview/$1/$2');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Audit/Emails', 'AlertsAdminController::auditEmailScraper');`
+  - `app/Config/Routes.php` → `$routes->get('fetchData', 'AlertsAdminController::fetchData');`
+  - `app/Config/Routes.php` → `$routes->get('Fetch/Ticker/(:segment)', 'AlertsAdminController::fetchTickerDetails/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Import/Tickers', 'AlertsAdminController::importTickers');`
+  - `app/Config/Routes.php` → `$routes->get('Stock/(:segment)/(:segment)', 'Management\AlertsAdminController::stockOverview/$1/$2');`
+  - `app/Config/Routes.php` → `$routes->get('Tasks/fetchAlerts', 'Management\AlertsAdminController::fetchData');`
+  - `app/Config/Routes.php` → `$routes->get('Submit/TradingView', 'AlertsAdminController::submitTradingView');`
+  - `app/Config/Routes.php` → `$routes->get('Test', 'AlertsAdminController::test');`
+  - `app/Config/Routes.php` → `$routes->get('Test-Alert-Email', 'AlertsAdminController::testEmail');`
+  - `app/Config/Routes.php` → `$routes->get('Test-Email', 'AlertsAdminController::sendTestEmail');`
+  - `app/Config/Routes.php` → `$routes->get('Trades', 'AlertsAdminController::trades');`
+  - `app/Config/Routes.php` → `$routes->get('Top-Performance/Weekly', 'AlertsAdminController::topPerformanceWeekly');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'AssetsAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'BudgetsAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'BudgetingAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'DevelopmentAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'DiscordAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->post('Discord/Channels/Save', 'DiscordAdminController::saveDiscordChannel');`
+  - `app/Config/Routes.php` → `$routes->post('Discord/Channels/Delete', 'DiscordAdminController::deleteDiscordChannel');`
+  - `app/Config/Routes.php` → `$routes->post('Discord/Templates/Save', 'DiscordAdminController::saveDiscordTemplate');`
+  - `app/Config/Routes.php` → `$routes->post('Discord/Templates/Delete', 'DiscordAdminController::deleteDiscordTemplate');`
+  - `app/Config/Routes.php` → `$routes->post('Discord/Subscriptions/Save', 'DiscordAdminController::saveDiscordSubscription');`
+  - `app/Config/Routes.php` → `$routes->post('Discord/Subscriptions/Delete', 'DiscordAdminController::deleteDiscordSubscription');`
+  - `app/Config/Routes.php` → `$routes->post('Discord/Policies/Save', 'DiscordAdminController::saveDiscordPolicy');`
+  - `app/Config/Routes.php` → `$routes->post('Discord/Policies/Delete', 'DiscordAdminController::deleteDiscordPolicy');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'DripCampaignAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Create', 'DripCampaignAdminController::create');`
+  - `app/Config/Routes.php` → `$routes->get('(:num)/Steps', 'DripCampaignAdminController::viewSteps/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], '(:num)/Steps/Add', 'DripCampaignAdminController::addStep/$1');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'EmailAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->post('addMember', 'EmailAdminController::addMember');`
+  - `app/Config/Routes.php` → `$routes->get('autoScheduleDrafts', 'EmailAdminController::autoScheduleDrafts');`
+  - `app/Config/Routes.php` → `$routes->get('autoScheduleLogs', 'EmailAdminController::autoScheduleLogs');`
+  - `app/Config/Routes.php` → `$routes->get('campaigns', 'EmailAdminController::campaigns');`
+  - `app/Config/Routes.php` → `$routes->get('campaignStats/(:num)', 'EmailAdminController::campaignStats/$1');`
+  - `app/Config/Routes.php` → `$routes->post('createList', 'EmailAdminController::createList');`
+  - `app/Config/Routes.php` → `$routes->get('editCampaign/(:num)', 'EmailAdminController::editCampaign/$1');`
+  - `app/Config/Routes.php` → `$routes->get('previewQueuedEmail/(:num)', 'EmailAdminController::previewQueuedEmail/$1');`
+  - `app/Config/Routes.php` → `$routes->get('queued', 'EmailAdminController::queued');`
+  - `app/Config/Routes.php` → `$routes->post('sendCampaign', 'EmailAdminController::sendCampaign');`
+  - `app/Config/Routes.php` → `$routes->post('scheduleCampaign/(:num)', 'EmailAdminController::scheduleCampaign/$1');`
+  - `app/Config/Routes.php` → `$routes->post('scheduleCampaignSubmit/(:num)', 'EmailAdminController::scheduleCampaignSubmit/$1');`
+  - `app/Config/Routes.php` → `$routes->post('updateCampaign/(:num)', 'EmailAdminController::updateCampaign/$1');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'ExchangeAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'FinanceAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'HowTosAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->get('Employees/Account-Setup', 'HowTosAdminController::employeeAccountSetup');`
+  - `app/Config/Routes.php` → `$routes->get('Employees/Email-Setup', 'HowTosAdminController::employeeEmailSetup');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'HRAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'InvestmentsAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->get('News', 'InvestmentsAdminController::newsIndex');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'MarketingAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Add/(:segment)', 'MarketingAdminController::add/$1');`
+  - `app/Config/Routes.php` → `// $routes->get('Add/(:segment)', 'MarketingAdminController::addSchedule');`
+  - `app/Config/Routes.php` → `$routes->match(['POST'], 'Add-Subscriber', 'MarketingAdminController::addSubscriber');`
+  - `app/Config/Routes.php` → `$routes->get('Approve-Content/(:num)', 'MarketingAdminController::approveContent/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Blog-Creator', 'MarketingAdminController::blogCreator');`
+  - `app/Config/Routes.php` → `$routes->get('Blogs', 'MarketingAdminController::blogs');`
+  - `app/Config/Routes.php` → `$routes->get('Campaigns', 'MarketingAdminController::campaigns');`
+  - `app/Config/Routes.php` → `$routes->get('Content-Review', 'MarketingAdminController::contentReview');`
+  - `app/Config/Routes.php` → `$routes->get('Content/Generator', 'MarketingAdminController::contentGenerator');`
+  - `app/Config/Routes.php` → `$routes->get('Content/Listing', 'MarketingAdminController::contentListing');`
+  - `app/Config/Routes.php` → `$routes->get('Daily-Log', 'MarketingAdminController::viewDailyLogs');`
+  - `app/Config/Routes.php` → `$routes->get('Edit-Content/(:num)', 'MarketingAdminController::editContent/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Email/(:any)/(:any)', 'MarketingAdminController::viewEmail/$1/$2');`
+  - `app/Config/Routes.php` → `$routes->get('fetchEmails', 'MarketingAdminController::fetchEmails');`
+  - `app/Config/Routes.php` → `$routes->post('fetchMissingLogos', 'MarketingAdminController::fetchMissingLogos');`
+  - `app/Config/Routes.php` → `$routes->get('Financial-News', 'MarketingAdminController::financialNews');`
+  - `app/Config/Routes.php` → `$routes->post('generateAutomatedContent', 'MarketingAdminController::generateAutomatedContent');`
+  - `app/Config/Routes.php` → `$routes->get('generateContent', 'MarketingAdminController::generateContent');`
+  - `app/Config/Routes.php` → `$routes->get('generateDailyContentDigest', 'MarketingAdminController::generateDailyContentDigest');`
+  - `app/Config/Routes.php` → `$routes->get('generateNewsletter', 'MarketingAdminController::generateNewsletterContent');`
+  - `app/Config/Routes.php` → `$routes->get('getRecentScrapes', 'MarketingAdminController::getRecentScrapes');`
+  - `app/Config/Routes.php` → `$routes->get('Grouped-Content-Drafts', 'MarketingAdminController::generateGroupedContentDrafts');`
+  - `app/Config/Routes.php` → `$routes->get('Ideas', 'MarketingAdminController::ideas');`
+  - `app/Config/Routes.php` → `$routes->get('Post-Creator', 'MarketingAdminController::postCreator');`
+  - `app/Config/Routes.php` → `$routes->get('previewGeneratedPost/(:num)', 'MarketingAdminController::previewGeneratedPost/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Promote', 'MarketingAdminController::promote');`
+  - `app/Config/Routes.php` → `$routes->get('Promote/(:segment)', 'MarketingAdminController::promote');`
+  - `app/Config/Routes.php` → `$routes->post('PublishBlog/(:num)', 'Management\MarketingAdminController::publishBlog/$1');`
+  - `app/Config/Routes.php` → `$routes->get('RunContentGeneration', 'Management\MarketingAdminController::runContentGeneration');`
+  - `app/Config/Routes.php` → `$routes->get('Quick-Scraper', 'MarketingAdminController::standaloneScrape');`
+  - `app/Config/Routes.php` → `$routes->get('Reject-Content/(:num)', 'MarketingAdminController::rejectContent/$1');`
+  - `app/Config/Routes.php` → `$routes->post('Save-Content-Edit/(:num)', 'MarketingAdminController::saveContentEdit/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Schedule', 'MarketingAdminController::schedule');`
+  - `app/Config/Routes.php` → `$routes->get('Schedule/(:segment)', 'MarketingAdminController::schedule/$1');`
+  - `app/Config/Routes.php` → `$routes->get('scheduleNewsletters', 'MarketingAdminController::scheduleNewsletterCampaign');`
+  - `app/Config/Routes.php` → `$routes->get('submitDailyLog', 'MarketingAdminController::submitDailyLog');`
+  - `app/Config/Routes.php` → `$routes->post('Scrape-Link', 'MarketingAdminController::scrapeLink'); // Ensure this is a POST route`
+  - `app/Config/Routes.php` → `$routes->get('sendNotification', 'MarketingAdminController::sendNotification');`
+  - `app/Config/Routes.php` → `$routes->get('sendNewsletter', 'MarketingAdminController::sendScheduleNewsletter');`
+  - `app/Config/Routes.php` → `$routes->get('Test', 'MarketingAdminController::test');`
+  - `app/Config/Routes.php` → `$routes->get('Twitter', 'MarketingAdminController::twitterDashboard');`
+  - `app/Config/Routes.php` → `$routes->get('Video-Creator', 'MarketingAdminController::videoCreator');`
+  - `app/Config/Routes.php` → `$routes->get('View-Email/(:segment)/(:segment)', 'MarketingAdminController::viewEmail/$1/$2');`
+  - `app/Config/Routes.php` → `$routes->get('View-Grouped-Summaries', 'MarketingAdminController::View-Grouped-Summaries');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsAdminController::addUserGoldTasks');`
+  - `app/Config/Routes.php` → `//     $routes->get('/', 'AdminController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'AdminController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('/', 'AdminController::index');`
+- **Services/Libraries used:** `authentication`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: AiOpsManagementAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/AiOpsManagementAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `index()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('AiOps', 'AiOpsManagementAdminController::index', ['filter' => 'permission:admin.access']);`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** `App\Modules\Management\Views\AiOps\index`
+
+## Controller: AlertsAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/AlertsAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `getMyMIAlerts()`, `commonData()`, `index()`, `generateAdvisorPackage()`, `index()`, `index()`, `add()`, `addTradeAlert()`, `advisorMedia()`, `auditEmailScraper()`, `backfillCategoriesFromScraper()`, `distributeAlert()`, `distributeAlerts()`, `extractTickersFromSubject()`, `fetchAndProcessEmails()`, `fetchAndStoreAlertsEmailsOrig()`, `fetchAndStoreAlertsEmails()`, `fetchAndStoreAlertsEmails()`, `fetchData()`, `fetchEmails()`, `fetchEmailAlerts()`, `fetchMarketData()`, `fetchTickerDetails()`, `getAlerts()`, `getFilteredAlerts()`, `importTickers()`, `parseEmail()`, `prepareDataArray()`, `processStoredEmails()`, `research()`, `sendTestEmail()`, `sendTradeAlertEmail()`, `stockOverview()`, `submitTradingView()`, `test()`, `testAlertEmail()`, `testEmail()`, `trades()`, `updateAlerts()`, `updateTradeChart()`, `validateRequestData()`, `viewAlert()`, `viewTradeChart()`, `weeklyTopPerformance()`, `logMem()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'AlertsAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->get('Add/(:segment)', 'AlertsAdminController::add');`
+  - `app/Config/Routes.php` → `$routes->get('addTradeAlert', 'AlertsAdminController::addTradeAlert');`
+  - `app/Config/Routes.php` → `$routes->get('Advisor/Media', 'AlertsAdminController::advisorMedia');`
+  - `app/Config/Routes.php` → `$routes->post('Generate-Advisor-Package', 'AlertsAdminController::generateAdvisorPackage', ['filter' => 'auth']);`
+  - `app/Config/Routes.php` → `$routes->get('Crypto/(:segment)/(:segment)', 'Management\AlertsAdminController::stockOverview/$1/$2');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Audit/Emails', 'AlertsAdminController::auditEmailScraper');`
+  - `app/Config/Routes.php` → `$routes->get('fetchData', 'AlertsAdminController::fetchData');`
+  - `app/Config/Routes.php` → `$routes->get('Fetch/Ticker/(:segment)', 'AlertsAdminController::fetchTickerDetails/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Import/Tickers', 'AlertsAdminController::importTickers');`
+  - `app/Config/Routes.php` → `$routes->get('Stock/(:segment)/(:segment)', 'Management\AlertsAdminController::stockOverview/$1/$2');`
+  - `app/Config/Routes.php` → `$routes->get('Tasks/fetchAlerts', 'Management\AlertsAdminController::fetchData');`
+  - `app/Config/Routes.php` → `$routes->get('Submit/TradingView', 'AlertsAdminController::submitTradingView');`
+  - `app/Config/Routes.php` → `$routes->get('Test', 'AlertsAdminController::test');`
+  - `app/Config/Routes.php` → `$routes->get('Test-Alert-Email', 'AlertsAdminController::testEmail');`
+  - `app/Config/Routes.php` → `$routes->get('Test-Email', 'AlertsAdminController::sendTestEmail');`
+  - `app/Config/Routes.php` → `$routes->get('Trades', 'AlertsAdminController::trades');`
+  - `app/Config/Routes.php` → `$routes->get('Top-Performance/Weekly', 'AlertsAdminController::topPerformanceWeekly');`
+- **Services/Libraries used:** `Config\Services`, `authentication`, `mailService`, `request`
+- **Models used:** `AccountsModel`, `AlertsModel`, `App\Models\{AccountsModel`, `App\Modules\Management\Models\AlertsModel`, `BudgetModel`, `Myth\Auth\Authorization\GroupModel`, `SignalsModel`, `UserModel`
+- **View files used:** `ManagementModule/Views/Alerts/emails/trade_alert`, `ManagementModule\Views\Alerts\emails\trade_alerts`, `emails/layout`, `emails/trade_alert`
+
+## Controller: AssetsAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/AssetsAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `applications()`, `applicationDetails()`, `approval()`, `create()`, `distribute()`, `saveData()`, `set_current_user()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'AssetsAdminController::index');`
+- **Services/Libraries used:** `Config\Services`, `authentication`, `request`
+- **Models used:** `AccountsModel`, `App\Models\{AccountsModel`, `BudgetModel`, `Myth\Auth\Authorization\GroupModel`, `UserModel`
+- **View files used:** None detected
+
+## Controller: AuthFunnelAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/AuthFunnelAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `authFunnel()`, `referrals()`, `buildDateWindow()`, `fetchDailySeries()`, `formatSeries()`, `fetchTotals()`, `fetchRecentEvents()`, `buildConversionRates()`, `fetchReferralAggregates()`, `isAdmin()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `authentication`, `request`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: AuthHealthAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/AuthHealthAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `details()`, `extractFailingSteps()`, `isAdmin()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `authentication`
+- **Models used:** `App\Models\AuthHealthRunModel`, `AuthHealthRunModel`
+- **View files used:** `App\Modules\Management\Views\AuthHealth\modals\details`
+
+## Controller: BudgetingAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/BudgetingAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `Debt_Collector_Cleanup()`, `saveData()`, `set_current_user()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'BudgetingAdminController::index');`
+- **Services/Libraries used:** `Config\Services`, `authentication`, `request`
+- **Models used:** `AccountsModel`, `App\Models\{AccountsModel`, `BudgetModel`, `Myth\Auth\Authorization\GroupModel`, `UserModel`
+- **View files used:** None detected
+
+## Controller: BudgetsAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/BudgetsAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `applications()`, `applicationDetails()`, `approval()`, `create()`, `distribute()`, `saveData()`, `set_current_user()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'BudgetsAdminController::index');`
+- **Services/Libraries used:** `App\Services\{DashboardService}`, `Config\Services`, `DashboardService`, `authentication`, `request`
+- **Models used:** `AccountsModel`, `App\Models\{AccountsModel`, `BudgetModel`, `Myth\Auth\Authorization\GroupModel`, `UserModel`
+- **View files used:** None detected
+
+## Controller: ChatAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/ChatAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `submit()`, `history()`, `isAdmin()`, `currentUserId()`, `checkThrottle()`, `logFailureToDatabase()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('Chat', 'ChatAdminController::index', ['filter' => 'permission:admin.access']);`
+  - `app/Config/Routes.php` → `$routes->post('Chat/submit', 'ChatAdminController::submit', ['filter' => 'permission:admin.access']);`
+  - `app/Config/Routes.php` → `$routes->get('Chat/history', 'ChatAdminController::history', ['filter' => 'permission:admin.access']);`
+- **Services/Libraries used:** `App\Services\AIOps\ChatIngestService`, `ChatIngestService`, `authentication`
+- **Models used:** `AIOpsChatAdminModel`, `App\Models\AIOpsChatAdminModel`
+- **View files used:** None detected
+
+## Controller: ChatUsageAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/ChatUsageAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `saveSettings()`, `resetUser()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: ContentEngineAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/ContentEngineAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `previewPost()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** `App\Models\ContentIdeaModel`, `App\Models\ContentPostModel`
+- **View files used:** `App\Modules\Management\Views\ContentEngine\modals\post_preview`
+
+## Controller: DevelopmentAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/DevelopmentAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `index()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'DevelopmentAdminController::index');`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: DiscordAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/DiscordAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `discord()`, `saveDiscordChannel()`, `deleteDiscordChannel()`, `saveDiscordTemplate()`, `deleteDiscordTemplate()`, `saveDiscordSubscription()`, `deleteDiscordSubscription()`, `saveDiscordPolicy()`, `deleteDiscordPolicy()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'DiscordAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->post('Discord/Channels/Save', 'DiscordAdminController::saveDiscordChannel');`
+  - `app/Config/Routes.php` → `$routes->post('Discord/Channels/Delete', 'DiscordAdminController::deleteDiscordChannel');`
+  - `app/Config/Routes.php` → `$routes->post('Discord/Templates/Save', 'DiscordAdminController::saveDiscordTemplate');`
+  - `app/Config/Routes.php` → `$routes->post('Discord/Templates/Delete', 'DiscordAdminController::deleteDiscordTemplate');`
+  - `app/Config/Routes.php` → `$routes->post('Discord/Subscriptions/Save', 'DiscordAdminController::saveDiscordSubscription');`
+  - `app/Config/Routes.php` → `$routes->post('Discord/Subscriptions/Delete', 'DiscordAdminController::deleteDiscordSubscription');`
+  - `app/Config/Routes.php` → `$routes->post('Discord/Policies/Save', 'DiscordAdminController::saveDiscordPolicy');`
+  - `app/Config/Routes.php` → `$routes->post('Discord/Policies/Delete', 'DiscordAdminController::deleteDiscordPolicy');`
+- **Services/Libraries used:** `AccountService`, `App\Services\{AccountService`, `BudgetService`, `Config\Services`, `DashboardService`, `GoalTrackingService`, `MarketingService`, `SolanaService`, `UserService`, `WalletService`, `authentication`, `logger`
+- **Models used:** `App\Models\{AccountsModel`, `BudgetModel`, `DiscordModel`, `Myth\Auth\Authorization\GroupModel`, `WalletModel`
+- **View files used:** None detected
+
+## Controller: DocsAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/DocsAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `browse()`, `view()`, `renderDirectory()`, `scanDirectory()`, `sanitizePath()`, `relativeFromDocsRoot()`, `buildBreadcrumbs()`, `failNotFound()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** `App\Modules\Management\Views\docs\index`, `App\Modules\Management\Views\docs\view`
+
+## Controller: DripCampaignAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/DripCampaignAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `addStep()`, `create()`, `enrollUser()`, `previewTemplate()`, `testDripCron()`, `trackEngagement()`, `viewSteps()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'DripCampaignAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Create', 'DripCampaignAdminController::create');`
+  - `app/Config/Routes.php` → `$routes->get('(:num)/Steps', 'DripCampaignAdminController::viewSteps/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], '(:num)/Steps/Add', 'DripCampaignAdminController::addStep/$1');`
+- **Services/Libraries used:** `App\Services\DripCampaignService`, `authentication`, `request`, `session`
+- **Models used:** `App\Models\DripCampaignModel`, `DripCampaignModel`
+- **View files used:** `Email/Templates/$template`
+
+## Controller: EmailAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/EmailAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `addMember()`, `autoScheduleLogs()`, `campaigns()`, `campaignStats()`, `createList()`, `editCampaign()`, `queued()`, `previewQueuedEmail()`, `sendCampaign()`, `scheduleCampaign()`, `scheduleCampaignSubmit()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'EmailAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->post('addMember', 'EmailAdminController::addMember');`
+  - `app/Config/Routes.php` → `$routes->get('autoScheduleDrafts', 'EmailAdminController::autoScheduleDrafts');`
+  - `app/Config/Routes.php` → `$routes->get('autoScheduleLogs', 'EmailAdminController::autoScheduleLogs');`
+  - `app/Config/Routes.php` → `$routes->get('campaigns', 'EmailAdminController::campaigns');`
+  - `app/Config/Routes.php` → `$routes->get('campaignStats/(:num)', 'EmailAdminController::campaignStats/$1');`
+  - `app/Config/Routes.php` → `$routes->post('createList', 'EmailAdminController::createList');`
+  - `app/Config/Routes.php` → `$routes->get('editCampaign/(:num)', 'EmailAdminController::editCampaign/$1');`
+  - `app/Config/Routes.php` → `$routes->get('previewQueuedEmail/(:num)', 'EmailAdminController::previewQueuedEmail/$1');`
+  - `app/Config/Routes.php` → `$routes->get('queued', 'EmailAdminController::queued');`
+  - `app/Config/Routes.php` → `$routes->post('sendCampaign', 'EmailAdminController::sendCampaign');`
+  - `app/Config/Routes.php` → `$routes->post('scheduleCampaign/(:num)', 'EmailAdminController::scheduleCampaign/$1');`
+  - `app/Config/Routes.php` → `$routes->post('scheduleCampaignSubmit/(:num)', 'EmailAdminController::scheduleCampaignSubmit/$1');`
+  - `app/Config/Routes.php` → `$routes->post('updateCampaign/(:num)', 'EmailAdminController::updateCampaign/$1');`
+- **Services/Libraries used:** `App\Services\EmailService`, `EmailService`
+- **Models used:** `App\Models\CampaignModel`, `App\Models\EmailModel`, `EmailModel`
+- **View files used:** None detected
+
+## Controller: EmailOutboxAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/EmailOutboxAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `sendTest()`, `isAdmin()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `App\Libraries\MailService`, `MailService`, `authentication`
+- **Models used:** `App\Models\EmailOutboxModel`, `EmailOutboxModel`
+- **View files used:** `emails/layout`
+
+## Controller: ErrorOpsController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/ErrorOpsController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `index()`, `apiKpis()`, `apiTopControllers()`, `apiHeatmap()`, `apiPatterns()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'ErrorOpsController::index');`
+  - `app/Config/Routes.php` → `$routes->get('apiKpis', 'ErrorOpsController::apiKpis');`
+  - `app/Config/Routes.php` → `$routes->get('apiTopControllers', 'ErrorOpsController::apiTopControllers');`
+  - `app/Config/Routes.php` → `$routes->get('apiHeatmap', 'ErrorOpsController::apiHeatmap');`
+  - `app/Config/Routes.php` → `$routes->get('apiPatterns', 'ErrorOpsController::apiPatterns');`
+- **Services/Libraries used:** `App\Services\Observability\ErrorAggregationService`, `ErrorAggregationService`
+- **Models used:** `App\Models\ErrorPatternModel`, `ErrorPatternModel`
+- **View files used:** None detected
+
+## Controller: ExchangeAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/ExchangeAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `assets()`, `markTransactionAsSuspicious()`, `suspiciousTransactions()`, `triggerWebSocket()`, `fetchRealTimeData()`, `updatePrices()`, `fetchRealTimeData()`, `fetchRealTimeData()`, `__destruct()`, `saveData()`, `set_current_user()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'ExchangeAdminController::index');`
+- **Services/Libraries used:** `Config\Services`, `authentication`, `request`
+- **Models used:** `AccountsModel`, `AnalyticalModel`, `AnnouncementsModel`, `App\Models\{AccountsModel`, `BudgetModel`, `DesignModel`, `ExchangeModel`, `InvestmentModel`, `MarketingModel`, `MyMIGoldModel`, `Myth\Auth\Authorization\GroupModel`, `SolanaModel`, `UserModel`, `WalletModel`
+- **View files used:** None detected
+
+## Controller: FinanceAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/FinanceAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `index()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'FinanceAdminController::index');`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: HRAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/HRAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `index()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'HRAdminController::index');`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: HowTosAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/HowTosAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `employeeAccountSetup()`, `employeeEmailSetup()`, `add()`, `add()`, `accountOverview()`, `details()`, `add()`, `edit()`, `add()`, `history()`, `add()`, `recurringSchedule()`, `approveRecurringSchedule()`, `safeDateFormat()`, `add()`, `settings()`, `accountManager()`, `deleteAccount()`, `cancelAccount()`, `paid()`, `unpaid()`, `bulkUpdateStatus()`, `createLinkToken()`, `exchangeToken()`, `bulkDelete()`, `checkUserAuthentication()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'HowTosAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->get('Employees/Account-Setup', 'HowTosAdminController::employeeAccountSetup');`
+  - `app/Config/Routes.php` → `$routes->get('Employees/Email-Setup', 'HowTosAdminController::employeeEmailSetup');`
+- **Services/Libraries used:** `AccountService`, `App\Services\{AccountService`, `BudgetService`, `Config\Services`, `DashboardService`, `GoalTrackingService`, `MarketingService`, `SolanaService`, `UserService`, `WalletService`, `authentication`, `logger`, `solanaService`
+- **Models used:** `App\Models\BudgetModel`, `App\Models\{AccountsModel`, `BudgetModel`, `Myth\Auth\Authorization\GroupModel`, `UserModel`, `WalletModel`
+- **View files used:** None detected
+
+## Controller: InvestmentsAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/InvestmentsAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `index()`, `newsIndex()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'InvestmentsAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->get('News', 'InvestmentsAdminController::newsIndex');`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: ManagementAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/ManagementAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `userAccountData()`, `index()`, `add()`, `realEstateQuickIntake()`, `realEstateQuickSubmit()`, `viewProject()`, `listProjects()`, `createProject()`, `commitInvestment()`, `distributeRevenue()`, `sendMoreInfoRequest()`, `approveProject()`, `notifyIssues()`, `rejectProject()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('banUnverifiedUsers', 'ManagementAdminController::banUnverifiedUsers');`
+  - `app/Config/Routes.php` → `$routes->get('processQueuedEmails', 'ManagementAdminController::processQueuedEmails');`
+  - `app/Config/Routes.php` → `$routes->get('resendActivationEmailsBatch', 'ManagementAdminController::resendActivationEmailsBatch');`
+  - `app/Config/Routes.php` → `$routes->get('resendActivationEmailsBatchQueued', 'ManagementAdminController::resendActivationEmailsBatchQueued');`
+  - `app/Config/Routes.php` → `$routes->get('sendTestActivationEmail', 'ManagementAdminController::sendTestActivationEmail');`
+  - `app/Config/Routes.php` → `$routes->post('saveSuggestion', 'ManagementAdminController::saveSuggestion');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'ManagementAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->get('AiOps', 'AiOpsManagementAdminController::index', ['filter' => 'permission:admin.access']);`
+- **Services/Libraries used:** `AccountService`, `App\Services\{AccountService`, `Config\Services`, `DashboardService`, `RealEstateIngestService`, `SolanaService`, `SupportService`, `UserService`, `authentication`, `dashboardService`, `request`, `solanaService`
+- **Models used:** `App\Models\{AccountsModel`, `DashboardModel`, `Myth\Auth\Authorization\GroupModel`, `ProjectsModel`, `SolanaModel`
+- **View files used:** `ManagementModule\Views\Projects\_email\Project_Received`, `ManagementModule\Views\Projects\_emails\More_Information_Required`, `ManagementModule\Views\Projects\_emails\Project_Approved`, `ManagementModule\Views\Projects\_emails\Project_Issues`, `ManagementModule\Views\Projects\_emails\Project_Not_Approved`, `emails/layout`
+
+## Controller: ManagementController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/ManagementController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `index()`, `add()`, `add()`, `accountOverview()`, `buildContentEngineSummary()`, `buildAuthHealthWidget()`, `details()`, `add()`, `edit()`, `add()`, `history()`, `howTos()`, `add()`, `recurringSchedule()`, `research()`, `approveRecurringSchedule()`, `safeDateFormat()`, `add()`, `settings()`, `triggerPostAutogenOnEmpty()`, `accountManager()`, `deleteAccount()`, `cancelAccount()`, `paid()`, `unpaid()`, `bulkUpdateStatus()`, `createLinkToken()`, `exchangeToken()`, `bulkDelete()`, `checkUserAuthentication()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::index');`
+  - `app/Config/Routes.php` → `$routes->get('projects', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::projects');`
+  - `app/Config/Routes.php` → `$routes->post('projects/save', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::saveProject');`
+  - `app/Config/Routes.php` → `$routes->get('subprojects', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::subprojects');`
+  - `app/Config/Routes.php` → `$routes->post('subprojects/save', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::saveSubproject');`
+  - `app/Config/Routes.php` → `$routes->get('tasks', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::tasks');`
+  - `app/Config/Routes.php` → `$routes->post('tasks/save', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::saveTask');`
+  - `app/Config/Routes.php` → `$routes->post('import/xlsx', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::importXlsx');`
+  - `app/Config/Routes.php` → `$routes->get('export/tasks.csv', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::exportTasksCsv');`
+  - `app/Config/Routes.php` → `$routes->get('export/workbook.xlsx', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::exportWorkbookXlsx');`
+  - `app/Config/Routes.php` → `$routes->get('Search/(:segment)/(:any)', 'ManagementController::index/$1/$2');`
+  - `app/Config/Routes.php` → `//     $routes->get('/', 'ManagementController::index');`
+  - `app/Config/Routes.php` → `//     // $routes->get('How-Tos', 'ManagementController::howTos');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'ajaxGetActiveUsers', 'ManagementController::ajaxGetActiveUsers');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'ajaxGetInactiveUsers', 'ManagementController::ajaxGetInactiveUsers');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'checkForSpamUsers', 'ManagementController::checkForSpamUsers');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'Marketing/cronAnalyzeContent', 'ManagementController::cronAnalyzeContent');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'Marketing/cronFetchAndGenerateNews', 'ManagementController::cronFetchAndGenerateNews');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'Marketing/cronFetchMarketingEmails', 'ManagementController::cronFetchMarketingEmails');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'Marketing/cronFetchInbox', 'ManagementController::cronFetchInbox');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'generateTodaysStory', 'ManagementController::generateTodaysStory');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'Marketing/generateContent', 'ManagementController::cronFetchAndGenerateNews');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'Marketing/generateContentFromScraper', 'ManagementController::generateContentFromScraper');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'Marketing/generateContentDigestFromStored', 'ManagementController::generateContentDigestFromStored');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'Marketing/generateDailyContentDigest', 'ManagementController::generateDailyContentDigest');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'Marketing/massResendActivationEmails', 'ManagementController::massResendActivationEmails');`
+  - `app/Config/Routes.php` → `//     $routes->match(['CLI', 'GET', 'POST'], 'Run-CRON-Tasks', 'ManagementController::runCRONTasks');`
+  - `app/Config/Routes.php` → `//     $routes->get('fetchEmailsToTempScraper', 'ManagementController::fetchEmailsToTempScraper');`
+  - `app/Config/Routes.php` → `//     $routes->get('getUsers', 'ManagementController::getUsers');`
+  - `app/Config/Routes.php` → `//     $routes->get('getReferrals', 'ManagementController::getReferrals');`
+  - `app/Config/Routes.php` → `//     $routes->get('getAlerts', 'ManagementController::getAlerts');`
+  - `app/Config/Routes.php` → `//     $routes->get('getNews', 'ManagementController::getNews');`
+  - `app/Config/Routes.php` → `//     $routes->get('getAssets', 'ManagementController::getAssets');`
+  - `app/Config/Routes.php` → `//     $routes->get('getSupport', 'ManagementController::getSupport');`
+  - `app/Config/Routes.php` → `//     $routes->get('processTempEmailsToScraper', 'ManagementController::processTempEmailsToScraper');`
+  - `app/Config/Routes.php` → `//     $routes->get('distributeTodaysNewsContent', 'ManagementController::distributeTodaysNewsContent');`
+  - `app/Config/Routes.php` → `//     $routes->get('exportPostJson/(:num)', 'ManagementController::exportPostJson/$1');`
+  - `app/Config/Routes.php` → `//     $routes->get('fetchNewsEmails', 'ManagementController::fetchNewsEmails');`
+  - `app/Config/Routes.php` → `//     $routes->get('generatePostsFromSummary/(:num)', 'ManagementController::generatePostsFromSummary/$1');`
+  - `app/Config/Routes.php` → `//     $routes->get('generateVoiceScriptManually', 'ManagementController::generateVoiceScriptManually');`
+  - `app/Config/Routes.php` → `//     $routes->get('processAllTradeAlerts', 'ManagementController::processAllTradeAlerts');`
+  - `app/Config/Routes.php` → `//     $routes->get('runCronManually', 'ManagementController::runCronManually');`
+  - `app/Config/Routes.php` → `//     $routes->get('runDailyAlphaVantageDataPipeline', 'ManagementController::runDailyAlphaVantageDataPipeline');`
+  - `app/Config/Routes.php` → `//     $routes->get('sendToZapierManually', 'ManagementController::sendToZapierManually');`
+  - `app/Config/Routes.php` → `//     $routes->get('scrapeAndGenerateTodaysStoryFromInbox', 'ManagementController::scrapeAndGenerateTodaysStoryFromInbox');`
+  - `app/Config/Routes.php` → `//     $routes->get('sharePost/(:num)/(:segment)', 'ManagementController::sharePost/$1/$2');`
+  - `app/Config/Routes.php` → `//     $routes->get('sendAllDiscordAlerts', 'ManagementController::sendAllDiscordAlerts');`
+  - `app/Config/Routes.php` → `//     $routes->get('updateMarketDataForAlerts', 'ManagementController::updateMarketDataForAlerts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Run-CRON-Tasks', 'ManagementController::runCRONTasks');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('ajaxGetActiveUsers', 'ManagementController::ajaxGetActiveUsers');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('ajaxGetInactiveUsers', 'ManagementController::ajaxGetInactiveUsers');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('checkForSpamUsers', 'ManagementController::checkForSpamUsers');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('distributeTodaysNewsContent', 'ManagementController::distributeTodaysNewsContent');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('exportPostJson/(:num)', 'ManagementController::exportPostJson/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('fetchAlphaVantageNewsForTradeAlerts', 'ManagementController::fetchAlphaVantageNewsForTradeAlerts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('fetchEmailsToTempScraper', 'ManagementController::fetchEmailsToTempScraper');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('fetchLatestSummaries', 'ManagementController::fetchLatestSummaries');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('fetchNewsEmails', 'ManagementController::fetchNewsEmails');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('generatePostsFromSummary/(:num)', 'ManagementController::generatePostsFromSummary/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('generatePostsFromSummary', 'ManagementController::generatePostsFromSummary');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('generateVoiceScriptManually', 'ManagementController::generateVoiceScriptManually');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getUsers', 'ManagementController::getUsers');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getAlerts', 'ManagementController::getAlerts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getReferrals', 'ManagementController::getReferrals');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getAssets', 'ManagementController::getAssets');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getNews', 'ManagementController::getNews');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getSupport', 'ManagementController::getSupport');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('processAllTradeAlerts', 'ManagementController::processAllTradeAlerts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('runCronManually', 'ManagementController::runCronManually');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('runDailyAlphaVantageDataPipeline', 'ManagementController::runDailyAlphaVantageDataPipeline');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('scrapeAndGenerateTodaysStoryFromInbox', 'ManagementController::scrapeAndGenerateTodaysStoryFromInbox');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('sendAllDiscordAlerts', 'ManagementController::sendAllDiscordAlerts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('sendToZapierManually', 'ManagementController::sendToZapierManually');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('sharePost/(:num)/(:segment)', 'ManagementController::sharePost/$1/$2');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('triggerPostAutogenOnEmpty', 'ManagementController::triggerPostAutogenOnEmpty');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('updateMarketDataForAlerts', 'ManagementController::updateMarketDataForAlerts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('generateQueueForToday', 'ManagementController::generateQueueForToday');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('publishQueueBatch', 'ManagementController::publishQueueBatch');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('discordWebhook', 'ManagementController::discordWebhook');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('analyticsCron', 'ManagementController::analyticsCron');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('banUnverifiedUsers', 'ManagementController::banUnverifiedUsers');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('processQueuedEmails', 'ManagementController::processQueuedEmails');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('resendActivationEmailsBatch', 'ManagementController::resendActivationEmailsBatch');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('resendActivationEmailsBatchQueued', 'ManagementController::resendActivationEmailsBatchQueued');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('sendTestActivationEmail', 'ManagementController::sendTestActivationEmail');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Search/(:segment)/(:any)', 'ManagementController::index/$1/$2');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'ManagementController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('/', 'ManagementController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     // $routes->get('How-Tos', 'ManagementController::howTos');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'ajaxGetActiveUsers', 'ManagementController::ajaxGetActiveUsers');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'ajaxGetInactiveUsers', 'ManagementController::ajaxGetInactiveUsers');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'checkForSpamUsers', 'ManagementController::checkForSpamUsers');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'Marketing/cronAnalyzeContent', 'ManagementController::cronAnalyzeContent');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'Marketing/cronFetchAndGenerateNews', 'ManagementController::cronFetchAndGenerateNews');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'Marketing/cronFetchMarketingEmails', 'ManagementController::cronFetchMarketingEmails');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'Marketing/cronFetchInbox', 'ManagementController::cronFetchInbox');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'generateTodaysStory', 'ManagementController::generateTodaysStory');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'Marketing/generateContent', 'ManagementController::cronFetchAndGenerateNews');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'Marketing/generateContentFromScraper', 'ManagementController::generateContentFromScraper');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'Marketing/generateContentDigestFromStored', 'ManagementController::generateContentDigestFromStored');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'Marketing/generateDailyContentDigest', 'ManagementController::generateDailyContentDigest');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'Marketing/massResendActivationEmails', 'ManagementController::massResendActivationEmails');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['CLI', 'GET', 'POST'], 'Run-CRON-Tasks', 'ManagementController::runCRONTasks');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('fetchEmailsToTempScraper', 'ManagementController::fetchEmailsToTempScraper');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('getUsers', 'ManagementController::getUsers');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('getReferrals', 'ManagementController::getReferrals');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('getAlerts', 'ManagementController::getAlerts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('getNews', 'ManagementController::getNews');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('getAssets', 'ManagementController::getAssets');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('getSupport', 'ManagementController::getSupport');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('processTempEmailsToScraper', 'ManagementController::processTempEmailsToScraper');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('distributeTodaysNewsContent', 'ManagementController::distributeTodaysNewsContent');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('exportPostJson/(:num)', 'ManagementController::exportPostJson/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('fetchNewsEmails', 'ManagementController::fetchNewsEmails');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('generatePostsFromSummary/(:num)', 'ManagementController::generatePostsFromSummary/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('generateVoiceScriptManually', 'ManagementController::generateVoiceScriptManually');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('processAllTradeAlerts', 'ManagementController::processAllTradeAlerts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('runCronManually', 'ManagementController::runCronManually');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('runDailyAlphaVantageDataPipeline', 'ManagementController::runDailyAlphaVantageDataPipeline');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('sendToZapierManually', 'ManagementController::sendToZapierManually');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('scrapeAndGenerateTodaysStoryFromInbox', 'ManagementController::scrapeAndGenerateTodaysStoryFromInbox');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('sharePost/(:num)/(:segment)', 'ManagementController::sharePost/$1/$2');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('sendAllDiscordAlerts', 'ManagementController::sendAllDiscordAlerts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('updateMarketDataForAlerts', 'ManagementController::updateMarketDataForAlerts');`
+- **Services/Libraries used:** `AccountService`, `App\Services\DashboardAggregatorService`, `App\Services\{AccountService`, `BudgetService`, `Config\Services`, `DashboardService`, `GoalTrackingService`, `MarketingService`, `MyMISolana`, `SolanaService`, `UserService`, `WalletService`, `WeeklyStreamService`, `authentication`, `logger`
+- **Models used:** `App\Models\BudgetModel`, `App\Models\{AccountsModel`, `AuthHealthRunModel`, `BudgetModel`, `ContentIdeaModel`, `ContentPostModel`, `ContentScannerIngestModel`, `MarketingNewsletterModel`, `Myth\Auth\Authorization\GroupModel`, `UserModel`, `WalletModel`, `WeeklyStreamWatchlistModel`
+- **View files used:** None detected
+
+## Controller: BloggerAdminController
+- **Namespace:** `App\Modules\Management\Controllers\Marketing`
+- **Path:** `app/Modules/Management/Controllers/Marketing/BloggerAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `index()`, `generate()`, `repurpose()`, `schedule()`, `preview()`, `save()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `bloggerService`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: CampaignAdminController
+- **Namespace:** `App\Modules\Management\Controllers\Marketing`
+- **Path:** `app/Modules/Management/Controllers/Marketing/CampaignAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `uploadForm()`, `processFile()`, `saveCampaign()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'DripCampaignAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Create', 'DripCampaignAdminController::create');`
+  - `app/Config/Routes.php` → `$routes->get('(:num)/Steps', 'DripCampaignAdminController::viewSteps/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], '(:num)/Steps/Add', 'DripCampaignAdminController::addStep/$1');`
+- **Services/Libraries used:** None detected
+- **Models used:** `App\Models\EmailQueueModel`, `App\Models\EmailTemplateModel`, `EmailQueueModel`
+- **View files used:** None detected
+
+## Controller: EmailQueueAdminController
+- **Namespace:** `App\Modules\Management\Controllers\Marketing`
+- **Path:** `app/Modules/Management/Controllers/Marketing/EmailQueueAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `create()`, `store()`, `index()`, `processQueue()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** `App\Models\EmailQueueModel`, `App\Models\EmailTemplateModel`, `EmailQueueModel`, `EmailTemplateModel`
+- **View files used:** `email_queue/create`, `email_queue/index`
+
+## Controller: EmailTemplateAdminController
+- **Namespace:** `App\Modules\Management\Controllers\Marketing`
+- **Path:** `app/Modules/Management/Controllers/Marketing/EmailTemplateAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `index()`, `create()`, `store()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** `App\Models\EmailTemplateModel`, `EmailTemplateModel`
+- **View files used:** `email_templates/create`, `email_templates/index`
+
+## Controller: MarketingAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/MarketingAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `initializeMarketingContext()`, `index()`, `index()`, `index()`, `add()`, `addSchedule()`, `addSubscriber()`, `addSubscriber()`, `addSubscriber()`, `approveBufferItem()`, `approveLogo()`, `approveAndDownloadLogo()`, `approveContent()`, `blogs()`, `bufferDashboard()`, `campaigns()`, `contentGenerator()`, `contentReview()`, `cronAnalyzeContent()`, `cronFetchAndStoreEmails()`, `cronFetchInbox()`, `cronFetchMarketingEmails()`, `cronGenerateContentFromTemp()`, `cronGenerateFinalContentFromTemp()`, `cronSendDailyLog()`, `edit()`, `editContent()`, `fetchBufferPaginated()`, `fetchLatestSummaries()`, `fetchMissingLogos()`, `financialNews()`, `generateAudio()`, `generateAutomatedContent()`, `backfillBlogExcerpts()`, `generateContent()`, `generateContentDigestFromStored()`, `generateContentFromTweet()`, `generateDailyContentDigest()`, `generateGroupedContentDrafts()`, `generateNewsletterContent()`, `generateSummarizedFallbackContent()`, `getDripCampaigns()`, `getLogsOrFallback()`, `getRecentScrapes()`, `handleMediaUpload()`, `ideas()`, `importScheduleCSV()`, `keywords()`, `previewBufferItem()`, `previewGeneratedPost()`, `previewPendingSummaries()`, `previewVideoScript()`, `processScheduledPosts()`, `sendToZapier()`, `handlePostFailure()`, `postCreator()`, `promote()`, `publishBlog()`, `rejectBufferItem()`, `rejectContent()`, `reviewBuffer()`, `runContentGeneration()`, `sanitizeContent()`, `saveCampaign()`, `saveContentEdit()`, `saveSchedule()`, `schedule()`, `scheduleNewsletterCampaign()`, `scrapeGoogleSearch()`, `scrapeLink()`, `scrapeLinks()`, `scrapeWebsite()`, `scrapeWebsiteWithFallback()`, `searchAndApproveLogo()`, `sendScheduledNewsletter()`, `standaloneAddSubscriber()`, `standaloneScrape()`, `storeScrapedData()`, `submitContent()`, `submitDailyLog()`, `submitLargeContent()`, `submitLargeContentForm()`, `submitMarketingCampaign()`, `submitMarketIdeas()`, `topCommunities()`, `triggerPostAutogenOnEmpty()`, `twitterDashboard()`, `upcomingEarnings()`, `updatePlatformToggle()`, `viewBlog()`, `viewCampaign()`, `viewDailyLogs()`, `viewEmail()`, `viewGeneratedContent()`, `viewGeneratedSummaries()`, `viewGroupedSummaries()`, `handleTeamMessage()`, `viewTempScrapedEmails()`, `viewTimelineGrouped()`, `shortLongContentForm()`, `submitManualContent()`, `communities()`, `getSocialPlatforms()`, `getSocialCommunities()`, `saveSocialCommunity()`, `getPostTemplates()`, `savePostTemplate()`, `generatePlatformPosts()`, `generateDailyCommunityPosts()`, `exportGeneratedPostJson()`, `generateRevenueDocs()`, `cronGenerateDailyCommunityPosts()`, `cronQueueDistribution()`, `ensurePlatformsSeeded()`, `ensureDefaultTemplates()`, `fetchSummaryById()`, `generatePlatformPostPackFromSummaryData()`, `extractTickers()`, `extractLinks()`, `extractHashtags()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'MarketingAdminController::index');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Add/(:segment)', 'MarketingAdminController::add/$1');`
+  - `app/Config/Routes.php` → `// $routes->get('Add/(:segment)', 'MarketingAdminController::addSchedule');`
+  - `app/Config/Routes.php` → `$routes->match(['POST'], 'Add-Subscriber', 'MarketingAdminController::addSubscriber');`
+  - `app/Config/Routes.php` → `$routes->get('Approve-Content/(:num)', 'MarketingAdminController::approveContent/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Blog-Creator', 'MarketingAdminController::blogCreator');`
+  - `app/Config/Routes.php` → `$routes->get('Blogs', 'MarketingAdminController::blogs');`
+  - `app/Config/Routes.php` → `$routes->get('Campaigns', 'MarketingAdminController::campaigns');`
+  - `app/Config/Routes.php` → `$routes->get('Content-Review', 'MarketingAdminController::contentReview');`
+  - `app/Config/Routes.php` → `$routes->get('Content/Generator', 'MarketingAdminController::contentGenerator');`
+  - `app/Config/Routes.php` → `$routes->get('Content/Listing', 'MarketingAdminController::contentListing');`
+  - `app/Config/Routes.php` → `$routes->get('Daily-Log', 'MarketingAdminController::viewDailyLogs');`
+  - `app/Config/Routes.php` → `$routes->get('Edit-Content/(:num)', 'MarketingAdminController::editContent/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Email/(:any)/(:any)', 'MarketingAdminController::viewEmail/$1/$2');`
+  - `app/Config/Routes.php` → `$routes->get('fetchEmails', 'MarketingAdminController::fetchEmails');`
+  - `app/Config/Routes.php` → `$routes->post('fetchMissingLogos', 'MarketingAdminController::fetchMissingLogos');`
+  - `app/Config/Routes.php` → `$routes->get('Financial-News', 'MarketingAdminController::financialNews');`
+  - `app/Config/Routes.php` → `$routes->post('generateAutomatedContent', 'MarketingAdminController::generateAutomatedContent');`
+  - `app/Config/Routes.php` → `$routes->get('generateContent', 'MarketingAdminController::generateContent');`
+  - `app/Config/Routes.php` → `$routes->get('generateDailyContentDigest', 'MarketingAdminController::generateDailyContentDigest');`
+  - `app/Config/Routes.php` → `$routes->get('generateNewsletter', 'MarketingAdminController::generateNewsletterContent');`
+  - `app/Config/Routes.php` → `$routes->get('getRecentScrapes', 'MarketingAdminController::getRecentScrapes');`
+  - `app/Config/Routes.php` → `$routes->get('Grouped-Content-Drafts', 'MarketingAdminController::generateGroupedContentDrafts');`
+  - `app/Config/Routes.php` → `$routes->get('Ideas', 'MarketingAdminController::ideas');`
+  - `app/Config/Routes.php` → `$routes->get('Post-Creator', 'MarketingAdminController::postCreator');`
+  - `app/Config/Routes.php` → `$routes->get('previewGeneratedPost/(:num)', 'MarketingAdminController::previewGeneratedPost/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Promote', 'MarketingAdminController::promote');`
+  - `app/Config/Routes.php` → `$routes->get('Promote/(:segment)', 'MarketingAdminController::promote');`
+  - `app/Config/Routes.php` → `$routes->post('PublishBlog/(:num)', 'Management\MarketingAdminController::publishBlog/$1');`
+  - `app/Config/Routes.php` → `$routes->get('RunContentGeneration', 'Management\MarketingAdminController::runContentGeneration');`
+  - `app/Config/Routes.php` → `$routes->get('Quick-Scraper', 'MarketingAdminController::standaloneScrape');`
+  - `app/Config/Routes.php` → `$routes->get('Reject-Content/(:num)', 'MarketingAdminController::rejectContent/$1');`
+  - `app/Config/Routes.php` → `$routes->post('Save-Content-Edit/(:num)', 'MarketingAdminController::saveContentEdit/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Schedule', 'MarketingAdminController::schedule');`
+  - `app/Config/Routes.php` → `$routes->get('Schedule/(:segment)', 'MarketingAdminController::schedule/$1');`
+  - `app/Config/Routes.php` → `$routes->get('scheduleNewsletters', 'MarketingAdminController::scheduleNewsletterCampaign');`
+  - `app/Config/Routes.php` → `$routes->get('submitDailyLog', 'MarketingAdminController::submitDailyLog');`
+  - `app/Config/Routes.php` → `$routes->post('Scrape-Link', 'MarketingAdminController::scrapeLink'); // Ensure this is a POST route`
+  - `app/Config/Routes.php` → `$routes->get('sendNotification', 'MarketingAdminController::sendNotification');`
+  - `app/Config/Routes.php` → `$routes->get('sendNewsletter', 'MarketingAdminController::sendScheduleNewsletter');`
+  - `app/Config/Routes.php` → `$routes->get('Test', 'MarketingAdminController::test');`
+  - `app/Config/Routes.php` → `$routes->get('Twitter', 'MarketingAdminController::twitterDashboard');`
+  - `app/Config/Routes.php` → `$routes->get('Video-Creator', 'MarketingAdminController::videoCreator');`
+  - `app/Config/Routes.php` → `$routes->get('View-Email/(:segment)/(:segment)', 'MarketingAdminController::viewEmail/$1/$2');`
+  - `app/Config/Routes.php` → `$routes->get('View-Grouped-Summaries', 'MarketingAdminController::View-Grouped-Summaries');`
+- **Services/Libraries used:** `App\Services\{DashboardService`, `Config\Services`, `DashboardService`, `GoalTrackingService`, `MarketingService`, `MyMIMarketing`, `MyMIUser`, `SolanaService`, `authentication`, `logger`, `mailService`, `marketingService`, `request`, `solanaService`
+- **Models used:** `AlertsModel`, `AnnouncementModel`, `App\Models\DripCampaignModel`, `App\Models\EarningsModel`, `App\Models\MarketingModel`, `App\Models\ScheduleModel`, `App\Models\{AlertsModel`, `CampaignModel`, `InvestmentModel`, `ManagementModel`, `MarketingModel`, `MyMIGoldModel`, `SocialCommunityModel`, `SocialDistributionQueueModel`, `SocialGeneratedPostModel`, `SocialPlatformModel`, `SocialPostTemplateModel`, `SolanaModel`, `UserModel`
+- **View files used:** `App\\Modules\\Management\\Views\\Marketing\\communities`, `emails/daily_log_summary`, `emails/welcomeInvestor`
+
+## Controller: NotificationAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/NotificationAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `sendNotification()`, `addRecord()`, `sendWebSocketMessage()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `Config\Services`, `MyMIMarketing`, `authentication`, `request`
+- **Models used:** `AlertsModel`, `AnnouncementModel`, `App\Models\{AlertsModel`, `InvestmentModel`, `ManagementModel`, `MarketingModel`, `MyMIGoldModel`, `Myth\Auth\Authorization\GroupModel`, `UserModel`, `YourModel`
+- **View files used:** None detected
+
+## Controller: OperationsAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/OperationsAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `index()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: OpsAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/OpsAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `ajaxStatus()`, `ajaxDispatch()`, `buildStatusPayload()`, `filesystemGovernanceStatus()`, `isAdmin()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('Ops', 'OpsAdminController::index', ['filter' => 'permission:admin.access']);`
+  - `app/Config/Routes.php` → `$routes->get('Ops/ajaxStatus', 'OpsAdminController::ajaxStatus', ['filter' => 'permission:admin.access']);`
+  - `app/Config/Routes.php` → `$routes->post('Ops/ajaxDispatch', 'OpsAdminController::ajaxDispatch', ['filter' => 'permission:admin.access']);`
+- **Services/Libraries used:** `authentication`
+- **Models used:** `App\Models\OpsJobsModel`, `App\Models\OpsQueueModel`, `App\Models\OpsRunsModel`, `OpsJobsModel`, `OpsQueueModel`, `OpsRunsModel`
+- **View files used:** None detected
+
+## Controller: OpsInboxAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/OpsInboxAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `view()`, `createTaskFile()`, `createTaskRegistry()`, `markApproved()`, `reject()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `App\Services\OpsCommandService`, `OpsCommandService`
+- **Models used:** None detected
+- **View files used:** `Management/OpsInbox/index`, `Management/OpsInbox/show`
+
+## Controller: PartnersAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/PartnersAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `saveData()`, `set_current_user()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `Config\Services`, `MyMIMarketing`, `authentication`, `request`
+- **Models used:** `AlertsModel`, `AnnouncementModel`, `App\Models\{AlertsModel`, `InvestmentModel`, `ManagementModel`, `MarketingModel`, `MyMIGoldModel`, `Myth\Auth\Authorization\GroupModel`, `UserModel`
+- **View files used:** None detected
+
+## Controller: ProjectsAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/ProjectsAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `userAccountData()`, `index()`, `add()`, `realEstateQuickIntake()`, `realEstateQuickSubmit()`, `viewProject()`, `listProjects()`, `createProject()`, `commitInvestment()`, `distributeRevenue()`, `sendMoreInfoRequest()`, `approveProject()`, `notifyIssues()`, `rejectProject()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `AccountService`, `App\Services\{AccountService`, `Config\Services`, `DashboardService`, `RealEstateIngestService`, `SolanaService`, `SupportService`, `UserService`, `authentication`, `dashboardService`, `request`, `solanaService`
+- **Models used:** `App\Models\{AccountsModel`, `DashboardModel`, `Myth\Auth\Authorization\GroupModel`, `ProjectsModel`, `SolanaModel`
+- **View files used:** `ManagementModule\Views\Projects\_email\Project_Received`, `ManagementModule\Views\Projects\_emails\More_Information_Required`, `ManagementModule\Views\Projects\_emails\Project_Approved`, `ManagementModule\Views\Projects\_emails\Project_Issues`, `ManagementModule\Views\Projects\_emails\Project_Not_Approved`, `emails/layout`
+
+## Controller: PublicPagesAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/PublicPagesAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `index()`, `ajaxGenerateNow()`, `ajaxLoadDraft()`, `ajaxSaveDraft()`, `ajaxApproveDraft()`, `ajaxRejectDraft()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `App\Services\PublicPages\SchemaGenerator`, `authentication`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: SecurityAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/SecurityAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `encrypt()`, `decrypt()`, `mask()`, `purge_api_requests()`, `log_activity()`, `check_compliance()`, `access_control()`, `validate_password_strength()`, `anonymize_data()`, `sanitize_headers()`, `validate_file_upload()`, `file_upload_security()`, `generate_security_questions()`, `verify_security_answers()`, `log_api_request()`, `rate_limit_actions()`, `analyze_user_agent()`, `validate_input_pattern()`, `rotate_encryption_keys()`, `secure_delete_file()`, `get_security_training_content()`, `get_security_dashboard_data()`, `initiate_incident_response()`, `check_compliance_standards()`, `get_threat_intelligence_data()`, `send_security_notifications()`, `check_for_patches()`, `review_access_controls()`, `run_vulnerability_scan()`, `get_latest_version_from_repository()`, `check_role_permissions()`, `send_to_slack_channel()`, `csrf_token_provider()`, `generate_2fa_secret()`, `verify_2fa_code()`, `log_api_response()`, `log_error()`, `jsonOutput()`, `validatePostData()`, `logSecurityEvent()`, `checkSession()`, `bruteForceCheck()`, `rateLimitCheck()`, `sanitizeInput()`, `rotateKeys()`, `secureFileDelete()`, `generateCsrfToken()`, `verifyCsrfToken()`, `accessControlCheck()`, `fileUploadSecurityCheck()`, `detectPhishing()`, `mobileSecurityCheck()`, `sendSecurityNotification()`, `vulnerabilityScan()`, `complianceCheck()`, `threatIntelligenceIntegration()`, `initiateIncidentResponse()`, `checkPatches()`, `reviewAccessControls()`, `sendSecurityTrainingReminder()`, `encryptAtRest()`, `secureDataTransmission()`, `conductSecurityAudit()`, `updateSecurityPolicy()`, `performRiskAssessment()`, `performCodeReview()`, `logSecurityIncident()`, `trackSecurityMetrics()`, `respondToSecurityBreach()`, `reportCompliance()`, `updateSecurityTraining()`, `manageSecurityConfiguration()`, `setupSecurityMonitoring()`, `simulateSecurityIncident()`, `conductSecurityAwarenessCampaign()`, `benchmarkSecurity()`, `analyzeSecurityTrends()`, `assessSecurityPosture()`, `disseminateSecurityAdvisory()`, `manageSecurityPatches()`, `trainIncidentResponse()`, `modelSecurityThreats()`, `testSecurityControls()`, `planIncidentResponse()`, `analyzeThreatIntelligence()`, `enhanceSecurityControls()`, `recoverFromSecurityIncident()`, `mitigateSecurityRisks()`, `enforceSecurityPolicy()`, `validateData()`, `terminateSecureSession()`, `setSecureCookie()`, `secureRedirect()`, `validateAjaxRequest()`, `secureFileUpload()`, `signApiRequest()`, `encryptData()`, `decryptData()`, `logUserConsent()`, `scheduleBackgroundJob()`, `anonymizeData()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `Config\Services`, `authentication`, `compliance_checker`, `encryption`, `mobile_security_checker`, `phishing_detector`, `request`, `security`, `vulnerability_scanner`
+- **Models used:** `AccountsModel`, `App\Models\{AccountsModel`, `BudgetModel`, `Myth\Auth\Authorization\GroupModel`, `UserModel`
+- **View files used:** None detected
+
+## Controller: ServicesAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/ServicesAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `campaigns()`, `tasks()`, `blogSubscribe()`, `seoCheck()`, `assignMarketingTask()`, `saveData()`, `set_current_user()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `Config\Services`, `authentication`, `request`
+- **Models used:** `AccountsModel`, `App\Models\{AccountsModel`, `BudgetModel`, `Myth\Auth\Authorization\GroupModel`, `UserModel`
+- **View files used:** None detected
+
+## Controller: SignalsAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/SignalsAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `index()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('Signals', 'SignalsAdminController::index');`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** `App\Modules\Management\Views\Signals\index`
+
+## Controller: SitemapAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/SitemapAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `general()`, `articles()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** `App\Models\SitemapModel`, `SitemapModel`
+- **View files used:** None detected
+
+## Controller: SmtpTestAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/SmtpTestAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `probe()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `email`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: SupportAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/SupportAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `logs()`, `requests()`, `reporting()`, `contentCreator()`, `curlGenerator()`, `pages()`, `pageTemplate()`, `testPage()`, `testPageEmail()`, `testPageCB()`, `sitemapGenerator()`, `basicUI()`, `icons()`, `forms()`, `charts()`, `tables()`, `uiElements()`, `emailTest()`, `saveData()`, `set_current_user()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `Config\Services`, `authentication`, `mailService`, `request`
+- **Models used:** `AccountsModel`, `AnnouncementsModel`, `App\Models\{AccountsModel`, `BudgetModel`, `DesignModel`, `InvestmentModel`, `MarketingModel`, `MyMIGoldModel`, `Myth\Auth\Authorization\GroupModel`, `UserModel`, `WalletModel`
+- **View files used:** None detected
+
+## Controller: TestAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/TestAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `testITTSend()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: TradovateAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/TradovateAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `login()`, `callback()`, `sendTradeOrder()`, `copyTrade()`, `index()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: UsersAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/UsersAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `assets()`, `ajaxBlockUser()`, `ajaxBulkBanUsers()`, `blockUser()`, `distribute()`, `referralReport()`, `exportUsers()`, `forceReset()`, `orders()`, `profile()`, `resendActivationCode()`, `generateActivationCode()`, `saveData()`, `setCurrentUser()`, `renderView()`, `addJsModule()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `Config\Services`, `authentication`, `request`
+- **Models used:** `AccountsModel`, `App\Models\{AccountsModel`, `BudgetModel`, `InvestmentModel`, `MarketingModel`, `MyMIGoldModel`, `Myth\Auth\Authorization\GroupModel`, `UserModel`, `WalletModel`
+- **View files used:** `_emails/activated`
+
+## Controller: WalletsAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/WalletsAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `generateWallets()`, `amlMonitoring()`, `amlForm()`, `complianceForm()`, `submitCompliance()`, `submitAML()`, `largeTransactionReview()`, `kycForm()`, `submitKYC()`, `suspiciousActivityReview()`, `saveData()`, `set_current_user()`, `reconcile()`, `renderTable()`, `guessEditEndpoint()`, `NotifyUserMissingInfo()`, `notifyUser()`, `emailUserAboutIssue()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsAdminController::addUserGoldTasks');`
+- **Services/Libraries used:** `Config\Services`, `authentication`, `request`
+- **Models used:** `AccountsModel`, `App\Models\{AccountsModel`, `BudgetModel`, `InvestmentModel`, `MarketingModel`, `MyMIGoldModel`, `Myth\Auth\Authorization\GroupModel`, `UserModel`, `WalletModel`
+- **View files used:** None detected
+
+## Controller: WebDesignAdminController
+- **Namespace:** `App\Modules\Management\Controllers`
+- **Path:** `app/Modules/Management/Controllers/WebDesignAdminController.php`
+- **Classification:** `ADMIN_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `contentCreator()`, `curlGenerator()`, `pages()`, `pageTemplate()`, `testPage()`, `testPageEmail()`, `testPageCB()`, `sitemapGenerator()`, `basicUI()`, `icons()`, `forms()`, `charts()`, `tables()`, `uiElements()`, `emailTest()`, `saveData()`, `set_current_user()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `Config\Services`, `authentication`, `request`
+- **Models used:** `AccountsModel`, `AnalyticalModel`, `AnnouncementsModel`, `App\Models\{AccountsModel`, `BudgetModel`, `DesignModel`, `InvestmentModel`, `MarketingModel`, `MyMIGoldModel`, `Myth\Auth\Authorization\GroupModel`, `UserModel`, `WalletModel`
+- **View files used:** None detected
+
+## Controller: TaxConfig
+- **Namespace:** `App\Modules\Management\TaxAdmin\Controllers`
+- **Path:** `app/Modules/Management/TaxAdmin/Controllers/TaxConfig.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `templates()`, `editTemplate()`, `jurisdictions()`, `rates()`, `createRate()`, `editRate()`, `ensureAdmin()`, `logAudit()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'TaxConfig::index');`
+  - `app/Config/Routes.php` → `$routes->get('Templates', 'TaxConfig::templates');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Templates/edit/(:num)', 'TaxConfig::editTemplate/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Jurisdictions', 'TaxConfig::jurisdictions');`
+  - `app/Config/Routes.php` → `$routes->get('Rates', 'TaxConfig::rates');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Rates/create', 'TaxConfig::createRate');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Rates/edit/(:num)', 'TaxConfig::editRate/$1');`
+- **Services/Libraries used:** `authentication`
+- **Models used:** `App\Modules\Management\TaxAdmin\Models\TaxAuditLogModel`, `App\Modules\Management\TaxAdmin\Models\TaxJurisdictionsModel`, `App\Modules\Management\TaxAdmin\Models\TaxLinesModel`, `App\Modules\Management\TaxAdmin\Models\TaxRatesModel`, `App\Modules\Management\TaxAdmin\Models\TaxTemplatesModel`
+- **View files used:** `App\\Modules\\Management\\TaxAdmin\\Views\\dashboard`, `App\\Modules\\Management\\TaxAdmin\\Views\\jurisdictions\\index`, `App\\Modules\\Management\\TaxAdmin\\Views\\rates\\edit`, `App\\Modules\\Management\\TaxAdmin\\Views\\rates\\index`, `App\\Modules\\Management\\TaxAdmin\\Views\\templates\\edit`, `App\\Modules\\Management\\TaxAdmin\\Views\\templates\\index`
+
+## Controller: ScraperController
+- **Namespace:** `App\Modules\Marketing_New\Controllers`
+- **Path:** `app/Modules/Marketing_New/Controllers/ScraperController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `scrapeWebsiteWithFallback()`, `scrapeGoogleSearch()`, `generateContentFromScrapedData()`, `generatePrimaryContent()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** `App\Modules\Marketing_New\Models\MarketingModel`, `MarketingModel`
+- **View files used:** None detected
+
+## Controller: PushController
+- **Namespace:** `App\Modules\Notifications\Controllers`
+- **Path:** `app/Modules/Notifications/Controllers/PushController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `publicKey()`, `subscribe()`, `unsubscribe()`, `testSend()`, `ok()`, `fail()`, `forbid()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `App\Libraries\Notifications\PushService`
+- **Models used:** `App\Models\PushSubscriptionModel`, `PushSubscriptionModel`
+- **View files used:** None detected
+
+## Controller: OpsController
+- **Namespace:** `App\Modules\Ops\Controllers`
+- **Path:** `app/Modules/Ops/Controllers/OpsController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `healthcheck()`, `appUpdate()`, `commands()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'OpsController::index');`
+  - `app/Config/Routes.php` → `$routes->get('ajaxStatus', 'OpsController::ajaxStatus');`
+  - `app/Config/Routes.php` → `$routes->post('ajaxDispatch', 'OpsController::ajaxDispatch');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'ErrorOpsController::index');`
+  - `app/Config/Routes.php` → `$routes->get('apiKpis', 'ErrorOpsController::apiKpis');`
+  - `app/Config/Routes.php` → `$routes->get('apiTopControllers', 'ErrorOpsController::apiTopControllers');`
+  - `app/Config/Routes.php` → `$routes->get('apiHeatmap', 'ErrorOpsController::apiHeatmap');`
+  - `app/Config/Routes.php` → `$routes->get('apiPatterns', 'ErrorOpsController::apiPatterns');`
+  - `app/Config/Routes.php` → `$routes->get('healthcheck', 'App\Modules\Ops\Controllers\OpsController::healthcheck');`
+  - `app/Config/Routes.php` → `$routes->post('app/update', 'App\Modules\Ops\Controllers\OpsController::appUpdate');`
+  - `app/Config/Routes.php` → `$routes->get('commands', 'App\Modules\Ops\Controllers\OpsController::commands');`
+  - `app/Config/Routes.php` → `$routes->get('snapshot', 'App\Modules\AIOps\Controllers\AIOpsController::snapshot');`
+  - `app/Config/Routes.php` → `$routes->get('gaps/docs', 'App\Modules\AIOps\Controllers\AIOpsController::docsGaps');`
+  - `app/Config/Routes.php` → `$routes->post('watch', 'App\Modules\AIOps\Controllers\AIOpsController::watch');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Ops/OPcacheReset', 'OpsController::opcacheReset'); // /API/Ops/OPcacheReset`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Ops/OPcacheReset', 'OpsController::opcacheReset'); // /API/Ops/OPcacheReset`
+- **Services/Libraries used:** `App\Services\Ops\SparkRunnerService`, `SparkRunnerService`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: OpsManagementController
+- **Namespace:** `App\Modules\Ops\Controllers`
+- **Path:** `app/Modules/Ops/Controllers/OpsManagementController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `projects()`, `saveProject()`, `subprojects()`, `saveSubproject()`, `tasks()`, `saveTask()`, `importXlsx()`, `exportTasksCsv()`, `exportWorkbookXlsx()`, `refreshRepoExports()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::index');`
+  - `app/Config/Routes.php` → `$routes->get('projects', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::projects');`
+  - `app/Config/Routes.php` → `$routes->post('projects/save', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::saveProject');`
+  - `app/Config/Routes.php` → `$routes->get('subprojects', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::subprojects');`
+  - `app/Config/Routes.php` → `$routes->post('subprojects/save', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::saveSubproject');`
+  - `app/Config/Routes.php` → `$routes->get('tasks', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::tasks');`
+  - `app/Config/Routes.php` → `$routes->post('tasks/save', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::saveTask');`
+  - `app/Config/Routes.php` → `$routes->post('import/xlsx', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::importXlsx');`
+  - `app/Config/Routes.php` → `$routes->get('export/tasks.csv', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::exportTasksCsv');`
+  - `app/Config/Routes.php` → `$routes->get('export/workbook.xlsx', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::exportWorkbookXlsx');`
+- **Services/Libraries used:** `App\Services\OpsExportService`, `App\Services\OpsImportService`, `OpsExportService`, `OpsImportService`, `request`
+- **Models used:** `App\Models\OpsProjectModel`, `App\Models\OpsSubprojectModel`, `App\Models\OpsTaskModel`, `OpsProjectModel`, `OpsSubprojectModel`, `OpsTaskModel`
+- **View files used:** None detected
+
+## Controller: PredictionsApiController
+- **Namespace:** `App\Modules\Predictions\Controllers\API`
+- **Path:** `app/Modules/Predictions/Controllers/API/PredictionsApiController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `latest()`, `svc()`, `uid()`, `listMarkets()`, `createMarket()`, `placeOrder()`, `cancelOrder()`, `settle()`, `addLiquidity()`, `removeLiquidity()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `auth`, `mymipredictions`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: PublicPagesController
+- **Namespace:** `App\Modules\Public\Controllers`
+- **Path:** `app/Modules/Public/Controllers/PublicPagesController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `show()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('Learn/(:segment)', 'App\Modules\Public\Controllers\PublicPagesController::show/$1');`
+  - `app/Config/Routes.php` → `$routes->post('public-pages/import', 'App\Modules\APIs\Controllers\OpsPublicPagesController::import');`
+  - `app/Config/Routes.php` → `$routes->post('public-pages/run', 'App\Modules\APIs\Controllers\OpsPublicPagesController::run');`
+  - `app/Config/Routes.php` → `$routes->get('public-pages/report', 'App\Modules\APIs\Controllers\OpsPublicPagesController::report');`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** `App\\Modules\\Public\\Views\\pages\\container`
+
+## Controller: ScriptStudioController
+- **Namespace:** `App\Modules\ScriptStudio\Controllers`
+- **Path:** `app/Modules/ScriptStudio/Controllers/ScriptStudioController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `marketplace()`, `create()`, `store()`, `edit()`, `update()`, `preview()`, `export()`, `validateAndFormatInput()`, `generateSlug()`, `slugExists()`, `prepareScriptForForm()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('Marketplace', 'ScriptStudioController::marketplace');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'ScriptStudioController::index');`
+  - `app/Config/Routes.php` → `$routes->get('Marketplace', 'ScriptStudioController::marketplace');`
+  - `app/Config/Routes.php` → `$routes->get('Create', 'ScriptStudioController::create');`
+  - `app/Config/Routes.php` → `$routes->post('Store', 'ScriptStudioController::store');`
+  - `app/Config/Routes.php` → `$routes->get('Edit/(:num)', 'ScriptStudioController::edit/$1');`
+  - `app/Config/Routes.php` → `$routes->post('Update/(:num)', 'ScriptStudioController::update/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Preview/(:num)', 'ScriptStudioController::preview/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Export/(:num)/(:segment)', 'ScriptStudioController::export/$1/$2');`
+  - `app/Modules/ScriptStudio/Config/Routes.php` → `$routes->get('/', 'ScriptStudioController::index');`
+  - `app/Modules/ScriptStudio/Config/Routes.php` → `$routes->get('Marketplace', 'ScriptStudioController::marketplace');`
+  - `app/Modules/ScriptStudio/Config/Routes.php` → `$routes->get('Create', 'ScriptStudioController::create');`
+  - `app/Modules/ScriptStudio/Config/Routes.php` → `$routes->post('Store', 'ScriptStudioController::store');`
+  - `app/Modules/ScriptStudio/Config/Routes.php` → `$routes->get('Edit/(:num)', 'ScriptStudioController::edit/$1');`
+  - `app/Modules/ScriptStudio/Config/Routes.php` → `$routes->post('Update/(:num)', 'ScriptStudioController::update/$1');`
+  - `app/Modules/ScriptStudio/Config/Routes.php` → `$routes->get('Preview/(:num)', 'ScriptStudioController::preview/$1');`
+  - `app/Modules/ScriptStudio/Config/Routes.php` → `$routes->get('Export/(:num)/(:any)', 'ScriptStudioController::export/$1/$2');`
+- **Services/Libraries used:** None detected
+- **Models used:** `App\Modules\ScriptStudio\Models\ScriptModel`, `ScriptModel`
+- **View files used:** `App\\Modules\\ScriptStudio\\Views\\create_edit`, `App\\Modules\\ScriptStudio\\Views\\index`, `App\\Modules\\ScriptStudio\\Views\\marketplace`, `App\\Modules\\ScriptStudio\\Views\\preview_emulator`
+
+## Controller: SearchController
+- **Namespace:** `App\Modules\Search\Controllers`
+- **Path:** `app/Modules/Search/Controllers/SearchController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `api()`, `view()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/Search', 'SearchController::index');`
+  - `app/Config/Routes.php` → `$routes->get('/Search/(:segment)', 'SearchController::index/$1');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'SearchController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'SearchController::index');`
+- **Services/Libraries used:** `App\Services\SearchService`, `SearchService`
+- **Models used:** None detected
+- **View files used:** `App\Modules\Search\Views\index`
+
+## Controller: HealthController
+- **Namespace:** `App\Modules\Status\Controllers`
+- **Path:** `app/Modules/Status/Controllers/HealthController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `live()`, `ready()`, `deps()`, `depsJson()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('healthz', 'System\HealthController::healthz', ['as' => 'healthz']);`
+  - `app/Config/Routes.php` → `$routes->get('api/health', 'Api\\HealthController::index'); // convenient alias`
+  - `app/Config/Routes.php` → `$routes->get('healthz', 'System\HealthController::healthz');`
+  - `app/Config/Routes.php` → `$routes->get('diag',    'System\HealthController::diag');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Health', 'HealthController::index');              // /API/Health`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Health', 'HealthController::index');              // /API/Health`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: MetricsController
+- **Namespace:** `App\Modules\Status\Controllers`
+- **Path:** `app/Modules/Status/Controllers/MetricsController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `export()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: AccountSupportController
+- **Namespace:** `App\Modules\Support\Controllers`
+- **Path:** `app/Modules/Support/Controllers/AccountSupportController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `index()`, `resendActivation()`, `sendPasswordReset()`, `handleSupportAction()`, `respondGeneric()`, `respondFailure()`, `checkRateLimit()`, `hashEmail()`, `mailerTransport()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('Account', 'AccountSupportController::index');`
+  - `app/Config/Routes.php` → `$routes->post('resendActivation', 'AccountSupportController::resendActivation');`
+  - `app/Config/Routes.php` → `$routes->post('sendPasswordReset', 'AccountSupportController::sendPasswordReset');`
+  - `app/Config/Routes.php` → `$routes->get('help/account', 'App\\Modules\\Support\\Controllers\\AccountSupportController::index');`
+- **Services/Libraries used:** `activator`, `resetter`, `throttler`
+- **Models used:** `App\Models\UserModel`
+- **View files used:** None detected
+
+## Controller: Support
+- **Namespace:** `App\Modules\Support\Controllers`
+- **Path:** `app/Modules/Support/Controllers/Support.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `memberCustomerSupportRequest()`, `faq()`, `request()`, `response()`, `closeRequest()`, `renderPage()`, `getViewFileData()`, `getSiteSettings()`, `getPageTitle()`, `ensureSEOData()`, `render()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/Customer-Support', 'App\Modules\Support\Controllers\SupportController::index');`
+  - `app/Config/Routes.php` → `// $routes->get('/Support', 'DashboardController::support', ['as' => 'support']);`
+  - `app/Config/Routes.php` → `$routes->get('getSupport', 'ManagementAPIController::getSupport');`
+  - `app/Config/Routes.php` → `$routes->group('Support', function($routes) {`
+  - `app/Config/Routes.php` → `// $routes->group('Support', function($routes) {`
+  - `app/Config/Routes.php` → `$routes->group('Support', ['namespace' => 'App\Modules\Support\Controllers'], function($routes) {`
+  - `app/Config/Routes.php` → `$routes->get('Technical-Support', 'KnowledgebaseController::technicalSupport');`
+  - `app/Config/Routes.php` → `//     $routes->get('getSupport', 'ManagementController::getSupport');`
+  - `app/Config/Routes.php` → `// $routes->group('Management/Support', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Support', 'DashboardController::support', ['as' => 'support']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getSupport', 'ManagementController::getSupport');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->group('Support', function($routes) {`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->group('Support', ['namespace' => 'App\Modules\Support\Controllers'], function($routes) {`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Technical-Support', 'KnowledgebaseController::technicalSupport');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('getSupport', 'ManagementController::getSupport');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `// $routes->group('Management/Support', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {`
+- **Services/Libraries used:** `Config\Services`
+- **Models used:** `App\Models\SupportModel`, `SupportModel`
+- **View files used:** `themes/default/layouts/index`
+
+## Controller: SupportController
+- **Namespace:** `App\Modules\Support\Controllers`
+- **Path:** `app/Modules/Support/Controllers/SupportController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `view()`, `article()`, `discordOnboarding()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/Customer-Support', 'App\Modules\Support\Controllers\SupportController::index');`
+  - `app/Config/Routes.php` → `//     $routes->get('/', 'SupportController::index');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'SupportController::index');`
+  - `app/Config/Routes.php` → `$routes->get('Account', 'AccountSupportController::index');`
+  - `app/Config/Routes.php` → `$routes->post('resendActivation', 'AccountSupportController::resendActivation');`
+  - `app/Config/Routes.php` → `$routes->post('sendPasswordReset', 'AccountSupportController::sendPasswordReset');`
+  - `app/Config/Routes.php` → `$routes->get('Article/(:segment)', 'SupportController::article/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Discord', 'SupportController::discordOnboarding');`
+  - `app/Config/Routes.php` → `$routes->get('FAQ', 'SupportController::view/FAQ');`
+  - `app/Config/Routes.php` → `$routes->get('Feedback', 'SupportController::view/Feedback');`
+  - `app/Config/Routes.php` → `$routes->get('Test', 'SupportController::view/Test');`
+  - `app/Config/Routes.php` → `$routes->get('Test-Email', 'SupportController::view/Test-Email');`
+  - `app/Config/Routes.php` → `$routes->get('(:any)', 'SupportController::view/$1');`
+  - `app/Config/Routes.php` → `$routes->get('help/account', 'App\\Modules\\Support\\Controllers\\AccountSupportController::index');`
+  - `app/Config/Routes.php` → `//     $routes->get('/', 'SupportController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'SupportController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'SupportController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('FAQ', 'SupportController::faq');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Article/(:segment)', 'SupportController::article/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Feedback', 'SupportController::feedback');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Test', 'SupportController::test');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Test-Email', 'SupportController::sendTestEmail');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('/', 'SupportController::index');`
+- **Services/Libraries used:** None detected
+- **Models used:** `App\Models\{PageSEOModel`, `SubscribeModel`, `SupportModel`
+- **View files used:** None detected
+
+## Controller: SupportTicketController
+- **Namespace:** `App\Modules\Support\Controllers`
+- **Path:** `app/Modules/Support/Controllers/SupportTicketController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `index()`, `show()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('ticket/(:num)', 'SupportTicketController::show/$1');`
+- **Services/Libraries used:** None detected
+- **Models used:** `App\Modules\Support\Models\SupportTicketEventModel`, `App\Modules\Support\Models\SupportTicketModel`
+- **View files used:** `App\\Modules\\Support\\Views\\Support\\ticket_detail`, `App\\Modules\\Support\\Views\\index`
+
+## Controller: TemplateController
+- **Namespace:** `App\Modules\Template\Controllers`
+- **Path:** `app/Modules/Template/Controllers/TemplateController.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `index()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('Email-Templates/create', 'EmailTemplateController::create');`
+  - `app/Config/Routes.php` → `$routes->post('/Email-Templates/store', 'EmailTemplateController::store');`
+  - `app/Config/Routes.php` → `// $routes->get('Management/Marketing/Email-Templates', 'EmailTemplateController::index');`
+  - `app/Config/Routes.php` → `$routes->get('Email-Templates/create', 'EmailTemplateController::create');`
+  - `app/Config/Routes.php` → `$routes->post('/Email-Templates/store', 'EmailTemplateController::store');`
+  - `app/Config/Routes.php` → `//     // $routes->get('Management/Marketing/Email-Templates', 'EmailTemplateController::index');`
+  - `app/Config/Routes.php` → `//     $routes->get('Email-Templates/create', 'EmailTemplateController::create');`
+  - `app/Config/Routes.php` → `//     $routes->post('/Email-Templates/store', 'EmailTemplateController::store');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `// $routes->get('Management/Marketing/Email-Templates', 'EmailTemplateController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Email-Templates/create', 'EmailTemplateController::create');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('/Email-Templates/store', 'EmailTemplateController::store');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     // $routes->get('Management/Marketing/Email-Templates', 'EmailTemplateController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('Email-Templates/create', 'EmailTemplateController::create');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->post('/Email-Templates/store', 'EmailTemplateController::store');`
+- **Services/Libraries used:** None detected
+- **Models used:** None detected
+- **View files used:** `Template\\index`
+
+## Controller: AccountController
+- **Namespace:** `App\Modules\User\Controllers`
+- **Path:** `app/Modules/User/Controllers/AccountController.php`
+- **Classification:** `USER_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `createLinkToken()`, `exchangeToken()`, `index()`, `add()`, `copy()`, `accountManager()`, `accountOverview()`, `approveRecurringSchedule()`, `cancelAccount()`, `deleteAccount()`, `bulkUpdateStatus()`, `bulkDelete()`, `sessions()`, `revokeSession()`, `twoFactor()`, `enable2fa()`, `verify2fa()`, `disable2fa()`, `regenerateBackupCodes()`, `okJson()`, `failJson()`, `generateBackupCodes()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/Accounts/createLinkToken', 'AccountController::createLinkToken', ['as' => 'create-link-token']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Accounts/createLinkToken', 'AccountController::createLinkToken', ['as' => 'create-link-token']);`
+- **Services/Libraries used:** `AccountService`, `App\Services\{AccountService`, `Config\Services`, `authentication`, `request`
+- **Models used:** `App\Models\AccountsModel`, `App\Models\BudgetModel`, `App\Models\PlaidModel`, `App\Models\UserSessionModel`, `App\Models\UserTwoFactorModel`, `BudgetModel`
+- **View files used:** `App\\Modules\\User\\Views\\Account\\sessions`, `App\\Modules\\User\\Views\\Account\\twofactor`, `themes/dashboard/layouts/index`
+
+## Controller: AlertsController
+- **Namespace:** `App\Modules\User\Controllers`
+- **Path:** `app/Modules/User/Controllers/AlertsController.php`
+- **Classification:** `USER_CONTROLLER`
+- **Methods:** `initController()`, `getMyMIUser()`, `getMyMIBudget()`, `getMyMIDashboard()`, `getMyMIAdvisor()`, `getBudgetService()`, `getAccountService()`, `getSolanaService()`, `preview()`, `getGoalTrackingService()`, `commonData()`, `index()`, `trades()`, `filterAlerts()`, `viewAlert()`, `getUserAlerts()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('Alerts/Preview/(:segment)', 'AlertsController::preview/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Preview/Alert/(:segment)', 'AlertsController::preview/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Research', 'AlertsController::research');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], '/', 'AlertsController::index');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], '/Trades', 'AlertsController::trades');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'addTradeAlert', 'AlertsController::addTradeAlert');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'getFilteredAlerts', 'AlertsController::getFilteredAlerts');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'fetchEmailAlerts', 'AlertsController::fetchEmailAlerts');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'forceFetchEmails', 'AlertsController::forceFetchEmails');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'forceFetchTickers', 'AlertsController::forceFetchTickers');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'manageTradeAlert', 'AlertsController::manageTradeAlert');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'markAlertAsSentAndSendEmail/(:segment)', 'AlertsController::markAlertAsSentAndSendEmail/$1');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'updateTradeAlerts', 'AlertsController::updateTradeAlerts');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'processAlerts', 'AlertsController::processAlerts');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'processTradeAlerts', 'AlertsController::processTradeAlerts');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'sendAlert', 'AlertsController::sendAlert');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'sendDiscordAlerts', 'AlertsController::sendDiscordAlerts');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'sendDiscordAlertsBySymbol/(:segment)', 'AlertsController::sendDiscordAlertsBySymbol/$1');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'storeMarketingContent', 'AlertsController::storeMarketingContent');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'updateChartOverride', 'AlertsController::updateChartOverride');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'updateExchange', 'AlertsController::updateExchange');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'submitTradeAlert', 'AlertsController::submitTradeAlert');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'getTradeAlertDetails', 'AlertsController::getTradeAlertDetails');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'generateVoiceoverScript', 'AlertsController::generateVoiceoverScript');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'generateVoiceoverAndMarketingContent', 'AlertsController::generateVoiceoverAndMarketingContent');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'generateAndStoreVoiceover', 'AlertsController::generateAndStoreVoiceover');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'generateSocialMediaPosts', 'AlertsController::generateSocialMediaPosts');`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'postMarketingContentToSocials', 'AlertsController::postMarketingContentToSocials');`
+  - `app/Config/Routes.php` → `//     $routes->get('/', 'AlertsController::index');`
+  - `app/Config/Routes.php` → `//     $routes->get('Add/(:segment)', 'AlertsController::add');`
+  - `app/Config/Routes.php` → `//     $routes->get('addTradeAlert', 'AlertsController::addTradeAlert');`
+  - `app/Config/Routes.php` → `//     $routes->get('fetchData', 'AlertsController::fetchData');`
+  - `app/Config/Routes.php` → `//     $routes->get('Fetch/Ticker/(:segment)', 'AlertsController::fetchTickerDetails/$1');`
+  - `app/Config/Routes.php` → `//     $routes->get('Import/Tickers', 'AlertsController::importTickers');`
+  - `app/Config/Routes.php` → `//     $routes->get('Tasks/fetchAlerts', 'Management\AlertsController::fetchData');`
+  - `app/Config/Routes.php` → `//     $routes->get('Test', 'AlertsController::testEmail');`
+  - `app/Config/Routes.php` → `//     $routes->get('Test-Email', 'AlertsController::sendTestEmail');`
+  - `app/Config/Routes.php` → `//     $routes->get('Trades', 'AlertsController::trades');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'processBrokerEmails', 'AlertsController::processBrokerEmails');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'processAllEmails', 'AlertsController::processAllEmails');`
+  - `app/Config/Routes.php` → `$routes->get('previewScraper/(:num)', 'AlertsController::previewScraper/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'addTradeAlert', 'AlertsController::addTradeAlert');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'backfillCategories', 'AlertsController::backfillCategories');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'createTradeAlert/(:segment)', 'AlertsController::addTradeAlert');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'createTradeAlert', 'AlertsController::addTradeAlert');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'getFilteredAlerts', 'AlertsController::getFilteredAlerts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'fetchAutoGeneratedAnalysis', 'AlertsController::fetchAutoGeneratedAnalysis');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'fetchEmailAlerts', 'AlertsController::fetchEmailAlerts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'fetchMarketAuxNews/(:segment)', 'AlertsController::fetchMarketAuxNews/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'forceFetchEmails', 'AlertsController::forceFetchEmails');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'forceFetchTickers', 'AlertsController::forceFetchTickers');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('API/Alerts/generateAdvisorMediaFromAlert/(:num)', 'AlertsController::generateAdvisorMediaFromAlert/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('API/Alerts/generateAdvisorMediaFromAlert', 'AlertsController::generateAdvisorMediaFromAlert');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'generateNow', 'AlertsController::generateNow');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'generateTradeAlertSummary', 'AlertsController::generateTradeAlertSummary');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'getEmaComparison/(:segment)', 'AlertsController::getEmaComparison/1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'getFullMetrics', 'AlertsController::getFullMetrics');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'getLatestPrices', 'AlertsController::getLatestPrices');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'getTechnicalIndicators', 'AlertsController::getTechnicalIndicators');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'hideTradeAlert', 'AlertsController::hideTradeAlert');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'manageTradeAlert', 'AlertsController::manageTradeAlert');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'markAlertAsSentAndSendEmail/(:segment)', 'AlertsController::markAlertAsSentAndSendEmail/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'processAlerts', 'AlertsController::processAlerts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'processEmailAlerts', 'AlertsController::processEmailAlerts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'processTradeAlerts', 'AlertsController::processTradeAlerts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'processTradeBatch', 'AlertsController::processTradeBatch');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'sendAlert', 'AlertsController::sendAlert');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'sendDiscordAlerts', 'AlertsController::sendDiscordAlerts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'sendDiscordAlertsBySymbol/(:segment)', 'AlertsController::sendDiscordAlertsBySymbol/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'storeMarketingContent', 'AlertsController::storeMarketingContent');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'updateBatchPrices', 'AlertsController::updateBatchPrices');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'updateChartOverride', 'AlertsController::updateChartOverride');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'updateExchange', 'AlertsController::updateExchange');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'updateStatus/(:num)/(:any)', 'AlertsController::updateStatus/$1/$2s');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'updateTradeAlerts', 'AlertsController::updateTradeAlerts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'submitTradeAlert', 'AlertsController::submitTradeAlert');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'getTradeAlertDetails', 'AlertsController::getTradeAlertDetails');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'generateVoiceoverScript', 'AlertsController::generateVoiceoverScript');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'generateVoiceoverAndMarketingContent', 'AlertsController::generateVoiceoverAndMarketingContent');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'generateAndStoreVoiceover', 'AlertsController::generateAndStoreVoiceover');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'generateSocialMediaPosts', 'AlertsController::generateSocialMediaPosts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'postMarketingContentToSocials', 'AlertsController::postMarketingContentToSocials');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'gen-keys', 'AlertsController::genKeys'); // Robinhood API Library :: generate keys`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'sign', 'AlertsController::sign'); // Robinhood API Library :: sign`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'AlertsController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Add/(:segment)', 'AlertsController::add');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('addTradeAlert', 'AlertsController::addTradeAlert');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Advisor/Media', 'AlertsController::advisorMedia');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Crypto/(:segment)/(:segment)', 'Management\AlertsController::stockOverview/$1/$2');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Audit/Emails', 'AlertsController::auditEmailScraper');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('fetchData', 'AlertsController::fetchData');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Fetch/Ticker/(:segment)', 'AlertsController::fetchTickerDetails/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Import/Tickers', 'AlertsController::importTickers');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Stock/(:segment)/(:segment)', 'Management\AlertsController::stockOverview/$1/$2');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Tasks/fetchAlerts', 'Management\AlertsController::fetchData');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Test', 'AlertsController::test');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Test-Alert-Email', 'AlertsController::testEmail');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Test-Email', 'AlertsController::sendTestEmail');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Trades', 'AlertsController::trades');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Research', 'AlertsController::research');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], '/', 'AlertsController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'addTradeAlert', 'AlertsController::addTradeAlert');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'getFilteredAlerts', 'AlertsController::getFilteredAlerts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'fetchEmailAlerts', 'AlertsController::fetchEmailAlerts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'forceFetchEmails', 'AlertsController::forceFetchEmails');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'forceFetchTickers', 'AlertsController::forceFetchTickers');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'manageTradeAlert', 'AlertsController::manageTradeAlert');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'markAlertAsSentAndSendEmail/(:segment)', 'AlertsController::markAlertAsSentAndSendEmail/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'updateTradeAlerts', 'AlertsController::updateTradeAlerts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'processAlerts', 'AlertsController::processAlerts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'processTradeAlerts', 'AlertsController::processTradeAlerts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'sendAlert', 'AlertsController::sendAlert');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'sendDiscordAlerts', 'AlertsController::sendDiscordAlerts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'sendDiscordAlertsBySymbol/(:segment)', 'AlertsController::sendDiscordAlertsBySymbol/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'storeMarketingContent', 'AlertsController::storeMarketingContent');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'updateChartOverride', 'AlertsController::updateChartOverride');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'updateExchange', 'AlertsController::updateExchange');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'submitTradeAlert', 'AlertsController::submitTradeAlert');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'getTradeAlertDetails', 'AlertsController::getTradeAlertDetails');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'generateVoiceoverScript', 'AlertsController::generateVoiceoverScript');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'generateVoiceoverAndMarketingContent', 'AlertsController::generateVoiceoverAndMarketingContent');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'generateAndStoreVoiceover', 'AlertsController::generateAndStoreVoiceover');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'generateSocialMediaPosts', 'AlertsController::generateSocialMediaPosts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'postMarketingContentToSocials', 'AlertsController::postMarketingContentToSocials');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('/', 'AlertsController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('Add/(:segment)', 'AlertsController::add');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('addTradeAlert', 'AlertsController::addTradeAlert');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('fetchData', 'AlertsController::fetchData');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('Fetch/Ticker/(:segment)', 'AlertsController::fetchTickerDetails/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('Import/Tickers', 'AlertsController::importTickers');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('Tasks/fetchAlerts', 'Management\AlertsController::fetchData');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('Test', 'AlertsController::testEmail');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('Test-Email', 'AlertsController::sendTestEmail');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('Trades', 'AlertsController::trades');`
+- **Services/Libraries used:** `AccountService`, `App\Services\{
+    UserService`, `BudgetService`, `Config\Services`, `GoalTrackingService`, `SolanaService`, `UserService`, `authentication`, `myMIUser`, `mymialerts`, `request`
+- **Models used:** `AlertsModel`, `App\Models\{AlertsModel`, `BudgetModel`
+- **View files used:** None detected
+
+## Controller: AuctionsController
+- **Namespace:** `App\Modules\User\Controllers`
+- **Path:** `app/Modules/User/Controllers/AuctionsController.php`
+- **Classification:** `USER_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `item()`, `create()`, `bid()`, `poll()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'AuctionsController::index');`
+  - `app/Config/Routes.php` → `$routes->get('Item/(:num)', 'AuctionsController::item/$1');`
+  - `app/Config/Routes.php` → `$routes->post('Create', 'AuctionsController::create');`
+  - `app/Config/Routes.php` → `$routes->post('Bid/(:num)', 'AuctionsController::bid/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Poll/(:num)', 'AuctionsController::poll/$1');`
+- **Services/Libraries used:** `curlrequest`
+- **Models used:** `App\Models\{AuctionBidModel`, `AuctionBidModel`, `AuctionItemModel`, `AuctionLotModel`
+- **View files used:** None detected
+
+## Controller: BudgetController
+- **Namespace:** `App\Modules\User\Controllers`
+- **Path:** `app/Modules/User/Controllers/BudgetController.php`
+- **Classification:** `USER_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `ensureCommonDataReady()`, `commonData()`, `index()`, `thisMonth()`, `lastMonth()`, `nextMonth()`, `renderMonthlyPeriod()`, `normalizeBudgetFilterType()`, `accountManager()`, `resolveAuthenticatedUserId()`, `respondUnauthorized()`, `respondSuccess()`, `respondFailure()`, `respondNotReady()`, `currentTimestamp()`, `sanitizeCurrency()`, `defaultDueDate()`, `logSecurityEvent()`, `logException()`, `rememberUserData()`, `accountOverview()`, `add()`, `approveRecurringSchedule()`, `approveRecurringScheduleOld()`, `bulkDelete()`, `bulkUpdateStatus()`, `cancelAccount()`, `deleteAccount()`, `details()`, `edit()`, `financialAnalysis()`, `financialForecaster()`, `forecast()`, `inlineBuildForecast()`, `summary()`, `credit()`, `available()`, `repayment()`, `categories()`, `transactions()`, `goals()`, `insights()`, `trends()`, `netWorth()`, `cashFlow()`, `budgets()`, `savingsGoals()`, `investmentAccounts()`, `linkedAccounts()`, `addLinkedAccount()`, `removeLinkedAccount()`, `refreshLinkedAccount()`, `forecastBudget()`, `getUserBudgetRecords()`, `getUserAvailableBalances()`, `getUserCreditBalances()`, `getUserRepaymentSummary()`, `add()`, `history()`, `paid()`, `recurringSchedule()`, `recurringSchedule()`, `add()`, `settings()`, `unpaid()`, `safeDateFormat()`
+- **Route references:**
+  - `app/Config/Routes.php` → `// $routes->get('Dashboard', 'App\\Modules\\User\\Controllers\\BudgetController::index', ['filter' => 'login']);`
+  - `app/Config/Routes.php` → `// $routes->get('/Budget', 'BudgetController::index', ['as' => 'budget']);`
+  - `app/Config/Routes.php` → `$routes->get('trends', 'BudgetController::trends');`
+  - `app/Config/Routes.php` → `$routes->get('net-worth', 'BudgetController::netWorth');`
+  - `app/Config/Routes.php` → `$routes->get('cash-flow', 'BudgetController::cashFlow');`
+  - `app/Config/Routes.php` → `$routes->get('budgets', 'BudgetController::budgets');`
+  - `app/Config/Routes.php` → `// $routes->get('Budget', 'BudgetController::index', ['namespace' => 'App\Modules\User\Controllers', 'filter' => 'login']);`
+  - `app/Config/Routes.php` → `$routes->get('/', 'BudgetController::index');`
+  - `app/Config/Routes.php` → `$routes->get('Search/(:any)', 'BudgetController::index');`
+  - `app/Config/Routes.php` → `$routes->get('This-Month', 'BudgetController::thisMonth');`
+  - `app/Config/Routes.php` → `$routes->get('This-Month/(:segment)', 'BudgetController::thisMonth/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Last-Month', 'BudgetController::lastMonth');`
+  - `app/Config/Routes.php` → `$routes->get('Last-Month/(:segment)', 'BudgetController::lastMonth/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Next-Month', 'BudgetController::nextMonth');`
+  - `app/Config/Routes.php` → `$routes->get('Next-Month/(:segment)', 'BudgetController::nextMonth/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Account-Manager', 'BudgetController::accountManager');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Add', 'BudgetController::add');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Add/(:segment)', 'BudgetController::add/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Approve-Recurring-Schedule/(:num)', 'BudgetController::approveRecurringSchedule/$1');`
+  - `app/Config/Routes.php` → `// $routes->post('Approve-Recurring-Schedule/(:num)', 'BudgetController::approveRecurringSchedule/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Cancel-Account/(:segment)', 'BudgetController::cancelAccount/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Copy', 'BudgetController::edit');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Copy/(:segment)', 'BudgetController::edit/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Delete-Account', 'BudgetController::deleteAccount');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Delete-Account/(:segment)', 'BudgetController::deleteAccount/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Details', 'BudgetController::details');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Details/(:segment)', 'BudgetController::details/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Edit', 'BudgetController::edit');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Edit/(:segment)', 'BudgetController::edit/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Edit/(:segment)/(:segment)', 'BudgetController::edit/$1/$2');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Expenses', 'BudgetController::accountOverview');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Financial-Analysis', 'BudgetController::financialAnalysis');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Financial-Forecaster', 'BudgetController::financialForecaster');`
+  - `app/Config/Routes.php` → `$routes->get('Forecast', 'BudgetController::forecast');                   // /Budget/Forecast  (defaults to 1y)`
+  - `app/Config/Routes.php` → `$routes->get('Forecast/(:segment)', 'BudgetController::forecast/$1');     // /Budget/Forecast/{1y|5y|10y|15y|30y|<months>}`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'History', 'BudgetController::history');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'History/(:segment)', 'BudgetController::history');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Income', 'BudgetController::accountOverview');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Recurring-Account/Schedule', 'BudgetController::recurringSchedule/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Recurring-Account/Schedule/(:segment)', 'BudgetController::recurringSchedule/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Recurring-Account/Edit/(:segment)', 'BudgetController::edit/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Settings/(:segment)', 'BudgetController::settings/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Status/Paid/(:segment)', 'BudgetController::paid/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Status/Unpaid/(:segment)', 'BudgetController::unpaid/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `// $routes->get('/Budget', 'BudgetController::index', ['as' => 'budget']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'BudgetController::index', ['as' => 'dashboard']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], '/', 'BudgetController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Search/(:any)', 'BudgetController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Account-Manager', 'BudgetController::accountManager');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Add', 'BudgetController::add');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Add/(:segment)', 'BudgetController::add/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Approve-Recurring-Schedule/(:num)', 'BudgetController::approveRecurringSchedule/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `// $routes->post('Approve-Recurring-Schedule/(:num)', 'BudgetController::approveRecurringSchedule/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Cancel-Account/(:segment)', 'BudgetController::cancelAccount/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Copy', 'BudgetController::edit');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Copy/(:segment)', 'BudgetController::edit/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Delete-Account', 'BudgetController::deleteAccount');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Delete-Account/(:segment)', 'BudgetController::deleteAccount/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Details', 'BudgetController::details');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Details/(:segment)', 'BudgetController::details/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Edit', 'BudgetController::edit');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Edit/(:segment)', 'BudgetController::edit/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Edit/(:segment)/(:segment)', 'BudgetController::edit/$1/$2');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Expenses', 'BudgetController::accountOverview');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Financial-Analysis', 'BudgetController::financialAnalysis');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Financial-Forecaster', 'BudgetController::financialForecaster');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Forecast', 'BudgetController::forecast');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Forecast/(:segment)', 'BudgetController::forecast/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'History', 'BudgetController::history');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'History/(:segment)', 'BudgetController::history');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Income', 'BudgetController::accountOverview');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Recurring-Account/Schedule', 'BudgetController::recurringSchedule/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Recurring-Account/Schedule/(:segment)', 'BudgetController::recurringSchedule/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Recurring-Account/Edit/(:segment)', 'BudgetController::edit/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Settings/(:segment)', 'BudgetController::settings/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Status/Paid/(:segment)', 'BudgetController::paid/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Status/Unpaid/(:segment)', 'BudgetController::unpaid/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getUserBudgetRecords', 'BudgetController::getUserBudgetRecords');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getUserCreditBalances', 'BudgetController::getUserCreditBalances');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getUserAvailableBalances', 'BudgetController::getUserAvailableBalances');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getUserRepaymentSummary', 'BudgetController::getUserRepaymentSummary');`
+- **Services/Libraries used:** `AccountService`, `App\Services\{AccountService`, `BudgetService`, `Config\Services`, `DashboardService`, `GoalTrackingService`, `MarketingService`, `SolanaService`, `UserService`, `authentication`, `logger`, `request`, `safeCache`, `setupStatusService`, `solanaService`
+- **Models used:** `AccountsModel`, `App\Models\{AccountsModel`, `BudgetModel`
+- **View files used:** None detected
+
+## Controller: DashboardController
+- **Namespace:** `App\Modules\User\Controllers`
+- **Path:** `app/Modules/User/Controllers/DashboardController.php`
+- **Classification:** `USER_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `resolveCuID()`, `solanaAddressForUser()`, `index()`, `getForecastHighlights()`, `account()`, `activity()`, `billing()`, `checkOnboardingStatus()`, `completeOnboardingStep()`, `connectedAccounts()`, `generatePromotionalMessage()`, `goals()`, `loadingScreen()`, `loadModalContent()`, `notifications()`, `onboarding()`, `continueSetupModal()`, `dismissSetup()`, `performance()`, `profile()`, `profile()`, `schedule()`, `scrapeAndGenerateContent()`, `search()`, `security()`, `socialMedia()`, `support()`, `userAccountData()`, `findAccountRowForEdit()`, `buildEditFieldData()`, `currentUserId()`, `extractBase58Address()`, `loadEmailScraperAuditHealth()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/Profile', 'App\Modules\User\Controllers\DashboardController::profile', ['filter' => 'login']);`
+  - `app/Config/Routes.php` → `$routes->get('/Account', 'DashboardController::account', ['as' => 'account']);`
+  - `app/Config/Routes.php` → `$routes->get('/Account/Activity', 'DashboardController::activity', ['as' => 'activity']);`
+  - `app/Config/Routes.php` → `$routes->get('/Account/Billing', 'DashboardController::billing', ['as' => 'billing']);`
+  - `app/Config/Routes.php` → `$routes->get('/Account/Connected-Accounts', 'DashboardController::connectedAccounts', ['as' => 'connected-accounts']);`
+  - `app/Config/Routes.php` → `$routes->get('/Account/Notifications', 'DashboardController::notifications', ['as' => 'notifications']);`
+  - `app/Config/Routes.php` → `$routes->get('/Account/Security', 'DashboardController::Security', ['as' => 'security']);`
+  - `app/Config/Routes.php` → `$routes->get('/Account/Social-Media', 'DashboardController::SocialMedia', ['as' => 'social-media']);`
+  - `app/Config/Routes.php` → `// $routes->get('/Profile', 'DashboardController::profile', ['as' => 'profile']);`
+  - `app/Config/Routes.php` → `$routes->get('/Profile/(:segment)', 'DashboardController::profile/$1', ['as' => 'profile']);`
+  - `app/Config/Routes.php` → `$routes->get('/Performance', 'DashboardController::performance', ['as' => 'performance']);`
+  - `app/Config/Routes.php` → `$routes->get('/Schedule', 'DashboardController::schedule', ['as' => 'schedule']);`
+  - `app/Config/Routes.php` → `// $routes->get('/Support', 'DashboardController::support', ['as' => 'support']);`
+  - `app/Config/Routes.php` → `$routes->get('/MyMI-Gold/Goals/(:segment)', 'DashboardController::goals', ['as' => 'mymi-gold-daily-goals']);`
+  - `app/Config/Routes.php` → `// $routes->get('/MyMI-Gold/Goals/Daily', 'DashboardController::goals', ['as' => 'mymi-gold-daily-goals']);`
+  - `app/Config/Routes.php` → `// $routes->get('/MyMI-Gold/Goals/Weekly', 'DashboardController::goals', ['as' => 'mymi-gold-weekly-goals']);`
+  - `app/Config/Routes.php` → `// $routes->get('/MyMI-Gold/Goals/Monthly', 'DashboardController::goals', ['as' => 'mymi-gold-monthly-goals']);`
+  - `app/Config/Routes.php` → `$routes->get('/', 'DashboardController::index', ['as' => 'dashboard']);`
+  - `app/Config/Routes.php` → `$routes->get('Transaction-Modal/(:segment)', 'DashboardController::loadModalContent/$1', ['as' => 'load-modal-1-segment']);`
+  - `app/Config/Routes.php` → `$routes->get('Transaction-Modal/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2', ['as' => 'load-modal-2-segment']);`
+  - `app/Config/Routes.php` → `$routes->get('Transaction-Modal/(:segment)/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2/$3', ['as' => 'load-modal-3-segment']);`
+  - `app/Config/Routes.php` → `$routes->get('Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2/$3/$4', ['as' => 'load-modal-4-segment']);`
+  - `app/Config/Routes.php` → `$routes->get('Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2/$3/$4/$5', ['as' => 'load-modal-5-segment']);`
+  - `app/Config/Routes.php` → `$routes->get('Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2/$3/$4/$5/$6', ['as' => 'load-modal-6-segment']);`
+  - `app/Config/Routes.php` → `$routes->get('LoadingScreen', 'DashboardController::LoadingScreen', ['as' => 'loading-screen']);`
+  - `app/Config/Routes.php` → `$routes->get('onboarding', 'DashboardController::onboarding', ['as' => 'onboarding']);`
+  - `app/Config/Routes.php` → `$routes->get('checkOnboardingStatus', 'DashboardController::checkOnboardingStatus', ['as' => 'check-onboarding-status']);`
+  - `app/Config/Routes.php` → `$routes->post('completeOnboardingStep/(:segment)', 'DashboardController::completeOnboardingStep/$1', ['as' => 'complete-onboarding-step']);`
+  - `app/Config/Routes.php` → `$routes->get('continue-setup-modal', 'DashboardController::continueSetupModal', ['as' => 'continue-setup-modal']);`
+  - `app/Config/Routes.php` → `$routes->post('setup/dismiss', 'DashboardController::dismissSetup', ['as' => 'setup-dismiss']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Account', 'DashboardController::account', ['as' => 'account']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Account/Activity', 'DashboardController::activity', ['as' => 'activity']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Account/Billing', 'DashboardController::billing', ['as' => 'billing']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Account/Connected-Accounts', 'DashboardController::connectedAccounts', ['as' => 'connected-accounts']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Account/Notifications', 'DashboardController::notifications', ['as' => 'notifications']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Account/Security', 'DashboardController::Security', ['as' => 'security']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Account/Social-Media', 'DashboardController::SocialMedia', ['as' => 'social-media']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `// $routes->get('/Profile', 'DashboardController::profile', ['as' => 'profile']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Profile/(:segment)', 'DashboardController::profile/$1', ['as' => 'profile']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Performance', 'DashboardController::performance', ['as' => 'performance']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Schedule', 'DashboardController::schedule', ['as' => 'schedule']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Support', 'DashboardController::support', ['as' => 'support']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/MyMI-Gold/Goals/(:segment)', 'DashboardController::goals', ['as' => 'mymi-gold-daily-goals']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `// $routes->get('/MyMI-Gold/Goals/Daily', 'DashboardController::goals', ['as' => 'mymi-gold-daily-goals']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `// $routes->get('/MyMI-Gold/Goals/Weekly', 'DashboardController::goals', ['as' => 'mymi-gold-weekly-goals']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `// $routes->get('/MyMI-Gold/Goals/Monthly', 'DashboardController::goals', ['as' => 'mymi-gold-monthly-goals']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Transaction-Modal/(:segment)', 'DashboardController::loadModalContent/$1', ['as' => 'load-modal-1-segment']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Transaction-Modal/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2', ['as' => 'load-modal-2-segment']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Transaction-Modal/(:segment)/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2/$3', ['as' => 'load-modal-3-segment']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2/$3/$4', ['as' => 'load-modal-4-segment']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2/$3/$4/$5', ['as' => 'load-modal-5-segment']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2/$3/$4/$5/$6', ['as' => 'load-modal-6-segment']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('LoadingScreen', 'DashboardController::LoadingScreen', ['as' => 'loading-screen']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('onboarding', 'DashboardController::onboarding', ['as' => 'onboarding']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('checkOnboardingStatus', 'DashboardController::checkOnboardingStatus', ['as' => 'check-onboarding-status']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('completeOnboardingStep/(:segment)', 'DashboardController::completeOnboardingStep/$1', ['as' => 'complete-onboarding-step']);`
+- **Services/Libraries used:** `AccountService`, `App\Services\Ops\EnvDoctorService`, `App\Services\UserService`, `App\Services\{AccountService`, `BudgetService`, `Config\Services`, `DashboardService`, `EmailService`, `EnvDoctorService`, `MyMIMarketing`, `OnboardingProgressService`, `SolanaService`, `UserService`, `authentication`, `eventTracker`, `logger`, `myMISolana`, `mymiForecaster`, `onboardingProgressService`, `request`, `setupStatusService`, `solanaService`
+- **Models used:** `AccountsModel`, `AlertsModel`, `App\Models\MarketingModel`, `App\Models\WalletModel`, `App\Models\{AccountsModel`, `DashboardModel`, `DiscordLinkModel`, `MarketingModel`, `Myth\Auth\Authorization\GroupModel`, `SolanaModel`, `UserModel`
+- **View files used:** `UserModule\Views\Setup\continue_setup_modal`
+
+## Controller: EconomyController
+- **Namespace:** `App\Modules\User\Controllers`
+- **Path:** `app/Modules/User/Controllers/EconomyController.php`
+- **Classification:** `USER_CONTROLLER`
+- **Methods:** `initController()`, `dashboardWidget()`, `latest()`, `updateAll()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('Economy/latest', 'EconomyController::latest');`
+  - `app/Config/Routes.php` → `$routes->get('Widget', 'EconomyController::dashboardWidget', ['filter' => 'login']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'update_all', 'EconomyController::updateAll');`
+- **Services/Libraries used:** `App\Libraries\EconomicDataService`, `EconomicDataService`
+- **Models used:** None detected
+- **View files used:** `Investments/economy_widget`
+
+## Controller: EmailController
+- **Namespace:** `App\Modules\User\Controllers`
+- **Path:** `app/Modules/User/Controllers/EmailController.php`
+- **Classification:** `USER_CONTROLLER`
+- **Methods:** `sendVerification()`, `verifyToken()`, `ok()`, `fail()`, `forbid()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'EmailController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('autoScheduleDraftCampaigns', 'EmailController::autoScheduleDraftCampaigns');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('cloneCampaign/(:num)', 'EmailController::cloneCampaign/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('createDraftCampaign', 'EmailController::createDraftCampaign');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('scheduleCampaignApi/(:num)', 'EmailController::scheduleCampaignApi/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('cancelScheduledCampaign/(:num)', 'EmailController::cancelScheduledCampaign/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->delete('deleteCampaign/(:num)', 'EmailController::deleteCampaign/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('fetchCampaignAnalytics', 'EmailController::fetchCampaignAnalytics');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('fetchQueuedEmails', 'EmailController::fetchQueuedEmails');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('fetchQueuedEmailById/(:num)', 'EmailController::fetchQueuedEmailById/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getAllCampaigns', 'EmailController::getAllCampaigns');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getCampaignMetrics/(:num)', 'EmailController::getCampaignMetrics/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getCampaignStats/(:num)', 'EmailController::getCampaignStats/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getEmailQueueStats', 'EmailController::getEmailQueueStats');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getEmailQueueTrend', 'EmailController::getEmailQueueTrend');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('processScheduledCampaigns', 'EmailController::processScheduledCampaigns');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('sendMassTestCampaign', 'EmailController::sendMassTestCampaign');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('trackBounceWebhook', 'EmailController::trackBounceWebhook');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('unsubscribe/(:any)', 'EmailController::unsubscribe/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'EmailController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('addMember', 'EmailController::addMember');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('autoScheduleDrafts', 'EmailController::autoScheduleDrafts');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('autoScheduleLogs', 'EmailController::autoScheduleLogs');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('campaigns', 'EmailController::campaigns');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('campaignStats/(:num)', 'EmailController::campaignStats/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('createList', 'EmailController::createList');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('editCampaign/(:num)', 'EmailController::editCampaign/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('previewQueuedEmail/(:num)', 'EmailController::previewQueuedEmail/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('queued', 'EmailController::queued');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('sendCampaign', 'EmailController::sendCampaign');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('scheduleCampaign/(:num)', 'EmailController::scheduleCampaign/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('scheduleCampaignSubmit/(:num)', 'EmailController::scheduleCampaignSubmit/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('updateCampaign/(:num)', 'EmailController::updateCampaign/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'EmailController::index');`
+- **Services/Libraries used:** `mailService`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: InstitutesController
+- **Namespace:** `App\Modules\User\Controllers`
+- **Path:** `app/Modules/User/Controllers/InstitutesController.php`
+- **Classification:** `USER_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `register()`, `view()`, `edit()`, `delete()`, `filterBySpecialty()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], '/', 'InstitutesController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], '/', 'InstitutesController::index');`
+- **Services/Libraries used:** `Config\Services`, `authentication`
+- **Models used:** `App\Models\{AccountsModel`, `BudgetModel`, `InstitutesModel`, `Myth\Auth\Authorization\GroupModel`, `UserModel`
+- **View files used:** None detected
+
+## Controller: InvestmentsController
+- **Namespace:** `App\Modules\User\Controllers`
+- **Path:** `app/Modules/User/Controllers/InvestmentsController.php`
+- **Classification:** `USER_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `forecastModal()`, `buildForecastDetailsPayload()`, `decodeIndicators()`, `getForecastDetails()`, `getConfidenceHeatmap()`, `getForecastAccuracySummary()`, `getForecastHighlights()`, `reforecastTicker()`, `userAccountData()`, `index()`, `add()`, `squeezes()`, `resolveSubViewPath()`, `joinViewPath()`, `addWatchlist()`, `edit()`, `deleteTrade()`, `retirement()`, `services()`, `sharePortfolio()`, `tradeTracker()`, `fetchRealTimeData()`, `accountManager()`, `processInvestment()`, `validateTradeInput()`, `computeTradeData()`, `loadDynamicData()`, `save()`, `assessment()`, `trackInvestmentReturns()`, `getUserInvestmentSummary()`, `getInvestmentPerformance()`, `analyzeUserPortfolio()`, `getSymbolsByTradeType()`, `dynamicRiskAssessment()`, `getCustomAlerts()`, `getMarketNews()`, `getUserWatchlist()`, `setCustomAlert()`, `retirementPlanner()`, `manageTrades()`, `validateSaveRequest()`, `saveInvestmentData()`, `getTradeData()`, `saveTradeData()`, `validateTradeInput()`, `prepareTradeData()`, `exportExcel()`
+- **Route references:**
+  - `app/Config/Routes.php` → `// $routes->get('/Investments', 'InvestmentsController::index', ['as' => 'investments']);`
+  - `app/Config/Routes.php` → `// $routes->match(['GET', 'POST'], '/', 'InvestmentsController::tradeTracker');`
+  - `app/Config/Routes.php` → `$routes->get('/Trade-Tracker', 'InvestmentsController::tradeTracker', ['as' => 'mymi-trade-tracker']);`
+  - `app/Config/Routes.php` → `$routes->get('/Trade-Tracker/getTradeData', 'InvestmentsController::getTradeData', ['as' => 'get-trade-tracker-data']);`
+  - `app/Config/Routes.php` → `$routes->post('/Trade-Tracker/saveTradeData', 'InvestmentsController::saveTradeData', ['as' => 'save-trade-tracker-data']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'My-Investments', 'InvestmentsController::index');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'My-Trades', 'InvestmentsController::index');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], '/', 'InvestmentsController::index');`
+  - `app/Config/Routes.php` → `$routes->get('forecastModal/(:segment)', 'InvestmentsController::forecastModal/$1');`
+  - `app/Config/Routes.php` → `$routes->post('Account-Manager', 'InvestmentsController::accountManager'); // Account Manager to handle adding, editing, deleting Investments Records to/from Database`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Add', 'InvestmentsController::add'); // Add New Investment Records to Database`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Add/(:segment)', 'InvestmentsController::add'); // Add New Investment Records to Database`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Autosave', 'InvestmentsController::autoSave');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Overview', 'InvestmentsController::overview');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Retirement', 'InvestmentsController::retirement');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Save', 'InvestmentsController::save'); // Save Investment Record Data to Database`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Services', 'InvestmentsController::services');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Squeezes', 'InvestmentsController::squeezes');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Test', 'InvestmentsController::test');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Watchlist', 'InvestmentsController::watchlist');`
+  - `app/Config/Routes.php` → `$routes->get('Crypto-Overview', 'InvestmentsController::cryptoOverview');`
+  - `app/Config/Routes.php` → `$routes->get('Economic-Data', 'InvestmentsController::economicData');`
+  - `app/Config/Routes.php` → `$routes->get('Market-News', 'InvestmentsController::marketNews');`
+  - `app/Config/Routes.php` → `$routes->get('MyMI-News', 'InvestmentsController::MyMINews');`
+  - `app/Config/Routes.php` → `$routes->get('MyMI-Research', 'InvestmentsController::MyMIResearch');`
+  - `app/Config/Routes.php` → `$routes->get('Stock-Overview', 'InvestmentsController::stockOverview');`
+  - `app/Config/Routes.php` → `$routes->get('GetUserWatchlist/(:segment)', 'InvestmentsController::getUserWatchlist/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `// $routes->get('/Investments', 'InvestmentsController::index', ['as' => 'investments']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `// $routes->match(['GET', 'POST'], '/', 'InvestmentsController::tradeTracker');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Trade-Tracker', 'InvestmentsController::tradeTracker', ['as' => 'mymi-trade-tracker']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Trade-Tracker/getTradeData', 'InvestmentsController::getTradeData', ['as' => 'get-trade-tracker-data']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('/Trade-Tracker/saveTradeData', 'InvestmentsController::saveTradeData', ['as' => 'save-trade-tracker-data']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'addNewTradeToWatchlist', 'InvestmentsController::addNewTradeToWatchlist');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('fetchWatchlistPrices/(:any)', 'InvestmentsController::fetchWatchlistPrices/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getInvestmentData/(:segment)', 'InvestmentsController::getInvestmentData/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('GetUserWatchlist/(:any)', 'InvestmentsController::getUserWatchlist/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('GetUserWatchlist/(:any)', 'InvestmentsController::getUserWatchlist/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('refreshActiveTradesPrices/(:any)', 'InvestmentsController::refreshActiveTradesPrices/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getSymbolsByTradeType/(:segment)', 'InvestmentsController::getSymbolsByTradeType/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('getInvestmentData/(:segment)', 'InvestmentsController::getInvestmentData/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'My-Investments', 'App\Modules\User\Controllers\InvestmentsController::index', ['filter' => 'login']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'My-Trades', 'App\Modules\User\Controllers\InvestmentsController::index', ['filter' => 'login']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], '/', 'InvestmentsController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Account-Manager', 'InvestmentsController::accountManager'); // Account Manager to handle adding, editing, deleting Investments Records to/from Database`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Add', 'InvestmentsController::add'); // Add New Investment Records to Database`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Add/(:segment)', 'InvestmentsController::add'); // Add New Investment Records to Database`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Autosave', 'InvestmentsController::autoSave');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Overview', 'InvestmentsController::overview');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Retirement', 'InvestmentsController::retirement');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Save', 'InvestmentsController::save'); // Save Investment Record Data to Database`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Services', 'InvestmentsController::services');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Test', 'InvestmentsController::test');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Watchlist', 'InvestmentsController::watchlist');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Crypto-Overview', 'InvestmentsController::cryptoOverview');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Economic-Data', 'InvestmentsController::economicData');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Market-News', 'InvestmentsController::marketNews');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('MyMI-News', 'InvestmentsController::MyMINews');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('MyMI-Research', 'InvestmentsController::MyMIResearch');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Stock-Overview', 'InvestmentsController::stockOverview');`
+- **Services/Libraries used:** `App\Services\ForecastAccuracyEvaluator`, `App\Services\ForecastAggregationService`, `App\Services\{BudgetService`, `BudgetService`, `Config\Services`, `DashboardService`, `GoalTrackingService`, `InvestmentService`, `MyMIUser`, `SolanaService`, `UserService`, `WalletService`, `authentication`, `curlrequest`, `forecastAccuracyEvaluator`, `forecastAggregation`, `logger`, `mymiForecaster`, `request`, `solanaService`
+- **Models used:** `AccountsModel`, `AlertsModel`, `App\Models\AccountsModel`, `App\Models\InvestmentModel`, `App\Models\{AccountsModel`, `BudgetModel`, `InvestmentForecastAccuracyModel`, `InvestmentForecastHistoryModel`, `InvestmentModel`, `InvestmentPriceForecastModel`, `MarketingModel`, `MgmtBudgetModel`, `MyMIGoldModel`, `Myth\Auth\Authorization\GroupModel`, `UserModel`, `WalletModel`
+- **View files used:** `Investments/forecast_detail_modal`
+
+## Controller: KnowledgebaseController
+- **Namespace:** `App\Modules\User\Controllers`
+- **Path:** `app/Modules/User/Controllers/KnowledgebaseController.php`
+- **Classification:** `USER_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `show()`, `accountBilling()`, `assets()`, `gettingStarted()`, `integratingWallets()`, `investorProfile()`, `KYCVerification()`, `partnerships()`, `promotedArticles()`, `technicalSupport()`, `tradeTracker()`, `tutorials()`, `typesOfAccounts()`, `ensureSEOData()`, `normalizeSlug()`, `respondWithRendered()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'KnowledgebaseController::index');`
+  - `app/Config/Routes.php` → `$routes->get('Account-And-Billing', 'KnowledgebaseController::accountBilling');`
+  - `app/Config/Routes.php` → `$routes->get('Assets', 'KnowledgebaseController::assets');`
+  - `app/Config/Routes.php` → `// $routes->get('Getting-Started', 'KnowledgebaseController::gettingStarted');`
+  - `app/Config/Routes.php` → `$routes->get('Integrating-Wallets', 'KnowledgebaseController::integratingWallets');`
+  - `app/Config/Routes.php` → `$routes->get('Investor-Profile', 'KnowledgebaseController::investorProfile');`
+  - `app/Config/Routes.php` → `$routes->get('KYC-Verification', 'KnowledgebaseController::KYCVerification');`
+  - `app/Config/Routes.php` → `$routes->get('MyMI-Partnerships', 'KnowledgebaseController::partnerships');`
+  - `app/Config/Routes.php` → `$routes->get('Promoted-Articles', 'KnowledgebaseController::promotedArticles');`
+  - `app/Config/Routes.php` → `$routes->get('Technical-Support', 'KnowledgebaseController::technicalSupport');`
+  - `app/Config/Routes.php` → `$routes->get('Trade-Tracker', 'KnowledgebaseController::tradeTracker');`
+  - `app/Config/Routes.php` → `$routes->get('Tutorials', 'KnowledgebaseController::tutorials');`
+  - `app/Config/Routes.php` → `$routes->get('Types-Of-Accounts', 'KnowledgebaseController::typesOfAccounts');`
+  - `app/Config/Routes.php` → `$routes->get('(:any)', 'KnowledgebaseController::show/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'KnowledgebaseController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Account-And-Billing', 'KnowledgebaseController::accountBilling');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Assets', 'KnowledgebaseController::assets');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `// $routes->get('Getting-Started', 'KnowledgebaseController::gettingStarted');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Integrating-Wallets', 'KnowledgebaseController::integratingWallets');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Investor-Profile', 'KnowledgebaseController::investorProfile');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('KYC-Verification', 'KnowledgebaseController::KYCVerification');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('MyMI-Partnerships', 'KnowledgebaseController::partnerships');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Promoted-Articles', 'KnowledgebaseController::promotedArticles');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Technical-Support', 'KnowledgebaseController::technicalSupport');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Trade-Tracker', 'KnowledgebaseController::tradeTracker');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Tutorials', 'KnowledgebaseController::tutorials');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Types-Of-Accounts', 'KnowledgebaseController::typesOfAccounts');`
+- **Services/Libraries used:** `Config\Services`, `authentication`
+- **Models used:** `App\Models\{DashboardModel`, `ExchangeModel`, `Myth\Auth\Authorization\GroupModel`, `PageSEOModel`, `PublicModel`, `SubscribeModel`
+- **View files used:** `errors/html/error_404`
+
+## Controller: OnboardingController
+- **Namespace:** `App\Modules\User\Controllers`
+- **Path:** `app/Modules/User/Controllers/OnboardingController.php`
+- **Classification:** `USER_CONTROLLER`
+- **Methods:** `get()`, `mark()`, `ok()`, `fail()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `App\Services\OnboardingService`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: OnboardingWalkthroughController
+- **Namespace:** `App\Modules\User\Controllers`
+- **Path:** `app/Modules/User/Controllers/OnboardingWalkthroughController.php`
+- **Classification:** `USER_CONTROLLER`
+- **Methods:** `progress()`, `saveProfile()`, `saveBudgetIncome()`, `saveCreditDebt()`, `saveRecurringExpense()`, `saveWatchlist()`, `respondSuccess()`, `respondError()`, `filterPayloadByColumns()`, `getTableColumns()`, `db()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('onboarding/progress', 'OnboardingWalkthroughController::progress', ['as' => 'onboarding-progress']);`
+  - `app/Config/Routes.php` → `$routes->post('onboarding/profile', 'OnboardingWalkthroughController::saveProfile', ['as' => 'onboarding-save-profile']);`
+  - `app/Config/Routes.php` → `$routes->post('onboarding/budget-income', 'OnboardingWalkthroughController::saveBudgetIncome', ['as' => 'onboarding-save-income']);`
+  - `app/Config/Routes.php` → `$routes->post('onboarding/credit-debt', 'OnboardingWalkthroughController::saveCreditDebt', ['as' => 'onboarding-save-credit-debt']);`
+  - `app/Config/Routes.php` → `$routes->post('onboarding/recurring-expense', 'OnboardingWalkthroughController::saveRecurringExpense', ['as' => 'onboarding-save-recurring']);`
+  - `app/Config/Routes.php` → `$routes->post('onboarding/watchlist', 'OnboardingWalkthroughController::saveWatchlist', ['as' => 'onboarding-save-watchlist']);`
+- **Services/Libraries used:** `App\Services\OnboardingProgressService`, `authentication`, `eventTracker`, `onboardingProgressService`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: PredictionsController
+- **Namespace:** `App\Modules\User\Controllers`
+- **Path:** `app/Modules/User/Controllers/PredictionsController.php`
+- **Classification:** `USER_CONTROLLER`
+- **Methods:** `svc()`, `index()`, `markets()`, `view()`, `portfolio()`, `settlements()`, `placeOrder()`, `cancelOrder()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'PredictionsController::index');`
+  - `app/Config/Routes.php` → `$routes->get('Markets', 'PredictionsController::markets');`
+  - `app/Config/Routes.php` → `$routes->get('Market/(:num)', 'PredictionsController::view/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Portfolio', 'PredictionsController::portfolio');`
+  - `app/Config/Routes.php` → `$routes->get('Settlements', 'PredictionsController::settlements');`
+  - `app/Config/Routes.php` → `$routes->post('PlaceOrder', 'PredictionsController::placeOrder');     // POST`
+  - `app/Config/Routes.php` → `$routes->post('CancelOrder', 'PredictionsController::cancelOrder');   // POST`
+- **Services/Libraries used:** `mymipredictions`, `request`
+- **Models used:** None detected
+- **View files used:** None detected
+
+## Controller: PrivacyController
+- **Namespace:** `App\Modules\User\Controllers`
+- **Path:** `app/Modules/User/Controllers/PrivacyController.php`
+- **Classification:** `USER_CONTROLLER`
+- **Methods:** `requestExport()`, `requestErasure()`, `adminApproveExport()`, `adminApproveErasure()`, `ok()`, `fail()`, `forbid()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `App\Libraries\Privacy\DataErasureService`, `App\Libraries\Privacy\DataExportService`, `DataErasureService`, `DataExportService`
+- **Models used:** `App\Models\PrivacyRequestModel`, `PrivacyRequestModel`
+- **View files used:** None detected
+
+## Controller: ProjectsController
+- **Namespace:** `App\Modules\User\Controllers`
+- **Path:** `app/Modules/User/Controllers/ProjectsController.php`
+- **Classification:** `USER_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `view()`, `commit()`, `withdrawCommit()`, `myCommitments()`, `requestMonthlyWithdrawal()`, `acceptPrivateAllocation()`, `ensurePost()`, `currentUserId()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->post('fetchInbox', 'ProjectsController::fetchProjectEmails');`
+  - `app/Config/Routes.php` → `$routes->post('parseInbox', 'ProjectsController::parseProjectEmails');`
+  - `app/Config/Routes.php` → `$routes->post('promoteLead/(:num)', 'ProjectsController::promoteLead/$1');`
+  - `app/Config/Routes.php` → `$routes->post('updateProject/(:num)', 'ProjectsController::updateProject/$1');`
+  - `app/Config/Routes.php` → `$routes->post('openCommitments/(:num)', 'ProjectsController::openCommitments/$1');`
+  - `app/Config/Routes.php` → `$routes->post('checkThreshold/(:num)', 'ProjectsController::checkThreshold/$1');`
+  - `app/Config/Routes.php` → `$routes->post('launchPrivateAuction/(:num)', 'ProjectsController::launchPrivateAuction/$1');`
+  - `app/Config/Routes.php` → `$routes->post('settlePrivateAuction/(:num)', 'ProjectsController::settlePrivateAuction/$1');`
+  - `app/Config/Routes.php` → `$routes->post('markFunded/(:num)', 'ProjectsController::markFunded/$1');`
+  - `app/Config/Routes.php` → `$routes->post('createQuarterlyDistribution/(:num)', 'ProjectsController::createQuarterlyDistribution/$1');`
+  - `app/Config/Routes.php` → `$routes->post('runPayouts/(:num)', 'ProjectsController::runPayouts/$1');`
+  - `app/Config/Routes.php` → `$routes->post('processMonthlyWithdrawals/(:num)', 'ProjectsController::processMonthlyWithdrawals/$1');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'ProjectsController::index');`
+  - `app/Config/Routes.php` → `$routes->post('Approve/(:segment)', 'ProjectsController::approveProject/$1');`
+  - `app/Config/Routes.php` → `$routes->post('Edit/(:segment)', 'ProjectsController::approveProject/$1');`
+  - `app/Config/Routes.php` → `$routes->post('Reject/(:segment)', 'ProjectsController::rejectProject/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Quick-Intake', 'ProjectsController::realEstateQuickIntake');`
+  - `app/Config/Routes.php` → `$routes->post('Quick-Intake', 'ProjectsController::realEstateQuickSubmit');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'ProjectsController::index');`
+  - `app/Config/Routes.php` → `$routes->get('View/(:segment)', 'ProjectsController::view/$1');`
+  - `app/Config/Routes.php` → `$routes->post('Commit/(:num)', 'ProjectsController::commit/$1');`
+  - `app/Config/Routes.php` → `$routes->post('Withdraw-Commit/(:num)', 'ProjectsController::withdrawCommit/$1');`
+  - `app/Config/Routes.php` → `$routes->get('My/Commitments', 'ProjectsController::myCommitments');`
+  - `app/Config/Routes.php` → `$routes->post('Request-Monthly-Withdrawal/(:num)', 'ProjectsController::requestMonthlyWithdrawal/$1');`
+  - `app/Config/Routes.php` → `$routes->post('Accept-Private-Allocation/(:num)', 'ProjectsController::acceptPrivateAllocation/$1');`
+  - `app/Config/Routes.php` → `//     $routes->get('/', 'ProjectsController::index');`
+  - `app/Config/Routes.php` → `//     $routes->post('Approve/(:segment)', 'ProjectsController::approveProject/$1');`
+  - `app/Config/Routes.php` → `//     $routes->post('Edit/(:segment)', 'ProjectsController::approveProject/$1');`
+  - `app/Config/Routes.php` → `//     $routes->post('Reject/(:segment)', 'ProjectsController::rejectProject/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('List', 'ProjectsController::list');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('View/(:segment)', 'ProjectsController::view/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Holdings', 'ProjectsController::holdings');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('ingest/real-estate', 'ProjectsController::ingestRealEstate');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'ProjectsController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Approve/(:segment)', 'ProjectsController::approveProject/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Edit/(:segment)', 'ProjectsController::approveProject/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Reject/(:segment)', 'ProjectsController::rejectProject/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Quick-Intake', 'ProjectsController::realEstateQuickIntake');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Quick-Intake', 'ProjectsController::realEstateQuickSubmit');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], '/', 'ProjectsController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Add', 'ProjectsController::add');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Holdings', 'ProjectsController::holdings');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'View/(:segment)', 'ProjectsController::viewProject/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Commit/(:segment)', 'ProjectsController::commit/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Submit/Commit/(:segment)', 'ProjectsController::submitCommit/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Invest/(:segment)', 'ProjectsController::invest/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Submit/Invest/(:segment)', 'ProjectsController::submitInvest/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Sell/(:segment)', 'ProjectsController::sell/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Submit/Sell/(:segment)', 'ProjectsController::submitSell/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Discuss/(:segment)', 'ProjectsController::discuss/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Submit/Discuss/(:segment)', 'ProjectsController::submitDiscuss/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('AddComment', 'ProjectsController::addComment');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('/', 'ProjectsController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->post('Approve/(:segment)', 'ProjectsController::approveProject/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->post('Edit/(:segment)', 'ProjectsController::approveProject/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->post('Reject/(:segment)', 'ProjectsController::rejectProject/$1');`
+- **Services/Libraries used:** `Config\Services`, `authentication`
+- **Models used:** `App\Models\ProjectCommitmentsModel`, `App\Models\ProjectsModel`, `ProjectCommitmentsModel`, `ProjectsModel`
+- **View files used:** None detected
+
+## Controller: ReferralController
+- **Namespace:** `App\Modules\User\Controllers`
+- **Path:** `app/Modules/User/Controllers/ReferralController.php`
+- **Classification:** `USER_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `create()`, `share()`, `sendReferralEmail()`, `My_Referrals()`, `Users()`, `Marketing_Affiliate_Program_Agreement()`, `Apply()`, `Success()`, `New_Affiliate_Information()`, `Activate_Affiliate()`, `New_Affiliate_Procedure()`, `processPayments()`, `sendFollowUpEmails()`, `saveData()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->post('bulk-update-status', 'ReferralController::bulkUpdateStatus');`
+  - `app/Config/Routes.php` → `$routes->post('bulk-delete', 'ReferralController::bulkDelete');`
+  - `app/Config/Routes.php` → `// $routes->match(['GET', 'POST'], 'My-Referrals', 'App\Modules\User\Controllers\ReferralController::index', ['filter' => 'login']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], '/', 'ReferralController::index');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], '/', 'ReferralController::index');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Create', 'ReferralController::create');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'sendReferralEmail', 'ReferralController::sendReferralEmail');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `// $routes->match(['GET', 'POST'], 'My-Referrals', 'App\Modules\User\Controllers\ReferralController::index', ['filter' => 'login']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], '/', 'ReferralController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], '/', 'ReferralController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Create', 'ReferralController::create');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'sendReferralEmail', 'ReferralController::sendReferralEmail');`
+- **Services/Libraries used:** `AccountService`, `App\Services\WalletService`, `App\Services\{AccountService`, `BudgetService`, `Config\Services`, `DashboardService`, `GoalTrackingService`, `MarketingService`, `ReferralService`, `SolanaService`, `UserService`, `authentication`, `logger`, `solanaService`
+- **Models used:** `App\Models\WalletModel`, `App\Models\{BudgetModel`, `BudgetModel`, `UserModel`
+- **View files used:** `emails/referral_invite`
+
+## Controller: SearchController
+- **Namespace:** `App\Modules\User\Controllers`
+- **Path:** `app/Modules/User/Controllers/SearchController.php`
+- **Classification:** `USER_CONTROLLER`
+- **Methods:** `index()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/Search', 'SearchController::index');`
+  - `app/Config/Routes.php` → `$routes->get('/Search/(:segment)', 'SearchController::index/$1');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'SearchController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'SearchController::index');`
+- **Services/Libraries used:** None detected
+- **Models used:** `App\Models\UserModel`
+- **View files used:** None detected
+
+## Controller: SubscribeController
+- **Namespace:** `App\Modules\User\Controllers`
+- **Path:** `app/Modules/User/Controllers/SubscribeController.php`
+- **Classification:** `USER_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `Services()`, `Submit()`, `saveData()`, `setCurrentUser()`, `preparePageData()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/', 'SubscribeController::index');`
+  - `app/Config/Routes.php` → `$routes->get('/Daily-Financial-News', 'SubscribeController::index');`
+  - `app/Config/Routes.php` → `$routes->get('Submit', 'SubscribeController::submit');`
+  - `app/Config/Routes.php` → `//     $routes->get('/', 'SubscribeController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'SubscribeController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/Daily-Financial-News', 'SubscribeController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Submit', 'SubscribeController::submit');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('/', 'SubscribeController::index');`
+- **Services/Libraries used:** `auth`, `request`
+- **Models used:** `App\Models\{MarketingModel`, `BudgetModel`, `MarketingModel`, `MyMIGoldModel`, `SubscribeModel`
+- **View files used:** None detected
+
+## Controller: SupportController
+- **Namespace:** `App\Modules\User\Controllers`
+- **Path:** `app/Modules/User/Controllers/SupportController.php`
+- **Classification:** `USER_CONTROLLER`
+- **Methods:** `initController()`, `commonData()`, `index()`, `index()`, `handleSupportRequest()`, `sendEmail()`, `test()`, `sendTestEmail()`, `sendSupportRequestReceivedEmail()`, `sendToDiscord()`, `Communication_Manager()`, `Feedback()`, `KnowledgeBase()`, `MyRequest()`, `Request()`, `Response()`, `Close_Request()`, `saveData()`, `setCurrentUser()`, `preparePageData()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/Customer-Support', 'App\Modules\Support\Controllers\SupportController::index');`
+  - `app/Config/Routes.php` → `//     $routes->get('/', 'SupportController::index');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'SupportController::index');`
+  - `app/Config/Routes.php` → `$routes->get('Account', 'AccountSupportController::index');`
+  - `app/Config/Routes.php` → `$routes->post('resendActivation', 'AccountSupportController::resendActivation');`
+  - `app/Config/Routes.php` → `$routes->post('sendPasswordReset', 'AccountSupportController::sendPasswordReset');`
+  - `app/Config/Routes.php` → `$routes->get('Article/(:segment)', 'SupportController::article/$1');`
+  - `app/Config/Routes.php` → `$routes->get('Discord', 'SupportController::discordOnboarding');`
+  - `app/Config/Routes.php` → `$routes->get('FAQ', 'SupportController::view/FAQ');`
+  - `app/Config/Routes.php` → `$routes->get('Feedback', 'SupportController::view/Feedback');`
+  - `app/Config/Routes.php` → `$routes->get('Test', 'SupportController::view/Test');`
+  - `app/Config/Routes.php` → `$routes->get('Test-Email', 'SupportController::view/Test-Email');`
+  - `app/Config/Routes.php` → `$routes->get('(:any)', 'SupportController::view/$1');`
+  - `app/Config/Routes.php` → `$routes->get('help/account', 'App\\Modules\\Support\\Controllers\\AccountSupportController::index');`
+  - `app/Config/Routes.php` → `//     $routes->get('/', 'SupportController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'SupportController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'SupportController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('FAQ', 'SupportController::faq');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Article/(:segment)', 'SupportController::article/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Feedback', 'SupportController::feedback');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Test', 'SupportController::test');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Test-Email', 'SupportController::sendTestEmail');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('/', 'SupportController::index');`
+- **Services/Libraries used:** `Config\Services`, `auth`, `authentication`, `mailService`, `request`
+- **Models used:** `App\Models\{PageSEOModel`, `Myth\Auth\Authorization\GroupModel`, `PageSEOModel`, `SubscribeModel`, `SupportModel`, `UserModel`
+- **View files used:** `Support/Emails/Requests`, `Support/Feedback`, `Support/Knowledge_Base`, `Support/My_Request`, `Support/Request`, `User/Support/Communication_Manager`, `UserModule\Views\Support\_emails\Support_Request_Received`, `emails/layout`
+
+## Controller: TradeTracker
+- **Namespace:** `App\Modules\User\Controllers`
+- **Path:** `app/Modules/User/Controllers/TradeTracker.php`
+- **Classification:** `USER_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `log()`, `overview()`, `holdingsManager()`, `layoutManager()`, `tradeManager()`, `tradeTrackerEditor()`, `search()`, `add()`, `quickTrade()`, `sell()`, `update()`, `close()`, `delete()`, `addStock()`, `saveData()`, `setCurrentUser()`, `preparePageData()`
+- **Route references:** None found via static scan
+- **Services/Libraries used:** `request`, `validation`
+- **Models used:** `App\Models\TrackerModel`, `TrackerModel`
+- **View files used:** `User/Trade_Tracker/Add`, `User/Trade_Tracker/Search`
+
+## Controller: WalletsController
+- **Namespace:** `App\Modules\User\Controllers`
+- **Path:** `app/Modules/User/Controllers/WalletsController.php`
+- **Classification:** `USER_CONTROLLER`
+- **Methods:** `initController()`, `resolveSolanaService()`, `getSolanaService()`, `mapFormToWalletData()`, `commonData()`, `guardAuthenticated()`, `loadUserCommonData()`, `loadBudgetSnapshot()`, `getMyMISolana()`, `loadSolanaSnapshot()`, `loadWalletSummary()`, `loadAccountCollections()`, `getSummaryCalculator()`, `buildFinancialSummary()`, `formatCurrency()`, `commonData()`, `renderWalletLandingPage()`, `index()`, `checking()`, `bank()`, `banking()`, `all()`, `crypto()`, `credit()`, `debt()`, `investments()`, `index()`, `add()`, `prepareAccountData()`, `edit()`, `edit()`, `edit()`, `editBankAccount()`, `editCreditAccount()`, `editCryptoAccount()`, `editDebtAccount()`, `editInvestAccount()`, `renderEditAccountByEndpoint()`, `submitEdit()`, `mapType()`, `delete()`, `copy()`, `deposit()`, `withdraw()`, `exchangeCurrency()`, `details()`, `transferFunds()`, `executeSwap()`, `walletSelection()`, `purchase()`, `purchase()`, `purchase()`, `purchase()`, `purchaseGold()`, `purchaseMyMIGold()`, `handleMyMIGPayPalCallback()`, `purchaseMembershipSuccess()`, `completePurchase()`, `purchaseComplete()`, `purchaseComplete()`, `securityViolation()`, `securityViolation()`, `confirmDeposit()`, `depositComplete()`, `viewTransactionHistory()`, `auditWallet()`, `detectFraud()`, `convertCurrency()`, `generateStatement()`, `freezeWallet()`, `unfreezeWallet()`, `getAvailableServices()`, `activatePremiumService()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->get('/MyMI-Wallet', 'WalletsController::MyMIWallet', ['as' => 'mymi-wallet']);`
+  - `app/Config/Routes.php` → `$routes->get('/', 'WalletsController::index');`
+  - `app/Config/Routes.php` → `$routes->get('Reconcile', 'WalletsController::reconcile');`
+  - `app/Config/Routes.php` → `$routes->post('EmailUserAboutIssue/(:num)/(:num)', 'WalletsController::emailUserAboutIssue/$1/$2');`
+  - `app/Config/Routes.php` → `$routes->get('/', 'WalletsController::index', ['as' => 'wallets.index']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'All', 'WalletsController::all', ['as' => 'wallets.all']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Account-Manager', 'WalletsController::accountManager', ['as' => 'wallets.account-manager']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Add', 'WalletsController::add', ['as' => 'wallets.add']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Add/(:segment)', 'WalletsController::add/$1', ['as' => 'wallets.add.segment']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Add/(:segment)/(:segment)', 'WalletsController::addFetch/$1/$2', ['as' => 'wallets.add.segment.segment']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Add/Bank-Account', 'WalletsController::createBankeAccount', ['as' => 'wallets.add.bank-account']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Attach-Account', 'WalletsController::attachAccount', ['as' => 'wallets.attach-account']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Attach-Account/(:segment)/(:segment)/(:segment)', 'WalletsController::attachAccount/$1/$2/$3', ['as' => 'wallets.attach-account.segment.segment.segment']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Bank', 'WalletsController::bank', ['as' => 'wallets.bank']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Banking', 'WalletsController::banking', ['as' => 'wallets.banking']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Banking/Add/Account/(:segment)', 'WalletsController::add', ['as' => 'wallets.banking.add.account.segment']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Banking/(:segment)', 'WalletsController::addAccount', ['as' => 'wallets.banking.segment']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Banking/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.banking.details.segment']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Banking/Edit/Account/(:segment)', 'WalletsController::editBankAccount/$1', ['as' => 'wallets.banking.edit.account.segment']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Checking', 'WalletsController::checking', ['as' => 'wallets.checking']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Credit/Edit/Account/(:segment)', 'WalletsController::editCreditAccount/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Crypto', 'WalletsController::crypto', ['as' => 'wallets.crypto']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Create', 'WalletsController::generateWallet', ['as' => 'wallets.create']); // Previously /Wallets/Address-Generator`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Credit', 'WalletsController::index', ['as' => 'wallets.credit']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Credit/Details/(:segment)', 'WalletsController::details/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Coin-Swap', 'WalletsController::coinSwap', ['as' => 'wallets.coin-swap']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Coin-Swap/(:segment)', 'WalletsController::coinSwap/$1', ['as' => 'wallets.coin-swap.segment']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Complete/Purchase', 'WalletsController::completePurchase', ['as' => 'wallets.complete.purchase']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Confirm-Deposit', 'WalletsController::confirmDeposit', ['as' => 'wallets.confirm.deposit']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Debt', 'WalletsController::debt', ['as' => 'wallets.debt']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Debt/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.debt.details.segment']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Debt/Edit/Account/(:segment)', 'WalletsController::editDebtAccount/$1', ['as' => 'wallets.debt.edit.account.segment']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Delete/(:segment)/(:segment)', 'WalletsController::delete/$1/$2');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Deposit', 'WalletsController::deposit', ['as' => 'wallets.deposit']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Deposit/Fetch', 'WalletsController::addDepositFetch', ['as' => 'wallets.deposit.fetch']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Deposit/Complete', 'WalletsController::depositComplete', ['as' => 'wallets.deposit.complete']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Deposit/Complete/(:segment)', 'WalletsController::depositComplete/$1', ['as' => 'wallets.deposit.complete.segment']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Deposit/(:segment)', 'WalletsController::deposit/$1', ['as' => 'wallets.deposit.segment']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Deposit/Funds', 'WalletsController::deposit', ['as' => 'wallets.deposit.funds']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Details', 'WalletsController::details', ['as' => 'wallets.details']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Edit', 'WalletsController::edit', ['as' => 'wallets.edit']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Edit/(:segment)', 'WalletsController::edit/$1', ['as' => 'wallets.edit.segment']); // Previously /Wallets/Address-Generator`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Edit/(:segment)/(:segment)', 'WalletsController::edit/$1/$2', ['as' => 'wallets.edit.segment.segment']); // Previously /Wallets/Address-Generator`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Feature-Manager', 'WalletsController::featureManager', ['as' => 'wallets.feature-manager']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Generate-Wallet', 'WalletsController::generateWallet', ['as' => 'wallets.generate-wallet']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Investments', 'WalletsController::investments', ['as' => 'wallets.investments']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Investment/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.investment.details']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Investment/Edit/Account/(:segment)', 'WalletsController::editInvestAccount/$1', ['as' => 'wallets.investment.edit']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Link-Account', 'WalletsController::linkAccount', ['as' => 'wallets.link-account']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Link-Account/(:segment)', 'WalletsController::linkAccount/$1', ['as' => 'wallets.link-account.segment']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Link-Account/(:segment)/(:segment)', 'WalletsController::linkAccount/$1', ['as' => 'wallets.link-account.segment.segment']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Link-Account/Success', 'WalletsController::linkAccountSuccess', ['as' => 'wallets.link-account.success']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Link-Account/Success/(:segment)', 'WalletsController::linkAccountSuccess/$1', ['as' => 'wallets.link-account.success.segment']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Manager', 'WalletsController::walletManager', ['as' => 'wallets.manager']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Wallets/MyMIGPayPalCallback', 'WalletsController::handleMyMIGPayPalCallback');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase', 'WalletsController::purchase');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase-Manager', 'WalletsController::purchaseManager');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase/(:segment)', 'WalletsController::purchase');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase/Memberships/Customize', 'WalletsController::customizeMembership');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase/Memberships/Success', 'WalletsController::purchaseMembershipSuccess');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase/Memberships/Success', 'WalletsController::purchaseMembershipSuccess');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase/Memberships/(:segment)', 'WalletsController::purchase');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase/Memberships/(:segment)/(:segment)', 'WalletsController::purchase');`
+  - `app/Config/Routes.php` → `// $routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold', 'WalletsController::purchaseGold');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase/(:segment)/Complete', 'WalletsController::purchaseComplete');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase/Complete/(:segment)', 'WalletsController::purchaseComplete/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase/Complete/(:segment)/(:segment)', 'WalletsController::purchaseComplete/$1/$2');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold', 'WalletsController::purchaseMyMIGold');`
+  - `app/Config/Routes.php` → `// $routes->match(['GET', 'POST'], 'Purchase/Complete/MyMI-Gold', 'WalletsController::purchaseMyMIGold');`
+  - `app/Config/Routes.php` → `// $routes->match(['GET', 'POST'], 'Purchase/Complete/MyMI-Gold/(:segment)', 'WalletsController::purchaseMyMIGold');`
+  - `app/Config/Routes.php` → `// $routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold/Complete/(:segment)', 'WalletsController::purchaseComplete/$1');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase/MyMIGold/Security/(:segment)', 'WalletsController::securityViolation');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Transfer-Funds', 'WalletsController::transferFunds', ['as' => 'wallets.transfer-funds']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Wallet-Generator', 'WalletsController::walletGenerator', ['as' => 'wallets.generator']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Wallet-Selection', 'WalletsController::walletSelections', ['as' => 'wallets.selection']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Wallet-Transactions', 'WalletsController::walletTransaction', ['as' => 'wallets.transactions']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Wallet-Transaction/(:segment)', 'WalletsController::walletTransaction/$1', ['as' => 'wallets.transactions.segment']);`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Withdraw', 'WalletsController::withdraw', ['as' => 'wallets.withdraw']); // Previously /Wallets/Withdraw-Funds`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Withdraw/(:segment)', 'WalletsController::withdraw/$1', ['as' => 'wallets.withdraw.segment']); // Previously /Wallets/Withdraw-Funds`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'Withdraw/Fetch', 'WalletsController::addWithdrawFetch', ['as' => 'wallets.withdraw.fetch']);`
+  - `app/Config/Routes.php` → `//     $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsController::addUserGoldTasks');`
+  - `app/Config/Routes.php` → `//     // $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsController::addUserGoldTasks');`
+  - `app/Config/Routes.php` → `//     $routes->get('/', 'WalletsController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/MyMI-Wallet', 'WalletsController::MyMIWallet', ['as' => 'support']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `// ✅ Add this so /API/Wallets resolves to WalletsController::index`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'WalletsController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('providers', 'WalletsController::providers');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Create', 'WalletsController::create');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->put('Update/(:num)', 'WalletsController::update/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->delete('Unlink/(:num)', 'WalletsController::unlink/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Link-Robinhood', 'WalletsController::linkRobinhood');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Link-Snaptrade', 'WalletsController::linkSnapTrade');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Snaptrade/Connect-URL', 'WalletsController::getSnapTradeConnectUrl');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/(:segment)/(:segment)', 'WalletsController::index/$1/$2');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Banking/Update/(:num)',   'WalletsController::updateBank/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Credit/Update/(:num)',    'WalletsController::updateCredit/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Debt/Update/(:num)',      'WalletsController::updateDebt/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Investments/Update/(:num)','WalletsController::updateInvestment/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Crypto/Update/(:num)',    'WalletsController::updateCrypto/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Plaid/Link-Token', 'App\Modules\APIs\Controllers\WalletsController::plaidLinkToken');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('Plaid/Exchange', 'App\Modules\APIs\Controllers\WalletsController::plaidExchange');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsController::addUserGoldTasks');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('/', 'WalletsController::index');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->get('Reconcile', 'WalletsController::reconcile');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->post('EmailUserAboutIssue/(:num)/(:num)', 'WalletsController::emailUserAboutIssue/$1/$2');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], '/', 'WalletsController::index', ['as' => 'wallets.index']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Account-Manager', 'WalletsController::accountManager', ['as' => 'wallets.account-manager']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Add', 'WalletsController::add', ['as' => 'wallets.add']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Add/(:segment)', 'WalletsController::add/$1', ['as' => 'wallets.add.segment']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Add/(:segment)/(:segment)', 'WalletsController::addFetch/$1/$2', ['as' => 'wallets.add.segment.segment']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Add/Bank-Account', 'WalletsController::createBankeAccount', ['as' => 'wallets.add.bank-account']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Attach-Account', 'WalletsController::attachAccount', ['as' => 'wallets.attach-account']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Attach-Account/(:segment)/(:segment)/(:segment)', 'WalletsController::attachAccount/$1/$2/$3', ['as' => 'wallets.attach-account.segment.segment.segment']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Banking', 'WalletsController::banking', ['as' => 'wallets.banking']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Banking/Add/Account/(:segment)', 'WalletsController::add', ['as' => 'wallets.banking.add.account.segment']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Banking/(:segment)', 'WalletsController::addAccount', ['as' => 'wallets.banking.segment']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Banking/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.banking.details.segment']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Banking/Edit/Account/(:segment)', 'WalletsController::edit/$1', ['as' => 'wallets.banking.edit.account.segment']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Checking', 'WalletsController::index', ['as' => 'wallets.checking']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Create', 'WalletsController::generateWallet', ['as' => 'wallets.create']); // Previously /Wallets/Address-Generator`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Credit', 'WalletsController::index', ['as' => 'wallets.credit']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Credit/Details/(:segment)', 'WalletsController::details/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Credit/Edit/Account/(:segment)', 'WalletsController::edit/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Coin-Swap', 'WalletsController::coinSwap', ['as' => 'wallets.coin-swap']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Coin-Swap/(:segment)', 'WalletsController::coinSwap/$1', ['as' => 'wallets.coin-swap.segment']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Complete/Purchase', 'WalletsController::completePurchase', ['as' => 'wallets.complete.purchase']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Confirm-Deposit', 'WalletsController::confirmDeposit', ['as' => 'wallets.confirm.deposit']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Debt', 'WalletsController::index', ['as' => 'wallets.debt']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Debt/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.debt.details.segment']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Debt/Edit/Account/(:segment)', 'WalletsController::edit/$1', ['as' => 'wallets.debt.edit.account.segment']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Delete/(:segment)/(:segment)', 'WalletsController::delete/$1/$2');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Deposit', 'WalletsController::deposit', ['as' => 'wallets.deposit']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Deposit/Fetch', 'WalletsController::addDepositFetch', ['as' => 'wallets.deposit.fetch']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Deposit/Complete', 'WalletsController::depositComplete', ['as' => 'wallets.deposit.complete']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Deposit/Complete/(:segment)', 'WalletsController::depositComplete/$1', ['as' => 'wallets.deposit.complete.segment']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Deposit/(:segment)', 'WalletsController::deposit/$1', ['as' => 'wallets.deposit.segment']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Deposit/Funds', 'WalletsController::deposit', ['as' => 'wallets.deposit.funds']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Details', 'WalletsController::details', ['as' => 'wallets.details']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Edit', 'WalletsController::edit', ['as' => 'wallets.edit']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Edit/(:segment)', 'WalletsController::edit/$1', ['as' => 'wallets.edit.segment']); // Previously /Wallets/Address-Generator`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Edit/(:segment)/(:segment)', 'WalletsController::edit/$1/$2', ['as' => 'wallets.edit.segment.segment']); // Previously /Wallets/Address-Generator`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Feature-Manager', 'WalletsController::featureManager', ['as' => 'wallets.feature-manager']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Generate-Wallet', 'WalletsController::generateWallet', ['as' => 'wallets.generate-wallet']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Investments', 'WalletsController::index', ['as' => 'wallets.investments']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Investment/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.investment.details']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Investment/Edit/Account/(:segment)', 'WalletsController::edit/$1', ['as' => 'wallets.investment.edit']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Link-Account', 'WalletsController::linkAccount', ['as' => 'wallets.link-account']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Link-Account/(:segment)', 'WalletsController::linkAccount/$1', ['as' => 'wallets.link-account.segment']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Link-Account/(:segment)/(:segment)', 'WalletsController::linkAccount/$1', ['as' => 'wallets.link-account.segment.segment']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Link-Account/Success', 'WalletsController::linkAccountSuccess', ['as' => 'wallets.link-account.success']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Link-Account/Success/(:segment)', 'WalletsController::linkAccountSuccess/$1', ['as' => 'wallets.link-account.success.segment']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Manager', 'WalletsController::walletManager', ['as' => 'wallets.manager']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Wallets/MyMIGPayPalCallback', 'WalletsController::handleMyMIGPayPalCallback');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase', 'WalletsController::purchase');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase-Manager', 'WalletsController::purchaseManager');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase/(:segment)', 'WalletsController::purchase');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase/Memberships/Customize', 'WalletsController::customizeMembership');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase/Memberships/Success', 'WalletsController::purchaseMembershipSuccess');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase/Memberships/Success', 'WalletsController::purchaseMembershipSuccess');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase/Memberships/(:segment)', 'WalletsController::purchase');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase/Memberships/(:segment)/(:segment)', 'WalletsController::purchase');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `// $routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold', 'WalletsController::purchaseGold');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase/(:segment)/Complete', 'WalletsController::purchaseComplete');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase/Complete/(:segment)', 'WalletsController::purchaseComplete/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase/Complete/(:segment)/(:segment)', 'WalletsController::purchaseComplete/$1/$2');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold', 'WalletsController::purchaseMyMIGold');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `// $routes->match(['GET', 'POST'], 'Purchase/Complete/MyMI-Gold', 'WalletsController::purchaseMyMIGold');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `// $routes->match(['GET', 'POST'], 'Purchase/Complete/MyMI-Gold/(:segment)', 'WalletsController::purchaseMyMIGold');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `// $routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold/Complete/(:segment)', 'WalletsController::purchaseComplete/$1');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Purchase/MyMIGold/Security/(:segment)', 'WalletsController::securityViolation');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Transfer-Funds', 'WalletsController::transferFunds', ['as' => 'wallets.transfer-funds']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Wallet-Generator', 'WalletsController::walletGenerator', ['as' => 'wallets.generator']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Wallet-Selection', 'WalletsController::walletSelections', ['as' => 'wallets.selection']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Wallet-Transactions', 'WalletsController::walletTransaction', ['as' => 'wallets.transactions']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Wallet-Transaction/(:segment)', 'WalletsController::walletTransaction/$1', ['as' => 'wallets.transactions.segment']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Withdraw', 'WalletsController::withdraw', ['as' => 'wallets.withdraw']); // Previously /Wallets/Withdraw-Funds`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Withdraw/(:segment)', 'WalletsController::withdraw/$1', ['as' => 'wallets.withdraw.segment']); // Previously /Wallets/Withdraw-Funds`
+  - `.archive/_legacy/ConfigO/Routes.php` → `$routes->match(['GET', 'POST'], 'Withdraw/Fetch', 'WalletsController::addWithdrawFetch', ['as' => 'wallets.withdraw.fetch']);`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsController::addUserGoldTasks');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     // $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsController::addUserGoldTasks');`
+  - `.archive/_legacy/ConfigO/Routes.php` → `//     $routes->get('/', 'WalletsController::index');`
+- **Services/Libraries used:** `AccountService`, `App\Services\{AccountService`, `BudgetService`, `CurrencyService`, `GoalTrackingService`, `MarketingService`, `SolanaService`, `TransactionService`, `WalletService`, `authentication`, `email`, `logger`, `request`, `safeCache`, `setupStatusService`, `solanaService`
+- **Models used:** `App\Models\{MyMIGoldModel`, `MyMIGoldModel`, `WalletModel`
+- **View files used:** `App\Modules\User\Views\Wallets\Purchase\Memberships\Success`
+
+## Controller: Tax
+- **Namespace:** `App\Modules\User\Tax\Controllers`
+- **Path:** `app/Modules/User/Tax/Controllers/Tax.php`
+- **Classification:** `SYSTEM_CONTROLLER`
+- **Methods:** `initController()`, `index()`, `create()`, `edit()`, `view()`, `preview()`, `ajaxSaveLine()`, `ajaxRecalc()`, `ajaxSaveAllocation()`, `exportJson()`, `exportCsv()`, `buildExportPayload()`, `writeExportFile()`, `toCsv()`
+- **Route references:**
+  - `app/Config/Routes.php` → `$routes->group('Tax', ['namespace' => 'App\\Modules\\User\\Tax\\Controllers', 'filter' => 'login'], static function ($routes) {`
+  - `app/Config/Routes.php` → `$routes->get('/', 'Tax::index');`
+  - `app/Config/Routes.php` → `$routes->match(['GET', 'POST'], 'create', 'Tax::create');`
+  - `app/Config/Routes.php` → `$routes->get('edit/(:num)', 'Tax::edit/$1');`
+  - `app/Config/Routes.php` → `$routes->get('view/(:num)', 'Tax::view/$1');`
+  - `app/Config/Routes.php` → `$routes->get('preview/(:num)', 'Tax::preview/$1');`
+  - `app/Config/Routes.php` → `$routes->post('ajax/saveLine', 'Tax::ajaxSaveLine');`
+  - `app/Config/Routes.php` → `$routes->post('ajax/saveAllocation', 'Tax::ajaxSaveAllocation');`
+  - `app/Config/Routes.php` → `$routes->get('ajax/recalc/(:num)', 'Tax::ajaxRecalc/$1');`
+  - `app/Config/Routes.php` → `$routes->get('export/json/(:num)', 'Tax::exportJson/$1');`
+  - `app/Config/Routes.php` → `$routes->get('export/csv/(:num)', 'Tax::exportCsv/$1');`
+  - `app/Config/Routes.php` → `$routes->group('Admin/Tax', ['namespace' => 'App\\Modules\\Management\\TaxAdmin\\Controllers', 'filter' => 'login'], static function ($routes) {`
+- **Services/Libraries used:** `authentication`
+- **Models used:** `App\Modules\User\Tax\Models\TaxJurisdictionModel`, `App\Modules\User\Tax\Models\TaxReturnModel`, `App\Modules\User\Tax\Models\TaxTemplateModel`
+- **View files used:** `App\\Modules\\User\\Tax\\Views\\edit`, `App\\Modules\\User\\Tax\\Views\\index`, `App\\Modules\\User\\Tax\\Views\\preview`, `App\\Modules\\User\\Tax\\Views\\view`

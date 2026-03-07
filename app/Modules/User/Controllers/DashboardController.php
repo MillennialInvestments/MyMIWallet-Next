@@ -1,9 +1,9 @@
 <?php namespace App\Modules\User\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseUserController;
+
 use Config\Services;
 use Config\{Auth, SiteSettings, SocialMedia};
-use App\Controllers\UserController;
 use App\Libraries\{MyMIAlerts, MyMIAnalytics, MyMIAssistant, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIInvestments, MyMIMarketing, MyMIOnboarding, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets};
 use App\Models\{AccountsModel, AlertsModel, DashboardModel, DiscordLinkModel, MarketingModel, SolanaModel, UserModel};
 use App\Services\{AccountService, BudgetService, DashboardService, EmailService, OnboardingProgressService, SolanaService, UserService};
@@ -14,7 +14,7 @@ use DateTime;
 use Psr\Log\LoggerInterface;
 
 #[\AllowDynamicProperties]
-class DashboardController extends UserController
+class DashboardController extends BaseUserController
 {
     use ResponseTrait;
     protected $auth;

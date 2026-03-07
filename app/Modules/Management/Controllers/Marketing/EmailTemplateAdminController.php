@@ -2,11 +2,12 @@
 
 namespace App\Modules\Management\Controllers\Marketing;
 
+use App\Controllers\BaseAdminController;
+
 use App\Models\EmailTemplateModel;
-use App\Controllers\BaseController;
 
 #[\AllowDynamicProperties]
-class EmailTemplateAdminController extends \App\Controllers\BaseController
+class EmailTemplateAdminController extends BaseAdminController
 {
     public function index()
     {

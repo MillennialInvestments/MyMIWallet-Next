@@ -2,13 +2,14 @@
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseAdminController;
+
 use App\Services\OpsCommandService;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class OpsInboxAdminController extends UserController
+class OpsInboxAdminController extends BaseAdminController
 {
     protected OpsCommandService $ops;
     protected array $helpers = ['url', 'form', 'text'];

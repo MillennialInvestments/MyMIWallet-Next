@@ -1,12 +1,13 @@
 <?php
 namespace App\Modules\User\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseUserController;
+
 use App\Models\PrivacyRequestModel;
 use App\Libraries\Privacy\DataExportService;
 use App\Libraries\Privacy\DataErasureService;
 
-class PrivacyController extends BaseController
+class PrivacyController extends BaseUserController
 {
     public function requestExport()
     {

@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Deprecated\Controllers;
+
+use App\Controllers\BaseController;
 
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class HowItWorksController extends BaseController
+class LegacyHowItWorksController extends BaseController
 {
     /**
      * Nav items and their paths (converted to full URLs at render time).

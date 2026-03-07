@@ -2,19 +2,18 @@
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\BaseController;
-use App\Controllers\UserController;
+use App\Controllers\BaseAdminController;
+
 use App\Libraries\{MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIReferrals, MyMISolana, MyMIUser, MyMIUsers, MyMIWallet, MyMIWallets};
 use App\Models\{AccountsModel, AnnouncementsModel, BudgetModel, DesignModel, InvestmentModel, MarketingModel, MyMIGoldModel, UserModel, WalletModel};
 use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\API\RequestTrait;
-use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\HTTP\IncomingRequest;
 
 #[\AllowDynamicProperties]
-class SupportAdminController extends UserController
+class SupportAdminController extends BaseAdminController
 {
     use ResponseTrait;
     use RequestTrait;

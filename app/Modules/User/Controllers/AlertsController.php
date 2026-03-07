@@ -2,7 +2,7 @@
 
 namespace App\Modules\User\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseUserController;
 use App\Models\{AlertsModel, BudgetModel};
 use App\Libraries\{
     MyMIAlphaVantage,
@@ -23,7 +23,7 @@ use Config\Services;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class AlertsController extends UserController
+class AlertsController extends BaseUserController
 {
     use ResponseTrait;
 

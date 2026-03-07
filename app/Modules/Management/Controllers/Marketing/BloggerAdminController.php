@@ -1,9 +1,10 @@
 <?php namespace App\Modules\Management\Controllers\Marketing;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseAdminController;
+
 
 #[\AllowDynamicProperties]
-class BloggerAdminController extends UserController
+class BloggerAdminController extends BaseAdminController
 {
     public function index()
     {

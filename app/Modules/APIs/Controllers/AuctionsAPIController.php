@@ -1,9 +1,10 @@
 <?php namespace App\Modules\APIs\Controllers;
 
-use App\Models\{AuctionItemModel, AuctionSettlementModel, AuctionPaymentModel};
-use CodeIgniter\RESTful\ResourceController;
+use App\Controllers\BaseAPIController;
 
-class AuctionsAPIController extends ResourceController
+use App\Models\{AuctionItemModel, AuctionSettlementModel, AuctionPaymentModel};
+
+class AuctionsAPIController extends BaseAPIController
 {
     protected $format = 'json';
 

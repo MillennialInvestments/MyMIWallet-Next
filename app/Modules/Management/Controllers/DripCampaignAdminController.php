@@ -2,12 +2,13 @@
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseAdminController;
+
 use App\Models\DripCampaignModel;
 use CodeIgniter\API\ResponseTrait;
 
 #[\AllowDynamicProperties]
-class DripCampaignAdminController extends UserController
+class DripCampaignAdminController extends BaseAdminController
 {
     use ResponseTrait;
 

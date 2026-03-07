@@ -2,7 +2,8 @@
 
 namespace App\Modules\User\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseUserController;
+
 use App\Libraries\{MyMIWallet, MyMIWallets, MyMISolana};
 use App\Models\{MyMIGoldModel, WalletModel};
 use App\Services\{AccountService, CurrencyService, GoalTrackingService, MarketingService, SolanaService, TransactionService, WalletService, WalletSummaryCalculator};
@@ -14,7 +15,7 @@ use DateTime;
 use Exception;
 
 #[\AllowDynamicProperties]
-class WalletsController extends UserController
+class WalletsController extends BaseUserController
 {
 
     protected $API;

@@ -1,7 +1,8 @@
 <?php
 namespace App\Modules\APIs\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAPIController;
+
 use App\Modules\APIs\Controllers\MarketingController;
 use App\Libraries\{MyMIAlerts, MyMIMarketing, MyMIDiscord, KimiSuggestions};
 use App\Models\{AlertsModel, ExchangeModel, IdempotencyModel, MarketingModel, MarketingNewsletterModel, ReferralModel, SupportModel, UserModel, WeeklyStreamWatchlistModel};
@@ -9,7 +10,6 @@ use App\Services\{AlphaVantagePipelineService, AuthSmokeService, MarketingServic
 use App\Support\Http;
 use App\Services\SubSystemManager;
 use CodeIgniter\Log\Handlers\FileHandler;
-use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait; // Import the ResponseTrait
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -17,7 +17,7 @@ use Config\Database;
 use Config\Services;
 
 #[\AllowDynamicProperties]
-class ManagementAPIController extends \App\Controllers\BaseController
+class ManagementAPIController extends BaseAPIController
 {
     use ResponseTrait;
     protected MyMIAlerts $alertManager;

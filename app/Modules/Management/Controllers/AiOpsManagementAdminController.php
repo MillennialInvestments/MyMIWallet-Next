@@ -2,9 +2,10 @@
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAdminController;
 
-class AiOpsManagementAdminController extends BaseController
+
+class AiOpsManagementAdminController extends BaseAdminController
 {
     public function index()
     {

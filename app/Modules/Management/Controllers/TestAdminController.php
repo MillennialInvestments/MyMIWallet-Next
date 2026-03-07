@@ -1,9 +1,10 @@
 <?php 
 namespace App\Modules\Management\Controllers;
-use App\Controllers\BaseController;
+
+use App\Controllers\BaseAdminController;
 
 #[\AllowDynamicProperties]
-class TestAdminController extends \App\Controllers\BaseController
+class TestAdminController extends BaseAdminController
 {
     public function testITTSend()
     {

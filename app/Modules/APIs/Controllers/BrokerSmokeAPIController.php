@@ -1,13 +1,14 @@
 <?php
 namespace App\Modules\APIs\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAPIController;
+
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Libraries\MyMIRobinhood;
 use App\Libraries\MyMISnapTrader;
 
 #[\AllowDynamicProperties]
-class BrokerSmokeAPIController extends \App\Controllers\BaseController
+class BrokerSmokeAPIController extends BaseAPIController
 {
     public function rhAccount(): ResponseInterface
     {

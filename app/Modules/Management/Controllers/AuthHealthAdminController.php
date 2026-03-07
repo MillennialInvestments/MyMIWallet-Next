@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseAdminController;
+
 use App\Models\AuthHealthRunModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class AuthHealthAdminController extends UserController
+class AuthHealthAdminController extends BaseAdminController
 {
     protected AuthHealthRunModel $runs;
 

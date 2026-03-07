@@ -2,13 +2,14 @@
 
 namespace App\Modules\User\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseUserController;
+
 use App\Services\OnboardingProgressService;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Database\ConnectionInterface;
 use DateTimeImmutable;
 
-class OnboardingWalkthroughController extends BaseController
+class OnboardingWalkthroughController extends BaseUserController
 {
     use ResponseTrait;
 

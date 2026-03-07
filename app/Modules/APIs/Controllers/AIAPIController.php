@@ -1,13 +1,14 @@
 <?php
 namespace App\Modules\APIs\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAPIController;
+
 use App\Libraries\MyMIAssistant;
 use App\Models\DiscordLinkModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\API\ResponseTrait;
 
-class AIAPIController extends BaseController
+class AIAPIController extends BaseAPIController
 {
     use ResponseTrait;
 

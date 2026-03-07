@@ -1,6 +1,7 @@
 <?php namespace App\Modules\User\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseUserController;
+
 use Config\{Auth, SiteSettings, SocialMedia};
 use App\Libraries\{MyMIBudget, MyMIDashboard, MyMICoin, MyMIGold, MyMIInvestments, MyMIMarketData, MyMIMarketing, MyMIReferrals, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets, MyMISimulator, FRED, MyMIFractalAnalyzer};
 use App\Models\{AccountsModel, AlertsModel, BudgetModel, InvestmentForecastAccuracyModel, InvestmentForecastHistoryModel, InvestmentModel, InvestmentPriceForecastModel, MarketingModel, MgmtBudgetModel, MyMIGoldModel, UserModel, WalletModel};
@@ -16,7 +17,7 @@ use Myth\Auth\Authorization\GroupModel;
 use Psr\Log\LoggerInterface;
 
 #[\AllowDynamicProperties]
-class InvestmentsController extends UserController
+class InvestmentsController extends BaseUserController
 {
     use ResponseTrait;
     // Controller Settings

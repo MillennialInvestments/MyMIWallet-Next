@@ -1,11 +1,12 @@
 <?php
 namespace App\Modules\User\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseUserController;
+
 use App\Services\OnboardingService;
 use App\Libraries\Flags;
 
-class OnboardingController extends BaseController
+class OnboardingController extends BaseUserController
 {
     public function get()
     {

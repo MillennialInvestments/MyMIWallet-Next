@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseAdminController;
+
 use App\Libraries\AiCostControls;
 use CodeIgniter\API\ResponseTrait;
 
-class ChatUsageAdminController extends UserController
+class ChatUsageAdminController extends BaseAdminController
 {
     use ResponseTrait;
 

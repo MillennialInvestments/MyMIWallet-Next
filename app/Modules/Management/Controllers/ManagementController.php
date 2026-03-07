@@ -2,11 +2,11 @@
 // app/Modules/User/Controllers/DashboardController.php
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAdminController;
+
 use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
 use Config\{Auth, SiteSettings, SocialMedia}; 
-use App\Controllers\UserController;
 use App\Libraries\{AiCostControls, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIUser, MyMIWallet, MyMIWallets};
 use App\Models\{AccountsModel, AuthHealthRunModel, BudgetModel, ContentIdeaModel, ContentPostModel, ContentScannerIngestModel, MarketingNewsletterModel, UserModel, WalletModel, WeeklyStreamWatchlistModel};
 use App\Services\{AccountService, BudgetService, DashboardService, GoalTrackingService, MarketingService, SolanaService, UserService, WalletService, WeeklyStreamService};
@@ -17,7 +17,7 @@ use CodeIgniter\API\ResponseTrait;
 use Psr\Log\LoggerInterface;
 
 #[\AllowDynamicProperties]
-class ManagementController extends UserController
+class ManagementController extends BaseAdminController
 {
     protected $auth;
     protected $logger;

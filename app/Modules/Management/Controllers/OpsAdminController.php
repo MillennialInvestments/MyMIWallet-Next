@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseAdminController;
+
 use App\Models\OpsJobsModel;
 use App\Models\OpsQueueModel;
 use App\Models\OpsRunsModel;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class OpsAdminController extends UserController
+class OpsAdminController extends BaseAdminController
 {
     use ResponseTrait;
 

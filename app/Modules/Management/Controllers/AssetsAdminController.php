@@ -2,18 +2,18 @@
 // app/Modules/User/Controllers/DashboardController.php
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAdminController;
+
 use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
 use Config\{Auth, SiteSettings, SocialMedia}; 
-use App\Controllers\UserController;
 use App\Libraries\{MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIUser, MyMIWallet, MyMIWallets};
 use App\Models\{AccountsModel, BudgetModel, UserModel};
 // use App\Modules\User\Libraries\{DashboardLibrary}; 
 use CodeIgniter\API\ResponseTrait; // Import the ResponseTrait
 
 #[\AllowDynamicProperties]
-class AssetsAdminController extends UserController
+class AssetsAdminController extends BaseAdminController
 {
     protected $auth;
     

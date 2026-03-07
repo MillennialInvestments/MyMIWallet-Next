@@ -1,6 +1,8 @@
 <?php
 namespace App\Modules\APIs\Controllers;
 
+use App\Controllers\BaseAPIController;
+
 use App\Libraries\CrudCacheInvalidator;
 
 use App\Libraries\MyMIPlaid;
@@ -8,10 +10,9 @@ use App\Models\WalletModel;
 use App\Services\WalletService;
 use App\Services\WalletSummaryService;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\RESTful\ResourceController;
 
 #[\AllowDynamicProperties]
-class WalletsAPIController extends ResourceController
+class WalletsAPIController extends BaseAPIController
 {
     protected $format = 'json';
 

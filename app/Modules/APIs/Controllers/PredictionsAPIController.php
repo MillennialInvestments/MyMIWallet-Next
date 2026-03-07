@@ -1,10 +1,11 @@
 <?php 
 namespace App\Modules\APIs\Controllers;
 
-use CodeIgniter\API\ResponseTrait;
-use App\Controllers\BaseController;
+use App\Controllers\BaseAPIController;
 
-class PredictionsAPIController extends BaseController
+use CodeIgniter\API\ResponseTrait;
+
+class PredictionsAPIController extends BaseAPIController
 {
     use ResponseTrait;
 

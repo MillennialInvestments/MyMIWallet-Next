@@ -2,11 +2,12 @@
 
 namespace App\Modules\User\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseUserController;
+
 use App\Models\TrackerModel;
 
 #[\AllowDynamicProperties]
-class TradeTracker extends UserController
+class TradeTracker extends BaseUserController
 {
     private $siteSettings;
 

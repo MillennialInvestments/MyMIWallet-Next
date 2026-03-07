@@ -2,10 +2,11 @@
 // PATCH: inbound TradingView webhook endpoint
 namespace App\Modules\APIs\Controllers\Webhooks;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAPIController;
+
 use App\Models\InboundWebhookModel;
 
-class TradingViewAPIController extends BaseController
+class TradingViewAPIController extends BaseAPIController
 {
     public function ingest()
     {

@@ -2,13 +2,14 @@
 
 namespace App\Modules\Management\Controllers\Marketing;
 
+use App\Controllers\BaseAdminController;
+
 use App\Models\EmailQueueModel;
 use App\Models\EmailTemplateModel;
-use App\Controllers\BaseController;
 use Dompdf\Dompdf;
 
 #[\AllowDynamicProperties]
-class CampaignAdminController extends \App\Controllers\BaseController
+class CampaignAdminController extends BaseAdminController
 {
     public function uploadForm()
     {

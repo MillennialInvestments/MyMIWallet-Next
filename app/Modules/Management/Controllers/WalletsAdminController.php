@@ -2,20 +2,19 @@
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAdminController;
+
 use Myth\Auth\Authorization\GroupModel;
 use Config\{Auth, SiteSettings, SocialMedia}; 
 use Config\Services;
-use App\Controllers\UserController;
 use App\Libraries\{MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIReferrals, MyMISolana, MyMIUser, MyMIUsers, MyMIWallet, MyMIWallets};
 use App\Models\{AccountsModel, BudgetModel, InvestmentModel, MarketingModel, MyMIGoldModel, UserModel, WalletModel};
 use CodeIgniter\API\ResponseTrait; // Import the ResponseTrait
 use CodeIgniter\API\RequestTrait; // Import the ResponseTrait
-use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\HTTP\IncomingRequest;
 
 #[\AllowDynamicProperties]
-class WalletsAdminController extends UserController
+class WalletsAdminController extends BaseAdminController
 {
     // Controller Settings
     protected $auth;

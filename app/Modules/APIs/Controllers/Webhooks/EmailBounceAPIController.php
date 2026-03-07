@@ -1,10 +1,11 @@
 <?php
 namespace App\Modules\APIs\Controllers\Webhooks;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAPIController;
+
 use App\Libraries\Security\Redactor;
 
-class EmailBounceAPIController extends BaseController
+class EmailBounceAPIController extends BaseAPIController
 {
     public function ingest()
     {

@@ -2,13 +2,14 @@
 
 namespace App\Modules\Management\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseAdminController;
+
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
 #[\AllowDynamicProperties]
-class AdminController extends UserController
+class AdminController extends BaseAdminController
 {
 
     protected ?int $cuID = null;

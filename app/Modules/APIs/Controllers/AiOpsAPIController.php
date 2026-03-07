@@ -1,13 +1,13 @@
 <?php namespace App\Modules\APIs\Controllers;
 
-use App\Controllers\BaseController;
+use App\Controllers\BaseAPIController;
 use App\Libraries\AiOps\AiOpsManager;
 use App\Libraries\SiteSettingsOverride;
 use CodeIgniter\API\ResponseTrait;
 use Config\Services;
 use Throwable;
 
-class AiOpsAPIController extends BaseController
+class AiOpsAPIController extends BaseAPIController
 {
     use ResponseTrait;
 
@@ -21,33 +21,7 @@ class AiOpsAPIController extends BaseController
 
     protected function guardInternalOrAuthorized(): ?\CodeIgniter\HTTP\ResponseInterface
     {
-        if (is_cli()) {
-            return null;
-        }
-
-        $userId = function_exists('auth') ? auth()->id() : null;
-        if ($userId !== null) {
-            return null;
-        }
-
-        try {
-            $tokenService = service('internalToken');
-        } catch (Throwable $e) {
-            log_message('error', '[API] internalToken service unavailable for {route}: {message}', [
-                'route' => current_url(),
-                'message' => $e->getMessage(),
-            ]);
-
-            return $this->failServerError('Internal processing error');
-        }
-
-        if ($tokenService && method_exists($tokenService, 'allowed') && $tokenService->allowed()) {
-            return null;
-        }
-
-        log_message('warning', '[API] Internal endpoint blocked: {route}', ['route' => current_url()]);
-
-        return $this->failForbidden('Internal endpoint');
+        return $this->authorizeInternalEndpoint(true);
     }
 
     public function status()

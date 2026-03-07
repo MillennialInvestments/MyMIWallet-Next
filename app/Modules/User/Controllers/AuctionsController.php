@@ -1,10 +1,11 @@
 <?php namespace App\Modules\User\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseUserController;
+
 use App\Models\{AuctionBidModel, AuctionItemModel, AuctionLotModel};
 use CodeIgniter\HTTP\ResponseInterface;
 
-class AuctionsController extends UserController
+class AuctionsController extends BaseUserController
 {
     protected AuctionItemModel $itemModel;
     protected AuctionLotModel $lotModel;

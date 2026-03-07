@@ -2,10 +2,11 @@
 
 namespace App\Modules\User\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseUserController;
+
 use App\Libraries\EconomicDataService;
 
-class EconomyController extends UserController
+class EconomyController extends BaseUserController
 {
     private EconomicDataService $service;
 

@@ -1,9 +1,10 @@
 <?php namespace App\Modules\User\Controllers;
 
-use App\Controllers\UserController;
+use App\Controllers\BaseUserController;
+
 use CodeIgniter\Exceptions\PageNotFoundException;
 
-class PredictionsController extends UserController
+class PredictionsController extends BaseUserController
 {
     protected function svc()
     {

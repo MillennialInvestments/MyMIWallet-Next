@@ -2,10 +2,11 @@
 
 namespace App\Modules\APIs\Controllers;
 
-use CodeIgniter\RESTful\ResourceController;
+use App\Controllers\BaseAPIController;
+
 use App\Services\BitcoinService;
 
-class BitcoinAPIController extends ResourceController
+class BitcoinAPIController extends BaseAPIController
 {
     protected $format = 'json';
 
