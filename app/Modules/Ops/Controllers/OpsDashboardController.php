@@ -12,7 +12,7 @@ use App\Services\OpsExportService;
 use App\Services\OpsImportService;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class OpsManagementController extends UserController
+class OpsDashboardController extends UserController
 {
     private OpsProjectModel $projects;
     private OpsTaskModel $tasks;

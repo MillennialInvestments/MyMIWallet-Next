@@ -14,7 +14,7 @@ final class ClassTrace extends SafeBaseCommand
     protected $group = 'Repo';
     protected $name = 'repo:class-trace';
     protected $description = 'Trace where a class is declared and referenced in the repository.';
-    protected $usage = 'repo:class-trace --class="App\\Modules\\Ops\\Controllers\\OpsManagementController"';
+    protected $usage = 'repo:class-trace --class="App\\Modules\\Ops\\Controllers\\OpsDashboardController"';
 
     public function run(array $params)
     {

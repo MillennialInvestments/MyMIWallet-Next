@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Controllers\UseController;
 use App\Services\Ops\EnvDoctorService;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class OpsHealth extends BaseController
+class OpsHealthController extends UserController
 {
     use ResponseTrait;
 

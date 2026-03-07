@@ -223,7 +223,7 @@ class AppUpdate extends SafeBaseCommand
             $controllers = [
                 \App\Controllers\Home::class,
                 \App\Controllers\Health::class,
-                \App\Controllers\OpsHealth::class,
+                \App\Controllers\OpsHealthController::class,
             ];
             $services = [
                 'cache',

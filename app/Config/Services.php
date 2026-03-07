@@ -149,7 +149,25 @@ class Services extends CoreServices
 
         return new CrudCacheInvalidator();
     }
-    
+
+    public static function docsParser($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('docsParser');
+        }
+
+        return new \App\Services\Docs\DocsParserService();
+    }
+
+    public static function docsSyncEngine($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('docsSyncEngine');
+        }
+
+        return new \App\Services\Docs\DocsSyncEngine();
+    }
+
     public static function myMIAnalytics(bool $getShared = true)
     {
         if ($getShared) {

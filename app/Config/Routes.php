@@ -44,28 +44,15 @@ if (ENVIRONMENT !== 'production') {
         throw new \Exception('Manual test exception');
     });
 }
-$routes->get('ops/health', '\\App\\Controllers\\OpsHealth::index');
+$routes->get('ops/health', '\\App\\Controllers\\OpsHealthController::index');
 $routes->get('Maintenance', 'MaintenanceController::index');
 
-$routes->group('Ops', ['filter' => 'auth'], static function ($routes) {
-    $routes->get('', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::index');
-    $routes->get('projects', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::projects');
-    $routes->post('projects/save', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::saveProject');
-    $routes->get('subprojects', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::subprojects');
-    $routes->post('subprojects/save', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::saveSubproject');
-    $routes->get('tasks', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::tasks');
-    $routes->post('tasks/save', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::saveTask');
-    $routes->post('import/xlsx', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::importXlsx');
-    $routes->get('export/tasks.csv', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::exportTasksCsv');
-    $routes->get('export/workbook.xlsx', 'App\\Modules\\Ops\\Controllers\\OpsManagementController::exportWorkbookXlsx');
-});
-
-$routes->get('API/Ops/health-score', '\\App\\Controllers\\OpsHealth::score');
+$routes->get('API/Ops/health-score', '\\App\\Controllers\\OpsHealthController::score');
 $routes->get('API/Ops/filesystem-status', '\\App\\Controllers\\Api\\OpsFilesystemStatusController::index', ['filter' => 'permission:admin.access']);
 $routes->get('API/docs', '\\App\\Controllers\\Api\\SwaggerDocsController::index', ['filter' => 'permission:admin.access']);
 $routes->group('admin/ops', ['filter' => 'permission:admin.access'], static function ($routes) {
-    $routes->get('health', '\\App\\Controllers\\OpsHealth::index');
-    $routes->post('health/run', '\\App\\Controllers\\OpsHealth::run');
+    $routes->get('health', '\\App\\Controllers\\OpsHealthController::index');
+    $routes->post('health/run', '\\App\\Controllers\\OpsHealthController::run');
 });
 
 // Docs index for AI orchestration
@@ -143,7 +130,7 @@ $routes->group('', ['namespace' => 'App\Controllers'], static function($routes) 
     $routes->get('api/health', 'Api\\HealthController::index'); // convenient alias
     $routes->get('api/admin/chat-usage', 'Api\\AdminChatUsageController::index', ['filter' => 'permission:admin.access']);
     $routes->post('api/aiops/manual-run', 'Api\\AiOpsManualRunController::run', ['filter' => 'permission:admin.access']);
-    $routes->get('ops/health', 'OpsHealth::index');
+    $routes->get('ops/health', 'OpsHealthController::index');
 
     // Ops (protected by X-OPCACHE-RESET header)
     $routes->get('_ops/opcache-reset', 'Ops::opcacheReset');
@@ -1350,6 +1337,19 @@ $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers
     });
 });
 
+$routes->group('Ops', ['namespace' => 'App\Modules\Ops\Controllers'], function($routes) {
+    $routes->get('', 'OpsDashboardController::index');
+    $routes->get('projects', 'OpsDashboardController::projects');
+    $routes->post('projects/save', 'OpsDashboardController::saveProject');
+    $routes->get('subprojects', 'OpsDashboardController::subprojects');
+    $routes->post('subprojects/save', 'OpsDashboardController::saveSubproject');
+    $routes->get('tasks', 'OpsDashboardController::tasks');
+    $routes->post('tasks/save', 'OpsDashboardController::saveTask');
+    $routes->post('import/xlsx', 'OpsDashboardController::importXlsx');
+    $routes->get('export/tasks.csv', 'OpsDashboardController::exportTasksCsv');
+    $routes->get('export/workbook.xlsx', 'OpsDashboardController::exportWorkbookXlsx');
+
+});
 $routes->group('Search', ['namespace' => 'App\Modules\APIs\Controllers'], function($routes) {
     $routes->get('/', 'SearchController::index');
 });
