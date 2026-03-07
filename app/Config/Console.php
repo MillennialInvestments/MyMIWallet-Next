@@ -391,6 +391,8 @@ class Console extends BaseConfig
         |----------------------------------------------------------------------
         */
         \App\Commands\Repo\ClassScan::class,
+        \App\Commands\Repo\ClassTrace::class,
+        \App\Commands\Repo\DiffSplit::class,
         \App\Commands\Repo\Health::class,
 
         /*
@@ -402,6 +404,7 @@ class Console extends BaseConfig
         \App\Commands\Route\Benchmark::class,
         \App\Commands\Route\Debug::class,
         \App\Commands\Route\Docs::class,
+        \App\Commands\Route\Reconcile::class,
         \App\Commands\Route\Repair::class,
         
         /*
