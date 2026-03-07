@@ -1,13 +1,13 @@
 {
-    "generated_utc": "2026-03-06T13:43:20Z",
+    "generated_utc": "2026-03-07T02:30:56Z",
     "environment": "development",
     "mode": "all",
     "limit": 0,
     "summary": {
-        "total": 1489,
+        "total": 1491,
         "methods": {
-            "GET": 981,
-            "POST": 488,
+            "GET": 982,
+            "POST": 489,
             "PUT": 3,
             "DELETE": 11,
             "PATCH": 0,
@@ -19,7 +19,7 @@
             "Public/User": 745,
             "API": 722,
             "Admin": 13,
-            "Ops": 9
+            "Ops": 11
         }
     },
     "routes": [
@@ -8531,6 +8531,20 @@
         {
             "method": "POST",
             "route": "Ops/projects/save",
+            "handler": "unknown_handler",
+            "surface": "Ops",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Ops/subprojects",
+            "handler": "unknown_handler",
+            "surface": "Ops",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Ops/subprojects/save",
             "handler": "unknown_handler",
             "surface": "Ops",
             "issues": []

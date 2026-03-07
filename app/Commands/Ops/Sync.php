@@ -18,28 +18,36 @@ final class Sync extends SafeBaseCommand
     {
         CLI::write('Running ops:sync pipeline...', 'yellow');
 
-        $cmds = [
-            'php spark git:workspace:guard',
-            'php spark git:pull:safe',
-            'php spark routes:docs --mode=all',
-            'php spark gtm:launch:audit',
-            'php spark repo:health',
+        $commands = [
+            ['git:workspace:guard', []],
+            ['git:pull:safe', []],
+            ['routes:docs', ['--mode=all']],
+            ['gtm:launch:audit', []],
+            ['repo:health', []],
         ];
 
-        foreach ($cmds as $cmd) {
-            CLI::write("\n> " . $cmd, 'cyan');
-            $out = $this->runShell($cmd);
-            CLI::write($out);
+        $runner = service('commands');
+
+        foreach ($commands as [$command, $args]) {
+
+            CLI::write("\n> php spark {$command} " . implode(' ', $args), 'cyan');
+
+            try {
+
+                $result = $runner->run($command, $args);
+
+                if ($result !== EXIT_SUCCESS) {
+                    CLI::error("Command returned non-zero status: {$command}");
+                }
+
+            } catch (\Throwable $e) {
+
+                CLI::error("Command failed: {$command}");
+                CLI::error($e->getMessage());
+
+            }
         }
 
         CLI::write("\nops:sync complete.", 'green');
-    }
-
-    private function runShell(string $cmd): string
-    {
-        if (!function_exists('shell_exec')) {
-            return "shell_exec disabled; cannot run: {$cmd}\n";
-        }
-        return (string) shell_exec($cmd . ' 2>&1');
     }
 }

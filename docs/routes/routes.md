@@ -1,14 +1,14 @@
 # Routes Export
 
-- Generated (UTC): `2026-03-06T13:43:20Z`
+- Generated (UTC): `2026-03-07T02:30:56Z`
 - Environment: `development`
 - Mode: `all`
 - Limit: `0`
 
 ## Summary
-- Total routes: `1489`
-- Methods: `{"GET":981,"POST":488,"PUT":3,"DELETE":11,"PATCH":0,"OPTIONS":0,"CLI":1,"OTHER":5}`
-- Surface groups: `{"Public/User":745,"API":722,"Admin":13,"Ops":9}`
+- Total routes: `1491`
+- Methods: `{"GET":982,"POST":489,"PUT":3,"DELETE":11,"PATCH":0,"OPTIONS":0,"CLI":1,"OTHER":5}`
+- Surface groups: `{"Public/User":745,"API":722,"Admin":13,"Ops":11}`
 
 ## Routes
 
@@ -1230,6 +1230,8 @@
 | POST | Ops/import/xlsx | unknown_handler | Ops |  |
 | GET | Ops/projects | unknown_handler | Ops |  |
 | POST | Ops/projects/save | unknown_handler | Ops |  |
+| GET | Ops/subprojects | unknown_handler | Ops |  |
+| POST | Ops/subprojects/save | unknown_handler | Ops |  |
 | GET | Ops/tasks | unknown_handler | Ops |  |
 | POST | Ops/tasks/save | unknown_handler | Ops |  |
 | GET | Performance | unknown_handler | Public/User |  |

@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-03-06T12:00:01Z
+> Run: 2026-03-07T02:00:02Z
 
 - docs/APIs/_inventory_controllers.md
   - Last updated: 2026-02-28
@@ -79,6 +79,9 @@
   - Change type: unchanged
 - docs/_ops/filesystem-trend.md
   - Last updated: 2026-02-10
+  - Change type: unchanged
+- docs/_repo/class_integrity_report.md
+  - Last updated: 2026-03-06
   - Change type: unchanged
 - docs/_support/aiops-init.md
   - Last updated: 2026-02-20
@@ -235,6 +238,9 @@
   - Change type: unchanged
 - docs/_support/spark-reset/20260226-024907/summary.md
   - Last updated: 2026-02-26
+  - Change type: unchanged
+- docs/_support/spark-reset/20260306-133918/summary.md
+  - Last updated: 2026-03-06
   - Change type: unchanged
 - docs/adr/0001-standards-and-response-contract.md
   - Last updated: 2025-11-08
@@ -1320,7 +1326,7 @@
   - Last updated: 2026-03-01
   - Change type: unchanged
 - docs/launch/launch_readiness_audit.md
-  - Last updated: 2026-03-05
+  - Last updated: 2026-03-06
   - Change type: unchanged
 - docs/launch/launch_smoke_results.md
   - Last updated: 2026-03-01

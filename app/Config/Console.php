@@ -390,6 +390,7 @@ class Console extends BaseConfig
         | Repo
         |----------------------------------------------------------------------
         */
+        \App\Commands\Repo\ClassScan::class,
         \App\Commands\Repo\Health::class,
 
         /*

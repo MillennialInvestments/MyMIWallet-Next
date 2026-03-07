@@ -1,15 +1,15 @@
 # Launch Readiness Audit (Phase A)
 
 ## run_meta
-- timestamp_utc: `2026-03-06T13:40:48+00:00`
-- git_commit: `93011cb8f`
+- timestamp_utc: `2026-03-07T02:30:56+00:00`
+- git_commit: `119139eea`
 - env: `development`
 - command: `php spark gtm:launch:audit`
 
 ## route scan summary
-- total routes discovered: 1044
+- total routes discovered: 1046
 - Phase A routes included: 29
-- Excluded routes: 1015
+- Excluded routes: 1017
 
 ### Included user-facing routes (Phase A)
 - `GET /login` => `AuthController::login`
@@ -50,6 +50,8 @@
 - `GET /Maintenance` => `MaintenanceController::index`
 - `GET /projects` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::projects`
 - `POST /projects/save` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::saveProject`
+- `GET /subprojects` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::subprojects`
+- `POST /subprojects/save` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::saveSubproject`
 - `GET /tasks` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::tasks`
 - `POST /tasks/save` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::saveTask`
 - `POST /import/xlsx` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::importXlsx`
@@ -81,16 +83,16 @@
 - `GET /Learn/(:segment)` => `App\Modules\Public\Controllers\PublicPagesController::show/$1`
 - `GET /Alerts/Preview/(:segment)` => `AlertsController::preview/$1`
 - `GET /Preview/Alert/(:segment)` => `AlertsController::preview/$1`
-- `GET /Privacy-Policy` => `Home::privacyPolicy`
-- `GET /Legal/Privacy-Policy` => `Home::privacyPolicy`
 
 ## route->controller integrity scan
-- scanned: 1043
-- missing targets: 467
+- scanned: 1045
+- missing targets: 469
 - ❌ `GET /healthz => System\HealthController::healthz`
 - ❌ `GET /ops/health => \\App\\Controllers\\OpsHealth::index`
 - ❌ `GET /projects => App\\Modules\\Ops\\Controllers\\OpsManagementController::projects`
 - ❌ `POST /projects/save => App\\Modules\\Ops\\Controllers\\OpsManagementController::saveProject`
+- ❌ `GET /subprojects => App\\Modules\\Ops\\Controllers\\OpsManagementController::subprojects`
+- ❌ `POST /subprojects/save => App\\Modules\\Ops\\Controllers\\OpsManagementController::saveSubproject`
 - ❌ `GET /tasks => App\\Modules\\Ops\\Controllers\\OpsManagementController::tasks`
 - ❌ `POST /tasks/save => App\\Modules\\Ops\\Controllers\\OpsManagementController::saveTask`
 - ❌ `POST /import/xlsx => App\\Modules\\Ops\\Controllers\\OpsManagementController::importXlsx`
@@ -587,7 +589,7 @@
 - gtm:launch:smoke: `present`
 
 ## blockers list
-- Missing route targets detected: 467
+- Missing route targets detected: 469
 
 ## decision
 - **HOLD**

@@ -1,8 +1,68 @@
 {
     "docs": {
+        "docs/APIs/_inventory_controllers.md": {
+            "hash": "843a8072ca5a7be4ec53a00f8e9f3f569c3376479fecbbea23c291e3595833a9",
+            "mtime": "2026-02-28"
+        },
+        "docs/APIs/_inventory_filters.md": {
+            "hash": "e1632132526dfa9d53ce3d42b3c554418f5f4d41a5d9f6a94ff0bacca4a4b454",
+            "mtime": "2026-02-28"
+        },
+        "docs/APIs/_inventory_rate_limits.md": {
+            "hash": "55f34171019667d83ab0b7f5763bcf8c67238fde46fbfc998f9f677b7c372b8d",
+            "mtime": "2026-02-28"
+        },
+        "docs/APIs/_inventory_routes.md": {
+            "hash": "a2392dba8744dad1e3aa4c43060f13bf3101ec9bcfbcab2ceb21da672772a4b6",
+            "mtime": "2026-02-28"
+        },
+        "docs/APIs/api_audit_latest.md": {
+            "hash": "d91a5365baa5b45c9bf67db94410979ecd35780de1340acb53bbc19fd4d18c4e",
+            "mtime": "2026-02-21"
+        },
+        "docs/APIs/audit/20260226-032119_bdb17080249dcd27/report.md": {
+            "hash": "7bb444c00fc0272191bddb778e9f5458f3ebe51db5a09bf15e8c97238b8cc80a",
+            "mtime": "2026-02-28"
+        },
+        "docs/APIs/audit/latest.md": {
+            "hash": "7bb444c00fc0272191bddb778e9f5458f3ebe51db5a09bf15e8c97238b8cc80a",
+            "mtime": "2026-02-28"
+        },
+        "docs/APIs/deprecations.md": {
+            "hash": "2ca2382bea48c6185fe6eb27f12fd769df7fb248a2e61b87aea6c7ddc8453c8f",
+            "mtime": "2026-02-28"
+        },
+        "docs/APIs/list/latest.md": {
+            "hash": "9e37b3c6ebb8a06692633c21a44f638acecf5b3a231e0bd37467844bfd935e38",
+            "mtime": "2026-02-28"
+        },
+        "docs/APIs/rate-limit-coverage.md": {
+            "hash": "a2444b58d89ad92caa04f16840f01f27e8a7940ef1ae2d048d3b7468c460670b",
+            "mtime": "2026-02-28"
+        },
         "docs/CRON.md": {
             "hash": "c258ac5806f50a3530b0f969984285dfc42fa3fe489d112c836519646d94b241",
             "mtime": "2026-01-30"
+        },
+        "docs/Github/temporary/gtm_gap-001/validation.md": {
+            "hash": "09771fbada243adf484bb7d6d68973573d6f5c3376f1932512ec0d1c489e024f",
+            "mtime": "2026-02-28"
+        },
+        "docs/Github/temporary/gtm_gap-002/validation.md": {
+            "hash": "3cfe2cfb2eb265345d0aabb72b11545d9d0b5bb2d4f08f6325d98c1c41d3dc4c",
+            "mtime": "2026-02-28"
+        },
+        "docs/Github/temporary/gtm_gap-003/validation.md": {
+            "hash": "9fb8678c040b6183c644c9b5cd8fe2c87dd57807c68802679434ffa64aa9f006",
+            "mtime": "2026-02-28"
+        },
+        "docs/Github/temporary/gtm_gap-004/validation.md": {
+            "hash": "ec5975e41995e85c4c4e35d61d99dbe667953998f7ee4aef4013f09447ce24ad",
+            "mtime": "2026-03-01"
+        },
+        "docs/Github/temporary/ollama-patch-pipeline-fallback/README.md": {
+            "hash": "d47cfb0a8ba774fb8227b2f333b429b37bd54fc7d3ad71221ecf03e6dffddba1",
+            "mtime": "2026-02-28"
         },
         "docs/Kimi/README.md": {
             "hash": "1ea4573d71c02435a078ad00364de045c540afa984851d0018c2061ffaa03bc2",
@@ -44,6 +104,10 @@
             "hash": "9bcc06aaf508ce4686520b5884511d97e997da07eb0d1bb833e8b28e0cd394b9",
             "mtime": "2026-02-10"
         },
+        "docs/_repo/class_integrity_report.md": {
+            "hash": "dfe518bf21e9d5cb2a9d84031cda6bbd549aad5f64fe78aa1c602facfaeb0cb7",
+            "mtime": "2026-03-06"
+        },
         "docs/_support/aiops-init.md": {
             "hash": "e6d6afb2749947f259a6683fc7727c9ce0c4b38d0d2ef45e0d24b0e14d4a44a9",
             "mtime": "2026-02-20"
@@ -63,6 +127,66 @@
         "docs/_support/api-audit/20260217-200919/summary.md": {
             "hash": "e39b328dcda3e14d13498735c0ad9b545ecb82cf19974c96780b0e0211f0f1a5",
             "mtime": "2026-02-17"
+        },
+        "docs/_support/config-clear/20260221-034317/summary.md": {
+            "hash": "8556d9d8696508cc1ef6d7814fb3bbc51ed106f416ec67dcc8088bd223b3006b",
+            "mtime": "2026-02-21"
+        },
+        "docs/_support/config-clear/20260221-123013/summary.md": {
+            "hash": "ac89bd5cb805756e802c93e4567aa4d56f1324ab5b43ba2cebe53b5b14293d3f",
+            "mtime": "2026-02-21"
+        },
+        "docs/_support/config-clear/20260221-123209/summary.md": {
+            "hash": "1f307494f72dfa68ef37e141ea47a6a9b1cc3cbf46721d862abdff7606398b0f",
+            "mtime": "2026-02-21"
+        },
+        "docs/_support/config-clear/20260221-141447/summary.md": {
+            "hash": "977e310129242e4a484f1c737efb69a4cccbf13b48c68ce78f7970660f257fc8",
+            "mtime": "2026-02-21"
+        },
+        "docs/_support/config-clear/20260221-175340/summary.md": {
+            "hash": "7e75c5e8a3633973084f9f2e8717d36238fae5eb1912b9f3a952d9e1fcedccd9",
+            "mtime": "2026-02-21"
+        },
+        "docs/_support/config-clear/20260222-004516/summary.md": {
+            "hash": "08a193432e61c43ecf4f6f090ffecd247fab62f48ef5ab538ce19b2efa24bcb2",
+            "mtime": "2026-02-22"
+        },
+        "docs/_support/config-clear/20260222-033759/summary.md": {
+            "hash": "3c64bc41a2c6b32be24049d03aa5dcf94d7f517704bb1c94f9cbd91b3597c817",
+            "mtime": "2026-02-22"
+        },
+        "docs/_support/config-clear/20260222-224306/summary.md": {
+            "hash": "f7c813a3c799b47bc88fb83544aa998f2b7b3cbd63cf072f9ad12f163eaff395",
+            "mtime": "2026-02-22"
+        },
+        "docs/_support/config-clear/20260222-230252/summary.md": {
+            "hash": "d16a0f6da36a2ba3b657ebda98e4ff0adf29f2a4c54c90807b994fb80d83435c",
+            "mtime": "2026-02-22"
+        },
+        "docs/_support/config-clear/20260222-230405/summary.md": {
+            "hash": "0e57fed8803b23a1c326bfcef720782c39f930f8a4572aa61b7c030a8782e47a",
+            "mtime": "2026-02-22"
+        },
+        "docs/_support/config-clear/20260222-230452/summary.md": {
+            "hash": "1c068e96a26957ad6c2205608adf0cc806724fb166607279ad0ba9a6750a7022",
+            "mtime": "2026-02-22"
+        },
+        "docs/_support/config-clear/20260223-002620/summary.md": {
+            "hash": "47cba0ee80159865232a0b35b359495338bae4505e1d0d59de85f85eca75705b",
+            "mtime": "2026-02-23"
+        },
+        "docs/_support/config-clear/20260223-005145/summary.md": {
+            "hash": "d9fd57c11e2da4b54d32df139bbf471ad045e252814b658aa42fe989661c6e1b",
+            "mtime": "2026-02-23"
+        },
+        "docs/_support/config-clear/20260225-005807/summary.md": {
+            "hash": "f7a435ce6949e3743dd380137c9cd6d526d19b329c6c278fe22d3c1410a25bd8",
+            "mtime": "2026-02-25"
+        },
+        "docs/_support/config-clear/20260225-011911/summary.md": {
+            "hash": "71f224b4c38a728926ba1bdfd4a834a2404ef59014fd7e3ad3107cd0dc213a50",
+            "mtime": "2026-02-25"
         },
         "docs/_support/fix-503/20260215-005841/summary.md": {
             "hash": "1c66abd41175accca99c17d261e18dc2abc7355a95c21015489a1a946ae385ba",
@@ -155,6 +279,46 @@
         "docs/_support/runtime-triage/20260215-010146/summary.md": {
             "hash": "9a38f0bd9ec7ce092be0073f53ceabafa44bf7e14e6bd61ced9c02364a40f9f9",
             "mtime": "2026-02-15"
+        },
+        "docs/_support/spark-reset/20260221-034349/summary.md": {
+            "hash": "f9e06f9e314826ba2e91d646b4f44530eb8a021ffdaa61c51432d2954c4861fe",
+            "mtime": "2026-02-21"
+        },
+        "docs/_support/spark-reset/20260221-123005/summary.md": {
+            "hash": "fdec6a0d9f41e793b50f3bafc5c667914b809f0d5cc3b9d2b2d257cc15f71546",
+            "mtime": "2026-02-21"
+        },
+        "docs/_support/spark-reset/20260221-123211/summary.md": {
+            "hash": "43c4a56e4d9ff3906437f78b460a3f4086cabd77be18118033f39031a885af01",
+            "mtime": "2026-02-21"
+        },
+        "docs/_support/spark-reset/20260221-141452/summary.md": {
+            "hash": "6b988fb6459ac280ed339fda11cc6cc5e05ed1a014c6f17916d246e45298b3aa",
+            "mtime": "2026-02-21"
+        },
+        "docs/_support/spark-reset/20260221-175347/summary.md": {
+            "hash": "f4dba227b4c9e2c01bd4a79eb39ef324aa227c968c89e72e7f09803843952257",
+            "mtime": "2026-02-21"
+        },
+        "docs/_support/spark-reset/20260222-033804/summary.md": {
+            "hash": "1c91416670dc65f40a41c58b1d40d3972ee727bf74417c58676f1c30e1b62b05",
+            "mtime": "2026-02-22"
+        },
+        "docs/_support/spark-reset/20260223-002623/summary.md": {
+            "hash": "f5b8931342b8f0d103dbe18a073faa6df438643a84d31a481c19c1b4192c581b",
+            "mtime": "2026-02-23"
+        },
+        "docs/_support/spark-reset/20260225-005815/summary.md": {
+            "hash": "3351cc8561f355981c28c5ab6c8ba25f8ff203efca0b3df425348362e18501f0",
+            "mtime": "2026-02-25"
+        },
+        "docs/_support/spark-reset/20260226-024907/summary.md": {
+            "hash": "e8dd417821417fd1ceb1d2c9c5c7f16e3296f6d00f15e88f0bfd4f6777f87003",
+            "mtime": "2026-02-26"
+        },
+        "docs/_support/spark-reset/20260306-133918/summary.md": {
+            "hash": "204af1653e5d6adb4118a6f46deab26cf49f5fbf79cbd02cf161152278b55d9d",
+            "mtime": "2026-03-06"
         },
         "docs/adr/0001-standards-and-response-contract.md": {
             "hash": "3e6ddaeef644d044c1805c18def40543195c9ba32fd352610e417ab2aa410530",
@@ -1539,6 +1703,90 @@
         "docs/kimi-k2-integration.md": {
             "hash": "7477c47167bbaeaa87b2cf57d5ee30917a0d31c4e3912584b6af758827aac9dd",
             "mtime": "2026-02-15"
+        },
+        "docs/launch/aiops_ollama_dependency_audit.md": {
+            "hash": "33417a553d11656fd9489ecd2426835c64b0e0106dd8b2527fdcf6ede174656f",
+            "mtime": "2026-02-28"
+        },
+        "docs/launch/aiops_patch_pipeline_audit.md": {
+            "hash": "33c2762db84d16d6402f5d9177f15b3303d339c5f052395c4ed6d5b653980a3b",
+            "mtime": "2026-02-28"
+        },
+        "docs/launch/core_flow_smoke_tests.md": {
+            "hash": "7380de0fa19e0f1a42fa60870943cb528e1ab472d98342a73d14012374407bd1",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/cron_route_security_validation.md": {
+            "hash": "cb6a88b590d2b2a62c81511a3668fcc5f3209df5e188417029f19f218a703316",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/customer_interaction_matrix.md": {
+            "hash": "a7fecfe9e3329d80e0c303fbc9e073cfda2cb370f1345b83011eb100976f6c27",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/daily_health_snapshot.md": {
+            "hash": "ae89b1c705963d755d93a3a23deba5bddda022989c76c9a3b972abfec7d9f6cc",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/error_pages_and_logging.md": {
+            "hash": "220b4197d02271a9a66d8330644f144f332c18039c891e020ebbcf0a7a775a2f",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/external_api_cost_controls.md": {
+            "hash": "e4623bed9ba4b1fefa4028d38f17749ceaf14c062fcfc460bf0a7cb59a9a5fbe",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/functional_hardening_queue.md": {
+            "hash": "81f701bdaacb756da00923a661576eb5a9101b58fb4ccd00033086b265054df4",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/gtm_blockers_today.md": {
+            "hash": "9c1ebcf5db4aa7f0e8d0132b946cd01a424d9429fe12c78a96b626b1ba0ce757",
+            "mtime": "2026-02-28"
+        },
+        "docs/launch/gtm_change_log.md": {
+            "hash": "2c90ee3a7c3390a4912eaea13f8cb1b88c47fefcb491cc872dfb5079f8cca832",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/gtm_execution_queue.md": {
+            "hash": "799eea930188869b3ffda89d37301a0801aef2c81f47131c140137a93dced303",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/gtm_next_steps_for_chatgpt.md": {
+            "hash": "b3efb3b917832eb3e1096e188b344c7f477ec7c0f2490db74dfc76552c5e7a0a",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/gtm_readiness_report.md": {
+            "hash": "70d2a82d8ddc5dca2b6d4253f521d907d892e6573f0e48b7c7ec11318647fe62",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/gtm_test_matrix.md": {
+            "hash": "69bafb32485328993fc6bab455b23638ede3d799e339eaff1d165fbca15fc3f8",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/launch_readiness_audit.md": {
+            "hash": "ddfb4ec22df9931bda312931fbb2b473d52d0f991aaf25f436332819a01cca61",
+            "mtime": "2026-03-06"
+        },
+        "docs/launch/launch_smoke_results.md": {
+            "hash": "043390d690b323d428df1b5dc561a1303b3501923ce56e99faab2cb043554aab",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/manual_qa_checklist.md": {
+            "hash": "6d50b315814b222deb262a76b25da7da9d8d25bf75a00675782040667dbe586b",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/ops_observability.md": {
+            "hash": "64449da8451947ccb98f58e7a015419d19e6eba03e98ff1a8bfddb6fd8731629",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/security_access_control.md": {
+            "hash": "f1f33ed834ae2f129d142465bd12ced3f6f49bead57448ba4c40f8a56ba6efd8",
+            "mtime": "2026-03-01"
+        },
+        "docs/launch/trust_and_compliance.md": {
+            "hash": "34cd463611f2d9a805c139c4312c1016b8c84cba9a3a70074bb8d833622e9337",
+            "mtime": "2026-03-01"
         },
         "docs/legal/crypto_customer_agreement/README.md": {
             "hash": "961489fe6589e9d79acaae4861889a59c167cacdd1a1d49616cb86710f5028fa",
@@ -4108,6 +4356,10 @@
             "hash": "1735e1c4e9d594d92158b55ff54311a7f02e5c682f6429d23111c7f161b62f27",
             "mtime": "2025-12-16"
         },
+        "docs/routes/routes.md": {
+            "hash": "3d4e5bb19add96318e3c389ce4b1549904a1e1b8bfd7060c26f6cef48a92c186",
+            "mtime": "2026-03-06"
+        },
         "docs/routes/routes_audit.md": {
             "hash": "4de9fe39a7f53b56994c09b48859c846075870d92c59e6827596017980468cfc",
             "mtime": "2025-12-16"
@@ -4155,6 +4407,14 @@
         "docs/security/csp.md": {
             "hash": "8d9e4ca5772b2027c557aad70a45add948ce6e3852a65540c520b9840262f17c",
             "mtime": "2026-01-25"
+        },
+        "docs/security/endpoint-permission-matrix.md": {
+            "hash": "047fbe6e0f53669b69807963e5889230276a5dba3a48c546a7cd66bdbb0e6805",
+            "mtime": "2026-02-28"
+        },
+        "docs/security/filter-coverage.md": {
+            "hash": "bc6fe06a761698e51d391a56edab5171ae90ab08a7607013dbb654a315b5836c",
+            "mtime": "2026-02-28"
         },
         "docs/security/public_routes_inventory.md": {
             "hash": "19f39f7d0054f62d3bfd9c03a63eab9bfa933db95b8a3979c58deaf5f8dde7cc",
@@ -4396,6 +4656,42 @@
             "hash": "9437bda6c9c68e698ee3b2fd80609027b1122822acfe959c338ca0d0d2fb2a85",
             "mtime": "2026-01-17"
         },
+        "docs/trading/codeigniter4/README.md": {
+            "hash": "65be4b7211f54454d9019f7f755759df9bb349c1d024876d589034bd6da4cfd3",
+            "mtime": "2026-02-22"
+        },
+        "docs/trading/codeigniter4/architecture.md": {
+            "hash": "f6ae5b2a3cd02e03aada753a468cabb2c567a1d1c233ac13c168cc8f2c50e2e0",
+            "mtime": "2026-02-22"
+        },
+        "docs/trading/codeigniter4/cron.md": {
+            "hash": "6529994ff2e561bbb6e9c521ef2944d5b1287e84ad6999360c04603ca375dd03",
+            "mtime": "2026-02-22"
+        },
+        "docs/trading/codeigniter4/endpoints.md": {
+            "hash": "d8adde960f7e8e2d08ef9ca8f411f976875331a97080cac033eff26ce1edad20",
+            "mtime": "2026-02-22"
+        },
+        "docs/trading/codeigniter4/integration-alerts.md": {
+            "hash": "a74a0c8e126b1c6ccb8adc615dfc4050b71491899872c4f54c403096525500e8",
+            "mtime": "2026-02-24"
+        },
+        "docs/trading/codeigniter4/providers.md": {
+            "hash": "3fc150148a50e15f27d1d2c67d84234d4fcbbae5e6d0f355f65c7dc01c3a663f",
+            "mtime": "2026-02-22"
+        },
+        "docs/trading/codeigniter4/schema.md": {
+            "hash": "afe75c601a92620437aa644725617242dec215801920effa78248c12c0af6c76",
+            "mtime": "2026-02-22"
+        },
+        "docs/trading/codeigniter4/signals.md": {
+            "hash": "e750771b83bbdbfecb4e0f4bbcbccba3ff8c0bddf09f344789253b7055c1ab2b",
+            "mtime": "2026-02-22"
+        },
+        "docs/trading/codeigniter4/testing.md": {
+            "hash": "5d66e6ef4d27393eebd7c0cafc9c73ed65daf1bda045447444420fee78a0b383",
+            "mtime": "2026-02-22"
+        },
         "docs/trading/datapoint-groups/MyMI-Momentum-and-Inflow-Core.md": {
             "hash": "f86177c8dc6824a96b5281872bb516ce54c1fff79be8ac5b7347973309f9fde4",
             "mtime": "2026-01-21"
@@ -4412,9 +4708,17 @@
             "hash": "14ab980c315ab8ba4c135e0d69173f7ad30e30704c5b0c10d71623b2e52e1f57",
             "mtime": "2026-01-21"
         },
+        "docs/trading/thinkorswim/scanners/MyMI-Liquidity-Scanner.md": {
+            "hash": "f1741c11cdb27c3211c3e432f7b9544438e894170d47e1b270af454c201c8945",
+            "mtime": "2026-02-22"
+        },
         "docs/trading/thinkorswim/scanners/MyMI-Momentum-Alignment.md": {
             "hash": "031753426f5e03779f04ccb1fb0858dfbb47633d12209b53e6cef0f50dc2628f",
             "mtime": "2026-01-21"
+        },
+        "docs/trading/thinkorswim/studies/MyMI-Liquidity-Scanner.md": {
+            "hash": "0f85e74aef59c6b36561004029bb19d78392510761e092c3f25e0d8d0a0b361c",
+            "mtime": "2026-02-22"
         },
         "docs/trading/thinkorswim/studies/MyMI-Momentum-Pressure.md": {
             "hash": "185d6dcdc78c271acf4a37e3f658c53ace5de42793484e762b5e00550ced062f",
@@ -4427,6 +4731,10 @@
         "docs/trading/tradingview/indicators/MyMI-Flow-Momentum.md": {
             "hash": "65098caf973d0a639bc4a7a936eaf843818c76cc98a7b47c6b142436cb09ac46",
             "mtime": "2026-01-21"
+        },
+        "docs/trading/tradingview/indicators/MyMI-Liquidity-Scanner.md": {
+            "hash": "74a39c478052d58bbf951a633116f6f3ce762fb332b6e5a82aa6ea1959b14b2c",
+            "mtime": "2026-02-22"
         },
         "docs/trading/workflows/MyMI-Daily-Trading-Workflow.md": {
             "hash": "baf8f677c91c82e31173b7ec590f31af8be93dcb345bccf3459e873db2244efe",
@@ -4567,321 +4875,7 @@
         "docs/wallets/wallets_workflow.md": {
             "hash": "eb51973b24eb162f1b8cf2ca2c86f53badfc063bbd48cd1ae96735ee24483597",
             "mtime": "2025-11-16"
-        },
-        "docs/_support/config-clear/20260221-034317/summary.md": {
-            "hash": "8556d9d8696508cc1ef6d7814fb3bbc51ed106f416ec67dcc8088bd223b3006b",
-            "mtime": "2026-02-21"
-        },
-        "docs/_support/spark-reset/20260221-034349/summary.md": {
-            "hash": "f9e06f9e314826ba2e91d646b4f44530eb8a021ffdaa61c51432d2954c4861fe",
-            "mtime": "2026-02-21"
-        },
-        "docs/_support/config-clear/20260221-123013/summary.md": {
-            "hash": "ac89bd5cb805756e802c93e4567aa4d56f1324ab5b43ba2cebe53b5b14293d3f",
-            "mtime": "2026-02-21"
-        },
-        "docs/_support/config-clear/20260221-123209/summary.md": {
-            "hash": "1f307494f72dfa68ef37e141ea47a6a9b1cc3cbf46721d862abdff7606398b0f",
-            "mtime": "2026-02-21"
-        },
-        "docs/_support/spark-reset/20260221-123005/summary.md": {
-            "hash": "fdec6a0d9f41e793b50f3bafc5c667914b809f0d5cc3b9d2b2d257cc15f71546",
-            "mtime": "2026-02-21"
-        },
-        "docs/_support/spark-reset/20260221-123211/summary.md": {
-            "hash": "43c4a56e4d9ff3906437f78b460a3f4086cabd77be18118033f39031a885af01",
-            "mtime": "2026-02-21"
-        },
-        "docs/_support/config-clear/20260221-141447/summary.md": {
-            "hash": "977e310129242e4a484f1c737efb69a4cccbf13b48c68ce78f7970660f257fc8",
-            "mtime": "2026-02-21"
-        },
-        "docs/_support/spark-reset/20260221-141452/summary.md": {
-            "hash": "6b988fb6459ac280ed339fda11cc6cc5e05ed1a014c6f17916d246e45298b3aa",
-            "mtime": "2026-02-21"
-        },
-        "docs/APIs/api_audit_latest.md": {
-            "hash": "d91a5365baa5b45c9bf67db94410979ecd35780de1340acb53bbc19fd4d18c4e",
-            "mtime": "2026-02-21"
-        },
-        "docs/_support/config-clear/20260221-175340/summary.md": {
-            "hash": "7e75c5e8a3633973084f9f2e8717d36238fae5eb1912b9f3a952d9e1fcedccd9",
-            "mtime": "2026-02-21"
-        },
-        "docs/_support/spark-reset/20260221-175347/summary.md": {
-            "hash": "f4dba227b4c9e2c01bd4a79eb39ef324aa227c968c89e72e7f09803843952257",
-            "mtime": "2026-02-21"
-        },
-        "docs/_support/config-clear/20260222-004516/summary.md": {
-            "hash": "08a193432e61c43ecf4f6f090ffecd247fab62f48ef5ab538ce19b2efa24bcb2",
-            "mtime": "2026-02-22"
-        },
-        "docs/_support/config-clear/20260222-033759/summary.md": {
-            "hash": "3c64bc41a2c6b32be24049d03aa5dcf94d7f517704bb1c94f9cbd91b3597c817",
-            "mtime": "2026-02-22"
-        },
-        "docs/_support/spark-reset/20260222-033804/summary.md": {
-            "hash": "1c91416670dc65f40a41c58b1d40d3972ee727bf74417c58676f1c30e1b62b05",
-            "mtime": "2026-02-22"
-        },
-        "docs/trading/thinkorswim/scanners/MyMI-Liquidity-Scanner.md": {
-            "hash": "f1741c11cdb27c3211c3e432f7b9544438e894170d47e1b270af454c201c8945",
-            "mtime": "2026-02-22"
-        },
-        "docs/trading/thinkorswim/studies/MyMI-Liquidity-Scanner.md": {
-            "hash": "0f85e74aef59c6b36561004029bb19d78392510761e092c3f25e0d8d0a0b361c",
-            "mtime": "2026-02-22"
-        },
-        "docs/trading/tradingview/indicators/MyMI-Liquidity-Scanner.md": {
-            "hash": "74a39c478052d58bbf951a633116f6f3ce762fb332b6e5a82aa6ea1959b14b2c",
-            "mtime": "2026-02-22"
-        },
-        "docs/trading/codeigniter4/README.md": {
-            "hash": "65be4b7211f54454d9019f7f755759df9bb349c1d024876d589034bd6da4cfd3",
-            "mtime": "2026-02-22"
-        },
-        "docs/trading/codeigniter4/architecture.md": {
-            "hash": "f6ae5b2a3cd02e03aada753a468cabb2c567a1d1c233ac13c168cc8f2c50e2e0",
-            "mtime": "2026-02-22"
-        },
-        "docs/trading/codeigniter4/cron.md": {
-            "hash": "6529994ff2e561bbb6e9c521ef2944d5b1287e84ad6999360c04603ca375dd03",
-            "mtime": "2026-02-22"
-        },
-        "docs/trading/codeigniter4/endpoints.md": {
-            "hash": "d8adde960f7e8e2d08ef9ca8f411f976875331a97080cac033eff26ce1edad20",
-            "mtime": "2026-02-22"
-        },
-        "docs/trading/codeigniter4/providers.md": {
-            "hash": "3fc150148a50e15f27d1d2c67d84234d4fcbbae5e6d0f355f65c7dc01c3a663f",
-            "mtime": "2026-02-22"
-        },
-        "docs/trading/codeigniter4/schema.md": {
-            "hash": "afe75c601a92620437aa644725617242dec215801920effa78248c12c0af6c76",
-            "mtime": "2026-02-22"
-        },
-        "docs/trading/codeigniter4/signals.md": {
-            "hash": "e750771b83bbdbfecb4e0f4bbcbccba3ff8c0bddf09f344789253b7055c1ab2b",
-            "mtime": "2026-02-22"
-        },
-        "docs/trading/codeigniter4/testing.md": {
-            "hash": "5d66e6ef4d27393eebd7c0cafc9c73ed65daf1bda045447444420fee78a0b383",
-            "mtime": "2026-02-22"
-        },
-        "docs/_support/config-clear/20260222-224306/summary.md": {
-            "hash": "f7c813a3c799b47bc88fb83544aa998f2b7b3cbd63cf072f9ad12f163eaff395",
-            "mtime": "2026-02-22"
-        },
-        "docs/_support/config-clear/20260222-230252/summary.md": {
-            "hash": "d16a0f6da36a2ba3b657ebda98e4ff0adf29f2a4c54c90807b994fb80d83435c",
-            "mtime": "2026-02-22"
-        },
-        "docs/_support/config-clear/20260222-230405/summary.md": {
-            "hash": "0e57fed8803b23a1c326bfcef720782c39f930f8a4572aa61b7c030a8782e47a",
-            "mtime": "2026-02-22"
-        },
-        "docs/_support/config-clear/20260222-230452/summary.md": {
-            "hash": "1c068e96a26957ad6c2205608adf0cc806724fb166607279ad0ba9a6750a7022",
-            "mtime": "2026-02-22"
-        },
-        "docs/_support/config-clear/20260223-002620/summary.md": {
-            "hash": "47cba0ee80159865232a0b35b359495338bae4505e1d0d59de85f85eca75705b",
-            "mtime": "2026-02-23"
-        },
-        "docs/_support/config-clear/20260223-005145/summary.md": {
-            "hash": "d9fd57c11e2da4b54d32df139bbf471ad045e252814b658aa42fe989661c6e1b",
-            "mtime": "2026-02-23"
-        },
-        "docs/_support/spark-reset/20260223-002623/summary.md": {
-            "hash": "f5b8931342b8f0d103dbe18a073faa6df438643a84d31a481c19c1b4192c581b",
-            "mtime": "2026-02-23"
-        },
-        "docs/trading/codeigniter4/integration-alerts.md": {
-            "hash": "a74a0c8e126b1c6ccb8adc615dfc4050b71491899872c4f54c403096525500e8",
-            "mtime": "2026-02-24"
-        },
-        "docs/_support/config-clear/20260225-005807/summary.md": {
-            "hash": "f7a435ce6949e3743dd380137c9cd6d526d19b329c6c278fe22d3c1410a25bd8",
-            "mtime": "2026-02-25"
-        },
-        "docs/_support/config-clear/20260225-011911/summary.md": {
-            "hash": "71f224b4c38a728926ba1bdfd4a834a2404ef59014fd7e3ad3107cd0dc213a50",
-            "mtime": "2026-02-25"
-        },
-        "docs/_support/spark-reset/20260225-005815/summary.md": {
-            "hash": "3351cc8561f355981c28c5ab6c8ba25f8ff203efca0b3df425348362e18501f0",
-            "mtime": "2026-02-25"
-        },
-        "docs/_support/spark-reset/20260226-024907/summary.md": {
-            "hash": "e8dd417821417fd1ceb1d2c9c5c7f16e3296f6d00f15e88f0bfd4f6777f87003",
-            "mtime": "2026-02-26"
-        },
-        "docs/APIs/_inventory_controllers.md": {
-            "hash": "843a8072ca5a7be4ec53a00f8e9f3f569c3376479fecbbea23c291e3595833a9",
-            "mtime": "2026-02-28"
-        },
-        "docs/APIs/_inventory_filters.md": {
-            "hash": "e1632132526dfa9d53ce3d42b3c554418f5f4d41a5d9f6a94ff0bacca4a4b454",
-            "mtime": "2026-02-28"
-        },
-        "docs/APIs/_inventory_rate_limits.md": {
-            "hash": "55f34171019667d83ab0b7f5763bcf8c67238fde46fbfc998f9f677b7c372b8d",
-            "mtime": "2026-02-28"
-        },
-        "docs/APIs/_inventory_routes.md": {
-            "hash": "a2392dba8744dad1e3aa4c43060f13bf3101ec9bcfbcab2ceb21da672772a4b6",
-            "mtime": "2026-02-28"
-        },
-        "docs/APIs/audit/20260226-032119_bdb17080249dcd27/report.md": {
-            "hash": "7bb444c00fc0272191bddb778e9f5458f3ebe51db5a09bf15e8c97238b8cc80a",
-            "mtime": "2026-02-28"
-        },
-        "docs/APIs/audit/latest.md": {
-            "hash": "7bb444c00fc0272191bddb778e9f5458f3ebe51db5a09bf15e8c97238b8cc80a",
-            "mtime": "2026-02-28"
-        },
-        "docs/APIs/deprecations.md": {
-            "hash": "2ca2382bea48c6185fe6eb27f12fd769df7fb248a2e61b87aea6c7ddc8453c8f",
-            "mtime": "2026-02-28"
-        },
-        "docs/APIs/list/latest.md": {
-            "hash": "9e37b3c6ebb8a06692633c21a44f638acecf5b3a231e0bd37467844bfd935e38",
-            "mtime": "2026-02-28"
-        },
-        "docs/APIs/rate-limit-coverage.md": {
-            "hash": "a2444b58d89ad92caa04f16840f01f27e8a7940ef1ae2d048d3b7468c460670b",
-            "mtime": "2026-02-28"
-        },
-        "docs/Github/temporary/gtm_gap-001/validation.md": {
-            "hash": "09771fbada243adf484bb7d6d68973573d6f5c3376f1932512ec0d1c489e024f",
-            "mtime": "2026-02-28"
-        },
-        "docs/Github/temporary/gtm_gap-002/validation.md": {
-            "hash": "3cfe2cfb2eb265345d0aabb72b11545d9d0b5bb2d4f08f6325d98c1c41d3dc4c",
-            "mtime": "2026-02-28"
-        },
-        "docs/Github/temporary/gtm_gap-003/validation.md": {
-            "hash": "9fb8678c040b6183c644c9b5cd8fe2c87dd57807c68802679434ffa64aa9f006",
-            "mtime": "2026-02-28"
-        },
-        "docs/Github/temporary/ollama-patch-pipeline-fallback/README.md": {
-            "hash": "d47cfb0a8ba774fb8227b2f333b429b37bd54fc7d3ad71221ecf03e6dffddba1",
-            "mtime": "2026-02-28"
-        },
-        "docs/launch/aiops_ollama_dependency_audit.md": {
-            "hash": "33417a553d11656fd9489ecd2426835c64b0e0106dd8b2527fdcf6ede174656f",
-            "mtime": "2026-02-28"
-        },
-        "docs/launch/aiops_patch_pipeline_audit.md": {
-            "hash": "33c2762db84d16d6402f5d9177f15b3303d339c5f052395c4ed6d5b653980a3b",
-            "mtime": "2026-02-28"
-        },
-        "docs/launch/core_flow_smoke_tests.md": {
-            "hash": "7380de0fa19e0f1a42fa60870943cb528e1ab472d98342a73d14012374407bd1",
-            "mtime": "2026-03-01"
-        },
-        "docs/launch/daily_health_snapshot.md": {
-            "hash": "ae89b1c705963d755d93a3a23deba5bddda022989c76c9a3b972abfec7d9f6cc",
-            "mtime": "2026-03-01"
-        },
-        "docs/launch/error_pages_and_logging.md": {
-            "hash": "220b4197d02271a9a66d8330644f144f332c18039c891e020ebbcf0a7a775a2f",
-            "mtime": "2026-03-01"
-        },
-        "docs/launch/external_api_cost_controls.md": {
-            "hash": "e4623bed9ba4b1fefa4028d38f17749ceaf14c062fcfc460bf0a7cb59a9a5fbe",
-            "mtime": "2026-03-01"
-        },
-        "docs/launch/gtm_blockers_today.md": {
-            "hash": "9c1ebcf5db4aa7f0e8d0132b946cd01a424d9429fe12c78a96b626b1ba0ce757",
-            "mtime": "2026-02-28"
-        },
-        "docs/launch/gtm_change_log.md": {
-            "hash": "2c90ee3a7c3390a4912eaea13f8cb1b88c47fefcb491cc872dfb5079f8cca832",
-            "mtime": "2026-03-01"
-        },
-        "docs/launch/gtm_execution_queue.md": {
-            "hash": "799eea930188869b3ffda89d37301a0801aef2c81f47131c140137a93dced303",
-            "mtime": "2026-03-01"
-        },
-        "docs/launch/gtm_next_steps_for_chatgpt.md": {
-            "hash": "b3efb3b917832eb3e1096e188b344c7f477ec7c0f2490db74dfc76552c5e7a0a",
-            "mtime": "2026-03-01"
-        },
-        "docs/launch/gtm_readiness_report.md": {
-            "hash": "70d2a82d8ddc5dca2b6d4253f521d907d892e6573f0e48b7c7ec11318647fe62",
-            "mtime": "2026-03-01"
-        },
-        "docs/launch/gtm_test_matrix.md": {
-            "hash": "69bafb32485328993fc6bab455b23638ede3d799e339eaff1d165fbca15fc3f8",
-            "mtime": "2026-03-01"
-        },
-        "docs/launch/ops_observability.md": {
-            "hash": "64449da8451947ccb98f58e7a015419d19e6eba03e98ff1a8bfddb6fd8731629",
-            "mtime": "2026-03-01"
-        },
-        "docs/launch/security_access_control.md": {
-            "hash": "f1f33ed834ae2f129d142465bd12ced3f6f49bead57448ba4c40f8a56ba6efd8",
-            "mtime": "2026-03-01"
-        },
-        "docs/launch/trust_and_compliance.md": {
-            "hash": "34cd463611f2d9a805c139c4312c1016b8c84cba9a3a70074bb8d833622e9337",
-            "mtime": "2026-03-01"
-        },
-        "docs/security/endpoint-permission-matrix.md": {
-            "hash": "047fbe6e0f53669b69807963e5889230276a5dba3a48c546a7cd66bdbb0e6805",
-            "mtime": "2026-02-28"
-        },
-        "docs/security/filter-coverage.md": {
-            "hash": "bc6fe06a761698e51d391a56edab5171ae90ab08a7607013dbb654a315b5836c",
-            "mtime": "2026-02-28"
-        },
-        "docs/Github/temporary/gtm_gap-004/validation.md": {
-            "hash": "ec5975e41995e85c4c4e35d61d99dbe667953998f7ee4aef4013f09447ce24ad",
-            "mtime": "2026-03-01"
-        },
-        "docs/launch/cron_route_security_validation.md": {
-            "hash": "cb6a88b590d2b2a62c81511a3668fcc5f3209df5e188417029f19f218a703316",
-            "mtime": "2026-03-01"
-        },
-        "docs/launch/customer_interaction_matrix.md": {
-            "hash": "a7fecfe9e3329d80e0c303fbc9e073cfda2cb370f1345b83011eb100976f6c27",
-            "mtime": "2026-03-01"
-        },
-        "docs/launch/functional_hardening_queue.md": {
-            "hash": "81f701bdaacb756da00923a661576eb5a9101b58fb4ccd00033086b265054df4",
-            "mtime": "2026-03-01"
-        },
-        "docs/launch/launch_readiness_audit.md": {
-            "hash": "e8805107231e09a836141ec6d6fd7ad6f7b50486ece7a08fb306273d7bf85185",
-            "mtime": "2026-03-05"
-        },
-        "docs/launch/launch_smoke_results.md": {
-            "hash": "043390d690b323d428df1b5dc561a1303b3501923ce56e99faab2cb043554aab",
-            "mtime": "2026-03-01"
-        },
-        "docs/launch/manual_qa_checklist.md": {
-            "hash": "6d50b315814b222deb262a76b25da7da9d8d25bf75a00675782040667dbe586b",
-            "mtime": "2026-03-01"
-        },
-        "docs/routes/routes.md": {
-<<<<<<< Updated upstream
-            "hash": "65a97866cde7de0b15781a98653b339c4107c01a6489b82b93fb3542dc4b6500",
-            "mtime": "2026-03-06"
-||||||| constructed merge base
-            "hash": "741ee98021204a55bfa60b891ce769d719e98b023435346da8c87cbe5149f7e9",
-            "mtime": "2026-03-01"
-=======
-            "hash": "bee260252d8697ab1990b5bcc429f8cdd22e5be73eb6ea1c208b8b893c9d1a40",
-            "mtime": "2026-03-05"
->>>>>>> Stashed changes
         }
     },
-<<<<<<< Updated upstream
-    "last_run": "2026-03-06T12:00:01Z"
-||||||| constructed merge base
-    "last_run": "2026-03-01T20:00:01Z"
-=======
-    "last_run": "2026-03-05T12:00:02Z"
->>>>>>> Stashed changes
+    "last_run": "2026-03-07T02:00:02Z"
 }
