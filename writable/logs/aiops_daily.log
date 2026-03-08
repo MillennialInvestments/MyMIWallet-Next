@@ -10470,3 +10470,105 @@ Nightly Summary Preview:
 - Spark results: `docs/_aiops/spark-results.md`
 - CI summary: `docs/_aiops/ci-summary.md`
 
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-03-08 15:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-03-08T15:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "reason": "empty_diff",
+    "status": "failed_invalid_model_output",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-03-08T15:00:05+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-03-08T15:00:02Z
+
+## Docs
+- Changed docs: 26
+- Total docs scanned: 1281
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1160
+- Docs with no code match candidates: 1075
+
+## Stale Docs
+- Docs older than 60 days: 344
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-03-08 17:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-03-08T17:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "reason": "empty_diff",
+    "status": "failed_invalid_model_output",
+    "job_id": "2026-02-09-001",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-03-08T17:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-03-08T17:00:02Z
+
+## Docs
+- Changed docs: 4
+- Total docs scanned: 1285
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1160
+- Docs with no code match candidates: 1079
+
+## Stale Docs
+- Docs older than 60 days: 344
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+

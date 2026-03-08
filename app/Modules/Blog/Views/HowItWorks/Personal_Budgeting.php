@@ -122,7 +122,7 @@ $formData               = array(
                         <!-- Utilize our <a href="<?php //echo site_url('/Marketplace'); ?>">MyMI Asset Marketplace</a> &amp; <a href="<?php //echo site_url('/Exchange'); ?>">Exchange</a> to profit from your investment data, build liquidity, and more at MyMI Wallet.  -->
                     </p> 
                     <ul class="list list-sm list-checked">
-                        <li><strong class="list-blue-header pl-3">Creating Your Account</strong> Sign up for an account with MyMI Wallet, if you haven't already. This will require providing some basic personal and financial information, such as your name, email address, and contact information. Click <a href="<?php echo site_url('How-It-Works/Registering-An-Account'); ?>">here</a> for more information on <a href="<?php echo site_url('How-It-Works/Registering-An-Account'); ?>">Account & Security Settings</a>.</li><br>
+                        <li><strong class="list-blue-header pl-3 ml-1">Creating Your Account</strong> Sign up for an account with MyMI Wallet, if you haven't already. This will require providing some basic personal and financial information, such as your name, email address, and contact information. Click <a href="<?php echo site_url('How-It-Works/Registering-An-Account'); ?>">here</a> for more information on <a href="<?php echo site_url('How-It-Works/Registering-An-Account'); ?>">Account & Security Settings</a>.</li><br>
                     </ul>
                     <a class="btn btn-primary mb-3" href="<?php echo $btnURL; ?> ">Create Account</a>
                     <ul class="list list-sm list-checked">

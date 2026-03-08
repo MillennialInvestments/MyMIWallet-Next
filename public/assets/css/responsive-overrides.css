@@ -54,7 +54,9 @@ img, video, iframe { max-width: 100%; height: auto; }
   word-wrap: break-word;
   overflow-wrap: anywhere;
 }
-
+.intro-section-desc strong {
+    margin-left:25px; 
+}
 .menu {
     padding: .4rem 2rem;
 }

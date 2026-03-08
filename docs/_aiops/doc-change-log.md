@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-03-08T13:00:01Z
+> Run: 2026-03-08T17:00:02Z
 
 - docs/APIs/_inventory_controllers.md
   - Last updated: 2026-02-28
@@ -1223,6 +1223,18 @@
 - docs/forecasting/forecast_detail_ui.md
   - Last updated: 2026-01-25
   - Change type: unchanged
+- docs/frontend/batches/batch-01-findings.md
+  - Last updated: 2026-03-08
+  - Change type: new
+- docs/frontend/view_inventory_manifest.md
+  - Last updated: 2026-03-08
+  - Change type: new
+- docs/frontend/view_js_audit_log.md
+  - Last updated: 2026-03-08
+  - Change type: new
+- docs/frontend/view_js_enhancement_backlog.md
+  - Last updated: 2026-03-08
+  - Change type: new
 - docs/functional_inventory/docs_to_code_map.md
   - Last updated: 2026-02-15
   - Change type: unchanged
@@ -1486,6 +1498,9 @@
   - Change type: unchanged
 - docs/legal/crypto_customer_agreement/sections/16_misc_governing_law_changes.md
   - Last updated: 2025-12-27
+  - Change type: unchanged
+- docs/log_fixes/log_review_2026_03_08.md
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/logs/_index.md
   - Last updated: 2025-11-08
@@ -3468,13 +3483,22 @@
   - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/spark/COMMAND_AUDIT.md
-  - Last updated: 2026-01-26
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/spark/README.md
-  - Last updated: 2026-01-24
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/spark/aiops.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/spark/automation.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/spark/bootstrap.md
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/spark/cadence.md
-  - Last updated: 2026-01-24
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/spark/categories/aiops/aiops-seed.md
   - Last updated: 2026-01-24
@@ -3578,20 +3602,56 @@
 - docs/spark/cli-standards.md
   - Last updated: 2026-03-08
   - Change type: unchanged
+- docs/spark/codex.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/spark/database.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/spark/diagnostics.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/spark/documentation.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/spark/infrastructure.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
 - docs/spark/inventory.md
-  - Last updated: 2026-01-25
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/spark/logging.md
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/spark/merge-report.md
-  - Last updated: 2026-01-30
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/spark/ollama.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/spark/recovery.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/spark/research.md
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/spark/roadmap.md
-  - Last updated: 2026-01-24
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/spark/safety-matrix.md
-  - Last updated: 2026-01-24
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/spark/security.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/spark/spark_command_graph.md
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/spark/standards.md
-  - Last updated: 2026-01-30
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/spark/troubleshooting.md
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/sql/mysql.md
   - Last updated: 2025-12-21

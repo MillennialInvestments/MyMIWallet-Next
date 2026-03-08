@@ -7348,3 +7348,2783 @@ in SYSTEMPATH/CodeIgniter.php on line 1001.
 CRITICAL - 2026-03-08 14:26:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
 WARNING - 2026-03-08 14:26:17 --> [404] URI=https://www.mymiwallet.com/index.php/
 WARNING - 2026-03-08 14:26:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 14:29:31 --> [REQ_ID=f9d2c494fbf2] [REQUEST][START] GET /index.php/Ops
+DEBUG - 2026-03-08 14:29:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:29:31 --> [REQ_ID=f9d2c494fbf2] [FILTER_BEFORE] /index.php/Ops
+DEBUG - 2026-03-08 14:29:31 --> [REQ_ID=f9d2c494fbf2] [ROUTE] Controller=\App\Modules\Ops\Controllers\OpsDashboardController Method=index
+DEBUG - 2026-03-08 14:29:31 --> [REQ_ID=f9d2c494fbf2] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Ops
+DEBUG - 2026-03-08 14:29:31 --> [CSRF] token name=csrf_test_name hash=d22729c94092f0379495fafb1ecda7d8
+DEBUG - 2026-03-08 14:29:31 --> [REQ_ID=d0bf91594dbb] [INIT] App\Modules\Ops\Controllers\OpsDashboardController::GET
+INFO - 2026-03-08 14:29:31 --> [REQ_ID=d0bf91594dbb] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 14:29:31 --> [REQ_ID=d0bf91594dbb] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 14:29:31 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:29:31 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 14:29:31 --> [REQ_ID=d0bf91594dbb] [MEMORY][commonData:start] 6291456
+ERROR - 2026-03-08 14:29:31 --> Table 'mymiwallet.ops_tasks' doesn't exist
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 300.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(300): mysqli->query('SELECT *
+FROM `ops_tasks`', 0)
+ 2 SYSTEMPATH/Database/BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `ops_tasks`')
+ 3 SYSTEMPATH/Database/BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `ops_tasks`')
+ 4 SYSTEMPATH/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `ops_tasks`', [], false)
+ 5 SYSTEMPATH/Model.php(254): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH/BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH/Modules/Ops/Controllers/OpsDashboardController.php(40): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH/CodeIgniter.php(951): App\Modules\Ops\Controllers\OpsDashboardController->index()
+ 9 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Modules\Ops\Controllers\OpsDashboardController))
+10 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2026-03-08 14:29:31 --> [REQ_ID=d0bf91594dbb] [PERF] Execution time=0.070924
+DEBUG - 2026-03-08 14:29:39 --> [REQ_ID=bd2e9930b5d6] [REQUEST][START] GET /index.php/Management/Admin
+DEBUG - 2026-03-08 14:29:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:29:39 --> [REQ_ID=bd2e9930b5d6] [FILTER_BEFORE] /index.php/Management/Admin
+DEBUG - 2026-03-08 14:29:39 --> [REQ_ID=bd2e9930b5d6] [ROUTE] Controller=\App\Modules\Management\Controllers\ManagementAdminController Method=index
+DEBUG - 2026-03-08 14:29:39 --> [REQ_ID=bd2e9930b5d6] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management/Admin
+DEBUG - 2026-03-08 14:29:39 --> [CSRF] token name=csrf_test_name hash=d22729c94092f0379495fafb1ecda7d8
+DEBUG - 2026-03-08 14:29:39 --> [REQ_ID=6642f0cf2c7c] [INIT] App\Modules\Management\Controllers\ManagementAdminController::GET
+INFO - 2026-03-08 14:29:39 --> [REQ_ID=6642f0cf2c7c] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 14:29:39 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:29:39 --> [REQ_ID=6642f0cf2c7c] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 14:29:39 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:29:39 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 14:29:39 --> [REQ_ID=6642f0cf2c7c] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 14:29:39 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:29:39 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:29:39 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+INFO - 2026-03-08 14:29:39 --> getSolanaData: invalid address param
+DEBUG - 2026-03-08 14:29:40 --> [REQ_ID=6642f0cf2c7c] [VIEW_RENDER] App\Modules\Management\Views\index
+INFO - 2026-03-08 14:29:40 --> [REQ_ID=6642f0cf2c7c] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:29:40 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+INFO - 2026-03-08 14:29:40 --> getSolanaData: invalid address param
+INFO - 2026-03-08 14:29:40 --> [REQ_ID=6642f0cf2c7c] [PERF] Execution time=0.631284
+DEBUG - 2026-03-08 14:29:44 --> [REQ_ID=3e7f1e952169] [REQUEST][START] GET /index.php/Management
+DEBUG - 2026-03-08 14:29:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:29:44 --> [REQ_ID=3e7f1e952169] [FILTER_BEFORE] /index.php/Management
+DEBUG - 2026-03-08 14:29:44 --> [REQ_ID=3e7f1e952169] [ROUTE] Controller=\App\Modules\Management\Controllers\ManagementController Method=index
+DEBUG - 2026-03-08 14:29:44 --> [REQ_ID=3e7f1e952169] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management
+DEBUG - 2026-03-08 14:29:44 --> [CSRF] token name=csrf_test_name hash=d22729c94092f0379495fafb1ecda7d8
+DEBUG - 2026-03-08 14:29:44 --> [REQ_ID=c06e2c6b437e] [INIT] App\Modules\Management\Controllers\ManagementController::GET
+INFO - 2026-03-08 14:29:44 --> [REQ_ID=c06e2c6b437e] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 14:29:44 --> [REQ_ID=c06e2c6b437e] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 14:29:44 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:29:44 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:29:44 --> ManagementController init cuID: 2
+INFO - 2026-03-08 14:29:44 --> [REQ_ID=c06e2c6b437e] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 14:29:44 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:29:44 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:29:44 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:29:44 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:29:44 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:29:44 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:29:44 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:29:44 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:29:44 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:29:45 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:29:45 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:29:45 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:29:45 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:29:45 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:29:45 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:29:45 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:29:45 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:29:45 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:29:45 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:29:45 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:29:45 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:29:45 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:29:45 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:29:45 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:29:45 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+INFO - 2026-03-08 14:29:45 --> [REQ_ID=c06e2c6b437e] [PERF] Execution time=0.042466
+INFO - 2026-03-08 14:30:02 --> [spark:ops:work] Started
+INFO - 2026-03-08 14:30:02 --> [SPARK_START] App\Commands\Ops\Work
+INFO - 2026-03-08 14:30:02 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 14:30:02 --> [spark:ops:work] Intent
+INFO - 2026-03-08 14:30:02 --> [spark:ops:work] Completed
+INFO - 2026-03-08 14:30:02 --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.041832
+INFO - 2026-03-08 14:30:02 --> [SPARK_MEMORY] 18874368
+DEBUG - 2026-03-08 14:30:18 --> [REQ_ID=b43a309a02e2] [REQUEST][START] GET /index.php/Management
+DEBUG - 2026-03-08 14:30:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:30:18 --> [REQ_ID=b43a309a02e2] [FILTER_BEFORE] /index.php/Management
+DEBUG - 2026-03-08 14:30:18 --> [REQ_ID=b43a309a02e2] [ROUTE] Controller=\App\Modules\Management\Controllers\ManagementAdminController Method=index
+DEBUG - 2026-03-08 14:30:18 --> [REQ_ID=b43a309a02e2] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management
+DEBUG - 2026-03-08 14:30:18 --> [CSRF] token name=csrf_test_name hash=d22729c94092f0379495fafb1ecda7d8
+DEBUG - 2026-03-08 14:30:18 --> [REQ_ID=94a83ec9ccd7] [INIT] App\Modules\Management\Controllers\ManagementAdminController::GET
+INFO - 2026-03-08 14:30:18 --> [REQ_ID=94a83ec9ccd7] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 14:30:18 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:30:18 --> [REQ_ID=94a83ec9ccd7] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 14:30:18 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:30:18 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 14:30:18 --> [REQ_ID=94a83ec9ccd7] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 14:30:18 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:18 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:19 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+INFO - 2026-03-08 14:30:19 --> getSolanaData: invalid address param
+DEBUG - 2026-03-08 14:30:19 --> [REQ_ID=94a83ec9ccd7] [VIEW_RENDER] App\Modules\Management\Views\index
+INFO - 2026-03-08 14:30:19 --> [REQ_ID=94a83ec9ccd7] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:19 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+INFO - 2026-03-08 14:30:19 --> getSolanaData: invalid address param
+INFO - 2026-03-08 14:30:19 --> [REQ_ID=94a83ec9ccd7] [PERF] Execution time=0.404526
+DEBUG - 2026-03-08 14:30:47 --> [REQ_ID=273afe951e4f] [REQUEST][START] GET /index.php/Management/Alerts
+DEBUG - 2026-03-08 14:30:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:30:47 --> [REQ_ID=273afe951e4f] [FILTER_BEFORE] /index.php/Management/Alerts
+DEBUG - 2026-03-08 14:30:47 --> [REQ_ID=273afe951e4f] [ROUTE] Controller=\App\Modules\Management\Controllers\AlertsAdminController Method=index
+DEBUG - 2026-03-08 14:30:47 --> [REQ_ID=273afe951e4f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-08 14:30:47 --> [CSRF] token name=csrf_test_name hash=d22729c94092f0379495fafb1ecda7d8
+DEBUG - 2026-03-08 14:30:47 --> [REQ_ID=9aaa17953017] [INIT] App\Modules\Management\Controllers\AlertsAdminController::GET
+INFO - 2026-03-08 14:30:47 --> [REQ_ID=9aaa17953017] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 14:30:47 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-08 14:30:47 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:30:47 --> [REQ_ID=9aaa17953017] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 14:30:47 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:30:47 --> AlertsController init cuID: 2
+DEBUG - 2026-03-08 14:30:47 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:47 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:47 --> MyMIWallets::getUserWallets user=2 type=checking rows=20
+DEBUG - 2026-03-08 14:30:47 --> MyMIWallets::getUserWallets user=2 type=credit rows=1
+DEBUG - 2026-03-08 14:30:47 --> MyMIWallets::getUserWallets user=2 type=debt rows=3
+DEBUG - 2026-03-08 14:30:47 --> MyMIWallets::getUserWallets user=2 type=investment rows=3
+DEBUG - 2026-03-08 14:30:47 --> MyMIWallets::getUserWallets user=2 type=savings rows=0
+DEBUG - 2026-03-08 14:30:48 --> AlertsController::index start - memory: 10485760
+DEBUG - 2026-03-08 14:30:48 --> AlertsController::index - wallet blocks disabled by config
+DEBUG - 2026-03-08 14:30:48 --> AlertsController::index after wallets - memory: 10485760
+DEBUG - 2026-03-08 14:30:48 --> AlertsController::index before alerts query - memory: 10485760
+DEBUG - 2026-03-08 14:30:48 --> AlertsModel::getPendingAlerts - fetched 2 alerts (limit 50)
+DEBUG - 2026-03-08 14:30:48 --> AlertsController::index after alerts query - memory: 10485760
+DEBUG - 2026-03-08 14:30:48 --> AlertsController::index - Momentum scoring disabled by config
+DEBUG - 2026-03-08 14:30:48 --> AlertsController::index - Advisor package disabled by config
+DEBUG - 2026-03-08 14:30:48 --> AlertsController::index - Solana summary disabled by config
+DEBUG - 2026-03-08 14:30:48 --> AlertsController::index end - memory: 10485760
+DEBUG - 2026-03-08 14:30:48 --> [CACHE_MISS] mymiwallet_development_alerts_activity_uid_2_97d170e1550e
+DEBUG - 2026-03-08 14:30:48 --> Triggered processAlerts CRON for user 2
+INFO - 2026-03-08 14:30:48 --> [REQ_ID=9aaa17953017] [MEMORY][commonData:start] 10485760
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="paid"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="deleted"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="status"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="paid"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="STR_TO_DATE(designated_date, \"%m\/%d\/%Y\") >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="STR_TO_DATE(designated_date, \"%m\/%d\/%Y\") <="
+DEBUG - 2026-03-08 14:30:48 --> Memory usage before coin value fetch: 10485760
+DEBUG - 2026-03-08 14:30:48 --> Memory usage after coin value fetch: 10485760
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:48 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [REQ_ID=9aaa17953017] [VIEW_RENDER] ManagementModule\Views\Alerts\index
+INFO - 2026-03-08 14:30:49 --> [REQ_ID=9aaa17953017] [MEMORY][commonData:start] 18874368
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="paid"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="deleted"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="status"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="paid"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="STR_TO_DATE(designated_date, \"%m\/%d\/%Y\") >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="STR_TO_DATE(designated_date, \"%m\/%d\/%Y\") <="
+DEBUG - 2026-03-08 14:30:49 --> Memory usage before coin value fetch: 16777216
+DEBUG - 2026-03-08 14:30:49 --> Memory usage after coin value fetch: 16777216
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:30:49 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+INFO - 2026-03-08 14:30:50 --> themesMemory usage: 23068672
+DEBUG - 2026-03-08 14:30:50 --> [REQ_ID=273afe951e4f] [FILTER_AFTER]
+DEBUG - 2026-03-08 14:30:50 --> [REQ_ID=273afe951e4f] [LIFECYCLE][END] status=200 duration_ms=2,482.88 memory_delta=20971520
+INFO - 2026-03-08 14:30:50 --> [REQ_ID=9aaa17953017] [PERF] Execution time=2.404365
+DEBUG - 2026-03-08 14:30:50 --> [REQ_ID=273afe951e4f] [REQUEST][END]
+INFO - 2026-03-08 14:30:50 --> [REQ_ID=273afe951e4f] [PERF] Execution time=2.502598
+DEBUG - 2026-03-08 14:31:17 --> [REQ_ID=15b6650046e4] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 14:31:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 14:31:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 14:31:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 14:31:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 14:31:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+ERROR - 2026-03-08 14:32:48 --> Duplicate entry 'ABT-In Review-scanner' for key 'bf_investment_trade_alerts.uniq_ticker_status_source'
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 300.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(300): mysqli->query('ALTER TABLE bf_investment_trade_alerts ADD UNIQUE KEY uniq_ticker_status_source (ticker, status, source)', 0)
+ 2 SYSTEMPATH/Database/BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute('ALTER TABLE bf_investment_trade_alerts ADD UNIQUE KEY uniq_ticker_status_source (ticker, status, source)')
+ 3 SYSTEMPATH/Database/BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery('ALTER TABLE bf_investment_trade_alerts ADD UNIQUE KEY uniq_ticker_status_source (ticker, status, source)')
+ 4 APPPATH/Database/Migrations/2026-06-15-000100_AddScannerSourceToTradeAlerts.php(40): CodeIgniter\Database\BaseConnection->query('ALTER TABLE bf_investment_trade_alerts ADD UNIQUE KEY uniq_ticker_status_source (ticker, status, source)')
+ 5 SYSTEMPATH/Database/MigrationRunner.php(1014): App\Database\Migrations\AddScannerSourceToTradeAlerts->up()
+ 6 SYSTEMPATH/Database/MigrationRunner.php(202): CodeIgniter\Database\MigrationRunner->migrate('up', Object(stdClass))
+ 7 SYSTEMPATH/Commands/Database/Migrate.php(89): CodeIgniter\Database\MigrationRunner->latest(null)
+ 8 SYSTEMPATH/CLI/SignalTrait.php(245): CodeIgniter\Commands\Database\Migrate::CodeIgniter\Commands\Database\{closure}()
+ 9 SYSTEMPATH/Commands/Database/Migrate.php(88): CodeIgniter\Commands\Database\Migrate->withSignalsBlocked(Object(Closure))
+10 SYSTEMPATH/CLI/Commands.php(74): CodeIgniter\Commands\Database\Migrate->run([])
+11 SYSTEMPATH/CLI/Console.php(47): CodeIgniter\CLI\Commands->run('migrate', [])
+12 SYSTEMPATH/Boot.php(442): CodeIgniter\CLI\Console->run()
+13 SYSTEMPATH/Boot.php(166): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+14 ROOTPATH/spark(99): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+DEBUG - 2026-03-08 14:36:17 --> [REQ_ID=03fcb31b6384] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 14:36:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 14:36:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 14:36:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 14:36:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 14:36:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 14:37:51 --> [REQ_ID=a54b809c79b2] [REQUEST][START] GET /index.php
+DEBUG - 2026-03-08 14:37:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:37:51 --> [REQ_ID=a54b809c79b2] [FILTER_BEFORE] /index.php
+DEBUG - 2026-03-08 14:37:51 --> [REQ_ID=a54b809c79b2] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 14:37:51 --> [REQ_ID=a54b809c79b2] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 14:37:51 --> [CSRF] token name=csrf_test_name hash=d22729c94092f0379495fafb1ecda7d8
+DEBUG - 2026-03-08 14:37:51 --> [REQ_ID=74de46615e63] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 14:37:51 --> [REQ_ID=74de46615e63] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 14:37:51 --> [REQ_ID=74de46615e63] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 14:37:51 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:37:52 --> [MetaService] slug= pageName= cacheHit= path=FALLBACK
+DEBUG - 2026-03-08 14:37:52 --> [REQ_ID=74de46615e63] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 14:37:52 --> [REQ_ID=74de46615e63] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 14:37:52 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 14:37:52 --> [MetaService] slug= pageName=Home cacheHit= path=DB
+DEBUG - 2026-03-08 14:37:52 --> [REQ_ID=a54b809c79b2] [FILTER_AFTER]
+DEBUG - 2026-03-08 14:37:52 --> [REQ_ID=a54b809c79b2] [LIFECYCLE][END] status=200 duration_ms=741.14 memory_delta=4194304
+INFO - 2026-03-08 14:37:52 --> [REQ_ID=74de46615e63] [PERF] Execution time=0.739236
+DEBUG - 2026-03-08 14:37:52 --> [REQ_ID=a54b809c79b2] [REQUEST][END]
+INFO - 2026-03-08 14:37:52 --> [REQ_ID=a54b809c79b2] [PERF] Execution time=0.781619
+DEBUG - 2026-03-08 14:37:58 --> [REQ_ID=702765d98128] [REQUEST][START] GET /index.php/How-It-Works
+DEBUG - 2026-03-08 14:37:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:37:58 --> [REQ_ID=702765d98128] [FILTER_BEFORE] /index.php/How-It-Works
+DEBUG - 2026-03-08 14:37:58 --> [REQ_ID=702765d98128] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=index
+DEBUG - 2026-03-08 14:37:58 --> [REQ_ID=702765d98128] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works
+DEBUG - 2026-03-08 14:37:58 --> [CSRF] token name=csrf_test_name hash=d22729c94092f0379495fafb1ecda7d8
+DEBUG - 2026-03-08 14:37:58 --> [REQ_ID=232475ea383c] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 14:37:58 --> [REQ_ID=232475ea383c] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 14:37:58 --> [REQ_ID=232475ea383c] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 14:37:58 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:37:58 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:37:58 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:37:58 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:37:58 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:37:58 --> [REQ_ID=232475ea383c] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\index
+INFO - 2026-03-08 14:37:58 --> [REQ_ID=232475ea383c] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 14:37:58 --> [MetaService] slug=how-it-works pageName= cacheHit= path=DB
+INFO - 2026-03-08 14:37:58 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 14:37:58 --> [MetaService] slug=how-it-works pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 14:37:58 --> [REQ_ID=702765d98128] [FILTER_AFTER]
+DEBUG - 2026-03-08 14:37:58 --> [REQ_ID=702765d98128] [LIFECYCLE][END] status=200 duration_ms=567.88 memory_delta=2097152
+INFO - 2026-03-08 14:37:58 --> [REQ_ID=232475ea383c] [PERF] Execution time=0.567534
+DEBUG - 2026-03-08 14:37:58 --> [REQ_ID=702765d98128] [REQUEST][END]
+INFO - 2026-03-08 14:37:58 --> [REQ_ID=702765d98128] [PERF] Execution time=0.582833
+DEBUG - 2026-03-08 14:38:01 --> [REQ_ID=8bf0abefd08f] [REQUEST][START] GET /index.php/How-It-Works/alerts
+DEBUG - 2026-03-08 14:38:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:38:01 --> [REQ_ID=8bf0abefd08f] [FILTER_BEFORE] /index.php/How-It-Works/alerts
+DEBUG - 2026-03-08 14:38:01 --> [REQ_ID=8bf0abefd08f] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=alerts
+DEBUG - 2026-03-08 14:38:01 --> [REQ_ID=8bf0abefd08f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/alerts
+DEBUG - 2026-03-08 14:38:01 --> [CSRF] token name=csrf_test_name hash=d22729c94092f0379495fafb1ecda7d8
+DEBUG - 2026-03-08 14:38:01 --> [REQ_ID=f7332967b24d] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 14:38:01 --> [REQ_ID=f7332967b24d] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 14:38:01 --> [REQ_ID=f7332967b24d] [METHOD_ENTRY] alerts
+DEBUG - 2026-03-08 14:38:01 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:38:01 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:38:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:38:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:38:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 14:38:01 --> [REQ_ID=f7332967b24d] [PERF] Execution time=0.028512
+CRITICAL - 2026-03-08 14:38:01 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: How-It-Works/alerts]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 14:38:01 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 14:38:01 --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works/alerts
+WARNING - 2026-03-08 14:38:01 --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works/alerts | referrer: none
+ERROR - 2026-03-08 14:38:01 --> [ERROR_PAGE] event=error_404 status=404 message=Page not found.
+DEBUG - 2026-03-08 14:38:04 --> [REQ_ID=0aeb35350a1f] [REQUEST][START] GET /index.php/How-It-Works
+DEBUG - 2026-03-08 14:38:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:38:04 --> [REQ_ID=0aeb35350a1f] [FILTER_BEFORE] /index.php/How-It-Works
+DEBUG - 2026-03-08 14:38:04 --> [REQ_ID=0aeb35350a1f] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=index
+DEBUG - 2026-03-08 14:38:04 --> [REQ_ID=0aeb35350a1f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works
+DEBUG - 2026-03-08 14:38:04 --> [CSRF] token name=csrf_test_name hash=d22729c94092f0379495fafb1ecda7d8
+DEBUG - 2026-03-08 14:38:04 --> [REQ_ID=b568d3d06bf9] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 14:38:04 --> [REQ_ID=b568d3d06bf9] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 14:38:04 --> [REQ_ID=b568d3d06bf9] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 14:38:04 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:38:04 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:38:04 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:38:04 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:38:04 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:38:04 --> [REQ_ID=b568d3d06bf9] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\index
+INFO - 2026-03-08 14:38:04 --> [REQ_ID=b568d3d06bf9] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 14:38:05 --> [MetaService] slug=how-it-works pageName= cacheHit=1 path=CACHE
+INFO - 2026-03-08 14:38:05 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 14:38:05 --> [MetaService] slug=how-it-works pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 14:38:05 --> [REQ_ID=0aeb35350a1f] [FILTER_AFTER]
+DEBUG - 2026-03-08 14:38:05 --> [REQ_ID=0aeb35350a1f] [LIFECYCLE][END] status=200 duration_ms=628.77 memory_delta=4194304
+INFO - 2026-03-08 14:38:05 --> [REQ_ID=b568d3d06bf9] [PERF] Execution time=0.628695
+DEBUG - 2026-03-08 14:38:05 --> [REQ_ID=0aeb35350a1f] [REQUEST][END]
+INFO - 2026-03-08 14:38:05 --> [REQ_ID=0aeb35350a1f] [PERF] Execution time=0.638647
+DEBUG - 2026-03-08 14:38:05 --> [REQ_ID=6148195ed895] [REQUEST][START] GET /index.php/How-It-Works/marketing
+DEBUG - 2026-03-08 14:38:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:38:05 --> [REQ_ID=6148195ed895] [FILTER_BEFORE] /index.php/How-It-Works/marketing
+DEBUG - 2026-03-08 14:38:05 --> [REQ_ID=6148195ed895] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 14:38:05 --> [REQ_ID=6148195ed895] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/marketing
+DEBUG - 2026-03-08 14:38:05 --> [CSRF] token name=csrf_test_name hash=d22729c94092f0379495fafb1ecda7d8
+DEBUG - 2026-03-08 14:38:05 --> [REQ_ID=c0d39dd8ffb9] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 14:38:05 --> [REQ_ID=c0d39dd8ffb9] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 14:38:05 --> [REQ_ID=c0d39dd8ffb9] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 14:38:05 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:38:05 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:38:05 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:38:05 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:38:05 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:38:05 --> [REQ_ID=c0d39dd8ffb9] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\index
+INFO - 2026-03-08 14:38:05 --> [REQ_ID=c0d39dd8ffb9] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 14:38:06 --> [MetaService] slug=how-it-works/marketing pageName= cacheHit= path=DB
+INFO - 2026-03-08 14:38:06 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 14:38:06 --> [MetaService] slug=how-it-works/marketing pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 14:38:06 --> [REQ_ID=6148195ed895] [FILTER_AFTER]
+DEBUG - 2026-03-08 14:38:06 --> [REQ_ID=6148195ed895] [LIFECYCLE][END] status=200 duration_ms=532.60 memory_delta=2097152
+INFO - 2026-03-08 14:38:06 --> [REQ_ID=c0d39dd8ffb9] [PERF] Execution time=0.532452
+DEBUG - 2026-03-08 14:38:06 --> [REQ_ID=6148195ed895] [REQUEST][END]
+INFO - 2026-03-08 14:38:06 --> [REQ_ID=6148195ed895] [PERF] Execution time=0.541848
+DEBUG - 2026-03-08 14:38:06 --> [REQ_ID=5fdd0e59860f] [REQUEST][START] GET /index.php/images/ci4-marketing.png
+DEBUG - 2026-03-08 14:38:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 14:38:06 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: images/ci4-marketing.png]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 14:38:06 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 14:38:06 --> [404] URI=https://www.mymiwallet.com/index.php/images/ci4-marketing.png
+WARNING - 2026-03-08 14:38:06 --> 404 route miss: https://www.mymiwallet.com/index.php/images/ci4-marketing.png | referrer: none
+DEBUG - 2026-03-08 14:38:09 --> [REQ_ID=36b6337f93c3] [REQUEST][START] GET /index.php/How-It-Works/earnings
+DEBUG - 2026-03-08 14:38:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:38:09 --> [REQ_ID=36b6337f93c3] [FILTER_BEFORE] /index.php/How-It-Works/earnings
+DEBUG - 2026-03-08 14:38:09 --> [REQ_ID=36b6337f93c3] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 14:38:09 --> [REQ_ID=36b6337f93c3] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/earnings
+DEBUG - 2026-03-08 14:38:09 --> [CSRF] token name=csrf_test_name hash=d22729c94092f0379495fafb1ecda7d8
+DEBUG - 2026-03-08 14:38:09 --> [REQ_ID=5365566aa4cb] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 14:38:09 --> [REQ_ID=5365566aa4cb] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 14:38:09 --> [REQ_ID=5365566aa4cb] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 14:38:09 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:38:09 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:38:09 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:38:09 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:38:09 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:38:09 --> [REQ_ID=5365566aa4cb] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\index
+INFO - 2026-03-08 14:38:09 --> [REQ_ID=5365566aa4cb] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 14:38:10 --> [MetaService] slug=how-it-works/earnings pageName= cacheHit= path=DB
+INFO - 2026-03-08 14:38:10 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 14:38:10 --> [MetaService] slug=how-it-works/earnings pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 14:38:10 --> [REQ_ID=36b6337f93c3] [FILTER_AFTER]
+DEBUG - 2026-03-08 14:38:10 --> [REQ_ID=36b6337f93c3] [LIFECYCLE][END] status=200 duration_ms=564.58 memory_delta=4194304
+INFO - 2026-03-08 14:38:10 --> [REQ_ID=5365566aa4cb] [PERF] Execution time=0.564414
+DEBUG - 2026-03-08 14:38:10 --> [REQ_ID=36b6337f93c3] [REQUEST][END]
+INFO - 2026-03-08 14:38:10 --> [REQ_ID=36b6337f93c3] [PERF] Execution time=0.575130
+DEBUG - 2026-03-08 14:38:10 --> [REQ_ID=7b65432d2e60] [REQUEST][START] GET /index.php/images/ci4-earnings.png
+DEBUG - 2026-03-08 14:38:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 14:38:10 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: images/ci4-earnings.png]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 14:38:10 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 14:38:10 --> [404] URI=https://www.mymiwallet.com/index.php/images/ci4-earnings.png
+WARNING - 2026-03-08 14:38:10 --> 404 route miss: https://www.mymiwallet.com/index.php/images/ci4-earnings.png | referrer: none
+DEBUG - 2026-03-08 14:38:12 --> [REQ_ID=b270dfc963d0] [REQUEST][START] GET /index.php/How-It-Works/investments
+DEBUG - 2026-03-08 14:38:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:38:12 --> [REQ_ID=b270dfc963d0] [FILTER_BEFORE] /index.php/How-It-Works/investments
+DEBUG - 2026-03-08 14:38:12 --> [REQ_ID=b270dfc963d0] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 14:38:12 --> [REQ_ID=b270dfc963d0] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/investments
+DEBUG - 2026-03-08 14:38:12 --> [CSRF] token name=csrf_test_name hash=d22729c94092f0379495fafb1ecda7d8
+DEBUG - 2026-03-08 14:38:12 --> [REQ_ID=2d6b6bc747c5] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 14:38:12 --> [REQ_ID=2d6b6bc747c5] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 14:38:12 --> [REQ_ID=2d6b6bc747c5] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 14:38:12 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:38:12 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:38:12 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:38:12 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:38:12 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:38:12 --> [REQ_ID=2d6b6bc747c5] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\index
+INFO - 2026-03-08 14:38:12 --> [REQ_ID=2d6b6bc747c5] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 14:38:12 --> [MetaService] slug=how-it-works/investments pageName= cacheHit= path=DB
+INFO - 2026-03-08 14:38:12 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 14:38:12 --> [MetaService] slug=how-it-works/investments pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 14:38:12 --> [REQ_ID=b270dfc963d0] [FILTER_AFTER]
+DEBUG - 2026-03-08 14:38:12 --> [REQ_ID=b270dfc963d0] [LIFECYCLE][END] status=200 duration_ms=513.97 memory_delta=4194304
+INFO - 2026-03-08 14:38:12 --> [REQ_ID=2d6b6bc747c5] [PERF] Execution time=0.513731
+DEBUG - 2026-03-08 14:38:12 --> [REQ_ID=b270dfc963d0] [REQUEST][END]
+INFO - 2026-03-08 14:38:12 --> [REQ_ID=b270dfc963d0] [PERF] Execution time=0.524635
+DEBUG - 2026-03-08 14:38:13 --> [REQ_ID=aed4df2b15da] [REQUEST][START] GET /index.php/images/ci4-portfolio.png
+DEBUG - 2026-03-08 14:38:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 14:38:13 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: images/ci4-portfolio.png]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 14:38:13 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 14:38:13 --> [404] URI=https://www.mymiwallet.com/index.php/images/ci4-portfolio.png
+WARNING - 2026-03-08 14:38:13 --> 404 route miss: https://www.mymiwallet.com/index.php/images/ci4-portfolio.png | referrer: none
+DEBUG - 2026-03-08 14:38:15 --> [REQ_ID=e0e1e8f88ce4] [REQUEST][START] GET /index.php/How-It-Works/account-settings
+DEBUG - 2026-03-08 14:38:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:38:15 --> [REQ_ID=e0e1e8f88ce4] [FILTER_BEFORE] /index.php/How-It-Works/account-settings
+DEBUG - 2026-03-08 14:38:15 --> [REQ_ID=e0e1e8f88ce4] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 14:38:15 --> [REQ_ID=e0e1e8f88ce4] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/account-settings
+DEBUG - 2026-03-08 14:38:15 --> [CSRF] token name=csrf_test_name hash=d22729c94092f0379495fafb1ecda7d8
+DEBUG - 2026-03-08 14:38:15 --> [REQ_ID=ff08f78ff456] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 14:38:15 --> [REQ_ID=ff08f78ff456] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 14:38:15 --> [REQ_ID=ff08f78ff456] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 14:38:15 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:38:15 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:38:15 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:38:15 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:38:15 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:38:15 --> [REQ_ID=ff08f78ff456] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\index
+INFO - 2026-03-08 14:38:15 --> [REQ_ID=ff08f78ff456] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 14:38:16 --> [MetaService] slug=how-it-works/account-settings pageName= cacheHit= path=DB
+INFO - 2026-03-08 14:38:16 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 14:38:16 --> [MetaService] slug=how-it-works/account-settings pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 14:38:16 --> [REQ_ID=e0e1e8f88ce4] [FILTER_AFTER]
+DEBUG - 2026-03-08 14:38:16 --> [REQ_ID=e0e1e8f88ce4] [LIFECYCLE][END] status=200 duration_ms=537.41 memory_delta=4194304
+INFO - 2026-03-08 14:38:16 --> [REQ_ID=ff08f78ff456] [PERF] Execution time=0.537111
+DEBUG - 2026-03-08 14:38:16 --> [REQ_ID=e0e1e8f88ce4] [REQUEST][END]
+INFO - 2026-03-08 14:38:16 --> [REQ_ID=e0e1e8f88ce4] [PERF] Execution time=0.547311
+DEBUG - 2026-03-08 14:38:16 --> [REQ_ID=a039d96cd433] [REQUEST][START] GET /index.php/images/ci4-social.png
+DEBUG - 2026-03-08 14:38:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 14:38:16 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: images/ci4-social.png]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 14:38:16 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 14:38:16 --> [404] URI=https://www.mymiwallet.com/index.php/images/ci4-social.png
+WARNING - 2026-03-08 14:38:16 --> 404 route miss: https://www.mymiwallet.com/index.php/images/ci4-social.png | referrer: none
+DEBUG - 2026-03-08 14:38:20 --> [REQ_ID=96c66fbcb26c] [REQUEST][START] GET /index.php
+DEBUG - 2026-03-08 14:38:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:38:20 --> [REQ_ID=96c66fbcb26c] [FILTER_BEFORE] /index.php
+DEBUG - 2026-03-08 14:38:20 --> [REQ_ID=96c66fbcb26c] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 14:38:20 --> [REQ_ID=96c66fbcb26c] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 14:38:20 --> [CSRF] token name=csrf_test_name hash=d22729c94092f0379495fafb1ecda7d8
+DEBUG - 2026-03-08 14:38:20 --> [REQ_ID=4434d68d1a8c] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 14:38:20 --> [REQ_ID=4434d68d1a8c] [MEMORY][controller-start] 4194304
+INFO - 2026-03-08 14:38:20 --> [REQ_ID=4434d68d1a8c] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 14:38:20 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:38:21 --> [MetaService] slug= pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 14:38:21 --> [REQ_ID=4434d68d1a8c] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 14:38:21 --> [REQ_ID=4434d68d1a8c] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 14:38:21 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 14:38:21 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 14:38:21 --> [REQ_ID=96c66fbcb26c] [FILTER_AFTER]
+DEBUG - 2026-03-08 14:38:21 --> [REQ_ID=96c66fbcb26c] [LIFECYCLE][END] status=200 duration_ms=474.05 memory_delta=4194304
+INFO - 2026-03-08 14:38:21 --> [REQ_ID=4434d68d1a8c] [PERF] Execution time=0.473891
+DEBUG - 2026-03-08 14:38:21 --> [REQ_ID=96c66fbcb26c] [REQUEST][END]
+INFO - 2026-03-08 14:38:21 --> [REQ_ID=96c66fbcb26c] [PERF] Execution time=0.483328
+DEBUG - 2026-03-08 14:38:46 --> [REQ_ID=840ec7e6abad] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 14:38:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:38:46 --> [REQ_ID=840ec7e6abad] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 14:38:46 --> [REQ_ID=840ec7e6abad] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 14:38:46 --> [REQ_ID=840ec7e6abad] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 14:38:46 --> [CSRF] token name=csrf_test_name hash=d22729c94092f0379495fafb1ecda7d8
+DEBUG - 2026-03-08 14:38:46 --> [REQ_ID=7b2467b88e4f] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 14:38:46 --> [REQ_ID=7b2467b88e4f] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 14:38:47 --> [REQ_ID=7b2467b88e4f] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 14:38:47 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:38:47 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:38:47 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:38:47 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:38:47 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 14:38:47 --> [REQ_ID=7b2467b88e4f] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 14:38:47 --> [REQ_ID=7b2467b88e4f] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Personal_Budgeting
+INFO - 2026-03-08 14:38:47 --> [REQ_ID=7b2467b88e4f] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 14:38:48 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 14:38:48 --> [REQ_ID=840ec7e6abad] [FILTER_AFTER]
+DEBUG - 2026-03-08 14:38:48 --> [REQ_ID=840ec7e6abad] [LIFECYCLE][END] status=200 duration_ms=1,031.75 memory_delta=6291456
+INFO - 2026-03-08 14:38:48 --> [REQ_ID=7b2467b88e4f] [PERF] Execution time=1.031100
+DEBUG - 2026-03-08 14:38:48 --> [REQ_ID=840ec7e6abad] [REQUEST][END]
+INFO - 2026-03-08 14:38:48 --> [REQ_ID=840ec7e6abad] [PERF] Execution time=1.045008
+DEBUG - 2026-03-08 14:39:17 --> [REQ_ID=b95575660ec9] [REQUEST][START] GET /index.php/How-It-Works
+DEBUG - 2026-03-08 14:39:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:39:17 --> [REQ_ID=b95575660ec9] [FILTER_BEFORE] /index.php/How-It-Works
+DEBUG - 2026-03-08 14:39:17 --> [REQ_ID=b95575660ec9] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=index
+DEBUG - 2026-03-08 14:39:17 --> [REQ_ID=b95575660ec9] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works
+DEBUG - 2026-03-08 14:39:17 --> [CSRF] token name=csrf_test_name hash=d22729c94092f0379495fafb1ecda7d8
+DEBUG - 2026-03-08 14:39:17 --> [REQ_ID=f286b4219ccf] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 14:39:17 --> [REQ_ID=f286b4219ccf] [MEMORY][controller-start] 8388608
+DEBUG - 2026-03-08 14:39:17 --> [REQ_ID=f286b4219ccf] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 14:39:17 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:39:17 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:39:17 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:39:17 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:39:17 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:39:17 --> [REQ_ID=f286b4219ccf] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\index
+INFO - 2026-03-08 14:39:17 --> [REQ_ID=f286b4219ccf] [MEMORY][commonData:start] 8388608
+DEBUG - 2026-03-08 14:39:17 --> [MetaService] slug=how-it-works pageName= cacheHit=1 path=CACHE
+INFO - 2026-03-08 14:39:17 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 14:39:17 --> [MetaService] slug=how-it-works pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 14:39:17 --> [REQ_ID=b95575660ec9] [FILTER_AFTER]
+DEBUG - 2026-03-08 14:39:17 --> [REQ_ID=b95575660ec9] [LIFECYCLE][END] status=200 duration_ms=569.27 memory_delta=0
+INFO - 2026-03-08 14:39:17 --> [REQ_ID=f286b4219ccf] [PERF] Execution time=0.569015
+DEBUG - 2026-03-08 14:39:17 --> [REQ_ID=b95575660ec9] [REQUEST][END]
+INFO - 2026-03-08 14:39:17 --> [REQ_ID=b95575660ec9] [PERF] Execution time=0.579628
+DEBUG - 2026-03-08 14:40:00 --> [REQ_ID=0bdb0e06e4c8] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 14:40:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:40:00 --> [REQ_ID=0bdb0e06e4c8] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 14:40:00 --> [REQ_ID=0bdb0e06e4c8] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 14:40:00 --> [REQ_ID=0bdb0e06e4c8] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 14:40:00 --> [CSRF] token name=csrf_test_name hash=d22729c94092f0379495fafb1ecda7d8
+DEBUG - 2026-03-08 14:40:00 --> [REQ_ID=a76086b07fab] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 14:40:00 --> [REQ_ID=a76086b07fab] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 14:40:00 --> [REQ_ID=a76086b07fab] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 14:40:00 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:40:00 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:40:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:40:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:40:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 14:40:00 --> [REQ_ID=a76086b07fab] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 14:40:00 --> [REQ_ID=a76086b07fab] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Personal_Budgeting
+INFO - 2026-03-08 14:40:00 --> [REQ_ID=a76086b07fab] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 14:40:01 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 14:40:01 --> [REQ_ID=0bdb0e06e4c8] [FILTER_AFTER]
+DEBUG - 2026-03-08 14:40:01 --> [REQ_ID=0bdb0e06e4c8] [LIFECYCLE][END] status=200 duration_ms=1,233.50 memory_delta=8388608
+INFO - 2026-03-08 14:40:01 --> [REQ_ID=a76086b07fab] [PERF] Execution time=1.233226
+DEBUG - 2026-03-08 14:40:01 --> [REQ_ID=0bdb0e06e4c8] [REQUEST][END]
+INFO - 2026-03-08 14:40:01 --> [REQ_ID=0bdb0e06e4c8] [PERF] Execution time=1.244396
+DEBUG - 2026-03-08 14:40:02 --> [REQ_ID=92d0a57aca14] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 14:40:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:40:02 --> [REQ_ID=92d0a57aca14] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 14:40:02 --> [REQ_ID=92d0a57aca14] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 14:40:02 --> [REQ_ID=92d0a57aca14] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 14:40:02 --> [CSRF] token name=csrf_test_name hash=d22729c94092f0379495fafb1ecda7d8
+DEBUG - 2026-03-08 14:40:02 --> [REQ_ID=35ea0392ea68] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 14:40:02 --> [REQ_ID=35ea0392ea68] [MEMORY][controller-start] 8388608
+DEBUG - 2026-03-08 14:40:02 --> [REQ_ID=35ea0392ea68] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 14:40:02 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:40:02 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:40:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:40:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:40:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 14:40:02 --> [REQ_ID=35ea0392ea68] [MEMORY][commonData:start] 8388608
+DEBUG - 2026-03-08 14:40:03 --> [REQ_ID=35ea0392ea68] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Personal_Budgeting
+INFO - 2026-03-08 14:40:03 --> [REQ_ID=35ea0392ea68] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 14:40:03 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 14:40:03 --> [REQ_ID=92d0a57aca14] [FILTER_AFTER]
+DEBUG - 2026-03-08 14:40:03 --> [REQ_ID=92d0a57aca14] [LIFECYCLE][END] status=200 duration_ms=1,037.52 memory_delta=4194304
+INFO - 2026-03-08 14:40:03 --> [REQ_ID=35ea0392ea68] [PERF] Execution time=1.037334
+DEBUG - 2026-03-08 14:40:03 --> [REQ_ID=92d0a57aca14] [REQUEST][END]
+INFO - 2026-03-08 14:40:03 --> [REQ_ID=92d0a57aca14] [PERF] Execution time=1.046989
+DEBUG - 2026-03-08 14:41:17 --> [REQ_ID=7beeab8995f1] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 14:41:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 14:41:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 14:41:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 14:41:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 14:41:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+INFO - 2026-03-08 14:45:01 --> [spark:ops:work] Started
+INFO - 2026-03-08 14:45:01 --> [SPARK_START] App\Commands\Ops\Work
+INFO - 2026-03-08 14:45:01 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 14:45:01 --> [spark:ops:work] Intent
+INFO - 2026-03-08 14:45:01 --> [spark:ops:work] Completed
+INFO - 2026-03-08 14:45:01 --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.024431
+INFO - 2026-03-08 14:45:01 --> [SPARK_MEMORY] 18874368
+DEBUG - 2026-03-08 14:46:17 --> [REQ_ID=dc7728cc9831] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 14:46:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 14:46:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 14:46:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 14:46:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 14:46:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 14:47:01 --> [REQ_ID=4a0c31ffe543] [REQUEST][START] GET /index.php/Management/Marketing/Blog-Creator
+DEBUG - 2026-03-08 14:47:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:47:01 --> [REQ_ID=4a0c31ffe543] [FILTER_BEFORE] /index.php/Management/Marketing/Blog-Creator
+DEBUG - 2026-03-08 14:47:01 --> [REQ_ID=4a0c31ffe543] [ROUTE] Controller=\App\Modules\Management\Controllers\MarketingAdminController Method=blogCreator
+DEBUG - 2026-03-08 14:47:01 --> [REQ_ID=4a0c31ffe543] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management/Marketing/Blog-Creator
+DEBUG - 2026-03-08 14:47:01 --> [CSRF] token name=csrf_test_name hash=d834a02414e5844747ef761407fef0be
+DEBUG - 2026-03-08 14:47:01 --> [REQ_ID=4a0c31ffe543] [REQUEST][END]
+INFO - 2026-03-08 14:47:01 --> [REQ_ID=4a0c31ffe543] [PERF] Execution time=0.035527
+DEBUG - 2026-03-08 14:47:01 --> [REQ_ID=0fb032826fe6] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 14:47:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:47:01 --> [REQ_ID=0fb032826fe6] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 14:47:01 --> [REQ_ID=0fb032826fe6] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 14:47:01 --> [REQ_ID=0fb032826fe6] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 14:47:01 --> [CSRF] token name=csrf_test_name hash=a7b9e0ae9333a84db63770553daaf36d
+DEBUG - 2026-03-08 14:47:01 --> [REQ_ID=e3f48800d6ce] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 14:47:01 --> [REQ_ID=e3f48800d6ce] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 14:47:02 --> [REQ_ID=0fb032826fe6] [FILTER_AFTER]
+DEBUG - 2026-03-08 14:47:02 --> [REQ_ID=0fb032826fe6] [LIFECYCLE][END] status=200 duration_ms=279.59 memory_delta=0
+INFO - 2026-03-08 14:47:02 --> [REQ_ID=e3f48800d6ce] [PERF] Execution time=0.279275
+DEBUG - 2026-03-08 14:47:02 --> [REQ_ID=0fb032826fe6] [REQUEST][END]
+INFO - 2026-03-08 14:47:02 --> [REQ_ID=0fb032826fe6] [PERF] Execution time=0.292222
+DEBUG - 2026-03-08 14:50:23 --> [REQ_ID=9b205dae3b12] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 14:50:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:50:23 --> [REQ_ID=9b205dae3b12] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 14:50:23 --> [REQ_ID=9b205dae3b12] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 14:50:23 --> [REQ_ID=9b205dae3b12] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 14:50:23 --> [CSRF] token name=csrf_test_name hash=e1f814a9283542ea65cb1d5695964e1a
+DEBUG - 2026-03-08 14:50:23 --> [REQ_ID=cab655bcd51a] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 14:50:23 --> [REQ_ID=cab655bcd51a] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 14:50:23 --> [REQ_ID=cab655bcd51a] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 14:50:23 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:50:23 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:50:23 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:50:23 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:50:23 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 14:50:23 --> [REQ_ID=cab655bcd51a] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 14:50:24 --> [REQ_ID=cab655bcd51a] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Personal_Budgeting
+INFO - 2026-03-08 14:50:24 --> [REQ_ID=cab655bcd51a] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 14:50:25 --> themesMemory usage: 14680064
+DEBUG - 2026-03-08 14:50:25 --> [REQ_ID=9b205dae3b12] [FILTER_AFTER]
+DEBUG - 2026-03-08 14:50:25 --> [REQ_ID=9b205dae3b12] [LIFECYCLE][END] status=200 duration_ms=1,437.33 memory_delta=8388608
+INFO - 2026-03-08 14:50:25 --> [REQ_ID=cab655bcd51a] [PERF] Execution time=1.435105
+DEBUG - 2026-03-08 14:50:25 --> [REQ_ID=9b205dae3b12] [REQUEST][END]
+INFO - 2026-03-08 14:50:25 --> [REQ_ID=9b205dae3b12] [PERF] Execution time=1.479927
+DEBUG - 2026-03-08 14:50:26 --> [REQ_ID=77ef9ebf27fb] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 14:50:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:50:26 --> [REQ_ID=77ef9ebf27fb] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 14:50:26 --> [REQ_ID=77ef9ebf27fb] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 14:50:26 --> [REQ_ID=77ef9ebf27fb] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 14:50:26 --> [CSRF] token name=csrf_test_name hash=e1f814a9283542ea65cb1d5695964e1a
+DEBUG - 2026-03-08 14:50:26 --> [REQ_ID=fc42cf412ce5] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 14:50:26 --> [REQ_ID=fc42cf412ce5] [MEMORY][controller-start] 8388608
+DEBUG - 2026-03-08 14:50:26 --> [REQ_ID=fc42cf412ce5] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 14:50:26 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:50:26 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:50:26 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:50:26 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:50:26 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 14:50:26 --> [REQ_ID=fc42cf412ce5] [MEMORY][commonData:start] 8388608
+DEBUG - 2026-03-08 14:50:27 --> [REQ_ID=fc42cf412ce5] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Personal_Budgeting
+INFO - 2026-03-08 14:50:27 --> [REQ_ID=fc42cf412ce5] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 14:50:28 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 14:50:28 --> [REQ_ID=77ef9ebf27fb] [FILTER_AFTER]
+DEBUG - 2026-03-08 14:50:28 --> [REQ_ID=77ef9ebf27fb] [LIFECYCLE][END] status=200 duration_ms=1,243.93 memory_delta=4194304
+INFO - 2026-03-08 14:50:28 --> [REQ_ID=fc42cf412ce5] [PERF] Execution time=1.243250
+DEBUG - 2026-03-08 14:50:28 --> [REQ_ID=77ef9ebf27fb] [REQUEST][END]
+INFO - 2026-03-08 14:50:28 --> [REQ_ID=77ef9ebf27fb] [PERF] Execution time=1.257628
+DEBUG - 2026-03-08 14:50:35 --> [REQ_ID=94e37f15e7f6] [REQUEST][START] GET /index.php/How-It-Works
+DEBUG - 2026-03-08 14:50:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:50:35 --> [REQ_ID=94e37f15e7f6] [FILTER_BEFORE] /index.php/How-It-Works
+DEBUG - 2026-03-08 14:50:35 --> [REQ_ID=94e37f15e7f6] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=index
+DEBUG - 2026-03-08 14:50:35 --> [REQ_ID=94e37f15e7f6] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works
+DEBUG - 2026-03-08 14:50:35 --> [CSRF] token name=csrf_test_name hash=e1f814a9283542ea65cb1d5695964e1a
+DEBUG - 2026-03-08 14:50:35 --> [REQ_ID=d71dec4c866b] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 14:50:35 --> [REQ_ID=d71dec4c866b] [MEMORY][controller-start] 10485760
+DEBUG - 2026-03-08 14:50:35 --> [REQ_ID=d71dec4c866b] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 14:50:35 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:50:35 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:50:35 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:50:35 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:50:35 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 14:50:35 --> [ERROR_PAGE] event=error_404 status=404 message=Page not found.
+DEBUG - 2026-03-08 14:50:35 --> [REQ_ID=94e37f15e7f6] [FILTER_AFTER]
+DEBUG - 2026-03-08 14:50:35 --> [REQ_ID=94e37f15e7f6] [LIFECYCLE][END] status=404 duration_ms=176.09 memory_delta=0
+INFO - 2026-03-08 14:50:35 --> [REQ_ID=d71dec4c866b] [PERF] Execution time=0.175737
+DEBUG - 2026-03-08 14:50:35 --> [REQ_ID=94e37f15e7f6] [REQUEST][END]
+INFO - 2026-03-08 14:50:35 --> [REQ_ID=94e37f15e7f6] [PERF] Execution time=0.185525
+DEBUG - 2026-03-08 14:50:40 --> [REQ_ID=ec76fd388a5b] [REQUEST][START] GET /index.php/How-It-Works/investments
+DEBUG - 2026-03-08 14:50:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:50:40 --> [REQ_ID=ec76fd388a5b] [FILTER_BEFORE] /index.php/How-It-Works/investments
+DEBUG - 2026-03-08 14:50:40 --> [REQ_ID=ec76fd388a5b] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 14:50:40 --> [REQ_ID=ec76fd388a5b] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/investments
+DEBUG - 2026-03-08 14:50:40 --> [CSRF] token name=csrf_test_name hash=e1f814a9283542ea65cb1d5695964e1a
+DEBUG - 2026-03-08 14:50:40 --> [REQ_ID=39eb95f21509] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 14:50:40 --> [REQ_ID=39eb95f21509] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 14:50:40 --> [REQ_ID=39eb95f21509] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 14:50:40 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:50:40 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:50:40 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:50:40 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:50:40 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 14:50:40 --> [ERROR_PAGE] event=error_404 status=404 message=Page not found.
+DEBUG - 2026-03-08 14:50:40 --> [REQ_ID=ec76fd388a5b] [FILTER_AFTER]
+DEBUG - 2026-03-08 14:50:40 --> [REQ_ID=ec76fd388a5b] [LIFECYCLE][END] status=404 duration_ms=24.13 memory_delta=0
+INFO - 2026-03-08 14:50:40 --> [REQ_ID=39eb95f21509] [PERF] Execution time=0.023857
+DEBUG - 2026-03-08 14:50:40 --> [REQ_ID=ec76fd388a5b] [REQUEST][END]
+INFO - 2026-03-08 14:50:40 --> [REQ_ID=ec76fd388a5b] [PERF] Execution time=0.033654
+DEBUG - 2026-03-08 14:50:40 --> [REQ_ID=3de2f1e46a8b] [REQUEST][START] GET /index.php/images/ci4-portfolio.png
+DEBUG - 2026-03-08 14:50:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 14:50:40 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: images/ci4-portfolio.png]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 14:50:40 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 14:50:40 --> [404] URI=https://www.mymiwallet.com/index.php/images/ci4-portfolio.png
+WARNING - 2026-03-08 14:50:40 --> 404 route miss: https://www.mymiwallet.com/index.php/images/ci4-portfolio.png | referrer: none
+DEBUG - 2026-03-08 14:51:17 --> [REQ_ID=0d42c49e37d1] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 14:51:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 14:51:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 14:51:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 14:51:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 14:51:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 14:51:50 --> [REQ_ID=773497e18edc] [REQUEST][START] GET /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 14:51:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:51:50 --> [REQ_ID=773497e18edc] [FILTER_BEFORE] /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 14:51:50 --> [REQ_ID=773497e18edc] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 14:51:50 --> [REQ_ID=773497e18edc] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 14:51:50 --> [CSRF] token name=csrf_test_name hash=5dc6a1ec08b43ce33d15e7fd688c3c59
+DEBUG - 2026-03-08 14:51:50 --> [REQ_ID=7e5ad2692cb1] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 14:51:50 --> [REQ_ID=7e5ad2692cb1] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 14:51:50 --> [REQ_ID=7e5ad2692cb1] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 14:51:50 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:51:50 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:51:50 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 14:51:50 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 14:51:50 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 14:51:50 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 14:51:50 --> [REQ_ID=7e5ad2692cb1] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 14:51:51 --> [REQ_ID=7e5ad2692cb1] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Determining_Your_Financial_Goals
+INFO - 2026-03-08 14:51:51 --> [REQ_ID=7e5ad2692cb1] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 14:51:51 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 14:51:51 --> [REQ_ID=773497e18edc] [FILTER_AFTER]
+DEBUG - 2026-03-08 14:51:51 --> [REQ_ID=773497e18edc] [LIFECYCLE][END] status=200 duration_ms=1,289.47 memory_delta=8388608
+INFO - 2026-03-08 14:51:51 --> [REQ_ID=7e5ad2692cb1] [PERF] Execution time=1.288826
+DEBUG - 2026-03-08 14:51:51 --> [REQ_ID=773497e18edc] [REQUEST][END]
+INFO - 2026-03-08 14:51:51 --> [REQ_ID=773497e18edc] [PERF] Execution time=1.303100
+DEBUG - 2026-03-08 14:56:17 --> [REQ_ID=da3220f1ad67] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 14:56:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 14:56:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 14:56:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 14:56:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 14:56:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 14:59:17 --> [REQ_ID=88ff8833e814] [REQUEST][START] GET /index.php/Profile
+DEBUG - 2026-03-08 14:59:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:59:17 --> [REQ_ID=88ff8833e814] [FILTER_BEFORE] /index.php/Profile
+DEBUG - 2026-03-08 14:59:17 --> [REQ_ID=88ff8833e814] [ROUTE] Controller=\App\Controllers\App\Modules\User\Controllers\DashboardController Method=profile
+DEBUG - 2026-03-08 14:59:17 --> [REQ_ID=88ff8833e814] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Profile
+DEBUG - 2026-03-08 14:59:17 --> [CSRF] token name=csrf_test_name hash=a015b60c0365e314f513f39f9155bcba
+DEBUG - 2026-03-08 14:59:17 --> [REQ_ID=88ff8833e814] [REQUEST][END]
+INFO - 2026-03-08 14:59:17 --> [REQ_ID=88ff8833e814] [PERF] Execution time=0.046652
+DEBUG - 2026-03-08 14:59:18 --> [REQ_ID=d0e54ced7d1b] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 14:59:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:59:18 --> [REQ_ID=d0e54ced7d1b] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 14:59:18 --> [REQ_ID=d0e54ced7d1b] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 14:59:18 --> [REQ_ID=d0e54ced7d1b] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 14:59:18 --> [CSRF] token name=csrf_test_name hash=726465b4604f7f9c99d2381effed5312
+DEBUG - 2026-03-08 14:59:18 --> [REQ_ID=7cef28933690] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 14:59:18 --> [REQ_ID=7cef28933690] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 14:59:18 --> [REQ_ID=d0e54ced7d1b] [FILTER_AFTER]
+DEBUG - 2026-03-08 14:59:18 --> [REQ_ID=d0e54ced7d1b] [LIFECYCLE][END] status=200 duration_ms=238.07 memory_delta=0
+INFO - 2026-03-08 14:59:18 --> [REQ_ID=7cef28933690] [PERF] Execution time=0.237967
+DEBUG - 2026-03-08 14:59:18 --> [REQ_ID=d0e54ced7d1b] [REQUEST][END]
+INFO - 2026-03-08 14:59:18 --> [REQ_ID=d0e54ced7d1b] [PERF] Execution time=0.253126
+DEBUG - 2026-03-08 15:00:01 --> [REQ_ID=e6a2b4489fbc] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 15:00:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:00:02 --> [REQ_ID=e6a2b4489fbc] [FILTER_BEFORE] /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 15:00:02 --> [REQ_ID=e6a2b4489fbc] [ROUTE] Controller=\App\Modules\Management\Controllers\ManagementAPIController Method=Run_CRON_Tasks
+DEBUG - 2026-03-08 15:00:02 --> [REQ_ID=e6a2b4489fbc] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 15:00:02 --> [REQ_ID=e6a2b4489fbc] [REQUEST][END]
+INFO - 2026-03-08 15:00:02 --> [REQ_ID=e6a2b4489fbc] [PERF] Execution time=0.062994
+INFO - 2026-03-08 15:00:02 --> [SPARK_START] App\Commands\AIOps\Run
+INFO - 2026-03-08 15:00:02 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 15:00:02 --> [spark:aiops:run] Intent
+INFO - 2026-03-08 15:00:02 --> [spark:ops:work] Started
+INFO - 2026-03-08 15:00:02 --> [SPARK_START] App\Commands\Ops\Work
+INFO - 2026-03-08 15:00:02 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 15:00:02 --> [spark:ops:work] Intent
+INFO - 2026-03-08 15:00:02 --> [spark:ops:work] Completed
+INFO - 2026-03-08 15:00:02 --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.037531
+INFO - 2026-03-08 15:00:02 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 15:00:03 --> [AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Started
+INFO - 2026-03-08 15:00:03 --> [SPARK_START] App\Commands\Logs\Summarize
+INFO - 2026-03-08 15:00:03 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 15:00:03 --> [spark:logs:summarize] Intent
+INFO - 2026-03-08 15:00:03 --> [AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Completed
+INFO - 2026-03-08 15:00:03 --> [SPARK_COMPLETE] App\Commands\Logs\Summarize duration=0.029379
+INFO - 2026-03-08 15:00:03 --> [SPARK_MEMORY] 20971520
+INFO - 2026-03-08 15:00:03 --> [spark:app:healthcheck] Started
+INFO - 2026-03-08 15:00:03 --> [SPARK_START] App\Commands\App\Healthcheck
+INFO - 2026-03-08 15:00:03 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 15:00:03 --> [spark:app:healthcheck] Intent
+DEBUG - 2026-03-08 15:00:03 --> LOG_HEALTHCHECK debug marker=057eed5cce47
+INFO - 2026-03-08 15:00:03 --> LOG_HEALTHCHECK info marker=057eed5cce47
+NOTICE - 2026-03-08 15:00:03 --> LOG_HEALTHCHECK probe marker=057eed5cce47
+INFO - 2026-03-08 15:00:04 --> [spark:app:healthcheck] Completed
+INFO - 2026-03-08 15:00:04 --> [SPARK_COMPLETE] App\Commands\App\Healthcheck duration=0.215964
+INFO - 2026-03-08 15:00:04 --> [SPARK_MEMORY] 20971520
+WARNING - 2026-03-08 15:00:05 --> Patch generation returned empty diff
+INFO - 2026-03-08 15:00:05 --> [SPARK_COMPLETE] App\Commands\AIOps\Run duration=3.320680
+INFO - 2026-03-08 15:00:05 --> [SPARK_MEMORY] 20971520
+DEBUG - 2026-03-08 15:01:17 --> [REQ_ID=545384b3b5d4] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 15:01:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 15:01:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 15:01:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 15:01:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 15:01:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 15:02:10 --> [REQ_ID=76a994431ca7] [REQUEST][START] GET /index.php/How-It-Works/investing
+DEBUG - 2026-03-08 15:02:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:02:10 --> [REQ_ID=76a994431ca7] [FILTER_BEFORE] /index.php/How-It-Works/investing
+DEBUG - 2026-03-08 15:02:10 --> [REQ_ID=76a994431ca7] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=investing
+DEBUG - 2026-03-08 15:02:10 --> [REQ_ID=76a994431ca7] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/investing
+DEBUG - 2026-03-08 15:02:10 --> [CSRF] token name=csrf_test_name hash=e1f814a9283542ea65cb1d5695964e1a
+DEBUG - 2026-03-08 15:02:10 --> [REQ_ID=ff197504b2aa] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 15:02:10 --> [REQ_ID=ff197504b2aa] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 15:02:10 --> [REQ_ID=ff197504b2aa] [METHOD_ENTRY] investing
+DEBUG - 2026-03-08 15:02:10 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 15:02:10 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 15:02:10 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:02:10 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:02:10 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 15:02:10 --> [REQ_ID=ff197504b2aa] [PERF] Execution time=0.152675
+CRITICAL - 2026-03-08 15:02:10 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: How-It-Works/investing]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 15:02:10 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 15:02:10 --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works/investing
+WARNING - 2026-03-08 15:02:10 --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works/investing | referrer: none
+ERROR - 2026-03-08 15:02:10 --> [ERROR_PAGE] event=error_404 status=404 message=Page not found.
+DEBUG - 2026-03-08 15:02:17 --> [REQ_ID=35ae500c3ad9] [REQUEST][START] GET /index.php/Support
+DEBUG - 2026-03-08 15:02:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:02:17 --> [REQ_ID=35ae500c3ad9] [FILTER_BEFORE] /index.php/Support
+DEBUG - 2026-03-08 15:02:17 --> [REQ_ID=35ae500c3ad9] [ROUTE] Controller=\App\Modules\Support\Controllers\SupportController Method=index
+DEBUG - 2026-03-08 15:02:17 --> [REQ_ID=35ae500c3ad9] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support
+DEBUG - 2026-03-08 15:02:17 --> [CSRF] token name=csrf_test_name hash=e1f814a9283542ea65cb1d5695964e1a
+DEBUG - 2026-03-08 15:02:17 --> [REQ_ID=27f74c2a9d70] [INIT] App\Modules\Support\Controllers\SupportController::GET
+INFO - 2026-03-08 15:02:17 --> [REQ_ID=27f74c2a9d70] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 15:02:17 --> [REQ_ID=27f74c2a9d70] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 15:02:17 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 15:02:17 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 15:02:17 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:02:17 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:02:17 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 15:02:17 --> [REQ_ID=27f74c2a9d70] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 15:02:17 --> [REQ_ID=27f74c2a9d70] [VIEW_RENDER] SupportModule\Views\Support\index
+INFO - 2026-03-08 15:02:17 --> [REQ_ID=27f74c2a9d70] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 15:02:17 --> themesMemory usage: 4194304
+DEBUG - 2026-03-08 15:02:17 --> [REQ_ID=35ae500c3ad9] [FILTER_AFTER]
+DEBUG - 2026-03-08 15:02:17 --> [REQ_ID=35ae500c3ad9] [LIFECYCLE][END] status=200 duration_ms=56.94 memory_delta=0
+INFO - 2026-03-08 15:02:17 --> [REQ_ID=27f74c2a9d70] [PERF] Execution time=0.056646
+DEBUG - 2026-03-08 15:02:17 --> [REQ_ID=35ae500c3ad9] [REQUEST][END]
+INFO - 2026-03-08 15:02:17 --> [REQ_ID=35ae500c3ad9] [PERF] Execution time=0.072363
+DEBUG - 2026-03-08 15:02:18 --> [REQ_ID=695f268e00a0] [REQUEST][START] GET /index.php?debugbar
+DEBUG - 2026-03-08 15:02:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:02:18 --> [REQ_ID=695f268e00a0] [FILTER_BEFORE] /index.php?debugbar
+DEBUG - 2026-03-08 15:02:18 --> [REQ_ID=695f268e00a0] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 15:02:18 --> [REQ_ID=695f268e00a0] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php?debugbar=
+DEBUG - 2026-03-08 15:02:18 --> [CSRF] token name=csrf_test_name hash=e1f814a9283542ea65cb1d5695964e1a
+DEBUG - 2026-03-08 15:02:18 --> [REQ_ID=5e4c2c9ad558] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 15:02:18 --> [REQ_ID=5e4c2c9ad558] [MEMORY][controller-start] 4194304
+INFO - 2026-03-08 15:02:18 --> [REQ_ID=5e4c2c9ad558] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 15:02:18 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 15:02:18 --> [MetaService] slug= pageName= cacheHit= path=FALLBACK
+DEBUG - 2026-03-08 15:02:18 --> [REQ_ID=5e4c2c9ad558] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 15:02:18 --> [REQ_ID=5e4c2c9ad558] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 15:02:18 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 15:02:18 --> [MetaService] slug= pageName=Home cacheHit= path=DB
+DEBUG - 2026-03-08 15:02:18 --> [REQ_ID=695f268e00a0] [FILTER_AFTER]
+DEBUG - 2026-03-08 15:02:18 --> [REQ_ID=695f268e00a0] [LIFECYCLE][END] status=200 duration_ms=634.67 memory_delta=4194304
+INFO - 2026-03-08 15:02:18 --> [REQ_ID=5e4c2c9ad558] [PERF] Execution time=0.634485
+DEBUG - 2026-03-08 15:02:18 --> [REQ_ID=695f268e00a0] [REQUEST][END]
+INFO - 2026-03-08 15:02:18 --> [REQ_ID=695f268e00a0] [PERF] Execution time=0.644326
+DEBUG - 2026-03-08 15:02:19 --> [REQ_ID=53921d8d2975] [REQUEST][START] GET /index.php?debugbar
+DEBUG - 2026-03-08 15:02:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:02:19 --> [REQ_ID=53921d8d2975] [FILTER_BEFORE] /index.php?debugbar
+DEBUG - 2026-03-08 15:02:19 --> [REQ_ID=53921d8d2975] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 15:02:19 --> [REQ_ID=53921d8d2975] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php?debugbar=
+DEBUG - 2026-03-08 15:02:19 --> [CSRF] token name=csrf_test_name hash=e1f814a9283542ea65cb1d5695964e1a
+DEBUG - 2026-03-08 15:02:19 --> [REQ_ID=4cf790320a5b] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 15:02:19 --> [REQ_ID=4cf790320a5b] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 15:02:19 --> [REQ_ID=4cf790320a5b] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 15:02:19 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 15:02:20 --> [MetaService] slug= pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 15:02:20 --> [REQ_ID=4cf790320a5b] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 15:02:20 --> [REQ_ID=4cf790320a5b] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 15:02:20 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 15:02:20 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 15:02:20 --> [REQ_ID=53921d8d2975] [FILTER_AFTER]
+DEBUG - 2026-03-08 15:02:20 --> [REQ_ID=53921d8d2975] [LIFECYCLE][END] status=200 duration_ms=725.09 memory_delta=2097152
+INFO - 2026-03-08 15:02:20 --> [REQ_ID=4cf790320a5b] [PERF] Execution time=0.725029
+DEBUG - 2026-03-08 15:02:20 --> [REQ_ID=53921d8d2975] [REQUEST][END]
+INFO - 2026-03-08 15:02:20 --> [REQ_ID=53921d8d2975] [PERF] Execution time=0.738750
+DEBUG - 2026-03-08 15:02:20 --> [REQ_ID=f468aa9b4a3f] [REQUEST][START] GET /index.php?debugbar
+DEBUG - 2026-03-08 15:02:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:02:20 --> [REQ_ID=f468aa9b4a3f] [FILTER_BEFORE] /index.php?debugbar
+DEBUG - 2026-03-08 15:02:20 --> [REQ_ID=f468aa9b4a3f] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 15:02:20 --> [REQ_ID=f468aa9b4a3f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php?debugbar=
+DEBUG - 2026-03-08 15:02:20 --> [CSRF] token name=csrf_test_name hash=e1f814a9283542ea65cb1d5695964e1a
+DEBUG - 2026-03-08 15:02:20 --> [REQ_ID=06c61ab6e5ae] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 15:02:20 --> [REQ_ID=06c61ab6e5ae] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 15:02:20 --> [REQ_ID=06c61ab6e5ae] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 15:02:20 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 15:02:21 --> [REQ_ID=5053cdfbe968] [REQUEST][START] GET /index.php?debugbar
+DEBUG - 2026-03-08 15:02:21 --> [MetaService] slug= pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 15:02:21 --> [REQ_ID=06c61ab6e5ae] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 15:02:21 --> [REQ_ID=06c61ab6e5ae] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 15:02:21 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 15:02:21 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 15:02:21 --> [REQ_ID=f468aa9b4a3f] [FILTER_AFTER]
+DEBUG - 2026-03-08 15:02:21 --> [REQ_ID=f468aa9b4a3f] [LIFECYCLE][END] status=200 duration_ms=741.74 memory_delta=2097152
+INFO - 2026-03-08 15:02:21 --> [REQ_ID=06c61ab6e5ae] [PERF] Execution time=0.741271
+DEBUG - 2026-03-08 15:02:21 --> [REQ_ID=f468aa9b4a3f] [REQUEST][END]
+INFO - 2026-03-08 15:02:21 --> [REQ_ID=f468aa9b4a3f] [PERF] Execution time=0.794009
+DEBUG - 2026-03-08 15:02:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:02:21 --> [REQ_ID=5053cdfbe968] [FILTER_BEFORE] /index.php?debugbar
+DEBUG - 2026-03-08 15:02:21 --> [REQ_ID=5053cdfbe968] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 15:02:21 --> [REQ_ID=5053cdfbe968] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php?debugbar=
+DEBUG - 2026-03-08 15:02:21 --> [CSRF] token name=csrf_test_name hash=e1f814a9283542ea65cb1d5695964e1a
+DEBUG - 2026-03-08 15:02:21 --> [REQ_ID=df249ace4d1e] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 15:02:21 --> [REQ_ID=df249ace4d1e] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 15:02:21 --> [REQ_ID=df249ace4d1e] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 15:02:21 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 15:02:22 --> [MetaService] slug= pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 15:02:22 --> [REQ_ID=df249ace4d1e] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 15:02:22 --> [REQ_ID=df249ace4d1e] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 15:02:22 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 15:02:22 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 15:02:22 --> [REQ_ID=5053cdfbe968] [FILTER_AFTER]
+DEBUG - 2026-03-08 15:02:22 --> [REQ_ID=5053cdfbe968] [LIFECYCLE][END] status=200 duration_ms=826.80 memory_delta=4194304
+INFO - 2026-03-08 15:02:22 --> [REQ_ID=df249ace4d1e] [PERF] Execution time=0.824444
+DEBUG - 2026-03-08 15:02:22 --> [REQ_ID=5053cdfbe968] [REQUEST][END]
+INFO - 2026-03-08 15:02:22 --> [REQ_ID=5053cdfbe968] [PERF] Execution time=1.326890
+DEBUG - 2026-03-08 15:02:23 --> [REQ_ID=f984f08efcc8] [REQUEST][START] GET /index.php/How-It-Works/investments
+DEBUG - 2026-03-08 15:02:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:02:23 --> [REQ_ID=f984f08efcc8] [FILTER_BEFORE] /index.php/How-It-Works/investments
+DEBUG - 2026-03-08 15:02:23 --> [REQ_ID=f984f08efcc8] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 15:02:23 --> [REQ_ID=f984f08efcc8] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/investments
+DEBUG - 2026-03-08 15:02:23 --> [CSRF] token name=csrf_test_name hash=e1f814a9283542ea65cb1d5695964e1a
+DEBUG - 2026-03-08 15:02:23 --> [REQ_ID=4a771ef203b5] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 15:02:23 --> [REQ_ID=4a771ef203b5] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 15:02:23 --> [REQ_ID=fbb200eb5b87] [REQUEST][START] GET /index.php/images/ci4-portfolio.png
+DEBUG - 2026-03-08 15:02:23 --> [REQ_ID=4a771ef203b5] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 15:02:23 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 15:02:23 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 15:02:23 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:02:23 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:02:23 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 15:02:23 --> [ERROR_PAGE] event=error_404 status=404 message=Page not found.
+DEBUG - 2026-03-08 15:02:23 --> [REQ_ID=f984f08efcc8] [FILTER_AFTER]
+DEBUG - 2026-03-08 15:02:23 --> [REQ_ID=f984f08efcc8] [LIFECYCLE][END] status=404 duration_ms=60.14 memory_delta=0
+INFO - 2026-03-08 15:02:23 --> [REQ_ID=4a771ef203b5] [PERF] Execution time=0.060021
+DEBUG - 2026-03-08 15:02:23 --> [REQ_ID=f984f08efcc8] [REQUEST][END]
+INFO - 2026-03-08 15:02:23 --> [REQ_ID=f984f08efcc8] [PERF] Execution time=0.080689
+DEBUG - 2026-03-08 15:02:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 15:02:23 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: images/ci4-portfolio.png]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 15:02:23 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 15:02:23 --> [404] URI=https://www.mymiwallet.com/index.php/images/ci4-portfolio.png
+WARNING - 2026-03-08 15:02:23 --> 404 route miss: https://www.mymiwallet.com/index.php/images/ci4-portfolio.png | referrer: none
+DEBUG - 2026-03-08 15:03:57 --> [REQ_ID=109883493893] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 15:03:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:03:57 --> [REQ_ID=109883493893] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 15:03:57 --> [REQ_ID=109883493893] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 15:03:57 --> [REQ_ID=109883493893] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 15:03:57 --> [CSRF] token name=csrf_test_name hash=e1f814a9283542ea65cb1d5695964e1a
+DEBUG - 2026-03-08 15:03:57 --> [REQ_ID=a302cefcce0a] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 15:03:57 --> [REQ_ID=a302cefcce0a] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 15:03:57 --> [REQ_ID=a302cefcce0a] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 15:03:57 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 15:03:57 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 15:03:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:03:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:03:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 15:03:57 --> [REQ_ID=a302cefcce0a] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 15:03:57 --> [REQ_ID=a302cefcce0a] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Personal_Budgeting
+INFO - 2026-03-08 15:03:57 --> [REQ_ID=a302cefcce0a] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 15:03:58 --> themesMemory usage: 14680064
+DEBUG - 2026-03-08 15:03:58 --> [REQ_ID=109883493893] [FILTER_AFTER]
+DEBUG - 2026-03-08 15:03:58 --> [REQ_ID=109883493893] [LIFECYCLE][END] status=200 duration_ms=1,567.34 memory_delta=8388608
+INFO - 2026-03-08 15:03:58 --> [REQ_ID=a302cefcce0a] [PERF] Execution time=1.565384
+DEBUG - 2026-03-08 15:03:58 --> [REQ_ID=109883493893] [REQUEST][END]
+INFO - 2026-03-08 15:03:58 --> [REQ_ID=109883493893] [PERF] Execution time=1.608035
+DEBUG - 2026-03-08 15:04:27 --> [REQ_ID=37db21492688] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 15:04:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:04:27 --> [REQ_ID=37db21492688] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 15:04:27 --> [REQ_ID=37db21492688] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 15:04:27 --> [REQ_ID=37db21492688] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 15:04:27 --> [CSRF] token name=csrf_test_name hash=e1f814a9283542ea65cb1d5695964e1a
+DEBUG - 2026-03-08 15:04:27 --> [REQ_ID=fe1a6212c77b] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 15:04:27 --> [REQ_ID=fe1a6212c77b] [MEMORY][controller-start] 8388608
+DEBUG - 2026-03-08 15:04:27 --> [REQ_ID=fe1a6212c77b] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 15:04:27 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 15:04:27 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 15:04:27 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:04:27 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:04:27 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 15:04:27 --> [REQ_ID=fe1a6212c77b] [MEMORY][commonData:start] 8388608
+DEBUG - 2026-03-08 15:04:28 --> [REQ_ID=fe1a6212c77b] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Personal_Budgeting
+INFO - 2026-03-08 15:04:28 --> [REQ_ID=fe1a6212c77b] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 15:04:28 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 15:04:28 --> [REQ_ID=37db21492688] [FILTER_AFTER]
+DEBUG - 2026-03-08 15:04:28 --> [REQ_ID=37db21492688] [LIFECYCLE][END] status=200 duration_ms=1,556.83 memory_delta=4194304
+INFO - 2026-03-08 15:04:28 --> [REQ_ID=fe1a6212c77b] [PERF] Execution time=1.556507
+DEBUG - 2026-03-08 15:04:28 --> [REQ_ID=37db21492688] [REQUEST][END]
+INFO - 2026-03-08 15:04:28 --> [REQ_ID=37db21492688] [PERF] Execution time=1.567259
+DEBUG - 2026-03-08 15:04:39 --> [REQ_ID=a4f8cab7da81] [REQUEST][START] GET /index.php/How-It-Works/mymi-gold
+DEBUG - 2026-03-08 15:04:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:04:39 --> [REQ_ID=a4f8cab7da81] [FILTER_BEFORE] /index.php/How-It-Works/mymi-gold
+DEBUG - 2026-03-08 15:04:39 --> [REQ_ID=a4f8cab7da81] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 15:04:39 --> [REQ_ID=a4f8cab7da81] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/mymi-gold
+DEBUG - 2026-03-08 15:04:39 --> [CSRF] token name=csrf_test_name hash=e1f814a9283542ea65cb1d5695964e1a
+DEBUG - 2026-03-08 15:04:39 --> [REQ_ID=c9a4c08dd1a7] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 15:04:39 --> [REQ_ID=c9a4c08dd1a7] [MEMORY][controller-start] 10485760
+DEBUG - 2026-03-08 15:04:39 --> [REQ_ID=c9a4c08dd1a7] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 15:04:39 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 15:04:39 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 15:04:39 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:04:39 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:04:39 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 15:04:39 --> [REQ_ID=c9a4c08dd1a7] [MEMORY][commonData:start] 10485760
+DEBUG - 2026-03-08 15:04:39 --> [REQ_ID=c9a4c08dd1a7] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\MyMI_Gold
+INFO - 2026-03-08 15:04:39 --> [REQ_ID=c9a4c08dd1a7] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 15:04:40 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 15:04:40 --> [REQ_ID=a4f8cab7da81] [FILTER_AFTER]
+DEBUG - 2026-03-08 15:04:40 --> [REQ_ID=a4f8cab7da81] [LIFECYCLE][END] status=200 duration_ms=1,290.76 memory_delta=2097152
+INFO - 2026-03-08 15:04:40 --> [REQ_ID=c9a4c08dd1a7] [PERF] Execution time=1.290968
+DEBUG - 2026-03-08 15:04:40 --> [REQ_ID=a4f8cab7da81] [REQUEST][END]
+INFO - 2026-03-08 15:04:40 --> [REQ_ID=a4f8cab7da81] [PERF] Execution time=1.301256
+DEBUG - 2026-03-08 15:06:17 --> [REQ_ID=cbc9f15a020f] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 15:06:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 15:06:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 15:06:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 15:06:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 15:06:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 15:09:16 --> [REQ_ID=d02baf0e90a2] [REQUEST][START] GET /index.php/Management/Budgets
+DEBUG - 2026-03-08 15:09:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:09:16 --> [REQ_ID=d02baf0e90a2] [FILTER_BEFORE] /index.php/Management/Budgets
+DEBUG - 2026-03-08 15:09:16 --> [REQ_ID=d02baf0e90a2] [ROUTE] Controller=\App\Modules\Management\Controllers\BudgetsAdminController Method=index
+DEBUG - 2026-03-08 15:09:16 --> [REQ_ID=d02baf0e90a2] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management/Budgets
+DEBUG - 2026-03-08 15:09:16 --> [CSRF] token name=csrf_test_name hash=5091967cafb86869bbf29341a8a08ad5
+DEBUG - 2026-03-08 15:09:16 --> [REQ_ID=d02baf0e90a2] [REQUEST][END]
+INFO - 2026-03-08 15:09:16 --> [REQ_ID=d02baf0e90a2] [PERF] Execution time=0.052424
+DEBUG - 2026-03-08 15:09:16 --> [REQ_ID=57458f98e61d] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 15:09:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:09:16 --> [REQ_ID=57458f98e61d] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 15:09:16 --> [REQ_ID=57458f98e61d] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 15:09:16 --> [REQ_ID=57458f98e61d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 15:09:16 --> [CSRF] token name=csrf_test_name hash=b95040f93b43c29975e66963971d3917
+DEBUG - 2026-03-08 15:09:16 --> [REQ_ID=7c67c84f73fa] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 15:09:16 --> [REQ_ID=7c67c84f73fa] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 15:09:16 --> [REQ_ID=57458f98e61d] [FILTER_AFTER]
+DEBUG - 2026-03-08 15:09:16 --> [REQ_ID=57458f98e61d] [LIFECYCLE][END] status=200 duration_ms=145.08 memory_delta=0
+INFO - 2026-03-08 15:09:16 --> [REQ_ID=7c67c84f73fa] [PERF] Execution time=0.144793
+DEBUG - 2026-03-08 15:09:16 --> [REQ_ID=57458f98e61d] [REQUEST][END]
+INFO - 2026-03-08 15:09:16 --> [REQ_ID=57458f98e61d] [PERF] Execution time=0.157372
+DEBUG - 2026-03-08 15:11:18 --> [REQ_ID=aa286905b11f] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 15:11:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 15:11:18 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 15:11:18 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 15:11:18 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 15:11:18 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 15:14:27 --> [REQ_ID=45798e14b890] [REQUEST][START] GET /index.php/How-It-Works/mymi-gold
+DEBUG - 2026-03-08 15:14:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:14:27 --> [REQ_ID=45798e14b890] [FILTER_BEFORE] /index.php/How-It-Works/mymi-gold
+DEBUG - 2026-03-08 15:14:27 --> [REQ_ID=45798e14b890] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 15:14:27 --> [REQ_ID=45798e14b890] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/mymi-gold
+DEBUG - 2026-03-08 15:14:27 --> [CSRF] token name=csrf_test_name hash=e1f814a9283542ea65cb1d5695964e1a
+DEBUG - 2026-03-08 15:14:27 --> [REQ_ID=ecd5524f459a] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 15:14:27 --> [REQ_ID=ecd5524f459a] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 15:14:27 --> [REQ_ID=ecd5524f459a] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 15:14:27 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 15:14:27 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 15:14:27 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:14:27 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:14:27 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 15:14:27 --> [REQ_ID=ecd5524f459a] [MEMORY][commonData:start] 6291456
+INFO - 2026-03-08 15:14:27 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 15:14:27 --> [MetaService] slug=how-it-works/mymi-gold pageName= cacheHit= path=DB
+DEBUG - 2026-03-08 15:14:27 --> [REQ_ID=45798e14b890] [FILTER_AFTER]
+DEBUG - 2026-03-08 15:14:27 --> [REQ_ID=45798e14b890] [LIFECYCLE][END] status=200 duration_ms=801.06 memory_delta=4194304
+INFO - 2026-03-08 15:14:27 --> [REQ_ID=ecd5524f459a] [PERF] Execution time=0.799137
+DEBUG - 2026-03-08 15:14:27 --> [REQ_ID=45798e14b890] [REQUEST][END]
+INFO - 2026-03-08 15:14:27 --> [REQ_ID=45798e14b890] [PERF] Execution time=0.843102
+DEBUG - 2026-03-08 15:14:29 --> [REQ_ID=15dddbae8e1a] [REQUEST][START] GET /index.php/How-It-Works/mymi-gold
+DEBUG - 2026-03-08 15:14:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:14:29 --> [REQ_ID=15dddbae8e1a] [FILTER_BEFORE] /index.php/How-It-Works/mymi-gold
+DEBUG - 2026-03-08 15:14:29 --> [REQ_ID=15dddbae8e1a] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 15:14:29 --> [REQ_ID=15dddbae8e1a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/mymi-gold
+DEBUG - 2026-03-08 15:14:29 --> [CSRF] token name=csrf_test_name hash=e1f814a9283542ea65cb1d5695964e1a
+DEBUG - 2026-03-08 15:14:29 --> [REQ_ID=c2124f0e4b3b] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 15:14:29 --> [REQ_ID=c2124f0e4b3b] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 15:14:29 --> [REQ_ID=c2124f0e4b3b] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 15:14:29 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 15:14:29 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 15:14:29 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:14:29 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:14:29 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 15:14:29 --> [REQ_ID=c2124f0e4b3b] [MEMORY][commonData:start] 6291456
+INFO - 2026-03-08 15:14:30 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 15:14:30 --> [MetaService] slug=how-it-works/mymi-gold pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 15:14:30 --> [REQ_ID=15dddbae8e1a] [FILTER_AFTER]
+DEBUG - 2026-03-08 15:14:30 --> [REQ_ID=15dddbae8e1a] [LIFECYCLE][END] status=200 duration_ms=700.36 memory_delta=2097152
+INFO - 2026-03-08 15:14:30 --> [REQ_ID=c2124f0e4b3b] [PERF] Execution time=0.700239
+DEBUG - 2026-03-08 15:14:30 --> [REQ_ID=15dddbae8e1a] [REQUEST][END]
+INFO - 2026-03-08 15:14:30 --> [REQ_ID=15dddbae8e1a] [PERF] Execution time=0.710238
+DEBUG - 2026-03-08 15:15:01 --> [REQ_ID=3f8d1867a989] [REQUEST][START] GET /index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 15:15:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:15:01 --> [REQ_ID=3f8d1867a989] [FILTER_BEFORE] /index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 15:15:01 --> [REQ_ID=3f8d1867a989] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=fetchEmailAlerts
+DEBUG - 2026-03-08 15:15:01 --> [REQ_ID=3f8d1867a989] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 15:15:01 --> [REQ_ID=3f8d1867a989] [REQUEST][END]
+INFO - 2026-03-08 15:15:01 --> [REQ_ID=3f8d1867a989] [PERF] Execution time=0.052954
+INFO - 2026-03-08 15:15:01 --> [spark:ops:work] Started
+INFO - 2026-03-08 15:15:01 --> [SPARK_START] App\Commands\Ops\Work
+INFO - 2026-03-08 15:15:01 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 15:15:01 --> [spark:ops:work] Intent
+INFO - 2026-03-08 15:15:01 --> [spark:ops:work] Completed
+INFO - 2026-03-08 15:15:01 --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.109340
+INFO - 2026-03-08 15:15:01 --> [SPARK_MEMORY] 18874368
+DEBUG - 2026-03-08 15:15:11 --> [REQ_ID=1ae4cf414bf0] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 15:15:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:15:11 --> [REQ_ID=1ae4cf414bf0] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 15:15:11 --> [REQ_ID=1ae4cf414bf0] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 15:15:11 --> [REQ_ID=1ae4cf414bf0] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 15:15:11 --> [CSRF] token name=csrf_test_name hash=e1f814a9283542ea65cb1d5695964e1a
+DEBUG - 2026-03-08 15:15:11 --> [REQ_ID=6d87a3f273bb] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 15:15:11 --> [REQ_ID=6d87a3f273bb] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 15:15:11 --> [REQ_ID=6d87a3f273bb] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 15:15:11 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 15:15:11 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 15:15:11 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:15:11 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:15:11 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 15:15:11 --> [REQ_ID=6d87a3f273bb] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 15:15:12 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 15:15:12 --> [MetaService] slug=how-it-works/personal-budgeting pageName= cacheHit= path=DB
+DEBUG - 2026-03-08 15:15:12 --> [REQ_ID=1ae4cf414bf0] [FILTER_AFTER]
+DEBUG - 2026-03-08 15:15:12 --> [REQ_ID=1ae4cf414bf0] [LIFECYCLE][END] status=200 duration_ms=689.46 memory_delta=4194304
+INFO - 2026-03-08 15:15:12 --> [REQ_ID=6d87a3f273bb] [PERF] Execution time=0.688677
+DEBUG - 2026-03-08 15:15:12 --> [REQ_ID=1ae4cf414bf0] [REQUEST][END]
+INFO - 2026-03-08 15:15:12 --> [REQ_ID=1ae4cf414bf0] [PERF] Execution time=0.702711
+DEBUG - 2026-03-08 15:15:13 --> [REQ_ID=80bf1bf0b5ad] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 15:15:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:15:13 --> [REQ_ID=80bf1bf0b5ad] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 15:15:13 --> [REQ_ID=80bf1bf0b5ad] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 15:15:13 --> [REQ_ID=80bf1bf0b5ad] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 15:15:13 --> [CSRF] token name=csrf_test_name hash=e1f814a9283542ea65cb1d5695964e1a
+DEBUG - 2026-03-08 15:15:13 --> [REQ_ID=4161440cf242] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 15:15:13 --> [REQ_ID=4161440cf242] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 15:15:13 --> [REQ_ID=4161440cf242] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 15:15:13 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 15:15:13 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 15:15:13 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:15:13 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:15:13 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 15:15:13 --> [REQ_ID=4161440cf242] [MEMORY][commonData:start] 6291456
+INFO - 2026-03-08 15:15:14 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 15:15:14 --> [MetaService] slug=how-it-works/personal-budgeting pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 15:15:14 --> [REQ_ID=80bf1bf0b5ad] [FILTER_AFTER]
+DEBUG - 2026-03-08 15:15:14 --> [REQ_ID=80bf1bf0b5ad] [LIFECYCLE][END] status=200 duration_ms=747.00 memory_delta=2097152
+INFO - 2026-03-08 15:15:14 --> [REQ_ID=4161440cf242] [PERF] Execution time=0.746666
+DEBUG - 2026-03-08 15:15:14 --> [REQ_ID=80bf1bf0b5ad] [REQUEST][END]
+INFO - 2026-03-08 15:15:14 --> [REQ_ID=80bf1bf0b5ad] [PERF] Execution time=0.757498
+DEBUG - 2026-03-08 15:15:59 --> [REQ_ID=f343a137bbde] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 15:15:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:15:59 --> [REQ_ID=f343a137bbde] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 15:15:59 --> [REQ_ID=f343a137bbde] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 15:15:59 --> [REQ_ID=f343a137bbde] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 15:15:59 --> [CSRF] token name=csrf_test_name hash=e1f814a9283542ea65cb1d5695964e1a
+DEBUG - 2026-03-08 15:15:59 --> [REQ_ID=24b3cc08b258] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 15:15:59 --> [REQ_ID=24b3cc08b258] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 15:15:59 --> [REQ_ID=24b3cc08b258] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 15:15:59 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 15:15:59 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 15:15:59 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:15:59 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:15:59 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 15:15:59 --> [REQ_ID=24b3cc08b258] [MEMORY][commonData:start] 6291456
+INFO - 2026-03-08 15:16:00 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 15:16:00 --> [MetaService] slug=how-it-works/personal-budgeting pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 15:16:00 --> [REQ_ID=f343a137bbde] [FILTER_AFTER]
+DEBUG - 2026-03-08 15:16:00 --> [REQ_ID=f343a137bbde] [LIFECYCLE][END] status=200 duration_ms=1,139.73 memory_delta=2097152
+INFO - 2026-03-08 15:16:00 --> [REQ_ID=24b3cc08b258] [PERF] Execution time=1.139526
+DEBUG - 2026-03-08 15:16:00 --> [REQ_ID=f343a137bbde] [REQUEST][END]
+INFO - 2026-03-08 15:16:00 --> [REQ_ID=f343a137bbde] [PERF] Execution time=1.150285
+DEBUG - 2026-03-08 15:16:17 --> [REQ_ID=2d06c466976b] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 15:16:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 15:16:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 15:16:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 15:16:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 15:16:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 15:18:15 --> [REQ_ID=93351dd704a7] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 15:18:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:18:15 --> [REQ_ID=93351dd704a7] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 15:18:15 --> [REQ_ID=93351dd704a7] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 15:18:15 --> [REQ_ID=93351dd704a7] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 15:18:15 --> [CSRF] token name=csrf_test_name hash=e1f814a9283542ea65cb1d5695964e1a
+DEBUG - 2026-03-08 15:18:15 --> [REQ_ID=301a00889aac] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 15:18:15 --> [REQ_ID=301a00889aac] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 15:18:15 --> [REQ_ID=301a00889aac] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 15:18:15 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 15:18:15 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 15:18:15 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:18:15 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 15:18:15 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 15:18:15 --> [REQ_ID=301a00889aac] [MEMORY][commonData:start] 6291456
+INFO - 2026-03-08 15:18:16 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 15:18:16 --> [MetaService] slug=how-it-works/personal-budgeting pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 15:18:16 --> [REQ_ID=93351dd704a7] [FILTER_AFTER]
+DEBUG - 2026-03-08 15:18:16 --> [REQ_ID=93351dd704a7] [LIFECYCLE][END] status=200 duration_ms=918.00 memory_delta=4194304
+INFO - 2026-03-08 15:18:16 --> [REQ_ID=301a00889aac] [PERF] Execution time=0.915726
+DEBUG - 2026-03-08 15:18:16 --> [REQ_ID=93351dd704a7] [REQUEST][END]
+INFO - 2026-03-08 15:18:16 --> [REQ_ID=93351dd704a7] [PERF] Execution time=0.957877
+DEBUG - 2026-03-08 15:21:17 --> [REQ_ID=0203b68bf2be] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 15:21:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 15:21:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 15:21:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 15:21:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 15:21:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 15:26:17 --> [REQ_ID=d115a5ead4b8] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 15:26:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 15:26:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 15:26:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 15:26:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 15:26:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 15:28:19 --> [REQ_ID=855b1fb77230] [REQUEST][START] GET /
+DEBUG - 2026-03-08 15:28:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:28:19 --> [REQ_ID=855b1fb77230] [REQUEST][END]
+INFO - 2026-03-08 15:28:19 --> [REQ_ID=855b1fb77230] [PERF] Execution time=0.037819
+INFO - 2026-03-08 15:30:02 --> [spark:ops:work] Started
+INFO - 2026-03-08 15:30:02 --> [SPARK_START] App\Commands\Ops\Work
+INFO - 2026-03-08 15:30:02 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 15:30:02 --> [spark:ops:work] Intent
+INFO - 2026-03-08 15:30:02 --> [spark:ops:work] Completed
+INFO - 2026-03-08 15:30:02 --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.022799
+INFO - 2026-03-08 15:30:02 --> [SPARK_MEMORY] 18874368
+DEBUG - 2026-03-08 15:31:17 --> [REQ_ID=61234d305c7e] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 15:31:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 15:31:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 15:31:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 15:31:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 15:31:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 15:36:17 --> [REQ_ID=159d7b1be447] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 15:36:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 15:36:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 15:36:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 15:36:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 15:36:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 15:41:09 --> [REQ_ID=8d6187de94c9] [REQUEST][START] GET /index.php/Management/Marketing/Content/Listing
+DEBUG - 2026-03-08 15:41:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:41:09 --> [REQ_ID=8d6187de94c9] [FILTER_BEFORE] /index.php/Management/Marketing/Content/Listing
+DEBUG - 2026-03-08 15:41:09 --> [REQ_ID=8d6187de94c9] [ROUTE] Controller=\App\Modules\Management\Controllers\MarketingAdminController Method=contentListing
+DEBUG - 2026-03-08 15:41:09 --> [REQ_ID=8d6187de94c9] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management/Marketing/Content/Listing
+DEBUG - 2026-03-08 15:41:09 --> [CSRF] token name=csrf_test_name hash=88aabd603eb461209d0fceb6267bf840
+DEBUG - 2026-03-08 15:41:09 --> [REQ_ID=8d6187de94c9] [REQUEST][END]
+INFO - 2026-03-08 15:41:09 --> [REQ_ID=8d6187de94c9] [PERF] Execution time=0.059464
+DEBUG - 2026-03-08 15:41:12 --> [REQ_ID=4041926a2bdf] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 15:41:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 15:41:12 --> [REQ_ID=4041926a2bdf] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 15:41:12 --> [REQ_ID=4041926a2bdf] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 15:41:12 --> [REQ_ID=4041926a2bdf] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 15:41:12 --> [CSRF] token name=csrf_test_name hash=746c903992694503184758d946613720
+DEBUG - 2026-03-08 15:41:12 --> [REQ_ID=5c2dba42de50] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 15:41:12 --> [REQ_ID=5c2dba42de50] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 15:41:12 --> [REQ_ID=4041926a2bdf] [FILTER_AFTER]
+DEBUG - 2026-03-08 15:41:12 --> [REQ_ID=4041926a2bdf] [LIFECYCLE][END] status=200 duration_ms=127.25 memory_delta=0
+INFO - 2026-03-08 15:41:12 --> [REQ_ID=5c2dba42de50] [PERF] Execution time=0.126922
+DEBUG - 2026-03-08 15:41:12 --> [REQ_ID=4041926a2bdf] [REQUEST][END]
+INFO - 2026-03-08 15:41:12 --> [REQ_ID=4041926a2bdf] [PERF] Execution time=0.140205
+DEBUG - 2026-03-08 15:41:17 --> [REQ_ID=1c5cb38b7394] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 15:41:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 15:41:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 15:41:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 15:41:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 15:41:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+INFO - 2026-03-08 15:45:01 --> [spark:ops:work] Started
+INFO - 2026-03-08 15:45:01 --> [SPARK_START] App\Commands\Ops\Work
+INFO - 2026-03-08 15:45:01 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 15:45:01 --> [spark:ops:work] Intent
+INFO - 2026-03-08 15:45:01 --> [spark:ops:work] Completed
+INFO - 2026-03-08 15:45:01 --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.170199
+INFO - 2026-03-08 15:45:01 --> [SPARK_MEMORY] 18874368
+DEBUG - 2026-03-08 15:46:17 --> [REQ_ID=131a1c7f84ce] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 15:46:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 15:46:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 15:46:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 15:46:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 15:46:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 15:51:17 --> [REQ_ID=b7f5ff4daf5a] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 15:51:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 15:51:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 15:51:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 15:51:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 15:51:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 15:56:07 --> [REQ_ID=3d6fa06ee941] [REQUEST][START] GET /index.php/Premium-Features/Advanced-Trade-Tracker
+DEBUG - 2026-03-08 15:56:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 15:56:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Premium-Features/Advanced-Trade-Tracker]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 15:56:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 15:56:07 --> [404] URI=https://www.mymiwallet.com/index.php/Premium-Features/Advanced-Trade-Tracker
+WARNING - 2026-03-08 15:56:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Premium-Features/Advanced-Trade-Tracker | referrer: none
+DEBUG - 2026-03-08 15:56:17 --> [REQ_ID=b313b63d463b] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 15:56:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 15:56:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 15:56:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 15:56:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 15:56:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+INFO - 2026-03-08 16:00:01 --> [spark:ops:work] Started
+INFO - 2026-03-08 16:00:01 --> [SPARK_START] App\Commands\Ops\Work
+INFO - 2026-03-08 16:00:01 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 16:00:01 --> [spark:ops:work] Intent
+INFO - 2026-03-08 16:00:01 --> [spark:ops:work] Completed
+INFO - 2026-03-08 16:00:01 --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.040007
+INFO - 2026-03-08 16:00:01 --> [SPARK_MEMORY] 18874368
+DEBUG - 2026-03-08 16:00:01 --> [REQ_ID=38989c99fe76] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 16:00:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 16:00:01 --> [REQ_ID=38989c99fe76] [FILTER_BEFORE] /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 16:00:01 --> [REQ_ID=38989c99fe76] [ROUTE] Controller=\App\Modules\Management\Controllers\ManagementAPIController Method=Run_CRON_Tasks
+DEBUG - 2026-03-08 16:00:01 --> [REQ_ID=38989c99fe76] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 16:00:01 --> [REQ_ID=38989c99fe76] [REQUEST][END]
+INFO - 2026-03-08 16:00:01 --> [REQ_ID=38989c99fe76] [PERF] Execution time=0.053710
+DEBUG - 2026-03-08 16:01:17 --> [REQ_ID=d4f7fce2a4fb] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 16:01:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 16:01:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 16:01:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 16:01:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 16:01:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 16:06:17 --> [REQ_ID=2238a47127dd] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 16:06:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 16:06:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 16:06:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 16:06:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 16:06:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 16:11:17 --> [REQ_ID=9978874912bf] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 16:11:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 16:11:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 16:11:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 16:11:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 16:11:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+INFO - 2026-03-08 16:15:01 --> [spark:ops:work] Started
+INFO - 2026-03-08 16:15:01 --> [SPARK_START] App\Commands\Ops\Work
+INFO - 2026-03-08 16:15:01 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 16:15:01 --> [spark:ops:work] Intent
+INFO - 2026-03-08 16:15:01 --> [spark:ops:work] Completed
+INFO - 2026-03-08 16:15:01 --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.105529
+INFO - 2026-03-08 16:15:01 --> [SPARK_MEMORY] 18874368
+DEBUG - 2026-03-08 16:15:01 --> [REQ_ID=9efa1cb1751f] [REQUEST][START] GET /index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 16:15:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 16:15:01 --> [REQ_ID=9efa1cb1751f] [FILTER_BEFORE] /index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 16:15:01 --> [REQ_ID=9efa1cb1751f] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=fetchEmailAlerts
+DEBUG - 2026-03-08 16:15:01 --> [REQ_ID=9efa1cb1751f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 16:15:01 --> [REQ_ID=9efa1cb1751f] [REQUEST][END]
+INFO - 2026-03-08 16:15:01 --> [REQ_ID=9efa1cb1751f] [PERF] Execution time=0.047665
+DEBUG - 2026-03-08 16:16:17 --> [REQ_ID=e8b71b1aa096] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 16:16:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 16:16:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 16:16:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 16:16:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 16:16:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 16:21:17 --> [REQ_ID=42c866693e20] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 16:21:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 16:21:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 16:21:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 16:21:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 16:21:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 16:21:59 --> [REQ_ID=699f5334796a] [REQUEST][START] GET /index.php/Management/Wallets
+DEBUG - 2026-03-08 16:21:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 16:21:59 --> [REQ_ID=699f5334796a] [FILTER_BEFORE] /index.php/Management/Wallets
+DEBUG - 2026-03-08 16:21:59 --> [REQ_ID=699f5334796a] [ROUTE] Controller=\App\Modules\Management\Controllers\WalletsController Method=index
+DEBUG - 2026-03-08 16:21:59 --> [REQ_ID=699f5334796a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management/Wallets
+DEBUG - 2026-03-08 16:21:59 --> [CSRF] token name=csrf_test_name hash=78762aa8c9070a34c55d7dcbcaf824c4
+DEBUG - 2026-03-08 16:21:59 --> [REQ_ID=699f5334796a] [REQUEST][END]
+INFO - 2026-03-08 16:21:59 --> [REQ_ID=699f5334796a] [PERF] Execution time=0.026002
+DEBUG - 2026-03-08 16:22:00 --> [REQ_ID=2b32db93e698] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 16:22:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 16:22:00 --> [REQ_ID=2b32db93e698] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 16:22:00 --> [REQ_ID=2b32db93e698] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 16:22:00 --> [REQ_ID=2b32db93e698] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 16:22:00 --> [CSRF] token name=csrf_test_name hash=6641af1835c67772d03d9180c5571368
+DEBUG - 2026-03-08 16:22:00 --> [REQ_ID=6dcac230e59a] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 16:22:00 --> [REQ_ID=6dcac230e59a] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 16:22:00 --> [REQ_ID=2b32db93e698] [FILTER_AFTER]
+DEBUG - 2026-03-08 16:22:00 --> [REQ_ID=2b32db93e698] [LIFECYCLE][END] status=200 duration_ms=60.96 memory_delta=0
+INFO - 2026-03-08 16:22:00 --> [REQ_ID=6dcac230e59a] [PERF] Execution time=0.059844
+DEBUG - 2026-03-08 16:22:00 --> [REQ_ID=2b32db93e698] [REQUEST][END]
+INFO - 2026-03-08 16:22:00 --> [REQ_ID=2b32db93e698] [PERF] Execution time=0.083225
+DEBUG - 2026-03-08 16:23:14 --> [REQ_ID=6ba9a843a4c9] [REQUEST][START] GET /
+DEBUG - 2026-03-08 16:23:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 16:23:14 --> [REQ_ID=6ba9a843a4c9] [FILTER_BEFORE] /
+DEBUG - 2026-03-08 16:23:14 --> [REQ_ID=6ba9a843a4c9] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 16:23:14 --> [REQ_ID=6ba9a843a4c9] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 16:23:14 --> [CSRF] token name=csrf_test_name hash=630ff2a85d9a558e6eaa7b6b3786ef18
+DEBUG - 2026-03-08 16:23:14 --> [REQ_ID=5b88b5a29fc6] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 16:23:14 --> [REQ_ID=5b88b5a29fc6] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 16:23:14 --> [REQ_ID=5b88b5a29fc6] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 16:23:14 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 16:23:15 --> [MetaService] slug= pageName= cacheHit= path=FALLBACK
+DEBUG - 2026-03-08 16:23:15 --> [REQ_ID=5b88b5a29fc6] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 16:23:15 --> [REQ_ID=5b88b5a29fc6] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 16:23:15 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 16:23:15 --> [MetaService] slug= pageName=Home cacheHit= path=DB
+DEBUG - 2026-03-08 16:23:15 --> [REQ_ID=6ba9a843a4c9] [FILTER_AFTER]
+DEBUG - 2026-03-08 16:23:15 --> [REQ_ID=6ba9a843a4c9] [LIFECYCLE][END] status=200 duration_ms=677.49 memory_delta=4194304
+INFO - 2026-03-08 16:23:15 --> [REQ_ID=5b88b5a29fc6] [PERF] Execution time=0.675372
+DEBUG - 2026-03-08 16:23:15 --> [REQ_ID=6ba9a843a4c9] [REQUEST][END]
+INFO - 2026-03-08 16:23:15 --> [REQ_ID=6ba9a843a4c9] [PERF] Execution time=0.715777
+DEBUG - 2026-03-08 16:26:17 --> [REQ_ID=2ed975608bf9] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 16:26:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 16:26:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 16:26:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 16:26:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 16:26:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+INFO - 2026-03-08 16:30:02 --> [spark:ops:work] Started
+INFO - 2026-03-08 16:30:02 --> [SPARK_START] App\Commands\Ops\Work
+INFO - 2026-03-08 16:30:02 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 16:30:02 --> [spark:ops:work] Intent
+INFO - 2026-03-08 16:30:02 --> [spark:ops:work] Completed
+INFO - 2026-03-08 16:30:02 --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.024222
+INFO - 2026-03-08 16:30:02 --> [SPARK_MEMORY] 18874368
+DEBUG - 2026-03-08 16:31:17 --> [REQ_ID=7716a38a176e] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 16:31:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 16:31:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 16:31:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 16:31:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 16:31:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 16:36:17 --> [REQ_ID=6e4c64f9db93] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 16:36:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 16:36:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 16:36:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 16:36:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 16:36:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 16:41:04 --> [REQ_ID=645ae646def9] [REQUEST][START] GET /
+DEBUG - 2026-03-08 16:41:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 16:41:04 --> [REQ_ID=645ae646def9] [FILTER_BEFORE] /
+DEBUG - 2026-03-08 16:41:04 --> [REQ_ID=645ae646def9] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 16:41:04 --> [REQ_ID=645ae646def9] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 16:41:04 --> [CSRF] token name=csrf_test_name hash=2a8e216348e47da69e686d5910986d16
+DEBUG - 2026-03-08 16:41:04 --> [REQ_ID=c1ae434ef178] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 16:41:04 --> [REQ_ID=c1ae434ef178] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 16:41:04 --> [REQ_ID=c1ae434ef178] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 16:41:04 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 16:41:05 --> [MetaService] slug= pageName= cacheHit= path=FALLBACK
+DEBUG - 2026-03-08 16:41:05 --> [REQ_ID=c1ae434ef178] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 16:41:05 --> [REQ_ID=c1ae434ef178] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 16:41:05 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 16:41:05 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 16:41:05 --> [REQ_ID=645ae646def9] [FILTER_AFTER]
+DEBUG - 2026-03-08 16:41:05 --> [REQ_ID=645ae646def9] [LIFECYCLE][END] status=200 duration_ms=776.97 memory_delta=4194304
+INFO - 2026-03-08 16:41:05 --> [REQ_ID=c1ae434ef178] [PERF] Execution time=0.774978
+DEBUG - 2026-03-08 16:41:05 --> [REQ_ID=645ae646def9] [REQUEST][END]
+INFO - 2026-03-08 16:41:05 --> [REQ_ID=645ae646def9] [PERF] Execution time=0.815238
+DEBUG - 2026-03-08 16:41:17 --> [REQ_ID=01b0d2f7cfac] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 16:41:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 16:41:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 16:41:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 16:41:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 16:41:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 16:43:19 --> [REQ_ID=d63f790db611] [REQUEST][START] GET /
+DEBUG - 2026-03-08 16:43:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 16:43:19 --> [REQ_ID=d63f790db611] [REQUEST][END]
+INFO - 2026-03-08 16:43:19 --> [REQ_ID=d63f790db611] [PERF] Execution time=0.040259
+INFO - 2026-03-08 16:45:01 --> [spark:ops:work] Started
+INFO - 2026-03-08 16:45:01 --> [SPARK_START] App\Commands\Ops\Work
+INFO - 2026-03-08 16:45:01 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 16:45:01 --> [spark:ops:work] Intent
+INFO - 2026-03-08 16:45:01 --> [spark:ops:work] Completed
+INFO - 2026-03-08 16:45:01 --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.099356
+INFO - 2026-03-08 16:45:01 --> [SPARK_MEMORY] 18874368
+DEBUG - 2026-03-08 16:46:17 --> [REQ_ID=e690e16d3896] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 16:46:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 16:46:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 16:46:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 16:46:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 16:46:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 16:46:37 --> [REQ_ID=43c7aed6d7f2] [REQUEST][START] GET /index.php/Investments/News
+DEBUG - 2026-03-08 16:46:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 16:46:37 --> [REQ_ID=43c7aed6d7f2] [FILTER_BEFORE] /index.php/Investments/News
+DEBUG - 2026-03-08 16:46:37 --> [REQ_ID=43c7aed6d7f2] [ROUTE] Controller=closure_route Method=index
+DEBUG - 2026-03-08 16:46:37 --> [REQ_ID=43c7aed6d7f2] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Investments/News
+DEBUG - 2026-03-08 16:46:37 --> [CSRF] token name=csrf_test_name hash=4a9c5762a679e8f10ef310e6319651ff
+DEBUG - 2026-03-08 16:46:37 --> [REQ_ID=43c7aed6d7f2] [REQUEST][END]
+INFO - 2026-03-08 16:46:37 --> [REQ_ID=43c7aed6d7f2] [PERF] Execution time=0.026550
+DEBUG - 2026-03-08 16:46:38 --> [REQ_ID=1403ffd95140] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 16:46:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 16:46:38 --> [REQ_ID=1403ffd95140] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 16:46:38 --> [REQ_ID=1403ffd95140] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 16:46:38 --> [REQ_ID=1403ffd95140] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 16:46:38 --> [CSRF] token name=csrf_test_name hash=7787684ea8a5f5b3a47f03121cad25c2
+DEBUG - 2026-03-08 16:46:38 --> [REQ_ID=747dae0e1505] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 16:46:38 --> [REQ_ID=747dae0e1505] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 16:46:38 --> [REQ_ID=1403ffd95140] [FILTER_AFTER]
+DEBUG - 2026-03-08 16:46:38 --> [REQ_ID=1403ffd95140] [LIFECYCLE][END] status=200 duration_ms=116.35 memory_delta=0
+INFO - 2026-03-08 16:46:38 --> [REQ_ID=747dae0e1505] [PERF] Execution time=0.116132
+DEBUG - 2026-03-08 16:46:38 --> [REQ_ID=1403ffd95140] [REQUEST][END]
+INFO - 2026-03-08 16:46:38 --> [REQ_ID=1403ffd95140] [PERF] Execution time=0.132364
+DEBUG - 2026-03-08 16:51:17 --> [REQ_ID=371a2e5245ef] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 16:51:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 16:51:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 16:51:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 16:51:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 16:51:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 16:53:56 --> [REQ_ID=8c91a0dfa682] [REQUEST][START] GET /
+DEBUG - 2026-03-08 16:53:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 16:53:56 --> [REQ_ID=8c91a0dfa682] [FILTER_BEFORE] /
+DEBUG - 2026-03-08 16:53:56 --> [REQ_ID=8c91a0dfa682] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 16:53:56 --> [REQ_ID=8c91a0dfa682] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 16:53:56 --> [CSRF] token name=csrf_test_name hash=901a0a4d2fd26efa71698b418baca077
+DEBUG - 2026-03-08 16:53:56 --> [REQ_ID=9ea2bd1b05c6] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 16:53:56 --> [REQ_ID=9ea2bd1b05c6] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 16:53:56 --> [REQ_ID=9ea2bd1b05c6] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 16:53:56 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 16:53:57 --> [MetaService] slug= pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 16:53:57 --> [REQ_ID=9ea2bd1b05c6] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 16:53:57 --> [REQ_ID=9ea2bd1b05c6] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 16:53:57 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 16:53:57 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 16:53:57 --> [REQ_ID=8c91a0dfa682] [FILTER_AFTER]
+DEBUG - 2026-03-08 16:53:57 --> [REQ_ID=8c91a0dfa682] [LIFECYCLE][END] status=200 duration_ms=784.20 memory_delta=4194304
+INFO - 2026-03-08 16:53:57 --> [REQ_ID=9ea2bd1b05c6] [PERF] Execution time=0.782186
+DEBUG - 2026-03-08 16:53:57 --> [REQ_ID=8c91a0dfa682] [REQUEST][END]
+INFO - 2026-03-08 16:53:57 --> [REQ_ID=8c91a0dfa682] [PERF] Execution time=0.823171
+DEBUG - 2026-03-08 16:56:17 --> [REQ_ID=bf1bbe42bed8] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 16:56:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 16:56:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 16:56:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 16:56:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 16:56:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+INFO - 2026-03-08 17:00:01 --> [SPARK_START] App\Commands\AIOps\Run
+INFO - 2026-03-08 17:00:01 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 17:00:01 --> [spark:aiops:run] Intent
+INFO - 2026-03-08 17:00:02 --> [spark:ops:work] Started
+INFO - 2026-03-08 17:00:02 --> [SPARK_START] App\Commands\Ops\Work
+INFO - 2026-03-08 17:00:02 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 17:00:02 --> [spark:ops:work] Intent
+DEBUG - 2026-03-08 17:00:02 --> [REQ_ID=ca892d82a966] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 17:00:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:00:02 --> [REQ_ID=ca892d82a966] [FILTER_BEFORE] /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 17:00:02 --> [REQ_ID=ca892d82a966] [ROUTE] Controller=\App\Modules\Management\Controllers\ManagementAPIController Method=Run_CRON_Tasks
+DEBUG - 2026-03-08 17:00:02 --> [REQ_ID=ca892d82a966] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Management/Run-CRON-Tasks
+INFO - 2026-03-08 17:00:02 --> [spark:ops:work] Completed
+INFO - 2026-03-08 17:00:02 --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.197098
+INFO - 2026-03-08 17:00:02 --> [SPARK_MEMORY] 18874368
+DEBUG - 2026-03-08 17:00:02 --> [REQ_ID=ca892d82a966] [REQUEST][END]
+INFO - 2026-03-08 17:00:02 --> [REQ_ID=ca892d82a966] [PERF] Execution time=0.108374
+INFO - 2026-03-08 17:00:03 --> [AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Started
+INFO - 2026-03-08 17:00:03 --> [SPARK_START] App\Commands\Logs\Summarize
+INFO - 2026-03-08 17:00:03 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 17:00:03 --> [spark:logs:summarize] Intent
+INFO - 2026-03-08 17:00:03 --> [AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Completed
+INFO - 2026-03-08 17:00:03 --> [SPARK_COMPLETE] App\Commands\Logs\Summarize duration=0.031384
+INFO - 2026-03-08 17:00:03 --> [SPARK_MEMORY] 23068672
+INFO - 2026-03-08 17:00:03 --> [spark:app:healthcheck] Started
+INFO - 2026-03-08 17:00:03 --> [SPARK_START] App\Commands\App\Healthcheck
+INFO - 2026-03-08 17:00:03 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 17:00:03 --> [spark:app:healthcheck] Intent
+DEBUG - 2026-03-08 17:00:03 --> LOG_HEALTHCHECK debug marker=001057806e83
+INFO - 2026-03-08 17:00:03 --> LOG_HEALTHCHECK info marker=001057806e83
+NOTICE - 2026-03-08 17:00:03 --> LOG_HEALTHCHECK probe marker=001057806e83
+INFO - 2026-03-08 17:00:03 --> [spark:app:healthcheck] Completed
+INFO - 2026-03-08 17:00:03 --> [SPARK_COMPLETE] App\Commands\App\Healthcheck duration=0.029889
+INFO - 2026-03-08 17:00:03 --> [SPARK_MEMORY] 23068672
+WARNING - 2026-03-08 17:00:04 --> Patch generation returned empty diff
+INFO - 2026-03-08 17:00:04 --> [SPARK_COMPLETE] App\Commands\AIOps\Run duration=2.987009
+INFO - 2026-03-08 17:00:04 --> [SPARK_MEMORY] 20971520
+DEBUG - 2026-03-08 17:01:17 --> [REQ_ID=6bf262ce7276] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 17:01:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 17:01:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 17:01:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 17:01:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 17:01:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 17:04:51 --> [REQ_ID=012199857a41] [REQUEST][START] GET /
+DEBUG - 2026-03-08 17:04:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:04:51 --> [REQ_ID=012199857a41] [FILTER_BEFORE] /
+DEBUG - 2026-03-08 17:04:51 --> [REQ_ID=012199857a41] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 17:04:51 --> [REQ_ID=012199857a41] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 17:04:51 --> [CSRF] token name=csrf_test_name hash=761d372bcaea567a4de68466a0147271
+DEBUG - 2026-03-08 17:04:51 --> [REQ_ID=1c11cdf378e1] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 17:04:51 --> [REQ_ID=1c11cdf378e1] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 17:04:51 --> [REQ_ID=1c11cdf378e1] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 17:04:52 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 17:04:52 --> [MetaService] slug= pageName= cacheHit= path=FALLBACK
+DEBUG - 2026-03-08 17:04:52 --> [REQ_ID=1c11cdf378e1] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 17:04:52 --> [REQ_ID=1c11cdf378e1] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 17:04:52 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 17:04:52 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 17:04:52 --> [REQ_ID=012199857a41] [FILTER_AFTER]
+DEBUG - 2026-03-08 17:04:52 --> [REQ_ID=012199857a41] [LIFECYCLE][END] status=200 duration_ms=720.48 memory_delta=4194304
+INFO - 2026-03-08 17:04:52 --> [REQ_ID=1c11cdf378e1] [PERF] Execution time=0.718548
+DEBUG - 2026-03-08 17:04:52 --> [REQ_ID=012199857a41] [REQUEST][END]
+INFO - 2026-03-08 17:04:52 --> [REQ_ID=012199857a41] [PERF] Execution time=0.758476
+DEBUG - 2026-03-08 17:06:17 --> [REQ_ID=935c8b41c5be] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 17:06:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 17:06:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 17:06:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 17:06:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 17:06:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 17:11:17 --> [REQ_ID=5bd688d35056] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 17:11:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 17:11:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 17:11:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 17:11:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 17:11:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+INFO - 2026-03-08 17:15:01 --> [spark:ops:work] Started
+INFO - 2026-03-08 17:15:01 --> [SPARK_START] App\Commands\Ops\Work
+INFO - 2026-03-08 17:15:01 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 17:15:01 --> [spark:ops:work] Intent
+INFO - 2026-03-08 17:15:01 --> [spark:ops:work] Completed
+INFO - 2026-03-08 17:15:01 --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.057991
+INFO - 2026-03-08 17:15:01 --> [SPARK_MEMORY] 18874368
+DEBUG - 2026-03-08 17:15:01 --> [REQ_ID=2fceb4074fc3] [REQUEST][START] GET /index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 17:15:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:15:01 --> [REQ_ID=2fceb4074fc3] [FILTER_BEFORE] /index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 17:15:01 --> [REQ_ID=2fceb4074fc3] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=fetchEmailAlerts
+DEBUG - 2026-03-08 17:15:01 --> [REQ_ID=2fceb4074fc3] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 17:15:01 --> [REQ_ID=2fceb4074fc3] [REQUEST][END]
+INFO - 2026-03-08 17:15:01 --> [REQ_ID=2fceb4074fc3] [PERF] Execution time=0.048826
+DEBUG - 2026-03-08 17:16:17 --> [REQ_ID=f54c1d0d7cd9] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 17:16:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 17:16:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 17:16:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 17:16:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 17:16:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 17:16:27 --> [REQ_ID=58eb99c30de7] [REQUEST][START] GET /index.php/Legal/Privacy-Policy
+DEBUG - 2026-03-08 17:16:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:16:27 --> [REQ_ID=58eb99c30de7] [FILTER_BEFORE] /index.php/Legal/Privacy-Policy
+DEBUG - 2026-03-08 17:16:27 --> [REQ_ID=58eb99c30de7] [ROUTE] Controller=\App\Controllers\Home Method=privacyPolicy
+DEBUG - 2026-03-08 17:16:27 --> [REQ_ID=58eb99c30de7] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Legal/Privacy-Policy
+DEBUG - 2026-03-08 17:16:27 --> [CSRF] token name=csrf_test_name hash=f09ec1dc812ee766debfeb8e9b0d4f55
+DEBUG - 2026-03-08 17:16:27 --> [REQ_ID=58eb99c30de7] [REQUEST][END]
+INFO - 2026-03-08 17:16:27 --> [REQ_ID=58eb99c30de7] [PERF] Execution time=0.018235
+DEBUG - 2026-03-08 17:16:29 --> [REQ_ID=b0585514b36f] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 17:16:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:16:29 --> [REQ_ID=b0585514b36f] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 17:16:29 --> [REQ_ID=b0585514b36f] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 17:16:29 --> [REQ_ID=b0585514b36f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 17:16:29 --> [CSRF] token name=csrf_test_name hash=a4bcca76a7c7f6ff3f7cbea0d00f4f11
+DEBUG - 2026-03-08 17:16:29 --> [REQ_ID=7a3d6edde8e7] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 17:16:29 --> [REQ_ID=7a3d6edde8e7] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 17:16:29 --> [REQ_ID=b0585514b36f] [FILTER_AFTER]
+DEBUG - 2026-03-08 17:16:29 --> [REQ_ID=b0585514b36f] [LIFECYCLE][END] status=200 duration_ms=94.69 memory_delta=0
+INFO - 2026-03-08 17:16:29 --> [REQ_ID=7a3d6edde8e7] [PERF] Execution time=0.094898
+DEBUG - 2026-03-08 17:16:29 --> [REQ_ID=b0585514b36f] [REQUEST][END]
+INFO - 2026-03-08 17:16:29 --> [REQ_ID=b0585514b36f] [PERF] Execution time=0.107590
+DEBUG - 2026-03-08 17:20:43 --> [REQ_ID=a4375dd1066b] [REQUEST][START] GET /
+DEBUG - 2026-03-08 17:20:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:20:43 --> [REQ_ID=a4375dd1066b] [FILTER_BEFORE] /
+DEBUG - 2026-03-08 17:20:43 --> [REQ_ID=a4375dd1066b] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 17:20:43 --> [REQ_ID=a4375dd1066b] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 17:20:43 --> [CSRF] token name=csrf_test_name hash=06b3f1986e866d72955f596ee293e749
+DEBUG - 2026-03-08 17:20:43 --> [REQ_ID=262d4d4221eb] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 17:20:43 --> [REQ_ID=262d4d4221eb] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 17:20:44 --> [REQ_ID=262d4d4221eb] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 17:20:44 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 17:20:44 --> [MetaService] slug= pageName= cacheHit= path=FALLBACK
+DEBUG - 2026-03-08 17:20:44 --> [REQ_ID=262d4d4221eb] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 17:20:44 --> [REQ_ID=262d4d4221eb] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 17:20:44 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 17:20:44 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 17:20:44 --> [REQ_ID=a4375dd1066b] [FILTER_AFTER]
+DEBUG - 2026-03-08 17:20:44 --> [REQ_ID=a4375dd1066b] [LIFECYCLE][END] status=200 duration_ms=829.80 memory_delta=4194304
+INFO - 2026-03-08 17:20:44 --> [REQ_ID=262d4d4221eb] [PERF] Execution time=0.828000
+DEBUG - 2026-03-08 17:20:44 --> [REQ_ID=a4375dd1066b] [REQUEST][END]
+INFO - 2026-03-08 17:20:44 --> [REQ_ID=a4375dd1066b] [PERF] Execution time=0.872040
+DEBUG - 2026-03-08 17:21:17 --> [REQ_ID=2772e1f0113b] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 17:21:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 17:21:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 17:21:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 17:21:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 17:21:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 17:24:47 --> [REQ_ID=c9fa43343e52] [REQUEST][START] GET /index.php/How-It-Works
+DEBUG - 2026-03-08 17:24:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:24:47 --> [REQ_ID=c9fa43343e52] [FILTER_BEFORE] /index.php/How-It-Works
+DEBUG - 2026-03-08 17:24:47 --> [REQ_ID=c9fa43343e52] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=index
+DEBUG - 2026-03-08 17:24:47 --> [REQ_ID=c9fa43343e52] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works
+DEBUG - 2026-03-08 17:24:47 --> [CSRF] token name=csrf_test_name hash=603835b8f4e6ef2c47c55462eea7c9d3
+DEBUG - 2026-03-08 17:24:47 --> [REQ_ID=7a6d3b0faf5a] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 17:24:47 --> [REQ_ID=7a6d3b0faf5a] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 17:24:47 --> [REQ_ID=7a6d3b0faf5a] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 17:24:47 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 17:24:47 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 17:24:47 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 17:24:47 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 17:24:47 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 17:24:47 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 17:24:47 --> [ERROR_PAGE] event=error_404 status=404 message=Page not found.
+DEBUG - 2026-03-08 17:24:47 --> [REQ_ID=c9fa43343e52] [FILTER_AFTER]
+DEBUG - 2026-03-08 17:24:47 --> [REQ_ID=c9fa43343e52] [LIFECYCLE][END] status=404 duration_ms=169.42 memory_delta=0
+INFO - 2026-03-08 17:24:47 --> [REQ_ID=7a6d3b0faf5a] [PERF] Execution time=0.167479
+DEBUG - 2026-03-08 17:24:47 --> [REQ_ID=c9fa43343e52] [REQUEST][END]
+INFO - 2026-03-08 17:24:47 --> [REQ_ID=c9fa43343e52] [PERF] Execution time=0.212249
+DEBUG - 2026-03-08 17:25:29 --> [REQ_ID=d3caa5c0b337] [REQUEST][START] GET /index.php/Budget/Financial-Forecaster
+DEBUG - 2026-03-08 17:25:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:25:29 --> [REQ_ID=d3caa5c0b337] [FILTER_BEFORE] /index.php/Budget/Financial-Forecaster
+DEBUG - 2026-03-08 17:25:29 --> [REQ_ID=d3caa5c0b337] [ROUTE] Controller=\App\Modules\User\Controllers\BudgetController Method=financialForecaster
+DEBUG - 2026-03-08 17:25:29 --> [REQ_ID=d3caa5c0b337] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Budget/Financial-Forecaster
+DEBUG - 2026-03-08 17:25:29 --> [CSRF] token name=csrf_test_name hash=a1e131da8352ccafd7331982fbbe8370
+DEBUG - 2026-03-08 17:25:29 --> [REQ_ID=d3caa5c0b337] [REQUEST][END]
+INFO - 2026-03-08 17:25:29 --> [REQ_ID=d3caa5c0b337] [PERF] Execution time=0.015637
+DEBUG - 2026-03-08 17:25:30 --> [REQ_ID=e31360f17de4] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 17:25:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:25:30 --> [REQ_ID=e31360f17de4] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 17:25:30 --> [REQ_ID=e31360f17de4] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 17:25:30 --> [REQ_ID=e31360f17de4] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 17:25:30 --> [CSRF] token name=csrf_test_name hash=8bdfac4ea6f17c9c23d60cbc7632e440
+DEBUG - 2026-03-08 17:25:30 --> [REQ_ID=228402b584b8] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 17:25:30 --> [REQ_ID=228402b584b8] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 17:25:30 --> [REQ_ID=e31360f17de4] [FILTER_AFTER]
+DEBUG - 2026-03-08 17:25:30 --> [REQ_ID=e31360f17de4] [LIFECYCLE][END] status=200 duration_ms=44.59 memory_delta=0
+INFO - 2026-03-08 17:25:30 --> [REQ_ID=228402b584b8] [PERF] Execution time=0.044229
+DEBUG - 2026-03-08 17:25:30 --> [REQ_ID=e31360f17de4] [REQUEST][END]
+INFO - 2026-03-08 17:25:30 --> [REQ_ID=e31360f17de4] [PERF] Execution time=0.056134
+DEBUG - 2026-03-08 17:26:17 --> [REQ_ID=2011b4171a27] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 17:26:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 17:26:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 17:26:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 17:26:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 17:26:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220

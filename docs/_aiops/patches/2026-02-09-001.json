@@ -1,10 +1,9 @@
 {
     "job_file": "docs/_aiops/patch_jobs/README.md",
-    "debug_file": "docs/_aiops/debug/2026-02-09-001.attempt_2.raw-output.json",
-    "fallback_plan": "docs/_aiops/patch_jobs_failed/2026-02-09-001.md",
+    "reason": "empty_diff",
     "status": "failed_invalid_model_output",
     "job_id": "2026-02-09-001",
     "diff_path": null,
     "diff_valid": false,
-    "timestamp": "2026-03-08T13:00:04+00:00"
+    "timestamp": "2026-03-08T17:00:04+00:00"
 }

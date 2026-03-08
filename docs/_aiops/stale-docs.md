@@ -1,6 +1,6 @@
 # AI-Ops: Stale Docs
 > Auto-generated. Do not edit manually.
-> Run: 2026-03-08T13:00:01Z
+> Run: 2026-03-08T17:00:02Z
 
 - docs/Kimi/README.md
   - Doc last updated: 2025-12-11 (86 days ago)
@@ -9,45 +9,45 @@
 - docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md
   - Doc last updated: 2025-12-11 (86 days ago)
 - docs/OVERVIEW.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/README.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/adr/0001-standards-and-response-contract.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/adr/_index.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/ai-cost-controls.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/ai-ops/README.md
-  - Doc last updated: 2026-01-01 (65 days ago)
+  - Doc last updated: 2026-01-01 (66 days ago)
 - docs/ai-ops/api-automations.md
-  - Doc last updated: 2026-01-01 (65 days ago)
+  - Doc last updated: 2026-01-01 (66 days ago)
 - docs/ai-ops/cost-budget.md
-  - Doc last updated: 2026-01-01 (65 days ago)
+  - Doc last updated: 2026-01-01 (66 days ago)
 - docs/ai-ops/cron-jobs.md
-  - Doc last updated: 2026-01-01 (65 days ago)
+  - Doc last updated: 2026-01-01 (66 days ago)
 - docs/ai-ops/dashboard.md
   - Doc last updated: 2026-01-02 (65 days ago)
 - docs/ai-ops/observability-policy.md
-  - Doc last updated: 2026-01-01 (65 days ago)
+  - Doc last updated: 2026-01-01 (66 days ago)
 - docs/aiops-budgeting.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/aiops/runbooks/dreamhost-proxy-ports.md
   - Doc last updated: 2026-01-02 (65 days ago)
 - docs/aiops/runbooks/operations.md
-  - Doc last updated: 2026-01-01 (65 days ago)
+  - Doc last updated: 2026-01-01 (66 days ago)
 - docs/aiops/runbooks/security-hardening.md
-  - Doc last updated: 2026-01-01 (65 days ago)
+  - Doc last updated: 2026-01-01 (66 days ago)
 - docs/aiops/selfhosted-stack.md
   - Doc last updated: 2026-01-02 (65 days ago)
 - docs/aiops/workflows/n8n-workflows.md
-  - Doc last updated: 2026-01-01 (65 days ago)
+  - Doc last updated: 2026-01-01 (66 days ago)
 - docs/alerts/alerts_marketing_pipline.md
   - Doc last updated: 2025-11-22 (105 days ago)
 - docs/auctions/_index.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/auctions/auction-schema.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/automation/communities/cron_plan.md
   - Doc last updated: 2025-12-27 (71 days ago)
 - docs/automation/communities/distribution_matrix.md
@@ -55,21 +55,21 @@
 - docs/automation/communities/post_generation_rules.md
   - Doc last updated: 2025-12-27 (71 days ago)
 - docs/bitcoin-standardization.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/budget/UI-Suggestions.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/budget/_index.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/budget/budget-controller.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/budgeting/_index.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/budgeting/architecture.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/categorized/README.md
-  - Doc last updated: 2025-11-30 (97 days ago)
+  - Doc last updated: 2025-11-30 (98 days ago)
 - docs/chat-auth-flow.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/chat/ARCHITECTURE.md
   - Doc last updated: 2026-01-05 (62 days ago)
 - docs/chat/CI4_INTEGRATION.md
@@ -81,25 +81,25 @@
 - docs/chat/ENV.md
   - Doc last updated: 2026-01-05 (62 days ago)
 - docs/chat/OPS.md
-  - Doc last updated: 2026-01-05 (61 days ago)
+  - Doc last updated: 2026-01-05 (62 days ago)
 - docs/chat/README.md
   - Doc last updated: 2026-01-05 (62 days ago)
 - docs/chat/TROUBLESHOOTING.md
   - Doc last updated: 2026-01-05 (61 days ago)
 - docs/chatgpt/README.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/chatgpt/codex_executive_director/summary.md
   - Doc last updated: 2025-12-20 (78 days ago)
 - docs/chatgpt/decision_log.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/chatgpt/diffs/new_since_last_run.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/chatgpt/extraction_standards_step_1.md
-  - Doc last updated: 2025-12-20 (77 days ago)
+  - Doc last updated: 2025-12-20 (78 days ago)
 - docs/chatgpt/extraction_standards_step_2.md
-  - Doc last updated: 2025-12-20 (77 days ago)
+  - Doc last updated: 2025-12-20 (78 days ago)
 - docs/chatgpt/extraction_standards_step_3.md
-  - Doc last updated: 2025-12-20 (77 days ago)
+  - Doc last updated: 2025-12-20 (78 days ago)
 - docs/chatgpt/mymi_alert_system/inventory.md
   - Doc last updated: 2025-12-20 (78 days ago)
 - docs/chatgpt/mymi_alert_system/standards.md
@@ -107,27 +107,27 @@
 - docs/chatgpt/mymi_alert_system/summary.md
   - Doc last updated: 2025-12-20 (78 days ago)
 - docs/chatgpt/processed/unresolved.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/chatgpt/prompt_template.md
-  - Doc last updated: 2025-12-20 (77 days ago)
+  - Doc last updated: 2025-12-20 (78 days ago)
 - docs/chatgpt/prompt_templates.md
-  - Doc last updated: 2025-12-21 (76 days ago)
+  - Doc last updated: 2025-12-21 (77 days ago)
 - docs/chatgpt/unresolved_threads.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/chatgpt/workflows/export_to_csv.md
   - Doc last updated: 2026-01-04 (62 days ago)
 - docs/codex/00_master_plan.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/codex/01_pr1_foundations.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/codex/02_pr2_worker_and_registry.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/codex/03_pr3_management_ui.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/codex/04_pr4_chat_management_ui.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/codex/05_pr5_n8n_docs_automation.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/communities/discord.md
   - Doc last updated: 2025-12-27 (71 days ago)
 - docs/communities/facebook.md
@@ -167,23 +167,23 @@
 - docs/content_hub_inventory/content_hub_inventory.md
   - Doc last updated: 2025-11-17 (111 days ago)
 - docs/cron/README.md
-  - Doc last updated: 2025-12-21 (76 days ago)
+  - Doc last updated: 2025-12-21 (77 days ago)
 - docs/cron/jobs/codex_review.md
-  - Doc last updated: 2025-12-21 (76 days ago)
+  - Doc last updated: 2025-12-21 (77 days ago)
 - docs/cron/jobs/deploy_pull_restart.md
-  - Doc last updated: 2025-12-21 (76 days ago)
+  - Doc last updated: 2025-12-21 (77 days ago)
 - docs/cron/jobs/health_check.md
-  - Doc last updated: 2025-12-21 (76 days ago)
+  - Doc last updated: 2025-12-21 (77 days ago)
 - docs/cron/jobs/log_summarize_and_diff.md
-  - Doc last updated: 2025-12-21 (76 days ago)
+  - Doc last updated: 2025-12-21 (77 days ago)
 - docs/cron/jobs/marketing_daily_run.md
-  - Doc last updated: 2025-12-21 (76 days ago)
+  - Doc last updated: 2025-12-21 (77 days ago)
 - docs/cron/jobs/ops_analyze_commands.md
-  - Doc last updated: 2025-12-21 (76 days ago)
+  - Doc last updated: 2025-12-21 (77 days ago)
 - docs/cron/jobs/ops_fetch_commands.md
-  - Doc last updated: 2025-12-21 (76 days ago)
+  - Doc last updated: 2025-12-21 (77 days ago)
 - docs/csp-and-commondata.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/discord/README.md
   - Doc last updated: 2025-12-07 (90 days ago)
 - docs/discord/_index.md
@@ -191,13 +191,13 @@
 - docs/discord/_inventory.md
   - Doc last updated: 2025-12-05 (92 days ago)
 - docs/discord/alerts_automation.md
-  - Doc last updated: 2025-11-27 (100 days ago)
+  - Doc last updated: 2025-11-27 (101 days ago)
 - docs/discord/discord_integration_overview.md
   - Doc last updated: 2025-11-25 (103 days ago)
 - docs/discord/discord_schema_v3.sql.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/discord/discord_seed_v3.sql.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/discord/discord_to_ci4_commands.md
   - Doc last updated: 2025-11-26 (102 days ago)
 - docs/discord/earnings_calendar_automation.md
@@ -207,7 +207,7 @@
 - docs/discord/events_matrix.md
   - Doc last updated: 2025-12-05 (92 days ago)
 - docs/discord/marketing_news_automation.md
-  - Doc last updated: 2025-12-10 (87 days ago)
+  - Doc last updated: 2025-12-10 (88 days ago)
 - docs/discord/mee6_and_mymi_automation.md
   - Doc last updated: 2025-12-05 (92 days ago)
 - docs/discord/mysql_discord_schema.md
@@ -227,15 +227,15 @@
 - docs/discord/where_to_share_what.md
   - Doc last updated: 2025-12-07 (90 days ago)
 - docs/discord_schema.sql.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/discord_seed.sql.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/emergency-playbook.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/esports_preflight.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/exports_schema.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/functional_inventory/feature_inventory.md
   - Doc last updated: 2025-11-24 (104 days ago)
 - docs/funnels/community_funnel.md
@@ -245,17 +245,17 @@
 - docs/funnels/platform_to_discord.md
   - Doc last updated: 2025-12-27 (71 days ago)
 - docs/gap-audit/README.md
-  - Doc last updated: 2026-01-01 (65 days ago)
+  - Doc last updated: 2026-01-01 (66 days ago)
 - docs/gap-audit/codex_queue.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/gap-audit/gap_report.md
   - Doc last updated: 2025-12-27 (71 days ago)
 - docs/gap-audit/next-steps.md
-  - Doc last updated: 2026-01-01 (65 days ago)
+  - Doc last updated: 2026-01-01 (66 days ago)
 - docs/gap-audit/unresolved_questions.md
   - Doc last updated: 2025-12-27 (71 days ago)
 - docs/gap_tracker/README.md
-  - Doc last updated: 2026-01-01 (65 days ago)
+  - Doc last updated: 2026-01-01 (66 days ago)
 - docs/gap_tracker/items/GAP-AI-001.md
   - Doc last updated: 2026-01-02 (65 days ago)
 - docs/gap_tracker/items/GAP-DOCS-001.md
@@ -271,7 +271,7 @@
 - docs/go-live/operational_usage.md
   - Doc last updated: 2025-12-27 (71 days ago)
 - docs/hardening-playbook.md
-  - Doc last updated: 2026-01-01 (65 days ago)
+  - Doc last updated: 2026-01-01 (66 days ago)
 - docs/indicators/README.md
   - Doc last updated: 2025-12-27 (71 days ago)
 - docs/indicators/_template.md
@@ -279,9 +279,9 @@
 - docs/indicators/mymi-momentum-suite-public.md
   - Doc last updated: 2025-12-27 (71 days ago)
 - docs/integrations/technology_investor_integrations.md
-  - Doc last updated: 2025-12-31 (66 days ago)
+  - Doc last updated: 2025-12-31 (67 days ago)
 - docs/inventory/docs_gaps.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/legal/crypto_customer_agreement/README.md
   - Doc last updated: 2025-12-27 (71 days ago)
 - docs/legal/crypto_customer_agreement/agreement.md
@@ -323,82 +323,82 @@
 - docs/legal/crypto_customer_agreement/sections/16_misc_governing_law_changes.md
   - Doc last updated: 2025-12-27 (71 days ago)
 - docs/logs/_index.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/logs/log-2025-10-06.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/marketing/01-mymi-gold-and-coin.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/marketing/02-budgeting-and-investments-libraries.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/marketing/03-mymiexchange-solana.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/marketing/04-mymialerts-premium.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/marketing/05-memberships-and-custom-plans.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/marketing/06-referrals-rewards.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/marketing/07-myprojects-real-estate.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/marketing/08-mymi-apis-self-host.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/marketing/09-discord-coffee-and-stocks.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/marketing/10-linkedin-groups-guide.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/marketing/11-facebook-groups-guide.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/marketing/12-discord-no-links-guide.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/marketing/13-x-twitter-guide.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/marketing/14-stocktwits-guide.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/marketing/15-youtube-guide.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/marketing/16-tiktok-guide.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/marketing/README.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/marketing/_assets/README.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/marketing/_index.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/marketing/_templates/CAMPAIGN_TEMPLATE.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/marketing/_templates/Coffee-and-Stocks/Facebook_Event_Template.md
-  - Doc last updated: 2025-12-19 (78 days ago)
+  - Doc last updated: 2025-12-19 (79 days ago)
 - docs/marketing/_templates/Coffee-and-Stocks/Prism_Live_Stream_Template.md
-  - Doc last updated: 2025-12-21 (76 days ago)
+  - Doc last updated: 2025-12-21 (77 days ago)
 - docs/marketing/index.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/mobile/replit/00_overview.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/mobile/replit/01_replit_setup.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/mobile/replit/02_architecture.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/mobile/replit/03_ci4_api_contracts.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/mobile/replit/04_npm_shared_package.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/mobile/replit/05_security.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/mobile/replit/06_mvp_checklist.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/mobile/replit/07_deploy_and_release.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/mobile/replit/missing_endpoints.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/mobile/replit/patches/mobile_endpoints.php.md
-  - Doc last updated: 2026-01-04 (62 days ago)
+  - Doc last updated: 2026-01-04 (63 days ago)
 - docs/nginx/01-structure.md
   - Doc last updated: 2025-12-27 (71 days ago)
 - docs/nginx/_index.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)
 - docs/nginx/config-nginx.md
   - Doc last updated: 2025-12-27 (71 days ago)
 - docs/nginx/mymiwallet.md
   - Doc last updated: 2025-12-27 (71 days ago)
 - docs/nginx/nginx.md
-  - Doc last updated: 2025-11-08 (119 days ago)
+  - Doc last updated: 2025-11-08 (120 days ago)

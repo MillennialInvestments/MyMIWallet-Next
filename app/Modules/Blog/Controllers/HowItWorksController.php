@@ -4,13 +4,10 @@ namespace App\Modules\Blog\Controllers;
 
 use Myth\Auth\Authorization\GroupModel;
 use Config\{Auth, SiteSettings, SocialMedia};
-use App\Controllers\UserController; 
+use App\Controllers\UserController;
 use App\Libraries\{BaseLoader, MyMIAnalytics, MyMIGold};
 use App\Models\{MarketingModel, MyMIGoldModel, PageSEOModel, SubscribeModel, UserModel};
-// use App\Modules\User\Libraries\{DashboardLibrary};
-use CodeIgniter\API\RequestTrait; // Import the ResponseTrait
-use CodeIgniter\API\ResponseTrait; // Import the ResponseTrait
-use App\Controllers\BaseController;
+use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Config\Services;
@@ -20,41 +17,52 @@ use App\Services\Docs\DocsRendererService;
 class HowItWorksController extends UserController
 {
     use ResponseTrait;
+
     protected string $ci4DocsPath = ROOTPATH . 'docs/user-guides/ci4/';
+
     protected $auth;
     protected $helpers = ['directory', 'form', 'file', 'url'];
-    protected $library;
     protected $request;
     protected $session;
     protected $uri;
     protected $siteSettings;
     protected $socialMedia;
+
     protected $MyMIAnalytics;
     protected $MyMIGoldModel;
     protected $pageSEOModel;
     protected $subscribeModel;
     protected $userModel;
+
     protected ?array $userAccount = null;
     protected ?MyMIGold $myMIGold = null;
     protected $docsRenderer;
 
-    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+    public function initController(
+        \CodeIgniter\HTTP\RequestInterface $request,
+        \CodeIgniter\HTTP\ResponseInterface $response,
+        \Psr\Log\LoggerInterface $logger
+    )
     {
         parent::initController($request, $response, $logger);
-        $this->auth                                     = service('authentication'); // Use the 'authentication' service
-        $this->request                                  = service('request');
-        $this->session                                  = Services::session();
-        $this->siteSettings                             = config('SiteSettings');
-        $this->socialMedia                              = config('SocialMedia');
-        $this->uri                                      = $this->request->getUri();
-//         $this->MyMIAnalytics                            = new MyMIAnalytics(); // replaced by BaseController getter
-//         $this->MyMIGoldModel                            = new MyMIGoldModel(); // replaced by BaseController getter
-        $this->pageSEOModel                             = new PageSEOModel();
-        $this->subscribeModel                           = new SubscribeModel();
-        $this->userModel                                = new UserModel();
-        $this->cuID                                     = $this->auth->id() ?? $this->session->get('user_id');
-        $this->myMIGold                                 = service('myMIGold') ?: (class_exists(MyMIGold::class) ? new MyMIGold() : null);
-        if (! $this->MyMIGoldModel && class_exists(MyMIGoldModel::class)) {
+
+        $this->auth         = service('authentication');
+        $this->request      = service('request');
+        $this->session      = Services::session();
+        $this->uri          = $this->request->getUri();
+
+        $this->siteSettings = config('SiteSettings');
+        $this->socialMedia  = config('SocialMedia');
+
+        $this->pageSEOModel = new PageSEOModel();
+        $this->subscribeModel = new SubscribeModel();
+        $this->userModel = new UserModel();
+
+        $this->cuID = $this->auth->id() ?? $this->session->get('user_id');
+
+        $this->myMIGold = service('myMIGold') ?: (class_exists(MyMIGold::class) ? new MyMIGold() : null);
+
+        if (!$this->MyMIGoldModel && class_exists(MyMIGoldModel::class)) {
             $this->MyMIGoldModel = new MyMIGoldModel();
         }
         $this->docsRenderer = new DocsRendererService();
@@ -110,47 +118,42 @@ class HowItWorksController extends UserController
             
         }
         return $this->data;
-}
+    }
 
+    /**
+     * Standard renderer for public pages
+     */
+    protected function renderPublic(string $view, array $data = []): ResponseInterface
+    {
+        $baseData = $this->commonData();
+        $merged = array_merge($baseData, $data);
 
+        $content = view($view, $merged);
 
+        $html = view('themes/public/layouts/index', array_merge($merged, [
+            'content' => $content
+        ]));
+
+        return $this->response
+            ->setStatusCode(200)
+            ->setBody($html);
+    }
+
+    /**
+     * Default entry
+     */
     public function index(): ResponseInterface
     {
         return $this->show('overview');
     }
 
+    /**
+     * Main slug handler
+     */
     public function show(string $slug = 'overview'): ResponseInterface
     {
-        $normalizedSlug = $this->normalizeSlug($slug);
+        $slug = $this->normalizeSlug($slug);
 
-        // 1) CI4 markdown-based docs
-        $map = [
-            'overview'         => '01_Overview.md',
-            'alerts'           => '02_Alerts_Dashboard_Guide.md',
-            'marketing'        => '03_Marketing_Dashboard_Guide.md',
-            'earnings'         => '04_Earnings_Dashboard_Guide.md',
-            'investments'      => '05_Investments_and_Portfolio_Guide.md',
-            'account-settings' => '06_Account_Settings_and_Social_Media_Linking.md',
-        ];
-
-        if (array_key_exists($normalizedSlug, $map)) {
-            $file = $this->ci4DocsPath . $map[$normalizedSlug];
-            if (is_file($file)) {
-                $markdown     = file_get_contents($file) ?: '';
-                $contentHtml  = $this->parseMarkdownToHtml($markdown);
-                $data = [
-                    'layout'      => 'public',
-                    'title'       => $this->getGuideTitle($normalizedSlug),
-                    'slug'        => $normalizedSlug,
-                    'contentHtml' => $contentHtml,
-                    'navItems'    => $this->getNavItems(),
-                ];
-
-                return $this->respondWithRendered('App\\Modules\\Blog\\Views\\HowItWorks\\index', $data);
-            }
-        }
-
-        // 2) Static How-It-Works views (dash-friendly slug mapping)
         $viewMap = [
             'registering-an-account'          => 'App\Modules\Blog\Views\HowItWorks\Registering_An_Account',
             'personal-budgeting'              => 'App\Modules\Blog\Views\HowItWorks\Personal_Budgeting',
@@ -194,71 +197,61 @@ class HowItWorksController extends UserController
             ->setBody(view('errors/html/error_404'));
     }
 
+    /**
+     * Discord guide page
+     */
     public function discord(): ResponseInterface
     {
         $config = config('DiscordHelp');
 
         $data = [
-            'title'           => 'How The MyMI Discord Works',
-            'slug'            => 'discord',
-            'commands'        => $config->commands,
+            'title' => 'How The MyMI Discord Works',
+            'commands' => $config->commands,
             'onboardingSteps' => $config->onboardingSteps,
-            'sharingGuideUrl' => site_url('API/Discord/sharingGuide'),
+            'sharingGuideUrl' => site_url('API/Discord/sharingGuide')
         ];
 
-        return $this->response
-            ->setStatusCode(200)
-            ->setBody(view('Modules/Blog/HowItWorks/Discord', $data));
+        return $this->renderPublic(
+            'App\Modules\Blog\Views\HowItWorks\Discord',
+            $data
+        );
     }
 
+    /**
+     * Streaming guide
+     */
     public function streaming(): ResponseInterface
     {
+        return $this->renderPublic(
+            'App\Modules\Blog\Views\HowItWorks\Streaming',
+            ['title' => 'Streaming with Twitch & YouTube']
+        );
+    }
+
+    /**
+     * MyMI Gold page
+     */
+    public function MyMIGold(): ResponseInterface
+    {
         $data = [
-            'title' => 'Streaming with Twitch & YouTube',
+            'pageTitle' => 'MyMI Gold | How It Works | MyMI Wallet',
+            'goldValue' => null,
+            'getInitialCoinValue' => null
         ];
-
-        return $this->response
-            ->setStatusCode(200)
-            ->setBody(view('Modules/Blog/HowItWorks/Streaming', $data));
-    }
-
-    public function DetermineYourFinancialGoals(): ResponseInterface
-    {
-        $data = $this->commonData(); // Ensure this is correctly populating $this->data
-        $data['pageTitle'] = 'Determine Your Financial Goals | How It Works | MyMI Wallet';
-        return $this->respondWithRendered('App\Modules\Blog\Views\HowItWorks\Determining_Your_Financial_Goals', $data);
-    }
-
-    public function RegisteringAnAccount(): ResponseInterface
-    {
-        $data = $this->commonData(); // Ensure this is correctly populating $this->data
-        $data['pageTitle'] = 'Registering An Account | How It Works | MyMI Wallet';
-        return $this->respondWithRendered('App\Modules\Blog\Views\HowItWorks\Registering_An_Account', $data);
-    }
-
-    public function MyMIGold(): ResponseInterface {
-        $this->data['pageTitle'] = 'MyMI Gold | How It Works | MyMI Wallet';
-        $this->data['goldValue'] = null;
-        $this->data['getCoinValue'] = null;
-        $this->data['getInitialCoinValue'] = null;
 
         if ($this->myMIGold && method_exists($this->myMIGold, 'getCoinValue')) {
             try {
-                $value = $this->myMIGold->getCoinValue();
-                $this->data['goldValue'] = $value;
-                $this->data['getCoinValue'] = $value;
+                $data['goldValue'] = $this->myMIGold->getCoinValue();
             } catch (\Throwable $e) {
-                log_message('error', 'MyMIGold::getCoinValue failed: {msg}', ['msg' => $e->getMessage()]);
+                log_message('error', 'MyMIGold value fetch failed: {msg}', ['msg' => $e->getMessage()]);
             }
-        } else {
-            log_message('warning', 'MyMIGold library missing or method not available; rendering page without live value.');
         }
 
         if ($this->MyMIGoldModel && method_exists($this->MyMIGoldModel, 'getInitialCoinValue')) {
             try {
-                $this->data['getInitialCoinValue'] = $this->MyMIGoldModel->getInitialCoinValue();
+                $data['getInitialCoinValue'] = $this->MyMIGoldModel->getInitialCoinValue();
             } catch (\Throwable $e) {
-                log_message('error', 'MyMIGoldModel::getInitialCoinValue failed: {msg}', ['msg' => $e->getMessage()]);
+                log_message('error', 'Initial coin value fetch failed: {msg}', ['msg' => $e->getMessage()]);
             }
         }
 
@@ -356,23 +349,8 @@ class HowItWorksController extends UserController
         $perPage = min(50, max(5, (int) ($this->request->getGet('perPage') ?? 20)));
         $offset = ($page - 1) * $perPage;
 
-        $userId = (int) ($this->auth->id() ?? $this->session->get('user_id') ?? 0);
-        $ttl = 300; // 5 min
-        $safeCache = service('safeCache');
-        $cacheParams = ['page' => $page, 'perPage' => $perPage];
-        $cachedHtml = null;
-
-        if ($safeCache) {
-            $cachedHtml = $userId > 0
-                ? $safeCache->getUser('howitworks', 'dailynews', $userId, $cacheParams)
-                : $safeCache->getGuest('howitworks', 'dailynews', $cacheParams);
-        }
-
-        if (is_string($cachedHtml)) {
-            return $this->response->setBody($cachedHtml);
-        }
-
         $model = model(MarketingModel::class);
+
         try {
             $rows = $model->getDailyNews($perPage, $offset);
         } catch (\Throwable $e) {
@@ -380,127 +358,27 @@ class HowItWorksController extends UserController
             $rows = [];
         }
 
-        $this->data['pageTitle'] = 'Daily Financial News | How It Works | MyMI Wallet';
-        $this->data['news'] = $rows;
-        $this->data['page'] = $page;
-        $this->data['perPage'] = $perPage;
-        $this->data['hasMore'] = count($rows) === $perPage;
-
-        $html = $this->renderTheme('App\Modules\Blog\Views\HowItWorks\Daily_Financial_News', $this->data);
-        if ($safeCache) {
-            if ($userId > 0) {
-                $safeCache->saveUser('howitworks', 'dailynews', $userId, $html, $ttl, $cacheParams);
-            } else {
-                $safeCache->saveGuest('howitworks', 'dailynews', $html, $ttl, $cacheParams);
-            }
-        }
-        return $this->response->setBody($html);
-    } 
-
-    // Additional methods...
-
-    private function renderPage($pageName, $pageType, $content)
-    {
-        $cuID = $this->session->get('user_id') ?? 0;
-        $reportingData = $this->getMyMIAnalytics()->reporting($cuID);
-        $uri = $this->request->uri;
-        $siteSettings = $this->getSiteSettings();
-
-        $pageTitle = $this->getPageTitle($pageName);
-        $seoData = $this->pageSEOModel->getPageSEOByName($pageName);
-        $seoData = $this->ensureSEOData($seoData, $pageTitle);
-
-        $viewFileData = [
-            'pageType' => $pageType,
-            'pageName' => $pageName,
-            'pageTitle' => $pageTitle,
-            'reportingData' => $reportingData,
-            'seoData' => $seoData,
-            'cuID' => $cuID,
-            'content' => $content
+        $data = [
+            'pageTitle' => 'Daily Financial News | MyMI Wallet',
+            'news' => $rows,
+            'page' => $page,
+            'perPage' => $perPage,
+            'hasMore' => count($rows) === $perPage
         ];
 
-        // Merge site settings with other data
-        $data = array_merge($viewFileData, $siteSettings, [
-            // 'addValueHere' => $addValueHere,
-        ]);
-        return $this->render('themes/default/layouts/index', $data);
+        return $this->renderPublic(
+            'App\Modules\Blog\Views\HowItWorks\Daily_Financial_News',
+            $data
+        );
     }
 
-    private function getViewFileData($uri)
-    {
-        $data = [];
-        for ($i = 1; $i <= 5; $i++) {
-            $data['pageURI' . chr(64 + $i)] = $uri->getTotalSegments() >= $i ? $uri->getSegment($i, '') : '';
-        }
-        return $data;
-    }  
-
-    private function getSiteSettings() {
-        $settings = $this->siteSettings;
-        return [
-            'siteOperations' => $settings->siteOperations,
-            'educateOperations' => $settings->educateOperations,
-            'budgetOperations' => $settings->budgetOperations,
-            'investmentOperations' => $settings->investmentOperations,
-            'integrationOperations' => $settings->integrationOperations,
-            'newsOperations' => $settings->newsOperations,
-            'referralOperations' => $settings->referralOperations,
-            'debtOperations' => $settings->debtOperations,
-            'retirementOperations' => $settings->retirementOperations,
-            'assetOperations' => $settings->assetOperations,
-            'exchangeOperations' => $settings->exchangeOperations,
-            'marketplaceOperations' => $settings->marketplaceOperations,
-            'partnerOperations' => $settings->partnerOperations,
-            'bettingOperations' => $settings->bettingOperations
-            // Add any additional settings here if needed
-        ];
-    }
-
-    private function getPageTitle($pageName)
-    {
-        $thisURL = current_url();
-        return str_replace(['/', '-'], [' | ', ' '], $thisURL);
-    }
-    
-    private function ensureSEOData($seoData, $pageTitle)
-    {
-        if (empty($seoData)) {
-            $seoData = [
-                'page_name' => $pageTitle,
-                'page_title' => $pageTitle,
-                'page_url' => current_url(),
-                'page_sitemap_url' => base_url('/sitemap.xml'),
-                'page_image' => base_url('/assets/images/default-seo-image.png'),
-                'meta_description' => 'Default meta description for ' . $pageTitle,
-                'meta_keywords' => 'default,keywords,for,' . str_replace(' ', ',', strtolower($pageTitle))
-            ];
-            
-            $this->pageSEOModel->saveOrUpdatePageSEO($seoData);
-        }
-    
-        return $seoData;
-    }    
-
-    public function render(string $view, array $data = [], array $options = []): string
-    {
-        return $this->renderTheme($view, $data);
-    }
-
+    /**
+     * Normalize slug
+     */
     private function normalizeSlug(string $slug): string
     {
         $slug = trim(strtolower($slug));
         $slug = str_replace([' ', '_'], '-', $slug);
         return preg_replace('/[^a-z0-9\-]+/', '-', $slug);
-    }
-
-    private function respondWithRendered(string $view, array $data = []): ResponseInterface
-    {
-        $rendered = $this->renderTheme($view, $data);
-        if ($rendered instanceof ResponseInterface) {
-            return $rendered;
-        }
-
-        return $this->response->setStatusCode(200)->setBody($rendered);
     }
 }

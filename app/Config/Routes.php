@@ -1113,7 +1113,7 @@ $routes->group('Dashboard', ['namespace' => 'App\Modules\User\Controllers', 'fil
 });
 
 $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers'],  function($routes) {
-    $routes->get('/', 'ManagementController::index');
+    $routes->get('/', 'ManagementAdminController::index');
     $routes->get('banUnverifiedUsers', 'ManagementAdminController::banUnverifiedUsers');
     $routes->get('processQueuedEmails', 'ManagementAdminController::processQueuedEmails');
     $routes->get('resendActivationEmailsBatch', 'ManagementAdminController::resendActivationEmailsBatch');

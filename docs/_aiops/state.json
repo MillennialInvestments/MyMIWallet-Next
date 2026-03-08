@@ -4437,16 +4437,16 @@
             "mtime": "2026-02-09"
         },
         "docs/spark/COMMAND_AUDIT.md": {
-            "hash": "fdfd4b01bd7947e18f856727bc7375f97eba86297f2900f889c0b5df973f4304",
-            "mtime": "2026-01-26"
+            "hash": "438b6b58307103b0e1496e7d96d3770ef5bda0e6d2ce8fbe13410a85fd4a4b3e",
+            "mtime": "2026-03-08"
         },
         "docs/spark/README.md": {
-            "hash": "ffb7814a426b2e0506c59931bbaf8c263b3665e6c74243e7e089cbadf5140464",
-            "mtime": "2026-01-24"
+            "hash": "f3f266be441eda47f92e0a0020bece26a5e6d74e24118039667b6355724e682b",
+            "mtime": "2026-03-08"
         },
         "docs/spark/cadence.md": {
-            "hash": "68c748ab8ae5975229a64f04f315ff3d778daa718f1bfb955a6f1284833da0d8",
-            "mtime": "2026-01-24"
+            "hash": "a6d67dc4237617b9af3021076556bb14eb0e24bd7e9ee04c806360615e83b4a6",
+            "mtime": "2026-03-08"
         },
         "docs/spark/categories/aiops/aiops-seed.md": {
             "hash": "5f29c2d8b0cf640d7fe23191008f14471bbc65bce5335bf7ef05347ff5ae6e67",
@@ -4581,28 +4581,28 @@
             "mtime": "2026-01-24"
         },
         "docs/spark/cli-standards.md": {
-            "hash": "8c41aad270ae86c3af79dd8533fd9cdd7cf2dd21581c4eb2e09ff8159b4ac342",
+            "hash": "1fd56b2301dca6fab69a4c58afc69a95efbdfd61bb858f03ce5d2f96b481e3f9",
             "mtime": "2026-03-08"
         },
         "docs/spark/inventory.md": {
-            "hash": "d565d7e4dcc9f37e5fb81249db6bc7661053150cb47344e3271c1ab9d6e10564",
-            "mtime": "2026-01-25"
+            "hash": "7d4acc0bd5bd1cf0b8e265cc7941eeee77b2b1b138090f41670fe4c8a6dae045",
+            "mtime": "2026-03-08"
         },
         "docs/spark/merge-report.md": {
-            "hash": "6d8098509857e98b18256f0cefd278a5b8f5272601d417b19c9d3179b4b39739",
-            "mtime": "2026-01-30"
+            "hash": "4fc33afde70979802e3d14b30ea481d1beee5ee750c0d40e634227e9510ce873",
+            "mtime": "2026-03-08"
         },
         "docs/spark/roadmap.md": {
-            "hash": "70ccfc028b8b43c5a75a00f8d8bbf7140155a55a670671249f09736d8f11a244",
-            "mtime": "2026-01-24"
+            "hash": "4841083ab8cb35d3b210d8d32f9870eb7a744741931320684253f146d7f8a11c",
+            "mtime": "2026-03-08"
         },
         "docs/spark/safety-matrix.md": {
-            "hash": "13e185c96978a41c832cdbb3a04c2593e8251668d34e415d98bc5f7d03c396a4",
-            "mtime": "2026-01-24"
+            "hash": "fb787bbb75312e1112ec060d5feb2d19a801b72c245c1d1c84c13af2ad79f39d",
+            "mtime": "2026-03-08"
         },
         "docs/spark/standards.md": {
-            "hash": "62465cb0fadff10914e8062f58d9018952dfb3a04432cd95ce7fa578adc2cdf9",
-            "mtime": "2026-01-30"
+            "hash": "2dc46b940177b1960cfd78c0d512a39006b95956ad0dd491fe1e0f237b0febf5",
+            "mtime": "2026-03-08"
         },
         "docs/sql/mysql.md": {
             "hash": "27b9a567007a600704245ad540d559b6e67d12d093ed4bda0cffd02e2d62cb21",
@@ -4917,7 +4917,7 @@
             "mtime": "2026-03-08"
         },
         "docs/_infrastructure/Lists/ModulesViews.md": {
-            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "hash": "a68e7e1c3e617862330da1c5b2b5cad3419837fd603187c69004f085f08303d6",
             "mtime": "2026-03-08"
         },
         "docs/_infrastructure/Lists/Services.md": {
@@ -5059,7 +5059,87 @@
         "docs/refactor/routes_validation_after_consolidation.md": {
             "hash": "a07be45b1bb434af49662b591b18a324c23eb0e780f41f3b45400a18717d3d3f",
             "mtime": "2026-03-08"
+        },
+        "docs/log_fixes/log_review_2026_03_08.md": {
+            "hash": "c026922a7db4e15d05e6c8cea15cb8bb2f5c3f854d5ab8d9294656dc4b418128",
+            "mtime": "2026-03-08"
+        },
+        "docs/spark/aiops.md": {
+            "hash": "a084ff531e0faf71b40dcf519415e57293a83bb4fbb63473c9e65c4c7f4e3ceb",
+            "mtime": "2026-03-08"
+        },
+        "docs/spark/automation.md": {
+            "hash": "21dd6f549a84ceb711cf80e86679daf68ee2d49684516f3e8f28af5d0c80f54f",
+            "mtime": "2026-03-08"
+        },
+        "docs/spark/bootstrap.md": {
+            "hash": "7680e636ed3d5518a8745bb4a08d0dcd2a9a88d4e017b8b81be2b32c9203103a",
+            "mtime": "2026-03-08"
+        },
+        "docs/spark/codex.md": {
+            "hash": "872eb5746df5933e09fdbd8b189b124574077f3df0ba41fdd61df4a6775ebb2a",
+            "mtime": "2026-03-08"
+        },
+        "docs/spark/database.md": {
+            "hash": "1add21da37f1411e3ef09f0df7e2c2f957369697df096ab77bbc19c818b98b53",
+            "mtime": "2026-03-08"
+        },
+        "docs/spark/diagnostics.md": {
+            "hash": "b159f42253d56e66cf4de36a703596f7db49aada25d29b7387f71b01327c1bd3",
+            "mtime": "2026-03-08"
+        },
+        "docs/spark/documentation.md": {
+            "hash": "2bed8cb3a240d74ec57d46c37db58e03985a42b41dd209e9b2a7697f9be4485a",
+            "mtime": "2026-03-08"
+        },
+        "docs/spark/infrastructure.md": {
+            "hash": "c9b17f34080dc9932725f62c862b872091bae2a444e7be9c9dd5157c450c4d09",
+            "mtime": "2026-03-08"
+        },
+        "docs/spark/logging.md": {
+            "hash": "9948c79d4785c8c46cc98f712636d5ac1fde903986e3ae858aec1cb34913cd43",
+            "mtime": "2026-03-08"
+        },
+        "docs/spark/ollama.md": {
+            "hash": "07a73700da53208243eec7d31eb824a021b8525ad7210c341d0dd1493b0801f1",
+            "mtime": "2026-03-08"
+        },
+        "docs/spark/recovery.md": {
+            "hash": "002c42fe6417af1275bf758db58c500bbf0d6d68e52dcc013a75cec4f65476a6",
+            "mtime": "2026-03-08"
+        },
+        "docs/spark/research.md": {
+            "hash": "be2e9c921ce426ccdaac4553217bc0c2542667320c4d812de39a1af6c1e9fe3b",
+            "mtime": "2026-03-08"
+        },
+        "docs/spark/security.md": {
+            "hash": "d4e88ee1a64d44cf230fd6c00db7e4b87df2d35f407d6b557ed837b86e494ee6",
+            "mtime": "2026-03-08"
+        },
+        "docs/spark/spark_command_graph.md": {
+            "hash": "71c7d299dcc66b146dd2f8e82d77d7f2ec88ac7d4ce5f9e3b6b35751a8f1a2a6",
+            "mtime": "2026-03-08"
+        },
+        "docs/spark/troubleshooting.md": {
+            "hash": "c0cce094f61fc1664210cc6794cecb5a708f07cfe1ce6ce16ae5ce603f13e9d4",
+            "mtime": "2026-03-08"
+        },
+        "docs/frontend/batches/batch-01-findings.md": {
+            "hash": "d4ae9a13943b7a30041fa95d58a4e27e66e6b407f2bc42542427c5bdfd11dfcf",
+            "mtime": "2026-03-08"
+        },
+        "docs/frontend/view_inventory_manifest.md": {
+            "hash": "4614d4d808f8b7529c54f18fc48f91dd1c860117d7dd6858b20e9413f57f5a34",
+            "mtime": "2026-03-08"
+        },
+        "docs/frontend/view_js_audit_log.md": {
+            "hash": "9f5933f5754a6a54bd0196e121bc51bbc9ad5409c4ba9a196cefb4339c4ad624",
+            "mtime": "2026-03-08"
+        },
+        "docs/frontend/view_js_enhancement_backlog.md": {
+            "hash": "7facd99fd0195581fe2608e9868f12b373138d7724c7fd7a0cf37cdf44354bf2",
+            "mtime": "2026-03-08"
         }
     },
-    "last_run": "2026-03-08T13:00:01Z"
+    "last_run": "2026-03-08T17:00:02Z"
 }
