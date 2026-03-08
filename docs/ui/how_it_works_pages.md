@@ -12,3 +12,17 @@ Public-facing routes and purpose for each page:
 - `/how-it-works/pricing` — Presents plan tiers, comparisons, and calls to upgrade.
 
 All pages share the public layout wrapper and reuse the shared How It Works nav + partials for hero, CTA, and FAQ sections.
+
+## Expansion runbook
+
+For automated expansion (Codex + AIOps + Ollama), use:
+
+- `docs/ui/how_it_works_expansion_workflow.md`
+
+That runbook defines:
+
+- repository scan commands
+- topic classification rules
+- `show()` map expansion standards
+- internal linking requirements
+- `aiops:ingest` instruction payloads

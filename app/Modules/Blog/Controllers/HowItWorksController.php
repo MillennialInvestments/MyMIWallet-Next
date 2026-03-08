@@ -14,6 +14,7 @@ use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Config\Services;
+use App\Services\Docs\DocsRendererService;
 
 #[\AllowDynamicProperties]
 class HowItWorksController extends UserController
@@ -35,6 +36,7 @@ class HowItWorksController extends UserController
     protected $userModel;
     protected ?array $userAccount = null;
     protected ?MyMIGold $myMIGold = null;
+    protected $docsRenderer;
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
@@ -55,6 +57,7 @@ class HowItWorksController extends UserController
         if (! $this->MyMIGoldModel && class_exists(MyMIGoldModel::class)) {
             $this->MyMIGoldModel = new MyMIGoldModel();
         }
+        $this->docsRenderer = new DocsRendererService();
     }
 
     public function commonData(): array {     
@@ -149,18 +152,40 @@ class HowItWorksController extends UserController
 
         // 2) Static How-It-Works views (dash-friendly slug mapping)
         $viewMap = [
-            'registering-an-account'   => 'App\Modules\Blog\Views\HowItWorks\Registering_An_Account',
-            'personal-budgeting'       => 'App\Modules\Blog\Views\HowItWorks\Personal_Budgeting',
-            'investment-dashboard'     => 'App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management',
-            'setting-financial-goals'  => 'App\Modules\Blog\Views\HowItWorks\Determining_Your_Financial_Goals',
-            'mymi-gold'                => 'App\Modules\Blog\Views\HowItWorks\MyMI_Gold',
-            'mymi-exchange'            => 'App\Modules\Blog\Views\HowItWorks\Manage_Finances',
-            'features-and-plans'       => 'App\Modules\Blog\Views\HowItWorks\Features_And_Plans',
-            'manage-finances'          => 'App\Modules\Blog\Views\HowItWorks\Manage_Finances',
+            'registering-an-account'          => 'App\Modules\Blog\Views\HowItWorks\Registering_An_Account',
+            'personal-budgeting'              => 'App\Modules\Blog\Views\HowItWorks\Personal_Budgeting',
+            'investment-dashboard'            => 'App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management',
+            'investment-portfolio-management' => 'App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management',
+            'setting-financial-goals'         => 'App\Modules\Blog\Views\HowItWorks\Determining_Your_Financial_Goals',
+            'determining-your-financial-goals'=> 'App\Modules\Blog\Views\HowItWorks\Determining_Your_Financial_Goals',
+            'mymi-gold'                       => 'App\Modules\Blog\Views\HowItWorks\MyMI_Gold',
+            'mymi-exchange'                   => 'App\Modules\Blog\Views\HowItWorks\Manage_Finances',
+            'features-and-plans'              => 'App\Modules\Blog\Views\HowItWorks\Features_And_Plans',
+            'manage-finances'                 => 'App\Modules\Blog\Views\HowItWorks\Manage_Finances',
+            'daily-financial-news'            => 'App\Modules\Blog\Views\HowItWorks\Daily_Financial_News',
+            'discord'                         => 'App\Modules\Blog\Views\HowItWorks\Discord',
+            'streaming'                       => 'App\Modules\Blog\Views\HowItWorks\Streaming',
+            'purchase-mymi-gold'              => 'App\Modules\Blog\Views\HowItWorks\Purchase_MyMI_Gold',
         ];
 
         if (isset($viewMap[$normalizedSlug])) {
             return $this->respondWithRendered($viewMap[$normalizedSlug], $this->commonData());
+        }
+
+        // 3) Dynamic docs/how-it-works/*.md fallback
+        if ($this->docsRenderer instanceof DocsRendererService) {
+            $docPage = $this->docsRenderer->renderDocBySlug($normalizedSlug);
+            if (is_array($docPage)) {
+                $data = [
+                    'layout'      => 'public',
+                    'title'       => $docPage['title'] ?? ucwords(str_replace('-', ' ', $normalizedSlug)),
+                    'slug'        => $docPage['slug'] ?? $normalizedSlug,
+                    'contentHtml' => $docPage['contentHtml'] ?? '',
+                    'navItems'    => $this->getNavItems(),
+                ];
+
+                return $this->respondWithRendered('App\Modules\Blog\Views\HowItWorks\index', $data);
+            }
         }
 
         // Graceful 404 (no exception)
@@ -285,7 +310,7 @@ class HowItWorksController extends UserController
 
     protected function getNavItems(): array
     {
-        return [
+        $items = [
             ['slug' => 'overview', 'label' => 'Overview'],
             ['slug' => 'alerts', 'label' => 'Alerts Dashboard'],
             ['slug' => 'marketing', 'label' => 'Marketing Dashboard'],
@@ -293,6 +318,22 @@ class HowItWorksController extends UserController
             ['slug' => 'investments', 'label' => 'Investments & Portfolio'],
             ['slug' => 'account-settings', 'label' => 'Account Settings & Social Linking'],
         ];
+
+        if ($this->docsRenderer instanceof DocsRendererService) {
+            foreach ($this->docsRenderer->listHowItWorksDocs() as $docItem) {
+                $items[] = [
+                    'slug' => $docItem['slug'],
+                    'label' => $docItem['title'],
+                ];
+            }
+        }
+
+        $unique = [];
+        foreach ($items as $item) {
+            $unique[$item['slug']] = $item;
+        }
+
+        return array_values($unique);
     }
 
     public function PersonalBudgeting()
