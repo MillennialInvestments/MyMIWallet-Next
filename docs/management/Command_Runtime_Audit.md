@@ -6,7 +6,7 @@ This audit validates every Spark command under `app/Commands/**` against runtime
 - No illegal constructors.
 - `$group`, `$name`, `$description` metadata defined.
 - PHP 8.2 compatibility (heuristic scan for deprecated runtime APIs).
-- No deprecated Spark APIs (`$this->option()`, `$this->getOption()`, etc.).
+- No deprecated Spark APIs (`$this->option()`, `$this->option()`, etc.).
 - Safety flags (`--dry-run`, `--approve`) present on destructive commands.
 
 ## Audit Table

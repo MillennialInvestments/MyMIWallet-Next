@@ -3,7 +3,7 @@
     "suffix": "attempt_2",
     "http": 500,
     "error": null,
-    "raw": "{\"error\":\"model requires more system memory (1.9 GiB) than is available (1.4 GiB)\"}",
+    "raw": "{\"error\":\"model requires more system memory (1.9 GiB) than is available (906.3 MiB)\"}",
     "response": "",
-    "captured_at": "2026-03-08T00:00:05+00:00"
+    "captured_at": "2026-03-08T13:00:04+00:00"
 }

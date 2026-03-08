@@ -48,7 +48,7 @@ The following methods **must never** be used in CI4 `BaseCommand` classes:
 
 - `$this->option()`
 - `$this->argument()`
-- `$this->getOption()`
+- `$this->option()`
 - `$this->getArgument()`
 
 These methods do not exist on CI4 `BaseCommand` and will throw runtime errors.

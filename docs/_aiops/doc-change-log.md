@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-03-08T00:00:02Z
+> Run: 2026-03-08T13:00:01Z
 
 - docs/APIs/_inventory_controllers.md
   - Last updated: 2026-02-28
@@ -72,40 +72,40 @@
   - Last updated: 2026-02-18
   - Change type: unchanged
 - docs/_audit_report.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/_infrastructure/Lists/Commands.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/_infrastructure/Lists/Config.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/_infrastructure/Lists/Controllers.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/_infrastructure/Lists/Helpers.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/_infrastructure/Lists/Libraries.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/_infrastructure/Lists/Models.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/_infrastructure/Lists/ModuleControllers.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/_infrastructure/Lists/ModulesViews.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/_infrastructure/Lists/Services.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/_infrastructure/Lists/Views.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/_inventory.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/_ops/filesystem-lint-summary.md
   - Last updated: 2026-02-10
@@ -123,7 +123,7 @@
   - Last updated: 2026-03-07
   - Change type: unchanged
 - docs/_repo/diff_batches/batch_01.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/_support/aiops-init.md
   - Last updated: 2026-02-20
@@ -285,7 +285,7 @@
   - Last updated: 2026-03-06
   - Change type: unchanged
 - docs/_support/spark-reset/20260307-110433/summary.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/adr/0001-standards-and-response-contract.md
   - Last updated: 2025-11-08
@@ -978,43 +978,43 @@
   - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/controllers/AuthController.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/controllers/BaseController.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/controllers/Blog.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/controllers/Debug.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/controllers/Health.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/controllers/Home.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/controllers/HowItWorksController.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/controllers/MaintenanceController.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/controllers/OpsHealthController.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/controllers/Predictions/PredictionsApiController.md
   - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/controllers/StockController.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/controllers/Test.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/controllers/UserController.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/cron/README.md
   - Last updated: 2025-12-21
@@ -1161,7 +1161,7 @@
   - Last updated: 2025-11-08
   - Change type: unchanged
 - docs/docs-system/README.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/email/deliverability.md
   - Last updated: 2026-01-21
@@ -1503,7 +1503,7 @@
   - Last updated: 2026-01-29
   - Change type: unchanged
 - docs/management/Command_Runtime_Audit.md
-  - Last updated: 2026-02-09
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/management/Management_Command_Map.md
   - Last updated: 2026-02-01
@@ -3308,6 +3308,54 @@
 - docs/product/Next_Codex_Tasks.md
   - Last updated: 2026-02-01
   - Change type: unchanged
+- docs/refactor/controller_class_conflicts.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/refactor/controller_cleanup_validation.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/refactor/controller_consolidation_phase3.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/refactor/controller_consolidation_phase4.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/refactor/controller_consolidation_phase5.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/refactor/controller_consolidation_phase6.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/refactor/controller_consolidation_phase7.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/refactor/controller_duplication_report.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/refactor/controller_inventory.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/refactor/controller_migration_map.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/refactor/controller_migration_validation.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/refactor/controller_progress.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/refactor/controller_refactor_plan.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/refactor/routes_post_migration.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/refactor/routes_validation.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/refactor/routes_validation_after_consolidation.md
+  - Last updated: 2026-03-08
+  - Change type: unchanged
 - docs/repo-review.md
   - Last updated: 2025-11-08
   - Change type: unchanged
@@ -3528,7 +3576,7 @@
   - Last updated: 2026-01-24
   - Change type: unchanged
 - docs/spark/cli-standards.md
-  - Last updated: 2026-01-31
+  - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/spark/inventory.md
   - Last updated: 2026-01-25
