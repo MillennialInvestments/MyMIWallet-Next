@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class InfraIntegrationHealth extends BaseCommand
+class InfraIntegrationHealth extends SafeBaseCommand
 {
     protected $group = 'Infrastructure';
     protected $name = 'infra:integration-health';

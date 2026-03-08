@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Commands;
 
 use App\Services\Infra\ReportWriter;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class InfraCertify extends BaseCommand
+class InfraCertify extends SafeBaseCommand
 {
     protected $group = 'Infrastructure';
     protected $name = 'infra:certify';

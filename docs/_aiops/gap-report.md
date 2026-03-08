@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-03-07T14:00:01Z
+> Run: 2026-03-08T00:00:02Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -129,10 +129,6 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Blog/Controllers/EarningsController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Blog/Controllers/HowItWorks.php
-  - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Blog/Controllers/HowItWorksController.php
-  - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Blog/Controllers/IRSController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Blog/Controllers/InvestingController.php
@@ -206,8 +202,6 @@
 - app/Modules/Exchange/Controllers/MetaMaskController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Exchange/Controllers/SolanaController.php
-  - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Exchange/Controllers/UserController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Exchange/Models/ExchangeOrderModel.php
   - ⚠️ No obvious doc match found (heuristic)
@@ -403,7 +397,13 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Views/API/Sophtron_Widget.php
   - ⚠️ No obvious doc match found (heuristic)
-- … and 971 more
+- app/Modules/Management/Views/Alerts/add/user_fields.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Views/Alerts/batchEmailAudit.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Management/Views/Alerts/emails/layout.php
+  - ⚠️ No obvious doc match found (heuristic)
+- … and 959 more
 
 ## Documented Items With No Obvious Code Match (best-effort)
 - docs/APIs/_inventory_controllers.md
@@ -448,6 +448,16 @@
   - ❌ No obvious code match found (heuristic)
 - docs/_audit/ci4-logger-hardening-2026-02-18.md
   - ❌ No obvious code match found (heuristic)
+- docs/_audit_report.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_infrastructure/Lists/Helpers.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_infrastructure/Lists/ModuleControllers.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_infrastructure/Lists/ModulesViews.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_inventory.md
+  - ❌ No obvious code match found (heuristic)
 - docs/_ops/filesystem-lint-summary.md
   - ❌ No obvious code match found (heuristic)
 - docs/_ops/filesystem-lint.md
@@ -455,6 +465,8 @@
 - docs/_ops/filesystem-trend.md
   - ❌ No obvious code match found (heuristic)
 - docs/_repo/class_integrity_report.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_repo/class_trace_fix.md
   - ❌ No obvious code match found (heuristic)
 - docs/_repo/diff_batches/batch_01.md
   - ❌ No obvious code match found (heuristic)
@@ -794,16 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/discord/events_matrix.md
   - ❌ No obvious code match found (heuristic)
-- docs/discord/marketing_news_automation.md
-  - ❌ No obvious code match found (heuristic)
-- docs/discord/mee6_and_mymi_automation.md
-  - ❌ No obvious code match found (heuristic)
-- docs/discord/my_midiscord_server_setup_and_alert_routing.md
-  - ❌ No obvious code match found (heuristic)
-- docs/discord/mysql_discord_schema.md
-  - ❌ No obvious code match found (heuristic)
-- docs/discord/operations_and_montioring.md
-  - ❌ No obvious code match found (heuristic)
-- docs/discord/premium_flows_and_upsell.md
-  - ❌ No obvious code match found (heuristic)
-- … and 842 more
+- … and 851 more

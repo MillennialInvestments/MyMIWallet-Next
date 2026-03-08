@@ -6,10 +6,10 @@ namespace App\Commands;
 
 use App\Services\Infra\ReportWriter;
 use App\Services\Infra\SubsystemCatalog;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class InfraSubsystemInventory extends BaseCommand
+class InfraSubsystemInventory extends SafeBaseCommand
 {
     protected $group = 'Infrastructure';
     protected $name = 'infra:subsystem-inventory';

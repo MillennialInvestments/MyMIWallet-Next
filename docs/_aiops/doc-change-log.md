@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-03-07T14:00:01Z
+> Run: 2026-03-08T00:00:02Z
 
 - docs/APIs/_inventory_controllers.md
   - Last updated: 2026-02-28
@@ -71,6 +71,42 @@
 - docs/_audit/ci4-logger-hardening-2026-02-18.md
   - Last updated: 2026-02-18
   - Change type: unchanged
+- docs/_audit_report.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/_infrastructure/Lists/Commands.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/_infrastructure/Lists/Config.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/_infrastructure/Lists/Controllers.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/_infrastructure/Lists/Helpers.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/_infrastructure/Lists/Libraries.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/_infrastructure/Lists/Models.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/_infrastructure/Lists/ModuleControllers.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/_infrastructure/Lists/ModulesViews.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/_infrastructure/Lists/Services.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/_infrastructure/Lists/Views.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/_inventory.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
 - docs/_ops/filesystem-lint-summary.md
   - Last updated: 2026-02-10
   - Change type: unchanged
@@ -81,6 +117,9 @@
   - Last updated: 2026-02-10
   - Change type: unchanged
 - docs/_repo/class_integrity_report.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/_repo/class_trace_fix.md
   - Last updated: 2026-03-07
   - Change type: unchanged
 - docs/_repo/diff_batches/batch_01.md
@@ -938,8 +977,44 @@
 - docs/controllers/APIs/TradingViewController.md
   - Last updated: 2026-02-09
   - Change type: unchanged
+- docs/controllers/AuthController.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/controllers/BaseController.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/controllers/Blog.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/controllers/Debug.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/controllers/Health.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/controllers/Home.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/controllers/HowItWorksController.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/controllers/MaintenanceController.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/controllers/OpsHealthController.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
 - docs/controllers/Predictions/PredictionsApiController.md
   - Last updated: 2026-02-09
+  - Change type: unchanged
+- docs/controllers/StockController.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/controllers/Test.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/controllers/UserController.md
+  - Last updated: 2026-03-07
   - Change type: unchanged
 - docs/cron/README.md
   - Last updated: 2025-12-21
@@ -1084,6 +1159,9 @@
   - Change type: unchanged
 - docs/discord_seed.sql.md
   - Last updated: 2025-11-08
+  - Change type: unchanged
+- docs/docs-system/README.md
+  - Last updated: 2026-03-07
   - Change type: unchanged
 - docs/email/deliverability.md
   - Last updated: 2026-01-21
@@ -3283,6 +3361,12 @@
   - Change type: unchanged
 - docs/routes/routes_maintenance_rules.md
   - Last updated: 2025-12-16
+  - Change type: unchanged
+- docs/routes/routes_reconcile.md
+  - Last updated: 2026-03-07
+  - Change type: unchanged
+- docs/routes/routes_repair_report.md
+  - Last updated: 2026-03-07
   - Change type: unchanged
 - docs/routes/routes_smoke_tests.md
   - Last updated: 2025-12-16

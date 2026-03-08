@@ -4357,7 +4357,7 @@
             "mtime": "2025-12-16"
         },
         "docs/routes/routes.md": {
-            "hash": "3ce25bfea4d03df8d6f1bffb0b14999e37f05c972285b90e7360afd241272a44",
+            "hash": "0198ea445ba63fb77cc3a7e6102b194aa27a46bd703f6ae12b8d19a41cb64171",
             "mtime": "2026-03-07"
         },
         "docs/routes/routes_audit.md": {
@@ -4883,7 +4883,119 @@
         "docs/_support/spark-reset/20260307-110433/summary.md": {
             "hash": "c0190415412632a3126a61635f178dfc94094fc13365a3d9e2bdf529d55d9981",
             "mtime": "2026-03-07"
+        },
+        "docs/_audit_report.md": {
+            "hash": "1414a2a3828ba9060ae4b34b00cc7fbdbd261bb36adc55dd3f0a3262d429082c",
+            "mtime": "2026-03-07"
+        },
+        "docs/_infrastructure/Lists/Commands.md": {
+            "hash": "775327a3f6f1a71987c4cc03f79155f0e04f31855a4d3513ea253466e416d895",
+            "mtime": "2026-03-07"
+        },
+        "docs/_infrastructure/Lists/Config.md": {
+            "hash": "9ac280d8881f037aa910ea0e79517f64ebac27f9b44eadcd589dd08d056845b3",
+            "mtime": "2026-03-07"
+        },
+        "docs/_infrastructure/Lists/Controllers.md": {
+            "hash": "530191c2384e776b5c769951de9d160630833797a3d67fb9a124920a7b0b9ced",
+            "mtime": "2026-03-07"
+        },
+        "docs/_infrastructure/Lists/Helpers.md": {
+            "hash": "4a397f7cc7a95a07a7d7246e2fc2d01282f378bebe9faf2bb09543333c5b7127",
+            "mtime": "2026-03-07"
+        },
+        "docs/_infrastructure/Lists/Libraries.md": {
+            "hash": "7a092077076aef57d90723b71d6042d5fc734c881417ac206f93d42e2f2e7eab",
+            "mtime": "2026-03-07"
+        },
+        "docs/_infrastructure/Lists/Models.md": {
+            "hash": "530191c2384e776b5c769951de9d160630833797a3d67fb9a124920a7b0b9ced",
+            "mtime": "2026-03-07"
+        },
+        "docs/_infrastructure/Lists/ModuleControllers.md": {
+            "hash": "8f39ad56c3a8ca0600005848511b2923472a1445d9d22b0fbc2923ba5f45b130",
+            "mtime": "2026-03-07"
+        },
+        "docs/_infrastructure/Lists/ModulesViews.md": {
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "mtime": "2026-03-07"
+        },
+        "docs/_infrastructure/Lists/Services.md": {
+            "hash": "36db3c06f77d738edc2734765e064f8aad56a19495a26b687961e49470179aa3",
+            "mtime": "2026-03-07"
+        },
+        "docs/_infrastructure/Lists/Views.md": {
+            "hash": "6fda15969fa6f2bba72434f743ed3e8f80907c564c87780d0c270decf51d7037",
+            "mtime": "2026-03-07"
+        },
+        "docs/_inventory.md": {
+            "hash": "7172c6e35fe1181b89a6cb40fb6ab32046d7b4c06a3764338177299051c9011f",
+            "mtime": "2026-03-07"
+        },
+        "docs/_repo/class_trace_fix.md": {
+            "hash": "7e61a35608e9739e26f2f12a466dc2134b7f75487f4d5023dddd597ed443a972",
+            "mtime": "2026-03-07"
+        },
+        "docs/controllers/AuthController.md": {
+            "hash": "d4af4645821dc083ec1a3ee0d3b5477e7ecd687b570f819ecf5bb94f6bb50fea",
+            "mtime": "2026-03-07"
+        },
+        "docs/controllers/BaseController.md": {
+            "hash": "e74ec700938e178a571b5dd603da578943c1e29ff360e39d2486fb357431689e",
+            "mtime": "2026-03-07"
+        },
+        "docs/controllers/Blog.md": {
+            "hash": "8348ced6769a5ca3bf792376eea372b09cdbd5b0fefcef2147eabf8e91466f66",
+            "mtime": "2026-03-07"
+        },
+        "docs/controllers/Debug.md": {
+            "hash": "facf57475f7ac922e0ac12d5dfeeadd9916abf3ae68184ed5599b2af4994c10d",
+            "mtime": "2026-03-07"
+        },
+        "docs/controllers/Health.md": {
+            "hash": "67fa8359a4d36248dcdfe55937fb95193ccb496d2781cbd527f71952ae7817e9",
+            "mtime": "2026-03-07"
+        },
+        "docs/controllers/Home.md": {
+            "hash": "860f79fd1d9a0623ec6c9f9793e536f72e0cb395947e72e374a9aad6ba179a6c",
+            "mtime": "2026-03-07"
+        },
+        "docs/controllers/HowItWorksController.md": {
+            "hash": "9f4d36516b1534e5a5ab792527bf721151958cb3512a5b19e3795fdfb3801157",
+            "mtime": "2026-03-07"
+        },
+        "docs/controllers/MaintenanceController.md": {
+            "hash": "4e8c9d268e9a68559af61497d69ada668a9550e5abee4b8f570b3597261ddc1d",
+            "mtime": "2026-03-07"
+        },
+        "docs/controllers/OpsHealthController.md": {
+            "hash": "4bac619c988d428f6998ad3870f441f43a28b47e476a1399e02301637e04c206",
+            "mtime": "2026-03-07"
+        },
+        "docs/controllers/StockController.md": {
+            "hash": "85351bd91b6153e687159878979608dbe082bd83e3858606e1128408bde04c9c",
+            "mtime": "2026-03-07"
+        },
+        "docs/controllers/Test.md": {
+            "hash": "2be10beb393fffa7916c797fa67a34a0b351c8c36fef934e819d387adb331e69",
+            "mtime": "2026-03-07"
+        },
+        "docs/controllers/UserController.md": {
+            "hash": "aeea17e4fce6e065b6951fc40538e8518148b6434dbb6fb19f0bff00820166ba",
+            "mtime": "2026-03-07"
+        },
+        "docs/docs-system/README.md": {
+            "hash": "e881689da3dd223b39c3e0937e97bbba4506f1a9c8d2fe5d23e48d6d041cdf56",
+            "mtime": "2026-03-07"
+        },
+        "docs/routes/routes_reconcile.md": {
+            "hash": "b0dba2e72bb8fb66bf9b1f2c902b70c6eddfd0bb76e9930759c660617a145b5c",
+            "mtime": "2026-03-07"
+        },
+        "docs/routes/routes_repair_report.md": {
+            "hash": "45a9a7aafad65c71c7db6de98945e38c8d8e244d74bbbcf35ec8e34152310e3a",
+            "mtime": "2026-03-07"
         }
     },
-    "last_run": "2026-03-07T14:00:01Z"
+    "last_run": "2026-03-08T00:00:02Z"
 }
