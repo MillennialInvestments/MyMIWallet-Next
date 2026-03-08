@@ -288,24 +288,26 @@ class InvestmentsAPIController extends BaseAPIController
                 return $this->failForbidden('Confidence heatmaps are disabled.');
             }
 
-            $timeframe = (string) ($this->request->getGet('timeframe') ?? 'all');
-            $window = (string) ($this->request->getGet('window') ?? ($config->heatmap['defaultWindow'] ?? '6h'));
+            $timeframe = (string) ($this->request->getGet('timeframe') ?? '5m');
+            $window = (int) ($this->request->getGet('windowMinutes') ?? $this->request->getGet('window') ?? 60);
+            $window = max(1, $window);
             $refresh = filter_var($this->request->getGet('refresh'), FILTER_VALIDATE_BOOLEAN);
 
-        $aggregation = service('forecastAggregationService');
+            $aggregation = service('forecastAggregationService');
 
-        if (!$aggregation) {
-            log_message('critical', 'forecastAggregationService returned null');
-            return $this->failServerError('Aggregation service unavailable');
-        }
-        $result = $aggregation->getConfidenceHeatmap($timeframe, $window, $refresh);
+            if (! $aggregation) {
+                log_message('critical', 'forecastAggregationService returned null');
+                return $this->failServerError('Aggregation service unavailable');
+            }
+
+            $payload = $aggregation->getConfidenceHeatmap($timeframe, $window, ! $refresh);
 
             return $this->respond([
                 'status' => 'success',
-                'cached' => $result['cached'],
+                'cached' => ! $refresh,
                 'timeframe' => $timeframe,
-                'window' => $window,
-                'data' => $result['payload'],
+                'windowMinutes' => $window,
+                'data' => $payload,
             ]);
         } catch (\Throwable $e) {
             log_message('error', 'API getConfidenceHeatmap failed: {msg}', ['msg' => $e->getMessage()]);

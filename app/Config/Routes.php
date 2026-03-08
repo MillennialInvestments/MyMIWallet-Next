@@ -16,6 +16,8 @@ helper('ai');
 // $routes->get('favicon.ico', 'Assets::favicon');
 // Optional, but helpful:
 $routes->addRedirect('index.php/(:any)', '$1', 301);
+$routes->addRedirect('index.php', '/', 301);
+$routes->addRedirect('index.php/', '/', 301);
 $routes->get('assets/(:any)', static function () {
     throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
 });
@@ -1746,10 +1748,24 @@ $routes->group('Wallets', ['namespace' => 'App\Modules\User\Controllers', 'filte
 
 // Features:
 $routes->group('Features', ['namespace' => 'App\Modules\Advertise\Controllers'], function($routes) {
-    $routes->get('/', 'Features::index');
-    $routes->get('Brokerage-Integrations', 'Features::BrokerageIntegrations');
+    $routes->get('/', 'FeaturesController::index');
+    $routes->get('Brokerage-Integrations', 'FeaturesController::BrokerageIntegrations');
+    $routes->get('Brokerage-Integration', 'FeaturesController::BrokerageIntegrations');
     $routes->get('MyMI-Gold', 'HowItWorks::MyMIGold');
     // Define other routes for 'blog' module
+});
+
+$routes->addRedirect('Features/Advanced-Investment-Portfoio-Manager', 'Features/Advanced-Investment-Portfolio-Manager', 301);
+$routes->addRedirect('Premium-Features/Due-Diligence-Database', 'Features/Brokerage-Integrations', 301);
+$routes->addRedirect('How-To-Guides', 'Knowledgebase/Tutorials', 301);
+$routes->addRedirect('Budget/Financial-Institute', 'Budget/Account-Manager', 301);
+$routes->addRedirect('Investments/Reports', 'Investments/Trade-Tracker', 301);
+
+$routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers'], function ($routes) {
+    $routes->get('API', 'APIAdminController::index');
+    $routes->get('API/(:segment)', 'APIAdminController::index');
+    $routes->get('Docs', 'DocsAdminController::index');
+    $routes->get('Docs/(:any)', 'DocsAdminController::browse/$1');
 });
 
 // KnowlegeBase:
