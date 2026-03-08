@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Commands\Ops;
+namespace App\Commands\Ops\Commands;
 
 use App\Commands\SafeBaseCommand;
 use App\Commands\Ops\Support\CommandRulesScanner;
 use CodeIgniter\CLI\CLI;
 
-class CommandsLint extends SafeBaseCommand
+class Lint extends SafeBaseCommand
 {
     protected $group = 'ops';
     protected $name = 'ops:commands:lint';

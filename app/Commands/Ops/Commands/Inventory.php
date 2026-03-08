@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Commands\Ops;
+namespace App\Commands\Ops\Commands;
 
 use App\Commands\SafeBaseCommand;
 use App\Commands\Support\ArtifactHelper;
 use CodeIgniter\CLI\CLI;
 
-class CommandsInventory extends SafeBaseCommand
+class Inventory extends SafeBaseCommand
 {
     protected $group       = 'ops';
     protected $name        = 'ops:commands:inventory';

@@ -1,0 +1,3 @@
+<?php
+namespace App\Commands\Ops\Subs; use App\Commands\SafeBaseCommand; use App\Commands\Support\SubsCommandTrait; use CodeIgniter\CLI\CLI;
+class Doctor extends SafeBaseCommand { use SubsCommandTrait; protected $group='Ops'; protected $name='ops:subs:doctor'; protected $description='Friendly subsystem triage'; protected $options=['--json'=>'JSON']; public function run(array $params){$this->parseParams($params);$out=['status'=>'ok','next'=>['php spark ops:subs:audit --json=1','php spark aiops:self-heal --attempts=1 --json=1','php spark ops:subs:status --json=1']]; if($this->optBool('json')){CLI::write(json_encode($out,JSON_PRETTY_PRINT));} else {CLI::write('Subsystem doctor'); foreach($out['next'] as $cmd){CLI::write(' - '.$cmd);} } return EXIT_SUCCESS;}}

@@ -1,3 +1,0 @@
-<?php
-namespace App\Commands\Ops; use App\Commands\SafeBaseCommand; use App\Commands\Support\SubsCommandTrait;
-class SubsAudit extends SafeBaseCommand { use SubsCommandTrait; protected $group='Ops'; protected $name='ops:subs:audit'; protected $description='Run subsystem audits'; protected $options=['--json'=>'JSON','--strict'=>'Strict']; public function run(array $params){$this->parseParams($params);$strict=$this->optBool('strict');$a=command('aiops:audit --json=1');$c=command('chat:audit --json=1');$p=['status'=>'ok','strict'=>$strict,'aiops_audit'=>$a,'chat_audit'=>$c];$this->writeDoc('audits','subs-audit-'.date('Y-m-d').'.json',$p);$this->emit($p,$this->optBool('json'));return EXIT_SUCCESS;}}

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Commands\Ops;
+namespace App\Commands\Ops\Commands;
 
-class CommandConstructorScanner
+class ConstructorScanner
 {
     public function scan(string $rootPath): array
     {

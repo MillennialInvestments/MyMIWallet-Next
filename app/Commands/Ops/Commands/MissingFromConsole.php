@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Commands\Ops;
+namespace App\Commands\Ops\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class CommandsMissingFromConsole extends BaseCommand
+class MissingFromConsole extends BaseCommand
 {
     protected $group = 'ops';
     protected $name = 'ops:commands:missing';

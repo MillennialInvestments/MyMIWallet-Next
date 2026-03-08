@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Commands\Ops;
+namespace App\Commands\Ops\Commands;
 
 use App\Commands\SafeBaseCommand;
 use App\Commands\Ops\Support\CommandRulesScanner;
 use App\Commands\Support\ArtifactHelper;
 use CodeIgniter\CLI\CLI;
 
-class CommandsAutofix extends SafeBaseCommand
+class Autofix extends SafeBaseCommand
 {
     protected $defaultDryRun = true;
     protected $group = 'ops';
