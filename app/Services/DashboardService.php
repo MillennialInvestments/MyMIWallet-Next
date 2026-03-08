@@ -38,7 +38,7 @@ class DashboardService
             return [];
         }
 
-        $cacheKey = $this->executiveSummaryCacheKey($userId);
+        $cacheKey = sanitize_cache_key($this->executiveSummaryCacheKey($userId));
         $cached = $this->cache->get($cacheKey);
         if (is_array($cached)) {
             return $cached;
@@ -56,7 +56,7 @@ class DashboardService
     public function invalidateExecutiveDashboardSummary(int $userId): void
     {
         if ($userId > 0) {
-            $this->cache->delete($this->executiveSummaryCacheKey($userId));
+            $this->cache->delete(sanitize_cache_key($this->executiveSummaryCacheKey($userId)));
         }
     }
 
