@@ -26,65 +26,112 @@ final class ScannerAlertBridge
         $status = 'Opened';
         $now = date('Y-m-d H:i:s');
 
-        $existing = $this->db->table('bf_investment_trade_alerts')
+        $sql = <<<'SQL'
+INSERT INTO bf_investment_trade_alerts
+(
+    active,
+    status,
+    send_alert,
+    alert_created,
+    ticker,
+    exchange,
+    category,
+    trade_type,
+    price,
+    current_price,
+    potential_price,
+    ema_9,
+    ema_21,
+    ema_34,
+    volume,
+    trade_description,
+    occurrences,
+    notification_sent,
+    source,
+    created_on,
+    last_updated,
+    last_updated_time,
+    modified_on
+)
+VALUES
+(
+    1,
+    ?,
+    1,
+    1,
+    ?,
+    'UNKNOWN',
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    1,
+    0,
+    'scanner',
+    ?,
+    ?,
+    ?,
+    ?
+)
+ON DUPLICATE KEY UPDATE
+    category = VALUES(category),
+    trade_type = VALUES(trade_type),
+    price = VALUES(price),
+    current_price = VALUES(current_price),
+    potential_price = VALUES(potential_price),
+    ema_9 = VALUES(ema_9),
+    ema_21 = VALUES(ema_21),
+    ema_34 = VALUES(ema_34),
+    volume = VALUES(volume),
+    trade_description = VALUES(trade_description),
+    occurrences = occurrences + 1,
+    last_updated = VALUES(last_updated),
+    last_updated_time = VALUES(last_updated_time),
+    modified_on = VALUES(modified_on)
+SQL;
+
+        $this->db->query($sql, [
+            $status,
+            $ticker,
+            $category,
+            $result->direction,
+            $result->price,
+            $result->price,
+            $result->price,
+            $result->ema8,
+            $result->ema13,
+            $result->ema55,
+            $result->volume,
+            'Scanner signal: ' . $result->signal . ' (' . $result->timeframe . ')',
+            $now,
+            $now,
+            $now,
+            $now,
+        ]);
+
+        $alertRow = $this->db->table('bf_investment_trade_alerts')
             ->where('ticker', $ticker)
             ->where('status', $status)
             ->where('source', 'scanner')
-            ->get()
+            ->orderBy('id', 'DESC')
+            ->get(1)
             ->getRowArray();
 
-        if ($existing) {
-            $alertId = (int) $existing['id'];
-            $this->db->table('bf_investment_trade_alerts')
-                ->where('id', $alertId)
-                ->update([
-                    'category' => $category,
-                    'trade_type' => $result->direction,
-                    'price' => $result->price,
-                    'current_price' => $result->price,
-                    'ema_9' => $result->ema8,
-                    'ema_21' => $result->ema13,
-                    'ema_34' => $result->ema55,
-                    'volume' => $result->volume,
-                    'occurrences' => ((int) ($existing['occurrences'] ?? 0)) + 1,
-                    'last_updated' => $now,
-                    'last_updated_time' => $now,
-                    'modified_on' => $now,
-                ]);
-        } else {
-            $this->db->table('bf_investment_trade_alerts')->insert([
-                'active' => 1,
-                'status' => $status,
-                'send_alert' => 1,
-                'alert_created' => 1,
-                'ticker' => $ticker,
-                'exchange' => 'UNKNOWN',
-                'category' => $category,
-                'trade_type' => $result->direction,
-                'price' => $result->price,
-                'current_price' => $result->price,
-                'potential_price' => $result->price,
-                'ema_9' => $result->ema8,
-                'ema_21' => $result->ema13,
-                'ema_34' => $result->ema55,
-                'volume' => $result->volume,
-                'trade_description' => 'Scanner signal: ' . $result->signal . ' (' . $result->timeframe . ')',
-                'occurrences' => 1,
-                'notification_sent' => 0,
-                'source' => 'scanner',
-                'created_on' => $now,
-                'last_updated' => $now,
-                'last_updated_time' => $now,
-            ]);
-            $alertId = (int) $this->db->insertID();
-        }
+        $alertId = (int) ($alertRow['id'] ?? 0);
+        $existingOccurrences = (int) ($alertRow['occurrences'] ?? 1);
 
         $this->db->table('bf_investment_alert_history')->insert([
             'trade_id' => $alertId,
             'ticker' => $ticker,
             'category' => $category,
             'status' => $status,
-            'occurrences' => $existing ? ((int) ($existing['occurrences'] ?? 0)) + 1 : 1,
+            'occurrences' => $existingOccurrences,
             'source_email' => 'scanner',
             'email_subject' => 'Scanner Signal ' . $result->signal,
             'email_date' => $result->occurredOn,
