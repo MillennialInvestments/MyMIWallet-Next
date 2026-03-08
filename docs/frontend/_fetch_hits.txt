@@ -1,0 +1,280 @@
+app/Modules/Search/Views/index.php:24:    const res = await fetch('API/Search?'+params.toString(), {headers:{'Accept':'application/json'}});
+app/Modules/User/Views/Auctions/item.php:193:            const response = await fetch(pollUrl);
+app/Modules/User/Views/Auctions/item.php:215:            const response = await fetch(bidForm.action, {
+app/Modules/User/Views/Auctions/item.php:253:                const response = await fetch('<?= site_url('API/Auctions/topup') ?>', {
+app/Modules/User/Views/Projects/index/most_recent_content.php:101:        fetch('<?php echo site_url('Management/Marketing/getRecentScrapes'); ?>')
+app/Modules/Exchange/Views/Solana/viewWallet.php:193:      fetch("<?= site_url('Exchange/Solana/Edit-Wallet') ?>", {
+app/Modules/Exchange/Views/Solana/swap.php:218:        fetch(`https://www.mymiwallet.com/index.php/API/Solana/getExchangePrice/${selectedFromToken}`)
+app/Modules/Exchange/Views/Solana/swap.php:227:        fetch(`https://www.mymiwallet.com/index.php/API/Solana/getTokenPrice/${selectedToToken}`)
+app/Modules/Exchange/Views/Solana/swap.php:235:        fetch(`<?= base_url('index.php/API/Solana/getCoinAmount') ?>/${selectedToken}`)
+app/Modules/Exchange/Views/Solana/swap.php:348://         fetch(`https://www.mymiwallet.com/index.php/API/Solana/getExchangePrice/${selectedFromToken}`)
+app/Modules/Exchange/Views/Solana/swap.php:361://         fetch(`https://www.mymiwallet.com/index.php/API/Solana/getTokenPrice/${selectedToken}`)
+app/Modules/Exchange/Views/Solana/swap.php:447://         fetch(`<?=base_url('index.php/API/Solana/getCoinAmount')?>/${selectedToken}`)
+app/Modules/Exchange/Views/Solana/swap-working.php:273:        fetch(`<?= base_url('API/Solana/getExchangePrice') ?>/SOL`)
+app/Modules/Exchange/Views/Solana/swap-working.php:288:        fetch(`<?= base_url('API/Solana/getTokenPrice') ?>/${selectedToken}`)
+app/Modules/Exchange/Views/Solana/trade.php:110:    fetch('index.php/API/Solana/getMarketPrice')
+app/Modules/Exchange/Views/Solana/trade.php:146:    fetch('Exchange/Solana/Purchase', {
+app/Modules/Exchange/Views/Solana/trade.php:170:    fetch('Exchange/Solana/Sell', { // Ensure the correct URL is used for processing the sell request
+app/Modules/User/Views/Projects/holdings.php:388:      const res = await fetch(form.action, { method: 'POST', body: fd, credentials: 'same-origin' });
+app/Modules/Exchange/Views/Sell.php:69:            const result = await fetch("<?= site_url('Exchange/Order_Sell_Manager'); ?>", {
+app/Modules/Exchange/Views/Coin_Listing_Request.php:78:            const result = await fetch("<?= site_url('Exchange/Application-Manager/' . $cuID); ?>", {
+app/Modules/Exchange/Views/Coin_Listing_Asset_Information_Modal.php:143:            const result = await fetch("<?= site_url('Exchange/Application-Manager/' . $cuID); ?>", {
+app/Modules/Exchange/Views/Coin_Listing_Asset_Information.php:244:            const result = await fetch("<?= site_url('Exchange/Application-Manager/' . $cuID); ?>", {
+app/Modules/Exchange/Views/Buy.php:69:            const result = await fetch("<?= site_url('Exchange/Order_Buy_Manager'); ?>", {
+app/Modules/User/Views/Dashboard/index/transaction-modal.php:159:                fetch("<?= site_url("/Wallets/MyMIGPayPalCallback") ?>", {
+app/Modules/User/Views/Dashboard/index/transaction-modal-02072025.php:109:                fetch('<?= site_url("/Wallets/MyMIGPayPalCallback") ?>', {
+app/Modules/User/Views/Dashboard/index/transaction-modal-12112024.php:118:                fetch('<?= site_url("/Wallets/MyMIGPayPalCallback") ?>', {
+app/Modules/User/Views/Dashboard/modals/onboarding.php:293:                const response = await fetch(form.action, {
+app/Modules/Advertise/Views/content_banner.php:127:    fetch('Subscribe/Submit', {
+app/Modules/User/Views/Dashboard/index.php:953:        fetch(`API/Investments/getConfidenceHeatmap?timeframe=${encodeURIComponent(timeframe)}&window=60`)
+app/Modules/User/Views/Dashboard/index.php:1000:        fetch('API/Investments/getForecastHighlights')
+app/Modules/User/Views/Dashboard/index.php:1011:        fetch('API/Investments/getForecastAccuracySummary?window=7d')
+app/Modules/User/Views/Dashboard/index.php:1116:            const response = await fetch('API/Investments/getForecastHighlights');
+app/Modules/User/Views/Dashboard/index.php:1158:            const response = await fetch(`API/Investments/getConfidenceHeatmap?timeframe=all&window=<?= esc($heatmapWindow, 'url') ?>`);
+app/Modules/User/Views/Dashboard/index.php:1285:        fetch('API/AI/Chat', {
+app/Modules/User/Views/Dashboard/index.php:1338:    fetch('<?= esc(site_url('ops/health')); ?>', { headers: { 'Accept': 'application/json' } })
+app/Modules/User/Views/Predictions/view.php:98:    const rsp = await fetch('<?=site_url('API/Predictions/orders/place')?>', {
+app/Views/Auth/2fa_verify.php:41:            const response = await fetch(url, requestOptions);
+app/Modules/User/Views/Referral_Program/Apply.php:94:            const result = await fetch("<?= site_url('User/Referral_Program/Application_Manager'); ?>", {
+app/Modules/User/Views/Referral_Program/Create.php:77:        fetch('<?=site_url("/Referrals/sendReferralEmail")?>', {
+app/Modules/User/Views/Referral_Program/index.php:459:    fetch(endpoint, {
+app/Modules/User/Views/Support/Request.php:71:            const response = await fetch("<?php echo site_url('Support/Manager'); ?>", {
+app/Views/Auth/2fa_qrcode.php:41:            const response = await fetch(url, requestOptions);
+app/Views/admin/health/index.php:75:            const response = await fetch('<?= esc(site_url('api/aiops/manual-run')) ?>', {
+app/Modules/User/Views/Support/Feedback.php:68:            const result = await fetch("<?= site_url('User/Support/Communication_Manager'); ?>", {
+app/Views/themes/dashboard/layouts/custom-js.php:701:    fetch('API/Alerts/getLatestPrices')
+app/Modules/User/Views/Wallets/types/wallets_block.php:464:    const res = await fetch(apiUrl, { credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+app/Modules/User/Views/Wallets/types/wallets_block.php:506:    const res  = await fetch(getApiUrl(), { credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+app/Modules/User/Views/Wallets/types/wallets_block.php:530:    const res = await fetch(siteUrl('API/Wallets/Link-Robinhood'), {method:'POST', body:fd, credentials:'include'});
+app/Modules/User/Views/Wallets/types/wallets_block.php:543:    const res = await fetch(siteUrl('API/Wallets/Link-Snaptrade'), {method:'POST', body:fd, credentials:'include'});
+app/Modules/User/Views/Wallets/types/wallets_block.php:555:    const res = await fetch(siteUrl('API/Wallets/Snaptrade/Connect-URL'), {method:'POST', body:fd, credentials:'include'});
+app/Modules/User/Views/Wallets/types/wallets_block.php:611:      const res = await fetch(url, {
+app/Modules/User/Views/Wallets/types/wallets_block.php:649:    const res = await fetch(siteUrl('API/Wallets/Plaid/Link-Token'), {
+app/Modules/User/Views/Wallets/types/wallets_block.php:667:          const res2 = await fetch(siteUrl('API/Wallets/Plaid/Exchange'), {
+app/Views/themes/public/previewAlert.php:1067:        const response = await fetch(url, requestOptions);
+app/Modules/User/Views/Wallets/Generate_Wallet.php:81:            const result = await fetch("<?= site_url('User/Wallets/Wallet_Generator'); ?>", {
+app/Modules/User/Views/Wallets/Add_Withdraw_Fetch.php:69:            const result = await fetch("<?= site_url('User/Wallets/Wallet_Transaction'); ?>", {
+app/Modules/User/Views/Wallets/Coin_Swap.php:126:            fetch('<?=site_url("/Wallets/MyMIGPayPalCallback")?>', {
+app/Modules/User/Views/Wallets/Coin_Swap.php:166:        return fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${cryptoType.toLowerCase()}&vs_currencies=usd`)
+app/Modules/User/Views/Wallets/Coin_Swap.php:172:        return fetch(`https://min-api.cryptocompare.com/data/price?fsym=${cryptoType}&tsyms=USD`)
+app/Modules/User/Views/Wallets/Coin_Swap.php:179:        return fetch(`https://rest.coinapi.io/v1/exchangerate/${cryptoType}/USD`, {
+app/Modules/User/Views/Wallets/Add.php:202:                const response = await fetch("<?= site_url('Wallets/accountManager'); ?>", {
+app/Modules/User/Views/Wallets/Purchase.php:151:        return fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${cryptoType.toLowerCase()}&vs_currencies=usd`)
+app/Modules/User/Views/Wallets/Purchase.php:157:        return fetch(`https://min-api.cryptocompare.com/data/price?fsym=${cryptoType}&tsyms=USD`)
+app/Modules/User/Views/Wallets/Purchase.php:164:        return fetch(`https://rest.coinapi.io/v1/exchangerate/${cryptoType}/USD`, {
+app/Modules/User/Views/Wallets/Edit_Account.php:216:            const result = await fetch("<?= site_url('User/Wallets/Wallet_Manager'); ?>", {
+app/Modules/User/Views/Wallets/Link_Account/Import-Trades.php:70:            const result = await fetch("<?= site_url('User/Wallets/Wallet_Manager'); ?>", {
+app/Modules/User/Views/Wallets/Add/form.php:57:            const result = await fetch("<?= site_url('User/Wallets/Wallet_Manager'); ?>", {
+app/Modules/User/Views/Wallets/Purchase_Gold.php:81:            const result = await fetch("<?= site_url('User/Wallets/Purchase_Coins_Transaction'); ?>", {
+app/Modules/User/Views/Alerts/index.php:382:                const response = await fetch(`/Advisor/tradeAnalysis/${alertId}`, { method: 'POST' });
+app/Modules/User/Views/Alerts/index.php:413:                const response = await fetch(`/Alerts/generateAlertCommentary/${alertId}`);
+app/Modules/User/Views/Alerts/index.php:432:                const response = await fetch('API/Investments/reforecastTicker', {
+app/Modules/User/Views/Wallets/Add_Account.php:215:            const result = await fetch("<?= site_url('User/Wallets/Wallet_Manager'); ?>", {
+app/Modules/User/Views/Wallets/MyMI_Gold/order_form.php:71:            const result = await fetch("<?= site_url('User/Wallets/Purchase_Coins_Transaction'); ?>", {
+app/Modules/User/Views/Subscribe/header_subscribe.php:68:            const result = await fetch("<?= site_url('Blog/Email/Subscription/Account-Manager'); ?>", {            
+app/Modules/User/Views/Wallets/Add_Deposit_Fetch.php:71:            const result = await fetch("<?= site_url('User/Wallets/Wallet_Transaction'); ?>", {
+app/Modules/User/Views/Wallets/Edit.php:210:    const res = await fetch(form.action, {
+app/Modules/User/Views/Wallets/Purchase/Memberships/Customize.php:176:                fetch('<?=site_url("/Memberships/PurchaseCallback")?>', {
+app/Modules/User/Views/Wallets/Purchase/user_fields.php:202:            fetch('<?=site_url("/Wallets/MyMIGPayPalCallback")?>', {
+app/Modules/User/Views/Wallets/Purchase/paypal_fields.php:219://             fetch('<?= site_url("/Wallets/MyMIGPayPalCallback") ?>', {
+app/Modules/User/Views/Wallets/Add_Fiat_Wallet.php:78:                const result = await fetch("<?= site_url('User/Wallets/Wallet_Manager'); ?>", {			
+app/Modules/User/Views/Wallets/Add_Fiat_Wallet.php:86:                const result = await fetch("<?= site_url('User/Wallets/Purchase_Coins_Transaction'); ?>", {			
+app/Modules/User/Views/Wallets/Add_Fiat_Wallet.php:123://             const result = await fetch("<?php //site_url('User/Wallets/Wallet_Manager');?>", {
+app/Modules/User/Views/Budget/index/overview_chart.php:228:        const res  = await fetch(url);
+app/Modules/User/Views/Budget/Edit.php:302:            const result = await fetch(url, {
+app/Modules/User/Views/Budget/Recurring_Account/Schedule.php:240:                const response = await fetch("<?= site_url('/Budget/Approve-Recurring-Schedule/' . $accountID); ?>", {
+app/Modules/User/Views/Budget/Recurring_Account/Schedule-12282024.php:196:                const response = await fetch("<?= site_url('/Budget/Approve-Recurring-Schedule/' . $accountID); ?>", {
+app/Modules/User/Views/Wallets/Link_Account (Original)/Import-Trades.php:70:            const result = await fetch("<?= site_url('User/Wallets/Wallet_Manager'); ?>", {
+app/Modules/User/Views/Budget/Copy-12242023.php:201:            const result = await fetch("<?= site_url('User/Budget/Account_Manager'); ?>", {
+app/Modules/User/Views/Budget/Copy.php:206:                const response = await fetch("<?php echo site_url('Budget/Account-Manager'); ?>", {
+app/Modules/User/Views/Budget/Copy.php:268:            const result = await fetch("<?= site_url('User/Budget/Account_Manager'); ?>", {
+app/Modules/User/Views/Budget/Add.php:326:                const response = await fetch("<?= site_url('Budget/Account-Manager'); ?>", {
+app/Modules/User/Views/Budget/Add-New.php:155:                const response = await fetch(url, {
+app/Modules/User/Views/Account/sessions.php:31:        const res = await fetch(`/Account/sessions/revoke/${sid}`, {
+app/Modules/User/Views/Investments/Add-12012024.php:137:            const response = await fetch(apiURL);
+app/Modules/User/Views/Investments/Services.php:571:            const response = await fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } });
+app/Modules/User/Views/Investments/Services.php:773:            const response = await fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } });
+app/Modules/Management/Views/Email/queued.php:43:        const response = await fetch("<?= site_url('API/Email/fetchQueuedEmails') ?>?limit=" + limitPerPage + "&offset=" + offset + "&search=" + encodeURIComponent(search));
+app/Modules/Management/Views/Email/resources/controlPanelBlock.php:54:    const response = await fetch(`<?= site_url('API/Email/cloneCampaign/') ?>${campaignId}`);
+app/Modules/Management/Views/Email/resources/controlPanelBlock.php:68:    const response = await fetch(`<?= site_url('API/Email/createDraftCampaign') ?>`, {
+app/Modules/Management/Views/Email/resources/controlPanelBlock.php:88:        const response = await fetch("<?= site_url('API/Email/getEmailQueueStats') ?>");
+app/Modules/Management/Views/Email/resources/controlPanelBlock.php:111:        const response = await fetch("<?= site_url('API/Email/sendMassTestCampaign') ?>?campaign_id=" + encodeURIComponent(campaignId));
+app/Modules/Management/Views/Email/campaign_dashboard.php:59:        const response = await fetch(`<?= site_url('API/Email/fetchTagAnalytics') ?>`);
+app/Modules/Management/Views/Email/campaign_dashboard.php:82:        const res = await fetch(`<?= site_url('API/Email/getCampaignStats') ?>/${campaignId}`);
+app/Modules/Management/Views/Email/campaign_dashboard.php:98:        const response = await fetch("<?= site_url('API/Email/fetchCampaignAnalytics') ?>");
+app/Modules/Management/Views/Email/modals/createDraftCampaign.php:41:    const response = await fetch(`<?= site_url('API/Email/createDraftCampaign') ?>`, {
+app/Modules/Management/Views/Email/modals/cloneCampaign.php:24:    const response = await fetch(`<?= site_url('API/Email/cloneCampaign/') ?>${encodeURIComponent(campaignId)}`);
+app/Modules/Management/Views/Email/modals/sendCampaign.php:37:    const response = await fetch(`<?= site_url('API/Email/createDraftCampaign') ?>`, {
+app/Modules/Management/Views/Email/modals/editCampaign.php:35:    const response = await fetch(`<?= site_url('API/Email/updateCampaign') ?>/${id}`, {
+app/Modules/Management/Views/Email/campaignStats.php:8:    const response = await fetch("<?= site_url('API/Email/getCampaignMetrics/'.$campaign['id']) ?>");
+app/Modules/Management/Views/Email/campaigns.php:135:        await fetch(`<?= site_url('API/Email/deleteCampaign') ?>/${campaignId}`, {
+app/Modules/Management/Views/Email/campaigns.php:152:        await fetch(`<?= site_url('API/Email/scheduleCampaignApi') ?>/${campaignId}`, {
+app/Modules/Management/Views/Email/campaigns.php:173:        await fetch(`<?= site_url('API/Email/scheduleCampaignApi') ?>/${campaignId}`, {
+app/Modules/Management/Views/Email/campaigns.php:189:    const res = await fetch(`<?= site_url('API/Email/cloneCampaign/') ?>${campaignId}`);
+app/Modules/Management/Views/Email/campaigns.php:203:        const response = await fetch("<?= site_url('API/Email/deleteCampaign') ?>/" + campaignId, {
+app/Modules/Management/Views/Email/campaigns.php:229:    const response = await fetch("<?= site_url('API/Email/scheduleCampaignApi') ?>/" + campaignId, {
+app/Modules/Management/Views/Email/campaigns.php:251:    const response = await fetch("<?= site_url('API/Email/scheduleCampaignApi') ?>/" + campaignId, {
+app/Modules/User/Views/Investments/tradeTracker-working-12082024.php:139:        fetch("<?= site_url('Trade-Tracker/saveTradeData') ?>", {
+app/Modules/User/Views/Investments/index-12022024.php:323://         const response = await fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } });
+app/Modules/Management/Views/Assets/Create.php:85:            const result = await fetch("<?= site_url('Exchange/Application-Manager/' . $cuID); ?>", {
+app/Modules/User/Views/Investments/index/Insights-test.php:139:    //     fetch('path/to/your/controller/method', { // Update this URL
+app/Modules/User/Views/Investments/index/Insights-test.php:159:        fetch('user/investments/get_user_watchlist') // Update this URL to your method
+app/Modules/User/Views/Investments/index/Insights-test.php:184:        fetch(apiURL)
+app/Modules/User/Views/Investments/index/Insights-test.php:210:        fetch('<?php echo site_url('/Investments/API/getSymbolsByTradeType/'); ?>')
+app/Modules/User/Views/Investments/index/Insights-test.php:229:        fetch('<?php echo site_url('/Investments/API/getSymbolsByTradeType/'); ?>')
+app/Modules/User/Views/Investments/index/Asset_Watchlist.php:37:    fetch('path/to/your/api/endpoint')
+app/Modules/User/Views/Investments/index/Performance_Overview.php:245:            const response = await fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } });
+app/Modules/User/Views/Investments/index/Insights.php:225:    //     fetch('path/to/your/controller/method', { // Update this URL
+app/Modules/User/Views/Investments/index/Insights.php:245:        fetch(<?php echo '"' . site_url('API/Investments/GetUserWatchlist/') . '"'; ?>) // Update this URL to your method
+app/Modules/User/Views/Investments/index/Insights.php:270:        fetch(apiURL)
+app/Modules/User/Views/Investments/index/Insights.php:321:        fetch('<?php echo site_url('/Investments/API/getSymbolsByTradeType/'); ?>')
+app/Modules/User/Views/Investments/index/Insights.php:340:        fetch('<?php echo site_url('/Investments/API/getSymbolsByTradeType/'); ?>')
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:216:        const response = await fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } });
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:408://         const response = await fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } });
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:515:    //         const response = await fetch(url, {
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:742:    // const response = await fetch(url, {
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:899:    //     return await (await fetch(e, { headers: { "X-Requested-With": "XMLHttpRequest" } })).text();
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:1057:    //     return await (await fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })).text();
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:1222:    //             let i = await (await fetch(r, {
+app/Modules/User/Views/Investments/tradeTracker copy 2.php:78:        fetch('<?= site_url('/Investments/saveTradeTracker') ?>', {
+app/Modules/Management/Views/Projects/_quick_intake.php:48:  fetch('<?= site_url('API/Projects/ingest/real-estate'); ?>', {
+app/Modules/User/Views/Investments/Add.php:221:            const response = await fetch(apiURL);
+app/Modules/User/Views/Investments/Add.php:266:        fetch('<?= site_url('/Investments/Account-Manager'); ?>', {
+app/Modules/User/Views/Investments/Add/user_fields-new.php:513:                fetch('<?= site_url("/add_new_wallet") ?>', {
+app/Modules/User/Views/Investments/Add/user_fields-new.php:549:            const response = await fetch(`getSymbolsByTradeType/${selectedType}`);
+app/Modules/User/Views/Investments/Add/user_fields-new.php:679:    //     fetch('<?=site_url("/Autosave")?>', {
+app/Modules/Management/Views/Projects/index/most_recent_content.php:101:        fetch('<?php echo site_url('Management/Marketing/getRecentScrapes'); ?>')
+app/Modules/User/Views/Investments/Add/user_fields-09162023.php:501:                fetch('<?= site_url("/add_new_wallet") ?>', {
+app/Modules/User/Views/Investments/Add/user_fields-09162023.php:537:            const response = await fetch(`getSymbolsByTradeType/${selectedType}`);
+app/Modules/User/Views/Investments/Add/user_fields-09162023.php:653:    //     fetch('<?=site_url("/Autosave")?>', {
+app/Modules/User/Views/Investments/Add/user_fields.php:547:        const response = await fetch(apiURL);
+app/Modules/User/Views/Investments/Add/watchlist_fields.php:110:    //                 const response = await fetch("<?= site_url('Investments/API/AddWatchlist') ?>", {
+app/Modules/User/Views/Investments/Add/watchlist_fields.php:140:        fetch("<?= site_url('API/Investments/GetUserWatchlist/' . $cuID) ?>")
+app/Modules/User/Views/Investments/Add/user_fields-04042024.php:501:                fetch('<?= site_url("/add_new_wallet") ?>', {
+app/Modules/User/Views/Investments/Add/user_fields-04042024.php:561:            const response = await fetch(fullUrl);
+app/Modules/User/Views/Investments/Add/user_fields-04042024.php:592:            const response = await fetch(apiURL);
+app/Modules/User/Views/Investments/Add/form.php:78:                const result = await fetch("<?php echo site_url('Investments/Account-Manager'); ?>", {
+app/Modules/User/Views/Investments/Add/form.php:170:        //         const response = await fetch(apiURL);
+app/Modules/User/Views/Investments/Add/form.php:185:                const response = await fetch(apiURL);
+app/Modules/User/Views/Investments/Add/form.php:264:                fetch('<?= site_url("/add_new_wallet") ?>', {
+app/Modules/User/Views/Investments/tradeTracker.php:352:            const res = await fetch('index.php/API/Alerts/getLatestPrices');
+app/Modules/User/Views/Investments/retirement.php:166:        fetch('<?= site_url('/Investments/saveRetirementPlan') ?>', {
+app/Modules/User/Views/Investments/index.php:530:            const response = await fetch(`API/Investments/getConfidenceHeatmap?timeframe=all&window=<?= esc($heatmapWindow, 'url') ?>`);
+app/Modules/User/Views/Investments/index.php:574:            const response = await fetch('API/Investments/getForecastAccuracySummary?days=30');
+app/Modules/User/Views/Investments/index.php:614:            const response = await fetch(<?= site_url('/API/getUserInvestmentData/' . $cuID)?>); // Replace with your API endpoint
+app/Modules/User/Views/Investments/index.php:711:        fetch(`API/Investments/getConfidenceHeatmap?timeframe=${encodeURIComponent(timeframe)}&window=60`)
+app/Modules/User/Views/Investments/index.php:727:        fetch('API/Investments/reforecastTicker', {
+app/Modules/User/Views/Investments/index.php:797:        fetch('API/Investments/getForecastAccuracySummary?window=7d')
+app/Modules/Management/Views/admin/chat.php:36:            const response = await fetch(form.action, {
+app/Modules/Management/Views/admin/errors_dashboard.php:78:    const res = await fetch(url, {headers: {'Accept':'application/json'}});
+app/Modules/Management/Views/AuthHealth/index.php:114:                    const response = await fetch("<?= site_url('API/Management/runAuthSmoke'); ?>", {
+app/Modules/Management/Views/Discord/index.php:527:                const response = await fetch('<?php echo site_url('API/Discord/broadcast'); ?>', {
+app/Modules/Management/Views/Wallets/Reconcile.php:150:    const res = await fetch('<?= site_url('Management/Wallets/Reconcile') ?>', { headers: {'X-Requested-With': 'XMLHttpRequest'} });
+app/Modules/Management/Views/Wallets/Reconcile.php:163:      const res = await fetch('<?= site_url('Management/Wallets/EmailUserAboutIssue') ?>/' + user + '/' + wallet, {
+app/Modules/Management/Views/Alerts/resources/rh-keygen.php:87:      const res = await fetch(r('gen-keys'), { method: 'POST' });
+app/Modules/Management/Views/Alerts/resources/rh-keygen.php:114:      const res = await fetch(r('sign'), {
+app/Modules/Management/Views/Web_Design/Content_Creator/Plaid/Integration.php:59:            fetch('<?php echo site_url('/Institutions/Integrations/savePublicToken'); ?>', {
+app/Modules/Management/Views/Web_Design/Content_Creator/Plaid/Integration.php:77:                fetch('<?php echo site_url('Institutions/Integrations/exchange_public_token'); ?>', {
+app/Modules/Management/Views/Web_Design/Content_Creator/Plaid/Integration.php:105:                    fetch('<?php echo site_url('Institutions/Integrations/create_wallet'); ?>', {
+app/Modules/Management/Views/Web_Design/Content_Creator/Plaid/Link_Web.php:7:          const res = await fetch("http://localhost:8000/api/create_link_token");
+app/Modules/Management/Views/Web_Design/Content_Creator/Plaid/Link_Web.php:18:            await fetch("/api/exchange_public_token", {
+app/Modules/Management/Views/Web_Design/Content_Creator/Plaid/Link_Web.php:45:        const response = await fetch("/api/data", {
+app/Modules/Management/Views/Web_Design/Content_Creator/Plaid/Link_Web.php:58:        const account = await fetch("/api/is_account_connected");
+app/Modules/Management/Views/Alerts/add.php:96:        const response = await fetch('Management/Alerts/addTradeAlert', {
+app/Modules/Management/Views/Alerts/index.php:1044:      const res  = await fetch('<?= site_url('Management/Alerts/weeklyTopPerformance'); ?>?limit=' + limit);
+app/Modules/Management/Views/Alerts/index.php:1070:      const res = await fetch('<?= site_url('API/Alerts/backfillCategories'); ?>', {
+app/Modules/Management/Views/Alerts/index.php:1101:      const res = await fetch('<?= site_url('API/Alerts/backfillEmailAlerts'); ?>', {
+app/Modules/Management/Views/Alerts/index.php:1132:        fetch('index.php/API/Alerts/getLatestPrices')
+app/Modules/Management/Views/EmailOutbox/index.php:182:            const response = await fetch('<?= site_url('Management/EmailOutbox/send-test') ?>', {
+app/Modules/Management/Views/Signals/index.php:62:    const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+app/Modules/Management/Views/Signals/index.php:93:        const html = await fetch(`/API/Alerts/previewSignalFile/${id}`).then(r => r.text());
+app/Modules/Management/Views/PublicPages/index.php:18:function generateNow(pageId){fetch('<?= site_url('Management/PublicPages/ajaxGenerateNow') ?>/'+encodeURIComponent(pageId),{method:'POST'}).then(()=>location.reload());}
+app/Modules/Management/Views/Ops/index.php:212:        fetch('<?php echo site_url('Management/Ops/ajaxStatus'); ?>', {headers})
+app/Modules/Management/Views/Ops/index.php:217:        fetch('<?php echo site_url('API/Ops/filesystem-status'); ?>', {headers})
+app/Modules/Management/Views/Ops/index.php:232:        fetch('<?php echo site_url('Management/Ops/ajaxDispatch'); ?>', {
+app/Modules/Management/Views/AiOps/index.php:129:            fetch('API/AiOps/status')
+app/Modules/Management/Views/AiOps/index.php:225:                fetch('API/AiOps/toggle', {
+app/Modules/Management/Views/AiOps/index.php:236:                fetch('API/AiOps/run', {
+app/Modules/Management/Views/Marketing/resources/platform-library.php:44:    fetch('API/Management/getPostingPlan', {
+app/Modules/Management/Views/Marketing/resources/platform-library.php:54:    fetch('API/Management/composePost', {
+app/Modules/Management/Views/Marketing/resources/bufferDashboard.php:87:    fetch(`/API/Management/fetchBufferPaginated?page=${page}&limit=20&only_suggested=${showOnlySuggested ? 1 : 0}`)
+app/Modules/Management/Views/Marketing/resources/bufferDashboard.php:106:    fetch(`/API/Management/approveBufferItem/${id}`)
+app/Modules/Management/Views/Marketing/resources/bufferDashboard.php:123:            fetch(`/API/Management/updatePlatformToggle/${id}`, {
+app/Modules/Management/Views/Marketing/resources/bufferDashboard.php:190:        const response = await fetch(`/API/Management/scheduleApprovedPost/${id}`, {
+app/Modules/Management/Views/Marketing/resources/bufferDashboard.php:231:    fetch(`/API/Management/rejectBufferItem/${id}`)
+app/Modules/Management/Views/Marketing/resources/bufferDashboard.php:262:        fetch(`/API/Marketing/updateBufferScheduleInterval/${id}`, {
+app/Modules/Management/Views/ContentEngine/index.php:94:        fetch(`/API/ContentEngine/topIdeas?ingest_id=${activeIngest}&tier=${activeTier}`)
+app/Modules/Management/Views/ContentEngine/index.php:121:            fetch(`/API/ContentEngine/processIngest/${ingestId}`, {method: 'POST'})
+app/Modules/Management/Views/ContentEngine/index.php:147:        fetch(`/API/ContentEngine/processIngest/${ingestId}`, {method: 'POST'})
+app/Modules/Management/Views/ContentEngine/index.php:154:        fetch('API/ContentEngine/runDaily', {method: 'POST'})
+app/Modules/Management/Views/Marketing/resources/standaloneAddSubscriberForm.php:37:        fetch('<?php echo site_url('Management/Marketing/Add-Subscriber'); ?>', {
+app/Modules/Management/Views/Marketing/resources/standaloneDailyLogForm.php:91:        fetch('<?= site_url("Management/Marketing/submitDailyLog") ?>', {
+app/Modules/Management/Views/Marketing/resources/standaloneShortLongPostForm.php:25:        fetch('<?= site_url('Management/Marketing/submitManualContent'); ?>', {
+app/Modules/Management/Views/Marketing/resources/standaloneScraper.php:34:                            fetch('<?php echo site_url('Management/Marketing/Scrape-Link'); ?>', {
+app/Modules/Management/Views/Marketing/resources/standaloneScraper.php:164:    fetch('<?php echo site_url('Management/Marketing/getRecentScrapes'); ?>')
+app/Modules/Management/Views/Marketing/resources/standaloneLargeContentForm.php:78:    fetch('<?= site_url('Management/Marketing/submitLargeContent'); ?>', {
+app/Modules/Management/Views/Marketing/resources/timelineGroupedView.php:56:    fetch(`/index.php/API/Marketing/PreviewGeneratedPost/${summaryId}`)
+app/Modules/Management/Views/Marketing/resources/timelineGroupedView.php:77:        fetch(`/index.php/API/Marketing/getTopKeywordChart/${summaryId}`)
+app/Modules/Management/Views/Marketing/resources/controlPanelBlock.php:55:            const response = await fetch("<?= site_url('API/Marketing/generateDailyContentDigest') ?>");
+app/Modules/Management/Views/Marketing/resources/controlPanelBlock.php:80:                const response = await fetch("<?= site_url('API/Marketing/generateContentFromScraper') ?>");
+app/Modules/Management/Views/Marketing/resources/controlPanelBlock.php:105:            const response = await fetch("<?= site_url('API/Marketing/massResendActivationEmails') ?>", {
+app/Modules/Management/Views/Marketing/resources/controlPanelBlock.php:135:            const response = await fetch("<?= site_url('API/Marketing/reprocessIncompleteEmails') ?>");
+app/Modules/Management/Views/Marketing/resources/controlPanelBlock.php:149:            const response = await fetch(`<?= site_url('API/Management/approveBufferItem/') ?>${id}`, {
+app/Modules/Management/Views/Marketing/resources/controlPanelBlock.php:172:            const response = await fetch("<?= site_url('API/Management/runKeywordBackfillBatch') ?>");
+app/Modules/Management/Views/Marketing/resources/controlPanelBlock.php:199:            const res = await fetch("<?= site_url('API/Marketing/previewPendingSummaries') ?>");
+app/Modules/Management/Views/Marketing/resources/controlPanelBlock.php:211:            const response = await fetch(`<?= site_url('API/Management/rejectBufferItem/') ?>${id}`, {
+app/Modules/Management/Views/Marketing/resources/generatedSummaries.php:222:        fetch('<?= site_url("API/Marketing/getTopKeywordChart") ?>/' + defaultSummaryId)
+app/Modules/Management/Views/Marketing/resources/generatedSummaries.php:290:    fetch(safeUrl)
+app/Modules/Management/Views/Marketing/resources/generatedSummaries.php:347:        const response = await fetch('<?= site_url("API/Marketing/fetchGeneratedSummariesJson") ?>');
+app/Modules/Management/Views/Marketing/resources/standaloneScraperForm.php:56:        fetch('<?= site_url('Management/Marketing/Scrape-Link') ?>', {
+app/Modules/Management/Views/Marketing/resources/standaloneScraperForm.php:101:    fetch(`<?= site_url('Management/Marketing/generatePostsFromSummary') ?>/${id}`)
+app/Modules/Management/Views/Marketing/resources/standaloneScraperForm.php:111:    fetch(`<?= site_url('Management/Marketing/getScrapeDetails') ?>/${id}`)
+app/Modules/Management/Views/Marketing/resources/standaloneScraperForm.php:121:    fetch(`<?= site_url('Management/Marketing/deleteScrape') ?>/${id}`, {
+app/Modules/Management/Views/Marketing/Exchanges/includes/website.php:212:        fetch('<?= site_url('solana/market-refresh') ?>', {
+app/Modules/Management/Views/Marketing/financialNews.php:84:            const response = await fetch('<?= site_url('/Management/Marketing/fetchMissingLogos') ?>', {
+app/Modules/Management/Views/Marketing/financialNews.php:116:                const response = await fetch('<?= site_url('/Management/Marketing/fetchMissingLogos') ?>', {
+app/Modules/Management/Views/Marketing/Blog/Subscribe.php:151:            const result = await fetch("<?= site_url('CFA/Analysis/Application/Account_Manager'); ?>", {
+app/Modules/Management/Views/Marketing/Drip/create.php:162:        fetch('API/Templates/Preview/' + selected)
+app/Modules/Management/Views/Marketing/Drip/create.php:171:    fetch('Management/DripCampaign/previewTemplate', {
+app/Modules/Management/Views/Marketing/Add.php:106:                const response = await fetch("<?= site_url('Management/Marketing/SubmitForm'); ?>", {
+app/Modules/Management/Views/Marketing/Drip/modals/deleteCampaignStep.php:20:    fetch(url, {
+app/Modules/Management/Views/Marketing/Drip/modals/generateCampaignContent.php:34:            fetch(`<?= site_url('API/Marketing/generateCampaignContent/') ?>${campaignId}`, {
+app/Modules/Management/Views/Marketing/Drip/modals/editCampaignStep.php:35:    fetch(actionUrl, {
+app/Modules/Management/Views/Marketing/Drip/modals/deleteCampaign.php:20:    fetch(url, {
+app/Modules/Management/Views/Marketing/Drip/modals/generateCampaignStepContent.php:34:            fetch(`<?= site_url('API/Marketing/generateCampaignStepContent/') ?>${stepId}`, {
+app/Modules/Management/Views/Marketing/Drip/modals/editCampaign.php:28:    fetch(actionUrl, {
+app/Modules/Management/Views/Marketing/dashboard.txt:6342:    fetch('<?php echo site_url('API/Marketing/generateDailyContentDigest'); ?>')
+app/Modules/Management/Views/Marketing/dashboard.txt:6365:        fetch('<?php echo site_url('API/Marketing/massResendActivationEmails'); ?>', {
+app/Modules/Management/Views/Marketing/dashboard.txt:6398:    fetch("<?= site_url('API/Marketing/generateContentFromScraper') ?>")
+app/Modules/Management/Views/Marketing/dashboard.txt:6708:        fetch('<?php echo site_url('Management/Marketing/getRecentScrapes'); ?>')
+app/Modules/Management/Views/Marketing/generatedPostsDashboard.php:38:    fetch(`/API/Management/getGeneratedPostsPaginated?page=${page}&limit=20`)
+app/Modules/Management/Views/Marketing/generatedPostsDashboard.php:76:    fetch(`/API/Management/sharePost/${id}/${platform}`)
+app/Modules/Management/Views/Marketing/generatedPostsDashboard.php:88:    fetch(`/API/Management/updatePostSchedule/${id}`, {
+app/Modules/Management/Views/Marketing/Schedule/Add.php:248:        const response = await fetch("<?php echo site_url('Management/Marketing/Marketing_Manager'); ?>", {
+app/Modules/Management/Views/Marketing/EmailDetail.php:71:    fetch("<?= site_url('API/Marketing/generateFromEmailId/' . $emailData['id']) ?>")
+app/Modules/Management/Views/Marketing/index.php:198:    fetch("<?= site_url('Management/Marketing/Scrape-Link') ?>", {
+app/Modules/Management/Views/Marketing/index.php:214:            fetch("<?= site_url('API/Marketing/fetchGeneratedSummariesBlock') ?>")
+app/Modules/Management/Views/Marketing/index.php:221:            fetch("<?= site_url('API/Marketing/fetchFinalizedSummariesBlock') ?>")
+app/Modules/Management/Views/Marketing/index.php:255:        const response = await fetch(buildUrl('<?= site_url('/API/Management/fetchCoffeeAndStocksNewsletter'); ?>?week_start_date=' + weekStart));
+app/Modules/Management/Views/Marketing/index.php:271:        const response = await fetch(buildUrl('<?= site_url('/API/Management/saveCoffeeAndStocksNewsletter'); ?>'), {
+app/Modules/Management/Views/Marketing/index.php:289:        const response = await fetch(buildUrl('<?= site_url('/API/Management/generateCoffeeAndStocksNewsletter'); ?>'));
+app/Modules/Management/Views/Marketing/index.php:312:            const response = await fetch('Advisor/generateStoryboard', { method: 'POST' });
+app/Modules/Management/Views/Marketing/index.php:339:        const res = await fetch('Marketing/generateKimiSummaries');
+app/Modules/Management/Views/Marketing/index.php:345:        const res = await fetch('Marketing/generateKimiPosts');
+app/Modules/Management/Views/Marketing/index.php:361:            const response = await fetch(buildUrl('<?= site_url('/API/Management/backfillMarketingEmails'); ?>'), {
+app/Modules/Management/Views/index.php:151:                fetch(endpoint, { credentials: 'same-origin' })
+app/Modules/Management/Views/index.php:643:                const refresh = () => fetch(statusUrl, { credentials: 'same-origin' }).then(r => r.json()).then(d => {
+app/Modules/Management/Views/index.php:654:                const runAction = (subsystem, action) => fetch(actionUrl, {
+app/Modules/Management/Views/Marketing/index/most_recent_content.php:69:    fetch("<?= site_url('Management/Marketing/getRecentScrapes'); ?>")
+app/Modules/Management/Views/Marketing/index/most_recent_content.php:90:        fetch(`<?= site_url('Management/Marketing/getScrapeDetails') ?>/${id}`)
+app/Modules/Management/Views/Marketing/index/most_recent_content.php:109:        fetch(`<?= site_url('API/Marketing/generatePostsFromSummary') ?>/${id}`)
+app/Modules/Management/Views/Marketing/index/most_recent_content.php:128:            fetch(`<?= site_url('Management/Marketing/deleteScrape') ?>/${id}`, { method: 'DELETE' })
+app/Modules/Management/Views/Marketing/modals/insightPreview.php:76:    fetch('<?= site_url("/API/Management/updateInsight") ?>', {
+app/Modules/Management/Views/Marketing/modals/insightPreview.php:101:    fetch('<?= site_url('/API/Marketing/generateLivePreview') ?>', {
+app/Modules/Management/Views/Marketing/modals/insightPreview.php:129:    fetch(`/index.php/API/Marketing/getTopKeywordChart/<?= esc($summary['id']) ?>`)
+app/Modules/Management/Views/Marketing/modals/insightPreview.php:163:    fetch(`/index.php/API/Marketing/generateThreadFromSummary/<?= esc($summary['id']) ?>`)
+app/Modules/Advisor/Views/partials/advisor_insight_modal.php:27:            const response = await fetch('Advisor/generateInsight', {
+app/Modules/Advisor/Views/partials/advisor_insight_modal.php:47:            await fetch('Notes/save', {
+app/Modules/Management/Views/Marketing/Edit.php:139:        const response = await fetch("<?php echo site_url('Management/Marketing/Exchanges/Edit/'.$token['id']); ?>", {
+app/Modules/Advisor/Views/advisor_dashboard.php:119:                const response = await fetch('Advisor/generateStoryboard', { method: 'POST' });
+app/Modules/Management/Views/Marketing/Twitter.php:56:        const response = await fetch('Management/Marketing/Twitter', {

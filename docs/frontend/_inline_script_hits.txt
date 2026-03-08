@@ -1,0 +1,803 @@
+app/Modules/Template/Views/Dashboard_Template.php:314:                        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.2/Chart.min.js"></script>
+app/Modules/Search/Views/index.php:14:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Public/Views/pages/public_page.php:7:            <script type="application/ld+json"><?= esc($schemaJson, 'raw') ?></script>
+app/Modules/User/Views/Advisors/index.php:51:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Auctions/item.php:140:<script>
+app/Modules/Exchange/Views/includes/application-modal.php:13:<script <?= $nonce['script'] ?? '' ?>>	
+app/Modules/Exchange/Views/Solana/coinSwap.php:105:                            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Exchange/Views/Solana/assets.php:255:                                    <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Projects/index/most_recent_content.php:64:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Exchange/Views/Solana/viewWallet.php:183:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Projects/index/project_chart-working.php:56:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Exchange/Views/Solana/swap.php:176:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Projects/index/modals.php:18:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Projects/index/project_list.php:110:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Exchange/Views/Solana/index/Top-Performing-Tokens.php:31:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Projects/index/project_chart.php:60:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Exchange/Views/Solana/swap-working.php:258:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Exchange/Views/Solana/trade.php:84:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Exchange/Views/Solana/index.php:366:<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+app/Modules/Exchange/Views/Solana/index.php:367:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Exchange/Views/Solana/index.php:565:<!-- <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Exchange/Views/Solana/index.php:573:<!-- <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Projects/holdings.php:338:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Exchange/Views/Buy/user_fields.php:111:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Exchange/Views/Buy/user_fields.php:119:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Exchange/Views/Sell.php:46:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Exchange/Views/Coin_Listing_Request.php:55:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Projects/management/project_analytics.php:12:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Projects/Add.php:215:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Exchange/Views/Coin_Listing_Asset_Information_Modal.php:120:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Exchange/Views/Coin_Listing_Asset_Information.php:221:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Exchange/Views/Buy.php:46:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Exchange/Views/Sell/user_fields.php:112:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Exchange/Views/Sell/user_fields.php:120:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Projects/forms/project_sell.php:209:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Projects/forms/project_invest.php:206:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Projects/forms/project_commit.php:201:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Projects/forms/project_discuss.php:206:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Blog/Views/HowItWorks/how-it-works-frontend/index.html:776:    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+app/Modules/Blog/Views/HowItWorks/how-it-works-frontend/index.html:778:    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+app/Modules/Blog/Views/HowItWorks/how-it-works-frontend/index.html:780:    <script src="script.js"></script>
+app/Modules/User/Views/Dashboard/Profile.php:109:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Blog/Views/HowItWorks/Determining_Your_Financial_Goals.php:654:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Dashboard/index/transaction-modal.php:26:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Dashboard/index/transaction-modal.php:184:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Dashboard/index/transaction-modal-02072025.php:31:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Dashboard/index/transaction-modal-02072025.php:136:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Dashboard/index/transaction-modal-12112024.php:29:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Dashboard/index/transaction-modal-12112024.php:145:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Dashboard/modals/onboarding.php:209:<script>
+app/Modules/User/Views/Dashboard/Goals.php:94:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Blog/Views/Earnings/2024/10/21.php:365:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Blog/Views/Earnings/2024/10/14.php:366:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Dashboard/Account/Activity.php:50:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Blog/Views/Earnings/2024/10/28.php:365:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Dashboard/Account/ConnectedAccounts.php:65:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Blog/Views/Earnings/TSLA/10192023.php:58://     <script <?= $nonce['script'] ?? '' >>
+app/Modules/Blog/Views/Earnings/TSLA/10192023.php:332:                                            <script type="text/javascript" src="https://s3.tradingview.com/tv.js" <?= $nonce['script'] ?? '' ?>></script>
+app/Modules/Blog/Views/Earnings/TSLA/10192023.php:336:                                            <script ' . $nonce['script'] ?? '' . '>
+app/Modules/User/Views/Dashboard/Goals/mobile_table.php:118:                                <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Dashboard/Goals/browser_table.php:166:                            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Dashboard/Goals/Weekly/mobile_table.php:118:                                <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Dashboard/Goals/Weekly/browser_table.php:166:                            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Dashboard/Goals/Monthly/mobile_table.php:118:                                <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Dashboard/Goals/Monthly/browser_table.php:166:                            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Dashboard/Goals/Daily/mobile_table.php:118:                                <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Dashboard/Goals/Daily/browser_table.php:240:                            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Advertise/Views/content_banner.php:122:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Dashboard/Goals/All/mobile_table.php:118:                                <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Dashboard/Goals/All/browser_table.php:166:                            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Dashboard/index.php:884:<script <?= $nonce['script'] ?? ''; ?>>
+app/Modules/User/Views/Dashboard/index.php:1331:<script>
+app/Modules/User/Views/Dashboard/forms/onboarding.php:22:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Predictions/portfolio.php:33:<script<?=$nonce['script']?? ''?>>document.addEventListener('DOMContentLoaded',function(){
+app/Modules/User/Views/Predictions/view.php:84:<script<?=$nonce['script']?? ''?>>
+app/Views/temp_landing.php:37:<script nonce="<?= esc($cspNonce) ?>">
+app/Views/Auth/2fa_verify.php:29:<script nonce="<?= esc($cspNonce) ?>">
+app/Views/Auth/_footer.php:7:<script src="<?= base_url('assets/vendor/jquery/jquery-3.6.0.min.js'); ?>"></script>
+app/Views/Auth/_footer.php:8:<script src="<?= base_url('assets/vendor/bootstrap5/bootstrap.bundle.min.js'); ?>"></script>
+app/Modules/User/Views/Referral_Program/My_Referrals/total_active_referrals.php:49:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Referral_Program/Apply.php:67:<script <?= $nonce['script'] ?? '' ?>> 
+app/Modules/User/Views/Referral_Program/Create.php:58:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Referral_Program/index.php:70:                                    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.2/Chart.min.js" type="text/javascript"></script> -->
+app/Modules/User/Views/Referral_Program/index.php:171:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/Auth/layout.php:49:<script src="<?= base_url('assets/vendor/bootstrap5/bootstrap.bundle.min.js'); ?>" defer></script>
+app/Views/Auth/layout.php:52:<script src="<?= base_url('assets/vendor/aos/aos.js'); ?>" defer></script>
+app/Views/Auth/layout.php:56:<script src="<?= base_url('assets/js/login-init.js'); ?>" defer></script>
+app/Views/Auth/2fa_qrcode.php:29:<script nonce="<?= esc($cspNonce) ?>">
+app/Modules/User/Views/Support/Request.php:57:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/admin/health/index.php:61:<script>
+app/Views/blog/single_post.php:107:    <script type="application/ld+json" nonce="<?= esc($cspNonce) ?>">
+app/Views/blog/single_post.php:110:    <script type="application/ld+json" nonce="<?= esc($cspNonce) ?>">
+app/Modules/User/Views/Support/Feedback.php:41:<script <?= $nonce['script'] ?? '' ?>> 
+app/Views/Dashboard/dashboard_template.php:95:<script nonce="<?= esc($cspNonce) ?>">
+app/Modules/User/Views/Support/index.php:247:<script <?= $scriptNonce; ?>>
+app/Views/errors/html/_launch_error_template.php:47:<script nonce="<?= esc($cspNonce) ?>">
+app/Views/welcome_message.php:318:<script {csp-script-nonce}>
+app/Views/Auth_orig/_footer.php:7:<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+app/Views/Auth_orig/_footer.php:8:<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+app/Views/Auth_orig/_footer.php:9:<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+app/Views/Auth_orig/layout.php:35:<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+app/Views/Auth_orig/layout.php:36:<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+app/Views/Auth_orig/layout.php:37:<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+app/Views/api/swagger_docs.php:10:<script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+app/Views/api/swagger_docs.php:11:<script>
+app/Views/themes/dashboard/partials/custom-js/selectpicker.php:12:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/partials/custom-js/Digibyte-js.php:11:  <script src="<?= $digibyte ?>" <?= $scriptNonceAttr ?>></script>
+app/Views/themes/dashboard/partials/custom-js/Digibyte-js.php:13:  <script <?= $scriptNonceAttr ?>>/* digibyte-adapter not present; stub loaded */</script>
+app/Views/themes/dashboard/partials/custom-js/Digibyte-js.php:16:  <script src="<?= $dgbFlow ?>" <?= $scriptNonceAttr ?>></script>
+app/Views/themes/dashboard/partials/custom-js/Digibyte-js.php:19:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/partials/custom-js/Digibyte-js.php:49:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/partials/custom-js/tradingview.php:51:        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/partials/custom-js/Google_Analytics.php:4:<script async src="https://www.googletagmanager.com/gtag/js?id=G-2FS4BNS0SL" <?= $nonce['script'] ?? '' ?>></script>
+app/Views/themes/dashboard/partials/custom-js/Google_Analytics.php:5:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/partials/custom-js/Google_Analytics.php:11:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/partials/custom-js/wonderpush.php:4:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/partials/custom-js/datatables.php:3:<script src="<?= base_url('assets/vendor/datatables/1.11.5/js/jquery.dataTables.min.js'); ?>" <?= $nonce['script'] ?? '' ?>></script>
+app/Views/themes/dashboard/partials/custom-js/datatables.php:4:<script src="<?= base_url('assets/vendor/datatables/1.11.5/js/dataTables.bootstrap5.min.js'); ?>" <?= $nonce['script'] ?? '' ?>></script>
+app/Views/themes/dashboard/partials/custom-js/datatables.php:5:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:9:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:48:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/partials/custom-js/auto-resize.php:4:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/partials/custom-js/auto-resize.php:256:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/partials/custom-js/datepicker.php:4:<script src="<?= base_url('assets/vendor/datepicker/jquery-ui.min.js'); ?>" <?= $nonce['script'] ?? '' ?>></script>
+app/Views/themes/dashboard/partials/custom-js/datepicker.php:5:<script src="<?= base_url('assets/vendor/daterangepicker/moment.min.js'); ?>" <?= $nonce['script'] ?? '' ?>></script>
+app/Views/themes/dashboard/partials/custom-js/datepicker.php:6:<script src="<?= base_url('assets/vendor/daterangepicker/daterangepicker.js'); ?>" <?= $nonce['script'] ?? '' ?>></script>
+app/Views/themes/dashboard/partials/custom-js/datepicker.php:7:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/partials/custom-js/datepicker.php:15:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/partials/custom-js/Exchange-js.php:4:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/partials/custom-js/Exchange-js.php:29:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/partials/custom-js/google-treemap.php:4:<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js" <?= $nonce['script'] ?? '' ?>></script>
+app/Views/themes/dashboard/partials/custom-js/google-treemap.php:5:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/partials/custom-js/realTimeData.php:4:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/partials/custom-js/tawk-to.php:4:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/layouts/header-information.php:26:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/layouts/header.php:22:    <script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/layouts/header.php:33:    <script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/layouts/header.php:36:    <script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/layouts/header.php:42:        <script src="<?= base_url('assets/js/dev-html-guard.js') ?>" defer></script>
+app/Views/themes/dashboard/layouts/header.php:44:        <script type="text/javascript">
+app/Views/themes/dashboard/layouts/js-links_old.php:9:<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+app/Views/themes/dashboard/layouts/js-links_old.php:11:<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+app/Views/themes/dashboard/layouts/js-links_old.php:13:<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script> -->
+app/Views/themes/dashboard/layouts/js-links_old.php:15:<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.js"></script>
+app/Views/themes/dashboard/layouts/js-links_old.php:16:<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
+app/Views/themes/dashboard/layouts/js-links_old.php:17:<!-- <script <?= $nonce['script'] ?? '' ?>>window.jQuery || document.write('<script src="<?php echo base_url(); ?>jquery-1.7.2.min.js"><\/script>');</script> -->
+app/Views/themes/dashboard/layouts/js-links_old.php:20:<script src="<?php echo base_url('/assets/js/bundle.js?ver=3.1.0'); ?>"></script>
+app/Views/themes/dashboard/layouts/js-links_old.php:21:<script src="<?php echo base_url('/assets/js/scripts.js?ver=3.1.0'); ?>"></script>
+app/Views/themes/dashboard/layouts/js-links_old.php:22:<script <?= csp_script_nonce() ?>>window.MYMI_DEBUG_SIDEBAR = false;</script>
+app/Views/themes/dashboard/layouts/js-links_old.php:23:<script src="<?php echo base_url('/assets/js/sidebar-menu-fix.js'); ?>" defer></script>
+app/Views/themes/dashboard/layouts/js-links_old.php:24:<script src="<?php echo base_url('/assets/js/charts/gd-invest.js?ver=3.1.0'); ?>"></script>
+app/Views/themes/dashboard/layouts/js-links_old.php:26:<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js"></script>
+app/Views/themes/dashboard/layouts/js-links_old.php:29:<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.0/b-2.0.0/sl-1.3.3/datatables.min.js"></script>
+app/Views/themes/dashboard/layouts/js-links_old.php:32:<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+app/Views/themes/dashboard/layouts/js-links_old.php:34:<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+app/Views/themes/dashboard/layouts/js-links_old.php:35:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/layouts/css-links.php:20:<script <?= $nonce['script'] ?? '' ?>>window.__CSP_NONCE__='<?= esc($csp['script'] ?? '') ?>'</script>
+app/Views/themes/dashboard/layouts/js-links-10042025.php:17:<script src="<?= base_url('assets/vendor/jquery/jquery-3.6.0.min.js'); ?>"        <?= $nonce['script'] ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links-10042025.php:18:<script src="<?= base_url('assets/vendor/bootstrap5/bootstrap.bundle.min.js'); ?>" <?= $nonce['script'] ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links-10042025.php:21:<script src="<?= base_url('assets/js/app-bootstrap-init.js'); ?>"                  <?= $nonce['script'] ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links-10042025.php:24:<script src="<?= base_url('assets/vendor/bootstrap-select/bootstrap-select.min.js'); ?>" <?= $nonce['script'] ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links-10042025.php:25:<script src="<?= base_url('assets/vendor/select2/js/select2.min.js'); ?>"              <?= $nonce['script'] ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links-10042025.php:26:<script src="<?= base_url('assets/vendor/jquery-validation/jquery.validate.min.js'); ?>"<?= $nonce['script'] ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links-10042025.php:27:<script src="<?= base_url('assets/vendor/jquery-knob/jquery.knob.min.js'); ?>"        <?= $nonce['script'] ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links-10042025.php:28:<script src="<?= base_url('assets/vendor/flatpickr/js/flatpickr.min.js'); ?>"         <?= $nonce['script'] ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links-10042025.php:31:<script src="<?= base_url('assets/js/BitcoinJS-lib/bitcoin.js'); ?>"           <?= $nonce['script'] ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links-10042025.php:32:<script src="<?= base_url('assets/js/crypto/bitcoin-adapter.js'); ?>"          <?= $nonce['script'] ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links-10042025.php:33:<script src="<?= base_url('assets/js/crypto/btc-send-flow.js'); ?>"            <?= $nonce['script'] ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links-10042025.php:36:<script src="<?= base_url('assets/js/bundle.js?ver=3.0.3'); ?>"               <?= $nonce['script'] ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links-10042025.php:37:<script src="<?= base_url('assets/js/scripts.js'); ?>"                         <?= $nonce['script'] ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links-10042025.php:38:<script <?= $nonce['script'] ?>>
+app/Views/themes/dashboard/layouts/js-links-10042025.php:41:<script src="<?= base_url('assets/js/sidebar-menu-fix.js'); ?>"                <?= $nonce['script'] ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links-10042025.php:44:<script src="<?= base_url('assets/js/navbar-search.js') . '?v=' . $navbarSearchV; ?>" <?= $nonce['script'] ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links-10042025.php:47:  <script src="<?= base_url('assets/vendor/chartjs/chart.min.js'); ?>"             <?= $nonce['script'] ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links-10042025.php:48:  <script src="<?= base_url('assets/js/charts/gd-invest.js') . '?v=' . $gdInvestV; ?>" <?= $nonce['script'] ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links-10042025.php:52:  <script src="<?= base_url('assets/vendor/summernote/js/summernote.min.js'); ?>" <?= $nonce['script'] ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links-10042025.php:56:<script <?= $nonce['script'] ?>>
+app/Views/themes/dashboard/layouts/js-links.php:18:<script src="<?= base_url('assets/vendor/jquery/jquery-3.6.0.min.js'); ?>" <?= $scriptNonceAttr ?>></script>
+app/Views/themes/dashboard/layouts/js-links.php:21:<script src="<?= base_url('assets/vendor/bootstrap5/bootstrap.bundle.min.js'); ?>" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links.php:24:<script src="<?= base_url('assets/js/scripts.js'); ?>" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links.php:25:<script <?= $scriptNonceAttr ?>>
+app/Views/themes/dashboard/layouts/js-links.php:28:<script src="<?= base_url('assets/js/sidebar-menu-fix.js'); ?>" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links.php:31:  <script src="<?= $u ?>" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links.php:34:<script src="<?= base_url('assets/vendor/bootstrap-select/bootstrap-select.min.js'); ?>" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links.php:35:<script src="<?= base_url('assets/vendor/select2/js/select2.min.js'); ?>" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links.php:36:<script src="<?= base_url('assets/vendor/jquery-validation/jquery.validate.min.js'); ?>" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links.php:37:<script src="<?= base_url('assets/vendor/jquery-knob/jquery.knob.min.js'); ?>" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links.php:38:<script src="<?= base_url('assets/vendor/flatpickr/js/flatpickr.min.js'); ?>" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links.php:50:<script src="<?= base_url('assets/js/navbar-search.js') . '?v=' . $navbarSearchV; ?>" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links.php:53:<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links.php:61:<script src="<?= base_url('assets/js/charts/gd-invest.js') . '?v=' . $gdInvestV; ?>" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links.php:65:  <script src="<?= base_url('assets/vendor/summernote/js/summernote.min.js'); ?>" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links.php:72:  <script src="<?= $digibyte ?>" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links.php:74:  <script <?= $scriptNonceAttr ?>>/* digibyte-adapter not present; stub loaded */</script>
+app/Views/themes/dashboard/layouts/js-links.php:77:  <script src="<?= $u ?>" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links.php:83:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/layouts/js-links.php:106:<script src="https://unpkg.com/aos@2.3.4/dist/aos.js" <?= $nonce['script'] ?? '' ?> defer></script>
+app/Views/themes/dashboard/layouts/js-links.php:107:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/layouts/custom-js.php:86:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/layouts/custom-js.php:173:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/layouts/custom-js.php:187:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/layouts/custom-js.php:699:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/dashboard/layouts/custom-js.php:720:    <script type="module" src="<?= base_url('assets/js/app/budget-dashboard.js'); ?>" <?= $nonce['script'] ?? '' ?> defer></script>
+app/Views/themes/dashboard/layouts/custom-js.php:725:    <script src="<?= base_url('assets/js/dev-html-guard.js'); ?>" <?= $nonce['script'] ?? '' ?> defer></script>
+app/Views/themes/dashboard/layouts/custom-js.php:728:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/public/corporateEarnings.php:157:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/public/economicCalendar.php:150:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/types/wallets_block.php:320:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/public/layouts/header.php:30:        <!-- <script src="https://www.google.com/recaptcha/api.js?render=<?php // echo config('App')->recaptchaSiteKey; ?>"></script> -->
+app/Views/themes/public/layouts/header.php:36:    <script nonce="<?= esc($cspNonce) ?>">
+app/Views/themes/public/layouts/header.php:48:    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2FS4BNS0SL"></script>
+app/Views/themes/public/layouts/header.php:49:    <script nonce="<?= esc($cspNonce) ?>">
+app/Views/themes/public/layouts/header.php:58:    <script nonce="<?= esc($cspNonce) ?>">
+app/Views/themes/public/layouts/header.php:75:        <script src="<?= base_url('assets/js/dev-html-guard.js') ?>" defer></script>
+app/Views/themes/public/layouts/header.php:77:        <script type="text/javascript" nonce="<?= esc($cspNonce) ?>">
+app/Views/themes/public/layouts/header_min.php:32:    <script nonce="<?= esc($cspNonce) ?>">
+app/Modules/User/Views/Wallets/Generate_Wallet/user_fields.php:57:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/public/layouts/css-links.php:16:<script nonce="<?= esc($cspNonce) ?>">window.__CSP_NONCE__='<?= esc($cspNonce) ?>'</script>
+app/Views/themes/public/layouts/custom-jsb.php:29:<script nonce="<?= esc($cspNonce) ?>">
+app/Views/themes/public/layouts/custom-jsb.php:38:	<script nonce="<?= esc($cspNonce) ?>">
+app/Views/themes/public/layouts/custom-jsb.php:47:<script type="text/javascript" nonce="<?= esc($cspNonce) ?>">
+app/Views/themes/public/layouts/js-links-10042025.php:13:<script nonce="<?= esc($cspNonce) ?>">
+app/Views/themes/public/layouts/js-links-10042025.php:18:<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+app/Views/themes/public/layouts/js-links-10042025.php:19:<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+app/Views/themes/public/layouts/js-links-10042025.php:22:<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js" defer></script>
+app/Views/themes/public/layouts/js-links-10042025.php:25:<script src="https://cdn.jsdelivr.net/npm/datatables.net@1.11.5/js/jquery.dataTables.min.js" defer></script>
+app/Views/themes/public/layouts/js-links-10042025.php:26:<script src="https://cdn.jsdelivr.net/npm/datatables.net-bs5@1.11.5/js/dataTables.bootstrap5.min.js" defer></script>
+app/Views/themes/public/layouts/js-links-10042025.php:29:<script src="https://cdn.jsdelivr.net/npm/chart.js@2.1.2/dist/Chart.min.js" defer></script>
+app/Views/themes/public/layouts/js-links-10042025.php:32:<script src="<?= base_url('assets/js/bundle.js?ver=3.0.3'); ?>"></script>
+app/Views/themes/public/layouts/js-links-10042025.php:35:<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+app/Views/themes/public/layouts/js-links-10042025.php:40:<script defer src="<?= base_url('assets/js/navbar-search.js') . '?v=' . $navbarSearchV; ?>"></script>
+app/Views/themes/public/layouts/js-links-10042025.php:43:<script src="https://s3.tradingview.com/tv.js" defer></script>
+app/Views/themes/public/layouts/js-links-10042025.php:48:<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/public/layouts/js-links-10042025.php:52:<script src="https://cdn.jsdelivr.net/npm/jquery-knob@1.2.13/dist/jquery.knob.min.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/public/layouts/js-links-10042025.php:56:<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/public/layouts/js-links-10042025.php:60:<script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/public/layouts/js-links-10042025.php:64:<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/public/layouts/js-links-10042025.php:68:<script src="https://cdn.jsdelivr.net/npm/datatables.net@1.13.6/js/jquery.dataTables.min.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/public/layouts/js-links-10042025.php:69:<script src="https://cdn.jsdelivr.net/npm/datatables.net-bs5@1.13.6/js/dataTables.bootstrap5.min.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/public/layouts/js-links-10042025.php:73:<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.3/dist/umd/popper.min.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/public/layouts/js-links-10042025.php:77:<script nonce="<?= esc($cspNonce) ?>">
+app/Views/themes/public/layouts/js-links-10042025.php:81:<script nonce="<?= esc($cspNonce) ?>">
+app/Views/themes/public/layouts/metadata-information.php:34:<script type="application/ld+json" nonce="<?= esc($cspNonce) ?>">
+app/Modules/User/Views/Wallets/Generate_Wallet.php:58:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/public/layouts/js-links.php:13:<script nonce="<?= esc($cspNonce) ?>">
+app/Views/themes/public/layouts/js-links.php:18:<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+app/Views/themes/public/layouts/js-links.php:19:<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+app/Views/themes/public/layouts/js-links.php:22:<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js" defer></script>
+app/Views/themes/public/layouts/js-links.php:25:<script src="https://cdn.jsdelivr.net/npm/datatables.net@1.11.5/js/jquery.dataTables.min.js" defer></script>
+app/Views/themes/public/layouts/js-links.php:26:<script src="https://cdn.jsdelivr.net/npm/datatables.net-bs5@1.11.5/js/dataTables.bootstrap5.min.js" defer></script>
+app/Views/themes/public/layouts/js-links.php:29:<script src="https://cdn.jsdelivr.net/npm/chart.js@2.1.2/dist/Chart.min.js" defer></script>
+app/Views/themes/public/layouts/js-links.php:41:<script src="<?= base_url('assets/vendor/jquery/jquery-3.6.0.min.js'); ?>"></script>
+app/Views/themes/public/layouts/js-links.php:44:<!-- <script src="<?= base_url('assets/vendor/bootstrap5/bootstrap.bundle.min.js'); ?>" <?= $scriptNonceAttr ?> defer></script> -->
+app/Views/themes/public/layouts/js-links.php:47:<script src="<?= base_url('assets/js/scripts.js'); ?>" defer></script>
+app/Views/themes/public/layouts/js-links.php:50:<script src="<?= base_url('assets/vendor/bootstrap-select/bootstrap-select.min.js'); ?>" defer></script>
+app/Views/themes/public/layouts/js-links.php:51:<script src="<?= base_url('assets/vendor/select2/js/select2.min.js'); ?>" defer></script>
+app/Views/themes/public/layouts/js-links.php:52:<script src="<?= base_url('assets/vendor/jquery-validation/jquery.validate.min.js'); ?>" defer></script>
+app/Views/themes/public/layouts/js-links.php:53:<script src="<?= base_url('assets/vendor/jquery-knob/jquery.knob.min.js'); ?>" defer></script>
+app/Views/themes/public/layouts/js-links.php:54:<script src="<?= base_url('assets/vendor/flatpickr/js/flatpickr.min.js'); ?>" defer></script>
+app/Views/themes/public/layouts/js-links.php:66:<script src="<?= base_url('assets/js/navbar-search.js') . '?v=' . $navbarSearchV; ?>" defer></script>
+app/Views/themes/public/layouts/js-links.php:69:<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+app/Views/themes/public/layouts/js-links.php:77:<script src="<?= base_url('assets/js/charts/gd-invest.js') . '?v=' . $gdInvestV; ?>" defer></script>
+app/Views/themes/public/layouts/js-links.php:81:  <script src="<?= base_url('assets/vendor/summernote/js/summernote.min.js'); ?>" defer></script>
+app/Views/themes/public/layouts/js-links.php:88:  <script src="<?= $digibyte ?>" defer></script>
+app/Views/themes/public/layouts/js-links.php:90:  <script nonce="<?= esc($cspNonce) ?>">/* digibyte-adapter not present; stub loaded */</script>
+app/Views/themes/public/layouts/js-links.php:93:  <script src="<?= $u ?>" defer></script>
+app/Views/themes/public/layouts/js-links.php:97:<script nonce="<?= esc($cspNonce) ?>">
+app/Views/themes/public/layouts/js-links.php:123:<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"
+app/Views/themes/public/layouts/js-links.php:126:<script nonce="<?= esc($cspNonce) ?>">
+app/Views/themes/public/layouts/js-links.php:161:<script defer src="<?= base_url('assets/js/navbar-search.js') . '?v=' . $navbarSearchV; ?>"></script>
+app/Views/themes/public/layouts/js-links.php:164:<script src="https://s3.tradingview.com/tv.js" defer></script>
+app/Views/themes/public/layouts/js-links.php:169:<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/public/layouts/js-links.php:173:<script src="https://cdn.jsdelivr.net/npm/jquery-knob@1.2.13/dist/jquery.knob.min.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/public/layouts/js-links.php:177:<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/public/layouts/js-links.php:181:<script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/public/layouts/js-links.php:185:<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/public/layouts/js-links.php:189:<script src="https://cdn.jsdelivr.net/npm/datatables.net@1.13.6/js/jquery.dataTables.min.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/public/layouts/js-links.php:190:<script src="https://cdn.jsdelivr.net/npm/datatables.net-bs5@1.13.6/js/dataTables.bootstrap5.min.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/public/layouts/js-links.php:194:<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.3/dist/umd/popper.min.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/public/layouts/js-links.php:198:<script nonce="<?= esc($cspNonce) ?>">
+app/Modules/User/Views/Wallets/Edit/user_fields.php:2117:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Coin_Swap.php:66:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Coin_Swap.php:106:<script src="https://www.paypal.com/sdk/js?client-id=<?= $client_id ?>&currency=USD"></script>  
+app/Modules/User/Views/Wallets/Coin_Swap.php:107:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Coin_Swap.php:137:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Purchase_Complete.php:129:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Purchase_Complete.php:156:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/public/layouts/total-index.php:2:<head><link href="/favicon.ico"rel="shortcut icon"type="image/png"><title>MyMI Wallet | Financial Budgeting &Planning Solutions</title><meta content="Experience the future of personal finance with MyMI Wallet. We provide advanced budgeting and investment portfolio management solutions, empowering individuals "name="description"><meta content="product"property="og:type"><meta content="https://www.mymiwallet.com"property="og:url"><link href="https://www.mymiwallet.com"rel="canonical"><meta content="MyMI Wallet | Financial Budgeting & Planning Solutions"property="og:title"><meta content="Experience the future of personal finance with MyMI Wallet. We provide advanced budgeting and investment portfolio management solutions, empowering individuals "property="og:description"><meta content="https://www.mymiwallet.com/assets/images/MyMI-Wallet-Logo-1024x1024.png"property="og:image"><meta content="MyMI Wallet | Financial Budgeting & Planning Solutions"name="twitter:title"><meta content="Experience the future of personal finance with MyMI Wallet. We provide advanced budgeting and investment portfolio management solutions, empowering individuals "name="twitter:description"><meta content="https://www.mymiwallet.com/assets/images/MyMI-Wallet-Logo-1024x1024.png"name="twitter:image"><script type="application/ld+json">{
+app/Views/themes/public/layouts/total-index.php:9:        }</script><meta charset="UTF-8"><meta content="IE=edge"http-equiv="X-UA-Compatible"><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"name="viewport"><meta content="MyMI Wallet, LLC."name="author"><link href="https://www.mymiwallet.com/favicon.ico"rel="shortcut icon"type="image/x-icon"><meta content="MyMI Wallet LLC. @2025"name="copyright"><meta content="assets/images/MyMI-Wallet-Logo-Black.png"name="image"property="og:image"><meta content="1200"property="og:image:width"><meta content="630"property="og:image:height"><meta content="MyMI Wallet | Advanced Budgeting & Investment Tools for Personal Finance Management"property="og:site_name"><meta content="website"property="og:type"><meta content="#ffffff"name="theme-color"><meta content="summary"name="twitter:card"><meta content="https://www.twitter.com/MyMIWalletNews"name="twitter:site"><meta content="https://www.twitter.com/MyMIWalletNews"name="twitter:creator"><meta content="yes"name="apple-mobile-app-capable"><meta content="default"name="apple-mobile-app-status-bar-style"><meta content="telephone=no"name="format-detection"><meta content="no"name="msapplication-tap-highlight"><meta content="never"name="referrer"><link href="https://www.mymiwallet.com/assets/vendor/bootstrap5/bootstrap.min.css"rel="stylesheet"><link href="https://www.mymiwallet.com/assets/css/bootstrap-select.min.css"rel="stylesheet"><link href="https://www.mymiwallet.com/assets/css/dashlite.css"rel="stylesheet"><link href="https://www.mymiwallet.com/assets/css/dashlite3.css?ver=3.0.2"rel="stylesheet"><link href="https://www.mymiwallet.com/assets/vendor/fontawesome/css/all.min.css"rel="stylesheet"><link href="https://www.mymiwallet.com/assets/vendor/aos/aos.css"rel="stylesheet"><link href="https://www.mymiwallet.com/assets/css/responsive-overrides.css"rel="stylesheet"><link href="https://www.mymiwallet.com/assets/vendor/css/jquery.dataTables-1.11.5.min.css"rel="stylesheet"><link href="https://www.mymiwallet.com/favicon.ico"rel="shortcut icon"type="image/x-icon"><style nonce="WlJWJwxgEr8GgMMaoybCBg==">.grecaptcha-badge{visibility:hidden}</style><script nonce="jtnYVszAdCZ5PTPm69Z4bA=="></script><script src="https://www.googletagmanager.com/gtag/js?id=G-2FS4BNS0SL"async></script><script nonce="jtnYVszAdCZ5PTPm69Z4bA==">function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-2FS4BNS0SL")</script><style nonce="WlJWJwxgEr8GgMMaoybCBg=="></style><script nonce="jtnYVszAdCZ5PTPm69Z4bA=="><?php
+app/Views/themes/public/layouts/total-index.php:18:<script <?= $scriptNonceAttr ?>>
+app/Views/themes/public/layouts/total-index.php:21:<script src="https://code.jquery.com/jquery-3.6.0.min.js" <?= $scriptNonceAttr ?> crossorigin="anonymous"></script>
+app/Views/themes/public/layouts/total-index.php:22:<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/public/layouts/total-index.php:23:<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/public/layouts/total-index.php:24:<script src="https://cdn.jsdelivr.net/npm/datatables.net@1.11.5/js/jquery.dataTables.min.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/public/layouts/total-index.php:25:<script src="https://cdn.jsdelivr.net/npm/datatables.net-bs5@1.11.5/js/dataTables.bootstrap5.min.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/public/layouts/total-index.php:26:<script src="https://cdn.jsdelivr.net/npm/chart.js@2.1.2/dist/Chart.min.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/public/layouts/total-index.php:28:<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js" <?= $scriptNonceAttr ?> defer></script>
+app/Views/themes/public/layouts/total-index.php:80:                                                    l7.4,5.9l9.3-10l0.1,2l1.2,0l-0.1-4.2L38.4,37z"fill="#225931"class="svgShape color222f59"></path><path d="M6.8 18.1c0 .6-.5 1.1-1.1 1.1-.6 0-1.1-.5-1.1-1.1 0-.6.5-1.1 1.1-1.1C6.4 17 6.8 17.5 6.8 18.1zM10.9 18.1c0 .6-.5 1.1-1.1 1.1-.6 0-1.1-.5-1.1-1.1 0-.6.5-1.1 1.1-1.1C10.4 17 10.9 17.5 10.9 18.1zM15 18.1c0 .6-.5 1.1-1.1 1.1-.6 0-1.1-.5-1.1-1.1 0-.6.5-1.1 1.1-1.1C14.5 17 15 17.5 15 18.1z"fill="#ffffff"class="svgShape colorffffff"></path><rect class="svgShape colorffffff"fill="#ffffff"height="1"width="21.3"x="22.9"y="17.6"></rect><g class="svgShape color000000"fill="#000000"><rect class="svgShape colorbcd6ef"fill="#fbbc05"height="1"width="11.1"x="50.3"y="56.3"></rect></g><g class="svgShape color000000"fill="#000000"><rect class="svgShape colorbcd6ef"fill="#fbbc05"height="1"width="11.1"x="50.3"y="52.2"></rect></g><g class="svgShape color000000"fill="#000000"><rect class="svgShape colorbcd6ef"fill="#fbbc05"height="1"width="11.1"x="50.3"y="48.1"></rect></g><g class="svgShape color000000"fill="#000000"><rect class="svgShape colorbcd6ef"fill="#fbbc05"height="1"width="11.1"x="50.3"y="44"></rect></g><g class="svgShape color000000"fill="#000000"><rect class="svgShape colorbcd6ef"fill="#fbbc05"height="1"width="11.1"x="50.3"y="39.9"></rect></g><g class="svgShape color000000"fill="#000000"><rect class="svgShape colorbcd6ef"fill="#fbbc05"height="1"width="22.7"x="24.5"y="5.5"></rect></g><g class="svgShape color000000"fill="#000000"><rect class="svgShape colorbcd6ef"fill="#fbbc05"height="1"width="22.7"x="24.5"y="10.3"></rect></g></svg></div><div class="intro-feature-info"><h4 class="title">Automated Financial Insights</h4><p>Our AI-driven insights provide personalized recommendations based on your portfolio’s performance. Leverage these insights to fine-tune your investment strategies and maximize your financial growth.</p><a href="https://www.mymiwallet.com/index.php/How-It-Works/Automated-Financial-Insights"class="btn btn-primary btn-sm">Learn More</a></div></div></div></div></div></div><div class="row justify-content-center text-center mt-5"><div class="col-lg-8"data-aos="fade-up"><p class="lead">Ready to make smarter decisions with MyMI Wallet’s financial tools?</p><div class="justify-content-center d-flex flex-wrap gap-3 mt-4"><a href="https://www.mymiwallet.com/index.php/Dashboard"class="btn btn-primary btn-lg">Access Dashboard</a> <a href="https://www.mymiwallet.com/index.php/How-It-Works"class="btn btn-lg btn-outline-primary">Learn More</a></div></div></div></div></section><section class="text-center bg-light full-width py-5"><div class="container"><h2 class="fw-bold display-5 mb-4">Your Financial Freedom Starts Today</h2><p class="lead mb-4">Get access to all tools and resources for free. Upgrade anytime for more power.</p><a href="https://www.mymiwallet.com/index.php/Free/register"class="btn btn-primary btn-lg px-5 py-3">Register Now</a><p class="mt-3"><small>No credit card required. Cancel anytime.</small></p></div></section><div class="bg-white intro-feature intro-section"><div class="container container-xl"><div class="row justify-content-center"><div class="col-lg-9 col-xl-7"><div class="text-center intro-section-title"><span class="overline-title">Your Comprehensive Guide</span><h2 class="title intro-heading-lead">How It Works</h2><div class="intro-section-desc"><p>MyMI Wallet’s all-in-one platform gives you control over your investments, budgeting, and financial future. Explore our easy-to-follow guides to get started.</p></div></div></div></div><div class="row justify-content-center"><div class="col-xl-12"><div class="row justify-content-center intro-feature-list"><div class="col-lg-4 col-sm-6"><a href="https://www.mymiwallet.com/index.php/How-It-Works/Registering-An-Account"class="intro-feature-item"><div class="intro-feature-media"><svg viewBox="0 0 64 64"xmlns="http://www.w3.org/2000/svg"id="Investor"><circle class="svgShape color65c981"cx="32"cy="32"fill="#34a853"r="32"></circle><path d="M43,38.87c-1.19-4-7.14-3.57-9.71-4.72s-2.17-5-2.49-5.7H24.5c-.33.67.08,4.54-2.49,5.7s-8.52.71-9.71,4.72a19.44,19.44,0,0,0-.8,5.35,95.15,95.15,0,0,0,16,1.62,102.5,102.5,0,0,0,16.33-1.62,19.45,19.45,0,0,0-.8-5.35Z"fill="#6d9be8"class="svgShape color6dc5e8"></path><path d="M29.26,45.8a44,44,0,0,0,2.8-12.71H23.19A43.89,43.89,0,0,0,26,45.81l1.45,0,1.81,0Z"fill="#ffffff"class="svgShape colorffffff"></path><path d="M29,33.76H26.29l-.2.66,3.09,0Z"fill="#d8a19c"class="svgShape colord8b59c"></path><path d="M29.12,45.81l.06-.85-.65-8.56h-1.7L26.08,45l.06.86,1.31,0,1.67,0Z"fill="#ea4335"class="svgShape colorf75267"></path><path d="M26.84,36.43l1.7,0,0,.48"fill="#b2352b"class="svgShape colorb22b39"></path><path d="M25.62,34h4l-.23,1.37-.91,1H26.84l-1-1Z"fill="#ea4335"class="svgShape colorf75267"></path><path d="M26.29 33.76l-2.74-1.49s-.36.51-1.26 1.72l3 2.13a.32.32 0 0 0 .5-.2l.2-1.09zM28.87 33.76l2.74-1.49s.36.51 1.26 1.72l-3 2.13a.32.32 0 0 1-.5-.2l-.2-1.09z"fill="#e5e5e5"class="svgShape colore5e5e5"></path><path d="M35 38.66l-4.09 7.07c-.74 0-1.48.07-2.22.08L31.46 35.5 32.13 33l1.8 1.4h0l1 3.1L33.45 38zM21.23 34.43l-.95 3.06 1.43.51-1.58.66 4.1 7.09c.73 0 1.48.06 2.22.07L23 33z"fill="#4285f4"class="svgShape color4395b5"></path><path d="M34.58 26.75c-.67-.12-1-1.22-.81-2.46s.95-2.14 1.62-2 1 1.22.81 2.46-.95 2.14-1.62 2zM19.06 24.73c-.22-1.24.14-2.34.81-2.46s1.4.78 1.62 2-.14 2.34-.81 2.46-1.4-.78-1.62-2z"fill="#d8c99e"class="svgShape colord8b79e"></path><path d="M34.46,16.94H20.8S17,32.54,27.63,34c10.66-1.51,6.83-17.1,6.83-17.1Z"fill="#f2e1b1"class="svgShape colorf2cfb1"></path><path d="M20.13,22.8a10.48,10.48,0,0,0,.71-2.85s.52,1.06.73.13a7.23,7.23,0,0,1,2.14-2.8c.22,0-1,2-.91,2.95a32,32,0,0,1,3.49-1.49,12.55,12.55,0,0,1,8.51.08l.32,3.72S36.9,20.8,36,17a7.54,7.54,0,0,0-8.12-5.76c-3.65.41-6.48,1.86-7.48,4S19.22,19.42,20.13,22.8Z"fill="#2d4f36"class="svgShape color2d434f"></path><path d="M49.55,52.33a4.77,4.77,0,0,0-4.11-.1,4.58,4.58,0,0,1-1.42.32A13.68,13.68,0,0,1,40,52.23a8,8,0,0,1-.82-.3c-.29-.13-1.18-.24-3.8.67-2.23.76-1.76-1.18-1.08-2.78a9,9,0,0,0,.73-4c-.12-3,.36-8.35,4.89-11.61v-.94s-2.14-2.1-2.3-3.24c-.12-.89.27-1.52,1.65-1.5a4.44,4.44,0,0,1,2.24.67l1.34.82h.64s2.5-1.28,3.34-1.13S48.4,30,46.26,33.3v.88l0,0a13.23,13.23,0,0,1,4.8,11.53,9,9,0,0,0,.56,3.82l.65,1.72S53.62,53.61,49.55,52.33Z"fill="#f7d163"class="svgShape colorf7cc63"></path><polygon class="svgShape colord89832"fill="#fbbc05"points="46.26 33.3 46.26 34.18 46.04 34.18 45.63 33.3 46.26 33.3"></polygon><polygon class="svgShape colord89832"fill="#fbbc05"points="40.49 34.21 39.88 34.21 39.88 33.3 40.08 33.3 40.49 34.21"></polygon><polygon class="svgShape colord89832"fill="#fbbc05"points="45.69 34.18 45 34.19 44.59 33.3 45.28 33.3 45.69 34.18"></polygon><polygon class="svgShape colord89832"fill="#fbbc05"points="44.65 34.19 43.96 34.19 43.55 33.3 44.24 33.3 44.65 34.19"></polygon><polygon class="svgShape colord89832"fill="#fbbc05"points="43.61 34.19 42.92 34.2 42.51 33.3 43.2 33.3 43.61 34.19"></polygon><polygon class="svgShape colord89832"fill="#fbbc05"points="42.57 34.2 41.88 34.2 41.47 33.3 42.16 33.3 42.57 34.2"></polygon><polygon class="svgShape colord89832"fill="#fbbc05"points="41.53 34.2 40.84 34.2 40.43 33.3 41.12 33.3 41.53 34.2"></polygon><polygon class="svgShape colora57329"fill="#a53329"points="40.84 34.2 40.49 34.21 40.08 33.3 40.43 33.3 40.84 34.2"></polygon><polygon class="svgShape colora57329"fill="#a53329"points="41.88 34.2 41.53 34.2 41.12 33.3 41.47 33.3 41.88 34.2"></polygon><polygon class="svgShape colora57329"fill="#a53329"points="42.92 34.2 42.57 34.2 42.16 33.3 42.51 33.3 42.92 34.2"></polygon><polygon class="svgShape colora57329"fill="#a53329"points="43.96 34.19 43.61 34.19 43.2 33.3 43.55 33.3 43.96 34.19"></polygon><polygon class="svgShape colora57329"fill="#a53329"points="45 34.19 44.65 34.19 44.24 33.3 44.59 33.3 45 34.19"></polygon><polygon class="svgShape colora57329"fill="#a53329"points="46.04 34.18 45.69 34.18 45.28 33.3 45.63 33.3 46.04 34.18"></polygon><path d="M46.07,44.67a1.85,1.85,0,0,1-.67,1.49,3.34,3.34,0,0,1-1.88.68V48h-.8V46.86a6.5,6.5,0,0,1-2.5-.5V44.81a6.75,6.75,0,0,0,1.23.44,6.56,6.56,0,0,0,1.28.23V43.67l-.39-.15a4.37,4.37,0,0,1-1.64-1,1.91,1.91,0,0,1-.48-1.32,1.73,1.73,0,0,1,.66-1.39,3.37,3.37,0,0,1,1.85-.66v-.89h.8v.87a6.64,6.64,0,0,1,2.42.54L45.38,41a6.33,6.33,0,0,0-1.87-.46V42.3a9,9,0,0,1,1.62.76,2.22,2.22,0,0,1,.71.71A1.76,1.76,0,0,1,46.07,44.67ZM42,41.2a.55.55,0,0,0,.18.42,2.12,2.12,0,0,0,.58.34V40.6Q42,40.71,42,41.2Zm2.35,3.55a.53.53,0,0,0-.2-.42,2.62,2.62,0,0,0-.6-.35v1.46Q44.31,45.31,44.31,44.75Z"fill="#ffffff"class="svgShape colorffffff"></path></svg></div><div class="intro-feature-info"><h4 class="title">Registering an Account</h4><p>Follow this guide to quickly create your MyMI Wallet account. Gain full access to the tools you need to manage your financial journey and make informed investment decisions.</p></div></a></div><div class="col-lg-4 col-sm-6"><a href="https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting"class="intro-feature-item"><div class="intro-feature-media"><svg viewBox="0 0 512 512"xmlns="http://www.w3.org/2000/svg"id="GrowthReport"><path d="M255.328,511.507H68.479a30.689,30.689,0,0,1-30.786-30.59V30.59A30.678,30.678,0,0,1,68.479,0H403.837a30.678,30.678,0,0,1,30.786,30.59V409.929Z"fill="#4285f4"class="svgShape color79a1b5"></path><path d="M89.79,135.1a29.1,29.1,0,1,0,58.205,0c0-7.919-5.933-14.487-12.864-19.339a39.808,39.808,0,0,0-16.283-6.309C104.423,106.993,89.791,96.277,89.791,82.2a29.1,29.1,0,1,1,58.2,0"fill="none"class="svgStroke colorStrokeffffff"stroke="#ffffff"stroke-linecap="round"stroke-linejoin="round"stroke-width="6"></path><line class="svgStroke colorStrokeffffff"fill="none"stroke="#ffffff"stroke-linecap="round"stroke-linejoin="round"stroke-width="6"x1="118.891"x2="118.891"y1="53.083"y2="34.55"></line><line class="svgStroke colorStrokeffffff"fill="none"stroke="#ffffff"stroke-linecap="round"stroke-linejoin="round"stroke-width="6"x1="118.891"x2="118.891"y1="182.748"y2="164.215"></line><line class="svgStroke colorStrokeffffff"fill="none"stroke="#ffffff"stroke-linecap="round"stroke-linejoin="round"stroke-width="6"x1="203.363"x2="382.519"y1="82.368"y2="82.368"></line><line class="svgStroke colorStrokeffffff"fill="none"stroke="#ffffff"stroke-linecap="round"stroke-linejoin="round"stroke-width="6"x1="203.363"x2="334.719"y1="134.93"y2="134.93"></line><path d="M308.409,285.629c12.422,18.106,23.514,35.7,32.528,51.607L361,387.429,349.857,493.714l-11.847,7.768c-25.08,10.671-62.026,13.2-110.295,7.685-161.207-18.4.209-223.538.209-223.538L239.286,271.5l64.5,6.214Z"fill="#34a853"class="svgShape color964c36"></path><path d="M321.365,355.123l0,128.972c.779,7.229,6.9,13.25,18.343,18.13,14.03,5.987,34.86,9.775,58.127,9.775s44.1-3.788,58.126-9.775c11.438-4.88,17.689-10.9,18.34-18.13l0-128.972Z"fill="#fbbc05"class="svgShape colorffcd0c"></path><ellipse class="svgShape colorfaa719"cx="397.834"cy="355.123"fill="#fac019"rx="76.469"ry="27.905"></ellipse><path d="M321.37,442.707c0,6.924,6.9,13.249,18.342,18.117,14.03,5.987,34.86,9.775,58.127,9.775s44.1-3.788,58.126-9.775c11.438-4.868,18.342-11.193,18.342-18.117V398.921c0,6.924-6.9,13.25-18.342,18.118-14.03,5.987-34.86,9.774-58.126,9.774s-44.1-3.787-58.127-9.774c-11.438-4.868-18.342-11.194-18.342-18.118Z"fill="#fac019"class="svgShape colorfaa719"></path><path d="M245.023,418.442a21.6,21.6,0,1,0,43.19,0c0-5.876-4.4-10.75-9.545-14.35a29.541,29.541,0,0,0-12.083-4.682c-10.7-1.825-21.561-9.776-21.561-20.218a21.594,21.594,0,1,1,43.187,0"fill="none"class="svgStroke colorStrokeffffff"stroke="#ffffff"stroke-linecap="round"stroke-linejoin="round"stroke-width="6"></path><line class="svgStroke colorStrokeffffff"fill="none"stroke="#ffffff"stroke-linecap="round"stroke-linejoin="round"stroke-width="6"x1="266.617"x2="266.617"y1="357.583"y2="343.83"></line><line class="svgStroke colorStrokeffffff"fill="none"stroke="#ffffff"stroke-linecap="round"stroke-linejoin="round"stroke-width="6"x1="266.617"x2="266.617"y1="453.799"y2="440.046"></line><path d="M331.478,222.877l-23.063,62.752H227.921l-27.006-62.752s17.235-10.833,59.366,4.445a90.406,90.406,0,0,0,34.338,5.657C318.96,232.015,331.478,222.877,331.478,222.877Z"fill="#ea4335"class="svgShape colorc36245"></path></svg></div><div class="intro-feature-info"><h4 class="title">Personal Budgeting</h4><p>Track income, manage expenses, and set financial goals with our easy-to-use budgeting tool. Take full control of your personal finances with MyMI Wallet.</p></div></a></div><div class="col-lg-4 col-sm-6"><a href="https://www.mymiwallet.com/index.php/How-It-Works/Investment-Dashboard"class="intro-feature-item"><div class="intro-feature-media"><svg viewBox="0 0 56 56"xmlns="http://www.w3.org/2000/svg"id="Investment"><path d="M52 51H4a1 1 0 0 0 0 2h48a1 1 0 0 0 0-2zm-30-2h12c.55 0 1-.45 1-1V36c0-.55-.45-1-1-1H22c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1zM6 49h12c.55 0 1-.45 1-1v-8c0-.55-.45-1-1-1H6c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1z"fill="#34a853"class="svgShape color3b4652"></path><path d="M38 49h12c.55 0 1-.45 1-1V28c0-.55-.45-1-1-1H38c-.55 0-1 .45-1 1v20c0 .55.45 1 1 1z"fill="#4285f4"class="svgShape color2b79c2"></path><path d="M6 37c.15 0 .303-.034.447-.105L32.43 23.903l-1.325 2.65a1 1 0 1 0 1.79.894l3-6A1.001 1.001 0 0 0 35 20h-7a1 1 0 0 0 0 2h3.763L5.553 35.105A1 1 0 0 0 6 37z"fill="#34a853"class="svgShape color3b4652"></path><path d="M43.58 3c-5.19 0-9.41 4.22-9.41 9.42 0 5.19 4.22 9.41 9.41 9.41S53 17.61 53 12.42C53 7.22 48.77 3 43.58 3zm-.02 8.417c1.795 0 3.22 1.424 3.22 3.174a3.191 3.191 0 0 1-2.197 3.049v.634a1 1 0 0 1-2 0v-.641c-1.281-.422-2.196-1.599-2.196-2.998a1 1 0 0 1 2 0c0 .648.526 1.175 1.174 1.175.692 0 1.219-.527 1.219-1.175 0-.692-.527-1.218-1.175-1.218-1.795 0-3.218-1.425-3.218-3.175a3.19 3.19 0 0 1 2.196-3.048v-.635a1 1 0 0 1 2 0V7.2c1.28.422 2.197 1.598 2.197 2.997a1 1 0 0 1-2 0c0-.648-.527-1.175-1.175-1.175-.692 0-1.218.527-1.218 1.175 0 .692.526 1.219 1.174 1.219z"fill="#4285f4"class="svgShape color2b79c2"></path></svg></div><div class="intro-feature-info"><h4 class="title">Investment Dashboard</h4><p>Access a complete overview of your portfolio with our Investment Dashboard. Get real-time updates, performance metrics, and track your progress to make smarter financial decisions.</p></div></a></div><div class="col-lg-4 col-sm-6"><a href="https://www.mymiwallet.com/index.php/How-It-Works/Setting-Financial-Goals"class="intro-feature-item"><div class="intro-feature-media"><svg viewBox="0 0 64 64"xmlns="http://www.w3.org/2000/svg"id="Business"><g class="svgShape color000000"fill="#000000"transform="translate(-183 -1175.362)"><path d="M190 1229.362v-10l11.958-11.937 2.921 3 7.942-8 1.947 2L227 1192.36v37.002z"fill="#4ac36a"class="svgShape color8bc34a"fill-rule="evenodd"></path><path d="M187.5 1182.362v50m47.5-2.5h-50"fill="none"class="svgStroke colorStroke37474f"stroke="#374f3d"></path><path d="m189.34 1219.362 13-12 3 3 8-8 2 2 12.005-12.346"fill="none"class="svgStroke colorStroke263238"stroke="#26382b"></path><path d="M224 1191.862h3.5v3.5m-36 25v7m3-10v10m3-13v13m3-16v16m3-16v16m3-15v15m3-18v18m3-21v21m3-20v20m3-23v23m3-26v26m3-29v29"fill="none"class="svgStroke colorStroke263238"stroke="#26382b"></path><g class="svgShape color000000"fill="#000000"transform="translate(183 185)"><path d="M53.5 1035.362h2v5h-2z"fill="#ffbe00"class="svgShape colorff9800"color="#000"overflow="visible"style="isolation:auto;mix-blend-mode:normal"></path><path d="M52 1030.862h-2a3.492 3.492 0 0 1-3.5-3.5v-.729m0-.179v-2.592h3.321"fill="none"class="svgStroke colorStrokeffc107"stroke="#ffbf07"stroke-linecap="round"stroke-linejoin="round"color="#000"overflow="visible"style="isolation:auto;mix-blend-mode:normal"transform="matrix(-1 0 0 1 109 2)"></path><path d="M52 1032.862h-2a3.492 3.492 0 0 1-3.5-3.5v-.73m0-.178v-2.592h3.321"fill="none"class="svgStroke colorStrokeffc107"stroke="#ffbf07"stroke-linecap="round"stroke-linejoin="round"color="#000"overflow="visible"style="isolation:auto;mix-blend-mode:normal"></path><rect class="svgShape colorffc107"fill="#fbbc05"height="11"width="11"x="49"y="1025.362"rx="4.889"color="#000"overflow="visible"ry="4.889"style="isolation:auto;mix-blend-mode:normal"></rect><rect class="svgShape colorffc107"fill="#fbbc05"height="8"width="11"x="49"y="1023.362"rx="0"color="#000"overflow="visible"ry="0"style="isolation:auto;mix-blend-mode:normal"></rect><path d="m54 1036.362-.89-.301-.752.561.012-.939-.767-.542.897-.279.279-.897.542.767.94-.012-.563.753z"fill="#ffbe00"class="svgShape colorff9800"color="#000"overflow="visible"style="isolation:auto;mix-blend-mode:normal"transform="rotate(8.722 5946.841 1188.277)scale(1.85876)"></path><rect class="svgShape colorffc107"fill="#fbbc05"height="1"width="5"x="52"y="1040.362"rx=".5"color="#000"overflow="visible"ry=".5"style="isolation:auto;mix-blend-mode:normal"></rect><rect class="svgShape colorffc107"fill="#fbbc05"height="1"width="5"x="52"y="1040.862"rx="0"color="#000"overflow="visible"ry="0"style="isolation:auto;mix-blend-mode:normal"></rect><rect class="svgShape color6d4c41"fill="#416d4d"height="4"width="9"x="50"y="1041.362"rx="1"color="#000"overflow="visible"ry="1"style="isolation:auto;mix-blend-mode:normal"></rect><path d="M50 1043.362h9v2h-9z"fill="#416d4d"class="svgShape color6d4c41"color="#000"overflow="visible"style="isolation:auto;mix-blend-mode:normal"></path><path d="M52 1043.362h5v1h-5z"fill="#f5b600"class="svgShape colorf57c00"color="#000"overflow="visible"style="isolation:auto;mix-blend-mode:normal"></path></g><path d="M190 1185.362h2v2h-2z"fill="#4caf66"class="svgShape color4caf50"color="#000"overflow="visible"style="isolation:auto;mix-blend-mode:normal"></path><path d="M190 1189.362h2v2h-2z"fill="#ea4335"class="svgShape colorf44336"color="#000"overflow="visible"style="isolation:auto;mix-blend-mode:normal"></path><path d="M193 1185.362h4v2h-4zM193 1189.362h4v2h-4z"fill="#e9eaed"class="svgShape colore9eded"color="#000"overflow="visible"style="isolation:auto;mix-blend-mode:normal"></path><path d="M199 1185.362h11v2h-11zM199 1189.362h11v2h-11z"fill="#b0b8c5"class="svgShape colorb0bec5"color="#000"overflow="visible"style="isolation:auto;mix-blend-mode:normal"></path><path d="m229.081 1207.857 1.414-1.414m-1.414 0 1.414 1.414"fill="none"class="svgStroke colorStroke6d4c41"stroke="#416d4d"stroke-linecap="round"stroke-linejoin="round"></path><path d="m244.575 1205.488.919-.53m-2.375.14-.53-.919m1.598 2.758.53.919m-1.987-1.309-.918.53"fill="none"class="svgStroke colorStroke47a146"stroke="#34a853"stroke-linecap="round"stroke-linejoin="round"></path><path d="m231.626 1223.366.868-.5m-2.238.13-.494-.855m1.505 2.595.493.854m-1.876-1.224-.854.493"fill="none"class="svgStroke colorStrokef44336"stroke="#f44536"stroke-linecap="round"stroke-linejoin="round"></path><path d="m244.08 1227.857 1.415-1.414m-1.414 0 1.414 1.414"fill="none"class="svgStroke colorStroke0277bd"stroke="#0248bd"stroke-linecap="round"stroke-linejoin="round"></path><circle class="svgStroke colorStroke2196f3"cx="233.5"cy="1203.862"fill="none"r="1"color="#000"overflow="visible"style="isolation:auto;mix-blend-mode:normal"stroke="#4285f4"stroke-linecap="round"stroke-linejoin="round"></circle><circle class="svgShape colorf44336"cx="242.5"cy="1222.862"fill="#ea4335"r=".5"color="#000"overflow="visible"style="isolation:auto;mix-blend-mode:normal"></circle><circle class="svgShape color4caf50"cx="229.5"cy="1226.862"fill="#4caf66"r=".5"color="#000"overflow="visible"style="isolation:auto;mix-blend-mode:normal"></circle></g></svg></div><div class="intro-feature-info"><h4 class="title">Setting Financial Goals</h4><p>Learn how to create and track your financial goals using our intuitive tools. Stay on course and reach your milestones to achieve financial independence.</p></div></a></div><div class="col-lg-4 col-sm-6"><a href="https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Gold"class="intro-feature-item"><div class="intro-feature-media"><svg viewBox="0 0 512 512"xmlns="http://www.w3.org/2000/svg"id="FinancialAnalysis"><path d="M456,216V448H56V216a24.006,24.006,0,0,1,24-24H432A24.006,24.006,0,0,1,456,216Z"fill="#2d302e"class="svgShape color2d2d30"></path><polyline class="svgShape color83d8f4"fill="#4285f4"points="352 216 432 216 432 424 80 424 80 216 160 216 320 216"></polyline><path d="M16,448H496a0,0,0,0,1,0,0v32a16,16,0,0,1-16,16H32a16,16,0,0,1-16-16V448a0,0,0,0,1,0,0Z"fill="#e0e1e2"class="svgShape colore0e0e2"></path><polygon class="svgShape color57565c"fill="#34a853"points="288 472 224 472 216 448 296 448 288 472"></polygon><circle class="svgShape colorff9811"cx="256"cy="144"fill="#fbbc05"r="88"></circle><circle class="svgShape colorffda44"cx="256"cy="144"fill="#ffcf44"r="64"></circle><rect class="svgShape colorffda44"fill="#ffcf44"height="48"width="24"x="16"y="16"></rect><rect class="svgShape colorffda44"fill="#ffcf44"height="48"width="24"x="472"y="112"transform="rotate(180 484 136)"></rect><rect class="svgShape colorffda44"fill="#ffcf44"height="88"width="24"x="120"y="264"></rect><rect class="svgShape colorab2300"fill="#ea4335"height="56"width="24"x="168"y="296"></rect><rect class="svgShape colorff9811"fill="#fbbc05"height="80"width="24"x="216"y="272"></rect><rect class="svgShape color91cc04"fill="#cc9904"height="88"width="24"x="264"y="264"></rect><rect class="svgShape colorff9811"fill="#fbbc05"height="56"width="24"x="312"y="296"></rect><rect class="svgShape colorab2300"fill="#ea4335"height="80"width="24"x="360"y="272"></rect><circle class="svgShape colorab2300"cx="360"cy="56"fill="#ea4335"r="16"></circle><g class="svgShape color000000"fill="#000000"><path d="M496,440H464V216a32.042,32.042,0,0,0-32-32H343.26a95.309,95.309,0,0,0,5.7-16H448a8,8,0,0,0,0-16H351.66c.22-2.64.34-5.31.34-8a96,96,0,0,0-184.9-36.22L117.66,58.34A8.008,8.008,0,0,0,112,56H64a8,8,0,0,0,0,16h44.69l53.17,53.17A96.009,96.009,0,0,0,168.74,184H80a32.036,32.036,0,0,0-32,32V440H16a8,8,0,0,0-8,8v32a24.032,24.032,0,0,0,24,24H480a24.032,24.032,0,0,0,24-24V448A8,8,0,0,0,496,440ZM256,64a80,80,0,1,1-80,80A80.093,80.093,0,0,1,256,64ZM424,224V416H88V224H203.03a95.715,95.715,0,0,0,105.96,0ZM64,216a16.021,16.021,0,0,1,16-16h98.07a99.229,99.229,0,0,0,6.44,8H80a8,8,0,0,0-8,8V424a8,8,0,0,0,8,8H432a8,8,0,0,0,8-8V216a8,8,0,0,0-8-8H327.49a99.229,99.229,0,0,0,6.44-8H432a16.021,16.021,0,0,1,16,16V440H64ZM284.9,456l-2.67,8H229.77l-2.67-8ZM488,480a8.011,8.011,0,0,1-8,8H32a8.011,8.011,0,0,1-8-8V456H210.23l6.18,18.53A8,8,0,0,0,224,480h64a8,8,0,0,0,7.59-5.47L301.77,456H488Z"fill="#000000"class="svgShape color000000"></path><path d="M104 464H40a8 8 0 000 16h64a8 8 0 000-16zM136 464h-8a8 8 0 000 16h8a8 8 0 000-16zM256 216a72 72 0 10-72-72A72.083 72.083 0 00256 216zm0-128a56 56 0 11-56 56A56.062 56.062 0 01256 88z"fill="#000000"class="svgShape color000000"></path><path d="M240 160a8 8 0 000 16h8a8 8 0 0016 0h8a8 8 0 008-8V144a8 8 0 00-8-8H248v-8h24a8 8 0 000-16h-8a8 8 0 00-16 0h-8a8 8 0 00-8 8v24a8 8 0 008 8h24v8zM64 24H168a8 8 0 000-16H64a8 8 0 000 16zM64 48h56a8 8 0 000-16H64a8 8 0 000 16zM16 72H40a8 8 0 008-8V16a8 8 0 00-8-8H16a8 8 0 00-8 8V64A8 8 0 0016 72zm8-48h8V56H24zM448 128H392a8 8 0 000 16h56a8 8 0 000-16zM496 104H472a8 8 0 00-8 8v48a8 8 0 008 8h24a8 8 0 008-8V112A8 8 0 00496 104zm-8 48h-8V120h8zM112 360H400a8 8 0 000-16h-8V272a8 8 0 00-8-8H360a8 8 0 00-8 8v72h-8V296a8 8 0 00-8-8H312a8 8 0 00-8 8v48h-8V264a8 8 0 00-8-8H264a8 8 0 00-8 8v80h-8V272a8 8 0 00-8-8H216a8 8 0 00-8 8v72h-8V296a8 8 0 00-8-8H168a8 8 0 00-8 8v48h-8V264a8 8 0 00-8-8H120a8 8 0 00-8 8v80a8 8 0 000 16zm256-80h8v64h-8zm-48 24h8v40h-8zm-48-32h8v72h-8zm-48 8h8v64h-8zm-48 24h8v40h-8zm-48-32h8v72h-8zM112 384h80a8 8 0 000-16H112a8 8 0 000 16zM112 408h48a8 8 0 000-16H112a8 8 0 000 16zM296 368H216a8 8 0 000 16h80a8 8 0 000-16zM264 392H216a8 8 0 000 16h48a8 8 0 000-16zM400 368H320a8 8 0 000 16h80a8 8 0 000-16zM368 392H320a8 8 0 000 16h48a8 8 0 000-16zM360 80a23.856 23.856 0 0010.34-2.345l0 0 40 40A8 8 0 00416 120h32a8 8 0 000-16H419.313L381.657 66.343l0 0A24 24 0 10360 80zm0-32a8 8 0 11-8 8A8.009 8.009 0 01360 48z"fill="#000000"class="svgShape color000000"></path></g></svg></div><div class="intro-feature-info"><h4 class="title">MyMI Gold</h4><p>Unlock exclusive features with MyMI Gold. Gain access to advanced analytics, higher trade limits, and special rewards. Learn how to acquire and grow your MyMI Gold balance.</p></div></a></div><div class="col-lg-4 col-sm-6"><a href="https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Exchange"class="intro-feature-item"><div class="intro-feature-media"><svg viewBox="0 0 512 512"xmlns="http://www.w3.org/2000/svg"id="BitcoinExchange"><circle class="svgShape color7dd9c2"cx="137.5"cy="137.5"fill="#34a853"r="137.5"></circle><path d="M20 157.5C20 81.68 81.68 20 157.5 20a136.79 136.79 0 0 1 86.66 30.84A137.27 137.27 0 0 0 137.5 0C61.68 0 0 61.68 0 137.5a137.27 137.27 0 0 0 50.84 106.66A136.79 136.79 0 0 1 20 157.5Z"fill="#4285f4"class="svgShape color5cd0b3"></path><circle class="svgShape colorffcd69"cx="374.5"cy="374.5"fill="#ffd969"r="137.5"></circle><path d="M257 394.5c0-75.82 61.68-137.5 137.5-137.5a136.79 136.79 0 0 1 86.66 30.84A137.27 137.27 0 0 0 374.5 237C298.68 237 237 298.68 237 374.5a137.27 137.27 0 0 0 50.84 106.66A136.79 136.79 0 0 1 257 394.5Z"fill="#fbbc05"class="svgShape colorffc144"></path><path d="M170 137.5a37.49 37.49 0 0 0-11.65-65.9V57.5a7.5 7.5 0 0 0-15 0V70h-11.68V57.5a7.5 7.5 0 1 0-15 0V70H97.5a7.5 7.5 0 0 0 0 15H110v45H97.5a7.5 7.5 0 0 0 0 15H110v45H97.5a7.5 7.5 0 0 0 0 15h19.17v12.5a7.5 7.5 0 1 0 15 0V205h11.66v12.5a7.5 7.5 0 0 0 15 0v-14.1A37.49 37.49 0 0 0 170 137.5ZM125 85h22.5a22.5 22.5 0 0 1 0 45H125Zm22.5 105H125v-45h22.5a22.5 22.5 0 0 1 0 45Z"fill="#f5f7fa"class="svgShape colorfaf7f5"></path><path d="M429.14 207.17a7.5 7.5 0 0 1-7.5-7.5V127.5a32.54 32.54 0 0 0-32.5-32.5h-75a7.5 7.5 0 0 1 0-15h75a47.55 47.55 0 0 1 47.5 47.5v72.17a7.5 7.5 0 0 1-7.5 7.5Z"fill="#ea4335"class="svgShape colordc72a9"></path><path d="M429.14 211.5a7.5 7.5 0 0 1-5.3-2.2L388.49 174a7.5 7.5 0 1 1 10.6-10.61l30.05 30 30.06-30A7.5 7.5 0 1 1 469.8 174l-35.35 35.3a7.51 7.51 0 0 1-5.31 2.2Z"fill="#e3958e"class="svgShape colore38eba"></path><path d="M197.86 432h-75a47.55 47.55 0 0 1-47.5-47.5v-72.17a7.5 7.5 0 0 1 15 0v72.17a32.54 32.54 0 0 0 32.5 32.5h75a7.5 7.5 0 0 1 0 15Z"fill="#ea4335"class="svgShape colordc72a9"></path><path d="M47.5 350.86a7.51 7.51 0 0 1-5.3-12.81l35.35-35.35a7.51 7.51 0 0 1 5.31-2.2 7.5 7.5 0 0 1 5.3 2.2l35.35 35.35a7.5 7.5 0 1 1-10.6 10.61l-30-30.05-30.11 30.05a7.48 7.48 0 0 1-5.3 2.2Z"fill="#e3958e"class="svgShape colore38eba"></path><path d="M422 400.35A33.39 33.39 0 0 0 388.65 367h-28.3a18.35 18.35 0 1 1 0-36.69h46.15a7.5 7.5 0 0 0 0-15H394V297a7.5 7.5 0 0 0-15 0v18.35h-9V297a7.5 7.5 0 0 0-15 0v18.78a33.35 33.35 0 0 0 5.35 66.22h28.3a18.35 18.35 0 1 1 0 36.69H342.5a7.5 7.5 0 0 0 0 15H355V452a7.5 7.5 0 0 0 15 0v-18.31h9V452a7.5 7.5 0 0 0 15 0v-18.74a33.41 33.41 0 0 0 28-32.91Z"fill="#f5f7fa"class="svgShape colorfaf7f5"></path></svg></div><div class="intro-feature-info"><h4 class="title">MyMI Exchange</h4><p>Trade MyMI Gold and other digital assets securely with our MyMI Exchange. Buy, sell, and manage your trades in one place to diversify your portfolio and enhance your financial growth.</p></div></a></div></div></div></div></div></div><section class="text-white bg-primary full-width py-5"><div class="container container-xl"><div class="row justify-content-center text-center mb-5"><div class="col-lg-8"data-aos="fade-up"><h2 class="mb-3 fw-bold display-5">Join Our Growing Platform</h2><p class="lead">Thousands are already on the path to financial freedom. Join them today.</p></div></div><div class="row text-center g-4"><div class="col-md-3 col-6"data-aos="fade-up"data-aos-delay="100"><div class="stat-card"><div class="fw-bold display-4"data-bs-target="115"data-counter="true">115</div><p>Active Users</p></div></div><div class="col-md-3 col-6"data-aos="fade-up"data-aos-delay="200"><div class="stat-card"><div class="fw-bold display-4"data-bs-target="206"data-counter="true">206</div><p>Wallets Created</p></div></div><div class="col-md-3 col-6"data-aos="fade-up"data-aos-delay="300"><div class="stat-card"><div class="fw-bold display-4"data-bs-target="139"data-counter="true">139</div><p>Trades Tracked</p></div></div><div class="col-md-3 col-6"data-aos="fade-up"data-aos-delay="400"><div class="stat-card"><div class="fw-bold display-4"data-bs-target="0"data-counter="true">0</div><p>Active Partners</p></div></div></div></div></section><div class="bg-white intro-feature intro-section"><div class="container-fluid"><div class="row justify-content-center"><div class="col-xl-12 col-lg-12"><div class="text-center intro-section-title"><span class="overline-title">Join Our Community</span><h2 class="title intro-heading-lead">MyMI's Communities for Investors</h2><div class="intro-section-desc"><p>Explore the vibrant MyMI Wallet communities across various social channels.<br>Each platform offers unique insights, resources, and interactions to help you make the most of your financial journey.</p></div></div></div></div><div class="row justify-content-center"><div class="col-lg-8"><div class="row justify-content-center intro-feature-list"><div class="col-sm-12"><div class="row"><div class="mb-3 col-12 col-lg-4"><div class="social-platform"><div class="row"><div class="col"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"class="bi ad-font-lg bi-discord"fill="currentColor"height="3rem"width="3rem"><path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019Zm-8.198 7.307c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612Zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Z"/></svg></div></div><div class="row"><div class="col"><h3>Discord</h3><p>Connect with a thriving community of like-minded investors and financial enthusiasts. Engage in real-time discussions, join dedicated channels for financial tips, and get direct support.</p></div></div><div class="row mt-3"><div class="col"><a href="https://discord.gg/UUMexvA"class="btn btn-primary btn-md social-link text-white"target="_blank">Join Our Discord</a></div></div></div></div><div class="mb-3 col-12 col-lg-4"><div class="social-platform"><div class="row"><div class="col"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"class="bi bi-facebook"fill="currentColor"height="3rem"width="3rem"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg></div></div><div class="row"><div class="col"><h3>Facebook Page</h3><p>Stay up-to-date with the latest MyMI Wallet news and feature updates. Follow our official announcements, market trends, and promotional events.</p></div></div><div class="row mt-3"><div class="col"><a href="https://www.facebook.com/MyMIWalletNews"class="btn btn-primary btn-md social-link text-white"target="_blank">Like Our Facebook Page</a></div></div></div></div><div class="mb-3 col-12 col-lg-4"><div class="social-platform"><div class="row"><div class="col"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"class="bi bi-facebook"fill="currentColor"height="3rem"width="3rem"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg></div></div><div class="row"><div class="col"><h3>Investors Talk FB Group</h3><p>Meet and exchange ideas with other investors in our exclusive Facebook Group. Perfect for discussions around personal finance and investment strategies.</p></div></div><div class="row mt-3"><div class="col"><a href="https://www.facebook.com/InvestorsTalk"class="btn btn-primary btn-md social-link text-white"target="_blank">Join The Investors Talk FB Group</a></div></div></div></div><div class="mb-3 col-12 col-lg-4"><div class="social-platform"><div class="row"><div class="col"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"class="bi bi-linkedin"fill="currentColor"height="3rem"width="3rem"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/></svg></div></div><div class="row"><div class="col"><h3>LinkedIn</h3><p>Gain professional insights into fintech and investment management with MyMI Wallet on LinkedIn. Connect with industry leaders and explore in-depth articles and updates.</p></div></div><div class="row mt-3"><div class="col"><a href="https://www.linkedin.com/MyMIWallet"class="btn btn-primary btn-md social-link text-white"target="_blank">Connect On LinkedIn</a></div></div></div></div><div class="mb-3 col-12 col-lg-4"><div class="social-platform"><div class="row"><div class="col"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"class="bi bi-tiktok"fill="currentColor"height="3rem"width="3rem"><path d="M9.117 0h1.631a.253.253 0 01.251.25v.647c0 .668.276 1.303.765 1.766a2.572 2.572 0 001.728.71c.14 0 .248.112.248.25v1.317a.253.253 0 01-.267.249 5.797 5.797 0 01-3.114-.815v5.592a3.454 3.454 0 11-2.505-3.33v1.537a1.917 1.917 0 101.185 1.77V0zM8.36 3.958a5.773 5.773 0 01-1.147-.553v6.837a1.92 1.92 0 00-1.35-2.167V7.34a3.451 3.451 0 012.497 3.323V3.958z"/></svg></div></div><div class="row"><div class="col"><h3>TikTok</h3><p>Discover bite-sized finance tips, investment insights, and platform features on TikTok. Ideal for anyone looking to learn finance in a fun and accessible way!</p></div></div><div class="row mt-3"><div class="col"><a href="https://www.tiktok.com/@MyMIWallet"class="btn btn-primary btn-md social-link text-white"target="_blank">Follow On TikTok</a></div></div></div></div><div class="mb-3 col-12 col-lg-4"><div class="social-platform"><div class="row"><div class="col"><div style="height:48px;display:flex;align-items:center;justify-content:center"><img src="https://www.mymiwallet.com/assets/images/Company-Logos/TradingView-white-short-logo.png"class="bi bi-facebook"style="height:100%;object-fit:cover"></div></div></div><div class="row"><div class="col"><h3>TradingView</h3><p>Follow us on TradingView to access technical analysis and trading insights. Perfect for new and seasoned investors looking to deepen market knowledge.</p></div></div><div class="row mt-3"><div class="col"><a href="https://www.tradingview.com/u/MyMIWallet/"class="btn btn-primary btn-md social-link text-white"target="_blank">Follow On TradingView</a></div></div></div></div><div class="mb-3 col-12 col-lg-4"><div class="social-platform"><div class="row"><div class="col"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"class="bi bi-twitter"fill="currentColor"height="3rem"width="3rem"><path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/></svg></div></div><div class="row"><div class="col"><h3>Twitter</h3><p>Get real-time updates, market insights, and quick tips on Twitter. Join us for timely, relevant information as it unfolds.</p></div></div><div class="row mt-3"><div class="col"><a href="https://www.twitter.com/MyMIWalletNews"class="btn btn-primary btn-md social-link text-white"target="_blank">Follow On Twitter</a></div></div></div></div><div class="mb-3 col-12 col-lg-4"><div class="social-platform"><div class="row"><div class="col"><svg viewBox="0 0 16 16"xmlns="http://www.w3.org/2000/svg"class="bi bi-youtube"fill="currentColor"height="3rem"width="3rem"><path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/></svg></div></div><div class="row"><div class="col"><h3>YouTube</h3><p>Watch tutorials, expert interviews, and investment guides on YouTube. Our videos cover everything from platform tutorials to advanced financial strategies.</p></div></div><div class="row mt-3"><div class="col"><a href="https://www.youtube.com/@MyMIWallet"class="btn btn-primary btn-md social-link text-white"target="_blank">Subscribe On YouTube</a></div></div></div></div></div></div></div></div></div></div></div></div></div></div><div class="intro-section intro-footer mt-auto text-start"><div class="container container-ld"><div class="row justify-content-center"><div class="col-md-12"><ul class="text-center intro-menu"><li><a href="https://brandfetch.com/mymiwallet.com"class="link-to"></a></li></ul></div></div><div class="row justify-content-center"><div class="col-md-12"><ul class="text-center intro-menu"><li><a href="https://www.mymiwallet.com/index.php/#features"class="link-to">Features</a></li><li><a href="https://www.mymiwallet.com/index.php/Knowledgebase"target="_blank">Doc</a></li><li><a href="https://www.mymiwallet.com/index.php/Privacy-Policy"target="_blank">Privacy Policy</a></li><li><a href="https://www.mymiwallet.com/index.php/Terms-Of-Service"target="_blank">Terms of Service</a></li><li><a href="https://www.mymiwallet.com/index.php/Support"target="_blank">Need Help?</a></li></ul></div><div class="mt-3 col-md-12"><div class="text-center intro-copyright"><p>©2025, MyMI Wallet. Operated By My Millennial Investments, LLC.<br>Developed &Powered by <a href="https://timothyburks.com"target="_blank">Timothy Burks Incorporated</a></p></div></div></div></div></div><script nonce="jtnYVszAdCZ5PTPm69Z4bA==">!function(r){var o=r(window),s=(r("body"),r(".intro-navbar")),n="navbar-fixed";r(".link-to").on("click",function(){var o=r(this).attr("href"),n=r(o);if(n.length)return r("html, body").scrollTop(n.offset().top-s.innerHeight()),!1}),o.on("scroll",function(){0<o.scrollTop()?s.hasClass(n)||s.addClass(n):s.hasClass(n)&&s.removeClass(n)})}(jQuery)</script><script nonce="jtnYVszAdCZ5PTPm69Z4bA==">function toggleMenu(){for(var e=document.getElementsByClassName("menu-item"),t=0;t<e.length;t++){e[t].classList.toggle("hidden")}}</script><script nonce="jtnYVszAdCZ5PTPm69Z4bA==">window.onload=function(){$("#navbarSupportedContent").hide()}</script><script src="https://www.googletagmanager.com/gtag/js?id=UA-168714029-1"async></script><script nonce="jtnYVszAdCZ5PTPm69Z4bA==">function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","UA-168714029-1")</script><script nonce="jtnYVszAdCZ5PTPm69Z4bA==">!function(e,t,n,c,o,a,f){e.fbq||(o=e.fbq=function(){o.callMethod?o.callMethod.apply(o,arguments):o.queue.push(arguments)},e._fbq||(e._fbq=o),(o.push=o).loaded=!0,o.version="2.0",o.queue=[],(a=t.createElement(n)).async=!0,a.src="https://connect.facebook.net/en_US/fbevents.js",(f=t.getElementsByTagName(n)[0]).parentNode.insertBefore(a,f))}(window,document,"script"),fbq("init","1066980131308331"),fbq("track","PageView")</script><noscript><img src="https://www.facebook.com/tr?id=1066980131308331&ev=PageView&noscript=1"class="d-none"height="1"width="1"></noscript></div></div></div></body>
+app/Modules/User/Views/Wallets/Withdraw_Funds/user_fields.php:89:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/public/layouts/footer.php:52:<script nonce="<?= esc($cspNonce) ?>">
+app/Views/themes/public/layouts/custom-js.php:39:<script nonce="<?= esc($cspNonce) ?>">
+app/Views/themes/public/layouts/custom-js.php:48:<script nonce="<?= esc($cspNonce) ?>">
+app/Views/themes/public/layouts/custom-js.php:54:<script async src="https://www.googletagmanager.com/gtag/js?id=UA-168714029-1"></script>
+app/Views/themes/public/layouts/custom-js.php:55:<script nonce="<?= esc($cspNonce) ?>">
+app/Views/themes/public/layouts/custom-js.php:63:<script nonce="<?= esc($cspNonce) ?>">
+app/Views/themes/public/layouts/custom-js.php:80:<script nonce="<?= esc($cspNonce) ?>">
+app/Modules/User/Views/Wallets/Edit_Account.php:189:<script <?= $nonce['script'] ?? '' ?>> 
+app/Views/themes/public/previewAlert.php:275:<script src="https://s3.tradingview.com/tv.js" defer <?= $nonce['script'] ?? '' ?>></script>
+app/Views/themes/public/previewAlert.php:280:    <script
+app/Views/themes/public/previewAlert.php:531:                <script
+app/Views/themes/public/previewAlert.php:573:                <script
+app/Views/themes/public/previewAlert.php:599:                <script
+app/Views/themes/public/previewAlert.php:728:                <script
+app/Views/themes/public/previewAlert.php:1055:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/public/previewAlert.php:1175:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/themes/public/exchange.php:324:<script<?= $nonce['script'] ?? '' ?>>
+app/Views/Investments/forecast_detail_modal.php:79:<script <?= $nonce['script'] ?? '' ?>>
+app/Views/Investments/economy_widget.php:30:<script>
+app/Modules/User/Views/Wallets/Withdraw_Funds.php:104:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Withdraw_Funds.php:126:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Complete_Purchase/paypal_checkout.php:12:echo '<script src="https://www.paypal.com/sdk/js?client-id=' . $client_id . '"></script>';
+app/Modules/User/Views/Wallets/Complete_Purchase/paypal_checkout.php:20:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Add.php:186:<!-- <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Purchase.php:122:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Link_Account/Brokerage.php:23:<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/ccxt@1.91.15/dist/ccxt.browser.js"></script>
+app/Modules/User/Views/Wallets/Link_Account/Brokerage.php:24:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Add_Account.php:28:        echo '<script ' . ($nonce['script'] ?? '') . '>console.log("Using Direct Connection in Add Wallet");</script>';
+app/Modules/User/Views/Wallets/Add_Account.php:188:<script <?= $nonce['script'] ?? '' ?>> 
+app/Modules/User/Views/Wallets/Link_Account/Import-Trades.php:43:<script <?= $nonce['script'] ?? '' ?>> 
+app/Modules/User/Views/Wallets/MyMI_Gold/order_form.php:48:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/MyMI_Gold/order_form.php:89:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Add_Deposit_Fetch.php:48:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Add/user_fields.php:2134:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Add/form.php:30:<script <?= $nonce['script'] ?? '' ?>> 
+app/Modules/User/Views/Wallets/Edit_Account/credit_fields.php:89:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Add_Account/credit_fields.php:113:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Edit_Account/accounting_fields.php:2161:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Edit_Account/debt_fields.php:92:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Add_Account/accounting_fields.php:2161:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Edit_Account/investment_fields.php:83:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Add_Account/debt_fields.php:86:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Edit_Account/ecommerce_fields.php:2188:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Add_Account/investment_fields.php:1325:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Edit.php:204:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Add_Account/crypto_fields.php:1319:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Add_Account/ecommerce_fields.php:2188:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Deposit_Funds/paypal_checkout.php:14:echo '<script src="https://www.paypal.com/sdk/js?client-id=' . $client_id . '"></script>';
+app/Modules/User/Views/Wallets/Deposit_Funds/paypal_checkout.php:20:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Delete.php:21:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Deposit_Funds/user_fields.php:66:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Purchase_Gold.php:58:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Purchase_Gold.php:99:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/index.php:125:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Wallet_Manager.php:76:        echo '<script ' . ($nonce['script'] ?? '') . '>console.log("Bank Account Submitted. Database Submission Complete")</script>';
+app/Modules/User/Views/Wallets/Wallet_Manager.php:93:        echo '<script ' . ($nonce['script'] ?? '') . '>console.log("Wallet Submitted. Database Submission Complete")</script>';
+app/Modules/User/Views/Wallets/Wallet_Manager.php:137:        echo '<script ' . ($nonce['script'] ?? '') . '>console.log("Credit Account Submitted. Database Submission Complete")</script>';
+app/Modules/User/Views/Wallets/Wallet_Manager.php:155:        echo '<script ' . ($nonce['script'] ?? '') . '>console.log("Wallet Submitted. Database Submission Complete")</script>';
+app/Modules/User/Views/Wallets/Wallet_Manager.php:196:        echo '<script ' . ($nonce['script'] ?? '') . '>console.log("Bank Account Submitted. Database Submission Complete"</script>';
+app/Modules/User/Views/Wallets/Wallet_Manager.php:213:        echo '<script ' . ($nonce['script'] ?? '') . '>console.log("Wallet Updated. Database Submission Complete"</script>';
+app/Modules/User/Views/Wallets/Wallet_Manager.php:275:        echo '<script ' . ($nonce['script'] ?? '') . '>console.log("Credit Account Updated. Database Submission Complete"</script>';
+app/Modules/User/Views/Wallets/Wallet_Manager.php:291:        echo '<script ' . ($nonce['script'] ?? '') . '>console.log("Wallet Updated. Database Submission Complete"</script>';
+app/Modules/User/Views/Wallets/Purchase/paypal_subscription.php:5:<script src="https://www.paypal.com/sdk/js?client-id=<?= $client_id ?>&vault=true&intent=subscription"></script>
+app/Modules/User/Views/Wallets/Purchase/paypal_subscription.php:7:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Purchase/paypal_checkout.php:36:<script src="https://www.paypal.com/sdk/js?client-id=<?= $client_id ?>"></script>
+app/Modules/User/Views/Wallets/Purchase/paypal_checkout.php:43:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Alerts/resources/overview_chart.php:175:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Alerts/resources/overview_chart.php:383:<!-- <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Purchase/Memberships/Premium.php:113:<script src="https://www.paypal.com/sdk/js?client-id=<?= $client_id ?>&vault=true&intent=subscription&currency=USD"></script>
+app/Modules/User/Views/Wallets/Purchase/Memberships/Premium.php:115:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Purchase/Memberships/Premium.php:161:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Purchase/Memberships/Starter.php:112:<script src="https://www.paypal.com/sdk/js?client-id=<?= $client_id ?>&vault=true&intent=subscription&currency=USD"></script>
+app/Modules/User/Views/Wallets/Purchase/Memberships/Starter.php:114:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Purchase/Memberships/Starter.php:160:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Purchase/Memberships/Pro.php:111:<script src="https://www.paypal.com/sdk/js?client-id=<?= $client_id ?>&vault=true&intent=subscription&currency=USD"></script>
+app/Modules/User/Views/Wallets/Purchase/Memberships/Pro.php:113:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Purchase/Memberships/Pro.php:159:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Alerts/index.php:360:<script>
+app/Modules/User/Views/Wallets/Purchase/Memberships/Customize.php:116:<script src="https://www.paypal.com/sdk/js?client-id=<?= $client_id ?>&vault=true&currency=USD"></script>
+app/Modules/User/Views/Wallets/Purchase/Memberships/Customize.php:117:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Purchase/Memberships/Customize.php:192:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Purchase/Memberships/Basic.php:129:<script src="https://www.paypal.com/sdk/js?client-id=<?= $client_id ?>&vault=true&intent=subscription&currency=USD"></script>
+app/Modules/User/Views/Wallets/Purchase/Memberships/Basic.php:131:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Purchase/Memberships/Basic.php:177:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Institutes/index.php:49:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Setup/continue_setup_modal.php:91:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Purchase/Memberships/Success.php:17:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Subscribe/header_subscribe.php:47:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Purchase/user_fields.php:147:<script src="https://www.paypal.com/sdk/js?client-id=<?= $client_id ?>&currency=USD"></script>  
+app/Modules/User/Views/Wallets/Purchase/user_fields.php:148:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Purchase/paypal_fields.php:166:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Add_Fiat_Wallet.php:52:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget_Orig/index/overview_chart.php:48:                        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.2/Chart.min.js"></script>
+app/Modules/User/Views/Budget_Orig/index.php:615:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:390:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:444:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:498:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:552:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:606:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:660:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:713:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:765:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:817:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:869:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:921:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:973:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:1062:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:1115:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:1168:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:1210:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:1241:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:1294:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:1347:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:1404:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:1458:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:1520:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:1579:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Link_Account (Original)/Import-Trades.php:43:<script <?= $nonce['script'] ?? '' ?>> 
+app/Modules/User/Views/Budget/Assessment/personal_information.php:42:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/personal_information.php:84:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/personal_information.php:126:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/personal_information.php:168:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/personal_information.php:210:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/personal_information.php:252:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/personal_information.php:294:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/personal_information.php:336:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/personal_information.php:378:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/personal_information.php:420:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/personal_information.php:462:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/personal_information.php:504:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/kyc_verification.php:43:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/kyc_verification.php:85:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/kyc_verification.php:127:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/kyc_verification.php:169:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/kyc_verification.php:211:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/kyc_verification.php:253:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/kyc_verification.php:295:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/kyc_verification.php:337:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/kyc_verification.php:379:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/kyc_verification.php:421:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/kyc_verification.php:463:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Assessment/kyc_verification.php:505:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/index-orig/plaid/fiat_wallets.php:78:    echo '<script ' . ($nonce['script'] ?? '') . '>console.log("' . $cuWalletCount . '");</script>';
+app/Modules/User/Views/Budget/Account_Overview/source_breakdown.php:49:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Account_Overview/expense_breakdown.php:44:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Account_Overview/income_breakdown.php:44:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Account_Overview/monthly_overview.php:140:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/index/mobile_table.php:194:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Wallets/Add_Withdraw_Fetch.php:46:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/index/browser_table.php:187:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/index/historical_table.11152024.php:219:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Financial_Analysis.php:34:                                    <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Financial_Analysis.php:109:                                    <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Financial_Analysis.php:180:<!-- <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/index/browser_table.11152024.php:196:                            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/index/active_table.php:229:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Financial_Forecaster.php:41:                                    <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Financial_Forecaster.php:128:                                    <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Financial_Forecaster.php:204:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/index/overview_chart.php:209:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/index/overview_chart.php:399:<!-- <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Add.php:299:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/index/mobile_table.11152024.php:118:                                <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Add-New.php:130:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/index/browser_table.09122024.php:124:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/index/active_table-09212025.php:139:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/index.06012024.php:437:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/index/historical_table.php:84:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Edit.php:240:<script <?= $nonce['script'] ?? '' ?>> 
+app/Modules/User/Views/Budget/index.php:296:    <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Recurring_Account/Schedule.php:193:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Account/sessions.php:25:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Recurring_Account/Schedule-12282024.php:186:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/index.09122025.php:270:    <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/index.09122025.php:339:<!-- <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Calculator/form.php:65:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Details/accounts.php:254:    <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Copy-12242023.php:168:<script <?= $nonce['script'] ?? '' ?>> 
+app/Modules/User/Views/Investments/Add-12012024.php:65:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Copy.php:168:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Budget/Copy.php:235:<!-- <script <?= $nonce['script'] ?? '' ?>> 
+app/Modules/User/Views/Investments/Services.php:418:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Add.php:149:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Add/user_fields-new.php:159:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Add/user_fields-09162023.php:159:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Add/user_fields.php:154:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/resources/insights.php:47:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Add/watchlist_fields.php:33:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Add/user_fields-04042024.php:154:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/resources/watchlist.php:64:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Add/symbol_fields.php:33:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Add/form.php:58:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/resources/working/get_symbols.php:65:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/resources/working/all_investments.php:75:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Add/options_fields.php:51:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/resources/working/financial_reports.php:108:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/tradeTracker.php:16:<script src="<?= base_url('assets/vendor/jquery/jquery-3.6.0.min.js'); ?>" <?= $nonce['script'] ?? '' ?>></script>
+app/Modules/User/Views/Investments/tradeTracker.php:17:<script src="<?= base_url('assets/vendor/datatables/1.11.5/js/jquery.dataTables.min.js'); ?>" <?= $nonce['script'] ?? '' ?>></script>
+app/Modules/User/Views/Investments/tradeTracker.php:18:<script src="<?= base_url('assets/vendor/datatables/1.11.5/js/dataTables.bootstrap5.min.js'); ?>" <?= $nonce['script'] ?? '' ?>></script> -->
+app/Modules/User/Views/Investments/tradeTracker.php:115:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/tradeTracker.php:341:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/tradeTracker.php:384:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/resources/working/economic_data.php:45:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/retirement.php:161:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/resources/retirement_planner_premium.php:57:                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/index.php:2:// echo '<script <?= $nonce['script'] ?? '' 
+app/Modules/User/Views/Investments/index.php:465:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/index.php:610:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/index.php:637:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/index.php:814:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/resources/retirement_planner_manual.php:58:                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/resources/strategizer.php:54:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/index-b.php:151:                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.2/Chart.min.js" type="text/javascript"></script>
+app/Modules/User/Views/Investments/resources/tax_report.php:49:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/assessment_content.php:411:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/assessment_content.php:464:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/assessment_content.php:517:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/assessment_content.php:559:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/assessment_content.php:590:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/assessment_content.php:643:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/assessment_content.php:696:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/assessment_content.php:753:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/assessment_content.php:807:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/assessment_content.php:869:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/assessment_content.php:928:                                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Support/Views/Support/index.php:248:<script <?= $scriptNonce; ?>>
+app/Modules/User/Views/Investments/Assessment/personal_information.php:42:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/personal_information.php:84:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/personal_information.php:126:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/personal_information.php:168:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/personal_information.php:210:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/personal_information.php:252:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/personal_information.php:294:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/personal_information.php:336:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/personal_information.php:378:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/personal_information.php:420:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/personal_information.php:462:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/personal_information.php:504:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/kyc_verification.php:43:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/kyc_verification.php:85:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/kyc_verification.php:127:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/kyc_verification.php:169:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/kyc_verification.php:211:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/kyc_verification.php:253:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/kyc_verification.php:295:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/kyc_verification.php:337:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/kyc_verification.php:379:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/kyc_verification.php:421:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/kyc_verification.php:463:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Assessment/kyc_verification.php:505:            <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/services.php:44:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/tradeTracker-full-functionality.php:7:<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+app/Modules/User/Views/Investments/tradeTracker-full-functionality.php:8:<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+app/Modules/User/Views/Investments/tradeTracker-full-functionality.php:88:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/tradeTracker-working-12082024.php:7:<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+app/Modules/User/Views/Investments/tradeTracker-working-12082024.php:8:<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+app/Modules/User/Views/Investments/tradeTracker-working-12082024.php:56:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/index-12022024.php:2:echo '<script ' . ($nonce['script'] ?? '') . '>';
+app/Modules/User/Views/Investments/index-12022024.php:222:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Ops/Views/Management/index.php:60:<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+app/Modules/Ops/Views/Management/index.php:61:<script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap4.min.js"></script>
+app/Modules/Ops/Views/Management/index.php:62:<script>
+app/Modules/User/Views/Investments/index/Recent_Trades.php:169:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/index/overview_chart.php:48:                        `<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.2/Chart.min.js"></script>
+app/Modules/User/Views/Investments/index/Month_to_Month-test.php:51:                        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.2/Chart.min.js"></script>
+app/Modules/Management/Views/Email/queued.php:34:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/index/Insights-test.php:132:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/index/Insights-test.php:248:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/index/Asset_Watchlist.php:30:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/index/Markets.php:37:                    echo '<script ' .  $nonce['script'] ?? '' . '>var historyData_' . $sanitizedSymbol . ' = [];</script>';
+app/Modules/User/Views/Investments/index/Markets.php:92:                        echo '<script ' .  $nonce['script'] ?? '' . '>var historyData_' . $displaySymbol . ' = [];</script>';
+app/Modules/User/Views/Investments/index/Markets.php:127:                    echo '<script ' .  $nonce['script'] ?? '' . '>';
+app/Modules/Management/Views/Email/resources/controlPanelBlock.php:49:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/index/Performance_Overview.php:60:                        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.2/Chart.min.js"></script>
+app/Modules/User/Views/Investments/index/Performance_Overview.php:66:                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/index/Performance_Overview.php:151:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Email/campaign_dashboard.php:54:<script src="<?= base_url('assets/vendor/chart.js/2.1.2/Chart.min.js'); ?>" <?= $nonce['script'] ?? '' ?>></script>
+app/Modules/Management/Views/Email/campaign_dashboard.php:56:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/index/Investment_Calendar.php:45:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/index/Economic_Data.php:172:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Email/modals/createDraftCampaign.php:28:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/index/Insights.php:218:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/index/Insights.php:359:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Email/modals/cloneCampaign.php:16:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Email/modals/viewCampaignStats.php:27:<script src="<?= base_url('assets/vendor/chart.js/2.1.2/Chart.min.js'); ?>" <?= $nonce['script'] ?? '' ?>></script>
+app/Modules/Management/Views/Email/modals/viewCampaignStats.php:29:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/index/Month_to_Month.php:51:                        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.2/Chart.min.js"></script>
+app/Modules/User/Views/Investments/index/Month_to_Month.php:67:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Email/modals/sendCampaign.php:26:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Email/modals/editCampaign.php:28:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/index/Custom_Watchlist.php:39:                    echo '<script ' . $nonce['script'] ?? '' . '>var historyData_' . $displaySymbol . ' = [];</script>';
+app/Modules/User/Views/Investments/index/Custom_Watchlist.php:67:                echo '<script ' . $nonce['script'] ?? '' . '>';
+app/Modules/User/Views/Investments/index/Custom_Watchlist.php:85:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Email/campaignStats.php:5:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Email/campaigns.php:62:                                                    <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Email/campaigns.php:114:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:52:                        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.2/Chart.min.js"></script>
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:58:                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:141:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:1332:<!-- <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Charts/tradingViewChart.php:9:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/tradeTracker copy 2.php:22:<script src="https://cdn.jsdelivr.net/npm/hyperformula@1.2.0/dist/hyperformula.full.min.js"></script>
+app/Modules/User/Views/Investments/tradeTracker copy 2.php:23:<script src="https://cdn.jsdelivr.net/npm/handsontable@12.0.1/dist/handsontable.min.js"></script>
+app/Modules/User/Views/Investments/tradeTracker copy 2.php:24:<script src="https://cdn.jsdelivr.net/npm/handsontable@12.0.1/dist/languages/all.min.js"></script>
+app/Modules/User/Views/Investments/tradeTracker copy 2.php:26:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Assets/Listing-Table.php:54:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Assets/Distribute/By_User.php:248:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/User/Views/Investments/Squeezes/index.php:41:<script src="/public/assets/investments/squeeze/squeeze.js"></script>
+app/Modules/Management/Views/Assets/Create.php:62:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Wallets/Reconcile.php:147:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Wallets/Listing-Table.php:41:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Projects/_quick_intake.php:36:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Alerts/resources/rh-keygen.php:69:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Projects/index/most_recent_content.php:64:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Alerts/resources/advisorMedia.php:84:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Alerts/resources/sendDiscordAlert.php:10:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Projects/index/modals.php:18:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Alerts/tradeDetails.php:17:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Projects/management/project_analytics.php:12:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Projects/Add.php:215:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Alerts/modals/addTrade.php:45:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Alerts/modals/manageTradeAlert.php:71:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Alerts/modals/updateExchange.php:30:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Projects/index.php:73:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Alerts/modals/viewTradeChart.php:107:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/admin/chat.php:24:<script>
+app/Modules/Management/Views/admin/errors_dashboard.php:68:<script <?= isset($nonce['script']) ? $nonce['script'] : '' ?>>
+app/Modules/Management/Views/Alerts/modals/createTradeAlert.php:375:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Alerts/add.php:88:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Partners/Active_Partners.php:91:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Partners/Active_Assets.php:78:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Alerts/index.php:420:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Alerts/index.php:1034:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Alerts/index.php:1119:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Users/Profile.php:109:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Users/Inactive_Table.php:59:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/Bar_Charts.php:8:    <script src="https://cdn.jsdelivr.net/npm/d3@7" <?= $nonce['script'] ?? '' ?>></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/Bar_Charts.php:9:    <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/Bar_Charts.php:56:    <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Users/partials/action_buttons.php:11:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/ChartJS_Bar_Chart.php:4:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Users/Referral_Report.php:99:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/Pass_Data_To_Modal.php:2:    <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron_Widget.php:1:<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron_Widget.php:2:    <script type="text/javascript" src="<?php echo base_url('assets/js/Sophtron_Widget/server.js'); ?>" ></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron_Widget.php:3:    <script type="text/javascript" src="https://cdn.sophtron.com/sophtron-widget-loader-0.0.0.5.min.js" ></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron_Widget.php:4:    <script type="text/javascript" >
+app/Modules/Management/Views/Users/Active_Table.php:57:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Users/Assets.php:237:<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+app/Modules/Management/Views/Users/Assets.php:238:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Users/Listing-Table.php:64:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Users/index.php:234:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Users/index.php:260:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron_API_Setup.php:13:        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron_API_Setup.php:14:        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac-sha256.min.js"></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron_API_Setup.php:15:        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/enc-base64.min.js"></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron_API_Setup.php:16:        <!-- <script type="text/javascript" src="https://cdn.sophtron.com/sophtron-widget-loader-0.0.0.5.min.js" ></script> -->
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron_API_Setup.php:17:        <script type="text/javascript" src="<?php echo base_url('assets/js/Sophtron_Widget/script.js'); ?>" ></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron_API_Setup.php:18:        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron_Integration.php:1:<script type="text/javascript" src="https://cdn.sophtron.com/sophtron-widget-loader-0.0.0.5.min.js" ></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron_Integration.php:2:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron_Integration.php:18:<!-- <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Referrals/index.php:68:<script>
+app/Modules/Management/Views/Web_Design/Content_Creator/FLinks/Flinks_API.php:416:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Web_Design/Content_Creator/FLinks/Flinks.php:73:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron/Sophtron_Widget.php:1:<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron/Sophtron_Widget.php:2:<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/hmac-sha256.min.js"></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron/Sophtron_Widget.php:3:<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/enc-base64.min.js"></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron/Sophtron_Widget.php:4:<!-- <script type="text/javascript" src="<?php // echo base_url('assets/js/sophtron_widget_loader.js'); ?>"></script> -->
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron/Sophtron_Widget.php:5:<!-- <script type="text/javascript" src="<?php //echo base_url('assets/js/Sophtron_Widget/server.js'); ?>"></script> -->
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron/Sophtron_Widget.php:6:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron/Sophtron_API_Setup.php:9:        <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron/Sophtron_API_Setup.php:10:        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac-sha256.min.js"></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron/Sophtron_API_Setup.php:11:        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/enc-base64.min.js"></script> -->
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron/Sophtron_API_Setup.php:12:        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/AuthFunnel/index.php:131:<script src="<?= base_url('assets/vendor/chart.js/2.1.2/Chart.min.js'); ?>"></script>
+app/Modules/Management/Views/AuthFunnel/index.php:132:<script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron/Sophtron_PHP.php:1:<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron/Sophtron_PHP.php:2:<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/hmac-sha256.min.js"></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron/Sophtron_PHP.php:3:<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/enc-base64.min.js"></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron/Sophtron_PHP.php:5:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron/Sophtron_PHP.php:43:<!-- <script type="text/javascript" src="https://cdn.sophtron.com/sophtron-widget-loader-0.0.0.5.min.js" ></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron/Sophtron_PHP.php:44:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron/Sophtron_Setup.php:9:        <script type="text/javascript" src="https://cdn.sophtron.com/sophtron-widget-loader-0.0.0.5.min.js" ></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron/Sophtron_Setup.php:10:        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Web_Design/Content_Creator/Plaid/Integration.php:50:<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js" <?= $nonce['script'] ?? '' ?>></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Plaid/Integration.php:52:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Web_Design/Content_Creator/Plaid/Link_Web.php:1:<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Plaid/Link_Web.php:2:    <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js" <?= $nonce['script'] ?? '' ?>></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Plaid/Link_Web.php:3:    <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/EmailOutbox/index.php:144:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron_Setup.php:9:        <script type="text/javascript" src="https://cdn.sophtron.com/sophtron-widget-loader-0.0.0.5.min.js" ></script>
+app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron_Setup.php:10:        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Signals/index.php:57:<script>
+app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Communities/Overview.php:62:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/resources/standaloneAnalytics.php:30:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Web_Design/Content_Creator.php:97:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Web_Design/Content_Creator.php:160:// <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/resources/platform-library.php:41:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/resources/bufferDashboard.php:77:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/resources/standaloneAddSubscriberForm.php:26:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/resources/standaloneDailyLogForm.php:77:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/resources/standaloneShortLongPostForm.php:20:<script>
+app/Modules/Management/Views/Marketing/resources/standaloneScraper.php:28:                        <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/resources/standaloneScraper.php:114:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/resources/standaloneLargeContentForm.php:71:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/resources/timelineGroupedView.php:54:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/resources/timelineGroupedView.php:70:<script src="<?= base_url('assets/vendor/chart.js/2.1.2/Chart.min.js'); ?>" <?= $nonce['script'] ?? '' ?>></script>
+app/Modules/Management/Views/Marketing/resources/timelineGroupedView.php:71:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/resources/controlPanelBlock.php:39:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/resources/controlPanelBlock.php:44:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/resources/generatedSummaries.php:214:<script src="<?= base_url('assets/vendor/chart.js/2.1.2/Chart.min.js'); ?>" <?= $nonce['script'] ?? '' ?>></script>
+app/Modules/Management/Views/Marketing/resources/generatedSummaries.php:215:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/resources/generatedSummaries.php:263:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/resources/generatedSummaries.php:314:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/resources/standaloneScraperForm.php:35:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/PublicPages/index.php:17:<script>
+app/Modules/Management/Views/Ops/index.php:122:<script>
+app/Modules/Management/Views/AiOps/index.php:121:<script>
+app/Modules/Management/Views/Marketing/Campaigns/View.php:278:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Campaigns/View.php:388:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Campaigns/View.php:401:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Campaigns/View.php:462:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/ContentEngine/index.php:73:<script>
+app/Modules/Management/Views/Marketing/Campaigns/Listing-Table.php:72:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Campaigns/Priority-Listing-Table.php:72:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Campaigns/Drip-Campaigns-Table.php:84:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Campaigns/Drip-Campaigns-Steps-Table.php:90:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/AuthHealth/index.php:90:<script>
+app/Modules/Management/Views/Marketing/Blog/Subscribe.php:123:<script <?= $nonce['script'] ?? '' ?>> 
+app/Modules/Management/Views/Discord/index.php:506:<script>
+app/Modules/Management/Views/API/Sophtron.php:5:  <script src="<?php echo base_url('assets/js/Sophtron_Integration/js/full_example.js'); ?>"></script>
+app/Modules/Management/Views/API/Sophtron.php:8:  <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/API/Sophtron_Widget.php:5:<script src="<?php echo $sophtronJSLink; ?>"></script>
+app/Modules/Management/Views/API/index.php:569:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Drip/create.php:141:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Drip/create.php:169:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/HowTos/Employees/setupEmails.php:83:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Drip/modals/deleteCampaignStep.php:11:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/HowTos/index.php:145:<!-- <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Drip/modals/generateCampaignContent.php:16:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Drip/modals/editCampaignStep.php:27:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Drip/modals/deleteCampaign.php:11:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Drip/modals/generateCampaignStepContent.php:16:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Drip/modals/editCampaign.php:20:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Exchanges/includes/all-tokens.php:129:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Exchanges/includes/discord.php:126:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Exchanges/includes/facebook.php:126:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Exchanges/includes/twitter.php:122:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Exchanges/includes/website.php:201:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Exchanges/includes/website.php:209:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/User/MyMIGold-Tasks.php:82:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/financialNews.php:49:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/contentGenerator.php:138:<!-- <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Forms/send_notifications.php:33:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Promote/Solana/subViews/Communities.php:243:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Blogger/index.php:18:<script src="<?= base_url('assets/mymiblogger/mymiblogger.js') ?>" <?= $nonce['script'] ?? '' ?>></script>
+app/Modules/Management/Views/Marketing/Add.php:67:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Add.php:96:<!-- <script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Promote/Solana/monthly_overview.php:52:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Schedule/Add.php:211:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/dashboard.txt:2307:        $content = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $content);
+app/Modules/Management/Views/Marketing/dashboard.txt:3997:        $content = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $content);
+app/Modules/Management/Views/Marketing/dashboard.txt:6337:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/dashboard.txt:6360:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/dashboard.txt:6393:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/dashboard.txt:6414:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/dashboard.txt:6671:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/dashboard.txt:6869:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/dashboard.txt:7256:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/dashboard.txt:7351:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/EmailDetail.php:66:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Add/campaign_fields.php:135:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Add/idea_fields.php:134:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/index_orig/modals.php:18:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/index/most_recent_content.php:34:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/generatedPostsDashboard.php:34:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/index/modals.php:18:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/index.php:187:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/index.php:237:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Investments/news.php:40:<script>
+app/Modules/Management/Views/Marketing/modals/insightPreview.php:71:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/modals/insightPreview.php:95:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/modals/insightPreview.php:127:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/modals/insightPreview.php:161:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/index.php:148:        <script>
+app/Modules/Management/Views/index.php:483:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/index.php:536:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/index.php:637:        <script>
+app/Modules/Management/Views/Marketing/modals/generatePostMedia.php:76:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Exchange/index/Large_Transactions.php:47:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/modals/previewGeneratedPost.php:79:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Docs/Views/openapi.php:7:  <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js" crossorigin="anonymous"></script>
+app/Modules/Management/Views/Marketing/Edit_Blog.php:28:<script src="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-bs4.min.js"></script>
+app/Modules/Management/Views/Marketing/Edit_Blog.php:29:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Edit.php:103:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Twitter.php:52:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Advisor/Views/partials/advisor_insight_modal.php:21:<script>
+app/Modules/Advisor/Views/advisor_dashboard.php:104:<script>
+app/Modules/APIs/Views/Search/results.php:69:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Email_Templates/create.php:35:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Content_Edit.php:16:<script src="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-bs4.min.js"></script>
+app/Modules/Management/Views/Marketing/Content_Edit.php:17:<script <?= $nonce['script'] ?? '' ?>>
+app/Modules/Management/Views/Marketing/Schedule.php:110:<script <?= $nonce['script'] ?? '' ?>>

@@ -100,7 +100,9 @@ if ($digibyte): ?>
     return setTimeout(startWhenReady, 50);
   }
   (function ($) {
-    $(document).ajaxComplete(function (_event, xhr) {
+    $(document)
+      .off('ajaxComplete.mymiCsrfRefresh')
+      .on('ajaxComplete.mymiCsrfRefresh', function (_event, xhr) {
       var newCsrfName = xhr.getResponseHeader('X-CSRF-Token-Name');
       var newCsrfHash = xhr.getResponseHeader('X-CSRF-Token-Hash');
       if (!newCsrfName || !newCsrfHash) return;
@@ -153,12 +155,6 @@ document.addEventListener('DOMContentLoaded', function () {
   document.head.appendChild(css);
 });
 </script>
-
-<?php
-$navbarSearch = FCPATH . 'assets/js/navbar-search.js';
-$navbarSearchV = is_file($navbarSearch) ? filemtime($navbarSearch) : time();
-?>
-<script defer src="<?= base_url('assets/js/navbar-search.js') . '?v=' . $navbarSearchV; ?>"></script>
 
 <!-- TradingView library -->
 <script src="https://s3.tradingview.com/tv.js" defer></script>
