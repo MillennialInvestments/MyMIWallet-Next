@@ -1113,13 +1113,13 @@ $routes->group('Dashboard', ['namespace' => 'App\Modules\User\Controllers', 'fil
 });
 
 $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers'],  function($routes) {
+    $routes->get('/', 'ManagementController::index');
     $routes->get('banUnverifiedUsers', 'ManagementAdminController::banUnverifiedUsers');
     $routes->get('processQueuedEmails', 'ManagementAdminController::processQueuedEmails');
     $routes->get('resendActivationEmailsBatch', 'ManagementAdminController::resendActivationEmailsBatch');
     $routes->get('resendActivationEmailsBatchQueued', 'ManagementAdminController::resendActivationEmailsBatchQueued');
     $routes->get('sendTestActivationEmail', 'ManagementAdminController::sendTestActivationEmail');
     $routes->post('saveSuggestion', 'ManagementAdminController::saveSuggestion');
-    $routes->get('/', 'ManagementAdminController::index');
     $routes->get('Signals', 'SignalsAdminController::index');
     $routes->get('AiOps', 'AiOpsManagementAdminController::index', ['filter' => 'permission:admin.access']);
     $routes->get('Ops', 'OpsAdminController::index', ['filter' => 'permission:admin.access']);
@@ -1134,7 +1134,7 @@ $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers
         $routes->post('unlock-account', 'AccountRescueAdminController::unlockAccount');
     });
     $routes->group('Admin', function($routes) {
-        $routes->get('/', 'AdminController::index');
+        $routes->get('/', 'ManagementAdminController::index');
         $routes->get('Chat', 'ChatAdminController::index', ['filter' => 'permission:admin.access']);
         $routes->post('Chat/submit', 'ChatAdminController::submit', ['filter' => 'permission:admin.access']);
         $routes->get('Chat/history', 'ChatAdminController::history', ['filter' => 'permission:admin.access']);

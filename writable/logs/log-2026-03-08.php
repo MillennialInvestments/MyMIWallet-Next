@@ -6973,3 +6973,378 @@ in SYSTEMPATH/CodeIgniter.php on line 1001.
 CRITICAL - 2026-03-08 14:06:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
 WARNING - 2026-03-08 14:06:17 --> [404] URI=https://www.mymiwallet.com/index.php/
 WARNING - 2026-03-08 14:06:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 14:11:17 --> [REQ_ID=f530df5fd3ee] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 14:11:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 14:11:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 14:11:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 14:11:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 14:11:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 14:11:37 --> [REQ_ID=4318a3a370f3] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 14:11:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:11:37 --> [REQ_ID=4318a3a370f3] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 14:11:37 --> [REQ_ID=4318a3a370f3] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 14:11:37 --> [REQ_ID=4318a3a370f3] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 14:11:37 --> [CSRF] token name=csrf_test_name hash=de6d0e9ccf8c879a59c452010c91982d
+DEBUG - 2026-03-08 14:11:37 --> [REQ_ID=21c1aebeaed1] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 14:11:37 --> [REQ_ID=21c1aebeaed1] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 14:11:37 --> [REQ_ID=4318a3a370f3] [FILTER_AFTER]
+DEBUG - 2026-03-08 14:11:37 --> [REQ_ID=4318a3a370f3] [LIFECYCLE][END] status=200 duration_ms=34.57 memory_delta=0
+INFO - 2026-03-08 14:11:37 --> [REQ_ID=21c1aebeaed1] [PERF] Execution time=0.032231
+DEBUG - 2026-03-08 14:11:37 --> [REQ_ID=4318a3a370f3] [REQUEST][END]
+INFO - 2026-03-08 14:11:37 --> [REQ_ID=4318a3a370f3] [PERF] Execution time=0.054941
+DEBUG - 2026-03-08 14:14:59 --> [REQ_ID=eea8e4da26e4] [REQUEST][START] GET /index.php/Management/Admin
+DEBUG - 2026-03-08 14:14:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:14:59 --> [REQ_ID=eea8e4da26e4] [FILTER_BEFORE] /index.php/Management/Admin
+DEBUG - 2026-03-08 14:14:59 --> [REQ_ID=eea8e4da26e4] [ROUTE] Controller=\App\Modules\Management\Controllers\ManagementAdminController Method=index
+DEBUG - 2026-03-08 14:14:59 --> [REQ_ID=eea8e4da26e4] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management/Admin
+DEBUG - 2026-03-08 14:14:59 --> [CSRF] token name=csrf_test_name hash=d22729c94092f0379495fafb1ecda7d8
+DEBUG - 2026-03-08 14:14:59 --> [REQ_ID=114e3d915965] [INIT] App\Modules\Management\Controllers\ManagementAdminController::GET
+INFO - 2026-03-08 14:14:59 --> [REQ_ID=114e3d915965] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 14:14:59 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:14:59 --> [REQ_ID=114e3d915965] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 14:14:59 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:14:59 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 14:14:59 --> [REQ_ID=114e3d915965] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 14:14:59 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:14:59 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+INFO - 2026-03-08 14:14:59 --> getSolanaData: invalid address param
+DEBUG - 2026-03-08 14:14:59 --> [REQ_ID=114e3d915965] [VIEW_RENDER] App\Modules\Management\Views\index
+INFO - 2026-03-08 14:14:59 --> [REQ_ID=114e3d915965] [MEMORY][commonData:start] 8388608
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:14:59 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:15:00 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+INFO - 2026-03-08 14:15:00 --> getSolanaData: invalid address param
+INFO - 2026-03-08 14:15:00 --> [REQ_ID=114e3d915965] [PERF] Execution time=0.699012
+DEBUG - 2026-03-08 14:15:01 --> [REQ_ID=2cbb863a2329] [REQUEST][START] GET /index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 14:15:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:15:01 --> [REQ_ID=2cbb863a2329] [FILTER_BEFORE] /index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 14:15:01 --> [REQ_ID=2cbb863a2329] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=fetchEmailAlerts
+DEBUG - 2026-03-08 14:15:01 --> [REQ_ID=2cbb863a2329] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 14:15:01 --> [REQ_ID=2cbb863a2329] [REQUEST][END]
+INFO - 2026-03-08 14:15:01 --> [REQ_ID=2cbb863a2329] [PERF] Execution time=0.061715
+INFO - 2026-03-08 14:15:01 --> [spark:ops:work] Started
+INFO - 2026-03-08 14:15:01 --> [SPARK_START] App\Commands\Ops\Work
+INFO - 2026-03-08 14:15:01 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 14:15:01 --> [spark:ops:work] Intent
+INFO - 2026-03-08 14:15:01 --> [spark:ops:work] Completed
+INFO - 2026-03-08 14:15:01 --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.094145
+INFO - 2026-03-08 14:15:01 --> [SPARK_MEMORY] 18874368
+DEBUG - 2026-03-08 14:15:03 --> [REQ_ID=00c5e98f40c3] [REQUEST][START] GET /index.php/Management/Admin
+DEBUG - 2026-03-08 14:15:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:15:03 --> [REQ_ID=00c5e98f40c3] [FILTER_BEFORE] /index.php/Management/Admin
+DEBUG - 2026-03-08 14:15:03 --> [REQ_ID=00c5e98f40c3] [ROUTE] Controller=\App\Modules\Management\Controllers\ManagementAdminController Method=index
+DEBUG - 2026-03-08 14:15:03 --> [REQ_ID=00c5e98f40c3] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management/Admin
+DEBUG - 2026-03-08 14:15:03 --> [CSRF] token name=csrf_test_name hash=d22729c94092f0379495fafb1ecda7d8
+DEBUG - 2026-03-08 14:15:03 --> [REQ_ID=e4f445f18937] [INIT] App\Modules\Management\Controllers\ManagementAdminController::GET
+INFO - 2026-03-08 14:15:03 --> [REQ_ID=e4f445f18937] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 14:15:03 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:15:03 --> [REQ_ID=e4f445f18937] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 14:15:03 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:15:03 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 14:15:03 --> [REQ_ID=e4f445f18937] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 14:15:03 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:15:03 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+INFO - 2026-03-08 14:15:03 --> getSolanaData: invalid address param
+DEBUG - 2026-03-08 14:15:03 --> [REQ_ID=e4f445f18937] [VIEW_RENDER] App\Modules\Management\Views\index
+INFO - 2026-03-08 14:15:03 --> [REQ_ID=e4f445f18937] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 14:15:03 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+INFO - 2026-03-08 14:15:03 --> getSolanaData: invalid address param
+INFO - 2026-03-08 14:15:03 --> [REQ_ID=e4f445f18937] [PERF] Execution time=0.329739
+DEBUG - 2026-03-08 14:15:35 --> [REQ_ID=40ecb82ac1f4] [REQUEST][START] GET /index.php/Ops
+DEBUG - 2026-03-08 14:15:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:15:35 --> [REQ_ID=40ecb82ac1f4] [FILTER_BEFORE] /index.php/Ops
+DEBUG - 2026-03-08 14:15:35 --> [REQ_ID=40ecb82ac1f4] [ROUTE] Controller=\App\Modules\Ops\Controllers\OpsDashboardController Method=index
+DEBUG - 2026-03-08 14:15:35 --> [REQ_ID=40ecb82ac1f4] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Ops
+DEBUG - 2026-03-08 14:15:35 --> [CSRF] token name=csrf_test_name hash=d22729c94092f0379495fafb1ecda7d8
+DEBUG - 2026-03-08 14:15:35 --> [REQ_ID=94487cbf1037] [INIT] App\Modules\Ops\Controllers\OpsDashboardController::GET
+INFO - 2026-03-08 14:15:35 --> [REQ_ID=94487cbf1037] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 14:15:35 --> [REQ_ID=94487cbf1037] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 14:15:35 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:15:35 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 14:15:35 --> [REQ_ID=94487cbf1037] [MEMORY][commonData:start] 4194304
+ERROR - 2026-03-08 14:15:35 --> Table 'mymiwallet.ops_tasks' doesn't exist
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 300.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(300): mysqli->query('SELECT *
+FROM `ops_tasks`', 0)
+ 2 SYSTEMPATH/Database/BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `ops_tasks`')
+ 3 SYSTEMPATH/Database/BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `ops_tasks`')
+ 4 SYSTEMPATH/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `ops_tasks`', [], false)
+ 5 SYSTEMPATH/Model.php(254): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH/BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH/Modules/Ops/Controllers/OpsDashboardController.php(40): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH/CodeIgniter.php(951): App\Modules\Ops\Controllers\OpsDashboardController->index()
+ 9 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Modules\Ops\Controllers\OpsDashboardController))
+10 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2026-03-08 14:15:35 --> [REQ_ID=94487cbf1037] [PERF] Execution time=0.022464
+DEBUG - 2026-03-08 14:15:49 --> [REQ_ID=253391f74c12] [REQUEST][START] GET /index.php/Ops
+DEBUG - 2026-03-08 14:15:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 14:15:49 --> [REQ_ID=253391f74c12] [FILTER_BEFORE] /index.php/Ops
+DEBUG - 2026-03-08 14:15:49 --> [REQ_ID=253391f74c12] [ROUTE] Controller=\App\Modules\Ops\Controllers\OpsDashboardController Method=index
+DEBUG - 2026-03-08 14:15:49 --> [REQ_ID=253391f74c12] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Ops
+DEBUG - 2026-03-08 14:15:49 --> [CSRF] token name=csrf_test_name hash=d22729c94092f0379495fafb1ecda7d8
+DEBUG - 2026-03-08 14:15:49 --> [REQ_ID=c50aa94f0023] [INIT] App\Modules\Ops\Controllers\OpsDashboardController::GET
+INFO - 2026-03-08 14:15:49 --> [REQ_ID=c50aa94f0023] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 14:15:49 --> [REQ_ID=c50aa94f0023] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 14:15:49 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 14:15:49 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 14:15:49 --> [REQ_ID=c50aa94f0023] [MEMORY][commonData:start] 4194304
+ERROR - 2026-03-08 14:15:49 --> Table 'mymiwallet.ops_tasks' doesn't exist
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 300.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(300): mysqli->query('SELECT *
+FROM `ops_tasks`', 0)
+ 2 SYSTEMPATH/Database/BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `ops_tasks`')
+ 3 SYSTEMPATH/Database/BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `ops_tasks`')
+ 4 SYSTEMPATH/Database/BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `ops_tasks`', [], false)
+ 5 SYSTEMPATH/Model.php(254): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH/BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH/Modules/Ops/Controllers/OpsDashboardController.php(40): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH/CodeIgniter.php(951): App\Modules\Ops\Controllers\OpsDashboardController->index()
+ 9 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Modules\Ops\Controllers\OpsDashboardController))
+10 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2026-03-08 14:15:49 --> [REQ_ID=c50aa94f0023] [PERF] Execution time=0.020464
+DEBUG - 2026-03-08 14:16:17 --> [REQ_ID=4812c470aefd] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 14:16:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 14:16:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 14:16:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 14:16:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 14:16:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 14:21:17 --> [REQ_ID=d74140c2d09d] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 14:21:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 14:21:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 14:21:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 14:21:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 14:21:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 14:26:17 --> [REQ_ID=fb17cb105cb5] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 14:26:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 14:26:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(113): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 14:26:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 14:26:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 14:26:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
