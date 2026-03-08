@@ -90,6 +90,30 @@ class Database extends Config
             'failover' => [],
             'port'     => $port,
         ];
+
+        if (ENVIRONMENT === 'testing') {
+            $this->default = [
+                'DSN'         => '',
+                'hostname'    => '',
+                'username'    => '',
+                'password'    => '',
+                'database'    => ':memory:',
+                'DBDriver'    => 'SQLite3',
+                'DBPrefix'    => 'bf_',
+                'pConnect'    => false,
+                'DBDebug'     => true,
+                'charset'     => 'utf8',
+                'DBCollat'    => 'utf8_general_ci',
+                'swapPre'     => '',
+                'encrypt'     => false,
+                'compress'    => false,
+                'strictOn'    => false,
+                'failover'    => [],
+                'port'        => 0,
+                'foreignKeys' => true,
+                'busyTimeout' => 1000,
+            ];
+        }
     }
 
 }

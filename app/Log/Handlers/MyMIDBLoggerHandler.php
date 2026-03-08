@@ -11,6 +11,10 @@ class MyMIDBLoggerHandler extends BaseHandler
 
     public function handle($level, $message): bool
     {
+        if (getenv('CI') || ENVIRONMENT === 'testing') {
+            return false;
+        }
+
         if (! $this->canHandle($level)) {
             return false;
         }

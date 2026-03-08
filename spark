@@ -93,6 +93,14 @@ require FCPATH . '../app/Config/Paths.php';
 
 $paths = new Paths();
 
+if (! defined('ROOTPATH')) {
+    define('ROOTPATH', rtrim(realpath(FCPATH . '..') ?: (FCPATH . '..'), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
+}
+
+if (! defined('SUPPORTPATH')) {
+    define('SUPPORTPATH', ROOTPATH . 'support' . DIRECTORY_SEPARATOR);
+}
+
 // LOAD THE FRAMEWORK BOOTSTRAP FILE
 require $paths->systemDirectory . '/Boot.php';
 
