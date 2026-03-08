@@ -34,7 +34,8 @@
         "exclude-from-classmap": [
             "**/Database/Migrations/**",
             "app/_legacy/**",
-            "app/.archive/**"
+            "app/.archive/**",
+            "app/Modules/**"
         ]
     },
     "autoload-dev": {

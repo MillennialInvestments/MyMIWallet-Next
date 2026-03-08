@@ -40,72 +40,82 @@ class Console extends BaseConfig
         | AI-Ops
         |----------------------------------------------------------------------
         */
-        \App\Commands\AiOps\Audit::class,
-        \App\Commands\AiOps\AutoRun::class,
-        \App\Commands\AiOps\Backlog::class,
-        \App\Commands\AiOps\BuildCommand::class,
-        \App\Commands\AiOps\ChatGovernanceIndex::class,
-        \App\Commands\AiOps\CommandIndex::class,
-        \App\Commands\AiOps\ContinueAudit::class,
+        \App\Commands\AIOps\Audit::class,
+        \App\Commands\AIOps\AutoRun::class,
+        \App\Commands\AIOps\Backlog::class,
+        \App\Commands\AIOps\BuildCommand::class,
+        \App\Commands\AIOps\ChatGovernanceIndex::class,
+        \App\Commands\AIOps\CommandIndex::class,
+        \App\Commands\AIOps\ContinueAudit::class,
         \App\Commands\AIOps\CspAudit::class,
-        \App\Commands\AiOps\CopilotValidate::class,
-        \App\Commands\AiOps\DiffFormat::class,
-        \App\Commands\AiOps\GateCost::class,
-        \App\Commands\AiOps\EmailScan::class,
-        \App\Commands\AiOps\GovernanceAnalyze::class,
-        \App\Commands\AiOps\HealthFull::class,
-        \App\Commands\AiOps\Init::class,
-        \App\Commands\AiOps\ManualIndex::class,
-        \App\Commands\AiOps\ManualRun::class,
-        \App\Commands\AiOps\Observe::class,
-        \App\Commands\AiOps\PRAuto::class,
-        \App\Commands\AiOps\PRCreate::class,
-        \App\Commands\AiOps\Repair::class,
-        \App\Commands\AiOps\RepairRunSafe::class,
-        \App\Commands\AiOps\Rollback::class,
-        \App\Commands\AiOps\Run::class,
-        \App\Commands\AiOps\ScanCells::class,
-        \App\Commands\AiOps\Seed::class,
-        \App\Commands\AiOps\SelfHeal::class,
-        \App\Commands\AiOps\Status::class,
-        \App\Commands\AiOps\SqlCheck::class,
-        \App\Commands\AiOps\SyncPerfRoutes::class,
-        \App\Commands\AiOps\Watch::class,
-        \App\Commands\AiOps\Alerts\Check::class,
-        \App\Commands\AiOps\Alerts\Clean::class,
-        \App\Commands\AiOps\Alerts\Health::class,
-        \App\Commands\AiOps\Alerts\Worker::class,
-        \App\Commands\AiOps\API\SchemeValidate::class,
-        \App\Commands\AiOps\DB\SlowScan::class,
-        \App\Commands\AiOps\Docs\AutoSync::class,
-        \App\Commands\AIOps\FormTestScan::class,
-        \App\Commands\AiOps\N8n\Logs::class,
-        \App\Commands\AiOps\N8n\Restart::class,
-        \App\Commands\AiOps\N8n\Start::class,
-        \App\Commands\AiOps\N8n\Stop::class,
-        \App\Commands\AiOps\Observe\Cost::class,
-        \App\Commands\AiOps\Observe\Hash::class,
-        \App\Commands\AiOps\Observe\Map::class,
-        \App\Commands\AiOps\Observe\Patch::class,
-        \App\Commands\AiOps\Observe\Regression::class,
-        \App\Commands\AiOps\Observe\Scan::class,
-        \App\Commands\AiOps\Observe\Snapshot::class,
-        \App\Commands\AiOps\Observe\Suggest::class,
-        \App\Commands\AiOps\Patch\Apply::class,
-        \App\Commands\AiOps\Patch\DryRun::class,
-        \App\Commands\AiOps\Patch\Hallucination::class,
-        \App\Commands\AiOps\Patch\RiskScore::class,
-        \App\Commands\AiOps\Patch\Validate::class,
-        \App\Commands\AiOps\PublicPages\Audit::class,
-        \App\Commands\AiOps\PublicPages\Import::class,
-        \App\Commands\AiOps\PublicPages\Report::class,
-        \App\Commands\AiOps\PublicPages\Run::class,
-        \App\Commands\AiOps\Redis\Stats::class,
-        \App\Commands\AiOps\Routes\Compare::class,
-        \App\Commands\AiOps\Routes\Gate::class,
-        \App\Commands\AiOps\Routes\Regress::class,
-        \App\Commands\AiOps\Routes\Scan::class,
-        \App\Commands\AiOps\Routes\ScanAuth::class,
+        \App\Commands\AIOps\CopilotValidate::class,
+        \App\Commands\AIOps\DedupeReport::class,
+        \App\Commands\AIOps\DepsAdd::class,
+        \App\Commands\AIOps\DiffFormat::class,
+        \App\Commands\AIOps\Doctor::class,
+        \App\Commands\AIOps\GateCost::class,
+        \App\Commands\AIOps\EmailScan::class,
+        \App\Commands\AIOps\GovernanceAnalyze::class,
+        \App\Commands\AIOps\HealthFull::class,
+        \App\Commands\AIOps\Ingest::class,
+        \App\Commands\AIOps\Init::class,
+        \App\Commands\AIOps\ManualIndex::class,
+        \App\Commands\AIOps\ManualRun::class,
+        \App\Commands\AIOps\Observe::class,
+        \App\Commands\AIOps\PRAuto::class,
+        \App\Commands\AIOps\PRCreate::class,
+        \App\Commands\AIOps\PriorityBuildCommand::class,
+        \App\Commands\AIOps\Repair::class,
+        \App\Commands\AIOps\RepairRun::class,
+        \App\Commands\AIOps\RepairRunSafe::class,
+        \App\Commands\AIOps\Rollback::class,
+        \App\Commands\AIOps\Run::class,
+        \App\Commands\AIOps\RunGraph::class,
+        \App\Commands\AIOps\ScanCells::class,
+        \App\Commands\AIOps\Seed::class,
+        \App\Commands\AIOps\SelfHeal::class,
+        \App\Commands\AIOps\Status::class,
+        \App\Commands\AIOps\SqlCheck::class,
+        \App\Commands\AIOps\SyncPerfRoutes::class,
+        \App\Commands\AIOps\Unlock::class,
+        \App\Commands\AIOps\Watch::class,
+        \App\Commands\AIOps\Worker::class,
+        \App\Commands\AIOps\WorkerLogs::class,
+        \App\Commands\AIOps\Alerts\Check::class,
+        \App\Commands\AIOps\Alerts\Clean::class,
+        \App\Commands\AIOps\Alerts\Health::class,
+        \App\Commands\AIOps\Alerts\Worker::class,
+        \App\Commands\AIOps\API\SchemaValidate::class,
+        \App\Commands\AIOps\DB\SlowScan::class,
+        \App\Commands\AIOps\Docs\AutoSync::class,
+        \App\Commands\AIOps\Forms\TestScan::class,
+        \App\Commands\AIOps\N8n\Logs::class,
+        \App\Commands\AIOps\N8n\Restart::class,
+        \App\Commands\AIOps\N8n\Start::class,
+        \App\Commands\AIOps\N8n\Stop::class,
+        \App\Commands\AIOps\Observe\Cost::class,
+        \App\Commands\AIOps\Observe\Hash::class,
+        \App\Commands\AIOps\Observe\Map::class,
+        \App\Commands\AIOps\Observe\Patch::class,
+        \App\Commands\AIOps\Observe\Regression::class,
+        \App\Commands\AIOps\Observe\Scan::class,
+        \App\Commands\AIOps\Observe\Snapshot::class,
+        \App\Commands\AIOps\Observe\Suggest::class,
+        \App\Commands\AIOps\Patch\Apply::class,
+        \App\Commands\AIOps\Patch\DryRun::class,
+        \App\Commands\AIOps\Patch\Hallucination::class,
+        \App\Commands\AIOps\Patch\RiskScore::class,
+        \App\Commands\AIOps\Patch\Validate::class,
+        \App\Commands\AIOps\PublicPages\Audit::class,
+        \App\Commands\AIOps\PublicPages\Import::class,
+        \App\Commands\AIOps\PublicPages\Report::class,
+        \App\Commands\AIOps\PublicPages\Run::class,
+        \App\Commands\AIOps\Redis\Stats::class,
+        \App\Commands\AIOps\Routes\Compare::class,
+        \App\Commands\AIOps\Routes\Gate::class,
+        \App\Commands\AIOps\Routes\Regress::class,
+        \App\Commands\AIOps\Routes\Scan::class,
+        \App\Commands\AIOps\Routes\ScanAuth::class,
 
         /*
         |----------------------------------------------------------------------
@@ -123,6 +133,8 @@ class Console extends BaseConfig
         |----------------------------------------------------------------------
         */
         \App\Commands\Audit\All::class,
+        \App\Commands\App\APIAuditPro::class,
+        \App\Commands\App\APIList::class,
         \App\Commands\App\ControllerAudit::class,
         \App\Commands\App\CoverageGate::class,
         \App\Commands\App\Healthcheck::class,
@@ -186,6 +198,8 @@ class Console extends BaseConfig
         |----------------------------------------------------------------------
         */
         \App\Commands\ConfigClear::class,
+        \App\Commands\ConfigLint::class,
+        \App\Commands\Config\Drift::class,
 
         /*
         |----------------------------------------------------------------------
@@ -244,25 +258,33 @@ class Console extends BaseConfig
         | Docs Management
         |----------------------------------------------------------------------
         */
-        \App\Commands\Docs\ArcitectureMap::class,
-        \App\Commands\Docs\AuditDocs::class,
-        \App\Commands\Docs\GenerateMissingDocs::class,
-        \App\Commands\Docs\InventoryDocs::class,
-        \App\Commands\Docs\SyncCodeFromDocs::class,
-        \App\Commands\Docs\SyncAllDocs::class,
+        \App\Commands\Docs\ArchitectureGraph::class,
+        \App\Commands\Docs\DatabaseMap::class,
+        \App\Commands\Docs\DependenciesMap::class,
+        \App\Commands\Docs\FullDocsAudit::class,
+        \App\Commands\Docs\ModulesMap::class,
+        \App\Commands\Docs\RoutesInventory::class,
+        \App\Commands\Docs\SparkCommandsInventory::class,
+        \App\Commands\Docs\SyncDocsSystem::class,
+        \App\Commands\Docs\Exports\ExportViewTxt::class,
+        \App\Commands\Docs\Generate\DocsReadmeBuilder::class,
+        \App\Commands\Docs\Scan\ControllersList::class,
+        \App\Commands\Docs\Scan\ServiceList::class,
+        \App\Commands\Docs\Scan\ViewDirectories::class,
+        \App\Commands\Docs\Scan\ViewFiles::class,
 
         /*
         |----------------------------------------------------------------------
         | DreamHost Diagnostics
         |----------------------------------------------------------------------
         */
-        \App\Commands\Dreamhost\DNSTest::class,
-        \App\Commands\Dreamhost\EnvDebug::class,
-        \App\Commands\Dreamhost\ImapFlagSweep::class,
-        \App\Commands\Dreamhost\ImapTest::class,
-        \App\Commands\Dreamhost\PortTest::class,
-        \App\Commands\Dreamhost\SmtpProbe::class,
-        \App\Commands\Dreamhost\SSLTest::class,
+        \App\Commands\DreamHost\DNSTest::class,
+        \App\Commands\DreamHost\EnvDebug::class,
+        \App\Commands\DreamHost\ImapFlagSweep::class,
+        \App\Commands\DreamHost\ImapTest::class,
+        \App\Commands\DreamHost\PortTest::class,
+        \App\Commands\DreamHost\SmtpProbe::class,
+        \App\Commands\DreamHost\SSLTest::class,
 
         /*
         |----------------------------------------------------------------------
@@ -270,6 +292,8 @@ class Console extends BaseConfig
         |----------------------------------------------------------------------
         */
         \App\Commands\Errors\ConsolidateErrors::class,
+        \App\Commands\Errors\Diagnose502::class,
+        \App\Commands\Errors\Diagnose503::class,
         \App\Commands\Errors\DispatchAlerts::class,
         \App\Commands\Errors\LearnPatterns::class,
 
@@ -278,7 +302,6 @@ class Console extends BaseConfig
         | GitHub
         |----------------------------------------------------------------------
         */
-        \App\Commands\GitHub\PullSafe::class,
         \App\Commands\GitHub\PullSafe::class,
         \App\Commands\GitHub\SearchRepo::class,
         \App\Commands\GitHub\WorkspaceGuard::class,
@@ -304,6 +327,7 @@ class Console extends BaseConfig
         |----------------------------------------------------------------------
         */
         \App\Commands\Logs\CheckServerLogs::class,
+        \App\Commands\Logs\Doctor::class,
         \App\Commands\Logs\EnableFullLogging::class,
         \App\Commands\Logs\Healthcheck::class,
         \App\Commands\Logs\Summarize::class,
@@ -313,16 +337,44 @@ class Console extends BaseConfig
 
         /*
         |----------------------------------------------------------------------
+        | Mail
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Mail\SendSend::class,
+        \App\Commands\Mail\SendTestEmail::class,
+        \App\Commands\Mail\Test::class,
+        \App\Commands\Mail\Verify::class,
+
+        /*
+        |----------------------------------------------------------------------
+        | Mail
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Master\Health\Commands::class,
+        \App\Commands\Master\Health\Controllers::class,
+        \App\Commands\Master\Health\Dependencies::class,
+        \App\Commands\Master\Health\Docs::class,
+        \App\Commands\Master\Health\Logs::class,
+        \App\Commands\Master\Health\Models::class,
+        \App\Commands\Master\Health\Routes::class,
+        \App\Commands\Master\Health\Services::class,
+        \App\Commands\Master\Health\Views::class,
+        \App\Commands\Master\KnowledgeGraphBuild::class,
+        \App\Commands\Master\RunAll::class,
+        /*
+        |----------------------------------------------------------------------
         | Ops
         |----------------------------------------------------------------------
         */
         \App\Commands\Ops\AnalyzeCommands::class,
         \App\Commands\Ops\AppUpdate::class,
+        \App\Commands\Ops\BuildConsoleRegistry::class,
         \App\Commands\Ops\CiPrepare::class,
         \App\Commands\Ops\CommandsAudit::class,
         \App\Commands\Ops\CommandsAutofix::class,
         \App\Commands\Ops\CommandsInventory::class,
         \App\Commands\Ops\CommandsLint::class,
+        \App\Commands\Ops\CommandsMissingFromConsole::class,
         \App\Commands\Ops\ConfigLint::class,
         \App\Commands\Ops\Diff::class,
         \App\Commands\Ops\DiffWallet::class,
@@ -407,26 +459,50 @@ class Console extends BaseConfig
         \App\Commands\Repo\ClassTrace::class,
         \App\Commands\Repo\DiffSplit::class,
         \App\Commands\Repo\Health::class,
+        
+        /*
+        |----------------------------------------------------------------------
+        | Research
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Research\DailyMarketReport::class,
+        \App\Commands\Research\EarningsCalendar::class,
+        \App\Commands\Research\FinancialIntelligenceSignals::class,
+        \App\Commands\Research\FinancialKnowledge::class,
+        \App\Commands\Research\FinancialNewsCollect::class,
+        \App\Commands\Research\GoogleFinancialScan::class,
+        \App\Commands\Research\GoogleScan::class,
+        \App\Commands\Research\MarketDataCompile::class,
+        \App\Commands\Research\ResearchPipeline::class,
+        \App\Commands\Research\ShortInterestScan::class,
+        \App\Commands\Research\ThinkOrSwimImport::class,
+        \App\Commands\Research\WatchlistCleanup::class,
+        \App\Commands\Research\WeeklyMarketReport::class,
 
         /*
         |----------------------------------------------------------------------
         | Routes
         |----------------------------------------------------------------------
         */
-        \App\Commands\Route\Audit::class,
-        \App\Commands\Route\Benchmark::class,
-        \App\Commands\Route\Debug::class,
-        \App\Commands\Route\Docs::class,
-        \App\Commands\Route\Reconcile::class,
-        \App\Commands\Route\Repair::class,
+        \App\Commands\Routes\Audit::class,
+        \App\Commands\Routes\Benchmark::class,
+        \App\Commands\Routes\Debug::class,
+        \App\Commands\Routes\Docs::class,
+        \App\Commands\Routes\Reconcile::class,
+        \App\Commands\Routes\Repair::class,
         
         /*
         |----------------------------------------------------------------------
         | Runtime / Recovery
         |----------------------------------------------------------------------
         */
-        \App\Commands\Runtime\Triage::class,
         \App\Commands\Runtime\CacheBoot::class,
+        \App\Commands\Runtime\Diagnose502::class,
+        \App\Commands\Runtime\SparkDoctor::class,
+        \App\Commands\Runtime\SparkDoctorRuntime::class,
+        \App\Commands\Runtime\SparkFix::class,
+        \App\Commands\Runtime\SparkOptimize::class,
+        \App\Commands\Runtime\Triage::class,
 
         \App\Commands\Diagnose503::class,
         \App\Commands\Fix503::class,
@@ -467,14 +543,13 @@ class Console extends BaseConfig
         |----------------------------------------------------------------------
         */
         \App\Commands\Test\RedisPing::class,
-        \App\Commands\SecurityCspAudit::class,
 
         /*
         |----------------------------------------------------------------------
         | Traits
         |----------------------------------------------------------------------
         */
-        \App\Commands\Traits\ParamOptions::class,
+        // \App\Commands\Traits\ParamOptions::class,
 
         /*
         |----------------------------------------------------------------------

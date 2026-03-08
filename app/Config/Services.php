@@ -169,6 +169,33 @@ class Services extends CoreServices
         return new \App\Services\Docs\DocsSyncEngine();
     }
 
+    public static function institutionalResearch($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('institutionalResearch');
+        }
+
+        return new \App\Services\Research\InstitutionalResearchService();
+    }
+
+    public static function financialIntelligence($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('financialIntelligence');
+        }
+
+        return new \App\Services\Research\FinancialIntelligenceService();
+    }
+
+    public static function researchService($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('researchService');
+        }
+
+        return new \App\Services\Research\InstitutionalResearchService();
+    }
+    
     public static function myMIAnalytics(bool $getShared = true)
     {
         if ($getShared) {

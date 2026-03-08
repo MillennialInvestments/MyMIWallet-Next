@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Commands;
+namespace App\Commands\Mail;
 
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class MailTest extends SafeBaseCommand
+class Test extends SafeBaseCommand
 {
     protected $group       = 'maintenance';
     protected $name        = 'mail:test';

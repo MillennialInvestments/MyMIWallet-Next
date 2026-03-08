@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-03-07T02:00:02Z
+> Run: 2026-03-07T14:00:01Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -456,6 +456,8 @@
   - ❌ No obvious code match found (heuristic)
 - docs/_repo/class_integrity_report.md
   - ❌ No obvious code match found (heuristic)
+- docs/_repo/diff_batches/batch_01.md
+  - ❌ No obvious code match found (heuristic)
 - docs/_support/aiops-init.md
   - ❌ No obvious code match found (heuristic)
 - docs/adr/0001-standards-and-response-contract.md
@@ -804,6 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/discord/premium_flows_and_upsell.md
   - ❌ No obvious code match found (heuristic)
-- docs/discord/python_workers.md
-  - ❌ No obvious code match found (heuristic)
-- … and 841 more
+- … and 842 more

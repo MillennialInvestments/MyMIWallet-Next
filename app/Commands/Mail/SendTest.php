@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Commands;
+namespace App\Commands\Mail;
 
 use App\Libraries\MailService;
 use App\Commands\SafeBaseCommand;

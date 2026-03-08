@@ -106,7 +106,7 @@
         },
         "docs/_repo/class_integrity_report.md": {
             "hash": "dfe518bf21e9d5cb2a9d84031cda6bbd549aad5f64fe78aa1c602facfaeb0cb7",
-            "mtime": "2026-03-06"
+            "mtime": "2026-03-07"
         },
         "docs/_support/aiops-init.md": {
             "hash": "e6d6afb2749947f259a6683fc7727c9ce0c4b38d0d2ef45e0d24b0e14d4a44a9",
@@ -1765,8 +1765,8 @@
             "mtime": "2026-03-01"
         },
         "docs/launch/launch_readiness_audit.md": {
-            "hash": "ddfb4ec22df9931bda312931fbb2b473d52d0f991aaf25f436332819a01cca61",
-            "mtime": "2026-03-06"
+            "hash": "6fedecdbeeed6c7501e9860e991d2b1c3d53c2854b50f40e08c35869918effe9",
+            "mtime": "2026-03-07"
         },
         "docs/launch/launch_smoke_results.md": {
             "hash": "043390d690b323d428df1b5dc561a1303b3501923ce56e99faab2cb043554aab",
@@ -4357,8 +4357,8 @@
             "mtime": "2025-12-16"
         },
         "docs/routes/routes.md": {
-            "hash": "3d4e5bb19add96318e3c389ce4b1549904a1e1b8bfd7060c26f6cef48a92c186",
-            "mtime": "2026-03-06"
+            "hash": "3ce25bfea4d03df8d6f1bffb0b14999e37f05c972285b90e7360afd241272a44",
+            "mtime": "2026-03-07"
         },
         "docs/routes/routes_audit.md": {
             "hash": "4de9fe39a7f53b56994c09b48859c846075870d92c59e6827596017980468cfc",
@@ -4875,7 +4875,15 @@
         "docs/wallets/wallets_workflow.md": {
             "hash": "eb51973b24eb162f1b8cf2ca2c86f53badfc063bbd48cd1ae96735ee24483597",
             "mtime": "2025-11-16"
+        },
+        "docs/_repo/diff_batches/batch_01.md": {
+            "hash": "33d6f72c80cf2582d4fa629219087fe8b17832675994badddee7409405fb4f75",
+            "mtime": "2026-03-07"
+        },
+        "docs/_support/spark-reset/20260307-110433/summary.md": {
+            "hash": "c0190415412632a3126a61635f178dfc94094fc13365a3d9e2bdf529d55d9981",
+            "mtime": "2026-03-07"
         }
     },
-    "last_run": "2026-03-07T02:00:02Z"
+    "last_run": "2026-03-07T14:00:01Z"
 }

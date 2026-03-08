@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Commands;
+namespace App\Commands\Mail;
 
 use App\Services\MailService;
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class MailSend extends SafeBaseCommand
+class Send extends SafeBaseCommand
 {
     protected $group       = 'Mail';
     protected $name        = 'mail:send';

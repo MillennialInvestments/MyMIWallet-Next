@@ -65,7 +65,7 @@ class OllamaPatchRunner
                     'fallback_plan' => 'docs/_aiops/patch_jobs_failed/' . $job->jobId . '.md',
                 ]));
             }
-        }
+        }   
 
         $validation = $this->validateDiff($diff, $job);
         $this->writeOutputs($job, $diff, $validation, $audit['model']);

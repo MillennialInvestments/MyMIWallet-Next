@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Commands;
+namespace App\Commands\Mail;
 
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class MailVerify extends SafeBaseCommand
+class Verify extends SafeBaseCommand
 {
     protected $group       = 'maintenance';
     protected $name        = 'mail:verify';
