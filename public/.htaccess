@@ -11,6 +11,13 @@ Options -Indexes
 	Options +FollowSymlinks
 	RewriteEngine On
 
+		# Serve real files directly
+		RewriteCond %{REQUEST_FILENAME} -f
+		RewriteRule ^ - [L]
+
+		# Normalize legacy image requests routed through index.php
+		RewriteRule ^index\.php/images/(.*)$ images/$1 [R=301,L,NC]
+
 	# Deny direct access attempts to application source paths if web root is misconfigured.
 	RewriteRule ^(?:app|writable|system)(?:/|$) - [F,L,NC]
 

@@ -18,6 +18,7 @@ helper('ai');
 $routes->addRedirect('index.php/(:any)', '$1', 301);
 $routes->addRedirect('index.php', '/', 301);
 $routes->addRedirect('index.php/', '/', 301);
+$routes->addRedirect('index.php/images/(:any)', 'images/$1', 301);
 $routes->get('assets/(:any)', static function () {
     throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
 });
@@ -1757,8 +1758,13 @@ $routes->group('Features', ['namespace' => 'App\Modules\Advertise\Controllers'],
 
 $routes->addRedirect('Features/Advanced-Investment-Portfoio-Manager', 'Features/Advanced-Investment-Portfolio-Manager', 301);
 $routes->addRedirect('Premium-Features/Due-Diligence-Database', 'Features/Brokerage-Integrations', 301);
+$routes->addRedirect('Premium-Features/Advanced-Charting', 'Features/Brokerage-Integrations', 301);
+$routes->addRedirect('Premium-Features/Advanced-Trade-Tracker', 'Investments/Trade-Tracker', 301);
+$routes->addRedirect('Premium-Features/Wallets', 'Wallets/Manager', 301);
+$routes->addRedirect('Premium_Features/Brokerage-Integrations', 'Features/Brokerage-Integrations', 301);
 $routes->addRedirect('How-To-Guides', 'Knowledgebase/Tutorials', 301);
 $routes->addRedirect('Budget/Financial-Institute', 'Budget/Account-Manager', 301);
+$routes->addRedirect('Budget/Financial-Advisors', 'Advisor', 301);
 $routes->addRedirect('Investments/Reports', 'Investments/Trade-Tracker', 301);
 
 $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers'], function ($routes) {
