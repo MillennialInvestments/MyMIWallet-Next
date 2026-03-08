@@ -108,6 +108,14 @@ try {
     require FCPATH . '../app/Config/Paths.php';
     $paths = new \Config\Paths();
 
+    if (! defined('ROOTPATH')) {
+        define('ROOTPATH', rtrim(realpath(FCPATH . '..') ?: (FCPATH . '..'), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
+    }
+
+    if (! defined('SUPPORTPATH')) {
+        define('SUPPORTPATH', ROOTPATH . 'support' . DIRECTORY_SEPARATOR);
+    }
+
     require $paths->systemDirectory . '/Boot.php';
 
     $exitCode = \CodeIgniter\Boot::bootWeb($paths);

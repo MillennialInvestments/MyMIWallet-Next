@@ -23,6 +23,10 @@ class ExternalApiGuard
      */
     public function allow(string $provider): bool
     {
+        if ((string) getenv('MYMI_DISABLE_EXTERNAL') !== '') {
+            return false;
+        }
+
         $key = strtolower(trim($provider));
         if ($key === '') {
             $key = 'unknown';

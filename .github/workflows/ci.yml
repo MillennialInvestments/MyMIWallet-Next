@@ -23,11 +23,30 @@ jobs:
         with:
           php-version: 8.2
 
-      - name: Install
-        run: composer install --no-interaction --no-progress
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Rebuild autoload cache
+        run: composer dump-autoload
 
       - name: Bootstrap CI .env
         run: cp env/.env.ci.example .env
+
+      - name: Prepare writable directories
+        run: |
+          mkdir -p writable/cache
+          mkdir -p writable/logs
+          mkdir -p writable/session
+          mkdir -p writable/uploads
+          chmod -R 777 writable
+
+      - name: CI install bootstrap (if available)
+        run: |
+          if php spark | grep -q "app:install"; then
+            php spark app:install
+          else
+            echo "app:install not registered; skipping"
+          fi
 
       - name: Prepare CI writable/artifacts
         run: php spark ops:ci:prepare
@@ -112,11 +131,30 @@ jobs:
         with:
           php-version: 8.2
 
-      - name: Install
-        run: composer install --no-interaction --no-progress
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Rebuild autoload cache
+        run: composer dump-autoload
 
       - name: Bootstrap CI .env
         run: cp env/.env.ci.example .env
+
+      - name: Prepare writable directories
+        run: |
+          mkdir -p writable/cache
+          mkdir -p writable/logs
+          mkdir -p writable/session
+          mkdir -p writable/uploads
+          chmod -R 777 writable
+
+      - name: CI install bootstrap (if available)
+        run: |
+          if php spark | grep -q "app:install"; then
+            php spark app:install
+          else
+            echo "app:install not registered; skipping"
+          fi
 
       - name: Prepare CI writable/artifacts
         run: php spark ops:ci:prepare
