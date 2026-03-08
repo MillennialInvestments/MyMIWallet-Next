@@ -1,17 +1,17 @@
 ---
-title: MyMI Gold
-slug: mymi-gold
-category: products
-description: How MyMI Gold is positioned in the ecosystem and how users can evaluate role, value, and risk in allocation plans.
+title: Setting Financial Goals
+slug: setting-financial-goals
+category: planning
+description: How to define measurable financial goals, align them with budgets, and track progress through milestones.
 ---
 
-# MyMI Gold
+# Setting Financial Goals
 
-How MyMI Gold is positioned in the ecosystem and how users can evaluate role, value, and risk in allocation plans.
+How to define measurable financial goals, align them with budgets, and track progress through milestones.
 
 ## What This Page Covers
 
-- Core concepts behind **MyMI Gold** inside the MyMI Wallet ecosystem.
+- Core concepts behind **Setting Financial Goals** inside the MyMI Wallet ecosystem.
 - Practical implementation flow from setup to daily operation.
 - How this area supports user education, acquisition, and onboarding.
 - Calls to action that move users into account activation and feature adoption.
@@ -22,7 +22,7 @@ MyMI Wallet is built to reduce decision friction. When users clearly understand 
 
 ## Platform Capabilities Connected to This Topic
 
-- MyMI Gold workflows are designed to be understandable for beginners and actionable for experienced users.
+- Setting Financial Goals workflows are designed to be understandable for beginners and actionable for experienced users.
 - Each guide includes education, implementation steps, and a practical call-to-action path.
 - Pages are intentionally structured for user onboarding, SEO indexing, and conversion support.
 
@@ -90,6 +90,6 @@ Use this structure for consistency on every How-It-Works page:
 
 ## Start Using MyMI Wallet
 
-Create your MyMI Wallet account and activate **MyMI Gold** to move from planning to execution with a repeatable workflow.
+Create your MyMI Wallet account and activate **Setting Financial Goals** to move from planning to execution with a repeatable workflow.
 
 **Primary CTA:** Create Account  **Secondary CTA:** Explore Features  **Next Step CTA:** Start Investing

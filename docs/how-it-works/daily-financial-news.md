@@ -1,17 +1,17 @@
 ---
-title: MyMI Gold
-slug: mymi-gold
-category: products
-description: How MyMI Gold is positioned in the ecosystem and how users can evaluate role, value, and risk in allocation plans.
+title: Daily Financial News
+slug: daily-financial-news
+category: news
+description: How to consume and operationalize daily market and macro news for budgeting and investment decisions.
 ---
 
-# MyMI Gold
+# Daily Financial News
 
-How MyMI Gold is positioned in the ecosystem and how users can evaluate role, value, and risk in allocation plans.
+How to consume and operationalize daily market and macro news for budgeting and investment decisions.
 
 ## What This Page Covers
 
-- Core concepts behind **MyMI Gold** inside the MyMI Wallet ecosystem.
+- Core concepts behind **Daily Financial News** inside the MyMI Wallet ecosystem.
 - Practical implementation flow from setup to daily operation.
 - How this area supports user education, acquisition, and onboarding.
 - Calls to action that move users into account activation and feature adoption.
@@ -22,7 +22,7 @@ MyMI Wallet is built to reduce decision friction. When users clearly understand 
 
 ## Platform Capabilities Connected to This Topic
 
-- MyMI Gold workflows are designed to be understandable for beginners and actionable for experienced users.
+- Daily Financial News workflows are designed to be understandable for beginners and actionable for experienced users.
 - Each guide includes education, implementation steps, and a practical call-to-action path.
 - Pages are intentionally structured for user onboarding, SEO indexing, and conversion support.
 
@@ -90,6 +90,6 @@ Use this structure for consistency on every How-It-Works page:
 
 ## Start Using MyMI Wallet
 
-Create your MyMI Wallet account and activate **MyMI Gold** to move from planning to execution with a repeatable workflow.
+Create your MyMI Wallet account and activate **Daily Financial News** to move from planning to execution with a repeatable workflow.
 
 **Primary CTA:** Create Account  **Secondary CTA:** Explore Features  **Next Step CTA:** Start Investing

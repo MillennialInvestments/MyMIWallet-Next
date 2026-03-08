@@ -1610,17 +1610,16 @@ $routes->group('ScriptStudio', ['namespace' => 'App\\Modules\\ScriptStudio\\Cont
     $routes->get('Export/(:num)/(:segment)', 'ScriptStudioController::export/$1/$2');
 });
 
-// Public: How It Works (new public views)
-$routes->group('How-It-Works', ['namespace' => 'App\\Modules\\Blog\\Controllers'], static function ($routes) {
+// Public: How It Works
+$routes->group('How-It-Works', ['namespace' => 'App\Modules\Blog\Controllers'], static function ($routes) {
     $routes->get('/', 'HowItWorksController::index');
-    $routes->get('budgeting', 'HowItWorksController::budgeting');
-    $routes->get('investing', 'HowItWorksController::investing');
-    $routes->get('crypto', 'HowItWorksController::crypto');
-    $routes->get('alerts', 'HowItWorksController::alerts');
-    $routes->get('projects', 'HowItWorksController::projects');
-    $routes->get('security', 'HowItWorksController::security');
-    $routes->get('pricing', 'HowItWorksController::pricing');
-    $routes->get('(:any)', 'HowItWorksController::show/$1');
+    $routes->get('Daily-Financial-News', 'HowItWorksController::DailyFinancialNews');
+    $routes->get('Investment-Portfolio-Management', 'HowItWorksController::InvestmentPortfolioManagement');
+    $routes->get('Personal-Budgeting', 'HowItWorksController::PersonalBudgeting');
+    $routes->get('MyMI-Gold', 'HowItWorksController::MyMIGold');
+    $routes->get('Purchase-MyMI-Gold', 'HowItWorksController::PurchaseMyMIGold');
+    $routes->get('Setting-Financial-Goals', 'HowItWorksController::show/setting-financial-goals');
+    $routes->get('(:segment)', 'HowItWorksController::show/$1');
 });
 
 // Customer Support:
