@@ -1,60 +1,131 @@
-# Master Spark Command Group
+# Master Spark Commands
 
-This group provides top-level documentation, architecture, and health inspection commands for the MyMI Wallet CI4 platform.
+## Overview
 
-## Command Group
-`master`
+This README documents Spark commands under `app/Commands/Master` and their operational dependencies.
 
-## Commands
+## Operational Purpose
 
-### Knowledge Graph
+Provide operators and developers with command intent, dependencies, workflows, and recovery guidance.
+
+## Command Inventory
+
+- `master:knowledge-graph:build` (Operational)
+- `master:run-all` (Automation)
+
+## Command Reference
+
+### master:knowledge-graph:build
+
+**Purpose**  
+Build a CI4 knowledge graph from controllers, routes, models, services, views, and commands.
+
+**Usage**  
+`php spark master:knowledge-graph:build`
+
+**Options**  
+None documented.
+
+**Services Used**  
+None detected.
+
+**Models Used**  
+None detected.
+
+**Tables Used**  
+`controllers`
+
+**External APIs**  
+None detected.
+
+**Related Commands**  
+`master:knowledge-graph:build`
+
+**Expected Output**  
+Command executes with status output and logs/errors based on runtime state.
+
+**Example Execution**  
+`php spark master:knowledge-graph:build`
+
+### master:run-all
+
+**Purpose**  
+Run the master docs, graph, and health pipeline.
+
+**Usage**  
+`php spark master:run-all`
+
+**Options**  
+None documented.
+
+**Services Used**  
+None detected.
+
+**Models Used**  
+None detected.
+
+**Tables Used**  
+None detected.
+
+**External APIs**  
+None detected.
+
+**Related Commands**  
+None detected.
+
+**Expected Output**  
+Command executes with status output and logs/errors based on runtime state.
+
+**Example Execution**  
+`php spark master:run-all`
+
+## Dependencies
+
+| Relationship | Target | Type |
+|---|---|---|
+| `master:knowledge-graph:build` | `controllers` | Command → Table |
+| `master:knowledge-graph:build` | `master:knowledge-graph:build` | Command → Command |
+
+## Command Dependency Graph
+
+```mermaid
+graph TD
+Master["Master Pipeline"]
+Master --> master_knowledge_graph_build["master:knowledge-graph:build"]
+master_knowledge_graph_build --> master_knowledge_graph_build["master:knowledge-graph:build"]
+Master --> master_run_all["master:run-all"]
+```
+
+## Execution Workflows
+
 - `php spark master:knowledge-graph:build`
-
-Builds:
-- `docs/_ci4_knowledge_graph.json`
-
-Relationships include:
-- Controller -> Model
-- Controller -> View
-- Controller -> Service
-- Model -> Table
-
-### Health Commands
-- `php spark master:health:routes`
-- `php spark master:health:controllers`
-- `php spark master:health:services`
-- `php spark master:health:models`
-- `php spark master:health:docs`
-- `php spark master:health:logs`
-- `php spark master:health:views`
-- `php spark master:health:commands`
-- `php spark master:health:dependencies`
-
-### Master Pipeline
 - `php spark master:run-all`
 
-Runs:
-1. docs inventory
-2. docs audit
-3. docs readme build
-4. knowledge graph build
-5. all health reports
+## Operational Playbooks
 
-## Generated Files
-- `docs/_ci4_knowledge_graph.json`
-- `docs/_health_routes.json`
-- `docs/_health_controllers.json`
-- `docs/_health_services.json`
-- `docs/_health_models.json`
-- `docs/_health_docs.json`
-- `docs/_health_logs.json`
-- `docs/_health_views.json`
-- `docs/_health_commands.json`
-- `docs/_health_dependencies.json`
+**Investigate Application Failure**
 
-## Recommended Workflow
+- `php spark logs:doctor`
+- `php spark ops:php:fpm:health`
+- `php spark ops:server:nginx:status`
+- `php spark spark:diagnose-503`
 
-### Daily
-```bash
-php spark master:run-all
-php spark aiops:docs-sync
+**Diagnose Database Issue**
+
+- `php spark db:inventory`
+- `php spark db:drift`
+- `php spark aiops:sql:check`
+
+## Troubleshooting
+
+- Common failure: command not found in registry.
+- Diagnostics: `php spark ops:commands:audit`, `php spark ops:commands:missing`.
+- Recovery: repair namespace/PSR-4 and rerun command audit tools.
+
+## Related Commands
+
+- `master:knowledge-graph:build`
+
+## Console Registry Verification
+
+- Console registry is auto-discovered in CI4; explicit `$commands` entries in `app/Config/Console.php` should be added for any commands that fail `ops:commands:missing`.

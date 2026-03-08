@@ -1,0 +1,4308 @@
+[
+  {
+    "command_name": "aiops:api:schema",
+    "group": "AIOps - API",
+    "description": "Validate API endpoints return JSON (optionally check required keys)",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/API/SchemaValidate.php",
+    "namespace": "App\\Commands\\AIOps\\API"
+  },
+  {
+    "command_name": "aiops:alerts-check",
+    "group": "AIOps - Alerts",
+    "description": "Fetch emails and queue them for processing",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Alerts/Check.php",
+    "namespace": "App\\Commands\\AIOps\\Alerts"
+  },
+  {
+    "command_name": "aiops:alerts-clean",
+    "group": "AIOps",
+    "description": "Delete completed aiops alert queue rows older than 30 days",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Alerts/Clean.php",
+    "namespace": "App\\Commands\\AIOps\\Alerts"
+  },
+  {
+    "command_name": "aiops:alerts-health",
+    "group": "AIOps - Alerts",
+    "description": "Run health checks on aiops alert queue and notify if failures are high",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Alerts/Health.php",
+    "namespace": "App\\Commands\\AIOps\\Alerts"
+  },
+  {
+    "command_name": "aiops:alerts-worker",
+    "group": "AIOps - Alerts",
+    "description": "Process queued alert emails",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Alerts/Worker.php",
+    "namespace": "App\\Commands\\AIOps\\Alerts"
+  },
+  {
+    "command_name": "aiops:audit",
+    "group": "AIOps - Audit",
+    "description": "Audit aiops runtime, orchestration routes, and n8n/docs readiness",
+    "options": [
+      "--json",
+      "Output JSON payload."
+    ],
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Audit.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:auto:run",
+    "group": "AIOps - Run",
+    "description": "Run AIOPS using manual priorities first, falling back to log-driven auto priorities.",
+    "options": [
+      "--dry-run",
+      "Evaluate only. No PR creation when enabled.",
+      "--limit-tasks",
+      "Max tasks per execution.",
+      "--limit-errors",
+      "Max signatures per task/PR batch.",
+      "--auto-threshold",
+      "Severity threshold for auto mode (CRITICAL|ERROR).",
+      "--write-auto-tasks",
+      "Persist generated auto priority files when in auto mode.",
+      "--create-pr",
+      "Create PR branches + GitHub PRs for matching signatures.",
+      "--notify",
+      "Send Discord notifications (if configured).",
+      "--job-file",
+      "Optional patch job file under docs/_aiops/patch_jobs/.",
+      "--force",
+      "Regenerate patch output even when docs/_aiops/patches/{job_id}.diff exists"
+    ],
+    "usage": "aiops:auto:run [--dry-run=1|0] [--limit-tasks=1] [--limit-errors=3] [--auto-threshold=CRITICAL|ERROR] [--write-auto-tasks=1|0] [--create-pr=1|0] [--notify=1|0] [--job-file=docs/_aiops/patch_jobs/<id>.md] [--force=1|0]",
+    "file_path": "app/Commands/AIOps/AutoRun.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:backlog",
+    "group": "AIOps - Run",
+    "description": "Reconcile outstanding AIOPS patch workflow jobs.",
+    "options": [
+      "--run",
+      "Execute reconciliation actions for outstanding jobs.",
+      "--force",
+      "Force rerun for failed/partial jobs."
+    ],
+    "usage": "aiops:backlog [--run=1|0] [--force=1|0]",
+    "file_path": "app/Commands/AIOps/Backlog.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:build-command",
+    "group": "AIOps - Commands",
+    "description": "Generate a Spark command from text logic using AIOps",
+    "options": null,
+    "usage": "aiops:build-command \"text logic here\"",
+    "file_path": "app/Commands/AIOps/BuildCommand.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:chat-gov-index",
+    "group": "AIOps - Commands",
+    "description": "Index ChatGPT governance steps from archived chats and sync CSV/DB outputs.",
+    "options": [
+      "--write-files",
+      "Write CSV/JSON outputs (default: config).",
+      "--db-sync",
+      "Sync results into MySQL tables (default: config).",
+      "--metrics",
+      "Write JSON metrics output (default: config).",
+      "--path",
+      "Override base path (default: docs/chatgpt/chats).",
+      "--limit",
+      "Limit number of files scanned."
+    ],
+    "usage": "aiops:chat-governance-index [--write-files=1|0] [--db-sync=1|0] [--metrics=1|0] [--path=path] [--limit=number]",
+    "file_path": "app/Commands/AIOps/ChatGovernanceIndex.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:command-index",
+    "group": "AIOps - Commands",
+    "description": "Scan and classify Spark commands for AIOps governance.",
+    "options": [
+      "--json",
+      "Emit JSON output to stdout",
+      "--notify",
+      "Send summary notification via Discord or email",
+      "--db",
+      "Store index snapshot in aiops_command_index table"
+    ],
+    "usage": "aiops:command-index [--json] [--notify] [--db]",
+    "file_path": "app/Commands/AIOps/CommandIndex.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:continue",
+    "group": "AIOps - Audit",
+    "description": "Operational audit (server + runtime focus)",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/ContinueAudit.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:copilot:validate",
+    "group": "AIOps - Audit",
+    "description": "Validate copilot instructions and Spark command safety rules.",
+    "options": [
+      "--json",
+      "Emit JSON output to stdout",
+      "--notify",
+      "Send summary notification via Discord or email",
+      "--db",
+      "Store JSON snapshot in aiops_command_snapshots table",
+      "--ci",
+      "Force CI-safe mode (no external network or DB persistence)"
+    ],
+    "usage": "aiops:copilot:validate [--json] [--notify] [--db]",
+    "file_path": "app/Commands/AIOps/CopilotValidate.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:csp:audit",
+    "group": "AIOps",
+    "description": "Scans the repository for CSP violations and writes a dated audit report.",
+    "options": [
+      "--dry-run",
+      "Scan and print summary without writing markdown report."
+    ],
+    "usage": "aiops:csp:audit",
+    "file_path": "app/Commands/AIOps/CspAudit.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:db:slow_scan",
+    "group": "AIOps - DB",
+    "description": "Scan logs for slow query markers (best-effort)",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/DB/SlowScan.php",
+    "namespace": "App\\Commands\\AIOps\\DB"
+  },
+  {
+    "command_name": "aiops:dedupe:report",
+    "group": "AIOps - Run",
+    "description": "Generate duplicate and near-duplicate instruction report.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/DedupeReport.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:deps:add",
+    "group": "AIOps - Run",
+    "description": "Add dependency link: instruction depends on another instruction",
+    "options": null,
+    "usage": "aiops:deps:add --id=123 --depends=122",
+    "file_path": "app/Commands/AIOps/DepsAdd.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:diff:format",
+    "group": "AIOps - Audit",
+    "description": "Generate a real unified diff from current working tree",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/DiffFormat.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:docs-sync",
+    "group": "AIOps - Docs",
+    "description": "Run documentation sync pipeline using DocsSyncEngine",
+    "options": null,
+    "usage": "php spark aiops:docs-sync",
+    "file_path": "app/Commands/AIOps/Docs/AutoSync.php",
+    "namespace": "App\\Commands\\AIOps\\Docs"
+  },
+  {
+    "command_name": "aiops:doctor",
+    "group": "AIOps - Audit",
+    "description": "Validate AIOps service wiring, namespace casing, and Spark helper migration state.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Doctor.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:email-scan",
+    "group": "AIOps - Marketing",
+    "description": "Scan alerts mailbox for new emails and record AIOps counts.",
+    "options": [
+      "--mailbox",
+      "IMAP mailbox folder (default: INBOX).",
+      "--from",
+      "Filter by sender email address (default: alerts@mymiwallet.com).",
+      "--since",
+      "IMAP SINCE date in YYYY-MM-DD format (overrides lookback-days).",
+      "--lookback-days",
+      "Number of days to look back when --since is not provided (default: 2).",
+      "--limit",
+      "Maximum number of emails to scan per run.",
+      "--dry-run",
+      "Preview counts without writing to the database."
+    ],
+    "usage": "aiops:email-scan [--mailbox=INBOX] [--from=alerts@mymiwallet.com] [--since=YYYY-MM-DD] [--lookback-days=2] [--limit=250] [--dry-run]",
+    "file_path": "app/Commands/AIOps/EmailScan.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:form:test",
+    "group": "AIOps - QA",
+    "description": "Scan a form (url/file/text), map route->controller, generate payload, submit, capture logs, and queue a patch job if errors found.",
+    "options": [
+      "--url",
+      "A URL or path to scan (e.g. \"/Budget/Account-Manager\").",
+      "--file",
+      "An absolute file path on server to scan.",
+      "--text",
+      "Raw HTML snippet containing a <form> to scan.",
+      "--no-ingest",
+      "Do not call aiops:ingest after creating a patch job."
+    ],
+    "usage": "aiops:form:test [--url=\"/path\"] [--file=\"/abs/path/to/view.php\"] [--text=\"<form>..</form>\"] [--no-ingest]",
+    "file_path": "app/Commands/AIOps/FormTestScan.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:gate:cost",
+    "group": "AIOps - Management",
+    "description": "Enforce daily AI cost cap; auto-disable AiOps LLM when threshold exceeded",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/GateCost.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:governance:analyze",
+    "group": "AIOps - Commands",
+    "description": "Analyze token usage + model anomalies",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/GovernanceAnalyze.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:health:full",
+    "group": "AIOps - Audit",
+    "description": "Run full system health checks and generate a consolidated report",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/HealthFull.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:ingest",
+    "group": "AIOps - Run",
+    "description": "Ingest AI instruction text and enqueue for AIOps worker (analysis + patch + PR prep)",
+    "options": null,
+    "usage": "aiops:ingest [--text=\"...\"] [--file=/path/file.txt] [--auto-pr] [--dry-run] [--severity=LOW|MEDIUM|HIGH]",
+    "file_path": "app/Commands/AIOps/Ingest.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:init",
+    "group": "AIOps - Run",
+    "description": "Initialize and validate the AIOps PR factory (one-time or rare use).",
+    "options": [
+      "--approve",
+      "Required to export PR bundle to outbox.",
+      "--dry-run",
+      "Validate only, do not write files."
+    ],
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Init.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:manual:index",
+    "group": "AIOps - Run",
+    "description": "Index AI manual documentation under docs/_aiops/manual",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/ManualIndex.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:manual:run",
+    "group": "AIOps - Run",
+    "description": "Run manual-priority AIOPS correlation, state refresh, and PR creation.",
+    "options": [
+      "--dry-run",
+      "Evaluate only. No PR creation or writes when enabled.",
+      "--limit-tasks",
+      "Max tasks per execution.",
+      "--limit-errors",
+      "Max signatures per PR batch.",
+      "--only",
+      "Single priority file name to evaluate.",
+      "--write-state",
+      "Persist state files.",
+      "--create-pr",
+      "Create PR branches + GitHub PRs for matching signatures.",
+      "--notify",
+      "Send Discord notifications (if configured)."
+    ],
+    "usage": "aiops:manual:run [--dry-run=1|0] [--limit-tasks=1] [--limit-errors=3] [--only=file.md] [--write-state=1|0] [--create-pr=1|0] [--notify=1|0]",
+    "file_path": "app/Commands/AIOps/ManualRun.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:n8n:logs",
+    "group": "AIOps - n8n",
+    "description": "Tail n8n logs",
+    "options": [
+      "--lines",
+      "Lines",
+      "--json",
+      "JSON"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/AIOps/N8n/Logs.php",
+    "namespace": "App\\Commands\\AIOps\\N8n"
+  },
+  {
+    "command_name": "aiops:n8n:restart",
+    "group": "AIOps - n8n",
+    "description": "Restart n8n",
+    "options": [
+      "--json",
+      "JSON",
+      "--dry-run",
+      "Dry"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/AIOps/N8n/Restart.php",
+    "namespace": "App\\Commands\\AIOps\\N8n"
+  },
+  {
+    "command_name": "aiops:n8n:start",
+    "group": "AIOps - n8n",
+    "description": "Start n8n",
+    "options": [
+      "--json",
+      "JSON",
+      "--dry-run",
+      "Dry"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/AIOps/N8n/Start.php",
+    "namespace": "App\\Commands\\AIOps\\N8n"
+  },
+  {
+    "command_name": "aiops:n8n:stop",
+    "group": "AIOps - n8n",
+    "description": "Stop n8n",
+    "options": [
+      "--json",
+      "JSON",
+      "--dry-run",
+      "Dry"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/AIOps/N8n/Stop.php",
+    "namespace": "App\\Commands\\AIOps\\N8n"
+  },
+  {
+    "command_name": "aiops:observe:cost",
+    "group": "AIOps - Observe",
+    "description": "Correlate observability signals with AI cost logs",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Observe/Cost.php",
+    "namespace": "App\\Commands\\AIOps\\Observe"
+  },
+  {
+    "command_name": "aiops:observe:hash",
+    "group": "AIOps - Observe",
+    "description": "Fingerprint recurring errors into stable hashes",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Observe/Hash.php",
+    "namespace": "App\\Commands\\AIOps\\Observe"
+  },
+  {
+    "command_name": "aiops:observe:map",
+    "group": "AIOps - Observe",
+    "description": "Map errors to routes and controllers",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Observe/Map.php",
+    "namespace": "App\\Commands\\AIOps\\Observe"
+  },
+  {
+    "command_name": "aiops:observe:patch",
+    "group": "AIOps - Observe",
+    "description": "Create patch file from suggestions",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Observe/Patch.php",
+    "namespace": "App\\Commands\\AIOps\\Observe"
+  },
+  {
+    "command_name": "aiops:observe:regression",
+    "group": "AIOps - Observe",
+    "description": "Detect fingerprint regressions vs previous snapshot",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Observe/Regression.php",
+    "namespace": "App\\Commands\\AIOps\\Observe"
+  },
+  {
+    "command_name": "aiops:observe:scan",
+    "group": "AIOps - Observe",
+    "description": "Scan logs and persist recurring errors",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Observe/Scan.php",
+    "namespace": "App\\Commands\\AIOps\\Observe"
+  },
+  {
+    "command_name": "aiops:observe:snapshot",
+    "group": "AIOps - Observe",
+    "description": "Snapshot fingerprint map for regression detection",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Observe/Snapshot.php",
+    "namespace": "App\\Commands\\AIOps\\Observe"
+  },
+  {
+    "command_name": "aiops:observe:suggest",
+    "group": "AIOps - Observe",
+    "description": "Generate fix suggestions for recurring errors",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Observe/Suggest.php",
+    "namespace": "App\\Commands\\AIOps\\Observe"
+  },
+  {
+    "command_name": "aiops:observe",
+    "group": "AIOps - Run",
+    "description": "Parse logs and detect recurring error signatures",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Observe.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:pr:auto",
+    "group": "AIOps - PR",
+    "description": "Full safe pipeline: observe \u2192 validate \u2192 regression \u2192 PR",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/PRAuto.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:pr:create",
+    "group": "AIOps - PR",
+    "description": "Create a branch, push, and open a PR (requires token + enabled flags)",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/PRCreate.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:patch:apply",
+    "group": "AIOps - Patch",
+    "description": "Safely apply AI-generated patch under guardrails",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Patch/Apply.php",
+    "namespace": "App\\Commands\\AIOps\\Patch"
+  },
+  {
+    "command_name": "aiops:patch:dry_run",
+    "group": "AIOps - Patch",
+    "description": "Apply patch in temporary branch",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Patch/DryRun.php",
+    "namespace": "App\\Commands\\AIOps\\Patch"
+  },
+  {
+    "command_name": "aiops:patch:hallucination",
+    "group": "AIOps - Patch",
+    "description": "Detect hallucinated symbols in aiops_generated_patch.diff before apply",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Patch/Hallucination.php",
+    "namespace": "App\\Commands\\AIOps\\Patch"
+  },
+  {
+    "command_name": "aiops:patch:risk_score",
+    "group": "AIOps - Patch",
+    "description": "Calculate patch risk score",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Patch/RiskScore.php",
+    "namespace": "App\\Commands\\AIOps\\Patch"
+  },
+  {
+    "command_name": "aiops:patch:validate",
+    "group": "AIOps - Patch",
+    "description": "Validate PHP syntax after patch apply",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Patch/Validate.php",
+    "namespace": "App\\Commands\\AIOps\\Patch"
+  },
+  {
+    "command_name": "aiops:priority:build",
+    "group": "AIOps - Audit",
+    "description": "Scan /docs, detect gaps, verify repo, stage codegen artifacts for PR batching, and write /docs/priority outputs.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/PriorityBuildCommand.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:public-pages:audit",
+    "group": "AIOps - Public Pages",
+    "description": "Audit public pages schema coverage, freshness, and governance conditions.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/PublicPages/Audit.php",
+    "namespace": "App\\Commands\\AIOps\\PublicPages"
+  },
+  {
+    "command_name": "aiops:public-pages:import",
+    "group": "AIOps - Public Pages",
+    "description": "Import docs/_aiops/inputs/public_pages.csv into bf_public_pages_catalog.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/PublicPages/Import.php",
+    "namespace": "App\\Commands\\AIOps\\PublicPages"
+  },
+  {
+    "command_name": "aiops:public-pages:report",
+    "group": "AIOps - Public Pages",
+    "description": "Generate report artifacts for a public pages run.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/PublicPages/Report.php",
+    "namespace": "App\\Commands\\AIOps\\PublicPages"
+  },
+  {
+    "command_name": "aiops:public-pages:run",
+    "group": "AIOps - Public Pages",
+    "description": "Run public pages source collection and draft generation.",
+    "options": [
+      "--due",
+      "Process pages due in next 24h (default).",
+      "--page_id",
+      "Process a specific page_id."
+    ],
+    "usage": null,
+    "file_path": "app/Commands/AIOps/PublicPages/Run.php",
+    "namespace": "App\\Commands\\AIOps\\PublicPages"
+  },
+  {
+    "command_name": "aiops:redis:stats",
+    "group": "AIOps - Redis",
+    "description": "Fetch Redis INFO stats (best-effort)",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Redis/Stats.php",
+    "namespace": "App\\Commands\\AIOps\\Redis"
+  },
+  {
+    "command_name": "aiops:repair",
+    "group": "AIOps - Repair",
+    "description": "Apply safe aiops repairs",
+    "options": [
+      "--json",
+      "JSON",
+      "--dry-run",
+      "Dry"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Repair.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:repair:run",
+    "group": "AIOps - Repair",
+    "description": "Full autonomous repair pipeline",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/RepairRun.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:repair:run_safe",
+    "group": "AIOps - Repair",
+    "description": "Run repair pipeline with rollback safety + gating before PR",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/RepairRunSafe.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:rollback",
+    "group": "AIOps - PR",
+    "description": "Rollback working tree to clean state (hard reset)",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Rollback.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:routes:compare",
+    "group": "AIOps - Routes",
+    "description": "Compare staging vs production routes scan",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Routes/Compare.php",
+    "namespace": "App\\Commands\\AIOps\\Routes"
+  },
+  {
+    "command_name": "aiops:routes:gate",
+    "group": "AIOps - Routes",
+    "description": "Gate based on routes_scan.json thresholds",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Routes/Gate.php",
+    "namespace": "App\\Commands\\AIOps\\Routes"
+  },
+  {
+    "command_name": "aiops:routes:regress",
+    "group": "AIOps - Routes",
+    "description": "Detect route scan regressions vs previous snapshot",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Routes/Regress.php",
+    "namespace": "App\\Commands\\AIOps\\Routes"
+  },
+  {
+    "command_name": "aiops:routes:scan",
+    "group": "AIOps - Routes",
+    "description": "Scan Routes.php (GET routes), parallel curl, write JSON+CSV+snapshot",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Routes/Scan.php",
+    "namespace": "App\\Commands\\AIOps\\Routes"
+  },
+  {
+    "command_name": "aiops:routes:scan_auth",
+    "group": "AIOps - Routes",
+    "description": "Authenticated scan using AIOPS_AUTH_COOKIE",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Routes/ScanAuth.php",
+    "namespace": "App\\Commands\\AIOps\\Routes"
+  },
+  {
+    "command_name": "aiops:run",
+    "group": "AIOps - Run",
+    "description": "Manually run the AI-Ops worker and generate docs/_aiops reports",
+    "options": [
+      "--mode",
+      "Run mode (manual|nightly). Default: manual",
+      "--dry-run",
+      "Validate paths and configuration without executing the worker",
+      "--job-file",
+      "Optional patch job file under docs/_aiops/patch_jobs/",
+      "--force",
+      "Regenerate patch output even when docs/_aiops/patches/{job_id}.diff exists"
+    ],
+    "usage": "aiops:run [--mode=manual|nightly] [--dry-run]",
+    "file_path": "app/Commands/AIOps/Run.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:graph:run",
+    "group": "AIOps - Run",
+    "description": "Execute queued instructions respecting dependency graph (runs worker iteratively).",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/RunGraph.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:scan:cells",
+    "group": "AIOps",
+    "description": "Stateful scanner for repeated UI blocks and Cell candidates.",
+    "options": [
+      "--dry-run",
+      "1|0 default 1",
+      "--sleep",
+      "seconds between cycles (default 900)",
+      "--batch",
+      "queue items per cycle (default 5)",
+      "--max-prs",
+      "max PR actions per cycle (default 1)",
+      "--write-pr",
+      "1|0 enable phase 2 patching/PR fallback write",
+      "--once",
+      "1|0 run single cycle then exit",
+      "--reset",
+      "1|0 reset scanner queue and state before running"
+    ],
+    "usage": "php spark aiops:scan:cells [--dry-run=1] [--sleep=900] [--batch=5] [--max-prs=1] [--write-pr=0] [--once=0] [--reset=0]",
+    "file_path": "app/Commands/AIOps/ScanCells.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:seed",
+    "group": "AIOps - PR",
+    "description": "Seed default AI Ops caps and pricing configuration.",
+    "options": [
+      "--dry-run",
+      "Preview actions without writing to the database"
+    ],
+    "usage": "php spark aiops:seed",
+    "file_path": "app/Commands/AIOps/Seed.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:self-heal",
+    "group": "AIOps - Repair",
+    "description": "Run one-pass self-heal",
+    "options": [
+      "--attempts",
+      "max 3",
+      "--json",
+      "JSON"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/AIOps/SelfHeal.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:sql:check",
+    "group": "AIOps - DB",
+    "description": "Validate model/table/query SQL compatibility against live schema.",
+    "options": [
+      "--model",
+      "Model class name, e.g. BudgetModel",
+      "--table",
+      "Table name to inspect",
+      "--query",
+      "SQL query to validate via EXPLAIN"
+    ],
+    "usage": "aiops:sql:check --model=BudgetModel | --table=bf_users | --query=\"SELECT * FROM bf_users\"",
+    "file_path": "app/Commands/AIOps/SqlCheck.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:status",
+    "group": "AIOps - Repair",
+    "description": "AIOps runtime status",
+    "options": [
+      "--json",
+      "JSON output"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Status.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:sync-perf",
+    "group": "AIOps - Performance",
+    "description": "Scan Routes.php and sync perf_urls.txt automatically",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/SyncPerfRoutes.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:unlock",
+    "group": "AIOps",
+    "description": "Manually unlock an AIOPS patch job and reset retries.",
+    "options": null,
+    "usage": "aiops:unlock {jobId}",
+    "file_path": "app/Commands/AIOps/Unlock.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:watch",
+    "group": "AIOps - Repair",
+    "description": "Continuous aiops audit watcher",
+    "options": [
+      "--interval",
+      "Seconds",
+      "--max-cycles",
+      "0 infinite",
+      "--heal",
+      "Run self-heal"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/AIOps/Watch.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:worker",
+    "group": "AIOps - Run",
+    "description": "Process queued AIOps instructions (governance + targeting + diff + optional PR).",
+    "options": null,
+    "usage": "aiops:worker [--once] [--max=10] [--create-pr=0|1]",
+    "file_path": "app/Commands/AIOps/Worker.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "aiops:worker:logs",
+    "group": "AIOps - Run",
+    "description": "Summarize logs, ingest actionable issues, and run aiops worker once.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/AIOps/WorkerLogs.php",
+    "namespace": "App\\Commands\\AIOps"
+  },
+  {
+    "command_name": "api:audit",
+    "group": "API",
+    "description": "Institutional API governance audit: routes, permissions, filters, rate limits, and versioning.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/API/ApiAudit.php",
+    "namespace": "App\\Commands\\API"
+  },
+  {
+    "command_name": "api:filters-check",
+    "group": "API",
+    "description": "Fail on CRITICAL uncovered endpoints by filter governance.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/API/ApiFiltersCheck.php",
+    "namespace": "App\\Commands\\API"
+  },
+  {
+    "command_name": "api:list",
+    "group": "API",
+    "description": "List endpoints with filters, auth indicator, and version.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/API/ApiList.php",
+    "namespace": "App\\Commands\\API"
+  },
+  {
+    "command_name": "api:permissions",
+    "group": "API",
+    "description": "Generate endpoint permission matrix in markdown and JSON.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/API/ApiPermissions.php",
+    "namespace": "App\\Commands\\API"
+  },
+  {
+    "command_name": "api:rate-limit-check",
+    "group": "API",
+    "description": "Fail when external/API-like endpoints have no rate-limit enforcement metadata.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/API/ApiRateLimitCheck.php",
+    "namespace": "App\\Commands\\API"
+  },
+  {
+    "command_name": "api:versioning-check",
+    "group": "API",
+    "description": "Detect API endpoints missing /API/vN namespace and emit remediation.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/API/ApiVersioningCheck.php",
+    "namespace": "App\\Commands\\API"
+  },
+  {
+    "command_name": "alerts:audit",
+    "group": "Alerts",
+    "description": "Audit recent scraped alert emails against generated trade alerts.",
+    "options": [
+      "--dry-run",
+      "Preview actions without writing audit artifacts"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Alerts/Audit.php",
+    "namespace": "App\\Commands\\Alerts"
+  },
+  {
+    "command_name": "alerts:forecast",
+    "group": "Alerts",
+    "description": "Refresh forecasts for open alerts.",
+    "options": [
+      "--dry-run",
+      "Preview actions without running refresh jobs",
+      "--approve",
+      "Acknowledge and run forecast refresh jobs"
+    ],
+    "usage": "forecasts:refresh [limit] [--dry-run] [--approve]",
+    "file_path": "app/Commands/Alerts/Forecast.php",
+    "namespace": "App\\Commands\\Alerts"
+  },
+  {
+    "command_name": "alerts:ingest",
+    "group": "Alerts",
+    "description": "Ingest ThinkorSwim alert emails and upsert trade alerts.",
+    "options": [
+      "--since",
+      "How far back to scan (default: 15m). Supports 15m|1h|today.",
+      "--limit",
+      "Max emails to scan (default: 200).",
+      "--dry-run",
+      "Preview ingestion without DB writes.",
+      "--verbose",
+      "Verbose logging to CLI."
+    ],
+    "usage": "ops:alerts:ingest [--since=15m|1h|today] [--limit=200] [--dry-run] [--verbose]",
+    "file_path": "app/Commands/Alerts/Ingest.php",
+    "namespace": "App\\Commands\\Alerts"
+  },
+  {
+    "command_name": "alerts:parse-test",
+    "group": "Alerts",
+    "description": "Parse a broker email sample and output normalized execution data.",
+    "options": [
+      "--dry-run",
+      "Preview actions without running parser"
+    ],
+    "usage": "alerts:parse-test [file] [subject] [--dry-run]",
+    "file_path": "app/Commands/Alerts/ParseTest.php",
+    "namespace": "App\\Commands\\Alerts"
+  },
+  {
+    "command_name": "app:api:audit",
+    "group": "App",
+    "description": "Advanced API audit: groups, filters, duplicates, OpenAPI, Postman, probe mode.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/App/APIAuditPro.php",
+    "namespace": "App\\Commands\\App"
+  },
+  {
+    "command_name": "app:api:list",
+    "group": "App",
+    "description": "List complete APIs from latest audit report.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/App/APIList.php",
+    "namespace": "App\\Commands\\App"
+  },
+  {
+    "command_name": "app:controller:audit",
+    "group": "App",
+    "description": "Audit controllers for unsafe initController patterns, score severity, suggest patches, optional safe auto-fix, and regression diff.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/App/ControllerAudit.php",
+    "namespace": "App\\Commands\\App"
+  },
+  {
+    "command_name": "app:gate:coverage",
+    "group": "App",
+    "description": "Gate on PHPUnit coverage if available (coverage-text).",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/App/CoverageGate.php",
+    "namespace": "App\\Commands\\App"
+  },
+  {
+    "command_name": "app:healthcheck",
+    "group": "app",
+    "description": "Compatibility healthcheck command aligned to AI-Ops spark checks.",
+    "options": [
+      "--dry-run",
+      "Preview actions without writing data"
+    ],
+    "usage": "php spark app:healthcheck",
+    "file_path": "app/Commands/App/Healthcheck.php",
+    "namespace": "App\\Commands\\App"
+  },
+  {
+    "command_name": "app:test",
+    "group": "App",
+    "description": "Run PHPUnit test suite",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/App/Test.php",
+    "namespace": "App\\Commands\\App"
+  },
+  {
+    "command_name": "app:update",
+    "group": "app",
+    "description": "Deprecated. Use ops:app:update instead.",
+    "options": null,
+    "usage": "app:update (deprecated)",
+    "file_path": "app/Commands/AppUpdate.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "audit:all",
+    "group": "Audit",
+    "description": "Full system visibility audit",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Audit/All.php",
+    "namespace": "App\\Commands\\Audit"
+  },
+  {
+    "command_name": "audit:node",
+    "group": "audit",
+    "description": "Detect tracked node_modules and native build artifacts (read-only).",
+    "options": null,
+    "usage": "audit:node",
+    "file_path": "app/Commands/Audit/NodeAudit.php",
+    "namespace": "App\\Commands\\Audit"
+  },
+  {
+    "command_name": "audit:psr4",
+    "group": "maintenance",
+    "description": "Audit PSR-4 compliance for the app namespace.",
+    "options": [
+      "--ci",
+      "Exit non-zero if violations are detected.",
+      "--json",
+      "Output JSON instead of CLI formatting.",
+      "--dry-run",
+      "Preview actions without writing data"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/AuditPsr4.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "auth:audit",
+    "group": "auth",
+    "description": "Audit Myth:Auth authentication and account lifecycle flows end-to-end, including registration, login, and reset flows.",
+    "options": [
+      "--dry-run",
+      "Preview actions without writing data"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Auth/Audit.php",
+    "namespace": "App\\Commands\\Auth"
+  },
+  {
+    "command_name": "auth:flow-smoke",
+    "group": "auth",
+    "description": "Smoke test for auth redirect safety and login route no-cache headers.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Auth/FlowSmoke.php",
+    "namespace": "App\\Commands\\Auth"
+  },
+  {
+    "command_name": "auth:funnel-check",
+    "group": "auth",
+    "description": "Check auth funnel sanity using recent user events and emit alerts on drop-offs.",
+    "options": [
+      "--dry-run",
+      "Preview actions without writing data"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Auth/FunnelCheck.php",
+    "namespace": "App\\Commands\\Auth"
+  },
+  {
+    "command_name": "auth:smoke",
+    "group": "auth",
+    "description": "Run a safe authentication smoke test and record health results for ops visibility.",
+    "options": [
+      "--dry-run",
+      "Preview actions without writing data"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Auth/Smoke.php",
+    "namespace": "App\\Commands\\Auth"
+  },
+  {
+    "command_name": "auth:smoke-test",
+    "group": "auth",
+    "description": "Deterministic Myth/Auth smoke test for login/session/reset flow.",
+    "options": [
+      "--json",
+      "Output machine-readable JSON only"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Auth/SmokeTest.php",
+    "namespace": "App\\Commands\\Auth"
+  },
+  {
+    "command_name": "cache:audit",
+    "group": "cache",
+    "description": "Scan the repo for unsafe cache key usage.",
+    "options": [
+      "--dry-run",
+      "Preview actions without writing data"
+    ],
+    "usage": "cache:audit",
+    "file_path": "app/Commands/CacheAudit.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "chat:audit",
+    "group": "Chat",
+    "description": "Chat audit",
+    "options": [
+      "--json",
+      "JSON"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Chat/Audit.php",
+    "namespace": "App\\Commands\\Chat"
+  },
+  {
+    "command_name": "chat:logs",
+    "group": "Chat",
+    "description": "Tail persisted chat logs from writable/logs/chat.",
+    "options": [
+      "--lines",
+      "Number of lines to output (default: 200).",
+      "--json",
+      "Return JSON payload with per-file log sources.",
+      "--since",
+      "Filter by relative window (e.g. 5m, 2h, 1d)."
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Chat/Logs.php",
+    "namespace": "App\\Commands\\Chat"
+  },
+  {
+    "command_name": "chat:repair",
+    "group": "Chat",
+    "description": "Chat repairs",
+    "options": [
+      "--json",
+      "JSON",
+      "--dry-run",
+      "Dry"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Chat/Repair.php",
+    "namespace": "App\\Commands\\Chat"
+  },
+  {
+    "command_name": "chat:restart",
+    "group": "Chat",
+    "description": "Restart chat",
+    "options": [
+      "--json",
+      "JSON",
+      "--dry-run",
+      "Dry"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Chat/Restart.php",
+    "namespace": "App\\Commands\\Chat"
+  },
+  {
+    "command_name": "chat:start",
+    "group": "Chat",
+    "description": "Start chat",
+    "options": [
+      "--json",
+      "JSON",
+      "--dry-run",
+      "Dry"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Chat/Start.php",
+    "namespace": "App\\Commands\\Chat"
+  },
+  {
+    "command_name": "chat:status",
+    "group": "Chat",
+    "description": "Chat status with PID and listening-port verification.",
+    "options": [
+      "--json",
+      "JSON"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Chat/Status.php",
+    "namespace": "App\\Commands\\Chat"
+  },
+  {
+    "command_name": "chat:stop",
+    "group": "Chat",
+    "description": "Stop chat",
+    "options": [
+      "--json",
+      "JSON",
+      "--dry-run",
+      "Dry"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Chat/Stop.php",
+    "namespace": "App\\Commands\\Chat"
+  },
+  {
+    "command_name": "chat:unlock",
+    "group": "chat",
+    "description": "Safely clear stale chat runtime lock and pid files.",
+    "options": [
+      "--force",
+      "Also kill a running process if PID exists (dangerous).",
+      "--json",
+      "Output JSON payload."
+    ],
+    "usage": "chat:unlock [--force] [--json]",
+    "file_path": "app/Commands/Chat/Unblock.php",
+    "namespace": "App\\Commands\\Chat"
+  },
+  {
+    "command_name": "codex:audit",
+    "group": "Codex",
+    "description": "Full repository audit via OpenAI",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Codex/Audit.php",
+    "namespace": "App\\Commands\\Codex"
+  },
+  {
+    "command_name": "codex:continue",
+    "group": "Codex",
+    "description": "Continue audit in batches (default 5 files) with OpenAI + severity tracking",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Codex/ContinueAudit.php",
+    "namespace": "App\\Commands\\Codex"
+  },
+  {
+    "command_name": "codex:gate",
+    "group": "Codex",
+    "description": "Fail build if high severity issues exist",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Codex/Gate.php",
+    "namespace": "App\\Commands\\Codex"
+  },
+  {
+    "command_name": "codex:gate:severity",
+    "group": "Codex",
+    "description": "Fail if severity counters exceed thresholds",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Codex/GateSeverity.php",
+    "namespace": "App\\Commands\\Codex"
+  },
+  {
+    "command_name": "codex:index",
+    "group": "Codex",
+    "description": "Index repository and initialize audit state",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Codex/Index.php",
+    "namespace": "App\\Commands\\Codex"
+  },
+  {
+    "command_name": "codex:instruct:audit",
+    "group": "Codex",
+    "description": "Batch review repository files via OpenAI API",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Codex/Instructions/Audit.php",
+    "namespace": "App\\Commands\\Codex\\Instructions"
+  },
+  {
+    "command_name": "codex:instruct:devops_review",
+    "group": "Codex",
+    "description": "Generate instruction payload to audit AI DevOps layer against docs/*",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Codex/Instructions/DevOpsReview.php",
+    "namespace": "App\\Commands\\Codex\\Instructions"
+  },
+  {
+    "command_name": "codex:instruct:summarize",
+    "group": "Codex",
+    "description": "Generate structured AI documentation summary template",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Codex/Instructions/Summarize.php",
+    "namespace": "App\\Commands\\Codex\\Instructions"
+  },
+  {
+    "command_name": "codex:review",
+    "group": "Codex",
+    "description": "Generate Codex review artifacts (summary + prompt payload)",
+    "options": [
+      "--dry-run",
+      "Preview actions without writing output files"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Codex/Review.php",
+    "namespace": "App\\Commands\\Codex"
+  },
+  {
+    "command_name": "codex:review:commit",
+    "group": "Codex",
+    "description": "Commit Codex review artifacts intentionally (latest or by date).",
+    "options": [
+      "--latest",
+      "Commit the latest review artifacts",
+      "--date=YYYY-MM-DD",
+      "Commit review artifacts for a specific date",
+      "--dry-run",
+      "Preview git commands without committing",
+      "--approve",
+      "Approve destructive changes (required for real commit)"
+    ],
+    "usage": "codex:review:commit --latest|--date=YYYY-MM-DD [--dry-run] [--approve]",
+    "file_path": "app/Commands/Codex/ReviewCommit.php",
+    "namespace": "App\\Commands\\Codex"
+  },
+  {
+    "command_name": "codex:review:list",
+    "group": "Codex",
+    "description": "List available Codex review artifacts stored under docs.",
+    "options": [
+      "--limit=5",
+      "Limit the number of review files shown",
+      "--latest",
+      "Show only the latest review file"
+    ],
+    "usage": "codex:review:list [--limit=5] [--latest]",
+    "file_path": "app/Commands/Codex/ReviewList.php",
+    "namespace": "App\\Commands\\Codex"
+  },
+  {
+    "command_name": "codex:review:pr-outbox",
+    "group": "codex",
+    "description": "Review the latest PR outbox bundle and publish CODEX_REVIEW.md.",
+    "options": [
+      "--dry-run",
+      "Preview review output without writing."
+    ],
+    "usage": "codex:review:pr-outbox [--dry-run]",
+    "file_path": "app/Commands/Codex/ReviewPrOutbox.php",
+    "namespace": "App\\Commands\\Codex"
+  },
+  {
+    "command_name": "codex:review:publish",
+    "group": "Codex",
+    "description": "Aggregate governance lint results and publish review artifacts.",
+    "options": [
+      "--dry-run",
+      "Preview payloads without writing artifacts"
+    ],
+    "usage": "codex:review:publish [--dry-run]",
+    "file_path": "app/Commands/Codex/ReviewPublish.php",
+    "namespace": "App\\Commands\\Codex"
+  },
+  {
+    "command_name": "codex:status",
+    "group": "Codex",
+    "description": "Show audit status",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Codex/Status.php",
+    "namespace": "App\\Commands\\Codex"
+  },
+  {
+    "command_name": "app:compat-audit",
+    "group": "App",
+    "description": "Audit MyMI Wallet for CI4 + PHP compatibility issues.",
+    "options": [
+      "--fix",
+      "Attempt safe auto-fixes for deterministic replacements.",
+      "--php",
+      "Target PHP version for forward-compat assessment (default: current).",
+      "--json",
+      "Write JSON report to path (default: writable/compat-audit-<timestamp>.json).",
+      "--csv",
+      "Write CSV report to path (default: writable/compat-audit-<timestamp>.csv)."
+    ],
+    "usage": "app:compat-audit [--fix] [--php=8.2] [--json=path] [--csv=path]",
+    "file_path": "app/Commands/CompatAudit.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "config:drift",
+    "group": "audit",
+    "description": "Compare deployed config and environment to repo baselines.",
+    "options": [
+      "--emit",
+      "Output mode: docs (default: docs).",
+      "--out",
+      "Override artifact directory (must be inside docs/aiops/artifacts).",
+      "--dry-run",
+      "Generate a report without mutating state.",
+      "--approve",
+      "Acknowledge execution (required for mutating commands)."
+    ],
+    "usage": "config:drift [--emit=docs] [--out=path] [--dry-run] [--approve]",
+    "file_path": "app/Commands/Config/Drift.php",
+    "namespace": "App\\Commands\\Config"
+  },
+  {
+    "command_name": "config:clear",
+    "group": "Config",
+    "description": "Clear configuration-related caches safely (guarded).",
+    "options": [
+      "--emit",
+      "Output mode: docs (default: docs).",
+      "--out",
+      "Override artifact directory (must be inside docs/aiops/artifacts).",
+      "--dry-run",
+      "Preview actions without deleting files.",
+      "--approve",
+      "Allow destructive deletions (required)."
+    ],
+    "usage": "config:clear [--emit=docs] [--out=path] [--dry-run] [--approve]",
+    "file_path": "app/Commands/ConfigClear.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "config:lint",
+    "group": "config",
+    "description": "Lint Config/Services.php overrides against CI4 service signatures.",
+    "options": [
+      "--dry-run",
+      "Preview actions without writing data",
+      "--json",
+      "Emit JSON summary"
+    ],
+    "usage": "config:lint",
+    "file_path": "app/Commands/ConfigLint.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "contentengine:smoke",
+    "group": "content",
+    "description": "End-to-end smoke test for the Content Engine ingest \u2192 scoring \u2192 drafts pipeline.",
+    "options": [
+      "--dry-run",
+      "Preview actions without writing ingest data"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/ContentEngineSmoke.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "content:ingest-sample",
+    "group": "content",
+    "description": "Load sample Daily Top Gainers JSON, ingest, score, and print the top 5 ideas.",
+    "options": [
+      "--dry-run",
+      "Preview actions without writing ingest data"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/ContentIngestSample.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "controller:profile",
+    "group": "Diagnostics",
+    "description": "Profile controller boot performance.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/ControllerProfile.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "db:apply-docs",
+    "group": "database",
+    "description": "Compile SQL from docs/mysql and apply statements with audit logging.",
+    "options": [
+      "--dry-run",
+      "Compile SQL without executing statements."
+    ],
+    "usage": "db:apply-docs [db-group] [--dry-run]",
+    "file_path": "app/Commands/Database/ApplyDocs.php",
+    "namespace": "App\\Commands\\Database"
+  },
+  {
+    "command_name": "db:drift",
+    "group": "db",
+    "description": "Compare live schema to expected inventory.",
+    "options": [
+      "--emit",
+      "Output mode: docs (default: docs).",
+      "--out",
+      "Override artifact directory (must be inside docs/aiops/artifacts).",
+      "--dry-run",
+      "Generate a report without mutating state.",
+      "--approve",
+      "Acknowledge execution (required for mutating commands)."
+    ],
+    "usage": "db:drift [--emit=docs] [--out=path] [--dry-run] [--approve]",
+    "file_path": "app/Commands/Database/Drift.php",
+    "namespace": "App\\Commands\\Database"
+  },
+  {
+    "command_name": "db:inventory",
+    "group": "database",
+    "description": "Scan code and migrations to inventory MyMI Wallet tables and generate integrity docs/SQL adjustments.",
+    "options": [
+      "--dry-run",
+      "Preview actions without writing data"
+    ],
+    "usage": "db:inventory [write-docs] [write-sql] [limit] [db-group] [--dry-run]",
+    "file_path": "app/Commands/Database/Inventory.php",
+    "namespace": "App\\Commands\\Database"
+  },
+  {
+    "command_name": "migrate:dry-run",
+    "group": "database",
+    "description": "List pending migrations without executing them.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Database/MigrateDryRun.php",
+    "namespace": "App\\Commands\\Database"
+  },
+  {
+    "command_name": "discord:list",
+    "group": "Discord",
+    "description": "List configured Discord channels/webhooks/IDs from config and database.",
+    "options": [
+      "--dry-run",
+      "Preview actions without querying the database"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Discord/GetList.php",
+    "namespace": "App\\Commands\\Discord"
+  },
+  {
+    "command_name": "discord:process-queue",
+    "group": "Discord",
+    "description": "Process queued Discord messages respecting quiet hours and pacing.",
+    "options": [
+      "--dry-run",
+      "Preview actions without processing the queue",
+      "--approve",
+      "Acknowledge and send queued messages"
+    ],
+    "usage": "php spark discord:process-queue [limit] [--dry-run] [--approve]",
+    "file_path": "app/Commands/Discord/ProcessQueue.php",
+    "namespace": "App\\Commands\\Discord"
+  },
+  {
+    "command_name": "discord:test",
+    "group": "Discord",
+    "description": "Send a test payload through the Discord queue pipeline.",
+    "options": [
+      "--dry-run",
+      "Preview actions without sending Discord alerts"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Discord/Test.php",
+    "namespace": "App\\Commands\\Discord"
+  },
+  {
+    "command_name": "discord:test-liquidity",
+    "group": "Discord",
+    "description": "Send a test Liquidity Scan alert to alerts.liquidity channel",
+    "options": [
+      "--dry-run",
+      "Preview actions without sending Discord alerts"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Discord/TestLiquidity.php",
+    "namespace": "App\\Commands\\Discord"
+  },
+  {
+    "command_name": "discord:wire-check",
+    "group": "Discord",
+    "description": "Validate Discord env vars, tables, and queue health for MyMIDiscord.",
+    "options": [
+      "--dry-run",
+      "Preview actions without querying the database"
+    ],
+    "usage": "php spark discord:wire-check",
+    "file_path": "app/Commands/Discord/WireCheck.php",
+    "namespace": "App\\Commands\\Discord"
+  },
+  {
+    "command_name": "docs:architecture:graph",
+    "group": "Docs",
+    "description": "Generate CI4 architecture graph",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Docs/ArchitectureGraph.php",
+    "namespace": "App\\Commands\\Docs"
+  },
+  {
+    "command_name": "docs:architecture-map",
+    "group": "Docs",
+    "description": "Generate architecture map of CI4 application",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Docs/ArchitectureMap.php",
+    "namespace": "App\\Commands\\Docs"
+  },
+  {
+    "command_name": "docs:audit",
+    "group": "Docs",
+    "description": "Audit CI4 codebase vs /docs documentation",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Docs/AuditDocs.php",
+    "namespace": "App\\Commands\\Docs"
+  },
+  {
+    "command_name": "docs:database:map",
+    "group": "Docs",
+    "description": null,
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Docs/DatabaseMap.php",
+    "namespace": "App\\Commands\\Docs"
+  },
+  {
+    "command_name": "docs:dependencies:map",
+    "group": "Docs",
+    "description": null,
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Docs/DependenciesMap.php",
+    "namespace": "App\\Commands\\Docs"
+  },
+  {
+    "command_name": "docs:views:export",
+    "group": "Docs Export",
+    "description": null,
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Docs/Exports/ExportViewTxt.php",
+    "namespace": "App\\Commands\\Docs\\Exports"
+  },
+  {
+    "command_name": "docs:full-audit",
+    "group": "Docs",
+    "description": null,
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Docs/FullDocsAudit.php",
+    "namespace": "App\\Commands\\Docs"
+  },
+  {
+    "command_name": "docs:readme:build",
+    "group": "Docs Generate",
+    "description": null,
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Docs/Generate/DocsReadmeBuilder.php",
+    "namespace": "App\\Commands\\Docs\\Generate"
+  },
+  {
+    "command_name": "docs:generate-missing",
+    "group": "Docs",
+    "description": "Generate documentation for undocumented controllers",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Docs/GenerateMissingDocs.php",
+    "namespace": "App\\Commands\\Docs"
+  },
+  {
+    "command_name": "docs:inventory",
+    "group": "Docs",
+    "description": "Scan /docs directory and generate docs/_inventory.md",
+    "options": null,
+    "usage": "php spark docs:inventory",
+    "file_path": "app/Commands/Docs/InventoryDocs.php",
+    "namespace": "App\\Commands\\Docs"
+  },
+  {
+    "command_name": "docs:modules:map",
+    "group": "Docs",
+    "description": null,
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Docs/ModulesMap.php",
+    "namespace": "App\\Commands\\Docs"
+  },
+  {
+    "command_name": "docs:routes:inventory",
+    "group": "Docs",
+    "description": null,
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Docs/RoutesInventory.php",
+    "namespace": "App\\Commands\\Docs"
+  },
+  {
+    "command_name": "docs:controllers:list",
+    "group": "Docs Scan",
+    "description": "List all module controllers",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Docs/Scan/ControllersList.php",
+    "namespace": "App\\Commands\\Docs\\Scan"
+  },
+  {
+    "command_name": "docs:services:list",
+    "group": "Docs Scan",
+    "description": "List all Services classes",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Docs/Scan/ServiceList.php",
+    "namespace": "App\\Commands\\Docs\\Scan"
+  },
+  {
+    "command_name": "docs:views:dirs",
+    "group": "Docs Scan",
+    "description": null,
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Docs/Scan/ViewDirectories.php",
+    "namespace": "App\\Commands\\Docs\\Scan"
+  },
+  {
+    "command_name": "docs:views:list",
+    "group": "Docs Scan",
+    "description": null,
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Docs/Scan/ViewFiles.php",
+    "namespace": "App\\Commands\\Docs\\Scan"
+  },
+  {
+    "command_name": "docs:spark:inventory",
+    "group": "Docs",
+    "description": null,
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Docs/SparkCommandsInventory.php",
+    "namespace": "App\\Commands\\Docs"
+  },
+  {
+    "command_name": "docs:sync-all",
+    "group": "Docs",
+    "description": "Run full documentation pipeline",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Docs/SyncAllDocs.php",
+    "namespace": "App\\Commands\\Docs"
+  },
+  {
+    "command_name": "docs:sync-code",
+    "group": "Docs",
+    "description": "Analyze /docs and generate repository patches to align code with documentation.",
+    "options": null,
+    "usage": "php spark docs:sync-code [--create-pr=1] [--dry-run=0]",
+    "file_path": "app/Commands/Docs/SyncCodeFromDocs.php",
+    "namespace": "App\\Commands\\Docs"
+  },
+  {
+    "command_name": "docs:sync-system",
+    "group": "Docs",
+    "description": null,
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Docs/SyncDocsSystem.php",
+    "namespace": "App\\Commands\\Docs"
+  },
+  {
+    "command_name": "dreamhost:dns-test",
+    "group": "DreamHost Diagnostics",
+    "description": "Resolve DNS for a given host.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/DreamHost/DNSTest.php",
+    "namespace": "App\\Commands\\DreamHost"
+  },
+  {
+    "command_name": "dreamhost:env",
+    "group": "DreamHost Diagnostics",
+    "description": "Display relevant DreamHost environment variables.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/DreamHost/EnvDebug.php",
+    "namespace": "App\\Commands\\DreamHost"
+  },
+  {
+    "command_name": "dreamhost:imap-capabilities",
+    "group": "DreamHost Diagnostics",
+    "description": "Probe IMAP greeting/capabilities/mailboxes and print detailed errors.",
+    "options": null,
+    "usage": "dreamhost:imap-capabilities [--host=imap.dreamhost.com] [--port=993] [--mailbox=INBOX] [--flags=/imap/ssl/novalidate-cert]",
+    "file_path": "app/Commands/DreamHost/ImapCapabilities.php",
+    "namespace": "App\\Commands\\DreamHost"
+  },
+  {
+    "command_name": "dreamhost:imap-flag-sweep",
+    "group": "DreamHost Diagnostics",
+    "description": "Try multiple IMAP connection flag variants and report which one connects.",
+    "options": null,
+    "usage": "dreamhost:imap-flag-sweep [--host=imap.dreamhost.com] [--port=993] [--mailbox=INBOX]",
+    "file_path": "app/Commands/DreamHost/ImapFlagSweep.php",
+    "namespace": "App\\Commands\\DreamHost"
+  },
+  {
+    "command_name": "dreamhost:imap-test",
+    "group": "DreamHost Diagnostics",
+    "description": "Test IMAP SSL connectivity to DreamHost mailbox.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/DreamHost/ImapTest.php",
+    "namespace": "App\\Commands\\DreamHost"
+  },
+  {
+    "command_name": "dreamhost:port-test",
+    "group": "DreamHost Diagnostics",
+    "description": "Test raw TCP connection to host:port.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/DreamHost/PortTest.php",
+    "namespace": "App\\Commands\\DreamHost"
+  },
+  {
+    "command_name": "dreamhost:ssl-test",
+    "group": "DreamHost Diagnostics",
+    "description": "Test raw SSL connection to a host/port.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/DreamHost/SSLTest.php",
+    "namespace": "App\\Commands\\DreamHost"
+  },
+  {
+    "command_name": "dreamhost:smtp-probe",
+    "group": "DreamHost Diagnostics",
+    "description": "Probe SMTP endpoints (465 SSL, 587 STARTTLS) and print handshake banner.",
+    "options": null,
+    "usage": "dreamhost:smtp-probe [--host=smtp.dreamhost.com]",
+    "file_path": "app/Commands/DreamHost/SmtpProbe.php",
+    "namespace": "App\\Commands\\DreamHost"
+  },
+  {
+    "command_name": "env:doctor",
+    "group": "env",
+    "description": "Environment diagnostics and snapshot.",
+    "options": [
+      "--notify=discord",
+      "Send summary to Discord.",
+      "--pack",
+      "Bundle JSON/Markdown into a tar.gz for sharing."
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Env/EnvDoctor.php",
+    "namespace": "App\\Commands\\Env"
+  },
+  {
+    "command_name": "app:logs:consolidate",
+    "group": "App - Logging",
+    "description": "Consolidate bf_error_logs into categorized grouped records.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Errors/ConsolidateErrors.php",
+    "namespace": "App\\Commands\\Errors"
+  },
+  {
+    "command_name": "spark:diagnose-502",
+    "group": "maintenance",
+    "description": "Diagnose common 502 causes (php-fpm, nginx, socket).",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Errors/Diagnose502.php",
+    "namespace": "App\\Commands\\Errors"
+  },
+  {
+    "command_name": "spark:diagnose-503",
+    "group": "maintenance",
+    "description": "Diagnose common 503 causes (cache, maintenance, upstream).",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Errors/Diagnose503.php",
+    "namespace": "App\\Commands\\Errors"
+  },
+  {
+    "command_name": "app:errors:dispatch",
+    "group": "App - Logging",
+    "description": "Evaluate alert rules and send notifications.",
+    "options": null,
+    "usage": "errors:alerts:dispatch",
+    "file_path": "app/Commands/Errors/DispatchAlerts.php",
+    "namespace": "App\\Commands\\Errors"
+  },
+  {
+    "command_name": "app:errors:learn",
+    "group": "App - Logging",
+    "description": "AI-assisted learning of consolidated error patterns into bf_error_patterns.",
+    "options": null,
+    "usage": "app:errors:learn [--limit=50]",
+    "file_path": "app/Commands/Errors/LearnPatterns.php",
+    "namespace": "App\\Commands\\Errors"
+  },
+  {
+    "command_name": "fix:503",
+    "group": "ops",
+    "description": "Diagnose and attempt safe auto-fixes for 503 errors.",
+    "options": [
+      "--dry-run",
+      "Run diagnostics without taking any corrective actions",
+      "--approve",
+      "Acknowledge and apply corrective actions"
+    ],
+    "usage": "fix:503 [--dry-run] [--approve]",
+    "file_path": "app/Commands/Fix503.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "forecasts:evaluate",
+    "group": "Forecasts",
+    "description": "Evaluate forecasts for accuracy windows.",
+    "options": [
+      "--dry-run",
+      "Preview actions without running evaluation"
+    ],
+    "usage": "forecasts:evaluate [limit] [--dry-run]",
+    "file_path": "app/Commands/ForecastEvaluate.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "gap:sync",
+    "group": "GapTracker",
+    "description": "Enrich gap tracker CSV and produce a report.",
+    "options": [
+      "--dry-run",
+      "Preview actions without writing files",
+      "--report-only",
+      "Generate report without updating CSV"
+    ],
+    "usage": "php spark gap:sync [limit] [priority] [--dry-run] [--report-only]",
+    "file_path": "app/Commands/GapTrackerSync.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "git:pull:safe",
+    "group": "DevOps",
+    "description": "Safely pull origin/main by stashing local changes and optionally resetting generated artifacts.",
+    "options": null,
+    "usage": "git:pull:safe [--stash=1] [--reset-generated=1]",
+    "file_path": "app/Commands/GitHub/PullSafe.php",
+    "namespace": "App\\Commands\\GitHub"
+  },
+  {
+    "command_name": "github:search",
+    "group": "GitHub",
+    "description": "Search the local git repository for a given string or pattern.",
+    "options": [
+      "--regex",
+      "Treat search text as regex",
+      "--ext",
+      "Comma-separated file extensions (e.g. php,env,md)",
+      "--path",
+      "Limit search to a subdirectory"
+    ],
+    "usage": "github:search \"search text\" [options]",
+    "file_path": "app/Commands/GitHub/SearchRepo.php",
+    "namespace": "App\\Commands\\GitHub"
+  },
+  {
+    "command_name": "git:workspace:guard",
+    "group": "DevOps",
+    "description": "Detects workspace conditions that commonly block pulls/PRs.",
+    "options": null,
+    "usage": "git:workspace:guard [--json=0|1]",
+    "file_path": "app/Commands/GitHub/WorkspaceGuard.php",
+    "namespace": "App\\Commands\\GitHub"
+  },
+  {
+    "command_name": "git:workspace:repair",
+    "group": "DevOps",
+    "description": "Repairs git workspace when generated files block pull operations.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/GitHub/WorkspaceRepair.php",
+    "namespace": "App\\Commands\\GitHub"
+  },
+  {
+    "command_name": "growth:retention-watch",
+    "group": "audit",
+    "description": "Detect retention anomalies from engagement signals.",
+    "options": [
+      "--emit",
+      "Output mode: docs (default: docs).",
+      "--out",
+      "Override artifact directory (must be inside docs/aiops/artifacts).",
+      "--dry-run",
+      "Generate a report without mutating state.",
+      "--approve",
+      "Acknowledge execution (required for mutating commands)."
+    ],
+    "usage": "growth:retention-watch [--emit=docs] [--out=path] [--dry-run] [--approve]",
+    "file_path": "app/Commands/Growth/RetentionWatch.php",
+    "namespace": "App\\Commands\\Growth"
+  },
+  {
+    "command_name": "gtm:cron:validate-security",
+    "group": "GTM",
+    "description": "Validate INTERNAL_CRON and /API/Management routes reject missing/invalid tokens.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/GtmCronRouteSecurityValidation.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "gtm:health:snapshot",
+    "group": "GTM",
+    "description": "Generate deterministic GTM daily health snapshot markdown report.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/GtmHealthSnapshot.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "gtm:launch:audit",
+    "group": "GTM",
+    "description": "Generate go-live launch readiness audit for Phase A user surfaces.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/GtmLaunchAudit.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "gtm:launch:smoke",
+    "group": "GTM",
+    "description": "Run non-destructive HTTP smoke checks for Phase A user navigation surfaces.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/GtmLaunchSmoke.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "health:cache",
+    "group": "health",
+    "description": "Check CI4 writable cache directories for access.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Health/Cache.php",
+    "namespace": "App\\Commands\\Health"
+  },
+  {
+    "command_name": "health:disk",
+    "group": "health",
+    "description": "Check disk and inode usage for the host.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Health/Disk.php",
+    "namespace": "App\\Commands\\Health"
+  },
+  {
+    "command_name": "health:git-safety",
+    "group": "health",
+    "description": "Check git ignore rules for env/writable and tracked secrets.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Health/GitSafety.php",
+    "namespace": "App\\Commands\\Health"
+  },
+  {
+    "command_name": "health:services",
+    "group": "health",
+    "description": "Detect web server + PHP handler status without systemctl.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Health/Services.php",
+    "namespace": "App\\Commands\\Health"
+  },
+  {
+    "command_name": "investments:economy:updateall",
+    "group": "investments",
+    "description": "Fetch and store economic indicators from FRED into local tables.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Investments/EconomyUpdateAll.php",
+    "namespace": "App\\Commands\\Investments"
+  },
+  {
+    "command_name": "logger:audit",
+    "group": "Diagnostics",
+    "description": "Audit logger handlers for overlap and recursion risks.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Logger/Audit.php",
+    "namespace": "App\\Commands\\Logger"
+  },
+  {
+    "command_name": "app:logs:check-server",
+    "group": "App - Logging",
+    "description": "Check external Apache/Nginx error.log",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Logs/CheckServerLogs.php",
+    "namespace": "App\\Commands\\Logs"
+  },
+  {
+    "command_name": "logs:doctor",
+    "group": "logs",
+    "description": "Validate CI4 logging and debug visibility plumbing.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Logs/Doctor.php",
+    "namespace": "App\\Commands\\Logs"
+  },
+  {
+    "command_name": "app:logs:enable-full",
+    "group": "App - Logging",
+    "description": "Force CI4 to log all levels with DB + PHP fallback enabled.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Logs/EnableFullLogging.php",
+    "namespace": "App\\Commands\\Logs"
+  },
+  {
+    "command_name": "logs:healthcheck",
+    "group": "logs",
+    "description": "Emit test logs and verify file + DB log sinks are functioning.",
+    "options": [
+      "--dry-run",
+      "Preview actions without writing data"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Logs/Healthcheck.php",
+    "namespace": "App\\Commands\\Logs"
+  },
+  {
+    "command_name": "logs:summarize",
+    "group": "logs",
+    "description": "Summarize CI4 logs for a given date, including new entries since the last run.",
+    "options": [
+      "--dry-run",
+      "Preview actions without writing data",
+      "--json",
+      "Output compact JSON payload for automation",
+      "--auto-aiops",
+      "After summarize, enqueue and run aiops:worker:logs pipeline"
+    ],
+    "usage": "logs:summarize [date|yesterday] [--dry-run] [--json]",
+    "file_path": "app/Commands/Logs/Summarize.php",
+    "namespace": "App\\Commands\\Logs"
+  },
+  {
+    "command_name": "logs:summarize-all",
+    "group": "logs",
+    "description": "Summarize logs for all known subsystems from writable/logs/** and emit docs/_aiops/logs markdown reports.",
+    "options": [
+      "--json",
+      "Print JSON output in addition to files."
+    ],
+    "usage": "logs:summarize-all [--json]",
+    "file_path": "app/Commands/Logs/SummarizeAll.php",
+    "namespace": "App\\Commands\\Logs"
+  },
+  {
+    "command_name": "logs:full-report",
+    "group": "maintenance",
+    "description": "Summarize CI4 + Apache + PHP logs for a given date.",
+    "options": [
+      "--save",
+      "Write the report to docs/aiops/logs",
+      "--fix-hints",
+      "Include fix hints in the report",
+      "--discord",
+      "Send a condensed summary to Discord"
+    ],
+    "usage": "logs:full-report [today|yesterday|YYYY-MM-DD] [--save] [--fix-hints] [--discord]",
+    "file_path": "app/Commands/LogsFullReport.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "logs:test",
+    "group": "logs",
+    "description": "Canonical logging test command (writes debug/info/error and validates file + DB sinks).",
+    "options": [
+      "--dry-run",
+      "Preview checks without writing records"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/LogsTest.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "mail:send",
+    "group": "Mail",
+    "description": "Process and send queued mail jobs.",
+    "options": [
+      "--dry-run",
+      "Preview actions without sending emails",
+      "--approve",
+      "Acknowledge and send queued emails"
+    ],
+    "usage": "mail:send [limit] [--dry-run] [--approve]",
+    "file_path": "app/Commands/Mail/Send.php",
+    "namespace": "App\\Commands\\Mail"
+  },
+  {
+    "command_name": "mail:send-test",
+    "group": "maintenance",
+    "description": "Send a test email using branded templates.",
+    "options": [
+      "--dry-run",
+      "Preview actions without sending email"
+    ],
+    "usage": "mail:send-test [to] [template] [--dry-run]",
+    "file_path": "app/Commands/Mail/SendTest.php",
+    "namespace": "App\\Commands\\Mail"
+  },
+  {
+    "command_name": "mail:test",
+    "group": "maintenance",
+    "description": "Send a DreamHost SMTP test email and output transport diagnostics.",
+    "options": [
+      "--dry-run",
+      "Preview actions without sending email"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Mail/Test.php",
+    "namespace": "App\\Commands\\Mail"
+  },
+  {
+    "command_name": "mail:verify",
+    "group": "maintenance",
+    "description": "Verify SMTP settings by sending a diagnostic email.",
+    "options": [
+      "--dry-run",
+      "Preview actions without sending email"
+    ],
+    "usage": "mail:verify you@example.com",
+    "file_path": "app/Commands/Mail/Verify.php",
+    "namespace": "App\\Commands\\Mail"
+  },
+  {
+    "command_name": "marketing:automation-audit",
+    "group": "marketing",
+    "description": "Verify marketing automations, cron hooks, and API usage expectations.",
+    "options": [
+      "--emit",
+      "Output mode: docs (default: docs).",
+      "--out",
+      "Override artifact directory (must be inside docs/aiops/artifacts).",
+      "--dry-run",
+      "Generate a report without mutating state.",
+      "--approve",
+      "Acknowledge execution (required for mutating commands)."
+    ],
+    "usage": "marketing:automation-audit [--emit=docs] [--out=path] [--dry-run] [--approve]",
+    "file_path": "app/Commands/Marketing/AutomationAudit.php",
+    "namespace": "App\\Commands\\Marketing"
+  },
+  {
+    "command_name": "master:health:commands",
+    "group": "master",
+    "description": "Inspect Spark command inventory and metadata.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Master/Health/Commands.php",
+    "namespace": "App\\Commands\\Master\\Health"
+  },
+  {
+    "command_name": "master:health:controllers",
+    "group": "master",
+    "description": "Inspect controllers for basic CI4 health issues.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Master/Health/Controllers.php",
+    "namespace": "App\\Commands\\Master\\Health"
+  },
+  {
+    "command_name": "master:health:dependencies",
+    "group": "master",
+    "description": "Inspect service(), model, and view dependency references across controllers.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Master/Health/Dependencies.php",
+    "namespace": "App\\Commands\\Master\\Health"
+  },
+  {
+    "command_name": "master:health:docs",
+    "group": "master",
+    "description": "Inspect docs directory health and summary coverage.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Master/Health/Docs.php",
+    "namespace": "App\\Commands\\Master\\Health"
+  },
+  {
+    "command_name": "master:health:logs",
+    "group": "master",
+    "description": "Inspect writable/logs for current log file health.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Master/Health/Logs.php",
+    "namespace": "App\\Commands\\Master\\Health"
+  },
+  {
+    "command_name": "master:health:models",
+    "group": "master",
+    "description": "Inspect models for table mapping and basic CI4 model metadata.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Master/Health/Models.php",
+    "namespace": "App\\Commands\\Master\\Health"
+  },
+  {
+    "command_name": "master:health:routes",
+    "group": "master",
+    "description": "Inspect route configuration files and emit a health report.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Master/Health/Routes.php",
+    "namespace": "App\\Commands\\Master\\Health"
+  },
+  {
+    "command_name": "master:health:services",
+    "group": "master",
+    "description": "Inspect service classes and app/Config/Services.php references.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Master/Health/Services.php",
+    "namespace": "App\\Commands\\Master\\Health"
+  },
+  {
+    "command_name": "master:health:views",
+    "group": "master",
+    "description": "Inspect views inventory and view directory health.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Master/Health/Views.php",
+    "namespace": "App\\Commands\\Master\\Health"
+  },
+  {
+    "command_name": "master:knowledge-graph:build",
+    "group": "master",
+    "description": "Build a CI4 knowledge graph from controllers, routes, models, services, views, and commands.",
+    "options": null,
+    "usage": "php spark master:knowledge-graph:build",
+    "file_path": "app/Commands/Master/KnowledgeGraphBuild.php",
+    "namespace": "App\\Commands\\Master"
+  },
+  {
+    "command_name": "master:run-all",
+    "group": "master",
+    "description": "Run the master docs, graph, and health pipeline.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Master/RunAll.php",
+    "namespace": "App\\Commands\\Master"
+  },
+  {
+    "command_name": "mdit:nav:compute_daily",
+    "group": "mdit",
+    "description": "Compute and snapshot the daily MDIT NAV.",
+    "options": null,
+    "usage": "mdit:nav:compute_daily [cash_value] [equities_value]",
+    "file_path": "app/Commands/MditNavComputeDaily.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "news:audit",
+    "group": "maintenance",
+    "description": "Audit recent marketing news ingestion, summarization, and post generation.",
+    "options": [
+      "--dry-run",
+      "Preview actions without writing audit artifacts"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/NewsAudit.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": null,
+    "group": "Ollama - Control",
+    "description": null,
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ollama/BaseOllamaCommand.php",
+    "namespace": "App\\Commands\\Ollama"
+  },
+  {
+    "command_name": "ollama:bench",
+    "group": null,
+    "description": "Benchmarks latency and throughput for prompt set.",
+    "options": [
+      "--json",
+      "JSON output",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--dry-run",
+      "Dry run where supported"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Bench.php",
+    "namespace": "App\\Commands\\Ollama"
+  },
+  {
+    "command_name": "ollama:chat",
+    "group": null,
+    "description": "Chat completion with optional session persistence.",
+    "options": [
+      "--model",
+      "Model",
+      "--session",
+      "Session ID",
+      "--system",
+      "System prompt",
+      "--user",
+      "User message",
+      "--save-session",
+      "Persist session",
+      "--load-session",
+      "Load existing session",
+      "--reset",
+      "Reset session",
+      "--base-url",
+      "URL",
+      "--timeout",
+      "Timeout",
+      "--json",
+      "JSON output"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Chat.php",
+    "namespace": "App\\Commands\\Ollama"
+  },
+  {
+    "command_name": "ollama:circuit:reset",
+    "group": null,
+    "description": "Resets circuit breaker state.",
+    "options": [
+      "--json",
+      "JSON output",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--dry-run",
+      "Dry run where supported"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Circuit/Reset.php",
+    "namespace": "App\\Commands\\Ollama\\Circuit"
+  },
+  {
+    "command_name": "ollama:circuit:status",
+    "group": null,
+    "description": "Shows circuit breaker state.",
+    "options": [
+      "--json",
+      "JSON output",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--dry-run",
+      "Dry run where supported"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Circuit/Status.php",
+    "namespace": "App\\Commands\\Ollama\\Circuit"
+  },
+  {
+    "command_name": "ollama:circuit:reset",
+    "group": null,
+    "description": "Resets Ollama circuit breaker.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ollama/CircuitReset.php",
+    "namespace": "App\\Commands\\Ollama"
+  },
+  {
+    "command_name": "ollama:circuit:status",
+    "group": null,
+    "description": "Shows Ollama circuit breaker state.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ollama/CircuitStatus.php",
+    "namespace": "App\\Commands\\Ollama"
+  },
+  {
+    "command_name": "ollama:diagnose",
+    "group": null,
+    "description": "Operator diagnostic report for Ollama connectivity and env.",
+    "options": [
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--include-env",
+      "Include env snapshot",
+      "--json",
+      "JSON output"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Diagnose.php",
+    "namespace": "App\\Commands\\Ollama"
+  },
+  {
+    "command_name": "ollama:docs:inventory",
+    "group": null,
+    "description": "Builds docs embedding/metadata manifest.",
+    "options": [
+      "--json",
+      "JSON output",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--dry-run",
+      "Dry run where supported"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Docs/Inventory.php",
+    "namespace": "App\\Commands\\Ollama\\Docs"
+  },
+  {
+    "command_name": "ollama:docs:sync",
+    "group": null,
+    "description": "Regenerates Ollama inventory and policy docs.",
+    "options": [
+      "--profile",
+      "Profile name",
+      "--base-url",
+      "URL",
+      "--timeout",
+      "Timeout",
+      "--json",
+      "JSON output"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Docs/Sync.php",
+    "namespace": "App\\Commands\\Ollama\\Docs"
+  },
+  {
+    "command_name": "ollama:doctor",
+    "group": null,
+    "description": "Deep diagnostics for Ollama connectivity and runtime hints.",
+    "options": [
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout seconds",
+      "--json",
+      "JSON output",
+      "--include-env",
+      "Include relevant env values"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Doctor.php",
+    "namespace": "App\\Commands\\Ollama"
+  },
+  {
+    "command_name": "ollama:embed",
+    "group": null,
+    "description": "Generates embedding vector for input text.",
+    "options": [
+      "--model",
+      "Model",
+      "--input",
+      "Text input",
+      "--base-url",
+      "URL",
+      "--timeout",
+      "Timeout",
+      "--json",
+      "JSON output"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Embed.php",
+    "namespace": "App\\Commands\\Ollama"
+  },
+  {
+    "command_name": "ollama:embed:file",
+    "group": null,
+    "description": "Embeds file chunks into vector storage.",
+    "options": [
+      "--json",
+      "JSON output",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--dry-run",
+      "Dry run where supported"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/EmbedFile.php",
+    "namespace": "App\\Commands\\Ollama"
+  },
+  {
+    "command_name": "ollama:generate",
+    "group": null,
+    "description": "Runs single prompt generate against Ollama.",
+    "options": [
+      "--model",
+      "Model name",
+      "--prompt",
+      "Prompt text",
+      "--stream",
+      "Stream mode",
+      "--temperature",
+      "Temperature",
+      "--top-p",
+      "Top-p",
+      "--max-tokens",
+      "Max tokens",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--json",
+      "JSON output"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Generate.php",
+    "namespace": "App\\Commands\\Ollama"
+  },
+  {
+    "command_name": "ollama:health",
+    "group": null,
+    "description": "Checks endpoint reachability and readiness.",
+    "options": [
+      "--base-url",
+      "Override base URL",
+      "--timeout",
+      "Timeout seconds",
+      "--json",
+      "JSON output"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Health.php",
+    "namespace": "App\\Commands\\Ollama"
+  },
+  {
+    "command_name": "ollama:logs:export",
+    "group": null,
+    "description": "Export Ollama run/error evidence to docs/_aiops/ollama/logs/*.md.",
+    "options": [
+      "--limit",
+      "Rows to export",
+      "--path",
+      "Output directory",
+      "--json",
+      "JSON output"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Logs/Export.php",
+    "namespace": "App\\Commands\\Ollama\\Logs"
+  },
+  {
+    "command_name": "ollama:logs:tail",
+    "group": null,
+    "description": "Tail app-captured Ollama logs from file.",
+    "options": [
+      "--tail",
+      "Number of lines",
+      "--file",
+      "Override log file",
+      "--json",
+      "JSON output"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Logs/Tail.php",
+    "namespace": "App\\Commands\\Ollama\\Logs"
+  },
+  {
+    "command_name": "ollama:logs",
+    "group": null,
+    "description": "Backward-compatible alias of ollama:logs:tail.",
+    "options": [
+      "--tail",
+      "Lines",
+      "--file",
+      "File",
+      "--json",
+      "JSON output"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Logs.php",
+    "namespace": "App\\Commands\\Ollama"
+  },
+  {
+    "command_name": "ollama:modelfile:validate",
+    "group": null,
+    "description": "Validates Ollama Modelfile.",
+    "options": [
+      "--json",
+      "JSON output",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--dry-run",
+      "Dry run where supported"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Modelfile/Validate.php",
+    "namespace": "App\\Commands\\Ollama\\Modelfile"
+  },
+  {
+    "command_name": "ollama:models:create",
+    "group": null,
+    "description": "Creates a model from Modelfile.",
+    "options": [
+      "--json",
+      "JSON output",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--dry-run",
+      "Dry run where supported"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Models/CreateModel.php",
+    "namespace": "App\\Commands\\Ollama\\Models"
+  },
+  {
+    "command_name": "ollama:models:diff",
+    "group": null,
+    "description": "Compare installed model inventory versus required profile and emit remediation.",
+    "options": [
+      "--profile",
+      "default|aiops|marketing|alerts",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout seconds",
+      "--json",
+      "JSON output"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Models/DiffModels.php",
+    "namespace": "App\\Commands\\Ollama\\Models"
+  },
+  {
+    "command_name": "ollama:models:ensure",
+    "group": null,
+    "description": "Ensures required models exist for a profile.",
+    "options": [
+      "--profile",
+      "default|aiops|marketing|alerts",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--json",
+      "JSON output"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Models/EnsureModels.php",
+    "namespace": "App\\Commands\\Ollama\\Models"
+  },
+  {
+    "command_name": "ollama:models:export",
+    "group": null,
+    "description": "Exports model inventory for docs or DB.",
+    "options": [
+      "--json",
+      "JSON output",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--dry-run",
+      "Dry run where supported"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Models/ExportModels.php",
+    "namespace": "App\\Commands\\Ollama\\Models"
+  },
+  {
+    "command_name": "ollama:models:list",
+    "group": null,
+    "description": "Lists installed Ollama models.",
+    "options": [
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--json",
+      "JSON output"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Models/ListModels.php",
+    "namespace": "App\\Commands\\Ollama\\Models"
+  },
+  {
+    "command_name": "ollama:models:prune",
+    "group": null,
+    "description": "Prunes models based on simple keep allowlist policy.",
+    "options": [
+      "--keep",
+      "Comma list of models to keep",
+      "--dry-run",
+      "Dry run",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--json",
+      "JSON output"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Models/PruneModels.php",
+    "namespace": "App\\Commands\\Ollama\\Models"
+  },
+  {
+    "command_name": "ollama:models:pull",
+    "group": null,
+    "description": "Pulls a model with optional progress stream flag.",
+    "options": [
+      "--progress",
+      "Enable streaming progress",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--json",
+      "JSON output",
+      "--dry-run",
+      "Dry run"
+    ],
+    "usage": "ollama:models:pull <model>",
+    "file_path": "app/Commands/Ollama/Models/PullModel.php",
+    "namespace": "App\\Commands\\Ollama\\Models"
+  },
+  {
+    "command_name": "ollama:models:push",
+    "group": null,
+    "description": "Pushes a model to registry.",
+    "options": [
+      "--json",
+      "JSON output",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--dry-run",
+      "Dry run where supported"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Models/PushModel.php",
+    "namespace": "App\\Commands\\Ollama\\Models"
+  },
+  {
+    "command_name": "ollama:models:rm",
+    "group": null,
+    "description": "Removes a local model.",
+    "options": [
+      "--force",
+      "Required to execute",
+      "--dry-run",
+      "Dry run",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--json",
+      "JSON output"
+    ],
+    "usage": "ollama:models:rm <model>",
+    "file_path": "app/Commands/Ollama/Models/RmModel.php",
+    "namespace": "App\\Commands\\Ollama\\Models"
+  },
+  {
+    "command_name": "ollama:models:show",
+    "group": null,
+    "description": "Shows metadata for one model.",
+    "options": [
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--json",
+      "JSON output"
+    ],
+    "usage": "ollama:models:show <model>",
+    "file_path": "app/Commands/Ollama/Models/ShowModel.php",
+    "namespace": "App\\Commands\\Ollama\\Models"
+  },
+  {
+    "command_name": "ollama:ping",
+    "group": null,
+    "description": "Low-level ping with retries.",
+    "options": [
+      "--retries",
+      "Retry count",
+      "--sleep-ms",
+      "Sleep between retries",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--json",
+      "JSON output"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Ping.php",
+    "namespace": "App\\Commands\\Ollama"
+  },
+  {
+    "command_name": "ollama:policy:check",
+    "group": null,
+    "description": "Validates current governance profile and limits.",
+    "options": [
+      "--profile",
+      "Profile name",
+      "--json",
+      "JSON output"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Policy/Check.php",
+    "namespace": "App\\Commands\\Ollama\\Policy"
+  },
+  {
+    "command_name": "ollama:policy:export",
+    "group": null,
+    "description": "Exports active policy to docs.",
+    "options": [
+      "--json",
+      "JSON output",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--dry-run",
+      "Dry run where supported"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Policy/Export.php",
+    "namespace": "App\\Commands\\Ollama\\Policy"
+  },
+  {
+    "command_name": "ollama:queue:push",
+    "group": null,
+    "description": "Queues an Ollama job in DB.",
+    "options": [
+      "--type",
+      "generate|chat|embed",
+      "--model",
+      "Model name",
+      "--payload-file",
+      "JSON payload file",
+      "--priority",
+      "Priority",
+      "--json",
+      "JSON"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Queue/Push.php",
+    "namespace": "App\\Commands\\Ollama\\Queue"
+  },
+  {
+    "command_name": "ollama:queue:retry",
+    "group": null,
+    "description": "Retries failed jobs from queue.",
+    "options": [
+      "--json",
+      "JSON output",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--dry-run",
+      "Dry run where supported"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Queue/Retry.php",
+    "namespace": "App\\Commands\\Ollama\\Queue"
+  },
+  {
+    "command_name": "ollama:queue:stats",
+    "group": null,
+    "description": "Queue depth and status counts.",
+    "options": [
+      "--json",
+      "JSON output"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Queue/Stats.php",
+    "namespace": "App\\Commands\\Ollama\\Queue"
+  },
+  {
+    "command_name": "ollama:queue:work",
+    "group": null,
+    "description": "Consumes queued Ollama jobs.",
+    "options": [
+      "--once",
+      "Process one item",
+      "--max",
+      "Max jobs",
+      "--base-url",
+      "URL",
+      "--timeout",
+      "Timeout",
+      "--json",
+      "JSON"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Queue/Work.php",
+    "namespace": "App\\Commands\\Ollama\\Queue"
+  },
+  {
+    "command_name": "ollama:rag:query",
+    "group": null,
+    "description": "Retrieves top-k chunks and optional answer.",
+    "options": [
+      "--json",
+      "JSON output",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--dry-run",
+      "Dry run where supported"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/RagQuery.php",
+    "namespace": "App\\Commands\\Ollama"
+  },
+  {
+    "command_name": "ollama:sessions:list",
+    "group": null,
+    "description": "Lists recent Ollama sessions.",
+    "options": [
+      "--json",
+      "JSON output",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--dry-run",
+      "Dry run where supported"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Sessions/ListSessions.php",
+    "namespace": "App\\Commands\\Ollama\\Sessions"
+  },
+  {
+    "command_name": "ollama:sessions:rm",
+    "group": null,
+    "description": "Deletes a session record.",
+    "options": [
+      "--json",
+      "JSON output",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--dry-run",
+      "Dry run where supported"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Sessions/RmSession.php",
+    "namespace": "App\\Commands\\Ollama\\Sessions"
+  },
+  {
+    "command_name": "ollama:sessions:show",
+    "group": null,
+    "description": "Shows one session transcript.",
+    "options": [
+      "--json",
+      "JSON output",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--dry-run",
+      "Dry run where supported"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Sessions/ShowSession.php",
+    "namespace": "App\\Commands\\Ollama\\Sessions"
+  },
+  {
+    "command_name": "ollama:stream",
+    "group": null,
+    "description": "Streams tokens to console and transcript output.",
+    "options": [
+      "--json",
+      "JSON output",
+      "--base-url",
+      "Override URL",
+      "--timeout",
+      "Timeout",
+      "--dry-run",
+      "Dry run where supported"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Stream.php",
+    "namespace": "App\\Commands\\Ollama"
+  },
+  {
+    "command_name": "ollama:version",
+    "group": null,
+    "description": "Reports Ollama version info from health endpoint.",
+    "options": [
+      "--base-url",
+      "Override base URL",
+      "--timeout",
+      "Timeout seconds",
+      "--json",
+      "JSON output"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ollama/Version.php",
+    "namespace": "App\\Commands\\Ollama"
+  },
+  {
+    "command_name": "ops:analyze-commands",
+    "group": "ops",
+    "description": "Analyze parsed ops inbox items and generate AI plans",
+    "options": [
+      "--dry-run",
+      "Preview actions without updating inbox items",
+      "--approve",
+      "Acknowledge and update inbox items"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ops/AnalyzeCommands.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:app:update",
+    "group": "ops",
+    "description": "Safely update and validate the CI4 application.",
+    "options": [
+      "--dry-run",
+      "Report only (no changes)",
+      "--strict",
+      "External failures become fatal",
+      "--migrate",
+      "Run pending migrations",
+      "--migrate-only",
+      "Run database checks and stop",
+      "--no-api",
+      "Skip API checks",
+      "--no-aiops",
+      "Skip AIOps snapshot",
+      "--json",
+      "Emit JSON output",
+      "--allow-ci",
+      "Allow running in CI environment"
+    ],
+    "usage": "ops:app:update [--dry-run] [--strict] [--migrate] [--migrate-only] [--no-api] [--no-aiops] [--json]",
+    "file_path": "app/Commands/Ops/AppUpdate.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:console:build",
+    "group": "ops",
+    "description": "Rebuild Console.php command registry",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/BuildConsoleRegistry.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:ci:prepare",
+    "group": "ops",
+    "description": "Prepare deterministic writable/artifact directories for CI runs.",
+    "options": null,
+    "usage": "ops:ci:prepare",
+    "file_path": "app/Commands/Ops/CiPrepare.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:commands:audit",
+    "group": "ops",
+    "description": "Audit Spark commands for illegal constructors.",
+    "options": [
+      "--json",
+      "Emit JSON output and write docs/_ops/commands-audit/ops-commands-audit.json"
+    ],
+    "usage": "ops:commands:audit",
+    "file_path": "app/Commands/Ops/Commands/Audit.php",
+    "namespace": "App\\Commands\\Ops\\Commands"
+  },
+  {
+    "command_name": "ops:commands:autofix",
+    "group": "ops",
+    "description": "Auto-fix Spark commands that define illegal constructors.",
+    "options": [
+      "--dry-run",
+      "Preview changes without modifying files (default)",
+      "--approve",
+      "Apply fixes and write updated files"
+    ],
+    "usage": "ops:commands:autofix [--dry-run] [--approve]",
+    "file_path": "app/Commands/Ops/Commands/Autofix.php",
+    "namespace": "App\\Commands\\Ops\\Commands"
+  },
+  {
+    "command_name": "ops:commands:inventory",
+    "group": "ops",
+    "description": "Generate Spark command inventory from Console.php and command files.",
+    "options": [
+      "--emit",
+      "Output mode: docs (default: docs).",
+      "--out",
+      "Override artifact directory (must be inside docs/aiops/artifacts).",
+      "--dry-run",
+      "Generate a report without mutating state.",
+      "--approve",
+      "Acknowledge execution (required for mutating commands)."
+    ],
+    "usage": "ops:commands:inventory [--emit=docs] [--out=path] [--dry-run] [--approve]",
+    "file_path": "app/Commands/Ops/Commands/Inventory.php",
+    "namespace": "App\\Commands\\Ops\\Commands"
+  },
+  {
+    "command_name": "ops:commands:lint",
+    "group": "ops",
+    "description": "Lint Spark commands for runtime safety contracts and documentation coverage.",
+    "options": [
+      "--json",
+      "Emit JSON results to stdout"
+    ],
+    "usage": "ops:commands:lint [--json]",
+    "file_path": "app/Commands/Ops/Commands/Lint.php",
+    "namespace": "App\\Commands\\Ops\\Commands"
+  },
+  {
+    "command_name": "ops:commands:missing",
+    "group": "ops",
+    "description": "Check commands missing from Console registry",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/Commands/MissingFromConsole.php",
+    "namespace": "App\\Commands\\Ops\\Commands"
+  },
+  {
+    "command_name": "ops:config:lint",
+    "group": "ops",
+    "description": "Lint Config files for illegal patterns (env(), dynamic expressions, protocols).",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/ConfigLint.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:filesystem-scan",
+    "group": "ops",
+    "description": "Ops helper command: ops:filesystem-scan",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/Diagnostics/FilesystemScan.php",
+    "namespace": "App\\Commands\\Ops\\Diagnostics"
+  },
+  {
+    "command_name": "ops:diff",
+    "group": "Ops",
+    "description": "Compare two files and persist AIOps diff artifact.",
+    "options": [
+      "--label",
+      "Optional label for diff folder"
+    ],
+    "usage": "ops:diff <fileA> <fileB> [--label=name]",
+    "file_path": "app/Commands/Ops/Diff.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:diff:wallet",
+    "group": "Ops",
+    "description": "Run wallet-specific diff governance check.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/DiffWallet.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:doctor:full",
+    "group": "Ops",
+    "description": "Run high-signal diagnostics: env, php extensions, network matrix, IMAP capabilities (best-effort).",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/DoctorFull.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "dreamhost:dns-verify",
+    "group": "ops",
+    "description": "Ops helper command: dreamhost:dns-verify",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/DreamHost/DnsVerify.php",
+    "namespace": "App\\Commands\\Ops\\DreamHost"
+  },
+  {
+    "command_name": "dreamhost:email-audit",
+    "group": "ops",
+    "description": "Ops helper command: dreamhost:email-audit",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/DreamHost/EmailAudit.php",
+    "namespace": "App\\Commands\\Ops\\DreamHost"
+  },
+  {
+    "command_name": "dreamhost:email-list",
+    "group": "ops",
+    "description": "Ops helper command: dreamhost:email-list",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/DreamHost/EmailList.php",
+    "namespace": "App\\Commands\\Ops\\DreamHost"
+  },
+  {
+    "command_name": "dreamhost:limits",
+    "group": "ops",
+    "description": "Ops helper command: dreamhost:limits",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/DreamHost/Limits.php",
+    "namespace": "App\\Commands\\Ops\\DreamHost"
+  },
+  {
+    "command_name": "ops:drift:scan",
+    "group": "Ops",
+    "description": "Scan critical services for production drift.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/DriftScan.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "email:healthcheck",
+    "group": "ops",
+    "description": "Ops helper command: email:healthcheck",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/Email/Healthcheck.php",
+    "namespace": "App\\Commands\\Ops\\Email"
+  },
+  {
+    "command_name": "email:queue-scan",
+    "group": "ops",
+    "description": "Ops helper command: email:queue-scan",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/Email/QueueScan.php",
+    "namespace": "App\\Commands\\Ops\\Email"
+  },
+  {
+    "command_name": "email:test",
+    "group": "ops",
+    "description": "Ops helper command: email:test",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/Email/Test.php",
+    "namespace": "App\\Commands\\Ops\\Email"
+  },
+  {
+    "command_name": "ops:env:snapshot",
+    "group": "Ops",
+    "description": "Print key env vars with secret redaction (safe for logs/screenshots).",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/EnvSnapshot.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:fetch-commands",
+    "group": "ops",
+    "description": "Fetch unread ops commands from IMAP and store them in bf_ops_command_inbox",
+    "options": [
+      "--dry-run",
+      "Preview actions without storing inbox items",
+      "--approve",
+      "Acknowledge and store inbox items"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ops/FetchCommands.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:filesystem:fix",
+    "group": "ops",
+    "description": "Auto-fix filesystem governance violations",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/FilesystemFix.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:filesystem:lint",
+    "group": "ops",
+    "description": "Lint and optionally auto-fix filesystem governance violations.",
+    "options": [
+      "--fix",
+      "Automatically apply safe fixes",
+      "--report",
+      "Write fix plan to docs/_ops/filesystem-lint.md",
+      "--json",
+      "JSON output"
+    ],
+    "usage": "ops:filesystem:lint [--fix] [--report] [--json]",
+    "file_path": "app/Commands/Ops/FilesystemLint.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:healthcheck",
+    "group": "ops",
+    "description": "Ops helper command: ops:healthcheck",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/Health/Healthcheck.php",
+    "namespace": "App\\Commands\\Ops\\Health"
+  },
+  {
+    "command_name": "ops:logger:test",
+    "group": "Ops",
+    "description": "Writes test entries to configured logger handlers.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/LoggerTest.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "logs:scan",
+    "group": "ops",
+    "description": "Ops helper command: logs:scan",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/Logs/Scan.php",
+    "namespace": "App\\Commands\\Ops\\Logs"
+  },
+  {
+    "command_name": "logs:watch",
+    "group": "ops",
+    "description": "Ops helper command: logs:watch",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/Logs/Watch.php",
+    "namespace": "App\\Commands\\Ops\\Logs"
+  },
+  {
+    "command_name": "ops:model-limit:audit",
+    "group": "ops",
+    "description": "Audit models/services/libraries for unbounded query patterns.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/ModelLimitAudit.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:network:matrix",
+    "group": "Ops",
+    "description": "Test outbound connectivity matrix (TCP/SSL) with latency and banner.",
+    "options": null,
+    "usage": "ops:network:matrix [--imap-host=imap.dreamhost.com] [--smtp-host=smtp.dreamhost.com]",
+    "file_path": "app/Commands/Ops/NetworkMatrix.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:next-steps",
+    "group": "ops",
+    "description": "Generate next-steps issues from audit commands and write docs/snapshots.",
+    "options": [
+      "--emit",
+      "docs (default), db, or both",
+      "--date",
+      "Override the snapshot date (YYYY-MM-DD)",
+      "--dry-run",
+      "Run analyzers but skip writes",
+      "--approve",
+      "Acknowledge and write docs/snapshots/tasks"
+    ],
+    "usage": "ops:next-steps [--emit=docs|db|both] [--date=YYYY-MM-DD] [--dry-run] [--approve]",
+    "file_path": "app/Commands/Ops/NextSteps.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:next-steps:sync",
+    "group": "ops",
+    "description": "Diff latest snapshots and queue net-new issues.",
+    "options": [
+      "--emit",
+      "Output mode: docs (default: docs).",
+      "--out",
+      "Override artifact directory (must be inside docs/aiops/artifacts).",
+      "--dry-run",
+      "Generate a report without mutating state.",
+      "--approve",
+      "Acknowledge execution (required for mutating commands)."
+    ],
+    "usage": "ops:next-steps:sync [--emit=docs] [--out=path] [--dry-run] [--approve]",
+    "file_path": "app/Commands/Ops/NextStepsSync.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:next-steps:sync-manual",
+    "group": "ops",
+    "description": "Sync manual TODOs from docs/_aiops/next-steps.md into the database.",
+    "options": [
+      "--dry-run",
+      "Preview changes without writing to the database."
+    ],
+    "usage": "ops:next-steps:sync-manual [--dry-run]",
+    "file_path": "app/Commands/Ops/NextStepsSyncManual.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:php-fpm-health",
+    "group": "ops",
+    "description": "Ops helper command: ops:php-fpm-health",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/PHP/FpmHealth.php",
+    "namespace": "App\\Commands\\Ops\\PHP"
+  },
+  {
+    "command_name": "ops:php:extensions",
+    "group": "Ops",
+    "description": "Audit required PHP extensions and key INI values (IMAP/SSL-friendly).",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/PHPExtensionsAudit.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:propose-pr",
+    "group": "ops",
+    "description": "Generate and validate a PR artifact bundle, then export to tracked outbox for GitHub automation.",
+    "options": [
+      "--slug",
+      "Required. Short identifier (kebab-case). Example: spark-taxonomy-fix",
+      "--title",
+      "Required. PR title.",
+      "--body",
+      "Required. PR description body (plain text or markdown).",
+      "--patch",
+      "Required. Path to unified diff patch file.",
+      "--risk",
+      "Optional. low|medium|high. Default: low",
+      "--emit",
+      "Optional. table|json|md (default: table)",
+      "--out",
+      "Optional. Write a summary artifact to a file path.",
+      "--dry-run",
+      "Optional. Do not write files; show what would be done.",
+      "--approve",
+      "Optional. Required to export to tracked outbox (mutating operation).",
+      "--artifact",
+      "Optional. Write a lightweight aiops artifact json file"
+    ],
+    "usage": "ops:propose-pr --slug=... --title=... --body=... --patch=... [--risk=low|medium|high] [--approve] [--dry-run]",
+    "file_path": "app/Commands/Ops/ProposePr.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:report",
+    "group": "ops",
+    "description": "Ops helper command: ops:report",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/Report.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:self-heal",
+    "group": "ops",
+    "description": "Ops helper command: ops:self-heal",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/SelfHeal.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:nginx-status",
+    "group": "ops",
+    "description": "Ops helper command: ops:nginx-status",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/Server/NginxStatus.php",
+    "namespace": "App\\Commands\\Ops\\Server"
+  },
+  {
+    "command_name": "ops:subs:audit",
+    "group": "Ops",
+    "description": "Run subsystem audits",
+    "options": [
+      "--json",
+      "JSON",
+      "--strict",
+      "Strict"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ops/Subs/Audit.php",
+    "namespace": "App\\Commands\\Ops\\Subs"
+  },
+  {
+    "command_name": "ops:subs:doctor",
+    "group": "Ops",
+    "description": "Friendly subsystem triage",
+    "options": [
+      "--json",
+      "JSON"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ops/Subs/Doctor.php",
+    "namespace": "App\\Commands\\Ops\\Subs"
+  },
+  {
+    "command_name": "ops:subs:repair",
+    "group": "Ops",
+    "description": "Run subsystem repairs",
+    "options": [
+      "--json",
+      "JSON"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ops/Subs/Repair.php",
+    "namespace": "App\\Commands\\Ops\\Subs"
+  },
+  {
+    "command_name": "ops:subs:status",
+    "group": "Ops",
+    "description": "Combined subsystem status",
+    "options": [
+      "--json",
+      "JSON"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/Ops/Subs/Status.php",
+    "namespace": "App\\Commands\\Ops\\Subs"
+  },
+  {
+    "command_name": "ops:sync",
+    "group": "Ops",
+    "description": "Runs an ops sync pipeline: git guard/pull + routes docs + launch audit + repo health.",
+    "options": null,
+    "usage": "ops:sync",
+    "file_path": "app/Commands/Ops/Sync.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:vps:snapshot",
+    "group": "Ops",
+    "description": "Collect system/runtime snapshot (no-sudo, best-effort) and write docs/_aiops snapshot.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Ops/VPSSnapshot.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:integrity:wallet",
+    "group": "Ops",
+    "description": "Validate wallet balances against completed ledger transactions.",
+    "options": null,
+    "usage": "ops:integrity:wallet [--limit=0] [--user_id=0]",
+    "file_path": "app/Commands/Ops/WalletIntegrity.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "ops:work",
+    "group": "ops",
+    "description": "Process AiOps task queue items safely.",
+    "options": [
+      "--lock",
+      "Lock duration in minutes (default 15).",
+      "--dry-run",
+      "Preview actions without processing tasks",
+      "--code",
+      "Process code-eligible tasks only and write PR outbox bundle."
+    ],
+    "usage": "php spark ops:work [limit] [--lock=minutes] [--dry-run]",
+    "file_path": "app/Commands/Ops/Work.php",
+    "namespace": "App\\Commands\\Ops"
+  },
+  {
+    "command_name": "perf:k6",
+    "group": "Performance",
+    "description": "Run k6 load test",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Performance/K6Run.php",
+    "namespace": "App\\Commands\\Performance"
+  },
+  {
+    "command_name": "spark:purge-fastcgi",
+    "group": "maintenance",
+    "description": "Detect and neutralize legacy FastCGI/php-pm socket references safely.",
+    "options": [
+      "--approve",
+      "Acknowledge and rename files that reference FastCGI/php-pm sockets"
+    ],
+    "usage": "spark:purge-fastcgi [--approve]",
+    "file_path": "app/Commands/PurgeFastCGI.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "repo:class-scan",
+    "group": "Repo",
+    "description": "Scan repository for duplicate classes and namespace conflicts.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Repo/ClassScan.php",
+    "namespace": "App\\Commands\\Repo"
+  },
+  {
+    "command_name": "repo:class-trace",
+    "group": "Repo",
+    "description": "Trace where a class is declared and referenced in the repository.",
+    "options": null,
+    "usage": "repo:class-trace --class=\"App\\\\Modules\\\\Ops\\\\Controllers\\\\OpsDashboardController\"",
+    "file_path": "app/Commands/Repo/ClassTrace.php",
+    "namespace": "App\\Commands\\Repo"
+  },
+  {
+    "command_name": "repo:diff-split",
+    "group": "Repo",
+    "description": "Split large git diffs into smaller review batches.",
+    "options": null,
+    "usage": "repo:diff-split [--size=25]",
+    "file_path": "app/Commands/Repo/DiffSplit.php",
+    "namespace": "App\\Commands\\Repo"
+  },
+  {
+    "command_name": "repo:health",
+    "group": "DevOps",
+    "description": "Runs lightweight repository health checks for GTM readiness.",
+    "options": null,
+    "usage": "repo:health",
+    "file_path": "app/Commands/Repo/Health.php",
+    "namespace": "App\\Commands\\Repo"
+  },
+  {
+    "command_name": "research:reports:daily",
+    "group": "research",
+    "description": "Generate daily market research report",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Research/DailyMarketReport.php",
+    "namespace": "App\\Commands\\Research"
+  },
+  {
+    "command_name": "research:earnings:calendar",
+    "group": "research",
+    "description": "Collect earnings calendar research items",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Research/EarningsCalendar.php",
+    "namespace": "App\\Commands\\Research"
+  },
+  {
+    "command_name": "research:intelligence:signals",
+    "group": "research",
+    "description": "Generate trade-signal intelligence from research rankings and the financial knowledge graph",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Research/FinancialIntelligenceSignals.php",
+    "namespace": "App\\Commands\\Research"
+  },
+  {
+    "command_name": "research:knowledge:build",
+    "group": "research",
+    "description": "Build financial knowledge graph",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Research/FinancialKnowledge.php",
+    "namespace": "App\\Commands\\Research"
+  },
+  {
+    "command_name": "research:news:collect",
+    "group": "research",
+    "description": null,
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Research/FinancialNewsCollect.php",
+    "namespace": "App\\Commands\\Research"
+  },
+  {
+    "command_name": "research:google:scan",
+    "group": "research",
+    "description": "Scan Google for financial research links",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Research/GoogleFinancialScan.php",
+    "namespace": "App\\Commands\\Research"
+  },
+  {
+    "command_name": "research:google:scan",
+    "group": "research",
+    "description": null,
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Research/GoogleScan.php",
+    "namespace": "App\\Commands\\Research"
+  },
+  {
+    "command_name": "research:data:compile",
+    "group": "research",
+    "description": null,
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Research/MarketDataCompile.php",
+    "namespace": "App\\Commands\\Research"
+  },
+  {
+    "command_name": "research:pipeline:run",
+    "group": "research",
+    "description": null,
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Research/ResearchPipeline.php",
+    "namespace": "App\\Commands\\Research"
+  },
+  {
+    "command_name": "research:short-interest:scan",
+    "group": "research",
+    "description": "Scan short-interest candidates",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Research/ShortInterestScan.php",
+    "namespace": "App\\Commands\\Research"
+  },
+  {
+    "command_name": "research:alerts:watchlist-import",
+    "group": "research",
+    "description": null,
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Research/ThinkOrSwimImport.php",
+    "namespace": "App\\Commands\\Research"
+  },
+  {
+    "command_name": "research:alerts:cleanup",
+    "group": "research",
+    "description": null,
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Research/WatchlistCleanup.php",
+    "namespace": "App\\Commands\\Research"
+  },
+  {
+    "command_name": "research:reports:weekly",
+    "group": "research",
+    "description": "Generate weekly market research report",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Research/WeeklyMarketReport.php",
+    "namespace": "App\\Commands\\Research"
+  },
+  {
+    "command_name": "spark:restart-safe",
+    "group": "maintenance",
+    "description": "Flush caches/sessions safely and guide a no-sudo restart flow on DreamHost.",
+    "options": [
+      "--hard",
+      "Also purge session files (file handler only)",
+      "--dry-run",
+      "Preview actions without purging",
+      "--approve",
+      "Acknowledge and apply cache/session purges"
+    ],
+    "usage": "spark:restart-safe [--hard] [--dry-run] [--approve]",
+    "file_path": "app/Commands/RestartSafe.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "revenue:cost-forecast",
+    "group": "audit",
+    "description": "Forecast infra and API costs and detect overruns.",
+    "options": [
+      "--emit",
+      "Output mode: docs (default: docs).",
+      "--out",
+      "Override artifact directory (must be inside docs/aiops/artifacts).",
+      "--dry-run",
+      "Generate a report without mutating state.",
+      "--approve",
+      "Acknowledge execution (required for mutating commands)."
+    ],
+    "usage": "revenue:cost-forecast [--emit=docs] [--out=path] [--dry-run] [--approve]",
+    "file_path": "app/Commands/Revenue/CostForecast.php",
+    "namespace": "App\\Commands\\Revenue"
+  },
+  {
+    "command_name": "revenue:scan",
+    "group": "marketing",
+    "description": "Scan the repository for monetizable features and generate revenue stream docs.",
+    "options": [
+      "--dry-run",
+      "Preview actions without writing documentation"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/RevenueStreamsScan.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "route:benchmark",
+    "group": "Diagnostics",
+    "description": "Benchmark route loading performance.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Routes/Benchmark.php",
+    "namespace": "App\\Commands\\Routes"
+  },
+  {
+    "command_name": "routes:debug",
+    "group": "Diagnostics",
+    "description": "Resolve a route and verify controller, method, and HTTP method coverage.",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Routes/Debug.php",
+    "namespace": "App\\Commands\\Routes"
+  },
+  {
+    "command_name": "routes:docs",
+    "group": "Routes",
+    "description": "Export active routes to Markdown + JSON under docs/routes/.",
+    "options": null,
+    "usage": "routes:docs [--mode=all|issues|missing-targets|invalid-handler] [--out=docs/routes/routes.md]",
+    "file_path": "app/Commands/Routes/Docs.php",
+    "namespace": "App\\Commands\\Routes"
+  },
+  {
+    "command_name": "routes:reconcile",
+    "group": "Routes",
+    "description": "Reconcile route handlers against actual controllers and methods.",
+    "options": null,
+    "usage": "routes:reconcile [--out=docs/routes/routes_reconcile.md]",
+    "file_path": "app/Commands/Routes/Reconcile.php",
+    "namespace": "App\\Commands\\Routes"
+  },
+  {
+    "command_name": "routes:repair",
+    "group": "Routes",
+    "description": "Repair invalid route handlers, resolve namespaces, and remove exact duplicate route definitions.",
+    "options": null,
+    "usage": "routes:repair [--apply=0|1] [--report=docs/routes/routes_repair_report.md] [--paths=app/Config/Routes.php,app/Config/Routes]",
+    "file_path": "app/Commands/Routes/Repair.php",
+    "namespace": "App\\Commands\\Routes"
+  },
+  {
+    "command_name": "routes:auth-audit",
+    "group": "maintenance",
+    "description": "Audit public routes for unauthenticated access regressions.",
+    "options": [
+      "--dry-run",
+      "Preview actions without making HTTP requests"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/RoutesAuthAudit.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "runtime:cache-boot",
+    "group": "runtime",
+    "description": "Validate cache boot health and warm critical cache keys.",
+    "options": [
+      "--emit",
+      "Output mode: docs (default: docs).",
+      "--out",
+      "Override artifact directory (must be inside docs/aiops/artifacts).",
+      "--dry-run",
+      "Preview actions without changing cache state.",
+      "--approve",
+      "Allow cache mutations (required)."
+    ],
+    "usage": "runtime:cache-boot [--emit=docs] [--out=path] [--dry-run] [--approve]",
+    "file_path": "app/Commands/Runtime/CacheBoot.php",
+    "namespace": "App\\Commands\\Runtime"
+  },
+  {
+    "command_name": "runtime:diagnose-502",
+    "group": "runtime",
+    "description": "Diagnose and optionally remediate 502/503 gateway errors",
+    "options": [
+      "--approve",
+      "Apply safe fixes (clear cache, remove stale sockets) after diagnostics"
+    ],
+    "usage": "runtime:diagnose-502 [--approve]",
+    "file_path": "app/Commands/Runtime/Diagnose502.php",
+    "namespace": "App\\Commands\\Runtime"
+  },
+  {
+    "command_name": "runtime:spark-doctor",
+    "group": "runtime",
+    "description": "Validate Spark command discovery and CI4 compatibility",
+    "options": null,
+    "usage": "runtime:spark-doctor",
+    "file_path": "app/Commands/Runtime/SparkDoctor.php",
+    "namespace": "App\\Commands\\Runtime"
+  },
+  {
+    "command_name": "runtime:spark-doctor",
+    "group": "runtime",
+    "description": "Validate Spark command discovery and CI4 compatibility (runtime scope).",
+    "options": [
+      "--emit",
+      "Output mode: docs (default: docs).",
+      "--out",
+      "Override artifact directory (must be inside docs/aiops/artifacts).",
+      "--dry-run",
+      "Generate a report without mutating state.",
+      "--approve",
+      "Acknowledge execution (required for mutating commands)."
+    ],
+    "usage": "runtime:spark-doctor [--emit=docs] [--out=path] [--dry-run] [--approve]",
+    "file_path": "app/Commands/Runtime/SparkDoctorRuntime.php",
+    "namespace": "App\\Commands\\Runtime"
+  },
+  {
+    "command_name": "spark:fix",
+    "group": "Runtime",
+    "description": "Auto-heal Spark command standards and generate a fix report",
+    "options": null,
+    "usage": "spark:fix",
+    "file_path": "app/Commands/Runtime/SparkFix.php",
+    "namespace": "App\\Commands\\Runtime"
+  },
+  {
+    "command_name": "optimize:safe",
+    "group": "runtime",
+    "description": "Run CI4 optimize safely (CI-only)",
+    "options": null,
+    "usage": "optimize:safe",
+    "file_path": "app/Commands/Runtime/SparkOptimize.php",
+    "namespace": "App\\Commands\\Runtime"
+  },
+  {
+    "command_name": "runtime:triage",
+    "group": "runtime",
+    "description": "Consolidate runtime diagnostics into a single report.",
+    "options": [
+      "--emit",
+      "Output mode: docs (default: docs).",
+      "--out",
+      "Override artifact directory (must be inside docs/aiops/artifacts).",
+      "--dry-run",
+      "Generate a report without mutating state.",
+      "--approve",
+      "Acknowledge execution (required for mutating commands)."
+    ],
+    "usage": "runtime:triage [--emit=docs] [--out=path] [--dry-run] [--approve]",
+    "file_path": "app/Commands/Runtime/Triage.php",
+    "namespace": "App\\Commands\\Runtime"
+  },
+  {
+    "command_name": "runtime:check",
+    "group": "app",
+    "description": "Validate runtime invariants (nginx, php, permissions, etc.).",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/RuntimeCheck.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "scanning:run",
+    "group": "scanning",
+    "description": "Run MyMI liquidity + momentum scanner",
+    "options": [
+      "--timeframe",
+      "Timeframe (1min,5min,15min,1day).",
+      "--source",
+      "Symbol source (watchlist|universe|manual).",
+      "--limit",
+      "Max symbol count."
+    ],
+    "usage": "scanning:run --timeframe=1min --source=watchlist --limit=200",
+    "file_path": "app/Commands/Scanning/RunScanner.php",
+    "namespace": "App\\Commands\\Scanning"
+  },
+  {
+    "command_name": "scraper:audit-emails",
+    "group": "audit",
+    "description": "Audit recent trade and news emails against the expected scraper schema.",
+    "options": [
+      "--limit",
+      "Number of emails to scan (default: 25)."
+    ],
+    "usage": "scraper:audit-emails [limit] [--limit=25]",
+    "file_path": "app/Commands/Scrapers/EmailScraperAudit.php",
+    "namespace": "App\\Commands\\Scrapers"
+  },
+  {
+    "command_name": "keys:generate-ci4",
+    "group": "security",
+    "description": "Generate and rotate CodeIgniter 4 encryption.key",
+    "options": null,
+    "usage": "keys:generate-ci4 [bits]",
+    "file_path": "app/Commands/Security/GenerateCI4Key.php",
+    "namespace": "App\\Commands\\Security"
+  },
+  {
+    "command_name": "keys:generate",
+    "group": "security",
+    "description": "Generate a cryptographically secure encryption key.",
+    "options": null,
+    "usage": "keys:generate [bits]",
+    "file_path": "app/Commands/Security/GenerateKey.php",
+    "namespace": "App\\Commands\\Security"
+  },
+  {
+    "command_name": "security:secrets-audit",
+    "group": "security",
+    "description": "Detect sensitive secrets in configs, logs, or docs.",
+    "options": [
+      "--emit",
+      "Output mode: docs (default: docs).",
+      "--out",
+      "Override artifact directory (must be inside docs/aiops/artifacts).",
+      "--dry-run",
+      "Generate a report without mutating state.",
+      "--approve",
+      "Acknowledge execution (required for mutating commands)."
+    ],
+    "usage": "security:secrets-audit [--emit=docs] [--out=path] [--dry-run] [--approve]",
+    "file_path": "app/Commands/Security/SecretsAudit.php",
+    "namespace": "App\\Commands\\Security"
+  },
+  {
+    "command_name": "security:csp:audit",
+    "group": "security",
+    "description": "Scan view templates for CSP-unsafe inline scripts, styles, and handlers.",
+    "options": [
+      "--dry-run",
+      "Preview actions without writing data"
+    ],
+    "usage": "security:csp:audit",
+    "file_path": "app/Commands/SecurityCspAudit.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "spark:commands:graph",
+    "group": "Spark",
+    "description": "Generate Spark command graph",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Spark/CommandGraph.php",
+    "namespace": "App\\Commands\\Spark"
+  },
+  {
+    "command_name": "spark:doctor",
+    "group": "Spark",
+    "description": "System health inspector for Spark commands.",
+    "options": [
+      "--json",
+      "Emit JSON output to stdout",
+      "--notify",
+      "Send summary notification via Discord or email",
+      "--db",
+      "Store JSON snapshot in aiops_command_snapshots table"
+    ],
+    "usage": "spark:doctor [--json] [--notify] [--db]",
+    "file_path": "app/Commands/Spark/Doctor.php",
+    "namespace": "App\\Commands\\Spark"
+  },
+  {
+    "command_name": "spark:fix",
+    "group": "Spark",
+    "description": "Safely repair Spark command and cache issues.",
+    "options": [
+      "--dry-run",
+      "Preview actions without modifying files (default)",
+      "--approve",
+      "Apply fixes and write updates",
+      "--json",
+      "Emit JSON output to stdout",
+      "--notify",
+      "Send summary notification via Discord or email",
+      "--db",
+      "Store JSON snapshot in aiops_command_snapshots table"
+    ],
+    "usage": "spark:fix [--dry-run] [--approve] [--json] [--notify] [--db]",
+    "file_path": "app/Commands/Spark/Fix.php",
+    "namespace": "App\\Commands\\Spark"
+  },
+  {
+    "command_name": "infra:server-audit",
+    "group": "Infrastructure",
+    "description": "Audit server and classify reusable infrastructure components",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Spark/InfraServerAudit.php",
+    "namespace": "App\\Commands\\Spark"
+  },
+  {
+    "command_name": "spark:registry-audit",
+    "group": "Spark",
+    "description": "Audit Spark command registry against filesystem declarations and runtime list output.",
+    "options": null,
+    "usage": "spark:registry-audit",
+    "file_path": "app/Commands/Spark/RegistryAudit.php",
+    "namespace": "App\\Commands\\Spark"
+  },
+  {
+    "command_name": "spark-reset",
+    "group": "Spark",
+    "description": "Reset Spark caches, purge command metadata, and rebuild autoload (guarded).",
+    "options": [
+      "--emit",
+      "Output mode: docs (default: docs).",
+      "--out",
+      "Override artifact directory (must be inside docs/aiops/artifacts).",
+      "--dry-run",
+      "Preview actions without mutating state.",
+      "--approve",
+      "Allow destructive mutations (required)."
+    ],
+    "usage": "spark-reset [--emit=docs] [--out=path] [--dry-run] [--approve]",
+    "file_path": "app/Commands/Spark/Reset.php",
+    "namespace": "App\\Commands\\Spark"
+  },
+  {
+    "command_name": "test:redis",
+    "group": "Test",
+    "description": "Test Redis connection",
+    "options": null,
+    "usage": null,
+    "file_path": "app/Commands/Test/RedisPing.php",
+    "namespace": "App\\Commands\\Test"
+  },
+  {
+    "command_name": "email:test",
+    "group": "maintenance",
+    "description": "Send a test email using the current SMTP configuration.",
+    "options": [
+      "--dry-run",
+      "Preview actions without sending email"
+    ],
+    "usage": null,
+    "file_path": "app/Commands/TestEmail.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "spark:traffic-spike-guard",
+    "group": "maintenance",
+    "description": "Detect traffic/error spikes that commonly lead to 503 and alert Discord.",
+    "options": [
+      "--lines",
+      "Number of log lines to scan (default 500)",
+      "--threshold",
+      "Spike threshold per metric (default 15)",
+      "--discord",
+      "Send alert to Discord if spike detected"
+    ],
+    "usage": "spark:traffic-spike-guard [--lines=500] [--threshold=15] [--discord]",
+    "file_path": "app/Commands/TrafficSpikeGuard.php",
+    "namespace": "App\\Commands"
+  },
+  {
+    "command_name": "ux:journey-audit",
+    "group": "audit",
+    "description": "Validate critical user journeys (signup to dashboard flow checks).",
+    "options": [
+      "--emit",
+      "Output mode: docs (default: docs).",
+      "--out",
+      "Override artifact directory (must be inside docs/aiops/artifacts).",
+      "--dry-run",
+      "Generate a report without mutating state.",
+      "--approve",
+      "Acknowledge execution (required for mutating commands)."
+    ],
+    "usage": "ux:journey-audit [--emit=docs] [--out=path] [--dry-run] [--approve]",
+    "file_path": "app/Commands/Ux/JourneyAudit.php",
+    "namespace": "App\\Commands\\Ux"
+  },
+  {
+    "command_name": "wallets:warm-summary-cache",
+    "group": "wallets",
+    "description": "Pre-warm the /API/Wallets/summary cache for active users.",
+    "options": [
+      "--dry-run",
+      "Preview actions without warming cache",
+      "--approve",
+      "Acknowledge and warm summary cache"
+    ],
+    "usage": "wallets:warm-summary-cache [user-id] [--dry-run] [--approve]",
+    "file_path": "app/Commands/WalletsWarmSummaryCache.php",
+    "namespace": "App\\Commands"
+  }
+]

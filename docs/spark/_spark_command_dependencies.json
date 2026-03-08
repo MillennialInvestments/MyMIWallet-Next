@@ -1,0 +1,2135 @@
+{
+  "generated_at": "2026-03-08T14:00:52.087994Z",
+  "dependencies": [
+    {
+      "from": "aiops:alerts-check",
+      "to": "App\\Services\\EmailScraperService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:alerts-check",
+      "to": "App\\Services\\EmailQueueService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:alerts-check",
+      "to": "aiops:alerts-worker",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:alerts-clean",
+      "to": "aiops_email_queue",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:alerts-health",
+      "to": "App\\Services\\SlackWebhookService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:alerts-health",
+      "to": "aiops_email_queue",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:alerts-worker",
+      "to": "App\\Services\\SlackWebhookService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:alerts-worker",
+      "to": "aiops_email_queue",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:auto:run",
+      "to": "App\\Services\\AIOps\\AutoRunCoordinator",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:auto:run",
+      "to": "App\\Services\\AIOps\\ManualRunNotifier",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:auto:run",
+      "to": "App\\Services\\AIOps\\OllamaPatchRunner",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:auto:run",
+      "to": "GitHub",
+      "type": "command_to_api"
+    },
+    {
+      "from": "aiops:auto:run",
+      "to": "Discord",
+      "type": "command_to_api"
+    },
+    {
+      "from": "aiops:backlog",
+      "to": "App\\Services\\AIOps\\BacklogMetaService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:backlog",
+      "to": "App\\Services\\AIOps\\OllamaPatchRunner",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:build-command",
+      "to": "App\\Services\\AIOpsService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:build-command",
+      "to": "App\\Services\\CommandBuilderService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:build-command",
+      "to": "text",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:chat-gov-index",
+      "to": "App\\Services\\ChatGovernanceIndexer",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:chat-gov-index",
+      "to": "archived",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:chat-gov-index",
+      "to": "MySQL",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:command-index",
+      "to": "App\\Services\\AIOps\\CommandHookService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:command-index",
+      "to": "App\\Services\\Spark\\CommandInventoryService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:command-index",
+      "to": "Discord",
+      "type": "command_to_api"
+    },
+    {
+      "from": "aiops:copilot:validate",
+      "to": "App\\Services\\AIOps\\CommandHookService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:copilot:validate",
+      "to": "App\\Services\\Spark\\CommandInventoryService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:copilot:validate",
+      "to": "Discord",
+      "type": "command_to_api"
+    },
+    {
+      "from": "aiops:dedupe:report",
+      "to": "App\\Services\\AIOps\\InstructionService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:dedupe:report",
+      "to": "App\\Models\\AIOpsInstructionModel",
+      "type": "command_to_model"
+    },
+    {
+      "from": "aiops:deps:add",
+      "to": "App\\Models\\AIOpsDependencyModel",
+      "type": "command_to_model"
+    },
+    {
+      "from": "aiops:deps:add",
+      "to": "aiops:deps:add",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:diff:format",
+      "to": "current",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:docs-sync",
+      "to": "aiops:docs-sync",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:email-scan",
+      "to": "App\\Services\\AIOps\\EmailScannerService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:email-scan",
+      "to": "App\\Models\\AiOpsRunModel",
+      "type": "command_to_model"
+    },
+    {
+      "from": "aiops:form:test",
+      "to": "App\\Services\\AIOps\\FormIntelligenceService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:form:test",
+      "to": "App\\Services\\AIOps\\FormPatchPlanner",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:form:test",
+      "to": "App\\Services\\AIOps\\FormTestExecutor",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:form:test",
+      "to": "aiops:form:test",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:ingest",
+      "to": "App\\Services\\AIOps\\InstructionService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:ingest",
+      "to": "bf_frontend_incidents",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:ingest",
+      "to": "parse",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:ingest",
+      "to": "aiops:ingest",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:ingest",
+      "to": "aiops:worker",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:ingest",
+      "to": "aiops:routes:scan",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:ingest",
+      "to": "aiops:repair:plan",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:ingest",
+      "to": "aiops:priority:build",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:manual:run",
+      "to": "App\\Services\\AIOps\\ManualPriorityRunner",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:manual:run",
+      "to": "App\\Services\\AIOps\\ManualRunNotifier",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:manual:run",
+      "to": "GitHub",
+      "type": "command_to_api"
+    },
+    {
+      "from": "aiops:manual:run",
+      "to": "Discord",
+      "type": "command_to_api"
+    },
+    {
+      "from": "aiops:observe:hash",
+      "to": "stable",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:observe:patch",
+      "to": "suggestions",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:observe:regression",
+      "to": "aiops:observe:hash",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:observe:snapshot",
+      "to": "aiops:observe:hash",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:pr:create",
+      "to": "GitHub",
+      "type": "command_to_api"
+    },
+    {
+      "from": "aiops:patch:dry_run",
+      "to": "aiops:patch:apply",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:priority:build",
+      "to": "App\\Services\\AIOps\\DocsScannerService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:priority:build",
+      "to": "App\\Services\\AIOps\\RepoVerifierService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:priority:build",
+      "to": "App\\Services\\AIOps\\OllamaCodeGenService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:priority:build",
+      "to": "App\\Services\\AIOps\\PriorityWriterService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:priority:build",
+      "to": "a",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:priority:build",
+      "to": "docs",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:public-pages:audit",
+      "to": "bf_public_pages_published",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:public-pages:audit",
+      "to": "bf_public_pages_catalog",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:public-pages:audit",
+      "to": "bf_public_pages_drafts",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:public-pages:import",
+      "to": "bf_public_pages_catalog",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:public-pages:report",
+      "to": "bf_public_pages_runs",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:public-pages:report",
+      "to": "bf_public_pages_drafts",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:public-pages:report",
+      "to": "bf_public_pages_catalog",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:public-pages:report",
+      "to": "bf_public_pages_sources",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:public-pages:run",
+      "to": "App\\Services\\AIOps\\PublicPagesPipelineService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:public-pages:run",
+      "to": "bf_public_pages_runs",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:public-pages:run",
+      "to": "bf_public_pages_catalog",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:public-pages:run",
+      "to": "bf_public_pages_sources",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:public-pages:run",
+      "to": "bf_public_pages_drafts",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:public-pages:run",
+      "to": "bf_public_pages_published",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:repair:run",
+      "to": "aiops:observe:scan",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:repair:run",
+      "to": "aiops:observe:hash",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:repair:run",
+      "to": "aiops:observe:cost",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:repair:run",
+      "to": "aiops:observe:suggest",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:repair:run",
+      "to": "aiops:diff:format",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:repair:run",
+      "to": "aiops:patch:apply",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:repair:run_safe",
+      "to": "branch",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:repair:run_safe",
+      "to": "the",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:repair:run_safe",
+      "to": "aiops:gate:cost",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:repair:run_safe",
+      "to": "aiops:observe:scan",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:repair:run_safe",
+      "to": "aiops:observe:hash",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:repair:run_safe",
+      "to": "aiops:observe:cost",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:repair:run_safe",
+      "to": "aiops:observe:regression",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:repair:run_safe",
+      "to": "aiops:patch:risk_score",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:repair:run_safe",
+      "to": "aiops:patch:validate",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:repair:run_safe",
+      "to": "aiops:patch:dry_run",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:repair:run_safe",
+      "to": "aiops:governance:analyze",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:repair:run_safe",
+      "to": "aiops:observe:suggest",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:repair:run_safe",
+      "to": "aiops:diff:format",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:repair:run_safe",
+      "to": "aiops:patch:hallucination",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:repair:run_safe",
+      "to": "aiops:patch:apply",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:repair:run_safe",
+      "to": "app:test",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:repair:run_safe",
+      "to": "codex:gate",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:repair:run_safe",
+      "to": "codex:gate:severity",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:repair:run_safe",
+      "to": "app:gate:coverage",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:routes:compare",
+      "to": "https://mymiwallet.com",
+      "type": "command_to_api"
+    },
+    {
+      "from": "aiops:routes:compare",
+      "to": "https://dev.mymiwallet.com",
+      "type": "command_to_api"
+    },
+    {
+      "from": "aiops:routes:compare",
+      "to": "aiops:routes:compare",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:run",
+      "to": "App\\Services\\AIOps\\OllamaPatchRunner",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:graph:run",
+      "to": "App\\Services\\AIOps\\DependencyResolver",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:graph:run",
+      "to": "aiops:worker",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:scan:cells",
+      "to": "App\\Services\\AIOps\\CellDiscoveryScanner",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:scan:cells",
+      "to": "App\\Models\\AiOpsScanStateModel",
+      "type": "command_to_model"
+    },
+    {
+      "from": "aiops:scan:cells",
+      "to": "aiops:scan:cells",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:seed",
+      "to": "bf_ai_ops_caps",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:seed",
+      "to": "aiops:seed",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:sql:check",
+      "to": "App\\Services\\AIOps\\SchemaInspectorService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:sql:check",
+      "to": "bf_aiops_query_audit",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:sql:check",
+      "to": "bf_users",
+      "type": "command_to_table"
+    },
+    {
+      "from": "aiops:status",
+      "to": "App\\Services\\AIOps\\AiOpsServiceManager",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:unlock",
+      "to": "App\\Services\\AIOps\\BacklogMetaService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:unlock",
+      "to": "aiops:unlock",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:worker",
+      "to": "App\\Services\\AIOps\\BranchLockService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:worker",
+      "to": "App\\Services\\AIOps\\DependencyResolver",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:worker",
+      "to": "App\\Services\\AIOps\\DiffBuilder",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:worker",
+      "to": "App\\Services\\AIOps\\GitHubPRService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:worker",
+      "to": "App\\Services\\AIOps\\GovernanceScorer",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:worker",
+      "to": "App\\Services\\AIOps\\InstructionService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:worker",
+      "to": "App\\Services\\AIOps\\TargetingIntelligence",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:worker",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "aiops:worker",
+      "to": "GitHub",
+      "type": "command_to_api"
+    },
+    {
+      "from": "aiops:worker",
+      "to": "aiops:worker",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:worker",
+      "to": "aiops:pr:send",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:worker",
+      "to": "logs:summarize",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:worker",
+      "to": "aiops:worker:logs",
+      "type": "command_to_command"
+    },
+    {
+      "from": "aiops:worker:logs",
+      "to": "App\\Services\\AIOps\\InstructionService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:worker:logs",
+      "to": "App\\Services\\Spark\\LogSummarizeService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "aiops:worker:logs",
+      "to": "App\\Models\\AIOpsInstructionModel",
+      "type": "command_to_model"
+    },
+    {
+      "from": "api:audit",
+      "to": "App\\Services\\ApiGovernanceService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "api:audit",
+      "to": "bf_api_audit_runs",
+      "type": "command_to_table"
+    },
+    {
+      "from": "api:audit",
+      "to": "bf_api_audit_findings",
+      "type": "command_to_table"
+    },
+    {
+      "from": "api:audit",
+      "to": "bf_api_endpoints",
+      "type": "command_to_table"
+    },
+    {
+      "from": "api:audit",
+      "to": "bf_api_endpoint_rules",
+      "type": "command_to_table"
+    },
+    {
+      "from": "api:filters-check",
+      "to": "App\\Services\\ApiGovernanceService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "api:list",
+      "to": "App\\Services\\ApiGovernanceService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "api:permissions",
+      "to": "App\\Services\\ApiGovernanceService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "api:rate-limit-check",
+      "to": "App\\Services\\ApiGovernanceService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "api:versioning-check",
+      "to": "App\\Services\\ApiGovernanceService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "alerts:audit",
+      "to": "App\\Models\\AlertsModel",
+      "type": "command_to_model"
+    },
+    {
+      "from": "alerts:audit",
+      "to": "bf_investment_scraper",
+      "type": "command_to_table"
+    },
+    {
+      "from": "alerts:audit",
+      "to": "bf_investment_trade_alerts",
+      "type": "command_to_table"
+    },
+    {
+      "from": "alerts:audit",
+      "to": "bf_error_logs",
+      "type": "command_to_table"
+    },
+    {
+      "from": "alerts:ingest",
+      "to": "App\\Models\\AiOpsIngestRunModel",
+      "type": "command_to_model"
+    },
+    {
+      "from": "alerts:ingest",
+      "to": "App\\Models\\AlertsModel",
+      "type": "command_to_model"
+    },
+    {
+      "from": "alerts:parse-test",
+      "to": "alerts:parse-test",
+      "type": "command_to_command"
+    },
+    {
+      "from": "app:api:audit",
+      "to": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+      "type": "command_to_api"
+    },
+    {
+      "from": "app:api:list",
+      "to": "latest",
+      "type": "command_to_table"
+    },
+    {
+      "from": "app:controller:audit",
+      "to": "method",
+      "type": "command_to_table"
+    },
+    {
+      "from": "app:healthcheck",
+      "to": "App\\Services\\Spark\\LogHealthcheckService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "app:healthcheck",
+      "to": "app:healthcheck",
+      "type": "command_to_command"
+    },
+    {
+      "from": "app:update",
+      "to": "instead",
+      "type": "command_to_table"
+    },
+    {
+      "from": "app:update",
+      "to": "is",
+      "type": "command_to_table"
+    },
+    {
+      "from": "app:update",
+      "to": "ops:app:update",
+      "type": "command_to_command"
+    },
+    {
+      "from": "auth:audit",
+      "to": "App\\Services\\Spark\\AuthAuditRunner",
+      "type": "command_to_service"
+    },
+    {
+      "from": "auth:flow-smoke",
+      "to": "https://evil.example",
+      "type": "command_to_api"
+    },
+    {
+      "from": "auth:funnel-check",
+      "to": "App\\Services\\Spark\\AuthFunnelCheckService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "auth:smoke",
+      "to": "App\\Services\\AuthSmokeService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "auth:smoke-test",
+      "to": "App\\Services\\AuthSmokeService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "chat:logs",
+      "to": "writable",
+      "type": "command_to_table"
+    },
+    {
+      "from": "codex:audit",
+      "to": "https://api.openai.com/v1/chat/completions",
+      "type": "command_to_api"
+    },
+    {
+      "from": "codex:audit",
+      "to": "codex:index",
+      "type": "command_to_command"
+    },
+    {
+      "from": "codex:continue",
+      "to": "counters",
+      "type": "command_to_table"
+    },
+    {
+      "from": "codex:continue",
+      "to": "codex:index",
+      "type": "command_to_command"
+    },
+    {
+      "from": "codex:instruct:audit",
+      "to": "https://api.openai.com/v1/chat/completions",
+      "type": "command_to_api"
+    },
+    {
+      "from": "codex:review:publish",
+      "to": "GitHub",
+      "type": "command_to_api"
+    },
+    {
+      "from": "codex:review:publish",
+      "to": "ops:filesystem:lint",
+      "type": "command_to_command"
+    },
+    {
+      "from": "codex:review:publish",
+      "to": "codex:review:publish",
+      "type": "command_to_command"
+    },
+    {
+      "from": "app:compat-audit",
+      "to": "table",
+      "type": "command_to_table"
+    },
+    {
+      "from": "app:compat-audit",
+      "to": "CI3",
+      "type": "command_to_table"
+    },
+    {
+      "from": "config:lint",
+      "to": "App\\Services\\ConfigLintService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "contentengine:smoke",
+      "to": "App\\Models\\ContentPostModel",
+      "type": "command_to_model"
+    },
+    {
+      "from": "controller:profile",
+      "to": "controller:profile",
+      "type": "command_to_command"
+    },
+    {
+      "from": "db:apply-docs",
+      "to": "App\\Services\\Spark\\DbApplyDocsService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "db:apply-docs",
+      "to": "docs",
+      "type": "command_to_table"
+    },
+    {
+      "from": "db:inventory",
+      "to": "App\\Services\\Spark\\DbInventoryService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "discord:list",
+      "to": "bf_discord_channels",
+      "type": "command_to_table"
+    },
+    {
+      "from": "discord:list",
+      "to": "config",
+      "type": "command_to_table"
+    },
+    {
+      "from": "discord:list",
+      "to": "DB",
+      "type": "command_to_table"
+    },
+    {
+      "from": "discord:list",
+      "to": "Discord",
+      "type": "command_to_api"
+    },
+    {
+      "from": "discord:process-queue",
+      "to": "Discord",
+      "type": "command_to_api"
+    },
+    {
+      "from": "discord:process-queue",
+      "to": "discord:process-queue",
+      "type": "command_to_command"
+    },
+    {
+      "from": "discord:test",
+      "to": "Discord",
+      "type": "command_to_api"
+    },
+    {
+      "from": "discord:test-liquidity",
+      "to": "CLI",
+      "type": "command_to_table"
+    },
+    {
+      "from": "discord:test-liquidity",
+      "to": "Discord",
+      "type": "command_to_api"
+    },
+    {
+      "from": "discord:wire-check",
+      "to": "bf_discord_queue",
+      "type": "command_to_table"
+    },
+    {
+      "from": "discord:wire-check",
+      "to": "Discord",
+      "type": "command_to_api"
+    },
+    {
+      "from": "discord:wire-check",
+      "to": "discord:wire-check",
+      "type": "command_to_command"
+    },
+    {
+      "from": "docs:inventory",
+      "to": "docs:inventory",
+      "type": "command_to_command"
+    },
+    {
+      "from": "docs:sync-code",
+      "to": "App\\Services\\Docs\\DocsSyncEngine",
+      "type": "command_to_service"
+    },
+    {
+      "from": "docs:sync-code",
+      "to": "docs:sync-code",
+      "type": "command_to_command"
+    },
+    {
+      "from": "docs:sync-system",
+      "to": "App\\Services\\Docs\\DocsSyncEngine",
+      "type": "command_to_service"
+    },
+    {
+      "from": "env:doctor",
+      "to": "App\\Services\\Ops\\EnvDoctorService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "env:doctor",
+      "to": "a",
+      "type": "command_to_table"
+    },
+    {
+      "from": "env:doctor",
+      "to": "Discord",
+      "type": "command_to_api"
+    },
+    {
+      "from": "app:logs:consolidate",
+      "to": "bf_error_processing_checkpoint",
+      "type": "command_to_table"
+    },
+    {
+      "from": "app:logs:consolidate",
+      "to": "bf_error_logs",
+      "type": "command_to_table"
+    },
+    {
+      "from": "app:logs:consolidate",
+      "to": "bf_error_consolidated_logs",
+      "type": "command_to_table"
+    },
+    {
+      "from": "app:logs:consolidate",
+      "to": "categorized",
+      "type": "command_to_table"
+    },
+    {
+      "from": "app:logs:consolidate",
+      "to": "ID",
+      "type": "command_to_table"
+    },
+    {
+      "from": "app:logs:consolidate",
+      "to": "checkpoint",
+      "type": "command_to_table"
+    },
+    {
+      "from": "app:errors:dispatch",
+      "to": "App\\Services\\Observability\\ErrorAlertService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "app:errors:learn",
+      "to": "App\\Services\\Observability\\ErrorPatternLearnerService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "app:errors:learn",
+      "to": "bf_error_patterns",
+      "type": "command_to_table"
+    },
+    {
+      "from": "fix:503",
+      "to": "App\\Services\\Triage\\CommandRunner",
+      "type": "command_to_service"
+    },
+    {
+      "from": "fix:503",
+      "to": "App\\Services\\Triage\\HostingModeDetector",
+      "type": "command_to_service"
+    },
+    {
+      "from": "fix:503",
+      "to": "App\\Services\\Ops\\EnvDoctorService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "fix:503",
+      "to": "https://www.mymiwallet.com",
+      "type": "command_to_api"
+    },
+    {
+      "from": "fix:503",
+      "to": "env:",
+      "type": "command_to_command"
+    },
+    {
+      "from": "fix:503",
+      "to": "routes:",
+      "type": "command_to_command"
+    },
+    {
+      "from": "fix:503",
+      "to": "env",
+      "type": "command_to_command"
+    },
+    {
+      "from": "fix:503",
+      "to": "routes",
+      "type": "command_to_command"
+    },
+    {
+      "from": "gap:sync",
+      "to": "gap:sync",
+      "type": "command_to_command"
+    },
+    {
+      "from": "git:pull:safe",
+      "to": "GitHub",
+      "type": "command_to_api"
+    },
+    {
+      "from": "github:search",
+      "to": "GitHub",
+      "type": "command_to_api"
+    },
+    {
+      "from": "git:workspace:guard",
+      "to": "GitHub",
+      "type": "command_to_api"
+    },
+    {
+      "from": "git:workspace:guard",
+      "to": "git:pull:safe",
+      "type": "command_to_command"
+    },
+    {
+      "from": "git:workspace:guard",
+      "to": "git:workspace:repair",
+      "type": "command_to_command"
+    },
+    {
+      "from": "git:workspace:repair",
+      "to": "GitHub",
+      "type": "command_to_api"
+    },
+    {
+      "from": "growth:retention-watch",
+      "to": "engagement",
+      "type": "command_to_table"
+    },
+    {
+      "from": "gtm:cron:validate-security",
+      "to": "http://127.0.0.1",
+      "type": "command_to_api"
+    },
+    {
+      "from": "gtm:cron:validate-security",
+      "to": "gtm:cron:validate-security",
+      "type": "command_to_command"
+    },
+    {
+      "from": "gtm:health:snapshot",
+      "to": "gtm:health:snapshot",
+      "type": "command_to_command"
+    },
+    {
+      "from": "gtm:launch:audit",
+      "to": "gtm:launch:audit",
+      "type": "command_to_command"
+    },
+    {
+      "from": "gtm:launch:smoke",
+      "to": "http://127.0.0.1",
+      "type": "command_to_api"
+    },
+    {
+      "from": "gtm:launch:smoke",
+      "to": "gtm:launch:smoke",
+      "type": "command_to_command"
+    },
+    {
+      "from": "health:disk",
+      "to": "App\\Services\\Triage\\CommandRunner",
+      "type": "command_to_service"
+    },
+    {
+      "from": "health:git-safety",
+      "to": "App\\Services\\Triage\\CommandRunner",
+      "type": "command_to_service"
+    },
+    {
+      "from": "health:services",
+      "to": "App\\Services\\Triage\\CommandRunner",
+      "type": "command_to_service"
+    },
+    {
+      "from": "health:services",
+      "to": "App\\Services\\Triage\\HostingModeDetector",
+      "type": "command_to_service"
+    },
+    {
+      "from": "investments:economy:updateall",
+      "to": "FRED",
+      "type": "command_to_table"
+    },
+    {
+      "from": "investments:economy:updateall",
+      "to": "local",
+      "type": "command_to_table"
+    },
+    {
+      "from": "investments:economy:updateall",
+      "to": "complete",
+      "type": "command_to_table"
+    },
+    {
+      "from": "logs:doctor",
+      "to": "bf_error_logs",
+      "type": "command_to_table"
+    },
+    {
+      "from": "app:logs:enable-full",
+      "to": "cache:clear",
+      "type": "command_to_command"
+    },
+    {
+      "from": "logs:healthcheck",
+      "to": "App\\Services\\Spark\\LogHealthcheckService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "logs:summarize",
+      "to": "App\\Services\\Spark\\LogSummarizeService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "logs:summarize",
+      "to": "state",
+      "type": "command_to_table"
+    },
+    {
+      "from": "logs:summarize-all",
+      "to": "writable",
+      "type": "command_to_table"
+    },
+    {
+      "from": "logs:full-report",
+      "to": "memory",
+      "type": "command_to_table"
+    },
+    {
+      "from": "logs:full-report",
+      "to": "Discord",
+      "type": "command_to_api"
+    },
+    {
+      "from": "logs:full-report",
+      "to": "spark:purge-fastcgi",
+      "type": "command_to_command"
+    },
+    {
+      "from": "logs:test",
+      "to": "App\\Services\\Spark\\LogHealthcheckService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "mail:send",
+      "to": "App\\Services\\MailService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "mail:send-test",
+      "to": "mail:send-test",
+      "type": "command_to_command"
+    },
+    {
+      "from": "mail:test",
+      "to": "mail:test",
+      "type": "command_to_command"
+    },
+    {
+      "from": "mail:verify",
+      "to": "mail:verify",
+      "type": "command_to_command"
+    },
+    {
+      "from": "master:knowledge-graph:build",
+      "to": "controllers",
+      "type": "command_to_table"
+    },
+    {
+      "from": "master:knowledge-graph:build",
+      "to": "master:knowledge-graph:build",
+      "type": "command_to_command"
+    },
+    {
+      "from": "mdit:nav:compute_daily",
+      "to": "App\\Services\\MDIT\\MditNavService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "mdit:nav:compute_daily",
+      "to": "migrate",
+      "type": "command_to_command"
+    },
+    {
+      "from": "news:audit",
+      "to": "bf_marketing_temp_scraper",
+      "type": "command_to_table"
+    },
+    {
+      "from": "news:audit",
+      "to": "bf_marketing_scraper",
+      "type": "command_to_table"
+    },
+    {
+      "from": "news:audit",
+      "to": "bf_error_logs",
+      "type": "command_to_table"
+    },
+    {
+      "from": "ollama:bench",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:chat",
+      "to": "App\\Models\\OllamaSessionModel",
+      "type": "command_to_model"
+    },
+    {
+      "from": "ollama:chat",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:circuit:reset",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:circuit:status",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:circuit:reset",
+      "to": "App\\Services\\LLM\\OllamaCircuitBreaker",
+      "type": "command_to_service"
+    },
+    {
+      "from": "ollama:circuit:reset",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:circuit:status",
+      "to": "App\\Services\\LLM\\OllamaCircuitBreaker",
+      "type": "command_to_service"
+    },
+    {
+      "from": "ollama:circuit:status",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:diagnose",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:docs:inventory",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:docs:sync",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:doctor",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:embed",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:embed:file",
+      "to": "vector",
+      "type": "command_to_table"
+    },
+    {
+      "from": "ollama:embed:file",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:generate",
+      "to": "App\\Services\\LLM\\OllamaCircuitBreaker",
+      "type": "command_to_service"
+    },
+    {
+      "from": "ollama:generate",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:health",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:logs:export",
+      "to": "App\\Models\\OllamaRunModel",
+      "type": "command_to_model"
+    },
+    {
+      "from": "ollama:logs:export",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:logs:tail",
+      "to": "file",
+      "type": "command_to_table"
+    },
+    {
+      "from": "ollama:logs:tail",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:logs",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:modelfile:validate",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:models:create",
+      "to": "Modelfile",
+      "type": "command_to_table"
+    },
+    {
+      "from": "ollama:models:create",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:models:diff",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:models:diff",
+      "to": "ollama:models:pull",
+      "type": "command_to_command"
+    },
+    {
+      "from": "ollama:models:diff",
+      "to": "ollama:models:rm",
+      "type": "command_to_command"
+    },
+    {
+      "from": "ollama:models:ensure",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:models:export",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:models:list",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:models:prune",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:models:pull",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:models:push",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:models:rm",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:models:show",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:ping",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:policy:check",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:policy:export",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:queue:push",
+      "to": "App\\Models\\OllamaQueueModel",
+      "type": "command_to_model"
+    },
+    {
+      "from": "ollama:queue:push",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:queue:retry",
+      "to": "queue",
+      "type": "command_to_table"
+    },
+    {
+      "from": "ollama:queue:retry",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:queue:stats",
+      "to": "App\\Models\\OllamaQueueModel",
+      "type": "command_to_model"
+    },
+    {
+      "from": "ollama:queue:stats",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:queue:work",
+      "to": "App\\Models\\OllamaQueueModel",
+      "type": "command_to_model"
+    },
+    {
+      "from": "ollama:queue:work",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:rag:query",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:sessions:list",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:sessions:rm",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:sessions:show",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:stream",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ollama:version",
+      "to": "health",
+      "type": "command_to_table"
+    },
+    {
+      "from": "ollama:version",
+      "to": "Ollama",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ops:analyze-commands",
+      "to": "App\\Services\\OpsCommandService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "ops:analyze-commands",
+      "to": "inbox",
+      "type": "command_to_table"
+    },
+    {
+      "from": "ops:analyze-commands",
+      "to": "https://api.openai.com/v1/chat/completions",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ops:app:update",
+      "to": "App\\Services\\Ops\\ApiHealthService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "ops:app:update",
+      "to": "App\\Services\\Ops\\AppSelfTestService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "ops:app:update",
+      "to": "App\\Services\\Ops\\ConfigAuditService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "ops:app:update",
+      "to": "App\\Services\\Ops\\DatabaseHealthService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "ops:app:update",
+      "to": "App\\Services\\Ops\\FilesystemHealthService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "ops:app:update",
+      "to": "App\\Services\\Ops\\SnapshotWriter",
+      "type": "command_to_service"
+    },
+    {
+      "from": "ops:app:update",
+      "to": "App\\Services\\Ops\\SparkGovernanceService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "ops:app:update",
+      "to": "and",
+      "type": "command_to_table"
+    },
+    {
+      "from": "ops:app:update",
+      "to": "environment",
+      "type": "command_to_table"
+    },
+    {
+      "from": "ops:app:update",
+      "to": "summary",
+      "type": "command_to_table"
+    },
+    {
+      "from": "ops:app:update",
+      "to": "https://api.marketaux.com",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ops:app:update",
+      "to": "https://www.alphavantage.co",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ops:app:update",
+      "to": "https://api.coingecko.com",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ops:commands:inventory",
+      "to": "Console",
+      "type": "command_to_table"
+    },
+    {
+      "from": "ops:commands:missing",
+      "to": "Console",
+      "type": "command_to_table"
+    },
+    {
+      "from": "ops:filesystem-scan",
+      "to": "App\\Services\\Ops\\VpsHealthService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "ops:diff:wallet",
+      "to": "ops:diff",
+      "type": "command_to_command"
+    },
+    {
+      "from": "ops:doctor:full",
+      "to": "ops:php:extensions",
+      "type": "command_to_command"
+    },
+    {
+      "from": "ops:doctor:full",
+      "to": "ops:network:matrix",
+      "type": "command_to_command"
+    },
+    {
+      "from": "ops:doctor:full",
+      "to": "runtime:spark-doctor",
+      "type": "command_to_command"
+    },
+    {
+      "from": "ops:doctor:full",
+      "to": "dreamhost:imap-capabilities",
+      "type": "command_to_command"
+    },
+    {
+      "from": "dreamhost:dns-verify",
+      "to": "App\\Services\\Ops\\DreamHostService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "dreamhost:email-audit",
+      "to": "App\\Services\\Ops\\DreamHostService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "dreamhost:email-list",
+      "to": "App\\Services\\Ops\\DreamHostService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "dreamhost:limits",
+      "to": "App\\Services\\Ops\\DreamHostService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "email:healthcheck",
+      "to": "App\\Services\\Ops\\EmailOpsService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "email:queue-scan",
+      "to": "App\\Services\\Ops\\EmailOpsService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "email:test",
+      "to": "App\\Services\\Ops\\EmailOpsService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "ops:fetch-commands",
+      "to": "App\\Models\\OpsCommandInboxModel",
+      "type": "command_to_model"
+    },
+    {
+      "from": "ops:fetch-commands",
+      "to": "IMAP",
+      "type": "command_to_table"
+    },
+    {
+      "from": "ops:healthcheck",
+      "to": "App\\Services\\Ops\\VpsHealthService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "logs:scan",
+      "to": "App\\Services\\Ops\\LogOpsService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "logs:watch",
+      "to": "App\\Services\\Ops\\LogOpsService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "ops:next-steps",
+      "to": "App\\Models\\AiOpsTaskModel",
+      "type": "command_to_model"
+    },
+    {
+      "from": "ops:next-steps",
+      "to": "audit",
+      "type": "command_to_table"
+    },
+    {
+      "from": "ops:next-steps:sync-manual",
+      "to": "App\\Models\\AiOpsManualTodoModel",
+      "type": "command_to_model"
+    },
+    {
+      "from": "ops:next-steps:sync-manual",
+      "to": "docs",
+      "type": "command_to_table"
+    },
+    {
+      "from": "ops:next-steps:sync-manual",
+      "to": "the",
+      "type": "command_to_table"
+    },
+    {
+      "from": "ops:php-fpm-health",
+      "to": "App\\Services\\Ops\\VpsHealthService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "ops:propose-pr",
+      "to": "GitHub",
+      "type": "command_to_api"
+    },
+    {
+      "from": "ops:report",
+      "to": "App\\Services\\Ops\\VpsHealthService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "ops:self-heal",
+      "to": "App\\Services\\Ops\\VpsHealthService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "ops:nginx-status",
+      "to": "App\\Services\\Ops\\VpsHealthService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "ops:subs:doctor",
+      "to": "ops:subs:audit",
+      "type": "command_to_command"
+    },
+    {
+      "from": "ops:subs:doctor",
+      "to": "aiops:self-heal",
+      "type": "command_to_command"
+    },
+    {
+      "from": "ops:subs:doctor",
+      "to": "ops:subs:status",
+      "type": "command_to_command"
+    },
+    {
+      "from": "ops:integrity:wallet",
+      "to": "bf_users_wallet",
+      "type": "command_to_table"
+    },
+    {
+      "from": "ops:integrity:wallet",
+      "to": "bf_users_wallet_transactions",
+      "type": "command_to_table"
+    },
+    {
+      "from": "ops:work",
+      "to": "App\\Models\\AiOpsSettingsModel",
+      "type": "command_to_model"
+    },
+    {
+      "from": "ops:work",
+      "to": "App\\Models\\AiOpsTaskModel",
+      "type": "command_to_model"
+    },
+    {
+      "from": "ops:work",
+      "to": "ops:work",
+      "type": "command_to_command"
+    },
+    {
+      "from": "repo:diff-split",
+      "to": "smaller",
+      "type": "command_to_table"
+    },
+    {
+      "from": "research:reports:daily",
+      "to": "bf_financial_news",
+      "type": "command_to_table"
+    },
+    {
+      "from": "research:reports:daily",
+      "to": "bf_investment_trade_alerts",
+      "type": "command_to_table"
+    },
+    {
+      "from": "research:reports:daily",
+      "to": "bf_market_snapshots",
+      "type": "command_to_table"
+    },
+    {
+      "from": "research:intelligence:signals",
+      "to": "bf_research_items",
+      "type": "command_to_table"
+    },
+    {
+      "from": "research:intelligence:signals",
+      "to": "research",
+      "type": "command_to_table"
+    },
+    {
+      "from": "research:knowledge:build",
+      "to": "bf_investment_trade_alerts",
+      "type": "command_to_table"
+    },
+    {
+      "from": "research:knowledge:build",
+      "to": "bf_financial_news",
+      "type": "command_to_table"
+    },
+    {
+      "from": "research:knowledge:build",
+      "to": "bf_market_snapshots",
+      "type": "command_to_table"
+    },
+    {
+      "from": "research:news:collect",
+      "to": "App\\Services\\Research\\FinancialResearchService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "research:news:collect",
+      "to": "https://feeds.finance.yahoo.com/rss/2.0/headline?s=^GSPC",
+      "type": "command_to_api"
+    },
+    {
+      "from": "research:news:collect",
+      "to": "https://www.marketwatch.com/rss/topstories",
+      "type": "command_to_api"
+    },
+    {
+      "from": "research:news:collect",
+      "to": "https://www.reutersagency.com/feed/?best-topics=business-finance",
+      "type": "command_to_api"
+    },
+    {
+      "from": "research:google:scan",
+      "to": "https://www.google.com/search?q=",
+      "type": "command_to_api"
+    },
+    {
+      "from": "research:google:scan",
+      "to": "https://www.google.com/search?q=",
+      "type": "command_to_api"
+    },
+    {
+      "from": "research:data:compile",
+      "to": "bf_market_snapshots",
+      "type": "command_to_table"
+    },
+    {
+      "from": "research:data:compile",
+      "to": "https://query1.finance.yahoo.com/v7/finance/quote?symbols=$symbol",
+      "type": "command_to_api"
+    },
+    {
+      "from": "research:alerts:watchlist-import",
+      "to": "bf_watchlist_imports",
+      "type": "command_to_table"
+    },
+    {
+      "from": "research:alerts:watchlist-import",
+      "to": "bf_investment_trade_alerts",
+      "type": "command_to_table"
+    },
+    {
+      "from": "research:reports:weekly",
+      "to": "bf_financial_news",
+      "type": "command_to_table"
+    },
+    {
+      "from": "research:reports:weekly",
+      "to": "bf_investment_trade_alerts",
+      "type": "command_to_table"
+    },
+    {
+      "from": "spark:restart-safe",
+      "to": "spark:diagnose-503",
+      "type": "command_to_command"
+    },
+    {
+      "from": "revenue:scan",
+      "to": "Discord",
+      "type": "command_to_table"
+    },
+    {
+      "from": "revenue:scan",
+      "to": "Discord",
+      "type": "command_to_api"
+    },
+    {
+      "from": "revenue:scan",
+      "to": "revenue:scan",
+      "type": "command_to_command"
+    },
+    {
+      "from": "routes:debug",
+      "to": "debug:route",
+      "type": "command_to_command"
+    },
+    {
+      "from": "routes:reconcile",
+      "to": "App\\Services\\Routes\\RouteReconcileService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "routes:repair",
+      "to": "App\\Services\\Routes\\RouteRepairService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "routes:auth-audit",
+      "to": "Discord",
+      "type": "command_to_api"
+    },
+    {
+      "from": "spark:fix",
+      "to": "spark:doctor",
+      "type": "command_to_command"
+    },
+    {
+      "from": "optimize:safe",
+      "to": "cache:clear",
+      "type": "command_to_command"
+    },
+    {
+      "from": "optimize:safe",
+      "to": "optimize",
+      "type": "command_to_command"
+    },
+    {
+      "from": "runtime:triage",
+      "to": "a",
+      "type": "command_to_table"
+    },
+    {
+      "from": "scraper:audit-emails",
+      "to": "App\\Services\\ScraperOpsService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "scraper:audit-emails",
+      "to": "current",
+      "type": "command_to_table"
+    },
+    {
+      "from": "scraper:audit-emails",
+      "to": "final",
+      "type": "command_to_table"
+    },
+    {
+      "from": "spark:doctor",
+      "to": "App\\Services\\AIOps\\CommandHookService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "spark:doctor",
+      "to": "App\\Services\\Spark\\CommandInventoryService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "spark:doctor",
+      "to": "Discord",
+      "type": "command_to_api"
+    },
+    {
+      "from": "spark:fix",
+      "to": "App\\Services\\AIOps\\CommandHookService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "spark:fix",
+      "to": "App\\Services\\Spark\\CommandInventoryService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "spark:fix",
+      "to": "Discord",
+      "type": "command_to_api"
+    },
+    {
+      "from": "spark:fix",
+      "to": "cache:clear",
+      "type": "command_to_command"
+    },
+    {
+      "from": "spark:registry-audit",
+      "to": "Console",
+      "type": "command_to_table"
+    },
+    {
+      "from": "spark:registry-audit",
+      "to": "filesystem",
+      "type": "command_to_table"
+    },
+    {
+      "from": "spark:registry-audit",
+      "to": "runtime",
+      "type": "command_to_table"
+    },
+    {
+      "from": "spark-reset",
+      "to": "list",
+      "type": "command_to_command"
+    },
+    {
+      "from": "test:redis",
+      "to": "App\\Services\\Infrastructure\\RedisService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "email:test",
+      "to": "MyMI",
+      "type": "command_to_table"
+    },
+    {
+      "from": "email:test",
+      "to": "email:test",
+      "type": "command_to_command"
+    },
+    {
+      "from": "spark:traffic-spike-guard",
+      "to": "Discord",
+      "type": "command_to_api"
+    },
+    {
+      "from": "spark:traffic-spike-guard",
+      "to": "logs:full-report",
+      "type": "command_to_command"
+    },
+    {
+      "from": "spark:traffic-spike-guard",
+      "to": "spark:diagnose-503",
+      "type": "command_to_command"
+    },
+    {
+      "from": "spark:traffic-spike-guard",
+      "to": "spark:restart-safe",
+      "type": "command_to_command"
+    },
+    {
+      "from": "wallets:warm-summary-cache",
+      "to": "App\\Services\\WalletSummaryService",
+      "type": "command_to_service"
+    },
+    {
+      "from": "wallets:warm-summary-cache",
+      "to": "App\\Models\\UserModel",
+      "type": "command_to_model"
+    }
+  ]
+}
