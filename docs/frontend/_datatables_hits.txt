@@ -1,0 +1,352 @@
+app/Modules/User/Views/Advisors/index.php:53:        $(".certifiedAdviorsTable").DataTable({
+app/Modules/Exchange/Views/Solana/coinSwap.php:107:                                var table = $('#solanaTokenListing').DataTable({
+app/Modules/Exchange/Views/Solana/assets.php:257:                                            $('#cuSolanaAssetsDatatable').DataTable({
+app/Modules/Exchange/Views/Solana/assets.php:261:                                            $('#solanaTopPerformersTable').DataTable({
+app/Modules/Exchange/Views/Solana/index/Top-Performing-Tokens.php:32:// $(".solanaTopPerformersTable").DataTable({
+app/Modules/User/Views/Projects/index/most_recent_content.php:47:        <table class="table table-striped" id="scrapedDataTable">
+app/Modules/User/Views/Projects/index/most_recent_content.php:66:        // Initialize DataTable
+app/Modules/User/Views/Projects/index/most_recent_content.php:67:        const table = $('#scrapedDataTable').DataTable();
+app/Modules/User/Views/Projects/index/most_recent_content.php:76:        function addToScrapedDataTable(data) {
+app/Modules/User/Views/Projects/index/most_recent_content.php:107:                    addToScrapedDataTable(scrape);
+app/Modules/Exchange/Views/Solana/index.php:515:    if ($.fn.DataTable && $.fn.DataTable.isDataTable($table)) {
+app/Modules/Exchange/Views/Solana/index.php:516:      $table.DataTable().clear().destroy();
+app/Modules/Exchange/Views/Solana/index.php:549:    if ($.fn.DataTable) {
+app/Modules/Exchange/Views/Solana/index.php:550:      $table.DataTable({
+app/Modules/User/Views/Projects/index/project_list.php:109:<!-- DataTable Initialization Script -->
+app/Modules/User/Views/Projects/index/project_list.php:112://     $('#MyMIProjectsListingTable').DataTable({
+app/Modules/Exchange/Views/index.php:218:			<table class="table display" id="exchangeOverviewDataTable">
+app/Modules/User/Views/Projects/holdings.php:367:  // Simple client-side search (swap with DataTables if desired)
+app/Modules/User/Views/Dashboard/Profile.php:108:<!-- DataTable Initialization Script -->
+app/Modules/User/Views/Dashboard/Profile.php:111:    $('#MyMIProjectsListingTable').DataTable({
+app/Modules/Blog/Views/Earnings/TSLA/10192023.php:385:                                        <!-- Content about stock performance, possibly with DataTablesJS for tabular data -->
+app/Modules/User/Views/Dashboard/Goals.php:96:    // Initialize DataTables
+app/Modules/User/Views/Dashboard/Goals.php:97:    $('#userGoalsTable').DataTable({
+app/Modules/User/Views/Dashboard/Account/Activity.php:52:        $('#userLoginActivityTable').DataTable({
+app/Modules/User/Views/Dashboard/Goals/mobile_table.php:120:                                        var table = $('#userBudgetingDatatable').DataTable({
+app/Modules/User/Views/Dashboard/Goals/browser_table.php:168:                                var table = $('#userBudgetingDatatable').DataTable({
+app/Modules/User/Views/Dashboard/Goals/Weekly/mobile_table.php:120:                                        var table = $('#userBudgetingDatatable').DataTable({
+app/Modules/User/Views/Dashboard/Goals/Weekly/browser_table.php:168:                                var table = $('#userBudgetingDatatable').DataTable({
+app/Modules/User/Views/Dashboard/Goals/Monthly/mobile_table.php:120:                                        var table = $('#userBudgetingDatatable').DataTable({
+app/Modules/User/Views/Dashboard/Goals/Monthly/browser_table.php:168:                                var table = $('#userBudgetingDatatable').DataTable({
+app/Modules/User/Views/Dashboard/Goals/Daily/mobile_table.php:120:                                        var table = $('#userBudgetingDatatable').DataTable({
+app/Modules/User/Views/Dashboard/Goals/Daily/browser_table.php:242:                                var table = $('#userDailyGoalsDatatable').DataTable({
+app/Modules/User/Views/Dashboard/Goals/All/mobile_table.php:120:                                        var table = $('#userBudgetingDatatable').DataTable({
+app/Modules/User/Views/Dashboard/Goals/All/browser_table.php:168:                                var table = $('#userBudgetingDatatable').DataTable({
+app/Modules/User/Views/Predictions/portfolio.php:37:  if(window.jQuery && (jQuery.fn.DataTable||jQuery.fn.dataTable)){ jQuery.fn.dataTable.isDataTable(el)||jQuery(el).DataTable(cfg); }
+app/Modules/User/Views/Referral_Program/index.php:369:    const initDataTable = () => {
+app/Modules/User/Views/Referral_Program/index.php:381:        if (window.jQuery?.fn?.DataTable) {
+app/Modules/User/Views/Referral_Program/index.php:382:            if (!jQuery.fn.dataTable.isDataTable(state.tableElement)) {
+app/Modules/User/Views/Referral_Program/index.php:383:                state.tableInstance = jQuery(state.tableElement).DataTable(options);
+app/Modules/User/Views/Referral_Program/index.php:385:                state.tableInstance = jQuery(state.tableElement).DataTable();
+app/Modules/User/Views/Referral_Program/index.php:387:        } else if (typeof window.DataTable === 'function') {
+app/Modules/User/Views/Referral_Program/index.php:388:            state.tableInstance = new DataTable(state.tableElement, options);
+app/Modules/User/Views/Referral_Program/index.php:412:    initDataTable();
+app/Views/themes/dashboard/partials/custom-js/datatables.php:7:    if (!$.fn.DataTable.isDataTable('.defaultDTTable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables.php:8:        $('.defaultDTTable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables.php:13:    if ($('#supportRequestOverview').length && !$.fn.DataTable.isDataTable('#supportRequestOverview')) {
+app/Views/themes/dashboard/partials/custom-js/datatables.php:14:        $('#supportRequestOverview').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables.php:19:    if ($('#userActivityLoggerDatatable').length && !$.fn.DataTable.isDataTable('#userActivityLoggerDatatable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables.php:20:        $('#userActivityLoggerDatatable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables.php:25:    if ($('#contentCreator').length && !$.fn.DataTable.isDataTable('.contentCreator')) {
+app/Views/themes/dashboard/partials/custom-js/datatables.php:26:        $('.contentCreator').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables.php:31:    if ($('#dashboardTasksDatatable').length && !$.fn.DataTable.isDataTable('#dashboardTasksDatatable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables.php:32:        $('#dashboardTasksDatatable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables.php:36:    if ($('#bankAccountTransactionHistory').length && !$.fn.DataTable.isDataTable('#bankAccountTransactionHistory')) {
+app/Views/themes/dashboard/partials/custom-js/datatables.php:37:        $('#bankAccountTransactionHistory').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables.php:42:    if ($('#userBudgetingDetailsDatatable').length && !$.fn.DataTable.isDataTable('#userBudgetingDetailsDatatable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables.php:43:        $('#userBudgetingDetailsDatatable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables.php:48:    if ($('#userBudgetingHistoricalDatatable').length && !$.fn.DataTable.isDataTable('#userBudgetingHistoricalDatatable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables.php:49:        $('#userBudgetingHistoricalDatatable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables.php:54:    if ($('#alertOverviewDatatable').length && !$.fn.DataTable.isDataTable('#alertOverviewDatatable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables.php:55:        $('#alertOverviewDatatable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables.php:60:    if ($('#tradeTrackerDatatable').length && !$.fn.DataTable.isDataTable('#tradeTrackerDatatable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables.php:61:        $('#tradeTrackerDatatable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables.php:65:    if ($('#walletTradeOverviewDatatable').length && !$.fn.DataTable.isDataTable('#walletTradeOverviewDatatable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables.php:66:        $('#walletTradeOverviewDatatable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables.php:71:    if ($('.accountingDatatable').length && !$.fn.DataTable.isDataTable('.accountingDatatable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables.php:72:        $('.accountingDatatable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables.php:77:    if ($('#activeTradeDataTable').length && !$.fn.DataTable.isDataTable('#activeTradeDataTable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables.php:78:        $('#activeTradeDataTable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables.php:83:    if ($('#walletTransactionDatabase').length && !$.fn.DataTable.isDataTable('#walletTransactionDatabase')) {
+app/Views/themes/dashboard/partials/custom-js/datatables.php:84:        $('#walletTransactionDatabase').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables.php:89:    if ($('#userInvestmentTable').length && !$.fn.DataTable.isDataTable('#userInvestmentTable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables.php:90:        $('#userInvestmentTable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables.php:95:    if ($('#exchangeOverviewDataTable').length && !$.fn.DataTable.isDataTable('#exchangeOverviewDataTable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables.php:96:        $('#exchangeOverviewDataTable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables.php:101:    if ($('#MyMIProjectsListingTable').length && !$.fn.DataTable.isDataTable('#MyMIProjectsListingTable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables.php:102:        $('#MyMIProjectsListingTable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables.php:107:    if ($('#MyMIPendingProjectsTable').length && !$.fn.DataTable.isDataTable('#MyMIPendingProjectsTable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables.php:108:        $('#MyMIPendingProjectsTable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:11:    if (!$.fn.DataTable.isDataTable('.defaultDTTable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:12:        $('.defaultDTTable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:18:    if ($('#supportRequestOverview').length && !$.fn.DataTable.isDataTable('#supportRequestOverview')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:19:        $('#supportRequestOverview').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:25:    if ($('#userActivityLoggerDatatable').length && !$.fn.DataTable.isDataTable('#userActivityLoggerDatatable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:26:        $('#userActivityLoggerDatatable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:32:    if ($('#contentCreator').length && !$.fn.DataTable.isDataTable('.contentCreator')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:33:        $('.contentCreator').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:41:    if ($('#dashboardTasksDatatable').length && !$.fn.DataTable.isDataTable('#dashboardTasksDatatable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:42:        $('#dashboardTasksDatatable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:50:    if (!$.fn.DataTable.isDataTable('.defaultDTTable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:51:        $('.defaultDTTable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:57:    if ($('#supportRequestOverview').length && !$.fn.DataTable.isDataTable('#supportRequestOverview')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:58:        $('#supportRequestOverview').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:64:    if ($('#userActivityLoggerDatatable').length && !$.fn.DataTable.isDataTable('#userActivityLoggerDatatable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:65:        $('#userActivityLoggerDatatable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:71:    if ($('#contentCreator').length && !$.fn.DataTable.isDataTable('.contentCreator')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:72:        $('.contentCreator').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:78:    if ($('#bankAccountTransactionHistory').length && !$.fn.DataTable.isDataTable('#bankAccountTransactionHistory')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:79:        $('#bankAccountTransactionHistory').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:85:    if ($('#userBudgetingDetailsDatatable').length && !$.fn.DataTable.isDataTable('#userBudgetingDetailsDatatable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:86:        $('#userBudgetingDetailsDatatable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:92:    if ($('#userBudgetingHistoricalDatatable').length && !$.fn.DataTable.isDataTable('#userBudgetingHistoricalDatatable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:93:        $('#userBudgetingHistoricalDatatable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:99:    if ($('#alertOverviewDatatable').length && !$.fn.DataTable.isDataTable('#alertOverviewDatatable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:100:        $('#alertOverviewDatatable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:106:    if ($('#tradeTrackerDatatable').length && !$.fn.DataTable.isDataTable('#tradeTrackerDatatable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:107:        $('#tradeTrackerDatatable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:112:    if ($('#walletTradeOverviewDatatable').length && !$.fn.DataTable.isDataTable('#walletTradeOverviewDatatable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:113:        $('#walletTradeOverviewDatatable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:119:    if ($('.accountingDatatable').length && !$.fn.DataTable.isDataTable('.accountingDatatable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:120:        $('.accountingDatatable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:126:    if ($('#activeTradeDataTable').length && !$.fn.DataTable.isDataTable('#activeTradeDataTable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:127:        $('#activeTradeDataTable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:133:    // if ($('#watchListDataTable').length && !$.fn.DataTable.isDataTable('#watchListDataTable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:134:    //     $('#watchListDataTable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:140:    if ($('#walletTransactionDatabase').length && !$.fn.DataTable.isDataTable('#walletTransactionDatabase')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:141:        $('#walletTransactionDatabase').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:147:    if ($('#userInvestmentTable').length && !$.fn.DataTable.isDataTable('#userInvestmentTable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:148:        $('#userInvestmentTable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:154:    if ($('#exchangeOverviewDataTable').length && !$.fn.DataTable.isDataTable('#exchangeOverviewDataTable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:155:        $('#exchangeOverviewDataTable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:161:    if ($('#userActivityDatatable').length && !$.fn.DataTable.isDataTable('#userActivityDatatable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:162:        $('#userActivityDatatable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:168:    if ($('#myReferralsDatatable').length && !$.fn.DataTable.isDataTable('#myReferralsDatatable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:169:        $('#myReferralsDatatable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:175:    if ($('#exchangeBuyOrders').length && !$.fn.DataTable.isDataTable('#exchangeBuyOrders')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:176:        $('#exchangeBuyOrders').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:184:    if ($('#exchangeSellOrders').length && !$.fn.DataTable.isDataTable('#exchangeSellOrders')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:185:        $('#exchangeSellOrders').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:193:    if ($('#exchangeTradeHistory').length && !$.fn.DataTable.isDataTable('#exchangeTradeHistory')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:194:        $('#exchangeTradeHistory').DataTable({
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:202:    if ($('#dashboardTasksDatatable').length && !$.fn.DataTable.isDataTable('#dashboardTasksDatatable')) {
+app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php:203:        $('#dashboardTasksDatatable').DataTable({
+app/Views/themes/dashboard/partials/custom-js/google-treemap.php:10:        var nodeListData = new google.visualization.arrayToDataTable([
+app/Views/themes/dashboard/layouts/js-links_old.php:28:<!-- DataTables -->
+app/Views/themes/dashboard/layouts/footer.php:92:    'useDataTables' => $useDataTables ?? false,
+app/Views/themes/dashboard/layouts/custom-js.php:25:    'useDataTables' => $useDataTables ?? false,
+app/Views/themes/dashboard/layouts/custom-js.php:58:if (!empty($useDataTables)) {
+app/Views/themes/dashboard/layouts/custom-js.php:194:    if (!$.fn || typeof $.fn.DataTable !== 'function') {
+app/Views/themes/dashboard/layouts/custom-js.php:195:        console.error('DataTables plugin missing on Alerts page – aborting table initialisation.');
+app/Views/themes/dashboard/layouts/custom-js.php:407:    // ✅ Check if Table Exists Before Initializing DataTable
+app/Views/themes/dashboard/layouts/custom-js.php:409:        let confirmedTable = $('#confirmedTradeAlertTable').DataTable({
+app/Views/themes/dashboard/layouts/custom-js.php:430:        let pendingTable = $('#pendingTradeAlertTable').DataTable({
+app/Views/themes/dashboard/layouts/custom-js.php:469:        const mainTable = $(tables[0]).DataTable();
+app/Views/themes/dashboard/layouts/custom-js.php:478:            if ($.fn.DataTable.isDataTable(selector)) {
+app/Views/themes/dashboard/layouts/custom-js.php:479:                const dt = $(selector).DataTable();
+app/Views/themes/dashboard/layouts/custom-js.php:567:                $('#confirmedTradeAlertTable').DataTable().ajax.reload(null, false);
+app/Views/themes/dashboard/layouts/custom-js.php:569:                $('#pendingTradeAlertTable').DataTable().ajax.reload(null, false);
+app/Views/themes/dashboard/layouts/custom-js.php:600:                            const table = $('#confirmedTradeAlertTable').DataTable();
+app/Views/themes/dashboard/layouts/custom-js.php:626:            $('#confirmedTradeAlertTable').DataTable().ajax.reload();
+app/Views/themes/dashboard/layouts/custom-js.php:630:            $('#pendingTradeAlertTable').DataTable().ajax.reload(); 
+app/Views/themes/dashboard/layouts/custom-js.php:647:                $('#confirmedTradeAlertTable').DataTable().ajax.reload();
+app/Views/themes/dashboard/layouts/custom-js.php:648:                <?php if ($cuRole <= 3): ?> $('#pendingTradeAlertTable').DataTable().ajax.reload(); <?php endif; ?>
+app/Views/themes/dashboard/layouts/custom-js.php:666:                $('#confirmedTradeAlertTable').DataTable().ajax.reload();
+app/Views/themes/dashboard/layouts/custom-js.php:667:                <?php if ($cuRole <= 3): ?> $('#pendingTradeAlertTable').DataTable().ajax.reload(); <?php endif; ?>
+app/Views/themes/dashboard/layouts/custom-js.php:686:                    $('#confirmedTradeAlertTable').DataTable().ajax.reload();
+app/Views/themes/dashboard/layouts/custom-js.php:687:                    <?php if ($cuRole <= 3): ?> $('#pendingTradeAlertTable').DataTable().ajax.reload(); <?php endif; ?>
+app/Views/themes/public/corporateEarnings.php:159:        $('#earnings-calendar-table').DataTable({
+app/Views/themes/public/economicCalendar.php:152:        $('#economic-calendar-table').DataTable({
+app/Views/themes/public/layouts/js-links-10042025.php:24:<!-- DataTables 1.11.5 (current production set) -->
+app/Views/themes/public/layouts/js-links-10042025.php:67:<?php /* Alternative: DataTables 1.13.6 (use instead of 1.11.5, not both)
+app/Views/themes/public/layouts/js-links.php:24:<!-- DataTables 1.11.5 (current production set) -->
+app/Views/themes/public/layouts/js-links.php:188:<?php /* Alternative: DataTables 1.13.6 (use instead of 1.11.5, not both)
+app/Views/themes/public/previewAlert.php:1132:    // ✅ Initialize DataTables (only if present)
+app/Views/themes/public/previewAlert.php:1133:    if (window.jQuery && $.fn && $.fn.DataTable) {
+app/Views/themes/public/previewAlert.php:1134:        $("#sec-filing-table").DataTable({ paging: true, searching: true, order: [[0, "desc"]] });
+app/Views/themes/public/previewAlert.php:1135:        $("#trade-alert-table").DataTable({ paging: true, searching: true, order: [[0, "desc"]] });
+app/Modules/User/Views/Wallets/Details/credit_accounts.php:120:                                <table class="table display" id="creditAccountTransactionHistory" role="grid" aria-describedby="DataTables_Table_0_info">
+app/Modules/User/Views/Wallets/Details/investment_accounts.php:100:                                <table class="table display" id="investmentAccountHistory" role="grid" aria-describedby="DataTables_Table_0_info">
+app/Modules/User/Views/Wallets/Details/wallets.php:167:                                <table class="table display" id="walletTradeOverviewDatatable" role="grid" aria-describedby="DataTables_Table_0_info">
+app/Modules/User/Views/Wallets/Details/debt_accounts.php:100:                                <table class="table display" id="debtAccountPaymentHistory" role="grid" aria-describedby="DataTables_Table_0_info">
+app/Modules/User/Views/Wallets/Details/bank_accounts.php:135:                                <table class="table display" id="bankAccountTransactionHistory" role="grid" aria-describedby="DataTables_Table_0_info">
+app/Modules/User/Views/Wallets/MyMI_Wallet.php:120:						<table class="table display" id="walletTradeOverviewDatatable" role="grid" aria-describedby="DataTables_Table_0_info">
+app/Modules/User/Views/Wallets/MyMI_Wallet.php:250:						<table class="table display" id="walletTradeOverviewDatatable" role="grid" aria-describedby="DataTables_Table_0_info">
+app/Modules/User/Views/Alerts/index.php:362:    if (typeof $ !== 'undefined' && $.fn.DataTable) {
+app/Modules/User/Views/Alerts/index.php:363:        $('#openAlertsTable').DataTable({
+app/Modules/User/Views/Institutes/index.php:51:        $(".institutionRecommendationTable").DataTable({
+app/Modules/User/Views/Budget/Financial_Analysis.php:182:        $(".financialAnalysisTable").DataTable({});
+app/Modules/User/Views/Budget/Financial_Forecaster.php:206:        $(".financialForecastTable").DataTable({
+app/Modules/User/Views/Budget/index/mobile_table.php:196:  // Safe jQuery/DataTables boot
+app/Modules/User/Views/Budget/index/mobile_table.php:198:    function run(){ if (window.jQuery && (jQuery.fn.DataTable || jQuery.fn.dataTable)) jQuery(cb); }
+app/Modules/User/Views/Budget/index/mobile_table.php:247:    var table = $table.DataTable({
+app/Modules/User/Views/Budget/index/mobile_table.php:297:      // Tell DataTables that ordering data changed
+app/Modules/User/Views/Budget/index.php:306:    // Safe DataTables init for search table
+app/Modules/User/Views/Budget/index.php:320:      if (window.jQuery && jQuery.fn && jQuery.fn.DataTable) {
+app/Modules/User/Views/Budget/index.php:321:        if (!jQuery.fn.dataTable.isDataTable(el)) {
+app/Modules/User/Views/Budget/index.php:322:          jQuery(el).DataTable(options);
+app/Modules/User/Views/Budget/index.php:324:      } else if (typeof window.DataTable === 'function') {
+app/Modules/User/Views/Budget/index.php:326:          new DataTable(el, options);
+app/Modules/User/Views/Budget/index.php:330:        console.warn('DataTables (jQuery or 2.x) is not loaded on this page.');
+app/Modules/User/Views/Budget/index/browser_table.php:54:/** helper: epoch at midnight UTC for DataTables numeric sort */
+app/Modules/User/Views/Budget/index/browser_table.php:189:  // Robust jQuery/DataTables init (avoids "$ is not defined")
+app/Modules/User/Views/Budget/index/browser_table.php:191:    if (window.jQuery && jQuery.fn && (jQuery.fn.DataTable || jQuery.fn.dataTable)) {
+app/Modules/User/Views/Budget/index/browser_table.php:196:      if (window.jQuery && jQuery.fn && (jQuery.fn.DataTable || jQuery.fn.dataTable)) jQuery(cb);
+app/Modules/User/Views/Budget/index/browser_table.php:203:    var table  = $table.DataTable({
+app/Modules/User/Views/Budget/index/browser_table.php:261:      // tell DataTables we changed order data in-place
+app/Modules/User/Views/Budget/index/historical_table.11152024.php:221:    var table = $('#userBudgetingHistoryDatatable').DataTable({
+app/Modules/User/Views/Budget/index/browser_table.11152024.php:198:                                var table = $('#userBudgetingDatatable').DataTable({
+app/Modules/User/Views/Budget/index/active_table.php:232:    if (window.jQuery && jQuery.fn && (jQuery.fn.DataTable || jQuery.fn.dataTable)) {
+app/Modules/User/Views/Budget/index/active_table.php:237:      if (window.jQuery && jQuery.fn && (jQuery.fn.DataTable || jQuery.fn.dataTable)) {
+app/Modules/User/Views/Budget/index/active_table.php:250:    var table = $table.DataTable({
+app/Modules/User/Views/Budget/index/mobile_table.11152024.php:120:                                        var table = $('#userBudgetingDatatable').DataTable({
+app/Modules/User/Views/Budget/index/browser_table.09122024.php:125:// Safe DataTables init: supports jQuery or DataTables 2.x (no jQuery)
+app/Modules/User/Views/Budget/index/browser_table.09122024.php:139:  if (window.jQuery && jQuery.fn && jQuery.fn.DataTable) {
+app/Modules/User/Views/Budget/index/browser_table.09122024.php:140:    // jQuery DataTables path
+app/Modules/User/Views/Budget/index/browser_table.09122024.php:141:    if (!jQuery.fn.dataTable.isDataTable(el)) {
+app/Modules/User/Views/Budget/index/browser_table.09122024.php:142:      jQuery(el).DataTable(options);
+app/Modules/User/Views/Budget/index/browser_table.09122024.php:144:  } else if (typeof window.DataTable === 'function') {
+app/Modules/User/Views/Budget/index/browser_table.09122024.php:145:    // No-jQuery DataTables 2.x path
+app/Modules/User/Views/Budget/index/browser_table.09122024.php:147:      new DataTable(el, options);
+app/Modules/User/Views/Budget/index/browser_table.09122024.php:151:    console.warn('DataTables (jQuery or 2.x) is not loaded on this page.');
+app/Modules/User/Views/Budget/index/active_table-09212025.php:141:    var table = $('#userBudgetingDatatable').DataTable({
+app/Modules/User/Views/Budget/index/historical_table.php:86:    var table = $('#userBudgetingHistoryDatatable').DataTable({
+app/Modules/User/Views/Investments/resources/insights.php:49:        $("#insightTable").DataTable({});
+app/Modules/User/Views/Investments/resources/watchlist.php:66:        $("#userWatchlistTable").DataTable({});
+app/Modules/User/Views/Budget/index.09122025.php:279:        //     $('#userBudgetingDatatable').DataTable({
+app/Modules/User/Views/Investments/resources/working/get_symbols.php:67:        $('#symbolListingTable').DataTable();
+app/Modules/User/Views/Investments/resources/working/all_investments.php:77:        $("#userInvestmentsTable").DataTable({});
+app/Modules/User/Views/Investments/resources/working/financial_reports.php:110:        $("#profitLossTable").DataTable({});
+app/Modules/User/Views/Investments/resources/working/financial_reports.php:111:        $("#performanceTable").DataTable({});
+app/Modules/User/Views/Investments/resources/working/economic_data.php:16:            <table class="table" id="economicDataTable">
+app/Modules/User/Views/Investments/resources/working/economic_data.php:47:$("#economicDataTable").DataTable({});
+app/Modules/User/Views/Budget/Details/bank_accounts.php:135:                                <table class="table display" id="bankAccountTransactionHistory" role="grid" aria-describedby="DataTables_Table_0_info">
+app/Modules/User/Views/Budget/Details/accounts.php:170:                                <table class="table display" id="userBudgetDetailsDatatable" role="grid" aria-describedby="DataTables_Table_0_info">
+app/Modules/User/Views/Budget/Details/accounts.php:256:            $("#userBudgetDetailsDatatable").DataTable({
+app/Modules/User/Views/Investments/resources/real_time_data.php:14:                    <table id="realTimeDataTable" class="table table-striped">
+app/Modules/User/Views/Investments/resources/tax_report.php:51:        $("#taxReportTable").DataTable({});
+app/Modules/User/Views/Investments/tradeTracker-full-functionality.php:5:<!-- Include CSS and JS for DataTables -->
+app/Modules/User/Views/Investments/tradeTracker-full-functionality.php:127:    // Initialize DataTable
+app/Modules/User/Views/Investments/tradeTracker-full-functionality.php:128:    let table = $('#trade-tracker-table').DataTable({
+app/Modules/User/Views/Investments/tradeTracker-full-functionality.php:272:        table = $('#trade-tracker-table').DataTable({
+app/Modules/User/Views/Investments/tradeTracker-full-functionality.php:366:        table = $('#trade-tracker-table').DataTable({
+app/Modules/User/Views/Investments/tradeTracker-working-12082024.php:5:<!-- Include CSS and JS for DataTables -->
+app/Modules/User/Views/Investments/tradeTracker-working-12082024.php:76:    // Initialize DataTable with AJAX for backend connection
+app/Modules/User/Views/Investments/tradeTracker-working-12082024.php:77:    let table = $('#trade-tracker-table').DataTable({
+app/Modules/User/Views/Investments/tradeTracker-working-12082024.php:121:        table = $('#trade-tracker-table').DataTable({
+app/Modules/User/Views/Investments/tradeTracker.php:13:<!-- Include CSS and JS for DataTables -->
+app/Modules/User/Views/Investments/tradeTracker.php:131:    // Initialize DataTable
+app/Modules/User/Views/Investments/tradeTracker.php:189:    let table = $('#trade-tracker-table').DataTable({
+app/Modules/User/Views/Investments/tradeTracker.php:238:        // Update the DataTable row data
+app/Modules/User/Views/Investments/tradeTracker.php:390:    let table = $('#trade-tracker-table').DataTable({
+app/Modules/User/Views/Investments/index/Recent_Trades.php:171:        $('#investmentTable').DataTable({
+app/Modules/User/Views/Investments/index/Insights-test.php:45:                            <table class="datatable-init nk-tb-list nk-tb-ulist" id="activeTradeDataTable" data-auto-responsive="false">
+app/Modules/User/Views/Investments/index/Insights-test.php:111:                            <table class="datatable-init nk-tb-list nk-tb-ulist" id="watchListDataTable" data-auto-responsive="false">
+app/Modules/User/Views/Investments/index/Insights-test.php:250:        $('#activeTradeDataTable').DataTable({
+app/Modules/User/Views/Investments/index/Insights-test.php:254:        $('#watchListDataTable').DataTable({
+app/Modules/User/Views/Investments/index/Investment_Calendar.php:47:        // Initialize DataTables
+app/Modules/User/Views/Investments/index/Investment_Calendar.php:48:        $('#economic-calendar-table').DataTable({
+app/Modules/User/Views/Investments/index/Insights.php:46:                            <table class="datatable-init nk-tb-list nk-tb-ulist" id="activeTradeDataTable" data-auto-responsive="false">
+app/Modules/User/Views/Investments/index/Insights.php:112:                            <table class="datatable-init nk-tb-list nk-tb-ulist" id="watchListDataTable" data-auto-responsive="false">
+app/Modules/User/Views/Investments/index/Insights.php:361:        $('#activeTradeDataTable').DataTable({
+app/Modules/Ops/Views/Management/index.php:79:    const table = $('#ops-tasks-table').DataTable({
+app/Modules/Management/Views/Email/campaigns.php:116:    $('#campaignsTable').DataTable({
+app/Modules/Management/Views/Assets/Listing-Table.php:56:        $("#approved-assets-overview").DataTable({
+app/Modules/Management/Views/Projects/index/most_recent_content.php:47:        <table class="table table-striped" id="scrapedDataTable">
+app/Modules/Management/Views/Projects/index/most_recent_content.php:66:        // Initialize DataTable
+app/Modules/Management/Views/Projects/index/most_recent_content.php:67:        const table = $('#scrapedDataTable').DataTable();
+app/Modules/Management/Views/Projects/index/most_recent_content.php:76:        function addToScrapedDataTable(data) {
+app/Modules/Management/Views/Projects/index/most_recent_content.php:107:                    addToScrapedDataTable(scrape);
+app/Modules/Management/Views/admin/errors_dashboard.php:161:      dt = $('#patternsTable').DataTable({
+app/Modules/Management/Views/Partners/Active_Partners.php:93:        $('#activePartnersDatatable').DataTable( {
+app/Modules/Management/Views/Partners/Active_Assets.php:80:        $('#activeAssetsDatatable').DataTable( {
+app/Modules/Management/Views/Web_Design/Test_Page/trade_tracker.php:7:<table class="table display" id="alertOverviewDatatable" role="grid" aria-describedby="DataTables_Table_0_info">
+app/Modules/Management/Views/AuthHealth/index.php:92:        if (window.jQuery && $.fn && $.fn.DataTable) {
+app/Modules/Management/Views/AuthHealth/index.php:93:            $('#auth-health-table').DataTable({
+app/Modules/Management/Views/API/index.php:571:        $('#userActivityLoggerDatatable').DataTable({
+app/Modules/Management/Views/Web_Design/Content_Creator.php:52:<!-- DataTableJS Table -->
+app/Modules/Management/Views/Web_Design/Content_Creator.php:89:                        <!-- Data will be populated here by DataTableJS -->
+app/Modules/Management/Views/Web_Design/Content_Creator.php:100:    var table = $("#nba_sports_team_statistics").DataTable({
+app/Modules/Management/Views/Wallets/Listing-Table.php:43:    $('#management-active-wallets').DataTable( {
+app/Modules/Management/Views/Alerts/modals/updateExchange.php:68:                    // ✅ Refresh only the updated row in DataTable
+app/Modules/Management/Views/Alerts/modals/updateExchange.php:69:                    let tradeAlertTable = $('#tradeAlertTable').DataTable();
+app/Modules/Management/Views/Alerts/modals/createTradeAlert.php:424:                    if ($.fn.DataTable.isDataTable("#tradeAlertsTable")) {
+app/Modules/Management/Views/Alerts/modals/createTradeAlert.php:425:                        $("#tradeAlertsTable").DataTable().ajax.reload(null, false);
+app/Modules/Management/Views/EmailOutbox/index.php:170:        if (window.jQuery && $.fn && $.fn.DataTable) {
+app/Modules/Management/Views/EmailOutbox/index.php:171:            $('#emailOutboxTable').DataTable({
+app/Modules/Management/Views/Alerts/index.php:432:    if (!$.fn || typeof $.fn.DataTable !== 'function') {
+app/Modules/Management/Views/Alerts/index.php:434:            console.error('DataTables plugin not available for Alerts scripts.');
+app/Modules/Management/Views/Alerts/index.php:671:    // ✅ Check if Table Exists Before Initializing DataTable
+app/Modules/Management/Views/Alerts/index.php:672:    let confirmedTable = $('#confirmedTradeAlertTable').DataTable({
+app/Modules/Management/Views/Alerts/index.php:698:    let pendingTable = $('#pendingTradeAlertTable').DataTable({
+app/Modules/Management/Views/Alerts/index.php:725:    let scannerTable = $('#scannerSignalsTable').DataTable({
+app/Modules/Management/Views/Alerts/index.php:762:        const mainTable = $(tables[0]).DataTable();
+app/Modules/Management/Views/Alerts/index.php:771:            if ($.fn.DataTable.isDataTable(selector)) {
+app/Modules/Management/Views/Alerts/index.php:772:                const dt = $(selector).DataTable();
+app/Modules/Management/Views/Alerts/index.php:865:                $('#confirmedTradeAlertTable').DataTable().ajax.reload(null, false);
+app/Modules/Management/Views/Alerts/index.php:867:                $('#pendingTradeAlertTable').DataTable().ajax.reload(null, false);
+app/Modules/Management/Views/Alerts/index.php:898:                            const table = $('#confirmedTradeAlertTable').DataTable();
+app/Modules/Management/Views/Alerts/index.php:926:            $('#confirmedTradeAlertTable').DataTable().ajax.reload();
+app/Modules/Management/Views/Alerts/index.php:930:            $('#pendingTradeAlertTable').DataTable().ajax.reload(); 
+app/Modules/Management/Views/Alerts/index.php:933:        if ($('#scannerSignalsTable').length) { $('#scannerSignalsTable').DataTable().ajax.reload(); }
+app/Modules/Management/Views/Alerts/index.php:948:                $('#confirmedTradeAlertTable').DataTable().ajax.reload();
+app/Modules/Management/Views/Alerts/index.php:949:                <?php if ($cuRole <= 3): ?> $('#pendingTradeAlertTable').DataTable().ajax.reload(); <?php endif; ?>
+app/Modules/Management/Views/Alerts/index.php:967:    //             $('#confirmedTradeAlertTable').DataTable().ajax.reload();
+app/Modules/Management/Views/Alerts/index.php:968:    //             <?php if ($cuRole <= 3): ?> $('#pendingTradeAlertTable').DataTable().ajax.reload(); <?php endif; ?>
+app/Modules/Management/Views/Alerts/index.php:1020:                    $('#confirmedTradeAlertTable').DataTable().ajax.reload();
+app/Modules/Management/Views/Alerts/index.php:1021:                    <?php if ($cuRole <= 3): ?> $('#pendingTradeAlertTable').DataTable().ajax.reload(); <?php endif; ?>
+app/Modules/Management/Views/Alerts/index.php:1084:      if (window.jQuery && $.fn && $.fn.DataTable) {
+app/Modules/Management/Views/Alerts/index.php:1085:        if ($.fn.DataTable.isDataTable('#confirmedTradeAlertTable')) {
+app/Modules/Management/Views/Alerts/index.php:1086:          $('#confirmedTradeAlertTable').DataTable().ajax.reload(null, false);
+app/Modules/Management/Views/Alerts/index.php:1088:        if ($.fn.DataTable.isDataTable('#pendingTradeAlertTable')) {
+app/Modules/Management/Views/Alerts/index.php:1089:          $('#pendingTradeAlertTable').DataTable().ajax.reload(null, false);
+app/Modules/Management/Views/Users/Profile.php:108:<!-- DataTable Initialization Script -->
+app/Modules/Management/Views/Users/Profile.php:111:    $('#MyMIProjectsListingTable').DataTable({
+app/Modules/Management/Views/Users/Inactive_Table.php:61:    $('#management-inactive-users').DataTable( {
+app/Modules/Management/Views/Users/Inactive_Table.php:68://     $('#management-inactive-users').DataTable({
+app/Modules/Management/Views/Users/Referral_Report.php:101:    $('#referral-report-table').DataTable({
+app/Modules/Management/Views/Users/Active_Table.php:59:    $('#management-active-users').DataTable( {
+app/Modules/Management/Views/Users/Active_Table.php:66://     $('#management-active-users').DataTable({
+app/Modules/Management/Views/Users/Listing-Table.php:66:    $('#user-listing-table').DataTable( {
+app/Modules/Management/Views/Users/index.php:262:    // const table = $('#management-inactive-users').DataTable({
+app/Modules/Management/Views/Referrals/index.php:70:        if (window.jQuery && $.fn && $.fn.DataTable) {
+app/Modules/Management/Views/Referrals/index.php:71:            $('#referral-conversion-table').DataTable({
+app/Modules/Management/Views/AuthFunnel/index.php:155:        if (window.jQuery && $.fn && $.fn.DataTable) {
+app/Modules/Management/Views/AuthFunnel/index.php:156:            $('#auth-funnel-events-table').DataTable({
+app/Modules/Management/Views/Marketing/Schedule.php:112:    $("#scheduleTable").DataTable({
+app/Modules/Management/Views/Marketing/resources/standaloneScraper.php:58:                                    addToScrapedDataTable(data.data);
+app/Modules/Management/Views/Marketing/resources/standaloneScraper.php:92:                            <table class="table table-striped table-responsive" id="scrapedDataTable">
+app/Modules/Management/Views/Marketing/resources/standaloneScraper.php:122:function addToScrapedDataTable(data) {
+app/Modules/Management/Views/Marketing/resources/standaloneScraper.php:123:    let tableBody = document.querySelector('#scrapedDataTable tbody');
+app/Modules/Management/Views/Marketing/resources/standaloneScraper.php:168:            let tableBody = document.querySelector('#scrapedDataTable tbody');
+app/Modules/Management/Views/Marketing/Exchanges/includes/all-tokens.php:131:        $('#website-table').DataTable({
+app/Modules/Management/Views/Marketing/Exchanges/includes/discord.php:128:        $('#discord-table').DataTable({
+app/Modules/Management/Views/Marketing/Exchanges/includes/facebook.php:128:        $('#faceboook-table').DataTable({
+app/Modules/Management/Views/Marketing/Exchanges/includes/twitter.php:124:        $('#twitter-table').DataTable({
+app/Modules/Management/Views/Marketing/Campaigns/Listing-Table.php:74:        $('#marketingCampaignOverview').DataTable({
+app/Modules/Management/Views/Marketing/Exchanges/includes/website.php:203:        $('#website-table').DataTable({
+app/Modules/Management/Views/Marketing/Campaigns/Priority-Listing-Table.php:74:        $('#marketingPriorityCampaignOverview').DataTable({
+app/Modules/Management/Views/Marketing/Campaigns/Drip-Campaigns-Table.php:86:        $('#marketingActiveDripCampaignsOverview').DataTable({
+app/Modules/Management/Views/Marketing/User/MyMIGold-Tasks.php:46:                                <!-- Data will be populated here by DataTables -->
+app/Modules/Management/Views/Marketing/User/MyMIGold-Tasks.php:85:    $('#userGoalsOverview').DataTable({
+app/Modules/Management/Views/Marketing/Campaigns/Drip-Campaigns-Steps-Table.php:92:        $('#marketingActiveDripCampaignStepsOverview').DataTable({
+app/Modules/Management/Views/Marketing/dashboard.txt:6654:        <table class="table table-striped" id="scrapedDataTable">
+app/Modules/Management/Views/Marketing/dashboard.txt:6673:        // Initialize DataTable
+app/Modules/Management/Views/Marketing/dashboard.txt:6674:        const table = $('#scrapedDataTable').DataTable();
+app/Modules/Management/Views/Marketing/dashboard.txt:6683:        function addToScrapedDataTable(data) {
+app/Modules/Management/Views/Marketing/dashboard.txt:6714:                    addToScrapedDataTable(scrape);
+app/Modules/Management/Views/Marketing/dashboard.txt:7220:                                <!-- Data will be populated here by DataTables -->
+app/Modules/Management/Views/Marketing/dashboard.txt:7259:    $('#userGoalsOverview').DataTable({
+app/Modules/Management/Views/Marketing/dashboard.txt:7353:        $('#marketingCampaignOverview').DataTable({
+app/Modules/Management/Views/Marketing/Promote/Solana/subViews/Communities.php:245:    // Initialize DataTables for each table
+app/Modules/Management/Views/Marketing/Promote/Solana/subViews/Communities.php:246:    $('#top-assets-table').DataTable({ order: [[2, 'desc']] });
+app/Modules/Management/Views/Marketing/Promote/Solana/subViews/Communities.php:247:    $('#discord-table').DataTable({ order: [[1, 'desc']] });
+app/Modules/Management/Views/Marketing/Promote/Solana/subViews/Communities.php:248:    $('#facebook-table').DataTable({ order: [[1, 'desc']] });
+app/Modules/Management/Views/Marketing/Promote/Solana/subViews/Communities.php:249:    $('#twitter-table').DataTable({ order: [[1, 'desc']] });
+app/Modules/Management/Views/Marketing/Promote/Solana/subViews/Communities.php:250:    $('#website-table').DataTable({ order: [[1, 'desc']] });
+app/Modules/Management/Views/Investments/news.php:74:        const table = $('#investments-news-table').DataTable({
+app/Modules/Management/Views/index.php:538:    //     // Function to load data via AJAX into a DataTable
+app/Modules/Management/Views/index.php:540:    //         $(`#${tableID}`).DataTable({
+app/Modules/Management/Views/Marketing/index/most_recent_content.php:4:        <table class="table table-striped" id="scrapedDataTable">
+app/Modules/Management/Views/Marketing/index/most_recent_content.php:36:    const table = $('#scrapedDataTable').DataTable();
+app/Modules/Management/Views/Exchange/index/Large_Transactions.php:49:        $("#suspicious-transactions-overview").DataTable({

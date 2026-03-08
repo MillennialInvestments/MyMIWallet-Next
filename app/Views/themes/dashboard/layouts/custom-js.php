@@ -86,6 +86,10 @@ if ($useGoogleAnalytics ?? true) {
 <script <?= $nonce['script'] ?? '' ?>>
     // Dynamically update CSRF token on page load and after AJAX requests
     document.addEventListener('DOMContentLoaded', () => {
+        if (!window.CSRF_TOKEN || !window.CSRF_TOKEN.name || !window.CSRF_TOKEN.hash) {
+            return;
+        }
+
         const csrfMeta = document.querySelector('meta[name="' + window.CSRF_TOKEN.name + '"]');
         if (csrfMeta) {
             csrfMeta.setAttribute('content', window.CSRF_TOKEN.hash);
@@ -122,11 +126,14 @@ if ($useGoogleAnalytics ?? true) {
 
         const $ = window.jQuery;
 
-        $(document).ajaxComplete((event, xhr) => {
+        $(document)
+            .off('ajaxComplete.mymiCsrfRefresh')
+            .on('ajaxComplete.mymiCsrfRefresh', (event, xhr) => {
             const newCsrfName = xhr.getResponseHeader('X-CSRF-Token-Name');
             const newCsrfHash = xhr.getResponseHeader('X-CSRF-Token-Hash');
 
             if (newCsrfName && newCsrfHash) {
+                window.CSRF_TOKEN = window.CSRF_TOKEN || {};
                 window.CSRF_TOKEN.name = newCsrfName;
                 window.CSRF_TOKEN.hash = newCsrfHash;
                 const csrfMeta = document.querySelector('meta[name="' + newCsrfName + '"]');

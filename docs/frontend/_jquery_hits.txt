@@ -1,0 +1,11 @@
+app/Modules/User/Views/Predictions/portfolio.php:37:  if(window.jQuery && (jQuery.fn.DataTable||jQuery.fn.dataTable)){ jQuery.fn.dataTable.isDataTable(el)||jQuery(el).DataTable(cfg); }
+app/Modules/User/Views/Referral_Program/index.php:383:                state.tableInstance = jQuery(state.tableElement).DataTable(options);
+app/Modules/User/Views/Referral_Program/index.php:385:                state.tableInstance = jQuery(state.tableElement).DataTable();
+app/Views/themes/dashboard/layouts/custom-js.php:179:        window.jQuery(function () {
+app/Modules/User/Views/Budget/index/mobile_table.php:198:    function run(){ if (window.jQuery && (jQuery.fn.DataTable || jQuery.fn.dataTable)) jQuery(cb); }
+app/Modules/User/Views/Budget/index/browser_table.php:192:      jQuery(cb);
+app/Modules/User/Views/Budget/index/browser_table.php:196:      if (window.jQuery && jQuery.fn && (jQuery.fn.DataTable || jQuery.fn.dataTable)) jQuery(cb);
+app/Modules/User/Views/Budget/index/active_table.php:233:      jQuery(cb);
+app/Modules/User/Views/Budget/index/active_table.php:238:        jQuery(cb);
+app/Modules/User/Views/Budget/index/browser_table.09122024.php:142:      jQuery(el).DataTable(options);
+app/Modules/User/Views/Budget/index.php:322:          jQuery(el).DataTable(options);

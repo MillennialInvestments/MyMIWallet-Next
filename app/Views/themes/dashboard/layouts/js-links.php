@@ -86,7 +86,9 @@ if ($digibyte): ?>
     return setTimeout(startWhenReady, 50);
   }
   (function ($) {
-    $(document).ajaxComplete(function (_event, xhr) {
+    $(document)
+      .off('ajaxComplete.mymiCsrfRefresh')
+      .on('ajaxComplete.mymiCsrfRefresh', function (_event, xhr) {
       var newCsrfName = xhr.getResponseHeader('X-CSRF-Token-Name');
       var newCsrfHash = xhr.getResponseHeader('X-CSRF-Token-Hash');
       if (!newCsrfName || !newCsrfHash) return;

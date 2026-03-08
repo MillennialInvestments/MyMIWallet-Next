@@ -1,0 +1,110 @@
+app/Modules/User/Views/Projects/index/project_chart-working.php:63:        return new Chart(ctx, {
+app/Modules/User/Views/Projects/index/project_chart-working.php:137:    const chart = initializeChart();
+app/Modules/User/Views/Projects/index/project_chart.php:82:        return new Chart(ctx, {
+app/Modules/User/Views/Projects/index/project_chart.php:159:    const chart = initializeChart();
+app/Modules/User/Views/Projects/management/project_analytics.php:15:    new Chart(ctx, {
+app/Modules/User/Views/Dashboard/index.php:1059:            new Chart(sparklineEl.getContext('2d'), {
+app/Modules/User/Views/Dashboard/index.php:1087:            new Chart(allocationEl.getContext('2d'), {
+app/Modules/User/Views/Referral_Program/My_Referrals/total_active_referrals.php:56:    let chart = new Chart(ctx, {
+app/Modules/User/Views/Referral_Program/index.php:313:        referralChart = new Chart(chartEl.getContext('2d'), {
+app/Views/themes/dashboard/partials/custom-js/google-treemap.php:9:     function drawSimpleNodeChart() {
+app/Views/Investments/economy_widget.php:37:        new Chart(document.getElementById('unemploymentChart'), {
+app/Modules/User/Views/Alerts/resources/overview_chart.php:272:    const chart = new Chart(ctx, {
+app/Modules/User/Views/Alerts/resources/overview_chart.php:468:    const chart = new Chart(ctx, {
+app/Modules/User/Views/Alerts/index.php:472:        new Chart(ctx, {
+app/Modules/User/Views/Budget_Orig/index.php:743: const chart = new Chart(ctx, {
+app/Modules/User/Views/Budget/Account_Overview/source_breakdown.php:62:    new Chart(ctx, {
+app/Modules/User/Views/Budget/Account_Overview/expense_breakdown.php:61:    new Chart(ctx, {
+app/Modules/User/Views/Budget/Account_Overview/income_breakdown.php:61:    new Chart(ctx, {
+app/Modules/User/Views/Budget/Account_Overview/monthly_overview.php:225:    const chart = new Chart(ctx, {
+app/Modules/User/Views/Budget/index/overview_chart.php:212:  function ensureChart(cb) {
+app/Modules/User/Views/Budget/index/overview_chart.php:221:  ensureChart(function () {
+app/Modules/User/Views/Budget/index/overview_chart.php:289:    const chart = new Chart(ctx, {
+app/Modules/User/Views/Budget/index/overview_chart.php:484:    const chart = new Chart(ctx, {
+app/Modules/User/Views/Budget/index.09122025.php:441:    const chart = new Chart(ctx, {
+app/Modules/User/Views/Budget/Financial_Analysis.php:37:                                            const chart = new Chart(ctx, {
+app/Modules/User/Views/Budget/Financial_Analysis.php:112:                                            const chart = new Chart(ctx, {
+app/Modules/User/Views/Budget/Financial_Forecaster.php:44:                                            const chart = new Chart(ctx, {
+app/Modules/User/Views/Budget/Financial_Forecaster.php:131:                                            const chart = new Chart(ctx, {
+app/Modules/User/Views/Budget/index.06012024.php:543:    const chart = new Chart(ctx, {
+app/Modules/User/Views/Investments/Services.php:648:    initInvestmentChart().catch(error => {
+app/Modules/User/Views/Investments/Services.php:671:    async function initInvestmentChart() {
+app/Modules/User/Views/Investments/Services.php:737:        new Chart(ctx, {
+app/Modules/User/Views/Investments/Services.php:832:    async function initInvestmentChart() {
+app/Modules/User/Views/Investments/Services.php:847:        new Chart(ctx, {
+app/Modules/User/Views/Investments/Services.php:869:    initInvestmentChart().catch(error => console.error(`Error initializing investment chart: ${error}`));
+app/Modules/User/Views/Investments/resources/retirement_planner_premium.php:60:                                const chart = new Chart(ctx, {
+app/Modules/User/Views/Investments/index.php:778:            new Chart(accuracyChartEl.getContext('2d'), {
+app/Modules/User/Views/Investments/index.php:854:    async function initInvestmentChart() {
+app/Modules/User/Views/Investments/index.php:916:        new Chart(ctx.getContext("2d"), {
+app/Modules/User/Views/Investments/index.php:929:    initInvestmentChart().catch(error => {
+app/Modules/User/Views/Investments/resources/retirement_planner_manual.php:61:                                const chart = new Chart(ctx, {
+app/Modules/User/Views/Investments/index-12022024.php:388:// async function initInvestmentChart() {
+app/Modules/User/Views/Investments/index-12022024.php:457://     new Chart(ctx, {
+app/Modules/User/Views/Investments/index-12022024.php:479:// initInvestmentChart().catch(error => {
+app/Modules/User/Views/Investments/index/Performance_Overview.php:68:                            var myChart = new Chart(ctx, {
+app/Modules/User/Views/Investments/index/Performance_Overview.php:322:    initInvestmentChart().catch(error => {
+app/Modules/User/Views/Investments/index/Performance_Overview.php:345:    async function initInvestmentChart() {
+app/Modules/User/Views/Investments/index/Performance_Overview.php:411:        new Chart(ctx, {
+app/Modules/User/Views/Investments/index/Month_to_Month.php:107:    async function initInvestmentChart() {
+app/Modules/User/Views/Investments/index/Month_to_Month.php:169:        new Chart(ctx.getContext("2d"), {
+app/Modules/User/Views/Investments/index/Month_to_Month.php:182:    initInvestmentChart().catch(error => {
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:60:                            var myChart = new Chart(ctx, {
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:293:initInvestmentChart().catch(error => {
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:316:async function initInvestmentChart() {
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:382:    new Chart(ctx, {
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:439:// async function initInvestmentChart() {
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:451://     new Chart(ctx, {
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:473:// initInvestmentChart().catch(error => {
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:694:    //         const chart = new Chart(ctx, {
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:857:    // new Chart(ctx, {
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:1019:    //     new Chart(ctx, {
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:1178:    //     new Chart(ctx, {
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:1298:    //     new Chart(ctx, {
+app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php:1380:    new Chart(ctx, {
+app/Modules/Management/Views/Email/campaign_dashboard.php:86:            renderCampaignStatsChart(data.stats);
+app/Modules/Management/Views/Email/campaign_dashboard.php:103:            renderTrendChart(data.trend);
+app/Modules/Management/Views/Email/campaign_dashboard.php:133:function renderTrendChart(trendData) {
+app/Modules/Management/Views/Email/campaign_dashboard.php:136:    new Chart(ctx, {
+app/Modules/Management/Views/Email/modals/viewCampaignStats.php:30:function renderCampaignStatsChart(stats) {
+app/Modules/Management/Views/Email/modals/viewCampaignStats.php:33:    new Chart(ctx, {
+app/Modules/Management/Views/Email/campaignStats.php:11:    new Chart(ctx, {
+app/Modules/Management/Views/Alerts/modals/viewTradeChart.php:134:    function loadTradingViewChart(exchange, ticker) {
+app/Modules/Management/Views/Alerts/modals/viewTradeChart.php:200:        loadTradingViewChart("<?= $exchange ?>", "<?= $ticker ?>");
+app/Modules/Management/Views/Alerts/modals/viewTradeChart.php:206:        loadTradingViewChart("<?= $exchange ?>", "<?= $ticker ?>");
+app/Modules/Management/Views/Alerts/modals/viewTradeChart.php:229:                    loadTradingViewChart(exchange, "<?= $ticker ?>");
+app/Modules/Management/Views/Users/Assets.php:240:const myChart = new Chart(ctx, {
+app/Modules/Management/Views/Projects/management/project_analytics.php:15:    new Chart(ctx, {
+app/Modules/Management/Views/Projects/index.php:76://     initInvestmentChart();
+app/Modules/Management/Views/AuthFunnel/index.php:137:            new Chart(ctx, {
+app/Modules/Management/Views/admin/errors_dashboard.php:93:      kpiChart = new Chart(document.getElementById('kpiLevelsChart'), {
+app/Modules/Management/Views/admin/errors_dashboard.php:114:      topChart = new Chart(document.getElementById('topControllersChart'), {
+app/Modules/Management/Views/admin/errors_dashboard.php:143:      heatChart = new Chart(document.getElementById('heatmapChart'), {
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/Bar_Charts.php:84:            function barChart(selector, set_data) {
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/Bar_Charts.php:109:                    var chart = new Chart(selectCanvas, {
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/Bar_Charts.php:161:            barChart();
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/Bar_Charts.php:184:            function lineChart(selector, set_data) {
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/Bar_Charts.php:209:                    var chart = new Chart(selectCanvas, {
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/Bar_Charts.php:259:            lineChart();
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/Bar_Charts.php:261:            function pieChart(selector, set_data) {
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/Bar_Charts.php:270:                    var chart = new Chart(selectCanvas, {
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/Bar_Charts.php:304:            pieChart();
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/Bar_Charts.php:306:            function doughnutChart(selector, set_data) {
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/Bar_Charts.php:315:                    var chart = new Chart(selectCanvas, {
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/Bar_Charts.php:350:            doughnutChart();
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/Bar_Charts.php:357:            function polarAreaChart(selector, set_data) {
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/Bar_Charts.php:366:                    var chart = new Chart(selectCanvas, {
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/Bar_Charts.php:399:            polarAreaChart();
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/ChartJS_Bar_Chart.php:22:    function orderOverviewChart(selector, set_data) {
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/ChartJS_Bar_Chart.php:48:        var chart = new Chart(selectCanvas, {
+app/Modules/Management/Views/Web_Design/Content_Creator/Components/ChartJS_Bar_Chart.php:134:        orderOverviewChart();
+app/Modules/Management/Views/Marketing/resources/standaloneAnalytics.php:34:    var emailOpenRateChart = new Chart(ctx, {
+app/Modules/Management/Views/Marketing/resources/standaloneAnalytics.php:58:    var userEngagementChart = new Chart(ctx2, {
+app/Modules/Management/Views/Marketing/resources/timelineGroupedView.php:81:                    new Chart(ctx, {
+app/Modules/Management/Views/Marketing/resources/generatedSummaries.php:226:                    new Chart(ctx, {
+app/Modules/Management/Views/Marketing/Promote/Solana/monthly_overview.php:55:    var chart = new Chart(ctx, {
+app/Modules/Management/Views/Marketing/modals/insightPreview.php:134:                new Chart(ctx, {
+app/Modules/Management/Views/Marketing/dashboard.txt:1112:        $alerts = $this->alertsModel->getAlertsWithNewTVChart();
+app/Modules/Management/Views/Marketing/dashboard.txt:4033:    public function saveTradingViewChart($chartUrl, $ticker)
+app/Modules/Management/Views/Marketing/dashboard.txt:6873:    var emailOpenRateChart = new Chart(ctx, {
+app/Modules/Management/Views/Marketing/dashboard.txt:6897:    var userEngagementChart = new Chart(ctx2, {

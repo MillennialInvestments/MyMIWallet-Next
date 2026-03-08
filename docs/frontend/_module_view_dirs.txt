@@ -1,0 +1,17 @@
+app/Modules/APIs/Views
+app/Modules/Advertise/Views
+app/Modules/Advisor/Views
+app/Modules/Blog/Views
+app/Modules/Docs/Views
+app/Modules/Exchange/Views
+app/Modules/Management/TaxAdmin/Views
+app/Modules/Management/Views
+app/Modules/Marketing_New/Views
+app/Modules/Ops/Views
+app/Modules/Public/Views
+app/Modules/ScriptStudio/Views
+app/Modules/Search/Views
+app/Modules/Support/Views
+app/Modules/Template/Views
+app/Modules/User/Tax/Views
+app/Modules/User/Views

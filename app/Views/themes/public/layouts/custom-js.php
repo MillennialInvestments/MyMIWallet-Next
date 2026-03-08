@@ -46,9 +46,11 @@
     }
 </script>
 <script nonce="<?= esc($cspNonce) ?>">
-window.onload = function() {
-  $("#navbarSupportedContent").hide();
-};
+window.addEventListener('load', function() {
+  if (window.jQuery) {
+    window.jQuery("#navbarSupportedContent").hide();
+  }
+});
 </script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168714029-1"></script>
