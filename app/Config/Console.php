@@ -272,6 +272,12 @@ class Console extends BaseConfig
         \App\Commands\Docs\Scan\ServiceList::class,
         \App\Commands\Docs\Scan\ViewDirectories::class,
         \App\Commands\Docs\Scan\ViewFiles::class,
+        \App\Commands\Docs\GenerateKnowledgeGraph::class,
+        \App\Commands\Docs\BuildHowItWorksNavigation::class,
+        \App\Commands\Docs\ScanOrphanRoutes::class,
+        \App\Commands\Docs\ScanOrphanViews::class,
+        \App\Commands\Docs\ScanUndocumentedControllers::class,
+        \App\Commands\Docs\GenerateArchitectureMap::class,
 
         /*
         |----------------------------------------------------------------------

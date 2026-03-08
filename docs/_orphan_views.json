@@ -1,0 +1,2699 @@
+{
+    "generated_at": "2026-03-08T16:13:55+00:00",
+    "orphanViews": [
+        {
+            "path": "app/Views/Auth_orig/_header.php"
+        },
+        {
+            "path": "app/Views/Auth_orig/_message_block.php"
+        },
+        {
+            "path": "app/Views/Auth_orig/emails/activation.php"
+        },
+        {
+            "path": "app/Views/Auth_orig/emails/forgot.php"
+        },
+        {
+            "path": "app/Views/Auth_orig/forgot.php"
+        },
+        {
+            "path": "app/Views/Auth_orig/login.php"
+        },
+        {
+            "path": "app/Views/Auth_orig/_navbar.php"
+        },
+        {
+            "path": "app/Views/Auth_orig/_footer.php"
+        },
+        {
+            "path": "app/Views/Auth_orig/reset.php"
+        },
+        {
+            "path": "app/Views/blog/single_post.php"
+        },
+        {
+            "path": "app/Views/blog/category.php"
+        },
+        {
+            "path": "app/Views/temp_landing.php"
+        },
+        {
+            "path": "app/Views/Dashboard/dashboard_template.php"
+        },
+        {
+            "path": "app/Views/emails/layouts/base.php"
+        },
+        {
+            "path": "app/Views/emails/support/auth_login_error_support.php"
+        },
+        {
+            "path": "app/Views/emails/support/auth_login_error_user.php"
+        },
+        {
+            "path": "app/Views/emails/activation.php"
+        },
+        {
+            "path": "app/Views/emails/auth/activation.php"
+        },
+        {
+            "path": "app/Views/emails/auth/reset.php"
+        },
+        {
+            "path": "app/Views/emails/reset_text.php"
+        },
+        {
+            "path": "app/Views/emails/ai_ops_alert.php"
+        },
+        {
+            "path": "app/Views/emails/activation_text.php"
+        },
+        {
+            "path": "app/Views/emails/reset.php"
+        },
+        {
+            "path": "app/Views/welcome_message.php"
+        },
+        {
+            "path": "app/Views/partials/auth_flash.php"
+        },
+        {
+            "path": "app/Views/partials/debug_hud.php"
+        },
+        {
+            "path": "app/Views/api/swagger_docs.php"
+        },
+        {
+            "path": "app/Views/errors/feature_disabled.php"
+        },
+        {
+            "path": "app/Views/errors/html/error_403.php"
+        },
+        {
+            "path": "app/Views/errors/html/error_500.php"
+        },
+        {
+            "path": "app/Views/errors/html/error_exception.php"
+        },
+        {
+            "path": "app/Views/errors/html/error_504.php"
+        },
+        {
+            "path": "app/Views/errors/html/_launch_error_template.php"
+        },
+        {
+            "path": "app/Views/errors/html/production.php"
+        },
+        {
+            "path": "app/Views/errors/html/_error_lifecycle_bootstrap.php"
+        },
+        {
+            "path": "app/Views/errors/html/error_400.php"
+        },
+        {
+            "path": "app/Views/errors/cli/error_exception.php"
+        },
+        {
+            "path": "app/Views/errors/cli/production.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/layouts/sidebar-New.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/layouts/custom-js.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/layouts/sidebar.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/layouts/js-links-10042025.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/layouts/js-links.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/layouts/sidebar-09012025.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/layouts/_sitenav.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/layouts/sidebar-10042025.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/layouts/metadata-information.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/layouts/sidebar-09092024.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/layouts/js-links_old.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/layouts/_sitenav-10042025.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/layouts/css-links.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/layouts/sidebar-05172024.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/layouts/header-information.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/partials/custom-js/modals.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/partials/custom-js/tawk-to.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/partials/custom-js/realTimeData.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/partials/custom-js/Exchange-js.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/partials/custom-js/datepicker.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/partials/custom-js/google-treemap.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/partials/custom-js/selectpicker.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/partials/custom-js/tradingview.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/partials/custom-js/Digibyte-js.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/partials/custom-js/datatables.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/partials/custom-js/auto-resize.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/partials/custom-js/datatables-09012025.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/partials/custom-js/wonderpush.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/partials/custom-js/Google_Analytics.php"
+        },
+        {
+            "path": "app/Views/themes/dashboard/partials/bitcoin-scripts.php"
+        },
+        {
+            "path": "app/Views/themes/public/corporateEarnings.php"
+        },
+        {
+            "path": "app/Views/themes/public/layouts/custom-js.php"
+        },
+        {
+            "path": "app/Views/themes/public/layouts/custom-jsb.php"
+        },
+        {
+            "path": "app/Views/themes/public/layouts/total-index.php"
+        },
+        {
+            "path": "app/Views/themes/public/layouts/_sitenav-new.php"
+        },
+        {
+            "path": "app/Views/themes/public/layouts/js-links-10042025.php"
+        },
+        {
+            "path": "app/Views/themes/public/layouts/js-links.php"
+        },
+        {
+            "path": "app/Views/themes/public/layouts/header_min.php"
+        },
+        {
+            "path": "app/Views/themes/public/layouts/login.php"
+        },
+        {
+            "path": "app/Views/themes/public/layouts/_sitenav.php"
+        },
+        {
+            "path": "app/Views/themes/public/layouts/metadata-information.php"
+        },
+        {
+            "path": "app/Views/themes/public/layouts/_sitenav-10042025.php"
+        },
+        {
+            "path": "app/Views/themes/public/layouts/data_distribution.php"
+        },
+        {
+            "path": "app/Views/themes/public/layouts/css-links.php"
+        },
+        {
+            "path": "app/Views/themes/public/layouts/page_views.php"
+        },
+        {
+            "path": "app/Views/themes/public/layouts/header-information.php"
+        },
+        {
+            "path": "app/Views/themes/public/economicCalendar.php"
+        },
+        {
+            "path": "app/Views/themes/public/home.php"
+        },
+        {
+            "path": "app/Views/themes/public/gettingStarted.php"
+        },
+        {
+            "path": "app/Views/themes/public/resources/stayConnected.php"
+        },
+        {
+            "path": "app/Views/themes/public/resources/Getting-Started/Projects.php"
+        },
+        {
+            "path": "app/Views/themes/public/resources/Getting-Started/default.php"
+        },
+        {
+            "path": "app/Views/themes/public/resources/needSupport.php"
+        },
+        {
+            "path": "app/Views/themes/public/resources/ytPromoVideo.php"
+        },
+        {
+            "path": "app/Views/themes/public/privacyPolicy.php"
+        },
+        {
+            "path": "app/Views/themes/public/exchange.php"
+        },
+        {
+            "path": "app/Views/themes/public/memberships.php"
+        },
+        {
+            "path": "app/Views/themes/public/termsOfService.php"
+        },
+        {
+            "path": "app/Views/themes/public/how_it_works/investing.php"
+        },
+        {
+            "path": "app/Views/themes/public/how_it_works/budgeting.php"
+        },
+        {
+            "path": "app/Views/themes/public/how_it_works/pricing.php"
+        },
+        {
+            "path": "app/Views/themes/public/how_it_works/_hero.php"
+        },
+        {
+            "path": "app/Views/themes/public/how_it_works/_nav.php"
+        },
+        {
+            "path": "app/Views/themes/public/how_it_works/partials/_audiences.php"
+        },
+        {
+            "path": "app/Views/themes/public/how_it_works/partials/_benefits.php"
+        },
+        {
+            "path": "app/Views/themes/public/how_it_works/partials/_cta.php"
+        },
+        {
+            "path": "app/Views/themes/public/how_it_works/partials/_faq.php"
+        },
+        {
+            "path": "app/Views/themes/public/how_it_works/partials/_steps.php"
+        },
+        {
+            "path": "app/Views/themes/public/how_it_works/projects.php"
+        },
+        {
+            "path": "app/Views/themes/public/how_it_works/alerts.php"
+        },
+        {
+            "path": "app/Views/themes/public/how_it_works/crypto.php"
+        },
+        {
+            "path": "app/Views/themes/public/home.new.php"
+        },
+        {
+            "path": "app/Views/Auth/activate.php"
+        },
+        {
+            "path": "app/Views/Auth/_header.php"
+        },
+        {
+            "path": "app/Views/Auth/2fa_verify.php"
+        },
+        {
+            "path": "app/Views/Auth/resend_activation.php"
+        },
+        {
+            "path": "app/Views/Auth/_message_block.php"
+        },
+        {
+            "path": "app/Views/Auth/2fa_qrcode.php"
+        },
+        {
+            "path": "app/Views/Auth/emails/activation.php"
+        },
+        {
+            "path": "app/Views/Auth/emails/forgot.php"
+        },
+        {
+            "path": "app/Views/Auth/emails/activation_email.php"
+        },
+        {
+            "path": "app/Views/Auth/register_form.php"
+        },
+        {
+            "path": "app/Views/Auth/forgot.php"
+        },
+        {
+            "path": "app/Views/Auth/login.php"
+        },
+        {
+            "path": "app/Views/Auth/register/Deon.php"
+        },
+        {
+            "path": "app/Views/Auth/register/Jeremy.php"
+        },
+        {
+            "path": "app/Views/Auth/register/Earl.php"
+        },
+        {
+            "path": "app/Views/Auth/register/Monetized-Creators.php"
+        },
+        {
+            "path": "app/Views/Auth/register/AnneAlicia.php"
+        },
+        {
+            "path": "app/Views/Auth/register/Facebook.php"
+        },
+        {
+            "path": "app/Views/Auth/register/MattCardon.php"
+        },
+        {
+            "path": "app/Views/Auth/register/LinkedIn.php"
+        },
+        {
+            "path": "app/Views/Auth/register/X.php"
+        },
+        {
+            "path": "app/Views/Auth/register/Free.php"
+        },
+        {
+            "path": "app/Views/Auth/register/Ken.php"
+        },
+        {
+            "path": "app/Views/Auth/register/Dubose.php"
+        },
+        {
+            "path": "app/Views/Auth/register/resources/apexHowItWorks.php"
+        },
+        {
+            "path": "app/Views/Auth/register/YouTube.php"
+        },
+        {
+            "path": "app/Views/Auth/register/Alicia.php"
+        },
+        {
+            "path": "app/Views/Auth/register/Jasmine.php"
+        },
+        {
+            "path": "app/Views/Auth/register/Solana.php"
+        },
+        {
+            "path": "app/Views/Auth/register/Apex.php"
+        },
+        {
+            "path": "app/Views/Auth/register/The-Mission.php"
+        },
+        {
+            "path": "app/Views/Auth/register/MattHill.php"
+        },
+        {
+            "path": "app/Views/Auth/register/Jailin.php"
+        },
+        {
+            "path": "app/Views/Auth/register/Manee.php"
+        },
+        {
+            "path": "app/Views/Auth/register/TBI.php"
+        },
+        {
+            "path": "app/Views/Auth/register/ITT.php"
+        },
+        {
+            "path": "app/Views/Auth/register/KenFlores.php"
+        },
+        {
+            "path": "app/Views/Auth/register/Michael.php"
+        },
+        {
+            "path": "app/Views/Auth/register/Kristie.php"
+        },
+        {
+            "path": "app/Views/Auth/register/TikTok.php"
+        },
+        {
+            "path": "app/Views/Auth/register/MyMI.php"
+        },
+        {
+            "path": "app/Views/Auth/_navbar.php"
+        },
+        {
+            "path": "app/Views/Auth/_footer.php"
+        },
+        {
+            "path": "app/Views/Auth/register_success.php"
+        },
+        {
+            "path": "app/Views/Auth/reset.php"
+        },
+        {
+            "path": "app/Modules/Advisor/Views/partials/advisor_insight_modal.php"
+        },
+        {
+            "path": "app/Modules/Public/Views/pages/public_page.php"
+        },
+        {
+            "path": "app/Modules/Support/Views/articles/welcome.php"
+        },
+        {
+            "path": "app/Modules/Support/Views/Support/partials/ticket_row.php"
+        },
+        {
+            "path": "app/Modules/Support/Views/Support/partials/ticket_offcanvas.php"
+        },
+        {
+            "path": "app/Modules/Support/Views/Support/partials/kb_results.php"
+        },
+        {
+            "path": "app/Modules/Support/Views/Need_Assistance.php"
+        },
+        {
+            "path": "app/Modules/Support/Views/_partials/_feedback.php"
+        },
+        {
+            "path": "app/Modules/Blog/Views/Investing/The_Beginners_Guide_To_Option_Trading.php"
+        },
+        {
+            "path": "app/Modules/Blog/Views/Investing/The_Fundamentals_Of_Investing.php"
+        },
+        {
+            "path": "app/Modules/Blog/Views/Investing/Tips_For_Effective_Investment_Portfolio_Management.php"
+        },
+        {
+            "path": "app/Modules/Blog/Views/HowItWorks/partials/navigation.php"
+        },
+        {
+            "path": "app/Modules/Blog/Views/HowItWorks/partials/ad_slot.php"
+        },
+        {
+            "path": "app/Modules/Blog/Views/HowItWorks/Manage_Finances.php"
+        },
+        {
+            "path": "app/Modules/Blog/Views/HowItWorks/Features_And_Plans.php"
+        },
+        {
+            "path": "app/Modules/Blog/Views/Earnings/update_earnings_form.php"
+        },
+        {
+            "path": "app/Modules/Blog/Views/Earnings/2024/10/28.php"
+        },
+        {
+            "path": "app/Modules/Blog/Views/Earnings/2024/10/14.php"
+        },
+        {
+            "path": "app/Modules/Blog/Views/Earnings/TSLA/10192023.php"
+        },
+        {
+            "path": "app/Modules/Advertise/Views/content_banner.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Advisors/index/control_center.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Dashboard.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/tradeTracker-full-functionality.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Add-12012024.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/forecast_modal.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/Stock_Overview.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/Investment_Research.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/Top_Trades.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/Custom_Watchlist.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/Month_to_Month.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/My_Alerts.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/overview_chart.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/Asset_Watchlist.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/Recent_Trades.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/Action_Center.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/Performance_Overview-09282023.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/Economic_Data.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/Insights.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/Performance_Overview.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/Investment_Tools.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/control_center.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/Crypto_Overview.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/MyMI_News.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/Investment_Tools-sm.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/active_table.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/My_Performance.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/My_Goals.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/historical_table.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/Investment_Calendar.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/My_Reports.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/Month_to_Month-test.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/Insights-test.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index/Markets.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Assessment/assessment_center.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Assessment/assessment_content.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Assessment/personal_information.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Assessment/kyc_verification.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index-12022024.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Squeezes/partials/zoom_out.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Squeezes/partials/scorecard.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Squeezes/partials/fade_setups.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Notes/11122024.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Add/user_fields-new.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Add/trade.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Add/user_fields-09162023.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Add/options_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Add/symbol_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Add/crypto_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Add/Bond/watchlist.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Add/Bond/trade.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Add/user_fields-04042024.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Add/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Add/form.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Add/stock_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/Add/watchlist_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/tradeTracker-working-12082024.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/watchlist.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/share_trade.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/mymi_news.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/mymi_research.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/tax_report.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/risk_management.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/strategies_and_goals.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/manage_trade.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/market_news.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/retirement_planner_premium.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/set_alerts.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/import_investments.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/real_time_data.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/working/economic_data.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/working/financial_reports.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/working/get_symbols.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/working/all_investments.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/working/crypto_overview.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/share_profile.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/profile.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/goal_based_investing.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/retirement_planner_manual.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/stock_overview.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/strategizer.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/insights.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/need_fixing/advanced_analytics.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/resources/retirement_planner.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/index-b.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Investments/tradeTracker copy 2.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Support/Feedback.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Support/Feedback/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Support/Communication_Manager.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Support/Request/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Support/Need_Assistance.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Support/_emails/Support_Request_Received.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Support/partials/ticket_row.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Support/partials/ticket_offcanvas.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Support/partials/kb_results.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Support/FAQs.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Support/Response/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Support/Request.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/index/transaction-modal-02072025.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/index/transaction-modal.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/index/user-feedback-modal.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/index/transaction-modal-12112024.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/Goals/Daily/browser_table.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/Goals/Daily/mobile_table.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/Goals/All/browser_table.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/Goals/All/mobile_table.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/Goals/Monthly/browser_table.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/Goals/Monthly/mobile_table.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/Goals/Weekly/browser_table.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/Goals/Weekly/mobile_table.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/Goals/browser_table.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/Goals/control_center.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/Goals/mobile_table.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/Budget.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/forms/onboarding.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/Support.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/Profile/investor_strength_score.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/Profile/user_mymi_projects.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/Account/ControlCenter.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/Performance_Alt.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/Search_Results.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/modals/onboarding.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/examples/recent_activities.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/examples/achievements.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/examples/transaction_history.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Dashboard/examples/financial_examples.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Subscribe/form_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Subscribe/header_subscribe.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/Tutorials/Categories/Partners.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/Tutorials/Categories/Wallets/Edit_Wallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/Tutorials/Categories/Wallets/Edit_Account/banking_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/Tutorials/Categories/MyMIGold/includes/production_tutorials.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/Tutorials/Categories/MyMIGold/includes/beta_tutorials.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/Tutorials/Categories/MyMIGold/Completing_Your_Purchase.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/Response.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/includes/navigation.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/includes/Investor_Account/tools.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/includes/Investor_Account/resources_and_tools.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/includes/Referral_Program/more_details.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/includes/Referral_Program/getting_started.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/includes/Partnerships/subheader.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/includes/Partnerships/full_content.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/includes/Partnerships/more_details.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/includes/KYC_Verification/kyc_regulations.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/includes/KYC_Verification/kyc_requirements.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/includes/KYC_Verification/more_details.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/includes/KYC_Verification/periodic_due_diligence.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/includes/KYC_Verification/getting_started.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/includes/Assets/asset_distribution.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/includes/Assets/asset_creator.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/includes/Assets/mymi_marketplace.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/includes/Assets/mymi_exchange.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/includes/Assets/what_are_mymi_assets.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/includes/Customer_Support/contact_support.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/Management/Risk-Assessment.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/Management/Historical-Performance.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Knowledgebase/Management/Comprehensive-Analysis.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Calculator/form.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget_Orig/index/overview_chart.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget_Orig/index/control_center.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget_Orig/index/active_table.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Alerts/resources/advisorMomentum.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Alerts/resources/overview_chart.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Alerts/resources/budgetAdvisor.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Alerts/resources/advisorMedia.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Alerts/resources/control_center.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Alerts/resources/advisorPick.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Alerts/resources/momentumChange.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index-orig/crypto_wallets/Wallet_Listing.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index-orig/crypto_wallets/MyMIGold.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index-orig/crypto_wallets/Purchase_Wallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index-orig/financial_wallets/Wallet_Listing.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index-orig/financial_wallets/Purchase_Wallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index-orig/financial_wallets/MyMIWallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index-orig/crypto_wallets.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index-orig/plaid/crypto_wallets/Purchase_Wallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index-orig/plaid/crypto_wallets.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index-orig/plaid/fiat_wallets/Purchase_Wallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index-orig/plaid/financial_wallets.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index-orig/plaid/fiat_wallets.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index-orig/fiat_wallets/Wallet_Listing.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index-orig/fiat_wallets/Purchase_Wallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index-orig/fiat_wallets/MyMIWallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Link_Account (Original)/Import_Trades/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Link_Account (Original)/TD-Ameritrade.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Link_Account (Original)/Confirm.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Link_Account (Original)/Account-Information.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Link_Account (Original)/Import-Trades.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Link_Account (Original)/Upload-Trades.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Link_Account (Original)/Trade-Import-Success.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Link_Account (Original)/Brokerage.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Add_Account.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Purchase_Coins_Transaction.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Add_Withdraw_Fetch.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Deposit_Funds.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Coin_Swap/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Coin_Swap.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/MyMI_Wallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Generate_Wallet/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Purchase_Manager.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Withdraw_Funds/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Link_Account_Success.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/debt_summary.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/investment_wallets/Wallet_Listing.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/investment_wallets/Purchase_Wallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/investment_wallets/MyMIWallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/credit_wallets/Wallet_Listing.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/credit_wallets/Purchase_Wallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/credit_wallets/MyMIWallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/debt_summary/active_table.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/crypto_wallets/Wallet_Listing.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/crypto_wallets/MyMIGold.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/crypto_wallets/Purchase_Wallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/investment_wallets.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/financial_wallets/Wallet_Listing.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/financial_wallets/Purchase_Wallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/financial_wallets/MyMIWallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/Purchase_Wallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/crypto_wallets.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/debt_wallets.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/credit_wallets.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/plaid/crypto_wallets/Purchase_Wallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/plaid/crypto_wallets.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/plaid/fiat_wallets/Purchase_Wallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/plaid/financial_wallets.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/plaid/fiat_wallets.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/debt_wallets/Wallet_Listing.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/debt_wallets/Purchase_Wallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/debt_wallets/MyMIWallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/fiat_wallets/Wallet_Listing.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/fiat_wallets/Purchase_Wallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/fiat_wallets/MyMIWallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/fiat_wallets/Wallet_Listing-02242024.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/financial_wallets.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/index/fiat_wallets.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Create_Bank_Account/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Link_Account/Import_Trades/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Link_Account/TD-Ameritrade.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Link_Account/TD-Ameritrade-07202022.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Link_Account/Confirm.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Link_Account/Account-Information.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Link_Account/TD-Ameritrade-B.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Link_Account/Import-Trades.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Link_Account/Upload-Trades.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Link_Account/Trade-Import-Success.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Link_Account/Brokerage.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Edit_Account/investment_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Edit_Account/debt_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Edit_Account/banking_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Edit_Account/credit_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Edit_Account/transaction_history.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Edit_Account/accounting_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Edit_Account/ecommerce_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Details/bank_accounts.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Details/wallets.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Details/investment_accounts.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Details/debt_accounts.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Details/credit_accounts.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Details/Balance.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Details/Title.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Add/wallet-transaction-modal.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Add/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Add/form.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Link_Account.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Wallet_Manager.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Edit_Bank_Account/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Complete_Purchase/Desktop.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Complete_Purchase/Mobile.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Complete_Purchase/paypal_checkout.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Purchase_Complete/Desktop.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Purchase_Complete/Mobile.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Wallet_Generator.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/MyMI_Gold/description.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/MyMI_Gold/order_form.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Add_Account/investment_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Add_Account/debt_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Add_Account/banking_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Add_Account/default_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Add_Account/crypto_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Add_Account/credit_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Add_Account/accounting_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Add_Account/ecommerce_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Create_Bank_Account_Modal.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Feature_Manager.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Create_Bank_Account.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Purchase/paypal_subscription.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Purchase/Memberships/Starter.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Purchase/Memberships/Pro.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Purchase/Memberships/Advertisements/CustomizeYourMembership.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Purchase/Memberships/Promotions.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Purchase/Memberships/Premium.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Purchase/Memberships/Basic.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Purchase/Memberships/Customize.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Purchase/Memberships/Features.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Purchase/paypal_checkout.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Purchase/Memberships.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Purchase/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Purchase/paypal_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Add_Deposit_Fetch.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Edit/wallet-transaction-modal.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Edit/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Add_Fiat_Wallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Withdraw_Funds.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Add_Deposit/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Deposit_Funds/paypal_checkout.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Deposit_Funds/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Edit_Account.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Purchase_Gold.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Delete/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/types/wallets_block.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/types/investment_wallets.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/types/crypto_wallets.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/types/debt_wallets.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/types/credit_wallets.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/types/financial_wallets.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Generate_Wallet.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Wallets/Purchase_Gold/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Institutes/index/control_center.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Referral_Program/Application_Manager.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Referral_Program/My_Referrals/referral_overview.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Referral_Program/My_Referrals/management_buttons.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Referral_Program/My_Referrals/Referrals.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Referral_Program/My_Referrals/total_active_referrals.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Referral_Program/My_Referrals/control_center.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Referral_Program/New_Affiliate_Information/Setup_Procedure.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Referral_Program/New_Affiliate_Information/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Referral_Program/Apply/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Referral_Program/Apply/Referral_Policy.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Referral_Program/Apply/Referral_Policy_Additional.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Referral_Program/includes/Regulatory_Requirements.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Referral_Program/User/Tools.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Referral_Program/Emails/New_Affiliate_Application.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Referral_Program/Emails/Affiliate_Approved.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/this_month.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/index.06012024.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Account_Manager.working10072022.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Copy.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/index/browser_table.11152024.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/index/overview_chart.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/index/mobile_table.11152024.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/index/Account_Manager-new.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/index/browser_table.09122024.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/index/historical_table.11152024.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/index/browser_table.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/index/control_center.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/index/active_table-09212025.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/index/active_table.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/index/mobile_table.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/index/historical_table.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Recurring_Account/Schedule-12282024.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Assessment/assessment_center.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Assessment/assessment_content.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Assessment/personal_information.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Assessment/kyc_verification.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Recurring_Account_Schedule.working102322.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Details/accounts.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Details/bank_accounts.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Details/Balance.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Details/Title.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Add/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Recurring_Account_Schedule-12232023.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Financial_Forecast.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Recurring_Account_Schedule.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Recurring_Account_Schedule.working.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Forecast.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/index.09122025.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Add-New.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Copy-12242023.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Edit/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Edit/related_records.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Account_Manager-12232023.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Account_Overview/source_breakdown.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Account_Overview/expense_breakdown.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Account_Overview/history_overview.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Account_Overview/active_table.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Account_Overview/action_center.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Account_Overview/income_breakdown.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Budget/Account_Manager-12152023.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/holdings/list_investments.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/holdings/list_distributions.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/holdings/list_commitments.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/holdings/analytics_chart.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/management/project_analytics.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/management/project_control.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/management/project_overview.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/index/modals.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/index/investment_commitment.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/index/project_list.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/index/user_dashboard.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/index/project_chart.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/index/project_chart-working.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/index/commitment_overview.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/index/most_recent_content.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/index/revenue_distribution.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/index/exchange_action_center.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/index/project_dashboard.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/index/action_center_new.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/index/top_projects.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/index/project_details.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/index/action_center.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/index/project_overview.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/index/project_creation.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/index/analytics_kpis.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/reportRevenue.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/Add/user_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/Add/user_fields_test.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/forms/project_invest.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/forms/fields/sell_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/forms/fields/discuss_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/forms/fields/commit_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/forms/fields/invest_fields.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/forms/project_sell.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/forms/project_discuss.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/forms/project_commit.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/holdings.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/_email/Project_Denied.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/_email/Issues_Found.php"
+        },
+        {
+            "path": "app/Modules/User/Views/Projects/_email/Information_Required.php"
+        },
+        {
+            "path": "app/Modules/User/Tax/Views/partials/jurisdiction_tiles.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Sell/user_fields.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Buy.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Application_Manager.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Order_Sell_Manager.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Coin_Listing_Request.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Order_Event_Manager.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Coin_Listing_Asset_Information/list_fields.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Coin_Listing_Asset_Information/new_fields.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Coin_Listing_Asset_Information/create_fields.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Coin_Listing_Asset_Information.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Coin_Listing_Request/contact_fields.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Account_Information.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/includes/Recent_Orders.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/includes/Order_Book.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/includes/Stock_Chart.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/includes/application-modal.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Solana/trade.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Solana/index/Top-Performing-Tokens.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Solana/executeSwap.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Solana/swap-working.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Solana/verifyWalletOwnership.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Solana/connectWallet.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Solana/coinSwap.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Solana/importWallet.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Solana/createWallet.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Solana/token.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Solana/Disconnect/wallet.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Solana/orders.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Coin_Listing_Asset_Information_Modal.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Buy/user_fields.php"
+        },
+        {
+            "path": "app/Modules/Exchange/Views/Coin_Listing_Request_Complete.php"
+        },
+        {
+            "path": "app/Modules/Management/TaxAdmin/Views/templates/partials/line_row.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Partners/Active_Partners.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Partners/Active_Assets.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Partners/Listing-Table.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/PublicPages/draft_editor.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Support/Template.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Support/Requests/Listing.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Support/Requests/Listing-Table.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Support/Logs.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Support/Requests.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Support/Reporting.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Pages.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Template.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Upgrade_Overview.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Test_Page/data-distribution.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Test_Page/trade_tracker.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Test_Page_Email.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Edit_Dashboard.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Charts.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Tables.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Debt_Amortization_Schedule.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Codat/GuzzleHttp.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Codat/Integrations.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Codat/Get_Companies.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Codat/Create_Company.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Forecasting_Data_Setup.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron_Setup.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron_Widget.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Plaid/Link_Web.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Plaid/Integration.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Template_Reporting.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Components/Pass_Data_To_Modal.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Components/Bar_Charts.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Components/ChartJS_Bar_Chart.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron_API_Setup.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/AlphaVantage/Function_Template.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Budgeting/Paid_Status_Update.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Budgeting/All_Arrays.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron/Sophtron_Setup.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron/Sophtron_Widget.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron/Sophtron_API_Setup.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron/Sophtron_PHP.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/FLinks/Flinks_API.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/FLinks/Flinks.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Management/Update_Users.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Management/Wallets/Generate_Wallet.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Management/Users/Update_Users.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron_Integration.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator/Codat.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Creator.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Test_Page_ToDoList.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Examples.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Content_Template_Backup.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Webbanners/Company_Logo.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Page_SEO_Overview.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Test_Page.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Test_Page_CB.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Curl_Generator.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/UI_Elements.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Icons.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Front_Page_Template.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Referral_Program/Information_ToDoList.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/includes/Test_Content.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Infrastructure_Overview.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Forms/employee_userid_fields.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Forms/services_fields.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Forms/address_fields.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Forms/phone_fields.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Forms/technician_fields.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Forms/additional_material_fields.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Forms/detail_fields.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Forms/product_fields.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Forms/boolean_fields.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Forms/email_fields.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Forms/employee_fields.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Forms/quantity_fields.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Forms.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Alerting_System/Weekly_Watchlist.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Alerting_System/Targeting/Breakout_Stocks.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Alerting_System/Targeting/Weekly_Watchlist.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Alerting_System/Targeting/Instant_Buy_Alerts.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Alerting_System/Targeting/Weekly_Options.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Alerting_System/Targeting/Market_Movers.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Alerting_System/Instant_Buy_Alerts.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Alerting_System/Weekly_Options.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Alerting_System/Market_Movers.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Alerting_System/Breakout_Stock_Alerts.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Information_ToDoList.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Modals.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Navbar.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Web_Design/Sitemap_Generator.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Keywords/keyword_analytics_table.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Marketing_Manager_10162023.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/generatedPostsDashboard.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Templates/in_app_notifications.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Templates/email_notification.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Templates/social_media_notifications.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/index/modals.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/index/most_recent_content.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/index/exchange_action_center.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/index/target_users.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/index/control_center.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/index/action_center_new.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/index/action_center.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/index/generated_summaries.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/index/analytics_kpis.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Ideas/action_center.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Ideas/Listing-Table.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Blog/Subscribe/user_fields.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Blog/Subscribe.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Blog/Listing-Table.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Promote/Templates/Promotions.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Promote/Templates/Updates.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Promote/Templates/Announcements.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Promote/Social_Media/Generate_Content.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Promote/Generate_Content.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Promote/Default/Generate_Content.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Promote/Solana/Dashboard.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Promote/Solana/Generate_Content.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Promote/Solana/subViews/Communities.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Promote/Solana/action_center.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Promote/Solana/content.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Edit_Blog.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Add/campaign_fields.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Add/blog_fields.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Add/idea_fields.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Add/user_fields.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/resources/ctaRecommenderModule.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/resources/analyticsSummaryBlock.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/resources/standaloneCalendar.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/resources/standaloneAddSubscriberForm.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/resources/standaloneAnalytics.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/resources/generatedSummariesBlock.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/resources/dripCampaignBlock.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/resources/standaloneEmailQueue.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/resources/platform-library.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/resources/standaloneScraperForm.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/resources/standaloneCreateEmailForm.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/resources/controlPanelBlock.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/resources/standaloneDailyLogForm.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/resources/standaloneEmailScheduleForm.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/resources/QueueBufferPosts.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Blogger/_calendar.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Blogger/_content_model.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Blogger/_preview_model.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Blogger/_campaign_form.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Blogger/_partials/_content_card.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/View_Blog.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Tasks/action_center.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Tasks/Listing-Table.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Exchanges/Top_Communities.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Exchanges/includes/all-tokens.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Exchanges/includes/social_channels.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Exchanges/includes/action_center.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Tools/General.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Tools/Exchange/Solana.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Tasks.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Notification.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/index_orig/modals.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/index_orig/operational_tasks.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/index_orig/action_center.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/News/Listing-Table.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Post.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Forms/send_notifications.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/modals/generatePostMedia.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/modals/videoPreview.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/modals/viewGeneratedPost.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/modals/previewBufferItem.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/User/MyMIGold-Tasks.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Drip/modals/generateCampaignContent.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Drip/modals/generateCampaignStepContent.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Drip/modals/deleteCampaignStep.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Drip/modals/editCampaignStep.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Drip/modals/viewCampaign.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Drip/modals/viewCampaignStep.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Drip/modals/deleteCampaign.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Campaigns/Priority-Listing-Table.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Campaigns/Drip-Campaigns-Steps-Table.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Campaigns/action_center.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Campaigns/Drip-Campaigns-Table.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Campaigns/Listing-Table.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Email_Templates/dailyLogSummary.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/SEO/Listing-Table.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Marketing/Marketing_Manager.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Reporting/Management.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Alerts/add.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Alerts/add/user_fields.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Alerts/tradeAnalysis.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Alerts/form_fields/trade_alert_fields.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Alerts/Trades.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Alerts/resources/rh-keygen.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Alerts/resources/management-controls.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Alerts/resources/market-data.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Alerts/resources/advisorMedia.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Alerts/resources/sendDiscordAlert.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Alerts/resources/management-tools.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Alerts/resources/statistical-overview.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Alerts/resources/action-center.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Alerts/resources/overview-chart.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Alerts/modals/addTrade.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Services/index/active_subscriptions.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Services/index/operational_tasks.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Services/index/action_center.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/resources/SubSystemHealth.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/resources/ChatBotBudget.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Email/campaign_dashboard.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Email/resources/controlPanelBlock.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Email/modals/scheduleCampaign.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Email/modals/cloneCampaign.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Email/modals/createDraftCampaign.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Email/modals/sendCampaign.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Email/modals/addMember.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Email/modals/createQuickList.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Email/modals/viewCampaignStats.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Wallets/Reconcile_Report.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Wallets/Reconcile.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Wallets/Generate_Wallets.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Wallets/Listing-Table.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Charts/tradingViewChart.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/HowTos/Employees/setupAccount.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/HowTos/Employees/action_center.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Security/index/active_subscriptions.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Security/index/operational_tasks.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Security/index/action_center.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/_quick_intake_page.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/management/project_analytics.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/management/project_control.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/management/project_overview.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/index/modals.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/index/investment_commitment.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/index/project_list.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/index/user_dashboard.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/index/commitment_overview.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/index/pending_projects.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/index/most_recent_content.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/index/revenue_distribution.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/index/exchange_action_center.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/index/action_center_new.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/index/top_projects.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/index/project_details.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/index/action_center.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/index/project_creation.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/index/analytics_kpis.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/Add/user_fields.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/Add/user_fields_test.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/_quick_intake.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/_email/Project_Denied.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/_email/Issues_Found.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Projects/_email/Information_Required.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Exchange/index/Large_Transactions.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/index.blank.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Assets/Applications.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Assets/Applications/Approval.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Assets/Applications/Details/Contact_Information.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Assets/Applications/Details/User_Profile.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Assets/Applications/Details/Investor_Information.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Assets/Applications/Details/Approval_Tasks.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Assets/Applications/Details/Asset_Information.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Assets/Applications/Details/Referral_Information.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Assets/Applications/Listing-Table.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Assets/Applications/Approval/Market_Conversion.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Assets/Distribute.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Assets/Listing-Table.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Assets/Distribute/By_User.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Reporting.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Users/Active_Table.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Users/MyMIGold-Tasks.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Users/Inactive_Table.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/Users/Listing-Table.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/API/Sophtron_Widget.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/API/BitcoinJS.php"
+        },
+        {
+            "path": "app/Modules/Management/Views/API/Sophtron.php"
+        },
+        {
+            "path": "app/Modules/Template/Views/Dashboard_Template.php"
+        },
+        {
+            "path": "app/Modules/APIs/Views/Search/results.php"
+        }
+    ]
+}
