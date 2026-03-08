@@ -22,4 +22,11 @@ class ForecastAccuracyEvaluator extends \App\Services\Forecasting\ForecastAccura
             $config ?? config('MyMIForecasting')
         );
     }
+
+    public function getAccuracyDashboardData(int $days = 7): array
+    {
+        $days = max(1, $days);
+
+        return $this->buildAccuracySummary($days . 'd');
+    }
 }

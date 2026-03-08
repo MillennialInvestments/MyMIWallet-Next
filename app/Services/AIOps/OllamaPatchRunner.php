@@ -46,6 +46,14 @@ class OllamaPatchRunner
         $attemptOne = $this->callOllama($prompt, $audit);
         $diff = $attemptOne['response'];
 
+        if (trim((string) $diff) === '') {
+            log_message('warning', 'Patch generation returned empty diff');
+            return $this->persist(new PatchResult('failed_invalid_model_output', $job->jobId, null, false, [
+                'job_file' => $job->jobFile,
+                'reason' => 'empty_diff',
+            ]));
+        }
+
         if (! $this->validateGeneratedPatch($diff)) {
             log_message('warning', 'OllamaPatchRunner:L49 - Original Diff: ' . print_r($diff, true)); 
             $this->writeInvalidModelOutput($job->jobId, $attemptOne, 'attempt_1');

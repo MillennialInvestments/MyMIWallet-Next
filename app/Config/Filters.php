@@ -74,6 +74,7 @@ class Filters extends BaseConfig
         // Safe no-op filter to satisfy routes that reference "except"
         'except'        => \App\Filters\ExceptFilter::class,
         'requestLifecycle' => \App\Filters\RequestLifecycleLogger::class,
+        'botBlocker'    => \App\Filters\BotBlocker::class,
     ];
 
     /**
@@ -97,6 +98,7 @@ class Filters extends BaseConfig
                 ],
             ],
             // PATCH: request observability
+            'botBlocker',
             'requestLifecycle',
             'observability',
             'ratelimit',

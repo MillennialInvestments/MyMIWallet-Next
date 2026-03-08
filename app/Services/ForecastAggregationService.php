@@ -18,6 +18,7 @@ class ForecastAggregationService
 
     public function __construct()
     {
+        helper('cache');
         $this->db    = Database::connect();
         $this->cache = Services::cache();
     }
@@ -34,7 +35,7 @@ class ForecastAggregationService
         bool $useCache = true
     ): array {
 
-        $cacheKey = "forecast_heatmap_{$timeframe}_{$windowMinutes}";
+        $cacheKey = sanitize_cache_key("forecast_heatmap_{$timeframe}_{$windowMinutes}");
 
         if ($useCache && $cached = $this->cache->get($cacheKey)) {
             return $cached;
@@ -82,7 +83,7 @@ class ForecastAggregationService
      */
     public function getForecastHighlights(int $limit = 10): array
     {
-        $cacheKey = "forecast_highlights_{$limit}";
+        $cacheKey = sanitize_cache_key("forecast_highlights_{$limit}");
 
         if ($cached = $this->cache->get($cacheKey)) {
             return $cached;
@@ -141,7 +142,7 @@ class ForecastAggregationService
      */
     public function getConfidenceDistribution(): array
     {
-        $cacheKey = "forecast_confidence_distribution";
+        $cacheKey = sanitize_cache_key("forecast_confidence_distribution");
 
         if ($cached = $this->cache->get($cacheKey)) {
             return $cached;
@@ -186,7 +187,7 @@ class ForecastAggregationService
      */
     public function getForecastAccuracySummary(int $days = 7): array
     {
-        $cacheKey = "forecast_accuracy_summary_{$days}";
+        $cacheKey = sanitize_cache_key("forecast_accuracy_summary_{$days}");
 
         if ($cached = $this->cache->get($cacheKey)) {
             return $cached;
