@@ -128,6 +128,16 @@ class HowItWorksController extends UserController
         $baseData = $this->commonData();
         $merged = array_merge($baseData, $data);
 
+        $slug = isset($merged['slug']) ? $this->normalizeSlug((string) $merged['slug']) : null;
+        if ($slug && $this->pageSEOModel) {
+            $pageSEO = $this->pageSEOModel->where('slug', $slug)->first();
+            if (is_array($pageSEO)) {
+                $merged['seoTitle'] = $pageSEO['title'] ?? ($pageSEO['seoTitle'] ?? ($merged['seoTitle'] ?? null));
+                $merged['seoDescription'] = $pageSEO['description'] ?? ($pageSEO['seoDescription'] ?? ($merged['seoDescription'] ?? null));
+                $merged['seoKeywords'] = $pageSEO['keywords'] ?? ($pageSEO['seoKeywords'] ?? ($merged['seoKeywords'] ?? null));
+            }
+        }
+
         $content = view($view, $merged);
 
         $html = view('themes/public/layouts/index', array_merge($merged, [
@@ -152,10 +162,11 @@ class HowItWorksController extends UserController
      */
     public function show(string $slug = 'overview'): ResponseInterface
     {
-        $slug = $this->normalizeSlug($slug);
+        $normalizedSlug = $this->normalizeSlug($slug);
 
         $viewMap = [
             'registering-an-account'          => 'App\Modules\Blog\Views\HowItWorks\Registering_An_Account',
+            'account-security'                => 'App\Modules\Blog\Views\HowItWorks\Registering_An_Account',
             'personal-budgeting'              => 'App\Modules\Blog\Views\HowItWorks\Personal_Budgeting',
             'investment-dashboard'            => 'App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management',
             'investment-portfolio-management' => 'App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management',
@@ -164,15 +175,24 @@ class HowItWorksController extends UserController
             'mymi-gold'                       => 'App\Modules\Blog\Views\HowItWorks\MyMI_Gold',
             'mymi-exchange'                   => 'App\Modules\Blog\Views\HowItWorks\Manage_Finances',
             'features-and-plans'              => 'App\Modules\Blog\Views\HowItWorks\Features_And_Plans',
+            'pricing'                         => 'App\Modules\Blog\Views\HowItWorks\Features_And_Plans',
             'manage-finances'                 => 'App\Modules\Blog\Views\HowItWorks\Manage_Finances',
+            'managing-mymi-wallets'           => 'App\Modules\Blog\Views\HowItWorks\Manage_Finances',
             'daily-financial-news'            => 'App\Modules\Blog\Views\HowItWorks\Daily_Financial_News',
+            'trade-alerts'                    => 'App\Modules\Blog\Views\HowItWorks\Daily_Financial_News',
             'discord'                         => 'App\Modules\Blog\Views\HowItWorks\Discord',
+            'discord-community'               => 'App\Modules\Blog\Views\HowItWorks\Discord',
             'streaming'                       => 'App\Modules\Blog\Views\HowItWorks\Streaming',
             'purchase-mymi-gold'              => 'App\Modules\Blog\Views\HowItWorks\Purchase_MyMI_Gold',
         ];
 
         if (isset($viewMap[$normalizedSlug])) {
-            return $this->respondWithRendered($viewMap[$normalizedSlug], $this->commonData());
+            return $this->renderPublic($viewMap[$normalizedSlug], [
+                'slug' => $normalizedSlug,
+                'title' => $this->getGuideTitle($normalizedSlug),
+                'navItems' => $this->getNavItems(),
+                'contentHtml' => '',
+            ]);
         }
 
         // 3) Dynamic docs/how-it-works/*.md fallback
@@ -187,7 +207,7 @@ class HowItWorksController extends UserController
                     'navItems'    => $this->getNavItems(),
                 ];
 
-                return $this->respondWithRendered('App\Modules\Blog\Views\HowItWorks\index', $data);
+                return $this->renderPublic('App\Modules\Blog\Views\HowItWorks\index', $data);
             }
         }
 
@@ -255,25 +275,41 @@ class HowItWorksController extends UserController
             }
         }
 
-        return $this->respondWithRendered('App\Modules\Blog\Views\HowItWorks\MyMI_Gold', $this->data);
+        return $this->renderPublic('App\Modules\Blog\Views\HowItWorks\MyMI_Gold', array_merge($data, [
+            'slug' => 'mymi-gold',
+            'title' => $this->getGuideTitle('mymi-gold'),
+            'navItems' => $this->getNavItems(),
+        ]));
     }
 
-    public function PurchaseMyMIGold(): ResponseInterface {
-        $getCoinValue = $this->MyMIGoldModel->getCoinValue();
-        $getInitialCoinValue = $this->MyMIGoldModel->getInitialCoinValue();
-        
-        $uri = $this->uri;
-    
-        $viewFileData = [
+    public function PurchaseMyMIGold(): ResponseInterface
+    {
+        $getCoinValue = null;
+        $getInitialCoinValue = null;
+
+        if ($this->MyMIGoldModel && method_exists($this->MyMIGoldModel, 'getCoinValue')) {
+            try {
+                $getCoinValue = $this->MyMIGoldModel->getCoinValue();
+            } catch (\Throwable $e) {
+                log_message('error', 'MyMIGold purchase coin value fetch failed: {msg}', ['msg' => $e->getMessage()]);
+            }
+        }
+
+        if ($this->MyMIGoldModel && method_exists($this->MyMIGoldModel, 'getInitialCoinValue')) {
+            try {
+                $getInitialCoinValue = $this->MyMIGoldModel->getInitialCoinValue();
+            } catch (\Throwable $e) {
+                log_message('error', 'MyMIGold initial coin value fetch failed: {msg}', ['msg' => $e->getMessage()]);
+            }
+        }
+
+        return $this->renderPublic('App\Modules\Blog\Views\HowItWorks\Purchase_MyMI_Gold', [
+            'slug' => 'purchase-mymi-gold',
+            'title' => $this->getGuideTitle('purchase-mymi-gold'),
+            'navItems' => $this->getNavItems(),
             'getCoinValue' => $getCoinValue,
-            'getInitialCoinValue' => $getInitialCoinValue
-        ];
-        // Merge site settings with other data
-        $data = array_merge($this->getViewFileData($uri), $viewFileData);
-    
-        // Pass the structured data array to the view
-        $content = view('Modules\Blog\Views\HowItWorks\Purchase_MyMI_Gold', $data);
-        return $this->response->setStatusCode(200)->setBody($this->renderPage('Home', 'Automated', $content));
+            'getInitialCoinValue' => $getInitialCoinValue,
+        ]);
     }
 
     protected function parseMarkdownToHtml(string $markdown): string
@@ -289,27 +325,45 @@ class HowItWorksController extends UserController
 
     protected function getGuideTitle(string $slug): string
     {
-        $titles = [
-            'overview'         => 'How MyMI Wallet Works',
-            'alerts'           => 'Trade Alerts Dashboard Guide',
-            'marketing'        => 'Marketing Dashboard Guide',
-            'earnings'         => 'Earnings Calendar Guide',
-            'investments'      => 'Investments & Portfolio Guide',
-            'account-settings' => 'Account Settings & Social Media Linking',
-        ];
+        $titles = [];
+        foreach ($this->getNavItems() as $item) {
+            $titles[$item['slug']] = $item['label'];
+        }
 
-        return $titles[$slug] ?? 'How It Works';
+        return $titles[$slug] ?? ucwords(str_replace('-', ' ', $slug));
     }
 
     protected function getNavItems(): array
     {
         $items = [
             ['slug' => 'overview', 'label' => 'Overview'],
-            ['slug' => 'alerts', 'label' => 'Alerts Dashboard'],
-            ['slug' => 'marketing', 'label' => 'Marketing Dashboard'],
-            ['slug' => 'earnings', 'label' => 'Earnings Calendar'],
-            ['slug' => 'investments', 'label' => 'Investments & Portfolio'],
-            ['slug' => 'account-settings', 'label' => 'Account Settings & Social Linking'],
+            ['slug' => 'registering-an-account', 'label' => 'Registering an Account'],
+            ['slug' => 'account-security', 'label' => 'Account Security'],
+            ['slug' => 'personal-budgeting', 'label' => 'Personal Budgeting'],
+            ['slug' => 'setting-financial-goals', 'label' => 'Setting Financial Goals'],
+            ['slug' => 'financial-forecasting', 'label' => 'Financial Forecasting'],
+            ['slug' => 'managing-mymi-wallets', 'label' => 'Managing MyMI Wallets'],
+            ['slug' => 'investment-dashboard', 'label' => 'Investment Dashboard'],
+            ['slug' => 'investment-portfolio-management', 'label' => 'Investment Portfolio Management'],
+            ['slug' => 'trade-alerts', 'label' => 'Trade Alerts'],
+            ['slug' => 'investment-research', 'label' => 'Investment Research'],
+            ['slug' => 'crypto-assets', 'label' => 'Crypto Assets'],
+            ['slug' => 'crypto-marketplace', 'label' => 'Crypto Marketplace'],
+            ['slug' => 'mymi-gold', 'label' => 'MyMI Gold'],
+            ['slug' => 'purchase-mymi-gold', 'label' => 'Purchase MyMI Gold'],
+            ['slug' => 'tokenized-assets', 'label' => 'Tokenized Assets'],
+            ['slug' => 'projects', 'label' => 'Projects'],
+            ['slug' => 'raising-capital-with-projects', 'label' => 'Raising Capital With Projects'],
+            ['slug' => 'marketing-automation', 'label' => 'Marketing Automation'],
+            ['slug' => 'content-generation', 'label' => 'Content Generation'],
+            ['slug' => 'discord-community', 'label' => 'Discord Community'],
+            ['slug' => 'streaming', 'label' => 'Streaming'],
+            ['slug' => 'daily-financial-news', 'label' => 'Daily Financial News'],
+            ['slug' => 'api-integrations', 'label' => 'API Integrations'],
+            ['slug' => 'data-sources', 'label' => 'Data Sources'],
+            ['slug' => 'security', 'label' => 'Security'],
+            ['slug' => 'compliance', 'label' => 'Compliance'],
+            ['slug' => 'pricing', 'label' => 'Pricing'],
         ];
 
         if ($this->docsRenderer instanceof DocsRendererService) {
@@ -329,19 +383,23 @@ class HowItWorksController extends UserController
         return array_values($unique);
     }
 
-    public function PersonalBudgeting()
+    public function PersonalBudgeting(): ResponseInterface
     {
-        $this->data['pageTitle']                    = 'Personal Budgeting | How It Works | MyMI Wallet';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $this->renderTheme('App\Modules\Blog\Views\HowItWorks\Personal_Budgeting', $this->data);
+        return $this->renderPublic('App\Modules\Blog\Views\HowItWorks\Personal_Budgeting', [
+            'slug' => 'personal-budgeting',
+            'title' => $this->getGuideTitle('personal-budgeting'),
+            'navItems' => $this->getNavItems(),
+        ]);
     }
 
-    public function InvestmentPortfolioManagement()
+    public function InvestmentPortfolioManagement(): ResponseInterface
     {
-        $this->data['pageTitle'] = 'Investment Portfolio Management | How It Works | MyMI Wallet';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $this->renderTheme('App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management', $this->data);
-    }  
+        return $this->renderPublic('App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management', [
+            'slug' => 'investment-portfolio-management',
+            'title' => $this->getGuideTitle('investment-portfolio-management'),
+            'navItems' => $this->getNavItems(),
+        ]);
+    }
 
     public function DailyFinancialNews()
     {
@@ -359,7 +417,10 @@ class HowItWorksController extends UserController
         }
 
         $data = [
+            'slug' => 'daily-financial-news',
+            'title' => $this->getGuideTitle('daily-financial-news'),
             'pageTitle' => 'Daily Financial News | MyMI Wallet',
+            'navItems' => $this->getNavItems(),
             'news' => $rows,
             'page' => $page,
             'perPage' => $perPage,
