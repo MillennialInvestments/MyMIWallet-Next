@@ -288,6 +288,13 @@ class Console extends BaseConfig
 
         /*
         |----------------------------------------------------------------------
+        | .env
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\ENV\EnvDoctor::class,
+
+        /*
+        |----------------------------------------------------------------------
         | Errors / Incidents
         |----------------------------------------------------------------------
         */
@@ -368,6 +375,7 @@ class Console extends BaseConfig
         */
         \App\Commands\Ops\AnalyzeCommands::class,
         \App\Commands\Ops\AppUpdate::class,
+        \App\Commands\Ops\BaseOpsCommand::class,
         \App\Commands\Ops\BuildConsoleRegistry::class,
         \App\Commands\Ops\CiPrepare::class,
         \App\Commands\Ops\ConfigLint::class,
@@ -388,15 +396,19 @@ class Console extends BaseConfig
         \App\Commands\Ops\NextStepsSyncManual::class,
         \App\Commands\Ops\PHPExtensionsAudit::class,
         \App\Commands\Ops\ProposePr::class,
+        \App\Commands\Ops\Report::class,
+        \App\Commands\Ops\SelfHeal::class,
         \App\Commands\Ops\Sync::class,
         \App\Commands\Ops\VPSSnapshot::class,
         \App\Commands\Ops\WalletIntegrity::class,
         \App\Commands\Ops\Work::class,
         \App\Commands\Ops\Commands\Audit::class,
         \App\Commands\Ops\Commands\Autofix::class,
+        \App\Commands\Ops\Commands\ConstructorScanner::class,
         \App\Commands\Ops\Commands\Inventory::class,
         \App\Commands\Ops\Commands\Lint::class,
         \App\Commands\Ops\Commands\MissingFromConsole::class,
+        \App\Commands\Ops\Daignostics\FilesystemScan::class,
         \App\Commands\Ops\Subs\Audit::class,
         \App\Commands\Ops\Subs\Doctor::class,
         \App\Commands\Ops\Subs\Repair::class,

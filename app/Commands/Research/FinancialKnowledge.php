@@ -6,7 +6,7 @@ use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Database;
 
-class FinancialKnowledgeGraph extends SafeBaseCommand
+class FinancialKnowledge extends SafeBaseCommand
 {
     protected $group = 'research';
     protected $name = 'research:knowledge:build';

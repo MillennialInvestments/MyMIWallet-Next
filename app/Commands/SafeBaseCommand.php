@@ -173,6 +173,28 @@ abstract class SafeBaseCommand extends BaseCommand implements
         return (bool) $this->aiOpsRunnable;
     }
 
+    protected function isCiRuntime(): bool
+    {
+        if (defined('CI_ENVIRONMENT') && CI_ENVIRONMENT === 'testing') {
+            return true;
+        }
+
+        if (getenv('CI') !== false) {
+            return true;
+        }
+
+        if (getenv('GITHUB_ACTIONS') !== false) {
+            return true;
+        }
+
+        if (getenv('CI_PIPELINE') !== false) {
+            return true;
+        }
+
+        return false;
+    }
+    
+
     /**
      * Guard destructive commands unless --approve is provided.
      */

@@ -5,7 +5,7 @@ namespace App\Commands\Docs\Scan;
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class ServicesList extends SafeBaseCommand
+class ServiceList extends SafeBaseCommand
 {
     protected $group = 'Docs Scan';
     protected $name = 'docs:services:list';

@@ -17,8 +17,8 @@ class WalletIntegrity extends SafeBaseCommand
 
     public function run(array $params)
     {
-        $limit = (int) ($this->getOption('limit') ?? 0);
-        $userId = (int) ($this->getOption('user_id') ?? 0);
+        $limit = (int) ($this->option('limit') ?? 0);
+        $userId = (int) ($this->option('user_id') ?? 0);
 
         try {
             $db = db_connect();

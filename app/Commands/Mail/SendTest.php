@@ -8,7 +8,7 @@ use App\Libraries\MailService;
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class MailSendTest extends SafeBaseCommand
+class SendTest extends SafeBaseCommand
 {
     protected $group       = 'maintenance';
     protected $name        = 'mail:send-test';

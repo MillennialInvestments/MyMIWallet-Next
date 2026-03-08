@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Commands\Ops\Spark;
+namespace App\Commands\Spark;
 
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;

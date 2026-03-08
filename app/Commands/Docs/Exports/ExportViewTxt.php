@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Commands\Docs\Export;
+namespace App\Commands\Docs\Exports;
 
 use App\Commands\SafeBaseCommand;
 
-class ExportViewsTxt extends SafeBaseCommand
+class ExportViewTxt extends SafeBaseCommand
 {
     protected $group = 'Docs Export';
     protected $name = 'docs:views:export';
