@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-03-08T17:00:02Z
+> Run: 2026-03-08T19:00:01Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -166,6 +166,8 @@
 - app/Modules/Blog/Views/HowItWorks/index.orig.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Blog/Views/HowItWorks/partials/ad_slot.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/Blog/Views/HowItWorks/partials/navigation.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Blog/Views/IRS/IRS_Expanded_Home_Energy_Tax_Credits.php
   - ⚠️ No obvious doc match found (heuristic)
@@ -401,9 +403,7 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Views/Alerts/batchEmailAudit.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Views/Alerts/emails/layout.php
-  - ⚠️ No obvious doc match found (heuristic)
-- … and 960 more
+- … and 961 more
 
 ## Documented Items With No Obvious Code Match (best-effort)
 - docs/APIs/_inventory_controllers.md
@@ -806,4 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/discord/events_matrix.md
   - ❌ No obvious code match found (heuristic)
-- … and 879 more
+- … and 887 more

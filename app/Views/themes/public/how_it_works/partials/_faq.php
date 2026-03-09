@@ -19,7 +19,7 @@ $idPrefix = $idPrefix ?? 'faq';
                 <div class="card">
                     <div class="card-header" id="<?= esc($headingId, 'attr') ?>">
                         <h5 class="mb-0">
-                            <button class="btn btn-link <?= $isFirst ? '' : 'collapsed' ?>" type="button" data-toggle="collapse" data-target="#<?= esc($collapseId, 'attr') ?>" aria-expanded="<?= $isFirst ? 'true' : 'false' ?>" aria-controls="<?= esc($collapseId, 'attr') ?>">
+                            <button class="btn btn-link <?= $isFirst ? '' : 'collapsed' ?>" type="button" data-bs-toggle="collapse" data-bs-target="#<?= esc($collapseId, 'attr') ?>" aria-expanded="<?= $isFirst ? 'true' : 'false' ?>" aria-controls="<?= esc($collapseId, 'attr') ?>">
                                 <?= esc($faq['question'] ?? 'Question') ?>
                             </button>
                         </h5>

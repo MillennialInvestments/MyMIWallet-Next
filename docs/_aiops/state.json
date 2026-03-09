@@ -4797,8 +4797,8 @@
             "mtime": "2025-12-27"
         },
         "docs/ui/how_it_works_pages.md": {
-            "hash": "9a841754583937772e11e353213ebe5fba765f7172646efd090f1e3e1e573df0",
-            "mtime": "2025-12-27"
+            "hash": "538a9f78e6351b08a093ae42e759189f0b03175df4546ebed7fdca2f9b70b021",
+            "mtime": "2026-03-08"
         },
         "docs/ui/mobile-qa-checklist.md": {
             "hash": "0f4b4a3d1dcc55b63bfc80b0d80b0aaf238ac92c323506c23964855bc871e38f",
@@ -5139,7 +5139,39 @@
         "docs/frontend/view_js_enhancement_backlog.md": {
             "hash": "7facd99fd0195581fe2608e9868f12b373138d7724c7fd7a0cf37cdf44354bf2",
             "mtime": "2026-03-08"
+        },
+        "docs/how-it-works/financial-forecasting.md": {
+            "hash": "4569d641bb1b626b2ee64661f48ded003e6eaeeb3242da9cf7d000e3d45313e0",
+            "mtime": "2026-03-08"
+        },
+        "docs/how-it-works/financial-goals.md": {
+            "hash": "b4e87fba6ed0919fe3720eebdfeabb9174ed21f8a770cd20974f2c4d2bf639e5",
+            "mtime": "2026-03-08"
+        },
+        "docs/how-it-works/investment-portfolio-management.md": {
+            "hash": "e591c0be4161be377d9054e5020e8e18152acd342ab5b18659ad42c7998c25a4",
+            "mtime": "2026-03-08"
+        },
+        "docs/how-it-works/mymi-gold.md": {
+            "hash": "44333762b9419b00f1c531e35dd88d4730098b286d75e316eac0508174e5c32e",
+            "mtime": "2026-03-08"
+        },
+        "docs/how-it-works/options-trading.md": {
+            "hash": "01942706605c03eee7993ad18f9d0c458caafb8fea8dbe16c281c150e8f036c4",
+            "mtime": "2026-03-08"
+        },
+        "docs/how-it-works/personal-budgeting.md": {
+            "hash": "0e7c7e33da22070631d83abb21e5ff5566cef0e308149e9f1e0fc3fd9f2b364d",
+            "mtime": "2026-03-08"
+        },
+        "docs/how-it-works/portfolio-diversification.md": {
+            "hash": "f96bdbe2602b2595187dd507381ea4ab815e9ca7147f763e0c04041beacd5279",
+            "mtime": "2026-03-08"
+        },
+        "docs/ui/how_it_works_expansion_workflow.md": {
+            "hash": "21291101f963d748d882de77df3cadb3e3a7dd8dd2037cd70aac6cdd4acae332",
+            "mtime": "2026-03-08"
         }
     },
-    "last_run": "2026-03-08T17:00:02Z"
+    "last_run": "2026-03-08T19:00:01Z"
 }

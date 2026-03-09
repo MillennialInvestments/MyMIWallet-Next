@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-03-08T17:00:02Z
+> Run: 2026-03-08T19:00:01Z
 
 - docs/APIs/_inventory_controllers.md
   - Last updated: 2026-02-28
@@ -1225,16 +1225,16 @@
   - Change type: unchanged
 - docs/frontend/batches/batch-01-findings.md
   - Last updated: 2026-03-08
-  - Change type: new
+  - Change type: unchanged
 - docs/frontend/view_inventory_manifest.md
   - Last updated: 2026-03-08
-  - Change type: new
+  - Change type: unchanged
 - docs/frontend/view_js_audit_log.md
   - Last updated: 2026-03-08
-  - Change type: new
+  - Change type: unchanged
 - docs/frontend/view_js_enhancement_backlog.md
   - Last updated: 2026-03-08
-  - Change type: new
+  - Change type: unchanged
 - docs/functional_inventory/docs_to_code_map.md
   - Last updated: 2026-02-15
   - Change type: unchanged
@@ -1355,6 +1355,27 @@
 - docs/health/service_inventory.md
   - Last updated: 2026-01-21
   - Change type: unchanged
+- docs/how-it-works/financial-forecasting.md
+  - Last updated: 2026-03-08
+  - Change type: new
+- docs/how-it-works/financial-goals.md
+  - Last updated: 2026-03-08
+  - Change type: new
+- docs/how-it-works/investment-portfolio-management.md
+  - Last updated: 2026-03-08
+  - Change type: new
+- docs/how-it-works/mymi-gold.md
+  - Last updated: 2026-03-08
+  - Change type: new
+- docs/how-it-works/options-trading.md
+  - Last updated: 2026-03-08
+  - Change type: new
+- docs/how-it-works/personal-budgeting.md
+  - Last updated: 2026-03-08
+  - Change type: new
+- docs/how-it-works/portfolio-diversification.md
+  - Last updated: 2026-03-08
+  - Change type: new
 - docs/hygiene/weekly_repo_hygiene.md
   - Last updated: 2026-01-24
   - Change type: unchanged
@@ -3797,9 +3818,12 @@
 - docs/troubleshooting/templates/incident_template.md
   - Last updated: 2025-12-27
   - Change type: unchanged
+- docs/ui/how_it_works_expansion_workflow.md
+  - Last updated: 2026-03-08
+  - Change type: new
 - docs/ui/how_it_works_pages.md
-  - Last updated: 2025-12-27
-  - Change type: unchanged
+  - Last updated: 2026-03-08
+  - Change type: modified
 - docs/ui/mobile-qa-checklist.md
   - Last updated: 2026-01-18
   - Change type: unchanged

@@ -10128,3 +10128,5564 @@ in SYSTEMPATH/CodeIgniter.php on line 1001.
 CRITICAL - 2026-03-08 17:26:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
 WARNING - 2026-03-08 17:26:17 --> [404] URI=https://www.mymiwallet.com/index.php/
 WARNING - 2026-03-08 17:26:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 17:28:57 --> [REQ_ID=01ff1210c884] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 17:28:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:28:57 --> [REQ_ID=01ff1210c884] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 17:28:57 --> [REQ_ID=01ff1210c884] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 17:28:57 --> [REQ_ID=01ff1210c884] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 17:28:57 --> [CSRF] token name=csrf_test_name hash=a8cde9dc6c44b97c43f954b7c0e720cb
+DEBUG - 2026-03-08 17:28:57 --> [REQ_ID=037e537564aa] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 17:28:57 --> [REQ_ID=037e537564aa] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 17:28:57 --> [REQ_ID=037e537564aa] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 17:28:57 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 17:28:57 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 17:28:57 --> [REQ_ID=037e537564aa] [PERF] Execution time=0.129184
+DEBUG - 2026-03-08 17:29:03 --> [REQ_ID=f534270c4dc3] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 17:29:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:29:03 --> [REQ_ID=f534270c4dc3] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 17:29:03 --> [REQ_ID=f534270c4dc3] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 17:29:03 --> [REQ_ID=f534270c4dc3] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 17:29:03 --> [CSRF] token name=csrf_test_name hash=af5ecefbc2e648ba6b70dfe67740d864
+DEBUG - 2026-03-08 17:29:03 --> [REQ_ID=95dfb8c197c1] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 17:29:03 --> [REQ_ID=95dfb8c197c1] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 17:29:03 --> [REQ_ID=95dfb8c197c1] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 17:29:03 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 17:29:03 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 17:29:03 --> [REQ_ID=95dfb8c197c1] [PERF] Execution time=0.017629
+DEBUG - 2026-03-08 17:29:06 --> [REQ_ID=2206d1a63643] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 17:29:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:29:06 --> [REQ_ID=2206d1a63643] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 17:29:06 --> [REQ_ID=2206d1a63643] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 17:29:06 --> [REQ_ID=2206d1a63643] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 17:29:06 --> [CSRF] token name=csrf_test_name hash=b610508345b4caae05dd7fc24e71a594
+DEBUG - 2026-03-08 17:29:06 --> [REQ_ID=d9966f83e11a] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 17:29:06 --> [REQ_ID=d9966f83e11a] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 17:29:06 --> [REQ_ID=d9966f83e11a] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 17:29:06 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 17:29:06 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 17:29:06 --> [REQ_ID=d9966f83e11a] [PERF] Execution time=0.017096
+DEBUG - 2026-03-08 17:29:52 --> [REQ_ID=c7b52a1420fd] [REQUEST][START] GET /index.php?debugbar
+DEBUG - 2026-03-08 17:29:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:29:52 --> [REQ_ID=c7b52a1420fd] [FILTER_BEFORE] /index.php?debugbar
+DEBUG - 2026-03-08 17:29:52 --> [REQ_ID=c7b52a1420fd] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 17:29:52 --> [REQ_ID=c7b52a1420fd] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php?debugbar=
+DEBUG - 2026-03-08 17:29:52 --> [CSRF] token name=csrf_test_name hash=b65e6127e9938a13cab4d66d7ea24f1a
+DEBUG - 2026-03-08 17:29:52 --> [REQ_ID=51f3e3aa063d] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 17:29:52 --> [REQ_ID=51f3e3aa063d] [MEMORY][controller-start] 4194304
+INFO - 2026-03-08 17:29:52 --> [REQ_ID=51f3e3aa063d] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 17:29:52 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 17:29:53 --> [MetaService] slug= pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 17:29:53 --> [REQ_ID=51f3e3aa063d] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 17:29:53 --> [REQ_ID=51f3e3aa063d] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 17:29:53 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 17:29:53 --> [MetaService] slug= pageName=Home cacheHit= path=DB
+DEBUG - 2026-03-08 17:29:53 --> [REQ_ID=c7b52a1420fd] [FILTER_AFTER]
+DEBUG - 2026-03-08 17:29:53 --> [REQ_ID=c7b52a1420fd] [LIFECYCLE][END] status=200 duration_ms=727.43 memory_delta=4194304
+INFO - 2026-03-08 17:29:53 --> [REQ_ID=51f3e3aa063d] [PERF] Execution time=0.727592
+DEBUG - 2026-03-08 17:29:53 --> [REQ_ID=c7b52a1420fd] [REQUEST][END]
+INFO - 2026-03-08 17:29:53 --> [REQ_ID=c7b52a1420fd] [PERF] Execution time=0.744013
+DEBUG - 2026-03-08 17:29:54 --> [REQ_ID=6f1514beb05b] [REQUEST][START] GET /index.php?debugbar
+DEBUG - 2026-03-08 17:29:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:29:54 --> [REQ_ID=6f1514beb05b] [FILTER_BEFORE] /index.php?debugbar
+DEBUG - 2026-03-08 17:29:54 --> [REQ_ID=6f1514beb05b] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 17:29:54 --> [REQ_ID=6f1514beb05b] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php?debugbar=
+DEBUG - 2026-03-08 17:29:54 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 17:29:54 --> [REQ_ID=81a9eabc460b] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 17:29:54 --> [REQ_ID=81a9eabc460b] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 17:29:54 --> [REQ_ID=81a9eabc460b] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 17:29:54 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 17:29:54 --> [MetaService] slug= pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 17:29:54 --> [REQ_ID=81a9eabc460b] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 17:29:54 --> [REQ_ID=81a9eabc460b] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 17:29:54 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 17:29:54 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 17:29:54 --> [REQ_ID=6f1514beb05b] [FILTER_AFTER]
+DEBUG - 2026-03-08 17:29:54 --> [REQ_ID=6f1514beb05b] [LIFECYCLE][END] status=200 duration_ms=625.13 memory_delta=2097152
+INFO - 2026-03-08 17:29:54 --> [REQ_ID=81a9eabc460b] [PERF] Execution time=0.625024
+DEBUG - 2026-03-08 17:29:54 --> [REQ_ID=6f1514beb05b] [REQUEST][END]
+INFO - 2026-03-08 17:29:54 --> [REQ_ID=6f1514beb05b] [PERF] Execution time=0.633990
+DEBUG - 2026-03-08 17:29:57 --> [REQ_ID=ba7c6705e426] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 17:29:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:29:57 --> [REQ_ID=ba7c6705e426] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 17:29:57 --> [REQ_ID=ba7c6705e426] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 17:29:57 --> [REQ_ID=ba7c6705e426] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 17:29:57 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 17:29:57 --> [REQ_ID=606bf0e1b64d] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 17:29:57 --> [REQ_ID=606bf0e1b64d] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 17:29:57 --> [REQ_ID=606bf0e1b64d] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 17:29:57 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 17:29:57 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 17:29:57 --> [REQ_ID=606bf0e1b64d] [PERF] Execution time=0.021785
+DEBUG - 2026-03-08 17:29:59 --> [REQ_ID=2361fc37854d] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 17:29:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:29:59 --> [REQ_ID=2361fc37854d] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 17:29:59 --> [REQ_ID=2361fc37854d] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 17:29:59 --> [REQ_ID=2361fc37854d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 17:29:59 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 17:29:59 --> [REQ_ID=20cb749a6c49] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 17:29:59 --> [REQ_ID=20cb749a6c49] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 17:29:59 --> [REQ_ID=20cb749a6c49] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 17:29:59 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 17:29:59 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 17:29:59 --> [REQ_ID=20cb749a6c49] [PERF] Execution time=0.018276
+DEBUG - 2026-03-08 17:30:01 --> [REQ_ID=ac2c7fc56981] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 17:30:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:30:01 --> [REQ_ID=ac2c7fc56981] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 17:30:01 --> [REQ_ID=ac2c7fc56981] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 17:30:01 --> [REQ_ID=ac2c7fc56981] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 17:30:01 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 17:30:01 --> [REQ_ID=2e171bd30e07] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 17:30:01 --> [REQ_ID=2e171bd30e07] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 17:30:01 --> [REQ_ID=2e171bd30e07] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 17:30:01 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 17:30:01 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 17:30:01 --> [REQ_ID=2e171bd30e07] [PERF] Execution time=0.014168
+INFO - 2026-03-08 17:30:02 --> [spark:ops:work] Started
+INFO - 2026-03-08 17:30:02 --> [SPARK_START] App\Commands\Ops\Work
+INFO - 2026-03-08 17:30:02 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 17:30:02 --> [spark:ops:work] Intent
+INFO - 2026-03-08 17:30:02 --> [spark:ops:work] Completed
+INFO - 2026-03-08 17:30:02 --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.024676
+INFO - 2026-03-08 17:30:02 --> [SPARK_MEMORY] 18874368
+DEBUG - 2026-03-08 17:30:11 --> [REQ_ID=1f8c80de87dc] [REQUEST][START] GET /index.php/How-It-Works/Registering-An-Account
+DEBUG - 2026-03-08 17:30:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:30:11 --> [REQ_ID=1f8c80de87dc] [FILTER_BEFORE] /index.php/How-It-Works/Registering-An-Account
+DEBUG - 2026-03-08 17:30:11 --> [REQ_ID=1f8c80de87dc] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 17:30:11 --> [REQ_ID=1f8c80de87dc] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Registering-An-Account
+DEBUG - 2026-03-08 17:30:11 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 17:30:11 --> [REQ_ID=ba08fe1b490a] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 17:30:11 --> [REQ_ID=ba08fe1b490a] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 17:30:11 --> [REQ_ID=ba08fe1b490a] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 17:30:11 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 17:30:11 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 17:30:11 --> [REQ_ID=ba08fe1b490a] [PERF] Execution time=0.083223
+DEBUG - 2026-03-08 17:30:12 --> [REQ_ID=ec3f635a11c1] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 17:30:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:30:12 --> [REQ_ID=ec3f635a11c1] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 17:30:12 --> [REQ_ID=ec3f635a11c1] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 17:30:12 --> [REQ_ID=ec3f635a11c1] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 17:30:12 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 17:30:12 --> [REQ_ID=b8fda1fb7c46] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 17:30:12 --> [REQ_ID=b8fda1fb7c46] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 17:30:12 --> [REQ_ID=b8fda1fb7c46] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 17:30:12 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 17:30:12 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 17:30:12 --> [REQ_ID=b8fda1fb7c46] [PERF] Execution time=0.012474
+DEBUG - 2026-03-08 17:30:14 --> [REQ_ID=37f5eda446e0] [REQUEST][START] GET /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 17:30:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:30:14 --> [REQ_ID=37f5eda446e0] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 17:30:14 --> [REQ_ID=37f5eda446e0] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 17:30:14 --> [REQ_ID=37f5eda446e0] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 17:30:14 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 17:30:14 --> [REQ_ID=a2f15d8953f4] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 17:30:14 --> [REQ_ID=a2f15d8953f4] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 17:30:14 --> [REQ_ID=a2f15d8953f4] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 17:30:14 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 17:30:14 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 17:30:14 --> [REQ_ID=a2f15d8953f4] [PERF] Execution time=0.016837
+DEBUG - 2026-03-08 17:30:17 --> [REQ_ID=f729e5c4a1cf] [REQUEST][START] GET /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 17:30:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:30:17 --> [REQ_ID=f729e5c4a1cf] [FILTER_BEFORE] /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 17:30:17 --> [REQ_ID=f729e5c4a1cf] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 17:30:17 --> [REQ_ID=f729e5c4a1cf] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 17:30:17 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 17:30:17 --> [REQ_ID=138e592a709b] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 17:30:17 --> [REQ_ID=138e592a709b] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 17:30:17 --> [REQ_ID=138e592a709b] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 17:30:17 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 17:30:17 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 17:30:17 --> [REQ_ID=138e592a709b] [PERF] Execution time=0.015046
+DEBUG - 2026-03-08 17:30:19 --> [REQ_ID=dc0b23b18b96] [REQUEST][START] GET /index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 17:30:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:30:19 --> [REQ_ID=dc0b23b18b96] [FILTER_BEFORE] /index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 17:30:19 --> [REQ_ID=dc0b23b18b96] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 17:30:19 --> [REQ_ID=dc0b23b18b96] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 17:30:19 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 17:30:19 --> [REQ_ID=9ed0279cd703] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 17:30:19 --> [REQ_ID=9ed0279cd703] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 17:30:19 --> [REQ_ID=9ed0279cd703] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 17:30:19 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 17:30:19 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 17:30:19 --> [REQ_ID=9ed0279cd703] [PERF] Execution time=0.019290
+DEBUG - 2026-03-08 17:30:21 --> [REQ_ID=2b65b9dc0d86] [REQUEST][START] GET /index.php/How-It-Works/MyMI-Exchange
+DEBUG - 2026-03-08 17:30:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:30:21 --> [REQ_ID=2b65b9dc0d86] [FILTER_BEFORE] /index.php/How-It-Works/MyMI-Exchange
+DEBUG - 2026-03-08 17:30:21 --> [REQ_ID=2b65b9dc0d86] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 17:30:21 --> [REQ_ID=2b65b9dc0d86] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Exchange
+DEBUG - 2026-03-08 17:30:21 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 17:30:21 --> [REQ_ID=3ecd0a8a76e3] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 17:30:21 --> [REQ_ID=3ecd0a8a76e3] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 17:30:21 --> [REQ_ID=3ecd0a8a76e3] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 17:30:21 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 17:30:21 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 17:30:21 --> [REQ_ID=3ecd0a8a76e3] [PERF] Execution time=0.016303
+INFO - 2026-03-08 17:30:45 --> [AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Started
+INFO - 2026-03-08 17:30:45 --> [SPARK_START] App\Commands\Logs\Summarize
+INFO - 2026-03-08 17:30:45 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 17:30:45 --> [spark:logs:summarize] Intent
+INFO - 2026-03-08 17:30:45 --> [AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Completed
+INFO - 2026-03-08 17:30:45 --> [SPARK_COMPLETE] App\Commands\Logs\Summarize duration=0.033958
+INFO - 2026-03-08 17:30:45 --> [SPARK_MEMORY] 23068672
+DEBUG - 2026-03-08 17:31:17 --> [REQ_ID=a4b1fac34c1b] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 17:31:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 17:31:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 17:31:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 17:31:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 17:31:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 17:36:09 --> [REQ_ID=1aa67fe40e1d] [REQUEST][START] GET /index.php/Knowledgebase
+DEBUG - 2026-03-08 17:36:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:36:09 --> [REQ_ID=1aa67fe40e1d] [FILTER_BEFORE] /index.php/Knowledgebase
+DEBUG - 2026-03-08 17:36:09 --> [REQ_ID=1aa67fe40e1d] [ROUTE] Controller=\App\Modules\User\Controllers\KnowledgebaseController Method=index
+DEBUG - 2026-03-08 17:36:09 --> [REQ_ID=1aa67fe40e1d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Knowledgebase
+DEBUG - 2026-03-08 17:36:09 --> [CSRF] token name=csrf_test_name hash=4a9c377186b3a25d731c40a0ae5b6d0a
+DEBUG - 2026-03-08 17:36:09 --> [REQ_ID=1aa67fe40e1d] [REQUEST][END]
+INFO - 2026-03-08 17:36:09 --> [REQ_ID=1aa67fe40e1d] [PERF] Execution time=0.055403
+DEBUG - 2026-03-08 17:36:13 --> [REQ_ID=d8ee0405dd5d] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 17:36:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:36:13 --> [REQ_ID=d8ee0405dd5d] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 17:36:13 --> [REQ_ID=d8ee0405dd5d] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 17:36:13 --> [REQ_ID=d8ee0405dd5d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 17:36:13 --> [CSRF] token name=csrf_test_name hash=8601d0a5afb2ca0521c5aa2154a3bd8c
+DEBUG - 2026-03-08 17:36:13 --> [REQ_ID=9f3c2ccfa024] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 17:36:13 --> [REQ_ID=9f3c2ccfa024] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 17:36:13 --> [REQ_ID=d8ee0405dd5d] [FILTER_AFTER]
+DEBUG - 2026-03-08 17:36:13 --> [REQ_ID=d8ee0405dd5d] [LIFECYCLE][END] status=200 duration_ms=130.99 memory_delta=0
+INFO - 2026-03-08 17:36:13 --> [REQ_ID=9f3c2ccfa024] [PERF] Execution time=0.130686
+DEBUG - 2026-03-08 17:36:13 --> [REQ_ID=d8ee0405dd5d] [REQUEST][END]
+INFO - 2026-03-08 17:36:13 --> [REQ_ID=d8ee0405dd5d] [PERF] Execution time=0.143752
+DEBUG - 2026-03-08 17:36:17 --> [REQ_ID=9d1e09a540a8] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 17:36:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 17:36:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 17:36:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 17:36:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 17:36:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 17:41:17 --> [REQ_ID=a32bee3810f1] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 17:41:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 17:41:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 17:41:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 17:41:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 17:41:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+INFO - 2026-03-08 17:45:02 --> [spark:ops:work] Started
+INFO - 2026-03-08 17:45:02 --> [SPARK_START] App\Commands\Ops\Work
+INFO - 2026-03-08 17:45:02 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 17:45:02 --> [spark:ops:work] Intent
+INFO - 2026-03-08 17:45:02 --> [spark:ops:work] Completed
+INFO - 2026-03-08 17:45:02 --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.033858
+INFO - 2026-03-08 17:45:02 --> [SPARK_MEMORY] 18874368
+DEBUG - 2026-03-08 17:45:43 --> [REQ_ID=0bffd576d872] [REQUEST][START] GET /index.php/Management/Marketing/Blog-Creator
+DEBUG - 2026-03-08 17:45:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:45:43 --> [REQ_ID=0bffd576d872] [FILTER_BEFORE] /index.php/Management/Marketing/Blog-Creator
+DEBUG - 2026-03-08 17:45:43 --> [REQ_ID=0bffd576d872] [ROUTE] Controller=\App\Modules\Management\Controllers\MarketingAdminController Method=blogCreator
+DEBUG - 2026-03-08 17:45:43 --> [REQ_ID=0bffd576d872] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management/Marketing/Blog-Creator
+DEBUG - 2026-03-08 17:45:43 --> [CSRF] token name=csrf_test_name hash=bd8f1c21713ef4e84bfa73021b87cd18
+DEBUG - 2026-03-08 17:45:43 --> [REQ_ID=0bffd576d872] [REQUEST][END]
+INFO - 2026-03-08 17:45:43 --> [REQ_ID=0bffd576d872] [PERF] Execution time=0.063930
+DEBUG - 2026-03-08 17:45:50 --> [REQ_ID=44b1111ce8cf] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 17:45:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:45:50 --> [REQ_ID=44b1111ce8cf] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 17:45:50 --> [REQ_ID=44b1111ce8cf] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 17:45:50 --> [REQ_ID=44b1111ce8cf] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 17:45:50 --> [CSRF] token name=csrf_test_name hash=ab374993c68a111510227e618da1884f
+DEBUG - 2026-03-08 17:45:50 --> [REQ_ID=54e543a175b2] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 17:45:50 --> [REQ_ID=54e543a175b2] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 17:45:51 --> [REQ_ID=44b1111ce8cf] [FILTER_AFTER]
+DEBUG - 2026-03-08 17:45:51 --> [REQ_ID=44b1111ce8cf] [LIFECYCLE][END] status=200 duration_ms=215.90 memory_delta=0
+INFO - 2026-03-08 17:45:51 --> [REQ_ID=54e543a175b2] [PERF] Execution time=0.215545
+DEBUG - 2026-03-08 17:45:51 --> [REQ_ID=44b1111ce8cf] [REQUEST][END]
+INFO - 2026-03-08 17:45:51 --> [REQ_ID=44b1111ce8cf] [PERF] Execution time=0.230717
+DEBUG - 2026-03-08 17:45:54 --> [REQ_ID=192e4aa980f2] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 17:45:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 17:45:54 --> [REQ_ID=192e4aa980f2] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 17:45:54 --> [REQ_ID=192e4aa980f2] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 17:45:54 --> [REQ_ID=192e4aa980f2] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 17:45:54 --> [CSRF] token name=csrf_test_name hash=4ce76a52c74530b0f706cef6a904638d
+DEBUG - 2026-03-08 17:45:54 --> [REQ_ID=1ebb4efff484] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 17:45:54 --> [REQ_ID=1ebb4efff484] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 17:45:54 --> [REQ_ID=1ebb4efff484] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 17:45:54 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 17:45:54 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 17:45:54 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 17:45:54 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 17:45:54 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 17:45:54 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 17:45:54 --> [REQ_ID=1ebb4efff484] [PERF] Execution time=0.073057
+DEBUG - 2026-03-08 17:46:17 --> [REQ_ID=5353604ef4e2] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 17:46:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 17:46:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 17:46:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 17:46:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 17:46:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 17:51:17 --> [REQ_ID=e2cf11f49c70] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 17:51:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 17:51:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 17:51:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 17:51:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 17:51:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 17:56:17 --> [REQ_ID=fb76cca228e8] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 17:56:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 17:56:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 17:56:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 17:56:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 17:56:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+INFO - 2026-03-08 18:00:01 --> [spark:ops:work] Started
+INFO - 2026-03-08 18:00:01 --> [SPARK_START] App\Commands\Ops\Work
+INFO - 2026-03-08 18:00:01 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 18:00:01 --> [spark:ops:work] Intent
+DEBUG - 2026-03-08 18:00:01 --> [REQ_ID=9dae22018b35] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 18:00:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:00:01 --> [REQ_ID=9dae22018b35] [FILTER_BEFORE] /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 18:00:01 --> [REQ_ID=9dae22018b35] [ROUTE] Controller=\App\Modules\Management\Controllers\ManagementAPIController Method=Run_CRON_Tasks
+DEBUG - 2026-03-08 18:00:01 --> [REQ_ID=9dae22018b35] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 18:00:01 --> [REQ_ID=9dae22018b35] [REQUEST][END]
+INFO - 2026-03-08 18:00:01 --> [REQ_ID=9dae22018b35] [PERF] Execution time=0.051772
+INFO - 2026-03-08 18:00:01 --> [spark:ops:work] Completed
+INFO - 2026-03-08 18:00:01 --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.290680
+INFO - 2026-03-08 18:00:01 --> [SPARK_MEMORY] 18874368
+DEBUG - 2026-03-08 18:01:17 --> [REQ_ID=1adf1e59fef1] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 18:01:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 18:01:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 18:01:18 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 18:01:18 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 18:01:18 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 18:05:31 --> [REQ_ID=2cc6049fdc61] [REQUEST][START] GET /index.php/Dashboard
+DEBUG - 2026-03-08 18:05:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:05:31 --> [REQ_ID=2cc6049fdc61] [FILTER_BEFORE] /index.php/Dashboard
+DEBUG - 2026-03-08 18:05:31 --> [REQ_ID=2cc6049fdc61] [ROUTE] Controller=\App\Modules\User\Controllers\DashboardController Method=index
+DEBUG - 2026-03-08 18:05:31 --> [REQ_ID=2cc6049fdc61] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Dashboard
+DEBUG - 2026-03-08 18:05:31 --> [CSRF] token name=csrf_test_name hash=6327fc543b8922db301807e1629d903a
+DEBUG - 2026-03-08 18:05:31 --> [REQ_ID=2cc6049fdc61] [REQUEST][END]
+INFO - 2026-03-08 18:05:31 --> [REQ_ID=2cc6049fdc61] [PERF] Execution time=0.055483
+DEBUG - 2026-03-08 18:05:34 --> [REQ_ID=69fef6d4df99] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 18:05:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:05:34 --> [REQ_ID=69fef6d4df99] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 18:05:34 --> [REQ_ID=69fef6d4df99] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 18:05:34 --> [REQ_ID=69fef6d4df99] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 18:05:34 --> [CSRF] token name=csrf_test_name hash=fdc1a698110502570292233f4a8eda3f
+DEBUG - 2026-03-08 18:05:34 --> [REQ_ID=38df288a757c] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 18:05:34 --> [REQ_ID=38df288a757c] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:05:34 --> [REQ_ID=69fef6d4df99] [FILTER_AFTER]
+DEBUG - 2026-03-08 18:05:34 --> [REQ_ID=69fef6d4df99] [LIFECYCLE][END] status=200 duration_ms=109.20 memory_delta=0
+INFO - 2026-03-08 18:05:34 --> [REQ_ID=38df288a757c] [PERF] Execution time=0.108921
+DEBUG - 2026-03-08 18:05:34 --> [REQ_ID=69fef6d4df99] [REQUEST][END]
+INFO - 2026-03-08 18:05:34 --> [REQ_ID=69fef6d4df99] [PERF] Execution time=0.121880
+DEBUG - 2026-03-08 18:06:17 --> [REQ_ID=df51ba48eb93] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 18:06:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 18:06:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 18:06:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 18:06:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 18:06:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 18:10:34 --> [REQ_ID=12ca304d9289] [REQUEST][START] GET /
+DEBUG - 2026-03-08 18:10:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:10:34 --> [REQ_ID=12ca304d9289] [FILTER_BEFORE] /
+DEBUG - 2026-03-08 18:10:34 --> [REQ_ID=12ca304d9289] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 18:10:34 --> [REQ_ID=12ca304d9289] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 18:10:34 --> [CSRF] token name=csrf_test_name hash=7ba0679f9f9db34f30ca352bdd0a6c99
+DEBUG - 2026-03-08 18:10:34 --> [REQ_ID=38ce8ab3130d] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 18:10:34 --> [REQ_ID=38ce8ab3130d] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 18:10:34 --> [REQ_ID=38ce8ab3130d] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 18:10:34 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:10:35 --> [MetaService] slug= pageName= cacheHit= path=FALLBACK
+DEBUG - 2026-03-08 18:10:35 --> [REQ_ID=38ce8ab3130d] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 18:10:35 --> [REQ_ID=38ce8ab3130d] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 18:10:35 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 18:10:35 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 18:10:35 --> [REQ_ID=12ca304d9289] [FILTER_AFTER]
+DEBUG - 2026-03-08 18:10:35 --> [REQ_ID=12ca304d9289] [LIFECYCLE][END] status=200 duration_ms=772.37 memory_delta=4194304
+INFO - 2026-03-08 18:10:35 --> [REQ_ID=38ce8ab3130d] [PERF] Execution time=0.770034
+DEBUG - 2026-03-08 18:10:35 --> [REQ_ID=12ca304d9289] [REQUEST][END]
+INFO - 2026-03-08 18:10:35 --> [REQ_ID=12ca304d9289] [PERF] Execution time=0.811166
+DEBUG - 2026-03-08 18:11:17 --> [REQ_ID=aec2f8f638be] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 18:11:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 18:11:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 18:11:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 18:11:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 18:11:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 18:14:10 --> [REQ_ID=88b0abbc91bb] [REQUEST][START] GET /index.php
+DEBUG - 2026-03-08 18:14:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:14:10 --> [REQ_ID=88b0abbc91bb] [FILTER_BEFORE] /index.php
+DEBUG - 2026-03-08 18:14:10 --> [REQ_ID=88b0abbc91bb] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 18:14:10 --> [REQ_ID=88b0abbc91bb] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 18:14:10 --> [CSRF] token name=csrf_test_name hash=336eff851aa1b552cfacb2dc67bfe72c
+DEBUG - 2026-03-08 18:14:10 --> [REQ_ID=07b49a2f0e09] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 18:14:10 --> [REQ_ID=07b49a2f0e09] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 18:14:10 --> [REQ_ID=07b49a2f0e09] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 18:14:10 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:14:11 --> [MetaService] slug= pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 18:14:11 --> [REQ_ID=07b49a2f0e09] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 18:14:11 --> [REQ_ID=07b49a2f0e09] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 18:14:11 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 18:14:11 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 18:14:11 --> [REQ_ID=88b0abbc91bb] [FILTER_AFTER]
+DEBUG - 2026-03-08 18:14:11 --> [REQ_ID=88b0abbc91bb] [LIFECYCLE][END] status=200 duration_ms=850.35 memory_delta=4194304
+INFO - 2026-03-08 18:14:11 --> [REQ_ID=07b49a2f0e09] [PERF] Execution time=0.848323
+DEBUG - 2026-03-08 18:14:11 --> [REQ_ID=88b0abbc91bb] [REQUEST][END]
+INFO - 2026-03-08 18:14:11 --> [REQ_ID=88b0abbc91bb] [PERF] Execution time=0.892672
+DEBUG - 2026-03-08 18:15:01 --> [REQ_ID=64747153535d] [REQUEST][START] GET /index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 18:15:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:15:01 --> [REQ_ID=64747153535d] [FILTER_BEFORE] /index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 18:15:01 --> [REQ_ID=64747153535d] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=fetchEmailAlerts
+DEBUG - 2026-03-08 18:15:01 --> [REQ_ID=64747153535d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 18:15:01 --> [REQ_ID=64747153535d] [REQUEST][END]
+INFO - 2026-03-08 18:15:01 --> [REQ_ID=64747153535d] [PERF] Execution time=0.047691
+INFO - 2026-03-08 18:15:01 --> [spark:ops:work] Started
+INFO - 2026-03-08 18:15:01 --> [SPARK_START] App\Commands\Ops\Work
+INFO - 2026-03-08 18:15:01 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 18:15:01 --> [spark:ops:work] Intent
+INFO - 2026-03-08 18:15:01 --> [spark:ops:work] Completed
+INFO - 2026-03-08 18:15:01 --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.039006
+INFO - 2026-03-08 18:15:01 --> [SPARK_MEMORY] 18874368
+DEBUG - 2026-03-08 18:15:43 --> [REQ_ID=3dc6c0e776a4] [REQUEST][START] GET /index.php/Premium_Features/Brokerage-Integrations
+DEBUG - 2026-03-08 18:15:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 18:15:43 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Premium_Features/Brokerage-Integrations]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 18:15:43 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 18:15:43 --> [404] URI=https://www.mymiwallet.com/index.php/Premium_Features/Brokerage-Integrations
+WARNING - 2026-03-08 18:15:43 --> 404 route miss: https://www.mymiwallet.com/index.php/Premium_Features/Brokerage-Integrations | referrer: none
+DEBUG - 2026-03-08 18:16:17 --> [REQ_ID=9a93bda0e154] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 18:16:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 18:16:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 18:16:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 18:16:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 18:16:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 18:20:08 --> [REQ_ID=47f15be261d2] [REQUEST][START] GET /index.php/How-To-Guides
+DEBUG - 2026-03-08 18:20:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2026-03-08 18:20:08 --> REDIRECTED ROUTE at https://www.mymiwallet.com/Knowledgebase/Tutorials
+DEBUG - 2026-03-08 18:20:08 --> [REQ_ID=47f15be261d2] [REQUEST][END]
+INFO - 2026-03-08 18:20:08 --> [REQ_ID=47f15be261d2] [PERF] Execution time=0.037353
+DEBUG - 2026-03-08 18:21:15 --> [REQ_ID=79d3d8d1749a] [REQUEST][START] GET /
+DEBUG - 2026-03-08 18:21:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:21:15 --> [REQ_ID=79d3d8d1749a] [FILTER_BEFORE] /
+DEBUG - 2026-03-08 18:21:15 --> [REQ_ID=79d3d8d1749a] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 18:21:15 --> [REQ_ID=79d3d8d1749a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 18:21:15 --> [CSRF] token name=csrf_test_name hash=fc03db43dba0306c604cbee82a105187
+DEBUG - 2026-03-08 18:21:15 --> [REQ_ID=c9f0cb7460fe] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 18:21:15 --> [REQ_ID=c9f0cb7460fe] [MEMORY][controller-start] 4194304
+INFO - 2026-03-08 18:21:15 --> [REQ_ID=c9f0cb7460fe] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 18:21:15 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:21:16 --> [MetaService] slug= pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 18:21:16 --> [REQ_ID=c9f0cb7460fe] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 18:21:16 --> [REQ_ID=c9f0cb7460fe] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 18:21:16 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 18:21:16 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 18:21:16 --> [REQ_ID=79d3d8d1749a] [FILTER_AFTER]
+DEBUG - 2026-03-08 18:21:16 --> [REQ_ID=79d3d8d1749a] [LIFECYCLE][END] status=200 duration_ms=692.76 memory_delta=4194304
+INFO - 2026-03-08 18:21:16 --> [REQ_ID=c9f0cb7460fe] [PERF] Execution time=0.689338
+DEBUG - 2026-03-08 18:21:16 --> [REQ_ID=79d3d8d1749a] [REQUEST][END]
+INFO - 2026-03-08 18:21:16 --> [REQ_ID=79d3d8d1749a] [PERF] Execution time=0.713578
+DEBUG - 2026-03-08 18:21:17 --> [REQ_ID=48f909e12dc0] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 18:21:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 18:21:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 18:21:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 18:21:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 18:21:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 18:24:25 --> [REQ_ID=f593dffed70d] [REQUEST][START] GET /index.php/Alerts
+DEBUG - 2026-03-08 18:24:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:24:25 --> [REQ_ID=f593dffed70d] [FILTER_BEFORE] /index.php/Alerts
+DEBUG - 2026-03-08 18:24:25 --> [REQ_ID=f593dffed70d] [ROUTE] Controller=\App\Modules\User\Controllers\AlertsController Method=index
+DEBUG - 2026-03-08 18:24:25 --> [REQ_ID=f593dffed70d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Alerts
+DEBUG - 2026-03-08 18:24:25 --> [CSRF] token name=csrf_test_name hash=dc1e8aa74577401555ea7a06bf6aa739
+DEBUG - 2026-03-08 18:24:25 --> [REQ_ID=f593dffed70d] [REQUEST][END]
+INFO - 2026-03-08 18:24:25 --> [REQ_ID=f593dffed70d] [PERF] Execution time=0.056169
+DEBUG - 2026-03-08 18:24:25 --> [REQ_ID=5ed68ad8c477] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 18:24:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:24:25 --> [REQ_ID=5ed68ad8c477] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 18:24:25 --> [REQ_ID=5ed68ad8c477] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 18:24:25 --> [REQ_ID=5ed68ad8c477] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 18:24:25 --> [CSRF] token name=csrf_test_name hash=640255108c07cf6f8fae95b80f92ca17
+DEBUG - 2026-03-08 18:24:25 --> [REQ_ID=925a84ee84d9] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 18:24:25 --> [REQ_ID=925a84ee84d9] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:24:25 --> [REQ_ID=5ed68ad8c477] [FILTER_AFTER]
+DEBUG - 2026-03-08 18:24:25 --> [REQ_ID=5ed68ad8c477] [LIFECYCLE][END] status=200 duration_ms=63.59 memory_delta=0
+INFO - 2026-03-08 18:24:25 --> [REQ_ID=925a84ee84d9] [PERF] Execution time=0.063230
+DEBUG - 2026-03-08 18:24:25 --> [REQ_ID=5ed68ad8c477] [REQUEST][END]
+INFO - 2026-03-08 18:24:25 --> [REQ_ID=5ed68ad8c477] [PERF] Execution time=0.079416
+DEBUG - 2026-03-08 18:26:04 --> [REQ_ID=9d57b7fc52de] [REQUEST][START] GET /index.php/Features/Brokerage-Integration
+DEBUG - 2026-03-08 18:26:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:26:04 --> [REQ_ID=9d57b7fc52de] [FILTER_BEFORE] /index.php/Features/Brokerage-Integration
+DEBUG - 2026-03-08 18:26:04 --> [REQ_ID=9d57b7fc52de] [ROUTE] Controller=\App\Modules\Advertise\Controllers\FeaturesController Method=BrokerageIntegrations
+DEBUG - 2026-03-08 18:26:04 --> [REQ_ID=9d57b7fc52de] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Features/Brokerage-Integration
+DEBUG - 2026-03-08 18:26:04 --> [CSRF] token name=csrf_test_name hash=8011def3b178f20b97af6cfb1dec1347
+DEBUG - 2026-03-08 18:26:04 --> [REQ_ID=9d57b7fc52de] [REQUEST][END]
+INFO - 2026-03-08 18:26:04 --> [REQ_ID=9d57b7fc52de] [PERF] Execution time=0.055411
+DEBUG - 2026-03-08 18:26:04 --> [REQ_ID=c4110687dcf1] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 18:26:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:26:04 --> [REQ_ID=c4110687dcf1] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 18:26:04 --> [REQ_ID=c4110687dcf1] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 18:26:04 --> [REQ_ID=c4110687dcf1] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 18:26:04 --> [CSRF] token name=csrf_test_name hash=99721f00e29f5b06d9114cb92823ac17
+DEBUG - 2026-03-08 18:26:04 --> [REQ_ID=4338cd68f0e7] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 18:26:04 --> [REQ_ID=4338cd68f0e7] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:26:04 --> [REQ_ID=c4110687dcf1] [FILTER_AFTER]
+DEBUG - 2026-03-08 18:26:04 --> [REQ_ID=c4110687dcf1] [LIFECYCLE][END] status=200 duration_ms=136.53 memory_delta=0
+INFO - 2026-03-08 18:26:04 --> [REQ_ID=4338cd68f0e7] [PERF] Execution time=0.135374
+DEBUG - 2026-03-08 18:26:04 --> [REQ_ID=c4110687dcf1] [REQUEST][END]
+INFO - 2026-03-08 18:26:04 --> [REQ_ID=c4110687dcf1] [PERF] Execution time=0.151414
+DEBUG - 2026-03-08 18:26:17 --> [REQ_ID=52c9530ddd39] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 18:26:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 18:26:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 18:26:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 18:26:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 18:26:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 18:26:29 --> [REQ_ID=3fc5c2bdcd4c] [REQUEST][START] GET /index.php/Support
+DEBUG - 2026-03-08 18:26:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:26:29 --> [REQ_ID=3fc5c2bdcd4c] [FILTER_BEFORE] /index.php/Support
+DEBUG - 2026-03-08 18:26:29 --> [REQ_ID=3fc5c2bdcd4c] [ROUTE] Controller=\App\Modules\Support\Controllers\SupportController Method=index
+DEBUG - 2026-03-08 18:26:29 --> [REQ_ID=3fc5c2bdcd4c] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support
+DEBUG - 2026-03-08 18:26:29 --> [CSRF] token name=csrf_test_name hash=57c4e2e2f63adf5b1bf1046eed536452
+DEBUG - 2026-03-08 18:26:29 --> [REQ_ID=258eaf091e26] [INIT] App\Modules\Support\Controllers\SupportController::GET
+INFO - 2026-03-08 18:26:29 --> [REQ_ID=258eaf091e26] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:26:29 --> [REQ_ID=258eaf091e26] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 18:26:29 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:26:29 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 18:26:29 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 18:26:29 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 18:26:29 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 18:26:29 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 18:26:29 --> [REQ_ID=258eaf091e26] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 18:26:29 --> [REQ_ID=258eaf091e26] [VIEW_RENDER] SupportModule\Views\Support\index
+INFO - 2026-03-08 18:26:29 --> [REQ_ID=258eaf091e26] [MEMORY][commonData:start] 6291456
+INFO - 2026-03-08 18:26:29 --> themesMemory usage: 6291456
+DEBUG - 2026-03-08 18:26:29 --> [REQ_ID=3fc5c2bdcd4c] [FILTER_AFTER]
+DEBUG - 2026-03-08 18:26:29 --> [REQ_ID=3fc5c2bdcd4c] [LIFECYCLE][END] status=200 duration_ms=78.98 memory_delta=2097152
+INFO - 2026-03-08 18:26:29 --> [REQ_ID=258eaf091e26] [PERF] Execution time=0.078653
+DEBUG - 2026-03-08 18:26:29 --> [REQ_ID=3fc5c2bdcd4c] [REQUEST][END]
+INFO - 2026-03-08 18:26:29 --> [REQ_ID=3fc5c2bdcd4c] [PERF] Execution time=0.089414
+DEBUG - 2026-03-08 18:27:25 --> [REQ_ID=bc8b21e6d269] [REQUEST][START] GET /index.php/Terms-Of-Service
+DEBUG - 2026-03-08 18:27:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:27:25 --> [REQ_ID=bc8b21e6d269] [FILTER_BEFORE] /index.php/Terms-Of-Service
+DEBUG - 2026-03-08 18:27:25 --> [REQ_ID=bc8b21e6d269] [ROUTE] Controller=\App\Controllers\Home Method=termsOfService
+DEBUG - 2026-03-08 18:27:25 --> [REQ_ID=bc8b21e6d269] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Terms-Of-Service
+DEBUG - 2026-03-08 18:27:25 --> [CSRF] token name=csrf_test_name hash=cbe258ab92053a7c7987e8a6a7ae98ca
+DEBUG - 2026-03-08 18:27:25 --> [REQ_ID=1fc802b8c04c] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 18:27:25 --> [REQ_ID=1fc802b8c04c] [MEMORY][controller-start] 4194304
+INFO - 2026-03-08 18:27:25 --> [REQ_ID=1fc802b8c04c] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 18:27:25 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:27:25 --> [MetaService] slug=terms-of-service pageName= cacheHit= path=DB
+DEBUG - 2026-03-08 18:27:25 --> [REQ_ID=1fc802b8c04c] [VIEW_RENDER] themes/public/termsOfService
+INFO - 2026-03-08 18:27:25 --> [REQ_ID=1fc802b8c04c] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 18:27:25 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 18:27:25 --> [MetaService] slug=terms-of-service pageName=Terms of Service cacheHit= path=DB
+DEBUG - 2026-03-08 18:27:25 --> [REQ_ID=bc8b21e6d269] [FILTER_AFTER]
+DEBUG - 2026-03-08 18:27:25 --> [REQ_ID=bc8b21e6d269] [LIFECYCLE][END] status=200 duration_ms=660.33 memory_delta=4194304
+INFO - 2026-03-08 18:27:25 --> [REQ_ID=1fc802b8c04c] [PERF] Execution time=0.660005
+DEBUG - 2026-03-08 18:27:25 --> [REQ_ID=bc8b21e6d269] [REQUEST][END]
+INFO - 2026-03-08 18:27:25 --> [REQ_ID=bc8b21e6d269] [PERF] Execution time=0.671129
+INFO - 2026-03-08 18:30:01 --> [spark:ops:work] Started
+INFO - 2026-03-08 18:30:01 --> [SPARK_START] App\Commands\Ops\Work
+INFO - 2026-03-08 18:30:01 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 18:30:01 --> [spark:ops:work] Intent
+INFO - 2026-03-08 18:30:02 --> [spark:ops:work] Completed
+INFO - 2026-03-08 18:30:02 --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.116114
+INFO - 2026-03-08 18:30:02 --> [SPARK_MEMORY] 18874368
+DEBUG - 2026-03-08 18:31:17 --> [REQ_ID=91e267d635bd] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 18:31:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 18:31:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 18:31:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 18:31:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 18:31:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 18:34:27 --> [REQ_ID=7bc1ac45e487] [REQUEST][START] GET /
+DEBUG - 2026-03-08 18:34:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:34:27 --> [REQ_ID=7bc1ac45e487] [FILTER_BEFORE] /
+DEBUG - 2026-03-08 18:34:27 --> [REQ_ID=7bc1ac45e487] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 18:34:27 --> [REQ_ID=7bc1ac45e487] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 18:34:27 --> [CSRF] token name=csrf_test_name hash=86646883ddc5e616a908a3b73ab34b98
+DEBUG - 2026-03-08 18:34:27 --> [REQ_ID=8a6e60ca8af1] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 18:34:27 --> [REQ_ID=8a6e60ca8af1] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 18:34:28 --> [REQ_ID=8a6e60ca8af1] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 18:34:28 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:34:28 --> [MetaService] slug= pageName= cacheHit= path=FALLBACK
+DEBUG - 2026-03-08 18:34:28 --> [REQ_ID=8a6e60ca8af1] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 18:34:28 --> [REQ_ID=8a6e60ca8af1] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 18:34:28 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 18:34:28 --> [MetaService] slug= pageName=Home cacheHit= path=DB
+DEBUG - 2026-03-08 18:34:28 --> [REQ_ID=7bc1ac45e487] [FILTER_AFTER]
+DEBUG - 2026-03-08 18:34:28 --> [REQ_ID=7bc1ac45e487] [LIFECYCLE][END] status=200 duration_ms=902.28 memory_delta=4194304
+INFO - 2026-03-08 18:34:28 --> [REQ_ID=8a6e60ca8af1] [PERF] Execution time=0.900449
+DEBUG - 2026-03-08 18:34:28 --> [REQ_ID=7bc1ac45e487] [REQUEST][END]
+INFO - 2026-03-08 18:34:28 --> [REQ_ID=7bc1ac45e487] [PERF] Execution time=0.942888
+DEBUG - 2026-03-08 18:35:16 --> [REQ_ID=e1296a09aafd] [REQUEST][START] GET /index.php/forgot
+DEBUG - 2026-03-08 18:35:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:35:16 --> [REQ_ID=e1296a09aafd] [FILTER_BEFORE] /index.php/forgot
+DEBUG - 2026-03-08 18:35:16 --> [REQ_ID=e1296a09aafd] [ROUTE] Controller=\Myth\Auth\Controllers\AuthController Method=forgotPassword
+DEBUG - 2026-03-08 18:35:16 --> [REQ_ID=e1296a09aafd] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/forgot
+DEBUG - 2026-03-08 18:35:16 --> [CSRF] token name=csrf_test_name hash=842f16021ec5e61bfd6ce36d0a14bdac
+DEBUG - 2026-03-08 18:35:16 --> [REQ_ID=e1296a09aafd] [FILTER_AFTER]
+DEBUG - 2026-03-08 18:35:16 --> [REQ_ID=e1296a09aafd] [LIFECYCLE][END] status=200 duration_ms=7.58 memory_delta=0
+DEBUG - 2026-03-08 18:35:16 --> [REQ_ID=e1296a09aafd] [REQUEST][END]
+INFO - 2026-03-08 18:35:16 --> [REQ_ID=e1296a09aafd] [PERF] Execution time=0.022242
+DEBUG - 2026-03-08 18:36:17 --> [REQ_ID=5acaa19b4498] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 18:36:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 18:36:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 18:36:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 18:36:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 18:36:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 18:36:29 --> [REQ_ID=5037dcedc5d1] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 18:36:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:36:29 --> [REQ_ID=5037dcedc5d1] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 18:36:29 --> [REQ_ID=5037dcedc5d1] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:36:29 --> [REQ_ID=5037dcedc5d1] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 18:36:29 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:36:29 --> [REQ_ID=e316da9db1a2] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:36:29 --> [REQ_ID=e316da9db1a2] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:36:29 --> [REQ_ID=e316da9db1a2] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:36:29 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:36:29 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:36:29 --> [REQ_ID=e316da9db1a2] [PERF] Execution time=0.112741
+DEBUG - 2026-03-08 18:36:33 --> [REQ_ID=e557279df18d] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:36:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:36:33 --> [REQ_ID=e557279df18d] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:36:33 --> [REQ_ID=e557279df18d] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:36:33 --> [REQ_ID=e557279df18d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:36:33 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:36:33 --> [REQ_ID=c64bc42906de] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:36:33 --> [REQ_ID=c64bc42906de] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:36:33 --> [REQ_ID=c64bc42906de] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:36:33 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:36:33 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:36:33 --> [REQ_ID=c64bc42906de] [PERF] Execution time=0.026615
+DEBUG - 2026-03-08 18:36:46 --> [REQ_ID=ac2c1c25f49f] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:36:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:36:46 --> [REQ_ID=ac2c1c25f49f] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:36:46 --> [REQ_ID=ac2c1c25f49f] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:36:46 --> [REQ_ID=ac2c1c25f49f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:36:46 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:36:46 --> [REQ_ID=7e854f645dcf] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:36:46 --> [REQ_ID=7e854f645dcf] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:36:46 --> [REQ_ID=7e854f645dcf] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:36:46 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:36:46 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:36:46 --> [REQ_ID=7e854f645dcf] [PERF] Execution time=0.080240
+DEBUG - 2026-03-08 18:36:48 --> [REQ_ID=c2dd8506023a] [REQUEST][START] GET /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 18:36:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:36:48 --> [REQ_ID=c2dd8506023a] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 18:36:48 --> [REQ_ID=c2dd8506023a] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:36:48 --> [REQ_ID=c2dd8506023a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 18:36:48 --> [CSRF] token name=csrf_test_name hash=2baf1b573b1cc809cb7eff2997d04384
+DEBUG - 2026-03-08 18:36:48 --> [REQ_ID=85edfc7a882a] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:36:48 --> [REQ_ID=85edfc7a882a] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:36:48 --> [REQ_ID=85edfc7a882a] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:36:48 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:36:48 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 18:36:48 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 18:36:48 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 18:36:48 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 18:36:48 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 18:36:48 --> [REQ_ID=85edfc7a882a] [PERF] Execution time=0.015548
+DEBUG - 2026-03-08 18:37:49 --> [REQ_ID=de9073c4647c] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:37:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:37:49 --> [REQ_ID=de9073c4647c] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:37:49 --> [REQ_ID=de9073c4647c] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:37:49 --> [REQ_ID=de9073c4647c] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:37:49 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:37:49 --> [REQ_ID=5ee885702ed3] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:37:49 --> [REQ_ID=5ee885702ed3] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:37:49 --> [REQ_ID=5ee885702ed3] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:37:49 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:37:49 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:37:49 --> [REQ_ID=5ee885702ed3] [PERF] Execution time=0.031253
+DEBUG - 2026-03-08 18:37:51 --> [REQ_ID=a27eec41f475] [REQUEST][START] GET /index.php/How-It-Works/Registering-An-Account
+DEBUG - 2026-03-08 18:37:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:37:51 --> [REQ_ID=a27eec41f475] [FILTER_BEFORE] /index.php/How-It-Works/Registering-An-Account
+DEBUG - 2026-03-08 18:37:51 --> [REQ_ID=a27eec41f475] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:37:51 --> [REQ_ID=a27eec41f475] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Registering-An-Account
+DEBUG - 2026-03-08 18:37:51 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:37:51 --> [REQ_ID=e7c6180e195b] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:37:51 --> [REQ_ID=e7c6180e195b] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:37:51 --> [REQ_ID=e7c6180e195b] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:37:51 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:37:51 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:37:51 --> [REQ_ID=e7c6180e195b] [PERF] Execution time=0.015201
+DEBUG - 2026-03-08 18:37:53 --> [REQ_ID=63a594a3cd36] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 18:37:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:37:53 --> [REQ_ID=63a594a3cd36] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 18:37:53 --> [REQ_ID=63a594a3cd36] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:37:53 --> [REQ_ID=63a594a3cd36] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 18:37:53 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:37:53 --> [REQ_ID=90542faf0a7c] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:37:53 --> [REQ_ID=90542faf0a7c] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:37:53 --> [REQ_ID=90542faf0a7c] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:37:53 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:37:53 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:37:53 --> [REQ_ID=90542faf0a7c] [PERF] Execution time=0.014100
+DEBUG - 2026-03-08 18:37:58 --> [REQ_ID=ff566b2855bd] [REQUEST][START] GET /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 18:37:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:37:58 --> [REQ_ID=ff566b2855bd] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 18:37:58 --> [REQ_ID=ff566b2855bd] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:37:58 --> [REQ_ID=ff566b2855bd] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 18:37:58 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:37:58 --> [REQ_ID=586d6cfb40f9] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:37:58 --> [REQ_ID=586d6cfb40f9] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:37:58 --> [REQ_ID=586d6cfb40f9] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:37:58 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:37:58 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:37:58 --> [REQ_ID=586d6cfb40f9] [PERF] Execution time=0.012607
+DEBUG - 2026-03-08 18:38:00 --> [REQ_ID=518a36c4945f] [REQUEST][START] GET /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 18:38:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:38:00 --> [REQ_ID=518a36c4945f] [FILTER_BEFORE] /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 18:38:00 --> [REQ_ID=518a36c4945f] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:38:00 --> [REQ_ID=518a36c4945f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 18:38:00 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:38:00 --> [REQ_ID=26cfffd25a3b] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:38:00 --> [REQ_ID=26cfffd25a3b] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:38:00 --> [REQ_ID=26cfffd25a3b] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:38:00 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:38:00 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:38:00 --> [REQ_ID=26cfffd25a3b] [PERF] Execution time=0.013531
+DEBUG - 2026-03-08 18:38:03 --> [REQ_ID=c56ba3fd3785] [REQUEST][START] GET /index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 18:38:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:38:03 --> [REQ_ID=c56ba3fd3785] [FILTER_BEFORE] /index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 18:38:03 --> [REQ_ID=c56ba3fd3785] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:38:03 --> [REQ_ID=c56ba3fd3785] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 18:38:03 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:38:03 --> [REQ_ID=dfb144a5b6f0] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:38:03 --> [REQ_ID=dfb144a5b6f0] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:38:03 --> [REQ_ID=dfb144a5b6f0] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:38:03 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:38:03 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:38:03 --> [REQ_ID=dfb144a5b6f0] [PERF] Execution time=0.015710
+DEBUG - 2026-03-08 18:38:06 --> [REQ_ID=9b74f67b20e8] [REQUEST][START] GET /index.php/How-It-Works/MyMI-Exchange
+DEBUG - 2026-03-08 18:38:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:38:06 --> [REQ_ID=9b74f67b20e8] [FILTER_BEFORE] /index.php/How-It-Works/MyMI-Exchange
+DEBUG - 2026-03-08 18:38:06 --> [REQ_ID=9b74f67b20e8] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:38:06 --> [REQ_ID=9b74f67b20e8] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Exchange
+DEBUG - 2026-03-08 18:38:06 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:38:06 --> [REQ_ID=38679a424653] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:38:06 --> [REQ_ID=38679a424653] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:38:06 --> [REQ_ID=38679a424653] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:38:06 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:38:06 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:38:06 --> [REQ_ID=38679a424653] [PERF] Execution time=0.014419
+DEBUG - 2026-03-08 18:39:23 --> [REQ_ID=11a75766c5e0] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:39:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:39:23 --> [REQ_ID=11a75766c5e0] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:39:23 --> [REQ_ID=11a75766c5e0] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:39:23 --> [REQ_ID=11a75766c5e0] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:39:23 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:39:23 --> [REQ_ID=9c7254cbcacb] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:39:23 --> [REQ_ID=9c7254cbcacb] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:39:23 --> [REQ_ID=9c7254cbcacb] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:39:23 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:39:23 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:39:23 --> [REQ_ID=9c7254cbcacb] [PERF] Execution time=0.034923
+DEBUG - 2026-03-08 18:40:42 --> [REQ_ID=0597d44fe3a8] [REQUEST][START] GET /index.php/How-It-Works/budgeting
+DEBUG - 2026-03-08 18:40:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:40:42 --> [REQ_ID=0597d44fe3a8] [FILTER_BEFORE] /index.php/How-It-Works/budgeting
+DEBUG - 2026-03-08 18:40:42 --> [REQ_ID=0597d44fe3a8] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=budgeting
+DEBUG - 2026-03-08 18:40:42 --> [REQ_ID=0597d44fe3a8] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/budgeting
+DEBUG - 2026-03-08 18:40:42 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:40:42 --> [REQ_ID=1771937ec36a] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:40:42 --> [REQ_ID=1771937ec36a] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 18:40:42 --> [REQ_ID=1771937ec36a] [METHOD_ENTRY] budgeting
+DEBUG - 2026-03-08 18:40:42 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:40:42 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:40:42 --> [REQ_ID=1771937ec36a] [PERF] Execution time=0.324994
+CRITICAL - 2026-03-08 18:40:42 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: How-It-Works/budgeting]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 18:40:42 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 18:40:42 --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works/budgeting
+WARNING - 2026-03-08 18:40:42 --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works/budgeting | referrer: none
+ERROR - 2026-03-08 18:40:42 --> [ERROR_PAGE] event=error_404 status=404 message=Page not found.
+DEBUG - 2026-03-08 18:40:48 --> [REQ_ID=5391ed283452] [REQUEST][START] GET /index.php/Support
+DEBUG - 2026-03-08 18:40:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:40:48 --> [REQ_ID=5391ed283452] [FILTER_BEFORE] /index.php/Support
+DEBUG - 2026-03-08 18:40:48 --> [REQ_ID=5391ed283452] [ROUTE] Controller=\App\Modules\Support\Controllers\SupportController Method=index
+DEBUG - 2026-03-08 18:40:48 --> [REQ_ID=5391ed283452] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support
+DEBUG - 2026-03-08 18:40:48 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:40:48 --> [REQ_ID=735133a20bb0] [INIT] App\Modules\Support\Controllers\SupportController::GET
+INFO - 2026-03-08 18:40:48 --> [REQ_ID=735133a20bb0] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:40:48 --> [REQ_ID=735133a20bb0] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 18:40:48 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:40:48 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:40:48 --> [REQ_ID=735133a20bb0] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 18:40:48 --> [REQ_ID=735133a20bb0] [VIEW_RENDER] SupportModule\Views\Support\index
+INFO - 2026-03-08 18:40:48 --> [REQ_ID=735133a20bb0] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 18:40:48 --> themesMemory usage: 4194304
+DEBUG - 2026-03-08 18:40:48 --> [REQ_ID=5391ed283452] [FILTER_AFTER]
+DEBUG - 2026-03-08 18:40:48 --> [REQ_ID=5391ed283452] [LIFECYCLE][END] status=200 duration_ms=40.89 memory_delta=0
+INFO - 2026-03-08 18:40:48 --> [REQ_ID=735133a20bb0] [PERF] Execution time=0.040891
+DEBUG - 2026-03-08 18:40:48 --> [REQ_ID=5391ed283452] [REQUEST][END]
+INFO - 2026-03-08 18:40:48 --> [REQ_ID=5391ed283452] [PERF] Execution time=0.056149
+DEBUG - 2026-03-08 18:40:53 --> [REQ_ID=8f8bfb0ee4e3] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 18:40:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:40:53 --> [REQ_ID=8f8bfb0ee4e3] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 18:40:53 --> [REQ_ID=8f8bfb0ee4e3] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:40:53 --> [REQ_ID=8f8bfb0ee4e3] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 18:40:53 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:40:53 --> [REQ_ID=6ac612f42b00] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:40:53 --> [REQ_ID=6ac612f42b00] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:40:53 --> [REQ_ID=6ac612f42b00] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:40:53 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:40:53 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:40:53 --> [REQ_ID=6ac612f42b00] [PERF] Execution time=0.018732
+DEBUG - 2026-03-08 18:41:17 --> [REQ_ID=6856b2996961] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 18:41:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 18:41:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 18:41:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 18:41:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 18:41:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 18:41:29 --> [REQ_ID=40336295f31a] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:41:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:41:29 --> [REQ_ID=40336295f31a] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:41:29 --> [REQ_ID=40336295f31a] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:41:29 --> [REQ_ID=40336295f31a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:41:29 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:41:29 --> [REQ_ID=bdc51805aed7] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:41:29 --> [REQ_ID=bdc51805aed7] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:41:29 --> [REQ_ID=bdc51805aed7] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:41:29 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:41:29 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:41:29 --> [REQ_ID=bdc51805aed7] [PERF] Execution time=0.107764
+DEBUG - 2026-03-08 18:41:35 --> [REQ_ID=3ecb163321e2] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:41:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:41:35 --> [REQ_ID=3ecb163321e2] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:41:35 --> [REQ_ID=3ecb163321e2] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:41:35 --> [REQ_ID=3ecb163321e2] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:41:35 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:41:35 --> [REQ_ID=ebe909e2e8c5] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:41:35 --> [REQ_ID=ebe909e2e8c5] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:41:35 --> [REQ_ID=ebe909e2e8c5] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:41:35 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:41:35 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:41:35 --> [REQ_ID=ebe909e2e8c5] [PERF] Execution time=0.012555
+DEBUG - 2026-03-08 18:41:44 --> [REQ_ID=69d92a675ee6] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:41:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:41:44 --> [REQ_ID=69d92a675ee6] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:41:44 --> [REQ_ID=69d92a675ee6] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:41:44 --> [REQ_ID=69d92a675ee6] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:41:44 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:41:44 --> [REQ_ID=da9cd7b0a4b8] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:41:44 --> [REQ_ID=da9cd7b0a4b8] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:41:44 --> [REQ_ID=da9cd7b0a4b8] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:41:44 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:41:44 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:41:44 --> [REQ_ID=da9cd7b0a4b8] [PERF] Execution time=0.044566
+DEBUG - 2026-03-08 18:41:53 --> [REQ_ID=92f3b88d9fea] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:41:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:41:53 --> [REQ_ID=92f3b88d9fea] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:41:53 --> [REQ_ID=92f3b88d9fea] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:41:53 --> [REQ_ID=92f3b88d9fea] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:41:53 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:41:53 --> [REQ_ID=19753ac97619] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:41:53 --> [REQ_ID=19753ac97619] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:41:53 --> [REQ_ID=19753ac97619] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:41:53 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:41:53 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:41:53 --> [REQ_ID=19753ac97619] [PERF] Execution time=0.030289
+DEBUG - 2026-03-08 18:42:16 --> [REQ_ID=2a9a273b6564] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:42:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:42:16 --> [REQ_ID=2a9a273b6564] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:42:16 --> [REQ_ID=2a9a273b6564] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:42:16 --> [REQ_ID=2a9a273b6564] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:42:16 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:42:16 --> [REQ_ID=88fcc2f0a563] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:42:16 --> [REQ_ID=88fcc2f0a563] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:42:16 --> [REQ_ID=88fcc2f0a563] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:42:16 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:42:16 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:42:16 --> [REQ_ID=88fcc2f0a563] [PERF] Execution time=0.014670
+DEBUG - 2026-03-08 18:44:12 --> [REQ_ID=ef5e05de25df] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 18:44:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:44:12 --> [REQ_ID=ef5e05de25df] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 18:44:12 --> [REQ_ID=ef5e05de25df] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 18:44:12 --> [REQ_ID=ef5e05de25df] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 18:44:12 --> [CSRF] token name=csrf_test_name hash=6f06abfd0f2d492301407ecd9fe017f3
+DEBUG - 2026-03-08 18:44:12 --> [REQ_ID=06949e18d600] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 18:44:12 --> [REQ_ID=06949e18d600] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 18:44:12 --> [REQ_ID=ef5e05de25df] [FILTER_AFTER]
+DEBUG - 2026-03-08 18:44:12 --> [REQ_ID=ef5e05de25df] [LIFECYCLE][END] status=200 duration_ms=50.41 memory_delta=0
+INFO - 2026-03-08 18:44:12 --> [REQ_ID=06949e18d600] [PERF] Execution time=0.048205
+DEBUG - 2026-03-08 18:44:12 --> [REQ_ID=ef5e05de25df] [REQUEST][END]
+INFO - 2026-03-08 18:44:12 --> [REQ_ID=ef5e05de25df] [PERF] Execution time=0.091142
+DEBUG - 2026-03-08 18:44:36 --> [REQ_ID=17a6ff3e03e6] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:44:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:44:36 --> [REQ_ID=17a6ff3e03e6] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:44:36 --> [REQ_ID=17a6ff3e03e6] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:44:36 --> [REQ_ID=17a6ff3e03e6] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:44:36 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:44:36 --> [REQ_ID=245d6059b112] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:44:36 --> [REQ_ID=245d6059b112] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:44:36 --> [REQ_ID=245d6059b112] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:44:36 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:44:36 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:44:36 --> [REQ_ID=245d6059b112] [PERF] Execution time=0.183807
+INFO - 2026-03-08 18:45:01 --> [spark:ops:work] Started
+INFO - 2026-03-08 18:45:01 --> [SPARK_START] App\Commands\Ops\Work
+INFO - 2026-03-08 18:45:01 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 18:45:01 --> [spark:ops:work] Intent
+INFO - 2026-03-08 18:45:01 --> [spark:ops:work] Completed
+INFO - 2026-03-08 18:45:01 --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.046969
+INFO - 2026-03-08 18:45:01 --> [SPARK_MEMORY] 18874368
+DEBUG - 2026-03-08 18:45:22 --> [REQ_ID=fc8131eec25f] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:45:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:45:22 --> [REQ_ID=fc8131eec25f] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:45:22 --> [REQ_ID=fc8131eec25f] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=DailyFinancialNews
+DEBUG - 2026-03-08 18:45:22 --> [REQ_ID=fc8131eec25f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 18:45:22 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:45:22 --> [REQ_ID=109083e98fa2] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:45:22 --> [REQ_ID=109083e98fa2] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:45:23 --> [REQ_ID=109083e98fa2] [METHOD_ENTRY] DailyFinancialNews
+DEBUG - 2026-03-08 18:45:23 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:45:23 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:45:23 --> [REQ_ID=109083e98fa2] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 18:45:23 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 18:45:23 --> [MetaService] slug=how-it-works/daily-financial-news pageName= cacheHit= path=DB
+DEBUG - 2026-03-08 18:45:23 --> [REQ_ID=fc8131eec25f] [FILTER_AFTER]
+DEBUG - 2026-03-08 18:45:23 --> [REQ_ID=fc8131eec25f] [LIFECYCLE][END] status=200 duration_ms=734.88 memory_delta=4194304
+INFO - 2026-03-08 18:45:23 --> [REQ_ID=109083e98fa2] [PERF] Execution time=0.734612
+DEBUG - 2026-03-08 18:45:23 --> [REQ_ID=fc8131eec25f] [REQUEST][END]
+INFO - 2026-03-08 18:45:23 --> [REQ_ID=fc8131eec25f] [PERF] Execution time=0.748118
+DEBUG - 2026-03-08 18:45:27 --> [REQ_ID=45cabfc4c423] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:45:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:45:27 --> [REQ_ID=45cabfc4c423] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:45:27 --> [REQ_ID=45cabfc4c423] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:45:27 --> [REQ_ID=45cabfc4c423] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:45:27 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:45:27 --> [REQ_ID=8835311e4237] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:45:27 --> [REQ_ID=8835311e4237] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 18:45:27 --> [REQ_ID=8835311e4237] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:45:27 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:45:27 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:45:27 --> [REQ_ID=8835311e4237] [PERF] Execution time=0.019580
+DEBUG - 2026-03-08 18:46:17 --> [REQ_ID=c71437549c33] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 18:46:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 18:46:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 18:46:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 18:46:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 18:46:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 18:47:40 --> [REQ_ID=b1974ee6e398] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:47:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:47:40 --> [REQ_ID=b1974ee6e398] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:47:40 --> [REQ_ID=b1974ee6e398] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:47:40 --> [REQ_ID=b1974ee6e398] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:47:40 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:47:40 --> [REQ_ID=18d8b7cf85ec] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:47:40 --> [REQ_ID=18d8b7cf85ec] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 18:47:40 --> [REQ_ID=18d8b7cf85ec] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:47:40 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:47:40 --> [SERVICE] App\Services\BudgetService ::setUserId
+ERROR - 2026-03-08 18:47:40 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 18:47:40 --> [REQ_ID=18d8b7cf85ec] [PERF] Execution time=0.365806
+DEBUG - 2026-03-08 18:47:45 --> [REQ_ID=0f9c08997a82] [REQUEST][START] GET /index.php/How-It-Works/Registering-An-Account
+DEBUG - 2026-03-08 18:47:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:47:45 --> [REQ_ID=0f9c08997a82] [FILTER_BEFORE] /index.php/How-It-Works/Registering-An-Account
+DEBUG - 2026-03-08 18:47:45 --> [REQ_ID=0f9c08997a82] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:47:45 --> [REQ_ID=0f9c08997a82] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Registering-An-Account
+DEBUG - 2026-03-08 18:47:45 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:47:45 --> [REQ_ID=fb21e5f3491b] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:47:45 --> [REQ_ID=fb21e5f3491b] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:47:45 --> [REQ_ID=fb21e5f3491b] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:47:45 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:47:45 --> [SERVICE] App\Services\BudgetService ::setUserId
+ERROR - 2026-03-08 18:47:45 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 18:47:45 --> [REQ_ID=fb21e5f3491b] [PERF] Execution time=0.017360
+DEBUG - 2026-03-08 18:48:18 --> [REQ_ID=09587adf6d00] [REQUEST][START] GET /index.php/How-It-Works/Purchase-MyMI-Gold
+DEBUG - 2026-03-08 18:48:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:48:18 --> [REQ_ID=09587adf6d00] [FILTER_BEFORE] /index.php/How-It-Works/Purchase-MyMI-Gold
+DEBUG - 2026-03-08 18:48:18 --> [REQ_ID=09587adf6d00] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 18:48:18 --> [REQ_ID=09587adf6d00] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Purchase-MyMI-Gold
+DEBUG - 2026-03-08 18:48:18 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:48:18 --> [REQ_ID=85f6e011cbea] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:48:18 --> [REQ_ID=85f6e011cbea] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:48:18 --> [REQ_ID=85f6e011cbea] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 18:48:18 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:48:18 --> [SERVICE] App\Services\BudgetService ::setUserId
+ERROR - 2026-03-08 18:48:18 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 18:48:18 --> [REQ_ID=85f6e011cbea] [PERF] Execution time=0.049726
+DEBUG - 2026-03-08 18:51:17 --> [REQ_ID=f566e299dd0b] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 18:51:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 18:51:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 18:51:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 18:51:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 18:51:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 18:51:52 --> [REQ_ID=6672c292ddcd] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 18:51:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:51:52 --> [REQ_ID=6672c292ddcd] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 18:51:52 --> [REQ_ID=6672c292ddcd] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=PersonalBudgeting
+DEBUG - 2026-03-08 18:51:52 --> [REQ_ID=6672c292ddcd] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 18:51:52 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:51:52 --> [REQ_ID=1719ff1d6cd1] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:51:52 --> [REQ_ID=1719ff1d6cd1] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:51:52 --> [REQ_ID=1719ff1d6cd1] [METHOD_ENTRY] PersonalBudgeting
+DEBUG - 2026-03-08 18:51:52 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:51:52 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:51:52 --> [REQ_ID=1719ff1d6cd1] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 18:51:52 --> [REQ_ID=1719ff1d6cd1] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Personal_Budgeting
+INFO - 2026-03-08 18:51:52 --> [REQ_ID=1719ff1d6cd1] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 18:51:53 --> themesMemory usage: 12582912
+DEBUG - 2026-03-08 18:51:53 --> [REQ_ID=6672c292ddcd] [FILTER_AFTER]
+DEBUG - 2026-03-08 18:51:53 --> [REQ_ID=6672c292ddcd] [LIFECYCLE][END] status=200 duration_ms=1,190.77 memory_delta=8388608
+INFO - 2026-03-08 18:51:53 --> [REQ_ID=1719ff1d6cd1] [PERF] Execution time=1.188827
+DEBUG - 2026-03-08 18:51:53 --> [REQ_ID=6672c292ddcd] [REQUEST][END]
+INFO - 2026-03-08 18:51:53 --> [REQ_ID=6672c292ddcd] [PERF] Execution time=1.216116
+DEBUG - 2026-03-08 18:51:58 --> [REQ_ID=9569ba306739] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 18:51:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:51:58 --> [REQ_ID=9569ba306739] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 18:51:58 --> [REQ_ID=9569ba306739] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=PersonalBudgeting
+DEBUG - 2026-03-08 18:51:58 --> [REQ_ID=9569ba306739] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 18:51:58 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:51:58 --> [REQ_ID=69bd41fedfc4] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:51:58 --> [REQ_ID=69bd41fedfc4] [MEMORY][controller-start] 8388608
+DEBUG - 2026-03-08 18:51:58 --> [REQ_ID=69bd41fedfc4] [METHOD_ENTRY] PersonalBudgeting
+DEBUG - 2026-03-08 18:51:58 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:51:58 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:51:58 --> [REQ_ID=69bd41fedfc4] [MEMORY][commonData:start] 8388608
+DEBUG - 2026-03-08 18:51:58 --> [REQ_ID=69bd41fedfc4] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Personal_Budgeting
+INFO - 2026-03-08 18:51:58 --> [REQ_ID=69bd41fedfc4] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 18:51:59 --> themesMemory usage: 12582912
+DEBUG - 2026-03-08 18:51:59 --> [REQ_ID=9569ba306739] [FILTER_AFTER]
+DEBUG - 2026-03-08 18:51:59 --> [REQ_ID=9569ba306739] [LIFECYCLE][END] status=200 duration_ms=1,069.33 memory_delta=4194304
+INFO - 2026-03-08 18:51:59 --> [REQ_ID=69bd41fedfc4] [PERF] Execution time=1.069173
+DEBUG - 2026-03-08 18:51:59 --> [REQ_ID=9569ba306739] [REQUEST][END]
+INFO - 2026-03-08 18:51:59 --> [REQ_ID=9569ba306739] [PERF] Execution time=1.080268
+DEBUG - 2026-03-08 18:52:03 --> [REQ_ID=5d348f168922] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:52:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:52:03 --> [REQ_ID=5d348f168922] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:52:03 --> [REQ_ID=5d348f168922] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=InvestmentPortfolioManagement
+DEBUG - 2026-03-08 18:52:03 --> [REQ_ID=5d348f168922] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:52:03 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:52:03 --> [REQ_ID=a4e4b1ede581] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:52:03 --> [REQ_ID=a4e4b1ede581] [MEMORY][controller-start] 10485760
+DEBUG - 2026-03-08 18:52:03 --> [REQ_ID=a4e4b1ede581] [METHOD_ENTRY] InvestmentPortfolioManagement
+DEBUG - 2026-03-08 18:52:03 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:52:03 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:52:03 --> [REQ_ID=a4e4b1ede581] [MEMORY][commonData:start] 10485760
+DEBUG - 2026-03-08 18:52:03 --> [REQ_ID=a4e4b1ede581] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management
+INFO - 2026-03-08 18:52:03 --> [REQ_ID=a4e4b1ede581] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 18:52:04 --> themesMemory usage: 12582912
+DEBUG - 2026-03-08 18:52:04 --> [REQ_ID=5d348f168922] [FILTER_AFTER]
+DEBUG - 2026-03-08 18:52:04 --> [REQ_ID=5d348f168922] [LIFECYCLE][END] status=200 duration_ms=1,149.93 memory_delta=2097152
+INFO - 2026-03-08 18:52:04 --> [REQ_ID=a4e4b1ede581] [PERF] Execution time=1.149684
+DEBUG - 2026-03-08 18:52:04 --> [REQ_ID=5d348f168922] [REQUEST][END]
+INFO - 2026-03-08 18:52:04 --> [REQ_ID=5d348f168922] [PERF] Execution time=1.159758
+DEBUG - 2026-03-08 18:52:24 --> [REQ_ID=4e03d6fd1ff5] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:52:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:52:24 --> [REQ_ID=4e03d6fd1ff5] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:52:24 --> [REQ_ID=4e03d6fd1ff5] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=InvestmentPortfolioManagement
+DEBUG - 2026-03-08 18:52:24 --> [REQ_ID=4e03d6fd1ff5] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:52:24 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:52:24 --> [REQ_ID=69ee1332fdca] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:52:24 --> [REQ_ID=69ee1332fdca] [MEMORY][controller-start] 10485760
+DEBUG - 2026-03-08 18:52:24 --> [REQ_ID=69ee1332fdca] [METHOD_ENTRY] InvestmentPortfolioManagement
+DEBUG - 2026-03-08 18:52:24 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:52:24 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:52:24 --> [REQ_ID=69ee1332fdca] [MEMORY][commonData:start] 10485760
+DEBUG - 2026-03-08 18:52:24 --> [REQ_ID=69ee1332fdca] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management
+INFO - 2026-03-08 18:52:24 --> [REQ_ID=69ee1332fdca] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 18:52:25 --> themesMemory usage: 12582912
+DEBUG - 2026-03-08 18:52:25 --> [REQ_ID=4e03d6fd1ff5] [FILTER_AFTER]
+DEBUG - 2026-03-08 18:52:25 --> [REQ_ID=4e03d6fd1ff5] [LIFECYCLE][END] status=200 duration_ms=983.44 memory_delta=2097152
+INFO - 2026-03-08 18:52:25 --> [REQ_ID=69ee1332fdca] [PERF] Execution time=0.983157
+DEBUG - 2026-03-08 18:52:25 --> [REQ_ID=4e03d6fd1ff5] [REQUEST][END]
+INFO - 2026-03-08 18:52:25 --> [REQ_ID=4e03d6fd1ff5] [PERF] Execution time=0.995061
+DEBUG - 2026-03-08 18:52:27 --> [REQ_ID=3be6da961312] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:52:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:52:27 --> [REQ_ID=3be6da961312] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:52:27 --> [REQ_ID=3be6da961312] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=InvestmentPortfolioManagement
+DEBUG - 2026-03-08 18:52:27 --> [REQ_ID=3be6da961312] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:52:27 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:52:27 --> [REQ_ID=731a31a835c3] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:52:27 --> [REQ_ID=731a31a835c3] [MEMORY][controller-start] 10485760
+DEBUG - 2026-03-08 18:52:27 --> [REQ_ID=731a31a835c3] [METHOD_ENTRY] InvestmentPortfolioManagement
+DEBUG - 2026-03-08 18:52:27 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:52:27 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:52:27 --> [REQ_ID=731a31a835c3] [MEMORY][commonData:start] 10485760
+DEBUG - 2026-03-08 18:52:27 --> [REQ_ID=731a31a835c3] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management
+INFO - 2026-03-08 18:52:27 --> [REQ_ID=731a31a835c3] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 18:52:27 --> themesMemory usage: 12582912
+DEBUG - 2026-03-08 18:52:27 --> [REQ_ID=3be6da961312] [FILTER_AFTER]
+DEBUG - 2026-03-08 18:52:27 --> [REQ_ID=3be6da961312] [LIFECYCLE][END] status=200 duration_ms=935.80 memory_delta=2097152
+INFO - 2026-03-08 18:52:27 --> [REQ_ID=731a31a835c3] [PERF] Execution time=0.935510
+DEBUG - 2026-03-08 18:52:27 --> [REQ_ID=3be6da961312] [REQUEST][END]
+INFO - 2026-03-08 18:52:27 --> [REQ_ID=3be6da961312] [PERF] Execution time=0.946097
+DEBUG - 2026-03-08 18:52:42 --> [REQ_ID=b7d2dd5f165d] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:52:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:52:42 --> [REQ_ID=b7d2dd5f165d] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:52:42 --> [REQ_ID=b7d2dd5f165d] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=InvestmentPortfolioManagement
+DEBUG - 2026-03-08 18:52:42 --> [REQ_ID=b7d2dd5f165d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 18:52:42 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:52:42 --> [REQ_ID=710b287c917d] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:52:42 --> [REQ_ID=710b287c917d] [MEMORY][controller-start] 10485760
+DEBUG - 2026-03-08 18:52:42 --> [REQ_ID=710b287c917d] [METHOD_ENTRY] InvestmentPortfolioManagement
+DEBUG - 2026-03-08 18:52:42 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:52:42 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:52:42 --> [REQ_ID=710b287c917d] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 18:52:43 --> [REQ_ID=710b287c917d] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 18:52:43 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 18:52:43 --> [MetaService] slug=how-it-works/investment-portfolio-management pageName= cacheHit= path=DB
+DEBUG - 2026-03-08 18:52:43 --> [REQ_ID=b7d2dd5f165d] [FILTER_AFTER]
+DEBUG - 2026-03-08 18:52:43 --> [REQ_ID=b7d2dd5f165d] [LIFECYCLE][END] status=200 duration_ms=1,228.45 memory_delta=0
+INFO - 2026-03-08 18:52:43 --> [REQ_ID=710b287c917d] [PERF] Execution time=1.228193
+DEBUG - 2026-03-08 18:52:43 --> [REQ_ID=b7d2dd5f165d] [REQUEST][END]
+INFO - 2026-03-08 18:52:43 --> [REQ_ID=b7d2dd5f165d] [PERF] Execution time=1.239494
+DEBUG - 2026-03-08 18:53:01 --> [REQ_ID=c47484d98887] [REQUEST][START] GET /index.php/How-It-Works/Purchase-MyMI-Gold
+DEBUG - 2026-03-08 18:53:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:53:02 --> [REQ_ID=c47484d98887] [FILTER_BEFORE] /index.php/How-It-Works/Purchase-MyMI-Gold
+DEBUG - 2026-03-08 18:53:02 --> [REQ_ID=c47484d98887] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=PurchaseMyMIGold
+DEBUG - 2026-03-08 18:53:02 --> [REQ_ID=c47484d98887] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Purchase-MyMI-Gold
+DEBUG - 2026-03-08 18:53:02 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:53:02 --> [REQ_ID=866dea5a18c8] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:53:02 --> [REQ_ID=866dea5a18c8] [MEMORY][controller-start] 10485760
+DEBUG - 2026-03-08 18:53:02 --> [REQ_ID=866dea5a18c8] [METHOD_ENTRY] PurchaseMyMIGold
+DEBUG - 2026-03-08 18:53:02 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:53:02 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:53:02 --> [REQ_ID=866dea5a18c8] [PERF] Execution time=0.046739
+DEBUG - 2026-03-08 18:54:38 --> [REQ_ID=6a3b068e0104] [REQUEST][START] GET /index.php/How-It-Works/Purchase-MyMI-Gold
+DEBUG - 2026-03-08 18:54:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:54:38 --> [REQ_ID=6a3b068e0104] [FILTER_BEFORE] /index.php/How-It-Works/Purchase-MyMI-Gold
+DEBUG - 2026-03-08 18:54:38 --> [REQ_ID=6a3b068e0104] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=PurchaseMyMIGold
+DEBUG - 2026-03-08 18:54:38 --> [REQ_ID=6a3b068e0104] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Purchase-MyMI-Gold
+DEBUG - 2026-03-08 18:54:38 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 18:54:38 --> [REQ_ID=7695a060ac2e] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 18:54:38 --> [REQ_ID=7695a060ac2e] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 18:54:38 --> [REQ_ID=7695a060ac2e] [METHOD_ENTRY] PurchaseMyMIGold
+DEBUG - 2026-03-08 18:54:38 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:54:38 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 18:54:38 --> [REQ_ID=7695a060ac2e] [PERF] Execution time=0.194226
+DEBUG - 2026-03-08 18:55:19 --> [REQ_ID=586db75e4265] [REQUEST][START] GET /index.php/MyMI-Gold/Goals/Daily
+DEBUG - 2026-03-08 18:55:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:55:19 --> [REQ_ID=586db75e4265] [FILTER_BEFORE] /index.php/MyMI-Gold/Goals/Daily
+DEBUG - 2026-03-08 18:55:19 --> [REQ_ID=586db75e4265] [ROUTE] Controller=\App\Modules\User\Controllers\DashboardController Method=goals
+DEBUG - 2026-03-08 18:55:19 --> [REQ_ID=586db75e4265] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/MyMI-Gold/Goals/Daily
+DEBUG - 2026-03-08 18:55:19 --> [CSRF] token name=csrf_test_name hash=039b68ab27d3e91325f7294d37e30b43
+DEBUG - 2026-03-08 18:55:19 --> [REQ_ID=586db75e4265] [REQUEST][END]
+INFO - 2026-03-08 18:55:19 --> [REQ_ID=586db75e4265] [PERF] Execution time=0.019030
+DEBUG - 2026-03-08 18:55:20 --> [REQ_ID=2fbbf1765fa0] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 18:55:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:55:21 --> [REQ_ID=2fbbf1765fa0] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 18:55:21 --> [REQ_ID=2fbbf1765fa0] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 18:55:21 --> [REQ_ID=2fbbf1765fa0] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 18:55:21 --> [CSRF] token name=csrf_test_name hash=cffa1d6cc7382f828cd1c7ad988d1318
+DEBUG - 2026-03-08 18:55:21 --> [REQ_ID=526b80bd400c] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 18:55:21 --> [REQ_ID=526b80bd400c] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 18:55:21 --> [REQ_ID=2fbbf1765fa0] [FILTER_AFTER]
+DEBUG - 2026-03-08 18:55:21 --> [REQ_ID=2fbbf1765fa0] [LIFECYCLE][END] status=200 duration_ms=180.99 memory_delta=0
+INFO - 2026-03-08 18:55:21 --> [REQ_ID=526b80bd400c] [PERF] Execution time=0.168538
+DEBUG - 2026-03-08 18:55:21 --> [REQ_ID=2fbbf1765fa0] [REQUEST][END]
+INFO - 2026-03-08 18:55:21 --> [REQ_ID=2fbbf1765fa0] [PERF] Execution time=0.330376
+DEBUG - 2026-03-08 18:56:17 --> [REQ_ID=a1dc745893e1] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 18:56:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 18:56:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 18:56:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 18:56:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 18:56:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 18:59:19 --> [REQ_ID=a6f04006113f] [REQUEST][START] GET /
+DEBUG - 2026-03-08 18:59:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 18:59:19 --> [REQ_ID=a6f04006113f] [FILTER_BEFORE] /
+DEBUG - 2026-03-08 18:59:19 --> [REQ_ID=a6f04006113f] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 18:59:19 --> [REQ_ID=a6f04006113f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 18:59:19 --> [CSRF] token name=csrf_test_name hash=49686f7013f50d8be042e4e46ba0cbfb
+DEBUG - 2026-03-08 18:59:19 --> [REQ_ID=6e1028930452] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 18:59:19 --> [REQ_ID=6e1028930452] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 18:59:19 --> [REQ_ID=6e1028930452] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 18:59:19 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 18:59:20 --> [MetaService] slug= pageName= cacheHit= path=FALLBACK
+DEBUG - 2026-03-08 18:59:20 --> [REQ_ID=6e1028930452] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 18:59:20 --> [REQ_ID=6e1028930452] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 18:59:20 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 18:59:20 --> [MetaService] slug= pageName=Home cacheHit= path=DB
+DEBUG - 2026-03-08 18:59:20 --> [REQ_ID=a6f04006113f] [FILTER_AFTER]
+DEBUG - 2026-03-08 18:59:20 --> [REQ_ID=a6f04006113f] [LIFECYCLE][END] status=200 duration_ms=800.09 memory_delta=4194304
+INFO - 2026-03-08 18:59:20 --> [REQ_ID=6e1028930452] [PERF] Execution time=0.796818
+DEBUG - 2026-03-08 18:59:20 --> [REQ_ID=a6f04006113f] [REQUEST][END]
+INFO - 2026-03-08 18:59:20 --> [REQ_ID=a6f04006113f] [PERF] Execution time=0.912975
+DEBUG - 2026-03-08 19:00:01 --> [REQ_ID=141bb95c959c] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 19:00:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 19:00:01 --> [REQ_ID=141bb95c959c] [FILTER_BEFORE] /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 19:00:01 --> [REQ_ID=141bb95c959c] [ROUTE] Controller=\App\Modules\Management\Controllers\ManagementAPIController Method=Run_CRON_Tasks
+DEBUG - 2026-03-08 19:00:01 --> [REQ_ID=141bb95c959c] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 19:00:01 --> [REQ_ID=141bb95c959c] [REQUEST][END]
+INFO - 2026-03-08 19:00:01 --> [REQ_ID=141bb95c959c] [PERF] Execution time=0.062690
+INFO - 2026-03-08 19:00:01 --> [spark:ops:work] Started
+INFO - 2026-03-08 19:00:01 --> [SPARK_START] App\Commands\AIOps\Run
+INFO - 2026-03-08 19:00:01 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 19:00:01 --> [spark:aiops:run] Intent
+INFO - 2026-03-08 19:00:01 --> [SPARK_START] App\Commands\Ops\Work
+INFO - 2026-03-08 19:00:01 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 19:00:01 --> [spark:ops:work] Intent
+INFO - 2026-03-08 19:00:01 --> [spark:ops:work] Completed
+INFO - 2026-03-08 19:00:01 --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.136740
+INFO - 2026-03-08 19:00:01 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 19:00:03 --> [AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Started
+INFO - 2026-03-08 19:00:03 --> [SPARK_START] App\Commands\Logs\Summarize
+INFO - 2026-03-08 19:00:03 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 19:00:03 --> [spark:logs:summarize] Intent
+INFO - 2026-03-08 19:00:03 --> [AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Completed
+INFO - 2026-03-08 19:00:03 --> [SPARK_COMPLETE] App\Commands\Logs\Summarize duration=0.043717
+INFO - 2026-03-08 19:00:03 --> [SPARK_MEMORY] 23068672
+INFO - 2026-03-08 19:00:03 --> [spark:app:healthcheck] Started
+INFO - 2026-03-08 19:00:03 --> [SPARK_START] App\Commands\App\Healthcheck
+INFO - 2026-03-08 19:00:03 --> [SPARK_MEMORY] 18874368
+INFO - 2026-03-08 19:00:03 --> [spark:app:healthcheck] Intent
+DEBUG - 2026-03-08 19:00:03 --> LOG_HEALTHCHECK debug marker=8784a0673651
+INFO - 2026-03-08 19:00:03 --> LOG_HEALTHCHECK info marker=8784a0673651
+NOTICE - 2026-03-08 19:00:03 --> LOG_HEALTHCHECK probe marker=8784a0673651
+INFO - 2026-03-08 19:00:03 --> [spark:app:healthcheck] Completed
+INFO - 2026-03-08 19:00:03 --> [SPARK_COMPLETE] App\Commands\App\Healthcheck duration=0.043320
+INFO - 2026-03-08 19:00:03 --> [SPARK_MEMORY] 23068672
+INFO - 2026-03-08 19:00:03 --> [SPARK_COMPLETE] App\Commands\AIOps\Run duration=2.150064
+INFO - 2026-03-08 19:00:03 --> [SPARK_MEMORY] 18874368
+DEBUG - 2026-03-08 19:01:17 --> [REQ_ID=f6ca62455e01] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 19:01:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 19:01:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 19:01:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 19:01:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 19:01:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 19:02:30 --> [REQ_ID=432c3e0f0bf2] [REQUEST][START] GET /index.php?debugbar
+DEBUG - 2026-03-08 19:02:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 19:02:30 --> [REQ_ID=432c3e0f0bf2] [FILTER_BEFORE] /index.php?debugbar
+DEBUG - 2026-03-08 19:02:30 --> [REQ_ID=432c3e0f0bf2] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 19:02:30 --> [REQ_ID=432c3e0f0bf2] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php?debugbar=
+DEBUG - 2026-03-08 19:02:30 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 19:02:30 --> [REQ_ID=259aeb7146ee] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 19:02:30 --> [REQ_ID=259aeb7146ee] [MEMORY][controller-start] 4194304
+INFO - 2026-03-08 19:02:30 --> [REQ_ID=259aeb7146ee] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 19:02:30 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 19:02:31 --> [MetaService] slug= pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 19:02:31 --> [REQ_ID=259aeb7146ee] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 19:02:31 --> [REQ_ID=259aeb7146ee] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 19:02:31 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 19:02:31 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 19:02:31 --> [REQ_ID=432c3e0f0bf2] [FILTER_AFTER]
+DEBUG - 2026-03-08 19:02:31 --> [REQ_ID=432c3e0f0bf2] [LIFECYCLE][END] status=200 duration_ms=754.51 memory_delta=4194304
+INFO - 2026-03-08 19:02:31 --> [REQ_ID=259aeb7146ee] [PERF] Execution time=0.752526
+DEBUG - 2026-03-08 19:02:31 --> [REQ_ID=432c3e0f0bf2] [REQUEST][END]
+INFO - 2026-03-08 19:02:31 --> [REQ_ID=432c3e0f0bf2] [PERF] Execution time=0.773472
+DEBUG - 2026-03-08 19:02:34 --> [REQ_ID=70556b86df50] [REQUEST][START] GET /index.php?debugbar
+DEBUG - 2026-03-08 19:02:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 19:02:34 --> [REQ_ID=70556b86df50] [FILTER_BEFORE] /index.php?debugbar
+DEBUG - 2026-03-08 19:02:34 --> [REQ_ID=70556b86df50] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 19:02:34 --> [REQ_ID=70556b86df50] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php?debugbar=
+DEBUG - 2026-03-08 19:02:34 --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+DEBUG - 2026-03-08 19:02:34 --> [REQ_ID=39766dc4a636] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 19:02:34 --> [REQ_ID=39766dc4a636] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 19:02:34 --> [REQ_ID=39766dc4a636] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 19:02:34 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 19:02:35 --> [MetaService] slug= pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 19:02:35 --> [REQ_ID=39766dc4a636] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 19:02:35 --> [REQ_ID=39766dc4a636] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 19:02:35 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 19:02:35 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 19:02:35 --> [REQ_ID=70556b86df50] [FILTER_AFTER]
+DEBUG - 2026-03-08 19:02:35 --> [REQ_ID=70556b86df50] [LIFECYCLE][END] status=200 duration_ms=682.28 memory_delta=2097152
+INFO - 2026-03-08 19:02:35 --> [REQ_ID=39766dc4a636] [PERF] Execution time=0.682105
+DEBUG - 2026-03-08 19:02:35 --> [REQ_ID=70556b86df50] [REQUEST][END]
+INFO - 2026-03-08 19:02:35 --> [REQ_ID=70556b86df50] [PERF] Execution time=0.691275
+DEBUG - 2026-03-08 19:05:49 --> [REQ_ID=344ea1ab5516] [REQUEST][START] GET /index.php/Account
+DEBUG - 2026-03-08 19:05:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 19:05:49 --> [REQ_ID=344ea1ab5516] [FILTER_BEFORE] /index.php/Account
+DEBUG - 2026-03-08 19:05:49 --> [REQ_ID=344ea1ab5516] [ROUTE] Controller=\App\Modules\User\Controllers\DashboardController Method=account
+DEBUG - 2026-03-08 19:05:49 --> [REQ_ID=344ea1ab5516] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Account
+DEBUG - 2026-03-08 19:05:49 --> [CSRF] token name=csrf_test_name hash=a8c13ec7bb12e3793a90057030138fb2
+DEBUG - 2026-03-08 19:05:49 --> [REQ_ID=344ea1ab5516] [REQUEST][END]
+INFO - 2026-03-08 19:05:49 --> [REQ_ID=344ea1ab5516] [PERF] Execution time=0.067035
+DEBUG - 2026-03-08 19:05:54 --> [REQ_ID=8c500db20572] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 19:05:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 19:05:54 --> [REQ_ID=8c500db20572] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 19:05:54 --> [REQ_ID=8c500db20572] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 19:05:54 --> [REQ_ID=8c500db20572] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 19:05:54 --> [CSRF] token name=csrf_test_name hash=6bb19b44b311c652bb5b5c6f72c7b3fc
+DEBUG - 2026-03-08 19:05:54 --> [REQ_ID=0d6b1e1a3a6a] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 19:05:54 --> [REQ_ID=0d6b1e1a3a6a] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 19:05:54 --> [REQ_ID=8c500db20572] [FILTER_AFTER]
+DEBUG - 2026-03-08 19:05:54 --> [REQ_ID=8c500db20572] [LIFECYCLE][END] status=200 duration_ms=89.46 memory_delta=0
+INFO - 2026-03-08 19:05:54 --> [REQ_ID=0d6b1e1a3a6a] [PERF] Execution time=0.088427
+DEBUG - 2026-03-08 19:05:54 --> [REQ_ID=8c500db20572] [REQUEST][END]
+INFO - 2026-03-08 19:05:54 --> [REQ_ID=8c500db20572] [PERF] Execution time=0.105339
+DEBUG - 2026-03-08 19:06:17 --> [REQ_ID=04bd1f05b958] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 19:06:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 19:06:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 19:06:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 19:06:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 19:06:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 19:07:12 --> [REQ_ID=a646a49852e9] [REQUEST][START] GET /
+DEBUG - 2026-03-08 19:07:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 19:07:12 --> [REQ_ID=a646a49852e9] [FILTER_BEFORE] /
+DEBUG - 2026-03-08 19:07:12 --> [REQ_ID=a646a49852e9] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 19:07:12 --> [REQ_ID=a646a49852e9] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 19:07:12 --> [CSRF] token name=csrf_test_name hash=87d148547a53d7f843aee44142b5039b
+DEBUG - 2026-03-08 19:07:12 --> [REQ_ID=eab61ababb0b] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 19:07:12 --> [REQ_ID=eab61ababb0b] [MEMORY][controller-start] 4194304
+INFO - 2026-03-08 19:07:12 --> [REQ_ID=eab61ababb0b] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 19:07:12 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 19:07:13 --> [MetaService] slug= pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 19:07:13 --> [REQ_ID=eab61ababb0b] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 19:07:13 --> [REQ_ID=eab61ababb0b] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 19:07:13 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 19:07:13 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 19:07:13 --> [REQ_ID=a646a49852e9] [FILTER_AFTER]
+DEBUG - 2026-03-08 19:07:13 --> [REQ_ID=a646a49852e9] [LIFECYCLE][END] status=200 duration_ms=838.38 memory_delta=4194304
+INFO - 2026-03-08 19:07:13 --> [REQ_ID=eab61ababb0b] [PERF] Execution time=0.838130
+DEBUG - 2026-03-08 19:07:13 --> [REQ_ID=a646a49852e9] [REQUEST][END]
+INFO - 2026-03-08 19:07:13 --> [REQ_ID=a646a49852e9] [PERF] Execution time=0.849213
+DEBUG - 2026-03-08 19:11:17 --> [REQ_ID=d42c7f402d7a] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 19:11:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 19:11:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 19:11:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 19:11:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 19:11:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 19:15:01 --> [REQ_ID=8dfc71fde49c] [REQUEST][START] GET /index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 19:15:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 19:15:01 --> [REQ_ID=8dfc71fde49c] [FILTER_BEFORE] /index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 19:15:01 --> [REQ_ID=8dfc71fde49c] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=fetchEmailAlerts
+DEBUG - 2026-03-08 19:15:01 --> [REQ_ID=8dfc71fde49c] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 19:15:01 --> [REQ_ID=8dfc71fde49c] [REQUEST][END]
+INFO - 2026-03-08 19:15:01 --> [REQ_ID=8dfc71fde49c] [PERF] Execution time=0.050881
+DEBUG - 2026-03-08 19:15:05 --> [REQ_ID=45bc6b109539] [REQUEST][START] GET /index.php/Management/Marketing/Ideas
+DEBUG - 2026-03-08 19:15:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 19:15:05 --> [REQ_ID=45bc6b109539] [FILTER_BEFORE] /index.php/Management/Marketing/Ideas
+DEBUG - 2026-03-08 19:15:05 --> [REQ_ID=45bc6b109539] [ROUTE] Controller=\App\Modules\Management\Controllers\MarketingAdminController Method=ideas
+DEBUG - 2026-03-08 19:15:05 --> [REQ_ID=45bc6b109539] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management/Marketing/Ideas
+DEBUG - 2026-03-08 19:15:05 --> [CSRF] token name=csrf_test_name hash=b9003f6e71d336e3b8cab98fbe48bbcd
+DEBUG - 2026-03-08 19:15:05 --> [REQ_ID=45bc6b109539] [REQUEST][END]
+INFO - 2026-03-08 19:15:05 --> [REQ_ID=45bc6b109539] [PERF] Execution time=0.043644
+DEBUG - 2026-03-08 19:15:09 --> [REQ_ID=7af4a4efccec] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 19:15:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 19:15:09 --> [REQ_ID=7af4a4efccec] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 19:15:09 --> [REQ_ID=7af4a4efccec] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 19:15:09 --> [REQ_ID=7af4a4efccec] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 19:15:09 --> [CSRF] token name=csrf_test_name hash=b8d4e8d9ca3601090abfd3d576b694aa
+DEBUG - 2026-03-08 19:15:09 --> [REQ_ID=74da169ca33e] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 19:15:09 --> [REQ_ID=74da169ca33e] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 19:15:10 --> [REQ_ID=7af4a4efccec] [FILTER_AFTER]
+DEBUG - 2026-03-08 19:15:10 --> [REQ_ID=7af4a4efccec] [LIFECYCLE][END] status=200 duration_ms=65.46 memory_delta=0
+INFO - 2026-03-08 19:15:10 --> [REQ_ID=74da169ca33e] [PERF] Execution time=0.065342
+DEBUG - 2026-03-08 19:15:10 --> [REQ_ID=7af4a4efccec] [REQUEST][END]
+INFO - 2026-03-08 19:15:10 --> [REQ_ID=7af4a4efccec] [PERF] Execution time=0.079575
+DEBUG - 2026-03-08 19:16:17 --> [REQ_ID=f11e8477a3e8] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 19:16:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 19:16:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 19:16:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 19:16:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 19:16:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 19:20:32 --> [REQ_ID=ee792f119b16] [REQUEST][START] GET /
+DEBUG - 2026-03-08 19:20:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 19:20:32 --> [REQ_ID=ee792f119b16] [FILTER_BEFORE] /
+DEBUG - 2026-03-08 19:20:32 --> [REQ_ID=ee792f119b16] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 19:20:32 --> [REQ_ID=ee792f119b16] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 19:20:32 --> [CSRF] token name=csrf_test_name hash=3781584a4aae6b7651925d9cce2522b8
+DEBUG - 2026-03-08 19:20:32 --> [REQ_ID=17296f87c911] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 19:20:32 --> [REQ_ID=17296f87c911] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 19:20:32 --> [REQ_ID=17296f87c911] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 19:20:32 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 19:20:32 --> [MetaService] slug= pageName= cacheHit= path=FALLBACK
+DEBUG - 2026-03-08 19:20:32 --> [REQ_ID=17296f87c911] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 19:20:32 --> [REQ_ID=17296f87c911] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 19:20:33 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 19:20:33 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 19:20:33 --> [REQ_ID=ee792f119b16] [FILTER_AFTER]
+DEBUG - 2026-03-08 19:20:33 --> [REQ_ID=ee792f119b16] [LIFECYCLE][END] status=200 duration_ms=888.02 memory_delta=4194304
+INFO - 2026-03-08 19:20:33 --> [REQ_ID=17296f87c911] [PERF] Execution time=0.885366
+DEBUG - 2026-03-08 19:20:33 --> [REQ_ID=ee792f119b16] [REQUEST][END]
+INFO - 2026-03-08 19:20:33 --> [REQ_ID=ee792f119b16] [PERF] Execution time=0.948173
+DEBUG - 2026-03-08 19:21:17 --> [REQ_ID=8ba69948e054] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 19:21:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 19:21:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 19:21:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 19:21:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 19:21:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 19:25:53 --> [REQ_ID=9daca3a24d3b] [REQUEST][START] GET /index.php/Management/Marketing/Content/Generator
+DEBUG - 2026-03-08 19:25:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 19:25:53 --> [REQ_ID=9daca3a24d3b] [FILTER_BEFORE] /index.php/Management/Marketing/Content/Generator
+DEBUG - 2026-03-08 19:25:53 --> [REQ_ID=9daca3a24d3b] [ROUTE] Controller=\App\Modules\Management\Controllers\MarketingAdminController Method=contentGenerator
+DEBUG - 2026-03-08 19:25:53 --> [REQ_ID=9daca3a24d3b] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management/Marketing/Content/Generator
+DEBUG - 2026-03-08 19:25:53 --> [CSRF] token name=csrf_test_name hash=ebad75d0075de3040b8ca71c2289ff67
+DEBUG - 2026-03-08 19:25:53 --> [REQ_ID=9daca3a24d3b] [REQUEST][END]
+INFO - 2026-03-08 19:25:53 --> [REQ_ID=9daca3a24d3b] [PERF] Execution time=0.057798
+DEBUG - 2026-03-08 19:25:59 --> [REQ_ID=ddf42027e4fb] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 19:25:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 19:25:59 --> [REQ_ID=ddf42027e4fb] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 19:25:59 --> [REQ_ID=ddf42027e4fb] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 19:25:59 --> [REQ_ID=ddf42027e4fb] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 19:25:59 --> [CSRF] token name=csrf_test_name hash=12b99ea04a2365460d0d888d36ca8832
+DEBUG - 2026-03-08 19:25:59 --> [REQ_ID=bcac36f84bb6] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 19:25:59 --> [REQ_ID=bcac36f84bb6] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 19:25:59 --> [REQ_ID=ddf42027e4fb] [FILTER_AFTER]
+DEBUG - 2026-03-08 19:25:59 --> [REQ_ID=ddf42027e4fb] [LIFECYCLE][END] status=200 duration_ms=42.23 memory_delta=0
+INFO - 2026-03-08 19:25:59 --> [REQ_ID=bcac36f84bb6] [PERF] Execution time=0.041859
+DEBUG - 2026-03-08 19:25:59 --> [REQ_ID=ddf42027e4fb] [REQUEST][END]
+INFO - 2026-03-08 19:25:59 --> [REQ_ID=ddf42027e4fb] [PERF] Execution time=0.056605
+DEBUG - 2026-03-08 19:26:17 --> [REQ_ID=5ce453d5d4d4] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 19:26:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 19:26:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 19:26:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 19:26:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 19:26:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 19:31:17 --> [REQ_ID=3cd107f8a945] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 19:31:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 19:31:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 19:31:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 19:31:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 19:31:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 19:36:17 --> [REQ_ID=9ca00ddc9c1d] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 19:36:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 19:36:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 19:36:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 19:36:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 19:36:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 19:41:17 --> [REQ_ID=fc28cdf5dac7] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 19:41:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 19:41:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 19:41:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 19:41:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 19:41:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 19:46:17 --> [REQ_ID=5c31b6d2713d] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 19:46:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 19:46:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 19:46:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 19:46:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 19:46:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 19:48:10 --> [REQ_ID=6080dc0c1725] [REQUEST][START] GET /index.php/Marketplace
+DEBUG - 2026-03-08 19:48:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 19:48:10 --> [REQ_ID=6080dc0c1725] [FILTER_BEFORE] /index.php/Marketplace
+DEBUG - 2026-03-08 19:48:10 --> [REQ_ID=6080dc0c1725] [ROUTE] Controller=\App\Modules\ScriptStudio\Controllers\ScriptStudioController Method=marketplace
+DEBUG - 2026-03-08 19:48:10 --> [REQ_ID=6080dc0c1725] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Marketplace
+DEBUG - 2026-03-08 19:48:10 --> [CSRF] token name=csrf_test_name hash=9444106e954211d914bbb512f89f17aa
+DEBUG - 2026-03-08 19:48:10 --> [REQ_ID=6080dc0c1725] [REQUEST][END]
+INFO - 2026-03-08 19:48:10 --> [REQ_ID=6080dc0c1725] [PERF] Execution time=0.056223
+DEBUG - 2026-03-08 19:48:10 --> [REQ_ID=ce377f4941db] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 19:48:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 19:48:10 --> [REQ_ID=ce377f4941db] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 19:48:10 --> [REQ_ID=ce377f4941db] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 19:48:10 --> [REQ_ID=ce377f4941db] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 19:48:10 --> [CSRF] token name=csrf_test_name hash=d9091814e6685548222d714eb747286a
+DEBUG - 2026-03-08 19:48:10 --> [REQ_ID=9280152a5a2b] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 19:48:10 --> [REQ_ID=9280152a5a2b] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 19:48:10 --> [REQ_ID=ce377f4941db] [FILTER_AFTER]
+DEBUG - 2026-03-08 19:48:10 --> [REQ_ID=ce377f4941db] [LIFECYCLE][END] status=200 duration_ms=82.11 memory_delta=0
+INFO - 2026-03-08 19:48:10 --> [REQ_ID=9280152a5a2b] [PERF] Execution time=0.081923
+DEBUG - 2026-03-08 19:48:10 --> [REQ_ID=ce377f4941db] [REQUEST][END]
+INFO - 2026-03-08 19:48:10 --> [REQ_ID=ce377f4941db] [PERF] Execution time=0.094310
+DEBUG - 2026-03-08 19:49:27 --> [REQ_ID=d5bcfe939094] [REQUEST][START] GET /
+DEBUG - 2026-03-08 19:49:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 19:49:27 --> [REQ_ID=d5bcfe939094] [FILTER_BEFORE] /
+DEBUG - 2026-03-08 19:49:27 --> [REQ_ID=d5bcfe939094] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 19:49:27 --> [REQ_ID=d5bcfe939094] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 19:49:27 --> [CSRF] token name=csrf_test_name hash=a1943d0567eaba2cef799d73f2132ddf
+DEBUG - 2026-03-08 19:49:27 --> [REQ_ID=27f74ecf9ec3] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 19:49:27 --> [REQ_ID=27f74ecf9ec3] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 19:49:27 --> [REQ_ID=27f74ecf9ec3] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 19:49:27 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 19:49:28 --> [MetaService] slug= pageName= cacheHit= path=FALLBACK
+DEBUG - 2026-03-08 19:49:28 --> [REQ_ID=27f74ecf9ec3] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 19:49:28 --> [REQ_ID=27f74ecf9ec3] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 19:49:28 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 19:49:28 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 19:49:28 --> [REQ_ID=d5bcfe939094] [FILTER_AFTER]
+DEBUG - 2026-03-08 19:49:28 --> [REQ_ID=d5bcfe939094] [LIFECYCLE][END] status=200 duration_ms=821.01 memory_delta=4194304
+INFO - 2026-03-08 19:49:28 --> [REQ_ID=27f74ecf9ec3] [PERF] Execution time=0.819069
+DEBUG - 2026-03-08 19:49:28 --> [REQ_ID=d5bcfe939094] [REQUEST][END]
+INFO - 2026-03-08 19:49:28 --> [REQ_ID=d5bcfe939094] [PERF] Execution time=0.859187
+DEBUG - 2026-03-08 19:51:17 --> [REQ_ID=d4c4d3562f42] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 19:51:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 19:51:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 19:51:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 19:51:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 19:51:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 19:51:55 --> [REQ_ID=7ccf27ee66d4] [REQUEST][START] GET /index.php/Exchange
+DEBUG - 2026-03-08 19:51:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 19:51:55 --> [REQ_ID=7ccf27ee66d4] [FILTER_BEFORE] /index.php/Exchange
+DEBUG - 2026-03-08 19:51:55 --> [REQ_ID=7ccf27ee66d4] [ROUTE] Controller=\App\Modules\Exchange\Controllers\ExchangeController Method=index
+DEBUG - 2026-03-08 19:51:55 --> [REQ_ID=7ccf27ee66d4] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Exchange
+DEBUG - 2026-03-08 19:51:55 --> [CSRF] token name=csrf_test_name hash=8d5769af93e6d30aa7ef92145153df1d
+DEBUG - 2026-03-08 19:51:55 --> [REQ_ID=7ccf27ee66d4] [REQUEST][END]
+INFO - 2026-03-08 19:51:55 --> [REQ_ID=7ccf27ee66d4] [PERF] Execution time=0.033721
+DEBUG - 2026-03-08 19:51:56 --> [REQ_ID=0d3c38a5bdca] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 19:51:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 19:51:56 --> [REQ_ID=0d3c38a5bdca] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 19:51:56 --> [REQ_ID=0d3c38a5bdca] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 19:51:56 --> [REQ_ID=0d3c38a5bdca] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 19:51:56 --> [CSRF] token name=csrf_test_name hash=2f53160b8a45ef7ef5b0cbfa7defd3ad
+DEBUG - 2026-03-08 19:51:56 --> [REQ_ID=716d46bfbcff] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 19:51:56 --> [REQ_ID=716d46bfbcff] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 19:51:56 --> [REQ_ID=0d3c38a5bdca] [FILTER_AFTER]
+DEBUG - 2026-03-08 19:51:56 --> [REQ_ID=0d3c38a5bdca] [LIFECYCLE][END] status=200 duration_ms=117.49 memory_delta=0
+INFO - 2026-03-08 19:51:56 --> [REQ_ID=716d46bfbcff] [PERF] Execution time=0.116757
+DEBUG - 2026-03-08 19:51:56 --> [REQ_ID=0d3c38a5bdca] [REQUEST][END]
+INFO - 2026-03-08 19:51:56 --> [REQ_ID=0d3c38a5bdca] [PERF] Execution time=0.135610
+DEBUG - 2026-03-08 19:55:28 --> [REQ_ID=1baced8c8713] [REQUEST][START] GET /index.php/Management/Security
+DEBUG - 2026-03-08 19:55:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 19:55:28 --> [REQ_ID=1baced8c8713] [FILTER_BEFORE] /index.php/Management/Security
+DEBUG - 2026-03-08 19:55:28 --> [REQ_ID=1baced8c8713] [ROUTE] Controller=\App\Modules\Management\Controllers\SecurityController Method=index
+DEBUG - 2026-03-08 19:55:28 --> [REQ_ID=1baced8c8713] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management/Security
+DEBUG - 2026-03-08 19:55:28 --> [CSRF] token name=csrf_test_name hash=035302e24fb8831e13fc071d2dce42a8
+DEBUG - 2026-03-08 19:55:28 --> [REQ_ID=1baced8c8713] [REQUEST][END]
+INFO - 2026-03-08 19:55:28 --> [REQ_ID=1baced8c8713] [PERF] Execution time=0.050549
+DEBUG - 2026-03-08 19:55:29 --> [REQ_ID=04abc21185c8] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 19:55:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 19:55:29 --> [REQ_ID=04abc21185c8] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 19:55:29 --> [REQ_ID=04abc21185c8] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 19:55:29 --> [REQ_ID=04abc21185c8] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 19:55:29 --> [CSRF] token name=csrf_test_name hash=73cb0a53e3f482ee419e3539b64cdb2f
+DEBUG - 2026-03-08 19:55:29 --> [REQ_ID=44bd3167c0c9] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 19:55:29 --> [REQ_ID=44bd3167c0c9] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 19:55:29 --> [REQ_ID=04abc21185c8] [FILTER_AFTER]
+DEBUG - 2026-03-08 19:55:29 --> [REQ_ID=04abc21185c8] [LIFECYCLE][END] status=200 duration_ms=45.63 memory_delta=0
+INFO - 2026-03-08 19:55:29 --> [REQ_ID=44bd3167c0c9] [PERF] Execution time=0.043564
+DEBUG - 2026-03-08 19:55:29 --> [REQ_ID=04abc21185c8] [REQUEST][END]
+INFO - 2026-03-08 19:55:29 --> [REQ_ID=04abc21185c8] [PERF] Execution time=0.065875
+DEBUG - 2026-03-08 19:56:17 --> [REQ_ID=6bffa567e9b2] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 19:56:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 19:56:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 19:56:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 19:56:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 19:56:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 20:00:01 --> [REQ_ID=09e53a46f837] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 20:00:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:00:02 --> [REQ_ID=09e53a46f837] [FILTER_BEFORE] /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 20:00:02 --> [REQ_ID=09e53a46f837] [ROUTE] Controller=\App\Modules\Management\Controllers\ManagementAPIController Method=Run_CRON_Tasks
+DEBUG - 2026-03-08 20:00:02 --> [REQ_ID=09e53a46f837] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 20:00:02 --> [REQ_ID=09e53a46f837] [REQUEST][END]
+INFO - 2026-03-08 20:00:02 --> [REQ_ID=09e53a46f837] [PERF] Execution time=0.076758
+DEBUG - 2026-03-08 20:01:17 --> [REQ_ID=118cab289491] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 20:01:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 20:01:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 20:01:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 20:01:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 20:01:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 20:06:17 --> [REQ_ID=e44440ae1daa] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 20:06:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 20:06:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 20:06:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 20:06:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 20:06:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 20:10:20 --> [REQ_ID=e3eb16ee55a4] [REQUEST][START] GET /index.php/Preview/Alert/NASDAQ-GUTS
+DEBUG - 2026-03-08 20:10:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:10:20 --> [REQ_ID=e3eb16ee55a4] [FILTER_BEFORE] /index.php/Preview/Alert/NASDAQ-GUTS
+DEBUG - 2026-03-08 20:10:20 --> [REQ_ID=e3eb16ee55a4] [ROUTE] Controller=\App\Modules\User\Controllers\AlertsController Method=preview
+DEBUG - 2026-03-08 20:10:20 --> [REQ_ID=e3eb16ee55a4] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Preview/Alert/NASDAQ-GUTS
+DEBUG - 2026-03-08 20:10:20 --> [CSRF] token name=csrf_test_name hash=11977567971703f0eb04b3a9b046f2bd
+DEBUG - 2026-03-08 20:10:20 --> [REQ_ID=c3838842c66b] [INIT] App\Modules\User\Controllers\AlertsController::GET
+INFO - 2026-03-08 20:10:20 --> [REQ_ID=c3838842c66b] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 20:10:21 --> [REQ_ID=c3838842c66b] [METHOD_ENTRY] preview
+DEBUG - 2026-03-08 20:10:21 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:10:21 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 20:10:21 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 20:10:21 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 20:10:21 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 20:10:21 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 20:10:21 --> MyMIInvestments: no session user detected; skipping personalized hydration.
+DEBUG - 2026-03-08 20:10:21 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 20:10:21 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 20:10:21 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-08 20:10:21 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 20:10:21 --> MyMIAlerts: no authenticated user context detected.
+DEBUG - 2026-03-08 20:10:21 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 20:10:21 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 20:10:21 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 20:10:21 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 20:10:21 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 20:10:21 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 20:10:21 --> [REQ_ID=c3838842c66b] [MEMORY][commonData:start] 8388608
+DEBUG - 2026-03-08 20:10:21 --> MyMIInvestments: no session user detected; skipping personalized hydration.
+DEBUG - 2026-03-08 20:10:21 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 20:10:21 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 20:10:21 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 20:10:21 --> MyMIAlerts: no authenticated user context detected.
+DEBUG - 2026-03-08 20:10:21 --> TwelveData batch response error: **symbol** or **figi** parameter is missing or invalid. Please provide a valid symbol according to API documentation: https://twelvedata.com/docs#reference-data
+DEBUG - 2026-03-08 20:10:21 --> Marketstack fallback failed: 22 : The requested URL returned error: 403
+DEBUG - 2026-03-08 20:10:21 --> [REQ_ID=c3838842c66b] [VIEW_RENDER] themes/public/previewAlert
+INFO - 2026-03-08 20:10:21 --> [REQ_ID=c3838842c66b] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 20:10:21 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 20:10:21 --> [REQ_ID=e3eb16ee55a4] [FILTER_AFTER]
+DEBUG - 2026-03-08 20:10:21 --> [REQ_ID=e3eb16ee55a4] [LIFECYCLE][END] status=200 duration_ms=1,066.15 memory_delta=2097152
+INFO - 2026-03-08 20:10:21 --> [REQ_ID=c3838842c66b] [PERF] Execution time=1.064257
+DEBUG - 2026-03-08 20:10:21 --> [REQ_ID=e3eb16ee55a4] [REQUEST][END]
+INFO - 2026-03-08 20:10:21 --> [REQ_ID=e3eb16ee55a4] [PERF] Execution time=1.106558
+DEBUG - 2026-03-08 20:11:17 --> [REQ_ID=306a3a6becf5] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 20:11:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 20:11:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 20:11:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 20:11:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 20:11:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 20:15:01 --> [REQ_ID=a270fe53a02f] [REQUEST][START] GET /index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 20:15:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:15:01 --> [REQ_ID=a270fe53a02f] [FILTER_BEFORE] /index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 20:15:01 --> [REQ_ID=a270fe53a02f] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=fetchEmailAlerts
+DEBUG - 2026-03-08 20:15:01 --> [REQ_ID=a270fe53a02f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 20:15:01 --> [REQ_ID=a270fe53a02f] [REQUEST][END]
+INFO - 2026-03-08 20:15:01 --> [REQ_ID=a270fe53a02f] [PERF] Execution time=0.046908
+DEBUG - 2026-03-08 20:15:39 --> [REQ_ID=d1d1847addd4] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 20:15:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:15:39 --> [REQ_ID=d1d1847addd4] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 20:15:39 --> [REQ_ID=d1d1847addd4] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=DailyFinancialNews
+DEBUG - 2026-03-08 20:15:39 --> [REQ_ID=d1d1847addd4] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 20:15:39 --> [CSRF] token name=csrf_test_name hash=b79dcd12ba1d6d6c16d5411e527cd137
+DEBUG - 2026-03-08 20:15:39 --> [REQ_ID=8961536dc4b9] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 20:15:39 --> [REQ_ID=8961536dc4b9] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 20:15:39 --> [REQ_ID=8961536dc4b9] [METHOD_ENTRY] DailyFinancialNews
+DEBUG - 2026-03-08 20:15:39 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:15:39 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 20:15:39 --> [REQ_ID=8961536dc4b9] [MEMORY][commonData:start] 6291456
+INFO - 2026-03-08 20:15:39 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 20:15:39 --> [MetaService] slug=how-it-works/daily-financial-news pageName= cacheHit= path=DB
+DEBUG - 2026-03-08 20:15:39 --> [REQ_ID=d1d1847addd4] [FILTER_AFTER]
+DEBUG - 2026-03-08 20:15:39 --> [REQ_ID=d1d1847addd4] [LIFECYCLE][END] status=200 duration_ms=908.34 memory_delta=6291456
+INFO - 2026-03-08 20:15:39 --> [REQ_ID=8961536dc4b9] [PERF] Execution time=0.907195
+DEBUG - 2026-03-08 20:15:39 --> [REQ_ID=d1d1847addd4] [REQUEST][END]
+INFO - 2026-03-08 20:15:39 --> [REQ_ID=d1d1847addd4] [PERF] Execution time=0.924030
+DEBUG - 2026-03-08 20:15:42 --> [REQ_ID=155b4b4b70f1] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 20:15:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:15:42 --> [REQ_ID=155b4b4b70f1] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 20:15:42 --> [REQ_ID=155b4b4b70f1] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=InvestmentPortfolioManagement
+DEBUG - 2026-03-08 20:15:42 --> [REQ_ID=155b4b4b70f1] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 20:15:42 --> [CSRF] token name=csrf_test_name hash=b79dcd12ba1d6d6c16d5411e527cd137
+DEBUG - 2026-03-08 20:15:42 --> [REQ_ID=1d5b2c030204] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 20:15:42 --> [REQ_ID=1d5b2c030204] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 20:15:42 --> [REQ_ID=1d5b2c030204] [METHOD_ENTRY] InvestmentPortfolioManagement
+DEBUG - 2026-03-08 20:15:42 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:15:42 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 20:15:42 --> [REQ_ID=1d5b2c030204] [PERF] Execution time=0.019897
+DEBUG - 2026-03-08 20:16:17 --> [REQ_ID=cf121393b8dd] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 20:16:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 20:16:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 20:16:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 20:16:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 20:16:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 20:16:33 --> [REQ_ID=d48e6c46142e] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 20:16:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:16:33 --> [REQ_ID=d48e6c46142e] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 20:16:33 --> [REQ_ID=d48e6c46142e] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=InvestmentPortfolioManagement
+DEBUG - 2026-03-08 20:16:33 --> [REQ_ID=d48e6c46142e] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 20:16:33 --> [CSRF] token name=csrf_test_name hash=b79dcd12ba1d6d6c16d5411e527cd137
+DEBUG - 2026-03-08 20:16:33 --> [REQ_ID=7b6931a29a26] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 20:16:33 --> [REQ_ID=7b6931a29a26] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 20:16:33 --> [REQ_ID=7b6931a29a26] [METHOD_ENTRY] InvestmentPortfolioManagement
+DEBUG - 2026-03-08 20:16:33 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:16:33 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 20:16:33 --> [REQ_ID=7b6931a29a26] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 20:16:33 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 20:16:33 --> [MetaService] slug=how-it-works/investment-portfolio-management pageName= cacheHit= path=DB
+DEBUG - 2026-03-08 20:16:33 --> [REQ_ID=d48e6c46142e] [FILTER_AFTER]
+DEBUG - 2026-03-08 20:16:33 --> [REQ_ID=d48e6c46142e] [LIFECYCLE][END] status=200 duration_ms=585.87 memory_delta=4194304
+INFO - 2026-03-08 20:16:33 --> [REQ_ID=7b6931a29a26] [PERF] Execution time=0.585581
+DEBUG - 2026-03-08 20:16:33 --> [REQ_ID=d48e6c46142e] [REQUEST][END]
+INFO - 2026-03-08 20:16:33 --> [REQ_ID=d48e6c46142e] [PERF] Execution time=0.597373
+DEBUG - 2026-03-08 20:16:42 --> [REQ_ID=ffeeda5e6292] [REQUEST][START] GET /index.php/How-It-Works/Purchase-MyMI-Gold
+DEBUG - 2026-03-08 20:16:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:16:42 --> [REQ_ID=ffeeda5e6292] [FILTER_BEFORE] /index.php/How-It-Works/Purchase-MyMI-Gold
+DEBUG - 2026-03-08 20:16:42 --> [REQ_ID=ffeeda5e6292] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=PurchaseMyMIGold
+DEBUG - 2026-03-08 20:16:42 --> [REQ_ID=ffeeda5e6292] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Purchase-MyMI-Gold
+DEBUG - 2026-03-08 20:16:42 --> [CSRF] token name=csrf_test_name hash=b79dcd12ba1d6d6c16d5411e527cd137
+DEBUG - 2026-03-08 20:16:42 --> [REQ_ID=afbb8fb25e7e] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 20:16:42 --> [REQ_ID=afbb8fb25e7e] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 20:16:42 --> [REQ_ID=afbb8fb25e7e] [METHOD_ENTRY] PurchaseMyMIGold
+DEBUG - 2026-03-08 20:16:42 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:16:42 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 20:16:42 --> [REQ_ID=afbb8fb25e7e] [PERF] Execution time=0.095323
+DEBUG - 2026-03-08 20:16:59 --> [REQ_ID=ebc35c7c7c55] [REQUEST][START] GET /index.php/How-It-Works/Purchase-MyMI-Gold
+DEBUG - 2026-03-08 20:16:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:16:59 --> [REQ_ID=ebc35c7c7c55] [FILTER_BEFORE] /index.php/How-It-Works/Purchase-MyMI-Gold
+DEBUG - 2026-03-08 20:16:59 --> [REQ_ID=ebc35c7c7c55] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=PurchaseMyMIGold
+DEBUG - 2026-03-08 20:16:59 --> [REQ_ID=ebc35c7c7c55] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Purchase-MyMI-Gold
+DEBUG - 2026-03-08 20:16:59 --> [CSRF] token name=csrf_test_name hash=b79dcd12ba1d6d6c16d5411e527cd137
+DEBUG - 2026-03-08 20:16:59 --> [REQ_ID=80cfb98d1bb2] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 20:16:59 --> [REQ_ID=80cfb98d1bb2] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 20:16:59 --> [REQ_ID=80cfb98d1bb2] [METHOD_ENTRY] PurchaseMyMIGold
+DEBUG - 2026-03-08 20:16:59 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:16:59 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 20:16:59 --> [REQ_ID=80cfb98d1bb2] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 20:16:59 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 20:16:59 --> [MetaService] slug=how-it-works/purchase-mymi-gold pageName= cacheHit= path=FALLBACK
+DEBUG - 2026-03-08 20:16:59 --> [REQ_ID=ebc35c7c7c55] [FILTER_AFTER]
+DEBUG - 2026-03-08 20:16:59 --> [REQ_ID=ebc35c7c7c55] [LIFECYCLE][END] status=200 duration_ms=674.39 memory_delta=4194304
+INFO - 2026-03-08 20:16:59 --> [REQ_ID=80cfb98d1bb2] [PERF] Execution time=0.674339
+DEBUG - 2026-03-08 20:16:59 --> [REQ_ID=ebc35c7c7c55] [REQUEST][END]
+INFO - 2026-03-08 20:16:59 --> [REQ_ID=ebc35c7c7c55] [PERF] Execution time=0.685510
+DEBUG - 2026-03-08 20:17:03 --> [REQ_ID=fc74c78905f3] [REQUEST][START] GET /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 20:17:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:17:03 --> [REQ_ID=fc74c78905f3] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 20:17:03 --> [REQ_ID=fc74c78905f3] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 20:17:03 --> [REQ_ID=fc74c78905f3] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 20:17:03 --> [CSRF] token name=csrf_test_name hash=b79dcd12ba1d6d6c16d5411e527cd137
+DEBUG - 2026-03-08 20:17:03 --> [REQ_ID=c2eff52bf17a] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 20:17:03 --> [REQ_ID=c2eff52bf17a] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 20:17:03 --> [REQ_ID=c2eff52bf17a] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 20:17:03 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:17:03 --> [SERVICE] App\Services\BudgetService ::setUserId
+ERROR - 2026-03-08 20:17:03 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 20:17:03 --> [REQ_ID=c2eff52bf17a] [PERF] Execution time=0.023475
+DEBUG - 2026-03-08 20:17:39 --> [REQ_ID=b8e4f42c095a] [REQUEST][START] GET /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 20:17:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:17:39 --> [REQ_ID=b8e4f42c095a] [FILTER_BEFORE] /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 20:17:39 --> [REQ_ID=b8e4f42c095a] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 20:17:39 --> [REQ_ID=b8e4f42c095a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 20:17:39 --> [CSRF] token name=csrf_test_name hash=b79dcd12ba1d6d6c16d5411e527cd137
+DEBUG - 2026-03-08 20:17:39 --> [REQ_ID=4b21ec9c2d96] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 20:17:39 --> [REQ_ID=4b21ec9c2d96] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 20:17:39 --> [REQ_ID=4b21ec9c2d96] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 20:17:39 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:17:39 --> [SERVICE] App\Services\BudgetService ::setUserId
+ERROR - 2026-03-08 20:17:39 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 20:17:39 --> [REQ_ID=4b21ec9c2d96] [PERF] Execution time=0.044363
+DEBUG - 2026-03-08 20:17:44 --> [REQ_ID=e114b34e7f18] [REQUEST][START] GET /index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 20:17:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:17:44 --> [REQ_ID=e114b34e7f18] [FILTER_BEFORE] /index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 20:17:44 --> [REQ_ID=e114b34e7f18] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 20:17:44 --> [REQ_ID=e114b34e7f18] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 20:17:44 --> [CSRF] token name=csrf_test_name hash=b79dcd12ba1d6d6c16d5411e527cd137
+DEBUG - 2026-03-08 20:17:44 --> [REQ_ID=5c459a96821f] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 20:17:44 --> [REQ_ID=5c459a96821f] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 20:17:44 --> [REQ_ID=5c459a96821f] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 20:17:44 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:17:44 --> [SERVICE] App\Services\BudgetService ::setUserId
+ERROR - 2026-03-08 20:17:44 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 20:17:44 --> [REQ_ID=5c459a96821f] [PERF] Execution time=0.019101
+DEBUG - 2026-03-08 20:18:06 --> [REQ_ID=a035aa855a9c] [REQUEST][START] GET /index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 20:18:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:18:06 --> [REQ_ID=a035aa855a9c] [FILTER_BEFORE] /index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 20:18:06 --> [REQ_ID=a035aa855a9c] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 20:18:06 --> [REQ_ID=a035aa855a9c] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 20:18:06 --> [CSRF] token name=csrf_test_name hash=b79dcd12ba1d6d6c16d5411e527cd137
+DEBUG - 2026-03-08 20:18:06 --> [REQ_ID=aadfc1c6c596] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 20:18:06 --> [REQ_ID=aadfc1c6c596] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 20:18:06 --> [REQ_ID=aadfc1c6c596] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 20:18:06 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:18:06 --> [SERVICE] App\Services\BudgetService ::setUserId
+ERROR - 2026-03-08 20:18:06 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 20:18:06 --> [REQ_ID=aadfc1c6c596] [PERF] Execution time=0.037802
+DEBUG - 2026-03-08 20:18:08 --> [REQ_ID=9488a52a2f83] [REQUEST][START] GET /index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 20:18:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:18:08 --> [REQ_ID=9488a52a2f83] [FILTER_BEFORE] /index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 20:18:08 --> [REQ_ID=9488a52a2f83] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 20:18:08 --> [REQ_ID=9488a52a2f83] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 20:18:08 --> [CSRF] token name=csrf_test_name hash=b79dcd12ba1d6d6c16d5411e527cd137
+DEBUG - 2026-03-08 20:18:08 --> [REQ_ID=867e559582aa] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 20:18:08 --> [REQ_ID=867e559582aa] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 20:18:08 --> [REQ_ID=867e559582aa] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 20:18:08 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:18:08 --> [SERVICE] App\Services\BudgetService ::setUserId
+ERROR - 2026-03-08 20:18:08 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 20:18:08 --> [REQ_ID=867e559582aa] [PERF] Execution time=0.028935
+DEBUG - 2026-03-08 20:18:47 --> [REQ_ID=00f54f582aec] [REQUEST][START] GET /index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 20:18:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:18:47 --> [REQ_ID=00f54f582aec] [FILTER_BEFORE] /index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 20:18:47 --> [REQ_ID=00f54f582aec] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 20:18:47 --> [REQ_ID=00f54f582aec] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 20:18:47 --> [CSRF] token name=csrf_test_name hash=b79dcd12ba1d6d6c16d5411e527cd137
+DEBUG - 2026-03-08 20:18:47 --> [REQ_ID=822eb0358c0f] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 20:18:47 --> [REQ_ID=822eb0358c0f] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 20:18:47 --> [REQ_ID=822eb0358c0f] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 20:18:47 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:18:47 --> [SERVICE] App\Services\BudgetService ::setUserId
+ERROR - 2026-03-08 20:18:47 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 20:18:47 --> [REQ_ID=822eb0358c0f] [PERF] Execution time=0.044113
+DEBUG - 2026-03-08 20:19:13 --> [REQ_ID=7cd156d453d6] [REQUEST][START] GET /index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 20:19:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:19:13 --> [REQ_ID=7cd156d453d6] [FILTER_BEFORE] /index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 20:19:13 --> [REQ_ID=7cd156d453d6] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=MyMIGold
+DEBUG - 2026-03-08 20:19:13 --> [REQ_ID=7cd156d453d6] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 20:19:13 --> [CSRF] token name=csrf_test_name hash=b79dcd12ba1d6d6c16d5411e527cd137
+DEBUG - 2026-03-08 20:19:13 --> [REQ_ID=cbe7c512fb3f] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 20:19:13 --> [REQ_ID=cbe7c512fb3f] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 20:19:13 --> [REQ_ID=cbe7c512fb3f] [METHOD_ENTRY] MyMIGold
+DEBUG - 2026-03-08 20:19:13 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:19:13 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 20:19:13 --> [REQ_ID=cbe7c512fb3f] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 20:19:14 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 20:19:14 --> [MetaService] slug=how-it-works/mymi-gold pageName= cacheHit= path=DB
+DEBUG - 2026-03-08 20:19:14 --> [REQ_ID=7cd156d453d6] [FILTER_AFTER]
+DEBUG - 2026-03-08 20:19:14 --> [REQ_ID=7cd156d453d6] [LIFECYCLE][END] status=200 duration_ms=686.02 memory_delta=4194304
+INFO - 2026-03-08 20:19:14 --> [REQ_ID=cbe7c512fb3f] [PERF] Execution time=0.685818
+DEBUG - 2026-03-08 20:19:14 --> [REQ_ID=7cd156d453d6] [REQUEST][END]
+INFO - 2026-03-08 20:19:14 --> [REQ_ID=7cd156d453d6] [PERF] Execution time=0.700847
+DEBUG - 2026-03-08 20:19:39 --> [REQ_ID=245a7305f301] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 20:19:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:19:39 --> [REQ_ID=245a7305f301] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 20:19:39 --> [REQ_ID=245a7305f301] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=DailyFinancialNews
+DEBUG - 2026-03-08 20:19:39 --> [REQ_ID=245a7305f301] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 20:19:39 --> [CSRF] token name=csrf_test_name hash=b79dcd12ba1d6d6c16d5411e527cd137
+DEBUG - 2026-03-08 20:19:39 --> [REQ_ID=279c34050d38] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 20:19:39 --> [REQ_ID=279c34050d38] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 20:19:39 --> [REQ_ID=279c34050d38] [METHOD_ENTRY] DailyFinancialNews
+DEBUG - 2026-03-08 20:19:39 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:19:39 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 20:19:39 --> [REQ_ID=279c34050d38] [MEMORY][commonData:start] 6291456
+INFO - 2026-03-08 20:19:40 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 20:19:40 --> [MetaService] slug=how-it-works/daily-financial-news pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 20:19:40 --> [REQ_ID=245a7305f301] [FILTER_AFTER]
+DEBUG - 2026-03-08 20:19:40 --> [REQ_ID=245a7305f301] [LIFECYCLE][END] status=200 duration_ms=679.16 memory_delta=2097152
+INFO - 2026-03-08 20:19:40 --> [REQ_ID=279c34050d38] [PERF] Execution time=0.678886
+DEBUG - 2026-03-08 20:19:40 --> [REQ_ID=245a7305f301] [REQUEST][END]
+INFO - 2026-03-08 20:19:40 --> [REQ_ID=245a7305f301] [PERF] Execution time=0.693979
+DEBUG - 2026-03-08 20:21:17 --> [REQ_ID=4d4730d7cd72] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 20:21:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 20:21:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 20:21:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 20:21:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 20:21:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 20:26:17 --> [REQ_ID=be188cca6ba4] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 20:26:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 20:26:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 20:26:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 20:26:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 20:26:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 20:26:27 --> [REQ_ID=c37aac08a430] [REQUEST][START] GET /index.php/Account
+DEBUG - 2026-03-08 20:26:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:26:27 --> [REQ_ID=c37aac08a430] [FILTER_BEFORE] /index.php/Account
+DEBUG - 2026-03-08 20:26:27 --> [REQ_ID=c37aac08a430] [ROUTE] Controller=\App\Modules\User\Controllers\DashboardController Method=account
+DEBUG - 2026-03-08 20:26:27 --> [REQ_ID=c37aac08a430] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Account
+DEBUG - 2026-03-08 20:26:27 --> [CSRF] token name=csrf_test_name hash=af635ab0cd7386de6d4f89d44d3a2c5d
+DEBUG - 2026-03-08 20:26:27 --> [REQ_ID=c37aac08a430] [REQUEST][END]
+INFO - 2026-03-08 20:26:27 --> [REQ_ID=c37aac08a430] [PERF] Execution time=0.029685
+DEBUG - 2026-03-08 20:26:28 --> [REQ_ID=ad5f0c1a760a] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 20:26:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:26:28 --> [REQ_ID=ad5f0c1a760a] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 20:26:28 --> [REQ_ID=ad5f0c1a760a] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 20:26:28 --> [REQ_ID=ad5f0c1a760a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 20:26:28 --> [CSRF] token name=csrf_test_name hash=584ecb5671092e9fc3b4d92fd229cd43
+DEBUG - 2026-03-08 20:26:28 --> [REQ_ID=8f6d0b780264] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 20:26:28 --> [REQ_ID=8f6d0b780264] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 20:26:28 --> [REQ_ID=ad5f0c1a760a] [FILTER_AFTER]
+DEBUG - 2026-03-08 20:26:28 --> [REQ_ID=ad5f0c1a760a] [LIFECYCLE][END] status=200 duration_ms=54.46 memory_delta=0
+INFO - 2026-03-08 20:26:28 --> [REQ_ID=8f6d0b780264] [PERF] Execution time=0.054163
+DEBUG - 2026-03-08 20:26:28 --> [REQ_ID=ad5f0c1a760a] [REQUEST][END]
+INFO - 2026-03-08 20:26:28 --> [REQ_ID=ad5f0c1a760a] [PERF] Execution time=0.067083
+DEBUG - 2026-03-08 20:28:39 --> [REQ_ID=48e892df1f7e] [REQUEST][START] GET /index.php/How-It-Works
+DEBUG - 2026-03-08 20:28:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:28:39 --> [REQ_ID=48e892df1f7e] [FILTER_BEFORE] /index.php/How-It-Works
+DEBUG - 2026-03-08 20:28:39 --> [REQ_ID=48e892df1f7e] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=index
+DEBUG - 2026-03-08 20:28:39 --> [REQ_ID=48e892df1f7e] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works
+DEBUG - 2026-03-08 20:28:39 --> [CSRF] token name=csrf_test_name hash=3781584a4aae6b7651925d9cce2522b8
+DEBUG - 2026-03-08 20:28:39 --> [REQ_ID=3c88c5dcdf95] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 20:28:39 --> [REQ_ID=3c88c5dcdf95] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 20:28:39 --> [REQ_ID=3c88c5dcdf95] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 20:28:39 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:28:39 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 20:28:39 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 20:28:39 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 20:28:39 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 20:28:39 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 20:28:39 --> HowItWorksController failure: overview
+CRITICAL - 2026-03-08 20:28:39 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: How-It-Works]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 20:28:39 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 20:28:39 --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works
+WARNING - 2026-03-08 20:28:39 --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works | referrer: none
+ERROR - 2026-03-08 20:28:39 --> [ERROR_PAGE] event=error_404 status=404 message=Page not found.
+INFO - 2026-03-08 20:28:39 --> [REQ_ID=3c88c5dcdf95] [PERF] Execution time=0.241456
+DEBUG - 2026-03-08 20:28:45 --> [REQ_ID=d335ed7b5839] [REQUEST][START] GET /index.php/Support
+DEBUG - 2026-03-08 20:28:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:28:45 --> [REQ_ID=d335ed7b5839] [FILTER_BEFORE] /index.php/Support
+DEBUG - 2026-03-08 20:28:45 --> [REQ_ID=d335ed7b5839] [ROUTE] Controller=\App\Modules\Support\Controllers\SupportController Method=index
+DEBUG - 2026-03-08 20:28:45 --> [REQ_ID=d335ed7b5839] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support
+DEBUG - 2026-03-08 20:28:45 --> [CSRF] token name=csrf_test_name hash=3781584a4aae6b7651925d9cce2522b8
+DEBUG - 2026-03-08 20:28:45 --> [REQ_ID=7fba3685fde3] [INIT] App\Modules\Support\Controllers\SupportController::GET
+INFO - 2026-03-08 20:28:45 --> [REQ_ID=7fba3685fde3] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 20:28:45 --> [REQ_ID=7fba3685fde3] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 20:28:45 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:28:45 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 20:28:45 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 20:28:45 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 20:28:45 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 20:28:45 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 20:28:45 --> [REQ_ID=7fba3685fde3] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 20:28:45 --> [REQ_ID=7fba3685fde3] [VIEW_RENDER] SupportModule\Views\Support\index
+INFO - 2026-03-08 20:28:45 --> [REQ_ID=7fba3685fde3] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 20:28:45 --> themesMemory usage: 4194304
+DEBUG - 2026-03-08 20:28:45 --> [REQ_ID=d335ed7b5839] [FILTER_AFTER]
+DEBUG - 2026-03-08 20:28:45 --> [REQ_ID=d335ed7b5839] [LIFECYCLE][END] status=200 duration_ms=34.99 memory_delta=0
+INFO - 2026-03-08 20:28:45 --> [REQ_ID=7fba3685fde3] [PERF] Execution time=0.034775
+DEBUG - 2026-03-08 20:28:45 --> [REQ_ID=d335ed7b5839] [REQUEST][END]
+INFO - 2026-03-08 20:28:45 --> [REQ_ID=d335ed7b5839] [PERF] Execution time=0.049918
+DEBUG - 2026-03-08 20:28:52 --> [REQ_ID=1216427bb04d] [REQUEST][START] GET /index.php/How-It-Works
+DEBUG - 2026-03-08 20:28:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:28:52 --> [REQ_ID=1216427bb04d] [FILTER_BEFORE] /index.php/How-It-Works
+DEBUG - 2026-03-08 20:28:52 --> [REQ_ID=1216427bb04d] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=index
+DEBUG - 2026-03-08 20:28:52 --> [REQ_ID=1216427bb04d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works
+DEBUG - 2026-03-08 20:28:52 --> [CSRF] token name=csrf_test_name hash=3781584a4aae6b7651925d9cce2522b8
+DEBUG - 2026-03-08 20:28:52 --> [REQ_ID=0475612d8190] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 20:28:52 --> [REQ_ID=0475612d8190] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 20:28:53 --> [REQ_ID=0475612d8190] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 20:28:53 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:28:53 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 20:28:53 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 20:28:53 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 20:28:53 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 20:28:53 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 20:28:53 --> HowItWorksController failure: overview
+CRITICAL - 2026-03-08 20:28:53 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: How-It-Works]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 20:28:53 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 20:28:53 --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works
+WARNING - 2026-03-08 20:28:53 --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works | referrer: none
+ERROR - 2026-03-08 20:28:53 --> [ERROR_PAGE] event=error_404 status=404 message=Page not found.
+INFO - 2026-03-08 20:28:53 --> [REQ_ID=0475612d8190] [PERF] Execution time=0.029298
+DEBUG - 2026-03-08 20:28:57 --> [REQ_ID=334c062be5b1] [REQUEST][START] GET /index.php/How-It-Works/index
+DEBUG - 2026-03-08 20:28:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:28:57 --> [REQ_ID=334c062be5b1] [FILTER_BEFORE] /index.php/How-It-Works/index
+DEBUG - 2026-03-08 20:28:57 --> [REQ_ID=334c062be5b1] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 20:28:57 --> [REQ_ID=334c062be5b1] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/index
+DEBUG - 2026-03-08 20:28:57 --> [CSRF] token name=csrf_test_name hash=3781584a4aae6b7651925d9cce2522b8
+DEBUG - 2026-03-08 20:28:57 --> [REQ_ID=60731a10351e] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 20:28:57 --> [REQ_ID=60731a10351e] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 20:28:57 --> [REQ_ID=60731a10351e] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 20:28:57 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:28:57 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 20:28:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 20:28:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 20:28:57 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 20:28:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 20:28:57 --> HowItWorksController failure: index
+CRITICAL - 2026-03-08 20:28:57 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: How-It-Works/index]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 20:28:57 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 20:28:57 --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works/index
+WARNING - 2026-03-08 20:28:57 --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works/index | referrer: none
+ERROR - 2026-03-08 20:28:57 --> [ERROR_PAGE] event=error_404 status=404 message=Page not found.
+INFO - 2026-03-08 20:28:57 --> [REQ_ID=60731a10351e] [PERF] Execution time=0.044417
+DEBUG - 2026-03-08 20:29:03 --> [REQ_ID=62e10ced2ba1] [REQUEST][START] GET /index.php/Support
+DEBUG - 2026-03-08 20:29:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:29:03 --> [REQ_ID=62e10ced2ba1] [FILTER_BEFORE] /index.php/Support
+DEBUG - 2026-03-08 20:29:03 --> [REQ_ID=62e10ced2ba1] [ROUTE] Controller=\App\Modules\Support\Controllers\SupportController Method=index
+DEBUG - 2026-03-08 20:29:03 --> [REQ_ID=62e10ced2ba1] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support
+DEBUG - 2026-03-08 20:29:03 --> [CSRF] token name=csrf_test_name hash=3781584a4aae6b7651925d9cce2522b8
+DEBUG - 2026-03-08 20:29:03 --> [REQ_ID=a7b9a5772c77] [INIT] App\Modules\Support\Controllers\SupportController::GET
+INFO - 2026-03-08 20:29:03 --> [REQ_ID=a7b9a5772c77] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 20:29:03 --> [REQ_ID=a7b9a5772c77] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 20:29:03 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:29:03 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 20:29:03 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 20:29:03 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 20:29:03 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 20:29:03 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 20:29:03 --> [REQ_ID=a7b9a5772c77] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 20:29:03 --> [REQ_ID=a7b9a5772c77] [VIEW_RENDER] SupportModule\Views\Support\index
+INFO - 2026-03-08 20:29:03 --> [REQ_ID=a7b9a5772c77] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 20:29:03 --> themesMemory usage: 4194304
+DEBUG - 2026-03-08 20:29:03 --> [REQ_ID=62e10ced2ba1] [FILTER_AFTER]
+DEBUG - 2026-03-08 20:29:03 --> [REQ_ID=62e10ced2ba1] [LIFECYCLE][END] status=200 duration_ms=31.12 memory_delta=0
+INFO - 2026-03-08 20:29:03 --> [REQ_ID=a7b9a5772c77] [PERF] Execution time=0.030850
+DEBUG - 2026-03-08 20:29:03 --> [REQ_ID=62e10ced2ba1] [REQUEST][END]
+INFO - 2026-03-08 20:29:03 --> [REQ_ID=62e10ced2ba1] [PERF] Execution time=0.041575
+DEBUG - 2026-03-08 20:29:05 --> [REQ_ID=975add469526] [REQUEST][START] GET /index.php/How-It-Works/MyMi-Gold
+DEBUG - 2026-03-08 20:29:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:29:05 --> [REQ_ID=975add469526] [FILTER_BEFORE] /index.php/How-It-Works/MyMi-Gold
+DEBUG - 2026-03-08 20:29:05 --> [REQ_ID=975add469526] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 20:29:05 --> [REQ_ID=975add469526] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMi-Gold
+DEBUG - 2026-03-08 20:29:05 --> [CSRF] token name=csrf_test_name hash=3781584a4aae6b7651925d9cce2522b8
+DEBUG - 2026-03-08 20:29:05 --> [REQ_ID=55b91b2afeb1] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 20:29:05 --> [REQ_ID=55b91b2afeb1] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 20:29:05 --> [REQ_ID=55b91b2afeb1] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 20:29:05 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:29:05 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 20:29:05 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 20:29:05 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 20:29:05 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 20:29:05 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 20:29:05 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 20:29:05 --> [REQ_ID=55b91b2afeb1] [PERF] Execution time=0.025117
+DEBUG - 2026-03-08 20:29:07 --> [REQ_ID=a40e19bd99d1] [REQUEST][START] GET /index.php/How-It-Works/MyMi-Gold
+DEBUG - 2026-03-08 20:29:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:29:07 --> [REQ_ID=a40e19bd99d1] [FILTER_BEFORE] /index.php/How-It-Works/MyMi-Gold
+DEBUG - 2026-03-08 20:29:07 --> [REQ_ID=a40e19bd99d1] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 20:29:07 --> [REQ_ID=a40e19bd99d1] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMi-Gold
+DEBUG - 2026-03-08 20:29:07 --> [CSRF] token name=csrf_test_name hash=3781584a4aae6b7651925d9cce2522b8
+DEBUG - 2026-03-08 20:29:07 --> [REQ_ID=f3ae4e4a6603] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 20:29:07 --> [REQ_ID=f3ae4e4a6603] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 20:29:07 --> [REQ_ID=f3ae4e4a6603] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 20:29:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:29:07 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 20:29:07 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 20:29:07 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 20:29:07 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 20:29:07 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 20:29:07 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 20:29:07 --> [REQ_ID=f3ae4e4a6603] [PERF] Execution time=0.021017
+DEBUG - 2026-03-08 20:29:09 --> [REQ_ID=bd381fb5ca43] [REQUEST][START] GET /index.php/How-It-Works/MyMi-Gold
+DEBUG - 2026-03-08 20:29:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:29:09 --> [REQ_ID=bd381fb5ca43] [FILTER_BEFORE] /index.php/How-It-Works/MyMi-Gold
+DEBUG - 2026-03-08 20:29:09 --> [REQ_ID=bd381fb5ca43] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 20:29:09 --> [REQ_ID=bd381fb5ca43] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMi-Gold
+DEBUG - 2026-03-08 20:29:09 --> [CSRF] token name=csrf_test_name hash=3781584a4aae6b7651925d9cce2522b8
+DEBUG - 2026-03-08 20:29:09 --> [REQ_ID=7d60c50dd544] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 20:29:09 --> [REQ_ID=7d60c50dd544] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 20:29:09 --> [REQ_ID=7d60c50dd544] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 20:29:09 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:29:09 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 20:29:09 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 20:29:09 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 20:29:09 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 20:29:09 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 20:29:09 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 20:29:09 --> [REQ_ID=7d60c50dd544] [PERF] Execution time=0.022009
+DEBUG - 2026-03-08 20:31:13 --> [REQ_ID=9e5e6cde887c] [REQUEST][START] GET /index.php/How-It-Works/Purchasing-MyMi-Gold
+DEBUG - 2026-03-08 20:31:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:31:14 --> [REQ_ID=9e5e6cde887c] [FILTER_BEFORE] /index.php/How-It-Works/Purchasing-MyMi-Gold
+DEBUG - 2026-03-08 20:31:14 --> [REQ_ID=9e5e6cde887c] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 20:31:14 --> [REQ_ID=9e5e6cde887c] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Purchasing-MyMi-Gold
+DEBUG - 2026-03-08 20:31:14 --> [CSRF] token name=csrf_test_name hash=3781584a4aae6b7651925d9cce2522b8
+DEBUG - 2026-03-08 20:31:14 --> [REQ_ID=e109116903ff] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 20:31:14 --> [REQ_ID=e109116903ff] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 20:31:14 --> [REQ_ID=e109116903ff] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 20:31:14 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:31:14 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 20:31:14 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 20:31:14 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 20:31:14 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 20:31:14 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 20:31:14 --> HowItWorksController failure: purchasing-mymi-gold
+CRITICAL - 2026-03-08 20:31:14 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: How-It-Works/Purchasing-MyMi-Gold]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 20:31:14 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 20:31:14 --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works/Purchasing-MyMi-Gold
+WARNING - 2026-03-08 20:31:14 --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works/Purchasing-MyMi-Gold | referrer: none
+ERROR - 2026-03-08 20:31:14 --> [ERROR_PAGE] event=error_404 status=404 message=Page not found.
+INFO - 2026-03-08 20:31:14 --> [REQ_ID=e109116903ff] [PERF] Execution time=0.149545
+DEBUG - 2026-03-08 20:31:16 --> [REQ_ID=ac72fad16780] [REQUEST][START] GET /index.php/How-It-Works/Purchasing-MyMi-Gold
+DEBUG - 2026-03-08 20:31:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:31:16 --> [REQ_ID=ac72fad16780] [FILTER_BEFORE] /index.php/How-It-Works/Purchasing-MyMi-Gold
+DEBUG - 2026-03-08 20:31:16 --> [REQ_ID=ac72fad16780] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 20:31:16 --> [REQ_ID=ac72fad16780] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Purchasing-MyMi-Gold
+DEBUG - 2026-03-08 20:31:16 --> [CSRF] token name=csrf_test_name hash=3781584a4aae6b7651925d9cce2522b8
+DEBUG - 2026-03-08 20:31:16 --> [REQ_ID=b879255622fc] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 20:31:16 --> [REQ_ID=b879255622fc] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 20:31:16 --> [REQ_ID=b879255622fc] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 20:31:16 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:31:16 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 20:31:16 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 20:31:16 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 20:31:16 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 20:31:16 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 20:31:16 --> HowItWorksController failure: purchasing-mymi-gold
+CRITICAL - 2026-03-08 20:31:16 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: How-It-Works/Purchasing-MyMi-Gold]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 20:31:16 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 20:31:16 --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works/Purchasing-MyMi-Gold
+WARNING - 2026-03-08 20:31:16 --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works/Purchasing-MyMi-Gold | referrer: none
+ERROR - 2026-03-08 20:31:16 --> [ERROR_PAGE] event=error_404 status=404 message=Page not found.
+INFO - 2026-03-08 20:31:16 --> [REQ_ID=b879255622fc] [PERF] Execution time=0.031927
+DEBUG - 2026-03-08 20:31:17 --> [REQ_ID=0dba1d98c4a2] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 20:31:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 20:31:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 20:31:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 20:31:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 20:31:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 20:31:21 --> [REQ_ID=3b07b2a67657] [REQUEST][START] GET /index.php/Support
+DEBUG - 2026-03-08 20:31:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:31:21 --> [REQ_ID=3b07b2a67657] [FILTER_BEFORE] /index.php/Support
+DEBUG - 2026-03-08 20:31:21 --> [REQ_ID=3b07b2a67657] [ROUTE] Controller=\App\Modules\Support\Controllers\SupportController Method=index
+DEBUG - 2026-03-08 20:31:21 --> [REQ_ID=3b07b2a67657] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support
+DEBUG - 2026-03-08 20:31:21 --> [CSRF] token name=csrf_test_name hash=3781584a4aae6b7651925d9cce2522b8
+DEBUG - 2026-03-08 20:31:21 --> [REQ_ID=619a940a60fa] [INIT] App\Modules\Support\Controllers\SupportController::GET
+INFO - 2026-03-08 20:31:21 --> [REQ_ID=619a940a60fa] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 20:31:21 --> [REQ_ID=619a940a60fa] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 20:31:21 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:31:21 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 20:31:21 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 20:31:21 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 20:31:21 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 20:31:21 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 20:31:21 --> [REQ_ID=619a940a60fa] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 20:31:21 --> [REQ_ID=619a940a60fa] [VIEW_RENDER] SupportModule\Views\Support\index
+INFO - 2026-03-08 20:31:21 --> [REQ_ID=619a940a60fa] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 20:31:21 --> themesMemory usage: 4194304
+DEBUG - 2026-03-08 20:31:21 --> [REQ_ID=3b07b2a67657] [FILTER_AFTER]
+DEBUG - 2026-03-08 20:31:21 --> [REQ_ID=3b07b2a67657] [LIFECYCLE][END] status=200 duration_ms=35.93 memory_delta=0
+INFO - 2026-03-08 20:31:21 --> [REQ_ID=619a940a60fa] [PERF] Execution time=0.035789
+DEBUG - 2026-03-08 20:31:21 --> [REQ_ID=3b07b2a67657] [REQUEST][END]
+INFO - 2026-03-08 20:31:21 --> [REQ_ID=3b07b2a67657] [PERF] Execution time=0.049880
+DEBUG - 2026-03-08 20:35:01 --> [REQ_ID=aceea8e304a0] [REQUEST][START] GET /
+DEBUG - 2026-03-08 20:35:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:35:01 --> [REQ_ID=aceea8e304a0] [FILTER_BEFORE] /
+DEBUG - 2026-03-08 20:35:01 --> [REQ_ID=aceea8e304a0] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 20:35:01 --> [REQ_ID=aceea8e304a0] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 20:35:01 --> [CSRF] token name=csrf_test_name hash=178ab3c564a2748f9019df2910ebdb29
+DEBUG - 2026-03-08 20:35:01 --> [REQ_ID=798b9ac8ba1d] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 20:35:01 --> [REQ_ID=798b9ac8ba1d] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 20:35:02 --> [REQ_ID=798b9ac8ba1d] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 20:35:02 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:35:02 --> [MetaService] slug= pageName= cacheHit= path=FALLBACK
+DEBUG - 2026-03-08 20:35:02 --> [REQ_ID=798b9ac8ba1d] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 20:35:02 --> [REQ_ID=798b9ac8ba1d] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 20:35:02 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 20:35:02 --> [MetaService] slug= pageName=Home cacheHit= path=DB
+DEBUG - 2026-03-08 20:35:02 --> [REQ_ID=aceea8e304a0] [FILTER_AFTER]
+DEBUG - 2026-03-08 20:35:02 --> [REQ_ID=aceea8e304a0] [LIFECYCLE][END] status=200 duration_ms=760.39 memory_delta=4194304
+INFO - 2026-03-08 20:35:02 --> [REQ_ID=798b9ac8ba1d] [PERF] Execution time=0.758253
+DEBUG - 2026-03-08 20:35:02 --> [REQ_ID=aceea8e304a0] [REQUEST][END]
+INFO - 2026-03-08 20:35:02 --> [REQ_ID=aceea8e304a0] [PERF] Execution time=0.799669
+DEBUG - 2026-03-08 20:36:17 --> [REQ_ID=fdbf8630cb02] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 20:36:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 20:36:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 20:36:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 20:36:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 20:36:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 20:38:15 --> [REQ_ID=01023c6ca57c] [REQUEST][START] POST /
+DEBUG - 2026-03-08 20:38:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 20:38:15 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: POST, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 20:38:15 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 20:38:15 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 20:38:15 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: none
+DEBUG - 2026-03-08 20:39:46 --> [REQ_ID=0286863f4179] [REQUEST][START] GET /
+DEBUG - 2026-03-08 20:39:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:39:46 --> [REQ_ID=0286863f4179] [FILTER_BEFORE] /
+DEBUG - 2026-03-08 20:39:46 --> [REQ_ID=0286863f4179] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 20:39:46 --> [REQ_ID=0286863f4179] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 20:39:46 --> [CSRF] token name=csrf_test_name hash=a4cdc91d4e1c528c6b573090418c3fcc
+DEBUG - 2026-03-08 20:39:46 --> [REQ_ID=1ef8f29f0b64] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 20:39:46 --> [REQ_ID=1ef8f29f0b64] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 20:39:46 --> [REQ_ID=1ef8f29f0b64] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 20:39:46 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:39:47 --> [MetaService] slug= pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 20:39:47 --> [REQ_ID=1ef8f29f0b64] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 20:39:47 --> [REQ_ID=1ef8f29f0b64] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 20:39:47 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 20:39:47 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 20:39:47 --> [REQ_ID=0286863f4179] [FILTER_AFTER]
+DEBUG - 2026-03-08 20:39:47 --> [REQ_ID=0286863f4179] [LIFECYCLE][END] status=200 duration_ms=845.64 memory_delta=4194304
+INFO - 2026-03-08 20:39:47 --> [REQ_ID=1ef8f29f0b64] [PERF] Execution time=0.842631
+DEBUG - 2026-03-08 20:39:47 --> [REQ_ID=0286863f4179] [REQUEST][END]
+INFO - 2026-03-08 20:39:47 --> [REQ_ID=0286863f4179] [PERF] Execution time=0.896372
+DEBUG - 2026-03-08 20:41:17 --> [REQ_ID=8fc91a67ea64] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 20:41:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 20:41:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 20:41:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 20:41:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 20:41:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 20:46:17 --> [REQ_ID=286999bd07c6] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 20:46:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 20:46:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 20:46:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 20:46:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 20:46:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 20:46:23 --> [REQ_ID=dcf5f843a681] [REQUEST][START] GET /
+DEBUG - 2026-03-08 20:46:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:46:23 --> [REQ_ID=dcf5f843a681] [FILTER_BEFORE] /
+DEBUG - 2026-03-08 20:46:23 --> [REQ_ID=dcf5f843a681] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 20:46:23 --> [REQ_ID=dcf5f843a681] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 20:46:23 --> [CSRF] token name=csrf_test_name hash=0186a87b84936903bdf13db5442d13d7
+DEBUG - 2026-03-08 20:46:23 --> [REQ_ID=cf0f840b7f12] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 20:46:23 --> [REQ_ID=cf0f840b7f12] [MEMORY][controller-start] 4194304
+INFO - 2026-03-08 20:46:23 --> [REQ_ID=cf0f840b7f12] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 20:46:23 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:46:23 --> [MetaService] slug= pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 20:46:23 --> [REQ_ID=cf0f840b7f12] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 20:46:23 --> [REQ_ID=cf0f840b7f12] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 20:46:23 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 20:46:23 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 20:46:23 --> [REQ_ID=dcf5f843a681] [FILTER_AFTER]
+DEBUG - 2026-03-08 20:46:23 --> [REQ_ID=dcf5f843a681] [LIFECYCLE][END] status=200 duration_ms=693.08 memory_delta=4194304
+INFO - 2026-03-08 20:46:23 --> [REQ_ID=cf0f840b7f12] [PERF] Execution time=0.691116
+DEBUG - 2026-03-08 20:46:23 --> [REQ_ID=dcf5f843a681] [REQUEST][END]
+INFO - 2026-03-08 20:46:23 --> [REQ_ID=dcf5f843a681] [PERF] Execution time=0.711450
+DEBUG - 2026-03-08 20:51:17 --> [REQ_ID=00c066c52bc8] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 20:51:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 20:51:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 20:51:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 20:51:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 20:51:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 20:55:00 --> [REQ_ID=44b0336a5459] [REQUEST][START] GET /
+DEBUG - 2026-03-08 20:55:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 20:55:00 --> [REQ_ID=44b0336a5459] [FILTER_BEFORE] /
+DEBUG - 2026-03-08 20:55:00 --> [REQ_ID=44b0336a5459] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 20:55:00 --> [REQ_ID=44b0336a5459] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 20:55:00 --> [CSRF] token name=csrf_test_name hash=d733c29f5cc9f0de0196287ccd6e2bd1
+DEBUG - 2026-03-08 20:55:00 --> [REQ_ID=53bf7816f44f] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 20:55:00 --> [REQ_ID=53bf7816f44f] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 20:55:00 --> [REQ_ID=53bf7816f44f] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 20:55:00 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 20:55:00 --> [MetaService] slug= pageName= cacheHit= path=FALLBACK
+DEBUG - 2026-03-08 20:55:00 --> [REQ_ID=53bf7816f44f] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 20:55:00 --> [REQ_ID=53bf7816f44f] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 20:55:00 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 20:55:00 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 20:55:00 --> [REQ_ID=44b0336a5459] [FILTER_AFTER]
+DEBUG - 2026-03-08 20:55:00 --> [REQ_ID=44b0336a5459] [LIFECYCLE][END] status=200 duration_ms=795.90 memory_delta=4194304
+INFO - 2026-03-08 20:55:00 --> [REQ_ID=53bf7816f44f] [PERF] Execution time=0.794000
+DEBUG - 2026-03-08 20:55:00 --> [REQ_ID=44b0336a5459] [REQUEST][END]
+INFO - 2026-03-08 20:55:00 --> [REQ_ID=44b0336a5459] [PERF] Execution time=0.834641
+DEBUG - 2026-03-08 20:56:17 --> [REQ_ID=b7c925b43e36] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 20:56:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 20:56:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 20:56:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 20:56:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 20:56:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 21:00:02 --> [REQ_ID=5573bf5584ac] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 21:00:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:00:02 --> [REQ_ID=5573bf5584ac] [FILTER_BEFORE] /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 21:00:02 --> [REQ_ID=5573bf5584ac] [ROUTE] Controller=\App\Modules\Management\Controllers\ManagementAPIController Method=Run_CRON_Tasks
+DEBUG - 2026-03-08 21:00:02 --> [REQ_ID=5573bf5584ac] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 21:00:02 --> [REQ_ID=5573bf5584ac] [REQUEST][END]
+INFO - 2026-03-08 21:00:02 --> [REQ_ID=5573bf5584ac] [PERF] Execution time=0.049919
+DEBUG - 2026-03-08 21:01:17 --> [REQ_ID=15bf3d635c0b] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 21:01:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 21:01:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 21:01:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 21:01:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 21:01:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 21:06:17 --> [REQ_ID=2595d1ba21c7] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 21:06:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 21:06:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 21:06:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 21:06:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 21:06:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 21:11:13 --> [REQ_ID=88b039d2dd3b] [REQUEST][START] GET /
+DEBUG - 2026-03-08 21:11:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:11:13 --> [REQ_ID=88b039d2dd3b] [FILTER_BEFORE] /
+DEBUG - 2026-03-08 21:11:13 --> [REQ_ID=88b039d2dd3b] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 21:11:13 --> [REQ_ID=88b039d2dd3b] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 21:11:13 --> [CSRF] token name=csrf_test_name hash=55d2a54c35d6d6e289d12c8db423bfbb
+DEBUG - 2026-03-08 21:11:13 --> [REQ_ID=b036b0801bda] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 21:11:13 --> [REQ_ID=b036b0801bda] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 21:11:13 --> [REQ_ID=b036b0801bda] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 21:11:13 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 21:11:14 --> [MetaService] slug= pageName= cacheHit= path=FALLBACK
+DEBUG - 2026-03-08 21:11:14 --> [REQ_ID=b036b0801bda] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 21:11:14 --> [REQ_ID=b036b0801bda] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 21:11:14 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 21:11:14 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 21:11:14 --> [REQ_ID=88b039d2dd3b] [FILTER_AFTER]
+DEBUG - 2026-03-08 21:11:14 --> [REQ_ID=88b039d2dd3b] [LIFECYCLE][END] status=200 duration_ms=780.16 memory_delta=4194304
+INFO - 2026-03-08 21:11:14 --> [REQ_ID=b036b0801bda] [PERF] Execution time=0.778040
+DEBUG - 2026-03-08 21:11:14 --> [REQ_ID=88b039d2dd3b] [REQUEST][END]
+INFO - 2026-03-08 21:11:14 --> [REQ_ID=88b039d2dd3b] [PERF] Execution time=0.818743
+DEBUG - 2026-03-08 21:11:15 --> [REQ_ID=b9672aa37682] [REQUEST][START] GET /
+DEBUG - 2026-03-08 21:11:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:11:15 --> [REQ_ID=b9672aa37682] [FILTER_BEFORE] /
+DEBUG - 2026-03-08 21:11:15 --> [REQ_ID=b9672aa37682] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 21:11:15 --> [REQ_ID=b9672aa37682] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 21:11:15 --> [CSRF] token name=csrf_test_name hash=55d2a54c35d6d6e289d12c8db423bfbb
+DEBUG - 2026-03-08 21:11:15 --> [REQ_ID=8d99cb01135a] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 21:11:15 --> [REQ_ID=8d99cb01135a] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 21:11:15 --> [REQ_ID=8d99cb01135a] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 21:11:15 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 21:11:15 --> [MetaService] slug= pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 21:11:15 --> [REQ_ID=8d99cb01135a] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 21:11:15 --> [REQ_ID=8d99cb01135a] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 21:11:15 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 21:11:15 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 21:11:15 --> [REQ_ID=b9672aa37682] [FILTER_AFTER]
+DEBUG - 2026-03-08 21:11:15 --> [REQ_ID=b9672aa37682] [LIFECYCLE][END] status=200 duration_ms=616.49 memory_delta=2097152
+INFO - 2026-03-08 21:11:15 --> [REQ_ID=8d99cb01135a] [PERF] Execution time=0.616126
+DEBUG - 2026-03-08 21:11:15 --> [REQ_ID=b9672aa37682] [REQUEST][END]
+INFO - 2026-03-08 21:11:15 --> [REQ_ID=b9672aa37682] [PERF] Execution time=0.625226
+DEBUG - 2026-03-08 21:11:16 --> [REQ_ID=a84aa88960de] [REQUEST][START] GET /index.php
+DEBUG - 2026-03-08 21:11:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:11:16 --> [REQ_ID=a84aa88960de] [FILTER_BEFORE] /index.php
+DEBUG - 2026-03-08 21:11:16 --> [REQ_ID=a84aa88960de] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 21:11:16 --> [REQ_ID=a84aa88960de] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 21:11:16 --> [CSRF] token name=csrf_test_name hash=55d2a54c35d6d6e289d12c8db423bfbb
+DEBUG - 2026-03-08 21:11:16 --> [REQ_ID=4aba02e7c9b3] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 21:11:16 --> [REQ_ID=4aba02e7c9b3] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 21:11:16 --> [REQ_ID=4aba02e7c9b3] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 21:11:16 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 21:11:17 --> [MetaService] slug= pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 21:11:17 --> [REQ_ID=4aba02e7c9b3] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 21:11:17 --> [REQ_ID=4aba02e7c9b3] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 21:11:17 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 21:11:17 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 21:11:17 --> [REQ_ID=a84aa88960de] [FILTER_AFTER]
+DEBUG - 2026-03-08 21:11:17 --> [REQ_ID=a84aa88960de] [LIFECYCLE][END] status=200 duration_ms=573.85 memory_delta=2097152
+INFO - 2026-03-08 21:11:17 --> [REQ_ID=4aba02e7c9b3] [PERF] Execution time=0.573500
+DEBUG - 2026-03-08 21:11:17 --> [REQ_ID=a84aa88960de] [REQUEST][END]
+INFO - 2026-03-08 21:11:17 --> [REQ_ID=a84aa88960de] [PERF] Execution time=0.583443
+DEBUG - 2026-03-08 21:11:17 --> [REQ_ID=4fd8b89bfdf3] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 21:11:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 21:11:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 21:11:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 21:11:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 21:11:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 21:11:17 --> [REQ_ID=1b3179703b29] [REQUEST][START] GET /index.php/Blog
+DEBUG - 2026-03-08 21:11:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:11:17 --> [REQ_ID=1b3179703b29] [FILTER_BEFORE] /index.php/Blog
+DEBUG - 2026-03-08 21:11:17 --> [REQ_ID=1b3179703b29] [ROUTE] Controller=\App\Modules\Blog\Controllers\BlogController Method=index
+DEBUG - 2026-03-08 21:11:17 --> [REQ_ID=1b3179703b29] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Blog
+DEBUG - 2026-03-08 21:11:17 --> [CSRF] token name=csrf_test_name hash=55d2a54c35d6d6e289d12c8db423bfbb
+DEBUG - 2026-03-08 21:11:17 --> [REQ_ID=22cf025c9f61] [INIT] App\Modules\Blog\Controllers\BlogController::GET
+INFO - 2026-03-08 21:11:17 --> [REQ_ID=22cf025c9f61] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 21:11:17 --> [REQ_ID=22cf025c9f61] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 21:11:17 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 21:11:17 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 21:11:17 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 21:11:17 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 21:11:17 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 21:11:17 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 21:11:17 --> [REQ_ID=22cf025c9f61] [MEMORY][commonData:start] 6291456
+INFO - 2026-03-08 21:11:17 --> [REQ_ID=22cf025c9f61] [PERF] Execution time=0.058009
+DEBUG - 2026-03-08 21:11:18 --> [REQ_ID=d615b3709229] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 21:11:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:11:18 --> [REQ_ID=d615b3709229] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 21:11:18 --> [REQ_ID=d615b3709229] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 21:11:18 --> [REQ_ID=d615b3709229] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 21:11:18 --> [CSRF] token name=csrf_test_name hash=55d2a54c35d6d6e289d12c8db423bfbb
+DEBUG - 2026-03-08 21:11:18 --> [REQ_ID=32c77880bdc7] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 21:11:18 --> [REQ_ID=32c77880bdc7] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 21:11:18 --> [REQ_ID=d615b3709229] [FILTER_AFTER]
+DEBUG - 2026-03-08 21:11:18 --> [REQ_ID=d615b3709229] [LIFECYCLE][END] status=200 duration_ms=26.71 memory_delta=0
+INFO - 2026-03-08 21:11:18 --> [REQ_ID=32c77880bdc7] [PERF] Execution time=0.026434
+DEBUG - 2026-03-08 21:11:18 --> [REQ_ID=d615b3709229] [REQUEST][END]
+INFO - 2026-03-08 21:11:18 --> [REQ_ID=d615b3709229] [PERF] Execution time=0.037943
+DEBUG - 2026-03-08 21:11:19 --> [REQ_ID=1cad4cc249fa] [REQUEST][START] GET /index.php/Support
+DEBUG - 2026-03-08 21:11:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:11:19 --> [REQ_ID=1cad4cc249fa] [FILTER_BEFORE] /index.php/Support
+DEBUG - 2026-03-08 21:11:19 --> [REQ_ID=1cad4cc249fa] [ROUTE] Controller=\App\Modules\Support\Controllers\SupportController Method=index
+DEBUG - 2026-03-08 21:11:19 --> [REQ_ID=1cad4cc249fa] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support
+DEBUG - 2026-03-08 21:11:19 --> [CSRF] token name=csrf_test_name hash=55d2a54c35d6d6e289d12c8db423bfbb
+DEBUG - 2026-03-08 21:11:19 --> [REQ_ID=f4976eb84a64] [INIT] App\Modules\Support\Controllers\SupportController::GET
+INFO - 2026-03-08 21:11:19 --> [REQ_ID=f4976eb84a64] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 21:11:19 --> [REQ_ID=f4976eb84a64] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 21:11:19 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 21:11:19 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 21:11:19 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 21:11:19 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 21:11:19 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 21:11:19 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 21:11:19 --> [REQ_ID=f4976eb84a64] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 21:11:19 --> [REQ_ID=f4976eb84a64] [VIEW_RENDER] SupportModule\Views\Support\index
+INFO - 2026-03-08 21:11:19 --> [REQ_ID=f4976eb84a64] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 21:11:19 --> themesMemory usage: 4194304
+DEBUG - 2026-03-08 21:11:19 --> [REQ_ID=1cad4cc249fa] [FILTER_AFTER]
+DEBUG - 2026-03-08 21:11:19 --> [REQ_ID=1cad4cc249fa] [LIFECYCLE][END] status=200 duration_ms=33.10 memory_delta=0
+INFO - 2026-03-08 21:11:19 --> [REQ_ID=f4976eb84a64] [PERF] Execution time=0.032871
+DEBUG - 2026-03-08 21:11:19 --> [REQ_ID=1cad4cc249fa] [REQUEST][END]
+INFO - 2026-03-08 21:11:19 --> [REQ_ID=1cad4cc249fa] [PERF] Execution time=0.043408
+DEBUG - 2026-03-08 21:11:20 --> [REQ_ID=45b6ac9b77ab] [REQUEST][START] GET /index.php/Dashboard
+DEBUG - 2026-03-08 21:11:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:11:20 --> [REQ_ID=45b6ac9b77ab] [FILTER_BEFORE] /index.php/Dashboard
+DEBUG - 2026-03-08 21:11:20 --> [REQ_ID=45b6ac9b77ab] [ROUTE] Controller=\App\Modules\User\Controllers\DashboardController Method=index
+DEBUG - 2026-03-08 21:11:20 --> [REQ_ID=45b6ac9b77ab] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Dashboard
+DEBUG - 2026-03-08 21:11:20 --> [CSRF] token name=csrf_test_name hash=55d2a54c35d6d6e289d12c8db423bfbb
+DEBUG - 2026-03-08 21:11:20 --> [REQ_ID=45b6ac9b77ab] [REQUEST][END]
+INFO - 2026-03-08 21:11:20 --> [REQ_ID=45b6ac9b77ab] [PERF] Execution time=0.013516
+DEBUG - 2026-03-08 21:11:20 --> [REQ_ID=4e486ea3604c] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 21:11:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:11:20 --> [REQ_ID=4e486ea3604c] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 21:11:20 --> [REQ_ID=4e486ea3604c] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 21:11:20 --> [REQ_ID=4e486ea3604c] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 21:11:20 --> [CSRF] token name=csrf_test_name hash=55d2a54c35d6d6e289d12c8db423bfbb
+DEBUG - 2026-03-08 21:11:20 --> [REQ_ID=701de381a412] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 21:11:20 --> [REQ_ID=701de381a412] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 21:11:20 --> [REQ_ID=4e486ea3604c] [FILTER_AFTER]
+DEBUG - 2026-03-08 21:11:20 --> [REQ_ID=4e486ea3604c] [LIFECYCLE][END] status=200 duration_ms=22.80 memory_delta=0
+INFO - 2026-03-08 21:11:20 --> [REQ_ID=701de381a412] [PERF] Execution time=0.022641
+DEBUG - 2026-03-08 21:11:20 --> [REQ_ID=4e486ea3604c] [REQUEST][END]
+INFO - 2026-03-08 21:11:20 --> [REQ_ID=4e486ea3604c] [PERF] Execution time=0.031089
+DEBUG - 2026-03-08 21:11:21 --> [REQ_ID=e932d17265ad] [REQUEST][START] GET /index.php/How-It-Works
+DEBUG - 2026-03-08 21:11:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:11:21 --> [REQ_ID=e932d17265ad] [FILTER_BEFORE] /index.php/How-It-Works
+DEBUG - 2026-03-08 21:11:21 --> [REQ_ID=e932d17265ad] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=index
+DEBUG - 2026-03-08 21:11:21 --> [REQ_ID=e932d17265ad] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works
+DEBUG - 2026-03-08 21:11:21 --> [CSRF] token name=csrf_test_name hash=55d2a54c35d6d6e289d12c8db423bfbb
+DEBUG - 2026-03-08 21:11:21 --> [REQ_ID=d35c5e46f11c] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 21:11:21 --> [REQ_ID=d35c5e46f11c] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 21:11:21 --> [REQ_ID=d35c5e46f11c] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 21:11:21 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 21:11:21 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 21:11:21 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 21:11:21 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 21:11:21 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 21:11:21 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 21:11:21 --> HowItWorksController failure: overview
+CRITICAL - 2026-03-08 21:11:21 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: How-It-Works]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 21:11:21 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 21:11:21 --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works
+WARNING - 2026-03-08 21:11:21 --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works | referrer: https://www.mymiwallet.com/index.php/How-It-Works
+INFO - 2026-03-08 21:11:21 --> [REQ_ID=d35c5e46f11c] [PERF] Execution time=0.034629
+DEBUG - 2026-03-08 21:11:22 --> [REQ_ID=16037aaa58bd] [REQUEST][START] GET /index.php/Free/register
+DEBUG - 2026-03-08 21:11:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:11:22 --> [REQ_ID=16037aaa58bd] [FILTER_BEFORE] /index.php/Free/register
+DEBUG - 2026-03-08 21:11:22 --> [REQ_ID=16037aaa58bd] [ROUTE] Controller=\App\Controllers\AuthController Method=register
+DEBUG - 2026-03-08 21:11:22 --> [REQ_ID=16037aaa58bd] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Free/register
+DEBUG - 2026-03-08 21:11:22 --> [CSRF] token name=csrf_test_name hash=55d2a54c35d6d6e289d12c8db423bfbb
+DEBUG - 2026-03-08 21:11:22 --> [REQ_ID=16037aaa58bd] [REQUEST][END]
+INFO - 2026-03-08 21:11:22 --> [REQ_ID=16037aaa58bd] [PERF] Execution time=0.009752
+DEBUG - 2026-03-08 21:11:23 --> [REQ_ID=9e9984eec08a] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 21:11:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:11:23 --> [REQ_ID=9e9984eec08a] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 21:11:23 --> [REQ_ID=9e9984eec08a] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 21:11:23 --> [REQ_ID=9e9984eec08a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 21:11:23 --> [CSRF] token name=csrf_test_name hash=55d2a54c35d6d6e289d12c8db423bfbb
+DEBUG - 2026-03-08 21:11:23 --> [REQ_ID=0041be3739c4] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 21:11:23 --> [REQ_ID=0041be3739c4] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 21:11:23 --> [REQ_ID=9e9984eec08a] [FILTER_AFTER]
+DEBUG - 2026-03-08 21:11:23 --> [REQ_ID=9e9984eec08a] [LIFECYCLE][END] status=200 duration_ms=19.76 memory_delta=0
+INFO - 2026-03-08 21:11:23 --> [REQ_ID=0041be3739c4] [PERF] Execution time=0.019618
+DEBUG - 2026-03-08 21:11:23 --> [REQ_ID=9e9984eec08a] [REQUEST][END]
+INFO - 2026-03-08 21:11:23 --> [REQ_ID=9e9984eec08a] [PERF] Execution time=0.029961
+DEBUG - 2026-03-08 21:11:23 --> [REQ_ID=ff83ed990d83] [REQUEST][START] GET /index.php/Knowledgebase
+DEBUG - 2026-03-08 21:11:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:11:23 --> [REQ_ID=ff83ed990d83] [FILTER_BEFORE] /index.php/Knowledgebase
+DEBUG - 2026-03-08 21:11:23 --> [REQ_ID=ff83ed990d83] [ROUTE] Controller=\App\Modules\User\Controllers\KnowledgebaseController Method=index
+DEBUG - 2026-03-08 21:11:23 --> [REQ_ID=ff83ed990d83] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Knowledgebase
+DEBUG - 2026-03-08 21:11:23 --> [CSRF] token name=csrf_test_name hash=55d2a54c35d6d6e289d12c8db423bfbb
+DEBUG - 2026-03-08 21:11:23 --> [REQ_ID=ff83ed990d83] [REQUEST][END]
+INFO - 2026-03-08 21:11:23 --> [REQ_ID=ff83ed990d83] [PERF] Execution time=0.011187
+DEBUG - 2026-03-08 21:11:24 --> [REQ_ID=b29a1282b5a7] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 21:11:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:11:24 --> [REQ_ID=b29a1282b5a7] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 21:11:24 --> [REQ_ID=b29a1282b5a7] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 21:11:24 --> [REQ_ID=b29a1282b5a7] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 21:11:24 --> [CSRF] token name=csrf_test_name hash=55d2a54c35d6d6e289d12c8db423bfbb
+DEBUG - 2026-03-08 21:11:24 --> [REQ_ID=a42ca2bfd6a3] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 21:11:24 --> [REQ_ID=a42ca2bfd6a3] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 21:11:24 --> [REQ_ID=b29a1282b5a7] [FILTER_AFTER]
+DEBUG - 2026-03-08 21:11:24 --> [REQ_ID=b29a1282b5a7] [LIFECYCLE][END] status=200 duration_ms=21.21 memory_delta=0
+INFO - 2026-03-08 21:11:24 --> [REQ_ID=a42ca2bfd6a3] [PERF] Execution time=0.021054
+DEBUG - 2026-03-08 21:11:24 --> [REQ_ID=b29a1282b5a7] [REQUEST][END]
+INFO - 2026-03-08 21:11:24 --> [REQ_ID=b29a1282b5a7] [PERF] Execution time=0.029982
+DEBUG - 2026-03-08 21:11:25 --> [REQ_ID=00229f931885] [REQUEST][START] GET /index.php/Privacy-Policy
+DEBUG - 2026-03-08 21:11:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:11:25 --> [REQ_ID=00229f931885] [FILTER_BEFORE] /index.php/Privacy-Policy
+DEBUG - 2026-03-08 21:11:25 --> [REQ_ID=00229f931885] [ROUTE] Controller=\App\Controllers\Home Method=privacyPolicy
+DEBUG - 2026-03-08 21:11:25 --> [REQ_ID=00229f931885] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Privacy-Policy
+DEBUG - 2026-03-08 21:11:25 --> [CSRF] token name=csrf_test_name hash=55d2a54c35d6d6e289d12c8db423bfbb
+DEBUG - 2026-03-08 21:11:25 --> [REQ_ID=1ced419d3169] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 21:11:25 --> [REQ_ID=1ced419d3169] [MEMORY][controller-start] 4194304
+INFO - 2026-03-08 21:11:25 --> [REQ_ID=1ced419d3169] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 21:11:25 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 21:11:25 --> [MetaService] slug=privacy-policy pageName= cacheHit= path=DB
+DEBUG - 2026-03-08 21:11:25 --> [REQ_ID=1ced419d3169] [VIEW_RENDER] themes/public/privacyPolicy
+INFO - 2026-03-08 21:11:25 --> [REQ_ID=1ced419d3169] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 21:11:25 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 21:11:25 --> [MetaService] slug=privacy-policy pageName=Privacy Policy cacheHit= path=DB
+DEBUG - 2026-03-08 21:11:25 --> [REQ_ID=00229f931885] [FILTER_AFTER]
+DEBUG - 2026-03-08 21:11:25 --> [REQ_ID=00229f931885] [LIFECYCLE][END] status=200 duration_ms=645.77 memory_delta=4194304
+INFO - 2026-03-08 21:11:25 --> [REQ_ID=1ced419d3169] [PERF] Execution time=0.645542
+DEBUG - 2026-03-08 21:11:25 --> [REQ_ID=00229f931885] [REQUEST][END]
+INFO - 2026-03-08 21:11:25 --> [REQ_ID=00229f931885] [PERF] Execution time=0.655007
+DEBUG - 2026-03-08 21:14:36 --> [REQ_ID=e82263e0d9e9] [REQUEST][START] GET /index.php/Management/Security
+DEBUG - 2026-03-08 21:14:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:14:37 --> [REQ_ID=e82263e0d9e9] [REQUEST][END]
+INFO - 2026-03-08 21:14:37 --> [REQ_ID=e82263e0d9e9] [PERF] Execution time=0.088547
+DEBUG - 2026-03-08 21:15:02 --> [REQ_ID=d84bc8b059d1] [REQUEST][START] GET /index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 21:15:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:15:02 --> [REQ_ID=d84bc8b059d1] [FILTER_BEFORE] /index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 21:15:02 --> [REQ_ID=d84bc8b059d1] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=fetchEmailAlerts
+DEBUG - 2026-03-08 21:15:02 --> [REQ_ID=d84bc8b059d1] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 21:15:02 --> [REQ_ID=d84bc8b059d1] [REQUEST][END]
+INFO - 2026-03-08 21:15:02 --> [REQ_ID=d84bc8b059d1] [PERF] Execution time=0.025714
+DEBUG - 2026-03-08 21:16:17 --> [REQ_ID=2ebe136d3570] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 21:16:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 21:16:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 21:16:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 21:16:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 21:16:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 21:17:24 --> [REQ_ID=c4518cf02b96] [REQUEST][START] GET /index.php/Management/Admin
+DEBUG - 2026-03-08 21:17:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:17:24 --> [REQ_ID=c4518cf02b96] [FILTER_BEFORE] /index.php/Management/Admin
+DEBUG - 2026-03-08 21:17:24 --> [REQ_ID=c4518cf02b96] [ROUTE] Controller=\App\Modules\Management\Controllers\ManagementAdminController Method=index
+DEBUG - 2026-03-08 21:17:24 --> [REQ_ID=c4518cf02b96] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management/Admin
+DEBUG - 2026-03-08 21:17:24 --> [CSRF] token name=csrf_test_name hash=b3e6bc4c6b8320787334fdb9ac923974
+DEBUG - 2026-03-08 21:17:24 --> [REQ_ID=c4518cf02b96] [REQUEST][END]
+INFO - 2026-03-08 21:17:24 --> [REQ_ID=c4518cf02b96] [PERF] Execution time=0.029712
+DEBUG - 2026-03-08 21:17:25 --> [REQ_ID=25295cfb8c11] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 21:17:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:17:25 --> [REQ_ID=25295cfb8c11] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 21:17:25 --> [REQ_ID=25295cfb8c11] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 21:17:25 --> [REQ_ID=25295cfb8c11] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 21:17:25 --> [CSRF] token name=csrf_test_name hash=aa6ab32b65c56465e54a9f0d2e659cfa
+DEBUG - 2026-03-08 21:17:25 --> [REQ_ID=0aa99359005b] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 21:17:25 --> [REQ_ID=0aa99359005b] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 21:17:25 --> [REQ_ID=25295cfb8c11] [FILTER_AFTER]
+DEBUG - 2026-03-08 21:17:25 --> [REQ_ID=25295cfb8c11] [LIFECYCLE][END] status=200 duration_ms=44.61 memory_delta=0
+INFO - 2026-03-08 21:17:25 --> [REQ_ID=0aa99359005b] [PERF] Execution time=0.044395
+DEBUG - 2026-03-08 21:17:25 --> [REQ_ID=25295cfb8c11] [REQUEST][END]
+INFO - 2026-03-08 21:17:25 --> [REQ_ID=25295cfb8c11] [PERF] Execution time=0.057605
+DEBUG - 2026-03-08 21:17:29 --> [REQ_ID=1b066b87e049] [REQUEST][START] GET /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 21:17:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:17:29 --> [REQ_ID=1b066b87e049] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 21:17:29 --> [REQ_ID=1b066b87e049] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 21:17:29 --> [REQ_ID=1b066b87e049] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 21:17:29 --> [CSRF] token name=csrf_test_name hash=b79dcd12ba1d6d6c16d5411e527cd137
+DEBUG - 2026-03-08 21:17:29 --> [REQ_ID=fc3a29365b2b] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 21:17:29 --> [REQ_ID=fc3a29365b2b] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 21:17:29 --> [REQ_ID=fc3a29365b2b] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 21:17:29 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 21:17:29 --> [SERVICE] App\Services\BudgetService ::setUserId
+ERROR - 2026-03-08 21:17:29 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 21:17:29 --> [REQ_ID=fc3a29365b2b] [PERF] Execution time=0.072929
+DEBUG - 2026-03-08 21:17:30 --> [REQ_ID=0efe690e5d45] [REQUEST][START] GET /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 21:17:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:17:30 --> [REQ_ID=0efe690e5d45] [FILTER_BEFORE] /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 21:17:30 --> [REQ_ID=0efe690e5d45] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 21:17:30 --> [REQ_ID=0efe690e5d45] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 21:17:30 --> [CSRF] token name=csrf_test_name hash=b79dcd12ba1d6d6c16d5411e527cd137
+DEBUG - 2026-03-08 21:17:30 --> [REQ_ID=b918081c9f50] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 21:17:30 --> [REQ_ID=b918081c9f50] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 21:17:30 --> [REQ_ID=b918081c9f50] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 21:17:30 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 21:17:30 --> [SERVICE] App\Services\BudgetService ::setUserId
+ERROR - 2026-03-08 21:17:30 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 21:17:30 --> [REQ_ID=b918081c9f50] [PERF] Execution time=0.024048
+DEBUG - 2026-03-08 21:21:17 --> [REQ_ID=c93105b0efe7] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 21:21:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 21:21:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 21:21:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 21:21:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 21:21:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 21:26:17 --> [REQ_ID=9136f640dde8] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 21:26:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 21:26:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 21:26:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 21:26:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 21:26:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 21:26:50 --> [REQ_ID=73385023b68c] [REQUEST][START] GET /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 21:26:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:26:50 --> [REQ_ID=73385023b68c] [FILTER_BEFORE] /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 21:26:50 --> [REQ_ID=73385023b68c] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=SettingFinancialGoals
+DEBUG - 2026-03-08 21:26:50 --> [REQ_ID=73385023b68c] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 21:26:50 --> [CSRF] token name=csrf_test_name hash=b79dcd12ba1d6d6c16d5411e527cd137
+DEBUG - 2026-03-08 21:26:50 --> [REQ_ID=42dfec9b2fda] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 21:26:50 --> [REQ_ID=42dfec9b2fda] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 21:26:50 --> [REQ_ID=42dfec9b2fda] [METHOD_ENTRY] SettingFinancialGoals
+DEBUG - 2026-03-08 21:26:50 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 21:26:50 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 21:26:50 --> [REQ_ID=42dfec9b2fda] [PERF] Execution time=0.144814
+CRITICAL - 2026-03-08 21:26:50 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: How-It-Works/Setting-Financial-Goals]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 21:26:50 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 21:26:50 --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works/Setting-Financial-Goals
+WARNING - 2026-03-08 21:26:50 --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works/Setting-Financial-Goals | referrer: none
+ERROR - 2026-03-08 21:26:50 --> [ERROR_PAGE] event=error_404 status=404 message=Page not found.
+DEBUG - 2026-03-08 21:26:53 --> [REQ_ID=05dfa77a3939] [REQUEST][START] GET /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 21:26:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:26:53 --> [REQ_ID=05dfa77a3939] [FILTER_BEFORE] /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 21:26:53 --> [REQ_ID=05dfa77a3939] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=SettingFinancialGoals
+DEBUG - 2026-03-08 21:26:53 --> [REQ_ID=05dfa77a3939] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 21:26:53 --> [CSRF] token name=csrf_test_name hash=b79dcd12ba1d6d6c16d5411e527cd137
+DEBUG - 2026-03-08 21:26:53 --> [REQ_ID=2051aa65eb38] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 21:26:53 --> [REQ_ID=2051aa65eb38] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 21:26:53 --> [REQ_ID=2051aa65eb38] [METHOD_ENTRY] SettingFinancialGoals
+DEBUG - 2026-03-08 21:26:53 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 21:26:53 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 21:26:53 --> [REQ_ID=2051aa65eb38] [PERF] Execution time=0.015830
+CRITICAL - 2026-03-08 21:26:53 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: How-It-Works/Setting-Financial-Goals]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 21:26:53 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 21:26:53 --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works/Setting-Financial-Goals
+WARNING - 2026-03-08 21:26:53 --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works/Setting-Financial-Goals | referrer: none
+ERROR - 2026-03-08 21:26:53 --> [ERROR_PAGE] event=error_404 status=404 message=Page not found.
+DEBUG - 2026-03-08 21:26:58 --> [REQ_ID=1f1dc2b25e0b] [REQUEST][START] GET /index.php/Support
+DEBUG - 2026-03-08 21:26:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:26:58 --> [REQ_ID=1f1dc2b25e0b] [FILTER_BEFORE] /index.php/Support
+DEBUG - 2026-03-08 21:26:58 --> [REQ_ID=1f1dc2b25e0b] [ROUTE] Controller=\App\Modules\Support\Controllers\SupportController Method=index
+DEBUG - 2026-03-08 21:26:58 --> [REQ_ID=1f1dc2b25e0b] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support
+DEBUG - 2026-03-08 21:26:58 --> [CSRF] token name=csrf_test_name hash=b79dcd12ba1d6d6c16d5411e527cd137
+DEBUG - 2026-03-08 21:26:58 --> [REQ_ID=eca897a67607] [INIT] App\Modules\Support\Controllers\SupportController::GET
+INFO - 2026-03-08 21:26:58 --> [REQ_ID=eca897a67607] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 21:26:58 --> [REQ_ID=eca897a67607] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 21:26:58 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 21:26:58 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 21:26:58 --> [REQ_ID=eca897a67607] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 21:26:58 --> [REQ_ID=eca897a67607] [VIEW_RENDER] SupportModule\Views\Support\index
+INFO - 2026-03-08 21:26:58 --> [REQ_ID=eca897a67607] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 21:26:58 --> themesMemory usage: 4194304
+DEBUG - 2026-03-08 21:26:58 --> [REQ_ID=1f1dc2b25e0b] [FILTER_AFTER]
+DEBUG - 2026-03-08 21:26:58 --> [REQ_ID=1f1dc2b25e0b] [LIFECYCLE][END] status=200 duration_ms=40.22 memory_delta=0
+INFO - 2026-03-08 21:26:58 --> [REQ_ID=eca897a67607] [PERF] Execution time=0.040065
+DEBUG - 2026-03-08 21:26:58 --> [REQ_ID=1f1dc2b25e0b] [REQUEST][END]
+INFO - 2026-03-08 21:26:58 --> [REQ_ID=1f1dc2b25e0b] [PERF] Execution time=0.054169
+DEBUG - 2026-03-08 21:27:32 --> [REQ_ID=3a887b929dc3] [REQUEST][START] GET /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 21:27:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:27:32 --> [REQ_ID=3a887b929dc3] [FILTER_BEFORE] /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 21:27:32 --> [REQ_ID=3a887b929dc3] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=SettingFinancialGoals
+DEBUG - 2026-03-08 21:27:32 --> [REQ_ID=3a887b929dc3] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 21:27:32 --> [CSRF] token name=csrf_test_name hash=b79dcd12ba1d6d6c16d5411e527cd137
+DEBUG - 2026-03-08 21:27:32 --> [REQ_ID=86ab5d05ca5f] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 21:27:32 --> [REQ_ID=86ab5d05ca5f] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 21:27:32 --> [REQ_ID=86ab5d05ca5f] [METHOD_ENTRY] SettingFinancialGoals
+DEBUG - 2026-03-08 21:27:32 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 21:27:32 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 21:27:32 --> [REQ_ID=86ab5d05ca5f] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 21:27:33 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 21:27:33 --> [MetaService] slug=how-it-works/setting-financial-goals pageName= cacheHit= path=FALLBACK
+DEBUG - 2026-03-08 21:27:33 --> [REQ_ID=3a887b929dc3] [FILTER_AFTER]
+DEBUG - 2026-03-08 21:27:33 --> [REQ_ID=3a887b929dc3] [LIFECYCLE][END] status=200 duration_ms=709.05 memory_delta=4194304
+INFO - 2026-03-08 21:27:33 --> [REQ_ID=86ab5d05ca5f] [PERF] Execution time=0.708947
+DEBUG - 2026-03-08 21:27:33 --> [REQ_ID=3a887b929dc3] [REQUEST][END]
+INFO - 2026-03-08 21:27:33 --> [REQ_ID=3a887b929dc3] [PERF] Execution time=0.720382
+DEBUG - 2026-03-08 21:27:44 --> [REQ_ID=60bd117058ee] [REQUEST][START] GET /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 21:27:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:27:44 --> [REQ_ID=60bd117058ee] [FILTER_BEFORE] /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 21:27:44 --> [REQ_ID=60bd117058ee] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=SettingFinancialGoals
+DEBUG - 2026-03-08 21:27:44 --> [REQ_ID=60bd117058ee] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 21:27:44 --> [CSRF] token name=csrf_test_name hash=b79dcd12ba1d6d6c16d5411e527cd137
+DEBUG - 2026-03-08 21:27:44 --> [REQ_ID=f28b4e8e1488] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 21:27:44 --> [REQ_ID=f28b4e8e1488] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 21:27:44 --> [REQ_ID=f28b4e8e1488] [METHOD_ENTRY] SettingFinancialGoals
+DEBUG - 2026-03-08 21:27:44 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 21:27:44 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 21:27:44 --> [REQ_ID=f28b4e8e1488] [MEMORY][commonData:start] 6291456
+INFO - 2026-03-08 21:27:44 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 21:27:44 --> [MetaService] slug=how-it-works/setting-financial-goals pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 21:27:44 --> [REQ_ID=60bd117058ee] [FILTER_AFTER]
+DEBUG - 2026-03-08 21:27:44 --> [REQ_ID=60bd117058ee] [LIFECYCLE][END] status=200 duration_ms=544.68 memory_delta=2097152
+INFO - 2026-03-08 21:27:44 --> [REQ_ID=f28b4e8e1488] [PERF] Execution time=0.544490
+DEBUG - 2026-03-08 21:27:44 --> [REQ_ID=60bd117058ee] [REQUEST][END]
+INFO - 2026-03-08 21:27:44 --> [REQ_ID=60bd117058ee] [PERF] Execution time=0.554601
+DEBUG - 2026-03-08 21:29:06 --> [REQ_ID=6bbc8f7f8113] [REQUEST][START] GET /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 21:29:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:29:06 --> [REQ_ID=6bbc8f7f8113] [FILTER_BEFORE] /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 21:29:06 --> [REQ_ID=6bbc8f7f8113] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=SettingFinancialGoals
+DEBUG - 2026-03-08 21:29:06 --> [REQ_ID=6bbc8f7f8113] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 21:29:06 --> [CSRF] token name=csrf_test_name hash=b79dcd12ba1d6d6c16d5411e527cd137
+DEBUG - 2026-03-08 21:29:06 --> [REQ_ID=55f222d70671] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 21:29:06 --> [REQ_ID=55f222d70671] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 21:29:06 --> [REQ_ID=55f222d70671] [METHOD_ENTRY] SettingFinancialGoals
+DEBUG - 2026-03-08 21:29:06 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 21:29:06 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 21:29:06 --> [REQ_ID=55f222d70671] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 21:29:07 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 21:29:07 --> [MetaService] slug=how-it-works/setting-financial-goals pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 21:29:07 --> [REQ_ID=6bbc8f7f8113] [FILTER_AFTER]
+DEBUG - 2026-03-08 21:29:07 --> [REQ_ID=6bbc8f7f8113] [LIFECYCLE][END] status=200 duration_ms=821.96 memory_delta=4194304
+INFO - 2026-03-08 21:29:07 --> [REQ_ID=55f222d70671] [PERF] Execution time=0.821895
+DEBUG - 2026-03-08 21:29:07 --> [REQ_ID=6bbc8f7f8113] [REQUEST][END]
+INFO - 2026-03-08 21:29:07 --> [REQ_ID=6bbc8f7f8113] [PERF] Execution time=0.833175
+DEBUG - 2026-03-08 21:29:13 --> [REQ_ID=b389d2c1311c] [REQUEST][START] GET /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 21:29:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 21:29:13 --> [REQ_ID=b389d2c1311c] [FILTER_BEFORE] /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 21:29:13 --> [REQ_ID=b389d2c1311c] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=SettingFinancialGoals
+DEBUG - 2026-03-08 21:29:13 --> [REQ_ID=b389d2c1311c] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 21:29:13 --> [CSRF] token name=csrf_test_name hash=b79dcd12ba1d6d6c16d5411e527cd137
+DEBUG - 2026-03-08 21:29:13 --> [REQ_ID=cbccb5e88f83] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 21:29:13 --> [REQ_ID=cbccb5e88f83] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 21:29:13 --> [REQ_ID=cbccb5e88f83] [METHOD_ENTRY] SettingFinancialGoals
+DEBUG - 2026-03-08 21:29:13 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 21:29:13 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 21:29:13 --> [REQ_ID=cbccb5e88f83] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 21:29:13 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 21:29:13 --> [MetaService] slug=how-it-works/setting-financial-goals pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 21:29:13 --> [REQ_ID=b389d2c1311c] [FILTER_AFTER]
+DEBUG - 2026-03-08 21:29:13 --> [REQ_ID=b389d2c1311c] [LIFECYCLE][END] status=200 duration_ms=587.74 memory_delta=4194304
+INFO - 2026-03-08 21:29:13 --> [REQ_ID=cbccb5e88f83] [PERF] Execution time=0.587500
+DEBUG - 2026-03-08 21:29:13 --> [REQ_ID=b389d2c1311c] [REQUEST][END]
+INFO - 2026-03-08 21:29:13 --> [REQ_ID=b389d2c1311c] [PERF] Execution time=0.596884
+DEBUG - 2026-03-08 21:31:17 --> [REQ_ID=d392651dbc2b] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 21:31:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 21:31:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 21:31:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 21:31:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 21:31:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 21:36:17 --> [REQ_ID=7cf1b3a5b8e3] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 21:36:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 21:36:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 21:36:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 21:36:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 21:36:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 21:41:17 --> [REQ_ID=8659734e3696] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 21:41:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 21:41:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 21:41:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 21:41:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 21:41:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 21:46:17 --> [REQ_ID=9bdb86cc4edf] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 21:46:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 21:46:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 21:46:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 21:46:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 21:46:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 21:51:17 --> [REQ_ID=c7700b4449fa] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 21:51:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 21:51:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 21:51:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 21:51:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 21:51:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 21:56:17 --> [REQ_ID=30c31b906793] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 21:56:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 21:56:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 21:56:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 21:56:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 21:56:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 22:00:01 --> [REQ_ID=a10b20dfe28d] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 22:00:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 22:00:01 --> [REQ_ID=a10b20dfe28d] [FILTER_BEFORE] /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 22:00:01 --> [REQ_ID=a10b20dfe28d] [ROUTE] Controller=\App\Modules\Management\Controllers\ManagementAPIController Method=Run_CRON_Tasks
+DEBUG - 2026-03-08 22:00:01 --> [REQ_ID=a10b20dfe28d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 22:00:01 --> [REQ_ID=a10b20dfe28d] [REQUEST][END]
+INFO - 2026-03-08 22:00:01 --> [REQ_ID=a10b20dfe28d] [PERF] Execution time=0.051410
+DEBUG - 2026-03-08 22:01:17 --> [REQ_ID=8ad19e9cd467] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 22:01:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 22:01:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 22:01:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 22:01:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 22:01:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 22:06:17 --> [REQ_ID=6e492fce0a84] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 22:06:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 22:06:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 22:06:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 22:06:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 22:06:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 22:11:17 --> [REQ_ID=6f5d64ddf7a6] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 22:11:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 22:11:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 22:11:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 22:11:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 22:11:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 22:11:43 --> [REQ_ID=cccaf49b7b01] [REQUEST][START] GET /
+DEBUG - 2026-03-08 22:11:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 22:11:43 --> [REQ_ID=cccaf49b7b01] [FILTER_BEFORE] /
+DEBUG - 2026-03-08 22:11:43 --> [REQ_ID=cccaf49b7b01] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 22:11:43 --> [REQ_ID=cccaf49b7b01] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 22:11:43 --> [CSRF] token name=csrf_test_name hash=e9262360a754e597b9a5d8aa85dd0bf3
+DEBUG - 2026-03-08 22:11:43 --> [REQ_ID=27f397aa7efe] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 22:11:43 --> [REQ_ID=27f397aa7efe] [MEMORY][controller-start] 4194304
+INFO - 2026-03-08 22:11:43 --> [REQ_ID=27f397aa7efe] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 22:11:43 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 22:11:44 --> [MetaService] slug= pageName= cacheHit= path=FALLBACK
+DEBUG - 2026-03-08 22:11:44 --> [REQ_ID=27f397aa7efe] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 22:11:44 --> [REQ_ID=27f397aa7efe] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 22:11:44 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 22:11:44 --> [MetaService] slug= pageName=Home cacheHit= path=DB
+DEBUG - 2026-03-08 22:11:44 --> [REQ_ID=cccaf49b7b01] [FILTER_AFTER]
+DEBUG - 2026-03-08 22:11:44 --> [REQ_ID=cccaf49b7b01] [LIFECYCLE][END] status=200 duration_ms=779.22 memory_delta=4194304
+INFO - 2026-03-08 22:11:44 --> [REQ_ID=27f397aa7efe] [PERF] Execution time=0.777032
+DEBUG - 2026-03-08 22:11:44 --> [REQ_ID=cccaf49b7b01] [REQUEST][END]
+INFO - 2026-03-08 22:11:44 --> [REQ_ID=cccaf49b7b01] [PERF] Execution time=0.799118
+DEBUG - 2026-03-08 22:15:01 --> [REQ_ID=a078f0783950] [REQUEST][START] GET /index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 22:15:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 22:15:01 --> [REQ_ID=a078f0783950] [FILTER_BEFORE] /index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 22:15:01 --> [REQ_ID=a078f0783950] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=fetchEmailAlerts
+DEBUG - 2026-03-08 22:15:01 --> [REQ_ID=a078f0783950] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 22:15:01 --> [REQ_ID=a078f0783950] [REQUEST][END]
+INFO - 2026-03-08 22:15:01 --> [REQ_ID=a078f0783950] [PERF] Execution time=0.047010
+DEBUG - 2026-03-08 22:16:17 --> [REQ_ID=76a71e14582a] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 22:16:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 22:16:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 22:16:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 22:16:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 22:16:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 22:21:17 --> [REQ_ID=d57684fea8b4] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 22:21:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 22:21:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 22:21:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 22:21:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 22:21:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 22:26:17 --> [REQ_ID=892e03f06536] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 22:26:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 22:26:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 22:26:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 22:26:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 22:26:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 22:28:36 --> [REQ_ID=bfc1ff840b0c] [REQUEST][START] GET /index.php/Budget/Financial-Institute
+DEBUG - 2026-03-08 22:28:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2026-03-08 22:28:36 --> REDIRECTED ROUTE at https://www.mymiwallet.com/Budget/Account-Manager
+DEBUG - 2026-03-08 22:28:36 --> [REQ_ID=bfc1ff840b0c] [REQUEST][END]
+INFO - 2026-03-08 22:28:36 --> [REQ_ID=bfc1ff840b0c] [PERF] Execution time=0.059041
+DEBUG - 2026-03-08 22:31:17 --> [REQ_ID=731c8982db8e] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 22:31:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 22:31:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 22:31:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 22:31:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 22:31:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 22:32:28 --> [REQ_ID=7dc87a1ec6b6] [REQUEST][START] GET /index.php/Management/Marketing/Campaigns
+DEBUG - 2026-03-08 22:32:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 22:32:28 --> [REQ_ID=7dc87a1ec6b6] [FILTER_BEFORE] /index.php/Management/Marketing/Campaigns
+DEBUG - 2026-03-08 22:32:28 --> [REQ_ID=7dc87a1ec6b6] [ROUTE] Controller=\App\Modules\Management\Controllers\MarketingAdminController Method=campaigns
+DEBUG - 2026-03-08 22:32:28 --> [REQ_ID=7dc87a1ec6b6] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management/Marketing/Campaigns
+DEBUG - 2026-03-08 22:32:28 --> [CSRF] token name=csrf_test_name hash=072f99987dc3a5257ee8eebc95de7730
+DEBUG - 2026-03-08 22:32:28 --> [REQ_ID=7dc87a1ec6b6] [REQUEST][END]
+INFO - 2026-03-08 22:32:28 --> [REQ_ID=7dc87a1ec6b6] [PERF] Execution time=0.060182
+DEBUG - 2026-03-08 22:32:28 --> [REQ_ID=057b206b4417] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 22:32:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 22:32:28 --> [REQ_ID=057b206b4417] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 22:32:28 --> [REQ_ID=057b206b4417] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 22:32:28 --> [REQ_ID=057b206b4417] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 22:32:28 --> [CSRF] token name=csrf_test_name hash=5a96979762e56afb99e769fff85d8382
+DEBUG - 2026-03-08 22:32:28 --> [REQ_ID=9f0a24332376] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 22:32:28 --> [REQ_ID=9f0a24332376] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 22:32:29 --> [REQ_ID=057b206b4417] [FILTER_AFTER]
+DEBUG - 2026-03-08 22:32:29 --> [REQ_ID=057b206b4417] [LIFECYCLE][END] status=200 duration_ms=111.60 memory_delta=0
+INFO - 2026-03-08 22:32:29 --> [REQ_ID=9f0a24332376] [PERF] Execution time=0.111368
+DEBUG - 2026-03-08 22:32:29 --> [REQ_ID=057b206b4417] [REQUEST][END]
+INFO - 2026-03-08 22:32:29 --> [REQ_ID=057b206b4417] [PERF] Execution time=0.123210
+DEBUG - 2026-03-08 22:34:49 --> [REQ_ID=e07b0d765fd7] [REQUEST][START] GET /
+DEBUG - 2026-03-08 22:34:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 22:34:49 --> [REQ_ID=e07b0d765fd7] [FILTER_BEFORE] /
+DEBUG - 2026-03-08 22:34:49 --> [REQ_ID=e07b0d765fd7] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 22:34:49 --> [REQ_ID=e07b0d765fd7] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 22:34:49 --> [CSRF] token name=csrf_test_name hash=e361507fe3d1496bb38f8e1d4f56b243
+DEBUG - 2026-03-08 22:34:49 --> [REQ_ID=8d3ff61923d7] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 22:34:49 --> [REQ_ID=8d3ff61923d7] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 22:34:49 --> [REQ_ID=8d3ff61923d7] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 22:34:49 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 22:34:50 --> [MetaService] slug= pageName= cacheHit= path=FALLBACK
+DEBUG - 2026-03-08 22:34:50 --> [REQ_ID=8d3ff61923d7] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 22:34:50 --> [REQ_ID=8d3ff61923d7] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 22:34:50 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 22:34:50 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 22:34:50 --> [REQ_ID=e07b0d765fd7] [FILTER_AFTER]
+DEBUG - 2026-03-08 22:34:50 --> [REQ_ID=e07b0d765fd7] [LIFECYCLE][END] status=200 duration_ms=695.91 memory_delta=4194304
+INFO - 2026-03-08 22:34:50 --> [REQ_ID=8d3ff61923d7] [PERF] Execution time=0.693781
+DEBUG - 2026-03-08 22:34:50 --> [REQ_ID=e07b0d765fd7] [REQUEST][END]
+INFO - 2026-03-08 22:34:50 --> [REQ_ID=e07b0d765fd7] [PERF] Execution time=0.734149
+DEBUG - 2026-03-08 22:34:55 --> [REQ_ID=df962b09ab96] [REQUEST][START] GET /index.php/Management/Assets
+DEBUG - 2026-03-08 22:34:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 22:34:55 --> [REQ_ID=df962b09ab96] [FILTER_BEFORE] /index.php/Management/Assets
+DEBUG - 2026-03-08 22:34:55 --> [REQ_ID=df962b09ab96] [ROUTE] Controller=\App\Modules\Management\Controllers\AssetsAdminController Method=index
+DEBUG - 2026-03-08 22:34:55 --> [REQ_ID=df962b09ab96] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management/Assets
+DEBUG - 2026-03-08 22:34:55 --> [CSRF] token name=csrf_test_name hash=287eb13be8759d8868f82da78ddabeb4
+DEBUG - 2026-03-08 22:34:55 --> [REQ_ID=df962b09ab96] [REQUEST][END]
+INFO - 2026-03-08 22:34:55 --> [REQ_ID=df962b09ab96] [PERF] Execution time=0.022982
+DEBUG - 2026-03-08 22:34:56 --> [REQ_ID=2432881b186e] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 22:34:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 22:34:56 --> [REQ_ID=2432881b186e] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 22:34:56 --> [REQ_ID=2432881b186e] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 22:34:56 --> [REQ_ID=2432881b186e] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 22:34:56 --> [CSRF] token name=csrf_test_name hash=74e4908664430065aaa685a9a048b52a
+DEBUG - 2026-03-08 22:34:56 --> [REQ_ID=654d4728ec88] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 22:34:56 --> [REQ_ID=654d4728ec88] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 22:34:56 --> [REQ_ID=2432881b186e] [FILTER_AFTER]
+DEBUG - 2026-03-08 22:34:56 --> [REQ_ID=2432881b186e] [LIFECYCLE][END] status=200 duration_ms=32.61 memory_delta=0
+INFO - 2026-03-08 22:34:56 --> [REQ_ID=654d4728ec88] [PERF] Execution time=0.032328
+DEBUG - 2026-03-08 22:34:56 --> [REQ_ID=2432881b186e] [REQUEST][END]
+INFO - 2026-03-08 22:34:56 --> [REQ_ID=2432881b186e] [PERF] Execution time=0.043971
+DEBUG - 2026-03-08 22:36:17 --> [REQ_ID=dd7321e276ce] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 22:36:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 22:36:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 22:36:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 22:36:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 22:36:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 22:41:17 --> [REQ_ID=6a713e49f94b] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 22:41:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 22:41:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 22:41:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 22:41:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 22:41:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 22:43:50 --> [REQ_ID=648c24a56a3a] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 22:43:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 22:43:51 --> [REQ_ID=648c24a56a3a] [REQUEST][END]
+INFO - 2026-03-08 22:43:51 --> [REQ_ID=648c24a56a3a] [PERF] Execution time=0.041364
+DEBUG - 2026-03-08 22:44:56 --> [REQ_ID=e64e97b4adff] [REQUEST][START] GET /index.php/How-It-Works/Registering-An-Account
+DEBUG - 2026-03-08 22:44:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 22:44:56 --> [REQ_ID=e64e97b4adff] [FILTER_BEFORE] /index.php/How-It-Works/Registering-An-Account
+DEBUG - 2026-03-08 22:44:56 --> [REQ_ID=e64e97b4adff] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 22:44:56 --> [REQ_ID=e64e97b4adff] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Registering-An-Account
+DEBUG - 2026-03-08 22:44:56 --> [CSRF] token name=csrf_test_name hash=6ce038c25780b59209aa11ace63ddd9e
+DEBUG - 2026-03-08 22:44:56 --> [REQ_ID=babd6de10fd2] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 22:44:56 --> [REQ_ID=babd6de10fd2] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 22:44:56 --> [REQ_ID=babd6de10fd2] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 22:44:56 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 22:44:56 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 22:44:56 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 22:44:56 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 22:44:56 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 22:44:56 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 22:44:56 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 22:44:56 --> [REQ_ID=babd6de10fd2] [PERF] Execution time=0.170127
+DEBUG - 2026-03-08 22:46:17 --> [REQ_ID=2c49b96b74f7] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 22:46:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 22:46:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 22:46:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 22:46:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 22:46:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 22:51:17 --> [REQ_ID=02739302a841] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 22:51:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 22:51:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 22:51:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 22:51:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 22:51:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 22:56:17 --> [REQ_ID=952e2913cc94] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 22:56:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 22:56:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 22:56:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 22:56:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 22:56:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 23:00:01 --> [REQ_ID=c8687a48407f] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 23:00:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:00:01 --> [REQ_ID=c8687a48407f] [FILTER_BEFORE] /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 23:00:01 --> [REQ_ID=c8687a48407f] [ROUTE] Controller=\App\Modules\Management\Controllers\ManagementAPIController Method=Run_CRON_Tasks
+DEBUG - 2026-03-08 23:00:01 --> [REQ_ID=c8687a48407f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-03-08 23:00:01 --> [REQ_ID=c8687a48407f] [REQUEST][END]
+INFO - 2026-03-08 23:00:01 --> [REQ_ID=c8687a48407f] [PERF] Execution time=0.049822
+DEBUG - 2026-03-08 23:01:17 --> [REQ_ID=a87dafd00c17] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 23:01:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 23:01:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 23:01:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 23:01:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 23:01:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 23:06:17 --> [REQ_ID=0f99cea04473] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 23:06:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 23:06:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 23:06:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 23:06:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 23:06:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 23:07:21 --> [REQ_ID=9d564506bf88] [REQUEST][START] GET /
+DEBUG - 2026-03-08 23:07:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:07:21 --> [REQ_ID=9d564506bf88] [FILTER_BEFORE] /
+DEBUG - 2026-03-08 23:07:21 --> [REQ_ID=9d564506bf88] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 23:07:21 --> [REQ_ID=9d564506bf88] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 23:07:21 --> [CSRF] token name=csrf_test_name hash=5841b942262559843fe3d4dbf4f1d8b6
+DEBUG - 2026-03-08 23:07:21 --> [REQ_ID=87a80d538cab] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 23:07:21 --> [REQ_ID=87a80d538cab] [MEMORY][controller-start] 4194304
+INFO - 2026-03-08 23:07:21 --> [REQ_ID=87a80d538cab] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 23:07:21 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:07:22 --> [MetaService] slug= pageName= cacheHit= path=FALLBACK
+DEBUG - 2026-03-08 23:07:22 --> [REQ_ID=87a80d538cab] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 23:07:22 --> [REQ_ID=87a80d538cab] [MEMORY][commonData:start] 8388608
+INFO - 2026-03-08 23:07:22 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 23:07:22 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 23:07:22 --> [REQ_ID=9d564506bf88] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:07:22 --> [REQ_ID=9d564506bf88] [LIFECYCLE][END] status=200 duration_ms=854.85 memory_delta=4194304
+INFO - 2026-03-08 23:07:22 --> [REQ_ID=87a80d538cab] [PERF] Execution time=0.851795
+DEBUG - 2026-03-08 23:07:22 --> [REQ_ID=9d564506bf88] [REQUEST][END]
+INFO - 2026-03-08 23:07:22 --> [REQ_ID=9d564506bf88] [PERF] Execution time=0.878459
+DEBUG - 2026-03-08 23:11:17 --> [REQ_ID=bd3c339d6121] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 23:11:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 23:11:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 23:11:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 23:11:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 23:11:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 23:11:28 --> [REQ_ID=ceaec9e28e4d] [REQUEST][START] GET /index.php/How-It-Works
+DEBUG - 2026-03-08 23:11:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:11:28 --> [REQ_ID=ceaec9e28e4d] [FILTER_BEFORE] /index.php/How-It-Works
+DEBUG - 2026-03-08 23:11:28 --> [REQ_ID=ceaec9e28e4d] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=index
+DEBUG - 2026-03-08 23:11:28 --> [REQ_ID=ceaec9e28e4d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works
+DEBUG - 2026-03-08 23:11:28 --> [CSRF] token name=csrf_test_name hash=0faeb0fbfe8eb462f1fcf36c2a6d75bb
+DEBUG - 2026-03-08 23:11:28 --> [REQ_ID=7d9a598cd59c] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:11:28 --> [REQ_ID=7d9a598cd59c] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:11:28 --> [REQ_ID=7d9a598cd59c] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 23:11:28 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:11:28 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:11:28 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:11:28 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:11:28 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:11:28 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 23:11:28 --> HowItWorksController failure: overview
+CRITICAL - 2026-03-08 23:11:28 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: How-It-Works]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 23:11:28 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 23:11:28 --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works
+WARNING - 2026-03-08 23:11:28 --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works | referrer: none
+INFO - 2026-03-08 23:11:28 --> [REQ_ID=7d9a598cd59c] [PERF] Execution time=0.102801
+DEBUG - 2026-03-08 23:13:27 --> [REQ_ID=9a66ccf6ad21] [REQUEST][START] GET /index.php/Account/Activity
+DEBUG - 2026-03-08 23:13:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:13:27 --> [REQ_ID=9a66ccf6ad21] [FILTER_BEFORE] /index.php/Account/Activity
+DEBUG - 2026-03-08 23:13:27 --> [REQ_ID=9a66ccf6ad21] [ROUTE] Controller=\App\Modules\User\Controllers\DashboardController Method=activity
+DEBUG - 2026-03-08 23:13:27 --> [REQ_ID=9a66ccf6ad21] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Account/Activity
+DEBUG - 2026-03-08 23:13:27 --> [CSRF] token name=csrf_test_name hash=4e046021c9360b875bc3666406845a72
+DEBUG - 2026-03-08 23:13:27 --> [REQ_ID=9a66ccf6ad21] [REQUEST][END]
+INFO - 2026-03-08 23:13:27 --> [REQ_ID=9a66ccf6ad21] [PERF] Execution time=0.053364
+DEBUG - 2026-03-08 23:13:27 --> [REQ_ID=cd7c9fa04ea1] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:13:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:13:27 --> [REQ_ID=cd7c9fa04ea1] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:13:27 --> [REQ_ID=cd7c9fa04ea1] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:13:27 --> [REQ_ID=cd7c9fa04ea1] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:13:27 --> [CSRF] token name=csrf_test_name hash=d58a9a08e32429707fd886f7efcced13
+DEBUG - 2026-03-08 23:13:27 --> [REQ_ID=1cb9ea6d2421] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:13:27 --> [REQ_ID=1cb9ea6d2421] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:13:27 --> [REQ_ID=cd7c9fa04ea1] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:13:27 --> [REQ_ID=cd7c9fa04ea1] [LIFECYCLE][END] status=200 duration_ms=119.67 memory_delta=0
+INFO - 2026-03-08 23:13:27 --> [REQ_ID=1cb9ea6d2421] [PERF] Execution time=0.119450
+DEBUG - 2026-03-08 23:13:27 --> [REQ_ID=cd7c9fa04ea1] [REQUEST][END]
+INFO - 2026-03-08 23:13:27 --> [REQ_ID=cd7c9fa04ea1] [PERF] Execution time=0.132899
+DEBUG - 2026-03-08 23:15:01 --> [REQ_ID=e6f884b0a37c] [REQUEST][START] GET /index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 23:15:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:15:01 --> [REQ_ID=e6f884b0a37c] [FILTER_BEFORE] /index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 23:15:01 --> [REQ_ID=e6f884b0a37c] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=fetchEmailAlerts
+DEBUG - 2026-03-08 23:15:01 --> [REQ_ID=e6f884b0a37c] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/fetchEmailAlerts
+DEBUG - 2026-03-08 23:15:01 --> [REQ_ID=e6f884b0a37c] [REQUEST][END]
+INFO - 2026-03-08 23:15:01 --> [REQ_ID=e6f884b0a37c] [PERF] Execution time=0.062142
+DEBUG - 2026-03-08 23:16:17 --> [REQ_ID=3db8328381cd] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 23:16:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 23:16:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 23:16:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 23:16:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 23:16:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 23:21:17 --> [REQ_ID=648dd9fd6a57] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 23:21:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 23:21:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 23:21:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 23:21:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 23:21:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 23:26:17 --> [REQ_ID=c56cd35061fa] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 23:26:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 23:26:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 23:26:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 23:26:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 23:26:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 23:31:17 --> [REQ_ID=3cf3a865d7f7] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 23:31:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 23:31:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 23:31:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 23:31:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 23:31:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 23:36:17 --> [REQ_ID=dbee7496328f] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 23:36:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 23:36:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 23:36:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 23:36:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 23:36:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 23:39:39 --> [REQ_ID=762af90fab80] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:39:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:39:39 --> [REQ_ID=762af90fab80] [REQUEST][END]
+INFO - 2026-03-08 23:39:39 --> [REQ_ID=762af90fab80] [PERF] Execution time=0.045910
+DEBUG - 2026-03-08 23:39:41 --> [REQ_ID=1f11359220bd] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:39:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:39:41 --> [REQ_ID=1f11359220bd] [REQUEST][END]
+INFO - 2026-03-08 23:39:41 --> [REQ_ID=1f11359220bd] [PERF] Execution time=0.008234
+DEBUG - 2026-03-08 23:39:43 --> [REQ_ID=dad6ac6f5cb5] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:39:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:39:43 --> [REQ_ID=dad6ac6f5cb5] [REQUEST][END]
+INFO - 2026-03-08 23:39:43 --> [REQ_ID=dad6ac6f5cb5] [PERF] Execution time=0.009154
+DEBUG - 2026-03-08 23:39:45 --> [REQ_ID=b1ac0504201f] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:39:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:39:45 --> [REQ_ID=b1ac0504201f] [REQUEST][END]
+INFO - 2026-03-08 23:39:45 --> [REQ_ID=b1ac0504201f] [PERF] Execution time=0.010022
+DEBUG - 2026-03-08 23:39:47 --> [REQ_ID=8e32b75a0b2b] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:39:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:39:47 --> [REQ_ID=8e32b75a0b2b] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:39:47 --> [REQ_ID=8e32b75a0b2b] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:39:47 --> [REQ_ID=8e32b75a0b2b] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:39:47 --> [CSRF] token name=csrf_test_name hash=a6822828c8b0956c8b63a2b2c704fa03
+DEBUG - 2026-03-08 23:39:47 --> [REQ_ID=4c73b3fe035a] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:39:47 --> [REQ_ID=4c73b3fe035a] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:39:47 --> [REQ_ID=8e32b75a0b2b] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:39:47 --> [REQ_ID=8e32b75a0b2b] [LIFECYCLE][END] status=200 duration_ms=73.01 memory_delta=0
+INFO - 2026-03-08 23:39:47 --> [REQ_ID=4c73b3fe035a] [PERF] Execution time=0.070766
+DEBUG - 2026-03-08 23:39:47 --> [REQ_ID=8e32b75a0b2b] [REQUEST][END]
+INFO - 2026-03-08 23:39:47 --> [REQ_ID=8e32b75a0b2b] [PERF] Execution time=0.083328
+DEBUG - 2026-03-08 23:41:17 --> [REQ_ID=e9cc1ac9e861] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 23:41:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 23:41:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 23:41:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 23:41:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 23:41:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 23:41:43 --> [REQ_ID=7d649cae2f42] [REQUEST][START] GET /index.php/Account
+DEBUG - 2026-03-08 23:41:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:41:43 --> [REQ_ID=7d649cae2f42] [FILTER_BEFORE] /index.php/Account
+DEBUG - 2026-03-08 23:41:43 --> [REQ_ID=7d649cae2f42] [ROUTE] Controller=\App\Modules\User\Controllers\DashboardController Method=account
+DEBUG - 2026-03-08 23:41:43 --> [REQ_ID=7d649cae2f42] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Account
+DEBUG - 2026-03-08 23:41:43 --> [CSRF] token name=csrf_test_name hash=04c2ea802a68c9c17db236bb48491e72
+DEBUG - 2026-03-08 23:41:43 --> [REQ_ID=7d649cae2f42] [REQUEST][END]
+INFO - 2026-03-08 23:41:43 --> [REQ_ID=7d649cae2f42] [PERF] Execution time=0.109617
+DEBUG - 2026-03-08 23:41:43 --> [REQ_ID=a441d077310d] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:41:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:41:43 --> [REQ_ID=a441d077310d] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:41:43 --> [REQ_ID=a441d077310d] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:41:43 --> [REQ_ID=a441d077310d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:41:43 --> [CSRF] token name=csrf_test_name hash=f9849484bf2f44ab5bf0d659ffc60fd7
+DEBUG - 2026-03-08 23:41:43 --> [REQ_ID=37fc6ad7574f] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:41:43 --> [REQ_ID=37fc6ad7574f] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:41:44 --> [REQ_ID=a441d077310d] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:41:44 --> [REQ_ID=a441d077310d] [LIFECYCLE][END] status=200 duration_ms=35.18 memory_delta=0
+INFO - 2026-03-08 23:41:44 --> [REQ_ID=37fc6ad7574f] [PERF] Execution time=0.035016
+DEBUG - 2026-03-08 23:41:44 --> [REQ_ID=a441d077310d] [REQUEST][END]
+INFO - 2026-03-08 23:41:44 --> [REQ_ID=a441d077310d] [PERF] Execution time=0.047194
+DEBUG - 2026-03-08 23:41:45 --> [REQ_ID=cac283e62c2a] [REQUEST][START] POST /index.php/login
+DEBUG - 2026-03-08 23:41:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:41:45 --> [REQ_ID=cac283e62c2a] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:41:45 --> [REQ_ID=cac283e62c2a] [ROUTE] Controller=\App\Controllers\AuthController Method=attemptLogin
+DEBUG - 2026-03-08 23:41:45 --> [REQ_ID=cac283e62c2a] [LIFECYCLE][START] POST https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:41:45 --> [CSRF] token name=csrf_test_name hash=f9849484bf2f44ab5bf0d659ffc60fd7
+DEBUG - 2026-03-08 23:41:45 --> [REQ_ID=cac283e62c2a] [REQUEST][END]
+INFO - 2026-03-08 23:41:45 --> [REQ_ID=cac283e62c2a] [PERF] Execution time=0.009734
+DEBUG - 2026-03-08 23:41:45 --> [REQ_ID=2c576ffc30b4] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:41:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:41:45 --> [REQ_ID=2c576ffc30b4] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:41:45 --> [REQ_ID=2c576ffc30b4] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:41:45 --> [REQ_ID=2c576ffc30b4] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:41:45 --> [CSRF] token name=csrf_test_name hash=f9849484bf2f44ab5bf0d659ffc60fd7
+DEBUG - 2026-03-08 23:41:45 --> [REQ_ID=96d9af285004] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:41:45 --> [REQ_ID=96d9af285004] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:41:45 --> [REQ_ID=2c576ffc30b4] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:41:45 --> [REQ_ID=2c576ffc30b4] [LIFECYCLE][END] status=200 duration_ms=22.48 memory_delta=0
+INFO - 2026-03-08 23:41:45 --> [REQ_ID=96d9af285004] [PERF] Execution time=0.022392
+DEBUG - 2026-03-08 23:41:45 --> [REQ_ID=2c576ffc30b4] [REQUEST][END]
+INFO - 2026-03-08 23:41:45 --> [REQ_ID=2c576ffc30b4] [PERF] Execution time=0.031340
+DEBUG - 2026-03-08 23:41:50 --> [REQ_ID=9d6b774b68fb] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:41:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:41:50 --> [REQ_ID=9d6b774b68fb] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:41:50 --> [REQ_ID=9d6b774b68fb] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:41:50 --> [REQ_ID=9d6b774b68fb] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:41:50 --> [CSRF] token name=csrf_test_name hash=f9849484bf2f44ab5bf0d659ffc60fd7
+DEBUG - 2026-03-08 23:41:50 --> [REQ_ID=73a5e02e7c77] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:41:50 --> [REQ_ID=73a5e02e7c77] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:41:50 --> [REQ_ID=9d6b774b68fb] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:41:50 --> [REQ_ID=9d6b774b68fb] [LIFECYCLE][END] status=200 duration_ms=24.87 memory_delta=0
+INFO - 2026-03-08 23:41:50 --> [REQ_ID=73a5e02e7c77] [PERF] Execution time=0.024557
+DEBUG - 2026-03-08 23:41:50 --> [REQ_ID=9d6b774b68fb] [REQUEST][END]
+INFO - 2026-03-08 23:41:50 --> [REQ_ID=9d6b774b68fb] [PERF] Execution time=0.034323
+DEBUG - 2026-03-08 23:41:53 --> [REQ_ID=9603233b9073] [REQUEST][START] POST /index.php/login
+DEBUG - 2026-03-08 23:41:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:41:53 --> [REQ_ID=9603233b9073] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:41:53 --> [REQ_ID=9603233b9073] [ROUTE] Controller=\App\Controllers\AuthController Method=attemptLogin
+DEBUG - 2026-03-08 23:41:53 --> [REQ_ID=9603233b9073] [LIFECYCLE][START] POST https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:41:53 --> [CSRF] token name=csrf_test_name hash=f9849484bf2f44ab5bf0d659ffc60fd7
+INFO - 2026-03-08 23:41:53 --> CSRF token verified.
+DEBUG - 2026-03-08 23:41:53 --> [REQ_ID=edd3d1960ca6] [INIT] App\Controllers\AuthController::POST
+INFO - 2026-03-08 23:41:53 --> [REQ_ID=edd3d1960ca6] [MEMORY][controller-start] 4194304
+INFO - 2026-03-08 23:41:53 --> AuthController L93: Auth:attemptLogin started.
+INFO - 2026-03-08 23:41:53 --> AuthController L104: Auth:attemptLogin rules: {"login":"required","password":"required"}
+INFO - 2026-03-08 23:41:53 --> AuthController L132: Auth:attemptLogin Login Variables: login: required, remember: true, ip: 76.234.126.68, ua: Mozilla/5.0 (X11; Linux x86_64; rv:148.0) Gecko/20100101 Firefox/148.0
+DEBUG - 2026-03-08 23:41:53 --> Auth attemptLogin() called with login identifier: tburks2392, remember: true
+DEBUG - 2026-03-08 23:41:53 --> Auth attemptLogin() called. redirect_url in session: https://www.mymiwallet.com/index.php/Account
+DEBUG - 2026-03-08 23:41:53 --> Auth credentials normalised for attempt using key "username"
+DEBUG - 2026-03-08 23:41:53 --> Auth attempt succeeded for identifier tburks2392. logged_in(): yes, user_id(): 2
+DEBUG - 2026-03-08 23:41:53 --> Auth attempt succeeded. logged_in(): yes, user_id(): 2
+DEBUG - 2026-03-08 23:41:53 --> Auth attemptLogin() - session user_id set to: 2
+INFO - 2026-03-08 23:41:53 --> [AUTH] Login success
+DEBUG - 2026-03-08 23:41:53 --> Auth redirect destination: https://www.mymiwallet.com/index.php/Account
+DEBUG - 2026-03-08 23:41:53 --> [REQ_ID=9603233b9073] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:41:53 --> [REQ_ID=9603233b9073] [LIFECYCLE][END] status=303 duration_ms=123.68 memory_delta=0
+INFO - 2026-03-08 23:41:53 --> [REQ_ID=edd3d1960ca6] [PERF] Execution time=0.123441
+DEBUG - 2026-03-08 23:41:53 --> [REQ_ID=9603233b9073] [REQUEST][END]
+INFO - 2026-03-08 23:41:53 --> [REQ_ID=9603233b9073] [PERF] Execution time=0.133400
+DEBUG - 2026-03-08 23:41:53 --> [REQ_ID=8266e48086d1] [REQUEST][START] GET /index.php/Account
+DEBUG - 2026-03-08 23:41:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:41:53 --> [REQ_ID=8266e48086d1] [FILTER_BEFORE] /index.php/Account
+DEBUG - 2026-03-08 23:41:53 --> [REQ_ID=8266e48086d1] [ROUTE] Controller=\App\Modules\User\Controllers\DashboardController Method=account
+DEBUG - 2026-03-08 23:41:53 --> [REQ_ID=8266e48086d1] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Account
+DEBUG - 2026-03-08 23:41:53 --> [CSRF] token name=csrf_test_name hash=f9849484bf2f44ab5bf0d659ffc60fd7
+DEBUG - 2026-03-08 23:41:53 --> [REQ_ID=617e2ff4114a] [INIT] App\Modules\User\Controllers\DashboardController::GET
+INFO - 2026-03-08 23:41:53 --> [REQ_ID=617e2ff4114a] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:41:53 --> [REQ_ID=617e2ff4114a] [METHOD_ENTRY] account
+DEBUG - 2026-03-08 23:41:53 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:41:53 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:41:53 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:41:53 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+INFO - 2026-03-08 23:41:53 --> [REQ_ID=617e2ff4114a] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 23:41:53 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 23:41:53 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","status":1,"month":"03","year":"2026"}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","status":1,"month":"03","year":"2026"}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Investment","month":"03","year":"2026","status":1}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","status":1,"month":"02"}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","status":1,"month":"02"}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Investment","month":"02","year":"2026","status":1}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","status":1,"month":"04"}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","status":1,"month":"04"}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Investment","month":"04","year":"2026","status":1}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","status":1,"year":"2026"}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="status"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Investment","status":1}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="status"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="status"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+INFO - 2026-03-08 23:41:53 --> DashboardController L72 - $checkingSummary: 8784.01
+DEBUG - 2026-03-08 23:41:53 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:41:53 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:41:53 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:41:53 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:41:53 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:41:53 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:41:53 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:41:53 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:41:53 --> [SERVICE] App\Services\BudgetService ::getUserBudget
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 23:41:53 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+INFO - 2026-03-08 23:41:53 --> getSolanaData: invalid address param
+DEBUG - 2026-03-08 23:41:53 --> [REQ_ID=617e2ff4114a] [VIEW_RENDER] App\Modules\User\Views\Dashboard\Account
+INFO - 2026-03-08 23:41:53 --> [REQ_ID=617e2ff4114a] [MEMORY][commonData:start] 8388608
+DEBUG - 2026-03-08 23:41:53 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 23:41:53 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","status":1,"month":"03","year":"2026"}
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","status":1,"month":"03","year":"2026"}
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Investment","month":"03","year":"2026","status":1}
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","status":1,"month":"02"}
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","status":1,"month":"02"}
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Investment","month":"02","year":"2026","status":1}
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","status":1,"month":"04"}
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","status":1,"month":"04"}
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Investment","month":"04","year":"2026","status":1}
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","status":1,"year":"2026"}
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="status"
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Investment","status":1}
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="status"
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="status"
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_FIRST] App\Models\BudgetModel
+INFO - 2026-03-08 23:41:54 --> DashboardController L72 - $checkingSummary: 8784.01
+DEBUG - 2026-03-08 23:41:54 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:41:54 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:41:54 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:41:54 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:41:54 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:41:54 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:41:54 --> [SERVICE] App\Services\BudgetService ::getUserBudget
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 23:41:54 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"03","year":"2026"}
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Income","month":"02","year":"2026"}
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="created_by"
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="account_type"
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date >="
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="designated_date <="
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="year"
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="month <="
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY="day <="
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"03","year":"2026"}
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"created_by":2,"account_type":"Expense","month":"02","year":"2026"}
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_FIRST] App\Models\BudgetModel
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"created_by":2,"deleted":0}
+DEBUG - 2026-03-08 23:41:54 --> [MODEL_WHERE] App\Models\BudgetModel KEY={"status":1,"paid":0,"created_by":2,"deleted":0}
+INFO - 2026-03-08 23:41:54 --> getSolanaData: invalid address param
+INFO - 2026-03-08 23:41:54 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 23:41:54 --> [REQ_ID=8266e48086d1] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:41:54 --> [REQ_ID=8266e48086d1] [LIFECYCLE][END] status=200 duration_ms=833.70 memory_delta=4194304
+INFO - 2026-03-08 23:41:54 --> [REQ_ID=617e2ff4114a] [PERF] Execution time=0.826355
+DEBUG - 2026-03-08 23:41:54 --> [REQ_ID=8266e48086d1] [REQUEST][END]
+INFO - 2026-03-08 23:41:54 --> [REQ_ID=8266e48086d1] [PERF] Execution time=0.845313
+DEBUG - 2026-03-08 23:42:03 --> [REQ_ID=9d28e0a00886] [REQUEST][START] GET /index.php/Account
+DEBUG - 2026-03-08 23:42:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:42:03 --> [REQ_ID=9d28e0a00886] [FILTER_BEFORE] /index.php/Account
+DEBUG - 2026-03-08 23:42:03 --> [REQ_ID=9d28e0a00886] [ROUTE] Controller=\App\Modules\User\Controllers\DashboardController Method=account
+DEBUG - 2026-03-08 23:42:03 --> [REQ_ID=9d28e0a00886] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Account
+DEBUG - 2026-03-08 23:42:03 --> [CSRF] token name=csrf_test_name hash=769f914444a514dd45b39e4a574c0ef4
+DEBUG - 2026-03-08 23:42:03 --> [REQ_ID=9d28e0a00886] [REQUEST][END]
+INFO - 2026-03-08 23:42:03 --> [REQ_ID=9d28e0a00886] [PERF] Execution time=0.011049
+DEBUG - 2026-03-08 23:42:03 --> [REQ_ID=cc12987b1f00] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:42:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:42:03 --> [REQ_ID=cc12987b1f00] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:42:03 --> [REQ_ID=cc12987b1f00] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:42:03 --> [REQ_ID=cc12987b1f00] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:42:03 --> [CSRF] token name=csrf_test_name hash=4fc3fe8b2435dc4b2d4f185d898b3f66
+DEBUG - 2026-03-08 23:42:03 --> [REQ_ID=93a179be5268] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:42:03 --> [REQ_ID=93a179be5268] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:42:03 --> [REQ_ID=cc12987b1f00] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:42:03 --> [REQ_ID=cc12987b1f00] [LIFECYCLE][END] status=200 duration_ms=103.32 memory_delta=0
+INFO - 2026-03-08 23:42:03 --> [REQ_ID=93a179be5268] [PERF] Execution time=0.103090
+DEBUG - 2026-03-08 23:42:03 --> [REQ_ID=cc12987b1f00] [REQUEST][END]
+INFO - 2026-03-08 23:42:03 --> [REQ_ID=cc12987b1f00] [PERF] Execution time=0.114192
+DEBUG - 2026-03-08 23:43:49 --> [REQ_ID=faed789274ec] [REQUEST][START] GET /
+DEBUG - 2026-03-08 23:43:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:43:49 --> [REQ_ID=faed789274ec] [FILTER_BEFORE] /
+DEBUG - 2026-03-08 23:43:49 --> [REQ_ID=faed789274ec] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-03-08 23:43:49 --> [REQ_ID=faed789274ec] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG - 2026-03-08 23:43:49 --> [CSRF] token name=csrf_test_name hash=98e74f3514b579ea4692ecaacc418eca
+DEBUG - 2026-03-08 23:43:49 --> [REQ_ID=6d74f43d5472] [INIT] App\Controllers\Home::GET
+INFO - 2026-03-08 23:43:49 --> [REQ_ID=6d74f43d5472] [MEMORY][controller-start] 6291456
+INFO - 2026-03-08 23:43:49 --> [REQ_ID=6d74f43d5472] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 23:43:49 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:43:50 --> [MetaService] slug= pageName= cacheHit= path=FALLBACK
+DEBUG - 2026-03-08 23:43:50 --> [REQ_ID=6d74f43d5472] [VIEW_RENDER] themes/public/home
+INFO - 2026-03-08 23:43:50 --> [REQ_ID=6d74f43d5472] [MEMORY][commonData:start] 10485760
+INFO - 2026-03-08 23:43:50 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 23:43:50 --> [MetaService] slug= pageName=Home cacheHit= path=DB
+DEBUG - 2026-03-08 23:43:50 --> [REQ_ID=faed789274ec] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:43:50 --> [REQ_ID=faed789274ec] [LIFECYCLE][END] status=200 duration_ms=692.00 memory_delta=4194304
+INFO - 2026-03-08 23:43:50 --> [REQ_ID=6d74f43d5472] [PERF] Execution time=0.690054
+DEBUG - 2026-03-08 23:43:50 --> [REQ_ID=faed789274ec] [REQUEST][END]
+INFO - 2026-03-08 23:43:50 --> [REQ_ID=faed789274ec] [PERF] Execution time=0.731256
+DEBUG - 2026-03-08 23:46:17 --> [REQ_ID=a99786f977ee] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 23:46:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 23:46:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 23:46:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 23:46:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 23:46:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 23:51:17 --> [REQ_ID=2335bd34e556] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 23:51:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 23:51:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 23:51:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 23:51:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 23:51:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=060b96672e3d] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:51:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=060b96672e3d] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=060b96672e3d] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=060b96672e3d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:51:54 --> [CSRF] token name=csrf_test_name hash=3472d835fcbb0e4d0c94cb02ced6f0e6
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=729788e18477] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:51:54 --> [REQ_ID=729788e18477] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=060b96672e3d] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=060b96672e3d] [LIFECYCLE][END] status=200 duration_ms=192.89 memory_delta=0
+INFO - 2026-03-08 23:51:54 --> [REQ_ID=729788e18477] [PERF] Execution time=0.190980
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=060b96672e3d] [REQUEST][END]
+INFO - 2026-03-08 23:51:54 --> [REQ_ID=060b96672e3d] [PERF] Execution time=0.214188
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=b6be1769a702] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:51:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=b6be1769a702] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=b6be1769a702] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=b6be1769a702] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:51:54 --> [CSRF] token name=csrf_test_name hash=d1f904536711524bb8c4673866eb2c1c
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=9b2263036d37] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:51:54 --> [REQ_ID=9b2263036d37] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=b6be1769a702] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=b6be1769a702] [LIFECYCLE][END] status=200 duration_ms=16.57 memory_delta=0
+INFO - 2026-03-08 23:51:54 --> [REQ_ID=9b2263036d37] [PERF] Execution time=0.016342
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=b6be1769a702] [REQUEST][END]
+INFO - 2026-03-08 23:51:54 --> [REQ_ID=b6be1769a702] [PERF] Execution time=0.027353
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=470d43c60785] [REQUEST][START] GET /index.php/How-It-Works/Registering-An-Account
+DEBUG - 2026-03-08 23:51:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=470d43c60785] [FILTER_BEFORE] /index.php/How-It-Works/Registering-An-Account
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=470d43c60785] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=470d43c60785] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Registering-An-Account
+DEBUG - 2026-03-08 23:51:54 --> [CSRF] token name=csrf_test_name hash=ae0a2d82d202b80c2386f5f41969a39f
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=23f336130129] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:51:54 --> [REQ_ID=23f336130129] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=23f336130129] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 23:51:54 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:51:54 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:51:54 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:54 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:51:54 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:51:54 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 23:51:54 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 23:51:54 --> [REQ_ID=23f336130129] [PERF] Execution time=0.071346
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=6cd2efa3c89f] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 23:51:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=6cd2efa3c89f] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=6cd2efa3c89f] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=InvestmentPortfolioManagement
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=6cd2efa3c89f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 23:51:54 --> [CSRF] token name=csrf_test_name hash=cfabbfd0e0f3fbe1806ef90116d7a628
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=86011e7cf920] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:51:54 --> [REQ_ID=86011e7cf920] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:51:54 --> [REQ_ID=86011e7cf920] [METHOD_ENTRY] InvestmentPortfolioManagement
+DEBUG - 2026-03-08 23:51:54 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:51:54 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:51:54 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:54 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:51:54 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:51:54 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:51:54 --> [REQ_ID=86011e7cf920] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 23:51:55 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 23:51:55 --> [MetaService] slug=how-it-works/investment-portfolio-management pageName= cacheHit= path=DB
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=6cd2efa3c89f] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=6cd2efa3c89f] [LIFECYCLE][END] status=200 duration_ms=563.39 memory_delta=4194304
+INFO - 2026-03-08 23:51:55 --> [REQ_ID=86011e7cf920] [PERF] Execution time=0.563289
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=6cd2efa3c89f] [REQUEST][END]
+INFO - 2026-03-08 23:51:55 --> [REQ_ID=6cd2efa3c89f] [PERF] Execution time=0.574651
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=ed625b6a9587] [REQUEST][START] GET /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:51:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=ed625b6a9587] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=ed625b6a9587] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=ed625b6a9587] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:51:55 --> [CSRF] token name=csrf_test_name hash=0891919d6749fa4f924aa742a9f98d2c
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=ce9d4bf82c3b] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:51:55 --> [REQ_ID=ce9d4bf82c3b] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=ce9d4bf82c3b] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 23:51:55 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:51:55 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:51:55 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:55 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:51:55 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:51:55 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 23:51:55 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 23:51:55 --> [REQ_ID=ce9d4bf82c3b] [PERF] Execution time=0.022541
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=00977b5a62d7] [REQUEST][START] GET /index.php/How-It-Works/marketing
+DEBUG - 2026-03-08 23:51:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=00977b5a62d7] [FILTER_BEFORE] /index.php/How-It-Works/marketing
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=00977b5a62d7] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=00977b5a62d7] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/marketing
+DEBUG - 2026-03-08 23:51:55 --> [CSRF] token name=csrf_test_name hash=d138957fe49e2376f92d14e42118c808
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=cc7fe92801af] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:51:55 --> [REQ_ID=cc7fe92801af] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=cc7fe92801af] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 23:51:55 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:51:55 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:51:55 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:55 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:51:55 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:51:55 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 23:51:55 --> HowItWorksController failure: marketing
+CRITICAL - 2026-03-08 23:51:55 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: How-It-Works/marketing]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 23:51:55 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 23:51:55 --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works/marketing
+WARNING - 2026-03-08 23:51:55 --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works/marketing | referrer: none
+INFO - 2026-03-08 23:51:55 --> [REQ_ID=cc7fe92801af] [PERF] Execution time=0.027847
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=263a62356750] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 23:51:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=263a62356750] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=263a62356750] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=DailyFinancialNews
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=263a62356750] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 23:51:55 --> [CSRF] token name=csrf_test_name hash=4094da05ef365c6536540407f0072dfa
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=39213d00fe2d] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:51:55 --> [REQ_ID=39213d00fe2d] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=39213d00fe2d] [METHOD_ENTRY] DailyFinancialNews
+DEBUG - 2026-03-08 23:51:55 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:51:55 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:51:55 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:55 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:51:55 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:51:55 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:51:55 --> [REQ_ID=39213d00fe2d] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=235cb97cc99d] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 23:51:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=235cb97cc99d] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=235cb97cc99d] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=PersonalBudgeting
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=235cb97cc99d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG - 2026-03-08 23:51:55 --> [CSRF] token name=csrf_test_name hash=9642868dc9635fbc19709dfb4c7e65d6
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=7c62dbaf36c6] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:51:55 --> [REQ_ID=7c62dbaf36c6] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=203491a3ab52] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=7c62dbaf36c6] [METHOD_ENTRY] PersonalBudgeting
+DEBUG - 2026-03-08 23:51:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:55 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=203491a3ab52] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=203491a3ab52] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=203491a3ab52] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:51:55 --> [CSRF] token name=csrf_test_name hash=0654bc69ab8188d4022975ff96523012
+DEBUG - 2026-03-08 23:51:55 --> [REQ_ID=6c215f272bec] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:51:55 --> [REQ_ID=6c215f272bec] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 23:51:55 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:51:55 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:56 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:51:56 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=203491a3ab52] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=203491a3ab52] [LIFECYCLE][END] status=200 duration_ms=119.86 memory_delta=0
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=6c215f272bec] [PERF] Execution time=0.116159
+DEBUG - 2026-03-08 23:51:56 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=7c62dbaf36c6] [MEMORY][commonData:start] 6291456
+INFO - 2026-03-08 23:51:56 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 23:51:56 --> [MetaService] slug=how-it-works/daily-financial-news pageName= cacheHit= path=DB
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=203491a3ab52] [REQUEST][END]
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=203491a3ab52] [PERF] Execution time=0.234825
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=263a62356750] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=263a62356750] [LIFECYCLE][END] status=200 duration_ms=685.82 memory_delta=4194304
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=39213d00fe2d] [PERF] Execution time=0.685508
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=263a62356750] [REQUEST][END]
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=263a62356750] [PERF] Execution time=0.695184
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=4ef6c4f66734] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:51:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=4ef6c4f66734] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=4ef6c4f66734] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=4ef6c4f66734] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:51:56 --> [CSRF] token name=csrf_test_name hash=d22c9e53919ede7125c1619d1ab369b3
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=0a41c8ea98cd] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=0a41c8ea98cd] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=0860ead23dc7] [REQUEST][START] GET /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 23:51:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=4ef6c4f66734] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=4ef6c4f66734] [LIFECYCLE][END] status=200 duration_ms=35.75 memory_delta=0
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=0a41c8ea98cd] [PERF] Execution time=0.035455
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=4ef6c4f66734] [REQUEST][END]
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=4ef6c4f66734] [PERF] Execution time=0.073741
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=a495874de87e] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=0860ead23dc7] [FILTER_BEFORE] /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=0860ead23dc7] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=SettingFinancialGoals
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=0860ead23dc7] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 23:51:56 --> [CSRF] token name=csrf_test_name hash=87e6e27caed05fc630499390643d3046
+DEBUG - 2026-03-08 23:51:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=c3678f8f6a89] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=c3678f8f6a89] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=c3678f8f6a89] [METHOD_ENTRY] SettingFinancialGoals
+DEBUG - 2026-03-08 23:51:56 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:51:56 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=a97da6c48319] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:51:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=94ed54231eaa] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:51:56 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=a97da6c48319] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=a97da6c48319] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=a97da6c48319] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:51:56 --> [CSRF] token name=csrf_test_name hash=ced33c8cd73b9f4108fe32943edca14b
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=c5584f66da73] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=c5584f66da73] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=a495874de87e] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=a495874de87e] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=DailyFinancialNews
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=a495874de87e] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+DEBUG - 2026-03-08 23:51:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:56 --> [CSRF] token name=csrf_test_name hash=5cc72dd382b58821cd76fb5749a450f6
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=2f937d0bc5bb] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=2f937d0bc5bb] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=03215389f4e6] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=a97da6c48319] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=a97da6c48319] [LIFECYCLE][END] status=200 duration_ms=47.52 memory_delta=0
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=c5584f66da73] [PERF] Execution time=0.047208
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=a97da6c48319] [REQUEST][END]
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=a97da6c48319] [PERF] Execution time=0.091530
+DEBUG - 2026-03-08 23:51:56 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:51:56 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:51:56 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=c3678f8f6a89] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=84a452e0847e] [REQUEST][START] GET /index.php/Support/Account
+DEBUG - 2026-03-08 23:51:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=067a054f28d8] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=84a452e0847e] [FILTER_BEFORE] /index.php/Support/Account
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=84a452e0847e] [ROUTE] Controller=\App\Modules\Support\Controllers\AccountSupportController Method=index
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=84a452e0847e] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support/Account
+DEBUG - 2026-03-08 23:51:56 --> [CSRF] token name=csrf_test_name hash=d1f904536711524bb8c4673866eb2c1c
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=9f8f339b09e0] [INIT] App\Modules\Support\Controllers\AccountSupportController::GET
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=9f8f339b09e0] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=2f937d0bc5bb] [METHOD_ENTRY] DailyFinancialNews
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=94ed54231eaa] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=94ed54231eaa] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=94ed54231eaa] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:51:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:56 --> [CSRF] token name=csrf_test_name hash=187d75f0a00fc39028c56287ec1b04f2
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=53a592a9ec97] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=53a592a9ec97] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=9f8f339b09e0] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 23:51:56 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:51:56 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:51:56 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:56 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:51:56 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:51:56 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=9f8f339b09e0] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=9f8f339b09e0] [VIEW_RENDER] SupportModule/Support/account_help
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=9f8f339b09e0] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 23:51:56 --> themesMemory usage: 4194304
+DEBUG - 2026-03-08 23:51:56 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=84a452e0847e] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=84a452e0847e] [LIFECYCLE][END] status=200 duration_ms=118.16 memory_delta=0
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=9f8f339b09e0] [PERF] Execution time=0.110742
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=84a452e0847e] [REQUEST][END]
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=84a452e0847e] [PERF] Execution time=0.163124
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=03215389f4e6] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=03215389f4e6] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=InvestmentPortfolioManagement
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=03215389f4e6] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+DEBUG - 2026-03-08 23:51:56 --> [CSRF] token name=csrf_test_name hash=b1e09ca2ad8118deac652a5b2940a1c7
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=43e873ac8a96] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=43e873ac8a96] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 23:51:56 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=067a054f28d8] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=067a054f28d8] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=067a054f28d8] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:51:56 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:56 --> [CSRF] token name=csrf_test_name hash=13c8957b8052e1a4b7882c8f1a4a26bf
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=925022f6bb82] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:51:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2026-03-08 23:51:56 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=aa9690219870] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=aa9690219870] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=94ed54231eaa] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=94ed54231eaa] [LIFECYCLE][END] status=200 duration_ms=209.35 memory_delta=0
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=53a592a9ec97] [PERF] Execution time=0.198240
+DEBUG - 2026-03-08 23:51:56 --> [MetaService] slug=how-it-works/personal-budgeting pageName= cacheHit= path=DB
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=235cb97cc99d] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=235cb97cc99d] [LIFECYCLE][END] status=200 duration_ms=1,019.28 memory_delta=4194304
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=7c62dbaf36c6] [PERF] Execution time=1.027159
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=94ed54231eaa] [REQUEST][END]
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=94ed54231eaa] [PERF] Execution time=0.420863
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=925022f6bb82] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=925022f6bb82] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=925022f6bb82] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:51:56 --> [CSRF] token name=csrf_test_name hash=00f5fbb913687b5dad74c5a216515143
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=9649ebde8c67] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=9649ebde8c67] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:51:56 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:51:56 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=235cb97cc99d] [REQUEST][END]
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=235cb97cc99d] [PERF] Execution time=1.122070
+DEBUG - 2026-03-08 23:51:56 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=43e873ac8a96] [METHOD_ENTRY] InvestmentPortfolioManagement
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=925022f6bb82] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=925022f6bb82] [LIFECYCLE][END] status=200 duration_ms=44.54 memory_delta=0
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=9649ebde8c67] [PERF] Execution time=0.042981
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=925022f6bb82] [REQUEST][END]
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=925022f6bb82] [PERF] Execution time=0.119449
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=46414c84db06] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:51:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=2f937d0bc5bb] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=d718d10e326f] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=6cf58a081dc4] [REQUEST][START] GET /index.php/How-It-Works/MyMI-Exchange
+DEBUG - 2026-03-08 23:51:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=46414c84db06] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=46414c84db06] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=46414c84db06] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:51:56 --> [CSRF] token name=csrf_test_name hash=cc4a940ada5a5f6014041997d4e0104f
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=abe9dd7967e2] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=abe9dd7967e2] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 23:51:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=055c5953d9b8] [REQUEST][START] GET /index.php/Support
+DEBUG - 2026-03-08 23:51:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:56 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=067a054f28d8] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=067a054f28d8] [LIFECYCLE][END] status=200 duration_ms=224.23 memory_delta=0
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=aa9690219870] [PERF] Execution time=0.197116
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=6cf58a081dc4] [FILTER_BEFORE] /index.php/How-It-Works/MyMI-Exchange
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=6cf58a081dc4] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=6cf58a081dc4] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Exchange
+DEBUG - 2026-03-08 23:51:56 --> [CSRF] token name=csrf_test_name hash=27075630c0524ca4d498feabb6b6bcdd
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=e305563db7de] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=e305563db7de] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=067a054f28d8] [REQUEST][END]
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=067a054f28d8] [PERF] Execution time=0.480118
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=e305563db7de] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=46414c84db06] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=46414c84db06] [LIFECYCLE][END] status=200 duration_ms=70.95 memory_delta=0
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=abe9dd7967e2] [PERF] Execution time=0.070537
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=46414c84db06] [REQUEST][END]
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=46414c84db06] [PERF] Execution time=0.134907
+DEBUG - 2026-03-08 23:51:56 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=055c5953d9b8] [FILTER_BEFORE] /index.php/Support
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=055c5953d9b8] [ROUTE] Controller=\App\Modules\Support\Controllers\SupportController Method=index
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=055c5953d9b8] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support
+DEBUG - 2026-03-08 23:51:56 --> [CSRF] token name=csrf_test_name hash=99bb5cc706e820e555eda8f539cdad99
+DEBUG - 2026-03-08 23:51:56 --> [REQ_ID=ffe4590b94d4] [INIT] App\Modules\Support\Controllers\SupportController::GET
+INFO - 2026-03-08 23:51:56 --> [REQ_ID=ffe4590b94d4] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=80a64201d274] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:51:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=ffe4590b94d4] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 23:51:57 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:51:57 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:51:57 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=7e89bd9a9f63] [REQUEST][START] GET /index.php/register
+DEBUG - 2026-03-08 23:51:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=ffe4590b94d4] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=ffe4590b94d4] [VIEW_RENDER] SupportModule\Views\Support\index
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=ffe4590b94d4] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=d718d10e326f] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=d718d10e326f] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=d718d10e326f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:51:57 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:51:57 --> [CSRF] token name=csrf_test_name hash=9ddd57371cfc6db212bbd06ec8a78c6f
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=da2eefa6fc34] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=da2eefa6fc34] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=80a64201d274] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=80a64201d274] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=80a64201d274] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:51:57 --> [CSRF] token name=csrf_test_name hash=1709ab6c903db31173bfd57c66ca34f7
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=4e17b6793f1c] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=4e17b6793f1c] [MEMORY][controller-start] 4194304
+INFO - 2026-03-08 23:51:57 --> themesMemory usage: 4194304
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=be34225a36cf] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=7e89bd9a9f63] [FILTER_BEFORE] /index.php/register
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=7e89bd9a9f63] [ROUTE] Controller=\App\Controllers\AuthController Method=register
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=7e89bd9a9f63] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/register
+DEBUG - 2026-03-08 23:51:57 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 23:51:57 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 23:51:57 --> [CSRF] token name=csrf_test_name hash=6dfa92b66c1c47f5ce8d8c8d885ac05a
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=2a908cfad323] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=2a908cfad323] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=80a64201d274] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=80a64201d274] [LIFECYCLE][END] status=200 duration_ms=43.17 memory_delta=0
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=4e17b6793f1c] [PERF] Execution time=0.034854
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=80a64201d274] [REQUEST][END]
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=80a64201d274] [PERF] Execution time=0.094535
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=055c5953d9b8] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=055c5953d9b8] [LIFECYCLE][END] status=200 duration_ms=110.95 memory_delta=0
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=ffe4590b94d4] [PERF] Execution time=0.107406
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=055c5953d9b8] [REQUEST][END]
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=055c5953d9b8] [PERF] Execution time=0.176732
+DEBUG - 2026-03-08 23:51:57 --> [MetaService] slug=how-it-works/setting-financial-goals pageName= cacheHit= path=DB
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=cdf5d0826ecb] [REQUEST][START] GET /index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:51:57 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=0860ead23dc7] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=0860ead23dc7] [LIFECYCLE][END] status=200 duration_ms=867.71 memory_delta=4194304
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=c3678f8f6a89] [PERF] Execution time=0.872567
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=0860ead23dc7] [REQUEST][END]
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=0860ead23dc7] [PERF] Execution time=0.939197
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:51:57 --> [REGISTRATION] Form loaded
+DEBUG - 2026-03-08 23:51:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=2a908cfad323] [PERF] Execution time=0.036882
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=43e873ac8a96] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:51:57 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=cdf5d0826ecb] [FILTER_BEFORE] /index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=cdf5d0826ecb] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=MyMIGold
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=cdf5d0826ecb] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-03-08 23:51:57 --> [CSRF] token name=csrf_test_name hash=de25cbb86da58be2b8f3e80c2b31c04a
+ERROR - 2026-03-08 23:51:57 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=48c54de42e2e] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=48c54de42e2e] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=6eb3345070a1] [REQUEST][START] GET /index.php/Support/Account
+DEBUG - 2026-03-08 23:51:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=e305563db7de] [PERF] Execution time=0.257586
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=d718d10e326f] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=d718d10e326f] [LIFECYCLE][END] status=200 duration_ms=161.61 memory_delta=0
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=da2eefa6fc34] [PERF] Execution time=0.151878
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=d718d10e326f] [REQUEST][END]
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=d718d10e326f] [PERF] Execution time=0.356006
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=be34225a36cf] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=be34225a36cf] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=be34225a36cf] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:51:57 --> [CSRF] token name=csrf_test_name hash=e0791b1cd804182d756fed57b62ebfdd
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=6db00d43f6cd] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=6db00d43f6cd] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=6eb3345070a1] [FILTER_BEFORE] /index.php/Support/Account
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=6eb3345070a1] [ROUTE] Controller=\App\Modules\Support\Controllers\AccountSupportController Method=index
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=6eb3345070a1] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support/Account
+DEBUG - 2026-03-08 23:51:57 --> [CSRF] token name=csrf_test_name hash=f0b425ab3cc5eaf9dd277d8137f19720
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=dbe41f664caa] [INIT] App\Modules\Support\Controllers\AccountSupportController::GET
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=dbe41f664caa] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=48c54de42e2e] [METHOD_ENTRY] MyMIGold
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=dbe41f664caa] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 23:51:57 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:51:57 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:57 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=be34225a36cf] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=be34225a36cf] [LIFECYCLE][END] status=200 duration_ms=85.78 memory_delta=0
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=6db00d43f6cd] [PERF] Execution time=0.083133
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:51:57 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:57 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=be34225a36cf] [REQUEST][END]
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=be34225a36cf] [PERF] Execution time=0.257867
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=48c54de42e2e] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:51:57 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=dbe41f664caa] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=dbe41f664caa] [VIEW_RENDER] SupportModule/Support/account_help
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=dbe41f664caa] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 23:51:57 --> themesMemory usage: 4194304
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=6eb3345070a1] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=6eb3345070a1] [LIFECYCLE][END] status=200 duration_ms=125.61 memory_delta=0
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=dbe41f664caa] [PERF] Execution time=0.124455
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=6eb3345070a1] [REQUEST][END]
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=6eb3345070a1] [PERF] Execution time=0.168428
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=219c64fb6a25] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:51:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=219c64fb6a25] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=219c64fb6a25] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=219c64fb6a25] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:51:57 --> [CSRF] token name=csrf_test_name hash=4200db22d512741c8b28b909f6e46600
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=b1e35d1b77ce] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=b1e35d1b77ce] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=219c64fb6a25] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=219c64fb6a25] [LIFECYCLE][END] status=200 duration_ms=21.37 memory_delta=0
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=b1e35d1b77ce] [PERF] Execution time=0.021438
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=219c64fb6a25] [REQUEST][END]
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=219c64fb6a25] [PERF] Execution time=0.032012
+INFO - 2026-03-08 23:51:57 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 23:51:57 --> [MetaService] slug=how-it-works/daily-financial-news pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=a495874de87e] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=a495874de87e] [LIFECYCLE][END] status=200 duration_ms=1,123.19 memory_delta=4194304
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=2f937d0bc5bb] [PERF] Execution time=1.111801
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=a495874de87e] [REQUEST][END]
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=a495874de87e] [PERF] Execution time=1.325192
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=ead406bc2371] [REQUEST][START] GET /index.php/How-It-Works/Purchase-MyMI-Gold
+DEBUG - 2026-03-08 23:51:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=ead406bc2371] [FILTER_BEFORE] /index.php/How-It-Works/Purchase-MyMI-Gold
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=ead406bc2371] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=PurchaseMyMIGold
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=ead406bc2371] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Purchase-MyMI-Gold
+DEBUG - 2026-03-08 23:51:57 --> [CSRF] token name=csrf_test_name hash=dfe133acc981816e924cdc15343d2419
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=6f0b3cc0e0f9] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=6f0b3cc0e0f9] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=6f0b3cc0e0f9] [METHOD_ENTRY] PurchaseMyMIGold
+DEBUG - 2026-03-08 23:51:57 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:51:57 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:51:57 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=6f0b3cc0e0f9] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=e30482fc9240] [REQUEST][START] GET /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 23:51:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=e30482fc9240] [FILTER_BEFORE] /index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=e30482fc9240] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=SettingFinancialGoals
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=e30482fc9240] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Setting-Financial-Goals
+DEBUG - 2026-03-08 23:51:57 --> [CSRF] token name=csrf_test_name hash=f96431bcd18cd06634927e84b006afa4
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=89fa26c5cd5c] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=89fa26c5cd5c] [MEMORY][controller-start] 4194304
+INFO - 2026-03-08 23:51:57 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=89fa26c5cd5c] [METHOD_ENTRY] SettingFinancialGoals
+DEBUG - 2026-03-08 23:51:57 --> [MetaService] slug=how-it-works/investment-portfolio-management pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=03215389f4e6] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=03215389f4e6] [LIFECYCLE][END] status=200 duration_ms=1,100.07 memory_delta=4194304
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=43e873ac8a96] [PERF] Execution time=1.089403
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=172f602c9e86] [REQUEST][START] GET /index.php/How-It-Works/Automated-Financial-Insights
+DEBUG - 2026-03-08 23:51:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=03215389f4e6] [REQUEST][END]
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=03215389f4e6] [PERF] Execution time=1.345264
+DEBUG - 2026-03-08 23:51:57 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=172f602c9e86] [FILTER_BEFORE] /index.php/How-It-Works/Automated-Financial-Insights
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=172f602c9e86] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=172f602c9e86] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Automated-Financial-Insights
+DEBUG - 2026-03-08 23:51:57 --> [CSRF] token name=csrf_test_name hash=2d24256ad0213e1892045e86436199cf
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=ced8d3837287] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=ced8d3837287] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:51:57 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=ced8d3837287] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 23:51:57 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:51:57 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:51:57 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 23:51:57 --> HowItWorksController failure: automated-financial-insights
+CRITICAL - 2026-03-08 23:51:57 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: How-It-Works/Automated-Financial-Insights]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 23:51:57 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:51:57 --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works/Automated-Financial-Insights
+WARNING - 2026-03-08 23:51:57 --> MyMIWallets initialized without numeric user context.
+WARNING - 2026-03-08 23:51:57 --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works/Automated-Financial-Insights | referrer: none
+DEBUG - 2026-03-08 23:51:57 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=89fa26c5cd5c] [MEMORY][commonData:start] 6291456
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=ced8d3837287] [PERF] Execution time=0.034709
+INFO - 2026-03-08 23:51:57 --> themesMemory usage: 10485760
+DEBUG - 2026-03-08 23:51:57 --> [MetaService] slug=how-it-works/mymi-gold pageName= cacheHit= path=DB
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=cdf5d0826ecb] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=cdf5d0826ecb] [LIFECYCLE][END] status=200 duration_ms=725.86 memory_delta=4194304
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=48c54de42e2e] [PERF] Execution time=0.720429
+DEBUG - 2026-03-08 23:51:57 --> [REQ_ID=cdf5d0826ecb] [REQUEST][END]
+INFO - 2026-03-08 23:51:57 --> [REQ_ID=cdf5d0826ecb] [PERF] Execution time=0.821578
+INFO - 2026-03-08 23:51:58 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 23:51:58 --> [MetaService] slug=how-it-works/purchase-mymi-gold pageName= cacheHit= path=DB
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=ead406bc2371] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=ead406bc2371] [LIFECYCLE][END] status=200 duration_ms=604.15 memory_delta=4194304
+INFO - 2026-03-08 23:51:58 --> [REQ_ID=6f0b3cc0e0f9] [PERF] Execution time=0.603886
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=ead406bc2371] [REQUEST][END]
+INFO - 2026-03-08 23:51:58 --> [REQ_ID=ead406bc2371] [PERF] Execution time=0.613673
+INFO - 2026-03-08 23:51:58 --> themesMemory usage: 8388608
+DEBUG - 2026-03-08 23:51:58 --> [MetaService] slug=how-it-works/setting-financial-goals pageName= cacheHit=1 path=CACHE
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=e30482fc9240] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=e30482fc9240] [LIFECYCLE][END] status=200 duration_ms=653.67 memory_delta=4194304
+INFO - 2026-03-08 23:51:58 --> [REQ_ID=89fa26c5cd5c] [PERF] Execution time=0.653435
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=e30482fc9240] [REQUEST][END]
+INFO - 2026-03-08 23:51:58 --> [REQ_ID=e30482fc9240] [PERF] Execution time=0.666765
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=30b5502bdb86] [REQUEST][START] GET /index.php/Preview/Alert/GRAB
+DEBUG - 2026-03-08 23:51:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=30b5502bdb86] [FILTER_BEFORE] /index.php/Preview/Alert/GRAB
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=30b5502bdb86] [ROUTE] Controller=\App\Modules\User\Controllers\AlertsController Method=preview
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=30b5502bdb86] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Preview/Alert/GRAB
+DEBUG - 2026-03-08 23:51:58 --> [CSRF] token name=csrf_test_name hash=24209b34903838da6a66fd3f45b1ae4e
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=e88f2910adbd] [INIT] App\Modules\User\Controllers\AlertsController::GET
+INFO - 2026-03-08 23:51:58 --> [REQ_ID=e88f2910adbd] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=e88f2910adbd] [METHOD_ENTRY] preview
+DEBUG - 2026-03-08 23:51:58 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:51:58 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:51:58 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:58 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:51:58 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:51:58 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:58 --> MyMIInvestments: no session user detected; skipping personalized hydration.
+DEBUG - 2026-03-08 23:51:58 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:58 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:58 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-08 23:51:58 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:58 --> MyMIAlerts: no authenticated user context detected.
+DEBUG - 2026-03-08 23:51:58 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:51:58 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:58 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:51:58 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:51:58 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:58 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 23:51:58 --> [REQ_ID=e88f2910adbd] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 23:51:58 --> MyMIInvestments: no session user detected; skipping personalized hydration.
+DEBUG - 2026-03-08 23:51:58 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:58 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:58 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:51:58 --> MyMIAlerts: no authenticated user context detected.
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=96472600f18f] [REQUEST][START] GET /index.php/Wallets/Purchase/Memberships/Customize
+DEBUG - 2026-03-08 23:51:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=96472600f18f] [FILTER_BEFORE] /index.php/Wallets/Purchase/Memberships/Customize
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=96472600f18f] [ROUTE] Controller=\App\Modules\User\Controllers\WalletsController Method=customizeMembership
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=96472600f18f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Wallets/Purchase/Memberships/Customize
+DEBUG - 2026-03-08 23:51:58 --> [CSRF] token name=csrf_test_name hash=9a4672d7c7d295e62c86adfd1acb479e
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=96472600f18f] [REQUEST][END]
+INFO - 2026-03-08 23:51:58 --> [REQ_ID=96472600f18f] [PERF] Execution time=0.017247
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=4ce8f1e508f4] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:51:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=4ce8f1e508f4] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=4ce8f1e508f4] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=4ce8f1e508f4] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:51:58 --> [CSRF] token name=csrf_test_name hash=ac446621326c89c31b1af9dc9f9c4f50
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=86484bdaedb2] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:51:58 --> [REQ_ID=86484bdaedb2] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=4ce8f1e508f4] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=4ce8f1e508f4] [LIFECYCLE][END] status=200 duration_ms=27.82 memory_delta=0
+INFO - 2026-03-08 23:51:58 --> [REQ_ID=86484bdaedb2] [PERF] Execution time=0.027569
+DEBUG - 2026-03-08 23:51:58 --> [REQ_ID=4ce8f1e508f4] [REQUEST][END]
+INFO - 2026-03-08 23:51:58 --> [REQ_ID=4ce8f1e508f4] [PERF] Execution time=0.039330
+INFO - 2026-03-08 23:51:58 --> AlertsModel L404 - Alert updated successfully for ID 7405: Array
+(
+    [price] => 3.98
+    [current_price] => 3.98
+    [last_updated] => 2026-03-08 23:51:58
+    [last_updated_time] => 2026-03-08 23:51:58
+)
+
+INFO - 2026-03-08 23:51:58 --> 🔄 Trying AlphaVantage for GRAB...
+INFO - 2026-03-08 23:51:59 --> ✅ Alert snapshot inserted for GRAB with trade_id 7405
+DEBUG - 2026-03-08 23:51:59 --> [REQ_ID=e88f2910adbd] [VIEW_RENDER] themes/public/previewAlert
+INFO - 2026-03-08 23:51:59 --> [REQ_ID=e88f2910adbd] [MEMORY][commonData:start] 6291456
+INFO - 2026-03-08 23:51:59 --> themesMemory usage: 6291456
+DEBUG - 2026-03-08 23:51:59 --> [REQ_ID=30b5502bdb86] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:51:59 --> [REQ_ID=30b5502bdb86] [LIFECYCLE][END] status=200 duration_ms=549.29 memory_delta=2097152
+INFO - 2026-03-08 23:51:59 --> [REQ_ID=e88f2910adbd] [PERF] Execution time=0.549552
+DEBUG - 2026-03-08 23:51:59 --> [REQ_ID=30b5502bdb86] [REQUEST][END]
+INFO - 2026-03-08 23:51:59 --> [REQ_ID=30b5502bdb86] [PERF] Execution time=0.560498
+DEBUG - 2026-03-08 23:52:36 --> [REQ_ID=6aa4ad0bec77] [REQUEST][START] GET /index.php/How-To-Guides
+DEBUG - 2026-03-08 23:52:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2026-03-08 23:52:36 --> REDIRECTED ROUTE at https://www.mymiwallet.com/Knowledgebase/Tutorials
+DEBUG - 2026-03-08 23:52:36 --> [REQ_ID=6aa4ad0bec77] [REQUEST][END]
+INFO - 2026-03-08 23:52:36 --> [REQ_ID=6aa4ad0bec77] [PERF] Execution time=0.010784
+DEBUG - 2026-03-08 23:52:37 --> [REQ_ID=57a925866125] [REQUEST][START] GET /index.php/How-It-Works/MyMI-Exchange
+DEBUG - 2026-03-08 23:52:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:52:37 --> [REQ_ID=57a925866125] [FILTER_BEFORE] /index.php/How-It-Works/MyMI-Exchange
+DEBUG - 2026-03-08 23:52:37 --> [REQ_ID=57a925866125] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 23:52:37 --> [REQ_ID=57a925866125] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Exchange
+DEBUG - 2026-03-08 23:52:37 --> [CSRF] token name=csrf_test_name hash=a70565c5f6d35244b2a440bf26abaf21
+DEBUG - 2026-03-08 23:52:37 --> [REQ_ID=312aaf03319f] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:52:37 --> [REQ_ID=312aaf03319f] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:52:37 --> [REQ_ID=312aaf03319f] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 23:52:37 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:52:37 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:52:37 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:52:37 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:52:37 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:52:37 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 23:52:37 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 23:52:37 --> [REQ_ID=312aaf03319f] [PERF] Execution time=0.019998
+DEBUG - 2026-03-08 23:52:40 --> [REQ_ID=f25aebf95b49] [REQUEST][START] GET /index.php/Investments/Reports
+DEBUG - 2026-03-08 23:52:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2026-03-08 23:52:40 --> REDIRECTED ROUTE at https://www.mymiwallet.com/Investments/Trade-Tracker
+DEBUG - 2026-03-08 23:52:40 --> [REQ_ID=f25aebf95b49] [REQUEST][END]
+INFO - 2026-03-08 23:52:40 --> [REQ_ID=f25aebf95b49] [PERF] Execution time=0.010502
+DEBUG - 2026-03-08 23:52:40 --> [REQ_ID=69c94a901dbe] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:52:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:52:40 --> [REQ_ID=69c94a901dbe] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:52:40 --> [REQ_ID=69c94a901dbe] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:52:40 --> [REQ_ID=69c94a901dbe] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:52:40 --> [CSRF] token name=csrf_test_name hash=5154dd5ed604e27d2347ae260b76cfbe
+DEBUG - 2026-03-08 23:52:40 --> [REQ_ID=4e76840800c6] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:52:40 --> [REQ_ID=4e76840800c6] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:52:40 --> [REQ_ID=69c94a901dbe] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:52:40 --> [REQ_ID=69c94a901dbe] [LIFECYCLE][END] status=200 duration_ms=19.86 memory_delta=0
+INFO - 2026-03-08 23:52:40 --> [REQ_ID=4e76840800c6] [PERF] Execution time=0.019529
+DEBUG - 2026-03-08 23:52:40 --> [REQ_ID=69c94a901dbe] [REQUEST][END]
+INFO - 2026-03-08 23:52:40 --> [REQ_ID=69c94a901dbe] [PERF] Execution time=0.029641
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=1788ba1cba10] [REQUEST][START] GET /index.php/Blog
+DEBUG - 2026-03-08 23:52:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=1788ba1cba10] [FILTER_BEFORE] /index.php/Blog
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=1788ba1cba10] [ROUTE] Controller=\App\Modules\Blog\Controllers\BlogController Method=index
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=1788ba1cba10] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Blog
+DEBUG - 2026-03-08 23:52:59 --> [CSRF] token name=csrf_test_name hash=7243ef53aaaa96ccf80541bebaf37e67
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=cb2001b0f273] [INIT] App\Modules\Blog\Controllers\BlogController::GET
+INFO - 2026-03-08 23:52:59 --> [REQ_ID=cb2001b0f273] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=cb2001b0f273] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 23:52:59 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:52:59 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:52:59 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:52:59 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:52:59 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:52:59 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:52:59 --> [REQ_ID=cb2001b0f273] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 23:52:59 --> [REQ_ID=cb2001b0f273] [PERF] Execution time=0.040128
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=45da5ed7cd33] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:52:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=45da5ed7cd33] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=45da5ed7cd33] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=45da5ed7cd33] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:52:59 --> [CSRF] token name=csrf_test_name hash=41ea09c5eb1abc4057e3ec930df0193b
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=fc6a5d4be097] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:52:59 --> [REQ_ID=fc6a5d4be097] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=45da5ed7cd33] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=45da5ed7cd33] [LIFECYCLE][END] status=200 duration_ms=23.00 memory_delta=0
+INFO - 2026-03-08 23:52:59 --> [REQ_ID=fc6a5d4be097] [PERF] Execution time=0.023127
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=45da5ed7cd33] [REQUEST][END]
+INFO - 2026-03-08 23:52:59 --> [REQ_ID=45da5ed7cd33] [PERF] Execution time=0.032879
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=cb88dbc1b5a5] [REQUEST][START] GET /index.php/Blog
+DEBUG - 2026-03-08 23:52:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=cb88dbc1b5a5] [FILTER_BEFORE] /index.php/Blog
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=cb88dbc1b5a5] [ROUTE] Controller=\App\Modules\Blog\Controllers\BlogController Method=index
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=cb88dbc1b5a5] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Blog
+DEBUG - 2026-03-08 23:52:59 --> [CSRF] token name=csrf_test_name hash=1b134dad34c522484cfa77eb858bc2c0
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=89bb7286c20d] [INIT] App\Modules\Blog\Controllers\BlogController::GET
+INFO - 2026-03-08 23:52:59 --> [REQ_ID=89bb7286c20d] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=89bb7286c20d] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 23:52:59 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:52:59 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:52:59 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:52:59 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:52:59 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:52:59 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:52:59 --> [REQ_ID=89bb7286c20d] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 23:52:59 --> [REQ_ID=89bb7286c20d] [PERF] Execution time=0.036779
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=f1e3ad568fda] [REQUEST][START] GET /index.php/Support
+DEBUG - 2026-03-08 23:52:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=f1e3ad568fda] [FILTER_BEFORE] /index.php/Support
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=f1e3ad568fda] [ROUTE] Controller=\App\Modules\Support\Controllers\SupportController Method=index
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=f1e3ad568fda] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support
+DEBUG - 2026-03-08 23:52:59 --> [CSRF] token name=csrf_test_name hash=efa8143019a7c558caac3e854db2bd1d
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=9d2be462ca07] [INIT] App\Modules\Support\Controllers\SupportController::GET
+INFO - 2026-03-08 23:52:59 --> [REQ_ID=9d2be462ca07] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=9d2be462ca07] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 23:52:59 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:52:59 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:52:59 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:52:59 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:52:59 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:52:59 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:52:59 --> [REQ_ID=9d2be462ca07] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=9d2be462ca07] [VIEW_RENDER] SupportModule\Views\Support\index
+INFO - 2026-03-08 23:52:59 --> [REQ_ID=9d2be462ca07] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 23:52:59 --> themesMemory usage: 4194304
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=f1e3ad568fda] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=f1e3ad568fda] [LIFECYCLE][END] status=200 duration_ms=30.24 memory_delta=0
+INFO - 2026-03-08 23:52:59 --> [REQ_ID=9d2be462ca07] [PERF] Execution time=0.029959
+DEBUG - 2026-03-08 23:52:59 --> [REQ_ID=f1e3ad568fda] [REQUEST][END]
+INFO - 2026-03-08 23:52:59 --> [REQ_ID=f1e3ad568fda] [PERF] Execution time=0.039671
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=96e9318e496b] [REQUEST][START] GET /index.php/Support
+DEBUG - 2026-03-08 23:53:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=96e9318e496b] [FILTER_BEFORE] /index.php/Support
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=96e9318e496b] [ROUTE] Controller=\App\Modules\Support\Controllers\SupportController Method=index
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=96e9318e496b] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support
+DEBUG - 2026-03-08 23:53:00 --> [CSRF] token name=csrf_test_name hash=108b5de436508b86367639b80b448508
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=2c18572f3b09] [INIT] App\Modules\Support\Controllers\SupportController::GET
+INFO - 2026-03-08 23:53:00 --> [REQ_ID=2c18572f3b09] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=2290c5f4bbd4] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:53:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=2c18572f3b09] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 23:53:00 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:00 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:00 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=2290c5f4bbd4] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=2290c5f4bbd4] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=2290c5f4bbd4] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:00 --> [CSRF] token name=csrf_test_name hash=ccdd248c09f8f773ed63f6b40a465ced
+INFO - 2026-03-08 23:53:00 --> [REQ_ID=2c18572f3b09] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=2c18572f3b09] [VIEW_RENDER] SupportModule\Views\Support\index
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=ee4a2df053e2] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:53:00 --> [REQ_ID=2c18572f3b09] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 23:53:00 --> [REQ_ID=ee4a2df053e2] [MEMORY][controller-start] 4194304
+INFO - 2026-03-08 23:53:00 --> themesMemory usage: 4194304
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=96e9318e496b] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=96e9318e496b] [LIFECYCLE][END] status=200 duration_ms=26.06 memory_delta=0
+INFO - 2026-03-08 23:53:00 --> [REQ_ID=2c18572f3b09] [PERF] Execution time=0.025724
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=96e9318e496b] [REQUEST][END]
+INFO - 2026-03-08 23:53:00 --> [REQ_ID=96e9318e496b] [PERF] Execution time=0.038223
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=2290c5f4bbd4] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=2290c5f4bbd4] [LIFECYCLE][END] status=200 duration_ms=22.25 memory_delta=0
+INFO - 2026-03-08 23:53:00 --> [REQ_ID=ee4a2df053e2] [PERF] Execution time=0.021739
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=2290c5f4bbd4] [REQUEST][END]
+INFO - 2026-03-08 23:53:00 --> [REQ_ID=2290c5f4bbd4] [PERF] Execution time=0.035778
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=4fd92058b0be] [REQUEST][START] GET /index.php/How-It-Works/Registering-An-Account
+DEBUG - 2026-03-08 23:53:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=4fd92058b0be] [FILTER_BEFORE] /index.php/How-It-Works/Registering-An-Account
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=4fd92058b0be] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=4fd92058b0be] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Registering-An-Account
+DEBUG - 2026-03-08 23:53:00 --> [CSRF] token name=csrf_test_name hash=99bb5cc706e820e555eda8f539cdad99
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=ab2b970936c1] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:53:00 --> [REQ_ID=ab2b970936c1] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=ab2b970936c1] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 23:53:00 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:00 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:00 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 23:53:00 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 23:53:00 --> [REQ_ID=ab2b970936c1] [PERF] Execution time=0.018526
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=fa43ff99332d] [REQUEST][START] GET /index.php/register
+DEBUG - 2026-03-08 23:53:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=fa43ff99332d] [FILTER_BEFORE] /index.php/register
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=fa43ff99332d] [ROUTE] Controller=\App\Controllers\AuthController Method=register
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=fa43ff99332d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/register
+DEBUG - 2026-03-08 23:53:00 --> [CSRF] token name=csrf_test_name hash=617762331bb3abab38ec4776b1f38b93
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=999bfe5f0d81] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:53:00 --> [REQ_ID=999bfe5f0d81] [MEMORY][controller-start] 4194304
+INFO - 2026-03-08 23:53:00 --> [REGISTRATION] Form loaded
+INFO - 2026-03-08 23:53:00 --> [REQ_ID=999bfe5f0d81] [PERF] Execution time=0.019327
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=d19126425277] [REQUEST][START] GET /index.php/Preview/Alert/NASDAQ-GUTS
+DEBUG - 2026-03-08 23:53:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=d19126425277] [FILTER_BEFORE] /index.php/Preview/Alert/NASDAQ-GUTS
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=d19126425277] [ROUTE] Controller=\App\Modules\User\Controllers\AlertsController Method=preview
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=d19126425277] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Preview/Alert/NASDAQ-GUTS
+DEBUG - 2026-03-08 23:53:00 --> [CSRF] token name=csrf_test_name hash=dfe133acc981816e924cdc15343d2419
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=f4d8a0903f84] [INIT] App\Modules\User\Controllers\AlertsController::GET
+INFO - 2026-03-08 23:53:00 --> [REQ_ID=f4d8a0903f84] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=f4d8a0903f84] [METHOD_ENTRY] preview
+DEBUG - 2026-03-08 23:53:00 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:00 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:00 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=12fa2566a284] [REQUEST][START] GET /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=12fa2566a284] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=12fa2566a284] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=12fa2566a284] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:00 --> [CSRF] token name=csrf_test_name hash=d22c9e53919ede7125c1619d1ab369b3
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=9bd82d1f9d16] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:53:00 --> [REQ_ID=9bd82d1f9d16] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:00 --> MyMIInvestments: no session user detected; skipping personalized hydration.
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=9bd82d1f9d16] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 23:53:00 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:00 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:00 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 23:53:00 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=728ea5680b51] [REQUEST][START] GET /index.php/register/success
+DEBUG - 2026-03-08 23:53:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:00 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:00 --> MyMIAlerts: no authenticated user context detected.
+DEBUG - 2026-03-08 23:53:00 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:53:00 --> [REQ_ID=9bd82d1f9d16] [PERF] Execution time=0.042950
+WARNING - 2026-03-08 23:53:00 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:00 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 23:53:00 --> [REQ_ID=f4d8a0903f84] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 23:53:00 --> MyMIInvestments: no session user detected; skipping personalized hydration.
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=728ea5680b51] [FILTER_BEFORE] /index.php/register/success
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=728ea5680b51] [ROUTE] Controller=\App\Controllers\AuthController Method=registerSuccess
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=728ea5680b51] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/register/success
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:00 --> MyMIAlerts: no authenticated user context detected.
+DEBUG - 2026-03-08 23:53:00 --> [CSRF] token name=csrf_test_name hash=04d3c7a7ea6eaec4ac47aebe7b8d9ef3
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=6649d4a4aef9] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:53:00 --> [REQ_ID=6649d4a4aef9] [MEMORY][controller-start] 4194304
+INFO - 2026-03-08 23:53:00 --> AuthController::registerSuccess view rendered.
+INFO - 2026-03-08 23:53:00 --> [REQ_ID=6649d4a4aef9] [PERF] Execution time=0.016038
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=ac74d436e88e] [REQUEST][START] GET /index.php/How-It-Works/Determining-Your-Financial-Goals
+DEBUG - 2026-03-08 23:53:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=ac74d436e88e] [FILTER_BEFORE] /index.php/How-It-Works/Determining-Your-Financial-Goals
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=ac74d436e88e] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=ac74d436e88e] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Determining-Your-Financial-Goals
+DEBUG - 2026-03-08 23:53:00 --> [CSRF] token name=csrf_test_name hash=77dc1d14db37286f11a835738e1faee4
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=d21ca35ee19f] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:53:00 --> [REQ_ID=d21ca35ee19f] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:00 --> TwelveData batch response error: **symbol** or **figi** parameter is missing or invalid. Please provide a valid symbol according to API documentation: https://twelvedata.com/docs#reference-data
+DEBUG - 2026-03-08 23:53:00 --> [REQ_ID=d21ca35ee19f] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 23:53:00 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:00 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:00 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:00 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 23:53:00 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 23:53:00 --> [REQ_ID=d21ca35ee19f] [PERF] Execution time=0.019223
+DEBUG - 2026-03-08 23:53:01 --> Marketstack fallback failed: 22 : The requested URL returned error: 403
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=f4d8a0903f84] [VIEW_RENDER] themes/public/previewAlert
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=f4d8a0903f84] [MEMORY][commonData:start] 6291456
+INFO - 2026-03-08 23:53:01 --> themesMemory usage: 6291456
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=d19126425277] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=d19126425277] [LIFECYCLE][END] status=200 duration_ms=651.26 memory_delta=2097152
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=f4d8a0903f84] [PERF] Execution time=0.651442
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=d19126425277] [REQUEST][END]
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=d19126425277] [PERF] Execution time=0.662077
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=cf9e7d11c0e0] [REQUEST][START] GET /index.php/Support/Account
+DEBUG - 2026-03-08 23:53:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=cf9e7d11c0e0] [FILTER_BEFORE] /index.php/Support/Account
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=cf9e7d11c0e0] [ROUTE] Controller=\App\Modules\Support\Controllers\AccountSupportController Method=index
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=cf9e7d11c0e0] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support/Account
+DEBUG - 2026-03-08 23:53:01 --> [CSRF] token name=csrf_test_name hash=4200db22d512741c8b28b909f6e46600
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=05f0134abffa] [INIT] App\Modules\Support\Controllers\AccountSupportController::GET
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=05f0134abffa] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=05f0134abffa] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 23:53:01 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:01 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:01 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=05f0134abffa] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=05f0134abffa] [VIEW_RENDER] SupportModule/Support/account_help
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=05f0134abffa] [MEMORY][commonData:start] 6291456
+INFO - 2026-03-08 23:53:01 --> themesMemory usage: 6291456
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=cf9e7d11c0e0] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=cf9e7d11c0e0] [LIFECYCLE][END] status=200 duration_ms=24.29 memory_delta=0
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=05f0134abffa] [PERF] Execution time=0.024042
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=cf9e7d11c0e0] [REQUEST][END]
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=cf9e7d11c0e0] [PERF] Execution time=0.035964
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=8d27e502876a] [REQUEST][START] GET /index.php/Blog
+DEBUG - 2026-03-08 23:53:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=8d27e502876a] [FILTER_BEFORE] /index.php/Blog
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=8d27e502876a] [ROUTE] Controller=\App\Modules\Blog\Controllers\BlogController Method=index
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=8d27e502876a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Blog
+DEBUG - 2026-03-08 23:53:01 --> [CSRF] token name=csrf_test_name hash=0654bc69ab8188d4022975ff96523012
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=dfa1d05ea0cb] [INIT] App\Modules\Blog\Controllers\BlogController::GET
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=dfa1d05ea0cb] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=dfa1d05ea0cb] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 23:53:01 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:01 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:01 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=dfa1d05ea0cb] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=dfa1d05ea0cb] [PERF] Execution time=0.026294
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=b07a53a625c9] [REQUEST][START] GET /index.php/Blog
+DEBUG - 2026-03-08 23:53:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=b07a53a625c9] [FILTER_BEFORE] /index.php/Blog
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=b07a53a625c9] [ROUTE] Controller=\App\Modules\Blog\Controllers\BlogController Method=index
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=b07a53a625c9] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Blog
+DEBUG - 2026-03-08 23:53:01 --> [CSRF] token name=csrf_test_name hash=dfe133acc981816e924cdc15343d2419
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=66dac148bf95] [INIT] App\Modules\Blog\Controllers\BlogController::GET
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=66dac148bf95] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=66dac148bf95] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 23:53:01 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:01 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:01 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=66dac148bf95] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=66dac148bf95] [PERF] Execution time=0.019772
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=ce6e4d2ed07a] [REQUEST][START] GET /index.php/Blog
+DEBUG - 2026-03-08 23:53:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=ce6e4d2ed07a] [FILTER_BEFORE] /index.php/Blog
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=ce6e4d2ed07a] [ROUTE] Controller=\App\Modules\Blog\Controllers\BlogController Method=index
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=ce6e4d2ed07a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Blog
+DEBUG - 2026-03-08 23:53:01 --> [CSRF] token name=csrf_test_name hash=4094da05ef365c6536540407f0072dfa
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=876ef1b32da8] [INIT] App\Modules\Blog\Controllers\BlogController::GET
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=876ef1b32da8] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=32e537ec9bf2] [REQUEST][START] GET /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=876ef1b32da8] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 23:53:01 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:01 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:01 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=32e537ec9bf2] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=32e537ec9bf2] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=32e537ec9bf2] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:01 --> [CSRF] token name=csrf_test_name hash=5cc72dd382b58821cd76fb5749a450f6
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=64e45d984099] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=64e45d984099] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=876ef1b32da8] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=876ef1b32da8] [PERF] Execution time=0.016264
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=64e45d984099] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 23:53:01 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:01 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:01 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 23:53:01 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=64e45d984099] [PERF] Execution time=0.019257
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=5bde64f5118e] [REQUEST][START] GET /index.php/How-It-Works/MyMI-Exchange
+DEBUG - 2026-03-08 23:53:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=5bde64f5118e] [FILTER_BEFORE] /index.php/How-It-Works/MyMI-Exchange
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=5bde64f5118e] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=5bde64f5118e] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Exchange
+DEBUG - 2026-03-08 23:53:01 --> [CSRF] token name=csrf_test_name hash=f96431bcd18cd06634927e84b006afa4
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=049bccb4dee1] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=049bccb4dee1] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=049bccb4dee1] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 23:53:01 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:01 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:01 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 23:53:01 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=049bccb4dee1] [PERF] Execution time=0.031204
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=74f86d61443b] [REQUEST][START] GET /index.php/Preview/Alert/IMNN
+DEBUG - 2026-03-08 23:53:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=9c257e82b006] [REQUEST][START] GET /index.php/Support/Account
+DEBUG - 2026-03-08 23:53:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=ba0b33901a54] [REQUEST][START] GET /index.php/Support/Account
+DEBUG - 2026-03-08 23:53:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=9c257e82b006] [FILTER_BEFORE] /index.php/Support/Account
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=9c257e82b006] [ROUTE] Controller=\App\Modules\Support\Controllers\AccountSupportController Method=index
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=9c257e82b006] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support/Account
+DEBUG - 2026-03-08 23:53:01 --> [CSRF] token name=csrf_test_name hash=c63cbc3255b1d915549742113d8d0e7b
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=8b5da3ff567f] [INIT] App\Modules\Support\Controllers\AccountSupportController::GET
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=8b5da3ff567f] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=74f86d61443b] [FILTER_BEFORE] /index.php/Preview/Alert/IMNN
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=74f86d61443b] [ROUTE] Controller=\App\Modules\User\Controllers\AlertsController Method=preview
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=74f86d61443b] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Preview/Alert/IMNN
+DEBUG - 2026-03-08 23:53:01 --> [CSRF] token name=csrf_test_name hash=4094da05ef365c6536540407f0072dfa
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=3957b53ebb0b] [INIT] App\Modules\User\Controllers\AlertsController::GET
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=3957b53ebb0b] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=ba0b33901a54] [FILTER_BEFORE] /index.php/Support/Account
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=8b5da3ff567f] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 23:53:01 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:01 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:01 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=ba0b33901a54] [ROUTE] Controller=\App\Modules\Support\Controllers\AccountSupportController Method=index
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=ba0b33901a54] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support/Account
+DEBUG - 2026-03-08 23:53:01 --> [CSRF] token name=csrf_test_name hash=01fd4ee2b816323e1547a25e343e58b2
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=f300a9ea4df5] [INIT] App\Modules\Support\Controllers\AccountSupportController::GET
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=f300a9ea4df5] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=8b5da3ff567f] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=8b5da3ff567f] [VIEW_RENDER] SupportModule/Support/account_help
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=8b5da3ff567f] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 23:53:01 --> themesMemory usage: 4194304
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=9c257e82b006] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=9c257e82b006] [LIFECYCLE][END] status=200 duration_ms=27.37 memory_delta=0
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=8b5da3ff567f] [PERF] Execution time=0.026241
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=9c257e82b006] [REQUEST][END]
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=9c257e82b006] [PERF] Execution time=0.041881
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=f300a9ea4df5] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=3957b53ebb0b] [METHOD_ENTRY] preview
+DEBUG - 2026-03-08 23:53:01 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:01 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:01 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:01 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:01 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:01 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=f300a9ea4df5] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=f300a9ea4df5] [VIEW_RENDER] SupportModule/Support/account_help
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=f300a9ea4df5] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:53:01 --> themesMemory usage: 4194304
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=ba0b33901a54] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=ba0b33901a54] [LIFECYCLE][END] status=200 duration_ms=31.83 memory_delta=0
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=f300a9ea4df5] [PERF] Execution time=0.028857
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=ba0b33901a54] [REQUEST][END]
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=ba0b33901a54] [PERF] Execution time=0.052550
+DEBUG - 2026-03-08 23:53:01 --> MyMIInvestments: no session user detected; skipping personalized hydration.
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=d6aba320dcbd] [REQUEST][START] GET /index.php/Support/Account
+DEBUG - 2026-03-08 23:53:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=d6aba320dcbd] [FILTER_BEFORE] /index.php/Support/Account
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=d6aba320dcbd] [ROUTE] Controller=\App\Modules\Support\Controllers\AccountSupportController Method=index
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=d6aba320dcbd] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support/Account
+DEBUG - 2026-03-08 23:53:01 --> [CSRF] token name=csrf_test_name hash=e5a4266b995be755ea0de71dba7b6b28
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=26849b258db4] [INIT] App\Modules\Support\Controllers\AccountSupportController::GET
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=26849b258db4] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:01 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:01 --> MyMIAlerts: no authenticated user context detected.
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=26849b258db4] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 23:53:01 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:01 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:01 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:01 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:01 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=26849b258db4] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 23:53:01 --> [REQ_ID=26849b258db4] [VIEW_RENDER] SupportModule/Support/account_help
+INFO - 2026-03-08 23:53:01 --> [REQ_ID=26849b258db4] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 23:53:01 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:02 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=3957b53ebb0b] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 23:53:02 --> MyMIInvestments: no session user detected; skipping personalized hydration.
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:02 --> MyMIAlerts: no authenticated user context detected.
+INFO - 2026-03-08 23:53:02 --> themesMemory usage: 4194304
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=2902cb07696a] [REQUEST][START] GET /index.php/resend-activation
+DEBUG - 2026-03-08 23:53:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=d6aba320dcbd] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=d6aba320dcbd] [LIFECYCLE][END] status=200 duration_ms=36.07 memory_delta=0
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=26849b258db4] [PERF] Execution time=0.035099
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=d6aba320dcbd] [REQUEST][END]
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=d6aba320dcbd] [PERF] Execution time=0.052360
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=2902cb07696a] [FILTER_BEFORE] /index.php/resend-activation
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=2902cb07696a] [ROUTE] Controller=\App\Controllers\AuthController Method=resendActivation
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=2902cb07696a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/resend-activation
+DEBUG - 2026-03-08 23:53:02 --> [CSRF] token name=csrf_test_name hash=dfe133acc981816e924cdc15343d2419
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=16e4ce8fd772] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=16e4ce8fd772] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=2c23e57a6fef] [REQUEST][START] GET /index.php/Support
+DEBUG - 2026-03-08 23:53:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=68ea94c6d6b7] [REQUEST][START] GET /index.php/Preview/Alert/IMNN
+DEBUG - 2026-03-08 23:53:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=2902cb07696a] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=2902cb07696a] [LIFECYCLE][END] status=200 duration_ms=20.51 memory_delta=0
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=16e4ce8fd772] [PERF] Execution time=0.019793
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=2902cb07696a] [REQUEST][END]
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=2902cb07696a] [PERF] Execution time=0.061859
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=68ea94c6d6b7] [FILTER_BEFORE] /index.php/Preview/Alert/IMNN
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=68ea94c6d6b7] [ROUTE] Controller=\App\Modules\User\Controllers\AlertsController Method=preview
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=68ea94c6d6b7] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Preview/Alert/IMNN
+DEBUG - 2026-03-08 23:53:02 --> [CSRF] token name=csrf_test_name hash=62f1511cbf7e3617bd67f7e86f27c20b
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=a16cc36ccf35] [INIT] App\Modules\User\Controllers\AlertsController::GET
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=a16cc36ccf35] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=2c23e57a6fef] [FILTER_BEFORE] /index.php/Support
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=2c23e57a6fef] [ROUTE] Controller=\App\Modules\Support\Controllers\SupportController Method=index
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=2c23e57a6fef] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support
+DEBUG - 2026-03-08 23:53:02 --> [CSRF] token name=csrf_test_name hash=501bee3497a948603390f26db54975e5
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=166529b70e76] [INIT] App\Modules\Support\Controllers\SupportController::GET
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=166529b70e76] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=a16cc36ccf35] [METHOD_ENTRY] preview
+DEBUG - 2026-03-08 23:53:02 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:02 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=166529b70e76] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:02 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:02 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:02 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:02 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=166529b70e76] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=166529b70e76] [VIEW_RENDER] SupportModule\Views\Support\index
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=166529b70e76] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 23:53:02 --> themesMemory usage: 4194304
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=2c23e57a6fef] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=2c23e57a6fef] [LIFECYCLE][END] status=200 duration_ms=35.12 memory_delta=0
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=166529b70e76] [PERF] Execution time=0.031601
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=2c23e57a6fef] [REQUEST][END]
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=2c23e57a6fef] [PERF] Execution time=0.070090
+DEBUG - 2026-03-08 23:53:02 --> MyMIInvestments: no session user detected; skipping personalized hydration.
+INFO - 2026-03-08 23:53:02 --> AlertsModel L404 - Alert updated successfully for ID 9368: Array
+(
+    [price] => 3.24
+    [current_price] => 3.24
+    [last_updated] => 2026-03-08 23:53:02
+    [last_updated_time] => 2026-03-08 23:53:02
+)
+
+INFO - 2026-03-08 23:53:02 --> 🔄 Trying AlphaVantage for IMNN...
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=7bd322eecd56] [REQUEST][START] GET /index.php/register
+DEBUG - 2026-03-08 23:53:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=7bd322eecd56] [FILTER_BEFORE] /index.php/register
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=7bd322eecd56] [ROUTE] Controller=\App\Controllers\AuthController Method=register
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=7bd322eecd56] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/register
+DEBUG - 2026-03-08 23:53:02 --> [CSRF] token name=csrf_test_name hash=d1f904536711524bb8c4673866eb2c1c
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=05565182128f] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=05565182128f] [MEMORY][controller-start] 4194304
+INFO - 2026-03-08 23:53:02 --> [REGISTRATION] Form loaded
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=05565182128f] [PERF] Execution time=0.017949
+DEBUG - 2026-03-08 23:53:02 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:02 --> MyMIAlerts: no authenticated user context detected.
+DEBUG - 2026-03-08 23:53:02 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:02 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:02 --> [SERVICE] App\Services\BudgetService ::setUserId
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=a16cc36ccf35] [MEMORY][commonData:start] 6291456
+DEBUG - 2026-03-08 23:53:02 --> MyMIInvestments: no session user detected; skipping personalized hydration.
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:02 --> MyMIAlerts: no authenticated user context detected.
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=a16cc36ccf35] [VIEW_RENDER] themes/public/previewAlert
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=a16cc36ccf35] [MEMORY][commonData:start] 6291456
+INFO - 2026-03-08 23:53:02 --> themesMemory usage: 6291456
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=2dd2999817ca] [REQUEST][START] GET /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=68ea94c6d6b7] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=68ea94c6d6b7] [LIFECYCLE][END] status=200 duration_ms=127.26 memory_delta=2097152
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=a16cc36ccf35] [PERF] Execution time=0.126522
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=68ea94c6d6b7] [REQUEST][END]
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=68ea94c6d6b7] [PERF] Execution time=0.153264
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=2dd2999817ca] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=2dd2999817ca] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=2dd2999817ca] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:02 --> [CSRF] token name=csrf_test_name hash=cc4a940ada5a5f6014041997d4e0104f
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=9ae6ce32d9db] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=9ae6ce32d9db] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=9ae6ce32d9db] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 23:53:02 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:02 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:02 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 23:53:02 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=9ae6ce32d9db] [PERF] Execution time=0.021121
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=77bf265f585f] [REQUEST][START] GET /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=77bf265f585f] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=77bf265f585f] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=77bf265f585f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:02 --> [CSRF] token name=csrf_test_name hash=2d24256ad0213e1892045e86436199cf
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=8e1e1fa0eb61] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=8e1e1fa0eb61] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=8e1e1fa0eb61] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 23:53:02 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:02 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:02 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 23:53:02 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=8e1e1fa0eb61] [PERF] Execution time=0.019987
+INFO - 2026-03-08 23:53:02 --> ✅ Alert snapshot inserted for IMNN with trade_id 9368
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=3957b53ebb0b] [VIEW_RENDER] themes/public/previewAlert
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=3957b53ebb0b] [MEMORY][commonData:start] 6291456
+INFO - 2026-03-08 23:53:02 --> themesMemory usage: 6291456
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=74f86d61443b] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=74f86d61443b] [LIFECYCLE][END] status=200 duration_ms=547.09 memory_delta=2097152
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=3957b53ebb0b] [PERF] Execution time=0.546387
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=74f86d61443b] [REQUEST][END]
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=74f86d61443b] [PERF] Execution time=0.574647
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=b19022498eb4] [REQUEST][START] GET /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=b19022498eb4] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=b19022498eb4] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=b19022498eb4] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:02 --> [CSRF] token name=csrf_test_name hash=4ba6afe1cdad1c351d579da1461a669b
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=7b8dc885ed2a] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=7b8dc885ed2a] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=7b8dc885ed2a] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 23:53:02 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:02 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:02 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 23:53:02 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=7b8dc885ed2a] [PERF] Execution time=0.017765
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=4fba6d6982fb] [REQUEST][START] GET /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=4fba6d6982fb] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=4fba6d6982fb] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=4fba6d6982fb] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:02 --> [CSRF] token name=csrf_test_name hash=108b5de436508b86367639b80b448508
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=54002d5422c0] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=54002d5422c0] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=54002d5422c0] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 23:53:02 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:02 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:02 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:02 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 23:53:02 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=54002d5422c0] [PERF] Execution time=0.021280
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=cc3388399a36] [REQUEST][START] GET /index.php/register
+DEBUG - 2026-03-08 23:53:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=cc3388399a36] [FILTER_BEFORE] /index.php/register
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=cc3388399a36] [ROUTE] Controller=\App\Controllers\AuthController Method=register
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=cc3388399a36] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/register
+DEBUG - 2026-03-08 23:53:02 --> [CSRF] token name=csrf_test_name hash=d22c9e53919ede7125c1619d1ab369b3
+DEBUG - 2026-03-08 23:53:02 --> [REQ_ID=7aad3d3adea4] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=7aad3d3adea4] [MEMORY][controller-start] 4194304
+INFO - 2026-03-08 23:53:02 --> [REGISTRATION] Form loaded
+INFO - 2026-03-08 23:53:02 --> [REQ_ID=7aad3d3adea4] [PERF] Execution time=0.015520
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=8a90161902dc] [REQUEST][START] GET /index.php/Support/Account
+DEBUG - 2026-03-08 23:53:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=8a90161902dc] [FILTER_BEFORE] /index.php/Support/Account
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=8a90161902dc] [ROUTE] Controller=\App\Modules\Support\Controllers\AccountSupportController Method=index
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=8a90161902dc] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support/Account
+DEBUG - 2026-03-08 23:53:03 --> [CSRF] token name=csrf_test_name hash=5af36e97f65331fb278e969852a37aff
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=cc2c52644ddc] [INIT] App\Modules\Support\Controllers\AccountSupportController::GET
+INFO - 2026-03-08 23:53:03 --> [REQ_ID=cc2c52644ddc] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=cc2c52644ddc] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 23:53:03 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:03 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:03 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:03 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:03 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:03 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:53:03 --> [REQ_ID=cc2c52644ddc] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=cc2c52644ddc] [VIEW_RENDER] SupportModule/Support/account_help
+INFO - 2026-03-08 23:53:03 --> [REQ_ID=cc2c52644ddc] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 23:53:03 --> themesMemory usage: 4194304
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=8a90161902dc] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=8a90161902dc] [LIFECYCLE][END] status=200 duration_ms=33.99 memory_delta=0
+INFO - 2026-03-08 23:53:03 --> [REQ_ID=cc2c52644ddc] [PERF] Execution time=0.033940
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=8a90161902dc] [REQUEST][END]
+INFO - 2026-03-08 23:53:03 --> [REQ_ID=8a90161902dc] [PERF] Execution time=0.044657
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=236d78224e15] [REQUEST][START] GET /index.php/How-It-Works/Automated-Financial-Insights
+DEBUG - 2026-03-08 23:53:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=236d78224e15] [FILTER_BEFORE] /index.php/How-It-Works/Automated-Financial-Insights
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=236d78224e15] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=236d78224e15] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Automated-Financial-Insights
+DEBUG - 2026-03-08 23:53:03 --> [CSRF] token name=csrf_test_name hash=cc4a940ada5a5f6014041997d4e0104f
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=a5cffcb1da38] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:53:03 --> [REQ_ID=a5cffcb1da38] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=a5cffcb1da38] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 23:53:03 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:03 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:03 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:03 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:03 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:03 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 23:53:03 --> HowItWorksController failure: automated-financial-insights
+CRITICAL - 2026-03-08 23:53:03 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: How-It-Works/Automated-Financial-Insights]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 23:53:03 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 23:53:03 --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works/Automated-Financial-Insights
+WARNING - 2026-03-08 23:53:03 --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works/Automated-Financial-Insights | referrer: none
+INFO - 2026-03-08 23:53:03 --> [REQ_ID=a5cffcb1da38] [PERF] Execution time=0.031387
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=ee95e63f19d2] [REQUEST][START] GET /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=ee95e63f19d2] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=ee95e63f19d2] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=ee95e63f19d2] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:03 --> [CSRF] token name=csrf_test_name hash=a7c875407844176d935c03566acadbea
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=dee9fecc503b] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:53:03 --> [REQ_ID=dee9fecc503b] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=dee9fecc503b] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 23:53:03 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:03 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:03 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:03 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:03 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:03 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 23:53:03 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 23:53:03 --> [REQ_ID=dee9fecc503b] [PERF] Execution time=0.019121
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=e0daf20dd5ae] [REQUEST][START] GET /index.php/How-It-Works/Investor-Profile
+DEBUG - 2026-03-08 23:53:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=e0daf20dd5ae] [FILTER_BEFORE] /index.php/How-It-Works/Investor-Profile
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=e0daf20dd5ae] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=e0daf20dd5ae] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investor-Profile
+DEBUG - 2026-03-08 23:53:03 --> [CSRF] token name=csrf_test_name hash=d7e9c4d47dcb45f633a0595b6c8ed7f2
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=4484b89af165] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:53:03 --> [REQ_ID=4484b89af165] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=4484b89af165] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 23:53:03 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:03 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:03 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:03 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:03 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:03 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 23:53:03 --> HowItWorksController failure: investor-profile
+CRITICAL - 2026-03-08 23:53:03 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: How-It-Works/Investor-Profile]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 23:53:03 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 23:53:03 --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works/Investor-Profile
+WARNING - 2026-03-08 23:53:03 --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works/Investor-Profile | referrer: none
+INFO - 2026-03-08 23:53:03 --> [REQ_ID=4484b89af165] [PERF] Execution time=0.036400
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=0c3be1cb19a6] [REQUEST][START] GET /index.php/Support/Account
+DEBUG - 2026-03-08 23:53:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=0c3be1cb19a6] [FILTER_BEFORE] /index.php/Support/Account
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=0c3be1cb19a6] [ROUTE] Controller=\App\Modules\Support\Controllers\AccountSupportController Method=index
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=0c3be1cb19a6] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support/Account
+DEBUG - 2026-03-08 23:53:03 --> [CSRF] token name=csrf_test_name hash=0654bc69ab8188d4022975ff96523012
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=2fe1225f3088] [INIT] App\Modules\Support\Controllers\AccountSupportController::GET
+INFO - 2026-03-08 23:53:03 --> [REQ_ID=2fe1225f3088] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=2fe1225f3088] [METHOD_ENTRY] index
+DEBUG - 2026-03-08 23:53:03 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:03 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:03 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:03 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:03 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:03 --> MyMICoin: guest context detected; skipping user-specific preload.
+INFO - 2026-03-08 23:53:03 --> [REQ_ID=2fe1225f3088] [MEMORY][commonData:start] 4194304
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=2fe1225f3088] [VIEW_RENDER] SupportModule/Support/account_help
+INFO - 2026-03-08 23:53:03 --> [REQ_ID=2fe1225f3088] [MEMORY][commonData:start] 4194304
+INFO - 2026-03-08 23:53:03 --> themesMemory usage: 4194304
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=0c3be1cb19a6] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=0c3be1cb19a6] [LIFECYCLE][END] status=200 duration_ms=26.32 memory_delta=0
+INFO - 2026-03-08 23:53:03 --> [REQ_ID=2fe1225f3088] [PERF] Execution time=0.026116
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=0c3be1cb19a6] [REQUEST][END]
+INFO - 2026-03-08 23:53:03 --> [REQ_ID=0c3be1cb19a6] [PERF] Execution time=0.035679
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=e11a012eff83] [REQUEST][START] GET /index.php/Free/register/MyMI-Budgeting-Tool
+DEBUG - 2026-03-08 23:53:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=e11a012eff83] [FILTER_BEFORE] /index.php/Free/register/MyMI-Budgeting-Tool
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=e11a012eff83] [ROUTE] Controller=\App\Controllers\AuthController Method=register
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=e11a012eff83] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Free/register/MyMI-Budgeting-Tool
+DEBUG - 2026-03-08 23:53:03 --> [CSRF] token name=csrf_test_name hash=d7e9c4d47dcb45f633a0595b6c8ed7f2
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=e11a012eff83] [REQUEST][END]
+INFO - 2026-03-08 23:53:03 --> [REQ_ID=e11a012eff83] [PERF] Execution time=0.012129
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=99ae4f2d2b70] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:53:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=99ae4f2d2b70] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=99ae4f2d2b70] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=99ae4f2d2b70] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:53:03 --> [CSRF] token name=csrf_test_name hash=d7e9c4d47dcb45f633a0595b6c8ed7f2
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=ee3baf1891ee] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:53:03 --> [REQ_ID=ee3baf1891ee] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=99ae4f2d2b70] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=99ae4f2d2b70] [LIFECYCLE][END] status=200 duration_ms=25.24 memory_delta=0
+INFO - 2026-03-08 23:53:03 --> [REQ_ID=ee3baf1891ee] [PERF] Execution time=0.025189
+DEBUG - 2026-03-08 23:53:03 --> [REQ_ID=99ae4f2d2b70] [REQUEST][END]
+INFO - 2026-03-08 23:53:03 --> [REQ_ID=99ae4f2d2b70] [PERF] Execution time=0.034660
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=478291312d73] [REQUEST][START] GET /index.php/How-It-Works/MyMI-Exchange
+DEBUG - 2026-03-08 23:53:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=478291312d73] [FILTER_BEFORE] /index.php/How-It-Works/MyMI-Exchange
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=478291312d73] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=478291312d73] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Exchange
+DEBUG - 2026-03-08 23:53:04 --> [CSRF] token name=csrf_test_name hash=d1f904536711524bb8c4673866eb2c1c
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=d5b0f0f7abd5] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:53:04 --> [REQ_ID=d5b0f0f7abd5] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=d5b0f0f7abd5] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 23:53:04 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:04 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:04 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:04 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:04 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:04 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 23:53:04 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 23:53:04 --> [REQ_ID=d5b0f0f7abd5] [PERF] Execution time=0.021164
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=3b2d8c4ecb82] [REQUEST][START] GET /index.php/How-It-Works/Investor-Profile
+DEBUG - 2026-03-08 23:53:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=3b2d8c4ecb82] [FILTER_BEFORE] /index.php/How-It-Works/Investor-Profile
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=3b2d8c4ecb82] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=3b2d8c4ecb82] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investor-Profile
+DEBUG - 2026-03-08 23:53:04 --> [CSRF] token name=csrf_test_name hash=cc4a940ada5a5f6014041997d4e0104f
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=a6ae08999b1f] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:53:04 --> [REQ_ID=a6ae08999b1f] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=2740b4979c86] [REQUEST][START] GET /index.php/How-It-Works/Automated-Financial-Insights
+DEBUG - 2026-03-08 23:53:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=2740b4979c86] [FILTER_BEFORE] /index.php/How-It-Works/Automated-Financial-Insights
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=2740b4979c86] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=2740b4979c86] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Automated-Financial-Insights
+DEBUG - 2026-03-08 23:53:04 --> [CSRF] token name=csrf_test_name hash=c63cbc3255b1d915549742113d8d0e7b
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=8f64ac3bb677] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:53:04 --> [REQ_ID=8f64ac3bb677] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=a6ae08999b1f] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 23:53:04 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:04 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:04 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:04 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:04 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=c2adbf72b8aa] [REQUEST][START] GET /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:04 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 23:53:04 --> HowItWorksController failure: investor-profile
+CRITICAL - 2026-03-08 23:53:04 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: How-It-Works/Investor-Profile]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=8f64ac3bb677] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 23:53:04 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:04 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:04 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:04 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:04 --> MyMIWallets initialized without numeric user context.
+CRITICAL - 2026-03-08 23:53:04 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 23:53:04 --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works/Investor-Profile
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=c2adbf72b8aa] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=c2adbf72b8aa] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=c2adbf72b8aa] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Dashboard
+DEBUG - 2026-03-08 23:53:04 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:04 --> [CSRF] token name=csrf_test_name hash=5154dd5ed604e27d2347ae260b76cfbe
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=9cb1df9ba732] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+INFO - 2026-03-08 23:53:04 --> [REQ_ID=9cb1df9ba732] [MEMORY][controller-start] 4194304
+ERROR - 2026-03-08 23:53:04 --> HowItWorksController failure: automated-financial-insights
+WARNING - 2026-03-08 23:53:04 --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works/Investor-Profile | referrer: none
+CRITICAL - 2026-03-08 23:53:04 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: How-It-Works/Automated-Financial-Insights]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2026-03-08 23:53:04 --> [REQ_ID=a6ae08999b1f] [PERF] Execution time=0.032638
+CRITICAL - 2026-03-08 23:53:04 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 23:53:04 --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works/Automated-Financial-Insights
+WARNING - 2026-03-08 23:53:04 --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works/Automated-Financial-Insights | referrer: none
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=9cb1df9ba732] [METHOD_ENTRY] show
+DEBUG - 2026-03-08 23:53:04 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-08 23:53:04 --> [SERVICE] App\Services\BudgetService ::setUserId
+DEBUG - 2026-03-08 23:53:04 --> MyMICoin: guest context detected; skipping user-specific preload.
+DEBUG - 2026-03-08 23:53:04 --> MyMICoin: guest context detected; skipping user-specific preload.
+WARNING - 2026-03-08 23:53:04 --> MyMIWallets initialized without numeric user context.
+DEBUG - 2026-03-08 23:53:04 --> MyMICoin: guest context detected; skipping user-specific preload.
+ERROR - 2026-03-08 23:53:04 --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+INFO - 2026-03-08 23:53:04 --> [REQ_ID=8f64ac3bb677] [PERF] Execution time=0.035151
+INFO - 2026-03-08 23:53:04 --> [REQ_ID=9cb1df9ba732] [PERF] Execution time=0.019121
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=0f888bc32db6] [REQUEST][START] GET /index.php/forgot
+DEBUG - 2026-03-08 23:53:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=0f888bc32db6] [FILTER_BEFORE] /index.php/forgot
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=0f888bc32db6] [ROUTE] Controller=\Myth\Auth\Controllers\AuthController Method=forgotPassword
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=0f888bc32db6] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/forgot
+DEBUG - 2026-03-08 23:53:04 --> [CSRF] token name=csrf_test_name hash=00f5fbb913687b5dad74c5a216515143
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=0f888bc32db6] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=0f888bc32db6] [LIFECYCLE][END] status=200 duration_ms=3.04 memory_delta=0
+DEBUG - 2026-03-08 23:53:04 --> [REQ_ID=0f888bc32db6] [REQUEST][END]
+INFO - 2026-03-08 23:53:04 --> [REQ_ID=0f888bc32db6] [PERF] Execution time=0.013413
+DEBUG - 2026-03-08 23:53:37 --> [REQ_ID=ce55d6fae367] [REQUEST][START] GET /index.php/Management/Budgeting
+DEBUG - 2026-03-08 23:53:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:37 --> [REQ_ID=ce55d6fae367] [FILTER_BEFORE] /index.php/Management/Budgeting
+DEBUG - 2026-03-08 23:53:37 --> [REQ_ID=ce55d6fae367] [ROUTE] Controller=\App\Modules\Management\Controllers\BudgetingAdminController Method=index
+DEBUG - 2026-03-08 23:53:37 --> [REQ_ID=ce55d6fae367] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management/Budgeting
+DEBUG - 2026-03-08 23:53:37 --> [CSRF] token name=csrf_test_name hash=874d4eeca2ecc18c49ee3e1fd0e72717
+DEBUG - 2026-03-08 23:53:37 --> [REQ_ID=ce55d6fae367] [REQUEST][END]
+INFO - 2026-03-08 23:53:37 --> [REQ_ID=ce55d6fae367] [PERF] Execution time=0.012129
+DEBUG - 2026-03-08 23:53:37 --> [REQ_ID=e7f06b055d87] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-08 23:53:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-08 23:53:37 --> [REQ_ID=e7f06b055d87] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-08 23:53:37 --> [REQ_ID=e7f06b055d87] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-08 23:53:37 --> [REQ_ID=e7f06b055d87] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-08 23:53:37 --> [CSRF] token name=csrf_test_name hash=1b108dcf968b126cb6ca61df4a5907bf
+DEBUG - 2026-03-08 23:53:37 --> [REQ_ID=8c12a4458472] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-08 23:53:37 --> [REQ_ID=8c12a4458472] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-08 23:53:37 --> [REQ_ID=e7f06b055d87] [FILTER_AFTER]
+DEBUG - 2026-03-08 23:53:37 --> [REQ_ID=e7f06b055d87] [LIFECYCLE][END] status=200 duration_ms=53.48 memory_delta=0
+INFO - 2026-03-08 23:53:37 --> [REQ_ID=8c12a4458472] [PERF] Execution time=0.053409
+DEBUG - 2026-03-08 23:53:37 --> [REQ_ID=e7f06b055d87] [REQUEST][END]
+INFO - 2026-03-08 23:53:37 --> [REQ_ID=e7f06b055d87] [PERF] Execution time=0.062940
+DEBUG - 2026-03-08 23:56:17 --> [REQ_ID=49484f26381a] [REQUEST][START] HEAD /
+DEBUG - 2026-03-08 23:56:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-08 23:56:17 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-08 23:56:17 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-08 23:56:17 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-08 23:56:17 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220

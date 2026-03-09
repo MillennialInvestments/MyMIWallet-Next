@@ -152,49 +152,59 @@ class HowItWorksController extends UserController
      */
     public function show(string $slug = 'overview'): ResponseInterface
     {
-        $slug = $this->normalizeSlug($slug);
+        try {
+            $normalizedSlug = $this->normalizeSlug($slug);
 
-        $viewMap = [
-            'registering-an-account'          => 'App\Modules\Blog\Views\HowItWorks\Registering_An_Account',
-            'personal-budgeting'              => 'App\Modules\Blog\Views\HowItWorks\Personal_Budgeting',
-            'investment-dashboard'            => 'App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management',
-            'investment-portfolio-management' => 'App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management',
-            'setting-financial-goals'         => 'App\Modules\Blog\Views\HowItWorks\Determining_Your_Financial_Goals',
-            'determining-your-financial-goals'=> 'App\Modules\Blog\Views\HowItWorks\Determining_Your_Financial_Goals',
-            'mymi-gold'                       => 'App\Modules\Blog\Views\HowItWorks\MyMI_Gold',
-            'mymi-exchange'                   => 'App\Modules\Blog\Views\HowItWorks\Manage_Finances',
-            'features-and-plans'              => 'App\Modules\Blog\Views\HowItWorks\Features_And_Plans',
-            'manage-finances'                 => 'App\Modules\Blog\Views\HowItWorks\Manage_Finances',
-            'daily-financial-news'            => 'App\Modules\Blog\Views\HowItWorks\Daily_Financial_News',
-            'discord'                         => 'App\Modules\Blog\Views\HowItWorks\Discord',
-            'streaming'                       => 'App\Modules\Blog\Views\HowItWorks\Streaming',
-            'purchase-mymi-gold'              => 'App\Modules\Blog\Views\HowItWorks\Purchase_MyMI_Gold',
-        ];
+            $viewMap = [
+                'registering-an-account'          => 'App\Modules\Blog\Views\HowItWorks\Registering_An_Account',
+                'personal-budgeting'              => 'App\Modules\Blog\Views\HowItWorks\Personal_Budgeting',
+                'investment-dashboard'            => 'App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management',
+                'investment-portfolio-management' => 'App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management',
+                'setting-financial-goals'         => 'App\Modules\Blog\Views\HowItWorks\Determining_Your_Financial_Goals',
+                'determining-your-financial-goals'=> 'App\Modules\Blog\Views\HowItWorks\Determining_Your_Financial_Goals',
+                'mymi-gold'                       => 'App\Modules\Blog\Views\HowItWorks\MyMI_Gold',
+                'mymi-exchange'                   => 'App\Modules\Blog\Views\HowItWorks\Manage_Finances',
+                'features-and-plans'              => 'App\Modules\Blog\Views\HowItWorks\Features_And_Plans',
+                'manage-finances'                 => 'App\Modules\Blog\Views\HowItWorks\Manage_Finances',
+                'daily-financial-news'            => 'App\Modules\Blog\Views\HowItWorks\Daily_Financial_News',
+                'discord'                         => 'App\Modules\Blog\Views\HowItWorks\Discord',
+                'streaming'                       => 'App\Modules\Blog\Views\HowItWorks\Streaming',
+                'purchase-mymi-gold'              => 'App\Modules\Blog\Views\HowItWorks\Purchase_MyMI_Gold',
+            ];
 
-        if (isset($viewMap[$normalizedSlug])) {
-            return $this->respondWithRendered($viewMap[$normalizedSlug], $this->commonData());
-        }
-
-        // 3) Dynamic docs/how-it-works/*.md fallback
-        if ($this->docsRenderer instanceof DocsRendererService) {
-            $docPage = $this->docsRenderer->renderDocBySlug($normalizedSlug);
-            if (is_array($docPage)) {
-                $data = [
-                    'layout'      => 'public',
-                    'title'       => $docPage['title'] ?? ucwords(str_replace('-', ' ', $normalizedSlug)),
-                    'slug'        => $docPage['slug'] ?? $normalizedSlug,
-                    'contentHtml' => $docPage['contentHtml'] ?? '',
-                    'navItems'    => $this->getNavItems(),
-                ];
-
-                return $this->respondWithRendered('App\Modules\Blog\Views\HowItWorks\index', $data);
+            if (isset($viewMap[$normalizedSlug])) {
+                return $this->respondWithRendered($viewMap[$normalizedSlug], $this->commonData());
             }
-        }
 
-        // Graceful 404 (no exception)
-        return $this->response
-            ->setStatusCode(404)
-            ->setBody(view('errors/html/error_404'));
+            // 3) Dynamic docs/how-it-works/*.md fallback
+            if ($this->docsRenderer instanceof DocsRendererService) {
+                $docPage = $this->docsRenderer->renderDocBySlug($normalizedSlug);
+                if (is_array($docPage)) {
+                    $data = [
+                        'layout'      => 'public',
+                        'title'       => $docPage['title'] ?? ucwords(str_replace('-', ' ', $normalizedSlug)),
+                        'slug'        => $docPage['slug'] ?? $normalizedSlug,
+                        'contentHtml' => $docPage['contentHtml'] ?? '',
+                        'navItems'    => $this->getNavItems(),
+                    ];
+
+                    return $this->respondWithRendered('App\Modules\Blog\Views\HowItWorks\index', $data);
+                }
+            }
+
+            // Graceful 404 (no exception)
+            throw PageNotFoundException::forPageNotFound($normalizedSlug);
+
+        } catch (\Throwable $e) {
+
+            log_message('error', 'HowItWorksController failure: {msg}', [
+                'msg' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
+
+            throw $e;
+        }
     }
 
     /**
@@ -226,54 +236,6 @@ class HowItWorksController extends UserController
             'App\Modules\Blog\Views\HowItWorks\Streaming',
             ['title' => 'Streaming with Twitch & YouTube']
         );
-    }
-
-    /**
-     * MyMI Gold page
-     */
-    public function MyMIGold(): ResponseInterface
-    {
-        $data = [
-            'pageTitle' => 'MyMI Gold | How It Works | MyMI Wallet',
-            'goldValue' => null,
-            'getInitialCoinValue' => null
-        ];
-
-        if ($this->myMIGold && method_exists($this->myMIGold, 'getCoinValue')) {
-            try {
-                $data['goldValue'] = $this->myMIGold->getCoinValue();
-            } catch (\Throwable $e) {
-                log_message('error', 'MyMIGold value fetch failed: {msg}', ['msg' => $e->getMessage()]);
-            }
-        }
-
-        if ($this->MyMIGoldModel && method_exists($this->MyMIGoldModel, 'getInitialCoinValue')) {
-            try {
-                $data['getInitialCoinValue'] = $this->MyMIGoldModel->getInitialCoinValue();
-            } catch (\Throwable $e) {
-                log_message('error', 'Initial coin value fetch failed: {msg}', ['msg' => $e->getMessage()]);
-            }
-        }
-
-        return $this->respondWithRendered('App\Modules\Blog\Views\HowItWorks\MyMI_Gold', $this->data);
-    }
-
-    public function PurchaseMyMIGold(): ResponseInterface {
-        $getCoinValue = $this->MyMIGoldModel->getCoinValue();
-        $getInitialCoinValue = $this->MyMIGoldModel->getInitialCoinValue();
-        
-        $uri = $this->uri;
-    
-        $viewFileData = [
-            'getCoinValue' => $getCoinValue,
-            'getInitialCoinValue' => $getInitialCoinValue
-        ];
-        // Merge site settings with other data
-        $data = array_merge($this->getViewFileData($uri), $viewFileData);
-    
-        // Pass the structured data array to the view
-        $content = view('Modules\Blog\Views\HowItWorks\Purchase_MyMI_Gold', $data);
-        return $this->response->setStatusCode(200)->setBody($this->renderPage('Home', 'Automated', $content));
     }
 
     protected function parseMarkdownToHtml(string $markdown): string
@@ -329,20 +291,6 @@ class HowItWorksController extends UserController
         return array_values($unique);
     }
 
-    public function PersonalBudgeting()
-    {
-        $this->data['pageTitle']                    = 'Personal Budgeting | How It Works | MyMI Wallet';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $this->renderTheme('App\Modules\Blog\Views\HowItWorks\Personal_Budgeting', $this->data);
-    }
-
-    public function InvestmentPortfolioManagement()
-    {
-        $this->data['pageTitle'] = 'Investment Portfolio Management | How It Works | MyMI Wallet';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $this->renderTheme('App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management', $this->data);
-    }  
-
     public function DailyFinancialNews()
     {
         $page = max(1, (int) ($this->request->getGet('page') ?? 1));
@@ -370,6 +318,85 @@ class HowItWorksController extends UserController
             'App\Modules\Blog\Views\HowItWorks\Daily_Financial_News',
             $data
         );
+    }
+
+    public function InvestmentPortfolioManagement()
+    {
+        $uri = $this->uri;
+    
+        $data = [
+            'pageTitle' => 'Investment Portfolio Management | MyMI Wallet',
+        ];
+        return $this->renderPublic('App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management', $data);
+    }  
+
+    /**
+     * MyMI Gold page
+     */
+    public function MyMIGold(): ResponseInterface
+    {
+        $data = [
+            'pageTitle' => 'MyMI Gold | How It Works | MyMI Wallet',
+            'goldValue' => null,
+            'getInitialCoinValue' => null
+        ];
+
+        if ($this->myMIGold && method_exists($this->myMIGold, 'getCoinValue')) {
+            try {
+                $data['goldValue'] = $this->myMIGold->getCoinValue();
+            } catch (\Throwable $e) {
+                log_message('error', 'MyMIGold value fetch failed: {msg}', ['msg' => $e->getMessage()]);
+            }
+        }
+
+        if ($this->MyMIGoldModel && method_exists($this->MyMIGoldModel, 'getInitialCoinValue')) {
+            try {
+                $data['getInitialCoinValue'] = $this->MyMIGoldModel->getInitialCoinValue();
+            } catch (\Throwable $e) {
+                log_message('error', 'Initial coin value fetch failed: {msg}', ['msg' => $e->getMessage()]);
+            }
+        }
+
+        return $this->renderPublic('App\Modules\Blog\Views\HowItWorks\MyMI_Gold', $this->data);
+    }
+
+    public function PersonalBudgeting()
+    {
+        $uri = $this->uri;
+    
+        $data = [
+            // Add any specific data needed for the Personal Budgeting view here
+            'pageTitle' => 'Personal Budgeting | How It Works | MyMI Wallet',
+        ];
+
+        return $this->renderPublic('App\Modules\Blog\Views\HowItWorks\Personal_Budgeting', $data);
+    }
+
+    public function PurchaseMyMIGold(): ResponseInterface {
+        $getCoinValue = $this->MyMIGoldModel->getCoinValue();
+        $getInitialCoinValue = $this->MyMIGoldModel->getInitialCoinValue();
+        
+        $uri = $this->uri;
+    
+        $data = [
+            'getCoinValue' => $getCoinValue,
+            'getInitialCoinValue' => $getInitialCoinValue
+        ];
+    
+        // Pass the structured data array to the view
+        return $this->renderPublic('App\Modules\Blog\Views\HowItWorks\Purchase_MyMI_Gold', $data);
+    }
+
+    public function SettingFinancialGoals()
+    {
+        $uri = $this->uri;
+    
+        $data = [
+            // Add any specific data needed for the Personal Budgeting view here
+            'pageTitle' => 'Personal Budgeting | How It Works | MyMI Wallet',
+        ];
+
+        return $this->renderPublic('App\Modules\Blog\Views\HowItWorks\Setting_Financial_Goals', $data);
     }
 
     /**

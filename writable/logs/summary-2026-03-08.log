@@ -4,7 +4,7 @@
    Grouped by (LEVEL + message)
 ===============================================
 
-Last processed up to: 2026-03-08 15:00:03
+Last processed up to: 2026-03-08 17:30:45
 
 ---------------------------
 LEVEL: DEBUG
@@ -13,7 +13,7 @@ LEVEL: DEBUG
 [1 occurrence(s)]
 DEBUG --> [REQ_ID=d20775567f71] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
 
-[513 occurrence(s)]
+[620 occurrence(s)]
 DEBUG --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 
 [1 occurrence(s)]
@@ -58,16 +58,16 @@ DEBUG --> [CSRF] token name=csrf_test_name hash=a017de7497ce68ee7756d14146610b68
 [1 occurrence(s)]
 DEBUG --> [REQ_ID=b2a9debeed3d] [INIT] App\Controllers\Home::GET
 
-[153 occurrence(s)]
+[212 occurrence(s)]
 DEBUG --> MyMIUser L52 - initialized (first log).
 
-[25 occurrence(s)]
+[29 occurrence(s)]
 DEBUG --> [MetaService] slug= pageName= cacheHit=1 path=CACHE
 
 [1 occurrence(s)]
 DEBUG --> [REQ_ID=b2a9debeed3d] [VIEW_RENDER] themes/public/home
 
-[37 occurrence(s)]
+[43 occurrence(s)]
 DEBUG --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
 
 [1 occurrence(s)]
@@ -190,10 +190,10 @@ DEBUG --> [REQ_ID=5f0ace7cc0ff] [INIT] App\Modules\Blog\Controllers\HowItWorksCo
 [1 occurrence(s)]
 DEBUG --> [REQ_ID=5f0ace7cc0ff] [METHOD_ENTRY] show
 
-[140 occurrence(s)]
+[189 occurrence(s)]
 DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
 
-[273 occurrence(s)]
+[285 occurrence(s)]
 DEBUG --> MyMICoin: guest context detected; skipping user-specific preload.
 
 [1 occurrence(s)]
@@ -241,13 +241,13 @@ DEBUG --> [CSRF] token name=csrf_test_name hash=5fd6f46cbc377abf2ff35886a6e67c30
 [1 occurrence(s)]
 DEBUG --> [REQ_ID=59789b53514c] [INIT] App\Controllers\Home::GET
 
-[23 occurrence(s)]
+[28 occurrence(s)]
 DEBUG --> [MetaService] slug= pageName= cacheHit= path=FALLBACK
 
 [1 occurrence(s)]
 DEBUG --> [REQ_ID=59789b53514c] [VIEW_RENDER] themes/public/home
 
-[11 occurrence(s)]
+[14 occurrence(s)]
 DEBUG --> [MetaService] slug= pageName=Home cacheHit= path=DB
 
 [1 occurrence(s)]
@@ -5254,13 +5254,13 @@ DEBUG --> [CSRF] token name=csrf_test_name hash=9767b3030b2f32acf9164f2c43c72dbe
 [1 occurrence(s)]
 DEBUG --> [REQ_ID=ec646863adc3] [INIT] App\Controllers\Home::GET
 
-[1 occurrence(s)]
+[2 occurrence(s)]
 DEBUG --> [MetaService] slug=terms-of-service pageName= cacheHit= path=DB
 
 [1 occurrence(s)]
 DEBUG --> [REQ_ID=ec646863adc3] [VIEW_RENDER] themes/public/termsOfService
 
-[1 occurrence(s)]
+[2 occurrence(s)]
 DEBUG --> [MetaService] slug=terms-of-service pageName=Terms of Service cacheHit= path=DB
 
 [1 occurrence(s)]
@@ -8335,69 +8335,1944 @@ DEBUG --> [REQ_ID=ca892d82a966] [LIFECYCLE][START] GET https://www.mymiwallet.co
 [1 occurrence(s)]
 DEBUG --> [REQ_ID=ca892d82a966] [REQUEST][END]
 
+[1 occurrence(s)]
+DEBUG --> LOG_HEALTHCHECK debug marker=001057806e83
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6bf262ce7276] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=012199857a41] [REQUEST][START] GET /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=012199857a41] [FILTER_BEFORE] /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=012199857a41] [ROUTE] Controller=\App\Controllers\Home Method=index
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=012199857a41] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=761d372bcaea567a4de68466a0147271
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=1c11cdf378e1] [INIT] App\Controllers\Home::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=1c11cdf378e1] [VIEW_RENDER] themes/public/home
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=012199857a41] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=012199857a41] [LIFECYCLE][END] status=200 duration_ms=720.48 memory_delta=4194304
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=012199857a41] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=935c8b41c5be] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5bd688d35056] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2fceb4074fc3] [REQUEST][START] GET /index.php/API/Alerts/fetchEmailAlerts
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2fceb4074fc3] [FILTER_BEFORE] /index.php/API/Alerts/fetchEmailAlerts
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2fceb4074fc3] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=fetchEmailAlerts
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2fceb4074fc3] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/fetchEmailAlerts
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2fceb4074fc3] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=f54c1d0d7cd9] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=58eb99c30de7] [REQUEST][START] GET /index.php/Legal/Privacy-Policy
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=58eb99c30de7] [FILTER_BEFORE] /index.php/Legal/Privacy-Policy
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=58eb99c30de7] [ROUTE] Controller=\App\Controllers\Home Method=privacyPolicy
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=58eb99c30de7] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Legal/Privacy-Policy
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=f09ec1dc812ee766debfeb8e9b0d4f55
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=58eb99c30de7] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=b0585514b36f] [REQUEST][START] GET /index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=b0585514b36f] [FILTER_BEFORE] /index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=b0585514b36f] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=b0585514b36f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=a4bcca76a7c7f6ff3f7cbea0d00f4f11
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=7a3d6edde8e7] [INIT] App\Controllers\AuthController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=b0585514b36f] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=b0585514b36f] [LIFECYCLE][END] status=200 duration_ms=94.69 memory_delta=0
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=b0585514b36f] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a4375dd1066b] [REQUEST][START] GET /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a4375dd1066b] [FILTER_BEFORE] /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a4375dd1066b] [ROUTE] Controller=\App\Controllers\Home Method=index
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a4375dd1066b] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=06b3f1986e866d72955f596ee293e749
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=262d4d4221eb] [INIT] App\Controllers\Home::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=262d4d4221eb] [VIEW_RENDER] themes/public/home
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a4375dd1066b] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a4375dd1066b] [LIFECYCLE][END] status=200 duration_ms=829.80 memory_delta=4194304
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a4375dd1066b] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2772e1f0113b] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c9fa43343e52] [REQUEST][START] GET /index.php/How-It-Works
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c9fa43343e52] [FILTER_BEFORE] /index.php/How-It-Works
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c9fa43343e52] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=index
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c9fa43343e52] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=603835b8f4e6ef2c47c55462eea7c9d3
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=7a6d3b0faf5a] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=7a6d3b0faf5a] [METHOD_ENTRY] index
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c9fa43343e52] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c9fa43343e52] [LIFECYCLE][END] status=404 duration_ms=169.42 memory_delta=0
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c9fa43343e52] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=d3caa5c0b337] [REQUEST][START] GET /index.php/Budget/Financial-Forecaster
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=d3caa5c0b337] [FILTER_BEFORE] /index.php/Budget/Financial-Forecaster
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=d3caa5c0b337] [ROUTE] Controller=\App\Modules\User\Controllers\BudgetController Method=financialForecaster
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=d3caa5c0b337] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Budget/Financial-Forecaster
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=a1e131da8352ccafd7331982fbbe8370
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=d3caa5c0b337] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e31360f17de4] [REQUEST][START] GET /index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e31360f17de4] [FILTER_BEFORE] /index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e31360f17de4] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e31360f17de4] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=8bdfac4ea6f17c9c23d60cbc7632e440
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=228402b584b8] [INIT] App\Controllers\AuthController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e31360f17de4] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e31360f17de4] [LIFECYCLE][END] status=200 duration_ms=44.59 memory_delta=0
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e31360f17de4] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2011b4171a27] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=01ff1210c884] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=01ff1210c884] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=01ff1210c884] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=01ff1210c884] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=a8cde9dc6c44b97c43f954b7c0e720cb
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=037e537564aa] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=037e537564aa] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=f534270c4dc3] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=f534270c4dc3] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=f534270c4dc3] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=f534270c4dc3] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=af5ecefbc2e648ba6b70dfe67740d864
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=95dfb8c197c1] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=95dfb8c197c1] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2206d1a63643] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2206d1a63643] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2206d1a63643] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2206d1a63643] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=b610508345b4caae05dd7fc24e71a594
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=d9966f83e11a] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=d9966f83e11a] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c7b52a1420fd] [REQUEST][START] GET /index.php?debugbar
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c7b52a1420fd] [FILTER_BEFORE] /index.php?debugbar
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c7b52a1420fd] [ROUTE] Controller=\App\Controllers\Home Method=index
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c7b52a1420fd] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php?debugbar=
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=b65e6127e9938a13cab4d66d7ea24f1a
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=51f3e3aa063d] [INIT] App\Controllers\Home::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=51f3e3aa063d] [VIEW_RENDER] themes/public/home
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c7b52a1420fd] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c7b52a1420fd] [LIFECYCLE][END] status=200 duration_ms=727.43 memory_delta=4194304
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c7b52a1420fd] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6f1514beb05b] [REQUEST][START] GET /index.php?debugbar
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6f1514beb05b] [FILTER_BEFORE] /index.php?debugbar
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6f1514beb05b] [ROUTE] Controller=\App\Controllers\Home Method=index
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6f1514beb05b] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php?debugbar=
+
+[43 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=81a9eabc460b] [INIT] App\Controllers\Home::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=81a9eabc460b] [VIEW_RENDER] themes/public/home
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6f1514beb05b] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6f1514beb05b] [LIFECYCLE][END] status=200 duration_ms=625.13 memory_delta=2097152
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6f1514beb05b] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ba7c6705e426] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ba7c6705e426] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ba7c6705e426] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ba7c6705e426] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=606bf0e1b64d] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=606bf0e1b64d] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2361fc37854d] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2361fc37854d] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2361fc37854d] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2361fc37854d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=20cb749a6c49] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=20cb749a6c49] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ac2c7fc56981] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ac2c7fc56981] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ac2c7fc56981] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ac2c7fc56981] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2e171bd30e07] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2e171bd30e07] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=1f8c80de87dc] [REQUEST][START] GET /index.php/How-It-Works/Registering-An-Account
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=1f8c80de87dc] [FILTER_BEFORE] /index.php/How-It-Works/Registering-An-Account
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=1f8c80de87dc] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=1f8c80de87dc] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Registering-An-Account
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ba08fe1b490a] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ba08fe1b490a] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ec3f635a11c1] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ec3f635a11c1] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ec3f635a11c1] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ec3f635a11c1] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=b8fda1fb7c46] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=b8fda1fb7c46] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=37f5eda446e0] [REQUEST][START] GET /index.php/How-It-Works/Investment-Dashboard
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=37f5eda446e0] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Dashboard
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=37f5eda446e0] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=37f5eda446e0] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Dashboard
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a2f15d8953f4] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a2f15d8953f4] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=f729e5c4a1cf] [REQUEST][START] GET /index.php/How-It-Works/Setting-Financial-Goals
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=f729e5c4a1cf] [FILTER_BEFORE] /index.php/How-It-Works/Setting-Financial-Goals
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=f729e5c4a1cf] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=f729e5c4a1cf] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Setting-Financial-Goals
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=138e592a709b] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=138e592a709b] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=dc0b23b18b96] [REQUEST][START] GET /index.php/How-It-Works/MyMI-Gold
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=dc0b23b18b96] [FILTER_BEFORE] /index.php/How-It-Works/MyMI-Gold
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=dc0b23b18b96] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=dc0b23b18b96] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Gold
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9ed0279cd703] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9ed0279cd703] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2b65b9dc0d86] [REQUEST][START] GET /index.php/How-It-Works/MyMI-Exchange
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2b65b9dc0d86] [FILTER_BEFORE] /index.php/How-It-Works/MyMI-Exchange
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2b65b9dc0d86] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2b65b9dc0d86] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Exchange
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=3ecd0a8a76e3] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=3ecd0a8a76e3] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a4b1fac34c1b] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=1aa67fe40e1d] [REQUEST][START] GET /index.php/Knowledgebase
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=1aa67fe40e1d] [FILTER_BEFORE] /index.php/Knowledgebase
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=1aa67fe40e1d] [ROUTE] Controller=\App\Modules\User\Controllers\KnowledgebaseController Method=index
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=1aa67fe40e1d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Knowledgebase
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=4a9c377186b3a25d731c40a0ae5b6d0a
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=1aa67fe40e1d] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=d8ee0405dd5d] [REQUEST][START] GET /index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=d8ee0405dd5d] [FILTER_BEFORE] /index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=d8ee0405dd5d] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=d8ee0405dd5d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=8601d0a5afb2ca0521c5aa2154a3bd8c
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9f3c2ccfa024] [INIT] App\Controllers\AuthController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=d8ee0405dd5d] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=d8ee0405dd5d] [LIFECYCLE][END] status=200 duration_ms=130.99 memory_delta=0
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=d8ee0405dd5d] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9d1e09a540a8] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a32bee3810f1] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=0bffd576d872] [REQUEST][START] GET /index.php/Management/Marketing/Blog-Creator
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=0bffd576d872] [FILTER_BEFORE] /index.php/Management/Marketing/Blog-Creator
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=0bffd576d872] [ROUTE] Controller=\App\Modules\Management\Controllers\MarketingAdminController Method=blogCreator
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=0bffd576d872] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management/Marketing/Blog-Creator
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=bd8f1c21713ef4e84bfa73021b87cd18
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=0bffd576d872] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=44b1111ce8cf] [REQUEST][START] GET /index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=44b1111ce8cf] [FILTER_BEFORE] /index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=44b1111ce8cf] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=44b1111ce8cf] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=ab374993c68a111510227e618da1884f
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=54e543a175b2] [INIT] App\Controllers\AuthController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=44b1111ce8cf] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=44b1111ce8cf] [LIFECYCLE][END] status=200 duration_ms=215.90 memory_delta=0
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=44b1111ce8cf] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=192e4aa980f2] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=192e4aa980f2] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=192e4aa980f2] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=192e4aa980f2] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=4ce76a52c74530b0f706cef6a904638d
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=1ebb4efff484] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=1ebb4efff484] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5353604ef4e2] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e2cf11f49c70] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=fb76cca228e8] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9dae22018b35] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9dae22018b35] [FILTER_BEFORE] /index.php/API/Management/Run-CRON-Tasks
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9dae22018b35] [ROUTE] Controller=\App\Modules\Management\Controllers\ManagementAPIController Method=Run_CRON_Tasks
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9dae22018b35] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Management/Run-CRON-Tasks
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9dae22018b35] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=1adf1e59fef1] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2cc6049fdc61] [REQUEST][START] GET /index.php/Dashboard
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2cc6049fdc61] [FILTER_BEFORE] /index.php/Dashboard
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2cc6049fdc61] [ROUTE] Controller=\App\Modules\User\Controllers\DashboardController Method=index
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2cc6049fdc61] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Dashboard
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=6327fc543b8922db301807e1629d903a
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2cc6049fdc61] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=69fef6d4df99] [REQUEST][START] GET /index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=69fef6d4df99] [FILTER_BEFORE] /index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=69fef6d4df99] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=69fef6d4df99] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=fdc1a698110502570292233f4a8eda3f
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=38df288a757c] [INIT] App\Controllers\AuthController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=69fef6d4df99] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=69fef6d4df99] [LIFECYCLE][END] status=200 duration_ms=109.20 memory_delta=0
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=69fef6d4df99] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=df51ba48eb93] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=12ca304d9289] [REQUEST][START] GET /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=12ca304d9289] [FILTER_BEFORE] /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=12ca304d9289] [ROUTE] Controller=\App\Controllers\Home Method=index
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=12ca304d9289] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=7ba0679f9f9db34f30ca352bdd0a6c99
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=38ce8ab3130d] [INIT] App\Controllers\Home::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=38ce8ab3130d] [VIEW_RENDER] themes/public/home
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=12ca304d9289] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=12ca304d9289] [LIFECYCLE][END] status=200 duration_ms=772.37 memory_delta=4194304
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=12ca304d9289] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=aec2f8f638be] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=88b0abbc91bb] [REQUEST][START] GET /index.php
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=88b0abbc91bb] [FILTER_BEFORE] /index.php
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=88b0abbc91bb] [ROUTE] Controller=\App\Controllers\Home Method=index
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=88b0abbc91bb] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=336eff851aa1b552cfacb2dc67bfe72c
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=07b49a2f0e09] [INIT] App\Controllers\Home::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=07b49a2f0e09] [VIEW_RENDER] themes/public/home
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=88b0abbc91bb] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=88b0abbc91bb] [LIFECYCLE][END] status=200 duration_ms=850.35 memory_delta=4194304
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=88b0abbc91bb] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=64747153535d] [REQUEST][START] GET /index.php/API/Alerts/fetchEmailAlerts
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=64747153535d] [FILTER_BEFORE] /index.php/API/Alerts/fetchEmailAlerts
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=64747153535d] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=fetchEmailAlerts
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=64747153535d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/fetchEmailAlerts
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=64747153535d] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=3dc6c0e776a4] [REQUEST][START] GET /index.php/Premium_Features/Brokerage-Integrations
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9a93bda0e154] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=47f15be261d2] [REQUEST][START] GET /index.php/How-To-Guides
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=47f15be261d2] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=79d3d8d1749a] [REQUEST][START] GET /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=79d3d8d1749a] [FILTER_BEFORE] /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=79d3d8d1749a] [ROUTE] Controller=\App\Controllers\Home Method=index
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=79d3d8d1749a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=fc03db43dba0306c604cbee82a105187
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c9f0cb7460fe] [INIT] App\Controllers\Home::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c9f0cb7460fe] [VIEW_RENDER] themes/public/home
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=79d3d8d1749a] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=79d3d8d1749a] [LIFECYCLE][END] status=200 duration_ms=692.76 memory_delta=4194304
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=79d3d8d1749a] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=48f909e12dc0] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=f593dffed70d] [REQUEST][START] GET /index.php/Alerts
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=f593dffed70d] [FILTER_BEFORE] /index.php/Alerts
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=f593dffed70d] [ROUTE] Controller=\App\Modules\User\Controllers\AlertsController Method=index
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=f593dffed70d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Alerts
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=dc1e8aa74577401555ea7a06bf6aa739
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=f593dffed70d] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5ed68ad8c477] [REQUEST][START] GET /index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5ed68ad8c477] [FILTER_BEFORE] /index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5ed68ad8c477] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5ed68ad8c477] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=640255108c07cf6f8fae95b80f92ca17
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=925a84ee84d9] [INIT] App\Controllers\AuthController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5ed68ad8c477] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5ed68ad8c477] [LIFECYCLE][END] status=200 duration_ms=63.59 memory_delta=0
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5ed68ad8c477] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9d57b7fc52de] [REQUEST][START] GET /index.php/Features/Brokerage-Integration
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9d57b7fc52de] [FILTER_BEFORE] /index.php/Features/Brokerage-Integration
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9d57b7fc52de] [ROUTE] Controller=\App\Modules\Advertise\Controllers\FeaturesController Method=BrokerageIntegrations
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9d57b7fc52de] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Features/Brokerage-Integration
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=8011def3b178f20b97af6cfb1dec1347
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9d57b7fc52de] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c4110687dcf1] [REQUEST][START] GET /index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c4110687dcf1] [FILTER_BEFORE] /index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c4110687dcf1] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c4110687dcf1] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=99721f00e29f5b06d9114cb92823ac17
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=4338cd68f0e7] [INIT] App\Controllers\AuthController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c4110687dcf1] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c4110687dcf1] [LIFECYCLE][END] status=200 duration_ms=136.53 memory_delta=0
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c4110687dcf1] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=52c9530ddd39] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=3fc5c2bdcd4c] [REQUEST][START] GET /index.php/Support
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=3fc5c2bdcd4c] [FILTER_BEFORE] /index.php/Support
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=3fc5c2bdcd4c] [ROUTE] Controller=\App\Modules\Support\Controllers\SupportController Method=index
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=3fc5c2bdcd4c] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=57c4e2e2f63adf5b1bf1046eed536452
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=258eaf091e26] [INIT] App\Modules\Support\Controllers\SupportController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=258eaf091e26] [METHOD_ENTRY] index
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=258eaf091e26] [VIEW_RENDER] SupportModule\Views\Support\index
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=3fc5c2bdcd4c] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=3fc5c2bdcd4c] [LIFECYCLE][END] status=200 duration_ms=78.98 memory_delta=2097152
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=3fc5c2bdcd4c] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=bc8b21e6d269] [REQUEST][START] GET /index.php/Terms-Of-Service
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=bc8b21e6d269] [FILTER_BEFORE] /index.php/Terms-Of-Service
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=bc8b21e6d269] [ROUTE] Controller=\App\Controllers\Home Method=termsOfService
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=bc8b21e6d269] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Terms-Of-Service
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=cbe258ab92053a7c7987e8a6a7ae98ca
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=1fc802b8c04c] [INIT] App\Controllers\Home::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=1fc802b8c04c] [VIEW_RENDER] themes/public/termsOfService
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=bc8b21e6d269] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=bc8b21e6d269] [LIFECYCLE][END] status=200 duration_ms=660.33 memory_delta=4194304
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=bc8b21e6d269] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=91e267d635bd] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=7bc1ac45e487] [REQUEST][START] GET /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=7bc1ac45e487] [FILTER_BEFORE] /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=7bc1ac45e487] [ROUTE] Controller=\App\Controllers\Home Method=index
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=7bc1ac45e487] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=86646883ddc5e616a908a3b73ab34b98
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=8a6e60ca8af1] [INIT] App\Controllers\Home::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=8a6e60ca8af1] [VIEW_RENDER] themes/public/home
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=7bc1ac45e487] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=7bc1ac45e487] [LIFECYCLE][END] status=200 duration_ms=902.28 memory_delta=4194304
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=7bc1ac45e487] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e1296a09aafd] [REQUEST][START] GET /index.php/forgot
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e1296a09aafd] [FILTER_BEFORE] /index.php/forgot
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e1296a09aafd] [ROUTE] Controller=\Myth\Auth\Controllers\AuthController Method=forgotPassword
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e1296a09aafd] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/forgot
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=842f16021ec5e61bfd6ce36d0a14bdac
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e1296a09aafd] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e1296a09aafd] [LIFECYCLE][END] status=200 duration_ms=7.58 memory_delta=0
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e1296a09aafd] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5acaa19b4498] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5037dcedc5d1] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5037dcedc5d1] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5037dcedc5d1] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5037dcedc5d1] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e316da9db1a2] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e316da9db1a2] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e557279df18d] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e557279df18d] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e557279df18d] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e557279df18d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c64bc42906de] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c64bc42906de] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ac2c1c25f49f] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ac2c1c25f49f] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ac2c1c25f49f] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ac2c1c25f49f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=7e854f645dcf] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=7e854f645dcf] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c2dd8506023a] [REQUEST][START] GET /index.php/How-It-Works/Investment-Dashboard
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c2dd8506023a] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Dashboard
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c2dd8506023a] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c2dd8506023a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Dashboard
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=2baf1b573b1cc809cb7eff2997d04384
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=85edfc7a882a] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=85edfc7a882a] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=de9073c4647c] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=de9073c4647c] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=de9073c4647c] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=de9073c4647c] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5ee885702ed3] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5ee885702ed3] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a27eec41f475] [REQUEST][START] GET /index.php/How-It-Works/Registering-An-Account
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a27eec41f475] [FILTER_BEFORE] /index.php/How-It-Works/Registering-An-Account
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a27eec41f475] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a27eec41f475] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Registering-An-Account
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e7c6180e195b] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=e7c6180e195b] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=63a594a3cd36] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=63a594a3cd36] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=63a594a3cd36] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=63a594a3cd36] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=90542faf0a7c] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=90542faf0a7c] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ff566b2855bd] [REQUEST][START] GET /index.php/How-It-Works/Investment-Dashboard
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ff566b2855bd] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Dashboard
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ff566b2855bd] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ff566b2855bd] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Dashboard
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=586d6cfb40f9] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=586d6cfb40f9] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=518a36c4945f] [REQUEST][START] GET /index.php/How-It-Works/Setting-Financial-Goals
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=518a36c4945f] [FILTER_BEFORE] /index.php/How-It-Works/Setting-Financial-Goals
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=518a36c4945f] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=518a36c4945f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Setting-Financial-Goals
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=26cfffd25a3b] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=26cfffd25a3b] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c56ba3fd3785] [REQUEST][START] GET /index.php/How-It-Works/MyMI-Gold
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c56ba3fd3785] [FILTER_BEFORE] /index.php/How-It-Works/MyMI-Gold
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c56ba3fd3785] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c56ba3fd3785] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Gold
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=dfb144a5b6f0] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=dfb144a5b6f0] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9b74f67b20e8] [REQUEST][START] GET /index.php/How-It-Works/MyMI-Exchange
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9b74f67b20e8] [FILTER_BEFORE] /index.php/How-It-Works/MyMI-Exchange
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9b74f67b20e8] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9b74f67b20e8] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Exchange
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=38679a424653] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=38679a424653] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=11a75766c5e0] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=11a75766c5e0] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=11a75766c5e0] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=11a75766c5e0] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9c7254cbcacb] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9c7254cbcacb] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=0597d44fe3a8] [REQUEST][START] GET /index.php/How-It-Works/budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=0597d44fe3a8] [FILTER_BEFORE] /index.php/How-It-Works/budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=0597d44fe3a8] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=0597d44fe3a8] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=1771937ec36a] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=1771937ec36a] [METHOD_ENTRY] budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5391ed283452] [REQUEST][START] GET /index.php/Support
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5391ed283452] [FILTER_BEFORE] /index.php/Support
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5391ed283452] [ROUTE] Controller=\App\Modules\Support\Controllers\SupportController Method=index
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5391ed283452] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=735133a20bb0] [INIT] App\Modules\Support\Controllers\SupportController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=735133a20bb0] [METHOD_ENTRY] index
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=735133a20bb0] [VIEW_RENDER] SupportModule\Views\Support\index
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5391ed283452] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5391ed283452] [LIFECYCLE][END] status=200 duration_ms=40.89 memory_delta=0
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5391ed283452] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=8f8bfb0ee4e3] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=8f8bfb0ee4e3] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=8f8bfb0ee4e3] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=8f8bfb0ee4e3] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6ac612f42b00] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6ac612f42b00] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6856b2996961] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=40336295f31a] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=40336295f31a] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=40336295f31a] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=40336295f31a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=bdc51805aed7] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=bdc51805aed7] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=3ecb163321e2] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=3ecb163321e2] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=3ecb163321e2] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=3ecb163321e2] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ebe909e2e8c5] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ebe909e2e8c5] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=69d92a675ee6] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=69d92a675ee6] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=69d92a675ee6] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=69d92a675ee6] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=da9cd7b0a4b8] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=da9cd7b0a4b8] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=92f3b88d9fea] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=92f3b88d9fea] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=92f3b88d9fea] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=92f3b88d9fea] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=19753ac97619] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=19753ac97619] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2a9a273b6564] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2a9a273b6564] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2a9a273b6564] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2a9a273b6564] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=88fcc2f0a563] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=88fcc2f0a563] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ef5e05de25df] [REQUEST][START] GET /index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ef5e05de25df] [FILTER_BEFORE] /index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ef5e05de25df] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ef5e05de25df] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=6f06abfd0f2d492301407ecd9fe017f3
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=06949e18d600] [INIT] App\Controllers\AuthController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ef5e05de25df] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ef5e05de25df] [LIFECYCLE][END] status=200 duration_ms=50.41 memory_delta=0
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=ef5e05de25df] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=17a6ff3e03e6] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=17a6ff3e03e6] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=17a6ff3e03e6] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=17a6ff3e03e6] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=245d6059b112] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=245d6059b112] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=fc8131eec25f] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=fc8131eec25f] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=fc8131eec25f] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=DailyFinancialNews
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=fc8131eec25f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=109083e98fa2] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=109083e98fa2] [METHOD_ENTRY] DailyFinancialNews
+
+[1 occurrence(s)]
+DEBUG --> [MetaService] slug=how-it-works/daily-financial-news pageName= cacheHit= path=DB
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=fc8131eec25f] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=fc8131eec25f] [LIFECYCLE][END] status=200 duration_ms=734.88 memory_delta=4194304
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=fc8131eec25f] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=45cabfc4c423] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=45cabfc4c423] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=45cabfc4c423] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=45cabfc4c423] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=8835311e4237] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=8835311e4237] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c71437549c33] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=b1974ee6e398] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=b1974ee6e398] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=b1974ee6e398] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=b1974ee6e398] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=18d8b7cf85ec] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=18d8b7cf85ec] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=0f9c08997a82] [REQUEST][START] GET /index.php/How-It-Works/Registering-An-Account
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=0f9c08997a82] [FILTER_BEFORE] /index.php/How-It-Works/Registering-An-Account
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=0f9c08997a82] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=0f9c08997a82] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Registering-An-Account
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=fb21e5f3491b] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=fb21e5f3491b] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=09587adf6d00] [REQUEST][START] GET /index.php/How-It-Works/Purchase-MyMI-Gold
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=09587adf6d00] [FILTER_BEFORE] /index.php/How-It-Works/Purchase-MyMI-Gold
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=09587adf6d00] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=09587adf6d00] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Purchase-MyMI-Gold
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=85f6e011cbea] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=85f6e011cbea] [METHOD_ENTRY] show
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=f566e299dd0b] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6672c292ddcd] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6672c292ddcd] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6672c292ddcd] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=PersonalBudgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6672c292ddcd] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=1719ff1d6cd1] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=1719ff1d6cd1] [METHOD_ENTRY] PersonalBudgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=1719ff1d6cd1] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Personal_Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6672c292ddcd] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6672c292ddcd] [LIFECYCLE][END] status=200 duration_ms=1,190.77 memory_delta=8388608
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6672c292ddcd] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9569ba306739] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9569ba306739] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9569ba306739] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=PersonalBudgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9569ba306739] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=69bd41fedfc4] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=69bd41fedfc4] [METHOD_ENTRY] PersonalBudgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=69bd41fedfc4] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Personal_Budgeting
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9569ba306739] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9569ba306739] [LIFECYCLE][END] status=200 duration_ms=1,069.33 memory_delta=4194304
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=9569ba306739] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5d348f168922] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5d348f168922] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5d348f168922] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=InvestmentPortfolioManagement
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5d348f168922] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a4e4b1ede581] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a4e4b1ede581] [METHOD_ENTRY] InvestmentPortfolioManagement
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a4e4b1ede581] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5d348f168922] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5d348f168922] [LIFECYCLE][END] status=200 duration_ms=1,149.93 memory_delta=2097152
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=5d348f168922] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=4e03d6fd1ff5] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=4e03d6fd1ff5] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=4e03d6fd1ff5] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=InvestmentPortfolioManagement
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=4e03d6fd1ff5] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=69ee1332fdca] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=69ee1332fdca] [METHOD_ENTRY] InvestmentPortfolioManagement
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=69ee1332fdca] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=4e03d6fd1ff5] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=4e03d6fd1ff5] [LIFECYCLE][END] status=200 duration_ms=983.44 memory_delta=2097152
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=4e03d6fd1ff5] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=3be6da961312] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=3be6da961312] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=3be6da961312] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=InvestmentPortfolioManagement
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=3be6da961312] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=731a31a835c3] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=731a31a835c3] [METHOD_ENTRY] InvestmentPortfolioManagement
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=731a31a835c3] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=3be6da961312] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=3be6da961312] [LIFECYCLE][END] status=200 duration_ms=935.80 memory_delta=2097152
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=3be6da961312] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=b7d2dd5f165d] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=b7d2dd5f165d] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=b7d2dd5f165d] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=InvestmentPortfolioManagement
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=b7d2dd5f165d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=710b287c917d] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=710b287c917d] [METHOD_ENTRY] InvestmentPortfolioManagement
+
+[1 occurrence(s)]
+DEBUG --> [MetaService] slug=how-it-works/investment-portfolio-management pageName= cacheHit= path=DB
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=b7d2dd5f165d] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=b7d2dd5f165d] [LIFECYCLE][END] status=200 duration_ms=1,228.45 memory_delta=0
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=b7d2dd5f165d] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c47484d98887] [REQUEST][START] GET /index.php/How-It-Works/Purchase-MyMI-Gold
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c47484d98887] [FILTER_BEFORE] /index.php/How-It-Works/Purchase-MyMI-Gold
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c47484d98887] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=PurchaseMyMIGold
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=c47484d98887] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Purchase-MyMI-Gold
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=866dea5a18c8] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=866dea5a18c8] [METHOD_ENTRY] PurchaseMyMIGold
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6a3b068e0104] [REQUEST][START] GET /index.php/How-It-Works/Purchase-MyMI-Gold
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6a3b068e0104] [FILTER_BEFORE] /index.php/How-It-Works/Purchase-MyMI-Gold
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6a3b068e0104] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=PurchaseMyMIGold
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6a3b068e0104] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Purchase-MyMI-Gold
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=7695a060ac2e] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=7695a060ac2e] [METHOD_ENTRY] PurchaseMyMIGold
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=586db75e4265] [REQUEST][START] GET /index.php/MyMI-Gold/Goals/Daily
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=586db75e4265] [FILTER_BEFORE] /index.php/MyMI-Gold/Goals/Daily
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=586db75e4265] [ROUTE] Controller=\App\Modules\User\Controllers\DashboardController Method=goals
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=586db75e4265] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/MyMI-Gold/Goals/Daily
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=039b68ab27d3e91325f7294d37e30b43
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=586db75e4265] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2fbbf1765fa0] [REQUEST][START] GET /index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2fbbf1765fa0] [FILTER_BEFORE] /index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2fbbf1765fa0] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2fbbf1765fa0] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=cffa1d6cc7382f828cd1c7ad988d1318
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=526b80bd400c] [INIT] App\Controllers\AuthController::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2fbbf1765fa0] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2fbbf1765fa0] [LIFECYCLE][END] status=200 duration_ms=180.99 memory_delta=0
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=2fbbf1765fa0] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a1dc745893e1] [REQUEST][START] HEAD /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a6f04006113f] [REQUEST][START] GET /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a6f04006113f] [FILTER_BEFORE] /
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a6f04006113f] [ROUTE] Controller=\App\Controllers\Home Method=index
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a6f04006113f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+
+[1 occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=49686f7013f50d8be042e4e46ba0cbfb
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6e1028930452] [INIT] App\Controllers\Home::GET
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=6e1028930452] [VIEW_RENDER] themes/public/home
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a6f04006113f] [FILTER_AFTER]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a6f04006113f] [LIFECYCLE][END] status=200 duration_ms=800.09 memory_delta=4194304
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=a6f04006113f] [REQUEST][END]
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=141bb95c959c] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=141bb95c959c] [FILTER_BEFORE] /index.php/API/Management/Run-CRON-Tasks
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=141bb95c959c] [ROUTE] Controller=\App\Modules\Management\Controllers\ManagementAPIController Method=Run_CRON_Tasks
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=141bb95c959c] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Management/Run-CRON-Tasks
+
+[1 occurrence(s)]
+DEBUG --> [REQ_ID=141bb95c959c] [REQUEST][END]
+
 
 ---------------------------
 LEVEL: INFO
 ---------------------------
 
-[69 occurrence(s)]
+[77 occurrence(s)]
 INFO --> [spark:ops:work] Started
 
-[69 occurrence(s)]
+[77 occurrence(s)]
 INFO --> [SPARK_START] App\Commands\Ops\Work
 
 [12 occurrence(s)]
 INFO --> [SPARK_MEMORY] 16777216
 
-[69 occurrence(s)]
+[77 occurrence(s)]
 INFO --> [spark:ops:work] Intent
 
-[9 occurrence(s)]
+[10 occurrence(s)]
 INFO --> [SPARK_START] App\Commands\AIOps\Run
 
-[9 occurrence(s)]
+[10 occurrence(s)]
 INFO --> [spark:aiops:run] Intent
 
-[69 occurrence(s)]
+[77 occurrence(s)]
 INFO --> [spark:ops:work] Completed
 
 [1 occurrence(s)]
 INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.110415
 
-[178 occurrence(s)]
+[198 occurrence(s)]
 INFO --> [SPARK_MEMORY] 18874368
 
 [1 occurrence(s)]
 INFO --> [REQ_ID=d20775567f71] [PERF] Execution time=0.050249
 
-[10 occurrence(s)]
+[12 occurrence(s)]
 INFO --> [AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Started
 
-[10 occurrence(s)]
+[12 occurrence(s)]
 INFO --> [SPARK_START] App\Commands\Logs\Summarize
 
-[10 occurrence(s)]
+[12 occurrence(s)]
 INFO --> [spark:logs:summarize] Intent
 
-[9 occurrence(s)]
+[11 occurrence(s)]
 INFO --> [AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Completed
 
 [1 occurrence(s)]
 INFO --> [SPARK_COMPLETE] App\Commands\Logs\Summarize duration=0.002221
 
-[8 occurrence(s)]
+[9 occurrence(s)]
 INFO --> [spark:app:healthcheck] Started
 
-[8 occurrence(s)]
+[9 occurrence(s)]
 INFO --> [SPARK_START] App\Commands\App\Healthcheck
 
-[8 occurrence(s)]
+[9 occurrence(s)]
 INFO --> [spark:app:healthcheck] Intent
 
 [1 occurrence(s)]
 INFO --> LOG_HEALTHCHECK info marker=ebd3f403b3a5
 
-[8 occurrence(s)]
+[9 occurrence(s)]
 INFO --> [spark:app:healthcheck] Completed
 
 [1 occurrence(s)]
@@ -8415,7 +10290,7 @@ INFO --> [REQ_ID=b2a9debeed3d] [MEMORY][commonData:start] 6291456
 [1 occurrence(s)]
 INFO --> [REQ_ID=b2a9debeed3d] [MEMORY][commonData:start] 8388608
 
-[43 occurrence(s)]
+[48 occurrence(s)]
 INFO --> themesMemory usage: 8388608
 
 [1 occurrence(s)]
@@ -8433,7 +10308,7 @@ INFO --> [REQ_ID=623ed687b3ae] [MEMORY][commonData:start] 6291456
 [1 occurrence(s)]
 INFO --> [REQ_ID=623ed687b3ae] [MEMORY][commonData:start] 10485760
 
-[41 occurrence(s)]
+[48 occurrence(s)]
 INFO --> themesMemory usage: 10485760
 
 [1 occurrence(s)]
@@ -8622,7 +10497,7 @@ INFO --> [REQ_ID=db65fa5d4058] [MEMORY][controller-start] 6291456
 [2 occurrence(s)]
 INFO --> [REQ_ID=db65fa5d4058] [MEMORY][commonData:start] 6291456
 
-[4 occurrence(s)]
+[5 occurrence(s)]
 INFO --> themesMemory usage: 6291456
 
 [1 occurrence(s)]
@@ -9126,7 +11001,7 @@ INFO --> [REQ_ID=ca33029cce63] [PERF] Execution time=0.032491
 [1 occurrence(s)]
 INFO --> [REQ_ID=6faa3da20017] [PERF] Execution time=0.093995
 
-[5 occurrence(s)]
+[10 occurrence(s)]
 INFO --> themesMemory usage: 12582912
 
 [1 occurrence(s)]
@@ -9159,7 +11034,7 @@ INFO --> [REQ_ID=856d1d5c9556] [PERF] Execution time=0.021143
 [1 occurrence(s)]
 INFO --> [REQ_ID=6c1cee18d302] [PERF] Execution time=0.045307
 
-[3 occurrence(s)]
+[4 occurrence(s)]
 INFO --> themesMemory usage: 4194304
 
 [1 occurrence(s)]
@@ -9672,7 +11547,7 @@ INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.111113
 [1 occurrence(s)]
 INFO --> [SPARK_COMPLETE] App\Commands\Logs\Summarize duration=0.014075
 
-[14 occurrence(s)]
+[15 occurrence(s)]
 INFO --> [SPARK_MEMORY] 20971520
 
 [1 occurrence(s)]
@@ -11475,6 +13350,678 @@ INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.197098
 [1 occurrence(s)]
 INFO --> [REQ_ID=ca892d82a966] [PERF] Execution time=0.108374
 
+[1 occurrence(s)]
+INFO --> [SPARK_COMPLETE] App\Commands\Logs\Summarize duration=0.031384
+
+[3 occurrence(s)]
+INFO --> [SPARK_MEMORY] 23068672
+
+[1 occurrence(s)]
+INFO --> LOG_HEALTHCHECK info marker=001057806e83
+
+[1 occurrence(s)]
+INFO --> [SPARK_COMPLETE] App\Commands\App\Healthcheck duration=0.029889
+
+[1 occurrence(s)]
+INFO --> [SPARK_COMPLETE] App\Commands\AIOps\Run duration=2.987009
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=1c11cdf378e1] [MEMORY][controller-start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=1c11cdf378e1] [MEMORY][commonData:start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=1c11cdf378e1] [MEMORY][commonData:start] 10485760
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=1c11cdf378e1] [PERF] Execution time=0.718548
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=012199857a41] [PERF] Execution time=0.758476
+
+[1 occurrence(s)]
+INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.057991
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=2fceb4074fc3] [PERF] Execution time=0.048826
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=58eb99c30de7] [PERF] Execution time=0.018235
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=7a3d6edde8e7] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=7a3d6edde8e7] [PERF] Execution time=0.094898
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=b0585514b36f] [PERF] Execution time=0.107590
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=262d4d4221eb] [MEMORY][controller-start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=262d4d4221eb] [MEMORY][commonData:start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=262d4d4221eb] [MEMORY][commonData:start] 10485760
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=262d4d4221eb] [PERF] Execution time=0.828000
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=a4375dd1066b] [PERF] Execution time=0.872040
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=7a6d3b0faf5a] [MEMORY][controller-start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=7a6d3b0faf5a] [PERF] Execution time=0.167479
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=c9fa43343e52] [PERF] Execution time=0.212249
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=d3caa5c0b337] [PERF] Execution time=0.015637
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=228402b584b8] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=228402b584b8] [PERF] Execution time=0.044229
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=e31360f17de4] [PERF] Execution time=0.056134
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=037e537564aa] [MEMORY][controller-start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=037e537564aa] [PERF] Execution time=0.129184
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=95dfb8c197c1] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=95dfb8c197c1] [PERF] Execution time=0.017629
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=d9966f83e11a] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=d9966f83e11a] [PERF] Execution time=0.017096
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=51f3e3aa063d] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=51f3e3aa063d] [MEMORY][commonData:start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=51f3e3aa063d] [MEMORY][commonData:start] 8388608
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=51f3e3aa063d] [PERF] Execution time=0.727592
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=c7b52a1420fd] [PERF] Execution time=0.744013
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=81a9eabc460b] [MEMORY][controller-start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=81a9eabc460b] [MEMORY][commonData:start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=81a9eabc460b] [MEMORY][commonData:start] 8388608
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=81a9eabc460b] [PERF] Execution time=0.625024
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=6f1514beb05b] [PERF] Execution time=0.633990
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=606bf0e1b64d] [MEMORY][controller-start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=606bf0e1b64d] [PERF] Execution time=0.021785
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=20cb749a6c49] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=20cb749a6c49] [PERF] Execution time=0.018276
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=2e171bd30e07] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=2e171bd30e07] [PERF] Execution time=0.014168
+
+[1 occurrence(s)]
+INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.024676
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=ba08fe1b490a] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=ba08fe1b490a] [PERF] Execution time=0.083223
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=b8fda1fb7c46] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=b8fda1fb7c46] [PERF] Execution time=0.012474
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=a2f15d8953f4] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=a2f15d8953f4] [PERF] Execution time=0.016837
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=138e592a709b] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=138e592a709b] [PERF] Execution time=0.015046
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=9ed0279cd703] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=9ed0279cd703] [PERF] Execution time=0.019290
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=3ecd0a8a76e3] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=3ecd0a8a76e3] [PERF] Execution time=0.016303
+
+[1 occurrence(s)]
+INFO --> [SPARK_COMPLETE] App\Commands\Logs\Summarize duration=0.033958
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=1aa67fe40e1d] [PERF] Execution time=0.055403
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=9f3c2ccfa024] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=9f3c2ccfa024] [PERF] Execution time=0.130686
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=d8ee0405dd5d] [PERF] Execution time=0.143752
+
+[1 occurrence(s)]
+INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.033858
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=0bffd576d872] [PERF] Execution time=0.063930
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=54e543a175b2] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=54e543a175b2] [PERF] Execution time=0.215545
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=44b1111ce8cf] [PERF] Execution time=0.230717
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=1ebb4efff484] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=1ebb4efff484] [PERF] Execution time=0.073057
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=9dae22018b35] [PERF] Execution time=0.051772
+
+[1 occurrence(s)]
+INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.290680
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=2cc6049fdc61] [PERF] Execution time=0.055483
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=38df288a757c] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=38df288a757c] [PERF] Execution time=0.108921
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=69fef6d4df99] [PERF] Execution time=0.121880
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=38ce8ab3130d] [MEMORY][controller-start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=38ce8ab3130d] [MEMORY][commonData:start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=38ce8ab3130d] [MEMORY][commonData:start] 10485760
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=38ce8ab3130d] [PERF] Execution time=0.770034
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=12ca304d9289] [PERF] Execution time=0.811166
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=07b49a2f0e09] [MEMORY][controller-start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=07b49a2f0e09] [MEMORY][commonData:start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=07b49a2f0e09] [MEMORY][commonData:start] 10485760
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=07b49a2f0e09] [PERF] Execution time=0.848323
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=88b0abbc91bb] [PERF] Execution time=0.892672
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=64747153535d] [PERF] Execution time=0.047691
+
+[1 occurrence(s)]
+INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.039006
+
+[1 occurrence(s)]
+INFO --> REDIRECTED ROUTE at https://www.mymiwallet.com/Knowledgebase/Tutorials
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=47f15be261d2] [PERF] Execution time=0.037353
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=c9f0cb7460fe] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=c9f0cb7460fe] [MEMORY][commonData:start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=c9f0cb7460fe] [MEMORY][commonData:start] 8388608
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=c9f0cb7460fe] [PERF] Execution time=0.689338
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=79d3d8d1749a] [PERF] Execution time=0.713578
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=f593dffed70d] [PERF] Execution time=0.056169
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=925a84ee84d9] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=925a84ee84d9] [PERF] Execution time=0.063230
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=5ed68ad8c477] [PERF] Execution time=0.079416
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=9d57b7fc52de] [PERF] Execution time=0.055411
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=4338cd68f0e7] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=4338cd68f0e7] [PERF] Execution time=0.135374
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=c4110687dcf1] [PERF] Execution time=0.151414
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=258eaf091e26] [MEMORY][controller-start] 4194304
+
+[2 occurrence(s)]
+INFO --> [REQ_ID=258eaf091e26] [MEMORY][commonData:start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=258eaf091e26] [PERF] Execution time=0.078653
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=3fc5c2bdcd4c] [PERF] Execution time=0.089414
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=1fc802b8c04c] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=1fc802b8c04c] [MEMORY][commonData:start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=1fc802b8c04c] [MEMORY][commonData:start] 8388608
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=1fc802b8c04c] [PERF] Execution time=0.660005
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=bc8b21e6d269] [PERF] Execution time=0.671129
+
+[1 occurrence(s)]
+INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.116114
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=8a6e60ca8af1] [MEMORY][controller-start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=8a6e60ca8af1] [MEMORY][commonData:start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=8a6e60ca8af1] [MEMORY][commonData:start] 10485760
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=8a6e60ca8af1] [PERF] Execution time=0.900449
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=7bc1ac45e487] [PERF] Execution time=0.942888
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=e1296a09aafd] [PERF] Execution time=0.022242
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=e316da9db1a2] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=e316da9db1a2] [PERF] Execution time=0.112741
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=c64bc42906de] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=c64bc42906de] [PERF] Execution time=0.026615
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=7e854f645dcf] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=7e854f645dcf] [PERF] Execution time=0.080240
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=85edfc7a882a] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=85edfc7a882a] [PERF] Execution time=0.015548
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=5ee885702ed3] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=5ee885702ed3] [PERF] Execution time=0.031253
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=e7c6180e195b] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=e7c6180e195b] [PERF] Execution time=0.015201
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=90542faf0a7c] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=90542faf0a7c] [PERF] Execution time=0.014100
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=586d6cfb40f9] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=586d6cfb40f9] [PERF] Execution time=0.012607
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=26cfffd25a3b] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=26cfffd25a3b] [PERF] Execution time=0.013531
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=dfb144a5b6f0] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=dfb144a5b6f0] [PERF] Execution time=0.015710
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=38679a424653] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=38679a424653] [PERF] Execution time=0.014419
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=9c7254cbcacb] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=9c7254cbcacb] [PERF] Execution time=0.034923
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=1771937ec36a] [MEMORY][controller-start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=1771937ec36a] [PERF] Execution time=0.324994
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=735133a20bb0] [MEMORY][controller-start] 4194304
+
+[2 occurrence(s)]
+INFO --> [REQ_ID=735133a20bb0] [MEMORY][commonData:start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=735133a20bb0] [PERF] Execution time=0.040891
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=5391ed283452] [PERF] Execution time=0.056149
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=6ac612f42b00] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=6ac612f42b00] [PERF] Execution time=0.018732
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=bdc51805aed7] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=bdc51805aed7] [PERF] Execution time=0.107764
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=ebe909e2e8c5] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=ebe909e2e8c5] [PERF] Execution time=0.012555
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=da9cd7b0a4b8] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=da9cd7b0a4b8] [PERF] Execution time=0.044566
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=19753ac97619] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=19753ac97619] [PERF] Execution time=0.030289
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=88fcc2f0a563] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=88fcc2f0a563] [PERF] Execution time=0.014670
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=06949e18d600] [MEMORY][controller-start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=06949e18d600] [PERF] Execution time=0.048205
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=ef5e05de25df] [PERF] Execution time=0.091142
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=245d6059b112] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=245d6059b112] [PERF] Execution time=0.183807
+
+[1 occurrence(s)]
+INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.046969
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=109083e98fa2] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=109083e98fa2] [MEMORY][commonData:start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=109083e98fa2] [PERF] Execution time=0.734612
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=fc8131eec25f] [PERF] Execution time=0.748118
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=8835311e4237] [MEMORY][controller-start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=8835311e4237] [PERF] Execution time=0.019580
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=18d8b7cf85ec] [MEMORY][controller-start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=18d8b7cf85ec] [PERF] Execution time=0.365806
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=fb21e5f3491b] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=fb21e5f3491b] [PERF] Execution time=0.017360
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=85f6e011cbea] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=85f6e011cbea] [PERF] Execution time=0.049726
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=1719ff1d6cd1] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=1719ff1d6cd1] [MEMORY][commonData:start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=1719ff1d6cd1] [MEMORY][commonData:start] 8388608
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=1719ff1d6cd1] [PERF] Execution time=1.188827
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=6672c292ddcd] [PERF] Execution time=1.216116
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=69bd41fedfc4] [MEMORY][controller-start] 8388608
+
+[2 occurrence(s)]
+INFO --> [REQ_ID=69bd41fedfc4] [MEMORY][commonData:start] 8388608
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=69bd41fedfc4] [PERF] Execution time=1.069173
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=9569ba306739] [PERF] Execution time=1.080268
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=a4e4b1ede581] [MEMORY][controller-start] 10485760
+
+[2 occurrence(s)]
+INFO --> [REQ_ID=a4e4b1ede581] [MEMORY][commonData:start] 10485760
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=a4e4b1ede581] [PERF] Execution time=1.149684
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=5d348f168922] [PERF] Execution time=1.159758
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=69ee1332fdca] [MEMORY][controller-start] 10485760
+
+[2 occurrence(s)]
+INFO --> [REQ_ID=69ee1332fdca] [MEMORY][commonData:start] 10485760
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=69ee1332fdca] [PERF] Execution time=0.983157
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=4e03d6fd1ff5] [PERF] Execution time=0.995061
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=731a31a835c3] [MEMORY][controller-start] 10485760
+
+[2 occurrence(s)]
+INFO --> [REQ_ID=731a31a835c3] [MEMORY][commonData:start] 10485760
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=731a31a835c3] [PERF] Execution time=0.935510
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=3be6da961312] [PERF] Execution time=0.946097
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=710b287c917d] [MEMORY][controller-start] 10485760
+
+[2 occurrence(s)]
+INFO --> [REQ_ID=710b287c917d] [MEMORY][commonData:start] 10485760
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=710b287c917d] [PERF] Execution time=1.228193
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=b7d2dd5f165d] [PERF] Execution time=1.239494
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=866dea5a18c8] [MEMORY][controller-start] 10485760
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=866dea5a18c8] [PERF] Execution time=0.046739
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=7695a060ac2e] [MEMORY][controller-start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=7695a060ac2e] [PERF] Execution time=0.194226
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=586db75e4265] [PERF] Execution time=0.019030
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=526b80bd400c] [MEMORY][controller-start] 4194304
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=526b80bd400c] [PERF] Execution time=0.168538
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=2fbbf1765fa0] [PERF] Execution time=0.330376
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=6e1028930452] [MEMORY][controller-start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=6e1028930452] [MEMORY][commonData:start] 6291456
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=6e1028930452] [MEMORY][commonData:start] 10485760
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=6e1028930452] [PERF] Execution time=0.796818
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=a6f04006113f] [PERF] Execution time=0.912975
+
+[1 occurrence(s)]
+INFO --> [REQ_ID=141bb95c959c] [PERF] Execution time=0.062690
+
+[1 occurrence(s)]
+INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.136740
+
 
 ---------------------------
 LEVEL: NOTICE
@@ -11504,6 +14051,9 @@ NOTICE --> LOG_HEALTHCHECK probe marker=1f38932dabb5
 [1 occurrence(s)]
 NOTICE --> LOG_HEALTHCHECK probe marker=057eed5cce47
 
+[1 occurrence(s)]
+NOTICE --> LOG_HEALTHCHECK probe marker=001057806e83
+
 
 ---------------------------
 LEVEL: WARNING
@@ -11512,13 +14062,13 @@ LEVEL: WARNING
 [7 occurrence(s)]
 WARNING --> OllamaPatchRunner:L49 - Original Diff:
 
-[203 occurrence(s)]
+[227 occurrence(s)]
 WARNING --> [404] URI=https://www.mymiwallet.com/index.php/
 
-[203 occurrence(s)]
+[227 occurrence(s)]
 WARNING --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
 
-[53 occurrence(s)]
+[57 occurrence(s)]
 WARNING --> MyMIWallets initialized without numeric user context.
 
 [1 occurrence(s)]
@@ -11557,10 +14107,10 @@ WARNING --> [404] URI=https://www.mymiwallet.com/index.php/Management/Docs
 [1 occurrence(s)]
 WARNING --> 404 route miss: https://www.mymiwallet.com/index.php/Management/Docs | referrer: none
 
-[1 occurrence(s)]
+[2 occurrence(s)]
 WARNING --> [404] URI=https://www.mymiwallet.com/index.php/Premium_Features/Brokerage-Integrations
 
-[1 occurrence(s)]
+[2 occurrence(s)]
 WARNING --> 404 route miss: https://www.mymiwallet.com/index.php/Premium_Features/Brokerage-Integrations | referrer: none
 
 [1 occurrence(s)]
@@ -11623,7 +14173,7 @@ WARNING --> [404] URI=https://www.mymiwallet.com/index.php/images/ci4-social.png
 [1 occurrence(s)]
 WARNING --> 404 route miss: https://www.mymiwallet.com/index.php/images/ci4-social.png | referrer: none
 
-[1 occurrence(s)]
+[2 occurrence(s)]
 WARNING --> Patch generation returned empty diff
 
 [1 occurrence(s)]
@@ -11638,12 +14188,18 @@ WARNING --> [404] URI=https://www.mymiwallet.com/index.php/Premium-Features/Adva
 [1 occurrence(s)]
 WARNING --> 404 route miss: https://www.mymiwallet.com/index.php/Premium-Features/Advanced-Trade-Tracker | referrer: none
 
+[1 occurrence(s)]
+WARNING --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works/budgeting
+
+[1 occurrence(s)]
+WARNING --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works/budgeting | referrer: none
+
 
 ---------------------------
 LEVEL: ERROR
 ---------------------------
 
-[27 occurrence(s)]
+[29 occurrence(s)]
 ERROR --> [ERROR_PAGE] event=error_404 status=404 message=Page not found.
 
 [2 occurrence(s)]
@@ -11667,15 +14223,18 @@ ERROR --> Table 'mymiwallet.ops_tasks' doesn't exist
 [1 occurrence(s)]
 ERROR --> Duplicate entry 'ABT-In Review-scanner' for key 'bf_investment_trade_alerts.uniq_ticker_status_source'
 
+[3 occurrence(s)]
+ERROR --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+
 
 ---------------------------
 LEVEL: CRITICAL
 ---------------------------
 
-[224 occurrence(s)]
+[250 occurrence(s)]
 CRITICAL --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
 
-[224 occurrence(s)]
+[250 occurrence(s)]
 CRITICAL --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
 
 [1 occurrence(s)]
@@ -11699,7 +14258,7 @@ CRITICAL --> [EXCEPTION] Call to undefined method App\Commands\Ops\Commands\Audi
 
 ===============================================
    HERE'S THE NEW STUFF
-   (Entries logged AFTER 2026-03-08 15:00:03)
+   (Entries logged AFTER 2026-03-08 17:30:45)
 ===============================================
 
 ---------------------------
@@ -11707,898 +14266,1411 @@ LEVEL: DEBUG (NEW)
 ---------------------------
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=545384b3b5d4] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=a4b1fac34c1b] [REQUEST][START] HEAD /
 
-[59 NEW occurrence(s)]
+[79 NEW occurrence(s)]
 DEBUG --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=76a994431ca7] [REQUEST][START] GET /index.php/How-It-Works/investing
+DEBUG --> [REQ_ID=1aa67fe40e1d] [REQUEST][START] GET /index.php/Knowledgebase
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=76a994431ca7] [FILTER_BEFORE] /index.php/How-It-Works/investing
+DEBUG --> [REQ_ID=1aa67fe40e1d] [FILTER_BEFORE] /index.php/Knowledgebase
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=76a994431ca7] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=investing
+DEBUG --> [REQ_ID=1aa67fe40e1d] [ROUTE] Controller=\App\Modules\User\Controllers\KnowledgebaseController Method=index
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=76a994431ca7] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/investing
-
-[16 NEW occurrence(s)]
-DEBUG --> [CSRF] token name=csrf_test_name hash=e1f814a9283542ea65cb1d5695964e1a
+DEBUG --> [REQ_ID=1aa67fe40e1d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Knowledgebase
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=ff197504b2aa] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+DEBUG --> [CSRF] token name=csrf_test_name hash=4a9c377186b3a25d731c40a0ae5b6d0a
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=ff197504b2aa] [METHOD_ENTRY] investing
+DEBUG --> [REQ_ID=1aa67fe40e1d] [REQUEST][END]
 
-[19 NEW occurrence(s)]
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=d8ee0405dd5d] [REQUEST][START] GET /index.php/login
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=d8ee0405dd5d] [FILTER_BEFORE] /index.php/login
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=d8ee0405dd5d] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=d8ee0405dd5d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+
+[1 NEW occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=8601d0a5afb2ca0521c5aa2154a3bd8c
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=9f3c2ccfa024] [INIT] App\Controllers\AuthController::GET
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=d8ee0405dd5d] [FILTER_AFTER]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=d8ee0405dd5d] [LIFECYCLE][END] status=200 duration_ms=130.99 memory_delta=0
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=d8ee0405dd5d] [REQUEST][END]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=9d1e09a540a8] [REQUEST][START] HEAD /
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=a32bee3810f1] [REQUEST][START] HEAD /
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=0bffd576d872] [REQUEST][START] GET /index.php/Management/Marketing/Blog-Creator
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=0bffd576d872] [FILTER_BEFORE] /index.php/Management/Marketing/Blog-Creator
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=0bffd576d872] [ROUTE] Controller=\App\Modules\Management\Controllers\MarketingAdminController Method=blogCreator
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=0bffd576d872] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management/Marketing/Blog-Creator
+
+[1 NEW occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=bd8f1c21713ef4e84bfa73021b87cd18
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=0bffd576d872] [REQUEST][END]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=44b1111ce8cf] [REQUEST][START] GET /index.php/login
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=44b1111ce8cf] [FILTER_BEFORE] /index.php/login
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=44b1111ce8cf] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=44b1111ce8cf] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+
+[1 NEW occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=ab374993c68a111510227e618da1884f
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=54e543a175b2] [INIT] App\Controllers\AuthController::GET
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=44b1111ce8cf] [FILTER_AFTER]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=44b1111ce8cf] [LIFECYCLE][END] status=200 duration_ms=215.90 memory_delta=0
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=44b1111ce8cf] [REQUEST][END]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=192e4aa980f2] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=192e4aa980f2] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=192e4aa980f2] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=192e4aa980f2] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+
+[1 NEW occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=4ce76a52c74530b0f706cef6a904638d
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=1ebb4efff484] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=1ebb4efff484] [METHOD_ENTRY] show
+
+[42 NEW occurrence(s)]
 DEBUG --> MyMIUser L52 - initialized (first log).
 
-[12 NEW occurrence(s)]
+[36 NEW occurrence(s)]
 DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
 
-[36 NEW occurrence(s)]
+[9 NEW occurrence(s)]
 DEBUG --> MyMICoin: guest context detected; skipping user-specific preload.
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=35ae500c3ad9] [REQUEST][START] GET /index.php/Support
+DEBUG --> [REQ_ID=5353604ef4e2] [REQUEST][START] HEAD /
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=35ae500c3ad9] [FILTER_BEFORE] /index.php/Support
+DEBUG --> [REQ_ID=e2cf11f49c70] [REQUEST][START] HEAD /
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=35ae500c3ad9] [ROUTE] Controller=\App\Modules\Support\Controllers\SupportController Method=index
+DEBUG --> [REQ_ID=fb76cca228e8] [REQUEST][START] HEAD /
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=35ae500c3ad9] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support
+DEBUG --> [REQ_ID=9dae22018b35] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=27f74c2a9d70] [INIT] App\Modules\Support\Controllers\SupportController::GET
+DEBUG --> [REQ_ID=9dae22018b35] [FILTER_BEFORE] /index.php/API/Management/Run-CRON-Tasks
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=27f74c2a9d70] [METHOD_ENTRY] index
+DEBUG --> [REQ_ID=9dae22018b35] [ROUTE] Controller=\App\Modules\Management\Controllers\ManagementAPIController Method=Run_CRON_Tasks
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=27f74c2a9d70] [VIEW_RENDER] SupportModule\Views\Support\index
+DEBUG --> [REQ_ID=9dae22018b35] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Management/Run-CRON-Tasks
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=35ae500c3ad9] [FILTER_AFTER]
+DEBUG --> [REQ_ID=9dae22018b35] [REQUEST][END]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=35ae500c3ad9] [LIFECYCLE][END] status=200 duration_ms=56.94 memory_delta=0
+DEBUG --> [REQ_ID=1adf1e59fef1] [REQUEST][START] HEAD /
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=35ae500c3ad9] [REQUEST][END]
+DEBUG --> [REQ_ID=2cc6049fdc61] [REQUEST][START] GET /index.php/Dashboard
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=695f268e00a0] [REQUEST][START] GET /index.php?debugbar
+DEBUG --> [REQ_ID=2cc6049fdc61] [FILTER_BEFORE] /index.php/Dashboard
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=695f268e00a0] [FILTER_BEFORE] /index.php?debugbar
+DEBUG --> [REQ_ID=2cc6049fdc61] [ROUTE] Controller=\App\Modules\User\Controllers\DashboardController Method=index
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=695f268e00a0] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG --> [REQ_ID=2cc6049fdc61] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Dashboard
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=695f268e00a0] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php?debugbar=
+DEBUG --> [CSRF] token name=csrf_test_name hash=6327fc543b8922db301807e1629d903a
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=5e4c2c9ad558] [INIT] App\Controllers\Home::GET
+DEBUG --> [REQ_ID=2cc6049fdc61] [REQUEST][END]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=69fef6d4df99] [REQUEST][START] GET /index.php/login
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=69fef6d4df99] [FILTER_BEFORE] /index.php/login
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=69fef6d4df99] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=69fef6d4df99] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+
+[1 NEW occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=fdc1a698110502570292233f4a8eda3f
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=38df288a757c] [INIT] App\Controllers\AuthController::GET
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=69fef6d4df99] [FILTER_AFTER]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=69fef6d4df99] [LIFECYCLE][END] status=200 duration_ms=109.20 memory_delta=0
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=69fef6d4df99] [REQUEST][END]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=df51ba48eb93] [REQUEST][START] HEAD /
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=12ca304d9289] [REQUEST][START] GET /
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=12ca304d9289] [FILTER_BEFORE] /
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=12ca304d9289] [ROUTE] Controller=\App\Controllers\Home Method=index
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=12ca304d9289] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+
+[1 NEW occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=7ba0679f9f9db34f30ca352bdd0a6c99
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=38ce8ab3130d] [INIT] App\Controllers\Home::GET
 
 [3 NEW occurrence(s)]
 DEBUG --> [MetaService] slug= pageName= cacheHit= path=FALLBACK
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=5e4c2c9ad558] [VIEW_RENDER] themes/public/home
+DEBUG --> [REQ_ID=38ce8ab3130d] [VIEW_RENDER] themes/public/home
+
+[3 NEW occurrence(s)]
+DEBUG --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=12ca304d9289] [FILTER_AFTER]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=12ca304d9289] [LIFECYCLE][END] status=200 duration_ms=772.37 memory_delta=4194304
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=12ca304d9289] [REQUEST][END]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=aec2f8f638be] [REQUEST][START] HEAD /
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=88b0abbc91bb] [REQUEST][START] GET /index.php
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=88b0abbc91bb] [FILTER_BEFORE] /index.php
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=88b0abbc91bb] [ROUTE] Controller=\App\Controllers\Home Method=index
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=88b0abbc91bb] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+
+[1 NEW occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=336eff851aa1b552cfacb2dc67bfe72c
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=07b49a2f0e09] [INIT] App\Controllers\Home::GET
+
+[2 NEW occurrence(s)]
+DEBUG --> [MetaService] slug= pageName= cacheHit=1 path=CACHE
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=07b49a2f0e09] [VIEW_RENDER] themes/public/home
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=88b0abbc91bb] [FILTER_AFTER]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=88b0abbc91bb] [LIFECYCLE][END] status=200 duration_ms=850.35 memory_delta=4194304
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=88b0abbc91bb] [REQUEST][END]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=64747153535d] [REQUEST][START] GET /index.php/API/Alerts/fetchEmailAlerts
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=64747153535d] [FILTER_BEFORE] /index.php/API/Alerts/fetchEmailAlerts
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=64747153535d] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=fetchEmailAlerts
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=64747153535d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/fetchEmailAlerts
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=64747153535d] [REQUEST][END]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=3dc6c0e776a4] [REQUEST][START] GET /index.php/Premium_Features/Brokerage-Integrations
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=9a93bda0e154] [REQUEST][START] HEAD /
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=47f15be261d2] [REQUEST][START] GET /index.php/How-To-Guides
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=47f15be261d2] [REQUEST][END]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=79d3d8d1749a] [REQUEST][START] GET /
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=79d3d8d1749a] [FILTER_BEFORE] /
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=79d3d8d1749a] [ROUTE] Controller=\App\Controllers\Home Method=index
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=79d3d8d1749a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+
+[1 NEW occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=fc03db43dba0306c604cbee82a105187
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=c9f0cb7460fe] [INIT] App\Controllers\Home::GET
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=c9f0cb7460fe] [VIEW_RENDER] themes/public/home
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=79d3d8d1749a] [FILTER_AFTER]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=79d3d8d1749a] [LIFECYCLE][END] status=200 duration_ms=692.76 memory_delta=4194304
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=79d3d8d1749a] [REQUEST][END]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=48f909e12dc0] [REQUEST][START] HEAD /
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=f593dffed70d] [REQUEST][START] GET /index.php/Alerts
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=f593dffed70d] [FILTER_BEFORE] /index.php/Alerts
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=f593dffed70d] [ROUTE] Controller=\App\Modules\User\Controllers\AlertsController Method=index
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=f593dffed70d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Alerts
+
+[1 NEW occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=dc1e8aa74577401555ea7a06bf6aa739
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=f593dffed70d] [REQUEST][END]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=5ed68ad8c477] [REQUEST][START] GET /index.php/login
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=5ed68ad8c477] [FILTER_BEFORE] /index.php/login
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=5ed68ad8c477] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=5ed68ad8c477] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+
+[1 NEW occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=640255108c07cf6f8fae95b80f92ca17
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=925a84ee84d9] [INIT] App\Controllers\AuthController::GET
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=5ed68ad8c477] [FILTER_AFTER]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=5ed68ad8c477] [LIFECYCLE][END] status=200 duration_ms=63.59 memory_delta=0
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=5ed68ad8c477] [REQUEST][END]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=9d57b7fc52de] [REQUEST][START] GET /index.php/Features/Brokerage-Integration
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=9d57b7fc52de] [FILTER_BEFORE] /index.php/Features/Brokerage-Integration
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=9d57b7fc52de] [ROUTE] Controller=\App\Modules\Advertise\Controllers\FeaturesController Method=BrokerageIntegrations
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=9d57b7fc52de] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Features/Brokerage-Integration
+
+[1 NEW occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=8011def3b178f20b97af6cfb1dec1347
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=9d57b7fc52de] [REQUEST][END]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=c4110687dcf1] [REQUEST][START] GET /index.php/login
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=c4110687dcf1] [FILTER_BEFORE] /index.php/login
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=c4110687dcf1] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=c4110687dcf1] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+
+[1 NEW occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=99721f00e29f5b06d9114cb92823ac17
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=4338cd68f0e7] [INIT] App\Controllers\AuthController::GET
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=c4110687dcf1] [FILTER_AFTER]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=c4110687dcf1] [LIFECYCLE][END] status=200 duration_ms=136.53 memory_delta=0
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=c4110687dcf1] [REQUEST][END]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=52c9530ddd39] [REQUEST][START] HEAD /
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=3fc5c2bdcd4c] [REQUEST][START] GET /index.php/Support
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=3fc5c2bdcd4c] [FILTER_BEFORE] /index.php/Support
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=3fc5c2bdcd4c] [ROUTE] Controller=\App\Modules\Support\Controllers\SupportController Method=index
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=3fc5c2bdcd4c] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support
+
+[1 NEW occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=57c4e2e2f63adf5b1bf1046eed536452
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=258eaf091e26] [INIT] App\Modules\Support\Controllers\SupportController::GET
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=258eaf091e26] [METHOD_ENTRY] index
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=258eaf091e26] [VIEW_RENDER] SupportModule\Views\Support\index
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=3fc5c2bdcd4c] [FILTER_AFTER]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=3fc5c2bdcd4c] [LIFECYCLE][END] status=200 duration_ms=78.98 memory_delta=2097152
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=3fc5c2bdcd4c] [REQUEST][END]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=bc8b21e6d269] [REQUEST][START] GET /index.php/Terms-Of-Service
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=bc8b21e6d269] [FILTER_BEFORE] /index.php/Terms-Of-Service
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=bc8b21e6d269] [ROUTE] Controller=\App\Controllers\Home Method=termsOfService
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=bc8b21e6d269] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Terms-Of-Service
+
+[1 NEW occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=cbe258ab92053a7c7987e8a6a7ae98ca
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=1fc802b8c04c] [INIT] App\Controllers\Home::GET
+
+[1 NEW occurrence(s)]
+DEBUG --> [MetaService] slug=terms-of-service pageName= cacheHit= path=DB
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=1fc802b8c04c] [VIEW_RENDER] themes/public/termsOfService
+
+[1 NEW occurrence(s)]
+DEBUG --> [MetaService] slug=terms-of-service pageName=Terms of Service cacheHit= path=DB
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=bc8b21e6d269] [FILTER_AFTER]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=bc8b21e6d269] [LIFECYCLE][END] status=200 duration_ms=660.33 memory_delta=4194304
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=bc8b21e6d269] [REQUEST][END]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=91e267d635bd] [REQUEST][START] HEAD /
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=7bc1ac45e487] [REQUEST][START] GET /
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=7bc1ac45e487] [FILTER_BEFORE] /
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=7bc1ac45e487] [ROUTE] Controller=\App\Controllers\Home Method=index
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=7bc1ac45e487] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+
+[1 NEW occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=86646883ddc5e616a908a3b73ab34b98
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=8a6e60ca8af1] [INIT] App\Controllers\Home::GET
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=8a6e60ca8af1] [VIEW_RENDER] themes/public/home
 
 [2 NEW occurrence(s)]
 DEBUG --> [MetaService] slug= pageName=Home cacheHit= path=DB
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=695f268e00a0] [FILTER_AFTER]
+DEBUG --> [REQ_ID=7bc1ac45e487] [FILTER_AFTER]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=695f268e00a0] [LIFECYCLE][END] status=200 duration_ms=634.67 memory_delta=4194304
+DEBUG --> [REQ_ID=7bc1ac45e487] [LIFECYCLE][END] status=200 duration_ms=902.28 memory_delta=4194304
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=695f268e00a0] [REQUEST][END]
+DEBUG --> [REQ_ID=7bc1ac45e487] [REQUEST][END]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=53921d8d2975] [REQUEST][START] GET /index.php?debugbar
+DEBUG --> [REQ_ID=e1296a09aafd] [REQUEST][START] GET /index.php/forgot
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=53921d8d2975] [FILTER_BEFORE] /index.php?debugbar
+DEBUG --> [REQ_ID=e1296a09aafd] [FILTER_BEFORE] /index.php/forgot
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=53921d8d2975] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG --> [REQ_ID=e1296a09aafd] [ROUTE] Controller=\Myth\Auth\Controllers\AuthController Method=forgotPassword
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=53921d8d2975] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php?debugbar=
+DEBUG --> [REQ_ID=e1296a09aafd] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/forgot
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=4cf790320a5b] [INIT] App\Controllers\Home::GET
+DEBUG --> [CSRF] token name=csrf_test_name hash=842f16021ec5e61bfd6ce36d0a14bdac
 
-[4 NEW occurrence(s)]
-DEBUG --> [MetaService] slug= pageName= cacheHit=1 path=CACHE
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=e1296a09aafd] [FILTER_AFTER]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=e1296a09aafd] [LIFECYCLE][END] status=200 duration_ms=7.58 memory_delta=0
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=e1296a09aafd] [REQUEST][END]
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=5acaa19b4498] [REQUEST][START] HEAD /
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=5037dcedc5d1] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=5037dcedc5d1] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=5037dcedc5d1] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=5037dcedc5d1] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+
+[33 NEW occurrence(s)]
+DEBUG --> [CSRF] token name=csrf_test_name hash=bf3ca65475182ab9d7cb200c9fd15910
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=e316da9db1a2] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=e316da9db1a2] [METHOD_ENTRY] show
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=e557279df18d] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=e557279df18d] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=e557279df18d] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=4cf790320a5b] [VIEW_RENDER] themes/public/home
+DEBUG --> [REQ_ID=e557279df18d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
 
-[5 NEW occurrence(s)]
-DEBUG --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=c64bc42906de] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=c64bc42906de] [METHOD_ENTRY] show
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=ac2c1c25f49f] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=ac2c1c25f49f] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=ac2c1c25f49f] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=ac2c1c25f49f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=7e854f645dcf] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=53921d8d2975] [FILTER_AFTER]
+DEBUG --> [REQ_ID=7e854f645dcf] [METHOD_ENTRY] show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=53921d8d2975] [LIFECYCLE][END] status=200 duration_ms=725.09 memory_delta=2097152
+DEBUG --> [REQ_ID=c2dd8506023a] [REQUEST][START] GET /index.php/How-It-Works/Investment-Dashboard
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=53921d8d2975] [REQUEST][END]
+DEBUG --> [REQ_ID=c2dd8506023a] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Dashboard
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=f468aa9b4a3f] [REQUEST][START] GET /index.php?debugbar
+DEBUG --> [REQ_ID=c2dd8506023a] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=f468aa9b4a3f] [FILTER_BEFORE] /index.php?debugbar
+DEBUG --> [REQ_ID=c2dd8506023a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Dashboard
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=f468aa9b4a3f] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG --> [CSRF] token name=csrf_test_name hash=2baf1b573b1cc809cb7eff2997d04384
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=f468aa9b4a3f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php?debugbar=
+DEBUG --> [REQ_ID=85edfc7a882a] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=06c61ab6e5ae] [INIT] App\Controllers\Home::GET
+DEBUG --> [REQ_ID=85edfc7a882a] [METHOD_ENTRY] show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=5053cdfbe968] [REQUEST][START] GET /index.php?debugbar
+DEBUG --> [REQ_ID=de9073c4647c] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=06c61ab6e5ae] [VIEW_RENDER] themes/public/home
+DEBUG --> [REQ_ID=de9073c4647c] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=f468aa9b4a3f] [FILTER_AFTER]
+DEBUG --> [REQ_ID=de9073c4647c] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=f468aa9b4a3f] [LIFECYCLE][END] status=200 duration_ms=741.74 memory_delta=2097152
+DEBUG --> [REQ_ID=de9073c4647c] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=f468aa9b4a3f] [REQUEST][END]
+DEBUG --> [REQ_ID=5ee885702ed3] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=5053cdfbe968] [FILTER_BEFORE] /index.php?debugbar
+DEBUG --> [REQ_ID=5ee885702ed3] [METHOD_ENTRY] show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=5053cdfbe968] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG --> [REQ_ID=a27eec41f475] [REQUEST][START] GET /index.php/How-It-Works/Registering-An-Account
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=5053cdfbe968] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php?debugbar=
+DEBUG --> [REQ_ID=a27eec41f475] [FILTER_BEFORE] /index.php/How-It-Works/Registering-An-Account
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=df249ace4d1e] [INIT] App\Controllers\Home::GET
+DEBUG --> [REQ_ID=a27eec41f475] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=df249ace4d1e] [VIEW_RENDER] themes/public/home
+DEBUG --> [REQ_ID=a27eec41f475] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Registering-An-Account
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=5053cdfbe968] [FILTER_AFTER]
+DEBUG --> [REQ_ID=e7c6180e195b] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=5053cdfbe968] [LIFECYCLE][END] status=200 duration_ms=826.80 memory_delta=4194304
+DEBUG --> [REQ_ID=e7c6180e195b] [METHOD_ENTRY] show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=5053cdfbe968] [REQUEST][END]
+DEBUG --> [REQ_ID=63a594a3cd36] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=f984f08efcc8] [REQUEST][START] GET /index.php/How-It-Works/investments
+DEBUG --> [REQ_ID=63a594a3cd36] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=f984f08efcc8] [FILTER_BEFORE] /index.php/How-It-Works/investments
+DEBUG --> [REQ_ID=63a594a3cd36] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=f984f08efcc8] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG --> [REQ_ID=63a594a3cd36] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=f984f08efcc8] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/investments
+DEBUG --> [REQ_ID=90542faf0a7c] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=4a771ef203b5] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+DEBUG --> [REQ_ID=90542faf0a7c] [METHOD_ENTRY] show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=fbb200eb5b87] [REQUEST][START] GET /index.php/images/ci4-portfolio.png
+DEBUG --> [REQ_ID=ff566b2855bd] [REQUEST][START] GET /index.php/How-It-Works/Investment-Dashboard
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=4a771ef203b5] [METHOD_ENTRY] show
+DEBUG --> [REQ_ID=ff566b2855bd] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Dashboard
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=f984f08efcc8] [FILTER_AFTER]
+DEBUG --> [REQ_ID=ff566b2855bd] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=f984f08efcc8] [LIFECYCLE][END] status=404 duration_ms=60.14 memory_delta=0
+DEBUG --> [REQ_ID=ff566b2855bd] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Dashboard
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=f984f08efcc8] [REQUEST][END]
+DEBUG --> [REQ_ID=586d6cfb40f9] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=109883493893] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG --> [REQ_ID=586d6cfb40f9] [METHOD_ENTRY] show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=109883493893] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG --> [REQ_ID=518a36c4945f] [REQUEST][START] GET /index.php/How-It-Works/Setting-Financial-Goals
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=109883493893] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG --> [REQ_ID=518a36c4945f] [FILTER_BEFORE] /index.php/How-It-Works/Setting-Financial-Goals
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=109883493893] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG --> [REQ_ID=518a36c4945f] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=a302cefcce0a] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+DEBUG --> [REQ_ID=518a36c4945f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Setting-Financial-Goals
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=a302cefcce0a] [METHOD_ENTRY] show
+DEBUG --> [REQ_ID=26cfffd25a3b] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=a302cefcce0a] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Personal_Budgeting
+DEBUG --> [REQ_ID=26cfffd25a3b] [METHOD_ENTRY] show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=109883493893] [FILTER_AFTER]
+DEBUG --> [REQ_ID=c56ba3fd3785] [REQUEST][START] GET /index.php/How-It-Works/MyMI-Gold
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=109883493893] [LIFECYCLE][END] status=200 duration_ms=1,567.34 memory_delta=8388608
+DEBUG --> [REQ_ID=c56ba3fd3785] [FILTER_BEFORE] /index.php/How-It-Works/MyMI-Gold
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=109883493893] [REQUEST][END]
+DEBUG --> [REQ_ID=c56ba3fd3785] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=37db21492688] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG --> [REQ_ID=c56ba3fd3785] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Gold
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=37db21492688] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG --> [REQ_ID=dfb144a5b6f0] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=37db21492688] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG --> [REQ_ID=dfb144a5b6f0] [METHOD_ENTRY] show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=37db21492688] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG --> [REQ_ID=9b74f67b20e8] [REQUEST][START] GET /index.php/How-It-Works/MyMI-Exchange
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=fe1a6212c77b] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+DEBUG --> [REQ_ID=9b74f67b20e8] [FILTER_BEFORE] /index.php/How-It-Works/MyMI-Exchange
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=fe1a6212c77b] [METHOD_ENTRY] show
+DEBUG --> [REQ_ID=9b74f67b20e8] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=fe1a6212c77b] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Personal_Budgeting
+DEBUG --> [REQ_ID=9b74f67b20e8] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Exchange
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=37db21492688] [FILTER_AFTER]
+DEBUG --> [REQ_ID=38679a424653] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=37db21492688] [LIFECYCLE][END] status=200 duration_ms=1,556.83 memory_delta=4194304
+DEBUG --> [REQ_ID=38679a424653] [METHOD_ENTRY] show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=37db21492688] [REQUEST][END]
+DEBUG --> [REQ_ID=11a75766c5e0] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=a4f8cab7da81] [REQUEST][START] GET /index.php/How-It-Works/mymi-gold
+DEBUG --> [REQ_ID=11a75766c5e0] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=a4f8cab7da81] [FILTER_BEFORE] /index.php/How-It-Works/mymi-gold
+DEBUG --> [REQ_ID=11a75766c5e0] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=a4f8cab7da81] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG --> [REQ_ID=11a75766c5e0] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=a4f8cab7da81] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/mymi-gold
+DEBUG --> [REQ_ID=9c7254cbcacb] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=c9a4c08dd1a7] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+DEBUG --> [REQ_ID=9c7254cbcacb] [METHOD_ENTRY] show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=c9a4c08dd1a7] [METHOD_ENTRY] show
+DEBUG --> [REQ_ID=0597d44fe3a8] [REQUEST][START] GET /index.php/How-It-Works/budgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=c9a4c08dd1a7] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\MyMI_Gold
+DEBUG --> [REQ_ID=0597d44fe3a8] [FILTER_BEFORE] /index.php/How-It-Works/budgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=a4f8cab7da81] [FILTER_AFTER]
+DEBUG --> [REQ_ID=0597d44fe3a8] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=budgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=a4f8cab7da81] [LIFECYCLE][END] status=200 duration_ms=1,290.76 memory_delta=2097152
+DEBUG --> [REQ_ID=0597d44fe3a8] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/budgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=a4f8cab7da81] [REQUEST][END]
+DEBUG --> [REQ_ID=1771937ec36a] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=cbc9f15a020f] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=1771937ec36a] [METHOD_ENTRY] budgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=d02baf0e90a2] [REQUEST][START] GET /index.php/Management/Budgets
+DEBUG --> [REQ_ID=5391ed283452] [REQUEST][START] GET /index.php/Support
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=d02baf0e90a2] [FILTER_BEFORE] /index.php/Management/Budgets
+DEBUG --> [REQ_ID=5391ed283452] [FILTER_BEFORE] /index.php/Support
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=d02baf0e90a2] [ROUTE] Controller=\App\Modules\Management\Controllers\BudgetsAdminController Method=index
+DEBUG --> [REQ_ID=5391ed283452] [ROUTE] Controller=\App\Modules\Support\Controllers\SupportController Method=index
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=d02baf0e90a2] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management/Budgets
+DEBUG --> [REQ_ID=5391ed283452] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Support
 
 [1 NEW occurrence(s)]
-DEBUG --> [CSRF] token name=csrf_test_name hash=5091967cafb86869bbf29341a8a08ad5
+DEBUG --> [REQ_ID=735133a20bb0] [INIT] App\Modules\Support\Controllers\SupportController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=d02baf0e90a2] [REQUEST][END]
+DEBUG --> [REQ_ID=735133a20bb0] [METHOD_ENTRY] index
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=57458f98e61d] [REQUEST][START] GET /index.php/login
+DEBUG --> [REQ_ID=735133a20bb0] [VIEW_RENDER] SupportModule\Views\Support\index
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=57458f98e61d] [FILTER_BEFORE] /index.php/login
+DEBUG --> [REQ_ID=5391ed283452] [FILTER_AFTER]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=57458f98e61d] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG --> [REQ_ID=5391ed283452] [LIFECYCLE][END] status=200 duration_ms=40.89 memory_delta=0
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=57458f98e61d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG --> [REQ_ID=5391ed283452] [REQUEST][END]
 
 [1 NEW occurrence(s)]
-DEBUG --> [CSRF] token name=csrf_test_name hash=b95040f93b43c29975e66963971d3917
+DEBUG --> [REQ_ID=8f8bfb0ee4e3] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=7c67c84f73fa] [INIT] App\Controllers\AuthController::GET
+DEBUG --> [REQ_ID=8f8bfb0ee4e3] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=57458f98e61d] [FILTER_AFTER]
+DEBUG --> [REQ_ID=8f8bfb0ee4e3] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=57458f98e61d] [LIFECYCLE][END] status=200 duration_ms=145.08 memory_delta=0
+DEBUG --> [REQ_ID=8f8bfb0ee4e3] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=57458f98e61d] [REQUEST][END]
+DEBUG --> [REQ_ID=6ac612f42b00] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=aa286905b11f] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=6ac612f42b00] [METHOD_ENTRY] show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=45798e14b890] [REQUEST][START] GET /index.php/How-It-Works/mymi-gold
+DEBUG --> [REQ_ID=6856b2996961] [REQUEST][START] HEAD /
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=45798e14b890] [FILTER_BEFORE] /index.php/How-It-Works/mymi-gold
+DEBUG --> [REQ_ID=40336295f31a] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=45798e14b890] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG --> [REQ_ID=40336295f31a] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=45798e14b890] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/mymi-gold
+DEBUG --> [REQ_ID=40336295f31a] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=ecd5524f459a] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+DEBUG --> [REQ_ID=40336295f31a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=ecd5524f459a] [METHOD_ENTRY] show
+DEBUG --> [REQ_ID=bdc51805aed7] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [MetaService] slug=how-it-works/mymi-gold pageName= cacheHit= path=DB
+DEBUG --> [REQ_ID=bdc51805aed7] [METHOD_ENTRY] show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=45798e14b890] [FILTER_AFTER]
+DEBUG --> [REQ_ID=3ecb163321e2] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=45798e14b890] [LIFECYCLE][END] status=200 duration_ms=801.06 memory_delta=4194304
+DEBUG --> [REQ_ID=3ecb163321e2] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=45798e14b890] [REQUEST][END]
+DEBUG --> [REQ_ID=3ecb163321e2] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=15dddbae8e1a] [REQUEST][START] GET /index.php/How-It-Works/mymi-gold
+DEBUG --> [REQ_ID=3ecb163321e2] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=15dddbae8e1a] [FILTER_BEFORE] /index.php/How-It-Works/mymi-gold
+DEBUG --> [REQ_ID=ebe909e2e8c5] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=15dddbae8e1a] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG --> [REQ_ID=ebe909e2e8c5] [METHOD_ENTRY] show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=15dddbae8e1a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/mymi-gold
+DEBUG --> [REQ_ID=69d92a675ee6] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=c2124f0e4b3b] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+DEBUG --> [REQ_ID=69d92a675ee6] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=c2124f0e4b3b] [METHOD_ENTRY] show
+DEBUG --> [REQ_ID=69d92a675ee6] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
 
 [1 NEW occurrence(s)]
-DEBUG --> [MetaService] slug=how-it-works/mymi-gold pageName= cacheHit=1 path=CACHE
+DEBUG --> [REQ_ID=69d92a675ee6] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=15dddbae8e1a] [FILTER_AFTER]
+DEBUG --> [REQ_ID=da9cd7b0a4b8] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=15dddbae8e1a] [LIFECYCLE][END] status=200 duration_ms=700.36 memory_delta=2097152
+DEBUG --> [REQ_ID=da9cd7b0a4b8] [METHOD_ENTRY] show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=15dddbae8e1a] [REQUEST][END]
+DEBUG --> [REQ_ID=92f3b88d9fea] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=3f8d1867a989] [REQUEST][START] GET /index.php/API/Alerts/fetchEmailAlerts
+DEBUG --> [REQ_ID=92f3b88d9fea] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=3f8d1867a989] [FILTER_BEFORE] /index.php/API/Alerts/fetchEmailAlerts
+DEBUG --> [REQ_ID=92f3b88d9fea] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=3f8d1867a989] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=fetchEmailAlerts
+DEBUG --> [REQ_ID=92f3b88d9fea] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=3f8d1867a989] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/fetchEmailAlerts
+DEBUG --> [REQ_ID=19753ac97619] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=3f8d1867a989] [REQUEST][END]
+DEBUG --> [REQ_ID=19753ac97619] [METHOD_ENTRY] show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=1ae4cf414bf0] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG --> [REQ_ID=2a9a273b6564] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=1ae4cf414bf0] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG --> [REQ_ID=2a9a273b6564] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=1ae4cf414bf0] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG --> [REQ_ID=2a9a273b6564] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=1ae4cf414bf0] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG --> [REQ_ID=2a9a273b6564] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=6d87a3f273bb] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+DEBUG --> [REQ_ID=88fcc2f0a563] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=6d87a3f273bb] [METHOD_ENTRY] show
+DEBUG --> [REQ_ID=88fcc2f0a563] [METHOD_ENTRY] show
 
 [1 NEW occurrence(s)]
-DEBUG --> [MetaService] slug=how-it-works/personal-budgeting pageName= cacheHit= path=DB
+DEBUG --> [REQ_ID=ef5e05de25df] [REQUEST][START] GET /index.php/login
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=1ae4cf414bf0] [FILTER_AFTER]
+DEBUG --> [REQ_ID=ef5e05de25df] [FILTER_BEFORE] /index.php/login
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=1ae4cf414bf0] [LIFECYCLE][END] status=200 duration_ms=689.46 memory_delta=4194304
+DEBUG --> [REQ_ID=ef5e05de25df] [ROUTE] Controller=\App\Controllers\AuthController Method=login
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=1ae4cf414bf0] [REQUEST][END]
+DEBUG --> [REQ_ID=ef5e05de25df] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=80bf1bf0b5ad] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG --> [CSRF] token name=csrf_test_name hash=6f06abfd0f2d492301407ecd9fe017f3
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=80bf1bf0b5ad] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG --> [REQ_ID=06949e18d600] [INIT] App\Controllers\AuthController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=80bf1bf0b5ad] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG --> [REQ_ID=ef5e05de25df] [FILTER_AFTER]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=80bf1bf0b5ad] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG --> [REQ_ID=ef5e05de25df] [LIFECYCLE][END] status=200 duration_ms=50.41 memory_delta=0
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=4161440cf242] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+DEBUG --> [REQ_ID=ef5e05de25df] [REQUEST][END]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=4161440cf242] [METHOD_ENTRY] show
+DEBUG --> [REQ_ID=17a6ff3e03e6] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
 
-[3 NEW occurrence(s)]
-DEBUG --> [MetaService] slug=how-it-works/personal-budgeting pageName= cacheHit=1 path=CACHE
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=17a6ff3e03e6] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=17a6ff3e03e6] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=17a6ff3e03e6] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=245d6059b112] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=245d6059b112] [METHOD_ENTRY] show
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=fc8131eec25f] [REQUEST][START] GET /index.php/How-It-Works/Daily-Financial-News
+
+[1 NEW occurrence(s)]
+DEBUG --> [REQ_ID=fc8131eec25f] [FILTER_BEFORE] /index.php/How-It-Works/Daily-Financial-News
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=80bf1bf0b5ad] [FILTER_AFTER]
+DEBUG --> [REQ_ID=fc8131eec25f] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=DailyFinancialNews
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=80bf1bf0b5ad] [LIFECYCLE][END] status=200 duration_ms=747.00 memory_delta=2097152
+DEBUG --> [REQ_ID=fc8131eec25f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Daily-Financial-News
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=80bf1bf0b5ad] [REQUEST][END]
+DEBUG --> [REQ_ID=109083e98fa2] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=f343a137bbde] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG --> [REQ_ID=109083e98fa2] [METHOD_ENTRY] DailyFinancialNews
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=f343a137bbde] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG --> [MetaService] slug=how-it-works/daily-financial-news pageName= cacheHit= path=DB
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=f343a137bbde] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG --> [REQ_ID=fc8131eec25f] [FILTER_AFTER]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=f343a137bbde] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG --> [REQ_ID=fc8131eec25f] [LIFECYCLE][END] status=200 duration_ms=734.88 memory_delta=4194304
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=24b3cc08b258] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+DEBUG --> [REQ_ID=fc8131eec25f] [REQUEST][END]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=24b3cc08b258] [METHOD_ENTRY] show
+DEBUG --> [REQ_ID=45cabfc4c423] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=f343a137bbde] [FILTER_AFTER]
+DEBUG --> [REQ_ID=45cabfc4c423] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=f343a137bbde] [LIFECYCLE][END] status=200 duration_ms=1,139.73 memory_delta=2097152
+DEBUG --> [REQ_ID=45cabfc4c423] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=f343a137bbde] [REQUEST][END]
+DEBUG --> [REQ_ID=45cabfc4c423] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=2d06c466976b] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=8835311e4237] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=93351dd704a7] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
+DEBUG --> [REQ_ID=8835311e4237] [METHOD_ENTRY] show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=93351dd704a7] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
+DEBUG --> [REQ_ID=c71437549c33] [REQUEST][START] HEAD /
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=93351dd704a7] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
+DEBUG --> [REQ_ID=b1974ee6e398] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=93351dd704a7] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
+DEBUG --> [REQ_ID=b1974ee6e398] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=301a00889aac] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
+DEBUG --> [REQ_ID=b1974ee6e398] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=301a00889aac] [METHOD_ENTRY] show
+DEBUG --> [REQ_ID=b1974ee6e398] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=93351dd704a7] [FILTER_AFTER]
+DEBUG --> [REQ_ID=18d8b7cf85ec] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=93351dd704a7] [LIFECYCLE][END] status=200 duration_ms=918.00 memory_delta=4194304
+DEBUG --> [REQ_ID=18d8b7cf85ec] [METHOD_ENTRY] show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=93351dd704a7] [REQUEST][END]
+DEBUG --> [REQ_ID=0f9c08997a82] [REQUEST][START] GET /index.php/How-It-Works/Registering-An-Account
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=0203b68bf2be] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=0f9c08997a82] [FILTER_BEFORE] /index.php/How-It-Works/Registering-An-Account
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=d115a5ead4b8] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=0f9c08997a82] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=855b1fb77230] [REQUEST][START] GET /
+DEBUG --> [REQ_ID=0f9c08997a82] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Registering-An-Account
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=855b1fb77230] [REQUEST][END]
+DEBUG --> [REQ_ID=fb21e5f3491b] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=61234d305c7e] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=fb21e5f3491b] [METHOD_ENTRY] show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=159d7b1be447] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=09587adf6d00] [REQUEST][START] GET /index.php/How-It-Works/Purchase-MyMI-Gold
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=8d6187de94c9] [REQUEST][START] GET /index.php/Management/Marketing/Content/Listing
+DEBUG --> [REQ_ID=09587adf6d00] [FILTER_BEFORE] /index.php/How-It-Works/Purchase-MyMI-Gold
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=8d6187de94c9] [FILTER_BEFORE] /index.php/Management/Marketing/Content/Listing
+DEBUG --> [REQ_ID=09587adf6d00] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=8d6187de94c9] [ROUTE] Controller=\App\Modules\Management\Controllers\MarketingAdminController Method=contentListing
+DEBUG --> [REQ_ID=09587adf6d00] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Purchase-MyMI-Gold
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=8d6187de94c9] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management/Marketing/Content/Listing
+DEBUG --> [REQ_ID=85f6e011cbea] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [CSRF] token name=csrf_test_name hash=88aabd603eb461209d0fceb6267bf840
+DEBUG --> [REQ_ID=85f6e011cbea] [METHOD_ENTRY] show
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=8d6187de94c9] [REQUEST][END]
+DEBUG --> [REQ_ID=f566e299dd0b] [REQUEST][START] HEAD /
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=4041926a2bdf] [REQUEST][START] GET /index.php/login
+DEBUG --> [REQ_ID=6672c292ddcd] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=4041926a2bdf] [FILTER_BEFORE] /index.php/login
+DEBUG --> [REQ_ID=6672c292ddcd] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=4041926a2bdf] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG --> [REQ_ID=6672c292ddcd] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=PersonalBudgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=4041926a2bdf] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG --> [REQ_ID=6672c292ddcd] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [CSRF] token name=csrf_test_name hash=746c903992694503184758d946613720
+DEBUG --> [REQ_ID=1719ff1d6cd1] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=5c2dba42de50] [INIT] App\Controllers\AuthController::GET
+DEBUG --> [REQ_ID=1719ff1d6cd1] [METHOD_ENTRY] PersonalBudgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=4041926a2bdf] [FILTER_AFTER]
+DEBUG --> [REQ_ID=1719ff1d6cd1] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Personal_Budgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=4041926a2bdf] [LIFECYCLE][END] status=200 duration_ms=127.25 memory_delta=0
+DEBUG --> [REQ_ID=6672c292ddcd] [FILTER_AFTER]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=4041926a2bdf] [REQUEST][END]
+DEBUG --> [REQ_ID=6672c292ddcd] [LIFECYCLE][END] status=200 duration_ms=1,190.77 memory_delta=8388608
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=1c5cb38b7394] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=6672c292ddcd] [REQUEST][END]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=131a1c7f84ce] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=9569ba306739] [REQUEST][START] GET /index.php/How-It-Works/Personal-Budgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=b7f5ff4daf5a] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=9569ba306739] [FILTER_BEFORE] /index.php/How-It-Works/Personal-Budgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=3d6fa06ee941] [REQUEST][START] GET /index.php/Premium-Features/Advanced-Trade-Tracker
+DEBUG --> [REQ_ID=9569ba306739] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=PersonalBudgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=b313b63d463b] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=9569ba306739] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Personal-Budgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=38989c99fe76] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+DEBUG --> [REQ_ID=69bd41fedfc4] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=38989c99fe76] [FILTER_BEFORE] /index.php/API/Management/Run-CRON-Tasks
+DEBUG --> [REQ_ID=69bd41fedfc4] [METHOD_ENTRY] PersonalBudgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=38989c99fe76] [ROUTE] Controller=\App\Modules\Management\Controllers\ManagementAPIController Method=Run_CRON_Tasks
+DEBUG --> [REQ_ID=69bd41fedfc4] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Personal_Budgeting
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=38989c99fe76] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Management/Run-CRON-Tasks
+DEBUG --> [REQ_ID=9569ba306739] [FILTER_AFTER]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=38989c99fe76] [REQUEST][END]
+DEBUG --> [REQ_ID=9569ba306739] [LIFECYCLE][END] status=200 duration_ms=1,069.33 memory_delta=4194304
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=d4f7fce2a4fb] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=9569ba306739] [REQUEST][END]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=2238a47127dd] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=5d348f168922] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=9978874912bf] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=5d348f168922] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=9efa1cb1751f] [REQUEST][START] GET /index.php/API/Alerts/fetchEmailAlerts
+DEBUG --> [REQ_ID=5d348f168922] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=InvestmentPortfolioManagement
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=9efa1cb1751f] [FILTER_BEFORE] /index.php/API/Alerts/fetchEmailAlerts
+DEBUG --> [REQ_ID=5d348f168922] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=9efa1cb1751f] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=fetchEmailAlerts
+DEBUG --> [REQ_ID=a4e4b1ede581] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=9efa1cb1751f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/fetchEmailAlerts
+DEBUG --> [REQ_ID=a4e4b1ede581] [METHOD_ENTRY] InvestmentPortfolioManagement
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=9efa1cb1751f] [REQUEST][END]
+DEBUG --> [REQ_ID=a4e4b1ede581] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=e8b71b1aa096] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=5d348f168922] [FILTER_AFTER]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=42c866693e20] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=5d348f168922] [LIFECYCLE][END] status=200 duration_ms=1,149.93 memory_delta=2097152
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=699f5334796a] [REQUEST][START] GET /index.php/Management/Wallets
+DEBUG --> [REQ_ID=5d348f168922] [REQUEST][END]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=699f5334796a] [FILTER_BEFORE] /index.php/Management/Wallets
+DEBUG --> [REQ_ID=4e03d6fd1ff5] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=699f5334796a] [ROUTE] Controller=\App\Modules\Management\Controllers\WalletsController Method=index
+DEBUG --> [REQ_ID=4e03d6fd1ff5] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=699f5334796a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Management/Wallets
+DEBUG --> [REQ_ID=4e03d6fd1ff5] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=InvestmentPortfolioManagement
 
 [1 NEW occurrence(s)]
-DEBUG --> [CSRF] token name=csrf_test_name hash=78762aa8c9070a34c55d7dcbcaf824c4
+DEBUG --> [REQ_ID=4e03d6fd1ff5] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=699f5334796a] [REQUEST][END]
+DEBUG --> [REQ_ID=69ee1332fdca] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=2b32db93e698] [REQUEST][START] GET /index.php/login
+DEBUG --> [REQ_ID=69ee1332fdca] [METHOD_ENTRY] InvestmentPortfolioManagement
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=2b32db93e698] [FILTER_BEFORE] /index.php/login
+DEBUG --> [REQ_ID=69ee1332fdca] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=2b32db93e698] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG --> [REQ_ID=4e03d6fd1ff5] [FILTER_AFTER]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=2b32db93e698] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG --> [REQ_ID=4e03d6fd1ff5] [LIFECYCLE][END] status=200 duration_ms=983.44 memory_delta=2097152
 
 [1 NEW occurrence(s)]
-DEBUG --> [CSRF] token name=csrf_test_name hash=6641af1835c67772d03d9180c5571368
+DEBUG --> [REQ_ID=4e03d6fd1ff5] [REQUEST][END]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=6dcac230e59a] [INIT] App\Controllers\AuthController::GET
+DEBUG --> [REQ_ID=3be6da961312] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=2b32db93e698] [FILTER_AFTER]
+DEBUG --> [REQ_ID=3be6da961312] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=2b32db93e698] [LIFECYCLE][END] status=200 duration_ms=60.96 memory_delta=0
+DEBUG --> [REQ_ID=3be6da961312] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=InvestmentPortfolioManagement
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=2b32db93e698] [REQUEST][END]
+DEBUG --> [REQ_ID=3be6da961312] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=6ba9a843a4c9] [REQUEST][START] GET /
+DEBUG --> [REQ_ID=731a31a835c3] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=6ba9a843a4c9] [FILTER_BEFORE] /
+DEBUG --> [REQ_ID=731a31a835c3] [METHOD_ENTRY] InvestmentPortfolioManagement
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=6ba9a843a4c9] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG --> [REQ_ID=731a31a835c3] [VIEW_RENDER] App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=6ba9a843a4c9] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG --> [REQ_ID=3be6da961312] [FILTER_AFTER]
 
 [1 NEW occurrence(s)]
-DEBUG --> [CSRF] token name=csrf_test_name hash=630ff2a85d9a558e6eaa7b6b3786ef18
+DEBUG --> [REQ_ID=3be6da961312] [LIFECYCLE][END] status=200 duration_ms=935.80 memory_delta=2097152
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=5b88b5a29fc6] [INIT] App\Controllers\Home::GET
+DEBUG --> [REQ_ID=3be6da961312] [REQUEST][END]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=5b88b5a29fc6] [VIEW_RENDER] themes/public/home
+DEBUG --> [REQ_ID=b7d2dd5f165d] [REQUEST][START] GET /index.php/How-It-Works/Investment-Portfolio-Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=6ba9a843a4c9] [FILTER_AFTER]
+DEBUG --> [REQ_ID=b7d2dd5f165d] [FILTER_BEFORE] /index.php/How-It-Works/Investment-Portfolio-Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=6ba9a843a4c9] [LIFECYCLE][END] status=200 duration_ms=677.49 memory_delta=4194304
+DEBUG --> [REQ_ID=b7d2dd5f165d] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=InvestmentPortfolioManagement
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=6ba9a843a4c9] [REQUEST][END]
+DEBUG --> [REQ_ID=b7d2dd5f165d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Investment-Portfolio-Management
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=2ed975608bf9] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=710b287c917d] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=7716a38a176e] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=710b287c917d] [METHOD_ENTRY] InvestmentPortfolioManagement
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=6e4c64f9db93] [REQUEST][START] HEAD /
+DEBUG --> [MetaService] slug=how-it-works/investment-portfolio-management pageName= cacheHit= path=DB
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=645ae646def9] [REQUEST][START] GET /
+DEBUG --> [REQ_ID=b7d2dd5f165d] [FILTER_AFTER]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=645ae646def9] [FILTER_BEFORE] /
+DEBUG --> [REQ_ID=b7d2dd5f165d] [LIFECYCLE][END] status=200 duration_ms=1,228.45 memory_delta=0
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=645ae646def9] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG --> [REQ_ID=b7d2dd5f165d] [REQUEST][END]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=645ae646def9] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG --> [REQ_ID=c47484d98887] [REQUEST][START] GET /index.php/How-It-Works/Purchase-MyMI-Gold
 
 [1 NEW occurrence(s)]
-DEBUG --> [CSRF] token name=csrf_test_name hash=2a8e216348e47da69e686d5910986d16
+DEBUG --> [REQ_ID=c47484d98887] [FILTER_BEFORE] /index.php/How-It-Works/Purchase-MyMI-Gold
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=c1ae434ef178] [INIT] App\Controllers\Home::GET
+DEBUG --> [REQ_ID=c47484d98887] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=PurchaseMyMIGold
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=c1ae434ef178] [VIEW_RENDER] themes/public/home
+DEBUG --> [REQ_ID=c47484d98887] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Purchase-MyMI-Gold
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=645ae646def9] [FILTER_AFTER]
+DEBUG --> [REQ_ID=866dea5a18c8] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=645ae646def9] [LIFECYCLE][END] status=200 duration_ms=776.97 memory_delta=4194304
+DEBUG --> [REQ_ID=866dea5a18c8] [METHOD_ENTRY] PurchaseMyMIGold
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=645ae646def9] [REQUEST][END]
+DEBUG --> [REQ_ID=6a3b068e0104] [REQUEST][START] GET /index.php/How-It-Works/Purchase-MyMI-Gold
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=01b0d2f7cfac] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=6a3b068e0104] [FILTER_BEFORE] /index.php/How-It-Works/Purchase-MyMI-Gold
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=d63f790db611] [REQUEST][START] GET /
+DEBUG --> [REQ_ID=6a3b068e0104] [ROUTE] Controller=\App\Modules\Blog\Controllers\HowItWorksController Method=PurchaseMyMIGold
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=d63f790db611] [REQUEST][END]
+DEBUG --> [REQ_ID=6a3b068e0104] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/How-It-Works/Purchase-MyMI-Gold
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=e690e16d3896] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=7695a060ac2e] [INIT] App\Modules\Blog\Controllers\HowItWorksController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=43c7aed6d7f2] [REQUEST][START] GET /index.php/Investments/News
+DEBUG --> [REQ_ID=7695a060ac2e] [METHOD_ENTRY] PurchaseMyMIGold
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=43c7aed6d7f2] [FILTER_BEFORE] /index.php/Investments/News
+DEBUG --> [REQ_ID=586db75e4265] [REQUEST][START] GET /index.php/MyMI-Gold/Goals/Daily
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=43c7aed6d7f2] [ROUTE] Controller=closure_route Method=index
+DEBUG --> [REQ_ID=586db75e4265] [FILTER_BEFORE] /index.php/MyMI-Gold/Goals/Daily
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=43c7aed6d7f2] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Investments/News
+DEBUG --> [REQ_ID=586db75e4265] [ROUTE] Controller=\App\Modules\User\Controllers\DashboardController Method=goals
 
 [1 NEW occurrence(s)]
-DEBUG --> [CSRF] token name=csrf_test_name hash=4a9c5762a679e8f10ef310e6319651ff
+DEBUG --> [REQ_ID=586db75e4265] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/MyMI-Gold/Goals/Daily
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=43c7aed6d7f2] [REQUEST][END]
+DEBUG --> [CSRF] token name=csrf_test_name hash=039b68ab27d3e91325f7294d37e30b43
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=1403ffd95140] [REQUEST][START] GET /index.php/login
+DEBUG --> [REQ_ID=586db75e4265] [REQUEST][END]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=1403ffd95140] [FILTER_BEFORE] /index.php/login
+DEBUG --> [REQ_ID=2fbbf1765fa0] [REQUEST][START] GET /index.php/login
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=1403ffd95140] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG --> [REQ_ID=2fbbf1765fa0] [FILTER_BEFORE] /index.php/login
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=1403ffd95140] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG --> [REQ_ID=2fbbf1765fa0] [ROUTE] Controller=\App\Controllers\AuthController Method=login
 
 [1 NEW occurrence(s)]
-DEBUG --> [CSRF] token name=csrf_test_name hash=7787684ea8a5f5b3a47f03121cad25c2
+DEBUG --> [REQ_ID=2fbbf1765fa0] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=747dae0e1505] [INIT] App\Controllers\AuthController::GET
+DEBUG --> [CSRF] token name=csrf_test_name hash=cffa1d6cc7382f828cd1c7ad988d1318
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=1403ffd95140] [FILTER_AFTER]
+DEBUG --> [REQ_ID=526b80bd400c] [INIT] App\Controllers\AuthController::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=1403ffd95140] [LIFECYCLE][END] status=200 duration_ms=116.35 memory_delta=0
+DEBUG --> [REQ_ID=2fbbf1765fa0] [FILTER_AFTER]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=1403ffd95140] [REQUEST][END]
+DEBUG --> [REQ_ID=2fbbf1765fa0] [LIFECYCLE][END] status=200 duration_ms=180.99 memory_delta=0
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=371a2e5245ef] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=2fbbf1765fa0] [REQUEST][END]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=8c91a0dfa682] [REQUEST][START] GET /
+DEBUG --> [REQ_ID=a1dc745893e1] [REQUEST][START] HEAD /
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=8c91a0dfa682] [FILTER_BEFORE] /
+DEBUG --> [REQ_ID=a6f04006113f] [REQUEST][START] GET /
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=8c91a0dfa682] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG --> [REQ_ID=a6f04006113f] [FILTER_BEFORE] /
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=8c91a0dfa682] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
+DEBUG --> [REQ_ID=a6f04006113f] [ROUTE] Controller=\App\Controllers\Home Method=index
 
 [1 NEW occurrence(s)]
-DEBUG --> [CSRF] token name=csrf_test_name hash=901a0a4d2fd26efa71698b418baca077
+DEBUG --> [REQ_ID=a6f04006113f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=9ea2bd1b05c6] [INIT] App\Controllers\Home::GET
+DEBUG --> [CSRF] token name=csrf_test_name hash=49686f7013f50d8be042e4e46ba0cbfb
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=9ea2bd1b05c6] [VIEW_RENDER] themes/public/home
+DEBUG --> [REQ_ID=6e1028930452] [INIT] App\Controllers\Home::GET
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=8c91a0dfa682] [FILTER_AFTER]
+DEBUG --> [REQ_ID=6e1028930452] [VIEW_RENDER] themes/public/home
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=8c91a0dfa682] [LIFECYCLE][END] status=200 duration_ms=784.20 memory_delta=4194304
+DEBUG --> [REQ_ID=a6f04006113f] [FILTER_AFTER]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=8c91a0dfa682] [REQUEST][END]
+DEBUG --> [REQ_ID=a6f04006113f] [LIFECYCLE][END] status=200 duration_ms=800.09 memory_delta=4194304
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=bf1bbe42bed8] [REQUEST][START] HEAD /
+DEBUG --> [REQ_ID=a6f04006113f] [REQUEST][END]
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=ca892d82a966] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+DEBUG --> [REQ_ID=141bb95c959c] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=ca892d82a966] [FILTER_BEFORE] /index.php/API/Management/Run-CRON-Tasks
+DEBUG --> [REQ_ID=141bb95c959c] [FILTER_BEFORE] /index.php/API/Management/Run-CRON-Tasks
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=ca892d82a966] [ROUTE] Controller=\App\Modules\Management\Controllers\ManagementAPIController Method=Run_CRON_Tasks
+DEBUG --> [REQ_ID=141bb95c959c] [ROUTE] Controller=\App\Modules\Management\Controllers\ManagementAPIController Method=Run_CRON_Tasks
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=ca892d82a966] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Management/Run-CRON-Tasks
+DEBUG --> [REQ_ID=141bb95c959c] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Management/Run-CRON-Tasks
 
 [1 NEW occurrence(s)]
-DEBUG --> [REQ_ID=ca892d82a966] [REQUEST][END]
+DEBUG --> [REQ_ID=141bb95c959c] [REQUEST][END]
 
 
 ---------------------------
@@ -12606,370 +15678,511 @@ LEVEL: INFO (NEW)
 ---------------------------
 
 [1 NEW occurrence(s)]
-INFO --> [spark:app:healthcheck] Completed
+INFO --> [REQ_ID=1aa67fe40e1d] [PERF] Execution time=0.055403
 
 [1 NEW occurrence(s)]
-INFO --> [SPARK_COMPLETE] App\Commands\App\Healthcheck duration=0.215964
+INFO --> [REQ_ID=9f3c2ccfa024] [MEMORY][controller-start] 4194304
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=9f3c2ccfa024] [PERF] Execution time=0.130686
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=d8ee0405dd5d] [PERF] Execution time=0.143752
+
+[6 NEW occurrence(s)]
+INFO --> [spark:ops:work] Started
+
+[6 NEW occurrence(s)]
+INFO --> [SPARK_START] App\Commands\Ops\Work
+
+[14 NEW occurrence(s)]
+INFO --> [SPARK_MEMORY] 18874368
+
+[6 NEW occurrence(s)]
+INFO --> [spark:ops:work] Intent
+
+[6 NEW occurrence(s)]
+INFO --> [spark:ops:work] Completed
+
+[1 NEW occurrence(s)]
+INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.033858
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=0bffd576d872] [PERF] Execution time=0.063930
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=54e543a175b2] [MEMORY][controller-start] 4194304
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=54e543a175b2] [PERF] Execution time=0.215545
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=44b1111ce8cf] [PERF] Execution time=0.230717
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=1ebb4efff484] [MEMORY][controller-start] 4194304
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=1ebb4efff484] [PERF] Execution time=0.073057
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=9dae22018b35] [PERF] Execution time=0.051772
+
+[1 NEW occurrence(s)]
+INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.290680
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=2cc6049fdc61] [PERF] Execution time=0.055483
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=38df288a757c] [MEMORY][controller-start] 4194304
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=38df288a757c] [PERF] Execution time=0.108921
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=69fef6d4df99] [PERF] Execution time=0.121880
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=38ce8ab3130d] [MEMORY][controller-start] 6291456
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=38ce8ab3130d] [MEMORY][commonData:start] 6291456
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=38ce8ab3130d] [MEMORY][commonData:start] 10485760
+
+[5 NEW occurrence(s)]
+INFO --> themesMemory usage: 10485760
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=38ce8ab3130d] [PERF] Execution time=0.770034
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=12ca304d9289] [PERF] Execution time=0.811166
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=07b49a2f0e09] [MEMORY][controller-start] 6291456
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=07b49a2f0e09] [MEMORY][commonData:start] 6291456
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=07b49a2f0e09] [MEMORY][commonData:start] 10485760
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=07b49a2f0e09] [PERF] Execution time=0.848323
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=88b0abbc91bb] [PERF] Execution time=0.892672
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=64747153535d] [PERF] Execution time=0.047691
+
+[1 NEW occurrence(s)]
+INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.039006
+
+[1 NEW occurrence(s)]
+INFO --> REDIRECTED ROUTE at https://www.mymiwallet.com/Knowledgebase/Tutorials
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=47f15be261d2] [PERF] Execution time=0.037353
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=c9f0cb7460fe] [MEMORY][controller-start] 4194304
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=c9f0cb7460fe] [MEMORY][commonData:start] 6291456
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=c9f0cb7460fe] [MEMORY][commonData:start] 8388608
+
+[3 NEW occurrence(s)]
+INFO --> themesMemory usage: 8388608
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=c9f0cb7460fe] [PERF] Execution time=0.689338
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=79d3d8d1749a] [PERF] Execution time=0.713578
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=f593dffed70d] [PERF] Execution time=0.056169
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=925a84ee84d9] [MEMORY][controller-start] 4194304
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=925a84ee84d9] [PERF] Execution time=0.063230
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=5ed68ad8c477] [PERF] Execution time=0.079416
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=9d57b7fc52de] [PERF] Execution time=0.055411
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=4338cd68f0e7] [MEMORY][controller-start] 4194304
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=4338cd68f0e7] [PERF] Execution time=0.135374
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=c4110687dcf1] [PERF] Execution time=0.151414
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=258eaf091e26] [MEMORY][controller-start] 4194304
 
 [2 NEW occurrence(s)]
-INFO --> [SPARK_MEMORY] 20971520
+INFO --> [REQ_ID=258eaf091e26] [MEMORY][commonData:start] 6291456
 
 [1 NEW occurrence(s)]
-INFO --> [SPARK_COMPLETE] App\Commands\AIOps\Run duration=3.320680
+INFO --> themesMemory usage: 6291456
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=ff197504b2aa] [MEMORY][controller-start] 4194304
+INFO --> [REQ_ID=258eaf091e26] [PERF] Execution time=0.078653
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=ff197504b2aa] [PERF] Execution time=0.152675
+INFO --> [REQ_ID=3fc5c2bdcd4c] [PERF] Execution time=0.089414
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=27f74c2a9d70] [MEMORY][controller-start] 4194304
+INFO --> [REQ_ID=1fc802b8c04c] [MEMORY][controller-start] 4194304
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=1fc802b8c04c] [MEMORY][commonData:start] 6291456
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=1fc802b8c04c] [MEMORY][commonData:start] 8388608
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=1fc802b8c04c] [PERF] Execution time=0.660005
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=bc8b21e6d269] [PERF] Execution time=0.671129
+
+[1 NEW occurrence(s)]
+INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.116114
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=8a6e60ca8af1] [MEMORY][controller-start] 6291456
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=8a6e60ca8af1] [MEMORY][commonData:start] 6291456
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=8a6e60ca8af1] [MEMORY][commonData:start] 10485760
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=8a6e60ca8af1] [PERF] Execution time=0.900449
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=7bc1ac45e487] [PERF] Execution time=0.942888
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=e1296a09aafd] [PERF] Execution time=0.022242
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=e316da9db1a2] [MEMORY][controller-start] 4194304
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=e316da9db1a2] [PERF] Execution time=0.112741
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=c64bc42906de] [MEMORY][controller-start] 4194304
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=c64bc42906de] [PERF] Execution time=0.026615
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=7e854f645dcf] [MEMORY][controller-start] 4194304
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=7e854f645dcf] [PERF] Execution time=0.080240
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=85edfc7a882a] [MEMORY][controller-start] 4194304
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=85edfc7a882a] [PERF] Execution time=0.015548
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=5ee885702ed3] [MEMORY][controller-start] 4194304
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=5ee885702ed3] [PERF] Execution time=0.031253
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=e7c6180e195b] [MEMORY][controller-start] 4194304
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=e7c6180e195b] [PERF] Execution time=0.015201
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=90542faf0a7c] [MEMORY][controller-start] 4194304
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=90542faf0a7c] [PERF] Execution time=0.014100
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=586d6cfb40f9] [MEMORY][controller-start] 4194304
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=586d6cfb40f9] [PERF] Execution time=0.012607
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=26cfffd25a3b] [MEMORY][controller-start] 4194304
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=26cfffd25a3b] [PERF] Execution time=0.013531
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=dfb144a5b6f0] [MEMORY][controller-start] 4194304
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=dfb144a5b6f0] [PERF] Execution time=0.015710
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=38679a424653] [MEMORY][controller-start] 4194304
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=38679a424653] [PERF] Execution time=0.014419
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=9c7254cbcacb] [MEMORY][controller-start] 4194304
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=9c7254cbcacb] [PERF] Execution time=0.034923
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=1771937ec36a] [MEMORY][controller-start] 6291456
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=1771937ec36a] [PERF] Execution time=0.324994
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=735133a20bb0] [MEMORY][controller-start] 4194304
 
 [2 NEW occurrence(s)]
-INFO --> [REQ_ID=27f74c2a9d70] [MEMORY][commonData:start] 4194304
+INFO --> [REQ_ID=735133a20bb0] [MEMORY][commonData:start] 4194304
 
 [1 NEW occurrence(s)]
 INFO --> themesMemory usage: 4194304
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=27f74c2a9d70] [PERF] Execution time=0.056646
+INFO --> [REQ_ID=735133a20bb0] [PERF] Execution time=0.040891
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=35ae500c3ad9] [PERF] Execution time=0.072363
+INFO --> [REQ_ID=5391ed283452] [PERF] Execution time=0.056149
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=5e4c2c9ad558] [MEMORY][controller-start] 4194304
+INFO --> [REQ_ID=6ac612f42b00] [MEMORY][controller-start] 4194304
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=5e4c2c9ad558] [MEMORY][commonData:start] 6291456
+INFO --> [REQ_ID=6ac612f42b00] [PERF] Execution time=0.018732
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=5e4c2c9ad558] [MEMORY][commonData:start] 8388608
-
-[7 NEW occurrence(s)]
-INFO --> themesMemory usage: 8388608
+INFO --> [REQ_ID=bdc51805aed7] [MEMORY][controller-start] 4194304
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=5e4c2c9ad558] [PERF] Execution time=0.634485
+INFO --> [REQ_ID=bdc51805aed7] [PERF] Execution time=0.107764
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=695f268e00a0] [PERF] Execution time=0.644326
+INFO --> [REQ_ID=ebe909e2e8c5] [MEMORY][controller-start] 4194304
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=4cf790320a5b] [MEMORY][controller-start] 6291456
+INFO --> [REQ_ID=ebe909e2e8c5] [PERF] Execution time=0.012555
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=4cf790320a5b] [MEMORY][commonData:start] 6291456
+INFO --> [REQ_ID=da9cd7b0a4b8] [MEMORY][controller-start] 4194304
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=4cf790320a5b] [MEMORY][commonData:start] 8388608
+INFO --> [REQ_ID=da9cd7b0a4b8] [PERF] Execution time=0.044566
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=4cf790320a5b] [PERF] Execution time=0.725029
+INFO --> [REQ_ID=19753ac97619] [MEMORY][controller-start] 4194304
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=53921d8d2975] [PERF] Execution time=0.738750
+INFO --> [REQ_ID=19753ac97619] [PERF] Execution time=0.030289
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=06c61ab6e5ae] [MEMORY][controller-start] 6291456
+INFO --> [REQ_ID=88fcc2f0a563] [MEMORY][controller-start] 4194304
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=06c61ab6e5ae] [MEMORY][commonData:start] 6291456
+INFO --> [REQ_ID=88fcc2f0a563] [PERF] Execution time=0.014670
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=06c61ab6e5ae] [MEMORY][commonData:start] 8388608
+INFO --> [REQ_ID=06949e18d600] [MEMORY][controller-start] 6291456
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=06c61ab6e5ae] [PERF] Execution time=0.741271
+INFO --> [REQ_ID=06949e18d600] [PERF] Execution time=0.048205
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=f468aa9b4a3f] [PERF] Execution time=0.794009
+INFO --> [REQ_ID=ef5e05de25df] [PERF] Execution time=0.091142
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=df249ace4d1e] [MEMORY][controller-start] 6291456
+INFO --> [REQ_ID=245d6059b112] [MEMORY][controller-start] 4194304
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=df249ace4d1e] [MEMORY][commonData:start] 6291456
+INFO --> [REQ_ID=245d6059b112] [PERF] Execution time=0.183807
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=df249ace4d1e] [MEMORY][commonData:start] 10485760
-
-[8 NEW occurrence(s)]
-INFO --> themesMemory usage: 10485760
+INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.046969
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=df249ace4d1e] [PERF] Execution time=0.824444
+INFO --> [REQ_ID=109083e98fa2] [MEMORY][controller-start] 4194304
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=5053cdfbe968] [PERF] Execution time=1.326890
+INFO --> [REQ_ID=109083e98fa2] [MEMORY][commonData:start] 4194304
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=4a771ef203b5] [MEMORY][controller-start] 6291456
+INFO --> [REQ_ID=109083e98fa2] [PERF] Execution time=0.734612
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=4a771ef203b5] [PERF] Execution time=0.060021
+INFO --> [REQ_ID=fc8131eec25f] [PERF] Execution time=0.748118
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=f984f08efcc8] [PERF] Execution time=0.080689
+INFO --> [REQ_ID=8835311e4237] [MEMORY][controller-start] 6291456
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=a302cefcce0a] [MEMORY][controller-start] 6291456
+INFO --> [REQ_ID=8835311e4237] [PERF] Execution time=0.019580
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=a302cefcce0a] [MEMORY][commonData:start] 6291456
+INFO --> [REQ_ID=18d8b7cf85ec] [MEMORY][controller-start] 6291456
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=a302cefcce0a] [MEMORY][commonData:start] 10485760
+INFO --> [REQ_ID=18d8b7cf85ec] [PERF] Execution time=0.365806
 
 [1 NEW occurrence(s)]
-INFO --> themesMemory usage: 14680064
+INFO --> [REQ_ID=fb21e5f3491b] [MEMORY][controller-start] 4194304
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=a302cefcce0a] [PERF] Execution time=1.565384
+INFO --> [REQ_ID=fb21e5f3491b] [PERF] Execution time=0.017360
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=109883493893] [PERF] Execution time=1.608035
+INFO --> [REQ_ID=85f6e011cbea] [MEMORY][controller-start] 4194304
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=fe1a6212c77b] [MEMORY][controller-start] 8388608
+INFO --> [REQ_ID=85f6e011cbea] [PERF] Execution time=0.049726
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=1719ff1d6cd1] [MEMORY][controller-start] 4194304
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=1719ff1d6cd1] [MEMORY][commonData:start] 6291456
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=1719ff1d6cd1] [MEMORY][commonData:start] 8388608
+
+[5 NEW occurrence(s)]
+INFO --> themesMemory usage: 12582912
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=1719ff1d6cd1] [PERF] Execution time=1.188827
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=6672c292ddcd] [PERF] Execution time=1.216116
+
+[1 NEW occurrence(s)]
+INFO --> [REQ_ID=69bd41fedfc4] [MEMORY][controller-start] 8388608
 
 [2 NEW occurrence(s)]
-INFO --> [REQ_ID=fe1a6212c77b] [MEMORY][commonData:start] 8388608
+INFO --> [REQ_ID=69bd41fedfc4] [MEMORY][commonData:start] 8388608
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=fe1a6212c77b] [PERF] Execution time=1.556507
+INFO --> [REQ_ID=69bd41fedfc4] [PERF] Execution time=1.069173
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=37db21492688] [PERF] Execution time=1.567259
+INFO --> [REQ_ID=9569ba306739] [PERF] Execution time=1.080268
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=c9a4c08dd1a7] [MEMORY][controller-start] 10485760
+INFO --> [REQ_ID=a4e4b1ede581] [MEMORY][controller-start] 10485760
 
 [2 NEW occurrence(s)]
-INFO --> [REQ_ID=c9a4c08dd1a7] [MEMORY][commonData:start] 10485760
+INFO --> [REQ_ID=a4e4b1ede581] [MEMORY][commonData:start] 10485760
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=c9a4c08dd1a7] [PERF] Execution time=1.290968
+INFO --> [REQ_ID=a4e4b1ede581] [PERF] Execution time=1.149684
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=a4f8cab7da81] [PERF] Execution time=1.301256
+INFO --> [REQ_ID=5d348f168922] [PERF] Execution time=1.159758
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=d02baf0e90a2] [PERF] Execution time=0.052424
+INFO --> [REQ_ID=69ee1332fdca] [MEMORY][controller-start] 10485760
 
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=7c67c84f73fa] [MEMORY][controller-start] 4194304
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=7c67c84f73fa] [PERF] Execution time=0.144793
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=57458f98e61d] [PERF] Execution time=0.157372
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=ecd5524f459a] [MEMORY][controller-start] 6291456
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=ecd5524f459a] [MEMORY][commonData:start] 6291456
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=ecd5524f459a] [PERF] Execution time=0.799137
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=45798e14b890] [PERF] Execution time=0.843102
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=c2124f0e4b3b] [MEMORY][controller-start] 6291456
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=c2124f0e4b3b] [MEMORY][commonData:start] 6291456
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=c2124f0e4b3b] [PERF] Execution time=0.700239
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=15dddbae8e1a] [PERF] Execution time=0.710238
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=3f8d1867a989] [PERF] Execution time=0.052954
-
-[8 NEW occurrence(s)]
-INFO --> [spark:ops:work] Started
-
-[8 NEW occurrence(s)]
-INFO --> [SPARK_START] App\Commands\Ops\Work
-
-[18 NEW occurrence(s)]
-INFO --> [SPARK_MEMORY] 18874368
-
-[8 NEW occurrence(s)]
-INFO --> [spark:ops:work] Intent
-
-[8 NEW occurrence(s)]
-INFO --> [spark:ops:work] Completed
-
-[1 NEW occurrence(s)]
-INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.109340
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=6d87a3f273bb] [MEMORY][controller-start] 4194304
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=6d87a3f273bb] [MEMORY][commonData:start] 4194304
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=6d87a3f273bb] [PERF] Execution time=0.688677
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=1ae4cf414bf0] [PERF] Execution time=0.702711
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=4161440cf242] [MEMORY][controller-start] 6291456
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=4161440cf242] [MEMORY][commonData:start] 6291456
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=4161440cf242] [PERF] Execution time=0.746666
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=80bf1bf0b5ad] [PERF] Execution time=0.757498
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=24b3cc08b258] [MEMORY][controller-start] 6291456
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=24b3cc08b258] [MEMORY][commonData:start] 6291456
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=24b3cc08b258] [PERF] Execution time=1.139526
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=f343a137bbde] [PERF] Execution time=1.150285
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=301a00889aac] [MEMORY][controller-start] 6291456
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=301a00889aac] [MEMORY][commonData:start] 6291456
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=301a00889aac] [PERF] Execution time=0.915726
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=93351dd704a7] [PERF] Execution time=0.957877
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=855b1fb77230] [PERF] Execution time=0.037819
-
-[1 NEW occurrence(s)]
-INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.022799
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=8d6187de94c9] [PERF] Execution time=0.059464
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=5c2dba42de50] [MEMORY][controller-start] 4194304
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=5c2dba42de50] [PERF] Execution time=0.126922
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=4041926a2bdf] [PERF] Execution time=0.140205
-
-[1 NEW occurrence(s)]
-INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.170199
-
-[1 NEW occurrence(s)]
-INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.040007
+[2 NEW occurrence(s)]
+INFO --> [REQ_ID=69ee1332fdca] [MEMORY][commonData:start] 10485760
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=38989c99fe76] [PERF] Execution time=0.053710
+INFO --> [REQ_ID=69ee1332fdca] [PERF] Execution time=0.983157
 
 [1 NEW occurrence(s)]
-INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.105529
+INFO --> [REQ_ID=4e03d6fd1ff5] [PERF] Execution time=0.995061
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=9efa1cb1751f] [PERF] Execution time=0.047665
+INFO --> [REQ_ID=731a31a835c3] [MEMORY][controller-start] 10485760
 
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=699f5334796a] [PERF] Execution time=0.026002
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=6dcac230e59a] [MEMORY][controller-start] 4194304
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=6dcac230e59a] [PERF] Execution time=0.059844
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=2b32db93e698] [PERF] Execution time=0.083225
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=5b88b5a29fc6] [MEMORY][controller-start] 6291456
+[2 NEW occurrence(s)]
+INFO --> [REQ_ID=731a31a835c3] [MEMORY][commonData:start] 10485760
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=5b88b5a29fc6] [MEMORY][commonData:start] 6291456
+INFO --> [REQ_ID=731a31a835c3] [PERF] Execution time=0.935510
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=5b88b5a29fc6] [MEMORY][commonData:start] 10485760
+INFO --> [REQ_ID=3be6da961312] [PERF] Execution time=0.946097
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=5b88b5a29fc6] [PERF] Execution time=0.675372
+INFO --> [REQ_ID=710b287c917d] [MEMORY][controller-start] 10485760
 
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=6ba9a843a4c9] [PERF] Execution time=0.715777
-
-[1 NEW occurrence(s)]
-INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.024222
+[2 NEW occurrence(s)]
+INFO --> [REQ_ID=710b287c917d] [MEMORY][commonData:start] 10485760
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=c1ae434ef178] [MEMORY][controller-start] 6291456
+INFO --> [REQ_ID=710b287c917d] [PERF] Execution time=1.228193
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=c1ae434ef178] [MEMORY][commonData:start] 6291456
+INFO --> [REQ_ID=b7d2dd5f165d] [PERF] Execution time=1.239494
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=c1ae434ef178] [MEMORY][commonData:start] 10485760
+INFO --> [REQ_ID=866dea5a18c8] [MEMORY][controller-start] 10485760
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=c1ae434ef178] [PERF] Execution time=0.774978
+INFO --> [REQ_ID=866dea5a18c8] [PERF] Execution time=0.046739
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=645ae646def9] [PERF] Execution time=0.815238
+INFO --> [REQ_ID=7695a060ac2e] [MEMORY][controller-start] 6291456
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=d63f790db611] [PERF] Execution time=0.040259
+INFO --> [REQ_ID=7695a060ac2e] [PERF] Execution time=0.194226
 
 [1 NEW occurrence(s)]
-INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.099356
+INFO --> [REQ_ID=586db75e4265] [PERF] Execution time=0.019030
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=43c7aed6d7f2] [PERF] Execution time=0.026550
+INFO --> [REQ_ID=526b80bd400c] [MEMORY][controller-start] 4194304
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=747dae0e1505] [MEMORY][controller-start] 4194304
+INFO --> [REQ_ID=526b80bd400c] [PERF] Execution time=0.168538
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=747dae0e1505] [PERF] Execution time=0.116132
+INFO --> [REQ_ID=2fbbf1765fa0] [PERF] Execution time=0.330376
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=1403ffd95140] [PERF] Execution time=0.132364
+INFO --> [REQ_ID=6e1028930452] [MEMORY][controller-start] 6291456
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=9ea2bd1b05c6] [MEMORY][controller-start] 6291456
+INFO --> [REQ_ID=6e1028930452] [MEMORY][commonData:start] 6291456
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=9ea2bd1b05c6] [MEMORY][commonData:start] 6291456
+INFO --> [REQ_ID=6e1028930452] [MEMORY][commonData:start] 10485760
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=9ea2bd1b05c6] [MEMORY][commonData:start] 10485760
+INFO --> [REQ_ID=6e1028930452] [PERF] Execution time=0.796818
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=9ea2bd1b05c6] [PERF] Execution time=0.782186
+INFO --> [REQ_ID=a6f04006113f] [PERF] Execution time=0.912975
 
 [1 NEW occurrence(s)]
-INFO --> [REQ_ID=8c91a0dfa682] [PERF] Execution time=0.823171
+INFO --> [REQ_ID=141bb95c959c] [PERF] Execution time=0.062690
 
 [1 NEW occurrence(s)]
 INFO --> [SPARK_START] App\Commands\AIOps\Run
@@ -12978,10 +16191,7 @@ INFO --> [SPARK_START] App\Commands\AIOps\Run
 INFO --> [spark:aiops:run] Intent
 
 [1 NEW occurrence(s)]
-INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.197098
-
-[1 NEW occurrence(s)]
-INFO --> [REQ_ID=ca892d82a966] [PERF] Execution time=0.108374
+INFO --> [SPARK_COMPLETE] App\Commands\Ops\Work duration=0.136740
 
 [1 NEW occurrence(s)]
 INFO --> [AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Started
@@ -12997,50 +16207,47 @@ INFO --> [spark:logs:summarize] Intent
 LEVEL: WARNING (NEW)
 ---------------------------
 
-[1 NEW occurrence(s)]
-WARNING --> Patch generation returned empty diff
-
-[24 NEW occurrence(s)]
+[18 NEW occurrence(s)]
 WARNING --> [404] URI=https://www.mymiwallet.com/index.php/
 
-[24 NEW occurrence(s)]
+[18 NEW occurrence(s)]
 WARNING --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
 
-[1 NEW occurrence(s)]
-WARNING --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works/investing
+[3 NEW occurrence(s)]
+WARNING --> MyMIWallets initialized without numeric user context.
 
 [1 NEW occurrence(s)]
-WARNING --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works/investing | referrer: none
+WARNING --> [404] URI=https://www.mymiwallet.com/index.php/Premium_Features/Brokerage-Integrations
 
 [1 NEW occurrence(s)]
-WARNING --> [404] URI=https://www.mymiwallet.com/index.php/images/ci4-portfolio.png
+WARNING --> 404 route miss: https://www.mymiwallet.com/index.php/Premium_Features/Brokerage-Integrations | referrer: none
 
 [1 NEW occurrence(s)]
-WARNING --> 404 route miss: https://www.mymiwallet.com/index.php/images/ci4-portfolio.png | referrer: none
+WARNING --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works/budgeting
 
 [1 NEW occurrence(s)]
-WARNING --> [404] URI=https://www.mymiwallet.com/index.php/Premium-Features/Advanced-Trade-Tracker
-
-[1 NEW occurrence(s)]
-WARNING --> 404 route miss: https://www.mymiwallet.com/index.php/Premium-Features/Advanced-Trade-Tracker | referrer: none
+WARNING --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works/budgeting | referrer: none
 
 
 ---------------------------
 LEVEL: ERROR (NEW)
 ---------------------------
 
-[2 NEW occurrence(s)]
+[1 NEW occurrence(s)]
 ERROR --> [ERROR_PAGE] event=error_404 status=404 message=Page not found.
+
+[3 NEW occurrence(s)]
+ERROR --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
 
 
 ---------------------------
 LEVEL: CRITICAL (NEW)
 ---------------------------
 
-[27 NEW occurrence(s)]
+[20 NEW occurrence(s)]
 CRITICAL --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
 
-[27 NEW occurrence(s)]
+[20 NEW occurrence(s)]
 CRITICAL --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
 
 
