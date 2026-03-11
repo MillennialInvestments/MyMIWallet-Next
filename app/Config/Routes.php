@@ -1613,12 +1613,6 @@ $routes->group('ScriptStudio', ['namespace' => 'App\\Modules\\ScriptStudio\\Cont
 // Public: How It Works
 $routes->group('How-It-Works', ['namespace' => 'App\Modules\Blog\Controllers'], static function ($routes) {
     $routes->get('/', 'HowItWorksController::index');
-    $routes->get('Daily-Financial-News', 'HowItWorksController::DailyFinancialNews');
-    $routes->get('Investment-Portfolio-Management', 'HowItWorksController::InvestmentPortfolioManagement');
-    $routes->get('Personal-Budgeting', 'HowItWorksController::PersonalBudgeting');
-    $routes->get('MyMI-Gold', 'HowItWorksController::MyMIGold');
-    $routes->get('Purchase-MyMI-Gold', 'HowItWorksController::PurchaseMyMIGold');
-    $routes->get('Setting-Financial-Goals', 'HowItWorksController::show/setting-financial-goals');
     $routes->get('(:segment)', 'HowItWorksController::show/$1');
 });
 

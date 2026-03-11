@@ -163,55 +163,23 @@ class HowItWorksController extends UserController
     public function show(string $slug = 'overview'): ResponseInterface
     {
         $normalizedSlug = $this->normalizeSlug($slug);
+        $docsService = service('docs');
 
-        $viewMap = [
-            'registering-an-account'          => 'App\Modules\Blog\Views\HowItWorks\Registering_An_Account',
-            'account-security'                => 'App\Modules\Blog\Views\HowItWorks\Registering_An_Account',
-            'personal-budgeting'              => 'App\Modules\Blog\Views\HowItWorks\Personal_Budgeting',
-            'investment-dashboard'            => 'App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management',
-            'investment-portfolio-management' => 'App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management',
-            'setting-financial-goals'         => 'App\Modules\Blog\Views\HowItWorks\Determining_Your_Financial_Goals',
-            'determining-your-financial-goals'=> 'App\Modules\Blog\Views\HowItWorks\Determining_Your_Financial_Goals',
-            'mymi-gold'                       => 'App\Modules\Blog\Views\HowItWorks\MyMI_Gold',
-            'mymi-exchange'                   => 'App\Modules\Blog\Views\HowItWorks\Manage_Finances',
-            'features-and-plans'              => 'App\Modules\Blog\Views\HowItWorks\Features_And_Plans',
-            'pricing'                         => 'App\Modules\Blog\Views\HowItWorks\Features_And_Plans',
-            'manage-finances'                 => 'App\Modules\Blog\Views\HowItWorks\Manage_Finances',
-            'managing-mymi-wallets'           => 'App\Modules\Blog\Views\HowItWorks\Manage_Finances',
-            'daily-financial-news'            => 'App\Modules\Blog\Views\HowItWorks\Daily_Financial_News',
-            'trade-alerts'                    => 'App\Modules\Blog\Views\HowItWorks\Daily_Financial_News',
-            'discord'                         => 'App\Modules\Blog\Views\HowItWorks\Discord',
-            'discord-community'               => 'App\Modules\Blog\Views\HowItWorks\Discord',
-            'streaming'                       => 'App\Modules\Blog\Views\HowItWorks\Streaming',
-            'purchase-mymi-gold'              => 'App\Modules\Blog\Views\HowItWorks\Purchase_MyMI_Gold',
-        ];
-
-        if (isset($viewMap[$normalizedSlug])) {
-            return $this->renderPublic($viewMap[$normalizedSlug], [
-                'slug' => $normalizedSlug,
-                'title' => $this->getGuideTitle($normalizedSlug),
-                'navItems' => $this->getNavItems(),
-                'contentHtml' => '',
-            ]);
-        }
-
-        // 3) Dynamic docs/how-it-works/*.md fallback
-        if ($this->docsRenderer instanceof DocsRendererService) {
-            $docPage = $this->docsRenderer->renderDocBySlug($normalizedSlug);
-            if (is_array($docPage)) {
-                $data = [
-                    'layout'      => 'public',
-                    'title'       => $docPage['title'] ?? ucwords(str_replace('-', ' ', $normalizedSlug)),
-                    'slug'        => $docPage['slug'] ?? $normalizedSlug,
-                    'contentHtml' => $docPage['contentHtml'] ?? '',
-                    'navItems'    => $this->getNavItems(),
-                ];
-
-                return $this->renderPublic('App\Modules\Blog\Views\HowItWorks\index', $data);
+        if ($docsService) {
+            $doc = $docsService->getDoc($normalizedSlug, 'how-it-works');
+            if (is_array($doc)) {
+                return $this->renderPublic('Modules/Blog/Views/HowItWorks/index', [
+                    'slug' => $doc['slug'] ?? $normalizedSlug,
+                    'title' => $doc['title'] ?? $this->getGuideTitle($normalizedSlug),
+                    'contentHtml' => $doc['contentHtml'] ?? '',
+                    'navItems' => $this->getNavItems(),
+                    'seoTitle' => $doc['title'] ?? null,
+                    'seoDescription' => $doc['description'] ?? null,
+                    'seoKeywords' => isset($doc['keywords']) && is_array($doc['keywords']) ? implode(', ', $doc['keywords']) : null,
+                ]);
             }
         }
 
-        // Graceful 404 (no exception)
         return $this->response
             ->setStatusCode(404)
             ->setBody(view('errors/html/error_404'));
@@ -312,16 +280,6 @@ class HowItWorksController extends UserController
         ]);
     }
 
-    protected function parseMarkdownToHtml(string $markdown): string
-    {
-        if (class_exists(\Parsedown::class)) {
-            $parsedown = new \Parsedown();
-            $parsedown->setSafeMode(true);
-            return $parsedown->text($markdown);
-        }
-
-        return nl2br(esc($markdown));
-    }
 
     protected function getGuideTitle(string $slug): string
     {
@@ -335,52 +293,13 @@ class HowItWorksController extends UserController
 
     protected function getNavItems(): array
     {
-        $items = [
-            ['slug' => 'overview', 'label' => 'Overview'],
-            ['slug' => 'registering-an-account', 'label' => 'Registering an Account'],
-            ['slug' => 'account-security', 'label' => 'Account Security'],
-            ['slug' => 'personal-budgeting', 'label' => 'Personal Budgeting'],
-            ['slug' => 'setting-financial-goals', 'label' => 'Setting Financial Goals'],
-            ['slug' => 'financial-forecasting', 'label' => 'Financial Forecasting'],
-            ['slug' => 'managing-mymi-wallets', 'label' => 'Managing MyMI Wallets'],
-            ['slug' => 'investment-dashboard', 'label' => 'Investment Dashboard'],
-            ['slug' => 'investment-portfolio-management', 'label' => 'Investment Portfolio Management'],
-            ['slug' => 'trade-alerts', 'label' => 'Trade Alerts'],
-            ['slug' => 'investment-research', 'label' => 'Investment Research'],
-            ['slug' => 'crypto-assets', 'label' => 'Crypto Assets'],
-            ['slug' => 'crypto-marketplace', 'label' => 'Crypto Marketplace'],
-            ['slug' => 'mymi-gold', 'label' => 'MyMI Gold'],
-            ['slug' => 'purchase-mymi-gold', 'label' => 'Purchase MyMI Gold'],
-            ['slug' => 'tokenized-assets', 'label' => 'Tokenized Assets'],
-            ['slug' => 'projects', 'label' => 'Projects'],
-            ['slug' => 'raising-capital-with-projects', 'label' => 'Raising Capital With Projects'],
-            ['slug' => 'marketing-automation', 'label' => 'Marketing Automation'],
-            ['slug' => 'content-generation', 'label' => 'Content Generation'],
-            ['slug' => 'discord-community', 'label' => 'Discord Community'],
-            ['slug' => 'streaming', 'label' => 'Streaming'],
-            ['slug' => 'daily-financial-news', 'label' => 'Daily Financial News'],
-            ['slug' => 'api-integrations', 'label' => 'API Integrations'],
-            ['slug' => 'data-sources', 'label' => 'Data Sources'],
-            ['slug' => 'security', 'label' => 'Security'],
-            ['slug' => 'compliance', 'label' => 'Compliance'],
-            ['slug' => 'pricing', 'label' => 'Pricing'],
-        ];
+        $docsService = service('docs');
 
-        if ($this->docsRenderer instanceof DocsRendererService) {
-            foreach ($this->docsRenderer->listHowItWorksDocs() as $docItem) {
-                $items[] = [
-                    'slug' => $docItem['slug'],
-                    'label' => $docItem['title'],
-                ];
-            }
+        if ($docsService && method_exists($docsService, 'getNavigation')) {
+            return $docsService->getNavigation('how-it-works');
         }
 
-        $unique = [];
-        foreach ($items as $item) {
-            $unique[$item['slug']] = $item;
-        }
-
-        return array_values($unique);
+        return [];
     }
 
     public function PersonalBudgeting(): ResponseInterface
