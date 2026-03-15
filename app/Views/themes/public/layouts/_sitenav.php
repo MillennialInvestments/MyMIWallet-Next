@@ -41,6 +41,9 @@ $brandAlt = 'MyMI Wallet - Investment Accounting/Analytical Software & Crypto As
         <li class="nav-item intro-nav-item">
           <a href="<?= site_url('How-It-Works'); ?>" class="link-to nav-link intro-nav-link">How It Works</a>
         </li>
+        <li class="nav-item intro-nav-item">
+          <a href="<?= site_url('Preview'); ?>" class="link-to nav-link intro-nav-link">Market Preview</a>
+        </li>
 
         <!-- <li class="nav-item intro-nav-item dropdown">
           <a class="nav-link intro-nav-link dropdown-toggle"

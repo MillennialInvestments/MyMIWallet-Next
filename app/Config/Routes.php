@@ -101,6 +101,21 @@ $routes->group('', ['namespace' => 'App\Modules\User\Controllers'], static funct
     // Legacy alias
     $routes->get('Preview/Alert/(:segment)', 'AlertsController::preview/$1');
 });
+
+$routes->get('Preview', 'PreviewController::index');
+$routes->get('Preview/Stock', 'PreviewController::stock');
+$routes->get('Preview/Stock/(:segment)', 'PreviewController::stock/$1');
+$routes->get('Preview/Crypto', 'PreviewController::crypto');
+$routes->get('Preview/Crypto/(:segment)', 'PreviewController::crypto/$1');
+$routes->get('Preview/ETF', 'PreviewController::etf');
+$routes->get('Preview/ETF/(:segment)', 'PreviewController::etf/$1');
+
+$routes->group('api/public/market', static function ($routes) {
+    $routes->get('stock/(:segment)', 'API\PublicMarketController::stock/$1');
+    $routes->get('crypto/(:segment)', 'API\PublicMarketController::crypto/$1');
+    $routes->get('etf/(:segment)', 'API\PublicMarketController::etf/$1');
+});
+
 $routes->get('/Privacy-Policy', 'Home::privacyPolicy');
 $routes->get('/Legal/Privacy-Policy', 'Home::privacyPolicy');
 $routes->get('/Legal/Terms-And-Conditions', 'Home::terms');
