@@ -53,7 +53,7 @@ class BudgetController extends BaseUserController
         'api-repayment'      => false,
         'api-categories'     => false,
     ];
-    protected $helpers = ['auth', 'form', 'url', 'cache', 'feature'];
+    protected $helpers = ['auth', 'form', 'url', 'cache', 'feature', 'premium'];
     protected ?ResponseInterface $featureGuardResponse = null;
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
@@ -412,6 +412,7 @@ class BudgetController extends BaseUserController
         $this->trace('[AJAX CHECK] isAJAX=' . ($this->request->isAJAX() ? 'YES' : 'NO'));
         $this->trace('[AJAX_HEADERS] ' . json_encode($this->request->headers()));
         $this->trace('[AJAX_POST] ' . json_encode($this->request->getPost()));
+
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('Authentication required to manage budget accounts.');
@@ -1112,6 +1113,10 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
         log_message('debug', '[BudgetController::METHOD_ENTRY] financialAnalysis');
         $this->data['pageTitle'] = 'My Financial Analysis | MyMI Wallet | The Future of Finance';
 
+        if ($premiumGuard = premium_guard('budget.financial_analysis')) {
+            return $premiumGuard;
+        }
+
         // Use service for financial analysis data
         $financialData = $this->getBudgetService()->getFinancialAnalysisData($this->cuID);
 
@@ -1129,6 +1134,10 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
     {
         log_message('debug', '[BudgetController::METHOD_ENTRY] financialForecaster');
         $this->data['pageTitle'] = 'Financial Forecaster | MyMI Wallet | The Future of Finance';
+
+        if ($premiumGuard = premium_guard('budget.forecasting')) {
+            return $premiumGuard;
+        }
 
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {

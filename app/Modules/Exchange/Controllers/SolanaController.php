@@ -18,7 +18,7 @@ class SolanaController extends UserController {
     protected $db;
     protected $email;
     protected $exchange;
-    protected $helpers = ['auth', 'form', 'url'];
+    protected $helpers = ['auth', 'form', 'url', 'premium'];
     protected $request;
     protected $session;
     protected $siteSettings;
@@ -390,6 +390,10 @@ $addr = $svc->normalizeAddress($row);
     }    
 
     public function executeSwap() {
+        if ($premiumGuard = premium_guard('exchange.swap')) {
+            return $premiumGuard;
+        }
+
         if ($this->request->getMethod() == 'post') {
             try {
                 // Extract inputs

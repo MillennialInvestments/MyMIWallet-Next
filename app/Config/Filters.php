@@ -151,6 +151,9 @@ class Filters extends BaseConfig
                 'except' => [
                     'login',
                     'register',
+                    'register/*',
+                    '*/register',
+                    '*/register/*',
                     'register/success',
                     'forgot',
                     'reset',
@@ -354,6 +357,8 @@ class Filters extends BaseConfig
                 'logout',
                 'register',
                 'register/*',
+                '*/register',
+                '*/register/*',
                 'forgot',
                 'forgot-password',
                 'reset-password',

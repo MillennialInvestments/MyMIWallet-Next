@@ -1,3 +1,4 @@
+<?php helper('premium'); ?>
 <?php
 $nonce                      = $nonce ?? ['script' => '', 'style' => ''];
 $csp                        = $csp   ?? [];
@@ -172,7 +173,11 @@ $subViewData                = [
                             <li class="mb-1"><a class="text-sm reset-anchor" href="<?php echo site_url('/Exchange/Solana/Create'); ?>">Create</a></li>
                         <?php endif; ?>
                         <?php if ($siteSettings->swapSolanaStatus === 1) : ?>
-                            <li class="mb-1"><a class="text-sm reset-anchor dynamicModalLoader" data-formtype="Solana" data-endpoint="coinSwap" href="#">Swap</a></li>
+                            <?php if (premium_feature_enabled('exchange.swap')) : ?>
+                                <li class="mb-1"><a class="text-sm reset-anchor dynamicModalLoader" data-formtype="Solana" data-endpoint="coinSwap" href="#">Swap</a></li>
+                            <?php else : ?>
+                                <li class="mb-1"><a class="text-sm reset-anchor" href="<?= site_url('Memberships') ?>">Swap (Upgrade)</a></li>
+                            <?php endif; ?>
                         <?php endif; ?>
                         <?php else : ?>
                             <li class="mb-1"><a class="text-sm reset-anchor" data-bs-toggle="modal" data-bs-target="#connectWalletModal" href="#">Create Wallet</a></li>

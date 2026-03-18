@@ -1,39 +1,22 @@
 <?php 
 $req = service('request');
 $uri = $uri ?? ($req ? $req->getUri() : null);
-$totalSegments = 0;
-
-if ($uri) {
-    if (method_exists($uri, 'getTotalSegments')) {
-        $totalSegments = $uri->getTotalSegments();
-    } elseif (method_exists($uri, 'getSegments')) {
-        $segs = $uri->getSegments();
-        $totalSegments = is_array($segs) ? count($segs) : 0;
-    }
-}
-$this->config               = config('Auth');
-$config                     = $this->config;
-$currentURL                 = current_url(); // Capture the current URL
-$referralLink               = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $currentURL;
-if ($totalSegments >= 2) {
-    if ($uri->getSegment(2) === 'register') {
-        $registerFormat     = 'Split-Form'; 
-        $referralPlatform   = $uri->getSegment(1); 
-    } else { 
-        $registerFormat     = 'Single-Form';
-        $referralPlatform   = 'MyMI';
-    }
-} else {
-    $registerFormat         = 'Single-Form';
-    $referralPlatform       = 'MyMI';
-}
-$subViewData                = [
-    'uri'                   => $uri,
-    'siteSettings'          => $siteSettings,
-    'socialMedia'           => $socialMedia,
-    'referralPlatform'      => $referralPlatform,
-    'referralLink'          => $referralLink,
-    'referralCode'          => $referralCode,
+$this->config = config('Auth');
+$config = $this->config;
+$currentURL = current_url();
+$referralLink = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $currentURL;
+$registrationAttribution = is_array($registrationAttribution ?? null) ? $registrationAttribution : [];
+$referralPlatform = (string) ($registrationAttribution['view_slug'] ?? 'Free');
+$hasCustomRegistrationView = (bool) ($registrationAttribution['view_exists'] ?? false);
+$registerFormat = $hasCustomRegistrationView && ! in_array($referralPlatform, ['Free', 'MyMI'], true) ? 'Split-Form' : 'Single-Form';
+$subViewData = [
+    'uri' => $uri,
+    'siteSettings' => $siteSettings,
+    'socialMedia' => $socialMedia,
+    'referralPlatform' => $referralPlatform,
+    'referralLink' => $referralLink,
+    'referralCode' => $referralCode,
+    'registrationAttribution' => $registrationAttribution,
 ];
 ?>
 <?= $this->extend($config->viewLayout) ?>
@@ -65,7 +48,7 @@ $subViewData                = [
         <?php endif; ?>
     </div>
     <?php 
-    if ($uri->getSegment(1) === 'Apex') {
+    if (($registrationAttribution['view_slug'] ?? null) === 'Apex') {
         echo view('Auth/register/resources/apexHowItWorks');
     } else {
         echo '<hr>';

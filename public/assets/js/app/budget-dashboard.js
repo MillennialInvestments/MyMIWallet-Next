@@ -23,6 +23,11 @@ async function fetchAllBudgetData() {
     window.MyMIBudget = Object.assign(window.MyMIBudget || {}, payload);
     document.dispatchEvent(new CustomEvent('mymi:budget-data-ready', { detail: payload }));
   } catch (error) {
+    if (error?.name === 'PremiumAccessError' && window.MyMIFetch?.redirectToUpgrade) {
+      window.MyMIFetch.redirectToUpgrade(error.payload);
+      return;
+    }
+
     console.error('⚠️ Budget fetch failure:', error);
     document.dispatchEvent(new CustomEvent('mymi:budget-data-error', { detail: error }));
   }

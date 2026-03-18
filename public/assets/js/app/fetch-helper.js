@@ -1,4 +1,14 @@
-import { authFetch } from '/assets/js/helpers/authFetch.js';
+import { authFetch, PremiumAccessError } from '/assets/js/helpers/authFetch.js';
+
+function redirectToUpgrade(payload = {}) {
+  const upgradeUrl = payload?.data?.upgrade_url || payload?.upgrade_url || '/Memberships';
+  const message = payload?.message || 'Premium access required.';
+  window.dispatchEvent(new CustomEvent('mymi:premium-required', { detail: { upgradeUrl, message, payload } }));
+  if (typeof window !== 'undefined' && typeof window.alert === 'function') {
+    window.alert(message);
+  }
+  window.location.assign(upgradeUrl);
+}
 
 export async function fetchJSON(url, opts = {}) {
   const headers = new Headers(opts.headers || {});
@@ -23,7 +33,11 @@ export async function fetchJSON(url, opts = {}) {
 
   const json = await response.json();
   if (!response.ok || (json && json.status === 'error')) {
-    const error = new Error((json && json.message) || `Request failed (${response.status}) for ${url}`);
+    const message = (json && json.message) || `Request failed (${response.status}) for ${url}`;
+    if (response.status === 403 && json?.data?.upgrade_url) {
+      throw new PremiumAccessError(message, json, response.status);
+    }
+    const error = new Error(message);
     error.status = response.status;
     error.payload = json;
     throw error;
@@ -31,3 +45,10 @@ export async function fetchJSON(url, opts = {}) {
 
   return json.data ?? json;
 }
+window.addEventListener('mymi:premium-required', (event) => {
+  console.warn('Premium access required', event.detail || {});
+});
+
+window.MyMIFetch = window.MyMIFetch || {};
+window.MyMIFetch.redirectToUpgrade = redirectToUpgrade;
+window.MyMIFetch.PremiumAccessError = PremiumAccessError;

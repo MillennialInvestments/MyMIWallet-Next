@@ -28,8 +28,11 @@
 
             <!-- <form class="form-horizontal" autocomplete="off" id="user_register_form"> -->
             <!-- Account Type -->
-                    <input type="hidden" id="referral" name="referral" value="<?php echo htmlspecialchars($referralPlatform ?? 'Default', ENT_QUOTES, 'UTF-8') ?? 'Default'; ?>">
-                    <input type="hidden" id="referral_link" name="referral_link" value="<?php echo htmlspecialchars($referralLink ?? 'Default', ENT_QUOTES, 'UTF-8') ?? 'Default'; ?>">
+                    <?php $registrationAttribution = is_array($registrationAttribution ?? null) ? $registrationAttribution : []; ?>
+                    <input type="hidden" id="referral" name="referral" value="<?= esc($referralCode ?? ($registrationAttribution['referral_slug'] ?? '')) ?>">
+                    <input type="hidden" id="referral_link" name="referral_link" value="<?= esc($referralLink ?? 'Default') ?>">
+                    <input type="hidden" id="source_channel" name="source_channel" value="<?= esc($registrationAttribution['source_channel'] ?? ($referralPlatform ?? 'direct')) ?>">
+                    <input type="hidden" id="campaign_code" name="campaign_code" value="<?= esc($registrationAttribution['campaign_code'] ?? '') ?>">
             <div class="form-group">
                 <label for="account_type">Account Type </label>
                 <select class="form-control" id="account_type" name="account_type" required>                 
@@ -50,13 +53,13 @@
             <!-- Email Field -->
             <div class="form-group">
                 <label for="email">Email Address</label>
-                <input type="email" class="form-control" id="email" name="email" value="" required>
+                <input type="email" class="form-control" id="email" name="email" value="<?= esc(set_value('email')) ?>" required>
             </div>
 
             <!-- Username Field -->
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" name="username" value="" required>
+                <input type="text" class="form-control" id="username" name="username" value="<?= esc(set_value('username')) ?>" required>
             </div>
 
             <!-- Password Fields -->
