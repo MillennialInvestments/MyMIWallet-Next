@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-03-08T19:00:01Z
+> Run: 2026-03-18T07:00:01Z
 
 - docs/APIs/_inventory_controllers.md
   - Last updated: 2026-02-28
@@ -1357,25 +1357,25 @@
   - Change type: unchanged
 - docs/how-it-works/financial-forecasting.md
   - Last updated: 2026-03-08
-  - Change type: new
+  - Change type: unchanged
 - docs/how-it-works/financial-goals.md
   - Last updated: 2026-03-08
-  - Change type: new
+  - Change type: unchanged
 - docs/how-it-works/investment-portfolio-management.md
   - Last updated: 2026-03-08
-  - Change type: new
+  - Change type: unchanged
 - docs/how-it-works/mymi-gold.md
   - Last updated: 2026-03-08
-  - Change type: new
+  - Change type: unchanged
 - docs/how-it-works/options-trading.md
   - Last updated: 2026-03-08
-  - Change type: new
+  - Change type: unchanged
 - docs/how-it-works/personal-budgeting.md
   - Last updated: 2026-03-08
-  - Change type: new
+  - Change type: unchanged
 - docs/how-it-works/portfolio-diversification.md
   - Last updated: 2026-03-08
-  - Change type: new
+  - Change type: unchanged
 - docs/hygiene/weekly_repo_hygiene.md
   - Last updated: 2026-01-24
   - Change type: unchanged
@@ -1519,6 +1519,9 @@
   - Change type: unchanged
 - docs/legal/crypto_customer_agreement/sections/16_misc_governing_law_changes.md
   - Last updated: 2025-12-27
+  - Change type: unchanged
+- docs/log_fixes/log_repair_2026_03_08.md
+  - Last updated: 2026-03-09
   - Change type: unchanged
 - docs/log_fixes/log_review_2026_03_08.md
   - Last updated: 2026-03-08
@@ -3820,10 +3823,10 @@
   - Change type: unchanged
 - docs/ui/how_it_works_expansion_workflow.md
   - Last updated: 2026-03-08
-  - Change type: new
+  - Change type: unchanged
 - docs/ui/how_it_works_pages.md
   - Last updated: 2026-03-08
-  - Change type: modified
+  - Change type: unchanged
 - docs/ui/mobile-qa-checklist.md
   - Last updated: 2026-01-18
   - Change type: unchanged
