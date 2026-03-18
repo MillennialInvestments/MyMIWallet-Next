@@ -23,6 +23,7 @@ class ChatAPIController extends BaseAPIController
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
         parent::initController($request, $response, $logger);
+        helper(['premium']);
         $this->toolRuns = new ChatToolRunModel();
     }
 
@@ -282,26 +283,12 @@ class ChatAPIController extends BaseAPIController
     protected function resolveTier(int $userId): string
     {
         try {
-            $db = db_connect();
-            if ($db->tableExists('bf_users_memberships')) {
-                $row = $db->table('bf_users_memberships')
-                    ->where('user_id', $userId)
-                    ->orderBy('expires_on', 'DESC')
-                    ->orderBy('created_at', 'DESC')
-                    ->get()
-                    ->getRowArray();
-
-                foreach (['tier', 'membership_tier', 'feature_level', 'feature_name', 'plan'] as $key) {
-                    if (! empty($row[$key])) {
-                        return strtoupper((string) $row[$key]);
-                    }
-                }
-            }
+            $entitlements = premium_entitlements($userId, ['feature_key' => 'alerts.trade_alerts']);
+            return strtoupper((string) ($entitlements['membershipTier'] ?? 'free'));
         } catch (Throwable $e) {
             log_message('error', 'ChatController tier lookup failed: {err}', ['err' => $e->getMessage()]);
+            return 'FREE';
         }
-
-        return 'FREE';
     }
 
     /**
@@ -320,7 +307,7 @@ class ChatAPIController extends BaseAPIController
 
     protected function hasPremiumTier(string $tier): bool
     {
-        return in_array(strtoupper($tier), ['BASIC', 'PREMIUM', 'GOLD'], true);
+        return in_array(strtoupper($tier), ['TRIAL', 'TIER1', 'TIER2', 'TIER3', 'PREMIUM', 'GOLD'], true);
     }
 
     protected function logToolRun(int $userId, string $mode, string $tool, array $requestPayload, $responsePayload, string $status): void

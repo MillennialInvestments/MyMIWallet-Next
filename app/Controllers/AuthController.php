@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Services\AuthAuditService;
 use App\Services\Auth\AuthLogger;
 use App\Services\OnboardingProgressService;
+use App\Services\RegistrationAttributionService;
 use App\Models\UserIpHistoryModel;
 use App\Modules\Support\Services\SupportTicketService;
 use App\Controllers\BaseController;
@@ -389,12 +390,10 @@ class AuthController extends BaseController
      */
     public function register()
     {
-        // If already logged in, send them away
         if ($this->auth->check()) {
             return redirect()->back();
         }
 
-        // Check if registration is allowed
         if (! $this->config->allowRegistration) {
             $this->setAuthMessage('danger', lang('Auth.registerDisabled'));
             return redirect()->back()
@@ -402,52 +401,47 @@ class AuthController extends BaseController
                 ->with('errors', ['register' => lang('Auth.registerDisabled')]);
         }
 
-        // Use the controller's request instance
         $request = $this->request;
+        $uri = $request->getUri();
 
-        $referralCode = null;
-        $uri          = null;
+        /** @var RegistrationAttributionService $registrationAttribution */
+        $registrationAttribution = service('registrationAttributionService');
+        $attribution = $registrationAttribution->resolve($request);
 
-        if ($request !== null) {
-            // Get the URI object safely
-            $uri = $request->getUri();
-
-            // 1) Try query string: /register?ref=MYCODE
-            $referralCode = $request->getGet('ref');
-
-            // 2) Fallback to a segment if query param not present
-            // Adjust `getSegment(2)` based on your real route:
-            //   /register/MYCODE        → getSegment(2)
-            //   /MYCODE/register        → getSegment(1)
-            if (! $referralCode && $uri !== null) {
-                $referralCode = $uri->getSegment(2);
-            }
-        }
-
-        if (! empty($referralCode)) {
+        $referralCode = (string) ($attribution['referral_slug'] ?? '');
+        if ($referralCode !== '') {
             $this->session->set('referral_code', $referralCode);
             service('eventTracker')->track('referral.captured', [
-                'source' => $request->getGet('ref') ? 'query' : 'segment',
+                'source' => $request->getGet('ref') ? 'query' : (($attribution['source_slug'] ?? null) ? 'dynamic-route' : 'segment'),
+                'channel' => $attribution['source_channel'] ?? 'direct',
             ]);
+        } else {
+            $referralCode = (string) ($this->session->get('referral_code') ?? '');
         }
 
-        if (empty($referralCode)) {
-            $referralCode = $this->session->get('referral_code');
-        }
+        $this->session->set('registration_attribution', $attribution);
 
         log_message('info', '[REGISTRATION] Form loaded', [
-            'referral_code' => $referralCode ?: $this->session->get('referral_code'),
-            'ip'            => $this->request->getIPAddress(),
+            'referral_code' => $referralCode !== '' ? $referralCode : null,
+            'source_channel' => $attribution['source_channel'] ?? 'direct',
+            'view_slug' => $attribution['view_slug'] ?? 'Free',
+            'campaign_code' => $attribution['campaign_code'] ?? null,
+            'ip' => $this->request->getIPAddress(),
         ]);
 
-        service('eventTracker')->track('auth.register_view');
+        service('eventTracker')->track('auth.register_view', [
+            'source_channel' => $attribution['source_channel'] ?? 'direct',
+            'view_slug' => $attribution['view_slug'] ?? 'Free',
+            'campaign_code' => $attribution['campaign_code'] ?? null,
+        ]);
 
         return $this->_render($this->config->views['register'], [
-            'config'       => $this->config,
-            'referralCode' => $referralCode,
+            'config' => $this->config,
+            'referralCode' => $referralCode !== '' ? $referralCode : null,
             'siteSettings' => config('SiteSettings'),
-            'socialMedia'  => config('SocialMedia'),
-            'uri'          => $uri, // pass the URI object if the view needs it
+            'socialMedia' => config('SocialMedia'),
+            'uri' => $uri,
+            'registrationAttribution' => $attribution,
         ]);
     }
 
@@ -523,7 +517,11 @@ class AuthController extends BaseController
         /** @var OnboardingProgressService $onboardingProgress */
         $onboardingProgress = service('onboardingProgressService');
 
-        $referralCode = trim((string) ($request->getPost('referralCode') ?? $request->getPost('referral') ?? ''));
+        /** @var RegistrationAttributionService $registrationAttribution */
+        $registrationAttribution = service('registrationAttributionService');
+        $attribution = $registrationAttribution->resolve($request);
+
+        $referralCode = trim((string) ($request->getPost('referralCode') ?? $request->getPost('referral') ?? ($attribution['referral_slug'] ?? '')));
         if ($referralCode === '') {
             $referralCode = (string) ($this->session->get('referral_code') ?? '');
         }
@@ -532,18 +530,28 @@ class AuthController extends BaseController
             $this->session->set('referral_code', $referralCode);
             service('eventTracker')->track('referral.captured', [
                 'source' => 'post',
+                'channel' => $attribution['source_channel'] ?? 'direct',
             ]);
         }
 
         log_message('info', '[REGISTRATION] Submission received', [
-            'email'         => $email,
+            'email' => $email,
             'referral_code' => $referralCode ?: null,
-            'ip'            => $request->getIPAddress(),
+            'source_channel' => $attribution['source_channel'] ?? 'direct',
+            'view_slug' => $attribution['view_slug'] ?? 'Free',
+            'campaign_code' => $attribution['campaign_code'] ?? null,
+            'ip' => $request->getIPAddress(),
         ]);
 
-        service('eventTracker')->track('auth.register_submit');
+        service('eventTracker')->track('auth.register_submit', [
+            'source_channel' => $attribution['source_channel'] ?? 'direct',
+            'view_slug' => $attribution['view_slug'] ?? 'Free',
+            'campaign_code' => $attribution['campaign_code'] ?? null,
+        ]);
 
-        $auditContext = $auditService->notifyRegistrationAttempt($email, $request);
+        $auditContext = $auditService->notifyRegistrationAttempt($email, $request) + [
+            'registration_attribution' => $attribution,
+        ];
 
         // Check if registration is allowed
         if (! $this->config->allowRegistration) {
@@ -682,12 +690,15 @@ class AuthController extends BaseController
 
             if ($newUserId > 0) {
                 $onboardingProgress->ensureRecord($newUserId);
+                $this->persistRegistrationAttribution($newUserId, $referralCode, $attribution);
             }
 
             if ($referralCode !== '') {
                 log_message('info', '[REFERRAL] Registration attributed', [
-                    'new_user_id'   => $newUserId,
+                    'new_user_id' => $newUserId,
                     'referral_code' => $referralCode,
+                    'source_channel' => $attribution['source_channel'] ?? 'direct',
+                    'campaign_code' => $attribution['campaign_code'] ?? null,
                 ]);
                 log_message('info', '[REGISTRATION] Referral applied', [
                     'user_id'       => $newUserId,
@@ -696,6 +707,8 @@ class AuthController extends BaseController
                 ]);
                 service('eventTracker')->track('referral.applied', [
                     'source' => 'register',
+                    'channel' => $attribution['source_channel'] ?? 'direct',
+                    'campaign_code' => $attribution['campaign_code'] ?? null,
                 ], $newUserId, 'referral');
             }
 
@@ -732,6 +745,7 @@ class AuthController extends BaseController
                 log_message('info', 'Registration redirecting to success guide for user_id={id}', ['id' => $newUserId]);
 
                 $this->session->remove('referral_code');
+                $this->session->remove('registration_attribution');
 
                 // Success!
                 $message = lang('Auth.activationSuccess');
@@ -749,6 +763,7 @@ class AuthController extends BaseController
             log_message('info', 'Registration redirecting to success guide for user_id={id}', ['id' => $newUserId]);
 
             $this->session->remove('referral_code');
+            $this->session->remove('registration_attribution');
 
             // Success!
             $message = lang('Auth.registerSuccess');
@@ -773,6 +788,41 @@ class AuthController extends BaseController
             $this->setAuthMessage('danger', lang('Auth.unknownError'));
             return redirect()->back()->withInput();
         }
+    }
+
+    /**
+     * @param array<string,mixed> $attribution
+     */
+    private function persistRegistrationAttribution(int $userId, string $referralCode, array $attribution): void
+    {
+        if ($userId <= 0) {
+            return;
+        }
+
+        $db = db_connect();
+        if (! $db->tableExists('users')) {
+            return;
+        }
+
+        $fields = $db->getFieldNames('users');
+        $payload = [];
+
+        if (in_array('referral_code', $fields, true) && $referralCode !== '') {
+            $payload['referral_code'] = $referralCode;
+        }
+        if (in_array('source_channel', $fields, true)) {
+            $payload['source_channel'] = (string) ($attribution['source_channel'] ?? 'direct');
+        }
+        if (in_array('campaign_code', $fields, true)) {
+            $campaignCode = trim((string) ($attribution['campaign_code'] ?? ''));
+            $payload['campaign_code'] = $campaignCode !== '' ? $campaignCode : null;
+        }
+
+        if ($payload === []) {
+            return;
+        }
+
+        $db->table('users')->where('id', $userId)->update($payload);
     }
 
     public function registerSuccess()

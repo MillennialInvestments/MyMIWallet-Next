@@ -1720,7 +1720,6 @@ $routes->group('Wallets', ['namespace' => 'App\Modules\User\Controllers', 'filte
     $routes->match(['GET', 'POST'], 'Purchase/(:segment)', 'WalletsController::purchase');
     $routes->match(['GET', 'POST'], 'Purchase/Memberships/Customize', 'WalletsController::customizeMembership');
     $routes->match(['GET', 'POST'], 'Purchase/Memberships/Success', 'WalletsController::purchaseMembershipSuccess');
-    $routes->match(['GET', 'POST'], 'Purchase/Memberships/Success', 'WalletsController::purchaseMembershipSuccess');
     $routes->match(['GET', 'POST'], 'Purchase/Memberships/(:segment)', 'WalletsController::purchase');
     $routes->match(['GET', 'POST'], 'Purchase/Memberships/(:segment)/(:segment)', 'WalletsController::purchase');
     // $routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold', 'WalletsController::purchaseGold');

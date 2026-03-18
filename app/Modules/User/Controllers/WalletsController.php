@@ -49,7 +49,7 @@ class WalletsController extends BaseUserController
     private ?WalletSummaryCalculator $summaryCalculator = null;
     private ?MyMISolana $solanaLibrary = null;
     protected $userAccount;
-    protected $helpers = ['auth', 'form', 'url', 'feature'];
+    protected $helpers = ['auth', 'form', 'url', 'feature', 'premium'];
     protected ?ResponseInterface $walletFeatureGuardResponse = null;
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
@@ -1508,6 +1508,10 @@ class WalletsController extends BaseUserController
 
     public function executeSwap()
     {
+        if ($premiumGuard = premium_guard('exchange.swap')) {
+            return $premiumGuard;
+        }
+
         $fromToken = $this->request->getPost('fromToken');
         $toToken = $this->request->getPost('toToken');
         $amount = $this->request->getPost('amount');

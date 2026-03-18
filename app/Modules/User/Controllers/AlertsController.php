@@ -56,6 +56,7 @@ class AlertsController extends BaseUserController
         $this->auth         = service('authentication');
         $this->request      = service('request');
         $this->session      = Services::session();
+        helper(['premium']);
         $this->siteSettings = config('SiteSettings');
         $this->uri          = $this->request->getUri();
 
@@ -322,6 +323,10 @@ class AlertsController extends BaseUserController
 
     public function index()
     {
+        if ($premiumGuard = premium_guard('alerts.trade_alerts')) {
+            return $premiumGuard;
+        }
+
         $this->data['pageTitle'] = 'Trade Alerts | MyMI Wallet | Market Insights';
 
         $sentAlerts    = $this->alertsModel->getSentAlerts(50);
@@ -392,6 +397,10 @@ class AlertsController extends BaseUserController
 
     public function trades()
     {
+        if ($premiumGuard = premium_guard('alerts.trade_alerts')) {
+            return $premiumGuard;
+        }
+
         $userId = $this->cuID;
         if (!is_int($userId) || $userId <= 0) {
             if ($resp = $this->requireUserOrJson()) {

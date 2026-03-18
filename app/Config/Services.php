@@ -11,6 +11,8 @@ use App\Services\EventTracker;
 use App\Services\OnboardingProgressService;
 use App\Services\Psr4AuditService;
 use App\Services\SetupStatusService;
+use App\Services\PremiumEntitlementService;
+use App\Services\RegistrationAttributionService;
 use App\Services\ForecastAccuracyEvaluator;
 use App\Services\ForecastAggregationService;
 use App\Services\Forecasting\MyMIForecaster;
@@ -277,6 +279,28 @@ class Services extends CoreServices
         }
 
         return new OnboardingProgressService();
+    }
+
+    public static function premiumEntitlementService(bool $getShared = true): PremiumEntitlementService
+    {
+        if ($getShared) {
+            /** @var PremiumEntitlementService $service */
+            $service = static::getSharedInstance('premiumEntitlementService');
+            return $service;
+        }
+
+        return new PremiumEntitlementService();
+    }
+
+    public static function registrationAttributionService(bool $getShared = true): RegistrationAttributionService
+    {
+        if ($getShared) {
+            /** @var RegistrationAttributionService $service */
+            $service = static::getSharedInstance('registrationAttributionService');
+            return $service;
+        }
+
+        return new RegistrationAttributionService();
     }
 
 

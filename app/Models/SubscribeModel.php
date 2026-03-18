@@ -39,16 +39,17 @@ class SubscribeModel extends Model
      */
     public function checkUserSubscription($userID)
     {
-        return $this->db->table('bf_users_subscriptions')
-            ->where('user_id', $userID)
-            ->whereIn('subscription_name', [
-                'MyMI Trade Alerts - Premium Tier 1',
-                'MyMI Trade Alerts - Premium Tier 2',
-                'MyMI Trade Alerts - Premium Tier 3'
-            ])
-            ->where('active', 1)
-            ->get()
-            ->getRow();
+        helper('premium');
+
+        $entitlements = premium_entitlements((int) $userID, ['feature_key' => 'alerts.trade_alerts']);
+
+        return (object) [
+            'user_id' => (int) $userID,
+            'active' => ! empty($entitlements['membershipActive']) ? 1 : 0,
+            'subscription_name' => $entitlements['subscriptionName'] ?? null,
+            'tier' => $entitlements['membershipTier'] ?? 'free',
+            'membership_status' => $entitlements['membershipStatus'] ?? 'free',
+        ];
     }
 
     public function insertEmail($email, $referral)

@@ -21,7 +21,7 @@ class InvestmentsAPIController extends BaseAPIController
     use ResponseTrait; // Use the trait in your controller
     protected $auth;
     protected $config;
-    protected $helpers = (['auth', 'form', 'url']);
+    protected $helpers = (['auth', 'form', 'url', 'premium']);
     protected $request;
     protected $session;
     protected $socialMedia;
@@ -235,6 +235,10 @@ class InvestmentsAPIController extends BaseAPIController
 
     public function getForecastDetails(string $ticker)
     {
+        if ($premiumGuard = premium_guard('investments.analytics')) {
+            return $premiumGuard;
+        }
+
         $ticker = strtoupper(trim($ticker));
         if ($ticker === '') {
             return $this->failValidationError('Ticker is required.');
@@ -282,6 +286,10 @@ class InvestmentsAPIController extends BaseAPIController
 
     public function getConfidenceHeatmap()
     {
+        if ($premiumGuard = premium_guard('investments.analytics')) {
+            return $premiumGuard;
+        }
+
         try {
             $config = config('MyMIForecasting');
             if (! ($config->features['confidenceHeatmaps'] ?? true)) {
@@ -317,6 +325,10 @@ class InvestmentsAPIController extends BaseAPIController
 
     public function getTopConfidenceBySector()
     {
+        if ($premiumGuard = premium_guard('investments.analytics')) {
+            return $premiumGuard;
+        }
+
         $config = config('MyMIForecasting');
         if (! ($config->features['confidenceHeatmaps'] ?? true)) {
             return $this->failForbidden('Confidence heatmaps are disabled.');
@@ -338,6 +350,10 @@ class InvestmentsAPIController extends BaseAPIController
 
     public function getConfidenceDistribution()
     {
+        if ($premiumGuard = premium_guard('investments.analytics')) {
+            return $premiumGuard;
+        }
+
         $config = config('MyMIForecasting');
         if (! ($config->features['confidenceHeatmaps'] ?? true)) {
             return $this->failForbidden('Confidence heatmaps are disabled.');
@@ -359,6 +375,10 @@ class InvestmentsAPIController extends BaseAPIController
 
     public function getForecastAccuracySummary()
     {
+        if ($premiumGuard = premium_guard('investments.analytics')) {
+            return $premiumGuard;
+        }
+
         try {
             $config = config('MyMIForecasting');
             if (! ($config->features['accuracyTracking'] ?? true)) {
@@ -605,6 +625,10 @@ class InvestmentsAPIController extends BaseAPIController
 
     public function reforecastTicker()
     {
+        if ($premiumGuard = premium_guard('investments.analytics')) {
+            return $premiumGuard;
+        }
+
         if ($guard = $this->guardAdmin()) {
             return $guard;
         }

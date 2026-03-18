@@ -50,7 +50,7 @@ class InvestmentsController extends BaseUserController
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
         parent::initController($request, $response, $logger);
-        helper(['feature']);
+        helper(['feature', 'premium']);
         $this->featureGuardResponse = feature_guard('FEATURE_INVESTMENTS', ['controller' => __CLASS__, 'phase' => 'phase_a']);
         $this->auth = service('authentication');
         // $this->config = config('Auth');
@@ -226,6 +226,10 @@ class InvestmentsController extends BaseUserController
 
     public function forecastModal(string $ticker)
     {
+        if ($premiumGuard = premium_guard('investments.analytics')) {
+            return $premiumGuard;
+        }
+
         $ticker = strtoupper(trim($ticker));
         if ($ticker === '') {
             throw PageNotFoundException::forPageNotFound();
@@ -619,6 +623,10 @@ class InvestmentsController extends BaseUserController
             return $featureGuard;
         }
 
+        if ($premiumGuard = premium_guard('investments.watchlist')) {
+            return $premiumGuard;
+        }
+
         $request = service('request');
     
         if (!$this->validate([
@@ -737,6 +745,10 @@ class InvestmentsController extends BaseUserController
   
     public function fetchRealTimeData($symbol)
     {
+        if ($premiumGuard = premium_guard('investments.realtime_data')) {
+            return $premiumGuard;
+        }
+
         $realTimeData = $this->getinvestmentService()->fetchRealTimeData($symbol);
         return $this->respond(['status' => 'success', 'data' => $realTimeData]);
     }
@@ -960,6 +972,10 @@ class InvestmentsController extends BaseUserController
             return $featureGuard;
         }
 
+        if ($premiumGuard = premium_guard('investments.watchlist')) {
+            return $premiumGuard;
+        }
+
         try {
             $watchlist = $this->investmentModel->getUserWatchlist($cuID);
             $symbols = array_values(array_unique(array_filter(array_map(static fn ($row) => strtoupper((string) ($row['symbol'] ?? '')), $watchlist))));
@@ -985,6 +1001,10 @@ class InvestmentsController extends BaseUserController
 
     public function retirementPlanner()
     {
+        if ($premiumGuard = premium_guard('investments.retirement_planner')) {
+            return $premiumGuard;
+        }
+
         $this->data['pageTitle'] = 'My Retirement Planner | MyMI Wallet | The Future of Finance';
         $this->commonData();
         $this->data['retirementPlan'] = $this->investmentModel->getRetirementPlan($this->cuID);
