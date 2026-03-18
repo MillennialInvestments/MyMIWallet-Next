@@ -317,6 +317,7 @@ class Console extends BaseConfig
         */
         \App\Commands\GitHub\PullSafe::class,
         \App\Commands\GitHub\SearchRepo::class,
+        \App\Commands\GitHub\SyncSafe::class,
         \App\Commands\GitHub\WorkspaceGuard::class,
         \App\Commands\GitHub\WorkspaceRepair::class,
 
