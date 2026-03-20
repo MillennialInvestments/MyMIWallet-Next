@@ -8,12 +8,12 @@ use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use Throwable;
 
-class Pull extends SafeBaseCommand
+class Push extends SafeBaseCommand
 {
-    protected $group = 'Git';
-    protected $name = 'git:pull';
-    protected $description = 'Pull the current branch from origin with rebase.';
-    protected $usage = 'git:pull [branch]';
+    protected $group = 'GitHub';
+    protected $name = 'github:push';
+    protected $description = 'Push the current branch to origin.';
+    protected $usage = 'github:push [branch]';
     protected $arguments = [
         'branch' => 'Optional branch override. Defaults to the current branch.',
     ];
@@ -24,11 +24,11 @@ class Pull extends SafeBaseCommand
             [$args] = $this->parseParams($params);
             $branch = $args[0] ?? null;
 
-            CLI::write(service('git')->pull($branch));
+            CLI::write(service('git')->push($branch));
 
             return EXIT_SUCCESS;
         } catch (Throwable $e) {
-            log_message('error', '[spark:git:pull] ' . $e->getMessage());
+            log_message('error', '[spark:git:push] ' . $e->getMessage());
             CLI::error($e->getMessage());
 
             return EXIT_ERROR;

@@ -7,7 +7,7 @@ namespace App\Commands\Docs;
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class DocsTest extends SafeBaseCommand
+class Test extends SafeBaseCommand
 {
     protected $group       = 'Docs';
     protected $name        = 'docs:test';

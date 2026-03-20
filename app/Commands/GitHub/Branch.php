@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Commands\Git;
+namespace App\Commands\GitHub;
 
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
@@ -10,10 +10,10 @@ use Throwable;
 
 class Branch extends SafeBaseCommand
 {
-    protected $group = 'Git';
-    protected $name = 'git:branch';
+    protected $group = 'GitHub';
+    protected $name = 'github:branch';
     protected $description = 'Create and switch to a new feature branch.';
-    protected $usage = 'git:branch feature/x';
+    protected $usage = 'github:branch feature/x';
     protected $arguments = [
         'name' => 'New branch name. Defaults to feature/auto.',
     ];

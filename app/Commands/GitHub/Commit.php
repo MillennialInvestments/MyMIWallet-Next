@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Commands\Git;
+namespace App\Commands\GitHub;
 
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
@@ -10,10 +10,10 @@ use Throwable;
 
 class Commit extends SafeBaseCommand
 {
-    protected $group = 'Git';
-    protected $name = 'git:commit';
+    protected $group = 'GitHub';
+    protected $name = 'github:commit';
     protected $description = 'Stage tracked changes and create a git commit.';
-    protected $usage = 'git:commit "message"';
+    protected $usage = 'github:commit "message"';
     protected $arguments = [
         'message' => 'Commit message. Defaults to "auto commit" when omitted.',
     ];

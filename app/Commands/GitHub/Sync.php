@@ -10,10 +10,10 @@ use Throwable;
 
 class Sync extends SafeBaseCommand
 {
-    protected $group = 'Git';
-    protected $name = 'git:sync';
+    protected $group = 'GitHub';
+    protected $name = 'github:sync';
     protected $description = 'Commit pending changes when needed, then pull and push the current branch.';
-    protected $usage = 'git:sync [message]';
+    protected $usage = 'github:sync [message]';
     protected $arguments = [
         'message' => 'Commit message to use when changes exist. Defaults to auto sync.',
     ];

@@ -14307,3 +14307,1649 @@ in SYSTEMPATH/CodeIgniter.php on line 1001.
 CRITICAL - 2026-03-20 18:52:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
 WARNING - 2026-03-20 18:52:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
 WARNING - 2026-03-20 18:52:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:26:07 --> [REQ_ID=3ea45edc7e6b] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:26:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:26:07 --> [REQ_ID=03dbc63e047a] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+CRITICAL - 2026-03-20 19:26:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:26:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:26:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:26:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:26:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:26:07 --> [REQ_ID=03dbc63e047a] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:26:07 --> [REQ_ID=03dbc63e047a] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:26:07 --> [REQ_ID=03dbc63e047a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:26:07 --> [REQ_ID=1f407255c6a5] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:26:07 --> [REQ_ID=1f407255c6a5] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:26:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:26:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:26:07 --> [REQ_ID=1f407255c6a5] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:26:07 --> [REQ_ID=1f407255c6a5] [AJAX_POST] []
+DEBUG - 2026-03-20 19:26:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:26:07 --> [REQ_ID=1f407255c6a5] [PERF] Execution time=0.030461
+DEBUG - 2026-03-20 19:26:07 --> [REQ_ID=e371f60ea181] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:26:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:26:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:26:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:26:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:26:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:26:07 --> [REQ_ID=fd71b82209ee] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:26:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:26:07 --> [REQ_ID=fd71b82209ee] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:26:07 --> [REQ_ID=fd71b82209ee] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:26:07 --> [REQ_ID=fd71b82209ee] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:26:07 --> [REQ_ID=d22a23a799da] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:26:07 --> [REQ_ID=d22a23a799da] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:26:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:26:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:26:07 --> [REQ_ID=d22a23a799da] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:26:07 --> [REQ_ID=d22a23a799da] [AJAX_POST] []
+DEBUG - 2026-03-20 19:26:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:26:07 --> [REQ_ID=d22a23a799da] [PERF] Execution time=0.023916
+DEBUG - 2026-03-20 19:26:22 --> [REQ_ID=63f54d4bb15d] [REQUEST][START] HEAD /
+DEBUG - 2026-03-20 19:26:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:26:22 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:26:22 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:26:22 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-20 19:26:22 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-20 19:27:07 --> [REQ_ID=e3a2f9547f49] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:27:07 --> [REQ_ID=80d7abf5f1bf] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:27:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:27:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:27:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:27:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:27:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:27:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:27:07 --> [REQ_ID=80d7abf5f1bf] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:27:07 --> [REQ_ID=80d7abf5f1bf] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:27:07 --> [REQ_ID=80d7abf5f1bf] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:27:07 --> [REQ_ID=81d5cd0b1871] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:27:07 --> [REQ_ID=81d5cd0b1871] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:27:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:27:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:27:07 --> [REQ_ID=81d5cd0b1871] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:27:07 --> [REQ_ID=81d5cd0b1871] [AJAX_POST] []
+DEBUG - 2026-03-20 19:27:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:27:07 --> [REQ_ID=81d5cd0b1871] [PERF] Execution time=0.045494
+DEBUG - 2026-03-20 19:27:07 --> [REQ_ID=19f20fb297f3] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:27:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:27:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:27:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:27:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:27:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:27:07 --> [REQ_ID=45d00a57961a] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:27:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:27:07 --> [REQ_ID=45d00a57961a] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:27:07 --> [REQ_ID=45d00a57961a] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:27:07 --> [REQ_ID=45d00a57961a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:27:07 --> [REQ_ID=d16b776c0090] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:27:07 --> [REQ_ID=d16b776c0090] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:27:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:27:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:27:07 --> [REQ_ID=d16b776c0090] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:27:07 --> [REQ_ID=d16b776c0090] [AJAX_POST] []
+DEBUG - 2026-03-20 19:27:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:27:07 --> [REQ_ID=d16b776c0090] [PERF] Execution time=0.027489
+DEBUG - 2026-03-20 19:28:07 --> [REQ_ID=bee3905b107a] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:28:07 --> [REQ_ID=3cd3ed53600a] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:28:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:28:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:28:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:28:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:28:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:28:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:28:07 --> [REQ_ID=bee3905b107a] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:28:07 --> [REQ_ID=bee3905b107a] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:28:07 --> [REQ_ID=bee3905b107a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:28:07 --> [REQ_ID=c3495d685d3a] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:28:07 --> [REQ_ID=c3495d685d3a] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:28:07 --> [REQ_ID=dddd996295e5] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:28:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:28:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:28:07 --> [REQ_ID=c3495d685d3a] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:28:07 --> [REQ_ID=c3495d685d3a] [AJAX_POST] []
+DEBUG - 2026-03-20 19:28:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:28:07 --> [REQ_ID=c3495d685d3a] [PERF] Execution time=0.097691
+DEBUG - 2026-03-20 19:28:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:28:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:28:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:28:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:28:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:28:07 --> [REQ_ID=e370a4031a50] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:28:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:28:07 --> [REQ_ID=e370a4031a50] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:28:07 --> [REQ_ID=e370a4031a50] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:28:07 --> [REQ_ID=e370a4031a50] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:28:07 --> [REQ_ID=1a125ddf2654] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:28:07 --> [REQ_ID=1a125ddf2654] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:28:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:28:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:28:07 --> [REQ_ID=1a125ddf2654] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:28:07 --> [REQ_ID=1a125ddf2654] [AJAX_POST] []
+DEBUG - 2026-03-20 19:28:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:28:07 --> [REQ_ID=1a125ddf2654] [PERF] Execution time=0.018451
+DEBUG - 2026-03-20 19:29:07 --> [REQ_ID=7818fc881ac1] [REQUEST][START] GET /index.php/Management/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:29:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:29:07 --> [REQ_ID=49e69f6fb06f] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+CRITICAL - 2026-03-20 19:29:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/index.php/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:29:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:29:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/index.php/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:29:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/index.php/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:29:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:29:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:29:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:29:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:29:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:29:07 --> [REQ_ID=7d0549cd73d4] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:29:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:29:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:29:08 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:29:08 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:29:08 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:29:08 --> [REQ_ID=e6c1083504ac] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:29:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:29:08 --> [REQ_ID=e6c1083504ac] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:29:08 --> [REQ_ID=e6c1083504ac] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:29:08 --> [REQ_ID=e6c1083504ac] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:29:08 --> [REQ_ID=924a19f574f7] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:29:08 --> [REQ_ID=924a19f574f7] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:29:08 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:29:08 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:29:08 --> [REQ_ID=924a19f574f7] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:29:08 --> [REQ_ID=924a19f574f7] [AJAX_POST] []
+DEBUG - 2026-03-20 19:29:08 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:29:08 --> [REQ_ID=924a19f574f7] [PERF] Execution time=0.031914
+DEBUG - 2026-03-20 19:29:08 --> [REQ_ID=1cc4ec1870be] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:29:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:29:08 --> [REQ_ID=1cc4ec1870be] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:29:08 --> [REQ_ID=1cc4ec1870be] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:29:08 --> [REQ_ID=1cc4ec1870be] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:29:08 --> [REQ_ID=b17cedda9bed] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:29:08 --> [REQ_ID=b17cedda9bed] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:29:08 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:29:08 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:29:08 --> [REQ_ID=b17cedda9bed] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:29:08 --> [REQ_ID=b17cedda9bed] [AJAX_POST] []
+DEBUG - 2026-03-20 19:29:08 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:29:08 --> [REQ_ID=b17cedda9bed] [PERF] Execution time=0.020608
+DEBUG - 2026-03-20 19:29:46 --> [REQ_ID=ec25ef40de29] [REQUEST][START] GET /index.php/Account/Connected-Accounts
+DEBUG - 2026-03-20 19:29:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:29:46 --> [REQ_ID=ec25ef40de29] [FILTER_BEFORE] /index.php/Account/Connected-Accounts
+DEBUG - 2026-03-20 19:29:46 --> [REQ_ID=ec25ef40de29] [ROUTE] Controller=\App\Modules\User\Controllers\DashboardController Method=connectedAccounts
+DEBUG - 2026-03-20 19:29:46 --> [REQ_ID=ec25ef40de29] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Account/Connected-Accounts
+DEBUG - 2026-03-20 19:29:46 --> [CSRF] token name=csrf_test_name hash=656eba8a699839164c78aa6e823e9d2a
+DEBUG - 2026-03-20 19:29:46 --> [REQ_ID=ec25ef40de29] [REQUEST][END]
+INFO - 2026-03-20 19:29:46 --> [REQ_ID=ec25ef40de29] [PERF] Execution time=0.022739
+DEBUG - 2026-03-20 19:29:46 --> [REQ_ID=f59a7fbb5679] [REQUEST][START] GET /index.php/login
+DEBUG - 2026-03-20 19:29:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:29:46 --> [REQ_ID=f59a7fbb5679] [FILTER_BEFORE] /index.php/login
+DEBUG - 2026-03-20 19:29:46 --> [REQ_ID=f59a7fbb5679] [ROUTE] Controller=\App\Controllers\AuthController Method=login
+DEBUG - 2026-03-20 19:29:46 --> [REQ_ID=f59a7fbb5679] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/login
+DEBUG - 2026-03-20 19:29:46 --> [CSRF] token name=csrf_test_name hash=33ddcc122b1d9937d071e4669075491f
+DEBUG - 2026-03-20 19:29:46 --> [REQ_ID=e285e2e8f2be] [INIT] App\Controllers\AuthController::GET
+INFO - 2026-03-20 19:29:46 --> [REQ_ID=e285e2e8f2be] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:29:46 --> [REQ_ID=f59a7fbb5679] [FILTER_AFTER]
+DEBUG - 2026-03-20 19:29:46 --> [REQ_ID=f59a7fbb5679] [LIFECYCLE][END] status=200 duration_ms=66.04 memory_delta=0
+INFO - 2026-03-20 19:29:46 --> [REQ_ID=e285e2e8f2be] [PERF] Execution time=0.064300
+DEBUG - 2026-03-20 19:29:46 --> [REQ_ID=f59a7fbb5679] [REQUEST][END]
+INFO - 2026-03-20 19:29:46 --> [REQ_ID=f59a7fbb5679] [PERF] Execution time=0.074936
+DEBUG - 2026-03-20 19:30:07 --> [REQ_ID=39bb3fb99b7e] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:30:07 --> [REQ_ID=f95e51736a1b] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:30:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:30:07 --> [REQ_ID=39bb3fb99b7e] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:30:07 --> [REQ_ID=39bb3fb99b7e] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:30:07 --> [REQ_ID=39bb3fb99b7e] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:30:07 --> [REQ_ID=3ac4b460fcca] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:30:07 --> [REQ_ID=3ac4b460fcca] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:30:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:30:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:30:07 --> [REQ_ID=3ac4b460fcca] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:30:07 --> [REQ_ID=3ac4b460fcca] [AJAX_POST] []
+DEBUG - 2026-03-20 19:30:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:30:07 --> [REQ_ID=3ac4b460fcca] [PERF] Execution time=0.274356
+DEBUG - 2026-03-20 19:30:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:30:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:30:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:30:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:30:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:30:07 --> [REQ_ID=fc7793d931ad] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:30:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:30:07 --> [REQ_ID=fc7793d931ad] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:30:07 --> [REQ_ID=fc7793d931ad] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:30:07 --> [REQ_ID=fc7793d931ad] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:30:07 --> [REQ_ID=297f7a6c34e5] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:30:07 --> [REQ_ID=297f7a6c34e5] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:30:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:30:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:30:07 --> [REQ_ID=297f7a6c34e5] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:30:07 --> [REQ_ID=297f7a6c34e5] [AJAX_POST] []
+DEBUG - 2026-03-20 19:30:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:30:07 --> [REQ_ID=297f7a6c34e5] [PERF] Execution time=0.027832
+DEBUG - 2026-03-20 19:30:07 --> [REQ_ID=7414a52e6b4a] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:30:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:30:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:30:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:30:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:30:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:31:07 --> [REQ_ID=d061efc30246] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:31:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:31:07 --> [REQ_ID=18dcb6452efd] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:31:07 --> [REQ_ID=d061efc30246] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:31:07 --> [REQ_ID=d061efc30246] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:31:07 --> [REQ_ID=d061efc30246] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:31:07 --> [REQ_ID=0d6892021fa0] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:31:07 --> [REQ_ID=0d6892021fa0] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:31:08 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:31:08 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:31:08 --> [REQ_ID=0d6892021fa0] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:31:08 --> [REQ_ID=0d6892021fa0] [AJAX_POST] []
+DEBUG - 2026-03-20 19:31:08 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:31:08 --> [REQ_ID=0d6892021fa0] [PERF] Execution time=0.356914
+DEBUG - 2026-03-20 19:31:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:31:08 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:31:08 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:31:08 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:31:08 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:31:08 --> [REQ_ID=92d916d98cfb] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:31:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:31:08 --> [REQ_ID=92d916d98cfb] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:31:08 --> [REQ_ID=92d916d98cfb] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:31:08 --> [REQ_ID=92d916d98cfb] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:31:08 --> [REQ_ID=6d4313c9eb64] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:31:08 --> [REQ_ID=6d4313c9eb64] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:31:08 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:31:08 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:31:08 --> [REQ_ID=6d4313c9eb64] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:31:08 --> [REQ_ID=6d4313c9eb64] [AJAX_POST] []
+DEBUG - 2026-03-20 19:31:08 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:31:08 --> [REQ_ID=6d4313c9eb64] [PERF] Execution time=0.020785
+DEBUG - 2026-03-20 19:31:08 --> [REQ_ID=6c9b70ba1a2f] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:31:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:31:08 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:31:08 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:31:08 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:31:08 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:31:22 --> [REQ_ID=c91233d409fa] [REQUEST][START] HEAD /
+DEBUG - 2026-03-20 19:31:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:31:22 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:31:22 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:31:22 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-20 19:31:22 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-20 19:32:07 --> [REQ_ID=b996b65c079e] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:32:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:32:07 --> [REQ_ID=620dc6386219] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:32:07 --> [REQ_ID=b996b65c079e] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:32:07 --> [REQ_ID=b996b65c079e] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:32:07 --> [REQ_ID=b996b65c079e] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:32:07 --> [REQ_ID=e08418c2b4c1] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:32:07 --> [REQ_ID=e08418c2b4c1] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:32:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:32:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:32:07 --> [REQ_ID=e08418c2b4c1] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:32:07 --> [REQ_ID=e08418c2b4c1] [AJAX_POST] []
+DEBUG - 2026-03-20 19:32:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:32:07 --> [REQ_ID=e08418c2b4c1] [PERF] Execution time=0.202401
+DEBUG - 2026-03-20 19:32:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:32:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:32:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:32:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:32:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:32:08 --> [REQ_ID=0e47448e06db] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:32:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:32:08 --> [REQ_ID=0e47448e06db] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:32:08 --> [REQ_ID=0e47448e06db] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:32:08 --> [REQ_ID=0e47448e06db] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:32:08 --> [REQ_ID=0595fd6fa42b] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:32:08 --> [REQ_ID=0595fd6fa42b] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:32:08 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:32:08 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:32:08 --> [REQ_ID=0595fd6fa42b] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:32:08 --> [REQ_ID=0595fd6fa42b] [AJAX_POST] []
+DEBUG - 2026-03-20 19:32:08 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:32:08 --> [REQ_ID=0595fd6fa42b] [PERF] Execution time=0.031350
+DEBUG - 2026-03-20 19:32:08 --> [REQ_ID=e4053b9b52ed] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:32:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:32:08 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:32:08 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:32:08 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:32:08 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:33:07 --> [REQ_ID=cd320c3015c3] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:33:07 --> [REQ_ID=59445b9f9300] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:33:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:33:07 --> [REQ_ID=cd320c3015c3] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:33:07 --> [REQ_ID=cd320c3015c3] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:33:07 --> [REQ_ID=cd320c3015c3] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:33:07 --> [REQ_ID=ebc849fb469b] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:33:07 --> [REQ_ID=ebc849fb469b] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:33:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:33:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:33:07 --> [REQ_ID=ebc849fb469b] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:33:07 --> [REQ_ID=ebc849fb469b] [AJAX_POST] []
+DEBUG - 2026-03-20 19:33:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:33:07 --> [REQ_ID=ebc849fb469b] [PERF] Execution time=0.151963
+DEBUG - 2026-03-20 19:33:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:33:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:33:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:33:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:33:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:33:07 --> [REQ_ID=60bf4ab152ca] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:33:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:33:07 --> [REQ_ID=60bf4ab152ca] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:33:07 --> [REQ_ID=60bf4ab152ca] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:33:07 --> [REQ_ID=60bf4ab152ca] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:33:07 --> [REQ_ID=bdbf659dccf3] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:33:07 --> [REQ_ID=bdbf659dccf3] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:33:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:33:07 --> [REQ_ID=385dbfea1638] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:33:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:33:07 --> [REQ_ID=bdbf659dccf3] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:33:07 --> [REQ_ID=bdbf659dccf3] [AJAX_POST] []
+DEBUG - 2026-03-20 19:33:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:33:07 --> [REQ_ID=bdbf659dccf3] [PERF] Execution time=0.021319
+DEBUG - 2026-03-20 19:33:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:33:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:33:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:33:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:33:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:34:07 --> [REQ_ID=fdefa3c4da04] [REQUEST][START] GET /index.php/Management/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:34:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:34:07 --> [REQ_ID=71eb21490116] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+CRITICAL - 2026-03-20 19:34:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/index.php/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:34:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:34:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/index.php/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:34:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/index.php/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:34:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:34:07 --> [REQ_ID=71eb21490116] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:34:07 --> [REQ_ID=71eb21490116] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:34:07 --> [REQ_ID=71eb21490116] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:34:07 --> [REQ_ID=ddd651861f38] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:34:07 --> [REQ_ID=ddd651861f38] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:34:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:34:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:34:07 --> [REQ_ID=ddd651861f38] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:34:07 --> [REQ_ID=ddd651861f38] [AJAX_POST] []
+DEBUG - 2026-03-20 19:34:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:34:07 --> [REQ_ID=ddd651861f38] [PERF] Execution time=0.033718
+DEBUG - 2026-03-20 19:34:07 --> [REQ_ID=10ad1269f0f8] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:34:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:34:07 --> [REQ_ID=10ad1269f0f8] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:34:07 --> [REQ_ID=10ad1269f0f8] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:34:07 --> [REQ_ID=10ad1269f0f8] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:34:07 --> [REQ_ID=7c53bad71189] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:34:07 --> [REQ_ID=7c53bad71189] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:34:08 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:34:08 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:34:08 --> [REQ_ID=7c53bad71189] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:34:08 --> [REQ_ID=7c53bad71189] [AJAX_POST] []
+DEBUG - 2026-03-20 19:34:08 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:34:08 --> [REQ_ID=7c53bad71189] [PERF] Execution time=0.017324
+DEBUG - 2026-03-20 19:34:08 --> [REQ_ID=ea8bd1972201] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:34:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:34:08 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:34:08 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:34:08 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:34:08 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:34:08 --> [REQ_ID=baf74f97c2ba] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:34:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:34:08 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:34:08 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:34:08 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:34:08 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:35:07 --> [REQ_ID=87d121344a9f] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:35:07 --> [REQ_ID=227670293bb7] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:35:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:35:07 --> [REQ_ID=87d121344a9f] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:35:07 --> [REQ_ID=87d121344a9f] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:35:07 --> [REQ_ID=87d121344a9f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:35:07 --> [REQ_ID=5c7529947e0a] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:35:07 --> [REQ_ID=5c7529947e0a] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-20 19:35:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:35:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:35:07 --> [REQ_ID=5c7529947e0a] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:35:07 --> [REQ_ID=5c7529947e0a] [AJAX_POST] []
+DEBUG - 2026-03-20 19:35:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:35:07 --> [REQ_ID=5c7529947e0a] [PERF] Execution time=0.137692
+DEBUG - 2026-03-20 19:35:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:35:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-20 19:35:07 --> [REQ_ID=c3b2cca61f22] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+CRITICAL - 2026-03-20 19:35:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:35:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:35:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:35:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:35:07 --> [REQ_ID=c3b2cca61f22] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:35:07 --> [REQ_ID=c3b2cca61f22] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:35:07 --> [REQ_ID=c3b2cca61f22] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:35:07 --> [REQ_ID=81357cfa989d] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:35:07 --> [REQ_ID=81357cfa989d] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-20 19:35:08 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:35:08 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:35:08 --> [REQ_ID=81357cfa989d] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:35:08 --> [REQ_ID=81357cfa989d] [AJAX_POST] []
+DEBUG - 2026-03-20 19:35:08 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:35:08 --> [REQ_ID=81357cfa989d] [PERF] Execution time=0.026844
+DEBUG - 2026-03-20 19:35:08 --> [REQ_ID=897fc4fa1dc6] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:35:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:35:08 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:35:08 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:35:08 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:35:08 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:35:08 --> [REQ_ID=d4d22746edf3] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:35:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:35:08 --> [REQ_ID=d4d22746edf3] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:35:08 --> [REQ_ID=d4d22746edf3] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:35:08 --> [REQ_ID=d4d22746edf3] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:35:08 --> [REQ_ID=ac9c27fe667a] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:35:08 --> [REQ_ID=ac9c27fe667a] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:35:08 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:35:08 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:35:08 --> [REQ_ID=ac9c27fe667a] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:35:08 --> [REQ_ID=ac9c27fe667a] [AJAX_POST] []
+DEBUG - 2026-03-20 19:35:08 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:35:08 --> [REQ_ID=ac9c27fe667a] [PERF] Execution time=0.139819
+DEBUG - 2026-03-20 19:36:07 --> [REQ_ID=1f14a7e7dc52] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:36:07 --> [REQ_ID=2728667fdc32] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:36:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:36:07 --> [REQ_ID=1f14a7e7dc52] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:36:07 --> [REQ_ID=1f14a7e7dc52] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:36:07 --> [REQ_ID=1f14a7e7dc52] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:36:07 --> [REQ_ID=0e33138a82aa] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:36:07 --> [REQ_ID=0e33138a82aa] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:36:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:36:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:36:07 --> [REQ_ID=0e33138a82aa] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:36:07 --> [REQ_ID=0e33138a82aa] [AJAX_POST] []
+DEBUG - 2026-03-20 19:36:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:36:07 --> [REQ_ID=0e33138a82aa] [PERF] Execution time=0.202613
+DEBUG - 2026-03-20 19:36:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:36:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:36:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:36:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:36:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:36:07 --> [REQ_ID=23b8bab7397e] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:36:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:36:07 --> [REQ_ID=23b8bab7397e] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:36:07 --> [REQ_ID=23b8bab7397e] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:36:07 --> [REQ_ID=23b8bab7397e] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:36:07 --> [REQ_ID=31c896d9374e] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:36:07 --> [REQ_ID=31c896d9374e] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:36:08 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:36:08 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:36:08 --> [REQ_ID=31c896d9374e] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:36:08 --> [REQ_ID=31c896d9374e] [AJAX_POST] []
+DEBUG - 2026-03-20 19:36:08 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:36:08 --> [REQ_ID=31c896d9374e] [PERF] Execution time=0.022328
+DEBUG - 2026-03-20 19:36:08 --> [REQ_ID=9f55b874d36a] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:36:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:36:08 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:36:08 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:36:08 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:36:08 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:36:22 --> [REQ_ID=b5d97f054cc8] [REQUEST][START] HEAD /
+DEBUG - 2026-03-20 19:36:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:36:22 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:36:22 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:36:22 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-20 19:36:22 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-20 19:37:07 --> [REQ_ID=b6109baf671e] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:37:07 --> [REQ_ID=dee5fb0707d2] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:37:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:37:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:37:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:37:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:37:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:37:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:37:07 --> [REQ_ID=dee5fb0707d2] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:37:07 --> [REQ_ID=dee5fb0707d2] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:37:07 --> [REQ_ID=dee5fb0707d2] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:37:07 --> [REQ_ID=4cd754e2ca34] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:37:07 --> [REQ_ID=4cd754e2ca34] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:37:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:37:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:37:07 --> [REQ_ID=4cd754e2ca34] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:37:07 --> [REQ_ID=4cd754e2ca34] [AJAX_POST] []
+DEBUG - 2026-03-20 19:37:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:37:07 --> [REQ_ID=4cd754e2ca34] [PERF] Execution time=0.035309
+DEBUG - 2026-03-20 19:37:07 --> [REQ_ID=77ded18f92cd] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:37:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:37:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:37:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:37:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:37:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:37:07 --> [REQ_ID=474a98cf1b44] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:37:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:37:07 --> [REQ_ID=474a98cf1b44] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:37:07 --> [REQ_ID=474a98cf1b44] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:37:07 --> [REQ_ID=474a98cf1b44] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:37:07 --> [REQ_ID=76900ce326fe] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:37:07 --> [REQ_ID=76900ce326fe] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:37:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:37:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:37:07 --> [REQ_ID=76900ce326fe] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:37:07 --> [REQ_ID=76900ce326fe] [AJAX_POST] []
+DEBUG - 2026-03-20 19:37:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:37:07 --> [REQ_ID=76900ce326fe] [PERF] Execution time=0.043279
+DEBUG - 2026-03-20 19:38:07 --> [REQ_ID=8ab34faa7460] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:38:07 --> [REQ_ID=65c5c0c7176c] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:38:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:38:07 --> [REQ_ID=8ab34faa7460] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:38:07 --> [REQ_ID=8ab34faa7460] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:38:07 --> [REQ_ID=8ab34faa7460] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:38:07 --> [REQ_ID=13a067682ab9] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:38:07 --> [REQ_ID=13a067682ab9] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:38:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:38:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:38:07 --> [REQ_ID=13a067682ab9] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:38:07 --> [REQ_ID=13a067682ab9] [AJAX_POST] []
+DEBUG - 2026-03-20 19:38:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:38:07 --> [REQ_ID=13a067682ab9] [PERF] Execution time=0.156922
+DEBUG - 2026-03-20 19:38:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:38:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:38:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:38:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:38:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:38:07 --> [REQ_ID=22010cf3ee20] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:38:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:38:07 --> [REQ_ID=22010cf3ee20] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:38:07 --> [REQ_ID=22010cf3ee20] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:38:07 --> [REQ_ID=22010cf3ee20] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:38:07 --> [REQ_ID=ae3037cb9ca6] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:38:07 --> [REQ_ID=ae3037cb9ca6] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:38:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:38:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:38:07 --> [REQ_ID=ae3037cb9ca6] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:38:07 --> [REQ_ID=ae3037cb9ca6] [AJAX_POST] []
+DEBUG - 2026-03-20 19:38:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:38:07 --> [REQ_ID=ae3037cb9ca6] [PERF] Execution time=0.031885
+DEBUG - 2026-03-20 19:38:07 --> [REQ_ID=86e489fa57d4] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:38:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:38:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:38:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:38:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:38:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:39:07 --> [REQ_ID=d36b1763169e] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:39:07 --> [REQ_ID=7096397a8657] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:39:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:39:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:39:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:39:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:39:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:39:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:39:07 --> [REQ_ID=7096397a8657] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:39:07 --> [REQ_ID=7096397a8657] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:39:07 --> [REQ_ID=7096397a8657] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:39:07 --> [REQ_ID=0d71f6ac8121] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:39:07 --> [REQ_ID=0d71f6ac8121] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:39:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:39:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:39:07 --> [REQ_ID=0d71f6ac8121] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:39:07 --> [REQ_ID=0d71f6ac8121] [AJAX_POST] []
+DEBUG - 2026-03-20 19:39:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:39:07 --> [REQ_ID=0d71f6ac8121] [PERF] Execution time=0.022034
+DEBUG - 2026-03-20 19:39:07 --> [REQ_ID=0a71b3f01301] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:39:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:39:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:39:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:39:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:39:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:39:07 --> [REQ_ID=2c2d71486423] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:39:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:39:07 --> [REQ_ID=2c2d71486423] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:39:07 --> [REQ_ID=2c2d71486423] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:39:07 --> [REQ_ID=2c2d71486423] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:39:07 --> [REQ_ID=72abbb2f110f] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:39:07 --> [REQ_ID=72abbb2f110f] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:39:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:39:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:39:07 --> [REQ_ID=72abbb2f110f] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:39:07 --> [REQ_ID=72abbb2f110f] [AJAX_POST] []
+DEBUG - 2026-03-20 19:39:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:39:07 --> [REQ_ID=72abbb2f110f] [PERF] Execution time=0.025539
+DEBUG - 2026-03-20 19:39:08 --> [REQ_ID=a5f57cbbaed1] [REQUEST][START] GET /index.php/Management/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:39:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:39:08 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/index.php/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:39:08 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:39:08 --> [404] URI=https://www.mymiwallet.com/index.php/Management/index.php/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:39:08 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/index.php/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:40:07 --> [REQ_ID=aaee98665f03] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:40:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:40:07 --> [REQ_ID=31be544bf69f] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+CRITICAL - 2026-03-20 19:40:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:40:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:40:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:40:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:40:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:40:07 --> [REQ_ID=31be544bf69f] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:40:07 --> [REQ_ID=31be544bf69f] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:40:07 --> [REQ_ID=31be544bf69f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:40:07 --> [REQ_ID=ea68361c75c8] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:40:07 --> [REQ_ID=ea68361c75c8] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:40:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:40:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:40:07 --> [REQ_ID=ea68361c75c8] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:40:07 --> [REQ_ID=ea68361c75c8] [AJAX_POST] []
+DEBUG - 2026-03-20 19:40:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:40:07 --> [REQ_ID=ea68361c75c8] [PERF] Execution time=0.025630
+DEBUG - 2026-03-20 19:40:07 --> [REQ_ID=8ded160d0bf9] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:40:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:40:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:40:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:40:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:40:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:40:07 --> [REQ_ID=06423d85ae24] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:40:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:40:07 --> [REQ_ID=06423d85ae24] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:40:07 --> [REQ_ID=06423d85ae24] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:40:07 --> [REQ_ID=06423d85ae24] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:40:07 --> [REQ_ID=2fa62e3b8118] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:40:07 --> [REQ_ID=2fa62e3b8118] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:40:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:40:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:40:07 --> [REQ_ID=2fa62e3b8118] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:40:07 --> [REQ_ID=2fa62e3b8118] [AJAX_POST] []
+DEBUG - 2026-03-20 19:40:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:40:07 --> [REQ_ID=2fa62e3b8118] [PERF] Execution time=0.068225
+DEBUG - 2026-03-20 19:41:07 --> [REQ_ID=261d60a78cd7] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:41:07 --> [REQ_ID=e0dde3cb1724] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:41:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:41:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:41:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-20 19:41:07 --> [REQ_ID=e0dde3cb1724] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:41:07 --> [REQ_ID=e0dde3cb1724] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:41:07 --> [REQ_ID=e0dde3cb1724] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:41:07 --> [REQ_ID=dc0d1e984e96] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:41:07 --> [REQ_ID=dc0d1e984e96] [MEMORY][controller-start] 4194304
+CRITICAL - 2026-03-20 19:41:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:41:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:41:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:41:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:41:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:41:07 --> [REQ_ID=dc0d1e984e96] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:41:07 --> [REQ_ID=dc0d1e984e96] [AJAX_POST] []
+DEBUG - 2026-03-20 19:41:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:41:07 --> [REQ_ID=dc0d1e984e96] [PERF] Execution time=0.229641
+DEBUG - 2026-03-20 19:41:07 --> [REQ_ID=62b3a97c4a25] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:41:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:41:07 --> [REQ_ID=5495977cd8f5] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+CRITICAL - 2026-03-20 19:41:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:41:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:41:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:41:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:41:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:41:07 --> [REQ_ID=5495977cd8f5] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:41:07 --> [REQ_ID=5495977cd8f5] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:41:07 --> [REQ_ID=5495977cd8f5] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:41:07 --> [REQ_ID=dc5b3215dd30] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:41:07 --> [REQ_ID=dc5b3215dd30] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:41:08 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:41:08 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:41:08 --> [REQ_ID=dc5b3215dd30] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:41:08 --> [REQ_ID=dc5b3215dd30] [AJAX_POST] []
+DEBUG - 2026-03-20 19:41:08 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:41:08 --> [REQ_ID=dc5b3215dd30] [PERF] Execution time=0.044582
+DEBUG - 2026-03-20 19:41:22 --> [REQ_ID=3af893f282f6] [REQUEST][START] HEAD /
+DEBUG - 2026-03-20 19:41:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:41:22 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:41:22 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:41:22 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-20 19:41:22 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-20 19:42:07 --> [REQ_ID=81f2692e2084] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:42:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:42:07 --> [REQ_ID=e4cd7bf9b399] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+CRITICAL - 2026-03-20 19:42:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:42:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:42:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:42:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:42:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:42:07 --> [REQ_ID=e4cd7bf9b399] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:42:07 --> [REQ_ID=e4cd7bf9b399] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:42:07 --> [REQ_ID=e4cd7bf9b399] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:42:07 --> [REQ_ID=98d077ead733] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:42:07 --> [REQ_ID=98d077ead733] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:42:07 --> [REQ_ID=84f8e4ebd07f] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:42:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:42:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:42:07 --> [REQ_ID=98d077ead733] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:42:07 --> [REQ_ID=98d077ead733] [AJAX_POST] []
+DEBUG - 2026-03-20 19:42:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:42:07 --> [REQ_ID=98d077ead733] [PERF] Execution time=0.100217
+DEBUG - 2026-03-20 19:42:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:42:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:42:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:42:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:42:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:42:07 --> [REQ_ID=392860b32bcf] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:42:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:42:07 --> [REQ_ID=392860b32bcf] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:42:07 --> [REQ_ID=392860b32bcf] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:42:07 --> [REQ_ID=392860b32bcf] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:42:07 --> [REQ_ID=f82eb3b7ac60] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:42:07 --> [REQ_ID=f82eb3b7ac60] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:42:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:42:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:42:07 --> [REQ_ID=f82eb3b7ac60] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:42:07 --> [REQ_ID=f82eb3b7ac60] [AJAX_POST] []
+DEBUG - 2026-03-20 19:42:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:42:07 --> [REQ_ID=f82eb3b7ac60] [PERF] Execution time=0.030436
+DEBUG - 2026-03-20 19:43:07 --> [REQ_ID=e423c2fbe313] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:43:07 --> [REQ_ID=be6729efe1d9] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:43:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:43:07 --> [REQ_ID=be6729efe1d9] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:43:07 --> [REQ_ID=be6729efe1d9] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:43:07 --> [REQ_ID=be6729efe1d9] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:43:07 --> [REQ_ID=7c561b801118] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:43:07 --> [REQ_ID=7c561b801118] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:43:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:43:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:43:07 --> [REQ_ID=7c561b801118] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:43:07 --> [REQ_ID=7c561b801118] [AJAX_POST] []
+DEBUG - 2026-03-20 19:43:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:43:07 --> [REQ_ID=7c561b801118] [PERF] Execution time=0.035139
+DEBUG - 2026-03-20 19:43:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:43:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:43:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:43:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:43:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:43:07 --> [REQ_ID=8b3a9c815b5f] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:43:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:43:07 --> [REQ_ID=8b3a9c815b5f] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:43:07 --> [REQ_ID=8b3a9c815b5f] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:43:07 --> [REQ_ID=8b3a9c815b5f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:43:07 --> [REQ_ID=3e49eb393e2a] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:43:07 --> [REQ_ID=3e49eb393e2a] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:43:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:43:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:43:07 --> [REQ_ID=3e49eb393e2a] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:43:07 --> [REQ_ID=3e49eb393e2a] [AJAX_POST] []
+DEBUG - 2026-03-20 19:43:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:43:07 --> [REQ_ID=3e49eb393e2a] [PERF] Execution time=0.021733
+DEBUG - 2026-03-20 19:43:07 --> [REQ_ID=cb962790ab39] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:43:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:43:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:43:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:43:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:43:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:44:07 --> [REQ_ID=7ade680ff654] [REQUEST][START] GET /index.php/Management/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:44:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:44:07 --> [REQ_ID=f502b3f83124] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+CRITICAL - 2026-03-20 19:44:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/index.php/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:44:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:44:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/index.php/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:44:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/index.php/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:44:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:44:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:44:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:44:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:44:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:44:07 --> [REQ_ID=7def262a255b] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:44:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:44:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:44:08 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:44:08 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:44:08 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:44:08 --> [REQ_ID=b7dce626d21d] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:44:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:44:08 --> [REQ_ID=b7dce626d21d] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:44:08 --> [REQ_ID=b7dce626d21d] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:44:08 --> [REQ_ID=b7dce626d21d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:44:08 --> [REQ_ID=8753a38e7114] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:44:08 --> [REQ_ID=8753a38e7114] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:44:08 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:44:08 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:44:08 --> [REQ_ID=8753a38e7114] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:44:08 --> [REQ_ID=8753a38e7114] [AJAX_POST] []
+DEBUG - 2026-03-20 19:44:08 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:44:08 --> [REQ_ID=8753a38e7114] [PERF] Execution time=0.039126
+DEBUG - 2026-03-20 19:44:08 --> [REQ_ID=6afb98189f3a] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:44:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:44:08 --> [REQ_ID=6afb98189f3a] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:44:08 --> [REQ_ID=6afb98189f3a] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:44:08 --> [REQ_ID=6afb98189f3a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:44:08 --> [REQ_ID=20de3ea49c66] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:44:08 --> [REQ_ID=20de3ea49c66] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:44:08 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:44:08 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:44:08 --> [REQ_ID=20de3ea49c66] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:44:08 --> [REQ_ID=20de3ea49c66] [AJAX_POST] []
+DEBUG - 2026-03-20 19:44:08 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:44:08 --> [REQ_ID=20de3ea49c66] [PERF] Execution time=0.020659
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=2934258d80a2] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=d09f8a60d337] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:45:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=2934258d80a2] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=2934258d80a2] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=2934258d80a2] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=087acf458c81] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:45:07 --> [REQ_ID=087acf458c81] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:45:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:45:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=087acf458c81] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=087acf458c81] [AJAX_POST] []
+DEBUG - 2026-03-20 19:45:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:45:07 --> [REQ_ID=087acf458c81] [PERF] Execution time=0.111769
+DEBUG - 2026-03-20 19:45:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:45:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:45:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:45:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:45:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=0267b980a4c5] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:45:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=0267b980a4c5] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=0267b980a4c5] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=0267b980a4c5] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=e186ffb3f422] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:45:07 --> [REQ_ID=e186ffb3f422] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=9d88ae5ad013] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:45:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:45:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=e186ffb3f422] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=e186ffb3f422] [AJAX_POST] []
+DEBUG - 2026-03-20 19:45:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:45:07 --> [REQ_ID=e186ffb3f422] [PERF] Execution time=0.022785
+DEBUG - 2026-03-20 19:45:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:45:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:45:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:45:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:45:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=b7400569ee69] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:45:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=b7400569ee69] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=b7400569ee69] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=b7400569ee69] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=7626883fb73a] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:45:07 --> [REQ_ID=7626883fb73a] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:45:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:45:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=7626883fb73a] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:45:07 --> [REQ_ID=7626883fb73a] [AJAX_POST] []
+DEBUG - 2026-03-20 19:45:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:45:07 --> [REQ_ID=7626883fb73a] [PERF] Execution time=0.026559
+DEBUG - 2026-03-20 19:46:08 --> [REQ_ID=669d08728c2d] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:46:08 --> [REQ_ID=cb2af8051cd9] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:46:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:46:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:46:08 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2026-03-20 19:46:08 --> [REQ_ID=669d08728c2d] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:46:08 --> [REQ_ID=669d08728c2d] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:46:08 --> [REQ_ID=669d08728c2d] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:46:08 --> [REQ_ID=6284d30f52da] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:46:08 --> [REQ_ID=6284d30f52da] [MEMORY][controller-start] 4194304
+CRITICAL - 2026-03-20 19:46:08 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:46:08 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:46:08 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:46:08 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:46:08 --> [REQ_ID=6284d30f52da] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+WARNING - 2026-03-20 19:46:08 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:46:08 --> [REQ_ID=6284d30f52da] [AJAX_POST] []
+DEBUG - 2026-03-20 19:46:08 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:46:08 --> [REQ_ID=6284d30f52da] [PERF] Execution time=0.029032
+DEBUG - 2026-03-20 19:46:08 --> [REQ_ID=d5d183dc0428] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:46:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:46:08 --> [REQ_ID=d5d183dc0428] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:46:08 --> [REQ_ID=d5d183dc0428] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:46:08 --> [REQ_ID=d5d183dc0428] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:46:08 --> [REQ_ID=de71042be479] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:46:08 --> [REQ_ID=de71042be479] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:46:08 --> [REQ_ID=144febbc5601] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:46:08 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:46:08 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:46:08 --> [REQ_ID=de71042be479] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:46:08 --> [REQ_ID=de71042be479] [AJAX_POST] []
+DEBUG - 2026-03-20 19:46:08 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:46:08 --> [REQ_ID=de71042be479] [PERF] Execution time=0.113862
+DEBUG - 2026-03-20 19:46:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:46:08 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:46:08 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:46:08 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:46:08 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:46:22 --> [REQ_ID=2c01d46bf53f] [REQUEST][START] HEAD /
+DEBUG - 2026-03-20 19:46:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:46:22 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:46:22 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:46:22 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-20 19:46:22 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-20 19:47:07 --> [REQ_ID=0e6d8a7766ff] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:47:07 --> [REQ_ID=7629538e2a12] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:47:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:47:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:47:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:47:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:47:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:47:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:47:07 --> [REQ_ID=7629538e2a12] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:47:07 --> [REQ_ID=7629538e2a12] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:47:07 --> [REQ_ID=7629538e2a12] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:47:07 --> [REQ_ID=501b8e39816f] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:47:07 --> [REQ_ID=501b8e39816f] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:47:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:47:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:47:07 --> [REQ_ID=501b8e39816f] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:47:07 --> [REQ_ID=501b8e39816f] [AJAX_POST] []
+DEBUG - 2026-03-20 19:47:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:47:07 --> [REQ_ID=501b8e39816f] [PERF] Execution time=0.023868
+DEBUG - 2026-03-20 19:47:07 --> [REQ_ID=fc4a5a36216a] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:47:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:47:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:47:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:47:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:47:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:47:07 --> [REQ_ID=c7af59eab747] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:47:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:47:07 --> [REQ_ID=c7af59eab747] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:47:07 --> [REQ_ID=c7af59eab747] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:47:07 --> [REQ_ID=c7af59eab747] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:47:07 --> [REQ_ID=9a21e192e41d] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:47:07 --> [REQ_ID=9a21e192e41d] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:47:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:47:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:47:07 --> [REQ_ID=9a21e192e41d] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:47:07 --> [REQ_ID=9a21e192e41d] [AJAX_POST] []
+DEBUG - 2026-03-20 19:47:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:47:07 --> [REQ_ID=9a21e192e41d] [PERF] Execution time=0.034387
+DEBUG - 2026-03-20 19:48:07 --> [REQ_ID=af8337488735] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:48:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:48:07 --> [REQ_ID=54db4ddfff25] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+CRITICAL - 2026-03-20 19:48:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:48:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:48:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:48:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:48:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:48:07 --> [REQ_ID=54db4ddfff25] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:48:07 --> [REQ_ID=54db4ddfff25] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:48:07 --> [REQ_ID=54db4ddfff25] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:48:07 --> [REQ_ID=79a72d1ffc7a] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:48:07 --> [REQ_ID=79a72d1ffc7a] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:48:08 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:48:08 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:48:08 --> [REQ_ID=79a72d1ffc7a] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:48:08 --> [REQ_ID=79a72d1ffc7a] [AJAX_POST] []
+DEBUG - 2026-03-20 19:48:08 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:48:08 --> [REQ_ID=79a72d1ffc7a] [PERF] Execution time=0.039981
+DEBUG - 2026-03-20 19:48:08 --> [REQ_ID=51c8b5845a03] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:48:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:48:08 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:48:08 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:48:08 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:48:08 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:48:08 --> [REQ_ID=b081aa44ac2f] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:48:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:48:08 --> [REQ_ID=b081aa44ac2f] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:48:08 --> [REQ_ID=b081aa44ac2f] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:48:08 --> [REQ_ID=b081aa44ac2f] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:48:08 --> [REQ_ID=a0bd3fc3ed2f] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:48:08 --> [REQ_ID=a0bd3fc3ed2f] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:48:08 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:48:08 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:48:08 --> [REQ_ID=a0bd3fc3ed2f] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:48:08 --> [REQ_ID=a0bd3fc3ed2f] [AJAX_POST] []
+DEBUG - 2026-03-20 19:48:08 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:48:08 --> [REQ_ID=a0bd3fc3ed2f] [PERF] Execution time=0.024951
+DEBUG - 2026-03-20 19:49:07 --> [REQ_ID=d424cb85c6c3] [REQUEST][START] GET /index.php/Management/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:49:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:49:07 --> [REQ_ID=a432990e0644] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+CRITICAL - 2026-03-20 19:49:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/index.php/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:49:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:49:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/index.php/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:49:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/index.php/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:49:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:49:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:49:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:49:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:49:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:49:08 --> [REQ_ID=1555f0bff761] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:49:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:49:08 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:49:08 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:49:08 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:49:08 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:49:08 --> [REQ_ID=e215af4323c1] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:49:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:49:08 --> [REQ_ID=e215af4323c1] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:49:08 --> [REQ_ID=e215af4323c1] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:49:08 --> [REQ_ID=e215af4323c1] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:49:08 --> [REQ_ID=9f6ea9a2bdf3] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:49:08 --> [REQ_ID=9f6ea9a2bdf3] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:49:08 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:49:08 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:49:08 --> [REQ_ID=9f6ea9a2bdf3] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:49:08 --> [REQ_ID=9f6ea9a2bdf3] [AJAX_POST] []
+DEBUG - 2026-03-20 19:49:08 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:49:08 --> [REQ_ID=9f6ea9a2bdf3] [PERF] Execution time=0.060872
+DEBUG - 2026-03-20 19:49:08 --> [REQ_ID=1db7222de5b8] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:49:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:49:08 --> [REQ_ID=1db7222de5b8] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:49:08 --> [REQ_ID=1db7222de5b8] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:49:08 --> [REQ_ID=1db7222de5b8] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:49:08 --> [REQ_ID=8204972d68a4] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:49:08 --> [REQ_ID=8204972d68a4] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:49:08 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:49:08 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:49:08 --> [REQ_ID=8204972d68a4] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:49:08 --> [REQ_ID=8204972d68a4] [AJAX_POST] []
+DEBUG - 2026-03-20 19:49:08 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:49:08 --> [REQ_ID=8204972d68a4] [PERF] Execution time=0.051192
+DEBUG - 2026-03-20 19:50:07 --> [REQ_ID=dbfa2b93f16a] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:50:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:50:07 --> [REQ_ID=4f69b005115d] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:50:07 --> [REQ_ID=dbfa2b93f16a] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:50:07 --> [REQ_ID=dbfa2b93f16a] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:50:07 --> [REQ_ID=dbfa2b93f16a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:50:07 --> [REQ_ID=ce28551bc666] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:50:07 --> [REQ_ID=ce28551bc666] [MEMORY][controller-start] 6291456
+DEBUG - 2026-03-20 19:50:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:50:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:50:07 --> [REQ_ID=ce28551bc666] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:50:07 --> [REQ_ID=ce28551bc666] [AJAX_POST] []
+DEBUG - 2026-03-20 19:50:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:50:07 --> [REQ_ID=ce28551bc666] [PERF] Execution time=0.256384
+DEBUG - 2026-03-20 19:50:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:50:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:50:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:50:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:50:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:50:07 --> [REQ_ID=a35e159a24fe] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:50:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:50:07 --> [REQ_ID=a35e159a24fe] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:50:07 --> [REQ_ID=a35e159a24fe] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:50:07 --> [REQ_ID=a35e159a24fe] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:50:07 --> [REQ_ID=096d46f6f29e] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:50:07 --> [REQ_ID=096d46f6f29e] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:50:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:50:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:50:07 --> [REQ_ID=096d46f6f29e] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:50:07 --> [REQ_ID=096d46f6f29e] [AJAX_POST] []
+DEBUG - 2026-03-20 19:50:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:50:07 --> [REQ_ID=096d46f6f29e] [PERF] Execution time=0.029982
+DEBUG - 2026-03-20 19:50:07 --> [REQ_ID=cbf2abf111e5] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:50:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:50:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:50:08 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:50:08 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:50:08 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:51:07 --> [REQ_ID=776499802549] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:51:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:51:07 --> [REQ_ID=90d0094a9e83] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:51:07 --> [REQ_ID=776499802549] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:51:07 --> [REQ_ID=776499802549] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:51:07 --> [REQ_ID=776499802549] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:51:07 --> [REQ_ID=d53242325255] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:51:07 --> [REQ_ID=d53242325255] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:51:08 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:51:08 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:51:08 --> [REQ_ID=d53242325255] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:51:08 --> [REQ_ID=d53242325255] [AJAX_POST] []
+DEBUG - 2026-03-20 19:51:08 --> getLatestPrices - Starting price refresh
+DEBUG - 2026-03-20 19:51:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2026-03-20 19:51:08 --> [REQ_ID=d53242325255] [PERF] Execution time=0.302500
+CRITICAL - 2026-03-20 19:51:08 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:51:08 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:51:08 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:51:08 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:51:08 --> [REQ_ID=03bb88664697] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:51:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:51:08 --> [REQ_ID=03bb88664697] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:51:08 --> [REQ_ID=03bb88664697] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:51:08 --> [REQ_ID=03bb88664697] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:51:08 --> [REQ_ID=843e20d618fc] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:51:08 --> [REQ_ID=843e20d618fc] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:51:08 --> [REQ_ID=e65837bcb6d6] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:51:08 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:51:08 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:51:08 --> [REQ_ID=843e20d618fc] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:51:08 --> [REQ_ID=843e20d618fc] [AJAX_POST] []
+DEBUG - 2026-03-20 19:51:08 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:51:08 --> [REQ_ID=843e20d618fc] [PERF] Execution time=0.030866
+DEBUG - 2026-03-20 19:51:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:51:08 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:51:08 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:51:08 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:51:08 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:51:22 --> [REQ_ID=a69ad7bc642c] [REQUEST][START] HEAD /
+DEBUG - 2026-03-20 19:51:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:51:22 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: HEAD, Route: /]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:51:22 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:51:22 --> [404] URI=https://www.mymiwallet.com/index.php/
+WARNING - 2026-03-20 19:51:22 --> 404 route miss: https://www.mymiwallet.com/index.php/ | referrer: http://67.205.42.220
+DEBUG - 2026-03-20 19:52:07 --> [REQ_ID=34d59d630307] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:52:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:52:07 --> [REQ_ID=febb6e1f1450] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:52:07 --> [REQ_ID=34d59d630307] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:52:07 --> [REQ_ID=34d59d630307] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:52:07 --> [REQ_ID=34d59d630307] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:52:07 --> [REQ_ID=cbf68254a93b] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:52:07 --> [REQ_ID=cbf68254a93b] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:52:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:52:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:52:07 --> [REQ_ID=cbf68254a93b] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:52:07 --> [REQ_ID=cbf68254a93b] [AJAX_POST] []
+DEBUG - 2026-03-20 19:52:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:52:07 --> [REQ_ID=cbf68254a93b] [PERF] Execution time=0.033142
+DEBUG - 2026-03-20 19:52:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:52:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:52:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:52:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:52:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:52:07 --> [REQ_ID=be1a219d436a] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:52:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:52:07 --> [REQ_ID=be1a219d436a] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:52:07 --> [REQ_ID=be1a219d436a] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:52:07 --> [REQ_ID=be1a219d436a] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:52:07 --> [REQ_ID=720069401732] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:52:07 --> [REQ_ID=720069401732] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:52:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:52:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:52:07 --> [REQ_ID=720069401732] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:52:07 --> [REQ_ID=720069401732] [AJAX_POST] []
+DEBUG - 2026-03-20 19:52:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:52:07 --> [REQ_ID=720069401732] [PERF] Execution time=0.026235
+DEBUG - 2026-03-20 19:52:07 --> [REQ_ID=00557a56c9de] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:52:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:52:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:52:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:52:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:52:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:53:07 --> [REQ_ID=d604d145d3f6] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:53:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:53:07 --> [REQ_ID=a5006e0f6282] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:53:07 --> [REQ_ID=d604d145d3f6] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:53:07 --> [REQ_ID=d604d145d3f6] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:53:07 --> [REQ_ID=d604d145d3f6] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:53:07 --> [REQ_ID=42f456b3d9f5] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:53:07 --> [REQ_ID=42f456b3d9f5] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:53:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:53:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:53:07 --> [REQ_ID=42f456b3d9f5] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:53:07 --> [REQ_ID=42f456b3d9f5] [AJAX_POST] []
+DEBUG - 2026-03-20 19:53:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:53:07 --> [REQ_ID=42f456b3d9f5] [PERF] Execution time=0.054055
+DEBUG - 2026-03-20 19:53:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:53:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:53:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:53:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:53:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts
+DEBUG - 2026-03-20 19:53:07 --> [REQ_ID=9f2293d450b7] [REQUEST][START] GET /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:53:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-20 19:53:07 --> [REQ_ID=9f2293d450b7] [FILTER_BEFORE] /index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:53:07 --> [REQ_ID=9f2293d450b7] [ROUTE] Controller=\App\Modules\APIs\Controllers\AlertsAPIController Method=getLatestPrices
+DEBUG - 2026-03-20 19:53:07 --> [REQ_ID=9f2293d450b7] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:53:07 --> [REQ_ID=62ce485cfc1e] [INIT] App\Modules\APIs\Controllers\AlertsAPIController::GET
+INFO - 2026-03-20 19:53:07 --> [REQ_ID=62ce485cfc1e] [MEMORY][controller-start] 4194304
+DEBUG - 2026-03-20 19:53:07 --> MyMIMarketing: Pscrape library not installed; Google search scraping will use fallback.
+DEBUG - 2026-03-20 19:53:07 --> MyMIUser L52 - initialized (first log).
+DEBUG - 2026-03-20 19:53:07 --> [REQ_ID=62ce485cfc1e] [AJAX_HEADERS] {"Connection":{},"Host":{},"Priority":{},"Cookie":{},"Accept-Language":{},"Accept-Encoding":{},"Referer":{},"Sec-Fetch-Dest":{},"Sec-Fetch-Mode":{},"Sec-Fetch-Site":{},"Sec-Ch-Ua-Mobile":{},"Sec-Ch-Ua":{},"Accept":{},"User-Agent":{},"X-Requested-With":{},"Sec-Ch-Ua-Platform":{}}
+DEBUG - 2026-03-20 19:53:07 --> [REQ_ID=62ce485cfc1e] [AJAX_POST] []
+DEBUG - 2026-03-20 19:53:07 --> getLatestPrices - Starting price refresh
+INFO - 2026-03-20 19:53:07 --> [REQ_ID=62ce485cfc1e] [PERF] Execution time=0.035855
+DEBUG - 2026-03-20 19:53:07 --> [REQ_ID=604c4259f9ee] [REQUEST][START] GET /index.php/Management/API/Alerts/getLatestPrices
+DEBUG - 2026-03-20 19:53:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-20 19:53:07 --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
+[Method: GET, Route: Management/API/Alerts/getLatestPrices]
+in SYSTEMPATH/CodeIgniter.php on line 1001.
+ 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null)
+ 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+ 3 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 4 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 5 FCPATH/index.php(121): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-20 19:53:07 --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
+WARNING - 2026-03-20 19:53:07 --> [404] URI=https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices
+WARNING - 2026-03-20 19:53:07 --> 404 route miss: https://www.mymiwallet.com/index.php/Management/API/Alerts/getLatestPrices | referrer: https://www.mymiwallet.com/index.php/Management/Alerts

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Commands\Git;
+namespace App\Commands\GitHub;
 
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
@@ -10,10 +10,10 @@ use Throwable;
 
 class CreatePR extends SafeBaseCommand
 {
-    protected $group = 'Git';
-    protected $name = 'git:pr:create';
+    protected $group = 'GitHub';
+    protected $name = 'github:pr:create';
     protected $description = 'Create a GitHub pull request for the current branch.';
-    protected $usage = 'git:pr:create "Title" [body]';
+    protected $usage = 'github:pr:create "Title" [body]';
     protected $arguments = [
         'title' => 'Pull request title. Defaults to Auto PR.',
         'body' => 'Optional pull request body.',

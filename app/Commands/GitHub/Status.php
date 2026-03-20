@@ -8,21 +8,21 @@ use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use Throwable;
 
-class Health extends SafeBaseCommand
+class Status extends SafeBaseCommand
 {
-    protected $group = 'Git';
-    protected $name = 'git:health';
-    protected $description = 'Show a lightweight repository and remote health summary.';
+    protected $group = 'GitHub';
+    protected $name = 'github:status';
+    protected $description = 'Show repository branch and working tree status.';
 
     public function run(array $params)
     {
         try {
             $this->parseParams($params);
-            CLI::write(service('git')->health());
+            CLI::write(service('git')->status());
 
             return EXIT_SUCCESS;
         } catch (Throwable $e) {
-            log_message('error', '[spark:git:health] ' . $e->getMessage());
+            log_message('error', '[spark:git:status] ' . $e->getMessage());
             CLI::error($e->getMessage());
 
             return EXIT_ERROR;
