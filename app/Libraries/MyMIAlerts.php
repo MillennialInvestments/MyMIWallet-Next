@@ -29,7 +29,7 @@ class MyMIAlerts
     protected $session;
     protected $emailConfig;
     protected $emailHost;
-    protected $emailUsername = '';
+    protected $emailUsername = 'tradealerts@mymiwallet.com';
 
     protected $emailPassword;
     protected $siteSettings;
@@ -93,7 +93,6 @@ class MyMIAlerts
     private array $senderFilters = [
         'tradingview',
         'thinkorswim',
-        'alerts@mymiwallet.com',
         'tradealerts@mymiwallet.com',
         'tradingview.com',
         'thinkorswim.com',
@@ -103,7 +102,6 @@ class MyMIAlerts
      * Known senders and vendor prefixes that signal press-release style news emails.
      */
     private array $newsSenders = [
-        'alerts@mymiwallet.com',
         'tradealerts@mymiwallet.com',
         'alerts@thinkorswim.com',
     ];
@@ -193,10 +191,8 @@ class MyMIAlerts
         $myMIConfig = config('MyMI');
 
         $this->emailHost = $this->emailConfig->SMTPHost;
-        $this->emailUsername = $myMIConfig->alertEmail;
-        $this->emailPassword = env('alerts.imap.pass', env('ALERTS_IMAP_PASSWORD', env('email.password', 'MyMI2024!')));
-        $this->senderFilters = array_values(array_unique(array_merge($this->senderFilters, $myMIConfig->allowedAlertEmails)));
-        $this->newsSenders = array_values(array_unique(array_merge($this->newsSenders, $myMIConfig->allowedAlertEmails)));
+        $this->emailUsername = 'alerts@mymiwallet.com';
+        $this->emailPassword = 'MyMI2024!';
 
         $this->alertsModel = $alertsModel ?? new AlertsModel();
         $this->trackerModel = new TrackerModel();
@@ -1161,7 +1157,7 @@ class MyMIAlerts
         log_message('info', 'Using alert email: ' . $config->alertEmail);
 
         $hostname = '{imap.dreamhost.com:993/imap/ssl}INBOX';
-        $username = $config->alertEmail;
+        $username = $this->emailUsername;
         $password = $this->emailPassword;
 
         log_message('debug', 'IMAP connected using: ' . $config->alertEmail);
@@ -1232,7 +1228,7 @@ class MyMIAlerts
     //     log_message('info', '✅ Connecting to IMAP server...');
     
     //     $hostname = '{imap.dreamhost.com:993/imap/ssl}INBOX';
-    //     $username = 'tradealerts@mymiwallet.com';
+    //     $username = $this->emailUsername;
     //     $password = $this->emailPassword;
     
     //     $inbox = imap_open($hostname, $username, $password);
@@ -1367,7 +1363,7 @@ class MyMIAlerts
     // public function fetchAndStoreAlertsEmails()
     // {
     //     $hostname = '{imap.dreamhost.com:993/imap/ssl}INBOX';
-    //     $username = 'tradealerts@mymiwallet.com';
+    //     $username = $this->emailUsername;
     //     $password = $this->emailPassword;
     
     //     log_message('info', '✅ Connecting to IMAP server...');
@@ -1502,7 +1498,7 @@ class MyMIAlerts
         log_message('info', 'Using alert email: ' . $config->alertEmail);
     
         $hostname = '{imap.dreamhost.com:993/imap/ssl}INBOX';
-        $username = $config->alertEmail;
+        $username = $this->emailUsername;
         $password = $this->emailPassword;
 
         log_message('debug', 'IMAP connected using: ' . $config->alertEmail);

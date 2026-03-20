@@ -779,7 +779,7 @@ class AlertsAdminController extends BaseAdminController
     // private function fetchAndStoreAlertsEmails()
     // {
     //     $hostname = '{imap.dreamhost.com:993/imap/ssl}INBOX';
-    //     $username = 'tradealerts@mymiwallet.com';
+    //     $username = 'alerts@mymiwallet.com';
     //     $password = $this->API->emailPassword;
 
     //     $inbox = imap_open($hostname, $username, $password);
@@ -856,7 +856,7 @@ class AlertsAdminController extends BaseAdminController
     {
         $config = config('MyMI');
         $hostname = '{imap.dreamhost.com:993/imap/ssl}INBOX';
-        $username = $config->alertEmail;
+        $username = 'alerts@mymiwallet.com';
         $password = $this->emailPassword;
         log_message('info', 'Using alert email: ' . $config->alertEmail);
     
@@ -932,7 +932,7 @@ class AlertsAdminController extends BaseAdminController
     {
         $config = config('MyMI');
         $hostname = '{imap.server.com:993/imap/ssl}INBOX';
-        $username = $config->alertEmail;
+        $username = 'alerts@mymiwallet.com';
         $password = 'your_password';
 
         $inbox = imap_open($hostname, $username, $password);
